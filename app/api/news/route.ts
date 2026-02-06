@@ -48,6 +48,80 @@ interface OutletFetchResult {
 }
 
 const DAY_MS = 24 * 60 * 60 * 1000;
+const RSS_ITEM_LIMIT = 15;
+const SITEMAP_ITEM_LIMIT = 10;
+const WORLD_PORTAL_RSS_LIMIT = 8;
+const WORLD_PORTAL_SITEMAP_LIMIT = 6;
+const LATAM_COUNTRIES = new Set(['LATAM', 'Argentina', 'Chile', 'Uruguay']);
+const LATAM_ENTITY_TERMS = [
+  'argentina',
+  'argentine',
+  'buenos aires',
+  'chile',
+  'chilean',
+  'santiago',
+  'uruguay',
+  'uruguayan',
+  'montevideo',
+  'mercosur',
+  'patagonia',
+  'rio de la plata',
+  'southern cone',
+  'latam',
+  'latin america',
+  'latinoamerica',
+  'america latina',
+];
+
+function normalizeText(value: string): string {
+  return value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase();
+}
+
+function detectLatamFromTitle(title: string, locationName?: string): boolean {
+  const normalized = normalizeText(`${title} ${locationName || ''}`);
+  return LATAM_ENTITY_TERMS.some((term) => normalized.includes(term));
+}
+
+function isLatamCountry(country?: string): boolean {
+  if (!country) return false;
+  return LATAM_COUNTRIES.has(country);
+}
+
+function annotateWorldLatam(item: NewsItem): NewsItem {
+  const latamByCountry = isLatamCountry(item.country);
+  const latamByEntity = detectLatamFromTitle(item.title, item.locationName);
+  const worldLatam = latamByCountry || latamByEntity;
+  return {
+    ...item,
+    worldLatam,
+    tags: worldLatam ? [...new Set([...(item.tags || []), 'world_latam'])] : (item.tags || [])
+  };
+}
+
+function rssItemLimitFor(outlet: OutletFeed): number {
+  if (
+    (outlet.sourceType || 'global') === 'portal'
+    && outlet.beat === 'world'
+    && /Google State:|Bing State:|Google Metro:|Bing Metro:|Google US World Topic|Google LATAM Regional Topic|Bing LATAM Topic|Bing US World Topic/i.test(outlet.name)
+  ) {
+    return WORLD_PORTAL_RSS_LIMIT;
+  }
+  return RSS_ITEM_LIMIT;
+}
+
+function sitemapItemLimitFor(outlet: OutletFeed): number {
+  if (
+    (outlet.sourceType || 'global') === 'portal'
+    && outlet.beat === 'world'
+    && /Google State:|Bing State:|Google Metro:|Bing Metro:|Google US World Topic|Google LATAM Regional Topic|Bing LATAM Topic|Bing US World Topic/i.test(outlet.name)
+  ) {
+    return WORLD_PORTAL_SITEMAP_LIMIT;
+  }
+  return SITEMAP_ITEM_LIMIT;
+}
 
 function countRecent24h(items: Array<{ publishedAt: string }>): number {
   const cutoff = Date.now() - DAY_MS;
@@ -79,7 +153,7 @@ async function getBusinessRadarFallback(): Promise<NewsItem[]> {
     return (data.articles || []).slice(0, 30).map((article) => {
       const keyword = classifyBeatByKeyword(article.title, 'business');
       const geo = inferGeoFromTitle(article.title);
-      return {
+      const newsItem = {
         id: article.url,
         title: article.title,
         link: article.url,
@@ -94,6 +168,7 @@ async function getBusinessRadarFallback(): Promise<NewsItem[]> {
         classificationReason: keyword.reason,
         ...geo
       } satisfies NewsItem;
+      return annotateWorldLatam(newsItem);
     });
   } catch {
     return [];
@@ -160,12 +235,12 @@ async function fetchOutletRss(origin: string, outlet: OutletFeed): Promise<Outle
     }
 
     const xml = await response.text();
-    const parsed = parseRssOrAtom(xml, 15);
+    const parsed = parseRssOrAtom(xml, rssItemLimitFor(outlet));
     const items = parsed.map((item) => {
       const classification = classifyBeatByKeyword(item.title, outlet.beat);
       const normalizedCountry = normalizeCountryName(outlet.country);
       const geo = inferGeoFromTitle(item.title, normalizedCountry);
-      return {
+      const newsItem = {
         id: item.link,
         title: item.title,
         link: item.link,
@@ -180,6 +255,7 @@ async function fetchOutletRss(origin: string, outlet: OutletFeed): Promise<Outle
         classificationReason: classification.reason,
         ...geo
       } satisfies NewsItem;
+      return annotateWorldLatam(newsItem);
     });
 
     markSuccess(outlet.id);
@@ -279,12 +355,12 @@ async function fetchOutletSitemap(origin: string, outlet: OutletFeed): Promise<O
     }
 
     const json = await response.json() as { items?: Array<{ title: string; link: string; publishedAt: string }> };
-    const parsed = (json.items || []).slice(0, 10);
+    const parsed = (json.items || []).slice(0, sitemapItemLimitFor(outlet));
     const items = parsed.map((item) => {
       const classification = classifyBeatByKeyword(item.title, outlet.beat);
       const normalizedCountry = normalizeCountryName(outlet.country);
       const geo = inferGeoFromTitle(item.title, normalizedCountry);
-      return {
+      const newsItem = {
         id: item.link,
         title: item.title,
         link: item.link,
@@ -299,6 +375,7 @@ async function fetchOutletSitemap(origin: string, outlet: OutletFeed): Promise<O
         classificationReason: classification.reason,
         ...geo
       } satisfies NewsItem;
+      return annotateWorldLatam(newsItem);
     });
 
     markSuccess(key);

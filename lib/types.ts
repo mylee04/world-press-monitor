@@ -57,4 +57,6 @@ export interface NewsItem {
   country?: string;
   lat?: number;
   lon?: number;
+  worldLatam?: boolean;
+  tags?: string[];
 }

@@ -12,6 +12,37 @@ const AUDITS_DIR = resolve(process.cwd(), 'audits');
 const FILE_PREFIX = 'source_daily_counts_';
 const FILE_SUFFIX = '.csv';
 
+function loadWebhookFromDotenvFiles(): string | null {
+  const envCandidates = [
+    resolve(process.cwd(), '.env.local'),
+    resolve(process.cwd(), '.env')
+  ];
+
+  for (const envPath of envCandidates) {
+    try {
+      const raw = readFileSync(envPath, 'utf8');
+      const lines = raw.split('\n');
+      for (const line of lines) {
+        const trimmed = line.trim();
+        if (!trimmed || trimmed.startsWith('#')) continue;
+        const eq = trimmed.indexOf('=');
+        if (eq <= 0) continue;
+        const key = trimmed.slice(0, eq).trim();
+        if (key !== 'DISCORD_WEBHOOK_URL') continue;
+        let value = trimmed.slice(eq + 1).trim();
+        if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
+          value = value.slice(1, -1);
+        }
+        if (value) return value;
+      }
+    } catch {
+      // ignore missing/invalid env files
+    }
+  }
+
+  return null;
+}
+
 function parseArgs(): { dryRun: boolean; filePath: string | null } {
   const args = process.argv.slice(2);
   let dryRun = false;
@@ -174,7 +205,7 @@ async function main(): Promise<void> {
     return;
   }
 
-  const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
+  const webhookUrl = process.env.DISCORD_WEBHOOK_URL || loadWebhookFromDotenvFiles();
   if (!webhookUrl) {
     throw new Error('Missing DISCORD_WEBHOOK_URL env var.');
   }

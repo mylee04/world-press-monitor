@@ -260,6 +260,52 @@ V1 source universe is expanded to support newsroom-level breadth while preservin
 - `bun run promote:expansion`
 - `bun run promote:expansion:apply`
 
+### 3.12 World LATAM Filter + Beat Balance
+
+Decision date: February 6, 2026
+
+To align with newsroom usage (US desks still covering LATAM), `world` handling is split into two layers:
+
+- `world_latam` detection:
+  - Source-country signal: `LATAM`, `Argentina`, `Chile`, `Uruguay`.
+  - Headline entity signal: LATAM terms such as `Argentina`, `Chile`, `Uruguay`, `Santiago`, `Buenos Aires`, `Montevideo`, `Mercosur`, `Latin America`.
+- Hybrid rule:
+  - A story is `world_latam` if **country is LATAM** OR **headline entity matches LATAM**.
+- UI behavior:
+  - Beat `world` supports `LATAM related` (default) and `All world`.
+  - `world_latam` chip is shown in the feed for matching stories.
+
+### 3.13 Volume Target and Mix Governance
+
+Decision date: February 6, 2026
+
+PressLab daily operating target is:
+
+- `15,000` metadata items / 24h (raw).
+
+To avoid `world` overconcentration while scaling:
+
+- Re-tag a portion of portal state/metro sources into `business`, `politics`, and `tech`.
+- Apply lower per-source caps only to broad `world` portal sources (state/metro/world-broad buckets).
+- Keep non-world beats less constrained to preserve category diversity.
+
+### 3.14 Reporting KPIs (US + LATAM)
+
+Decision date: February 6, 2026
+
+Daily reports must include:
+
+- Raw volume and target attainment (`raw vs 15000`).
+- Unique by source and unique cross-source.
+- Dedupe rates:
+  - within-source
+  - cross-source
+- Distinct domains and active newsrooms.
+- World LATAM coverage:
+  - `world_latam / world_total` (% of world)
+  - split by US sources vs LATAM sources.
+- `bun run promote:expansion:apply`
+
 ### 3.11.3 Daily Ops Reporting and Discord Delivery
 
 Decision date: February 6, 2026

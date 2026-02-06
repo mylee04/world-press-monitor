@@ -212,6 +212,197 @@ const PRESET_SEEDS: Record<string, OutletSeed[]> = {
   ]
 };
 
+const US_STATE_NAMES = [
+  'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia',
+  'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland',
+  'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey',
+  'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina',
+  'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
+];
+
+const US_STATE_TOPIC_SEEDS: OutletSeed[] = US_STATE_NAMES.flatMap((state) => ([
+  {
+    name: `Google State: ${state}`,
+    tier: 2,
+    beat: 'politics',
+    country: 'US',
+    sourceType: 'portal',
+    rssUrl: `https://news.google.com/rss/search?q=${encodeURIComponent(`${state} politics policy when:1d`)}&ceid=US:en&hl=en-US&gl=US`
+  },
+  {
+    name: `Bing State: ${state}`,
+    tier: 2,
+    beat: 'business',
+    country: 'US',
+    sourceType: 'portal',
+    rssUrl: `https://www.bing.com/news/search?q=${encodeURIComponent(`${state} business economy`)}&format=RSS&setlang=en-us`
+  }
+]));
+
+const US_BING_TOPIC_SEEDS: OutletSeed[] = [
+  { name: 'Bing US Politics Topic', tier: 2, beat: 'politics', country: 'US', sourceType: 'portal', rssUrl: 'https://www.bing.com/news/search?q=US+politics&format=RSS&setlang=en-us' },
+  { name: 'Bing US Business Topic', tier: 2, beat: 'business', country: 'US', sourceType: 'portal', rssUrl: 'https://www.bing.com/news/search?q=US+business&format=RSS&setlang=en-us' },
+  { name: 'Bing US Tech Topic', tier: 2, beat: 'tech', country: 'US', sourceType: 'portal', rssUrl: 'https://www.bing.com/news/search?q=US+technology&format=RSS&setlang=en-us' },
+  { name: 'Bing US World Topic', tier: 2, beat: 'world', country: 'US', sourceType: 'portal', rssUrl: 'https://www.bing.com/news/search?q=US+world+news&format=RSS&setlang=en-us' }
+];
+
+const LATAM_BING_TOPIC_SEEDS: OutletSeed[] = [
+  { name: 'Bing LATAM Topic', tier: 2, beat: 'world', country: 'LATAM', language: 'es', sourceType: 'portal', rssUrl: 'https://www.bing.com/news/search?q=Latinoamerica+noticias&format=RSS&setlang=es' },
+  { name: 'Bing Argentina Topic', tier: 2, beat: 'world', country: 'Argentina', language: 'es', sourceType: 'portal', rssUrl: 'https://www.bing.com/news/search?q=Argentina+noticias&format=RSS&setlang=es' },
+  { name: 'Bing Chile Topic', tier: 2, beat: 'world', country: 'Chile', language: 'es', sourceType: 'portal', rssUrl: 'https://www.bing.com/news/search?q=Chile+noticias&format=RSS&setlang=es' },
+  { name: 'Bing Uruguay Topic', tier: 2, beat: 'world', country: 'Uruguay', language: 'es', sourceType: 'portal', rssUrl: 'https://www.bing.com/news/search?q=Uruguay+noticias&format=RSS&setlang=es' },
+  { name: 'Bing LATAM Politics Topic', tier: 2, beat: 'politics', country: 'LATAM', language: 'es', sourceType: 'portal', rssUrl: 'https://www.bing.com/news/search?q=Latinoamerica+politica&format=RSS&setlang=es' },
+  { name: 'Bing LATAM Business Topic', tier: 2, beat: 'business', country: 'LATAM', language: 'es', sourceType: 'portal', rssUrl: 'https://www.bing.com/news/search?q=Latinoamerica+economia&format=RSS&setlang=es' }
+];
+
+const US_METRO_NAMES = [
+  'New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix', 'Philadelphia', 'San Antonio', 'San Diego', 'Dallas',
+  'San Jose', 'Austin', 'Jacksonville', 'Fort Worth', 'Columbus', 'Charlotte', 'San Francisco', 'Indianapolis',
+  'Seattle', 'Denver', 'Washington DC', 'Boston', 'El Paso', 'Nashville', 'Detroit', 'Oklahoma City', 'Portland',
+  'Las Vegas', 'Memphis', 'Louisville', 'Baltimore', 'Milwaukee', 'Albuquerque', 'Tucson', 'Fresno', 'Sacramento',
+  'Kansas City', 'Atlanta', 'Miami', 'Cleveland', 'Raleigh', 'Omaha', 'Minneapolis', 'Tulsa', 'Arlington',
+  'Tampa', 'New Orleans', 'Wichita', 'Bakersfield', 'Aurora', 'Honolulu'
+];
+
+const US_METRO_TOPIC_SEEDS: OutletSeed[] = US_METRO_NAMES.flatMap((metro) => ([
+  {
+    name: `Google Metro: ${metro}`,
+    tier: 2,
+    beat: 'business',
+    country: 'US',
+    sourceType: 'portal',
+    rssUrl: `https://news.google.com/rss/search?q=${encodeURIComponent(`${metro} economy business when:1d`)}&ceid=US:en&hl=en-US&gl=US`
+  },
+  {
+    name: `Bing Metro: ${metro}`,
+    tier: 2,
+    beat: 'tech',
+    country: 'US',
+    sourceType: 'portal',
+    rssUrl: `https://www.bing.com/news/search?q=${encodeURIComponent(`${metro} technology startups ai`)}&format=RSS&setlang=en-us`
+  }
+]));
+
+const US_TOPIC_VARIANTS: Array<{ key: string; beat: OutletFeed['beat']; q: string; provider: 'google' | 'bing' }> = [
+  { key: 'policy-election', beat: 'politics', q: 'US elections policy latest', provider: 'google' },
+  { key: 'congress-senate', beat: 'politics', q: 'US congress senate house latest', provider: 'bing' },
+  { key: 'markets-macro', beat: 'business', q: 'US markets inflation rates latest', provider: 'google' },
+  { key: 'earnings-corporate', beat: 'business', q: 'US earnings corporate results latest', provider: 'bing' },
+  { key: 'ai-startups', beat: 'tech', q: 'US AI startups funding latest', provider: 'google' },
+  { key: 'cyber-cloud', beat: 'tech', q: 'US cybersecurity cloud enterprise latest', provider: 'bing' },
+  { key: 'breaking-national', beat: 'world', q: 'US breaking national news', provider: 'google' },
+  { key: 'regional-watch', beat: 'world', q: 'United States regional news latest', provider: 'bing' }
+];
+
+const US_TOPIC_VARIANT_SEEDS: OutletSeed[] = US_TOPIC_VARIANTS.map((variant) => {
+  const name = `${variant.provider === 'google' ? 'Google' : 'Bing'} US Variant: ${variant.key}`;
+  const rssUrl = variant.provider === 'google'
+    ? `https://news.google.com/rss/search?q=${encodeURIComponent(`${variant.q} when:1d`)}&ceid=US:en&hl=en-US&gl=US`
+    : `https://www.bing.com/news/search?q=${encodeURIComponent(variant.q)}&format=RSS&setlang=en-us`;
+  return {
+    name,
+    tier: 2,
+    beat: variant.beat,
+    country: 'US',
+    sourceType: 'portal',
+    rssUrl
+  };
+});
+
+const US_LATAM_FOCUS_VARIANTS: Array<{ key: string; beat: OutletFeed['beat']; q: string; provider: 'google' | 'bing' }> = [
+  { key: 'latam-politics-us-desk', beat: 'politics', q: 'Argentina Chile Uruguay politics US coverage', provider: 'google' },
+  { key: 'latam-economy-us-desk', beat: 'business', q: 'Argentina Chile Uruguay economy markets US', provider: 'google' },
+  { key: 'latam-trade-us-desk', beat: 'business', q: 'LATAM trade tariffs exports imports US', provider: 'bing' },
+  { key: 'latam-energy-us-desk', beat: 'business', q: 'LATAM energy oil gas lithium US', provider: 'google' },
+  { key: 'latam-finance-us-desk', beat: 'business', q: 'LATAM central bank inflation currency', provider: 'bing' },
+  { key: 'latam-tech-us-desk', beat: 'tech', q: 'LATAM startups AI technology venture capital', provider: 'google' },
+  { key: 'latam-cyber-us-desk', beat: 'tech', q: 'LATAM cybersecurity telecom cloud', provider: 'bing' },
+  { key: 'argentina-elections-us', beat: 'politics', q: 'Argentina election congress senate latest', provider: 'google' },
+  { key: 'chile-politics-us', beat: 'politics', q: 'Chile government congress reform latest', provider: 'bing' },
+  { key: 'uruguay-politics-us', beat: 'politics', q: 'Uruguay government policy elections latest', provider: 'google' },
+  { key: 'argentina-markets-us', beat: 'business', q: 'Argentina stocks bonds peso inflation', provider: 'bing' },
+  { key: 'chile-markets-us', beat: 'business', q: 'Chile copper markets inflation rates', provider: 'google' },
+  { key: 'uruguay-markets-us', beat: 'business', q: 'Uruguay economy inflation markets exports', provider: 'bing' },
+  { key: 'mercosur-business-us', beat: 'business', q: 'Mercosur business economy supply chain', provider: 'google' },
+  { key: 'andes-mining-us', beat: 'business', q: 'Andes mining lithium copper business', provider: 'bing' },
+  { key: 'southern-cone-security-us', beat: 'politics', q: 'Southern Cone diplomacy defense policy', provider: 'google' },
+];
+
+const US_LATAM_FOCUS_SEEDS: OutletSeed[] = US_LATAM_FOCUS_VARIANTS.map((variant) => {
+  const name = `${variant.provider === 'google' ? 'Google' : 'Bing'} US LATAM Focus: ${variant.key}`;
+  const rssUrl = variant.provider === 'google'
+    ? `https://news.google.com/rss/search?q=${encodeURIComponent(`${variant.q} when:1d`)}&ceid=US:en&hl=en-US&gl=US`
+    : `https://www.bing.com/news/search?q=${encodeURIComponent(variant.q)}&format=RSS&setlang=en-us`;
+  return {
+    name,
+    tier: 2,
+    beat: variant.beat,
+    country: 'US',
+    sourceType: 'portal',
+    rssUrl
+  };
+});
+
+const LATAM_COUNTRY_TOPIC_VARIANTS: Array<{ country: 'Argentina' | 'Chile' | 'Uruguay'; lang: string; beat: OutletFeed['beat']; q: string }> = [
+  { country: 'Argentina', lang: 'es', beat: 'politics', q: 'Argentina politica hoy' },
+  { country: 'Argentina', lang: 'es', beat: 'business', q: 'Argentina economia hoy' },
+  { country: 'Argentina', lang: 'es', beat: 'world', q: 'Argentina sociedad hoy' },
+  { country: 'Chile', lang: 'es', beat: 'politics', q: 'Chile politica hoy' },
+  { country: 'Chile', lang: 'es', beat: 'business', q: 'Chile economia hoy' },
+  { country: 'Chile', lang: 'es', beat: 'world', q: 'Chile sociedad hoy' },
+  { country: 'Uruguay', lang: 'es', beat: 'politics', q: 'Uruguay politica hoy' },
+  { country: 'Uruguay', lang: 'es', beat: 'business', q: 'Uruguay economia hoy' },
+  { country: 'Uruguay', lang: 'es', beat: 'world', q: 'Uruguay sociedad hoy' }
+];
+
+const LATAM_DETAIL_TOPIC_SEEDS: OutletSeed[] = LATAM_COUNTRY_TOPIC_VARIANTS.flatMap((variant) => {
+  const googleName = `Google ${variant.country} Detail: ${variant.beat}`;
+  const bingName = `Bing ${variant.country} Detail: ${variant.beat}`;
+  const googleRss = `https://news.google.com/rss/search?q=${encodeURIComponent(`${variant.q} when:1d`)}&ceid=${variant.country === 'Argentina' ? 'AR' : variant.country === 'Chile' ? 'CL' : 'UY'}:es-419&hl=es-419&gl=${variant.country === 'Argentina' ? 'AR' : variant.country === 'Chile' ? 'CL' : 'UY'}`;
+  const bingRss = `https://www.bing.com/news/search?q=${encodeURIComponent(variant.q)}&format=RSS&setlang=es`;
+  return [
+    {
+      name: googleName,
+      tier: 2,
+      beat: variant.beat,
+      country: variant.country,
+      language: variant.lang,
+      sourceType: 'portal',
+      rssUrl: googleRss
+    },
+    {
+      name: bingName,
+      tier: 2,
+      beat: variant.beat,
+      country: variant.country,
+      language: variant.lang,
+      sourceType: 'portal',
+      rssUrl: bingRss
+    }
+  ];
+});
+
+const SITEMAP_BOOSTERS: OutletSeed[] = [
+  { name: 'The New York Times', tier: 1, beat: 'world', country: 'US', sitemapUrl: 'https://www.nytimes.com/sitemaps/new/news.xml' },
+  { name: 'LA Times', tier: 1, beat: 'world', country: 'US', sitemapUrl: 'https://www.latimes.com/sitemaps/news-sitemap.xml' },
+  { name: 'CNBC', tier: 1, beat: 'business', country: 'US', sitemapUrl: 'https://www.cnbc.com/sitemap_news.xml' },
+  { name: 'Fox News', tier: 2, beat: 'world', country: 'US', sitemapUrl: 'https://www.foxnews.com/sitemap.xml' },
+  { name: 'NPR', tier: 2, beat: 'world', country: 'US', sitemapUrl: 'https://www.npr.org/sitemaps/sitemap-index.xml' },
+  { name: 'Infobae', tier: 1, beat: 'world', country: 'Argentina', language: 'es', sourceType: 'local', sitemapUrl: 'https://www.infobae.com/sitemap-news.xml' },
+  { name: 'La Nacion AR', tier: 1, beat: 'world', country: 'Argentina', language: 'es', sourceType: 'local', sitemapUrl: 'https://www.lanacion.com.ar/arc/outboundfeeds/sitemap-index/?outputType=xml' },
+  { name: 'Emol', tier: 1, beat: 'world', country: 'Chile', language: 'es', sourceType: 'local', sitemapUrl: 'https://www.emol.com/sitemap.xml' },
+  { name: 'El Pais UY', tier: 1, beat: 'world', country: 'Uruguay', language: 'es', sourceType: 'local', sitemapUrl: 'https://www.elpais.com.uy/sitemap.xml' }
+];
+
+PRESET_SEEDS.us_state_topics = US_STATE_TOPIC_SEEDS;
+PRESET_SEEDS.us_bing_topics = US_BING_TOPIC_SEEDS;
+PRESET_SEEDS.latam_bing_topics = LATAM_BING_TOPIC_SEEDS;
+PRESET_SEEDS.us_metro_topics = US_METRO_TOPIC_SEEDS;
+PRESET_SEEDS.us_topic_variants = US_TOPIC_VARIANT_SEEDS;
+PRESET_SEEDS.us_latam_focus = US_LATAM_FOCUS_SEEDS;
+PRESET_SEEDS.latam_detail_topics = LATAM_DETAIL_TOPIC_SEEDS;
+PRESET_SEEDS.sitemap_boosters = SITEMAP_BOOSTERS;
+
 const CATEGORY_ALIAS: Record<string, OutletFeed['categories'][number]> = {
   us_general: 'global',
   us_business: 'business',
@@ -222,6 +413,14 @@ const CATEGORY_ALIAS: Record<string, OutletFeed['categories'][number]> = {
   latam_uruguay: 'world',
   us_broad_topics: 'world',
   latam_broad_topics: 'world',
+  us_state_topics: 'world',
+  us_bing_topics: 'world',
+  latam_bing_topics: 'world',
+  us_metro_topics: 'world',
+  us_topic_variants: 'world',
+  us_latam_focus: 'world',
+  latam_detail_topics: 'world',
+  sitemap_boosters: 'world',
   us_expansion: 'world',
   latam_expansion: 'world'
 };
@@ -341,6 +540,8 @@ function buildOutlets(): OutletFeed[] {
         if (!existing.categories.includes(category)) {
           existing.categories.push(category);
         }
+        if (!existing.rssUrl && seed.rssUrl) existing.rssUrl = seed.rssUrl;
+        if (!existing.sitemapUrl && seed.sitemapUrl) existing.sitemapUrl = seed.sitemapUrl;
         continue;
       }
 
@@ -371,6 +572,8 @@ const LATAM_SEEDS = [
   ...PRESET_SEEDS.latam_chile,
   ...PRESET_SEEDS.latam_uruguay,
   ...PRESET_SEEDS.latam_broad_topics,
+  ...PRESET_SEEDS.latam_bing_topics,
+  ...PRESET_SEEDS.latam_detail_topics,
   ...PRESET_SEEDS.latam_expansion
 ];
 
@@ -439,13 +642,30 @@ export const SOURCE_PRESETS: SourcePreset[] = [
     key: 'broad_capture_us',
     label: 'US Broad Capture',
     description: 'Google broad topic/state capture feeds for volume.',
-    outletIds: PRESET_SEEDS.us_broad_topics.map((seed) => slugify(seed.name))
+    outletIds: [
+      ...PRESET_SEEDS.us_broad_topics,
+      ...PRESET_SEEDS.us_state_topics,
+      ...PRESET_SEEDS.us_bing_topics,
+      ...PRESET_SEEDS.us_metro_topics,
+      ...PRESET_SEEDS.us_topic_variants,
+      ...PRESET_SEEDS.us_latam_focus
+    ].map((seed) => slugify(seed.name))
   },
   {
     key: 'broad_capture_latam',
     label: 'LATAM Broad Capture',
     description: 'Google regional topic feeds for LATAM volume.',
-    outletIds: PRESET_SEEDS.latam_broad_topics.map((seed) => slugify(seed.name))
+    outletIds: [
+      ...PRESET_SEEDS.latam_broad_topics,
+      ...PRESET_SEEDS.latam_bing_topics,
+      ...PRESET_SEEDS.latam_detail_topics
+    ].map((seed) => slugify(seed.name))
+  },
+  {
+    key: 'sitemap_boosters',
+    label: 'Sitemap Boosters',
+    description: 'RSS+sitemap dual-path feeds for higher recall.',
+    outletIds: PRESET_SEEDS.sitemap_boosters.map((seed) => slugify(seed.name))
   },
   {
     key: 'us_expansion_candidates',

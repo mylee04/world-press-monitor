@@ -9,7 +9,7 @@ const REFRESH_OPTIONS = [15, 60, 300];
 const TIME_WINDOWS_HOURS = [1, 6, 24];
 const BEATS: Beat[] = ['general', 'politics', 'business', 'tech', 'security', 'climate', 'world'];
 const MONITOR_STORAGE_KEY = 'presslab.savedMonitors.v1';
-const PANEL_STORAGE_KEY = 'presslab.panelVisibility.v1';
+const PANEL_STORAGE_KEY = 'presslab.panelVisibility.v2';
 
 type PanelKey = 'controls' | 'map' | 'liveWall' | 'feed' | 'countryBrief' | 'speedBoard' | 'beatMix' | 'spikeAlerts' | 'opsBoard';
 
@@ -29,6 +29,7 @@ interface SavedMonitor {
 
 type ScopeRegion = 'all' | 'us' | 'latam';
 type ScopeCountry = 'all' | 'United States' | 'Chile' | 'Argentina' | 'Uruguay';
+type WorldScope = 'latam_related' | 'all_world';
 
 interface IngestionDiagnostic {
   outletId: string;
@@ -59,10 +60,9 @@ const DEFAULT_PANELS: PanelVisibility = {
   liveWall: true,
   feed: true,
   countryBrief: true,
-  speedBoard: true,
-  beatMix: true,
-  spikeAlerts: true
-  ,
+  speedBoard: false,
+  beatMix: false,
+  spikeAlerts: false,
   opsBoard: true
 };
 
@@ -237,6 +237,7 @@ export function NewsroomDashboard() {
       .map((outlet) => outlet.id)
   );
   const [selectedBeat, setSelectedBeat] = useState<Beat>('general');
+  const [worldScope, setWorldScope] = useState<WorldScope>('latam_related');
   const [refreshSec, setRefreshSec] = useState<number>(60);
   const [timeWindowHours, setTimeWindowHours] = useState<number>(6);
   const [loading, setLoading] = useState<boolean>(false);
@@ -539,8 +540,14 @@ export function NewsroomDashboard() {
 
   const filteredItems = useMemo(() => {
     if (selectedBeat === 'general') return filteredByTime;
+    if (selectedBeat === 'world') {
+      if (worldScope === 'all_world') {
+        return filteredByTime.filter((item) => item.beat === 'world');
+      }
+      return filteredByTime.filter((item) => item.beat === 'world' && (item.worldLatam || isLatamOutlet(item.country || '')));
+    }
     return filteredByTime.filter((item) => item.beat === selectedBeat);
-  }, [filteredByTime, selectedBeat]);
+  }, [filteredByTime, selectedBeat, worldScope]);
 
   const countryScopedItems = useMemo(() => {
     if (selectedCountry === 'Global') return filteredByTime;
@@ -1043,6 +1050,16 @@ export function NewsroomDashboard() {
               </select>
             </label>
 
+            {selectedBeat === 'world' ? (
+              <label>
+                World Filter
+                <select value={worldScope} onChange={(event) => setWorldScope(event.target.value as WorldScope)}>
+                  <option value="latam_related">LATAM related</option>
+                  <option value="all_world">All world</option>
+                </select>
+              </label>
+            ) : null}
+
             <label>
               Refresh
               <select value={refreshSec} onChange={(event) => setRefreshSec(Number(event.target.value))}>
@@ -1193,6 +1210,7 @@ export function NewsroomDashboard() {
                   <code className="chip chip-tier">Tier {item.tier}</code>
                   <code className="chip chip-lang">{item.language || 'en'}</code>
                   <code className="chip chip-source-type">{item.sourceType || 'global'}</code>
+                  {item.worldLatam ? <code className="chip chip-cluster">world_latam</code> : null}
                   <code className="chip chip-classify">{item.classificationSource}</code>
                   <code className="chip chip-review">{outletByName.get(item.source)?.reviewDecision || 'unknown'}</code>
                   <code className="chip chip-cluster">cluster {item.clusterSize || 1}</code>

@@ -11,7 +11,7 @@
     "verify:latam-sources": "bun scripts/verify-latam-sources.ts",
     "policy:kr:auto": "bun archive/kr/scripts/apply-kr-source-policies.ts",
     "policy:kr:apply": "bun archive/kr/scripts/apply-kr-source-policies.ts --apply",
-    "report:daily-sources": "bun scripts/report-daily-source-counts.ts",
+    "report:daily-sources": "bun scripts/report-daily-source-counts.ts && bun scripts/post-daily-discord.ts",
     "report:daily-sources:notify": "bun scripts/report-daily-source-counts.ts && bun scripts/post-daily-discord.ts",
     "report:us-latam-health": "bun scripts/report-us-latam-health.ts",
     "notify:discord-daily": "bun scripts/post-daily-discord.ts",

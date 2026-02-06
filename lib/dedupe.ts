@@ -52,6 +52,17 @@ function canonicalizeUrl(input: string): string {
   }
 }
 
+export function extractDomain(input: string): string {
+  const canonical = canonicalizeUrl(input);
+  if (!canonical) return '';
+  try {
+    const url = new URL(canonical);
+    return url.hostname.replace(/^www\./, '').toLowerCase();
+  } catch {
+    return '';
+  }
+}
+
 export function makeHardKey(item: ParsedFeedItem): string {
   const canonicalUrl = canonicalizeUrl(item.link);
   if (canonicalUrl) return canonicalUrl;

@@ -1,8 +1,9 @@
-import { writeFileSync } from 'node:fs';
+import { readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { OUTLET_FEEDS } from '../data/outlets';
 import { parseRssOrAtom, parseSitemap } from '../lib/parsers';
-import { dedupeItems } from '../lib/dedupe';
+import { dedupeItems, extractDomain } from '../lib/dedupe';
+import { isLatamCountry, isLatamEntityTitle } from '../lib/latam-world';
 
 type Row = {
   outletId: string;
@@ -27,6 +28,7 @@ type Row = {
 };
 
 const HOURS = 24;
+const TARGET_24H = 15000;
 const CUTOFF_MS = Date.now() - HOURS * 60 * 60 * 1000;
 const RSS_LIMIT = 250;
 const SITEMAP_LIMIT = 250;
@@ -54,6 +56,28 @@ async function fetchWithTimeout(url: string, timeoutMs = TIMEOUT_MS): Promise<Re
 function in24h(publishedAt: string): boolean {
   const ts = new Date(publishedAt).getTime();
   return Number.isFinite(ts) && ts >= CUTOFF_MS;
+}
+
+function rssLimitFor(outlet: typeof OUTLET_FEEDS[number]): number {
+  if (
+    (outlet.sourceType || 'global') === 'portal'
+    && outlet.beat === 'world'
+    && /Google State:|Bing State:|Google Metro:|Bing Metro:|Google US World Topic|Google LATAM Regional Topic|Bing LATAM Topic|Bing US World Topic/i.test(outlet.name)
+  ) {
+    return 60;
+  }
+  return RSS_LIMIT;
+}
+
+function sitemapLimitFor(outlet: typeof OUTLET_FEEDS[number]): number {
+  if (
+    (outlet.sourceType || 'global') === 'portal'
+    && outlet.beat === 'world'
+    && /Google State:|Bing State:|Google Metro:|Bing Metro:|Google US World Topic|Google LATAM Regional Topic|Bing LATAM Topic|Bing US World Topic/i.test(outlet.name)
+  ) {
+    return 60;
+  }
+  return SITEMAP_LIMIT;
 }
 
 async function countOutlet(outlet: typeof OUTLET_FEEDS[number]): Promise<Row> {
@@ -86,7 +110,7 @@ async function countOutlet(outlet: typeof OUTLET_FEEDS[number]): Promise<Row> {
         row.errors.push(`rss:${res.status}`);
       } else {
         const xml = await res.text();
-        const parsed = parseRssOrAtom(xml, RSS_LIMIT);
+        const parsed = parseRssOrAtom(xml, rssLimitFor(outlet));
         row.rssParsed = parsed.length;
         const recent = parsed.filter((item) => in24h(item.publishedAt));
         row.rss24h = recent.length;
@@ -105,7 +129,7 @@ async function countOutlet(outlet: typeof OUTLET_FEEDS[number]): Promise<Row> {
         row.errors.push(`sitemap:${res.status}`);
       } else {
         const xml = await res.text();
-        const parsed = parseSitemap(xml, SITEMAP_LIMIT);
+        const parsed = parseSitemap(xml, sitemapLimitFor(outlet));
         row.sitemapParsed = parsed.length;
         const recent = parsed.filter((item) => in24h(item.publishedAt));
         row.sitemap24h = recent.length;
@@ -199,6 +223,75 @@ function crossSourceUnique(rows: Row[]): number {
   return dedupeItems(merged).length;
 }
 
+function worldLatamShare(rows: Row[]): { worldTotal: number; worldLatam: number; ratio: number } {
+  const beatBySource = new Map(OUTLET_FEEDS.map((outlet) => [outlet.name, outlet.beat]));
+  let worldTotal = 0;
+  let worldLatam = 0;
+
+  for (const row of rows) {
+    const beat = beatBySource.get(row.source);
+    if (beat !== 'world') continue;
+    for (const item of row.recentItems24h) {
+      worldTotal += 1;
+      if (isLatamCountry(row.country) || isLatamEntityTitle(item.title)) {
+        worldLatam += 1;
+      }
+    }
+  }
+
+  return {
+    worldTotal,
+    worldLatam,
+    ratio: worldTotal > 0 ? worldLatam / worldTotal : 0
+  };
+}
+
+function distinctDomains(rows: Row[]): number {
+  const domains = new Set<string>();
+  for (const row of rows) {
+    for (const item of row.recentItems24h) {
+      const domain = extractDomain(item.link);
+      if (domain) domains.add(domain);
+    }
+  }
+  return domains.size;
+}
+
+function activeNewsrooms(rows: Row[]): number {
+  return rows.filter((row) => row.total24h > 0).length;
+}
+
+function previousDayNewSourceRatio(stamp: string, currentRows: Row[]): string {
+  try {
+    const files = readdirSync(resolve(process.cwd(), 'audits'))
+      .filter((name) => /^source_daily_counts_\d{4}-\d{2}-\d{2}\.csv$/.test(name) && !name.includes(stamp))
+      .sort();
+    const previous = files[files.length - 1];
+    if (!previous) return 'n/a';
+    const raw = readFileSync(resolve(process.cwd(), 'audits', previous), 'utf8').trim();
+    if (!raw) return 'n/a';
+    const lines = raw.split('\n');
+    if (lines.length < 2) return 'n/a';
+    const header = lines[0].split(',');
+    const sourceIdx = header.indexOf('source');
+    const totalIdx = header.indexOf('total_24h');
+    if (sourceIdx < 0 || totalIdx < 0) return 'n/a';
+    const previousActive = new Set<string>();
+    for (let i = 1; i < lines.length; i += 1) {
+      const cols = lines[i].split(',');
+      if (!cols[sourceIdx]) continue;
+      const total = Number(cols[totalIdx] || 0);
+      if (Number.isFinite(total) && total > 0) previousActive.add(cols[sourceIdx]);
+    }
+    const currentActive = currentRows.filter((row) => row.total24h > 0).map((row) => row.source);
+    if (currentActive.length === 0) return 'n/a';
+    const newCount = currentActive.filter((source) => !previousActive.has(source)).length;
+    return `${((newCount / currentActive.length) * 100).toFixed(1)}% (${newCount}/${currentActive.length})`;
+  } catch {
+    return 'n/a';
+  }
+}
+
 function normalizeCountry(country: string): string {
   const c = country.trim().toLowerCase();
   if (c === 'us') return 'United States';
@@ -223,11 +316,17 @@ function byMatcher(rows: Row[], matchers: RegExp[]): Row[] {
 
 function toMarkdown(rows: Row[]): string {
   const scoped = rows.filter(inUsLatamScope);
+  const stamp = new Date().toISOString().slice(0, 10);
   const total24h = sum(scoped);
   const totalUnique24h = sumUnique(scoped);
   const totalCrossSourceUnique24h = crossSourceUnique(scoped);
   const overallDedupeRate = total24h > 0 ? 1 - totalUnique24h / total24h : 0;
   const overallCrossSourceDedupeRate = total24h > 0 ? 1 - totalCrossSourceUnique24h / total24h : 0;
+  const attainment = TARGET_24H > 0 ? (total24h / TARGET_24H) * 100 : 0;
+  const totalDomains = distinctDomains(scoped);
+  const totalNewsrooms = activeNewsrooms(scoped);
+  const newSourceRatio = previousDayNewSourceRatio(stamp, scoped);
+  const worldLatam = worldLatamShare(scoped);
   const activeCount = scoped.length;
   const withErrors = scoped.filter((r) => r.errors.length > 0).length;
   const usRows = scoped.filter((r) => regionOf(r.country) === 'US');
@@ -245,10 +344,15 @@ function toMarkdown(rows: Row[]): string {
   lines.push(`- Window: last ${HOURS} hours`);
   lines.push(`- Sources measured (active, US+LATAM): ${activeCount}`);
   lines.push(`- Total metadata items observed (24h, raw): ${total24h}`);
+  lines.push(`- Target attainment (raw vs ${TARGET_24H}/24h): ${attainment.toFixed(1)}%`);
   lines.push(`- Total metadata items observed (24h, unique by source): ${totalUnique24h}`);
   lines.push(`- Total metadata items observed (24h, unique cross-source): ${totalCrossSourceUnique24h}`);
   lines.push(`- Dedupe rate (within source): ${(overallDedupeRate * 100).toFixed(1)}%`);
   lines.push(`- Dedupe rate (cross-source): ${(overallCrossSourceDedupeRate * 100).toFixed(1)}%`);
+  lines.push(`- Distinct domains (24h): ${totalDomains}`);
+  lines.push(`- Active newsrooms (24h): ${totalNewsrooms}`);
+  lines.push(`- World LATAM coverage: ${worldLatam.worldLatam}/${worldLatam.worldTotal} (${(worldLatam.ratio * 100).toFixed(1)}% of world)`);
+  lines.push(`- New-source ratio vs previous report: ${newSourceRatio}`);
   lines.push(`- Sources with fetch/parse errors: ${withErrors}`);
   lines.push('');
 

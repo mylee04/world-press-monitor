@@ -2,7 +2,8 @@ import { writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { OUTLET_FEEDS } from '../data/outlets';
 import { parseRssOrAtom, parseSitemap } from '../lib/parsers';
-import { dedupeItems } from '../lib/dedupe';
+import { dedupeItems, extractDomain } from '../lib/dedupe';
+import { isLatamCountry, isLatamEntityTitle } from '../lib/latam-world';
 
 type Region = 'US' | 'LATAM';
 
@@ -25,6 +26,7 @@ type Row = {
 };
 
 const DAY_MS = 24 * 60 * 60 * 1000;
+const TARGET_TOTAL_24H = 15000;
 const RSS_LIMIT = 250;
 const SITEMAP_LIMIT = 250;
 const TIMEOUT_MS = 18000;
@@ -67,6 +69,28 @@ function in24h(publishedAt: string): boolean {
   return Number.isFinite(ts) && ts >= Date.now() - DAY_MS;
 }
 
+function rssLimitFor(outlet: typeof OUTLET_FEEDS[number]): number {
+  if (
+    (outlet.sourceType || 'global') === 'portal'
+    && outlet.beat === 'world'
+    && /Google State:|Bing State:|Google Metro:|Bing Metro:|Google US World Topic|Google LATAM Regional Topic|Bing LATAM Topic|Bing US World Topic/i.test(outlet.name)
+  ) {
+    return 60;
+  }
+  return RSS_LIMIT;
+}
+
+function sitemapLimitFor(outlet: typeof OUTLET_FEEDS[number]): number {
+  if (
+    (outlet.sourceType || 'global') === 'portal'
+    && outlet.beat === 'world'
+    && /Google State:|Bing State:|Google Metro:|Bing Metro:|Google US World Topic|Google LATAM Regional Topic|Bing LATAM Topic|Bing US World Topic/i.test(outlet.name)
+  ) {
+    return 60;
+  }
+  return SITEMAP_LIMIT;
+}
+
 async function measure(outlet: typeof OUTLET_FEEDS[number], region: Region): Promise<Row> {
   let attemptedEndpoints = 0;
   let failedEndpoints = 0;
@@ -84,7 +108,7 @@ async function measure(outlet: typeof OUTLET_FEEDS[number], region: Region): Pro
         errors.push(`rss:http_${res.status}`);
       } else {
         const xml = await res.text();
-        const parsed = parseRssOrAtom(xml, RSS_LIMIT);
+        const parsed = parseRssOrAtom(xml, rssLimitFor(outlet));
         parsedCount += parsed.length;
         const recent = parsed.filter((item) => in24h(item.publishedAt));
         recent24h += recent.length;
@@ -105,7 +129,7 @@ async function measure(outlet: typeof OUTLET_FEEDS[number], region: Region): Pro
         errors.push(`sitemap:http_${res.status}`);
       } else {
         const xml = await res.text();
-        const parsed = parseSitemap(xml, SITEMAP_LIMIT);
+        const parsed = parseSitemap(xml, sitemapLimitFor(outlet));
         parsedCount += parsed.length;
         const recent = parsed.filter((item) => in24h(item.publishedAt));
         recent24h += recent.length;
@@ -201,18 +225,59 @@ function crossSourceUnique(rows: Row[], region: Region): number {
   return dedupeItems(merged).length;
 }
 
-function summarize(rows: Row[], region: Region): { total24hRaw: number; total24hUniqueBySource: number; total24hUniqueCrossSource: number; avgFailure: number; avgDedupe: number; outlets: number } {
+function distinctDomains(rows: Row[], region: Region): number {
+  const domains = new Set<string>();
+  for (const row of rows.filter((r) => r.region === region)) {
+    for (const item of row.recentItems24h) {
+      const domain = extractDomain(item.link);
+      if (domain) domains.add(domain);
+    }
+  }
+  return domains.size;
+}
+
+function activeNewsrooms(rows: Row[], region: Region): number {
+  return rows.filter((r) => r.region === region && r.recent24h > 0).length;
+}
+
+function worldLatamShare(rows: Row[], region?: Region): { worldTotal: number; worldLatam: number; ratio: number } {
+  const beatBySource = new Map(OUTLET_FEEDS.map((outlet) => [outlet.name, outlet.beat]));
+  const scoped = region ? rows.filter((row) => row.region === region) : rows;
+  let worldTotal = 0;
+  let worldLatam = 0;
+
+  for (const row of scoped) {
+    const beat = beatBySource.get(row.source);
+    if (beat !== 'world') continue;
+    for (const item of row.recentItems24h) {
+      worldTotal += 1;
+      if (isLatamCountry(row.country) || isLatamEntityTitle(item.title)) {
+        worldLatam += 1;
+      }
+    }
+  }
+
+  return {
+    worldTotal,
+    worldLatam,
+    ratio: worldTotal > 0 ? worldLatam / worldTotal : 0
+  };
+}
+
+function summarize(rows: Row[], region: Region): { total24hRaw: number; total24hUniqueBySource: number; total24hUniqueCrossSource: number; activeNewsrooms: number; distinctDomains: number; avgFailure: number; avgDedupe: number; outlets: number } {
   const subset = rows.filter((r) => r.region === region);
   const total24hRaw = subset.reduce((acc, r) => acc + r.recent24h, 0);
   const total24hUniqueBySource = subset.reduce((acc, r) => acc + r.unique24h, 0);
   const total24hUniqueCrossSource = crossSourceUnique(rows, region);
+  const active = activeNewsrooms(rows, region);
+  const domains = distinctDomains(rows, region);
   const avgFailure = subset.length > 0
     ? subset.reduce((acc, r) => acc + r.failureRate, 0) / subset.length
     : 0;
   const avgDedupe = subset.length > 0
     ? subset.reduce((acc, r) => acc + r.dedupeRate, 0) / subset.length
     : 0;
-  return { total24hRaw, total24hUniqueBySource, total24hUniqueCrossSource, avgFailure, avgDedupe, outlets: subset.length };
+  return { total24hRaw, total24hUniqueBySource, total24hUniqueCrossSource, activeNewsrooms: active, distinctDomains: domains, avgFailure, avgDedupe, outlets: subset.length };
 }
 
 function topBy24h(rows: Row[], region: Region, n = 15): Row[] {
@@ -232,20 +297,28 @@ function topByFailure(rows: Row[], region: Region, n = 15): Row[] {
 function toMarkdown(rows: Row[]): string {
   const us = summarize(rows, 'US');
   const latam = summarize(rows, 'LATAM');
+  const worldAll = worldLatamShare(rows);
+  const worldUs = worldLatamShare(rows, 'US');
+  const worldLatamRegion = worldLatamShare(rows, 'LATAM');
 
   const lines: string[] = [];
   lines.push('# US + LATAM Source Health Report');
   lines.push('');
   lines.push(`- Generated at: ${new Date().toISOString()}`);
   lines.push(`- Window: last 24 hours`);
+  const combinedRaw = us.total24hRaw + latam.total24hRaw;
+  lines.push(`- Target attainment (raw vs ${TARGET_TOTAL_24H}/24h): ${((combinedRaw / TARGET_TOTAL_24H) * 100).toFixed(1)}%`);
+  lines.push(`- World LATAM coverage (all): ${worldAll.worldLatam}/${worldAll.worldTotal} (${(worldAll.ratio * 100).toFixed(1)}% of world)`);
+  lines.push(`- World LATAM coverage (US sources): ${worldUs.worldLatam}/${worldUs.worldTotal} (${(worldUs.ratio * 100).toFixed(1)}% of world)`);
+  lines.push(`- World LATAM coverage (LATAM sources): ${worldLatamRegion.worldLatam}/${worldLatamRegion.worldTotal} (${(worldLatamRegion.ratio * 100).toFixed(1)}% of world)`);
   lines.push('');
 
   lines.push('## Region Summary');
   lines.push('');
-  lines.push('| Region | Outlets | 24h raw | 24h unique (by source) | 24h unique (cross-source) | Avg dedupe | Avg failure rate |');
-  lines.push('| --- | ---: | ---: | ---: | ---: | ---: | ---: |');
-  lines.push(`| US | ${us.outlets} | ${us.total24hRaw} | ${us.total24hUniqueBySource} | ${us.total24hUniqueCrossSource} | ${(us.avgDedupe * 100).toFixed(1)}% | ${(us.avgFailure * 100).toFixed(1)}% |`);
-  lines.push(`| LATAM | ${latam.outlets} | ${latam.total24hRaw} | ${latam.total24hUniqueBySource} | ${latam.total24hUniqueCrossSource} | ${(latam.avgDedupe * 100).toFixed(1)}% | ${(latam.avgFailure * 100).toFixed(1)}% |`);
+  lines.push('| Region | Outlets | Active newsrooms | Distinct domains | 24h raw | 24h unique (by source) | 24h unique (cross-source) | Avg dedupe | Avg failure rate |');
+  lines.push('| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |');
+  lines.push(`| US | ${us.outlets} | ${us.activeNewsrooms} | ${us.distinctDomains} | ${us.total24hRaw} | ${us.total24hUniqueBySource} | ${us.total24hUniqueCrossSource} | ${(us.avgDedupe * 100).toFixed(1)}% | ${(us.avgFailure * 100).toFixed(1)}% |`);
+  lines.push(`| LATAM | ${latam.outlets} | ${latam.activeNewsrooms} | ${latam.distinctDomains} | ${latam.total24hRaw} | ${latam.total24hUniqueBySource} | ${latam.total24hUniqueCrossSource} | ${(latam.avgDedupe * 100).toFixed(1)}% | ${(latam.avgFailure * 100).toFixed(1)}% |`);
 
   lines.push('');
   lines.push('## US Top Sources by 24h');
