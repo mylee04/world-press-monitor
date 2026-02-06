@@ -2,6 +2,7 @@ import { writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { OUTLET_FEEDS } from '../data/outlets';
 import { parseRssOrAtom, parseSitemap } from '../lib/parsers';
+import { dedupeItems } from '../lib/dedupe';
 
 type Region = 'US' | 'LATAM';
 
@@ -17,6 +18,8 @@ type Row = {
   failureRate: number;
   parsedCount: number;
   recent24h: number;
+  unique24h: number;
+  dedupeRate: number;
   errors: string;
 };
 
@@ -68,6 +71,7 @@ async function measure(outlet: typeof OUTLET_FEEDS[number], region: Region): Pro
   let failedEndpoints = 0;
   let parsedCount = 0;
   let recent24h = 0;
+  const recentItems: { title: string; link: string; publishedAt: string }[] = [];
   const errors: string[] = [];
 
   if (outlet.rssUrl) {
@@ -81,7 +85,9 @@ async function measure(outlet: typeof OUTLET_FEEDS[number], region: Region): Pro
         const xml = await res.text();
         const parsed = parseRssOrAtom(xml, RSS_LIMIT);
         parsedCount += parsed.length;
-        recent24h += parsed.filter((item) => in24h(item.publishedAt)).length;
+        const recent = parsed.filter((item) => in24h(item.publishedAt));
+        recent24h += recent.length;
+        recentItems.push(...recent);
       }
     } catch (error) {
       failedEndpoints += 1;
@@ -100,7 +106,9 @@ async function measure(outlet: typeof OUTLET_FEEDS[number], region: Region): Pro
         const xml = await res.text();
         const parsed = parseSitemap(xml, SITEMAP_LIMIT);
         parsedCount += parsed.length;
-        recent24h += parsed.filter((item) => in24h(item.publishedAt)).length;
+        const recent = parsed.filter((item) => in24h(item.publishedAt));
+        recent24h += recent.length;
+        recentItems.push(...recent);
       }
     } catch (error) {
       failedEndpoints += 1;
@@ -109,6 +117,8 @@ async function measure(outlet: typeof OUTLET_FEEDS[number], region: Region): Pro
   }
 
   const failureRate = attemptedEndpoints > 0 ? failedEndpoints / attemptedEndpoints : 0;
+  const unique24h = dedupeItems(recentItems).length;
+  const dedupeRate = recent24h > 0 ? 1 - unique24h / recent24h : 0;
 
   return {
     region,
@@ -122,6 +132,8 @@ async function measure(outlet: typeof OUTLET_FEEDS[number], region: Region): Pro
     failureRate,
     parsedCount,
     recent24h,
+    unique24h,
+    dedupeRate,
     errors: errors.join(' | ')
   };
 }
@@ -153,7 +165,8 @@ function csvEscape(value: string | number): string {
 function toCsv(rows: Row[]): string {
   const header = [
     'region', 'outlet_id', 'source', 'country', 'source_type', 'review_decision',
-    'attempted_endpoints', 'failed_endpoints', 'failure_rate', 'parsed_count', 'recent_24h', 'errors'
+    'attempted_endpoints', 'failed_endpoints', 'failure_rate', 'parsed_count',
+    'recent_24h_raw', 'recent_24h_unique', 'dedupe_rate', 'errors'
   ];
   const lines = [header.join(',')];
 
@@ -170,6 +183,8 @@ function toCsv(rows: Row[]): string {
       row.failureRate.toFixed(4),
       row.parsedCount,
       row.recent24h,
+      row.unique24h,
+      row.dedupeRate.toFixed(4),
       row.errors
     ].map(csvEscape).join(','));
   }
@@ -177,13 +192,17 @@ function toCsv(rows: Row[]): string {
   return `${lines.join('\n')}\n`;
 }
 
-function summarize(rows: Row[], region: Region): { total24h: number; avgFailure: number; outlets: number } {
+function summarize(rows: Row[], region: Region): { total24hRaw: number; total24hUnique: number; avgFailure: number; avgDedupe: number; outlets: number } {
   const subset = rows.filter((r) => r.region === region);
-  const total24h = subset.reduce((acc, r) => acc + r.recent24h, 0);
+  const total24hRaw = subset.reduce((acc, r) => acc + r.recent24h, 0);
+  const total24hUnique = subset.reduce((acc, r) => acc + r.unique24h, 0);
   const avgFailure = subset.length > 0
     ? subset.reduce((acc, r) => acc + r.failureRate, 0) / subset.length
     : 0;
-  return { total24h, avgFailure, outlets: subset.length };
+  const avgDedupe = subset.length > 0
+    ? subset.reduce((acc, r) => acc + r.dedupeRate, 0) / subset.length
+    : 0;
+  return { total24hRaw, total24hUnique, avgFailure, avgDedupe, outlets: subset.length };
 }
 
 function topBy24h(rows: Row[], region: Region, n = 15): Row[] {
@@ -213,27 +232,27 @@ function toMarkdown(rows: Row[]): string {
 
   lines.push('## Region Summary');
   lines.push('');
-  lines.push('| Region | Outlets | Total 24h items | Avg failure rate |');
-  lines.push('| --- | ---: | ---: | ---: |');
-  lines.push(`| US | ${us.outlets} | ${us.total24h} | ${(us.avgFailure * 100).toFixed(1)}% |`);
-  lines.push(`| LATAM | ${latam.outlets} | ${latam.total24h} | ${(latam.avgFailure * 100).toFixed(1)}% |`);
+  lines.push('| Region | Outlets | 24h raw | 24h unique | Avg dedupe | Avg failure rate |');
+  lines.push('| --- | ---: | ---: | ---: | ---: | ---: |');
+  lines.push(`| US | ${us.outlets} | ${us.total24hRaw} | ${us.total24hUnique} | ${(us.avgDedupe * 100).toFixed(1)}% | ${(us.avgFailure * 100).toFixed(1)}% |`);
+  lines.push(`| LATAM | ${latam.outlets} | ${latam.total24hRaw} | ${latam.total24hUnique} | ${(latam.avgDedupe * 100).toFixed(1)}% | ${(latam.avgFailure * 100).toFixed(1)}% |`);
 
   lines.push('');
   lines.push('## US Top Sources by 24h');
   lines.push('');
-  lines.push('| Source | 24h items | Failure rate | Errors |');
-  lines.push('| --- | ---: | ---: | --- |');
+  lines.push('| Source | 24h raw | 24h unique | Dedupe | Failure rate | Errors |');
+  lines.push('| --- | ---: | ---: | ---: | ---: | --- |');
   for (const row of topBy24h(rows, 'US')) {
-    lines.push(`| ${row.source} | ${row.recent24h} | ${(row.failureRate * 100).toFixed(0)}% | ${row.errors || '-'} |`);
+    lines.push(`| ${row.source} | ${row.recent24h} | ${row.unique24h} | ${(row.dedupeRate * 100).toFixed(1)}% | ${(row.failureRate * 100).toFixed(0)}% | ${row.errors || '-'} |`);
   }
 
   lines.push('');
   lines.push('## LATAM Top Sources by 24h');
   lines.push('');
-  lines.push('| Source | Country | 24h items | Failure rate | Errors |');
-  lines.push('| --- | --- | ---: | ---: | --- |');
+  lines.push('| Source | Country | 24h raw | 24h unique | Dedupe | Failure rate | Errors |');
+  lines.push('| --- | --- | ---: | ---: | ---: | ---: | --- |');
   for (const row of topBy24h(rows, 'LATAM')) {
-    lines.push(`| ${row.source} | ${row.country} | ${row.recent24h} | ${(row.failureRate * 100).toFixed(0)}% | ${row.errors || '-'} |`);
+    lines.push(`| ${row.source} | ${row.country} | ${row.recent24h} | ${row.unique24h} | ${(row.dedupeRate * 100).toFixed(1)}% | ${(row.failureRate * 100).toFixed(0)}% | ${row.errors || '-'} |`);
   }
 
   lines.push('');

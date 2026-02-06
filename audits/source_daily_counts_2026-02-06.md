@@ -1,61 +1,63 @@
 # Daily Source Metadata Volume (US + LATAM)
 
-- Generated at: 2026-02-06T19:11:55.939Z
+- Generated at: 2026-02-06T20:50:53.126Z
 - Window: last 24 hours
-- Sources measured (active, US+LATAM): 156
-- Total metadata items observed (24h): 3016
+- Sources measured (active, US+LATAM): 176
+- Total metadata items observed (24h, raw): 4743
+- Total metadata items observed (24h, unique): 4743
+- Dedupe rate (24h): 0.0%
 - Sources with fetch/parse errors: 4
 
 ## Region Summary
 
-- US: 1730 items across 100 sources
-- LATAM: 1286 items across 56 sources
+- US: raw 2966 / unique 2966 items across 114 sources
+- LATAM: raw 1777 / unique 1777 items across 62 sources
 
 ## Reuters / AP
 
-- Reuters (all configured Reuters sources): 103
-- AP (all configured AP sources): 29
+- Reuters (all configured Reuters sources): 94
+- AP (all configured AP sources): 28
 
-| Source | 24h items | RSS parsed | Sitemap parsed | Errors |
-| --- | ---: | ---: | ---: | --- |
-| Reuters | 71 | 100 | 0 | - |
-| Reuters Argentina Desk | 24 | 100 | 0 | - |
-| Reuters Chile Desk | 7 | 100 | 0 | - |
-| Reuters Uruguay Desk | 1 | 100 | 0 | - |
-| AP News | 25 | 100 | 0 | - |
-| AP Uruguay Desk | 2 | 100 | 0 | - |
-| AP Argentina Desk | 1 | 100 | 0 | - |
-| AP Chile Desk | 1 | 100 | 0 | - |
+| Source | 24h raw | 24h unique | Dedupe | RSS parsed | Sitemap parsed | Errors |
+| --- | ---: | ---: | ---: | ---: | ---: | --- |
+| Reuters | 68 | 68 | 0.0% | 100 | 0 | - |
+| Reuters Argentina Desk | 20 | 20 | 0.0% | 100 | 0 | - |
+| Reuters Chile Desk | 5 | 5 | 0.0% | 100 | 0 | - |
+| Reuters Uruguay Desk | 1 | 1 | 0.0% | 100 | 0 | - |
+| AP News | 24 | 24 | 0.0% | 100 | 0 | - |
+| AP Uruguay Desk | 2 | 2 | 0.0% | 100 | 0 | - |
+| AP Argentina Desk | 1 | 1 | 0.0% | 100 | 0 | - |
+| AP Chile Desk | 1 | 1 | 0.0% | 100 | 0 | - |
 
 ## Top 25 Sources (US + LATAM, 24h items)
 
-| Source | 24h items | Country | Type | Policy | Errors |
-| --- | ---: | --- | --- | --- | --- |
-| Infobae | 100 | Argentina | local | verified_core | - |
-| La Nacion AR | 100 | Argentina | local | verified_core | - |
-| The Hill | 78 | US | global | keep_secondary | - |
-| Bloomberg | 73 | US | portal | verified_core | - |
-| Mashable | 71 | US | global | keep_secondary | - |
-| Reuters | 71 | US | portal | verified_core | - |
-| ESPN | 64 | US | portal | keep_secondary | - |
-| Cooperativa | 60 | Chile | local | keep_secondary | - |
-| People | 60 | US | portal | keep_secondary | - |
-| Perfil | 53 | Argentina | portal | keep_secondary | - |
-| El Destape | 51 | Argentina | portal | keep_secondary | - |
-| Sports Illustrated | 51 | US | portal | keep_secondary | - |
-| TN Argentina | 49 | Argentina | portal | keep_secondary | - |
-| El Tribuno | 48 | Argentina | portal | keep_secondary | - |
-| New York Post | 47 | US | portal | keep_secondary | - |
-| Deadline | 45 | US | portal | keep_secondary | - |
-| BioBioChile | 44 | Chile | local | verified_core | - |
-| La Voz del Interior | 44 | Argentina | portal | keep_secondary | - |
-| Breitbart | 43 | US | global | keep_secondary | - |
-| El Mostrador | 43 | Chile | portal | keep_secondary | - |
-| Newsweek | 42 | US | portal | keep_secondary | - |
-| America TV AR | 41 | Argentina | portal | keep_secondary | - |
-| CNN Chile | 40 | Chile | portal | keep_secondary | - |
-| El Cronista | 38 | Argentina | local | keep_secondary | - |
-| MinutoUno | 38 | Argentina | portal | keep_secondary | - |
+| Source | 24h raw | 24h unique | Dedupe | Country | Type | Policy | Errors |
+| --- | ---: | ---: | ---: | --- | --- | --- | --- |
+| Google Argentina Topic | 100 | 100 | 0.0% | Argentina | portal | keep_secondary | - |
+| Google Arizona News | 100 | 100 | 0.0% | US | portal | keep_secondary | - |
+| Google California News | 100 | 100 | 0.0% | US | portal | keep_secondary | - |
+| Google Florida News | 100 | 100 | 0.0% | US | portal | keep_secondary | - |
+| Google Georgia News | 100 | 100 | 0.0% | US | portal | keep_secondary | - |
+| Google Illinois News | 100 | 100 | 0.0% | US | portal | keep_secondary | - |
+| Google New York News | 100 | 100 | 0.0% | US | portal | keep_secondary | - |
+| Google Ohio News | 100 | 100 | 0.0% | US | portal | keep_secondary | - |
+| Google Pennsylvania News | 100 | 100 | 0.0% | US | portal | keep_secondary | - |
+| Google Texas News | 100 | 100 | 0.0% | US | portal | keep_secondary | - |
+| Google Uruguay Topic | 100 | 100 | 0.0% | Uruguay | portal | keep_secondary | - |
+| Google US Politics Topic | 100 | 100 | 0.0% | US | portal | keep_secondary | - |
+| Infobae | 100 | 100 | 0.0% | Argentina | local | verified_core | - |
+| La Nacion AR | 100 | 100 | 0.0% | Argentina | local | verified_core | - |
+| Google Chile Topic | 98 | 98 | 0.0% | Chile | portal | keep_secondary | - |
+| Google Washington News | 91 | 91 | 0.0% | US | portal | keep_secondary | - |
+| Bloomberg | 77 | 77 | 0.0% | US | portal | verified_core | - |
+| The Hill | 73 | 73 | 0.0% | US | global | keep_secondary | - |
+| Google US Business Topic | 71 | 71 | 0.0% | US | portal | keep_secondary | - |
+| Mashable | 70 | 70 | 0.0% | US | global | keep_secondary | - |
+| Reuters | 68 | 68 | 0.0% | US | portal | verified_core | - |
+| Google LATAM Business Topic | 63 | 63 | 0.0% | LATAM | portal | keep_secondary | - |
+| El Destape | 60 | 60 | 0.0% | Argentina | portal | keep_secondary | - |
+| Google LATAM Politics Topic | 58 | 58 | 0.0% | LATAM | portal | keep_secondary | - |
+| Cooperativa | 57 | 57 | 0.0% | Chile | local | keep_secondary | - |
 
 ## Notes
 

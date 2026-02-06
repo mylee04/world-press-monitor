@@ -1,54 +1,54 @@
 # US + LATAM Source Health Report
 
-- Generated at: 2026-02-06T19:12:13.074Z
+- Generated at: 2026-02-06T20:51:09.942Z
 - Window: last 24 hours
 
 ## Region Summary
 
-| Region | Outlets | Total 24h items | Avg failure rate |
-| --- | ---: | ---: | ---: |
-| US | 100 | 1728 | 4.0% |
-| LATAM | 56 | 1285 | 0.0% |
+| Region | Outlets | 24h raw | 24h unique | Avg dedupe | Avg failure rate |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| US | 114 | 2966 | 2966 | 0.0% | 3.5% |
+| LATAM | 62 | 1777 | 1777 | 0.0% | 0.0% |
 
 ## US Top Sources by 24h
 
-| Source | 24h items | Failure rate | Errors |
-| --- | ---: | ---: | --- |
-| The Hill | 78 | 0% | - |
-| Bloomberg | 73 | 0% | - |
-| Mashable | 71 | 0% | - |
-| Reuters | 71 | 0% | - |
-| ESPN | 64 | 0% | - |
-| People | 59 | 0% | - |
-| Sports Illustrated | 51 | 0% | - |
-| New York Post | 47 | 0% | - |
-| Deadline | 45 | 0% | - |
-| Breitbart | 43 | 0% | - |
-| Newsweek | 42 | 0% | - |
-| Engadget | 33 | 0% | - |
-| CBS Sports | 32 | 0% | - |
-| Variety | 31 | 0% | - |
-| CNBC | 30 | 0% | - |
+| Source | 24h raw | 24h unique | Dedupe | Failure rate | Errors |
+| --- | ---: | ---: | ---: | ---: | --- |
+| Google Arizona News | 100 | 100 | 0.0% | 0% | - |
+| Google California News | 100 | 100 | 0.0% | 0% | - |
+| Google Florida News | 100 | 100 | 0.0% | 0% | - |
+| Google Georgia News | 100 | 100 | 0.0% | 0% | - |
+| Google Illinois News | 100 | 100 | 0.0% | 0% | - |
+| Google New York News | 100 | 100 | 0.0% | 0% | - |
+| Google Ohio News | 100 | 100 | 0.0% | 0% | - |
+| Google Pennsylvania News | 100 | 100 | 0.0% | 0% | - |
+| Google Texas News | 100 | 100 | 0.0% | 0% | - |
+| Google US Politics Topic | 99 | 99 | 0.0% | 0% | - |
+| Google Washington News | 91 | 91 | 0.0% | 0% | - |
+| Bloomberg | 77 | 77 | 0.0% | 0% | - |
+| The Hill | 73 | 73 | 0.0% | 0% | - |
+| Google US Business Topic | 71 | 71 | 0.0% | 0% | - |
+| Mashable | 70 | 70 | 0.0% | 0% | - |
 
 ## LATAM Top Sources by 24h
 
-| Source | Country | 24h items | Failure rate | Errors |
-| --- | --- | ---: | ---: | --- |
-| Infobae | Argentina | 100 | 0% | - |
-| La Nacion AR | Argentina | 100 | 0% | - |
-| Cooperativa | Chile | 59 | 0% | - |
-| Perfil | Argentina | 53 | 0% | - |
-| El Destape | Argentina | 51 | 0% | - |
-| TN Argentina | Argentina | 49 | 0% | - |
-| El Tribuno | Argentina | 48 | 0% | - |
-| BioBioChile | Chile | 44 | 0% | - |
-| La Voz del Interior | Argentina | 44 | 0% | - |
-| El Mostrador | Chile | 43 | 0% | - |
-| America TV AR | Argentina | 41 | 0% | - |
-| CNN Chile | Chile | 40 | 0% | - |
-| El Cronista | Argentina | 38 | 0% | - |
-| MinutoUno | Argentina | 38 | 0% | - |
-| 24 Horas Chile | Chile | 36 | 0% | - |
+| Source | Country | 24h raw | 24h unique | Dedupe | Failure rate | Errors |
+| --- | --- | ---: | ---: | ---: | ---: | --- |
+| Google Argentina Topic | Argentina | 100 | 100 | 0.0% | 0% | - |
+| Google Uruguay Topic | Uruguay | 100 | 100 | 0.0% | 0% | - |
+| Infobae | Argentina | 100 | 100 | 0.0% | 0% | - |
+| La Nacion AR | Argentina | 100 | 100 | 0.0% | 0% | - |
+| Google Chile Topic | Chile | 98 | 98 | 0.0% | 0% | - |
+| Google LATAM Business Topic | LATAM | 63 | 63 | 0.0% | 0% | - |
+| El Destape | Argentina | 60 | 60 | 0.0% | 0% | - |
+| Google LATAM Politics Topic | LATAM | 58 | 58 | 0.0% | 0% | - |
+| Cooperativa | Chile | 57 | 57 | 0.0% | 0% | - |
+| Perfil | Argentina | 57 | 57 | 0.0% | 0% | - |
+| TN Argentina | Argentina | 56 | 56 | 0.0% | 0% | - |
+| La Voz del Interior | Argentina | 49 | 49 | 0.0% | 0% | - |
+| El Tribuno | Argentina | 47 | 47 | 0.0% | 0% | - |
+| 24 Horas Chile | Chile | 45 | 45 | 0.0% | 0% | - |
+| El Cronista | Argentina | 41 | 41 | 0.0% | 0% | - |
 
 ## US Highest Failure Rate
 
@@ -58,34 +58,34 @@
 | Inc Magazine | 100% | 1/1 | rss:http_404 |
 | Politico | 100% | 1/1 | rss:http_403 |
 | Vice News | 100% | 1/1 | rss:http_404 |
-| The Hill | 0% | 0/1 | - |
-| Bloomberg | 0% | 0/1 | - |
-| Mashable | 0% | 0/1 | - |
-| Reuters | 0% | 0/1 | - |
-| ESPN | 0% | 0/1 | - |
-| People | 0% | 0/1 | - |
-| Sports Illustrated | 0% | 0/1 | - |
-| New York Post | 0% | 0/1 | - |
-| Deadline | 0% | 0/1 | - |
-| Breitbart | 0% | 0/1 | - |
-| Newsweek | 0% | 0/1 | - |
+| Google Arizona News | 0% | 0/1 | - |
+| Google California News | 0% | 0/1 | - |
+| Google Florida News | 0% | 0/1 | - |
+| Google Georgia News | 0% | 0/1 | - |
+| Google Illinois News | 0% | 0/1 | - |
+| Google New York News | 0% | 0/1 | - |
+| Google Ohio News | 0% | 0/1 | - |
+| Google Pennsylvania News | 0% | 0/1 | - |
+| Google Texas News | 0% | 0/1 | - |
+| Google US Politics Topic | 0% | 0/1 | - |
+| Google Washington News | 0% | 0/1 | - |
 
 ## LATAM Highest Failure Rate
 
 | Source | Country | Failure rate | Endpoints failed/attempted | Errors |
 | --- | --- | ---: | --- | --- |
+| Google Argentina Topic | Argentina | 0% | 0/1 | - |
+| Google Uruguay Topic | Uruguay | 0% | 0/1 | - |
 | Infobae | Argentina | 0% | 0/1 | - |
 | La Nacion AR | Argentina | 0% | 0/1 | - |
+| Google Chile Topic | Chile | 0% | 0/1 | - |
+| Google LATAM Business Topic | LATAM | 0% | 0/1 | - |
+| El Destape | Argentina | 0% | 0/1 | - |
+| Google LATAM Politics Topic | LATAM | 0% | 0/1 | - |
 | Cooperativa | Chile | 0% | 0/1 | - |
 | Perfil | Argentina | 0% | 0/1 | - |
-| El Destape | Argentina | 0% | 0/1 | - |
 | TN Argentina | Argentina | 0% | 0/1 | - |
-| El Tribuno | Argentina | 0% | 0/1 | - |
-| BioBioChile | Chile | 0% | 0/1 | - |
 | La Voz del Interior | Argentina | 0% | 0/1 | - |
-| El Mostrador | Chile | 0% | 0/1 | - |
-| America TV AR | Argentina | 0% | 0/1 | - |
-| CNN Chile | Chile | 0% | 0/1 | - |
-| El Cronista | Argentina | 0% | 0/1 | - |
-| MinutoUno | Argentina | 0% | 0/1 | - |
+| El Tribuno | Argentina | 0% | 0/1 | - |
 | 24 Horas Chile | Chile | 0% | 0/1 | - |
+| El Cronista | Argentina | 0% | 0/1 | - |

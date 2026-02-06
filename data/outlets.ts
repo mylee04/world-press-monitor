@@ -86,6 +86,30 @@ const PRESET_SEEDS: Record<string, OutletSeed[]> = {
     { name: 'Montevideo Portal', tier: 2, beat: 'world', country: 'Uruguay', language: 'es', sourceType: 'local', rssUrl: 'https://www.montevideo.com.uy/anxml.aspx?59' },
     { name: 'Busqueda', tier: 2, beat: 'politics', country: 'Uruguay', language: 'es', sourceType: 'local', rssUrl: 'https://news.google.com/rss/search?q=site:busqueda.com.uy&ceid=UY:es-419&hl=es-419&gl=UY' }
   ],
+  us_broad_topics: [
+    { name: 'Google US World Topic', tier: 2, beat: 'world', country: 'US', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=US+world+news+when:1d&ceid=US:en&hl=en-US&gl=US' },
+    { name: 'Google US Politics Topic', tier: 2, beat: 'politics', country: 'US', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=US+politics+when:1d&ceid=US:en&hl=en-US&gl=US' },
+    { name: 'Google US Business Topic', tier: 2, beat: 'business', country: 'US', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=US+business+when:1d&ceid=US:en&hl=en-US&gl=US' },
+    { name: 'Google US Tech Topic', tier: 2, beat: 'tech', country: 'US', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=US+technology+when:1d&ceid=US:en&hl=en-US&gl=US' },
+    { name: 'Google California News', tier: 2, beat: 'world', country: 'US', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=California+news+when:1d&ceid=US:en&hl=en-US&gl=US' },
+    { name: 'Google Texas News', tier: 2, beat: 'world', country: 'US', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=Texas+news+when:1d&ceid=US:en&hl=en-US&gl=US' },
+    { name: 'Google Florida News', tier: 2, beat: 'world', country: 'US', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=Florida+news+when:1d&ceid=US:en&hl=en-US&gl=US' },
+    { name: 'Google New York News', tier: 2, beat: 'world', country: 'US', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=New+York+news+when:1d&ceid=US:en&hl=en-US&gl=US' },
+    { name: 'Google Illinois News', tier: 2, beat: 'world', country: 'US', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=Illinois+news+when:1d&ceid=US:en&hl=en-US&gl=US' },
+    { name: 'Google Arizona News', tier: 2, beat: 'world', country: 'US', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=Arizona+news+when:1d&ceid=US:en&hl=en-US&gl=US' },
+    { name: 'Google Georgia News', tier: 2, beat: 'world', country: 'US', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=Georgia+news+when:1d&ceid=US:en&hl=en-US&gl=US' },
+    { name: 'Google Ohio News', tier: 2, beat: 'world', country: 'US', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=Ohio+news+when:1d&ceid=US:en&hl=en-US&gl=US' },
+    { name: 'Google Pennsylvania News', tier: 2, beat: 'world', country: 'US', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=Pennsylvania+news+when:1d&ceid=US:en&hl=en-US&gl=US' },
+    { name: 'Google Washington News', tier: 2, beat: 'world', country: 'US', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=Washington+state+news+when:1d&ceid=US:en&hl=en-US&gl=US' }
+  ],
+  latam_broad_topics: [
+    { name: 'Google LATAM Regional Topic', tier: 2, beat: 'world', country: 'LATAM', language: 'es', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=Latinoamerica+noticias+when:1d&ceid=US:es-419&hl=es-419&gl=US' },
+    { name: 'Google Argentina Topic', tier: 2, beat: 'world', country: 'Argentina', language: 'es', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=Argentina+noticias+when:1d&ceid=AR:es-419&hl=es-419&gl=AR' },
+    { name: 'Google Chile Topic', tier: 2, beat: 'world', country: 'Chile', language: 'es', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=Chile+noticias+when:1d&ceid=CL:es-419&hl=es-419&gl=CL' },
+    { name: 'Google Uruguay Topic', tier: 2, beat: 'world', country: 'Uruguay', language: 'es', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=Uruguay+noticias+when:1d&ceid=UY:es-419&hl=es-419&gl=UY' },
+    { name: 'Google LATAM Politics Topic', tier: 2, beat: 'politics', country: 'LATAM', language: 'es', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=Latinoamerica+politica+when:1d&ceid=US:es-419&hl=es-419&gl=US' },
+    { name: 'Google LATAM Business Topic', tier: 2, beat: 'business', country: 'LATAM', language: 'es', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=Latinoamerica+economia+when:1d&ceid=US:es-419&hl=es-419&gl=US' }
+  ],
   us_expansion: [
     { name: 'Boston Globe', tier: 2, beat: 'world', country: 'US', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=site:bostonglobe.com&ceid=US:en&hl=en-US&gl=US' },
     { name: 'Philadelphia Inquirer', tier: 2, beat: 'world', country: 'US', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=site:inquirer.com&ceid=US:en&hl=en-US&gl=US' },
@@ -196,6 +220,8 @@ const CATEGORY_ALIAS: Record<string, OutletFeed['categories'][number]> = {
   latam_argentina: 'world',
   latam_chile: 'world',
   latam_uruguay: 'world',
+  us_broad_topics: 'world',
+  latam_broad_topics: 'world',
   us_expansion: 'world',
   latam_expansion: 'world'
 };
@@ -344,6 +370,7 @@ const LATAM_SEEDS = [
   ...PRESET_SEEDS.latam_argentina,
   ...PRESET_SEEDS.latam_chile,
   ...PRESET_SEEDS.latam_uruguay,
+  ...PRESET_SEEDS.latam_broad_topics,
   ...PRESET_SEEDS.latam_expansion
 ];
 
@@ -407,6 +434,18 @@ export const SOURCE_PRESETS: SourcePreset[] = [
     label: 'LATAM Regional',
     description: 'Argentina, Chile, and Uruguay regional coverage.',
     outletIds: LATAM_SEEDS.map((seed) => slugify(seed.name))
+  },
+  {
+    key: 'broad_capture_us',
+    label: 'US Broad Capture',
+    description: 'Google broad topic/state capture feeds for volume.',
+    outletIds: PRESET_SEEDS.us_broad_topics.map((seed) => slugify(seed.name))
+  },
+  {
+    key: 'broad_capture_latam',
+    label: 'LATAM Broad Capture',
+    description: 'Google regional topic feeds for LATAM volume.',
+    outletIds: PRESET_SEEDS.latam_broad_topics.map((seed) => slugify(seed.name))
   },
   {
     key: 'us_expansion_candidates',

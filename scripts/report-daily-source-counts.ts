@@ -2,6 +2,7 @@ import { writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { OUTLET_FEEDS } from '../data/outlets';
 import { parseRssOrAtom, parseSitemap } from '../lib/parsers';
+import { dedupeItems } from '../lib/dedupe';
 
 type Row = {
   outletId: string;
@@ -17,6 +18,11 @@ type Row = {
   rss24h: number;
   sitemap24h: number;
   total24h: number;
+  rssUnique24h: number;
+  sitemapUnique24h: number;
+  unique24h: number;
+  dedupeRate: number;
+  recentItems24h: { title: string; link: string; publishedAt: string }[];
   errors: string[];
 };
 
@@ -65,6 +71,11 @@ async function countOutlet(outlet: typeof OUTLET_FEEDS[number]): Promise<Row> {
     rss24h: 0,
     sitemap24h: 0,
     total24h: 0,
+    rssUnique24h: 0,
+    sitemapUnique24h: 0,
+    unique24h: 0,
+    dedupeRate: 0,
+    recentItems24h: [],
     errors: []
   };
 
@@ -77,7 +88,10 @@ async function countOutlet(outlet: typeof OUTLET_FEEDS[number]): Promise<Row> {
         const xml = await res.text();
         const parsed = parseRssOrAtom(xml, RSS_LIMIT);
         row.rssParsed = parsed.length;
-        row.rss24h = parsed.filter((item) => in24h(item.publishedAt)).length;
+        const recent = parsed.filter((item) => in24h(item.publishedAt));
+        row.rss24h = recent.length;
+        row.rssUnique24h = dedupeItems(recent).length;
+        row.recentItems24h.push(...recent);
       }
     } catch (error) {
       row.errors.push(`rss:err:${error instanceof Error ? error.message : String(error)}`);
@@ -93,7 +107,10 @@ async function countOutlet(outlet: typeof OUTLET_FEEDS[number]): Promise<Row> {
         const xml = await res.text();
         const parsed = parseSitemap(xml, SITEMAP_LIMIT);
         row.sitemapParsed = parsed.length;
-        row.sitemap24h = parsed.filter((item) => in24h(item.publishedAt)).length;
+        const recent = parsed.filter((item) => in24h(item.publishedAt));
+        row.sitemap24h = recent.length;
+        row.sitemapUnique24h = dedupeItems(recent).length;
+        row.recentItems24h.push(...recent);
       }
     } catch (error) {
       row.errors.push(`sitemap:err:${error instanceof Error ? error.message : String(error)}`);
@@ -101,6 +118,8 @@ async function countOutlet(outlet: typeof OUTLET_FEEDS[number]): Promise<Row> {
   }
 
   row.total24h = row.rss24h + row.sitemap24h;
+  row.unique24h = dedupeItems(row.recentItems24h).length;
+  row.dedupeRate = row.total24h > 0 ? 1 - row.unique24h / row.total24h : 0;
   return row;
 }
 
@@ -132,6 +151,7 @@ function toCsv(rows: Row[]): string {
   const header = [
     'outlet_id', 'source', 'tier', 'country', 'source_type', 'review_decision',
     'rss_parsed', 'sitemap_parsed', 'rss_24h', 'sitemap_24h', 'total_24h',
+    'rss_unique_24h', 'sitemap_unique_24h', 'unique_24h', 'dedupe_rate',
     'rss_url', 'sitemap_url', 'errors'
   ];
 
@@ -149,6 +169,10 @@ function toCsv(rows: Row[]): string {
       r.rss24h,
       r.sitemap24h,
       r.total24h,
+      r.rssUnique24h,
+      r.sitemapUnique24h,
+      r.unique24h,
+      r.dedupeRate.toFixed(4),
       r.rssUrl || '',
       r.sitemapUrl || '',
       r.errors.join(' | ')
@@ -164,6 +188,10 @@ function top(rows: Row[], n = 20): Row[] {
 
 function sum(rows: Row[]): number {
   return rows.reduce((acc, row) => acc + row.total24h, 0);
+}
+
+function sumUnique(rows: Row[]): number {
+  return rows.reduce((acc, row) => acc + row.unique24h, 0);
 }
 
 function normalizeCountry(country: string): string {
@@ -191,6 +219,8 @@ function byMatcher(rows: Row[], matchers: RegExp[]): Row[] {
 function toMarkdown(rows: Row[]): string {
   const scoped = rows.filter(inUsLatamScope);
   const total24h = sum(scoped);
+  const totalUnique24h = sumUnique(scoped);
+  const overallDedupeRate = total24h > 0 ? 1 - totalUnique24h / total24h : 0;
   const activeCount = scoped.length;
   const withErrors = scoped.filter((r) => r.errors.length > 0).length;
   const usRows = scoped.filter((r) => regionOf(r.country) === 'US');
@@ -205,14 +235,16 @@ function toMarkdown(rows: Row[]): string {
   lines.push(`- Generated at: ${new Date().toISOString()}`);
   lines.push(`- Window: last ${HOURS} hours`);
   lines.push(`- Sources measured (active, US+LATAM): ${activeCount}`);
-  lines.push(`- Total metadata items observed (24h): ${total24h}`);
+  lines.push(`- Total metadata items observed (24h, raw): ${total24h}`);
+  lines.push(`- Total metadata items observed (24h, unique): ${totalUnique24h}`);
+  lines.push(`- Dedupe rate (24h): ${(overallDedupeRate * 100).toFixed(1)}%`);
   lines.push(`- Sources with fetch/parse errors: ${withErrors}`);
   lines.push('');
 
   lines.push('## Region Summary');
   lines.push('');
-  lines.push(`- US: ${sum(usRows)} items across ${usRows.length} sources`);
-  lines.push(`- LATAM: ${sum(latamRows)} items across ${latamRows.length} sources`);
+  lines.push(`- US: raw ${sum(usRows)} / unique ${sumUnique(usRows)} items across ${usRows.length} sources`);
+  lines.push(`- LATAM: raw ${sum(latamRows)} / unique ${sumUnique(latamRows)} items across ${latamRows.length} sources`);
   lines.push('');
 
   lines.push('## Reuters / AP');
@@ -221,19 +253,19 @@ function toMarkdown(rows: Row[]): string {
   lines.push(`- AP (all configured AP sources): ${sum(apRows)}`);
   lines.push('');
 
-  lines.push('| Source | 24h items | RSS parsed | Sitemap parsed | Errors |');
-  lines.push('| --- | ---: | ---: | ---: | --- |');
+  lines.push('| Source | 24h raw | 24h unique | Dedupe | RSS parsed | Sitemap parsed | Errors |');
+  lines.push('| --- | ---: | ---: | ---: | ---: | ---: | --- |');
   for (const r of [...reutersRows, ...apRows]) {
-    lines.push(`| ${r.source} | ${r.total24h} | ${r.rssParsed} | ${r.sitemapParsed} | ${r.errors.join('; ') || '-'} |`);
+    lines.push(`| ${r.source} | ${r.total24h} | ${r.unique24h} | ${(r.dedupeRate * 100).toFixed(1)}% | ${r.rssParsed} | ${r.sitemapParsed} | ${r.errors.join('; ') || '-'} |`);
   }
   lines.push('');
 
   lines.push('## Top 25 Sources (US + LATAM, 24h items)');
   lines.push('');
-  lines.push('| Source | 24h items | Country | Type | Policy | Errors |');
-  lines.push('| --- | ---: | --- | --- | --- | --- |');
+  lines.push('| Source | 24h raw | 24h unique | Dedupe | Country | Type | Policy | Errors |');
+  lines.push('| --- | ---: | ---: | ---: | --- | --- | --- | --- |');
   for (const r of top(scoped, 25)) {
-    lines.push(`| ${r.source} | ${r.total24h} | ${r.country} | ${r.sourceType} | ${r.reviewDecision} | ${r.errors.join('; ') || '-'} |`);
+    lines.push(`| ${r.source} | ${r.total24h} | ${r.unique24h} | ${(r.dedupeRate * 100).toFixed(1)}% | ${r.country} | ${r.sourceType} | ${r.reviewDecision} | ${r.errors.join('; ') || '-'} |`);
   }
 
   lines.push('');
