@@ -1,0 +1,238 @@
+import { writeFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { OUTLET_FEEDS } from '../data/outlets';
+import { parseRssOrAtom, parseSitemap } from '../lib/parsers';
+
+type Row = {
+  outletId: string;
+  source: string;
+  tier: number;
+  country: string;
+  sourceType: string;
+  reviewDecision: string;
+  rssUrl?: string;
+  sitemapUrl?: string;
+  rssParsed: number;
+  sitemapParsed: number;
+  rss24h: number;
+  sitemap24h: number;
+  total24h: number;
+  errors: string[];
+};
+
+const HOURS = 24;
+const CUTOFF_MS = Date.now() - HOURS * 60 * 60 * 1000;
+const RSS_LIMIT = 250;
+const SITEMAP_LIMIT = 250;
+const TIMEOUT_MS = 18000;
+const CONCURRENCY = 8;
+const UA = 'Mozilla/5.0 (compatible; PressLabDailyMetrics/1.0; +https://presslab.local)';
+
+async function fetchWithTimeout(url: string, timeoutMs = TIMEOUT_MS): Promise<Response> {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(url, {
+      signal: controller.signal,
+      redirect: 'follow',
+      headers: {
+        'User-Agent': UA,
+        Accept: 'application/rss+xml, application/xml, text/xml, */*'
+      }
+    });
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+function in24h(publishedAt: string): boolean {
+  const ts = new Date(publishedAt).getTime();
+  return Number.isFinite(ts) && ts >= CUTOFF_MS;
+}
+
+async function countOutlet(outlet: typeof OUTLET_FEEDS[number]): Promise<Row> {
+  const row: Row = {
+    outletId: outlet.id,
+    source: outlet.name,
+    tier: outlet.tier,
+    country: outlet.country,
+    sourceType: outlet.sourceType || 'global',
+    reviewDecision: outlet.reviewDecision || 'unknown',
+    rssUrl: outlet.rssUrl,
+    sitemapUrl: outlet.sitemapUrl,
+    rssParsed: 0,
+    sitemapParsed: 0,
+    rss24h: 0,
+    sitemap24h: 0,
+    total24h: 0,
+    errors: []
+  };
+
+  if (outlet.rssUrl) {
+    try {
+      const res = await fetchWithTimeout(outlet.rssUrl);
+      if (!res.ok) {
+        row.errors.push(`rss:${res.status}`);
+      } else {
+        const xml = await res.text();
+        const parsed = parseRssOrAtom(xml, RSS_LIMIT);
+        row.rssParsed = parsed.length;
+        row.rss24h = parsed.filter((item) => in24h(item.publishedAt)).length;
+      }
+    } catch (error) {
+      row.errors.push(`rss:err:${error instanceof Error ? error.message : String(error)}`);
+    }
+  }
+
+  if (outlet.sitemapUrl) {
+    try {
+      const res = await fetchWithTimeout(outlet.sitemapUrl);
+      if (!res.ok) {
+        row.errors.push(`sitemap:${res.status}`);
+      } else {
+        const xml = await res.text();
+        const parsed = parseSitemap(xml, SITEMAP_LIMIT);
+        row.sitemapParsed = parsed.length;
+        row.sitemap24h = parsed.filter((item) => in24h(item.publishedAt)).length;
+      }
+    } catch (error) {
+      row.errors.push(`sitemap:err:${error instanceof Error ? error.message : String(error)}`);
+    }
+  }
+
+  row.total24h = row.rss24h + row.sitemap24h;
+  return row;
+}
+
+async function runWithConcurrency<T, R>(items: T[], limit: number, fn: (item: T) => Promise<R>): Promise<R[]> {
+  const results: R[] = new Array(items.length);
+  let idx = 0;
+
+  async function worker(): Promise<void> {
+    while (idx < items.length) {
+      const current = idx;
+      idx += 1;
+      results[current] = await fn(items[current]);
+    }
+  }
+
+  await Promise.all(Array.from({ length: Math.min(limit, items.length) }, () => worker()));
+  return results;
+}
+
+function csvEscape(value: string | number): string {
+  const raw = String(value ?? '');
+  if (raw.includes(',') || raw.includes('"') || raw.includes('\n')) {
+    return `"${raw.replaceAll('"', '""')}"`;
+  }
+  return raw;
+}
+
+function toCsv(rows: Row[]): string {
+  const header = [
+    'outlet_id', 'source', 'tier', 'country', 'source_type', 'review_decision',
+    'rss_parsed', 'sitemap_parsed', 'rss_24h', 'sitemap_24h', 'total_24h',
+    'rss_url', 'sitemap_url', 'errors'
+  ];
+
+  const lines = [header.join(',')];
+  for (const r of rows) {
+    lines.push([
+      r.outletId,
+      r.source,
+      r.tier,
+      r.country,
+      r.sourceType,
+      r.reviewDecision,
+      r.rssParsed,
+      r.sitemapParsed,
+      r.rss24h,
+      r.sitemap24h,
+      r.total24h,
+      r.rssUrl || '',
+      r.sitemapUrl || '',
+      r.errors.join(' | ')
+    ].map(csvEscape).join(','));
+  }
+
+  return `${lines.join('\n')}\n`;
+}
+
+function top(rows: Row[], n = 20): Row[] {
+  return [...rows].sort((a, b) => b.total24h - a.total24h).slice(0, n);
+}
+
+function sum(rows: Row[]): number {
+  return rows.reduce((acc, row) => acc + row.total24h, 0);
+}
+
+function byMatcher(rows: Row[], matchers: RegExp[]): Row[] {
+  return rows.filter((row) => matchers.some((m) => m.test(row.source)));
+}
+
+function toMarkdown(rows: Row[]): string {
+  const total24h = sum(rows);
+  const activeCount = rows.length;
+  const withErrors = rows.filter((r) => r.errors.length > 0).length;
+
+  const reutersRows = byMatcher(rows, [/Reuters/i]);
+  const apRows = byMatcher(rows, [/^AP\b/i, /AP News/i]);
+  const bbcRows = byMatcher(rows, [/^BBC\b/i]);
+
+  const lines: string[] = [];
+  lines.push('# Daily Source Metadata Volume');
+  lines.push('');
+  lines.push(`- Generated at: ${new Date().toISOString()}`);
+  lines.push(`- Window: last ${HOURS} hours`);
+  lines.push(`- Sources measured (active): ${activeCount}`);
+  lines.push(`- Total metadata items observed (24h): ${total24h}`);
+  lines.push(`- Sources with fetch/parse errors: ${withErrors}`);
+  lines.push('');
+
+  lines.push('## Reuters / AP / BBC');
+  lines.push('');
+  lines.push(`- Reuters (all configured Reuters sources): ${sum(reutersRows)}`);
+  lines.push(`- AP (all configured AP sources): ${sum(apRows)}`);
+  lines.push(`- BBC (all configured BBC sources): ${sum(bbcRows)}`);
+  lines.push('');
+
+  lines.push('| Source | 24h items | RSS parsed | Sitemap parsed | Errors |');
+  lines.push('| --- | ---: | ---: | ---: | --- |');
+  for (const r of [...reutersRows, ...apRows, ...bbcRows]) {
+    lines.push(`| ${r.source} | ${r.total24h} | ${r.rssParsed} | ${r.sitemapParsed} | ${r.errors.join('; ') || '-'} |`);
+  }
+  lines.push('');
+
+  lines.push('## Top 25 Sources (24h items)');
+  lines.push('');
+  lines.push('| Source | 24h items | Country | Type | Policy | Errors |');
+  lines.push('| --- | ---: | --- | --- | --- | --- |');
+  for (const r of top(rows, 25)) {
+    lines.push(`| ${r.source} | ${r.total24h} | ${r.country} | ${r.sourceType} | ${r.reviewDecision} | ${r.errors.join('; ') || '-'} |`);
+  }
+
+  lines.push('');
+  lines.push('## Notes');
+  lines.push('');
+  lines.push('- Counts are based on feed metadata timestamps (`publishedAt` / `lastmod`) seen at collection time.');
+  lines.push('- If an item has missing/invalid date in feed metadata, exact 24h assignment can be less precise.');
+
+  return `${lines.join('\n')}\n`;
+}
+
+async function main(): Promise<void> {
+  const rows = await runWithConcurrency(OUTLET_FEEDS, CONCURRENCY, countOutlet);
+  rows.sort((a, b) => b.total24h - a.total24h || a.source.localeCompare(b.source));
+
+  const stamp = new Date().toISOString().slice(0, 10);
+  const csvPath = resolve(process.cwd(), `audits/source_daily_counts_${stamp}.csv`);
+  const mdPath = resolve(process.cwd(), `audits/source_daily_counts_${stamp}.md`);
+
+  writeFileSync(csvPath, toCsv(rows), 'utf8');
+  writeFileSync(mdPath, toMarkdown(rows), 'utf8');
+
+  console.log(`Wrote ${csvPath}`);
+  console.log(`Wrote ${mdPath}`);
+}
+
+void main();
