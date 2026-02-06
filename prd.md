@@ -96,11 +96,16 @@ PressLab adds a 6-slot Live TV wall for passive situational awareness, adapted f
 
 **Channel Set Rules**
 - `Major Journal 6ch` mode:
-  - fixed to curated major channels.
+  - fixed to curated US + LATAM channels.
 - `Custom` mode:
   - user can choose channels per slot.
   - layout persists in browser local storage.
   - slot changes auto-save in custom mode.
+
+**Current Default 6ch (Implementation Snapshot)**
+- Left: `NBC News`, `LiveNOW from FOX`, `CBS News`
+- Right: `TN (Argentina)`, `C5N (Argentina)`, `La Nacion+ (Argentina)`
+- Dropdown remains enabled per tile so users can switch to other available channels.
 
 **Live Resolution / Fallback Rules**
 - Per channel, system checks `/@handle/live` and extracts active `videoId`.
@@ -211,23 +216,69 @@ Before enabling any country-local source by default, PressLab must run an HTTP v
 - `network_error`: infra/network lookup failure during probe environment.
 - `unexpected_content`: reachable but not valid feed/sitemap payload.
 
-**Implementation**
-- Verification script: `scripts/verify-kr-sources.ts`
-- Policy automation script: `scripts/apply-kr-source-policies.ts`
-- Output artifacts:
-  - `audits/kr_source_http_verification_2026-02-06.json`
-  - `audits/kr_source_http_verification_2026-02-06.md`
-  - `audits/kr_source_policy_actions_2026-02-06.md`
+**Implementation (Current Scope: US + LATAM)**
+- LATAM verification script: `scripts/verify-latam-sources.ts`
+- US/LATAM health script (24h volume + failure): `scripts/report-us-latam-health.ts`
+- Expansion promotion script:
+  - dry-run: `scripts/promote-expansion-sources.ts`
+  - apply: `scripts/promote-expansion-sources.ts --apply`
 
 **Runbook Commands**
-- `bun run verify:kr-sources`
-- `bun run policy:kr:auto` (dry-run recommendation report only)
-- `bun run policy:kr:apply` (mutates `data/outlets.ts` policy sets)
+- `bun run verify:latam-sources`
+- `bun run report:us-latam-health`
+- `bun run promote:expansion` (dry-run decision report)
+- `bun run promote:expansion:apply` (updates promoted expansion set in `data/outlets.ts`)
+
+**KR Legacy Note**
+- KR-specific scripts/audits are archived under `archive/kr/` and are not part of V1 operations.
 
 **Auto-disable Rule**
 - If a source is marked `deprecate_candidate` **2 runs in a row**, automation adds it to `DEPRECATED_OUTLETS`.
 - `DEPRECATED_OUTLETS` are excluded from source list and presets by default.
 - State is tracked in policy history audit artifacts.
+
+### 3.11.2 Source Scale Expansion (US100 + LATAM50)
+
+Decision date: February 6, 2026
+
+V1 source universe is expanded to support newsroom-level breadth while preserving operational safety.
+
+**Current Scale**
+- Total configured sources: `150`
+- US: `100`
+- LATAM (AR/CL/UY): `50`
+
+**Operational Safety Model**
+- Expansion candidates are tagged `exploratory_off_by_default` and excluded from `Default Live`.
+- Promotion to operational set is rule-based using health report metrics:
+  - `recent_24h >= 5`
+  - `failure_rate <= 0.2`
+- Promotions are persisted in `PROMOTED_EXPANSION` in `data/outlets.ts`.
+
+**Commands**
+- `bun run report:us-latam-health`
+- `bun run promote:expansion`
+- `bun run promote:expansion:apply`
+
+### 3.11.3 Daily Ops Reporting and Discord Delivery
+
+Decision date: February 6, 2026
+
+Daily ingestion reporting is standardized for developer operations and team visibility.
+
+**Report Scope**
+- US + LATAM only
+- 24h totals, region split, error-source counts, top sources
+- Artifacts:
+  - `audits/source_daily_counts_YYYY-MM-DD.csv`
+  - `audits/source_daily_counts_YYYY-MM-DD.md`
+
+**Discord Delivery**
+- Bilingual summary (`EN` + `ES`) via webhook.
+- Scripts:
+  - `bun run report:daily-sources` (generate report only)
+  - `bun run report:daily-sources:notify` (generate + send Discord)
+  - `bun run notify:discord-daily:dry` (preview payload without sending)
 
 ### 3.12 Country Intelligence Layer (Business Decision Log)
 
@@ -300,6 +351,7 @@ To make regional monitoring operational for newsroom users, PressLab adds three 
 **Phase 1: MVP**
 - Lock scope to US + LATAM only.
 - Build RSS/Sitemap/Portal ingestion for US major outlets + LATAM (`Chile`, `Argentina`, `Uruguay`) priority outlets.
+- Expand source universe to US100 + LATAM50 with staged promotion workflow.
 - Implement top-left filtering (Region / Country / Beat / Source Policy).
 - Implement source-health ops panel for developers.
 - Set up proxy server using Vercel Edge.
@@ -331,9 +383,10 @@ To make regional monitoring operational for newsroom users, PressLab adds three 
 - Disable Europe/Asia/non-target source presets by default.
 - Introduce region/country gating at source-selection level.
 
-2. Source Set Rebuild (Day 1-2)
-- US core: Reuters/AP/BBC US-facing + major US national outlets.
-- LATAM core: Chile/Argentina/Uruguay publisher list + Google site adapters.
+2. Source Set Rebuild + Expansion (Day 1-2)
+- Core operational set: US + LATAM direct/prioritized outlets.
+- Expansion set: US Top100 + LATAM Top50 candidate pool.
+- Keep expansion candidates default OFF until health-based promotion.
 - Tag each source with reliability policy and default state.
 
 3. Filter UX (Day 2)
@@ -345,7 +398,8 @@ To make regional monitoring operational for newsroom users, PressLab adds three 
 - Apply 2-strike deprecation automation for failing sources.
 
 5. V1 Readout (Day 3)
-- Publish daily source-volume report (per source counts, Reuters/AP/BBC summary, LATAM coverage).
+- Publish daily source-volume report (US/LATAM only, per-source counts, region split, top sources).
+- Optional Discord bilingual (`EN`/`ES`) daily summary.
 - Share ops panel screenshots and acceptance checklist with team.
 
 ## 7. Source Reliability Governance (Business Decision Log)

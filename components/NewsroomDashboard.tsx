@@ -22,8 +22,13 @@ interface SavedMonitor {
   beat: Beat;
   refreshSec: number;
   timeWindowHours: number;
+  scopeRegion?: ScopeRegion;
+  scopeCountry?: ScopeCountry;
   panelVisibility: PanelVisibility;
 }
+
+type ScopeRegion = 'all' | 'us' | 'latam';
+type ScopeCountry = 'all' | 'United States' | 'Chile' | 'Argentina' | 'Uruguay';
 
 interface IngestionDiagnostic {
   outletId: string;
@@ -105,27 +110,46 @@ const LIVE_CHANNELS: LiveChannel[] = [
   { id: 'abc', name: 'ABC News', handle: '@ABCNews' },
   { id: 'cbs', name: 'CBS News', handle: '@CBSNews' },
   { id: 'nbc', name: 'NBC News', handle: '@NBCNews' },
-  { id: 'euronews', name: 'Euronews', handle: '@euronews', fallbackVideoId: 'pykpO5kQJ98' }
+  { id: 'euronews', name: 'Euronews', handle: '@euronews', fallbackVideoId: 'pykpO5kQJ98' },
+  { id: 'tn', name: 'TN (Argentina)', handle: '@todonoticias' },
+  { id: 'c5n', name: 'C5N (Argentina)', handle: '@C5N' },
+  { id: 'lanacionplus', name: 'La Nacion+ (Argentina)', handle: '@LANACION' },
+  { id: 'a24', name: 'A24 (Argentina)', handle: '@A24com' }
 ];
 
-const FIXED_MAJOR_CHANNELS = ['bloomberg', 'sky', 'cnbc', 'nbc', 'fox', 'cbs'];
+const FIXED_MAJOR_CHANNELS = ['nbc', 'fox', 'cbs', 'tn', 'c5n', 'lanacionplus'];
 const LIVE_LAYOUT_STORAGE_KEY = 'presslab.livewall.custom.v1';
 const LIVE_CACHE_TTL_MS = 5 * 60 * 1000;
 const liveCache = new Map<string, { videoId: string | null; isLive: boolean; timestamp: number }>();
 const COUNTRY_MIN_WINDOW_HOURS = 24;
 const COUNTRY_PRIMARY_LANGUAGE: Record<string, string> = {
-  'South Korea': 'ko',
-  Japan: 'ja',
-  Russia: 'ru',
-  Italy: 'it',
-  Spain: 'es',
-  France: 'fr',
-  China: 'zh',
-  Taiwan: 'zh',
-  Germany: 'de',
   'United States': 'en',
-  'United Kingdom': 'en'
+  Chile: 'es',
+  Argentina: 'es',
+  Uruguay: 'es'
 };
+
+function normalizeOutletCountry(country: string): string {
+  const c = country.trim().toLowerCase();
+  if (c === 'us' || c === 'united states') return 'United States';
+  if (c === 'cl' || c === 'chile') return 'Chile';
+  if (c === 'ar' || c === 'argentina') return 'Argentina';
+  if (c === 'uy' || c === 'uruguay') return 'Uruguay';
+  if (c === 'latam' || c === 'latin america') return 'LATAM';
+  return country;
+}
+
+function isUsOutlet(country: string): boolean {
+  return normalizeOutletCountry(country) === 'United States';
+}
+
+function isLatamOutlet(country: string): boolean {
+  const normalized = normalizeOutletCountry(country);
+  return normalized === 'LATAM'
+    || normalized === 'Chile'
+    || normalized === 'Argentina'
+    || normalized === 'Uruguay';
+}
 
 function buildLiveTiles(channelIds: string[]): LiveTileState[] {
   return channelIds.map((channelId, slot) => ({
@@ -205,8 +229,12 @@ function median(values: number[]): number {
 
 export function NewsroomDashboard() {
   const [items, setItems] = useState<NewsItem[]>([]);
+  const [scopeRegion, setScopeRegion] = useState<ScopeRegion>('all');
+  const [scopeCountry, setScopeCountry] = useState<ScopeCountry>('all');
   const [selectedOutlets, setSelectedOutlets] = useState<string[]>(
-    OUTLET_FEEDS.filter((outlet) => outlet.defaultEnabled).map((outlet) => outlet.id)
+    OUTLET_FEEDS
+      .filter((outlet) => outlet.defaultEnabled && (isUsOutlet(outlet.country) || isLatamOutlet(outlet.country)))
+      .map((outlet) => outlet.id)
   );
   const [selectedBeat, setSelectedBeat] = useState<Beat>('general');
   const [refreshSec, setRefreshSec] = useState<number>(60);
@@ -251,6 +279,31 @@ export function NewsroomDashboard() {
     }
     return byCountry;
   }, []);
+  const scopedOutletIds = useMemo(() => {
+    return OUTLET_FEEDS
+      .filter((outlet) => {
+        const normalized = normalizeOutletCountry(outlet.country);
+        const regionPass = scopeRegion === 'all'
+          ? (isUsOutlet(outlet.country) || isLatamOutlet(outlet.country))
+          : scopeRegion === 'us'
+            ? isUsOutlet(outlet.country)
+            : isLatamOutlet(outlet.country);
+
+        if (!regionPass) return false;
+        if (scopeCountry === 'all') return true;
+        if (scopeCountry === 'United States') return normalized === 'United States';
+        if (scopeCountry === 'Chile') return normalized === 'Chile';
+        if (scopeCountry === 'Argentina') return normalized === 'Argentina';
+        if (scopeCountry === 'Uruguay') return normalized === 'Uruguay';
+        return true;
+      })
+      .map((outlet) => outlet.id);
+  }, [scopeCountry, scopeRegion]);
+
+  const effectiveSelectedOutlets = useMemo(() => {
+    const scopedSet = new Set(scopedOutletIds);
+    return selectedOutlets.filter((id) => scopedSet.has(id));
+  }, [scopedOutletIds, selectedOutlets]);
   const channelById = useMemo(() => new Map(LIVE_CHANNELS.map((channel) => [channel.id, channel])), []);
 
   const refreshLiveTiles = async (currentTiles: LiveTileState[]) => {
@@ -273,7 +326,13 @@ export function NewsroomDashboard() {
   const refresh = async (): Promise<void> => {
     setLoading(true);
     try {
-      const outletParam = selectedOutlets.join(',');
+      if (effectiveSelectedOutlets.length === 0) {
+        setItems([]);
+        setIngestionSummary(null);
+        setLastUpdated(new Date().toISOString());
+        return;
+      }
+      const outletParam = effectiveSelectedOutlets.join(',');
       const res = await fetch(`/api/news?outlets=${outletParam}`);
       const json = await res.json() as { items: NewsItem[]; generatedAt: string; ingestion?: IngestionSummary };
       const cleaned = (json.items || []).map((item) => ({
@@ -328,13 +387,13 @@ export function NewsroomDashboard() {
   useEffect(() => {
     void refresh();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedOutlets.join(',')]);
+  }, [effectiveSelectedOutlets.join(',')]);
 
   useEffect(() => {
     const interval = setInterval(() => void refresh(), refreshSec * 1000);
     return () => clearInterval(interval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refreshSec, selectedOutlets.join(',')]);
+  }, [refreshSec, effectiveSelectedOutlets.join(',')]);
 
   useEffect(() => {
     if (selectedCountry === 'Global') {
@@ -344,6 +403,16 @@ export function NewsroomDashboard() {
     }
     setCountryCardOpen(true);
   }, [selectedCountry]);
+
+  useEffect(() => {
+    if (scopeRegion === 'us' && scopeCountry !== 'all' && scopeCountry !== 'United States') {
+      setScopeCountry('all');
+      return;
+    }
+    if (scopeRegion === 'latam' && scopeCountry === 'United States') {
+      setScopeCountry('all');
+    }
+  }, [scopeCountry, scopeRegion]);
 
   useEffect(() => {
     localStorage.setItem('presslab.countryCardPinned.v1', String(countryCardPinned));
@@ -749,10 +818,12 @@ export function NewsroomDashboard() {
     const byPreset = preset
       ? OUTLET_FEEDS.filter((outlet) => preset.outletIds.includes(outlet.id))
       : OUTLET_FEEDS;
+    const scopedSet = new Set(scopedOutletIds);
+    const byScope = byPreset.filter((outlet) => scopedSet.has(outlet.id));
 
-    if (!q) return byPreset;
+    if (!q) return byScope;
 
-    return byPreset.filter((outlet) => {
+    return byScope.filter((outlet) => {
       return (
         outlet.name.toLowerCase().includes(q)
         || outlet.id.toLowerCase().includes(q)
@@ -760,7 +831,7 @@ export function NewsroomDashboard() {
         || outlet.categories.some((category) => category.includes(q))
       );
     });
-  }, [sourceQuery, selectedPresetKey]);
+  }, [scopedOutletIds, sourceQuery, selectedPresetKey]);
 
   const toggleOutlet = (outletId: string): void => {
     setSelectedOutlets((current) => {
@@ -771,7 +842,7 @@ export function NewsroomDashboard() {
     });
   };
 
-  const selectAllOutlets = (): void => setSelectedOutlets(OUTLET_FEEDS.map((outlet) => outlet.id));
+  const selectAllOutlets = (): void => setSelectedOutlets([...scopedOutletIds]);
   const selectNoneOutlets = (): void => setSelectedOutlets([]);
 
   const applyPreset = (preset: SourcePreset, mode: 'replace' | 'add' = 'replace'): void => {
@@ -799,6 +870,8 @@ export function NewsroomDashboard() {
       beat: selectedBeat,
       refreshSec,
       timeWindowHours,
+      scopeRegion,
+      scopeCountry,
       panelVisibility
     };
 
@@ -819,6 +892,8 @@ export function NewsroomDashboard() {
     setSelectedBeat(monitor.beat);
     setRefreshSec(monitor.refreshSec);
     setTimeWindowHours(monitor.timeWindowHours);
+    setScopeRegion(monitor.scopeRegion || 'all');
+    setScopeCountry(monitor.scopeCountry || 'all');
     setPanelVisibility(monitor.panelVisibility);
   };
 
@@ -940,6 +1015,26 @@ export function NewsroomDashboard() {
 
           <div className="control-grid">
             <label>
+              Region
+              <select value={scopeRegion} onChange={(event) => setScopeRegion(event.target.value as ScopeRegion)}>
+                <option value="all">US + LATAM</option>
+                <option value="us">US</option>
+                <option value="latam">LATAM</option>
+              </select>
+            </label>
+
+            <label>
+              Country
+              <select value={scopeCountry} onChange={(event) => setScopeCountry(event.target.value as ScopeCountry)}>
+                <option value="all">All</option>
+                {(scopeRegion === 'all' || scopeRegion === 'us') ? <option value="United States">US</option> : null}
+                {(scopeRegion === 'all' || scopeRegion === 'latam') ? <option value="Chile">Chile</option> : null}
+                {(scopeRegion === 'all' || scopeRegion === 'latam') ? <option value="Argentina">Argentina</option> : null}
+                {(scopeRegion === 'all' || scopeRegion === 'latam') ? <option value="Uruguay">Uruguay</option> : null}
+              </select>
+            </label>
+
+            <label>
               Beat
               <select value={selectedBeat} onChange={(event) => setSelectedBeat(event.target.value as Beat)}>
                 {BEATS.map((beat) => (
@@ -1017,7 +1112,7 @@ export function NewsroomDashboard() {
             <button type="button" onClick={deleteMonitor} disabled={!selectedMonitorId}>Delete</button>
           </div>
 
-          <p className="meta">Selected sources: {selectedOutlets.length} / {OUTLET_FEEDS.length}</p>
+          <p className="meta">Selected sources: {effectiveSelectedOutlets.length} / {scopedOutletIds.length} in scope</p>
           <p className="meta">
             Source policy: exploratory and manual-review feeds are default OFF.
           </p>

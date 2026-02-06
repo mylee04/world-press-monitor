@@ -166,48 +166,73 @@ function sum(rows: Row[]): number {
   return rows.reduce((acc, row) => acc + row.total24h, 0);
 }
 
+function normalizeCountry(country: string): string {
+  const c = country.trim().toLowerCase();
+  if (c === 'us') return 'United States';
+  if (c === 'latam' || c === 'latin america') return 'LATAM';
+  return country;
+}
+
+function regionOf(country: string): 'US' | 'LATAM' | null {
+  const normalized = normalizeCountry(country).toLowerCase();
+  if (normalized === 'united states') return 'US';
+  if (normalized === 'latam' || normalized === 'chile' || normalized === 'argentina' || normalized === 'uruguay') return 'LATAM';
+  return null;
+}
+
+function inUsLatamScope(row: Row): boolean {
+  return regionOf(row.country) !== null;
+}
+
 function byMatcher(rows: Row[], matchers: RegExp[]): Row[] {
   return rows.filter((row) => matchers.some((m) => m.test(row.source)));
 }
 
 function toMarkdown(rows: Row[]): string {
-  const total24h = sum(rows);
-  const activeCount = rows.length;
-  const withErrors = rows.filter((r) => r.errors.length > 0).length;
+  const scoped = rows.filter(inUsLatamScope);
+  const total24h = sum(scoped);
+  const activeCount = scoped.length;
+  const withErrors = scoped.filter((r) => r.errors.length > 0).length;
+  const usRows = scoped.filter((r) => regionOf(r.country) === 'US');
+  const latamRows = scoped.filter((r) => regionOf(r.country) === 'LATAM');
 
-  const reutersRows = byMatcher(rows, [/Reuters/i]);
-  const apRows = byMatcher(rows, [/^AP\b/i, /AP News/i]);
-  const bbcRows = byMatcher(rows, [/^BBC\b/i]);
+  const reutersRows = byMatcher(scoped, [/Reuters/i]);
+  const apRows = byMatcher(scoped, [/^AP\b/i, /AP News/i]);
 
   const lines: string[] = [];
-  lines.push('# Daily Source Metadata Volume');
+  lines.push('# Daily Source Metadata Volume (US + LATAM)');
   lines.push('');
   lines.push(`- Generated at: ${new Date().toISOString()}`);
   lines.push(`- Window: last ${HOURS} hours`);
-  lines.push(`- Sources measured (active): ${activeCount}`);
+  lines.push(`- Sources measured (active, US+LATAM): ${activeCount}`);
   lines.push(`- Total metadata items observed (24h): ${total24h}`);
   lines.push(`- Sources with fetch/parse errors: ${withErrors}`);
   lines.push('');
 
-  lines.push('## Reuters / AP / BBC');
+  lines.push('## Region Summary');
+  lines.push('');
+  lines.push(`- US: ${sum(usRows)} items across ${usRows.length} sources`);
+  lines.push(`- LATAM: ${sum(latamRows)} items across ${latamRows.length} sources`);
+  lines.push('');
+
+  lines.push('## Reuters / AP');
   lines.push('');
   lines.push(`- Reuters (all configured Reuters sources): ${sum(reutersRows)}`);
   lines.push(`- AP (all configured AP sources): ${sum(apRows)}`);
-  lines.push(`- BBC (all configured BBC sources): ${sum(bbcRows)}`);
   lines.push('');
 
   lines.push('| Source | 24h items | RSS parsed | Sitemap parsed | Errors |');
   lines.push('| --- | ---: | ---: | ---: | --- |');
-  for (const r of [...reutersRows, ...apRows, ...bbcRows]) {
+  for (const r of [...reutersRows, ...apRows]) {
     lines.push(`| ${r.source} | ${r.total24h} | ${r.rssParsed} | ${r.sitemapParsed} | ${r.errors.join('; ') || '-'} |`);
   }
   lines.push('');
 
-  lines.push('## Top 25 Sources (24h items)');
+  lines.push('## Top 25 Sources (US + LATAM, 24h items)');
   lines.push('');
   lines.push('| Source | 24h items | Country | Type | Policy | Errors |');
   lines.push('| --- | ---: | --- | --- | --- | --- |');
-  for (const r of top(rows, 25)) {
+  for (const r of top(scoped, 25)) {
     lines.push(`| ${r.source} | ${r.total24h} | ${r.country} | ${r.sourceType} | ${r.reviewDecision} | ${r.errors.join('; ') || '-'} |`);
   }
 
@@ -222,14 +247,15 @@ function toMarkdown(rows: Row[]): string {
 
 async function main(): Promise<void> {
   const rows = await runWithConcurrency(OUTLET_FEEDS, CONCURRENCY, countOutlet);
-  rows.sort((a, b) => b.total24h - a.total24h || a.source.localeCompare(b.source));
+  const scopedRows = rows.filter(inUsLatamScope);
+  scopedRows.sort((a, b) => b.total24h - a.total24h || a.source.localeCompare(b.source));
 
   const stamp = new Date().toISOString().slice(0, 10);
   const csvPath = resolve(process.cwd(), `audits/source_daily_counts_${stamp}.csv`);
   const mdPath = resolve(process.cwd(), `audits/source_daily_counts_${stamp}.md`);
 
-  writeFileSync(csvPath, toCsv(rows), 'utf8');
-  writeFileSync(mdPath, toMarkdown(rows), 'utf8');
+  writeFileSync(csvPath, toCsv(scopedRows), 'utf8');
+  writeFileSync(mdPath, toMarkdown(scopedRows), 'utf8');
 
   console.log(`Wrote ${csvPath}`);
   console.log(`Wrote ${mdPath}`);
