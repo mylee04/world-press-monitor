@@ -20,6 +20,7 @@ type Row = {
   recent24h: number;
   unique24h: number;
   dedupeRate: number;
+  recentItems24h: { title: string; link: string; publishedAt: string }[];
   errors: string;
 };
 
@@ -134,6 +135,7 @@ async function measure(outlet: typeof OUTLET_FEEDS[number], region: Region): Pro
     recent24h,
     unique24h,
     dedupeRate,
+    recentItems24h: recentItems,
     errors: errors.join(' | ')
   };
 }
@@ -192,17 +194,25 @@ function toCsv(rows: Row[]): string {
   return `${lines.join('\n')}\n`;
 }
 
-function summarize(rows: Row[], region: Region): { total24hRaw: number; total24hUnique: number; avgFailure: number; avgDedupe: number; outlets: number } {
+function crossSourceUnique(rows: Row[], region: Region): number {
+  const merged = rows
+    .filter((r) => r.region === region)
+    .flatMap((r) => r.recentItems24h);
+  return dedupeItems(merged).length;
+}
+
+function summarize(rows: Row[], region: Region): { total24hRaw: number; total24hUniqueBySource: number; total24hUniqueCrossSource: number; avgFailure: number; avgDedupe: number; outlets: number } {
   const subset = rows.filter((r) => r.region === region);
   const total24hRaw = subset.reduce((acc, r) => acc + r.recent24h, 0);
-  const total24hUnique = subset.reduce((acc, r) => acc + r.unique24h, 0);
+  const total24hUniqueBySource = subset.reduce((acc, r) => acc + r.unique24h, 0);
+  const total24hUniqueCrossSource = crossSourceUnique(rows, region);
   const avgFailure = subset.length > 0
     ? subset.reduce((acc, r) => acc + r.failureRate, 0) / subset.length
     : 0;
   const avgDedupe = subset.length > 0
     ? subset.reduce((acc, r) => acc + r.dedupeRate, 0) / subset.length
     : 0;
-  return { total24hRaw, total24hUnique, avgFailure, avgDedupe, outlets: subset.length };
+  return { total24hRaw, total24hUniqueBySource, total24hUniqueCrossSource, avgFailure, avgDedupe, outlets: subset.length };
 }
 
 function topBy24h(rows: Row[], region: Region, n = 15): Row[] {
@@ -232,10 +242,10 @@ function toMarkdown(rows: Row[]): string {
 
   lines.push('## Region Summary');
   lines.push('');
-  lines.push('| Region | Outlets | 24h raw | 24h unique | Avg dedupe | Avg failure rate |');
-  lines.push('| --- | ---: | ---: | ---: | ---: | ---: |');
-  lines.push(`| US | ${us.outlets} | ${us.total24hRaw} | ${us.total24hUnique} | ${(us.avgDedupe * 100).toFixed(1)}% | ${(us.avgFailure * 100).toFixed(1)}% |`);
-  lines.push(`| LATAM | ${latam.outlets} | ${latam.total24hRaw} | ${latam.total24hUnique} | ${(latam.avgDedupe * 100).toFixed(1)}% | ${(latam.avgFailure * 100).toFixed(1)}% |`);
+  lines.push('| Region | Outlets | 24h raw | 24h unique (by source) | 24h unique (cross-source) | Avg dedupe | Avg failure rate |');
+  lines.push('| --- | ---: | ---: | ---: | ---: | ---: | ---: |');
+  lines.push(`| US | ${us.outlets} | ${us.total24hRaw} | ${us.total24hUniqueBySource} | ${us.total24hUniqueCrossSource} | ${(us.avgDedupe * 100).toFixed(1)}% | ${(us.avgFailure * 100).toFixed(1)}% |`);
+  lines.push(`| LATAM | ${latam.outlets} | ${latam.total24hRaw} | ${latam.total24hUniqueBySource} | ${latam.total24hUniqueCrossSource} | ${(latam.avgDedupe * 100).toFixed(1)}% | ${(latam.avgFailure * 100).toFixed(1)}% |`);
 
   lines.push('');
   lines.push('## US Top Sources by 24h');

@@ -194,6 +194,11 @@ function sumUnique(rows: Row[]): number {
   return rows.reduce((acc, row) => acc + row.unique24h, 0);
 }
 
+function crossSourceUnique(rows: Row[]): number {
+  const merged = rows.flatMap((row) => row.recentItems24h);
+  return dedupeItems(merged).length;
+}
+
 function normalizeCountry(country: string): string {
   const c = country.trim().toLowerCase();
   if (c === 'us') return 'United States';
@@ -220,11 +225,15 @@ function toMarkdown(rows: Row[]): string {
   const scoped = rows.filter(inUsLatamScope);
   const total24h = sum(scoped);
   const totalUnique24h = sumUnique(scoped);
+  const totalCrossSourceUnique24h = crossSourceUnique(scoped);
   const overallDedupeRate = total24h > 0 ? 1 - totalUnique24h / total24h : 0;
+  const overallCrossSourceDedupeRate = total24h > 0 ? 1 - totalCrossSourceUnique24h / total24h : 0;
   const activeCount = scoped.length;
   const withErrors = scoped.filter((r) => r.errors.length > 0).length;
   const usRows = scoped.filter((r) => regionOf(r.country) === 'US');
   const latamRows = scoped.filter((r) => regionOf(r.country) === 'LATAM');
+  const usCrossUnique = crossSourceUnique(usRows);
+  const latamCrossUnique = crossSourceUnique(latamRows);
 
   const reutersRows = byMatcher(scoped, [/Reuters/i]);
   const apRows = byMatcher(scoped, [/^AP\b/i, /AP News/i]);
@@ -236,15 +245,17 @@ function toMarkdown(rows: Row[]): string {
   lines.push(`- Window: last ${HOURS} hours`);
   lines.push(`- Sources measured (active, US+LATAM): ${activeCount}`);
   lines.push(`- Total metadata items observed (24h, raw): ${total24h}`);
-  lines.push(`- Total metadata items observed (24h, unique): ${totalUnique24h}`);
-  lines.push(`- Dedupe rate (24h): ${(overallDedupeRate * 100).toFixed(1)}%`);
+  lines.push(`- Total metadata items observed (24h, unique by source): ${totalUnique24h}`);
+  lines.push(`- Total metadata items observed (24h, unique cross-source): ${totalCrossSourceUnique24h}`);
+  lines.push(`- Dedupe rate (within source): ${(overallDedupeRate * 100).toFixed(1)}%`);
+  lines.push(`- Dedupe rate (cross-source): ${(overallCrossSourceDedupeRate * 100).toFixed(1)}%`);
   lines.push(`- Sources with fetch/parse errors: ${withErrors}`);
   lines.push('');
 
   lines.push('## Region Summary');
   lines.push('');
-  lines.push(`- US: raw ${sum(usRows)} / unique ${sumUnique(usRows)} items across ${usRows.length} sources`);
-  lines.push(`- LATAM: raw ${sum(latamRows)} / unique ${sumUnique(latamRows)} items across ${latamRows.length} sources`);
+  lines.push(`- US: raw ${sum(usRows)} / unique by source ${sumUnique(usRows)} / unique cross-source ${usCrossUnique} across ${usRows.length} sources`);
+  lines.push(`- LATAM: raw ${sum(latamRows)} / unique by source ${sumUnique(latamRows)} / unique cross-source ${latamCrossUnique} across ${latamRows.length} sources`);
   lines.push('');
 
   lines.push('## Reuters / AP');
