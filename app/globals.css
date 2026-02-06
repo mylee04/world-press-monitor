@@ -45,7 +45,7 @@ body {
 .layout-newsroom {
   display: grid;
   grid-template-columns: 430px minmax(520px, 1fr) 430px;
-  grid-template-rows: 320px auto auto;
+  grid-template-rows: clamp(420px, 48vh, 620px) auto auto;
   grid-template-areas:
     "leftsetup map map"
     "leftlive feed rightlive"
@@ -127,7 +127,7 @@ body {
 
 .map-panel {
   grid-area: map;
-  min-height: 320px;
+  min-height: 420px;
   overflow: hidden;
 }
 

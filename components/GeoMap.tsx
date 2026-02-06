@@ -11,6 +11,14 @@ interface GeoMapProps {
   onCountrySelect: (country: string) => void;
 }
 
+const AMERICAS_BOUNDS = new maplibregl.LngLatBounds([-170, -60], [-20, 80]);
+
+function isAmericasPoint(item: NewsItem): boolean {
+  if (typeof item.lat !== 'number' || typeof item.lon !== 'number') return false;
+  const { lat, lon } = item;
+  return lon >= -170 && lon <= -20 && lat >= -60 && lat <= 75;
+}
+
 function escapeHtml(input: string): string {
   return input
     .replaceAll('&', '&amp;')
@@ -35,10 +43,10 @@ export function GeoMap({ items, selectedCountry, onCountrySelect }: GeoMapProps)
   const itemMarkersRef = useRef<maplibregl.Marker[]>([]);
   const countryMarkersRef = useRef<maplibregl.Marker[]>([]);
   const [now, setNow] = useState<Date | null>(null);
-  const [zoom, setZoom] = useState<number>(1.25);
+  const [zoom, setZoom] = useState<number>(2.1);
 
   const markerItems = useMemo(
-    () => items.filter((item) => typeof item.lat === 'number' && typeof item.lon === 'number'),
+    () => items.filter((item) => isAmericasPoint(item)),
     [items]
   );
   const countryAggregates = useMemo(() => {
@@ -78,12 +86,19 @@ export function GeoMap({ items, selectedCountry, onCountrySelect }: GeoMapProps)
     mapRef.current = new maplibregl.Map({
       container: containerRef.current,
       style: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
-      center: [16, 30],
-      zoom: 1.25
+      center: [-78, 12],
+      zoom: 2.35,
+      maxBounds: AMERICAS_BOUNDS
     });
 
     mapRef.current.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-left');
-    mapRef.current.on('zoomend', () => setZoom(mapRef.current?.getZoom() ?? 1.25));
+    mapRef.current.on('load', () => {
+      mapRef.current?.fitBounds(AMERICAS_BOUNDS, {
+        padding: { top: 18, bottom: 18, left: 18, right: 18 },
+        maxZoom: 3
+      });
+    });
+    mapRef.current.on('zoomend', () => setZoom(mapRef.current?.getZoom() ?? 2.1));
 
     return () => {
       mapRef.current?.remove();
@@ -170,7 +185,15 @@ export function GeoMap({ items, selectedCountry, onCountrySelect }: GeoMapProps)
   }, [countryAggregates, onCountrySelect, selectedCountry, zoom]);
 
   useEffect(() => {
-    if (!mapRef.current || !selectedCountry || selectedCountry === 'Global') return;
+    if (!mapRef.current || !selectedCountry) return;
+    if (selectedCountry === 'Global') {
+      mapRef.current.fitBounds(AMERICAS_BOUNDS, {
+        padding: { top: 18, bottom: 18, left: 18, right: 18 },
+        maxZoom: 3,
+        duration: 650
+      });
+      return;
+    }
     const target = markerItems.find((item) => item.country === selectedCountry);
     if (!target) return;
     mapRef.current.flyTo({
@@ -186,7 +209,7 @@ export function GeoMap({ items, selectedCountry, onCountrySelect }: GeoMapProps)
         <div className="map-toolbar-left">
           <strong className="map-brand">PRESSLAB</strong>
           <span className="map-brand-tag">NEWSROOM</span>
-          <span className="region-clock-chip">Global Coverage</span>
+          <span className="region-clock-chip">Americas Coverage</span>
         </div>
         <div className="map-toolbar-right">
           <button type="button" onClick={() => onCountrySelect('Global')}>Reset Country</button>

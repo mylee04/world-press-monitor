@@ -246,7 +246,7 @@ export function NewsroomDashboard() {
   const [countryAutoAdded, setCountryAutoAdded] = useState<number>(0);
   const [countryCardOpen, setCountryCardOpen] = useState<boolean>(false);
   const [countryCardPinned, setCountryCardPinned] = useState<boolean>(false);
-  const [countrySourceFilter, setCountrySourceFilter] = useState<'all' | 'local' | 'portal'>('all');
+  const [countrySourceFilter, setCountrySourceFilter] = useState<'all' | 'local' | 'portal' | 'global'>('all');
   const [liveMode, setLiveMode] = useState<'major' | 'custom'>('major');
   const [liveTiles, setLiveTiles] = useState<LiveTileState[]>(buildLiveTiles(FIXED_MAJOR_CHANNELS));
   const [liveUpdatedAt, setLiveUpdatedAt] = useState<string>('');
@@ -1143,7 +1143,7 @@ export function NewsroomDashboard() {
       {panelVisibility.map ? (
         <section className="panel map-panel">
           <GeoMap
-            items={filteredItems.slice(0, 120)}
+            items={filteredItems}
             selectedCountry={selectedCountry}
             onCountrySelect={setSelectedCountry}
           />
@@ -1158,7 +1158,7 @@ export function NewsroomDashboard() {
 
       {panelVisibility.feed ? (
         <section className="panel feed-panel center-feed">
-          <h2>Live Feed ({rankedCountryItems.length})</h2>
+          <h2>Live Feed</h2>
           {selectedCountry !== 'Global' ? (
             <>
               <p className="meta">
@@ -1172,11 +1172,12 @@ export function NewsroomDashboard() {
                   Country Intake Filter
                   <select
                     value={countrySourceFilter}
-                    onChange={(event) => setCountrySourceFilter(event.target.value as 'all' | 'local' | 'portal')}
+                    onChange={(event) => setCountrySourceFilter(event.target.value as 'all' | 'local' | 'portal' | 'global')}
                   >
                     <option value="all">all</option>
                     <option value="local">local only</option>
                     <option value="portal">portal only</option>
+                    <option value="global">global only</option>
                   </select>
                 </label>
               </div>
@@ -1255,6 +1256,12 @@ export function NewsroomDashboard() {
               <code className="chip chip-source-type">portal {countryCardMetrics.portalCount}</code>
               <code className="chip chip-source">global {countryCardMetrics.globalCount}</code>
             </div>
+            {countryCardMetrics.localCount === 0 && countryCardMetrics.portalCount > 0 ? (
+              <p className="meta">Direct local RSS is degraded in this window. Showing portal-backed local coverage.</p>
+            ) : null}
+            {countryCardMetrics.globalCount === 0 ? (
+              <p className="meta">No global bucket stories in this window. Try `all` or `portal` filter, or widen time window.</p>
+            ) : null}
             <ul className="simple-list">
               {rankedCountryItems.slice(0, 4).map((item) => (
                 <li key={item.id}>

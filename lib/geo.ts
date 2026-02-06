@@ -43,7 +43,9 @@ const HUBS: Hub[] = [
   { name: 'Toronto', country: 'Canada', lat: 43.6532, lon: -79.3832, keywords: ['toronto'] },
   { name: 'Mexico City', country: 'Mexico', lat: 19.4326, lon: -99.1332, keywords: ['mexico', 'mexico city'] },
   { name: 'Sao Paulo', country: 'Brazil', lat: -23.5505, lon: -46.6333, keywords: ['brazil', 'sao paulo'] },
-  { name: 'Buenos Aires', country: 'Argentina', lat: -34.6037, lon: -58.3816, keywords: ['argentina', 'buenos aires'] }
+  { name: 'Buenos Aires', country: 'Argentina', lat: -34.6037, lon: -58.3816, keywords: ['argentina', 'buenos aires'] },
+  { name: 'Santiago', country: 'Chile', lat: -33.4489, lon: -70.6693, keywords: ['chile', 'santiago'] },
+  { name: 'Montevideo', country: 'Uruguay', lat: -34.9011, lon: -56.1645, keywords: ['uruguay', 'montevideo'] }
 ];
 
 const COUNTRY_CENTROIDS = new Map<string, { lat: number; lon: number }>([
@@ -57,6 +59,8 @@ const COUNTRY_CENTROIDS = new Map<string, { lat: number; lon: number }>([
   ['Mexico', { lat: 23.6345, lon: -102.5528 }],
   ['Brazil', { lat: -14.235, lon: -51.9253 }],
   ['Argentina', { lat: -38.4161, lon: -63.6167 }],
+  ['Chile', { lat: -35.6751, lon: -71.543 }],
+  ['Uruguay', { lat: -32.5228, lon: -55.7658 }],
   ['Japan', { lat: 36.2048, lon: 138.2529 }],
   ['South Korea', { lat: 35.9078, lon: 127.7669 }],
   ['China', { lat: 35.8617, lon: 104.1954 }],

@@ -66,25 +66,25 @@ const PRESET_SEEDS: Record<string, OutletSeed[]> = {
     { name: 'The Atlantic', tier: 2, beat: 'politics', country: 'US', rssUrl: 'https://www.theatlantic.com/feed/all/' }
   ],
   latam_argentina: [
-    { name: 'Infobae', tier: 1, beat: 'world', country: 'Argentina', language: 'es', sourceType: 'local', rssUrl: 'https://www.infobae.com/feeds/rss/' },
+    { name: 'Infobae', tier: 1, beat: 'world', country: 'Argentina', language: 'es', sourceType: 'local', rssUrl: 'https://www.infobae.com/arc/outboundfeeds/rss/?outputType=xml' },
     { name: 'Clarin', tier: 1, beat: 'world', country: 'Argentina', language: 'es', sourceType: 'local', rssUrl: 'https://www.clarin.com/rss/lo-ultimo/' },
     { name: 'La Nacion AR', tier: 1, beat: 'world', country: 'Argentina', language: 'es', sourceType: 'local', rssUrl: 'https://www.lanacion.com.ar/arc/outboundfeeds/rss/' },
-    { name: 'Pagina12', tier: 2, beat: 'politics', country: 'Argentina', language: 'es', sourceType: 'local', rssUrl: 'https://www.pagina12.com.ar/rss/portada' },
+    { name: 'Pagina12', tier: 2, beat: 'politics', country: 'Argentina', language: 'es', sourceType: 'local', rssUrl: 'https://news.google.com/rss/search?q=site:pagina12.com.ar&ceid=AR:es-419&hl=es-419&gl=AR' },
     { name: 'Ambito Financiero', tier: 2, beat: 'business', country: 'Argentina', language: 'es', sourceType: 'local', rssUrl: 'https://www.ambito.com/rss/home.xml' },
     { name: 'El Cronista', tier: 2, beat: 'business', country: 'Argentina', language: 'es', sourceType: 'local', rssUrl: 'https://www.cronista.com/files/rss/news.xml' }
   ],
   latam_chile: [
-    { name: 'Emol', tier: 1, beat: 'world', country: 'Chile', language: 'es', sourceType: 'local', rssUrl: 'https://www.emol.com/rss/rss_ultimas_noticias.xml' },
-    { name: 'La Tercera', tier: 1, beat: 'world', country: 'Chile', language: 'es', sourceType: 'local', rssUrl: 'https://www.latercera.com/arc/outboundfeeds/rss/' },
-    { name: 'BioBioChile', tier: 1, beat: 'world', country: 'Chile', language: 'es', sourceType: 'local', rssUrl: 'https://www.biobiochile.cl/feed' },
-    { name: 'Cooperativa', tier: 2, beat: 'world', country: 'Chile', language: 'es', sourceType: 'local', rssUrl: 'https://www.cooperativa.cl/noticias/site/tax/port/all/rss_5_---_1.xml' },
-    { name: 'Diario Financiero', tier: 2, beat: 'business', country: 'Chile', language: 'es', sourceType: 'local', rssUrl: 'https://www.df.cl/rss/home.xml' }
+    { name: 'Emol', tier: 1, beat: 'world', country: 'Chile', language: 'es', sourceType: 'local', rssUrl: 'https://news.google.com/rss/search?q=site:emol.com&ceid=CL:es-419&hl=es-419&gl=CL' },
+    { name: 'La Tercera', tier: 1, beat: 'world', country: 'Chile', language: 'es', sourceType: 'local', rssUrl: 'https://news.google.com/rss/search?q=site:latercera.com&ceid=CL:es-419&hl=es-419&gl=CL' },
+    { name: 'BioBioChile', tier: 1, beat: 'world', country: 'Chile', language: 'es', sourceType: 'local', rssUrl: 'https://news.google.com/rss/search?q=site:biobiochile.cl&ceid=CL:es-419&hl=es-419&gl=CL' },
+    { name: 'Cooperativa', tier: 2, beat: 'world', country: 'Chile', language: 'es', sourceType: 'local', rssUrl: 'https://news.google.com/rss/search?q=site:cooperativa.cl&ceid=CL:es-419&hl=es-419&gl=CL' },
+    { name: 'Diario Financiero', tier: 2, beat: 'business', country: 'Chile', language: 'es', sourceType: 'local', rssUrl: 'https://news.google.com/rss/search?q=site:df.cl&ceid=CL:es-419&hl=es-419&gl=CL' }
   ],
   latam_uruguay: [
-    { name: 'El Pais UY', tier: 1, beat: 'world', country: 'Uruguay', language: 'es', sourceType: 'local', rssUrl: 'https://www.elpais.com.uy/rss' },
-    { name: 'El Observador', tier: 1, beat: 'world', country: 'Uruguay', language: 'es', sourceType: 'local', rssUrl: 'https://www.elobservador.com.uy/rss/home.xml' },
+    { name: 'El Pais UY', tier: 1, beat: 'world', country: 'Uruguay', language: 'es', sourceType: 'local', rssUrl: 'https://news.google.com/rss/search?q=site:elpais.com.uy&ceid=UY:es-419&hl=es-419&gl=UY' },
+    { name: 'El Observador', tier: 1, beat: 'world', country: 'Uruguay', language: 'es', sourceType: 'local', rssUrl: 'https://news.google.com/rss/search?q=site:elobservador.com.uy&ceid=UY:es-419&hl=es-419&gl=UY' },
     { name: 'Montevideo Portal', tier: 2, beat: 'world', country: 'Uruguay', language: 'es', sourceType: 'local', rssUrl: 'https://www.montevideo.com.uy/anxml.aspx?59' },
-    { name: 'Busqueda', tier: 2, beat: 'politics', country: 'Uruguay', language: 'es', sourceType: 'local', rssUrl: 'https://www.busqueda.com.uy/feed' }
+    { name: 'Busqueda', tier: 2, beat: 'politics', country: 'Uruguay', language: 'es', sourceType: 'local', rssUrl: 'https://news.google.com/rss/search?q=site:busqueda.com.uy&ceid=UY:es-419&hl=es-419&gl=UY' }
   ],
   us_expansion: [
     { name: 'Boston Globe', tier: 2, beat: 'world', country: 'US', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=site:bostonglobe.com&ceid=US:en&hl=en-US&gl=US' },
@@ -178,7 +178,13 @@ const PRESET_SEEDS: Record<string, OutletSeed[]> = {
     { name: 'Telemundo UY', tier: 2, beat: 'world', country: 'Uruguay', language: 'es', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=site:teledoce.com&ceid=UY:es-419&hl=es-419&gl=UY' },
     { name: 'Telenoche UY', tier: 2, beat: 'world', country: 'Uruguay', language: 'es', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=telenoche+uruguay&ceid=UY:es-419&hl=es-419&gl=UY' },
     { name: 'UyPress', tier: 2, beat: 'world', country: 'Uruguay', language: 'es', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=site:uypress.net&ceid=UY:es-419&hl=es-419&gl=UY' },
-    { name: 'Canal 10 UY', tier: 2, beat: 'world', country: 'Uruguay', language: 'es', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=site:canal10.com.uy&ceid=UY:es-419&hl=es-419&gl=UY' }
+    { name: 'Canal 10 UY', tier: 2, beat: 'world', country: 'Uruguay', language: 'es', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=site:canal10.com.uy&ceid=UY:es-419&hl=es-419&gl=UY' },
+    { name: 'Reuters Argentina Desk', tier: 2, beat: 'world', country: 'Argentina', language: 'en', sourceType: 'global', rssUrl: 'https://news.google.com/rss/search?q=Argentina+site:reuters.com&ceid=US:en&hl=en-US&gl=US' },
+    { name: 'AP Argentina Desk', tier: 2, beat: 'world', country: 'Argentina', language: 'en', sourceType: 'global', rssUrl: 'https://news.google.com/rss/search?q=Argentina+site:apnews.com&ceid=US:en&hl=en-US&gl=US' },
+    { name: 'Reuters Chile Desk', tier: 2, beat: 'world', country: 'Chile', language: 'en', sourceType: 'global', rssUrl: 'https://news.google.com/rss/search?q=Chile+site:reuters.com&ceid=US:en&hl=en-US&gl=US' },
+    { name: 'AP Chile Desk', tier: 2, beat: 'world', country: 'Chile', language: 'en', sourceType: 'global', rssUrl: 'https://news.google.com/rss/search?q=Chile+OR+Santiago+site:apnews.com&ceid=US:en&hl=en-US&gl=US' },
+    { name: 'Reuters Uruguay Desk', tier: 2, beat: 'world', country: 'Uruguay', language: 'en', sourceType: 'global', rssUrl: 'https://news.google.com/rss/search?q=Uruguay+site:reuters.com&ceid=US:en&hl=en-US&gl=US' },
+    { name: 'AP Uruguay Desk', tier: 2, beat: 'world', country: 'Uruguay', language: 'en', sourceType: 'global', rssUrl: 'https://news.google.com/rss/search?q=Uruguay+site:apnews.com&ceid=US:en&hl=en-US&gl=US' }
   ]
 };
 
@@ -268,6 +274,12 @@ const PROMOTED_EXPANSION = new Set<string>([
   'The Daily Beast',
   'The Hollywood Reporter',
   'TN Argentina',
+  'Reuters Argentina Desk',
+  'AP Argentina Desk',
+  'Reuters Chile Desk',
+  'AP Chile Desk',
+  'Reuters Uruguay Desk',
+  'AP Uruguay Desk',
   'Variety',
   'Vulture',
 ]);
