@@ -1,12 +1,27 @@
 import { NextRequest } from 'next/server';
+import { Redis } from '@upstash/redis';
 import { OUTLET_BY_ID, OUTLET_FEEDS } from '@/data/outlets';
 import { classifyBeatByKeyword } from '@/lib/keyword-classifier';
 import { inferGeoFromTitle } from '@/lib/geo';
 import { parseRssOrAtom } from '@/lib/parsers';
 import { isCoolingDown, markFailure, markSuccess } from '@/lib/circuit-breaker';
+import { persistIngestedArticles, persistIngestionDiagnostics } from '@/lib/ingestion-store';
+import {
+  newsCacheMetricHitMemory,
+  newsCacheMetricHitRedis,
+  newsCacheMetricMissMemory,
+  newsCacheMetricMissNoRedis,
+  newsCacheMetricMissRedis,
+  newsCacheMetricRequest,
+  newsCacheMetricSkipRedisNoRedis,
+  newsCacheMetricSkipRedisPayloadTooLarge,
+  newsCacheMetricWriteMemory,
+  newsCacheMetricWriteRedis,
+  newsCacheMetricWriteRedisFailed,
+} from '@/lib/news-cache-metrics';
 import type { NewsItem, OutletFeed } from '@/lib/types';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 const COUNTRY_CODE_TO_NAME: Record<string, string> = {
   US: 'United States',
@@ -37,6 +52,8 @@ interface FetchDiagnostic {
   ok: boolean;
   statusCode: number | null;
   parsedCount: number;
+  parsedLimit: number;
+  sampleCapped: boolean;
   recent24h: number;
   url?: string;
   error?: string;
@@ -47,11 +64,56 @@ interface OutletFetchResult {
   diagnostic: FetchDiagnostic;
 }
 
+interface NewsResponsePayload {
+  generatedAt: string;
+  count: number;
+  items: NewsItem[];
+  ingestion: {
+    totalOutlets: number;
+    totalEndpoints: number;
+    okEndpoints: number;
+    failedEndpoints: number;
+    circuitOpenEndpoints: number;
+    sampleCappedEndpoints: number;
+    diagnostics: FetchDiagnostic[];
+  };
+  persistence?: {
+    storage: 'postgres' | 'disabled';
+    persisted: number;
+  };
+}
+
+interface MemoryCacheEntry {
+  expiresAt: number;
+  payload: NewsResponsePayload;
+}
+
+interface ArticleTimeCacheEntry {
+  expiresAt: number;
+  publishedAt: string | null;
+}
+
+let redisClient: Redis | null = null;
+let redisFailed = false;
+const memoryNewsCache = new Map<string, MemoryCacheEntry>();
+const memoryArticleTimeCache = new Map<string, ArticleTimeCacheEntry>();
+
 const DAY_MS = 24 * 60 * 60 * 1000;
-const RSS_ITEM_LIMIT = 15;
-const SITEMAP_ITEM_LIMIT = 10;
-const WORLD_PORTAL_RSS_LIMIT = 8;
-const WORLD_PORTAL_SITEMAP_LIMIT = 6;
+const RSS_ITEM_LIMIT = 120;
+const SITEMAP_ITEM_LIMIT = 80;
+const WORLD_PORTAL_RSS_LIMIT = 60;
+const WORLD_PORTAL_SITEMAP_LIMIT = 40;
+const DEFAULT_RESPONSE_ITEM_LIMIT = 15000;
+const MAX_RESPONSE_ITEM_LIMIT = 20000;
+const NEWS_CACHE_TTL_SECONDS = 120;
+const MEMORY_CACHE_MAX_ENTRIES = 24;
+const REDIS_CACHE_MAX_PAYLOAD_BYTES = 1_500_000;
+const GNEWS_API_URL = 'https://gnews.io/api/v4/search';
+const GNEWS_ITEM_LIMIT = 10;
+const ARTICLE_TIME_CACHE_TTL_SECONDS = 60 * 60 * 24;
+const ARTICLE_TIME_FETCH_TIMEOUT_MS = 3500;
+const ARTICLE_TIME_MAX_ITEMS = 80;
+const ARTICLE_TIME_MAX_DIFF_MS = 7 * DAY_MS;
 const LATAM_COUNTRIES = new Set(['LATAM', 'Argentina', 'Chile', 'Uruguay']);
 const LATAM_ENTITY_TERMS = [
   'argentina',
@@ -72,12 +134,41 @@ const LATAM_ENTITY_TERMS = [
   'latinoamerica',
   'america latina',
 ];
+const BREAKING_TERMS = [
+  'breaking',
+  'urgent',
+  'developing',
+  'just in',
+  'ultima hora',
+  'última hora',
+  'urgente',
+  'en vivo',
+  'ahora',
+  'flash'
+];
+
+const ARTICLE_TIME_META_REGEXES = [
+  /<meta[^>]+(?:property|name)=["']article:published_time["'][^>]+content=["']([^"']+)["'][^>]*>/i,
+  /<meta[^>]+(?:property|name)=["']og:published_time["'][^>]+content=["']([^"']+)["'][^>]*>/i,
+  /<meta[^>]+(?:property|name)=["']parsely-pub-date["'][^>]+content=["']([^"']+)["'][^>]*>/i,
+  /<meta[^>]+(?:property|name)=["']pubdate["'][^>]+content=["']([^"']+)["'][^>]*>/i,
+  /<meta[^>]+(?:property|name)=["']date["'][^>]+content=["']([^"']+)["'][^>]*>/i,
+  /<meta[^>]+(?:property|name)=["']dc.date["'][^>]+content=["']([^"']+)["'][^>]*>/i,
+  /<time[^>]+datetime=["']([^"']+)["'][^>]*>/i,
+  /"datePublished"\s*:\s*"([^"]+)"/i,
+  /"dateCreated"\s*:\s*"([^"]+)"/i
+];
 
 function normalizeText(value: string): string {
   return value
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase();
+}
+
+function isLikelyBreakingText(text: string): boolean {
+  const normalized = normalizeText(text);
+  return BREAKING_TERMS.some((term) => normalized.includes(term));
 }
 
 function detectLatamFromTitle(title: string, locationName?: string): boolean {
@@ -94,10 +185,12 @@ function annotateWorldLatam(item: NewsItem): NewsItem {
   const latamByCountry = isLatamCountry(item.country);
   const latamByEntity = detectLatamFromTitle(item.title, item.locationName);
   const worldLatam = latamByCountry || latamByEntity;
+  const breaking = isLikelyBreakingText(`${item.title} ${item.classificationReason || ''}`);
+  const tags = [...new Set([...(item.tags || []), ...(worldLatam ? ['world_latam'] : []), ...(breaking ? ['breaking'] : [])])];
   return {
     ...item,
     worldLatam,
-    tags: worldLatam ? [...new Set([...(item.tags || []), 'world_latam'])] : (item.tags || [])
+    tags
   };
 }
 
@@ -133,6 +226,261 @@ function countRecent24h(items: Array<{ publishedAt: string }>): number {
 
 function normalizeCountryName(country: string): string {
   return COUNTRY_CODE_TO_NAME[country] || country;
+}
+
+function getRedis(): Redis | null {
+  if (redisClient) return redisClient;
+  if (redisFailed) return null;
+
+  const url = process.env.UPSTASH_REDIS_REST_URL;
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
+  if (!url || !token) return null;
+
+  try {
+    redisClient = new Redis({ url, token });
+    return redisClient;
+  } catch {
+    redisFailed = true;
+    return null;
+  }
+}
+
+async function sha256(input: string): Promise<string> {
+  const encoded = new TextEncoder().encode(input);
+  const digest = await crypto.subtle.digest('SHA-256', encoded);
+  return Array.from(new Uint8Array(digest)).map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+function pruneMemoryNewsCache(now: number): void {
+  for (const [key, entry] of memoryNewsCache.entries()) {
+    if (entry.expiresAt <= now) memoryNewsCache.delete(key);
+  }
+  while (memoryNewsCache.size > MEMORY_CACHE_MAX_ENTRIES) {
+    const oldest = memoryNewsCache.keys().next().value as string | undefined;
+    if (!oldest) break;
+    memoryNewsCache.delete(oldest);
+  }
+}
+
+async function buildNewsCacheKey(outletIds: string[], responseLimit: number): Promise<string> {
+  const normalizedOutlets = [...new Set(outletIds)].sort().join(',');
+  const signature = await sha256(`v2|${responseLimit}|${normalizedOutlets}`);
+  return `presslab:news:${signature}`;
+}
+
+async function getCachedNewsPayload(cacheKey: string): Promise<NewsResponsePayload | null> {
+  const now = Date.now();
+  const memoryEntry = memoryNewsCache.get(cacheKey);
+  if (memoryEntry && memoryEntry.expiresAt > now) {
+    newsCacheMetricHitMemory();
+    console.log(`[cache] news hit memory key=${cacheKey}`);
+    return memoryEntry.payload;
+  }
+  newsCacheMetricMissMemory();
+  if (memoryEntry) {
+    memoryNewsCache.delete(cacheKey);
+  }
+
+  const redis = getRedis();
+  if (!redis) {
+    newsCacheMetricMissNoRedis();
+    console.log(`[cache] news miss key=${cacheKey} (no redis configured)`);
+    return null;
+  }
+  try {
+    const cached = await redis.get<NewsResponsePayload>(cacheKey);
+    if (!cached) {
+      newsCacheMetricMissRedis();
+      console.log(`[cache] news miss key=${cacheKey} (redis miss)`);
+      return null;
+    }
+    newsCacheMetricHitRedis();
+    console.log(`[cache] news hit redis key=${cacheKey}`);
+    memoryNewsCache.set(cacheKey, {
+      expiresAt: now + NEWS_CACHE_TTL_SECONDS * 1000,
+      payload: cached
+    });
+    pruneMemoryNewsCache(now);
+    return cached;
+  } catch {
+    return null;
+  }
+}
+
+async function setCachedNewsPayload(cacheKey: string, payload: NewsResponsePayload): Promise<void> {
+  const now = Date.now();
+  memoryNewsCache.set(cacheKey, {
+    expiresAt: now + NEWS_CACHE_TTL_SECONDS * 1000,
+    payload
+  });
+  newsCacheMetricWriteMemory();
+  console.log(`[cache] news write memory key=${cacheKey}`);
+  pruneMemoryNewsCache(now);
+
+  const serialized = JSON.stringify(payload);
+  if (serialized.length > REDIS_CACHE_MAX_PAYLOAD_BYTES) {
+    newsCacheMetricSkipRedisPayloadTooLarge();
+    console.log(`[cache] news skip redis key=${cacheKey} reason=payload_too_large bytes=${serialized.length}`);
+    return;
+  }
+
+  const redis = getRedis();
+  if (!redis) {
+    newsCacheMetricSkipRedisNoRedis();
+    console.log(`[cache] news skip redis key=${cacheKey} reason=no_redis`);
+    return;
+  }
+  try {
+    await redis.set(cacheKey, payload, { ex: NEWS_CACHE_TTL_SECONDS });
+    newsCacheMetricWriteRedis();
+    console.log(`[cache] news write redis key=${cacheKey}`);
+  } catch {
+    newsCacheMetricWriteRedisFailed();
+    console.log(`[cache] news write redis failed key=${cacheKey}`);
+  }
+}
+
+function normalizeMetaPublishedAt(value: string): string | null {
+  const raw = (value || '').trim();
+  if (!raw) return null;
+  const ts = new Date(raw).getTime();
+  if (!Number.isFinite(ts)) return null;
+  return new Date(ts).toISOString();
+}
+
+function extractPublishedAtFromHtml(html: string): string | null {
+  for (const regex of ARTICLE_TIME_META_REGEXES) {
+    const match = html.match(regex);
+    if (!match || !match[1]) continue;
+    const normalized = normalizeMetaPublishedAt(match[1]);
+    if (normalized) return normalized;
+  }
+  return null;
+}
+
+function pruneMemoryArticleTimeCache(now: number): void {
+  for (const [key, entry] of memoryArticleTimeCache.entries()) {
+    if (entry.expiresAt <= now) memoryArticleTimeCache.delete(key);
+  }
+  while (memoryArticleTimeCache.size > 1024) {
+    const oldest = memoryArticleTimeCache.keys().next().value as string | undefined;
+    if (!oldest) break;
+    memoryArticleTimeCache.delete(oldest);
+  }
+}
+
+async function getCachedArticlePublishedAt(cacheKey: string): Promise<string | null | undefined> {
+  const now = Date.now();
+  const memoryEntry = memoryArticleTimeCache.get(cacheKey);
+  if (memoryEntry && memoryEntry.expiresAt > now) {
+    return memoryEntry.publishedAt;
+  }
+  if (memoryEntry) {
+    memoryArticleTimeCache.delete(cacheKey);
+  }
+
+  const redis = getRedis();
+  if (!redis) return undefined;
+  try {
+    const cached = await redis.get<string | null>(cacheKey);
+    if (cached === null) return undefined;
+    memoryArticleTimeCache.set(cacheKey, {
+      expiresAt: now + ARTICLE_TIME_CACHE_TTL_SECONDS * 1000,
+      publishedAt: cached
+    });
+    pruneMemoryArticleTimeCache(now);
+    return cached;
+  } catch {
+    return undefined;
+  }
+}
+
+async function setCachedArticlePublishedAt(cacheKey: string, publishedAt: string | null): Promise<void> {
+  const now = Date.now();
+  memoryArticleTimeCache.set(cacheKey, {
+    expiresAt: now + ARTICLE_TIME_CACHE_TTL_SECONDS * 1000,
+    publishedAt
+  });
+  pruneMemoryArticleTimeCache(now);
+
+  const redis = getRedis();
+  if (!redis) return;
+  try {
+    await redis.set(cacheKey, publishedAt, { ex: ARTICLE_TIME_CACHE_TTL_SECONDS });
+  } catch {
+    // Ignore cache write failure
+  }
+}
+
+async function fetchArticlePublishedAt(link: string): Promise<string | null> {
+  const cacheKey = `presslab:article-time:${await sha256(link)}`;
+  const cached = await getCachedArticlePublishedAt(cacheKey);
+  if (cached !== undefined) return cached;
+
+  let timeout: ReturnType<typeof setTimeout> | null = null;
+  try {
+    const controller = new AbortController();
+    timeout = setTimeout(() => controller.abort(), ARTICLE_TIME_FETCH_TIMEOUT_MS);
+    const response = await fetch(link, {
+      signal: controller.signal,
+      headers: {
+        'User-Agent': 'PressLabBot/1.0 (+https://presslab.local)'
+      },
+      next: { revalidate: 600 }
+    });
+    clearTimeout(timeout);
+    timeout = null;
+    if (!response.ok) {
+      await setCachedArticlePublishedAt(cacheKey, null);
+      return null;
+    }
+    const html = await response.text();
+    const parsed = extractPublishedAtFromHtml(html);
+    await setCachedArticlePublishedAt(cacheKey, parsed);
+    return parsed;
+  } catch {
+    await setCachedArticlePublishedAt(cacheKey, null);
+    return null;
+  } finally {
+    if (timeout) clearTimeout(timeout);
+  }
+}
+
+async function enrichPublishedAtFromArticleMeta(items: NewsItem[]): Promise<NewsItem[]> {
+  const enabled = process.env.ARTICLE_TIME_ENRICH_ENABLED !== 'false';
+  if (!enabled) return items;
+
+  const maxItems = Math.max(
+    0,
+    Math.min(
+      ARTICLE_TIME_MAX_ITEMS,
+      Number.parseInt(process.env.ARTICLE_TIME_ENRICH_MAX_ITEMS || `${ARTICLE_TIME_MAX_ITEMS}`, 10) || ARTICLE_TIME_MAX_ITEMS
+    )
+  );
+  if (maxItems === 0 || items.length === 0) return items;
+
+  const targets = items.slice(0, maxItems);
+  const enriched = await Promise.all(
+    targets.map(async (item) => {
+      const articlePublishedAt = await fetchArticlePublishedAt(item.link);
+      if (!articlePublishedAt) return item;
+
+      const sourceTs = new Date(item.publishedAt).getTime();
+      const metaTs = new Date(articlePublishedAt).getTime();
+      if (!Number.isFinite(sourceTs) || !Number.isFinite(metaTs)) return item;
+
+      // Guard against accidental wrong extraction (e.g. stale template times).
+      if (Math.abs(metaTs - sourceTs) > ARTICLE_TIME_MAX_DIFF_MS) return item;
+
+      return {
+        ...item,
+        publishedAt: articlePublishedAt
+      };
+    })
+  );
+
+  if (items.length <= maxItems) return enriched;
+  return [...enriched, ...items.slice(maxItems)];
 }
 
 async function getBusinessRadarFallback(): Promise<NewsItem[]> {
@@ -175,6 +523,91 @@ async function getBusinessRadarFallback(): Promise<NewsItem[]> {
   }
 }
 
+function inferCountryFromText(text: string): string {
+  const normalized = normalizeText(text);
+  if (normalized.includes('argentina') || normalized.includes('buenos aires')) return 'Argentina';
+  if (normalized.includes('chile') || normalized.includes('santiago')) return 'Chile';
+  if (normalized.includes('uruguay') || normalized.includes('montevideo')) return 'Uruguay';
+  if (normalized.includes('mexico')) return 'Mexico';
+  if (normalized.includes('united states') || normalized.includes(' usa ') || normalized.includes(' us ')) return 'United States';
+  if (normalized.includes('latam') || normalized.includes('latin america') || normalized.includes('latinoamerica')) return 'LATAM';
+  return 'Global';
+}
+
+async function getGnewsBreakingOverlay(): Promise<NewsItem[]> {
+  const apiKey = process.env.GNEWS_API_KEY;
+  const enabled = process.env.GNEWS_BREAKING_ENABLED !== 'false';
+  if (!apiKey || !enabled) return [];
+
+  const since = new Date(Date.now() - DAY_MS).toISOString();
+  const queries = [
+    {
+      lang: 'en',
+      q: '(breaking OR urgent OR developing OR "just in") AND (US OR "United States" OR Argentina OR Chile OR Uruguay OR Mexico OR LATAM OR "Latin America")'
+    },
+    {
+      lang: 'es',
+      q: '("ultima hora" OR "última hora" OR urgente OR "en vivo") AND (Argentina OR Chile OR Uruguay OR Mexico OR Latinoamerica OR LATAM)'
+    }
+  ];
+
+  const batches = await Promise.all(
+    queries.map(async ({ lang, q }) => {
+      const url = new URL(GNEWS_API_URL);
+      url.searchParams.set('apikey', apiKey);
+      url.searchParams.set('q', q);
+      url.searchParams.set('lang', lang);
+      url.searchParams.set('max', String(GNEWS_ITEM_LIMIT));
+      url.searchParams.set('sortby', 'publishedAt');
+      url.searchParams.set('from', since);
+
+      const response = await fetch(url.toString(), { next: { revalidate: 120 } });
+      if (!response.ok) return [];
+
+      const payload = await response.json() as {
+        articles?: Array<{
+          title?: string;
+          description?: string;
+          url?: string;
+          publishedAt?: string;
+          source?: { name?: string };
+        }>;
+      };
+      return payload.articles || [];
+    })
+  ).catch(() => []);
+
+  const merged = batches.flat();
+  return merged
+    .map((article) => {
+      const title = (article.title || '').trim();
+      const link = (article.url || '').trim();
+      const publishedAt = article.publishedAt ? new Date(article.publishedAt).toISOString() : '';
+      if (!title || !link || !publishedAt) return null;
+
+      const fallbackCountry = inferCountryFromText(`${title} ${article.description || ''} ${link}`);
+      const geo = inferGeoFromTitle(title, fallbackCountry);
+      const classification = classifyBeatByKeyword(title, 'world');
+      const item = {
+        id: link,
+        title,
+        link,
+        source: `GNews • ${article.source?.name || 'Breaking Desk'}`,
+        language: /[áéíóúñ]/i.test(`${title} ${article.description || ''}`) ? 'es' : 'en',
+        sourceType: 'portal' as const,
+        tier: 2 as const,
+        publishedAt,
+        beat: classification.beat,
+        confidence: classification.confidence,
+        classificationSource: classification.source,
+        classificationReason: classification.reason,
+        ...geo
+      } satisfies NewsItem;
+      return annotateWorldLatam(item);
+    })
+    .filter((item): item is NewsItem => Boolean(item));
+}
+
 async function fetchOutletRss(origin: string, outlet: OutletFeed): Promise<OutletFetchResult> {
   if (!outlet.rssUrl) {
     return {
@@ -188,6 +621,8 @@ async function fetchOutletRss(origin: string, outlet: OutletFeed): Promise<Outle
         ok: false,
         statusCode: null,
         parsedCount: 0,
+        parsedLimit: 0,
+        sampleCapped: false,
         recent24h: 0
       }
     };
@@ -204,6 +639,8 @@ async function fetchOutletRss(origin: string, outlet: OutletFeed): Promise<Outle
         ok: false,
         statusCode: null,
         parsedCount: 0,
+        parsedLimit: 0,
+        sampleCapped: false,
         recent24h: 0,
         url: outlet.rssUrl,
         error: 'circuit_open'
@@ -212,6 +649,7 @@ async function fetchOutletRss(origin: string, outlet: OutletFeed): Promise<Outle
   }
 
   try {
+    const parseLimit = rssItemLimitFor(outlet);
     const proxyUrl = `${origin}/api/rss-proxy?url=${encodeURIComponent(outlet.rssUrl)}`;
     const response = await fetch(proxyUrl, { next: { revalidate: 300 } });
     if (!response.ok) {
@@ -227,6 +665,8 @@ async function fetchOutletRss(origin: string, outlet: OutletFeed): Promise<Outle
           ok: false,
           statusCode: response.status,
           parsedCount: 0,
+          parsedLimit: parseLimit,
+          sampleCapped: false,
           recent24h: 0,
           url: outlet.rssUrl,
           error: `http_${response.status}`
@@ -235,7 +675,7 @@ async function fetchOutletRss(origin: string, outlet: OutletFeed): Promise<Outle
     }
 
     const xml = await response.text();
-    const parsed = parseRssOrAtom(xml, rssItemLimitFor(outlet));
+    const parsed = parseRssOrAtom(xml, parseLimit);
     const items = parsed.map((item) => {
       const classification = classifyBeatByKeyword(item.title, outlet.beat);
       const normalizedCountry = normalizeCountryName(outlet.country);
@@ -270,6 +710,8 @@ async function fetchOutletRss(origin: string, outlet: OutletFeed): Promise<Outle
         ok: true,
         statusCode: 200,
         parsedCount: parsed.length,
+        parsedLimit: parseLimit,
+        sampleCapped: parsed.length >= parseLimit,
         recent24h: countRecent24h(parsed),
         url: outlet.rssUrl
       }
@@ -287,6 +729,8 @@ async function fetchOutletRss(origin: string, outlet: OutletFeed): Promise<Outle
         ok: false,
         statusCode: null,
         parsedCount: 0,
+        parsedLimit: 0,
+        sampleCapped: false,
         recent24h: 0,
         url: outlet.rssUrl,
         error: error instanceof Error ? error.message : String(error)
@@ -308,6 +752,8 @@ async function fetchOutletSitemap(origin: string, outlet: OutletFeed): Promise<O
         ok: false,
         statusCode: null,
         parsedCount: 0,
+        parsedLimit: 0,
+        sampleCapped: false,
         recent24h: 0
       }
     };
@@ -325,6 +771,8 @@ async function fetchOutletSitemap(origin: string, outlet: OutletFeed): Promise<O
         ok: false,
         statusCode: null,
         parsedCount: 0,
+        parsedLimit: 0,
+        sampleCapped: false,
         recent24h: 0,
         url: outlet.sitemapUrl,
         error: 'circuit_open'
@@ -333,6 +781,7 @@ async function fetchOutletSitemap(origin: string, outlet: OutletFeed): Promise<O
   }
 
   try {
+    const parseLimit = sitemapItemLimitFor(outlet);
     const response = await fetch(`${origin}/api/sitemap?url=${encodeURIComponent(outlet.sitemapUrl)}`, { next: { revalidate: 300 } });
     if (!response.ok) {
       markFailure(key);
@@ -347,6 +796,8 @@ async function fetchOutletSitemap(origin: string, outlet: OutletFeed): Promise<O
           ok: false,
           statusCode: response.status,
           parsedCount: 0,
+          parsedLimit: parseLimit,
+          sampleCapped: false,
           recent24h: 0,
           url: outlet.sitemapUrl,
           error: `http_${response.status}`
@@ -355,7 +806,7 @@ async function fetchOutletSitemap(origin: string, outlet: OutletFeed): Promise<O
     }
 
     const json = await response.json() as { items?: Array<{ title: string; link: string; publishedAt: string }> };
-    const parsed = (json.items || []).slice(0, sitemapItemLimitFor(outlet));
+    const parsed = (json.items || []).slice(0, parseLimit);
     const items = parsed.map((item) => {
       const classification = classifyBeatByKeyword(item.title, outlet.beat);
       const normalizedCountry = normalizeCountryName(outlet.country);
@@ -390,6 +841,8 @@ async function fetchOutletSitemap(origin: string, outlet: OutletFeed): Promise<O
         ok: true,
         statusCode: 200,
         parsedCount: parsed.length,
+        parsedLimit: parseLimit,
+        sampleCapped: parsed.length >= parseLimit,
         recent24h: countRecent24h(parsed),
         url: outlet.sitemapUrl
       }
@@ -407,6 +860,8 @@ async function fetchOutletSitemap(origin: string, outlet: OutletFeed): Promise<O
         ok: false,
         statusCode: null,
         parsedCount: 0,
+        parsedLimit: 0,
+        sampleCapped: false,
         recent24h: 0,
         url: outlet.sitemapUrl,
         error: error instanceof Error ? error.message : String(error)
@@ -505,13 +960,37 @@ function buildStoryClusters(items: NewsItem[]): NewsItem[] {
   }));
 }
 
+function filterReasonablePublishedAt(items: NewsItem[]): NewsItem[] {
+  const now = Date.now();
+  const maxFutureSkewMs = 2 * 60 * 60 * 1000;
+  const maxAgeMs = 90 * DAY_MS;
+  return items.filter((item) => {
+    const ts = new Date(item.publishedAt).getTime();
+    if (!Number.isFinite(ts)) return false;
+    if (ts > now + maxFutureSkewMs) return false;
+    if (ts < now - maxAgeMs) return false;
+    return true;
+  });
+}
+
 export async function GET(req: NextRequest): Promise<Response> {
+  newsCacheMetricRequest();
   const origin = req.nextUrl.origin;
   const outletIds = (req.nextUrl.searchParams.get('outlets') || '').split(',').filter(Boolean);
+  const requestedLimit = Number(req.nextUrl.searchParams.get('limit') || DEFAULT_RESPONSE_ITEM_LIMIT);
+  const responseLimit = Number.isFinite(requestedLimit)
+    ? Math.max(100, Math.min(MAX_RESPONSE_ITEM_LIMIT, Math.round(requestedLimit)))
+    : DEFAULT_RESPONSE_ITEM_LIMIT;
 
   const selectedOutlets = outletIds.length
     ? outletIds.map((id) => OUTLET_BY_ID.get(id)).filter((outlet): outlet is OutletFeed => Boolean(outlet))
     : OUTLET_FEEDS;
+  const selectedOutletIds = selectedOutlets.map((outlet) => outlet.id);
+  const cacheKey = await buildNewsCacheKey(selectedOutletIds, responseLimit);
+  const cachedPayload = await getCachedNewsPayload(cacheKey);
+  if (cachedPayload) {
+    return Response.json(cachedPayload);
+  }
 
   const tasks = selectedOutlets.flatMap((outlet) => [
     fetchOutletRss(origin, outlet),
@@ -520,24 +999,47 @@ export async function GET(req: NextRequest): Promise<Response> {
 
   const results = await Promise.all(tasks);
   const diagnostics = results.map((result) => result.diagnostic);
-  let items = buildStoryClusters(dedupeAndSort(results.flatMap((result) => result.items)));
+  await persistIngestionDiagnostics(diagnostics).catch(() => ({ persisted: 0, storage: 'disabled' as const }));
+  const gnewsItems = await getGnewsBreakingOverlay();
+  const mergedItems = dedupeAndSort([
+    ...results.flatMap((result) => result.items),
+    ...gnewsItems
+  ]);
+  const enrichedItems = await enrichPublishedAtFromArticleMeta(mergedItems);
+  let items = buildStoryClusters(
+    dedupeAndSort(
+      filterReasonablePublishedAt([
+        ...enrichedItems
+      ])
+    )
+  );
 
   if (items.length < 20) {
     const fallback = await getBusinessRadarFallback();
     items = buildStoryClusters(dedupeAndSort([...items, ...fallback]));
   }
 
-  return Response.json({
+  const persistence = await persistIngestedArticles(items).catch(() => ({ persisted: 0, storage: 'disabled' as const }));
+
+  const payload: NewsResponsePayload = {
     generatedAt: new Date().toISOString(),
     count: items.length,
-    items: items.slice(0, 200),
+    items: items.slice(0, responseLimit),
     ingestion: {
       totalOutlets: selectedOutlets.length,
       totalEndpoints: diagnostics.filter((diag) => diag.attempted).length,
       okEndpoints: diagnostics.filter((diag) => diag.attempted && diag.ok).length,
       failedEndpoints: diagnostics.filter((diag) => diag.attempted && !diag.ok).length,
       circuitOpenEndpoints: diagnostics.filter((diag) => diag.circuitOpen).length,
+      sampleCappedEndpoints: diagnostics.filter((diag) => diag.attempted && diag.sampleCapped).length,
       diagnostics
+    },
+    persistence: {
+      storage: persistence.storage,
+      persisted: persistence.persisted
     }
-  });
+  };
+
+  await setCachedNewsPayload(cacheKey, payload);
+  return Response.json(payload);
 }

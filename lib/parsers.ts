@@ -13,33 +13,84 @@ function parseTag(body: string, tag: string): string {
   return match ? clean(match[1] || '') : '';
 }
 
+function normalizePublishedAt(value: string): string {
+  const raw = (value || '').trim();
+  if (!raw) return '';
+  const ts = new Date(raw).getTime();
+  if (!Number.isFinite(ts)) return '';
+  return new Date(ts).toISOString();
+}
+
+function inferPublishedAtFromLink(link: string): string {
+  const url = (link || '').toLowerCase();
+  if (!url) return '';
+  const slashPattern = url.match(/(20\d{2})\/(0[1-9]|1[0-2])\/([0-2]\d|3[01])/);
+  if (slashPattern) {
+    return normalizePublishedAt(`${slashPattern[1]}-${slashPattern[2]}-${slashPattern[3]}T00:00:00Z`);
+  }
+  const dashPattern = url.match(/(20\d{2})-(0[1-9]|1[0-2])-([0-2]\d|3[01])/);
+  if (dashPattern) {
+    return normalizePublishedAt(`${dashPattern[1]}-${dashPattern[2]}-${dashPattern[3]}T00:00:00Z`);
+  }
+  return '';
+}
+
+function parsePublishedAt(body: string, fallbackLink = ''): string {
+  const candidates = [
+    parseTag(body, 'pubDate'),
+    parseTag(body, 'published'),
+    parseTag(body, 'dc:published'),
+    parseTag(body, 'date'),
+    parseTag(body, 'updated'),
+    parseTag(body, 'dc:date'),
+  ];
+  for (const candidate of candidates) {
+    const normalized = normalizePublishedAt(candidate);
+    if (normalized) return normalized;
+  }
+  return inferPublishedAtFromLink(fallbackLink);
+}
+
 export function parseRssOrAtom(xml: string, limit = 10): ParsedFeedItem[] {
   const items = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/gi)].map((match) => match[1]);
   if (items.length > 0) {
-    return items.slice(0, limit).map((body) => ({
-      title: parseTag(body, 'title'),
-      link: parseTag(body, 'link'),
-      publishedAt: parseTag(body, 'pubDate') || new Date().toISOString()
-    })).filter((item) => item.title && item.link);
+    return items
+      .slice(0, limit)
+      .map((body) => {
+        const title = parseTag(body, 'title');
+        const link = parseTag(body, 'link');
+        return {
+          title,
+          link,
+          publishedAt: parsePublishedAt(body, link)
+        };
+      })
+      .filter((item) => item.title && item.link && item.publishedAt);
   }
 
   const entries = [...xml.matchAll(/<entry>([\s\S]*?)<\/entry>/gi)].map((match) => match[1]);
-  return entries.slice(0, limit).map((body) => {
-    const linkHref = body.match(/<link[^>]+href=["']([^"']+)["']/i)?.[1] || '';
-    return {
-      title: parseTag(body, 'title'),
-      link: linkHref,
-      publishedAt: parseTag(body, 'published') || parseTag(body, 'updated') || new Date().toISOString()
-    };
-  }).filter((item) => item.title && item.link);
+  return entries
+    .slice(0, limit)
+    .map((body) => {
+      const linkHref = body.match(/<link[^>]+href=["']([^"']+)["']/i)?.[1] || '';
+      return {
+        title: parseTag(body, 'title'),
+        link: linkHref,
+        publishedAt: parsePublishedAt(body, linkHref)
+      };
+    })
+    .filter((item) => item.title && item.link && item.publishedAt);
 }
 
 export function parseSitemap(xml: string, limit = 12): ParsedFeedItem[] {
   const urls = [...xml.matchAll(/<url>([\s\S]*?)<\/url>/gi)].map((match) => match[1]);
-  return urls.slice(0, limit).map((body) => {
-    const link = parseTag(body, 'loc');
-    const title = link.split('/').pop()?.replace(/[-_]/g, ' ') || link;
-    const publishedAt = parseTag(body, 'lastmod') || new Date().toISOString();
-    return { title, link, publishedAt };
-  }).filter((item) => item.link);
+  return urls
+    .slice(0, limit)
+    .map((body) => {
+      const link = parseTag(body, 'loc');
+      const title = link.split('/').pop()?.replace(/[-_]/g, ' ') || link;
+      const publishedAt = normalizePublishedAt(parseTag(body, 'lastmod')) || inferPublishedAtFromLink(link);
+      return { title, link, publishedAt };
+    })
+    .filter((item) => item.link && item.publishedAt);
 }

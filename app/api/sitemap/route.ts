@@ -37,7 +37,7 @@ export async function GET(req: Request): Promise<Response> {
     }
 
     const xml = await response.text();
-    const items = parseSitemap(xml, 20);
+    const items = parseSitemap(xml, 300);
     return Response.json({ items, count: items.length });
   } catch (error) {
     const isTimeout = error instanceof Error && error.name === 'AbortError';

@@ -14,6 +14,14 @@
     "report:daily-sources": "bun scripts/report-daily-source-counts.ts && bun scripts/post-daily-discord.ts",
     "report:daily-sources:notify": "bun scripts/report-daily-source-counts.ts && bun scripts/post-daily-discord.ts",
     "report:us-latam-health": "bun scripts/report-us-latam-health.ts",
+    "warm:once": "bun scripts/warm-news-cache.ts --once",
+    "warm:loop": "bun scripts/warm-news-cache.ts",
+    "warm:daemon:start": "bash scripts/warm-daemon.sh start",
+    "warm:daemon:stop": "bash scripts/warm-daemon.sh stop",
+    "warm:daemon:restart": "bash scripts/warm-daemon.sh restart",
+    "warm:daemon:status": "bash scripts/warm-daemon.sh status",
+    "warm:daemon:logs": "bash scripts/warm-daemon.sh logs",
+    "db:init": "psql \"$DATABASE_URL\" -f db/schema.sql",
     "notify:discord-daily": "bun scripts/post-daily-discord.ts",
     "notify:discord-daily:dry": "bun scripts/post-daily-discord.ts --dry-run",
     "promote:expansion": "bun scripts/promote-expansion-sources.ts",
@@ -23,11 +31,13 @@
     "@upstash/redis": "^1.35.6",
     "maplibre-gl": "^4.7.1",
     "next": "15.1.7",
+    "pg": "^8.16.3",
     "react": "19.0.0",
     "react-dom": "19.0.0"
   },
   "devDependencies": {
     "@types/node": "^22.13.1",
+    "@types/pg": "^8.16.0",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
     "typescript": "^5.7.3"

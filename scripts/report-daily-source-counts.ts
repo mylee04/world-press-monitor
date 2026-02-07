@@ -35,6 +35,31 @@ const SITEMAP_LIMIT = 250;
 const TIMEOUT_MS = 18000;
 const CONCURRENCY = 8;
 const UA = 'Mozilla/5.0 (compatible; PressLabDailyMetrics/1.0; +https://presslab.local)';
+const RETRY_STATUS = new Set([429, 500, 502, 503, 504]);
+const DIRECT_RETRIES = 2;
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function envValue(key: string): string {
+  return process.env[key] || '';
+}
+
+function buildProxyUrl(target: string): string | null {
+  const base = envValue('APP_BASE_URL') || 'http://localhost:3000';
+  if (!base) return null;
+  return `${base.replace(/\/$/, '')}/api/rss-proxy?url=${encodeURIComponent(target)}`;
+}
+
+function shouldTryProxy(url: string): boolean {
+  try {
+    const u = new URL(url);
+    return u.hostname === 'news.google.com' || u.hostname === 'www.bing.com';
+  } catch {
+    return false;
+  }
+}
 
 async function fetchWithTimeout(url: string, timeoutMs = TIMEOUT_MS): Promise<Response> {
   const controller = new AbortController();
@@ -50,6 +75,43 @@ async function fetchWithTimeout(url: string, timeoutMs = TIMEOUT_MS): Promise<Re
     });
   } finally {
     clearTimeout(timeout);
+  }
+}
+
+async function fetchWithRetryAndProxy(url: string): Promise<Response> {
+  let lastResponse: Response | null = null;
+  let lastError: unknown = null;
+
+  for (let i = 0; i <= DIRECT_RETRIES; i += 1) {
+    try {
+      const res = await fetchWithTimeout(url);
+      lastResponse = res;
+      if (!RETRY_STATUS.has(res.status) || i === DIRECT_RETRIES) break;
+      await sleep(250 * (i + 1));
+    } catch (error) {
+      lastError = error;
+      if (i === DIRECT_RETRIES) break;
+      await sleep(250 * (i + 1));
+    }
+  }
+
+  if (lastResponse && lastResponse.ok) return lastResponse;
+  if (lastResponse && !shouldTryProxy(url)) return lastResponse;
+  if (!shouldTryProxy(url)) {
+    if (lastResponse) return lastResponse;
+    throw (lastError instanceof Error ? lastError : new Error('fetch_failed'));
+  }
+
+  const proxyUrl = buildProxyUrl(url);
+  if (!proxyUrl) {
+    if (lastResponse) return lastResponse;
+    throw (lastError instanceof Error ? lastError : new Error('fetch_failed_no_proxy'));
+  }
+  try {
+    return await fetchWithTimeout(proxyUrl);
+  } catch (error) {
+    if (lastResponse) return lastResponse;
+    throw error;
   }
 }
 
@@ -105,7 +167,7 @@ async function countOutlet(outlet: typeof OUTLET_FEEDS[number]): Promise<Row> {
 
   if (outlet.rssUrl) {
     try {
-      const res = await fetchWithTimeout(outlet.rssUrl);
+      const res = await fetchWithRetryAndProxy(outlet.rssUrl);
       if (!res.ok) {
         row.errors.push(`rss:${res.status}`);
       } else {
@@ -124,7 +186,7 @@ async function countOutlet(outlet: typeof OUTLET_FEEDS[number]): Promise<Row> {
 
   if (outlet.sitemapUrl) {
     try {
-      const res = await fetchWithTimeout(outlet.sitemapUrl);
+      const res = await fetchWithRetryAndProxy(outlet.sitemapUrl);
       if (!res.ok) {
         row.errors.push(`sitemap:${res.status}`);
       } else {

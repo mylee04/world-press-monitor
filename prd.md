@@ -200,6 +200,11 @@ PressLab V1 is newsroom-first and region-focused. Coverage prioritizes US and LA
   - `language`
   - `sourceType` (`global` | `local` | `portal`)
 - Deduplication must run cross-language for same-event clustering.
+- Metadata persistence (V1.1):
+  - persist deduplicated feed items in `ingested_articles`
+  - dedupe key: normalized canonical link hash
+  - maintain `first_seen_at`, `last_seen_at`, `seen_count` for ingestion replay/audit
+  - retain metadata only (no full article body).
 
 **Ranking Policy in Country View**
 - For US: prioritize US core sources.
@@ -306,6 +311,116 @@ Daily reports must include:
   - split by US sources vs LATAM sources.
 - `bun run promote:expansion:apply`
 
+### 3.15 Realtime Ops and Cache Warming (Execution Decision Log)
+
+Decision date: February 7, 2026
+
+To stabilize latency and reduce repeated full fetches across 2k+ sources, V1 uses a warm-cache operating model.
+
+**Warm Strategy**
+- Add warm endpoint: `GET /api/news-warm`
+- Warm cadence: every `300s` (5 minutes)
+- Warm scopes:
+  - `limit=15000` (24h view)
+  - `limit=6000` (shorter windows)
+- Warm target: `defaultEnabled` outlet set, chunked execution for reliability.
+
+**Warm Status**
+- Add status mode: `GET /api/news-warm?mode=status`
+- Status returns latest successful warm summary (`elapsedMs`, requests, success/failure, total items).
+- Discord report reads status first; if no prior status exists, report flow may trigger one warm run.
+
+**Cache Architecture**
+- `/api/news` cache layers:
+  - memory cache (short TTL)
+  - Redis cache (Upstash, cross-process)
+- Cache diagnostics:
+  - endpoint: `GET /api/news-cache-health`
+  - counters: requests, memory/redis hits, misses, writes, skip/fail reasons.
+- Metrics persistence:
+  - keep counters in Redis to avoid per-process reset effects.
+
+**Published Time Quality Controls**
+- Feed parsing must not trust channel-level timestamps (`lastBuildDate` removed from primary date extraction).
+- For top N feed items, fetch article page metadata and prefer:
+  - `article:published_time`
+  - `og:published_time`
+  - JSON-LD `datePublished`
+- Apply guardrails to reject implausible timestamp jumps.
+
+**GNews Usage Policy**
+- GNews is supplementary in V1, not the primary real-time source path.
+- Primary path remains RSS + Sitemap + Google/Bing RSS.
+- Rationale: free-tier API delays and strict request caps make it unsuitable as sole breaking source.
+
+**Operational Commands**
+- `bun run warm:once`
+- `bun run warm:loop`
+- `bun run warm:daemon:start`
+- `bun run warm:daemon:status`
+- `bun run warm:daemon:logs`
+- `bun run warm:daemon:stop`
+- `bun run report:daily-sources`
+- `bun run notify:discord-daily:dry`
+
+### 3.16 Query Matrix Default Policy (US)
+
+Decision date: February 7, 2026
+
+- `US Query Matrix` (state/metro x category keyword seeds) is default ON in V1.
+- Query matrix sources are no longer treated as `exploratory_off_by_default`.
+- Purpose:
+  - increase recall for beat-specific competitor monitoring
+  - support daily target throughput with category-aware state/metro capture.
+
+### 3.17 Breaking -> Draft -> Distribution Pipeline (Core Workflow)
+
+Decision date: February 7, 2026
+
+PressLab V1 now treats this as a primary newsroom flow:
+
+1. Detect breaking candidates from live ingestion.
+2. Auto-generate Spanish draft in Writing.
+3. Human edit + approval.
+4. Generate platform-specific distribution copy.
+
+**Writing Tab (Implemented)**
+- Breaking discovery action fetches recent feed and selects candidates by:
+  - `breaking` tag or breaking keyword signal
+  - freshness window (recent hours)
+- For each candidate, system calls `POST /api/ai/draft` and stores:
+  - Spanish headline
+  - Spanish body draft
+  - source metadata and status
+- Editor can:
+  - regenerate draft
+  - edit headline/body
+  - approve and send to Distribution
+
+**Distribution Tab (Implemented)**
+- Takes approved drafts and calls `POST /api/ai/repurpose`.
+- Generates channel-specific content:
+  - Tweet Generator
+  - Instagram post
+  - LinkedIn post
+  - TikTok caption
+  - Newsletter format
+- Editor can:
+  - edit each channel copy
+  - copy content
+  - mark as published
+
+**State Model (V1)**
+- Local PostgreSQL-first persistence for draft/distribution records.
+- Browser local storage remains as offline fallback when DB is unavailable.
+- Draft states:
+  - `draft`
+  - `approved`
+  - `published`
+- Post-MVP migration path:
+  - move draft/distribution state to shared DB (Supabase/Postgres)
+  - add role-based approval and real publish connectors.
+
 ### 3.11.3 Daily Ops Reporting and Discord Delivery
 
 Decision date: February 6, 2026
@@ -411,6 +526,13 @@ To make regional monitoring operational for newsroom users, PressLab adds three 
 - Trend spike alerts (anomaly detection).
 - Comparative speed analysis by outlet.
 - Coverage gap detection between competitor and internal watchlists.
+- Warm daemon productionization:
+  - switch `NEWS_WARM_URL` from localhost to deployment URL
+  - replace local daemon dependency with platform scheduler/cron for `/api/news-warm`
+  - keep `mode=status` report integration for Discord ops.
+- Reporting performance optimization:
+  - keep current network-heavy verification report for audit accuracy
+  - add fast DB-backed report mode (from `ingested_articles` + `ingestion_endpoint_runs`) for operational daily updates
 
 ## 6. MVP Acceptance Criteria
 
@@ -422,6 +544,11 @@ To make regional monitoring operational for newsroom users, PressLab adds three 
 - V1 only displays sources from US + LATAM scope.
 - LATAM filter supports Chile/Argentina/Uruguay selection.
 - Dev ops panel shows per-source ingestion failures and zero-yield sources in real time.
+- Dev ops panel exposes 24h ingestion KPIs from PostgreSQL:
+  - unique items
+  - duplicate candidates/rate
+  - endpoint runs/failure rate
+  - top sources by 24h volume
 
 ## 8. V1 Execution Plan (US + LATAM)
 

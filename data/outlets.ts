@@ -14,7 +14,7 @@ interface OutletSeed {
 const PRESET_SEEDS: Record<string, OutletSeed[]> = {
   us_general: [
     { name: 'The New York Times', tier: 1, beat: 'world', country: 'US', rssUrl: 'https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml' },
-    { name: 'Washington Post', tier: 1, beat: 'politics', country: 'US', rssUrl: 'https://feeds.washingtonpost.com/rss/politics' },
+    { name: 'Washington Post', tier: 1, beat: 'politics', country: 'US', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=site:washingtonpost.com+politics&ceid=US:en&hl=en-US&gl=US' },
     { name: 'Wall Street Journal', tier: 1, beat: 'business', country: 'US', rssUrl: 'https://feeds.a.dj.com/rss/RSSWorldNews.xml' },
     { name: 'USA Today', tier: 1, beat: 'world', country: 'US', rssUrl: 'http://rssfeeds.usatoday.com/UsatodaycomNation-TopStories' },
     { name: 'LA Times', tier: 1, beat: 'world', country: 'US', rssUrl: 'https://www.latimes.com/local/rss2.0.xml' },
@@ -28,7 +28,7 @@ const PRESET_SEEDS: Record<string, OutletSeed[]> = {
     { name: 'Reuters', tier: 1, beat: 'world', country: 'US', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=site:reuters.com&ceid=US:en&hl=en-US&gl=US' },
     { name: 'HuffPost', tier: 2, beat: 'world', country: 'US', rssUrl: 'https://www.huffpost.com/section/front-page/feed' },
     { name: 'BuzzFeed News', tier: 2, beat: 'world', country: 'US', rssUrl: 'https://www.buzzfeednews.com/news.xml' },
-    { name: 'Vice News', tier: 2, beat: 'world', country: 'US', rssUrl: 'https://www.vice.com/en_us/rss' },
+    { name: 'Vice News', tier: 2, beat: 'world', country: 'US', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=site:vice.com+news&ceid=US:en&hl=en-US&gl=US' },
     { name: 'Vox', tier: 2, beat: 'politics', country: 'US', rssUrl: 'https://www.vox.com/rss/index.xml' }
   ],
   us_business: [
@@ -235,24 +235,24 @@ const US_STATE_TOPIC_SEEDS: OutletSeed[] = US_STATE_NAMES.flatMap((state) => ([
     beat: 'business',
     country: 'US',
     sourceType: 'portal',
-    rssUrl: `https://www.bing.com/news/search?q=${encodeURIComponent(`${state} business economy`)}&format=RSS&setlang=en-us`
+    rssUrl: `https://www.bing.com/news/search?q=${encodeURIComponent(`${state} business economy`)}&format=RSS&setlang=en-us&qft=interval%3D%227%22`
   }
 ]));
 
 const US_BING_TOPIC_SEEDS: OutletSeed[] = [
-  { name: 'Bing US Politics Topic', tier: 2, beat: 'politics', country: 'US', sourceType: 'portal', rssUrl: 'https://www.bing.com/news/search?q=US+politics&format=RSS&setlang=en-us' },
-  { name: 'Bing US Business Topic', tier: 2, beat: 'business', country: 'US', sourceType: 'portal', rssUrl: 'https://www.bing.com/news/search?q=US+business&format=RSS&setlang=en-us' },
-  { name: 'Bing US Tech Topic', tier: 2, beat: 'tech', country: 'US', sourceType: 'portal', rssUrl: 'https://www.bing.com/news/search?q=US+technology&format=RSS&setlang=en-us' },
-  { name: 'Bing US World Topic', tier: 2, beat: 'world', country: 'US', sourceType: 'portal', rssUrl: 'https://www.bing.com/news/search?q=US+world+news&format=RSS&setlang=en-us' }
+  { name: 'Bing US Politics Topic', tier: 2, beat: 'politics', country: 'US', sourceType: 'portal', rssUrl: 'https://www.bing.com/news/search?q=US+politics&format=RSS&setlang=en-us&qft=interval%3D%227%22' },
+  { name: 'Bing US Business Topic', tier: 2, beat: 'business', country: 'US', sourceType: 'portal', rssUrl: 'https://www.bing.com/news/search?q=US+business&format=RSS&setlang=en-us&qft=interval%3D%227%22' },
+  { name: 'Bing US Tech Topic', tier: 2, beat: 'tech', country: 'US', sourceType: 'portal', rssUrl: 'https://www.bing.com/news/search?q=US+technology&format=RSS&setlang=en-us&qft=interval%3D%227%22' },
+  { name: 'Bing US World Topic', tier: 2, beat: 'world', country: 'US', sourceType: 'portal', rssUrl: 'https://www.bing.com/news/search?q=US+world+news&format=RSS&setlang=en-us&qft=interval%3D%227%22' }
 ];
 
 const LATAM_BING_TOPIC_SEEDS: OutletSeed[] = [
-  { name: 'Bing LATAM Topic', tier: 2, beat: 'world', country: 'LATAM', language: 'es', sourceType: 'portal', rssUrl: 'https://www.bing.com/news/search?q=Latinoamerica+noticias&format=RSS&setlang=es' },
-  { name: 'Bing Argentina Topic', tier: 2, beat: 'world', country: 'Argentina', language: 'es', sourceType: 'portal', rssUrl: 'https://www.bing.com/news/search?q=Argentina+noticias&format=RSS&setlang=es' },
-  { name: 'Bing Chile Topic', tier: 2, beat: 'world', country: 'Chile', language: 'es', sourceType: 'portal', rssUrl: 'https://www.bing.com/news/search?q=Chile+noticias&format=RSS&setlang=es' },
-  { name: 'Bing Uruguay Topic', tier: 2, beat: 'world', country: 'Uruguay', language: 'es', sourceType: 'portal', rssUrl: 'https://www.bing.com/news/search?q=Uruguay+noticias&format=RSS&setlang=es' },
-  { name: 'Bing LATAM Politics Topic', tier: 2, beat: 'politics', country: 'LATAM', language: 'es', sourceType: 'portal', rssUrl: 'https://www.bing.com/news/search?q=Latinoamerica+politica&format=RSS&setlang=es' },
-  { name: 'Bing LATAM Business Topic', tier: 2, beat: 'business', country: 'LATAM', language: 'es', sourceType: 'portal', rssUrl: 'https://www.bing.com/news/search?q=Latinoamerica+economia&format=RSS&setlang=es' }
+  { name: 'Bing LATAM Topic', tier: 2, beat: 'world', country: 'LATAM', language: 'es', sourceType: 'portal', rssUrl: 'https://www.bing.com/news/search?q=Latinoamerica+noticias&format=RSS&setlang=es&qft=interval%3D%227%22' },
+  { name: 'Bing Argentina Topic', tier: 2, beat: 'world', country: 'Argentina', language: 'es', sourceType: 'portal', rssUrl: 'https://www.bing.com/news/search?q=Argentina+noticias&format=RSS&setlang=es&qft=interval%3D%227%22' },
+  { name: 'Bing Chile Topic', tier: 2, beat: 'world', country: 'Chile', language: 'es', sourceType: 'portal', rssUrl: 'https://www.bing.com/news/search?q=Chile+noticias&format=RSS&setlang=es&qft=interval%3D%227%22' },
+  { name: 'Bing Uruguay Topic', tier: 2, beat: 'world', country: 'Uruguay', language: 'es', sourceType: 'portal', rssUrl: 'https://www.bing.com/news/search?q=Uruguay+noticias&format=RSS&setlang=es&qft=interval%3D%227%22' },
+  { name: 'Bing LATAM Politics Topic', tier: 2, beat: 'politics', country: 'LATAM', language: 'es', sourceType: 'portal', rssUrl: 'https://www.bing.com/news/search?q=Latinoamerica+politica&format=RSS&setlang=es&qft=interval%3D%227%22' },
+  { name: 'Bing LATAM Business Topic', tier: 2, beat: 'business', country: 'LATAM', language: 'es', sourceType: 'portal', rssUrl: 'https://www.bing.com/news/search?q=Latinoamerica+economia&format=RSS&setlang=es&qft=interval%3D%227%22' }
 ];
 
 const US_METRO_NAMES = [
@@ -279,9 +279,64 @@ const US_METRO_TOPIC_SEEDS: OutletSeed[] = US_METRO_NAMES.flatMap((metro) => ([
     beat: 'tech',
     country: 'US',
     sourceType: 'portal',
-    rssUrl: `https://www.bing.com/news/search?q=${encodeURIComponent(`${metro} technology startups ai`)}&format=RSS&setlang=en-us`
+    rssUrl: `https://www.bing.com/news/search?q=${encodeURIComponent(`${metro} technology startups ai`)}&format=RSS&setlang=en-us&qft=interval%3D%227%22`
   }
 ]));
+
+const QUERY_BEAT_MATRIX: Array<{ key: string; beat: OutletFeed['beat']; googleTerms: string; bingTerms: string }> = [
+  { key: 'pol', beat: 'politics', googleTerms: 'politics government policy', bingTerms: 'politics government policy' },
+  { key: 'eco', beat: 'business', googleTerms: 'economy inflation rates markets', bingTerms: 'economy inflation rates markets' },
+  { key: 'biz', beat: 'business', googleTerms: 'business companies earnings', bingTerms: 'business companies earnings' },
+  { key: 'tech', beat: 'tech', googleTerms: 'technology ai startups cybersecurity', bingTerms: 'technology ai startups cybersecurity' },
+  { key: 'world', beat: 'world', googleTerms: 'world international breaking', bingTerms: 'world international breaking' },
+  { key: 'life', beat: 'general', googleTerms: 'lifestyle health education community', bingTerms: 'lifestyle health education community' },
+  { key: 'event', beat: 'world', googleTerms: 'events festival conference update', bingTerms: 'events festival conference update' },
+  { key: 'climate', beat: 'climate', googleTerms: 'climate weather environment wildfire', bingTerms: 'climate weather environment wildfire' },
+  { key: 'sec', beat: 'security', googleTerms: 'security defense intelligence', bingTerms: 'security defense intelligence' },
+  { key: 'crime', beat: 'security', googleTerms: 'crime police court arrest', bingTerms: 'crime police court arrest' }
+];
+
+const US_STATE_QUERY_MATRIX_SEEDS: OutletSeed[] = US_STATE_NAMES.flatMap((state) => (
+  QUERY_BEAT_MATRIX.flatMap((variant) => ([
+    {
+      name: `G State ${state} ${variant.key}`,
+      tier: 2,
+      beat: variant.beat,
+      country: 'US',
+      sourceType: 'portal',
+      rssUrl: `https://news.google.com/rss/search?q=${encodeURIComponent(`${state} ${variant.googleTerms} when:1d`)}&ceid=US:en&hl=en-US&gl=US`
+    },
+    {
+      name: `B State ${state} ${variant.key}`,
+      tier: 2,
+      beat: variant.beat,
+      country: 'US',
+      sourceType: 'portal',
+      rssUrl: `https://www.bing.com/news/search?q=${encodeURIComponent(`${state} ${variant.bingTerms}`)}&format=RSS&setlang=en-us&qft=interval%3D%227%22`
+    }
+  ]))
+));
+
+const US_METRO_QUERY_MATRIX_SEEDS: OutletSeed[] = US_METRO_NAMES.flatMap((metro) => (
+  QUERY_BEAT_MATRIX.flatMap((variant) => ([
+    {
+      name: `G Metro ${metro} ${variant.key}`,
+      tier: 2,
+      beat: variant.beat,
+      country: 'US',
+      sourceType: 'portal',
+      rssUrl: `https://news.google.com/rss/search?q=${encodeURIComponent(`${metro} ${variant.googleTerms} when:1d`)}&ceid=US:en&hl=en-US&gl=US`
+    },
+    {
+      name: `B Metro ${metro} ${variant.key}`,
+      tier: 2,
+      beat: variant.beat,
+      country: 'US',
+      sourceType: 'portal',
+      rssUrl: `https://www.bing.com/news/search?q=${encodeURIComponent(`${metro} ${variant.bingTerms}`)}&format=RSS&setlang=en-us&qft=interval%3D%227%22`
+    }
+  ]))
+));
 
 const US_TOPIC_VARIANTS: Array<{ key: string; beat: OutletFeed['beat']; q: string; provider: 'google' | 'bing' }> = [
   { key: 'policy-election', beat: 'politics', q: 'US elections policy latest', provider: 'google' },
@@ -298,7 +353,7 @@ const US_TOPIC_VARIANT_SEEDS: OutletSeed[] = US_TOPIC_VARIANTS.map((variant) => 
   const name = `${variant.provider === 'google' ? 'Google' : 'Bing'} US Variant: ${variant.key}`;
   const rssUrl = variant.provider === 'google'
     ? `https://news.google.com/rss/search?q=${encodeURIComponent(`${variant.q} when:1d`)}&ceid=US:en&hl=en-US&gl=US`
-    : `https://www.bing.com/news/search?q=${encodeURIComponent(variant.q)}&format=RSS&setlang=en-us`;
+    : `https://www.bing.com/news/search?q=${encodeURIComponent(variant.q)}&format=RSS&setlang=en-us&qft=interval%3D%227%22`;
   return {
     name,
     tier: 2,
@@ -332,7 +387,7 @@ const US_LATAM_FOCUS_SEEDS: OutletSeed[] = US_LATAM_FOCUS_VARIANTS.map((variant)
   const name = `${variant.provider === 'google' ? 'Google' : 'Bing'} US LATAM Focus: ${variant.key}`;
   const rssUrl = variant.provider === 'google'
     ? `https://news.google.com/rss/search?q=${encodeURIComponent(`${variant.q} when:1d`)}&ceid=US:en&hl=en-US&gl=US`
-    : `https://www.bing.com/news/search?q=${encodeURIComponent(variant.q)}&format=RSS&setlang=en-us`;
+    : `https://www.bing.com/news/search?q=${encodeURIComponent(variant.q)}&format=RSS&setlang=en-us&qft=interval%3D%227%22`;
   return {
     name,
     tier: 2,
@@ -359,7 +414,7 @@ const LATAM_DETAIL_TOPIC_SEEDS: OutletSeed[] = LATAM_COUNTRY_TOPIC_VARIANTS.flat
   const googleName = `Google ${variant.country} Detail: ${variant.beat}`;
   const bingName = `Bing ${variant.country} Detail: ${variant.beat}`;
   const googleRss = `https://news.google.com/rss/search?q=${encodeURIComponent(`${variant.q} when:1d`)}&ceid=${variant.country === 'Argentina' ? 'AR' : variant.country === 'Chile' ? 'CL' : 'UY'}:es-419&hl=es-419&gl=${variant.country === 'Argentina' ? 'AR' : variant.country === 'Chile' ? 'CL' : 'UY'}`;
-  const bingRss = `https://www.bing.com/news/search?q=${encodeURIComponent(variant.q)}&format=RSS&setlang=es`;
+  const bingRss = `https://www.bing.com/news/search?q=${encodeURIComponent(variant.q)}&format=RSS&setlang=es&qft=interval%3D%227%22`;
   return [
     {
       name: googleName,
@@ -387,17 +442,17 @@ const SITEMAP_BOOSTERS: OutletSeed[] = [
   { name: 'LA Times', tier: 1, beat: 'world', country: 'US', sitemapUrl: 'https://www.latimes.com/sitemaps/news-sitemap.xml' },
   { name: 'CNBC', tier: 1, beat: 'business', country: 'US', sitemapUrl: 'https://www.cnbc.com/sitemap_news.xml' },
   { name: 'Fox News', tier: 2, beat: 'world', country: 'US', sitemapUrl: 'https://www.foxnews.com/sitemap.xml' },
-  { name: 'NPR', tier: 2, beat: 'world', country: 'US', sitemapUrl: 'https://www.npr.org/sitemaps/sitemap-index.xml' },
-  { name: 'Infobae', tier: 1, beat: 'world', country: 'Argentina', language: 'es', sourceType: 'local', sitemapUrl: 'https://www.infobae.com/sitemap-news.xml' },
+  
   { name: 'La Nacion AR', tier: 1, beat: 'world', country: 'Argentina', language: 'es', sourceType: 'local', sitemapUrl: 'https://www.lanacion.com.ar/arc/outboundfeeds/sitemap-index/?outputType=xml' },
-  { name: 'Emol', tier: 1, beat: 'world', country: 'Chile', language: 'es', sourceType: 'local', sitemapUrl: 'https://www.emol.com/sitemap.xml' },
-  { name: 'El Pais UY', tier: 1, beat: 'world', country: 'Uruguay', language: 'es', sourceType: 'local', sitemapUrl: 'https://www.elpais.com.uy/sitemap.xml' }
+  { name: 'Emol', tier: 1, beat: 'world', country: 'Chile', language: 'es', sourceType: 'local', sitemapUrl: 'https://www.emol.com/sitemap.xml' }
 ];
 
 PRESET_SEEDS.us_state_topics = US_STATE_TOPIC_SEEDS;
 PRESET_SEEDS.us_bing_topics = US_BING_TOPIC_SEEDS;
 PRESET_SEEDS.latam_bing_topics = LATAM_BING_TOPIC_SEEDS;
 PRESET_SEEDS.us_metro_topics = US_METRO_TOPIC_SEEDS;
+PRESET_SEEDS.us_state_query_matrix = US_STATE_QUERY_MATRIX_SEEDS;
+PRESET_SEEDS.us_metro_query_matrix = US_METRO_QUERY_MATRIX_SEEDS;
 PRESET_SEEDS.us_topic_variants = US_TOPIC_VARIANT_SEEDS;
 PRESET_SEEDS.us_latam_focus = US_LATAM_FOCUS_SEEDS;
 PRESET_SEEDS.latam_detail_topics = LATAM_DETAIL_TOPIC_SEEDS;
@@ -417,6 +472,8 @@ const CATEGORY_ALIAS: Record<string, OutletFeed['categories'][number]> = {
   us_bing_topics: 'world',
   latam_bing_topics: 'world',
   us_metro_topics: 'world',
+  us_state_query_matrix: 'world',
+  us_metro_query_matrix: 'world',
   us_topic_variants: 'world',
   us_latam_focus: 'world',
   latam_detail_topics: 'world',
@@ -647,6 +704,8 @@ export const SOURCE_PRESETS: SourcePreset[] = [
       ...PRESET_SEEDS.us_state_topics,
       ...PRESET_SEEDS.us_bing_topics,
       ...PRESET_SEEDS.us_metro_topics,
+      ...PRESET_SEEDS.us_state_query_matrix,
+      ...PRESET_SEEDS.us_metro_query_matrix,
       ...PRESET_SEEDS.us_topic_variants,
       ...PRESET_SEEDS.us_latam_focus
     ].map((seed) => slugify(seed.name))
@@ -672,6 +731,15 @@ export const SOURCE_PRESETS: SourcePreset[] = [
     label: 'US Expansion Candidates',
     description: 'US Top-100 expansion candidates (default OFF until verified).',
     outletIds: PRESET_SEEDS.us_expansion.map((seed) => slugify(seed.name))
+  },
+  {
+    key: 'us_query_matrix',
+    label: 'US Query Matrix',
+    description: 'State + metro x category keyword matrix (default ON).',
+    outletIds: [
+      ...PRESET_SEEDS.us_state_query_matrix,
+      ...PRESET_SEEDS.us_metro_query_matrix
+    ].map((seed) => slugify(seed.name))
   },
   {
     key: 'latam_expansion_candidates',
