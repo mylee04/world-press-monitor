@@ -12,6 +12,7 @@
     "policy:kr:auto": "bun archive/kr/scripts/apply-kr-source-policies.ts",
     "policy:kr:apply": "bun archive/kr/scripts/apply-kr-source-policies.ts --apply",
     "report:daily-sources": "bun scripts/report-daily-source-counts.ts && bun scripts/post-daily-discord.ts",
+    "audit:daily-sources": "bun scripts/report-daily-source-counts-audit.ts",
     "report:daily-sources:notify": "bun scripts/report-daily-source-counts.ts && bun scripts/post-daily-discord.ts",
     "report:us-latam-health": "bun scripts/report-us-latam-health.ts",
     "warm:once": "bun scripts/warm-news-cache.ts --once",

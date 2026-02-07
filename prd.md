@@ -531,8 +531,8 @@ To make regional monitoring operational for newsroom users, PressLab adds three 
   - replace local daemon dependency with platform scheduler/cron for `/api/news-warm`
   - keep `mode=status` report integration for Discord ops.
 - Reporting performance optimization:
-  - keep current network-heavy verification report for audit accuracy
-  - add fast DB-backed report mode (from `ingested_articles` + `ingestion_endpoint_runs`) for operational daily updates
+  - `report:daily-sources`: fast DB-backed operational report (from `ingested_articles` + `ingestion_endpoint_runs`)
+  - `audit:daily-sources`: network-heavy verification report for audit accuracy
 
 ## 6. MVP Acceptance Criteria
 

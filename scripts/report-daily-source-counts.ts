@@ -1,19 +1,27 @@
-import { readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { OUTLET_FEEDS } from '../data/outlets';
-import { parseRssOrAtom, parseSitemap } from '../lib/parsers';
-import { dedupeItems, extractDomain } from '../lib/dedupe';
-import { isLatamCountry, isLatamEntityTitle } from '../lib/latam-world';
+import { Pool } from 'pg';
 
-type Row = {
+const HOURS = 24;
+const TARGET_24H = 15000;
+const AUDITS_DIR = resolve(process.cwd(), 'audits');
+
+type DbRow = {
+  source: string;
+  country: string;
+  unique_24h: string;
+  raw_24h: string;
+  failed_runs_24h: string;
+  endpoint_runs_24h: string;
+};
+
+type CsvRow = {
   outletId: string;
   source: string;
   tier: number;
   country: string;
   sourceType: string;
   reviewDecision: string;
-  rssUrl?: string;
-  sitemapUrl?: string;
   rssParsed: number;
   sitemapParsed: number;
   rss24h: number;
@@ -23,206 +31,36 @@ type Row = {
   sitemapUnique24h: number;
   unique24h: number;
   dedupeRate: number;
-  recentItems24h: { title: string; link: string; publishedAt: string }[];
+  rssUrl?: string;
+  sitemapUrl?: string;
   errors: string[];
 };
 
-const HOURS = 24;
-const TARGET_24H = 15000;
-const CUTOFF_MS = Date.now() - HOURS * 60 * 60 * 1000;
-const RSS_LIMIT = 250;
-const SITEMAP_LIMIT = 250;
-const TIMEOUT_MS = 18000;
-const CONCURRENCY = 8;
-const UA = 'Mozilla/5.0 (compatible; PressLabDailyMetrics/1.0; +https://presslab.local)';
-const RETRY_STATUS = new Set([429, 500, 502, 503, 504]);
-const DIRECT_RETRIES = 2;
-
-function sleep(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+function getDatabaseUrl(): string {
+  const env = process.env.DATABASE_URL || '';
+  if (env) return env;
+  const envLocal = resolve(process.cwd(), '.env.local');
+  if (existsSync(envLocal)) {
+    const raw = readFileSync(envLocal, 'utf8');
+    const line = raw.split('\n').find((l) => l.trim().startsWith('DATABASE_URL='));
+    if (line) return line.split('=').slice(1).join('=').trim().replace(/^['"]|['"]$/g, '');
+  }
+  throw new Error('Missing DATABASE_URL. Set it in env or .env.local to run fast DB report.');
 }
 
-function envValue(key: string): string {
-  return process.env[key] || '';
+function normalizeCountry(country: string): string {
+  const c = (country || '').trim().toLowerCase();
+  if (c === 'us') return 'United States';
+  if (c === 'argentina') return 'Argentina';
+  if (c === 'chile') return 'Chile';
+  if (c === 'uruguay') return 'Uruguay';
+  if (c === 'latam' || c === 'latin america') return 'LATAM';
+  return country || 'Unknown';
 }
 
-function buildProxyUrl(target: string): string | null {
-  const base = envValue('APP_BASE_URL') || 'http://localhost:3000';
-  if (!base) return null;
-  return `${base.replace(/\/$/, '')}/api/rss-proxy?url=${encodeURIComponent(target)}`;
-}
-
-function shouldTryProxy(url: string): boolean {
-  try {
-    const u = new URL(url);
-    return u.hostname === 'news.google.com' || u.hostname === 'www.bing.com';
-  } catch {
-    return false;
-  }
-}
-
-async function fetchWithTimeout(url: string, timeoutMs = TIMEOUT_MS): Promise<Response> {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), timeoutMs);
-  try {
-    return await fetch(url, {
-      signal: controller.signal,
-      redirect: 'follow',
-      headers: {
-        'User-Agent': UA,
-        Accept: 'application/rss+xml, application/xml, text/xml, */*'
-      }
-    });
-  } finally {
-    clearTimeout(timeout);
-  }
-}
-
-async function fetchWithRetryAndProxy(url: string): Promise<Response> {
-  let lastResponse: Response | null = null;
-  let lastError: unknown = null;
-
-  for (let i = 0; i <= DIRECT_RETRIES; i += 1) {
-    try {
-      const res = await fetchWithTimeout(url);
-      lastResponse = res;
-      if (!RETRY_STATUS.has(res.status) || i === DIRECT_RETRIES) break;
-      await sleep(250 * (i + 1));
-    } catch (error) {
-      lastError = error;
-      if (i === DIRECT_RETRIES) break;
-      await sleep(250 * (i + 1));
-    }
-  }
-
-  if (lastResponse && lastResponse.ok) return lastResponse;
-  if (lastResponse && !shouldTryProxy(url)) return lastResponse;
-  if (!shouldTryProxy(url)) {
-    if (lastResponse) return lastResponse;
-    throw (lastError instanceof Error ? lastError : new Error('fetch_failed'));
-  }
-
-  const proxyUrl = buildProxyUrl(url);
-  if (!proxyUrl) {
-    if (lastResponse) return lastResponse;
-    throw (lastError instanceof Error ? lastError : new Error('fetch_failed_no_proxy'));
-  }
-  try {
-    return await fetchWithTimeout(proxyUrl);
-  } catch (error) {
-    if (lastResponse) return lastResponse;
-    throw error;
-  }
-}
-
-function in24h(publishedAt: string): boolean {
-  const ts = new Date(publishedAt).getTime();
-  return Number.isFinite(ts) && ts >= CUTOFF_MS;
-}
-
-function rssLimitFor(outlet: typeof OUTLET_FEEDS[number]): number {
-  if (
-    (outlet.sourceType || 'global') === 'portal'
-    && outlet.beat === 'world'
-    && /Google State:|Bing State:|Google Metro:|Bing Metro:|Google US World Topic|Google LATAM Regional Topic|Bing LATAM Topic|Bing US World Topic/i.test(outlet.name)
-  ) {
-    return 60;
-  }
-  return RSS_LIMIT;
-}
-
-function sitemapLimitFor(outlet: typeof OUTLET_FEEDS[number]): number {
-  if (
-    (outlet.sourceType || 'global') === 'portal'
-    && outlet.beat === 'world'
-    && /Google State:|Bing State:|Google Metro:|Bing Metro:|Google US World Topic|Google LATAM Regional Topic|Bing LATAM Topic|Bing US World Topic/i.test(outlet.name)
-  ) {
-    return 60;
-  }
-  return SITEMAP_LIMIT;
-}
-
-async function countOutlet(outlet: typeof OUTLET_FEEDS[number]): Promise<Row> {
-  const row: Row = {
-    outletId: outlet.id,
-    source: outlet.name,
-    tier: outlet.tier,
-    country: outlet.country,
-    sourceType: outlet.sourceType || 'global',
-    reviewDecision: outlet.reviewDecision || 'unknown',
-    rssUrl: outlet.rssUrl,
-    sitemapUrl: outlet.sitemapUrl,
-    rssParsed: 0,
-    sitemapParsed: 0,
-    rss24h: 0,
-    sitemap24h: 0,
-    total24h: 0,
-    rssUnique24h: 0,
-    sitemapUnique24h: 0,
-    unique24h: 0,
-    dedupeRate: 0,
-    recentItems24h: [],
-    errors: []
-  };
-
-  if (outlet.rssUrl) {
-    try {
-      const res = await fetchWithRetryAndProxy(outlet.rssUrl);
-      if (!res.ok) {
-        row.errors.push(`rss:${res.status}`);
-      } else {
-        const xml = await res.text();
-        const parsed = parseRssOrAtom(xml, rssLimitFor(outlet));
-        row.rssParsed = parsed.length;
-        const recent = parsed.filter((item) => in24h(item.publishedAt));
-        row.rss24h = recent.length;
-        row.rssUnique24h = dedupeItems(recent).length;
-        row.recentItems24h.push(...recent);
-      }
-    } catch (error) {
-      row.errors.push(`rss:err:${error instanceof Error ? error.message : String(error)}`);
-    }
-  }
-
-  if (outlet.sitemapUrl) {
-    try {
-      const res = await fetchWithRetryAndProxy(outlet.sitemapUrl);
-      if (!res.ok) {
-        row.errors.push(`sitemap:${res.status}`);
-      } else {
-        const xml = await res.text();
-        const parsed = parseSitemap(xml, sitemapLimitFor(outlet));
-        row.sitemapParsed = parsed.length;
-        const recent = parsed.filter((item) => in24h(item.publishedAt));
-        row.sitemap24h = recent.length;
-        row.sitemapUnique24h = dedupeItems(recent).length;
-        row.recentItems24h.push(...recent);
-      }
-    } catch (error) {
-      row.errors.push(`sitemap:err:${error instanceof Error ? error.message : String(error)}`);
-    }
-  }
-
-  row.total24h = row.rss24h + row.sitemap24h;
-  row.unique24h = dedupeItems(row.recentItems24h).length;
-  row.dedupeRate = row.total24h > 0 ? 1 - row.unique24h / row.total24h : 0;
-  return row;
-}
-
-async function runWithConcurrency<T, R>(items: T[], limit: number, fn: (item: T) => Promise<R>): Promise<R[]> {
-  const results: R[] = new Array(items.length);
-  let idx = 0;
-
-  async function worker(): Promise<void> {
-    while (idx < items.length) {
-      const current = idx;
-      idx += 1;
-      results[current] = await fn(items[current]);
-    }
-  }
-
-  await Promise.all(Array.from({ length: Math.min(limit, items.length) }, () => worker()));
-  return results;
+function inScope(country: string): boolean {
+  const c = normalizeCountry(country).toLowerCase();
+  return c === 'united states' || c === 'argentina' || c === 'chile' || c === 'uruguay' || c === 'latam';
 }
 
 function csvEscape(value: string | number): string {
@@ -233,7 +71,7 @@ function csvEscape(value: string | number): string {
   return raw;
 }
 
-function toCsv(rows: Row[]): string {
+function toCsv(rows: CsvRow[]): string {
   const header = [
     'outlet_id', 'source', 'tier', 'country', 'source_type', 'review_decision',
     'rss_parsed', 'sitemap_parsed', 'rss_24h', 'sitemap_24h', 'total_24h',
@@ -268,69 +106,26 @@ function toCsv(rows: Row[]): string {
   return `${lines.join('\n')}\n`;
 }
 
-function top(rows: Row[], n = 20): Row[] {
-  return [...rows].sort((a, b) => b.total24h - a.total24h).slice(0, n);
-}
-
-function sum(rows: Row[]): number {
+function sum(rows: CsvRow[]): number {
   return rows.reduce((acc, row) => acc + row.total24h, 0);
 }
 
-function sumUnique(rows: Row[]): number {
+function sumUnique(rows: CsvRow[]): number {
   return rows.reduce((acc, row) => acc + row.unique24h, 0);
 }
 
-function crossSourceUnique(rows: Row[]): number {
-  const merged = rows.flatMap((row) => row.recentItems24h);
-  return dedupeItems(merged).length;
+function top(rows: CsvRow[], n = 25): CsvRow[] {
+  return [...rows].sort((a, b) => b.total24h - a.total24h || a.source.localeCompare(b.source)).slice(0, n);
 }
 
-function worldLatamShare(rows: Row[]): { worldTotal: number; worldLatam: number; ratio: number } {
-  const beatBySource = new Map(OUTLET_FEEDS.map((outlet) => [outlet.name, outlet.beat]));
-  let worldTotal = 0;
-  let worldLatam = 0;
-
-  for (const row of rows) {
-    const beat = beatBySource.get(row.source);
-    if (beat !== 'world') continue;
-    for (const item of row.recentItems24h) {
-      worldTotal += 1;
-      if (isLatamCountry(row.country) || isLatamEntityTitle(item.title)) {
-        worldLatam += 1;
-      }
-    }
-  }
-
-  return {
-    worldTotal,
-    worldLatam,
-    ratio: worldTotal > 0 ? worldLatam / worldTotal : 0
-  };
-}
-
-function distinctDomains(rows: Row[]): number {
-  const domains = new Set<string>();
-  for (const row of rows) {
-    for (const item of row.recentItems24h) {
-      const domain = extractDomain(item.link);
-      if (domain) domains.add(domain);
-    }
-  }
-  return domains.size;
-}
-
-function activeNewsrooms(rows: Row[]): number {
-  return rows.filter((row) => row.total24h > 0).length;
-}
-
-function previousDayNewSourceRatio(stamp: string, currentRows: Row[]): string {
+function previousDayNewSourceRatio(stamp: string, currentRows: CsvRow[]): string {
   try {
-    const files = readdirSync(resolve(process.cwd(), 'audits'))
+    const files = readdirSync(AUDITS_DIR)
       .filter((name) => /^source_daily_counts_\d{4}-\d{2}-\d{2}\.csv$/.test(name) && !name.includes(stamp))
       .sort();
     const previous = files[files.length - 1];
     if (!previous) return 'n/a';
-    const raw = readFileSync(resolve(process.cwd(), 'audits', previous), 'utf8').trim();
+    const raw = readFileSync(resolve(AUDITS_DIR, previous), 'utf8').trim();
     if (!raw) return 'n/a';
     const lines = raw.split('\n');
     if (lines.length < 2) return 'n/a';
@@ -338,6 +133,7 @@ function previousDayNewSourceRatio(stamp: string, currentRows: Row[]): string {
     const sourceIdx = header.indexOf('source');
     const totalIdx = header.indexOf('total_24h');
     if (sourceIdx < 0 || totalIdx < 0) return 'n/a';
+
     const previousActive = new Set<string>();
     for (let i = 1; i < lines.length; i += 1) {
       const cols = lines[i].split(',');
@@ -345,6 +141,7 @@ function previousDayNewSourceRatio(stamp: string, currentRows: Row[]): string {
       const total = Number(cols[totalIdx] || 0);
       if (Number.isFinite(total) && total > 0) previousActive.add(cols[sourceIdx]);
     }
+
     const currentActive = currentRows.filter((row) => row.total24h > 0).map((row) => row.source);
     if (currentActive.length === 0) return 'n/a';
     const newCount = currentActive.filter((source) => !previousActive.has(source)).length;
@@ -354,120 +151,160 @@ function previousDayNewSourceRatio(stamp: string, currentRows: Row[]): string {
   }
 }
 
-function normalizeCountry(country: string): string {
-  const c = country.trim().toLowerCase();
-  if (c === 'us') return 'United States';
-  if (c === 'latam' || c === 'latin america') return 'LATAM';
-  return country;
-}
-
-function regionOf(country: string): 'US' | 'LATAM' | null {
-  const normalized = normalizeCountry(country).toLowerCase();
-  if (normalized === 'united states') return 'US';
-  if (normalized === 'latam' || normalized === 'chile' || normalized === 'argentina' || normalized === 'uruguay') return 'LATAM';
-  return null;
-}
-
-function inUsLatamScope(row: Row): boolean {
-  return regionOf(row.country) !== null;
-}
-
-function byMatcher(rows: Row[], matchers: RegExp[]): Row[] {
-  return rows.filter((row) => matchers.some((m) => m.test(row.source)));
-}
-
-function toMarkdown(rows: Row[]): string {
-  const scoped = rows.filter(inUsLatamScope);
+function toMarkdown(rows: CsvRow[], worldStats: { worldTotal: number; worldLatam: number; ratio: number }): string {
   const stamp = new Date().toISOString().slice(0, 10);
-  const total24h = sum(scoped);
-  const totalUnique24h = sumUnique(scoped);
-  const totalCrossSourceUnique24h = crossSourceUnique(scoped);
-  const overallDedupeRate = total24h > 0 ? 1 - totalUnique24h / total24h : 0;
-  const overallCrossSourceDedupeRate = total24h > 0 ? 1 - totalCrossSourceUnique24h / total24h : 0;
+  const total24h = sum(rows);
+  const totalUnique24h = sumUnique(rows);
+  const dedupeRate = total24h > 0 ? 1 - totalUnique24h / total24h : 0;
   const attainment = TARGET_24H > 0 ? (total24h / TARGET_24H) * 100 : 0;
-  const totalDomains = distinctDomains(scoped);
-  const totalNewsrooms = activeNewsrooms(scoped);
-  const newSourceRatio = previousDayNewSourceRatio(stamp, scoped);
-  const worldLatam = worldLatamShare(scoped);
-  const activeCount = scoped.length;
-  const withErrors = scoped.filter((r) => r.errors.length > 0).length;
-  const usRows = scoped.filter((r) => regionOf(r.country) === 'US');
-  const latamRows = scoped.filter((r) => regionOf(r.country) === 'LATAM');
-  const usCrossUnique = crossSourceUnique(usRows);
-  const latamCrossUnique = crossSourceUnique(latamRows);
+  const withErrors = rows.filter((r) => r.errors.length > 0).length;
+  const newSourceRatio = previousDayNewSourceRatio(stamp, rows);
 
-  const reutersRows = byMatcher(scoped, [/Reuters/i]);
-  const apRows = byMatcher(scoped, [/^AP\b/i, /AP News/i]);
+  const usRows = rows.filter((r) => normalizeCountry(r.country) === 'United States');
+  const latamRows = rows.filter((r) => normalizeCountry(r.country) !== 'United States');
 
   const lines: string[] = [];
   lines.push('# Daily Source Metadata Volume (US + LATAM)');
   lines.push('');
   lines.push(`- Generated at: ${new Date().toISOString()}`);
+  lines.push(`- Mode: fast DB report (ingested_articles + ingestion_endpoint_runs)`);
   lines.push(`- Window: last ${HOURS} hours`);
-  lines.push(`- Sources measured (active, US+LATAM): ${activeCount}`);
+  lines.push(`- Sources measured (active, US+LATAM): ${rows.length}`);
   lines.push(`- Total metadata items observed (24h, raw): ${total24h}`);
   lines.push(`- Target attainment (raw vs ${TARGET_24H}/24h): ${attainment.toFixed(1)}%`);
-  lines.push(`- Total metadata items observed (24h, unique by source): ${totalUnique24h}`);
-  lines.push(`- Total metadata items observed (24h, unique cross-source): ${totalCrossSourceUnique24h}`);
-  lines.push(`- Dedupe rate (within source): ${(overallDedupeRate * 100).toFixed(1)}%`);
-  lines.push(`- Dedupe rate (cross-source): ${(overallCrossSourceDedupeRate * 100).toFixed(1)}%`);
-  lines.push(`- Distinct domains (24h): ${totalDomains}`);
-  lines.push(`- Active newsrooms (24h): ${totalNewsrooms}`);
-  lines.push(`- World LATAM coverage: ${worldLatam.worldLatam}/${worldLatam.worldTotal} (${(worldLatam.ratio * 100).toFixed(1)}% of world)`);
+  lines.push(`- Total metadata items observed (24h, unique): ${totalUnique24h}`);
+  lines.push(`- Dedupe rate: ${(dedupeRate * 100).toFixed(1)}%`);
+  lines.push(`- World LATAM coverage: ${worldStats.worldLatam}/${worldStats.worldTotal} (${(worldStats.ratio * 100).toFixed(1)}% of world)`);
   lines.push(`- New-source ratio vs previous report: ${newSourceRatio}`);
-  lines.push(`- Sources with fetch/parse errors: ${withErrors}`);
+  lines.push(`- Sources with endpoint failures: ${withErrors}`);
   lines.push('');
 
   lines.push('## Region Summary');
   lines.push('');
-  lines.push(`- US: raw ${sum(usRows)} / unique by source ${sumUnique(usRows)} / unique cross-source ${usCrossUnique} across ${usRows.length} sources`);
-  lines.push(`- LATAM: raw ${sum(latamRows)} / unique by source ${sumUnique(latamRows)} / unique cross-source ${latamCrossUnique} across ${latamRows.length} sources`);
+  lines.push(`- US: raw ${sum(usRows)} / unique ${sumUnique(usRows)} across ${usRows.length} sources`);
+  lines.push(`- LATAM: raw ${sum(latamRows)} / unique ${sumUnique(latamRows)} across ${latamRows.length} sources`);
   lines.push('');
 
-  lines.push('## Reuters / AP');
+  lines.push('## Top 25 Sources (US + LATAM, 24h raw)');
   lines.push('');
-  lines.push(`- Reuters (all configured Reuters sources): ${sum(reutersRows)}`);
-  lines.push(`- AP (all configured AP sources): ${sum(apRows)}`);
-  lines.push('');
-
-  lines.push('| Source | 24h raw | 24h unique | Dedupe | RSS parsed | Sitemap parsed | Errors |');
-  lines.push('| --- | ---: | ---: | ---: | ---: | ---: | --- |');
-  for (const r of [...reutersRows, ...apRows]) {
-    lines.push(`| ${r.source} | ${r.total24h} | ${r.unique24h} | ${(r.dedupeRate * 100).toFixed(1)}% | ${r.rssParsed} | ${r.sitemapParsed} | ${r.errors.join('; ') || '-'} |`);
-  }
-  lines.push('');
-
-  lines.push('## Top 25 Sources (US + LATAM, 24h items)');
-  lines.push('');
-  lines.push('| Source | 24h raw | 24h unique | Dedupe | Country | Type | Policy | Errors |');
-  lines.push('| --- | ---: | ---: | ---: | --- | --- | --- | --- |');
-  for (const r of top(scoped, 25)) {
-    lines.push(`| ${r.source} | ${r.total24h} | ${r.unique24h} | ${(r.dedupeRate * 100).toFixed(1)}% | ${r.country} | ${r.sourceType} | ${r.reviewDecision} | ${r.errors.join('; ') || '-'} |`);
+  lines.push('| Source | 24h raw | 24h unique | Dedupe | Country | Errors |');
+  lines.push('| --- | ---: | ---: | ---: | --- | --- |');
+  for (const row of top(rows, 25)) {
+    lines.push(`| ${row.source} | ${row.total24h} | ${row.unique24h} | ${(row.dedupeRate * 100).toFixed(1)}% | ${row.country} | ${row.errors.join('; ') || '-'} |`);
   }
 
   lines.push('');
   lines.push('## Notes');
   lines.push('');
-  lines.push('- Counts are based on feed metadata timestamps (`publishedAt` / `lastmod`) seen at collection time.');
-  lines.push('- If an item has missing/invalid date in feed metadata, exact 24h assignment can be less precise.');
+  lines.push('- This report reads persisted metadata and endpoint-run logs from PostgreSQL.');
+  lines.push('- Use `bun run audit:daily-sources` for full network re-validation of RSS/sitemap endpoints.');
 
   return `${lines.join('\n')}\n`;
 }
 
 async function main(): Promise<void> {
-  const rows = await runWithConcurrency(OUTLET_FEEDS, CONCURRENCY, countOutlet);
-  const scopedRows = rows.filter(inUsLatamScope);
-  scopedRows.sort((a, b) => b.total24h - a.total24h || a.source.localeCompare(b.source));
+  const pool = new Pool({ connectionString: getDatabaseUrl() });
+  const sinceHours = HOURS;
+  try {
+    const sourceResult = await pool.query<DbRow>(`
+    with article_rollup as (
+      select
+        source,
+        coalesce(nullif(country, ''), 'Unknown') as country,
+        count(*)::text as unique_24h,
+        coalesce(sum(seen_count), 0)::text as raw_24h
+      from ingested_articles
+      where last_seen_at > now() - ($1::text || ' hours')::interval
+      group by source, coalesce(nullif(country, ''), 'Unknown')
+    ),
+    run_rollup as (
+      select
+        source,
+        count(*)::text as endpoint_runs_24h,
+        count(*) filter (where attempted and not ok)::text as failed_runs_24h
+      from ingestion_endpoint_runs
+      where ran_at > now() - ($1::text || ' hours')::interval
+      group by source
+    )
+    select
+      a.source,
+      a.country,
+      a.unique_24h,
+      a.raw_24h,
+      coalesce(r.failed_runs_24h, '0') as failed_runs_24h,
+      coalesce(r.endpoint_runs_24h, '0') as endpoint_runs_24h
+    from article_rollup a
+    left join run_rollup r on r.source = a.source
+    order by a.raw_24h::int desc, a.source asc
+  `, [sinceHours]);
 
-  const stamp = new Date().toISOString().slice(0, 10);
-  const csvPath = resolve(process.cwd(), `audits/source_daily_counts_${stamp}.csv`);
-  const mdPath = resolve(process.cwd(), `audits/source_daily_counts_${stamp}.md`);
+    const worldResult = await pool.query<{
+    world_total: string;
+    world_latam: string;
+  }>(`
+    select
+      count(*)::text as world_total,
+      count(*) filter (where world_latam)::text as world_latam
+    from ingested_articles
+    where last_seen_at > now() - ($1::text || ' hours')::interval
+      and beat = 'world'
+  `, [sinceHours]);
 
-  writeFileSync(csvPath, toCsv(scopedRows), 'utf8');
-  writeFileSync(mdPath, toMarkdown(scopedRows), 'utf8');
+    const rows: CsvRow[] = sourceResult.rows
+      .map((row) => {
+        const raw = Number(row.raw_24h || '0');
+        const unique = Number(row.unique_24h || '0');
+        const failedRuns = Number(row.failed_runs_24h || '0');
+        const endpointRuns = Number(row.endpoint_runs_24h || '0');
+        return {
+          outletId: '',
+          source: row.source,
+          tier: 0,
+          country: normalizeCountry(row.country),
+          sourceType: '',
+          reviewDecision: '',
+          rssParsed: 0,
+          sitemapParsed: 0,
+          rss24h: 0,
+          sitemap24h: 0,
+          total24h: raw,
+          rssUnique24h: 0,
+          sitemapUnique24h: 0,
+          unique24h: unique,
+          dedupeRate: raw > 0 ? 1 - unique / raw : 0,
+          rssUrl: '',
+          sitemapUrl: '',
+          errors: failedRuns > 0 ? [`runs_failed:${failedRuns}/${endpointRuns}`] : []
+        } satisfies CsvRow;
+      })
+      .filter((row) => inScope(row.country));
 
-  console.log(`Wrote ${csvPath}`);
-  console.log(`Wrote ${mdPath}`);
+    rows.sort((a, b) => b.total24h - a.total24h || a.source.localeCompare(b.source));
+
+    const world = worldResult.rows[0] || { world_total: '0', world_latam: '0' };
+    const worldTotal = Number(world.world_total || 0);
+    const worldLatam = Number(world.world_latam || 0);
+
+    const stamp = new Date().toISOString().slice(0, 10);
+    const csvPath = resolve(process.cwd(), `audits/source_daily_counts_${stamp}.csv`);
+    const mdPath = resolve(process.cwd(), `audits/source_daily_counts_${stamp}.md`);
+
+    writeFileSync(csvPath, toCsv(rows), 'utf8');
+    writeFileSync(mdPath, toMarkdown(rows, {
+      worldTotal,
+      worldLatam,
+      ratio: worldTotal > 0 ? worldLatam / worldTotal : 0
+    }), 'utf8');
+
+    console.log(`Wrote ${csvPath}`);
+    console.log(`Wrote ${mdPath}`);
+  } catch (error) {
+    throw new Error(
+      `Fast DB report failed. Ensure PostgreSQL is running and DATABASE_URL is reachable. ${error instanceof Error ? error.message : String(error)}`
+    );
+  } finally {
+    await pool.end().catch(() => undefined);
+  }
 }
 
 void main();

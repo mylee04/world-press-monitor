@@ -74,10 +74,12 @@ Copy `.env.example` to `.env.local` and set values as needed.
 ## Reporting and Alerts
 
 - `bun run report:daily-sources`
-  - builds daily US+LATAM CSV/MD report
+  - builds daily US+LATAM CSV/MD report from PostgreSQL (`ingested_articles` + `ingestion_endpoint_runs`)
   - posts summary to Discord automatically (if `DISCORD_WEBHOOK_URL` is set)
   - includes cache health and warm summary
-  - note: this is a network-heavy verification report (RSS + sitemap probes across many endpoints), so runtime can be several minutes depending on endpoint health/rate-limits
+- `bun run audit:daily-sources`
+  - full network verification mode (RSS + sitemap probing per source)
+  - slower (minutes) but useful for endpoint-level audits and feed health investigations
 - `bun run report:us-latam-health`
   - builds health/failure and KPI report
 - `bun run notify:discord-daily:dry`
@@ -108,9 +110,8 @@ Key KPIs include:
 
 ## Reporting Performance Note
 
-- Current `report:daily-sources` is correctness-first (directly probes many live endpoints).
-- Expected behavior: slower runtime as source count grows and retries/fallbacks are enabled.
-- Planned optimization: add a fast DB-based report path using `ingested_articles` + `ingestion_endpoint_runs` for near-instant daily summaries.
+- `report:daily-sources` is the fast operational report (DB-backed, usually seconds).
+- `audit:daily-sources` is the slow audit report (network-backed, usually minutes).
 
 ## Notes
 
