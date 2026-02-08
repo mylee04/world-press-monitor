@@ -98,6 +98,14 @@ Copy `.env.example` to `.env.local` and set values as needed.
   - tail daemon logs
 - `bun run warm:daemon:stop`
   - stop background daemon
+- `bun run cron:install`
+  - install local cron jobs:
+    - every 5 minutes: warm once
+    - every hour: report + discord
+- `bun run cron:status`
+  - show installed PressLab cron jobs
+- `bun run cron:remove`
+  - remove PressLab cron jobs
 - `bun run db:init`
   - apply `db/schema.sql` to your local PostgreSQL (`DATABASE_URL` required)
 
