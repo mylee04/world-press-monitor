@@ -80,6 +80,8 @@ interface NewsResponsePayload {
   persistence?: {
     storage: 'postgres' | 'disabled';
     persisted: number;
+    error?: string;
+    reason?: string;
   };
 }
 
@@ -114,6 +116,10 @@ const ARTICLE_TIME_CACHE_TTL_SECONDS = 60 * 60 * 24;
 const ARTICLE_TIME_FETCH_TIMEOUT_MS = 3500;
 const ARTICLE_TIME_MAX_ITEMS = 80;
 const ARTICLE_TIME_MAX_DIFF_MS = 7 * DAY_MS;
+const ENDPOINT_FETCH_CONCURRENCY = Math.max(
+  4,
+  Math.min(120, Number.parseInt(process.env.NEWS_FETCH_CONCURRENCY || '40', 10) || 40)
+);
 const LATAM_COUNTRIES = new Set(['LATAM', 'Argentina', 'Chile', 'Uruguay']);
 const LATAM_ENTITY_TERMS = [
   'argentina',
@@ -973,6 +979,22 @@ function filterReasonablePublishedAt(items: NewsItem[]): NewsItem[] {
   });
 }
 
+async function runWithConcurrency<T, R>(items: T[], limit: number, fn: (item: T) => Promise<R>): Promise<R[]> {
+  const results: R[] = new Array(items.length);
+  let idx = 0;
+
+  async function worker(): Promise<void> {
+    while (idx < items.length) {
+      const current = idx;
+      idx += 1;
+      results[current] = await fn(items[current]);
+    }
+  }
+
+  await Promise.all(Array.from({ length: Math.min(limit, items.length) }, () => worker()));
+  return results;
+}
+
 export async function GET(req: NextRequest): Promise<Response> {
   newsCacheMetricRequest();
   const origin = req.nextUrl.origin;
@@ -992,12 +1014,11 @@ export async function GET(req: NextRequest): Promise<Response> {
     return Response.json(cachedPayload);
   }
 
-  const tasks = selectedOutlets.flatMap((outlet) => [
-    fetchOutletRss(origin, outlet),
-    fetchOutletSitemap(origin, outlet)
-  ]);
-
-  const results = await Promise.all(tasks);
+  const tasks = selectedOutlets.flatMap((outlet) => ([
+    () => fetchOutletRss(origin, outlet),
+    () => fetchOutletSitemap(origin, outlet)
+  ]));
+  const results = await runWithConcurrency(tasks, ENDPOINT_FETCH_CONCURRENCY, (task) => task());
   const diagnostics = results.map((result) => result.diagnostic);
   await persistIngestionDiagnostics(diagnostics).catch(() => ({ persisted: 0, storage: 'disabled' as const }));
   const gnewsItems = await getGnewsBreakingOverlay();
@@ -1019,7 +1040,19 @@ export async function GET(req: NextRequest): Promise<Response> {
     items = buildStoryClusters(dedupeAndSort([...items, ...fallback]));
   }
 
-  const persistence = await persistIngestedArticles(items).catch(() => ({ persisted: 0, storage: 'disabled' as const }));
+  let persistence: { persisted: number; storage: 'postgres' | 'disabled'; error?: string; reason?: string };
+  try {
+    const persisted = await persistIngestedArticles(items);
+    persistence = { ...persisted };
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.error('[news] persistIngestedArticles failed:', message);
+    persistence = {
+      persisted: 0,
+      storage: 'disabled',
+      error: message
+    };
+  }
 
   const payload: NewsResponsePayload = {
     generatedAt: new Date().toISOString(),
@@ -1036,7 +1069,9 @@ export async function GET(req: NextRequest): Promise<Response> {
     },
     persistence: {
       storage: persistence.storage,
-      persisted: persistence.persisted
+      persisted: persistence.persisted,
+      ...(persistence.reason ? { reason: persistence.reason } : {}),
+      ...(persistence.error ? { error: persistence.error } : {})
     }
   };
 

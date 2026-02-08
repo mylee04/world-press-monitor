@@ -1,21 +1,31 @@
 import { Pool } from 'pg';
+import { createHash } from 'node:crypto';
 import type { NewsItem } from '@/lib/types';
 import { normalizeLinkForId } from '@/lib/pipeline';
 
 let pool: Pool | null = null;
 let poolFailed = false;
 let schemaReady = false;
+let poolDisabledReason = 'not_initialized';
 
 function getPool(): Pool | null {
   if (pool) return pool;
-  if (poolFailed) return null;
-  const url = process.env.DATABASE_URL;
-  if (!url) return null;
+  if (poolFailed) {
+    poolDisabledReason = 'pool_failed';
+    return null;
+  }
+  const url = process.env.DATABASE_URL || (process.env.NODE_ENV !== 'production' ? 'postgresql://localhost:5432/presslab' : '');
+  if (!url) {
+    poolDisabledReason = 'missing_database_url';
+    return null;
+  }
   try {
     pool = new Pool({ connectionString: url });
+    poolDisabledReason = 'ok';
     return pool;
   } catch {
     poolFailed = true;
+    poolDisabledReason = 'pool_constructor_error';
     return null;
   }
 }
@@ -75,9 +85,7 @@ async function ensureSchema(): Promise<void> {
 }
 
 async function sha256Hex(value: string): Promise<string> {
-  const encoded = new TextEncoder().encode(value);
-  const digest = await crypto.subtle.digest('SHA-256', encoded);
-  return Array.from(new Uint8Array(digest)).map((b) => b.toString(16).padStart(2, '0')).join('');
+  return createHash('sha256').update(value).digest('hex');
 }
 
 type Persistable = {
@@ -134,7 +142,7 @@ function buildInsertSql(rows: Persistable[]): { sql: string; values: unknown[] }
   const values: unknown[] = [];
   const parts: string[] = [];
   rows.forEach((row, i) => {
-    const base = i * 16;
+    const base = i * 15;
     parts.push(
       `($${base + 1},$${base + 2},$${base + 3},$${base + 4},$${base + 5},$${base + 6},$${base + 7},$${base + 8},$${base + 9},$${base + 10},$${base + 11},$${base + 12},$${base + 13},$${base + 14},$${base + 15}::jsonb,now(),now(),1)`
     );
@@ -184,9 +192,9 @@ function buildInsertSql(rows: Persistable[]): { sql: string; values: unknown[] }
   return { sql, values };
 }
 
-export async function persistIngestedArticles(items: NewsItem[]): Promise<{ persisted: number; storage: 'postgres' | 'disabled' }> {
+export async function persistIngestedArticles(items: NewsItem[]): Promise<{ persisted: number; storage: 'postgres' | 'disabled'; reason?: string }> {
   const db = getPool();
-  if (!db) return { persisted: 0, storage: 'disabled' };
+  if (!db) return { persisted: 0, storage: 'disabled', reason: poolDisabledReason };
   if (!items.length) return { persisted: 0, storage: 'postgres' };
 
   await ensureSchema();
@@ -242,9 +250,9 @@ export interface IngestionEndpointRun {
   error?: string;
 }
 
-export async function persistIngestionDiagnostics(runs: IngestionEndpointRun[]): Promise<{ persisted: number; storage: 'postgres' | 'disabled' }> {
+export async function persistIngestionDiagnostics(runs: IngestionEndpointRun[]): Promise<{ persisted: number; storage: 'postgres' | 'disabled'; reason?: string }> {
   const db = getPool();
-  if (!db) return { persisted: 0, storage: 'disabled' };
+  if (!db) return { persisted: 0, storage: 'disabled', reason: poolDisabledReason };
   if (!runs.length) return { persisted: 0, storage: 'postgres' };
 
   await ensureSchema();
