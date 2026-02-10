@@ -151,7 +151,11 @@ function previousDayNewSourceRatio(stamp: string, currentRows: CsvRow[]): string
   }
 }
 
-function toMarkdown(rows: CsvRow[], worldStats: { worldTotal: number; worldLatam: number; ratio: number }): string {
+function toMarkdown(
+  rows: CsvRow[],
+  worldStats: { worldTotal: number; worldLatam: number; ratio: number },
+  translationStats: { externalTotal: number; titleCoverage: number; summaryCoverage: number }
+): string {
   const stamp = new Date().toISOString().slice(0, 10);
   const total24h = sum(rows);
   const totalUnique24h = sumUnique(rows);
@@ -167,7 +171,7 @@ function toMarkdown(rows: CsvRow[], worldStats: { worldTotal: number; worldLatam
   lines.push('# Daily Source Metadata Volume (US + LATAM)');
   lines.push('');
   lines.push(`- Generated at: ${new Date().toISOString()}`);
-  lines.push(`- Mode: fast DB report (ingested_articles + ingestion_endpoint_runs)`);
+  lines.push(`- Mode: fast DB report (external_news_articles + ingestion_endpoint_runs)`);
   lines.push(`- Window: last ${HOURS} hours`);
   lines.push(`- Sources measured (active, US+LATAM): ${rows.length}`);
   lines.push(`- Total metadata items observed (24h, raw): ${total24h}`);
@@ -175,6 +179,7 @@ function toMarkdown(rows: CsvRow[], worldStats: { worldTotal: number; worldLatam
   lines.push(`- Total metadata items observed (24h, unique): ${totalUnique24h}`);
   lines.push(`- Dedupe rate: ${(dedupeRate * 100).toFixed(1)}%`);
   lines.push(`- World LATAM coverage: ${worldStats.worldLatam}/${worldStats.worldTotal} (${(worldStats.ratio * 100).toFixed(1)}% of world)`);
+  lines.push(`- Translation coverage (external): title_en ${(translationStats.titleCoverage * 100).toFixed(1)}% · summary_en ${(translationStats.summaryCoverage * 100).toFixed(1)}% (base ${translationStats.externalTotal})`);
   lines.push(`- New-source ratio vs previous report: ${newSourceRatio}`);
   lines.push(`- Sources with endpoint failures: ${withErrors}`);
   lines.push('');
@@ -213,7 +218,7 @@ async function main(): Promise<void> {
         coalesce(nullif(country, ''), 'Unknown') as country,
         count(*)::text as unique_24h,
         coalesce(sum(seen_count), 0)::text as raw_24h
-      from ingested_articles
+      from external_news_articles
       where last_seen_at > now() - ($1::text || ' hours')::interval
       group by source, coalesce(nullif(country, ''), 'Unknown')
     ),
@@ -224,6 +229,7 @@ async function main(): Promise<void> {
         count(*) filter (where attempted and not ok)::text as failed_runs_24h
       from ingestion_endpoint_runs
       where ran_at > now() - ($1::text || ' hours')::interval
+        and runner = 'worker'
       group by source
     )
     select
@@ -248,6 +254,31 @@ async function main(): Promise<void> {
     from ingested_articles
     where last_seen_at > now() - ($1::text || ' hours')::interval
       and beat = 'world'
+  `, [sinceHours]);
+
+    const translationResult = await pool.query<{
+      external_total: string;
+      title_translated: string;
+      summary_translated: string;
+    }>(`
+    select
+      count(*)::text as external_total,
+      count(*) filter (
+        where language is not null
+          and btrim(language) <> ''
+          and lower(language) not like 'en%'
+          and title_en is not null
+          and btrim(title_en) <> ''
+      )::text as title_translated,
+      count(*) filter (
+        where language is not null
+          and btrim(language) <> ''
+          and lower(language) not like 'en%'
+          and summary_en is not null
+          and btrim(summary_en) <> ''
+      )::text as summary_translated
+    from external_news_articles
+    where last_seen_at > now() - ($1::text || ' hours')::interval
   `, [sinceHours]);
 
     const rows: CsvRow[] = sourceResult.rows
@@ -284,6 +315,10 @@ async function main(): Promise<void> {
     const world = worldResult.rows[0] || { world_total: '0', world_latam: '0' };
     const worldTotal = Number(world.world_total || 0);
     const worldLatam = Number(world.world_latam || 0);
+    const tr = translationResult.rows[0] || { external_total: '0', title_translated: '0', summary_translated: '0' };
+    const externalTotal = Number(tr.external_total || 0);
+    const titleTranslated = Number(tr.title_translated || 0);
+    const summaryTranslated = Number(tr.summary_translated || 0);
 
     const stamp = new Date().toISOString().slice(0, 10);
     const csvPath = resolve(process.cwd(), `audits/source_daily_counts_${stamp}.csv`);
@@ -294,6 +329,10 @@ async function main(): Promise<void> {
       worldTotal,
       worldLatam,
       ratio: worldTotal > 0 ? worldLatam / worldTotal : 0
+    }, {
+      externalTotal,
+      titleCoverage: externalTotal > 0 ? titleTranslated / externalTotal : 0,
+      summaryCoverage: externalTotal > 0 ? summaryTranslated / externalTotal : 0
     }), 'utf8');
 
     console.log(`Wrote ${csvPath}`);

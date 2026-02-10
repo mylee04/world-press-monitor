@@ -52,6 +52,9 @@ type OpsSummary = {
     endpointRuns24h: number;
     failedRuns24h: number;
     failureRate24h: number;
+    externalArticles24h: number;
+    translatedTitleCoverage24h: number;
+    translatedSummaryCoverage24h: number;
   };
 };
 
@@ -293,9 +296,15 @@ function buildMessage(
   const opsEn = opsSummary
     ? `- 24h quality: duplicate rate ${opsSummary.totals.duplicateRate24h.toFixed(1)}% · failure rate ${opsSummary.totals.failureRate24h.toFixed(1)}% (${opsSummary.totals.failedRuns24h}/${opsSummary.totals.endpointRuns24h})`
     : '- 24h quality: unavailable';
+  const translationEn = opsSummary
+    ? `- Translation coverage: title_en ${opsSummary.totals.translatedTitleCoverage24h.toFixed(1)}% · summary_en ${opsSummary.totals.translatedSummaryCoverage24h.toFixed(1)}% (base ${opsSummary.totals.externalArticles24h})`
+    : '- Translation coverage: unavailable';
   const opsEs = opsSummary
     ? `- Calidad 24h: tasa duplicados ${opsSummary.totals.duplicateRate24h.toFixed(1)}% · tasa fallos ${opsSummary.totals.failureRate24h.toFixed(1)}% (${opsSummary.totals.failedRuns24h}/${opsSummary.totals.endpointRuns24h})`
     : '- Calidad 24h: no disponible';
+  const translationEs = opsSummary
+    ? `- Cobertura de traducción: title_en ${opsSummary.totals.translatedTitleCoverage24h.toFixed(1)}% · summary_en ${opsSummary.totals.translatedSummaryCoverage24h.toFixed(1)}% (base ${opsSummary.totals.externalArticles24h})`
+    : '- Cobertura de traducción: no disponible';
 
   return [
     `**PressLab Daily Ingestion (US + LATAM) — ${stamp}**`,
@@ -306,6 +315,7 @@ function buildMessage(
     `- LATAM: ${sum(latamRows)} items across ${latamRows.length} sources`,
     `- Sources with errors: ${withErrors}`,
     opsEn,
+    translationEn,
     cacheEn,
     warmEn,
     '- Top sources (24h):',
@@ -317,6 +327,7 @@ function buildMessage(
     `- LATAM: ${sum(latamRows)} items en ${latamRows.length} fuentes`,
     `- Fuentes con errores: ${withErrors}`,
     opsEs,
+    translationEs,
     cacheEs,
     warmEs,
     '- Fuentes principales (24h):',

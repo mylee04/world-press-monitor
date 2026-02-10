@@ -40,7 +40,9 @@ export interface BeatClassification {
 
 export interface NewsItem {
   id: string;
+  outletId?: string;
   title: string;
+  description?: string;
   link: string;
   source: string;
   language?: string;
@@ -59,4 +61,6 @@ export interface NewsItem {
   lon?: number;
   worldLatam?: boolean;
   tags?: string[];
+  publicationSource?: 'feed' | 'article_meta';
+  summarySource?: 'feed' | 'article_meta';
 }

@@ -133,6 +133,15 @@ export function PresslabWorkbench() {
     { key: 'analytics', label: text.analytics, icon: '📊' }
   ];
 
+  const queueDraftFromResearch = (draft: DraftRecord) => {
+    setDrafts((prev) => {
+      const normalized = draft.sourceLink.trim().toLowerCase();
+      const exists = prev.some((item) => item.sourceLink.trim().toLowerCase() === normalized);
+      if (exists) return prev;
+      return [draft, ...prev];
+    });
+  };
+
   return (
     <div className="workbench-root">
       <aside className="workbench-sidebar">
@@ -182,7 +191,12 @@ export function PresslabWorkbench() {
                 <h2>{text.researchTitle}</h2>
                 <p>{text.researchSub}</p>
               </div>
-              <NewsroomDashboard locale={locale} />
+              <NewsroomDashboard
+                locale={locale}
+                onQueueDraft={queueDraftFromResearch}
+                existingDraftLinks={drafts.map((item) => item.sourceLink)}
+                onBreakingQueued={() => setActiveNav('writing')}
+              />
             </section>
           ) : activeNav === 'writing' ? (
             <WritingWorkspace

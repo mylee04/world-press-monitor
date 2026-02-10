@@ -15,8 +15,11 @@ fi
 build_block() {
   cat <<EOF
 $CRON_TAG_START
-*/5 * * * * cd "$ROOT_DIR" && $SHELL_BIN -lc 'set -a; source ./.env.local; set +a; "$BUN_BIN" scripts/warm-news-cache.ts --once >> ./audits/cron-warm.log 2>&1'
-0 * * * * cd "$ROOT_DIR" && $SHELL_BIN -lc 'set -a; source ./.env.local; set +a; "$BUN_BIN" run report:daily-sources >> ./audits/cron-report.log 2>&1'
+*/5 * * * * cd "$ROOT_DIR" && $SHELL_BIN -lc 'set -a; source ./.env.local; set +a; "$BUN_BIN" scripts/ingest-worker.ts --once >> ./audits/cron-ingest.log 2>&1'
+*/5 * * * * cd "$ROOT_DIR" && $SHELL_BIN -lc 'set -a; source ./.env.local; set +a; "$BUN_BIN" scripts/collect-x-breaking.ts >> ./audits/cron-x-breaking.log 2>&1'
+*/5 * * * * cd "$ROOT_DIR" && $SHELL_BIN -lc 'set -a; source ./.env.local; set +a; "$BUN_BIN" scripts/enrich-external-articles.ts >> ./audits/cron-enrich.log 2>&1'
+0 * * * * cd "$ROOT_DIR" && $SHELL_BIN -lc 'set -a; source ./.env.local; set +a; "$BUN_BIN" scripts/post-hourly-ops-discord.ts >> ./audits/cron-hourly-ops.log 2>&1'
+15 0 * * * cd "$ROOT_DIR" && $SHELL_BIN -lc 'set -a; source ./.env.local; set +a; ("$BUN_BIN" scripts/report-daily-source-counts.ts && "$BUN_BIN" scripts/post-daily-discord.ts) >> ./audits/cron-report.log 2>&1'
 $CRON_TAG_END
 EOF
 }

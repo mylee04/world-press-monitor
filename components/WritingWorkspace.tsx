@@ -44,6 +44,11 @@ const COPY: Record<Locale, Record<string, string>> = {
     countNew: 'new drafts',
     lastRun: 'Last discovery',
     notes: 'Editor can revise text before approval.'
+    ,
+    queuedBy: 'Queued by',
+    queuedMajor: 'Major Watch',
+    queuedX: 'X Breaking',
+    queuedManual: 'Manual discover'
   },
   es: {
     title: 'Workspace de Redacción',
@@ -68,8 +73,20 @@ const COPY: Record<Locale, Record<string, string>> = {
     countNew: 'borradores nuevos',
     lastRun: 'Última detección',
     notes: 'El editor puede revisar el texto antes de aprobar.'
+    ,
+    queuedBy: 'Encolado por',
+    queuedMajor: 'Major Watch',
+    queuedX: 'X Breaking',
+    queuedManual: 'Detección manual'
   }
 };
+
+function queuedLabel(localeText: Record<string, string>, value?: DraftRecord['autoQueuedFrom']): string {
+  if (value === 'major_watch') return localeText.queuedMajor;
+  if (value === 'social_x') return localeText.queuedX;
+  if (value === 'manual_discovery') return localeText.queuedManual;
+  return '';
+}
 
 function isBreakingCandidate(item: NewsItem): boolean {
   const freshCutoff = Date.now() - 6 * 60 * 60 * 1000;
@@ -166,7 +183,8 @@ export function WritingWorkspace({ locale, drafts, setDrafts, onSentToDistributi
           headlineEs: draft.headlineEs,
           bodyEs: draft.bodyEs,
           createdAt,
-          updatedAt: createdAt
+          updatedAt: createdAt,
+          autoQueuedFrom: 'manual_discovery'
         });
       }
 
@@ -261,6 +279,7 @@ export function WritingWorkspace({ locale, drafts, setDrafts, onSentToDistributi
                   <strong>{draft.headlineEs || draft.sourceTitle}</strong>
                   <span>{draft.source}</span>
                   <span>{new Date(draft.sourcePublishedAt).toLocaleString()}</span>
+                  {draft.autoQueuedFrom ? <code className="workspace-queue-badge">{queuedLabel(t, draft.autoQueuedFrom)}</code> : null}
                   <code>{draft.status === 'draft' ? t.statusDraft : draft.status === 'approved' ? t.statusApproved : t.statusPublished}</code>
                 </button>
               ))}
@@ -276,6 +295,7 @@ export function WritingWorkspace({ locale, drafts, setDrafts, onSentToDistributi
                 <p>{selected.sourceTitle}</p>
                 <p>{t.source}: {selected.source}</p>
                 <p>{t.published}: {new Date(selected.sourcePublishedAt).toLocaleString()}</p>
+                {selected.autoQueuedFrom ? <p>{t.queuedBy}: <strong>{queuedLabel(t, selected.autoQueuedFrom)}</strong></p> : null}
                 <a href={selected.sourceLink} target="_blank" rel="noreferrer">{t.openArticle}</a>
               </div>
 

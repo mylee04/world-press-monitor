@@ -487,6 +487,20 @@ const ALL_EXPANSION_SOURCE_NAMES = new Set([
   ...PRESET_SEEDS.latam_expansion.map((seed) => seed.name)
 ]);
 
+function isNoisyQueryMatrixSource(name: string): boolean {
+  return /^G (State|Metro) /i.test(name)
+    || /^B (State|Metro) /i.test(name)
+    || /^Google (State:|Metro:)/i.test(name)
+    || /^Bing (State:|Metro:)/i.test(name);
+}
+
+const NOISY_QUERY_MATRIX_SOURCE_NAMES = new Set(
+  Object.values(PRESET_SEEDS)
+    .flat()
+    .map((seed) => seed.name)
+    .filter((name) => isNoisyQueryMatrixSource(name))
+);
+
 const PROMOTED_EXPANSION = new Set<string>([
   '24 Horas Chile',
   'America TV AR',
@@ -567,7 +581,10 @@ const PROMOTED_EXPANSION = new Set<string>([
 ]);
 
 const EXPLORATORY_OFF_BY_DEFAULT = new Set(
-  [...ALL_EXPANSION_SOURCE_NAMES].filter((name) => !PROMOTED_EXPANSION.has(name))
+  [
+    ...[...ALL_EXPANSION_SOURCE_NAMES].filter((name) => !PROMOTED_EXPANSION.has(name)),
+    ...NOISY_QUERY_MATRIX_SOURCE_NAMES
+  ]
 );
 
 function getReviewDecision(seed: OutletSeed): OutletFeed['reviewDecision'] {
@@ -624,6 +641,19 @@ function buildOutlets(): OutletFeed[] {
 
 export const OUTLET_FEEDS: OutletFeed[] = buildOutlets();
 
+const TOP10_MAJOR_SOURCE_NAMES = [
+  'AP News',
+  'Reuters',
+  'The New York Times',
+  'Washington Post',
+  'Wall Street Journal',
+  'Bloomberg',
+  'CNBC',
+  'Financial Times',
+  'CNN',
+  'ABC News'
+];
+
 const LATAM_SEEDS = [
   ...PRESET_SEEDS.latam_argentina,
   ...PRESET_SEEDS.latam_chile,
@@ -654,6 +684,12 @@ export const SOURCE_PRESETS: SourcePreset[] = [
     outletIds: OUTLET_FEEDS
       .filter((outlet) => outlet.reviewDecision === 'verified_core')
       .map((outlet) => outlet.id)
+  },
+  {
+    key: 'top10_major',
+    label: 'Top 10 Major',
+    description: 'Top 10 major US/global sources for fast breaking monitoring.',
+    outletIds: TOP10_MAJOR_SOURCE_NAMES.map((name) => slugify(name))
   },
   {
     key: 'global_core',

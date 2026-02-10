@@ -40,7 +40,8 @@ async function ensureSchema(): Promise<void> {
       created_at timestamptz not null default now(),
       updated_at timestamptz not null default now(),
       approved_at timestamptz null,
-      published_at timestamptz null
+      published_at timestamptz null,
+      auto_queued_from text null
     );
     create table if not exists distribution_content (
       id bigserial primary key,
@@ -52,6 +53,7 @@ async function ensureSchema(): Promise<void> {
       unique(draft_id, platform)
     );
   `);
+  await db.query('alter table drafts add column if not exists auto_queued_from text null;');
   schemaReady = true;
 }
 
@@ -98,6 +100,7 @@ export async function listDrafts(): Promise<{ drafts: DraftRecord[]; storage: 'p
     updated_at: string;
     approved_at: string | null;
     published_at: string | null;
+    auto_queued_from: DraftRecord['autoQueuedFrom'] | null;
   }>('select * from drafts order by updated_at desc limit 500');
 
   const ids = draftsRes.rows.map((row) => row.id);
@@ -133,6 +136,7 @@ export async function listDrafts(): Promise<{ drafts: DraftRecord[]; storage: 'p
       updatedAt: row.updated_at,
       approvedAt: row.approved_at || undefined,
       publishedAt: row.published_at || undefined,
+      autoQueuedFrom: row.auto_queued_from || undefined,
       distribution
     } satisfies DraftRecord;
   });
@@ -167,8 +171,8 @@ export async function syncDrafts(records: DraftRecord[]): Promise<{ drafts: Draf
       await client.query(
         `insert into drafts (
           id, source_article_id, source, source_link, source_title, source_published_at,
-          status, headline_es, body_es, created_at, updated_at, approved_at, published_at
-        ) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
+          status, headline_es, body_es, created_at, updated_at, approved_at, published_at, auto_queued_from
+        ) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)
         on conflict (id) do update set
           source_article_id = excluded.source_article_id,
           source = excluded.source,
@@ -180,7 +184,8 @@ export async function syncDrafts(records: DraftRecord[]): Promise<{ drafts: Draf
           body_es = excluded.body_es,
           updated_at = excluded.updated_at,
           approved_at = excluded.approved_at,
-          published_at = excluded.published_at`,
+          published_at = excluded.published_at,
+          auto_queued_from = excluded.auto_queued_from`,
         [
           draft.id,
           draft.sourceArticleId,
@@ -194,7 +199,8 @@ export async function syncDrafts(records: DraftRecord[]): Promise<{ drafts: Draf
           draft.createdAt,
           draft.updatedAt,
           draft.approvedAt || null,
-          draft.publishedAt || null
+          draft.publishedAt || null,
+          draft.autoQueuedFrom || null
         ]
       );
 

@@ -14,7 +14,10 @@ export async function GET(): Promise<Response> {
       duplicateRate24h: 0,
       endpointRuns24h: 0,
       failedRuns24h: 0,
-      failureRate24h: 0
+      failureRate24h: 0,
+      externalArticles24h: 0,
+      translatedTitleCoverage24h: 0,
+      translatedSummaryCoverage24h: 0
     },
     topSources24h: []
   }));

@@ -23,6 +23,7 @@ export interface DraftRecord {
   updatedAt: string;
   approvedAt?: string;
   publishedAt?: string;
+  autoQueuedFrom?: 'major_watch' | 'social_x' | 'manual_discovery';
   distribution?: DistributionPayload;
 }
 

@@ -5,7 +5,14 @@ import { classifyBeatByKeyword } from '@/lib/keyword-classifier';
 import { inferGeoFromTitle } from '@/lib/geo';
 import { parseRssOrAtom } from '@/lib/parsers';
 import { isCoolingDown, markFailure, markSuccess } from '@/lib/circuit-breaker';
-import { persistIngestedArticles, persistIngestionDiagnostics } from '@/lib/ingestion-store';
+import {
+  persistExternalNewsArticles,
+  persistIngestionDiagnostics,
+  readExternalNewsArticles,
+  readIngestedArticles,
+  readLatestIngestionDiagnostics,
+  type IngestionEndpointRun
+} from '@/lib/ingestion-store';
 import {
   newsCacheMetricHitMemory,
   newsCacheMetricHitRedis,
@@ -82,6 +89,7 @@ interface NewsResponsePayload {
     persisted: number;
     error?: string;
     reason?: string;
+    externalPersisted?: number;
   };
 }
 
@@ -93,6 +101,7 @@ interface MemoryCacheEntry {
 interface ArticleTimeCacheEntry {
   expiresAt: number;
   publishedAt: string | null;
+  summary: string | null;
 }
 
 let redisClient: Redis | null = null;
@@ -119,6 +128,15 @@ const ARTICLE_TIME_MAX_DIFF_MS = 7 * DAY_MS;
 const ENDPOINT_FETCH_CONCURRENCY = Math.max(
   4,
   Math.min(120, Number.parseInt(process.env.NEWS_FETCH_CONCURRENCY || '40', 10) || 40)
+);
+const DB_READ_ENABLED_BY_DEFAULT = process.env.NEWS_DB_READ_ENABLED !== 'false';
+const DB_READ_MODEL = (process.env.NEWS_DB_READ_MODEL || 'external').toLowerCase();
+const PROD_READ_ONLY = process.env.NEWS_PROD_READ_ONLY === 'true';
+const LIVE_FALLBACK_ENABLED = process.env.NEWS_LIVE_FALLBACK_ENABLED !== 'false';
+const WRITE_INGESTED_COMPAT = process.env.NEWS_WRITE_INGESTED_COMPAT === 'true';
+const DB_READ_WINDOW_HOURS = Math.max(
+  6,
+  Math.min(168, Number.parseInt(process.env.NEWS_DB_READ_WINDOW_HOURS || '48', 10) || 48)
 );
 const LATAM_COUNTRIES = new Set(['LATAM', 'Argentina', 'Chile', 'Uruguay']);
 const LATAM_ENTITY_TERMS = [
@@ -163,6 +181,11 @@ const ARTICLE_TIME_META_REGEXES = [
   /<time[^>]+datetime=["']([^"']+)["'][^>]*>/i,
   /"datePublished"\s*:\s*"([^"]+)"/i,
   /"dateCreated"\s*:\s*"([^"]+)"/i
+];
+const ARTICLE_SUMMARY_META_REGEXES = [
+  /<meta[^>]+(?:property|name)=["']og:description["'][^>]+content=["']([^"']+)["'][^>]*>/i,
+  /<meta[^>]+(?:property|name)=["']twitter:description["'][^>]+content=["']([^"']+)["'][^>]*>/i,
+  /<meta[^>]+(?:property|name)=["']description["'][^>]+content=["']([^"']+)["'][^>]*>/i
 ];
 
 function normalizeText(value: string): string {
@@ -268,9 +291,13 @@ function pruneMemoryNewsCache(now: number): void {
   }
 }
 
-async function buildNewsCacheKey(outletIds: string[], responseLimit: number): Promise<string> {
+async function buildNewsCacheKey(
+  outletIds: string[],
+  responseLimit: number,
+  variant: 'full' | 'db'
+): Promise<string> {
   const normalizedOutlets = [...new Set(outletIds)].sort().join(',');
-  const signature = await sha256(`v2|${responseLimit}|${normalizedOutlets}`);
+  const signature = await sha256(`v3|${variant}|${responseLimit}|${normalizedOutlets}`);
   return `presslab:news:${signature}`;
 }
 
@@ -364,6 +391,21 @@ function extractPublishedAtFromHtml(html: string): string | null {
   return null;
 }
 
+function extractSummaryFromHtml(html: string): string | null {
+  for (const regex of ARTICLE_SUMMARY_META_REGEXES) {
+    const match = html.match(regex);
+    if (!match || !match[1]) continue;
+    const text = match[1]
+      .replace(/&amp;/gi, '&')
+      .replace(/&quot;/gi, '"')
+      .replace(/&#39;/gi, "'")
+      .replace(/\s+/g, ' ')
+      .trim();
+    if (text) return text.slice(0, 1600);
+  }
+  return null;
+}
+
 function pruneMemoryArticleTimeCache(now: number): void {
   for (const [key, entry] of memoryArticleTimeCache.entries()) {
     if (entry.expiresAt <= now) memoryArticleTimeCache.delete(key);
@@ -375,11 +417,14 @@ function pruneMemoryArticleTimeCache(now: number): void {
   }
 }
 
-async function getCachedArticlePublishedAt(cacheKey: string): Promise<string | null | undefined> {
+async function getCachedArticleMetadata(cacheKey: string): Promise<{ publishedAt: string | null; summary: string | null } | undefined> {
   const now = Date.now();
   const memoryEntry = memoryArticleTimeCache.get(cacheKey);
   if (memoryEntry && memoryEntry.expiresAt > now) {
-    return memoryEntry.publishedAt;
+    return {
+      publishedAt: memoryEntry.publishedAt,
+      summary: memoryEntry.summary
+    };
   }
   if (memoryEntry) {
     memoryArticleTimeCache.delete(cacheKey);
@@ -388,39 +433,44 @@ async function getCachedArticlePublishedAt(cacheKey: string): Promise<string | n
   const redis = getRedis();
   if (!redis) return undefined;
   try {
-    const cached = await redis.get<string | null>(cacheKey);
+    const cached = await redis.get<{ publishedAt: string | null; summary: string | null }>(cacheKey);
     if (cached === null) return undefined;
     memoryArticleTimeCache.set(cacheKey, {
       expiresAt: now + ARTICLE_TIME_CACHE_TTL_SECONDS * 1000,
-      publishedAt: cached
+      publishedAt: cached.publishedAt || null,
+      summary: cached.summary || null
     });
     pruneMemoryArticleTimeCache(now);
-    return cached;
+    return {
+      publishedAt: cached.publishedAt || null,
+      summary: cached.summary || null
+    };
   } catch {
     return undefined;
   }
 }
 
-async function setCachedArticlePublishedAt(cacheKey: string, publishedAt: string | null): Promise<void> {
+async function setCachedArticleMetadata(cacheKey: string, metadata: { publishedAt: string | null; summary: string | null }): Promise<void> {
   const now = Date.now();
   memoryArticleTimeCache.set(cacheKey, {
     expiresAt: now + ARTICLE_TIME_CACHE_TTL_SECONDS * 1000,
-    publishedAt
+    publishedAt: metadata.publishedAt,
+    summary: metadata.summary
   });
   pruneMemoryArticleTimeCache(now);
 
   const redis = getRedis();
   if (!redis) return;
   try {
-    await redis.set(cacheKey, publishedAt, { ex: ARTICLE_TIME_CACHE_TTL_SECONDS });
+    await redis.set(cacheKey, metadata, { ex: ARTICLE_TIME_CACHE_TTL_SECONDS });
   } catch {
     // Ignore cache write failure
   }
 }
 
-async function fetchArticlePublishedAt(link: string): Promise<string | null> {
+async function fetchArticleMetadata(link: string): Promise<{ publishedAt: string | null; summary: string | null }> {
   const cacheKey = `presslab:article-time:${await sha256(link)}`;
-  const cached = await getCachedArticlePublishedAt(cacheKey);
+  const cached = await getCachedArticleMetadata(cacheKey);
   if (cached !== undefined) return cached;
 
   let timeout: ReturnType<typeof setTimeout> | null = null;
@@ -437,16 +487,21 @@ async function fetchArticlePublishedAt(link: string): Promise<string | null> {
     clearTimeout(timeout);
     timeout = null;
     if (!response.ok) {
-      await setCachedArticlePublishedAt(cacheKey, null);
-      return null;
+      const value = { publishedAt: null, summary: null };
+      await setCachedArticleMetadata(cacheKey, value);
+      return value;
     }
     const html = await response.text();
-    const parsed = extractPublishedAtFromHtml(html);
-    await setCachedArticlePublishedAt(cacheKey, parsed);
+    const parsed = {
+      publishedAt: extractPublishedAtFromHtml(html),
+      summary: extractSummaryFromHtml(html)
+    };
+    await setCachedArticleMetadata(cacheKey, parsed);
     return parsed;
   } catch {
-    await setCachedArticlePublishedAt(cacheKey, null);
-    return null;
+    const value = { publishedAt: null, summary: null };
+    await setCachedArticleMetadata(cacheKey, value);
+    return value;
   } finally {
     if (timeout) clearTimeout(timeout);
   }
@@ -468,19 +523,30 @@ async function enrichPublishedAtFromArticleMeta(items: NewsItem[]): Promise<News
   const targets = items.slice(0, maxItems);
   const enriched = await Promise.all(
     targets.map(async (item) => {
-      const articlePublishedAt = await fetchArticlePublishedAt(item.link);
-      if (!articlePublishedAt) return item;
+      const articleMeta = await fetchArticleMetadata(item.link);
+      if (!articleMeta.publishedAt && !articleMeta.summary) return item;
+
+      let next = { ...item };
+      if (articleMeta.summary) {
+        next = {
+          ...next,
+          description: articleMeta.summary,
+          summarySource: 'article_meta' as const
+        };
+      }
+      if (!articleMeta.publishedAt) return next;
 
       const sourceTs = new Date(item.publishedAt).getTime();
-      const metaTs = new Date(articlePublishedAt).getTime();
-      if (!Number.isFinite(sourceTs) || !Number.isFinite(metaTs)) return item;
+      const metaTs = new Date(articleMeta.publishedAt).getTime();
+      if (!Number.isFinite(sourceTs) || !Number.isFinite(metaTs)) return next;
 
       // Guard against accidental wrong extraction (e.g. stale template times).
-      if (Math.abs(metaTs - sourceTs) > ARTICLE_TIME_MAX_DIFF_MS) return item;
+      if (Math.abs(metaTs - sourceTs) > ARTICLE_TIME_MAX_DIFF_MS) return next;
 
       return {
-        ...item,
-        publishedAt: articlePublishedAt
+        ...next,
+        publishedAt: articleMeta.publishedAt,
+        publicationSource: 'article_meta' as const
       };
     })
   );
@@ -540,6 +606,67 @@ function inferCountryFromText(text: string): string {
   return 'Global';
 }
 
+function inferCountryFromLink(link: string): string | null {
+  const host = (() => {
+    try {
+      return new URL(link).hostname.toLowerCase();
+    } catch {
+      return '';
+    }
+  })();
+  if (!host) return null;
+  if (host.endsWith('.ar')) return 'Argentina';
+  if (host.endsWith('.cl')) return 'Chile';
+  if (host.endsWith('.uy')) return 'Uruguay';
+  if (host.endsWith('.mx')) return 'Mexico';
+  if (host.endsWith('.us')) return 'United States';
+  return null;
+}
+
+function normalizeLanguageCode(value?: string): string | undefined {
+  const v = (value || '').trim().toLowerCase();
+  if (!v) return undefined;
+  if (v === 'es' || v.startsWith('es-')) return 'es';
+  if (v === 'en' || v.startsWith('en-')) return 'en';
+  if (v === 'pt' || v.startsWith('pt-')) return 'pt';
+  if (v === 'fr' || v.startsWith('fr-')) return 'fr';
+  return v.slice(0, 2);
+}
+
+function inferLanguageFromText(text: string, country?: string): string {
+  const normalized = normalizeText(text);
+  const hasSpanishHints = /[áéíóúñü¿¡]/i.test(text)
+    || normalized.includes(' el ')
+    || normalized.includes(' la ')
+    || normalized.includes(' de ')
+    || normalized.includes(' en vivo')
+    || normalized.includes('ultima hora')
+    || normalized.includes('última hora');
+  if (hasSpanishHints) return 'es';
+  const c = (country || '').toLowerCase();
+  if (c === 'argentina' || c === 'chile' || c === 'uruguay' || c === 'mexico' || c === 'latam') return 'es';
+  if (c === 'united states') return 'en';
+  return 'en';
+}
+
+function applyLocaleDetection(item: NewsItem): NewsItem {
+  const countryFromLink = inferCountryFromLink(item.link);
+  const countryFromText = inferCountryFromText(`${item.title} ${item.description || ''} ${item.link}`);
+  const country =
+    item.country && item.country !== 'Global'
+      ? item.country
+      : countryFromLink || (countryFromText !== 'Global' ? countryFromText : item.country || 'Global');
+
+  const language = normalizeLanguageCode(item.language)
+    || inferLanguageFromText(`${item.title} ${item.description || ''}`, country);
+
+  return {
+    ...item,
+    country,
+    language
+  };
+}
+
 async function getGnewsBreakingOverlay(): Promise<NewsItem[]> {
   const apiKey = process.env.GNEWS_API_KEY;
   const enabled = process.env.GNEWS_BREAKING_ENABLED !== 'false';
@@ -597,6 +724,7 @@ async function getGnewsBreakingOverlay(): Promise<NewsItem[]> {
       const item = {
         id: link,
         title,
+        description: article.description || '',
         link,
         source: `GNews • ${article.source?.name || 'Breaking Desk'}`,
         language: /[áéíóúñ]/i.test(`${title} ${article.description || ''}`) ? 'es' : 'en',
@@ -607,6 +735,8 @@ async function getGnewsBreakingOverlay(): Promise<NewsItem[]> {
         confidence: classification.confidence,
         classificationSource: classification.source,
         classificationReason: classification.reason,
+        publicationSource: 'feed' as const,
+        summarySource: article.description ? 'feed' as const : undefined,
         ...geo
       } satisfies NewsItem;
       return annotateWorldLatam(item);
@@ -688,7 +818,9 @@ async function fetchOutletRss(origin: string, outlet: OutletFeed): Promise<Outle
       const geo = inferGeoFromTitle(item.title, normalizedCountry);
       const newsItem = {
         id: item.link,
+        outletId: outlet.id,
         title: item.title,
+        description: item.description || '',
         link: item.link,
         source: outlet.name,
         language: outlet.language || 'en',
@@ -699,6 +831,8 @@ async function fetchOutletRss(origin: string, outlet: OutletFeed): Promise<Outle
         confidence: classification.confidence,
         classificationSource: classification.source,
         classificationReason: classification.reason,
+        publicationSource: 'feed' as const,
+        summarySource: item.description ? 'feed' as const : undefined,
         ...geo
       } satisfies NewsItem;
       return annotateWorldLatam(newsItem);
@@ -811,7 +945,7 @@ async function fetchOutletSitemap(origin: string, outlet: OutletFeed): Promise<O
       };
     }
 
-    const json = await response.json() as { items?: Array<{ title: string; link: string; publishedAt: string }> };
+    const json = await response.json() as { items?: Array<{ title: string; description?: string; link: string; publishedAt: string }> };
     const parsed = (json.items || []).slice(0, parseLimit);
     const items = parsed.map((item) => {
       const classification = classifyBeatByKeyword(item.title, outlet.beat);
@@ -819,9 +953,11 @@ async function fetchOutletSitemap(origin: string, outlet: OutletFeed): Promise<O
       const geo = inferGeoFromTitle(item.title, normalizedCountry);
       const newsItem = {
         id: item.link,
+        outletId: outlet.id,
         title: item.title,
+        description: item.description || '',
         link: item.link,
-        source: `${outlet.name} Sitemap`,
+        source: outlet.name,
         language: outlet.language || 'en',
         sourceType: outlet.sourceType || 'global',
         tier: outlet.tier,
@@ -830,6 +966,8 @@ async function fetchOutletSitemap(origin: string, outlet: OutletFeed): Promise<O
         confidence: classification.confidence,
         classificationSource: classification.source,
         classificationReason: classification.reason,
+        publicationSource: 'feed' as const,
+        summarySource: item.description ? 'feed' as const : undefined,
         ...geo
       } satisfies NewsItem;
       return annotateWorldLatam(newsItem);
@@ -995,23 +1133,159 @@ async function runWithConcurrency<T, R>(items: T[], limit: number, fn: (item: T)
   return results;
 }
 
+function diagnosticsFromRuns(runs: IngestionEndpointRun[]): FetchDiagnostic[] {
+  return runs.map((run) => ({
+    outletId: run.outletId,
+    source: run.source,
+    method: run.method,
+    attempted: Boolean(run.attempted),
+    circuitOpen: Boolean(run.circuitOpen),
+    ok: Boolean(run.ok),
+    statusCode: run.statusCode ?? null,
+    parsedCount: run.parsedCount || 0,
+    parsedLimit: run.parsedLimit || 0,
+    sampleCapped: Boolean(run.sampleCapped),
+    recent24h: run.recent24h || 0,
+    error: run.error
+  }));
+}
+
+function buildIngestionSummary(totalOutlets: number, diagnostics: FetchDiagnostic[]): NewsResponsePayload['ingestion'] {
+  const attempted = diagnostics.filter((diag) => diag.attempted);
+  return {
+    totalOutlets,
+    totalEndpoints: attempted.length,
+    okEndpoints: attempted.filter((diag) => diag.ok).length,
+    failedEndpoints: attempted.filter((diag) => !diag.ok).length,
+    circuitOpenEndpoints: diagnostics.filter((diag) => diag.circuitOpen).length,
+    sampleCappedEndpoints: attempted.filter((diag) => diag.sampleCapped).length,
+    diagnostics
+  };
+}
+
 export async function GET(req: NextRequest): Promise<Response> {
   newsCacheMetricRequest();
   const origin = req.nextUrl.origin;
+  const mode = (req.nextUrl.searchParams.get('mode') || '').toLowerCase();
+  const runnerParam = (req.nextUrl.searchParams.get('runner') || '').toLowerCase();
+  const runner: 'worker' | 'api_news' | 'warm' =
+    runnerParam === 'worker' || runnerParam === 'warm' ? runnerParam : 'api_news';
+  const readOnlyMode = mode === 'readonly' || mode === 'db';
+  const forceIngest = mode === 'ingest';
+  const forceFresh = forceIngest || mode === 'fresh';
+  const compactResponse = forceIngest;
+  const dbReadEnabled = DB_READ_ENABLED_BY_DEFAULT && !forceFresh;
+  const liveFallbackAllowed = LIVE_FALLBACK_ENABLED && !readOnlyMode && !(process.env.NODE_ENV === 'production' && PROD_READ_ONLY);
   const outletIds = (req.nextUrl.searchParams.get('outlets') || '').split(',').filter(Boolean);
   const requestedLimit = Number(req.nextUrl.searchParams.get('limit') || DEFAULT_RESPONSE_ITEM_LIMIT);
   const responseLimit = Number.isFinite(requestedLimit)
     ? Math.max(100, Math.min(MAX_RESPONSE_ITEM_LIMIT, Math.round(requestedLimit)))
     : DEFAULT_RESPONSE_ITEM_LIMIT;
+  const requestedDbWindowHours = Number(req.nextUrl.searchParams.get('dbHours') || DB_READ_WINDOW_HOURS);
+  const dbWindowHours = Number.isFinite(requestedDbWindowHours)
+    ? Math.max(6, Math.min(168, Math.round(requestedDbWindowHours)))
+    : DB_READ_WINDOW_HOURS;
 
   const selectedOutlets = outletIds.length
     ? outletIds.map((id) => OUTLET_BY_ID.get(id)).filter((outlet): outlet is OutletFeed => Boolean(outlet))
     : OUTLET_FEEDS;
+  const hasExplicitOutletFilter = outletIds.length > 0;
   const selectedOutletIds = selectedOutlets.map((outlet) => outlet.id);
-  const cacheKey = await buildNewsCacheKey(selectedOutletIds, responseLimit);
-  const cachedPayload = await getCachedNewsPayload(cacheKey);
-  if (cachedPayload) {
-    return Response.json(cachedPayload);
+
+  if (!forceFresh) {
+    const cacheVariant: 'full' | 'db' = dbReadEnabled ? 'db' : 'full';
+    const cacheKey = await buildNewsCacheKey(selectedOutletIds, responseLimit, cacheVariant);
+    const cachedPayload = await getCachedNewsPayload(cacheKey);
+    if (cachedPayload) {
+      return Response.json(cachedPayload);
+    }
+  }
+
+  if (dbReadEnabled) {
+    const dbReadLimit = Math.min(MAX_RESPONSE_ITEM_LIMIT, Math.max(responseLimit * 2, 1000));
+    const dbReadFn = DB_READ_MODEL === 'ingested' ? readIngestedArticles : readExternalNewsArticles;
+    const dbRead = await dbReadFn({
+      outletIds: hasExplicitOutletFilter ? selectedOutletIds : undefined,
+      limit: dbReadLimit,
+      hours: dbWindowHours
+    });
+
+    if (dbRead.storage === 'postgres' && dbRead.items.length > 0) {
+      const diagnosticsRead = await readLatestIngestionDiagnostics({
+        outletIds: hasExplicitOutletFilter ? selectedOutletIds : undefined,
+        runner: 'worker',
+        minutes: Math.min(24 * 60, Math.max(90, dbWindowHours * 60)),
+        limit: Math.min(5000, Math.max(200, selectedOutlets.length * 2))
+      });
+      const diagnostics = diagnosticsFromRuns(diagnosticsRead.runs);
+      const dbItems = buildStoryClusters(
+        dedupeAndSort(
+          filterReasonablePublishedAt(
+            dbRead.items.map((item) => annotateWorldLatam(applyLocaleDetection(item)))
+          )
+        )
+      );
+      const payload: NewsResponsePayload = {
+        generatedAt: dbRead.generatedAt || new Date().toISOString(),
+        count: dbItems.length,
+        items: dbItems.slice(0, responseLimit),
+        ingestion: buildIngestionSummary(selectedOutlets.length, diagnostics),
+        persistence: {
+          storage: 'postgres',
+          persisted: 0,
+          externalPersisted: 0,
+          reason: DB_READ_MODEL === 'ingested' ? 'db_read_ingested' : 'db_read_external'
+        }
+      };
+
+      const cacheKey = await buildNewsCacheKey(selectedOutletIds, responseLimit, 'db');
+      await setCachedNewsPayload(cacheKey, payload);
+      return Response.json(payload);
+    }
+
+    if (!liveFallbackAllowed) {
+      const diagnosticsRead = await readLatestIngestionDiagnostics({
+        outletIds: hasExplicitOutletFilter ? selectedOutletIds : undefined,
+        runner: 'worker',
+        minutes: Math.min(24 * 60, Math.max(90, dbWindowHours * 60)),
+        limit: Math.min(5000, Math.max(200, selectedOutlets.length * 2))
+      });
+      const diagnostics = diagnosticsFromRuns(diagnosticsRead.runs);
+      const payload: NewsResponsePayload = {
+        generatedAt: new Date().toISOString(),
+        count: 0,
+        items: [],
+        ingestion: buildIngestionSummary(selectedOutlets.length, diagnostics),
+        persistence: {
+          storage: dbRead.storage,
+          persisted: 0,
+          externalPersisted: 0,
+          reason: dbRead.storage === 'postgres'
+            ? 'db_empty_read_only'
+            : 'db_unavailable_read_only',
+          ...(dbRead.reason ? { error: dbRead.reason } : {})
+        }
+      };
+      const cacheKey = await buildNewsCacheKey(selectedOutletIds, responseLimit, 'db');
+      await setCachedNewsPayload(cacheKey, payload);
+      return Response.json(payload);
+    }
+  }
+
+  if (!liveFallbackAllowed) {
+    const payload: NewsResponsePayload = {
+      generatedAt: new Date().toISOString(),
+      count: 0,
+      items: [],
+      ingestion: buildIngestionSummary(selectedOutlets.length, []),
+      persistence: {
+        storage: 'disabled',
+        persisted: 0,
+        externalPersisted: 0,
+        reason: 'live_fallback_disabled'
+      }
+    };
+    return Response.json(payload);
   }
 
   const tasks = selectedOutlets.flatMap((outlet) => ([
@@ -1020,7 +1294,7 @@ export async function GET(req: NextRequest): Promise<Response> {
   ]));
   const results = await runWithConcurrency(tasks, ENDPOINT_FETCH_CONCURRENCY, (task) => task());
   const diagnostics = results.map((result) => result.diagnostic);
-  await persistIngestionDiagnostics(diagnostics).catch(() => ({ persisted: 0, storage: 'disabled' as const }));
+  await persistIngestionDiagnostics(diagnostics, { runner }).catch(() => ({ persisted: 0, storage: 'disabled' as const }));
   const gnewsItems = await getGnewsBreakingOverlay();
   const mergedItems = dedupeAndSort([
     ...results.flatMap((result) => result.items),
@@ -1040,13 +1314,19 @@ export async function GET(req: NextRequest): Promise<Response> {
     items = buildStoryClusters(dedupeAndSort([...items, ...fallback]));
   }
 
-  let persistence: { persisted: number; storage: 'postgres' | 'disabled'; error?: string; reason?: string };
+  items = items.map((item) => annotateWorldLatam(applyLocaleDetection(item)));
+
+  let persistence: { persisted: number; storage: 'postgres' | 'disabled'; error?: string; reason?: string; externalPersisted?: number };
   try {
-    const persisted = await persistIngestedArticles(items);
-    persistence = { ...persisted };
+    const external = await persistExternalNewsArticles(items);
+    if (WRITE_INGESTED_COMPAT) {
+      const { persistIngestedArticles } = await import('@/lib/ingestion-store');
+      await persistIngestedArticles(items).catch(() => ({ persisted: 0 }));
+    }
+    persistence = { ...external, externalPersisted: external.persisted || 0 };
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
-    console.error('[news] persistIngestedArticles failed:', message);
+    console.error('[news] persistExternalNewsArticles failed:', message);
     persistence = {
       persisted: 0,
       storage: 'disabled',
@@ -1054,27 +1334,30 @@ export async function GET(req: NextRequest): Promise<Response> {
     };
   }
 
+  const ingestion = buildIngestionSummary(selectedOutlets.length, diagnostics);
+  const responseIngestion = compactResponse ? {
+    ...ingestion,
+    diagnostics: []
+  } : ingestion;
+
   const payload: NewsResponsePayload = {
     generatedAt: new Date().toISOString(),
     count: items.length,
-    items: items.slice(0, responseLimit),
-    ingestion: {
-      totalOutlets: selectedOutlets.length,
-      totalEndpoints: diagnostics.filter((diag) => diag.attempted).length,
-      okEndpoints: diagnostics.filter((diag) => diag.attempted && diag.ok).length,
-      failedEndpoints: diagnostics.filter((diag) => diag.attempted && !diag.ok).length,
-      circuitOpenEndpoints: diagnostics.filter((diag) => diag.circuitOpen).length,
-      sampleCappedEndpoints: diagnostics.filter((diag) => diag.attempted && diag.sampleCapped).length,
-      diagnostics
-    },
+    items: compactResponse ? [] : items.slice(0, responseLimit),
+    ingestion: responseIngestion,
     persistence: {
       storage: persistence.storage,
       persisted: persistence.persisted,
+      externalPersisted: persistence.externalPersisted || 0,
       ...(persistence.reason ? { reason: persistence.reason } : {}),
       ...(persistence.error ? { error: persistence.error } : {})
     }
   };
 
-  await setCachedNewsPayload(cacheKey, payload);
+  if (!forceFresh) {
+    const cacheVariant: 'full' | 'db' = dbReadEnabled ? 'db' : 'full';
+    const cacheKey = await buildNewsCacheKey(selectedOutletIds, responseLimit, cacheVariant);
+    await setCachedNewsPayload(cacheKey, payload);
+  }
   return Response.json(payload);
 }

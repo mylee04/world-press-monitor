@@ -83,6 +83,8 @@ async function warmOne(origin: string, outletIds: string[], limit: number): Prom
   const query = new URLSearchParams();
   query.set('outlets', outletIds.join(','));
   query.set('limit', String(limit));
+  query.set('mode', 'readonly');
+  query.set('runner', 'warm');
   const url = `${origin}/api/news?${query.toString()}`;
 
   try {

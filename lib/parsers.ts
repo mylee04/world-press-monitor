@@ -1,5 +1,6 @@
 export interface ParsedFeedItem {
   title: string;
+  description?: string;
   link: string;
   publishedAt: string;
 }
@@ -11,6 +12,29 @@ function clean(text: string): string {
 function parseTag(body: string, tag: string): string {
   const match = body.match(new RegExp(`<${tag}[^>]*>([\\s\\S]*?)<\\/${tag}>`, 'i'));
   return match ? clean(match[1] || '') : '';
+}
+
+function stripHtml(value: string): string {
+  return (value || '')
+    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function parseDescription(body: string): string {
+  const candidates = [
+    parseTag(body, 'description'),
+    parseTag(body, 'summary'),
+    parseTag(body, 'content:encoded'),
+    parseTag(body, 'content')
+  ];
+  for (const candidate of candidates) {
+    const stripped = stripHtml(candidate);
+    if (stripped) return stripped.slice(0, 1600);
+  }
+  return '';
 }
 
 function normalizePublishedAt(value: string): string {
@@ -61,6 +85,7 @@ export function parseRssOrAtom(xml: string, limit = 10): ParsedFeedItem[] {
         const link = parseTag(body, 'link');
         return {
           title,
+          description: parseDescription(body),
           link,
           publishedAt: parsePublishedAt(body, link)
         };
@@ -75,6 +100,7 @@ export function parseRssOrAtom(xml: string, limit = 10): ParsedFeedItem[] {
       const linkHref = body.match(/<link[^>]+href=["']([^"']+)["']/i)?.[1] || '';
       return {
         title: parseTag(body, 'title'),
+        description: parseDescription(body),
         link: linkHref,
         publishedAt: parsePublishedAt(body, linkHref)
       };
@@ -90,7 +116,7 @@ export function parseSitemap(xml: string, limit = 12): ParsedFeedItem[] {
       const link = parseTag(body, 'loc');
       const title = link.split('/').pop()?.replace(/[-_]/g, ' ') || link;
       const publishedAt = normalizePublishedAt(parseTag(body, 'lastmod')) || inferPublishedAtFromLink(link);
-      return { title, link, publishedAt };
+      return { title, description: '', link, publishedAt };
     })
     .filter((item) => item.link && item.publishedAt);
 }

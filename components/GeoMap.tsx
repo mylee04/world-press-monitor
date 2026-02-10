@@ -18,13 +18,12 @@ interface GeoMapProps {
 }
 
 const AMERICAS_BOUNDS = new maplibregl.LngLatBounds([-170, -60], [-20, 80]);
+const MAP_FOCUS_COUNTRIES = new Set(['United States', 'Argentina', 'Chile', 'Uruguay']);
 const COUNTRY_CENTROIDS: Record<string, { lat: number; lon: number }> = {
   'United States': { lat: 39.8, lon: -98.6 },
-  Mexico: { lat: 23.6, lon: -102.5 },
   Argentina: { lat: -38.4, lon: -63.6 },
   Chile: { lat: -35.7, lon: -71.5 },
-  Uruguay: { lat: -32.5, lon: -55.8 },
-  LATAM: { lat: -20.0, lon: -62.0 }
+  Uruguay: { lat: -32.5, lon: -55.8 }
 };
 const MAP_TEXT = {
   en: {
@@ -39,9 +38,13 @@ const MAP_TEXT = {
     ,
     mapView: 'Map View',
     viewMap: 'Map',
-    viewCountryBubble: 'Country bubbles',
-    viewOutletBubble: 'Outlet bubbles',
-    allOutlets: 'All outlets'
+    viewCountryBubble: 'Country list',
+    viewOutletBubble: 'Outlet list',
+    allOutlets: 'All outlets',
+    countryCounts: 'Country counts',
+    outletCounts: 'Outlet counts',
+    noCountData: 'No count data for current filters',
+    stories: 'stories'
   },
   es: {
     global: 'Global',
@@ -55,9 +58,13 @@ const MAP_TEXT = {
     ,
     mapView: 'Vista mapa',
     viewMap: 'Mapa',
-    viewCountryBubble: 'Burbujas por país',
-    viewOutletBubble: 'Burbujas por medio',
-    allOutlets: 'Todos los medios'
+    viewCountryBubble: 'Lista por país',
+    viewOutletBubble: 'Lista por medio',
+    allOutlets: 'Todos los medios',
+    countryCounts: 'Conteo por país',
+    outletCounts: 'Conteo por medio',
+    noCountData: 'Sin datos para los filtros actuales',
+    stories: 'noticias'
   }
 } as const;
 
@@ -77,6 +84,10 @@ function normalizeCountryName(value?: string): string {
   if (key === 'uy' || key === 'uruguay') return 'Uruguay';
   if (key === 'latam' || key === 'latin america') return 'LATAM';
   return value;
+}
+
+function isMapFocusCountry(country: string): boolean {
+  return MAP_FOCUS_COUNTRIES.has(country);
 }
 
 function escapeHtml(input: string): string {
@@ -117,7 +128,11 @@ export function GeoMap({
   const [zoom, setZoom] = useState<number>(2.1);
 
   const markerItems = useMemo(
-    () => items.filter((item) => isAmericasPoint(item)),
+    () => items.filter((item) => {
+      if (!isAmericasPoint(item)) return false;
+      const country = normalizeCountryName(item.country || item.locationName || '');
+      return isMapFocusCountry(country);
+    }),
     [items]
   );
   const countryAggregates = useMemo(() => {
@@ -125,6 +140,8 @@ export function GeoMap({
 
     for (const item of items) {
       const country = normalizeCountryName(item.country || item.locationName || mt.global);
+      // Keep this panel country-only and scoped to US + target LATAM countries.
+      if (!isMapFocusCountry(country)) continue;
       const key = country;
       const hasGeo = isAmericasPoint(item);
       const fallback = COUNTRY_CENTROIDS[country];
@@ -151,7 +168,9 @@ export function GeoMap({
       if (Number.isFinite(ts)) existing.latestTs = Math.max(existing.latestTs, ts);
     }
 
-    return [...byCountry.values()].sort((a, b) => b.count - a.count);
+    return [...byCountry.values()]
+      .filter((row) => isMapFocusCountry(row.country))
+      .sort((a, b) => b.count - a.count);
   }, [items, mt.global]);
   const outletAggregates = useMemo(() => {
     const byOutlet = new Map<string, { outlet: string; count: number; country: string }>();
@@ -314,47 +333,61 @@ export function GeoMap({
           <span className="region-clock-chip">{zoom <= 2.4 ? mt.countryView : mt.articleView}</span>
         </div>
       </div>
-      <div ref={containerRef} className={mapViewMode === 'map' ? 'map' : 'map map-hidden'} />
-      {mapViewMode === 'bubble_country' ? (
-        <div className="bubble-view">
-          {countryAggregates.map((row) => (
-            <button
-              key={`country-${row.country}`}
-              type="button"
-              className={row.country === selectedCountry ? 'bubble-chip active' : 'bubble-chip'}
-              onClick={() => onCountrySelect(row.country)}
-              title={row.country}
-            >
-              <strong>{row.count}</strong>
-              <span>{row.country}</span>
-            </button>
-          ))}
-        </div>
-      ) : null}
-      {mapViewMode === 'bubble_outlet' ? (
-        <div className="bubble-view">
-          <button
-            type="button"
-            className={selectedOutletFilter === 'all' ? 'bubble-chip active' : 'bubble-chip'}
-            onClick={() => onOutletSelect('all')}
-          >
-            <strong>{markerItems.length}</strong>
-            <span>{mt.allOutlets}</span>
-          </button>
-          {outletAggregates.map((row) => (
-            <button
-              key={`outlet-${row.outlet}`}
-              type="button"
-              className={row.outlet === selectedOutletFilter ? 'bubble-chip active' : 'bubble-chip'}
-              onClick={() => onOutletSelect(row.outlet)}
-              title={`${row.outlet} · ${row.country}`}
-            >
-              <strong>{row.count}</strong>
-              <span>{row.outlet}</span>
-            </button>
-          ))}
-        </div>
-      ) : null}
+      <div className="map-content">
+        <div ref={containerRef} className="map" />
+        <aside className="map-side-panel">
+          <div className="map-side-head">
+            <strong>{mapViewMode === 'bubble_outlet' ? mt.outletCounts : mt.countryCounts}</strong>
+            <span className="meta">
+              {mapViewMode === 'bubble_outlet' ? `${outletAggregates.length} ${mt.stories}` : `${countryAggregates.length} ${mt.stories}`}
+            </span>
+          </div>
+          <div className="map-side-list">
+            {mapViewMode === 'bubble_outlet' ? (
+              <>
+                <button
+                  type="button"
+                  className={selectedOutletFilter === 'all' ? 'map-side-row active' : 'map-side-row'}
+                  onClick={() => onOutletSelect('all')}
+                >
+                  <span>{mt.allOutlets}</span>
+                  <strong>{markerItems.length}</strong>
+                </button>
+                {outletAggregates.map((row) => (
+                  <button
+                    key={`outlet-${row.outlet}`}
+                    type="button"
+                    className={row.outlet === selectedOutletFilter ? 'map-side-row active' : 'map-side-row'}
+                    onClick={() => onOutletSelect(row.outlet)}
+                    title={`${row.outlet} · ${row.country}`}
+                  >
+                    <span>{row.outlet}</span>
+                    <strong>{row.count}</strong>
+                  </button>
+                ))}
+              </>
+            ) : (
+              <>
+                {countryAggregates.map((row) => (
+                  <button
+                    key={`country-${row.country}`}
+                    type="button"
+                    className={row.country === selectedCountry ? 'map-side-row active' : 'map-side-row'}
+                    onClick={() => onCountrySelect(row.country)}
+                    title={row.country}
+                  >
+                    <span>{row.country}</span>
+                    <strong>{row.count}</strong>
+                  </button>
+                ))}
+              </>
+            )}
+            {((mapViewMode === 'bubble_outlet' && outletAggregates.length === 0) || (mapViewMode !== 'bubble_outlet' && countryAggregates.length === 0)) ? (
+              <p className="map-side-empty">{mt.noCountData}</p>
+            ) : null}
+          </div>
+        </aside>
+      </div>
     </div>
   );
 }

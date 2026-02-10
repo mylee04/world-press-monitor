@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { GeoMap } from '@/components/GeoMap';
 import { OUTLET_FEEDS, SOURCE_PRESETS } from '@/data/outlets';
 import type { Beat, NewsItem, SourcePreset } from '@/lib/types';
+import { draftIdFromLink, isLikelyBreakingTitle, normalizeLinkForId, nowIso, type DraftRecord } from '@/lib/pipeline';
 
 const REFRESH_OPTIONS = [15, 60, 300];
 const TIME_WINDOWS_HOURS = [1, 6, 24];
@@ -11,7 +12,7 @@ const BEATS: Beat[] = ['general', 'politics', 'business', 'tech', 'security', 'c
 const MONITOR_STORAGE_KEY = 'presslab.savedMonitors.v1';
 const PANEL_STORAGE_KEY = 'presslab.panelVisibility.v2';
 
-type PanelKey = 'controls' | 'map' | 'liveWall' | 'feed' | 'countryBrief' | 'speedBoard' | 'beatMix' | 'spikeAlerts' | 'opsBoard';
+type PanelKey = 'controls' | 'map' | 'liveWall' | 'feed' | 'speedBoard' | 'beatMix' | 'spikeAlerts';
 
 type PanelVisibility = Record<PanelKey, boolean>;
 
@@ -32,6 +33,12 @@ type ScopeCountry = 'all' | 'United States' | 'Chile' | 'Argentina' | 'Uruguay';
 type WorldScope = 'latam_related' | 'all_world';
 type Locale = 'en' | 'es';
 type MapViewMode = 'map' | 'bubble_country' | 'bubble_outlet';
+type NewsroomDashboardProps = {
+  locale?: Locale;
+  onQueueDraft?: (draft: DraftRecord) => void;
+  existingDraftLinks?: string[];
+  onBreakingQueued?: () => void;
+};
 
 interface IngestionDiagnostic {
   outletId: string;
@@ -59,30 +66,19 @@ interface IngestionSummary {
   diagnostics: IngestionDiagnostic[];
 }
 
-interface IngestionOpsSourceRow {
-  source: string;
-  uniqueItems24h: number;
-  seenTotal24h: number;
-  duplicateCandidates24h: number;
-  endpointRuns24h: number;
-  failedRuns24h: number;
-  failureRate24h: number;
-}
-
-interface IngestionOpsSummary {
-  storage: 'postgres' | 'disabled';
-  generatedAt: string;
-  totals: {
-    uniqueItems24h: number;
-    sourceCount24h: number;
-    seenTotal24h: number;
-    duplicateCandidates24h: number;
-    duplicateRate24h: number;
-    endpointRuns24h: number;
-    failedRuns24h: number;
-    failureRate24h: number;
-  };
-  topSources24h: IngestionOpsSourceRow[];
+interface BreakingQueueItem {
+  id: number;
+  source_kind: string;
+  source_ref: string;
+  title: string;
+  link: string;
+  summary: string | null;
+  language: string | null;
+  country: string | null;
+  status: string;
+  priority: number;
+  created_at: string;
+  updated_at: string;
 }
 
 const DEFAULT_PANELS: PanelVisibility = {
@@ -90,11 +86,9 @@ const DEFAULT_PANELS: PanelVisibility = {
   map: true,
   liveWall: true,
   feed: true,
-  countryBrief: true,
   speedBoard: false,
   beatMix: false,
-  spikeAlerts: false,
-  opsBoard: true
+  spikeAlerts: false
 };
 
 const PANEL_META: Array<{ key: PanelKey; label: string }> = [
@@ -102,11 +96,9 @@ const PANEL_META: Array<{ key: PanelKey; label: string }> = [
   { key: 'map', label: 'Global Map' },
   { key: 'liveWall', label: 'Live TV Wall' },
   { key: 'feed', label: 'Live Feed' },
-  { key: 'countryBrief', label: 'Country Daily Brief' },
   { key: 'speedBoard', label: 'Speed Board' },
   { key: 'beatMix', label: 'Beat Mix' },
-  { key: 'spikeAlerts', label: 'Spike Alerts' },
-  { key: 'opsBoard', label: 'Ingestion Ops' }
+  { key: 'spikeAlerts', label: 'Spike Alerts' }
 ];
 
 const PANEL_LABELS: Record<Locale, Record<PanelKey, string>> = {
@@ -115,22 +107,18 @@ const PANEL_LABELS: Record<Locale, Record<PanelKey, string>> = {
     map: 'Global Map',
     liveWall: 'Live TV Wall',
     feed: 'Live Feed',
-    countryBrief: 'Country Daily Brief',
     speedBoard: 'Speed Board',
     beatMix: 'Beat Mix',
-    spikeAlerts: 'Spike Alerts',
-    opsBoard: 'Ingestion Ops'
+    spikeAlerts: 'Spike Alerts'
   },
   es: {
     controls: 'Controles',
     map: 'Mapa global',
     liveWall: 'Muro TV',
     feed: 'Feed en vivo',
-    countryBrief: 'Resumen por país',
     speedBoard: 'Panel de velocidad',
     beatMix: 'Mix de secciones',
-    spikeAlerts: 'Alertas de picos',
-    opsBoard: 'Operación de ingesta'
+    spikeAlerts: 'Alertas de picos'
   }
 };
 
@@ -187,7 +175,22 @@ const FIXED_MAJOR_CHANNELS = ['nbc', 'fox', 'cbs', 'tn', 'c5n', 'lanacionplus'];
 const LIVE_LAYOUT_STORAGE_KEY = 'presslab.livewall.custom.v1';
 const LIVE_CACHE_TTL_MS = 5 * 60 * 1000;
 const liveCache = new Map<string, { videoId: string | null; isLive: boolean; timestamp: number }>();
+const MAJOR_WATCH_OUTLETS = [
+  'ap-news',
+  'reuters',
+  'cnn',
+  'fox-news',
+  'nbc-news',
+  'cbs-news',
+  'bloomberg',
+  'the-new-york-times',
+  'washington-post',
+  'wall-street-journal'
+] as const;
+const MAJOR_WATCH_SEEN_KEY = 'presslab.major-watch.seen.v1';
 const COUNTRY_MIN_WINDOW_HOURS = 24;
+const NEWS_FETCH_CHUNK_SIZE = 120;
+const STREAM_PAGE_SIZE = 5;
 const COUNTRY_PRIMARY_LANGUAGE: Record<string, string> = {
   'United States': 'en',
   Chile: 'es',
@@ -228,6 +231,21 @@ const UI_TEXT: Record<Locale, Record<string, string>> = {
     lastChecked: 'Last checked',
     checking: 'Checking...',
     liveFeed: 'Live Feed',
+    majorWatch: 'Major 10 Watch',
+    majorWatchSub: 'Realtime stream from AP/Reuters/CNN and major US desks',
+    rssSitemapLive: 'RSS/Sitemap Live Stream',
+    rssSitemapLiveSub: 'Newest ingested items from RSS and sitemap sources in current scope',
+    rssSitemapEmpty: 'No recent RSS/Sitemap items in current scope.',
+    watchNew: 'new',
+    markSeen: 'Mark Seen',
+    watchChecked: 'Last checked',
+    watchEmpty: 'No recent articles from major watch sources.',
+    autoQueued: 'Auto-queued to Writing',
+    breakingQueue: 'Breaking Queue',
+    breakingQueueSub: 'X + system breaking candidates',
+    queueEmpty: 'No breaking items in queue.',
+    dismiss: 'Dismiss',
+    queueToWriting: 'Queue to Writing',
     countryMode: 'Country mode',
     countryIntakeFilter: 'Country Intake Filter',
     countryIntel: 'Country Intel',
@@ -327,7 +345,12 @@ const UI_TEXT: Record<Locale, Record<string, string>> = {
     sampled: 'sampled',
     full: 'full',
     theme: 'Theme',
+    timePublished: 'Time',
+    locality: 'Locality',
     published: 'Published',
+    prevPage: 'Prev',
+    nextPage: 'Next',
+    page: 'Page',
     noOpsSummary: 'No 24h ops summary yet.',
     opsStorage: 'Storage',
     opsUnique24h: 'Unique 24h',
@@ -372,6 +395,21 @@ const UI_TEXT: Record<Locale, Record<string, string>> = {
     lastChecked: 'Última revisión',
     checking: 'Revisando...',
     liveFeed: 'Feed en vivo',
+    majorWatch: 'Monitor Major 10',
+    majorWatchSub: 'Flujo en tiempo real desde AP/Reuters/CNN y fuentes principales de EE.UU.',
+    rssSitemapLive: 'Flujo en vivo RSS/Sitemap',
+    rssSitemapLiveSub: 'Items mas recientes ingeridos desde fuentes RSS y sitemap en el alcance actual',
+    rssSitemapEmpty: 'No hay items recientes de RSS/Sitemap en el alcance actual.',
+    watchNew: 'nuevas',
+    markSeen: 'Marcar vistas',
+    watchChecked: 'Última revisión',
+    watchEmpty: 'Sin artículos recientes en fuentes Major 10.',
+    autoQueued: 'En cola automática a Redacción',
+    breakingQueue: 'Cola Breaking',
+    breakingQueueSub: 'Candidatos breaking de X + sistema',
+    queueEmpty: 'No hay elementos breaking en cola.',
+    dismiss: 'Descartar',
+    queueToWriting: 'Enviar a Redacción',
     countryMode: 'Modo país',
     countryIntakeFilter: 'Filtro de ingesta',
     countryIntel: 'Inteligencia país',
@@ -471,7 +509,12 @@ const UI_TEXT: Record<Locale, Record<string, string>> = {
     sampled: 'muestreado',
     full: 'completo',
     theme: 'Tema',
+    timePublished: 'Tiempo',
+    locality: 'Cobertura',
     published: 'Publicado',
+    prevPage: 'Anterior',
+    nextPage: 'Siguiente',
+    page: 'Página',
     noOpsSummary: 'Aún no hay resumen operativo de 24h.',
     opsStorage: 'Almacenamiento',
     opsUnique24h: 'Únicas 24h',
@@ -572,16 +615,54 @@ async function resolveLiveVideo(channel: LiveChannel): Promise<LiveLookupResult>
   }
 }
 
-function parseDateLabel(value: string, locale: Locale = 'en'): string {
+function parseDateLabel(value: string, locale: Locale = 'en', withTimeZone = false): string {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return locale === 'es' ? 'Hora desconocida' : 'Unknown time';
-  return date.toLocaleString(locale === 'es' ? 'es-ES' : 'en-US');
+  const localeTag = locale === 'es' ? 'es-ES' : 'en-US';
+  if (withTimeZone) {
+    return date.toLocaleString(localeTag, { timeZoneName: 'short' });
+  }
+  return date.toLocaleString(localeTag);
 }
 
 function minutesSince(value: string): number {
   const ts = new Date(value).getTime();
   if (!Number.isFinite(ts)) return 0;
   return Math.max(0, Math.round((Date.now() - ts) / 60000));
+}
+
+function relativeAgeLabel(value: string, locale: Locale = 'en'): string {
+  const minutes = minutesSince(value);
+  if (minutes >= 24 * 60) {
+    const days = Math.floor(minutes / (24 * 60));
+    return locale === 'es' ? `${days} d` : `${days} d ago`;
+  }
+  if (minutes >= 60) {
+    const hours = Math.floor(minutes / 60);
+    return locale === 'es' ? `${hours} h` : `${hours} h ago`;
+  }
+  return locale === 'es' ? `${minutes} min` : `${minutes} m ago`;
+}
+
+function deriveThemeFromText(text: string): Beat {
+  const value = text.toLowerCase();
+  if (/(election|congress|senate|policy|government|president|minister|vote|parliament)/.test(value)) return 'politics';
+  if (/(market|inflation|economy|gdp|jobs|earnings|business|stocks|trade|finance|bank)/.test(value)) return 'business';
+  if (/(ai|chip|cyber|software|cloud|startup|tech|device|apple|google|microsoft)/.test(value)) return 'tech';
+  if (/(war|defense|military|attack|missile|threat|terror|security|intelligence)/.test(value)) return 'security';
+  if (/(climate|weather|hurricane|wildfire|flood|earthquake|storm|environment)/.test(value)) return 'climate';
+  if (/(world|international|global|foreign|diplomatic)/.test(value)) return 'world';
+  return 'general';
+}
+
+function localityFromSourceType(sourceType?: string): 'local' | 'global' {
+  if ((sourceType || '').toLowerCase() === 'global') return 'global';
+  return 'local';
+}
+
+function localityFromCountry(country?: string | null): 'local' | 'global' {
+  if (!country) return 'global';
+  return isUsOutlet(country) || isLatamOutlet(country) ? 'local' : 'global';
 }
 
 function decodeEntities(text: string): string {
@@ -606,7 +687,41 @@ function median(values: number[]): number {
   return sorted[mid];
 }
 
-export function NewsroomDashboard({ locale = 'en' }: { locale?: Locale }) {
+function chunkArray<T>(values: T[], size: number): T[][] {
+  if (values.length === 0) return [];
+  const chunks: T[][] = [];
+  for (let i = 0; i < values.length; i += size) {
+    chunks.push(values.slice(i, i + size));
+  }
+  return chunks;
+}
+
+function dedupeAndSortNewsItems(rows: NewsItem[], limit: number): NewsItem[] {
+  const byKey = new Map<string, NewsItem>();
+  for (const row of rows) {
+    const key = row.id || row.link;
+    const existing = byKey.get(key);
+    if (!existing) {
+      byKey.set(key, row);
+      continue;
+    }
+    const existingTs = new Date(existing.publishedAt).getTime();
+    const rowTs = new Date(row.publishedAt).getTime();
+    if (rowTs > existingTs) {
+      byKey.set(key, row);
+    }
+  }
+  return [...byKey.values()]
+    .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
+    .slice(0, limit);
+}
+
+export function NewsroomDashboard({
+  locale = 'en',
+  onQueueDraft,
+  existingDraftLinks = [],
+  onBreakingQueued
+}: NewsroomDashboardProps) {
   const t = UI_TEXT[locale];
   const [items, setItems] = useState<NewsItem[]>([]);
   const [selectedOutletFilter, setSelectedOutletFilter] = useState<string>('all');
@@ -625,8 +740,15 @@ export function NewsroomDashboard({ locale = 'en' }: { locale?: Locale }) {
   const [loading, setLoading] = useState<boolean>(false);
   const [lastUpdated, setLastUpdated] = useState<string>('');
   const [ingestionSummary, setIngestionSummary] = useState<IngestionSummary | null>(null);
-  const [ingestionOps, setIngestionOps] = useState<IngestionOpsSummary | null>(null);
   const [selectedCountry, setSelectedCountry] = useState<string>('Global');
+  const [majorWatchRows, setMajorWatchRows] = useState<NewsItem[]>([]);
+  const [majorWatchPage, setMajorWatchPage] = useState<number>(1);
+  const [majorWatchCheckedAt, setMajorWatchCheckedAt] = useState<string>('');
+  const [majorWatchNewCount, setMajorWatchNewCount] = useState<number>(0);
+  const [majorWatchReady, setMajorWatchReady] = useState<boolean>(false);
+  const [breakingQueueRows, setBreakingQueueRows] = useState<BreakingQueueItem[]>([]);
+  const [breakingQueuePage, setBreakingQueuePage] = useState<number>(1);
+  const [rssSitemapPage, setRssSitemapPage] = useState<number>(1);
   const [countryAutoAdded, setCountryAutoAdded] = useState<number>(0);
   const [countryCardOpen, setCountryCardOpen] = useState<boolean>(false);
   const [countryCardPinned, setCountryCardPinned] = useState<boolean>(false);
@@ -663,6 +785,14 @@ export function NewsroomDashboard({ locale = 'en' }: { locale?: Locale }) {
     }
     return byCountry;
   }, []);
+  const normalizedSelectedCountry = useMemo(
+    () => (selectedCountry === 'Global' ? 'Global' : normalizeOutletCountry(selectedCountry)),
+    [selectedCountry]
+  );
+  const knownDraftLinkSet = useMemo(
+    () => new Set(existingDraftLinks.map((link) => normalizeLinkForId(link))),
+    [existingDraftLinks]
+  );
   const scopedOutletIds = useMemo(() => {
     return OUTLET_FEEDS
       .filter((outlet) => {
@@ -720,39 +850,261 @@ export function NewsroomDashboard({ locale = 'en' }: { locale?: Locale }) {
       if (effectiveSelectedOutlets.length === 0) {
         setItems([]);
         setIngestionSummary(null);
-        setIngestionOps(null);
         setLastUpdated(new Date().toISOString());
         return;
       }
-      const outletParam = effectiveSelectedOutlets.join(',');
       const limit = timeWindowHours >= 24 ? 15000 : 6000;
-      const [res, opsRes] = await Promise.all([
-        fetch(`/api/news?outlets=${outletParam}&limit=${limit}`),
-        fetch('/api/ops/ingestion')
-      ]);
-      if (!res.ok) {
-        console.warn('[news] refresh failed status', res.status);
-        return;
-      }
-      const json = await safeJson<{ items: NewsItem[]; generatedAt: string; ingestion?: IngestionSummary }>(res);
-      if (!json) {
-        console.warn('[news] refresh failed: invalid or empty JSON');
-        return;
-      }
-      const cleaned = (json.items || []).map((item) => ({
-        ...item,
-        title: decodeEntities(item.title)
-      }));
-      setItems(cleaned);
-      setIngestionSummary(json.ingestion || null);
-      setLastUpdated(json.generatedAt || new Date().toISOString());
+      const chunks = chunkArray(effectiveSelectedOutlets, NEWS_FETCH_CHUNK_SIZE);
+      const chunkLimit = chunks.length > 1
+        ? Math.max(500, Math.min(limit, Math.ceil((limit * 1.35) / chunks.length)))
+        : limit;
 
-      if (opsRes.ok) {
-        const ops = await safeJson<IngestionOpsSummary>(opsRes);
-        if (ops) setIngestionOps(ops);
+      const mergedRows: NewsItem[] = [];
+      const mergedIngestion: IngestionSummary = {
+        totalOutlets: 0,
+        totalEndpoints: 0,
+        okEndpoints: 0,
+        failedEndpoints: 0,
+        circuitOpenEndpoints: 0,
+        sampleCappedEndpoints: 0,
+        diagnostics: []
+      };
+      let mergedGeneratedAt = '';
+      let successCount = 0;
+
+      for (const chunkIds of chunks) {
+        const params = new URLSearchParams();
+        params.set('outlets', chunkIds.join(','));
+        params.set('limit', String(chunkLimit));
+        const res = await fetch(`/api/news?${params.toString()}`);
+        if (!res.ok) {
+          console.warn('[news] refresh chunk failed status', res.status);
+          continue;
+        }
+        const json = await safeJson<{ items: NewsItem[]; generatedAt: string; ingestion?: IngestionSummary }>(res);
+        if (!json) {
+          console.warn('[news] refresh chunk failed: invalid or empty JSON');
+          continue;
+        }
+        successCount += 1;
+        mergedRows.push(...((json.items || []).map((item) => ({
+          ...item,
+          title: decodeEntities(item.title)
+        }))));
+        const generatedTs = new Date(json.generatedAt || '').getTime();
+        const mergedTs = new Date(mergedGeneratedAt || '').getTime();
+        if (!Number.isFinite(mergedTs) || (Number.isFinite(generatedTs) && generatedTs > mergedTs)) {
+          mergedGeneratedAt = json.generatedAt;
+        }
+        if (json.ingestion) {
+          mergedIngestion.totalOutlets += json.ingestion.totalOutlets || 0;
+          mergedIngestion.totalEndpoints += json.ingestion.totalEndpoints || 0;
+          mergedIngestion.okEndpoints += json.ingestion.okEndpoints || 0;
+          mergedIngestion.failedEndpoints += json.ingestion.failedEndpoints || 0;
+          mergedIngestion.circuitOpenEndpoints += json.ingestion.circuitOpenEndpoints || 0;
+          mergedIngestion.sampleCappedEndpoints = (mergedIngestion.sampleCappedEndpoints || 0) + (json.ingestion.sampleCappedEndpoints || 0);
+          mergedIngestion.diagnostics.push(...(json.ingestion.diagnostics || []));
+        }
       }
+
+      if (successCount === 0) {
+        console.warn('[news] refresh failed: no successful chunks');
+        return;
+      }
+
+      const cleaned = dedupeAndSortNewsItems(mergedRows, limit);
+      setItems(cleaned);
+      setIngestionSummary(mergedIngestion.totalEndpoints > 0 ? mergedIngestion : null);
+      setLastUpdated(mergedGeneratedAt || new Date().toISOString());
     } finally {
       setLoading(false);
+    }
+  };
+
+  const markMajorSeen = (rows: NewsItem[] = majorWatchRows): void => {
+    const nextSeen = new Set<string>();
+    try {
+      const raw = localStorage.getItem(MAJOR_WATCH_SEEN_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw) as string[];
+        for (const value of parsed) nextSeen.add(value);
+      }
+    } catch {
+      // no-op
+    }
+    for (const row of rows) {
+      const key = normalizeLinkForId(row.link);
+      if (key) nextSeen.add(key);
+    }
+    localStorage.setItem(MAJOR_WATCH_SEEN_KEY, JSON.stringify([...nextSeen].slice(-3000)));
+    setMajorWatchNewCount(0);
+  };
+
+  const queueDraftFromBreakingInput = async (
+    payload: {
+      title: string;
+      source: string;
+      link: string;
+      publishedAt: string;
+      queuedFrom?: DraftRecord['autoQueuedFrom'];
+    },
+    force = false
+  ): Promise<boolean> => {
+    if (!onQueueDraft) return false;
+    const normalized = normalizeLinkForId(payload.link);
+    if (!normalized || knownDraftLinkSet.has(normalized)) return false;
+    if (!force && !isLikelyBreakingTitle(payload.title)) return false;
+
+    let headlineEs = payload.title;
+    let bodyEs = `${payload.source} reportó: ${payload.title}\n\nFuente: ${payload.link}`;
+    try {
+      const res = await fetch('/api/ai/draft', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: payload.title,
+          source: payload.source,
+          link: payload.link,
+          publishedAt: payload.publishedAt
+        })
+      });
+      const json = await safeJson<{ headlineEs?: string; bodyEs?: string }>(res);
+      if (res.ok && json?.headlineEs && json?.bodyEs) {
+        headlineEs = json.headlineEs;
+        bodyEs = json.bodyEs;
+      }
+    } catch {
+      // no-op fallback
+    }
+
+    const createdAt = nowIso();
+    onQueueDraft({
+      id: draftIdFromLink(payload.link),
+      sourceArticleId: draftIdFromLink(payload.link),
+      source: payload.source,
+      sourceLink: payload.link,
+      sourceTitle: payload.title,
+      sourcePublishedAt: payload.publishedAt,
+      status: 'draft',
+      headlineEs,
+      bodyEs,
+      createdAt,
+      updatedAt: createdAt,
+      autoQueuedFrom: payload.queuedFrom
+    });
+    onBreakingQueued?.();
+    return true;
+  };
+
+  const queueDraftFromBreaking = async (item: NewsItem): Promise<void> => {
+    await queueDraftFromBreakingInput({
+      title: item.title,
+      source: item.source,
+      link: item.link,
+      publishedAt: item.publishedAt,
+      queuedFrom: 'major_watch'
+    });
+  };
+
+  const markQueueStatus = async (ids: number[], status: string): Promise<void> => {
+    if (!ids.length) return;
+    try {
+      await fetch('/api/breaking-queue', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ids, status })
+      });
+    } catch {
+      // no-op
+    }
+  };
+
+  const refreshBreakingQueue = async (): Promise<void> => {
+    try {
+      const res = await fetch('/api/breaking-queue?status=all&limit=200');
+      if (!res.ok) return;
+      const json = await safeJson<{ items?: BreakingQueueItem[] }>(res);
+      const rows = json?.items || [];
+      setBreakingQueueRows(rows);
+
+      const newRows = rows.filter((row) => row.status === 'new').slice(0, 10);
+      if (!newRows.length) return;
+
+      const queuedIds: number[] = [];
+      for (const row of newRows) {
+        const queued = await queueDraftFromBreakingInput(
+          {
+            title: row.title,
+            source: row.source_kind === 'social_x' ? 'X Breaking' : row.source_kind,
+            link: row.link,
+            publishedAt: row.created_at,
+            queuedFrom: 'social_x'
+          },
+          true
+        );
+        if (queued) queuedIds.push(row.id);
+      }
+      if (queuedIds.length) {
+        await markQueueStatus(queuedIds, 'queued');
+      }
+    } catch {
+      // no-op
+    }
+  };
+
+  const refreshMajorWatch = async (): Promise<void> => {
+    try {
+      const res = await fetch(`/api/news?outlets=${MAJOR_WATCH_OUTLETS.join(',')}&limit=1200`);
+      if (!res.ok) return;
+      const json = await safeJson<{ items: NewsItem[] }>(res);
+      const rows = (json?.items || [])
+        .filter((item) => {
+          const ts = new Date(item.publishedAt).getTime();
+          return Number.isFinite(ts) && ts >= Date.now() - timeWindowHours * 60 * 60 * 1000;
+        })
+        .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+      const latest = dedupeAndSortNewsItems(rows, 80);
+      setMajorWatchRows(latest);
+      setMajorWatchCheckedAt(new Date().toISOString());
+
+      const seen = new Set<string>();
+      try {
+        const raw = localStorage.getItem(MAJOR_WATCH_SEEN_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw) as string[];
+          for (const value of parsed) seen.add(value);
+        }
+      } catch {
+        // no-op
+      }
+      const unseen = latest.filter((row) => !seen.has(normalizeLinkForId(row.link)));
+
+      if (!majorWatchReady) {
+        markMajorSeen(latest);
+        setMajorWatchReady(true);
+        return;
+      }
+
+      setMajorWatchNewCount(unseen.length);
+      if (unseen.length > 0) {
+        for (const row of unseen) {
+          await queueDraftFromBreaking(row);
+        }
+        if (typeof window !== 'undefined' && 'Notification' in window && Notification.permission === 'granted') {
+          void new Notification(`PressLab: ${unseen.length} ${t.watchNew}`, {
+            body: unseen[0]?.title || 'New article detected'
+          });
+        }
+      }
+    } catch {
+      // no-op
+    }
+  };
+
+  const requestNotifications = () => {
+    if (typeof window === 'undefined' || !('Notification' in window)) return;
+    if (Notification.permission === 'default') {
+      void Notification.requestPermission();
     }
   };
 
@@ -805,6 +1157,18 @@ export function NewsroomDashboard({ locale = 'en' }: { locale?: Locale }) {
   }, [refreshSec, effectiveSelectedOutlets.join(',')]);
 
   useEffect(() => {
+    void refreshMajorWatch();
+    void refreshBreakingQueue();
+    const interval = setInterval(() => void refreshMajorWatch(), 60_000);
+    const queueInterval = setInterval(() => void refreshBreakingQueue(), 60_000);
+    return () => {
+      clearInterval(interval);
+      clearInterval(queueInterval);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [existingDraftLinks.join(','), majorWatchReady, onQueueDraft, timeWindowHours]);
+
+  useEffect(() => {
     if (selectedCountry === 'Global') {
       setCountryCardOpen(false);
       setCountryAutoAdded(0);
@@ -835,7 +1199,7 @@ export function NewsroomDashboard({ locale = 'en' }: { locale?: Locale }) {
 
   useEffect(() => {
     if (selectedCountry === 'Global') return;
-    const countryOutlets = countryCoverageOutlets.get(selectedCountry) || [];
+    const countryOutlets = countryCoverageOutlets.get(normalizedSelectedCountry) || [];
     if (countryOutlets.length === 0) {
       setCountryAutoAdded(0);
       return;
@@ -847,7 +1211,7 @@ export function NewsroomDashboard({ locale = 'en' }: { locale?: Locale }) {
       if (missing.length === 0) return current;
       return [...current, ...missing];
     });
-  }, [countryCoverageOutlets, selectedCountry]);
+  }, [countryCoverageOutlets, normalizedSelectedCountry, selectedCountry]);
 
   useEffect(() => {
     const pending = items.filter((item) => item.classificationSource === 'keyword').slice(0, 25);
@@ -969,13 +1333,19 @@ export function NewsroomDashboard({ locale = 'en' }: { locale?: Locale }) {
     if (selectedCountry === 'Global') return filteredByTime;
     const cutoff = Date.now() - Math.max(timeWindowHours, COUNTRY_MIN_WINDOW_HOURS) * 60 * 60 * 1000;
     return items.filter((item) => {
-      if (item.country !== selectedCountry) return false;
+      const fallbackCountry = outletByName.get(item.source)?.country || '';
+      if (normalizedSelectedCountry === 'LATAM') {
+        if (!isLatamOutlet(item.country || fallbackCountry)) return false;
+      } else {
+        const itemCountry = normalizeOutletCountry(item.country || fallbackCountry || item.locationName || '');
+        if (itemCountry !== normalizedSelectedCountry) return false;
+      }
       const published = new Date(item.publishedAt).getTime();
       if (!Number.isFinite(published) || published < cutoff) return false;
       if (selectedOutletFilter !== 'all' && item.source !== selectedOutletFilter) return false;
       return true;
     });
-  }, [filteredByTime, items, selectedCountry, selectedOutletFilter, timeWindowHours]);
+  }, [filteredByTime, items, normalizedSelectedCountry, outletByName, selectedCountry, selectedOutletFilter, timeWindowHours]);
   const dedupedCountryItems = useMemo(() => {
     const byCluster = new Map<string, NewsItem>();
     for (const item of countryScopedItems) {
@@ -993,14 +1363,16 @@ export function NewsroomDashboard({ locale = 'en' }: { locale?: Locale }) {
   }, [countryScopedItems]);
   const rankedCountryItems = useMemo(() => {
     if (selectedCountry === 'Global') return filteredItems;
-    const preferredLanguage = COUNTRY_PRIMARY_LANGUAGE[selectedCountry];
+    const preferredLanguage = COUNTRY_PRIMARY_LANGUAGE[normalizedSelectedCountry];
     const sourceFiltered = dedupedCountryItems.filter((item) => {
       if (countrySourceFilter === 'all') return true;
       return (item.sourceType || 'global') === countrySourceFilter;
     });
     const byPriority = [...sourceFiltered].sort((a, b) => {
-      const aCountry = a.country === selectedCountry ? 1 : 0;
-      const bCountry = b.country === selectedCountry ? 1 : 0;
+      const aFallback = outletByName.get(a.source)?.country || '';
+      const bFallback = outletByName.get(b.source)?.country || '';
+      const aCountry = normalizeOutletCountry(a.country || aFallback || '') === normalizedSelectedCountry ? 1 : 0;
+      const bCountry = normalizeOutletCountry(b.country || bFallback || '') === normalizedSelectedCountry ? 1 : 0;
       if (aCountry !== bCountry) return bCountry - aCountry;
 
       const sourceWeight = (item: NewsItem) => {
@@ -1021,88 +1393,90 @@ export function NewsroomDashboard({ locale = 'en' }: { locale?: Locale }) {
       return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
     });
     return byPriority;
-  }, [countrySourceFilter, dedupedCountryItems, filteredItems, selectedCountry]);
-
-  const countryBriefRows = useMemo(() => {
-    const groups: Array<{ key: string; label: string; beats: Beat[] }> = [
-      { key: 'politics', label: t.politics, beats: ['politics'] },
-      { key: 'social', label: t.social, beats: ['world', 'security'] },
-      { key: 'business', label: t.businessLabel, beats: ['business'] },
-      { key: 'lifestyle', label: t.generalLife, beats: ['tech', 'climate', 'general'] }
-    ];
-
-    return groups.map((group) => {
-      const matched = countryScopedItems.filter((item) => group.beats.includes(item.beat));
-      return {
-        ...group,
-        count: matched.length,
-        headlines: matched.slice(0, 3)
-      };
-    });
-  }, [countryScopedItems, t.businessLabel, t.generalLife, t.politics, t.social]);
-  const countrySourceRanking = useMemo(() => {
-    if (selectedCountry === 'Global') return [];
-    const preferredLanguage = COUNTRY_PRIMARY_LANGUAGE[selectedCountry];
-    const sourceMap = new Map<string, { count: number; lags: number[]; localLangCount: number; sourceType: string; review: string }>();
-    for (const item of countryScopedItems) {
-      const lag = minutesSince(item.publishedAt);
-      const source = item.source;
-      const row = sourceMap.get(source) ?? {
-        count: 0,
-        lags: [],
-        localLangCount: 0,
-        sourceType: item.sourceType || 'global',
-        review: outletByName.get(source)?.reviewDecision || 'unknown'
-      };
-      row.count += 1;
-      row.lags.push(lag);
-      if (preferredLanguage && item.language === preferredLanguage) row.localLangCount += 1;
-      sourceMap.set(source, row);
+  }, [countrySourceFilter, dedupedCountryItems, filteredItems, normalizedSelectedCountry, outletByName, selectedCountry]);
+  const feedItems = useMemo(() => {
+    if (selectedCountry === 'Global') {
+      if (filteredItems.length > 0) return filteredItems;
+    } else if (rankedCountryItems.length > 0) {
+      return rankedCountryItems;
     }
+    if (filteredItems.length > 0) return filteredItems;
+    if (filteredByTime.length > 0) return filteredByTime;
+    return [...items]
+      .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
+      .slice(0, 300);
+  }, [filteredByTime, filteredItems, items, rankedCountryItems, selectedCountry]);
 
-    const reviewScore = (review: string): number => {
-      if (review === 'verified_core') return 1;
-      if (review === 'keep_secondary') return 0.8;
-      if (review === 'exploratory_off_by_default') return 0.55;
-      if (review === 'manual_review') return 0.4;
-      return 0.65;
-    };
+  const rssSitemapOutletsInScope = useMemo(() => {
+    const selectedSet = new Set(effectiveSelectedOutlets);
+    const ids = new Set<string>();
+    const names = new Set<string>();
+    for (const outlet of OUTLET_FEEDS) {
+      if (!selectedSet.has(outlet.id)) continue;
+      if (!outlet.rssUrl && !outlet.sitemapUrl) continue;
+      ids.add(outlet.id);
+      names.add(outlet.name);
+    }
+    return { ids, names };
+  }, [effectiveSelectedOutlets]);
 
-    const sourceTypeScore = (type: string): number => {
-      if (type === 'local') return 1;
-      if (type === 'portal') return 0.85;
-      return 0.7;
-    };
-
-    return [...sourceMap.entries()]
-      .map(([source, row]) => {
-        const medLag = median(row.lags);
-        const freshness = Math.max(0, 1 - Math.min(medLag, 240) / 240);
-        const localRatio = row.count > 0 ? row.localLangCount / row.count : 0;
-        const score =
-          reviewScore(row.review) * 0.45 +
-          sourceTypeScore(row.sourceType) * 0.2 +
-          freshness * 0.2 +
-          localRatio * 0.15;
-        return {
-          source,
-          score: Math.round(score * 100),
-          count: row.count,
-          medianLag: Math.round(medLag),
-          sourceType: row.sourceType,
-          review: row.review
-        };
+  const rssSitemapLiveRows = useMemo(() => {
+    if (rssSitemapOutletsInScope.ids.size === 0) return [];
+    const cutoff = Date.now() - timeWindowHours * 60 * 60 * 1000;
+    return items
+      .filter((item) => {
+        const inScope = item.outletId
+          ? rssSitemapOutletsInScope.ids.has(item.outletId)
+          : rssSitemapOutletsInScope.names.has(item.source);
+        if (!inScope) return false;
+        const ts = new Date(item.publishedAt).getTime();
+        return Number.isFinite(ts) && ts >= cutoff;
       })
-      .sort((a, b) => b.score - a.score)
-      .slice(0, 10);
-  }, [countryScopedItems, outletByName, selectedCountry]);
+      .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
+      .slice(0, 20);
+  }, [items, rssSitemapOutletsInScope, timeWindowHours]);
+
+  const majorWatchTotalPages = Math.max(1, Math.ceil(majorWatchRows.length / STREAM_PAGE_SIZE));
+  const breakingQueueTotalPages = Math.max(1, Math.ceil(breakingQueueRows.length / STREAM_PAGE_SIZE));
+  const rssSitemapTotalPages = Math.max(1, Math.ceil(rssSitemapLiveRows.length / STREAM_PAGE_SIZE));
+
+  const majorWatchPageRows = useMemo(() => {
+    const safePage = Math.min(majorWatchPage, majorWatchTotalPages);
+    const start = (safePage - 1) * STREAM_PAGE_SIZE;
+    return majorWatchRows.slice(start, start + STREAM_PAGE_SIZE);
+  }, [majorWatchPage, majorWatchRows, majorWatchTotalPages]);
+
+  const breakingQueuePageRows = useMemo(() => {
+    const safePage = Math.min(breakingQueuePage, breakingQueueTotalPages);
+    const start = (safePage - 1) * STREAM_PAGE_SIZE;
+    return breakingQueueRows.slice(start, start + STREAM_PAGE_SIZE);
+  }, [breakingQueuePage, breakingQueueRows, breakingQueueTotalPages]);
+
+  const rssSitemapPageRows = useMemo(() => {
+    const safePage = Math.min(rssSitemapPage, rssSitemapTotalPages);
+    const start = (safePage - 1) * STREAM_PAGE_SIZE;
+    return rssSitemapLiveRows.slice(start, start + STREAM_PAGE_SIZE);
+  }, [rssSitemapLiveRows, rssSitemapPage, rssSitemapTotalPages]);
+
+  useEffect(() => {
+    setMajorWatchPage((current) => Math.min(current, majorWatchTotalPages));
+  }, [majorWatchTotalPages]);
+
+  useEffect(() => {
+    setBreakingQueuePage((current) => Math.min(current, breakingQueueTotalPages));
+  }, [breakingQueueTotalPages]);
+
+  useEffect(() => {
+    setRssSitemapPage((current) => Math.min(current, rssSitemapTotalPages));
+  }, [rssSitemapTotalPages]);
+
   const countryCardMetrics = useMemo(() => {
     if (selectedCountry === 'Global') return null;
     const total = countryScopedItems.length;
     const localCount = countryScopedItems.filter((item) => item.sourceType === 'local').length;
     const portalCount = countryScopedItems.filter((item) => item.sourceType === 'portal').length;
     const globalCount = countryScopedItems.filter((item) => (item.sourceType || 'global') === 'global').length;
-    const preferredLanguage = COUNTRY_PRIMARY_LANGUAGE[selectedCountry];
+    const preferredLanguage = COUNTRY_PRIMARY_LANGUAGE[normalizedSelectedCountry];
     const localLanguageCount = preferredLanguage
       ? countryScopedItems.filter((item) => item.language === preferredLanguage).length
       : 0;
@@ -1119,7 +1493,15 @@ export function NewsroomDashboard({ locale = 'en' }: { locale?: Locale }) {
       preferredLanguage: preferredLanguage || 'n/a',
       latest: latest ? new Date(latest).toISOString() : ''
     };
-  }, [countryScopedItems, selectedCountry]);
+  }, [countryScopedItems, normalizedSelectedCountry, selectedCountry]);
+
+  const handleCountrySelect = (country: string): void => {
+    if (!country || country === 'Global') {
+      setSelectedCountry('Global');
+      return;
+    }
+    setSelectedCountry(normalizeOutletCountry(country));
+  };
 
   const sourceStats = useMemo(() => {
     const now = Date.now();
@@ -1147,60 +1529,6 @@ export function NewsroomDashboard({ locale = 'en' }: { locale?: Locale }) {
         return a.medianLagMins - b.medianLagMins;
       });
   }, [filteredItems]);
-
-  const ingestionBySource = useMemo(() => {
-    if (!ingestionSummary) return [];
-    const bySource = new Map<string, {
-      source: string;
-      outletId: string;
-      attempted: number;
-      ok: number;
-      failed: number;
-      circuitOpen: number;
-      parsedCount: number;
-      recent24h: number;
-      errors: Set<string>;
-    }>();
-
-    for (const diag of ingestionSummary.diagnostics) {
-      if (!diag.attempted) continue;
-      const row = bySource.get(diag.source) ?? {
-        source: diag.source,
-        outletId: diag.outletId,
-        attempted: 0,
-        ok: 0,
-        failed: 0,
-        circuitOpen: 0,
-        parsedCount: 0,
-        recent24h: 0,
-        errors: new Set<string>()
-      };
-      row.attempted += 1;
-      if (diag.ok) row.ok += 1;
-      if (!diag.ok) row.failed += 1;
-      if (diag.circuitOpen) row.circuitOpen += 1;
-      row.parsedCount += diag.parsedCount;
-      row.recent24h += diag.recent24h;
-      if (diag.error) row.errors.add(diag.error);
-      bySource.set(diag.source, row);
-    }
-
-    return [...bySource.values()]
-      .map((row) => ({ ...row, errors: [...row.errors].join('; ') }))
-      .sort((a, b) => {
-        if (b.failed !== a.failed) return b.failed - a.failed;
-        return b.recent24h - a.recent24h;
-      });
-  }, [ingestionSummary]);
-
-  const ingestionFailures = useMemo(
-    () => ingestionBySource.filter((row) => row.failed > 0).slice(0, 12),
-    [ingestionBySource]
-  );
-  const ingestionZeroYield = useMemo(
-    () => ingestionBySource.filter((row) => row.recent24h === 0).slice(0, 12),
-    [ingestionBySource]
-  );
 
   const beatMix = useMemo(() => {
     const counts = new Map<Beat, number>();
@@ -1389,6 +1717,18 @@ export function NewsroomDashboard({ locale = 'en' }: { locale?: Locale }) {
     return all.filter((item) => item.label.toLowerCase().includes(q)).slice(0, 16);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [commandQuery, locale, selectedOutlets.join(',')]);
+
+  const renderPager = (page: number, totalPages: number, onChange: (page: number) => void) => (
+    <div className="list-pagination">
+      <button type="button" onClick={() => onChange(Math.max(1, page - 1))} disabled={page <= 1}>
+        {t.prevPage}
+      </button>
+      <code>{t.page} {page}/{totalPages}</code>
+      <button type="button" onClick={() => onChange(Math.min(totalPages, page + 1))} disabled={page >= totalPages}>
+        {t.nextPage}
+      </button>
+    </div>
+  );
 
   const renderLiveTile = (tile: LiveTileState) => {
     const channel = channelById.get(tile.channelId);
@@ -1582,6 +1922,36 @@ export function NewsroomDashboard({ locale = 'en' }: { locale?: Locale }) {
       {panelVisibility.liveWall ? (
         <section className="panel live-stack left-live-stack">
           {liveTiles.filter((tile) => tile.slot < 3).map((tile) => renderLiveTile(tile))}
+          <section className="major-watch-box live-side-box">
+            <div className="major-watch-head">
+              <div>
+                <strong>{t.majorWatch}</strong>
+                <p className="meta">{t.majorWatchSub}</p>
+              </div>
+              <div className="major-watch-actions">
+                {majorWatchNewCount > 0 ? <code className="chip chip-lag">{majorWatchNewCount} {t.watchNew}</code> : null}
+                <button type="button" onClick={requestNotifications}>🔔</button>
+                <button type="button" onClick={() => markMajorSeen()}>{t.markSeen}</button>
+              </div>
+            </div>
+            <p className="meta">{t.watchChecked}: {majorWatchCheckedAt ? parseDateLabel(majorWatchCheckedAt, locale) : t.notAvailable}</p>
+            {majorWatchRows.length > 0 ? renderPager(majorWatchPage, majorWatchTotalPages, setMajorWatchPage) : null}
+            <ul className="simple-list stream-list">
+              {majorWatchPageRows.map((item) => (
+                <li key={`major-${item.id}`}>
+                  <strong><a href={item.link} target="_blank" rel="noreferrer">{item.source}: {item.title}</a></strong>
+                  <div className="chips stream-chips">
+                    <code className="chip chip-beat">{t.theme}: {BEAT_LABELS[locale][item.beat]}</code>
+                    <code className="chip chip-lag">{t.timePublished}: {relativeAgeLabel(item.publishedAt, locale)}</code>
+                    <code className="chip chip-source-type">{t.locality}: {localityFromSourceType(item.sourceType) === 'local' ? t.local : t.global}</code>
+                    <code className="chip">{t.published}: {parseDateLabel(item.publishedAt, locale, true)}</code>
+                  </div>
+                  {isLikelyBreakingTitle(item.title) ? <span className="reason-line">BREAKING · {t.autoQueued}</span> : null}
+                </li>
+              ))}
+              {majorWatchRows.length === 0 ? <li>{t.watchEmpty}</li> : null}
+            </ul>
+          </section>
         </section>
       ) : null}
 
@@ -1590,7 +1960,7 @@ export function NewsroomDashboard({ locale = 'en' }: { locale?: Locale }) {
           <GeoMap
             items={filteredItems}
             selectedCountry={selectedCountry}
-            onCountrySelect={setSelectedCountry}
+            onCountrySelect={handleCountrySelect}
             selectedOutletFilter={selectedOutletFilter}
             onOutletSelect={setSelectedOutletFilter}
             mapViewMode={mapViewMode}
@@ -1606,16 +1976,96 @@ export function NewsroomDashboard({ locale = 'en' }: { locale?: Locale }) {
       {panelVisibility.liveWall ? (
         <section className="panel live-stack right-live-stack">
           {liveTiles.filter((tile) => tile.slot >= 3).map((tile) => renderLiveTile(tile))}
+          <section className="major-watch-box live-side-box">
+            <div className="major-watch-head">
+              <div>
+                <strong>{t.breakingQueue}</strong>
+                <p className="meta">{t.breakingQueueSub}</p>
+              </div>
+            </div>
+            {breakingQueueRows.length > 0 ? renderPager(breakingQueuePage, breakingQueueTotalPages, setBreakingQueuePage) : null}
+            <ul className="simple-list stream-list">
+              {breakingQueuePageRows.map((row) => (
+                <li key={`bq-${row.id}`}>
+                  <strong><a href={row.link} target="_blank" rel="noreferrer">{row.title}</a></strong>
+                  <div className="source-line">{row.source_kind} · p{row.priority} · {row.status}</div>
+                  <div className="chips stream-chips">
+                    <code className="chip chip-beat">{t.theme}: {BEAT_LABELS[locale][deriveThemeFromText(`${row.title} ${row.summary || ''}`)]}</code>
+                    <code className="chip chip-lag">{t.timePublished}: {relativeAgeLabel(row.created_at, locale)}</code>
+                    <code className="chip chip-source-type">{t.locality}: {localityFromCountry(row.country) === 'local' ? t.local : t.global}</code>
+                    <code className="chip">{t.published}: {parseDateLabel(row.created_at, locale, true)}</code>
+                  </div>
+                  <div className="major-watch-actions">
+                    {row.status === 'new' ? (
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          const queued = await queueDraftFromBreakingInput({
+                            title: row.title,
+                            source: row.source_kind === 'social_x' ? 'X Breaking' : row.source_kind,
+                            link: row.link,
+                            publishedAt: row.created_at,
+                            queuedFrom: 'social_x'
+                          }, true);
+                          if (queued) {
+                            await markQueueStatus([row.id], 'queued');
+                            await refreshBreakingQueue();
+                          }
+                        }}
+                      >
+                        {t.queueToWriting}
+                      </button>
+                    ) : null}
+                    {row.status !== 'dismissed' ? (
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          await markQueueStatus([row.id], 'dismissed');
+                          await refreshBreakingQueue();
+                        }}
+                      >
+                        {t.dismiss}
+                      </button>
+                    ) : null}
+                  </div>
+                </li>
+              ))}
+              {breakingQueueRows.length === 0 ? <li>{t.queueEmpty}</li> : null}
+            </ul>
+          </section>
         </section>
       ) : null}
 
       {panelVisibility.feed ? (
         <section className="panel feed-panel center-feed">
           <h2>{t.liveFeed}</h2>
+          <section className="major-watch-box">
+            <div className="major-watch-head">
+              <div>
+                <strong>{t.rssSitemapLive}</strong>
+                <p className="meta">{t.rssSitemapLiveSub}</p>
+              </div>
+            </div>
+            {rssSitemapLiveRows.length > 0 ? renderPager(rssSitemapPage, rssSitemapTotalPages, setRssSitemapPage) : null}
+            <ul className="simple-list stream-list">
+              {rssSitemapPageRows.map((item) => (
+                <li key={`ingest-${item.id}`}>
+                  <strong><a href={item.link} target="_blank" rel="noreferrer">{item.source}: {item.title}</a></strong>
+                  <div className="chips stream-chips">
+                    <code className="chip chip-beat">{t.theme}: {BEAT_LABELS[locale][item.beat]}</code>
+                    <code className="chip chip-lag">{t.timePublished}: {relativeAgeLabel(item.publishedAt, locale)}</code>
+                    <code className="chip chip-source-type">{t.locality}: {localityFromSourceType(item.sourceType) === 'local' ? t.local : t.global}</code>
+                    <code className="chip">{t.published}: {parseDateLabel(item.publishedAt, locale, true)}</code>
+                  </div>
+                </li>
+              ))}
+              {rssSitemapLiveRows.length === 0 ? <li>{t.rssSitemapEmpty}</li> : null}
+            </ul>
+          </section>
           {selectedCountry !== 'Global' ? (
             <>
               <p className="meta">
-                {t.countryModePrioritizing} {COUNTRY_PRIMARY_LANGUAGE[selectedCountry] || t.local} {t.languagePlusSourcesFor} {selectedCountry}.
+                {t.countryModePrioritizing} {COUNTRY_PRIMARY_LANGUAGE[normalizedSelectedCountry] || t.local} {t.languagePlusSourcesFor} {normalizedSelectedCountry}.
               </p>
               {countryAutoAdded > 0 ? (
                 <p className="meta">{t.autoAdded} {countryAutoAdded} {t.local}/{t.portal} {t.autoAddedFor} {selectedCountry}.</p>
@@ -1637,15 +2087,15 @@ export function NewsroomDashboard({ locale = 'en' }: { locale?: Locale }) {
             </>
           ) : null}
           <ul className="feed-list">
-            {rankedCountryItems.map((item) => (
+            {feedItems.map((item) => (
               <li key={item.id} className="feed-item">
                 <a href={item.link} target="_blank" rel="noreferrer">{item.title}</a>
                 <div className="source-line">{item.source}</div>
                 <div className="chips">
                   <code className="chip chip-beat">{t.theme}: {BEAT_LABELS[locale][item.beat]}</code>
-                  <code className="chip chip-source-type">{item.sourceType || t.global}</code>
-                  <code className="chip chip-lag">{minutesSince(item.publishedAt)} {t.agoMins}</code>
-                  <code className="chip">{t.published}: {parseDateLabel(item.publishedAt, locale)}</code>
+                  <code className="chip chip-lag">{t.timePublished}: {relativeAgeLabel(item.publishedAt, locale)}</code>
+                  <code className="chip chip-source-type">{t.locality}: {localityFromSourceType(item.sourceType) === 'local' ? t.local : t.global}</code>
+                  <code className="chip">{t.published}: {parseDateLabel(item.publishedAt, locale, true)}</code>
                 </div>
               </li>
             ))}
@@ -1665,7 +2115,7 @@ export function NewsroomDashboard({ locale = 'en' }: { locale?: Locale }) {
           <section className={countryCardPinned ? 'country-intel-card country-intel-floating pinned' : 'country-intel-card country-intel-floating'}>
             <div className="country-intel-header">
               <div className="country-intel-title">
-                <h3>{selectedCountry}</h3>
+                <h3>{normalizedSelectedCountry}</h3>
                 <span className="country-intel-badge">{t.countryIntel}</span>
               </div>
               <div className="country-intel-actions">
@@ -1720,42 +2170,6 @@ export function NewsroomDashboard({ locale = 'en' }: { locale?: Locale }) {
         </section>
       ) : null}
 
-      {panelVisibility.countryBrief ? (
-        <section className="panel analytics-panel">
-          <h3>{t.dailyCountryBrief}</h3>
-          <p className="meta">{selectedCountry} · {countryScopedItems.length} {t.countryStoriesWindow} · {dedupedCountryItems.length} {t.dedupedClusters}</p>
-          <ul className="simple-list">
-            {countryBriefRows.map((row) => (
-              <li key={row.key}>
-                <strong>{row.label}</strong>
-                <span>{row.count} stories</span>
-                <span>
-                  {row.headlines.length > 0
-                    ? row.headlines.map((item) => item.title).join(' • ')
-                    : t.noItemsInCategory}
-                </span>
-              </li>
-            ))}
-          </ul>
-          {selectedCountry !== 'Global' ? (
-            <>
-              <h3 style={{ marginTop: '10px' }}>{t.sourceQualityCountry}</h3>
-              <ul className="simple-list">
-                {countrySourceRanking.map((row) => (
-                  <li key={row.source}>
-                    <strong>{row.source}</strong>
-                    <span>{t.score} {row.score}</span>
-                    <span>{row.count} {t.storiesWord} · {t.medianLag} {row.medianLag}m</span>
-                    <span>{row.sourceType} · {row.review}</span>
-                  </li>
-                ))}
-                {countrySourceRanking.length === 0 ? <li>{t.noCountrySourceRanking}</li> : null}
-              </ul>
-            </>
-          ) : null}
-        </section>
-      ) : null}
-
       <section className="insight-grid">
         {panelVisibility.speedBoard ? (
           <section className="panel analytics-panel">
@@ -1807,73 +2221,6 @@ export function NewsroomDashboard({ locale = 'en' }: { locale?: Locale }) {
           </section>
         ) : null}
 
-        {panelVisibility.opsBoard ? (
-          <section className="panel analytics-panel">
-            <h3>{t.ingestionOps}</h3>
-            {ingestionOps ? (
-              <>
-                <p className="meta">
-                  {t.opsStorage}: {ingestionOps.storage} · {parseDateLabel(ingestionOps.generatedAt, locale)}
-                </p>
-                <ul className="simple-list">
-                  <li><strong>{t.opsUnique24h}</strong><span>{ingestionOps.totals.uniqueItems24h}</span></li>
-                  <li><strong>{t.opsSources24h}</strong><span>{ingestionOps.totals.sourceCount24h}</span></li>
-                  <li><strong>{t.opsSeen24h}</strong><span>{ingestionOps.totals.seenTotal24h}</span></li>
-                  <li><strong>{t.opsDuplicates24h}</strong><span>{ingestionOps.totals.duplicateCandidates24h}</span></li>
-                  <li><strong>{t.opsDuplicateRate24h}</strong><span>{ingestionOps.totals.duplicateRate24h.toFixed(1)}%</span></li>
-                  <li><strong>{t.opsEndpointRuns24h}</strong><span>{ingestionOps.totals.endpointRuns24h}</span></li>
-                  <li><strong>{t.opsFailedRuns24h}</strong><span>{ingestionOps.totals.failedRuns24h}</span></li>
-                  <li><strong>{t.opsFailureRate24h}</strong><span>{ingestionOps.totals.failureRate24h.toFixed(1)}%</span></li>
-                </ul>
-                <h3 style={{ marginTop: '10px' }}>{t.opsTopSources24h}</h3>
-                <ul className="simple-list">
-                  {ingestionOps.topSources24h.slice(0, 12).map((row) => (
-                    <li key={`ops-${row.source}`}>
-                      <strong>{row.source}</strong>
-                      <span>{row.uniqueItems24h} {t.storiesWord}</span>
-                      <span>{t.opsDuplicates24h} {row.duplicateCandidates24h}</span>
-                      <span>{t.opsFailureRate24h} {row.failureRate24h.toFixed(1)}%</span>
-                    </li>
-                  ))}
-                </ul>
-              </>
-            ) : (
-              <p className="meta">{t.noOpsSummary}</p>
-            )}
-            {ingestionSummary ? (
-              <>
-                <p className="meta">
-                  {t.endpointSummary} {ingestionSummary.okEndpoints}/{ingestionSummary.totalEndpoints} {t.ok} · {t.failed} {ingestionSummary.failedEndpoints} · {t.circuit} {ingestionSummary.circuitOpenEndpoints}
-                </p>
-                <h3 style={{ marginTop: '10px' }}>{t.endpointFailures}</h3>
-                <ul className="simple-list">
-                  {ingestionFailures.map((row) => (
-                    <li key={`fail-${row.outletId}`}>
-                      <strong>{row.source}</strong>
-                      <span>{t.failed} {row.failed}/{row.attempted}</span>
-                      <span>{t.recent24h} {row.recent24h} · {t.parsed} {row.parsedCount}</span>
-                      <span>{row.errors || t.unknownError}</span>
-                    </li>
-                  ))}
-                  {ingestionFailures.length === 0 ? <li>{t.noEndpointFailures}</li> : null}
-                </ul>
-                <h3 style={{ marginTop: '10px' }}>{t.zeroYieldSources}</h3>
-                <ul className="simple-list">
-                  {ingestionZeroYield.map((row) => (
-                    <li key={`zero-${row.outletId}`}>
-                      <strong>{row.source}</strong>
-                      <span>{t.attempted} {row.attempted} · {t.ok} {row.ok}</span>
-                      <span>{t.recent24h} {row.recent24h} · {t.parsed} {row.parsedCount}</span>
-                    </li>
-                  ))}
-                  {ingestionZeroYield.length === 0 ? <li>{t.noZeroYield}</li> : null}
-                </ul>
-              </>
-            ) : (
-              <p className="meta">{t.noIngestionDiagnostics}</p>
-            )}
-          </section>
-        ) : null}
       </section>
 
       {sourcesOpen ? (
