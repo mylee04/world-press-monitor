@@ -260,13 +260,48 @@ async function main(): Promise<void> {
     `);
 
     const breakingResult = await pool.query<{
-      breaking_1h: string;
-      breaking_24h: string;
+      article_breaking_1h: string;
+      article_breaking_24h: string;
+      signal_breaking_1h: string;
+      signal_breaking_24h: string;
     }>(`
       select
-        count(*) filter (where last_seen_at > now() - interval '1 hour' and tags ? 'breaking')::text as breaking_1h,
-        count(*) filter (where last_seen_at > now() - interval '24 hours' and tags ? 'breaking')::text as breaking_24h
-      from ingested_articles
+        (
+          select count(*)
+          from ingested_articles
+          where last_seen_at > now() - interval '1 hour'
+            and tags ? 'breaking'
+        )::text as article_breaking_1h,
+        (
+          select count(*)
+          from ingested_articles
+          where last_seen_at > now() - interval '24 hours'
+            and tags ? 'breaking'
+        )::text as article_breaking_24h,
+        (
+          select count(*) from (
+            select source_ref as k
+            from breaking_queue
+            where created_at > now() - interval '1 hour'
+            union
+            select ('x:' || post_id)::text as k
+            from social_breaking_posts
+            where created_at > now() - interval '1 hour'
+              and is_breaking
+          ) t
+        )::text as signal_breaking_1h,
+        (
+          select count(*) from (
+            select source_ref as k
+            from breaking_queue
+            where created_at > now() - interval '24 hours'
+            union
+            select ('x:' || post_id)::text as k
+            from social_breaking_posts
+            where created_at > now() - interval '24 hours'
+              and is_breaking
+          ) t
+        )::text as signal_breaking_24h
     `);
 
     const queueResult = await pool.query<{
@@ -337,7 +372,12 @@ async function main(): Promise<void> {
       summary_article_meta_ok: '0',
       avg_quality: '0'
     };
-    const breaking = breakingResult.rows[0] || { breaking_1h: '0', breaking_24h: '0' };
+    const breaking = breakingResult.rows[0] || {
+      article_breaking_1h: '0',
+      article_breaking_24h: '0',
+      signal_breaking_1h: '0',
+      signal_breaking_24h: '0'
+    };
     const queue = queueResult.rows[0] || { queue_created_1h: '0', queue_new_1h: '0', queue_new_total: '0' };
     const social = socialResult.rows[0] || { social_posts_1h: '0', social_breaking_1h: '0' };
     const worker = readWorkerSummary();
@@ -355,8 +395,12 @@ async function main(): Promise<void> {
     const parsed1h = toNum(endpoint.parsed_1h);
     const total24h = toNum(quality.total_24h);
     const nonEnTotal = toNum(quality.non_en_total);
-    const breaking1h = toNum(breaking.breaking_1h);
-    const breaking24h = toNum(breaking.breaking_24h);
+    const articleBreaking1h = toNum(breaking.article_breaking_1h);
+    const articleBreaking24h = toNum(breaking.article_breaking_24h);
+    const signalBreaking1h = toNum(breaking.signal_breaking_1h);
+    const signalBreaking24h = toNum(breaking.signal_breaking_24h);
+    const breaking1h = articleBreaking1h + signalBreaking1h;
+    const breaking24h = articleBreaking24h + signalBreaking24h;
     const queueNew1h = toNum(queue.queue_new_1h);
     const queueNewTotal = toNum(queue.queue_new_total);
     const socialBreaking1h = toNum(social.social_breaking_1h);
@@ -427,7 +471,7 @@ async function main(): Promise<void> {
       `- Top activas 1h: ${topSources}`,
       workerLineEs,
       '',
-      `- Breaking 24h total: ${breaking24h}`,
+      `- Breaking 24h total: ${breaking24h} (article ${articleBreaking24h} + signal ${signalBreaking24h})`,
       `- Endpoint runs 1h: ${runs1h}`
     ].join('\n');
 

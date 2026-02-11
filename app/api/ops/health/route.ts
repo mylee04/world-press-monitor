@@ -139,7 +139,22 @@ export async function GET(): Promise<Response> {
       queue_new_total: string;
     }>(`
       select
-        (select count(*) filter (where last_seen_at > now() - interval '1 hour' and tags ? 'breaking') from ingested_articles)::text as breaking_1h,
+        (
+          (select count(*) from ingested_articles where last_seen_at > now() - interval '1 hour' and tags ? 'breaking')
+          +
+          (
+            select count(*) from (
+              select source_ref as k
+              from breaking_queue
+              where created_at > now() - interval '1 hour'
+              union
+              select ('x:' || post_id)::text as k
+              from social_breaking_posts
+              where created_at > now() - interval '1 hour'
+                and is_breaking
+            ) t
+          )
+        )::text as breaking_1h,
         (select count(*) filter (where status = 'new') from breaking_queue)::text as queue_new_total
     `);
 
