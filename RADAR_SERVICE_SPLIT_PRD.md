@@ -58,3 +58,10 @@
 - Serve from DB/cache only.
 - Continue hourly ops alerts from PressLab side.
 
+## Progress Snapshot
+- 2026-02-12:
+  - Phase 1 implemented.
+  - Added v1 APIs (articles/live-feed/country-counts/sources/ops summary/domain metrics/fetch).
+  - Added legacy-compatible Radar endpoints.
+  - Added cron endpoints and schedules in `vercel.json`.
+  - Added summary queue + usage + fetch logs schema and GLM summary worker.

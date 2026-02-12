@@ -1,0 +1,20 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "next build",
+  "outputDirectory": ".next",
+  "crons": [
+    {
+      "path": "/api/cron/radar",
+      "schedule": "*/10 * * * *"
+    },
+    {
+      "path": "/api/cron/radar-summaries",
+      "schedule": "* * * * *"
+    },
+    {
+      "path": "/api/cron/radar-hourly-discord",
+      "schedule": "55 * * * *"
+    }
+  ]
+}
+

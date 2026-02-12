@@ -208,7 +208,8 @@ Key KPIs include:
 ## Notes
 
 - `GNews` is supplementary only in V1. Primary real-time path remains RSS/Sitemap/Google/Bing RSS.
-- `publishedAt` is corrected with article meta tags (`article:published_time`, JSON-LD `datePublished`) for top items, then cached.
+- Radar does not fetch article pages for publication datetime correction or summaries.
+  - `publishedAt` and snippets come from feed/sitemap metadata only.
 - External enrichment knobs:
   - `EXTERNAL_ENRICH_AI_ENABLED=true|false`
   - `EXTERNAL_ENRICH_AI_MAX_ITEMS=120`
@@ -246,11 +247,30 @@ Key KPIs include:
   - or `x-api-key: <RADAR_SERVICE_API_KEY>`
 - Env:
   - `RADAR_SERVICE_API_KEY` (single key)
-  - `RADAR_SERVICE_API_KEYS` (optional comma-separated rotation keys)
+  - `RADAR_SERVICE_API_KEYS` (optional comma-separated rotation keys, supports `token:scope1|scope2`)
+  - `RADAR_SERVICE_RATE_LIMIT_RPM` (default `240`)
 - Endpoints:
   - `GET /api/radar/v1/articles?country=AR&hours=24&limit=100&offset=0`
+  - `GET /api/radar/v1/live-feed?country=AR&hours=24&limit=12`
   - `GET /api/radar/v1/country-counts?hours=24`
   - `GET /api/radar/v1/sources?hours=24&limit=200`
   - `GET /api/radar/v1/ops/summary`
+  - `GET /api/radar/v1/ops/domain-metrics?windowHours=24&limit=20`
+  - `GET|POST /api/radar/v1/fetch`
 
 These are intended for UI apps to consume preprocessed DB data without running ingest logic in the request path.
+
+Operational docs:
+- `RADAR_IMPLEMENTATION_MATRIX.md`
+- `RADAR_DB_OPERATIONS.md`
+- `RADAR_SERVICE_SPLIT_PRD.md`
+- `RADAR_SUMMARY_PIPELINE_PRD.md`
+
+### Radar Cron Endpoints
+
+- `GET|POST /api/cron/radar` (every 10m)
+- `GET|POST /api/cron/radar-summaries` (every 1m)
+- `GET|POST /api/cron/radar-hourly-discord` (hourly at minute 55)
+
+Cron auth uses:
+- `CRON_SECRET` or `RADAR_CRON_TOKEN` (bearer token header).

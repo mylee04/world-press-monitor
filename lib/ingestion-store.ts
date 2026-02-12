@@ -129,6 +129,48 @@ async function ensureSchema(): Promise<void> {
     alter table external_news_articles add column if not exists author_source text not null default 'feed';
     alter table external_news_articles add column if not exists author_verified boolean not null default false;
     alter table external_news_articles add column if not exists quality_score integer not null default 0;
+
+    create table if not exists radar_summary_queue (
+      id bigserial primary key,
+      article_external_id text not null unique references external_news_articles(external_id) on delete cascade,
+      status text not null default 'pending',
+      attempt_count integer not null default 0,
+      next_retry_at timestamptz not null default now(),
+      last_error text null,
+      provider text null,
+      model text null,
+      started_at timestamptz null,
+      completed_at timestamptz null,
+      created_at timestamptz not null default now(),
+      updated_at timestamptz not null default now()
+    );
+    create index if not exists idx_radar_summary_queue_status_retry on radar_summary_queue(status, next_retry_at, id);
+    create index if not exists idx_radar_summary_queue_updated on radar_summary_queue(updated_at desc);
+
+    create table if not exists radar_summary_usage_daily (
+      usage_date date not null,
+      provider text not null,
+      request_count integer not null default 0,
+      updated_at timestamptz not null default now(),
+      primary key (usage_date, provider)
+    );
+
+    create table if not exists radar_summary_fetch_logs (
+      id bigserial primary key,
+      queue_id bigint null references radar_summary_queue(id) on delete set null,
+      article_external_id text null,
+      domain text not null default 'unknown',
+      attempt_count integer not null default 1,
+      outcome text not null,
+      failure_code text null,
+      http_status integer null,
+      used_fallback boolean not null default false,
+      context_source text null,
+      latency_ms integer null,
+      created_at timestamptz not null default now()
+    );
+    create index if not exists idx_radar_summary_fetch_logs_created on radar_summary_fetch_logs(created_at desc);
+    create index if not exists idx_radar_summary_fetch_logs_domain_created on radar_summary_fetch_logs(domain, created_at desc);
   `);
   schemaReady = true;
 }
@@ -897,7 +939,7 @@ async function toExternalArticle(item: NewsItem): Promise<ExternalArticlePersist
   };
 }
 
-export async function persistExternalNewsArticles(items: NewsItem[]): Promise<{ persisted: number; storage: 'postgres' | 'disabled'; reason?: string }> {
+export async function persistExternalNewsArticles(items: NewsItem[]): Promise<{ persisted: number; storage: 'postgres' | 'disabled'; reason?: string; queuedSummaries?: number }> {
   const db = getPool();
   if (!db) return { persisted: 0, storage: 'disabled', reason: poolDisabledReason };
   if (!items.length) return { persisted: 0, storage: 'postgres' };
@@ -907,6 +949,7 @@ export async function persistExternalNewsArticles(items: NewsItem[]): Promise<{ 
   if (!rows.length) return { persisted: 0, storage: 'postgres' };
 
   const groups = chunk(rows, 250);
+  let queuedSummaries = 0;
   for (const group of groups) {
     const values: unknown[] = [];
     const parts: string[] = [];
@@ -971,9 +1014,38 @@ export async function persistExternalNewsArticles(items: NewsItem[]): Promise<{ 
       `,
       values
     );
+
+    const externalIds = group.map((row) => row.externalId);
+    if (externalIds.length > 0) {
+      const enqueue = await db.query(
+        `
+          insert into radar_summary_queue (article_external_id, status, next_retry_at, created_at, updated_at)
+          select e.external_id, 'pending', now(), now(), now()
+          from external_news_articles e
+          where e.external_id = any($1::text[])
+            and (
+              coalesce(btrim(e.summary_original), '') = ''
+              or (
+                e.language is not null
+                and lower(e.language) not like 'en%'
+                and coalesce(btrim(e.summary_en), '') = ''
+              )
+            )
+          on conflict (article_external_id) do update
+          set
+            status = case
+              when radar_summary_queue.status = 'done' then radar_summary_queue.status
+              else 'pending'
+            end,
+            updated_at = now()
+        `,
+        [externalIds]
+      );
+      queuedSummaries += enqueue.rowCount || 0;
+    }
   }
 
-  return { persisted: rows.length, storage: 'postgres' };
+  return { persisted: rows.length, storage: 'postgres', queuedSummaries };
 }
 
 export async function getIngestionOpsSummary24h(): Promise<IngestionOpsSummary> {

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { requireRadarServiceAuth } from '@/lib/radar-service-auth';
-import { getRadarServiceCountryCounts } from '@/lib/radar-service-store';
+import { getRadarServiceDomainMetrics } from '@/lib/radar-service-store';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -12,26 +12,29 @@ function toInt(raw: string | null, fallback: number, min: number, max: number): 
 }
 
 export async function GET(req: NextRequest): Promise<Response> {
-  const unauthorized = requireRadarServiceAuth(req, 'read:articles');
+  const unauthorized = requireRadarServiceAuth(req, 'read:ops');
   if (unauthorized) return unauthorized;
 
   try {
-    const { searchParams } = new URL(req.url);
-    const hours = toInt(searchParams.get('hours'), 24, 1, 168);
-    const counts = await getRadarServiceCountryCounts(hours);
-    const total = counts.reduce((acc, item) => acc + item.count, 0);
+    const params = req.nextUrl.searchParams;
+    const hours = toInt(params.get('windowHours') || params.get('hours'), 24, 1, 24 * 14);
+    const limit = toInt(params.get('limit'), 20, 1, 100);
+    const country = params.get('country');
+
+    const metrics = await getRadarServiceDomainMetrics({
+      hours,
+      limit,
+      country,
+    });
 
     return NextResponse.json(
       {
         ok: true,
-        generatedAt: new Date().toISOString(),
-        windowHours: hours,
-        total,
-        countries: counts,
+        ...metrics,
       },
       {
         headers: {
-          'Cache-Control': 'public, s-maxage=20, stale-while-revalidate=120',
+          'Cache-Control': 'public, s-maxage=15, stale-while-revalidate=120',
         },
       }
     );
@@ -45,3 +48,4 @@ export async function GET(req: NextRequest): Promise<Response> {
     );
   }
 }
+

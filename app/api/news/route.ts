@@ -508,8 +508,9 @@ async function fetchArticleMetadata(link: string): Promise<{ publishedAt: string
 }
 
 async function enrichPublishedAtFromArticleMeta(items: NewsItem[]): Promise<NewsItem[]> {
-  const enabled = process.env.ARTICLE_TIME_ENRICH_ENABLED !== 'false';
-  if (!enabled) return items;
+  // Compliance: do not fetch article pages for metadata enrichment.
+  // We only rely on feed/sitemap metadata already collected during ingest.
+  return items;
 
   const maxItems = Math.max(
     0,
@@ -1316,14 +1317,14 @@ export async function GET(req: NextRequest): Promise<Response> {
 
   items = items.map((item) => annotateWorldLatam(applyLocaleDetection(item)));
 
-  let persistence: { persisted: number; storage: 'postgres' | 'disabled'; error?: string; reason?: string; externalPersisted?: number };
+  let persistence: { persisted: number; storage: 'postgres' | 'disabled'; error?: string; reason?: string; externalPersisted?: number; queuedSummaries?: number };
   try {
     const external = await persistExternalNewsArticles(items);
     if (WRITE_INGESTED_COMPAT) {
       const { persistIngestedArticles } = await import('@/lib/ingestion-store');
       await persistIngestedArticles(items).catch(() => ({ persisted: 0 }));
     }
-    persistence = { ...external, externalPersisted: external.persisted || 0 };
+    persistence = { ...external, externalPersisted: external.persisted || 0, queuedSummaries: external.queuedSummaries || 0 };
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     console.error('[news] persistExternalNewsArticles failed:', message);
@@ -1349,6 +1350,7 @@ export async function GET(req: NextRequest): Promise<Response> {
       storage: persistence.storage,
       persisted: persistence.persisted,
       externalPersisted: persistence.externalPersisted || 0,
+      ...(typeof persistence.queuedSummaries === 'number' ? { queuedSummaries: persistence.queuedSummaries } : {}),
       ...(persistence.reason ? { reason: persistence.reason } : {}),
       ...(persistence.error ? { error: persistence.error } : {})
     }

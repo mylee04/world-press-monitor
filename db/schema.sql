@@ -166,3 +166,176 @@ create table if not exists breaking_queue (
 );
 
 create index if not exists idx_breaking_queue_status_created on breaking_queue(status, created_at desc);
+
+alter table external_news_articles add column if not exists url_norm text;
+alter table external_news_articles add column if not exists url_hash text;
+
+update external_news_articles
+set
+  url_norm = lower(trim(url)),
+  url_hash = md5(lower(trim(url)))
+where
+  url is not null
+  and (url_norm is null or url_hash is null);
+
+create index if not exists idx_external_news_articles_url_hash on external_news_articles(url_hash);
+create index if not exists idx_external_news_articles_source_last_seen on external_news_articles(source, last_seen_at desc);
+create index if not exists idx_external_news_articles_language_last_seen on external_news_articles(language, last_seen_at desc);
+create index if not exists idx_external_news_articles_non_en_last_seen
+  on external_news_articles(last_seen_at desc)
+  where language is not null and lower(language) not like 'en%';
+
+create table if not exists radar_summary_queue (
+  id bigserial primary key,
+  article_external_id text not null unique references external_news_articles(external_id) on delete cascade,
+  status text not null default 'pending',
+  attempt_count integer not null default 0,
+  next_retry_at timestamptz not null default now(),
+  last_error text null,
+  provider text null,
+  model text null,
+  started_at timestamptz null,
+  completed_at timestamptz null,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create index if not exists idx_radar_summary_queue_status_retry
+  on radar_summary_queue(status, next_retry_at, id);
+create index if not exists idx_radar_summary_queue_updated
+  on radar_summary_queue(updated_at desc);
+
+create table if not exists radar_summary_usage_daily (
+  usage_date date not null,
+  provider text not null,
+  request_count integer not null default 0,
+  updated_at timestamptz not null default now(),
+  primary key (usage_date, provider)
+);
+
+create table if not exists radar_summary_fetch_logs (
+  id bigserial primary key,
+  queue_id bigint null references radar_summary_queue(id) on delete set null,
+  article_external_id text null,
+  domain text not null default 'unknown',
+  attempt_count integer not null default 1,
+  outcome text not null,
+  failure_code text null,
+  http_status integer null,
+  used_fallback boolean not null default false,
+  context_source text null,
+  latency_ms integer null,
+  created_at timestamptz not null default now()
+);
+
+create index if not exists idx_radar_summary_fetch_logs_created
+  on radar_summary_fetch_logs(created_at desc);
+create index if not exists idx_radar_summary_fetch_logs_domain_created
+  on radar_summary_fetch_logs(domain, created_at desc);
+
+create index if not exists idx_ingestion_endpoint_runs_runner_attempted_ran_at
+  on ingestion_endpoint_runs(runner, attempted, ran_at desc);
+create index if not exists idx_ingestion_endpoint_runs_runner_attempted_ok_ran_at
+  on ingestion_endpoint_runs(runner, attempted, ok, ran_at desc);
+create index if not exists idx_ingestion_endpoint_runs_runner_source_ran_at
+  on ingestion_endpoint_runs(runner, source, ran_at desc);
+
+create index if not exists idx_breaking_queue_status_priority_created
+  on breaking_queue(status, priority desc, created_at desc);
+create index if not exists idx_social_breaking_posts_handle_created
+  on social_breaking_posts(account_handle, created_at desc);
+
+create index if not exists idx_ingested_articles_tags_gin on ingested_articles using gin(tags);
+create index if not exists idx_social_breaking_posts_tags_gin on social_breaking_posts using gin(tags);
+
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_constraint
+    where conname = 'chk_drafts_status'
+  ) then
+    alter table drafts
+      add constraint chk_drafts_status
+      check (status in ('draft', 'approved', 'published'));
+  end if;
+
+  if not exists (
+    select 1
+    from pg_constraint
+    where conname = 'chk_distribution_platform'
+  ) then
+    alter table distribution_content
+      add constraint chk_distribution_platform
+      check (platform in ('twitter', 'instagram', 'linkedin', 'tiktok', 'newsletter'));
+  end if;
+
+  if not exists (
+    select 1
+    from pg_constraint
+    where conname = 'chk_breaking_queue_status'
+  ) then
+    alter table breaking_queue
+      add constraint chk_breaking_queue_status
+      check (status in ('new', 'queued', 'dismissed', 'processing', 'published'));
+  end if;
+
+  if not exists (
+    select 1
+    from pg_constraint
+    where conname = 'chk_external_quality_score'
+  ) then
+    alter table external_news_articles
+      add constraint chk_external_quality_score
+      check (quality_score between 0 and 100);
+  end if;
+
+  if not exists (
+    select 1
+    from pg_constraint
+    where conname = 'chk_ingested_seen_count'
+  ) then
+    alter table ingested_articles
+      add constraint chk_ingested_seen_count
+      check (seen_count >= 1);
+  end if;
+
+  if not exists (
+    select 1
+    from pg_constraint
+    where conname = 'chk_external_seen_count'
+  ) then
+    alter table external_news_articles
+      add constraint chk_external_seen_count
+      check (seen_count >= 1);
+  end if;
+end
+$$;
+
+create or replace function set_row_updated_at()
+returns trigger
+language plpgsql
+as $$
+begin
+  new.updated_at = now();
+  return new;
+end;
+$$;
+
+drop trigger if exists trg_drafts_updated_at on drafts;
+create trigger trg_drafts_updated_at
+before update on drafts
+for each row
+execute function set_row_updated_at();
+
+drop trigger if exists trg_distribution_content_updated_at on distribution_content;
+create trigger trg_distribution_content_updated_at
+before update on distribution_content
+for each row
+execute function set_row_updated_at();
+
+drop trigger if exists trg_breaking_queue_updated_at on breaking_queue;
+create trigger trg_breaking_queue_updated_at
+before update on breaking_queue
+for each row
+execute function set_row_updated_at();

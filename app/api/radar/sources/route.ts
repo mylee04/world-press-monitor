@@ -12,35 +12,26 @@ function toInt(raw: string | null, fallback: number, min: number, max: number): 
 }
 
 export async function GET(req: NextRequest): Promise<Response> {
-  const unauthorized = requireRadarServiceAuth(req, 'read:sources');
-  if (unauthorized) return unauthorized;
+  if (process.env.RADAR_SERVICE_REQUIRE_AUTH !== 'false') {
+    const unauthorized = requireRadarServiceAuth(req, 'read:sources');
+    if (unauthorized) return unauthorized;
+  }
 
   try {
-    const { searchParams } = new URL(req.url);
-    const hours = toInt(searchParams.get('hours'), 24, 1, 168);
-    const limit = toInt(searchParams.get('limit'), 200, 1, 1000);
+    const params = req.nextUrl.searchParams;
+    const hours = toInt(params.get('hours'), 24, 1, 168);
+    const limit = toInt(params.get('limit'), 500, 1, 1000);
     const sources = await getRadarServiceSources({ hours, limit });
-
-    return NextResponse.json(
-      {
-        ok: true,
-        generatedAt: new Date().toISOString(),
-        windowHours: hours,
-        sources,
-      },
-      {
-        headers: {
-          'Cache-Control': 'public, s-maxage=30, stale-while-revalidate=180',
-        },
-      }
-    );
+    return NextResponse.json({
+      sources,
+      seeded: false,
+      inserted: 0,
+    });
   } catch (error) {
     return NextResponse.json(
-      {
-        ok: false,
-        error: error instanceof Error ? error.message : String(error),
-      },
+      { error: error instanceof Error ? error.message : 'Failed to fetch RSS sources' },
       { status: 500 }
     );
   }
 }
+
