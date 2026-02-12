@@ -572,7 +572,7 @@ export async function processRadarSummaryQueue(): Promise<RadarSummaryRunStats> 
 
       const fetchResult = await fetchContext({
         url: row.url,
-        fallbackText: row.summary_original,
+        fallbackText: row.summary_original || row.title_original,
         timeoutMs,
         maxChars: maxContextChars,
       });
