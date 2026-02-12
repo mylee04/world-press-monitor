@@ -845,18 +845,29 @@ export function NewsroomDashboard({
     knownDraftLinkSetRef.current = knownDraftLinkSet;
   }, [knownDraftLinkSet]);
 
+  const majorWatchRowsRef = useRef<NewsItem[]>([]);
+  useEffect(() => {
+    majorWatchRowsRef.current = majorWatchRows;
+  }, [majorWatchRows]);
+
   const breakingQueueRowsRef = useRef<BreakingQueueItem[]>([]);
   useEffect(() => {
     breakingQueueRowsRef.current = breakingQueueRows;
   }, [breakingQueueRows]);
 
   const pendingBreakingDraftsRef = useRef<Map<string, number>>(new Map());
+  const pendingMajorDraftsRef = useRef<Map<string, number>>(new Map());
   useEffect(() => {
     return () => {
       for (const timer of pendingBreakingDraftsRef.current.values()) {
         window.clearTimeout(timer);
       }
       pendingBreakingDraftsRef.current.clear();
+
+      for (const timer of pendingMajorDraftsRef.current.values()) {
+        window.clearTimeout(timer);
+      }
+      pendingMajorDraftsRef.current.clear();
     };
   }, []);
   const scopedOutletIds = useMemo(() => {
@@ -1171,6 +1182,83 @@ export function NewsroomDashboard({
     pendingBreakingDraftsRef.current.set(key, timer);
   };
 
+  const pickRelatedMajorSources = (primary: NewsItem, rows: NewsItem[]): RelatedDraftSource[] => {
+    const key = breakingEventKeyFromTitle(primary.title);
+    if (!key) return [];
+
+    const candidates = rows
+      .filter((item) => isLikelyBreakingTitle(item.title) && breakingEventKeyFromTitle(item.title) === key)
+      .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+
+    const picked: NewsItem[] = [];
+    const seenDomains = new Set<string>();
+    const seenLinks = new Set<string>();
+
+    picked.push(primary);
+    seenDomains.add(extractDomainForDraft(primary.link));
+    seenLinks.add(normalizeLinkForId(primary.link));
+
+    for (const item of candidates) {
+      if (item.id === primary.id) continue;
+      const norm = normalizeLinkForId(item.link);
+      if (!norm || seenLinks.has(norm)) continue;
+      const domain = extractDomainForDraft(item.link);
+      if (domain && seenDomains.has(domain)) continue;
+      picked.push(item);
+      if (domain) seenDomains.add(domain);
+      seenLinks.add(norm);
+      if (picked.length >= BREAKING_DRAFT_MAX_SOURCES) break;
+    }
+
+    return picked.slice(1).map((item) => ({
+      title: item.title,
+      source: item.source || extractDomainForDraft(item.link) || 'Unknown',
+      link: item.link,
+      publishedAt: item.publishedAt,
+    }));
+  };
+
+  const flushScheduledMajorWatchDraft = async (key: string): Promise<void> => {
+    const timer = pendingMajorDraftsRef.current.get(key);
+    if (timer) pendingMajorDraftsRef.current.delete(key);
+
+    const rows = majorWatchRowsRef.current || [];
+    const candidates = rows
+      .filter((item) => isLikelyBreakingTitle(item.title) && breakingEventKeyFromTitle(item.title) === key)
+      .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+
+    const primary = candidates[0];
+    if (!primary) return;
+
+    const known = knownDraftLinkSetRef.current;
+    const hasExistingDraft = candidates.some((item) => {
+      const norm = normalizeLinkForId(item.link);
+      return norm && known.has(norm);
+    });
+    if (hasExistingDraft) return;
+
+    const related = pickRelatedMajorSources(primary, candidates);
+    await queueDraftFromBreakingInput({
+      title: primary.title,
+      source: primary.source,
+      link: primary.link,
+      publishedAt: primary.publishedAt,
+      queuedFrom: 'major_watch',
+      related,
+    });
+  };
+
+  const scheduleMajorWatchDraft = (item: NewsItem): void => {
+    if (!isLikelyBreakingTitle(item.title)) return;
+    const key = breakingEventKeyFromTitle(item.title);
+    if (!key) return;
+    if (pendingMajorDraftsRef.current.has(key)) return;
+    const timer = window.setTimeout(() => {
+      void flushScheduledMajorWatchDraft(key);
+    }, BREAKING_AUTO_DRAFT_DELAY_MS);
+    pendingMajorDraftsRef.current.set(key, timer);
+  };
+
   const markQueueStatus = async (ids: number[], status: string): Promise<void> => {
     if (!ids.length) return;
     try {
@@ -1237,9 +1325,9 @@ export function NewsroomDashboard({
 
       setMajorWatchNewCount(unseen.length);
       if (unseen.length > 0) {
-        for (const row of unseen) {
-          await queueDraftFromBreaking(row);
-        }
+        // Delay breaking draft creation so multiple outlets have time to publish.
+        const breakingUnseen = unseen.filter((row) => isLikelyBreakingTitle(row.title));
+        breakingUnseen.forEach((row) => scheduleMajorWatchDraft(row));
         if (typeof window !== 'undefined' && 'Notification' in window && Notification.permission === 'granted') {
           void new Notification(`PressLab: ${unseen.length} ${t.watchNew}`, {
             body: unseen[0]?.title || 'New article detected'
