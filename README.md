@@ -237,3 +237,20 @@ Key KPIs include:
   - Vercel cron, GitHub Actions schedule, Cloud Run job, or system cron.
 - Full data stack tools (Docker + Postgres + dbt + Airflow) are useful for ETL/warehouse workloads,
   but are usually overkill for this V1 cache-warm use case.
+
+## Radar Service API (v1)
+
+- PressLab now exposes authenticated Radar read endpoints for external consumers.
+- Auth:
+  - `Authorization: Bearer <RADAR_SERVICE_API_KEY>`
+  - or `x-api-key: <RADAR_SERVICE_API_KEY>`
+- Env:
+  - `RADAR_SERVICE_API_KEY` (single key)
+  - `RADAR_SERVICE_API_KEYS` (optional comma-separated rotation keys)
+- Endpoints:
+  - `GET /api/radar/v1/articles?country=AR&hours=24&limit=100&offset=0`
+  - `GET /api/radar/v1/country-counts?hours=24`
+  - `GET /api/radar/v1/sources?hours=24&limit=200`
+  - `GET /api/radar/v1/ops/summary`
+
+These are intended for UI apps to consume preprocessed DB data without running ingest logic in the request path.
