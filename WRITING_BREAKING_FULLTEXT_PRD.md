@@ -14,6 +14,7 @@ Key requirements:
 In scope:
 - Breaking-only full-text extraction via Firecrawl.
 - GLM-based draft generation.
+- Optional multi-source synthesis when multiple related links are available (best-effort).
 - Domain whitelist enforcement.
 - Strict output formatting and safety rules to reduce verbatim copying.
 
@@ -37,6 +38,16 @@ Out of scope:
 
 No raw article body is persisted server-side.
 
+### Multi-source (best-effort, not required)
+- Caller can pass `related[]` sources (up to 3 additional links).
+- The server will attempt to scrape a small number of allowlisted sources (default 2) and synthesize a single Spanish draft.
+- If only 1 source exists, the system works exactly like single-source drafting.
+
+### “Wait 1-2 minutes” behavior
+- We do **not** keep HTTP requests open to wait for more sources.
+- Auto-queue logic in the client should delay draft creation ~60-120 seconds for breaking events so more outlets can publish.
+- Manual queue should generate immediately (still best-effort includes currently available related links).
+
 ## 4) Policy Constraints
 - Only run full-text mode when:
   - `WRITING_FULLTEXT_ENABLED=true`
@@ -57,6 +68,7 @@ Optional knobs:
 - `FIRECRAWL_API_BASE_URL` (default `https://api.firecrawl.dev/v1`)
 - `WRITING_FULLTEXT_TIMEOUT_MS` (default `15000`)
 - `WRITING_FULLTEXT_MAX_CHARS` (default `12000`)
+- `WRITING_FULLTEXT_MAX_SCRAPE_SOURCES` (default `2`)
 - `WRITING_GLM_MODEL` (default `glm-4.7-flash`, falls back to `RADAR_GLM_MODEL`)
 
 ## 6) Output Contract

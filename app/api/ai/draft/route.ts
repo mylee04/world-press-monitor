@@ -11,6 +11,12 @@ type DraftRequest = {
   source?: string;
   link?: string;
   publishedAt?: string;
+  related?: Array<{
+    title?: string;
+    source?: string;
+    link?: string;
+    publishedAt?: string;
+  }>;
 };
 
 type DraftResponse = {
@@ -18,7 +24,7 @@ type DraftResponse = {
   bodyEs: string;
 };
 
-function fallbackDraft(payload: Required<Omit<DraftRequest, 'publishedAt'>> & { publishedAt: string }): DraftResponse {
+function fallbackDraft(payload: { title: string; source: string; link: string; publishedAt: string }): DraftResponse {
   const dateLabel = payload.publishedAt ? new Date(payload.publishedAt).toISOString() : new Date().toISOString();
   return {
     headlineEs: payload.title,
@@ -78,6 +84,18 @@ function truncate(value: string, maxChars: number): string {
   return text.slice(0, Math.max(0, maxChars - 1)).trimEnd() + '…';
 }
 
+function normalizeUrlForDedupe(value: string): string {
+  const raw = (value || '').trim();
+  if (!raw) return '';
+  try {
+    const u = new URL(raw);
+    u.hash = '';
+    return u.toString().toLowerCase();
+  } catch {
+    return raw.toLowerCase();
+  }
+}
+
 function safeParseJsonObject(raw: string): Record<string, unknown> | null {
   const text = (raw || '').trim();
   if (!text) return null;
@@ -98,6 +116,32 @@ function safeParseJsonObject(raw: string): Record<string, unknown> | null {
     }
   }
   return null;
+}
+
+type DraftSourceInput = {
+  title: string;
+  source: string;
+  link: string;
+  publishedAt: string;
+  domain: string;
+};
+
+function coerceDraftSource(input: {
+  title?: string;
+  source?: string;
+  link?: string;
+  publishedAt?: string;
+}): DraftSourceInput | null {
+  const link = sanitize(input.link || '');
+  if (!link) return null;
+  const domain = extractDomain(link);
+  return {
+    title: sanitize(input.title || ''),
+    source: sanitize(input.source || domain || 'Unknown'),
+    link,
+    publishedAt: sanitize(input.publishedAt || ''),
+    domain,
+  };
 }
 
 function firecrawlScrapeUrl(baseUrl: string): string {
@@ -187,6 +231,7 @@ async function requestGlmDraft(input: {
             role: 'system',
             content: [
               'You are a LATAM newsroom editor writing Spanish neutral.',
+              'You may receive multiple sources for the same event; reconcile them and prefer cross-source facts.',
               'Do NOT translate or copy sentences verbatim; restate facts in your own words.',
               'Avoid direct quotes. If facts are uncertain, say so explicitly.',
               'Return strict JSON only with keys: headlineEs, bodyEs.',
@@ -251,6 +296,27 @@ export async function POST(req: Request): Promise<Response> {
   }
 
   const fallback = fallbackDraft({ title, source, link, publishedAt });
+  const primary = coerceDraftSource({ title, source, link, publishedAt });
+  const related = Array.isArray(body?.related)
+    ? body!.related
+        .map((item) => coerceDraftSource(item))
+        .filter((item): item is DraftSourceInput => Boolean(item))
+    : [];
+
+  const dedupedSources: DraftSourceInput[] = [];
+  const seenLinks = new Set<string>();
+  if (primary) {
+    const norm = normalizeUrlForDedupe(primary.link);
+    seenLinks.add(norm);
+    dedupedSources.push(primary);
+  }
+  for (const item of related) {
+    const norm = normalizeUrlForDedupe(item.link);
+    if (!norm || seenLinks.has(norm)) continue;
+    seenLinks.add(norm);
+    dedupedSources.push(item);
+    if (dedupedSources.length >= 4) break;
+  }
 
   // Breaking-only fulltext (no storage): Firecrawl -> GLM.
   // Policy: no paywall/bot-protection bypass. If blocked/short/failed, fall back to existing logic.
@@ -259,31 +325,91 @@ export async function POST(req: Request): Promise<Response> {
   const domain = extractDomain(link);
   const firecrawlKey = (process.env.FIRECRAWL_API_KEY || '').trim();
   const glmKey = (process.env.GLM_API_KEY || '').trim();
+  const maxScrapeSources = envInt('WRITING_FULLTEXT_MAX_SCRAPE_SOURCES', 2, 1, 4);
   const shouldTryFulltext =
     fulltextEnabled
-    && Boolean(domain)
     && allowedDomains.size > 0
-    && allowedDomains.has(domain)
     && Boolean(firecrawlKey)
-    && Boolean(glmKey);
+    && Boolean(glmKey)
+    && dedupedSources.some((item) => Boolean(item.domain) && allowedDomains.has(item.domain));
 
   if (shouldTryFulltext) {
     try {
       const timeoutMs = envInt('WRITING_FULLTEXT_TIMEOUT_MS', 15000, 2000, 60000);
-      const maxChars = envInt('WRITING_FULLTEXT_MAX_CHARS', 12000, 2000, 40000);
+      const maxCharsTotal = envInt('WRITING_FULLTEXT_MAX_CHARS', 12000, 2000, 60000);
       const firecrawlBase = (process.env.FIRECRAWL_API_BASE_URL || DEFAULT_FIRECRAWL_BASE_URL).trim();
       const glmBase = (process.env.RADAR_GLM_API_BASE_URL || DEFAULT_GLM_BASE_URL).trim();
       const glmModel = (process.env.WRITING_GLM_MODEL || process.env.RADAR_GLM_MODEL || 'glm-4.7-flash').trim();
 
-      const scraped = await fetchFullTextViaFirecrawl({
-        apiKey: firecrawlKey,
-        baseUrl: firecrawlBase,
-        url: link,
-        timeoutMs,
-        maxChars,
-      });
+      const scrapeCandidates: DraftSourceInput[] = [];
+      const usedDomains = new Set<string>();
+      for (const item of dedupedSources) {
+        if (!item.domain) continue;
+        if (!allowedDomains.has(item.domain)) continue;
+        if (usedDomains.has(item.domain)) continue;
+        scrapeCandidates.push(item);
+        usedDomains.add(item.domain);
+        if (scrapeCandidates.length >= maxScrapeSources) break;
+      }
 
-      if (scraped.text) {
+      // Ensure primary is always attempted first when allowlisted.
+      if (domain && allowedDomains.has(domain) && primary) {
+        const primaryNorm = normalizeUrlForDedupe(primary.link);
+        const currentPrimary = scrapeCandidates.find((item) => normalizeUrlForDedupe(item.link) === primaryNorm);
+        if (!currentPrimary) {
+          scrapeCandidates.unshift(primary);
+          // Re-dedupe for max.
+          const seen = new Set<string>();
+          const next: DraftSourceInput[] = [];
+          for (const item of scrapeCandidates) {
+            const k = normalizeUrlForDedupe(item.link);
+            if (seen.has(k)) continue;
+            seen.add(k);
+            next.push(item);
+            if (next.length >= maxScrapeSources) break;
+          }
+          scrapeCandidates.length = 0;
+          scrapeCandidates.push(...next);
+        }
+      }
+
+      const perSourceMaxChars = Math.max(2500, Math.floor(maxCharsTotal / Math.max(1, scrapeCandidates.length)));
+      const scrapedByLink = new Map<string, string>();
+      const scrapeResults = await Promise.all(
+        scrapeCandidates.map(async (item) => {
+          const result = await fetchFullTextViaFirecrawl({
+            apiKey: firecrawlKey,
+            baseUrl: firecrawlBase,
+            url: item.link,
+            timeoutMs,
+            maxChars: perSourceMaxChars,
+          });
+          if (result.text) {
+            scrapedByLink.set(normalizeUrlForDedupe(item.link), result.text);
+          }
+          return result;
+        })
+      );
+
+      const anyScraped = scrapeResults.some((r) => Boolean(r.text));
+      if (anyScraped) {
+        const sourceContext = dedupedSources
+          .map((item, idx) => {
+            const scraped = scrapedByLink.get(normalizeUrlForDedupe(item.link));
+            return [
+              `SOURCE ${idx + 1}`,
+              `Outlet: ${item.source || item.domain || 'Unknown'}`,
+              `Domain: ${item.domain || 'unknown'}`,
+              `Title: ${item.title || 'unknown'}`,
+              `PublishedAt: ${item.publishedAt || 'unknown'}`,
+              `Link: ${item.link}`,
+              scraped
+                ? `ExtractedText:\n${scraped}`
+                : 'ExtractedText: unavailable (use metadata only)',
+            ].join('\n');
+          })
+          .join('\n\n---\n\n');
+
         const draft = await requestGlmDraft({
           apiKey: glmKey,
           baseUrl: glmBase,
@@ -292,7 +418,7 @@ export async function POST(req: Request): Promise<Response> {
           source,
           link,
           publishedAt,
-          context: scraped.text,
+          context: truncate(sourceContext, Math.max(5000, maxCharsTotal + 4000)),
           timeoutMs,
         });
         return Response.json({ ...draft, source: 'glm_fulltext' });

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { GeoMap } from '@/components/GeoMap';
 import { OUTLET_FEEDS, SOURCE_PRESETS } from '@/data/outlets';
 import type { Beat, NewsItem, SourcePreset } from '@/lib/types';
@@ -11,6 +11,8 @@ const TIME_WINDOWS_HOURS = [1, 6, 24];
 const BEATS: Beat[] = ['general', 'politics', 'business', 'tech', 'security', 'climate', 'world'];
 const MONITOR_STORAGE_KEY = 'presslab.savedMonitors.v1';
 const PANEL_STORAGE_KEY = 'presslab.panelVisibility.v2';
+const BREAKING_AUTO_DRAFT_DELAY_MS = 90_000;
+const BREAKING_DRAFT_MAX_SOURCES = 4;
 
 type PanelKey = 'controls' | 'map' | 'liveWall' | 'feed' | 'speedBoard' | 'beatMix' | 'spikeAlerts';
 
@@ -80,6 +82,13 @@ interface BreakingQueueItem {
   created_at: string;
   updated_at: string;
 }
+
+type RelatedDraftSource = {
+  title: string;
+  source: string;
+  link: string;
+  publishedAt: string;
+};
 
 const DEFAULT_PANELS: PanelVisibility = {
   controls: true,
@@ -191,6 +200,7 @@ const MAJOR_WATCH_SEEN_KEY = 'presslab.major-watch.seen.v1';
 const COUNTRY_MIN_WINDOW_HOURS = 24;
 const NEWS_FETCH_CHUNK_SIZE = 120;
 const STREAM_PAGE_SIZE = 5;
+const COUNTRY_CARD_PAGE_SIZE = 5;
 const COUNTRY_PRIMARY_LANGUAGE: Record<string, string> = {
   'United States': 'en',
   Chile: 'es',
@@ -625,6 +635,41 @@ function parseDateLabel(value: string, locale: Locale = 'en', withTimeZone = fal
   return date.toLocaleString(localeTag);
 }
 
+const BREAKING_EVENT_STOPWORDS = new Set([
+  'breaking', 'live', 'update', 'updates', 'latest',
+  'the', 'a', 'an', 'and', 'or', 'of', 'to', 'in', 'on', 'for', 'with', 'from', 'as', 'at', 'by', 'is', 'are', 'was', 'were', 'be', 'been', 'this', 'that', 'these', 'those', 'say', 'says', 'said',
+  'el', 'la', 'los', 'las', 'un', 'una', 'y', 'o', 'de', 'del', 'en', 'por', 'con', 'para', 'que', 'se', 'al', 'como', 'segun', 'según', 'hoy', 'ayer'
+]);
+
+function extractDomainForDraft(link: string): string {
+  try {
+    return new URL(link).hostname.replace(/^www\./, '').toLowerCase();
+  } catch {
+    return '';
+  }
+}
+
+function breakingEventKeyFromTitle(title: string): string {
+  const cleaned = (title || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  if (!cleaned) return '';
+  const tokens = cleaned
+    .split(' ')
+    .map((t) => t.trim())
+    .filter((t) => t.length >= 3 && !BREAKING_EVENT_STOPWORDS.has(t));
+  const uniq: string[] = [];
+  for (const token of tokens) {
+    if (uniq.includes(token)) continue;
+    uniq.push(token);
+    if (uniq.length >= 10) break;
+  }
+  const top = uniq.slice(0, 8).sort();
+  return top.join('|');
+}
+
 function minutesSince(value: string): number {
   const ts = new Date(value).getTime();
   if (!Number.isFinite(ts)) return 0;
@@ -633,15 +678,16 @@ function minutesSince(value: string): number {
 
 function relativeAgeLabel(value: string, locale: Locale = 'en'): string {
   const minutes = minutesSince(value);
-  if (minutes >= 24 * 60) {
-    const days = Math.floor(minutes / (24 * 60));
-    return locale === 'es' ? `${days} d` : `${days} d ago`;
-  }
-  if (minutes >= 60) {
-    const hours = Math.floor(minutes / 60);
-    return locale === 'es' ? `${hours} h` : `${hours} h ago`;
-  }
-  return locale === 'es' ? `${minutes} min` : `${minutes} m ago`;
+  if (minutes < 60) return locale === 'es' ? `${minutes} min` : `${minutes} m ago`;
+
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return locale === 'es' ? `${hours} h` : `${hours} h ago`;
+
+  const days = Math.floor(hours / 24);
+  if (days < 7) return locale === 'es' ? `${days} d` : `${days} d ago`;
+
+  const weeks = Math.floor(days / 7);
+  return locale === 'es' ? `${weeks} sem` : `${weeks} w ago`;
 }
 
 function deriveThemeFromText(text: string): Beat {
@@ -752,6 +798,7 @@ export function NewsroomDashboard({
   const [countryAutoAdded, setCountryAutoAdded] = useState<number>(0);
   const [countryCardOpen, setCountryCardOpen] = useState<boolean>(false);
   const [countryCardPinned, setCountryCardPinned] = useState<boolean>(false);
+  const [countryCardPage, setCountryCardPage] = useState<number>(1);
   const [countrySourceFilter, setCountrySourceFilter] = useState<'all' | 'local' | 'portal' | 'global'>('all');
   const [liveMode, setLiveMode] = useState<'major' | 'custom'>('major');
   const [liveTiles, setLiveTiles] = useState<LiveTileState[]>(buildLiveTiles(FIXED_MAJOR_CHANNELS));
@@ -793,6 +840,25 @@ export function NewsroomDashboard({
     () => new Set(existingDraftLinks.map((link) => normalizeLinkForId(link))),
     [existingDraftLinks]
   );
+  const knownDraftLinkSetRef = useRef<Set<string>>(knownDraftLinkSet);
+  useEffect(() => {
+    knownDraftLinkSetRef.current = knownDraftLinkSet;
+  }, [knownDraftLinkSet]);
+
+  const breakingQueueRowsRef = useRef<BreakingQueueItem[]>([]);
+  useEffect(() => {
+    breakingQueueRowsRef.current = breakingQueueRows;
+  }, [breakingQueueRows]);
+
+  const pendingBreakingDraftsRef = useRef<Map<string, number>>(new Map());
+  useEffect(() => {
+    return () => {
+      for (const timer of pendingBreakingDraftsRef.current.values()) {
+        window.clearTimeout(timer);
+      }
+      pendingBreakingDraftsRef.current.clear();
+    };
+  }, []);
   const scopedOutletIds = useMemo(() => {
     return OUTLET_FEEDS
       .filter((outlet) => {
@@ -947,6 +1013,7 @@ export function NewsroomDashboard({
       link: string;
       publishedAt: string;
       queuedFrom?: DraftRecord['autoQueuedFrom'];
+      related?: RelatedDraftSource[];
     },
     force = false
   ): Promise<boolean> => {
@@ -965,7 +1032,8 @@ export function NewsroomDashboard({
           title: payload.title,
           source: payload.source,
           link: payload.link,
-          publishedAt: payload.publishedAt
+          publishedAt: payload.publishedAt,
+          related: payload.related || []
         })
       });
       const json = await safeJson<{ headlineEs?: string; bodyEs?: string }>(res);
@@ -1006,6 +1074,103 @@ export function NewsroomDashboard({
     });
   };
 
+  const pickRelatedBreakingSources = (primary: BreakingQueueItem, rows: BreakingQueueItem[]): { related: RelatedDraftSource[]; ids: number[] } => {
+    const key = breakingEventKeyFromTitle(primary.title);
+    if (!key) return { related: [], ids: [primary.id] };
+
+    const candidates = rows
+      .filter((row) => row.status === 'new' && breakingEventKeyFromTitle(row.title) === key)
+      .sort((a, b) => {
+        if (a.priority !== b.priority) return b.priority - a.priority;
+        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+      });
+
+    const picked: BreakingQueueItem[] = [];
+    const seenDomains = new Set<string>();
+    const seenLinks = new Set<string>();
+
+    picked.push(primary);
+    seenDomains.add(extractDomainForDraft(primary.link));
+    seenLinks.add(normalizeLinkForId(primary.link));
+
+    for (const row of candidates) {
+      if (row.id === primary.id) continue;
+      const norm = normalizeLinkForId(row.link);
+      if (!norm || seenLinks.has(norm)) continue;
+      const domain = extractDomainForDraft(row.link);
+      if (domain && seenDomains.has(domain)) continue;
+      picked.push(row);
+      if (domain) seenDomains.add(domain);
+      seenLinks.add(norm);
+      if (picked.length >= BREAKING_DRAFT_MAX_SOURCES) break;
+    }
+
+    const related: RelatedDraftSource[] = picked
+      .slice(1)
+      .map((row) => ({
+        title: row.title,
+        source: extractDomainForDraft(row.link) || (row.source_kind === 'social_x' ? 'X Breaking' : row.source_kind),
+        link: row.link,
+        publishedAt: row.created_at,
+      }));
+    const ids = picked.map((row) => row.id);
+    return { related, ids };
+  };
+
+  const flushScheduledBreakingDraft = async (key: string): Promise<void> => {
+    const timer = pendingBreakingDraftsRef.current.get(key);
+    if (timer) pendingBreakingDraftsRef.current.delete(key);
+
+    const rows = breakingQueueRowsRef.current || [];
+    const candidates = rows.filter((row) => row.status === 'new' && breakingEventKeyFromTitle(row.title) === key);
+    if (candidates.length === 0) return;
+
+    const primary = [...candidates].sort((a, b) => {
+      if (a.priority !== b.priority) return b.priority - a.priority;
+      return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+    })[0];
+    if (!primary) return;
+
+    const known = knownDraftLinkSetRef.current;
+    const hasExistingDraft = candidates.some((row) => {
+      const norm = normalizeLinkForId(row.link);
+      return norm && known.has(norm);
+    });
+    if (hasExistingDraft) {
+      await markQueueStatus(candidates.map((row) => row.id), 'queued');
+      await refreshBreakingQueue();
+      return;
+    }
+
+    const { related, ids } = pickRelatedBreakingSources(primary, candidates);
+    const queued = await queueDraftFromBreakingInput(
+      {
+        title: primary.title,
+        source: extractDomainForDraft(primary.link) || (primary.source_kind === 'social_x' ? 'X Breaking' : primary.source_kind),
+        link: primary.link,
+        publishedAt: primary.created_at,
+        queuedFrom: 'social_x',
+        related,
+      },
+      true
+    );
+    if (queued) {
+      await markQueueStatus(ids, 'queued');
+      await refreshBreakingQueue();
+    }
+  };
+
+  const scheduleBreakingDraft = (row: BreakingQueueItem): void => {
+    if (row.status !== 'new') return;
+    const key = breakingEventKeyFromTitle(row.title);
+    if (!key) return;
+    if (pendingBreakingDraftsRef.current.has(key)) return;
+    const timer = window.setTimeout(() => {
+      void flushScheduledBreakingDraft(key);
+    }, BREAKING_AUTO_DRAFT_DELAY_MS);
+    pendingBreakingDraftsRef.current.set(key, timer);
+  };
+
   const markQueueStatus = async (ids: number[], status: string): Promise<void> => {
     if (!ids.length) return;
     try {
@@ -1027,26 +1192,11 @@ export function NewsroomDashboard({
       const rows = json?.items || [];
       setBreakingQueueRows(rows);
 
-      const newRows = rows.filter((row) => row.status === 'new').slice(0, 10);
+      const newRows = rows.filter((row) => row.status === 'new').slice(0, 20);
       if (!newRows.length) return;
 
-      const queuedIds: number[] = [];
-      for (const row of newRows) {
-        const queued = await queueDraftFromBreakingInput(
-          {
-            title: row.title,
-            source: row.source_kind === 'social_x' ? 'X Breaking' : row.source_kind,
-            link: row.link,
-            publishedAt: row.created_at,
-            queuedFrom: 'social_x'
-          },
-          true
-        );
-        if (queued) queuedIds.push(row.id);
-      }
-      if (queuedIds.length) {
-        await markQueueStatus(queuedIds, 'queued');
-      }
+      // Auto-queue is delayed to allow multiple outlets to publish the same breaking event.
+      newRows.forEach((row) => scheduleBreakingDraft(row));
     } catch {
       // no-op
     }
@@ -1458,6 +1608,18 @@ export function NewsroomDashboard({
     return rssSitemapLiveRows.slice(start, start + STREAM_PAGE_SIZE);
   }, [rssSitemapLiveRows, rssSitemapPage, rssSitemapTotalPages]);
 
+  const countryCardItemsSorted = useMemo(() => {
+    if (selectedCountry === 'Global') return [];
+    return [...rankedCountryItems].sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+  }, [rankedCountryItems, selectedCountry]);
+
+  const countryCardTotalPages = Math.max(1, Math.ceil(countryCardItemsSorted.length / COUNTRY_CARD_PAGE_SIZE));
+  const countryCardPageRows = useMemo(() => {
+    const safePage = Math.min(countryCardPage, countryCardTotalPages);
+    const start = (safePage - 1) * COUNTRY_CARD_PAGE_SIZE;
+    return countryCardItemsSorted.slice(start, start + COUNTRY_CARD_PAGE_SIZE);
+  }, [countryCardItemsSorted, countryCardPage, countryCardTotalPages]);
+
   useEffect(() => {
     setMajorWatchPage((current) => Math.min(current, majorWatchTotalPages));
   }, [majorWatchTotalPages]);
@@ -1469,6 +1631,14 @@ export function NewsroomDashboard({
   useEffect(() => {
     setRssSitemapPage((current) => Math.min(current, rssSitemapTotalPages));
   }, [rssSitemapTotalPages]);
+
+  useEffect(() => {
+    setCountryCardPage((current) => Math.min(current, countryCardTotalPages));
+  }, [countryCardTotalPages]);
+
+  useEffect(() => {
+    setCountryCardPage(1);
+  }, [selectedCountry, countrySourceFilter]);
 
   const countryCardMetrics = useMemo(() => {
     if (selectedCountry === 'Global') return null;
@@ -2000,15 +2170,24 @@ export function NewsroomDashboard({
                       <button
                         type="button"
                         onClick={async () => {
+                          const key = breakingEventKeyFromTitle(row.title);
+                          const timer = key ? pendingBreakingDraftsRef.current.get(key) : undefined;
+                          if (timer) {
+                            window.clearTimeout(timer);
+                            pendingBreakingDraftsRef.current.delete(key);
+                          }
+
+                          const group = pickRelatedBreakingSources(row, breakingQueueRowsRef.current || []);
                           const queued = await queueDraftFromBreakingInput({
                             title: row.title,
-                            source: row.source_kind === 'social_x' ? 'X Breaking' : row.source_kind,
+                            source: extractDomainForDraft(row.link) || (row.source_kind === 'social_x' ? 'X Breaking' : row.source_kind),
                             link: row.link,
                             publishedAt: row.created_at,
-                            queuedFrom: 'social_x'
+                            queuedFrom: 'social_x',
+                            related: group.related
                           }, true);
                           if (queued) {
-                            await markQueueStatus([row.id], 'queued');
+                            await markQueueStatus(group.ids, 'queued');
                             await refreshBreakingQueue();
                           }
                         }}
@@ -2157,14 +2336,15 @@ export function NewsroomDashboard({
             {countryCardMetrics.globalCount === 0 ? (
               <p className="meta">{t.noGlobalBucket}</p>
             ) : null}
+            {countryCardItemsSorted.length > 0 ? renderPager(countryCardPage, countryCardTotalPages, setCountryCardPage) : null}
             <ul className="simple-list">
-              {rankedCountryItems.slice(0, 4).map((item) => (
+              {countryCardPageRows.map((item) => (
                 <li key={item.id}>
                   <strong>{item.title}</strong>
                   <span>{item.source} · {item.language || 'en'} · {item.sourceType || 'global'}</span>
                 </li>
               ))}
-              {rankedCountryItems.length === 0 ? <li>{t.noCountryStories}</li> : null}
+              {countryCardItemsSorted.length === 0 ? <li>{t.noCountryStories}</li> : null}
             </ul>
           </section>
         </section>
