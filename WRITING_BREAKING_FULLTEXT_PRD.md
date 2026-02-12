@@ -12,7 +12,7 @@ Key requirements:
 ## 2) Scope
 
 In scope:
-- Breaking-only full-text extraction via Firecrawl.
+- Breaking-only full-text extraction via direct HTTP fetch (public HTML only).
 - GLM-based draft generation.
 - Optional multi-source synthesis when multiple related links are available (best-effort).
 - Domain whitelist enforcement.
@@ -31,7 +31,7 @@ Out of scope:
 
 ### New flow (this PRD)
 - When breaking draft generation occurs, `/api/ai/draft` optionally:
-  1. Uses Firecrawl to extract main content text (in-memory only).
+  1. Fetches public article HTML (direct fetch) and extracts best-effort context (JSON-LD/meta/body) in-memory only.
   2. Sends extracted text to GLM to generate `headlineEs` + `bodyEs`.
   3. Returns the draft to the client.
   4. Client persists the draft through `/api/drafts` as before.
@@ -52,7 +52,6 @@ No raw article body is persisted server-side.
 - Only run full-text mode when:
   - `WRITING_FULLTEXT_ENABLED=true`
   - `WRITING_FULLTEXT_ALLOWED_DOMAINS` contains the article domain
-  - `FIRECRAWL_API_KEY` is configured
   - `GLM_API_KEY` is configured
 - If blocked/empty/too short: fall back to existing Groq/fallback path.
 
@@ -61,11 +60,9 @@ No raw article body is persisted server-side.
 Required for full-text drafting:
 - `WRITING_FULLTEXT_ENABLED=true`
 - `WRITING_FULLTEXT_ALLOWED_DOMAINS=cnn.com,apnews.com,...`
-- `FIRECRAWL_API_KEY=...`
 - `GLM_API_KEY=...`
 
 Optional knobs:
-- `FIRECRAWL_API_BASE_URL` (default `https://api.firecrawl.dev/v1`)
 - `WRITING_FULLTEXT_TIMEOUT_MS` (default `15000`)
 - `WRITING_FULLTEXT_MAX_CHARS` (default `12000`)
 - `WRITING_FULLTEXT_MAX_SCRAPE_SOURCES` (default `2`)

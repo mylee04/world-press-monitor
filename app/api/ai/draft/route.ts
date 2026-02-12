@@ -1,9 +1,6 @@
-import type { DraftRecord } from '@/lib/pipeline';
-
 export const runtime = 'edge';
 
 const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
-const DEFAULT_FIRECRAWL_BASE_URL = 'https://api.firecrawl.dev/v1';
 const DEFAULT_GLM_BASE_URL = 'https://open.bigmodel.cn/api/paas/v4';
 
 type DraftRequest = {
@@ -144,57 +141,116 @@ function coerceDraftSource(input: {
   };
 }
 
-function firecrawlScrapeUrl(baseUrl: string): string {
-  const base = (baseUrl || DEFAULT_FIRECRAWL_BASE_URL).replace(/\/+$/, '');
-  if (base.endsWith('/scrape')) return base;
-  if (base.endsWith('/v1')) return `${base}/scrape`;
-  return `${base}/v1/scrape`;
+function extractJsonLdCandidates(html: string): string[] {
+  const out: string[] = [];
+  const scriptRegex = /<script[^>]+type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi;
+  let m: RegExpExecArray | null;
+  while ((m = scriptRegex.exec(html))) {
+    const raw = (m[1] || '').trim();
+    if (!raw) continue;
+    let parsed: unknown;
+    try {
+      parsed = JSON.parse(raw);
+    } catch {
+      continue;
+    }
+    const queue: unknown[] = Array.isArray(parsed) ? [...parsed] : [parsed];
+    while (queue.length > 0) {
+      const item = queue.shift();
+      if (!item || typeof item !== 'object') continue;
+      const rec = item as Record<string, unknown>;
+      for (const field of ['articleBody', 'description', 'text', 'headline']) {
+        const value = rec[field];
+        if (typeof value === 'string' && value.trim()) out.push(normalizeText(value));
+      }
+      for (const value of Object.values(rec)) {
+        if (value && typeof value === 'object') queue.push(value);
+      }
+    }
+  }
+  return out;
 }
 
-async function fetchFullTextViaFirecrawl(input: {
-  apiKey: string;
-  baseUrl: string;
+function extractMetaDescription(html: string): string | null {
+  const patterns = [
+    /<meta[^>]+(?:property|name)=["']og:description["'][^>]+content=["']([^"']+)["'][^>]*>/i,
+    /<meta[^>]+(?:property|name)=["']twitter:description["'][^>]+content=["']([^"']+)["'][^>]*>/i,
+    /<meta[^>]+(?:property|name)=["']description["'][^>]+content=["']([^"']+)["'][^>]*>/i,
+  ];
+  for (const rx of patterns) {
+    const m = html.match(rx);
+    const value = normalizeText((m?.[1] || '').replace(/<[^>]+>/g, ' '));
+    if (value.length > 80) return value;
+  }
+  return null;
+}
+
+function extractReadableText(html: string): string {
+  const withoutNoise = html
+    .replace(/<!--[\s\S]*?-->/g, ' ')
+    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<noscript[\s\S]*?<\/noscript>/gi, ' ')
+    .replace(/<svg[\s\S]*?<\/svg>/gi, ' ')
+    .replace(/<iframe[\s\S]*?<\/iframe>/gi, ' ')
+    .replace(/<form[\s\S]*?<\/form>/gi, ' ')
+    .replace(/<(\/)?(p|div|section|article|main|h1|h2|h3|h4|h5|h6|li|br|tr|td|blockquote)\b[^>]*>/gi, '\n')
+    .replace(/<[^>]+>/g, ' ');
+  return normalizeText(withoutNoise);
+}
+
+async function fetchFullTextDirect(input: {
   url: string;
   timeoutMs: number;
   maxChars: number;
-}): Promise<{ text: string | null; error?: string }> {
+}): Promise<{ text: string | null; error?: string; status?: number }> {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), input.timeoutMs);
   try {
-    const response = await fetch(firecrawlScrapeUrl(input.baseUrl), {
-      method: 'POST',
+    const response = await fetch(input.url, {
+      method: 'GET',
+      redirect: 'follow',
       signal: controller.signal,
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${input.apiKey}`,
+        Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.9,es;q=0.8',
       },
-      body: JSON.stringify({
-        url: input.url,
-        formats: ['markdown', 'text'],
-        onlyMainContent: true,
-      }),
     });
-    const json = await response.json().catch(() => null) as any;
+
+    const status = response.status;
     if (!response.ok) {
-      const msg = typeof json?.error === 'string' ? json.error : `firecrawl_http_${response.status}`;
-      return { text: null, error: msg };
+      // No bypass/evasion: treat access restrictions as hard failures.
+      if (status === 401 || status === 402 || status === 403) return { text: null, error: `http_blocked_${status}`, status };
+      if (status === 429) return { text: null, error: 'http_rate_limited_429', status };
+      return { text: null, error: `http_${status}`, status };
     }
 
-    // Tolerate multiple Firecrawl response shapes.
-    const data = json?.data ?? json?.result ?? json;
-    const candidates: string[] = [];
-    for (const key of ['markdown', 'content', 'text', 'html']) {
-      const value = data?.[key];
-      if (typeof value === 'string' && value.trim()) candidates.push(value);
+    const contentType = (response.headers.get('content-type') || '').toLowerCase();
+    // NOTE: some origins omit content-type.
+    if (contentType && !contentType.includes('text/html')) {
+      return { text: null, error: `non_html:${contentType.slice(0, 60)}`, status };
     }
-    const picked = candidates.sort((a, b) => b.length - a.length)[0] || '';
+
+    const html = await response.text();
+    const jsonLd = extractJsonLdCandidates(html);
+    const meta = extractMetaDescription(html);
+    const body = extractReadableText(html);
+
+    const candidates: Array<{ text: string; source: 'jsonld' | 'meta' | 'body' }> = [];
+    for (const value of jsonLd) {
+      if (value.length >= 120) candidates.push({ text: value, source: 'jsonld' });
+    }
+    if (meta) candidates.push({ text: meta, source: 'meta' });
+    if (body.length >= 200) candidates.push({ text: body, source: 'body' });
+
+    const picked = candidates.sort((a, b) => b.text.length - a.text.length)[0]?.text || '';
     const normalized = normalizeText(picked.replace(/<[^>]+>/g, ' '));
     if (normalized.length < 600) {
-      return { text: null, error: 'firecrawl_empty_or_short' };
+      return { text: null, error: 'empty_or_short', status };
     }
-    return { text: truncate(normalized, input.maxChars) };
+    return { text: truncate(normalized, input.maxChars), status };
   } catch (error) {
-    const msg = error instanceof Error && error.name === 'AbortError' ? 'firecrawl_timeout' : 'firecrawl_network';
+    const msg = error instanceof Error && error.name === 'AbortError' ? 'timeout' : 'network';
     return { text: null, error: msg };
   } finally {
     clearTimeout(timeout);
@@ -318,18 +374,18 @@ export async function POST(req: Request): Promise<Response> {
     if (dedupedSources.length >= 4) break;
   }
 
-  // Breaking-only fulltext (no storage): Firecrawl -> GLM.
+  
+
+  // Breaking-only fulltext (no storage): direct fetch -> GLM.
   // Policy: no paywall/bot-protection bypass. If blocked/short/failed, fall back to existing logic.
   const fulltextEnabled = envFlag('WRITING_FULLTEXT_ENABLED', false);
   const allowedDomains = parseCsvSet(process.env.WRITING_FULLTEXT_ALLOWED_DOMAINS || '');
   const domain = extractDomain(link);
-  const firecrawlKey = (process.env.FIRECRAWL_API_KEY || '').trim();
   const glmKey = (process.env.GLM_API_KEY || '').trim();
   const maxScrapeSources = envInt('WRITING_FULLTEXT_MAX_SCRAPE_SOURCES', 2, 1, 4);
   const shouldTryFulltext =
     fulltextEnabled
     && allowedDomains.size > 0
-    && Boolean(firecrawlKey)
     && Boolean(glmKey)
     && dedupedSources.some((item) => Boolean(item.domain) && allowedDomains.has(item.domain));
 
@@ -337,7 +393,6 @@ export async function POST(req: Request): Promise<Response> {
     try {
       const timeoutMs = envInt('WRITING_FULLTEXT_TIMEOUT_MS', 15000, 2000, 60000);
       const maxCharsTotal = envInt('WRITING_FULLTEXT_MAX_CHARS', 12000, 2000, 60000);
-      const firecrawlBase = (process.env.FIRECRAWL_API_BASE_URL || DEFAULT_FIRECRAWL_BASE_URL).trim();
       const glmBase = (process.env.RADAR_GLM_API_BASE_URL || DEFAULT_GLM_BASE_URL).trim();
       const glmModel = (process.env.WRITING_GLM_MODEL || process.env.RADAR_GLM_MODEL || 'glm-4.7-flash').trim();
 
@@ -358,7 +413,6 @@ export async function POST(req: Request): Promise<Response> {
         const currentPrimary = scrapeCandidates.find((item) => normalizeUrlForDedupe(item.link) === primaryNorm);
         if (!currentPrimary) {
           scrapeCandidates.unshift(primary);
-          // Re-dedupe for max.
           const seen = new Set<string>();
           const next: DraftSourceInput[] = [];
           for (const item of scrapeCandidates) {
@@ -377,9 +431,7 @@ export async function POST(req: Request): Promise<Response> {
       const scrapedByLink = new Map<string, string>();
       const scrapeResults = await Promise.all(
         scrapeCandidates.map(async (item) => {
-          const result = await fetchFullTextViaFirecrawl({
-            apiKey: firecrawlKey,
-            baseUrl: firecrawlBase,
+          const result = await fetchFullTextDirect({
             url: item.link,
             timeoutMs,
             maxChars: perSourceMaxChars,
@@ -404,7 +456,8 @@ export async function POST(req: Request): Promise<Response> {
               `PublishedAt: ${item.publishedAt || 'unknown'}`,
               `Link: ${item.link}`,
               scraped
-                ? `ExtractedText:\n${scraped}`
+                ? `ExtractedText:
+${scraped}`
                 : 'ExtractedText: unavailable (use metadata only)',
             ].join('\n');
           })
@@ -427,7 +480,6 @@ export async function POST(req: Request): Promise<Response> {
       // Fall through to existing path.
     }
   }
-
   const groqKey = process.env.GROQ_API_KEY;
   if (!groqKey) {
     return Response.json({ ...fallback, source: 'fallback' });

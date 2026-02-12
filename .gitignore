@@ -1,6 +1,15 @@
 node_modules
 .next
+.next.bak-*
 .env.local
 tsconfig.tsbuildinfo
 .warm-daemon.pid
 audits/*.log
+audits/ingest-worker-*.json
+audits/source_daily_counts_*.csv
+audits/source_daily_counts_*.md
+audits/us_latam_source_health_*.csv
+audits/us_latam_source_health_*.md
+
+# Local-only large directory (kept out of git and most tooling scans).
+listening_dashboard_shallow/
