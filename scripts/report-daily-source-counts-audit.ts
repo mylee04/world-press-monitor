@@ -123,7 +123,7 @@ function in24h(publishedAt: string): boolean {
 function rssLimitFor(outlet: typeof OUTLET_FEEDS[number]): number {
   if (
     (outlet.sourceType || 'global') === 'portal'
-    && (outlet.section || outlet.beat) === 'world'
+    && outlet.section === 'world'
     && /Google State:|Bing State:|Google Metro:|Bing Metro:|Google US World Topic|Google LATAM Regional Topic|Bing LATAM Topic|Bing US World Topic/i.test(outlet.name)
   ) {
     return 60;
@@ -134,7 +134,7 @@ function rssLimitFor(outlet: typeof OUTLET_FEEDS[number]): number {
 function sitemapLimitFor(outlet: typeof OUTLET_FEEDS[number]): number {
   if (
     (outlet.sourceType || 'global') === 'portal'
-    && (outlet.section || outlet.beat) === 'world'
+    && outlet.section === 'world'
     && /Google State:|Bing State:|Google Metro:|Bing Metro:|Google US World Topic|Google LATAM Regional Topic|Bing LATAM Topic|Bing US World Topic/i.test(outlet.name)
   ) {
     return 60;
@@ -286,7 +286,7 @@ function crossSourceUnique(rows: Row[]): number {
 }
 
 function worldLatamShare(rows: Row[]): { worldTotal: number; worldLatam: number; ratio: number } {
-  const sectionBySource = new Map(OUTLET_FEEDS.map((outlet) => [outlet.name, outlet.section || outlet.beat || 'general']));
+  const sectionBySource = new Map(OUTLET_FEEDS.map((outlet) => [outlet.name, outlet.section || 'general']));
   let worldTotal = 0;
   let worldLatam = 0;
 

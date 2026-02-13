@@ -39,6 +39,7 @@
     "notify:discord-daily:dry": "bun scripts/post-daily-discord.ts --dry-run",
     "notify:discord-hourly:ops": "bun scripts/post-hourly-ops-discord.ts",
     "notify:discord-hourly:ops:dry": "bun scripts/post-hourly-ops-discord.ts --dry-run",
+    "radar-summary:once": "bun scripts/process-radar-summaries.ts",
     "db:cleanup:duplicates": "bun scripts/cleanup-historical-duplicates.ts",
     "auth:check:radar": "bash scripts/check-radar-auth.sh",
     "git:check-env-staged": "bash scripts/check-git-env-safety.sh",

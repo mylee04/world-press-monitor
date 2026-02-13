@@ -3,12 +3,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { GeoMap } from '@/components/GeoMap';
 import { OUTLET_FEEDS, SOURCE_PRESETS } from '@/data/outlets';
-import type { Beat, NewsItem, SourcePreset } from '@/lib/types';
+import type { NewsSection, NewsItem, SourcePreset } from '@/lib/types';
 import { draftIdFromLink, isLikelyBreakingTitle, normalizeLinkForId, nowIso, type DraftRecord } from '@/lib/pipeline';
 
 const REFRESH_OPTIONS = [15, 60, 300];
 const TIME_WINDOWS_HOURS = [1, 6, 24];
-const SECTIONS: Beat[] = ['general', 'politics', 'business', 'tech', 'security', 'climate', 'world'];
+const SECTIONS: NewsSection[] = ['general', 'politics', 'business', 'tech', 'security', 'climate', 'world'];
 const MONITOR_STORAGE_KEY = 'presslab.savedMonitors.v1';
 const PANEL_STORAGE_KEY = 'presslab.panelVisibility.v2';
 const BREAKING_AUTO_DRAFT_DELAY_MS = 90_000;
@@ -22,7 +22,7 @@ interface SavedMonitor {
   id: string;
   name: string;
   outletIds: string[];
-  beat: Beat;
+  section: NewsSection;
   refreshSec: number;
   timeWindowHours: number;
   scopeRegion?: ScopeRegion;
@@ -213,7 +213,6 @@ const UI_TEXT: Record<Locale, Record<string, string>> = {
     monitorSetup: 'Monitor Setup',
     region: 'Region',
     country: 'Country',
-    beat: 'Section',
     worldFilter: 'World Filter',
     worldLatam: 'LATAM related',
     worldAll: 'All world',
@@ -377,7 +376,6 @@ const UI_TEXT: Record<Locale, Record<string, string>> = {
     monitorSetup: 'Configuración',
     region: 'Región',
     country: 'País',
-    beat: 'Sección',
     worldFilter: 'Filtro mundo',
     worldLatam: 'Solo LATAM',
     worldAll: 'Todo mundo',
@@ -539,7 +537,7 @@ const UI_TEXT: Record<Locale, Record<string, string>> = {
   }
 };
 
-const SECTION_LABELS: Record<Locale, Record<Beat, string>> = {
+const SECTION_LABELS: Record<Locale, Record<NewsSection, string>> = {
   en: {
     general: 'general',
     politics: 'politics',
@@ -690,7 +688,7 @@ function relativeAgeLabel(value: string, locale: Locale = 'en'): string {
   return locale === 'es' ? `${weeks} sem` : `${weeks} w ago`;
 }
 
-function deriveSectionFromText(text: string): Beat {
+function deriveSectionFromText(text: string): NewsSection {
   const value = text.toLowerCase();
   if (/(election|congress|senate|policy|government|president|minister|vote|parliament)/.test(value)) return 'politics';
   if (/(market|inflation|economy|gdp|jobs|earnings|business|stocks|trade|finance|bank)/.test(value)) return 'business';
@@ -779,7 +777,7 @@ export function NewsroomDashboard({
       .filter((outlet) => outlet.defaultEnabled && (isUsOutlet(outlet.country) || isLatamOutlet(outlet.country)))
       .map((outlet) => outlet.id)
   );
-  const [selectedSection, setSelectedSection] = useState<Beat>('general');
+  const [selectedSection, setSelectedSection] = useState<NewsSection>('general');
   const [worldScope, setWorldScope] = useState<WorldScope>('latam_related');
   const [refreshSec, setRefreshSec] = useState<number>(60);
   const [timeWindowHours, setTimeWindowHours] = useState<number>(24);
@@ -1457,16 +1455,16 @@ export function NewsroomDashboard({
       void fetch('/api/classify-beat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title: item.title, fallbackBeat: item.beat })
+        body: JSON.stringify({ title: item.title, fallbackBeat: item.section })
       })
-        .then((response) => response.json() as Promise<{ beat: Beat; confidence: number; source: 'keyword' | 'llm'; reason?: string }>)
+        .then((response) => response.json() as Promise<{ section: NewsSection; confidence: number; source: 'keyword' | 'llm'; reason?: string }>)
         .then((result) => {
           if (result.source !== 'llm') return;
           setItems((prev) => prev.map((prevItem) => (
             prevItem.id === item.id && result.confidence > prevItem.confidence
               ? {
                   ...prevItem,
-                  beat: result.beat,
+                  section: result.section,
                   confidence: result.confidence,
                   classificationSource: result.source,
                   classificationReason: result.reason
@@ -1560,11 +1558,11 @@ export function NewsroomDashboard({
     if (selectedSection === 'general') return filteredByTime;
     if (selectedSection === 'world') {
       if (worldScope === 'all_world') {
-        return filteredByTime.filter((item) => item.beat === 'world');
+        return filteredByTime.filter((item) => item.section === 'world');
       }
-      return filteredByTime.filter((item) => item.beat === 'world' && (item.worldLatam || isLatamOutlet(item.country || '')));
+      return filteredByTime.filter((item) => item.section === 'world' && (item.worldLatam || isLatamOutlet(item.country || '')));
     }
-    return filteredByTime.filter((item) => item.beat === selectedSection);
+    return filteredByTime.filter((item) => item.section === selectedSection);
   }, [filteredByTime, selectedSection, worldScope]);
 
   const countryScopedItems = useMemo(() => {
@@ -1789,15 +1787,15 @@ export function NewsroomDashboard({
   }, [filteredItems]);
 
   const sectionMix = useMemo(() => {
-    const counts = new Map<Beat, number>();
+    const counts = new Map<NewsSection, number>();
     for (const section of SECTIONS) counts.set(section, 0);
     for (const item of filteredByTime) {
-      counts.set(item.beat, (counts.get(item.beat) ?? 0) + 1);
+      counts.set(item.section, (counts.get(item.section) ?? 0) + 1);
     }
     const total = filteredByTime.length || 1;
     return [...counts.entries()]
       .filter(([, count]) => count > 0)
-      .map(([beat, count]) => ({ beat, count, ratio: (count / total) * 100 }))
+      .map(([section, count]) => ({ section, count, ratio: (count / total) * 100 }))
       .sort((a, b) => b.count - a.count);
   }, [filteredByTime]);
 
@@ -1808,15 +1806,15 @@ export function NewsroomDashboard({
     const baseEnd = recentStart;
 
     return SECTIONS
-      .filter((beat) => beat !== 'general')
-      .map((beat) => {
-        const recentCount = filteredByTime.filter((item) => item.beat === beat && new Date(item.publishedAt).getTime() >= recentStart).length;
+      .filter((section) => section !== 'general')
+      .map((section) => {
+        const recentCount = filteredByTime.filter((item) => item.section === section && new Date(item.publishedAt).getTime() >= recentStart).length;
         const baselineCount = filteredByTime.filter((item) => {
           const ts = new Date(item.publishedAt).getTime();
-          return item.beat === beat && ts >= baseStart && ts < baseEnd;
+          return item.section === section && ts >= baseStart && ts < baseEnd;
         }).length;
         const ratio = (recentCount + 1) / (baselineCount + 1);
-        return { beat, recentCount, baselineCount, ratio };
+        return { section, recentCount, baselineCount, ratio };
       })
       .filter((row) => row.recentCount >= 2 && row.ratio >= 1.8)
       .sort((a, b) => b.ratio - a.ratio);
@@ -1878,7 +1876,7 @@ export function NewsroomDashboard({
       id: `${Date.now()}`,
       name,
       outletIds: selectedOutlets,
-      beat: selectedSection,
+      section: selectedSection,
       refreshSec,
       timeWindowHours,
       scopeRegion,
@@ -1900,7 +1898,7 @@ export function NewsroomDashboard({
     if (!monitor) return;
     setSelectedMonitorId(monitor.id);
     setSelectedOutlets(monitor.outletIds);
-    setSelectedSection(monitor.beat);
+    setSelectedSection(monitor.section);
     setRefreshSec(monitor.refreshSec);
     setTimeWindowHours(monitor.timeWindowHours);
     setScopeRegion(monitor.scopeRegion || 'all');
@@ -1951,10 +1949,10 @@ export function NewsroomDashboard({
       { id: 'cmd-refresh', label: locale === 'es' ? 'Actualizar ahora' : 'Refresh now', run: () => void refresh() },
       { id: 'cmd-open-sources', label: locale === 'es' ? 'Abrir modal de fuentes' : 'Open sources modal', run: () => setSourcesOpen(true) },
       { id: 'cmd-open-panels', label: locale === 'es' ? 'Abrir paneles' : 'Open panel settings', run: () => setPanelsOpen(true) },
-      { id: 'cmd-beat-general', label: locale === 'es' ? 'Sección: general' : 'Set section: general', run: () => setSelectedSection('general') },
-      { id: 'cmd-beat-business', label: locale === 'es' ? 'Sección: negocios' : 'Set section: business', run: () => setSelectedSection('business') },
-      { id: 'cmd-beat-politics', label: locale === 'es' ? 'Sección: política' : 'Set section: politics', run: () => setSelectedSection('politics') },
-      { id: 'cmd-beat-tech', label: locale === 'es' ? 'Sección: tecnología' : 'Set section: tech', run: () => setSelectedSection('tech') }
+      { id: 'cmd-section-general', label: locale === 'es' ? 'Sección: general' : 'Set section: general', run: () => setSelectedSection('general') },
+      { id: 'cmd-section-business', label: locale === 'es' ? 'Sección: negocios' : 'Set section: business', run: () => setSelectedSection('business') },
+      { id: 'cmd-section-politics', label: locale === 'es' ? 'Sección: política' : 'Set section: politics', run: () => setSelectedSection('politics') },
+      { id: 'cmd-section-tech', label: locale === 'es' ? 'Sección: tecnología' : 'Set section: tech', run: () => setSelectedSection('tech') }
     ];
     const presetCommands = SOURCE_PRESETS.map((preset) => ({
       id: `preset-${preset.key}`,
@@ -2070,8 +2068,8 @@ export function NewsroomDashboard({
             </label>
 
             <label>
-              {t.beat}
-              <select value={selectedSection} onChange={(event) => setSelectedSection(event.target.value as Beat)}>
+              {t.section}
+                <select value={selectedSection} onChange={(event) => setSelectedSection(event.target.value as NewsSection)}>
                 {SECTIONS.map((section) => (
                   <option key={section} value={section}>{SECTION_LABELS[locale][section]}</option>
                 ))}
@@ -2199,7 +2197,7 @@ export function NewsroomDashboard({
                 <li key={`major-${item.id}`}>
                   <strong><a href={item.link} target="_blank" rel="noreferrer">{item.source}: {item.title}</a></strong>
                   <div className="chips stream-chips">
-                    <code className="chip chip-beat">{t.section}: {SECTION_LABELS[locale][item.beat]}</code>
+                    <code className="chip chip-section">{t.section}: {SECTION_LABELS[locale][item.section]}</code>
                     <code className="chip chip-lag">{t.timePublished}: {relativeAgeLabel(item.publishedAt, locale)}</code>
                     <code className="chip chip-source-type">{t.locality}: {localityFromSourceType(item.sourceType) === 'local' ? t.local : t.global}</code>
                     <code className="chip">{t.published}: {parseDateLabel(item.publishedAt, locale, true)}</code>
@@ -2248,7 +2246,7 @@ export function NewsroomDashboard({
                   <strong><a href={row.link} target="_blank" rel="noreferrer">{row.title}</a></strong>
                   <div className="source-line">{row.source_kind} · p{row.priority} · {row.status}</div>
                   <div className="chips stream-chips">
-                    <code className="chip chip-beat">{t.section}: {SECTION_LABELS[locale][deriveSectionFromText(`${row.title} ${row.summary || ''}`)]}</code>
+                    <code className="chip chip-section">{t.section}: {SECTION_LABELS[locale][deriveSectionFromText(`${row.title} ${row.summary || ''}`)]}</code>
                     <code className="chip chip-lag">{t.timePublished}: {relativeAgeLabel(row.created_at, locale)}</code>
                     <code className="chip chip-source-type">{t.locality}: {localityFromCountry(row.country) === 'local' ? t.local : t.global}</code>
                     <code className="chip">{t.published}: {parseDateLabel(row.created_at, locale, true)}</code>
@@ -2319,7 +2317,7 @@ export function NewsroomDashboard({
                 <li key={`ingest-${item.id}`}>
                   <strong><a href={item.link} target="_blank" rel="noreferrer">{item.source}: {item.title}</a></strong>
                   <div className="chips stream-chips">
-                    <code className="chip chip-beat">{t.section}: {SECTION_LABELS[locale][item.beat]}</code>
+                    <code className="chip chip-section">{t.section}: {SECTION_LABELS[locale][item.section]}</code>
                     <code className="chip chip-lag">{t.timePublished}: {relativeAgeLabel(item.publishedAt, locale)}</code>
                     <code className="chip chip-source-type">{t.locality}: {localityFromSourceType(item.sourceType) === 'local' ? t.local : t.global}</code>
                     <code className="chip">{t.published}: {parseDateLabel(item.publishedAt, locale, true)}</code>
@@ -2359,7 +2357,7 @@ export function NewsroomDashboard({
                 <a href={item.link} target="_blank" rel="noreferrer">{item.title}</a>
                 <div className="source-line">{item.source}</div>
                 <div className="chips">
-                  <code className="chip chip-beat">{t.section}: {SECTION_LABELS[locale][item.beat]}</code>
+                  <code className="chip chip-section">{t.section}: {SECTION_LABELS[locale][item.section]}</code>
                   <code className="chip chip-lag">{t.timePublished}: {relativeAgeLabel(item.publishedAt, locale)}</code>
                   <code className="chip chip-source-type">{t.locality}: {localityFromSourceType(item.sourceType) === 'local' ? t.local : t.global}</code>
                   <code className="chip">{t.published}: {parseDateLabel(item.publishedAt, locale, true)}</code>
@@ -2461,8 +2459,8 @@ export function NewsroomDashboard({
             <h3>{t.beatMix}</h3>
             <ul className="simple-list">
               {sectionMix.map((row) => (
-                <li key={row.beat}>
-                  <strong>{SECTION_LABELS[locale][row.beat]}</strong>
+                <li key={row.section}>
+                  <strong>{SECTION_LABELS[locale][row.section]}</strong>
                   <span>{row.count} {t.storiesWord}</span>
                   <span>{row.ratio.toFixed(1)}%</span>
                 </li>
@@ -2477,8 +2475,8 @@ export function NewsroomDashboard({
             <h3>{t.spikeAlerts}</h3>
             <ul className="simple-list">
               {spikeAlerts.map((alert) => (
-                <li key={alert.beat}>
-                  <strong>{SECTION_LABELS[locale][alert.beat]}</strong>
+                <li key={alert.section}>
+                  <strong>{SECTION_LABELS[locale][alert.section]}</strong>
                   <span>{t.recentText} {alert.recentCount}</span>
                   <span>{t.baselineText} {alert.baselineCount}</span>
                   <span>{alert.ratio.toFixed(2)}x</span>

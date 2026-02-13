@@ -14,7 +14,6 @@ export type RadarServiceArticle = {
   lastSeenAt: string;
   outletId: string | null;
   section: string | null;
-  beat?: string | null;
   qualityScore: number;
   publicationSource: string | null;
   summarySource: string | null;
@@ -259,7 +258,6 @@ export async function getRadarServiceArticles(input: {
       lastSeenAt,
       outletId: row.outlet_id ? String(row.outlet_id) : null,
       section: row.section ? String(row.section) : null,
-      beat: row.section ? String(row.section) : null,
       qualityScore: Number(row.quality_score || 0),
       publicationSource: row.publication_source ? String(row.publication_source) : null,
       summarySource: row.summary_source ? String(row.summary_source) : null,

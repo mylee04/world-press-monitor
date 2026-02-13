@@ -33,7 +33,7 @@ import {
   newsCacheMetricWriteRedis,
   newsCacheMetricWriteRedisFailed,
 } from '@/lib/news-cache-metrics';
-import type { Beat, NewsItem, OutletFeed } from '@/lib/types';
+import type { NewsItem, NewsSection, OutletFeed } from '@/lib/types';
 
 export const runtime = 'nodejs';
 
@@ -428,21 +428,20 @@ async function getBusinessRadarFallback(): Promise<NewsItem[]> {
     });
 
     if (!response.ok) return [];
-    const data = await response.json() as {
+      const data = await response.json() as {
       articles?: Array<{
         title: string;
         url: string;
         source?: string;
         publishedAt?: string;
         section?: string;
-        beat?: string;
       }>;
     };
     const articles = (data.articles || []).slice(0, 30);
     const classified = await Promise.all(
       articles.map(async (article) => {
-        const fallbackSection = (article.section || article.beat || 'business') as Beat;
-        const classification = await classifyBeat({ title: article.title, fallbackBeat: fallbackSection });
+        const fallbackSection = (article.section || 'business') as NewsSection;
+        const classification = await classifyBeat({ title: article.title, fallbackSection });
         const geo = inferGeoFromTitle(article.title);
         const newsItem = {
           id: article.url,
@@ -453,8 +452,7 @@ async function getBusinessRadarFallback(): Promise<NewsItem[]> {
           sourceType: 'global',
           tier: 2,
           publishedAt: article.publishedAt || new Date().toISOString(),
-          beat: classification.beat,
-          section: classification.beat,
+          section: classification.section,
           confidence: classification.confidence,
           classificationSource: classification.source,
           classificationReason: classification.reason,
@@ -522,8 +520,8 @@ async function getGnewsBreakingOverlay(): Promise<NewsItem[]> {
 
       const fallbackCountry = inferCountryFromText(`${title} ${article.description || ''} ${link}`);
       const geo = inferGeoFromTitle(title, fallbackCountry);
-      const classification = await classifyBeat({ title, summary: article.description || '', fallbackBeat: 'world' });
-      const section = classification.beat;
+      const classification = await classifyBeat({ title, summary: article.description || '', fallbackSection: 'world' });
+      const section = classification.section;
       const item = {
         id: link,
         title,
@@ -535,7 +533,6 @@ async function getGnewsBreakingOverlay(): Promise<NewsItem[]> {
         tier: 2 as const,
         publishedAt,
         section,
-        beat: section,
         confidence: classification.confidence,
         classificationSource: classification.source,
         classificationReason: classification.reason,

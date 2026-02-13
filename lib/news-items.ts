@@ -100,8 +100,8 @@ function buildDedupeSignature(item: NewsItem): string | null {
 }
 
 function isPreferredDuplicate(candidate: NewsItem, existing: NewsItem): boolean {
-  const candidateSection = candidate.section || candidate.beat;
-  const existingSection = existing.section || existing.beat;
+  const candidateSection = candidate.section;
+  const existingSection = existing.section;
   if (candidateSection !== existingSection) return false;
 
   const candidatePublicationMeta = candidate.publicationSource === 'article_meta';
@@ -159,11 +159,11 @@ export async function mapParsedOutletItemToNewsItem(
   outlet: OutletFeed,
   item: { title: string; description?: string; link: string; publishedAt: string }
 ): Promise<NewsItem> {
-  const fallbackSection = outlet.section || outlet.beat || 'general';
-  const classification = await classifyBeat({ title: item.title, summary: item.description, fallbackBeat: fallbackSection });
+  const fallbackSection = outlet.section || 'general';
+  const classification = await classifyBeat({ title: item.title, summary: item.description, fallbackSection });
   const normalizedCountry = normalizeCountryName(outlet.country);
   const geo = inferGeoFromTitle(item.title, normalizedCountry);
-  const section = classification.beat;
+  const section = classification.section;
   return annotateWorldLatam({
     id: item.link,
     outletId: outlet.id,
@@ -176,7 +176,6 @@ export async function mapParsedOutletItemToNewsItem(
     tier: outlet.tier,
     publishedAt: item.publishedAt,
     section,
-    beat: section,
     confidence: classification.confidence,
     classificationSource: classification.source,
     classificationReason: classification.reason,
@@ -323,7 +322,7 @@ export function buildStoryClusters(items: NewsItem[]): NewsItem[] {
     const matched = clusterRep.find((rep) => {
       const sameCountry = (item.country || 'Unknown') === (rep.item.country || 'Unknown');
       if (!sameCountry) return false;
-      if ((item.section || item.beat) !== (rep.item.section || rep.item.beat)) return false;
+      if (item.section !== rep.item.section) return false;
 
       const mins = minutesBetween(item.publishedAt, rep.item.publishedAt);
       if (mins > 360) return false;

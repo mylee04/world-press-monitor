@@ -156,7 +156,7 @@ export function GeoMap({
           lat,
           lon,
           count: 1,
-          sections: new Map([[item.beat, 1]]),
+          sections: new Map([[item.section, 1]]),
           latestTs: Number.isFinite(ts) ? ts : 0
         });
         continue;
@@ -164,7 +164,7 @@ export function GeoMap({
       existing.count += 1;
       existing.lat = (existing.lat * (existing.count - 1) + lat) / existing.count;
       existing.lon = (existing.lon * (existing.count - 1) + lon) / existing.count;
-      existing.sections.set(item.beat, (existing.sections.get(item.beat) ?? 0) + 1);
+      existing.sections.set(item.section, (existing.sections.get(item.section) ?? 0) + 1);
       if (Number.isFinite(ts)) existing.latestTs = Math.max(existing.latestTs, ts);
     }
 
@@ -237,7 +237,7 @@ export function GeoMap({
         <div class="map-popup-card">
           <div class="map-popup-source">${escapeHtml(item.source)}</div>
           <div class="map-popup-title">${escapeHtml(item.title.slice(0, 160))}</div>
-          <div class="map-popup-meta">${escapeHtml(item.country || item.locationName || mt.global)} · ${escapeHtml(item.beat)}</div>
+          <div class="map-popup-meta">${escapeHtml(item.country || item.locationName || mt.global)} · ${escapeHtml(item.section)}</div>
         </div>
       `;
 

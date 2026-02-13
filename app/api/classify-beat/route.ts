@@ -1,6 +1,6 @@
 import { Redis } from '@upstash/redis';
 import { classifyBeat } from '@/lib/keyword-classifier';
-import type { Beat } from '@/lib/types';
+import type { NewsSection } from '@/lib/types';
 
 export const runtime = 'edge';
 
@@ -33,17 +33,22 @@ async function sha256(input: string): Promise<string> {
 }
 
 export async function POST(req: Request): Promise<Response> {
-  const body = await req.json().catch(() => null) as { title?: string; summary?: string; fallbackBeat?: Beat } | null;
+  const body = await req.json().catch(() => null) as {
+    title?: string;
+    summary?: string;
+    fallbackSection?: NewsSection;
+    fallbackBeat?: NewsSection;
+  } | null;
   const title = body?.title?.trim();
-  const fallbackBeat = body?.fallbackBeat ?? 'general';
+  const fallbackSection = body?.fallbackSection || body?.fallbackBeat || 'general';
   const summary = body?.summary?.trim();
-  const cacheSeed = `${title || ''}|${fallbackBeat}|${summary || ''}`;
+  const cacheSeed = `${title || ''}|${fallbackSection}|${summary || ''}`;
 
   if (!title) {
     return Response.json({ error: 'title is required' }, { status: 400 });
   }
 
-  const cacheKey = `presslab:beat:${await sha256(cacheSeed.toLowerCase())}`;
+  const cacheKey = `presslab:section:${await sha256(cacheSeed.toLowerCase())}`;
 
   const redis = getRedis();
   if (redis) {
@@ -58,7 +63,7 @@ export async function POST(req: Request): Promise<Response> {
   }
 
   try {
-    const finalResult = await classifyBeat({ title, summary, fallbackBeat });
+    const finalResult = await classifyBeat({ title, summary, fallbackSection });
     if (redis) {
       try {
         await redis.set(cacheKey, finalResult, { ex: CACHE_TTL_SECONDS });
@@ -68,7 +73,7 @@ export async function POST(req: Request): Promise<Response> {
     }
     return Response.json(finalResult);
   } catch {
-    const fallbackResult = await classifyBeat({ title, fallbackBeat });
+    const fallbackResult = await classifyBeat({ title, fallbackSection });
     return Response.json(fallbackResult);
   }
 }

@@ -215,7 +215,6 @@ export function WritingWorkspace({ locale, drafts, setDrafts, onSentToDistributi
         source: selected.source,
         tier: 2,
         publishedAt: selected.sourcePublishedAt,
-        beat: 'world',
         section: 'world',
         confidence: 0.5,
         classificationSource: 'keyword'

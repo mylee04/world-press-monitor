@@ -1,6 +1,4 @@
 export type NewsSection = 'politics' | 'business' | 'tech' | 'security' | 'climate' | 'world' | 'general';
-// `beat` is kept as a compatibility alias for older callsites and persisted data.
-export type Beat = NewsSection;
 export type SourceCategory =
   | 'global'
   | 'politics'
@@ -16,7 +14,6 @@ export interface OutletFeed {
   name: string;
   tier: OutletTier;
   section: NewsSection;
-  beat: Beat;
   categories: SourceCategory[];
   language?: string;
   sourceType?: 'global' | 'local' | 'portal';
@@ -34,8 +31,8 @@ export interface SourcePreset {
   outletIds: string[];
 }
 
-export interface BeatClassification {
-  beat: Beat;
+export interface SectionClassification {
+  section: NewsSection;
   confidence: number;
   source: 'keyword' | 'llm';
   reason?: string;
@@ -55,7 +52,6 @@ export interface NewsItem {
   tier: OutletTier;
   publishedAt: string;
   section: NewsSection;
-  beat: Beat;
   confidence: number;
   classificationSource: 'keyword' | 'llm';
   classificationReason?: string;

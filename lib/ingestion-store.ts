@@ -269,7 +269,7 @@ async function toPersistable(item: NewsItem): Promise<Persistable | null> {
     language: item.language || null,
     sourceType: item.sourceType || null,
     tier: typeof item.tier === 'number' ? item.tier : null,
-    section: item.section || item.beat || null,
+    section: item.section || null,
     classificationSource: item.classificationSource || null,
     classificationReason: item.classificationReason || null,
     confidence: typeof item.confidence === 'number' ? item.confidence : null,
@@ -456,13 +456,12 @@ export async function readIngestedArticles(options: {
   const items = result.rows.map((row) => {
     const tierCandidate = Number(row.tier);
     const tier = tierCandidate === 1 || tierCandidate === 2 || tierCandidate === 3 ? tierCandidate : 2;
-    const beat = parseNewsSection(row.section);
+    const section = parseNewsSection(row.section);
     const sourceTypeCandidate = (row.source_type || 'global').toLowerCase();
     const sourceType: NewsItem['sourceType'] =
       sourceTypeCandidate === 'local' || sourceTypeCandidate === 'portal'
         ? (sourceTypeCandidate as NewsItem['sourceType'])
         : 'global';
-    const section = beat;
     const classificationSource: NewsItem['classificationSource'] = row.classification_source === 'llm' ? 'llm' : 'keyword';
     const tags = Array.isArray(row.tags) ? (row.tags.filter((value) => typeof value === 'string') as string[]) : [];
 
@@ -478,7 +477,6 @@ export async function readIngestedArticles(options: {
       tier,
       publishedAt: new Date(row.published_at).toISOString(),
       section,
-      beat,
       confidence: typeof row.confidence === 'number' ? row.confidence : 0.5,
       classificationSource,
       classificationReason: row.classification_reason || undefined,
@@ -539,13 +537,12 @@ function mapRowToNewsItem(row: {
 }): NewsItem {
   const tierCandidate = Number(row.tier);
   const tier = tierCandidate === 1 || tierCandidate === 2 || tierCandidate === 3 ? tierCandidate : 2;
-  const beat = parseNewsSection(row.section);
+  const section = parseNewsSection(row.section);
   const sourceTypeCandidate = (row.source_type || 'global').toLowerCase();
   const sourceType: NewsItem['sourceType'] =
     sourceTypeCandidate === 'local' || sourceTypeCandidate === 'portal'
       ? (sourceTypeCandidate as NewsItem['sourceType'])
       : 'global';
-  const section = beat;
   const classificationSource: NewsItem['classificationSource'] = row.classification_source === 'llm' ? 'llm' : 'keyword';
   const tags = Array.isArray(row.tags) ? (row.tags.filter((value) => typeof value === 'string') as string[]) : [];
   const publicationSource: NewsItem['publicationSource'] =
@@ -565,7 +562,6 @@ function mapRowToNewsItem(row: {
     tier,
     publishedAt: new Date(row.published_at).toISOString(),
     section,
-    beat,
     confidence: typeof row.confidence === 'number' ? row.confidence : 0.5,
     classificationSource,
     classificationReason: row.classification_reason || undefined,
@@ -970,7 +966,7 @@ async function toExternalArticle(item: NewsItem): Promise<ExternalArticlePersist
     publicationDatetime: new Date(publicationTs).toISOString(),
     publicationSource,
     publicationVerified,
-    section: item.section || item.beat,
+    section: item.section,
     titleEn,
     titleOriginal,
     summaryEn,

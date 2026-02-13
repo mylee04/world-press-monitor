@@ -1,4 +1,4 @@
-import type { Beat, BeatClassification } from '@/lib/types';
+import type { NewsSection, SectionClassification } from '@/lib/types';
 
 const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 const DEFAULT_GROQ_MODEL = 'llama-3.1-8b-instant';
@@ -9,12 +9,12 @@ const CLASSIFY_MAX_SUMMARY_CHARS = 1800;
 
 type ClassifyParams = {
   title: string;
-  fallbackBeat?: Beat;
+  fallbackSection?: NewsSection;
   summary?: string;
 };
 
 type CachedBeatClassification = {
-  result: BeatClassification;
+  result: SectionClassification;
   expiresAt: number;
 };
 
@@ -30,7 +30,7 @@ const AI_CONCURRENCY = Math.max(1, Math.min(64, envInt('BEAT_CLASSIFIER_AI_CONCU
 let aiConcurrentCalls = 0;
 const aiCallQueue: Array<() => void> = [];
 
-type KeywordMap = Record<string, Beat>;
+type KeywordMap = Record<string, NewsSection>;
 
 const HIGH_PRIORITY: KeywordMap = {
   election: 'politics',
@@ -145,20 +145,20 @@ function getKeywordRegex(keyword: string): RegExp {
   return regex;
 }
 
-function matchMap(title: string, map: KeywordMap): { beat: Beat; keyword: string } | null {
-  for (const [keyword, beat] of Object.entries(map)) {
+function matchMap(title: string, map: KeywordMap): { section: NewsSection; keyword: string } | null {
+  for (const [keyword, section] of Object.entries(map)) {
     if (getKeywordRegex(keyword).test(title)) {
-      return { beat, keyword };
+      return { section, keyword };
     }
   }
   return null;
 }
 
-export function classifyBeatByKeyword(title: string, fallbackBeat: Beat = 'general'): BeatClassification {
+export function classifyBeatByKeyword(title: string, fallbackSection: NewsSection = 'general'): SectionClassification {
   const high = matchMap(title, HIGH_PRIORITY);
   if (high) {
     return {
-      beat: high.beat,
+      section: high.section,
       confidence: 0.84,
       source: 'keyword',
       reason: `Matched high-priority keyword: ${high.keyword}`
@@ -168,33 +168,33 @@ export function classifyBeatByKeyword(title: string, fallbackBeat: Beat = 'gener
   const medium = matchMap(title, MEDIUM_PRIORITY);
   if (medium) {
     return {
-      beat: medium.beat,
+      section: medium.section,
       confidence: 0.72,
       source: 'keyword',
       reason: `Matched medium-priority keyword: ${medium.keyword}`
     };
   }
 
-  return { beat: fallbackBeat, confidence: 0.51, source: 'keyword', reason: 'Fell back to outlet default beat' };
+  return { section: fallbackSection, confidence: 0.51, source: 'keyword', reason: 'Fell back to outlet default section' };
 }
 
-export async function classifyBeat(params: ClassifyParams): Promise<BeatClassification> {
+export async function classifyBeat(params: ClassifyParams): Promise<SectionClassification> {
   const title = (params.title || '').trim();
   const summary = (params.summary || '').trim();
-  const fallbackBeat = params.fallbackBeat || 'general';
+  const fallbackSection = params.fallbackSection || 'general';
 
-  const keywordResult = classifyBeatByKeyword(title, fallbackBeat);
+  const keywordResult = classifyBeatByKeyword(title, fallbackSection);
   if (!SHOULD_USE_AI_CLASSIFIER || !title) return keywordResult;
   if (keywordResult.confidence >= AI_TRIGGER_CONFIDENCE) return keywordResult;
 
   const groqKey = process.env.GROQ_API_KEY?.trim();
   if (!groqKey) return keywordResult;
 
-  const cacheKey = buildCacheKey(title, summary, fallbackBeat);
+  const cacheKey = buildCacheKey(title, summary, fallbackSection);
   const cached = readCache(cacheKey);
   if (cached) return cached;
 
-  const aiResult = await withAiConcurrency(() => callGroqClassifier(groqKey, title, summary, fallbackBeat));
+  const aiResult = await withAiConcurrency(() => callGroqClassifier(groqKey, title, summary, fallbackSection));
   const finalResult = aiResult && aiResult.confidence > keywordResult.confidence ? aiResult : keywordResult;
   writeCache(cacheKey, finalResult);
   return finalResult;
@@ -252,19 +252,19 @@ function normalizeText(value: string): string {
     .slice(0, CLASSIFY_MAX_SUMMARY_CHARS);
 }
 
-function parseBeat(value: string): Beat {
+function parseBeat(value: string): NewsSection {
   if (value === 'politics' || value === 'business' || value === 'tech' || value === 'security' || value === 'climate' || value === 'world' || value === 'general') {
     return value;
   }
   return 'general';
 }
 
-function buildCacheKey(title: string, summary: string, fallbackBeat: Beat): string {
-  const source = `${fallbackBeat}|${normalizeText(title)}|${normalizeText(summary).slice(0, CLASSIFY_MAX_SUMMARY_CHARS)}`;
+function buildCacheKey(title: string, summary: string, fallbackSection: NewsSection): string {
+  const source = `${fallbackSection}|${normalizeText(title)}|${normalizeText(summary).slice(0, CLASSIFY_MAX_SUMMARY_CHARS)}`;
   return source;
 }
 
-function readCache(key: string): BeatClassification | null {
+function readCache(key: string): SectionClassification | null {
   const entry = AI_CLASSIFIER_CACHE.get(key);
   if (!entry) return null;
   if (entry.expiresAt <= Date.now()) {
@@ -274,7 +274,7 @@ function readCache(key: string): BeatClassification | null {
   return entry.result;
 }
 
-function writeCache(key: string, result: BeatClassification): void {
+function writeCache(key: string, result: SectionClassification): void {
   AI_CLASSIFIER_CACHE.set(key, {
     result,
     expiresAt: Date.now() + AI_CACHE_TTL_MS
@@ -285,7 +285,7 @@ function writeCache(key: string, result: BeatClassification): void {
   }
 }
 
-async function callGroqClassifier(apiKey: string, title: string, summary: string, fallbackBeat: Beat): Promise<BeatClassification | null> {
+async function callGroqClassifier(apiKey: string, title: string, summary: string, fallbackSection: NewsSection): Promise<SectionClassification | null> {
   const payload = {
     model: process.env.BEAT_CLASSIFIER_GROQ_MODEL || DEFAULT_GROQ_MODEL,
     temperature: 0,
@@ -299,12 +299,12 @@ async function callGroqClassifier(apiKey: string, title: string, summary: string
           'Allowed sections: politics, business, tech, security, climate, world, general.',
           'Use the headline first, then short summary as context.',
           'Return strict JSON object only.',
-          'Schema: {"beat":"...","confidence":0.0,"reason":"..."}.'
+          'Schema: {"section":"...","confidence":0.0,"reason":"..."}.'
         ].join(' ')
       },
       {
         role: 'user',
-        content: `headline: ${normalizeText(title).slice(0, CLASSIFY_MAX_TITLE_CHARS)}\nsummary: ${normalizeText(summary) || 'n/a'}\nfallback: ${fallbackBeat}`
+        content: `headline: ${normalizeText(title).slice(0, CLASSIFY_MAX_TITLE_CHARS)}\nsummary: ${normalizeText(summary) || 'n/a'}\nfallback: ${fallbackSection}`
       }
     ]
   } satisfies Record<string, unknown>;
@@ -330,12 +330,12 @@ async function callGroqClassifier(apiKey: string, title: string, summary: string
     const parsed = safeJsonParse(raw);
     if (!parsed) return null;
 
-    const beat = parseBeat((String(parsed.beat || '').toLowerCase()).trim());
+    const section = parseBeat((String(parsed.section || '').toLowerCase()).trim());
     const confidence = Number(parsed.confidence);
     if (!Number.isFinite(confidence) || confidence < AI_MIN_CONFIDENCE) return null;
 
     return {
-      beat,
+      section,
       confidence: Math.max(0, Math.min(1, confidence)),
       source: 'llm',
       reason: String(parsed.reason || 'LLM classified headline section')
@@ -347,7 +347,7 @@ async function callGroqClassifier(apiKey: string, title: string, summary: string
   }
 }
 
-function safeJsonParse(value: unknown): { beat?: string; confidence?: number; reason?: string } | null {
+function safeJsonParse(value: unknown): { section?: string; confidence?: number; reason?: string } | null {
   if (typeof value !== 'string') return null;
   const raw = value.trim();
   if (!raw) return null;
