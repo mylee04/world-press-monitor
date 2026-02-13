@@ -244,7 +244,7 @@ async function main(): Promise<void> {
     order by a.raw_24h::int desc, a.source asc
   `, [sinceHours]);
 
-    const worldResult = await pool.query<{
+  const worldResult = await pool.query<{
     world_total: string;
     world_latam: string;
   }>(`
@@ -253,14 +253,14 @@ async function main(): Promise<void> {
       count(*) filter (where world_latam)::text as world_latam
     from ingested_articles
     where last_seen_at > now() - ($1::text || ' hours')::interval
-      and beat = 'world'
+      and section = 'world'
   `, [sinceHours]);
 
-    const translationResult = await pool.query<{
-      external_total: string;
-      title_translated: string;
-      summary_translated: string;
-    }>(`
+  const translationResult = await pool.query<{
+    external_total: string;
+    title_translated: string;
+    summary_translated: string;
+  }>(`
     select
       count(*)::text as external_total,
       count(*) filter (

@@ -34,7 +34,7 @@ export interface OutletFetchResult {
 function rssItemLimitFor(outlet: OutletFeed): number {
   if (
     (outlet.sourceType || 'global') === 'portal'
-    && outlet.beat === 'world'
+    && (outlet.section || outlet.beat) === 'world'
     && /Google State:|Bing State:|Google Metro:|Bing Metro:|Google US World Topic|Google LATAM Regional Topic|Bing LATAM Topic|Bing US World Topic/i.test(outlet.name)
   ) {
     return WORLD_PORTAL_RSS_LIMIT;
@@ -45,7 +45,7 @@ function rssItemLimitFor(outlet: OutletFeed): number {
 function sitemapItemLimitFor(outlet: OutletFeed): number {
   if (
     (outlet.sourceType || 'global') === 'portal'
-    && outlet.beat === 'world'
+    && (outlet.section || outlet.beat) === 'world'
     && /Google State:|Bing State:|Google Metro:|Bing Metro:|Google US World Topic|Google LATAM Regional Topic|Bing LATAM Topic|Bing US World Topic/i.test(outlet.name)
   ) {
     return WORLD_PORTAL_SITEMAP_LIMIT;

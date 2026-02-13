@@ -72,7 +72,7 @@ function in24h(publishedAt: string): boolean {
 function rssLimitFor(outlet: typeof OUTLET_FEEDS[number]): number {
   if (
     (outlet.sourceType || 'global') === 'portal'
-    && outlet.beat === 'world'
+    && (outlet.section || outlet.beat) === 'world'
     && /Google State:|Bing State:|Google Metro:|Bing Metro:|Google US World Topic|Google LATAM Regional Topic|Bing LATAM Topic|Bing US World Topic/i.test(outlet.name)
   ) {
     return 60;
@@ -83,7 +83,7 @@ function rssLimitFor(outlet: typeof OUTLET_FEEDS[number]): number {
 function sitemapLimitFor(outlet: typeof OUTLET_FEEDS[number]): number {
   if (
     (outlet.sourceType || 'global') === 'portal'
-    && outlet.beat === 'world'
+    && (outlet.section || outlet.beat) === 'world'
     && /Google State:|Bing State:|Google Metro:|Bing Metro:|Google US World Topic|Google LATAM Regional Topic|Bing LATAM Topic|Bing US World Topic/i.test(outlet.name)
   ) {
     return 60;
@@ -241,14 +241,14 @@ function activeNewsrooms(rows: Row[], region: Region): number {
 }
 
 function worldLatamShare(rows: Row[], region?: Region): { worldTotal: number; worldLatam: number; ratio: number } {
-  const beatBySource = new Map(OUTLET_FEEDS.map((outlet) => [outlet.name, outlet.beat]));
+  const sectionBySource = new Map(OUTLET_FEEDS.map((outlet) => [outlet.name, outlet.section || outlet.beat || 'general']));
   const scoped = region ? rows.filter((row) => row.region === region) : rows;
   let worldTotal = 0;
   let worldLatam = 0;
 
   for (const row of scoped) {
-    const beat = beatBySource.get(row.source);
-    if (beat !== 'world') continue;
+    const section = sectionBySource.get(row.source);
+    if (section !== 'world') continue;
     for (const item of row.recentItems24h) {
       worldTotal += 1;
       if (isLatamCountry(row.country) || isLatamEntityTitle(item.title)) {

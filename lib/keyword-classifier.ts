@@ -25,6 +25,10 @@ const AI_TRIGGER_CONFIDENCE = clampEnvFloat('BEAT_CLASSIFIER_TRIGGER_CONFIDENCE'
 const AI_MIN_CONFIDENCE = clampEnvFloat('BEAT_CLASSIFIER_MIN_AI_CONFIDENCE', DEFAULT_AI_MIN_CONFIDENCE, 0.01, 1.0);
 const AI_CACHE_TTL_MS = envInt('BEAT_CLASSIFIER_CACHE_TTL_MS', 6 * 60 * 60 * 1000, 60 * 60 * 1000);
 const AI_TIMEOUT_MS = envInt('BEAT_CLASSIFIER_AI_TIMEOUT_MS', 3500, 500);
+const AI_CONCURRENCY = Math.max(1, Math.min(64, envInt('BEAT_CLASSIFIER_AI_CONCURRENCY', 8, 1, 64)));
+
+let aiConcurrentCalls = 0;
+const aiCallQueue: Array<() => void> = [];
 
 type KeywordMap = Record<string, Beat>;
 
@@ -190,10 +194,39 @@ export async function classifyBeat(params: ClassifyParams): Promise<BeatClassifi
   const cached = readCache(cacheKey);
   if (cached) return cached;
 
-  const aiResult = await callGroqClassifier(groqKey, title, summary, fallbackBeat);
+  const aiResult = await withAiConcurrency(() => callGroqClassifier(groqKey, title, summary, fallbackBeat));
   const finalResult = aiResult && aiResult.confidence > keywordResult.confidence ? aiResult : keywordResult;
   writeCache(cacheKey, finalResult);
   return finalResult;
+}
+
+async function withAiConcurrency<T>(fn: () => Promise<T>): Promise<T> {
+  await acquireAiSlot();
+  try {
+    return await fn();
+  } finally {
+    releaseAiSlot();
+  }
+}
+
+function acquireAiSlot(): Promise<void> {
+  if (aiConcurrentCalls < AI_CONCURRENCY) {
+    aiConcurrentCalls += 1;
+    return Promise.resolve();
+  }
+
+  return new Promise((resolve) => {
+    aiCallQueue.push(resolve);
+  });
+}
+
+function releaseAiSlot(): void {
+  const next = aiCallQueue.shift();
+  if (next) {
+    next();
+  } else {
+    aiConcurrentCalls = Math.max(0, aiConcurrentCalls - 1);
+  }
 }
 
 function envInt(name: string, fallback: number, min = Number.NEGATIVE_INFINITY, max = Number.POSITIVE_INFINITY): number {

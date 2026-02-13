@@ -77,6 +77,12 @@ docker compose down
 Copy `.env.example` to `.env.local` and set values as needed.
 
 - `GROQ_API_KEY`: enables async LLM section refinement.
+- `BEAT_CLASSIFIER_ENABLED`: master switch for AI refinement (`true` by default; set `false` to disable).
+- `BEAT_CLASSIFIER_TRIGGER_CONFIDENCE`: threshold above which keyword result is accepted and AI is skipped (default `0.72`).
+- `BEAT_CLASSIFIER_MIN_AI_CONFIDENCE`: minimum accepted AI confidence (default `0.58`).
+- `BEAT_CLASSIFIER_CACHE_TTL_MS`: LLM result cache TTL in ms (default `21600000`).
+- `BEAT_CLASSIFIER_AI_TIMEOUT_MS`: per-call AI timeout in ms (default `3500`).
+- `BEAT_CLASSIFIER_AI_CONCURRENCY`: max concurrent AI classify calls (default `8`).
 - `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN`: cache LLM classifications.
 - `DATABASE_URL`: PostgreSQL connection string for Writing/Distribution draft persistence.
 - `INGEST_LOOP_INTERVAL_SEC`: independent ingest loop interval in seconds (default `300`).
@@ -149,7 +155,7 @@ Copy `.env.example` to `.env.local` and set values as needed.
 - normalized article record fields:
   - `external_id` (normalized URL hash)
   - `publication_datetime`
-  - `category` (section / legacy beat)
+  - `section`
   - `title_en`, `title_original`
   - `summary_en`, `summary_original` (feed description best-effort)
   - `country`, `url`, `source`, `is_paywalled`, `language`

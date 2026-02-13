@@ -13,7 +13,7 @@ It explains:
 
 ## 2) Operating Principles
 - Article SoT: `external_news_articles`.
-- Operational index: `ingested_articles` (joins/tags/beat compatibility).
+- Operational index: `ingested_articles` (joins/tags/section metadata).
 - Summary state and observability:
   - `radar_summary_queue`
   - `radar_summary_usage_daily`
@@ -38,13 +38,13 @@ Role:
 Radar-relevant columns:
 - identity/link: `external_id`, `url`, `url_norm`, `url_hash`
 - content: `title_original`, `summary_original`, `summary_en`
-- source dimensions: `source`, `country`, `language`, `category`
+- source dimensions: `source`, `country`, `language`, `section`
 - timing: `publication_datetime`, `last_seen_at`, `created_at`, `updated_at`
 - quality: `publication_source`, `publication_verified`, `summary_source`, `summary_verified`, `quality_score`
 
 ### 4.2 `ingested_articles` (operational join/index)
 Role:
-- compatibility layer for outlet-level metadata (`outlet_id`, `beat`, `tags`).
+- layer for outlet-level metadata (`outlet_id`, `section`, `tags`).
 
 ### 4.3 `radar_summary_queue` (async summary queue)
 Role:

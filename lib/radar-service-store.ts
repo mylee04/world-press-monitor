@@ -13,7 +13,8 @@ export type RadarServiceArticle = {
   publishedAt: string;
   lastSeenAt: string;
   outletId: string | null;
-  beat: string | null;
+  section: string | null;
+  beat?: string | null;
   qualityScore: number;
   publicationSource: string | null;
   summarySource: string | null;
@@ -214,7 +215,7 @@ export async function getRadarServiceArticles(input: {
       e.summary_verified,
       e.quality_score,
       i.outlet_id,
-      i.beat,
+      coalesce(i.section, e.section) as section,
       i.tags
     from external_news_articles e
     left join ingested_articles i on i.link = e.url
@@ -257,7 +258,8 @@ export async function getRadarServiceArticles(input: {
       publishedAt,
       lastSeenAt,
       outletId: row.outlet_id ? String(row.outlet_id) : null,
-      beat: row.beat ? String(row.beat) : null,
+      section: row.section ? String(row.section) : null,
+      beat: row.section ? String(row.section) : null,
       qualityScore: Number(row.quality_score || 0),
       publicationSource: row.publication_source ? String(row.publication_source) : null,
       summarySource: row.summary_source ? String(row.summary_source) : null,

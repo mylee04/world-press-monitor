@@ -32,7 +32,7 @@ type Row = {
   external_id: string;
   url: string;
   publication_datetime: string;
-  category: string;
+  section: string | null;
   language: string | null;
   title_original: string;
   title_en: string | null;
@@ -330,8 +330,8 @@ function parseAuthorMeta(html: string): { authorName: string | null; authorEmail
   return { authorName, authorEmail };
 }
 
-function shouldUseAiForCategory(category: string, allowed: Set<string>): boolean {
-  const normalized = (category || '').trim().toLowerCase();
+function shouldUseAiForSection(section: string, allowed: Set<string>): boolean {
+  const normalized = (section || '').trim().toLowerCase();
   return normalized.length > 0 && allowed.has(normalized);
 }
 
@@ -362,7 +362,7 @@ type AiProvider = 'glm' | 'gemini' | 'none';
 type AiCommon = {
   title: string;
   language: string | null;
-  category: string;
+  section: string;
   sourceUrl: string;
   articleText: string;
   metaSummary: string | null;
@@ -586,7 +586,7 @@ async function generateAiSummary(input: {
     '- summary_original should be in the article language.',
     '- summary_en should be in English.',
     `Language hint: ${languageHint}.`,
-    `Category: ${input.common.category}.`,
+    `Section: ${input.common.section}.`,
     `URL: ${input.common.sourceUrl}`,
     `Title: ${input.common.title}`,
     `Meta summary (fallback context): ${(input.common.metaSummary || '').slice(0, 1000)}`,
@@ -762,7 +762,7 @@ async function main(): Promise<void> {
   try {
     const rowsRes = await pool.query<Row>(
       `
-      select external_id, url, publication_datetime, category, language, title_original, title_en, author_name, author_email, summary_en, summary_original, summary_source
+      select external_id, url, publication_datetime, section, language, title_original, title_en, author_name, author_email, summary_en, summary_original, summary_source
       from external_news_articles
       where last_seen_at > now() - interval '24 hours'
         and (
@@ -840,11 +840,12 @@ async function main(): Promise<void> {
         || authorMeta.authorEmail
         || row.author_email
         || null;
+      const section = row.section || 'general';
 
       const eligibleForAi =
         canUseAi
         && aiAttempted < aiMaxItems
-        && shouldUseAiForCategory(row.category, aiCategories)
+        && shouldUseAiForSection(section, aiCategories)
         && articleText.length >= aiMinBodyChars
         && (
           !nextSummaryOriginal
@@ -862,7 +863,7 @@ async function main(): Promise<void> {
           common: {
             title: row.title_original,
             language: row.language,
-            category: row.category,
+            section,
             sourceUrl: row.url,
             articleText,
             metaSummary: meta.summary

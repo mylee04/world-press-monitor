@@ -238,7 +238,8 @@ async function toNewsItem(
 ): Promise<NewsItem> {
   const normalizedCountry = normalizeCountryName(outlet.country);
   const geo = inferGeoFromTitle(row.title, normalizedCountry);
-  const classification = await classifyBeat({ title: row.title, summary: row.description, fallbackBeat: outlet.beat });
+  const fallbackSection = outlet.section || outlet.beat || 'general';
+  const classification = await classifyBeat({ title: row.title, summary: row.description, fallbackBeat: fallbackSection });
   const section = classification.beat;
   return annotateWorldLatam({
     id: row.link,

@@ -100,6 +100,10 @@ function buildDedupeSignature(item: NewsItem): string | null {
 }
 
 function isPreferredDuplicate(candidate: NewsItem, existing: NewsItem): boolean {
+  const candidateSection = candidate.section || candidate.beat;
+  const existingSection = existing.section || existing.beat;
+  if (candidateSection !== existingSection) return false;
+
   const candidatePublicationMeta = candidate.publicationSource === 'article_meta';
   const existingPublicationMeta = existing.publicationSource === 'article_meta';
   if (candidatePublicationMeta !== existingPublicationMeta) return candidatePublicationMeta;
@@ -155,7 +159,8 @@ export async function mapParsedOutletItemToNewsItem(
   outlet: OutletFeed,
   item: { title: string; description?: string; link: string; publishedAt: string }
 ): Promise<NewsItem> {
-  const classification = await classifyBeat({ title: item.title, summary: item.description, fallbackBeat: outlet.beat });
+  const fallbackSection = outlet.section || outlet.beat || 'general';
+  const classification = await classifyBeat({ title: item.title, summary: item.description, fallbackBeat: fallbackSection });
   const normalizedCountry = normalizeCountryName(outlet.country);
   const geo = inferGeoFromTitle(item.title, normalizedCountry);
   const section = classification.beat;
@@ -318,7 +323,7 @@ export function buildStoryClusters(items: NewsItem[]): NewsItem[] {
     const matched = clusterRep.find((rep) => {
       const sameCountry = (item.country || 'Unknown') === (rep.item.country || 'Unknown');
       if (!sameCountry) return false;
-      if (item.beat !== rep.item.beat) return false;
+      if ((item.section || item.beat) !== (rep.item.section || rep.item.beat)) return false;
 
       const mins = minutesBetween(item.publishedAt, rep.item.publishedAt);
       if (mins > 360) return false;

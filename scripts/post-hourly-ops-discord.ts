@@ -207,7 +207,7 @@ async function main(): Promise<void> {
       title_original_ok: string;
       summary_original_ok: string;
       publication_datetime_ok: string;
-      category_ok: string;
+      section_ok: string;
       country_ok: string;
       language_ok: string;
       source_ok: string;
@@ -228,7 +228,7 @@ async function main(): Promise<void> {
         count(*) filter (where title_original is not null and btrim(title_original) <> '')::text as title_original_ok,
         count(*) filter (where summary_original is not null and btrim(summary_original) <> '')::text as summary_original_ok,
         count(*) filter (where publication_datetime is not null)::text as publication_datetime_ok,
-        count(*) filter (where category is not null and btrim(category) <> '')::text as category_ok,
+        count(*) filter (where section is not null and btrim(section) <> '')::text as section_ok,
         count(*) filter (where country is not null and btrim(country) <> '')::text as country_ok,
         count(*) filter (where language is not null and btrim(language) <> '')::text as language_ok,
         count(*) filter (where source is not null and btrim(source) <> '')::text as source_ok,
@@ -356,7 +356,7 @@ async function main(): Promise<void> {
       title_original_ok: '0',
       summary_original_ok: '0',
       publication_datetime_ok: '0',
-      category_ok: '0',
+      section_ok: '0',
       country_ok: '0',
       language_ok: '0',
       source_ok: '0',
@@ -452,7 +452,7 @@ async function main(): Promise<void> {
       `- Ingest 1h: new ${inserted1h} · active ${touched1h} · parsed ${parsed1h} · gap ${noIngestMinutes === null ? 'n/a' : `${noIngestMinutes.toFixed(1)}m`} · endpoint fail ${endpointFailureRate1h.toFixed(1)}% (${failed1h}/${Math.max(attempted1h, 0)})`,
       `- Scope: configured outlets ${configuredOutlets.length} (${configuredEndpoints} endpoints) · active sources 1h ${sourceActive1h} · 24h ${sourceActive24h}`,
       `- Articles: 24h ${touched24h} · breaking 1h ${breaking1h} (${breakingRatio1h.toFixed(1)}%) · queue new 1h ${queueNew1h} (total ${queueNewTotal}) · social breaking 1h ${socialBreaking1h}`,
-      `- Quality 24h: title ${formatPct(toNum(quality.title_original_ok), total24h)} · summary ${formatPct(toNum(quality.summary_original_ok), total24h)} · pub_dt ${formatPct(toNum(quality.publication_datetime_ok), total24h)} · category ${formatPct(toNum(quality.category_ok), total24h)}`,
+      `- Quality 24h: title ${formatPct(toNum(quality.title_original_ok), total24h)} · summary ${formatPct(toNum(quality.summary_original_ok), total24h)} · pub_dt ${formatPct(toNum(quality.publication_datetime_ok), total24h)} · section ${formatPct(toNum(quality.section_ok), total24h)}`,
       `- Coverage 24h: country ${formatPct(toNum(quality.country_ok), total24h)} · language ${formatPct(toNum(quality.language_ok), total24h)} · source ${formatPct(toNum(quality.source_ok), total24h)} · url ${formatPct(toNum(quality.url_ok), total24h)}`,
       `- Translation(non-en): title_en ${formatPct(toNum(quality.non_en_title_en_ok), nonEnTotal)} · summary_en ${formatPct(toNum(quality.non_en_summary_en_ok), nonEnTotal)} · verified(pub ${formatPct(toNum(quality.publication_verified_ok), total24h)}, summary ${formatPct(toNum(quality.summary_verified_ok), total24h)}) · avgQ ${Number(quality.avg_quality || 0).toFixed(1)}`,
       `- Summary source 24h: ai_article ${summaryAiArticlePct.toFixed(1)}% · article_meta ${summaryArticleMetaPct.toFixed(1)}% · feed/other ${summaryFeedOtherPct.toFixed(1)}%`,
@@ -464,7 +464,7 @@ async function main(): Promise<void> {
       `- Ingestion 1h: nuevas ${inserted1h} · activas ${touched1h} · parseadas ${parsed1h} · brecha ${noIngestMinutes === null ? 'n/d' : `${noIngestMinutes.toFixed(1)}m`} · fallo endpoints ${endpointFailureRate1h.toFixed(1)}% (${failed1h}/${Math.max(attempted1h, 0)})`,
       `- Alcance: fuentes configuradas ${configuredOutlets.length} (${configuredEndpoints} endpoints) · fuentes activas 1h ${sourceActive1h} · 24h ${sourceActive24h}`,
       `- Articulos: 24h ${touched24h} · breaking 1h ${breaking1h} (${breakingRatio1h.toFixed(1)}%) · cola nueva 1h ${queueNew1h} (total ${queueNewTotal}) · social breaking 1h ${socialBreaking1h}`,
-      `- Calidad 24h: titulo ${formatPct(toNum(quality.title_original_ok), total24h)} · resumen ${formatPct(toNum(quality.summary_original_ok), total24h)} · pub_dt ${formatPct(toNum(quality.publication_datetime_ok), total24h)} · categoria ${formatPct(toNum(quality.category_ok), total24h)}`,
+      `- Calidad 24h: titulo ${formatPct(toNum(quality.title_original_ok), total24h)} · resumen ${formatPct(toNum(quality.summary_original_ok), total24h)} · pub_dt ${formatPct(toNum(quality.publication_datetime_ok), total24h)} · seccion ${formatPct(toNum(quality.section_ok), total24h)}`,
       `- Cobertura 24h: pais ${formatPct(toNum(quality.country_ok), total24h)} · idioma ${formatPct(toNum(quality.language_ok), total24h)} · fuente ${formatPct(toNum(quality.source_ok), total24h)} · url ${formatPct(toNum(quality.url_ok), total24h)}`,
       `- Traduccion(no-en): title_en ${formatPct(toNum(quality.non_en_title_en_ok), nonEnTotal)} · summary_en ${formatPct(toNum(quality.non_en_summary_en_ok), nonEnTotal)} · verificado(pub ${formatPct(toNum(quality.publication_verified_ok), total24h)}, summary ${formatPct(toNum(quality.summary_verified_ok), total24h)}) · avgQ ${Number(quality.avg_quality || 0).toFixed(1)}`,
       `- Origen resumen 24h: ai_article ${summaryAiArticlePct.toFixed(1)}% · article_meta ${summaryArticleMetaPct.toFixed(1)}% · feed/otros ${summaryFeedOtherPct.toFixed(1)}%`,

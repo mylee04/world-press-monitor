@@ -22,7 +22,7 @@ Canonical article metadata store.
 | `publication_datetime` | `timestamptz` | No | - | Any timestamp | Publication time |
 | `publication_source` | `text` | No | `'feed'` | Convention: `feed`, `article_meta`, `ai_article` (or other app-defined values) | Source of publication time |
 | `publication_verified` | `boolean` | No | `false` | `true`/`false` | Whether publication time is verified |
-| `category` | `text` | No | - | Any text | Beat/category |
+| `section` | `text` | Yes | `NULL` | Any text | Canonical article section/category |
 | `title_en` | `text` | Yes | `NULL` | Any text | English title |
 | `title_original` | `text` | No | - | Any text | Original language title |
 | `summary_en` | `text` | Yes | `NULL` | Any text | English summary |
@@ -167,7 +167,7 @@ Per-platform distribution payloads.
 Unique key: (`draft_id`, `platform`)
 
 ### `ingested_articles`
-Legacy/compatibility operational index.
+Operational index.
 
 | Column | Type | Nullable | Default | Allowed values | Notes |
 |---|---|---|---|---|---|
@@ -183,7 +183,7 @@ Legacy/compatibility operational index.
 | `language` | `text` | Yes | `NULL` | Any text | Language |
 | `source_type` | `text` | Yes | `NULL` | Any text | Source type |
 | `tier` | `smallint` | Yes | `NULL` | Any smallint | Tier |
-| `beat` | `text` | Yes | `NULL` | Any text | Beat |
+| `section` | `text` | Yes | `NULL` | Any text | Canonical article section/category |
 | `classification_source` | `text` | Yes | `NULL` | Any text | Classification provenance |
 | `classification_reason` | `text` | Yes | `NULL` | Any text | Classification reason |
 | `confidence` | `real` | Yes | `NULL` | Any float | Confidence score |

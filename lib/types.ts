@@ -1,5 +1,5 @@
 export type NewsSection = 'politics' | 'business' | 'tech' | 'security' | 'climate' | 'world' | 'general';
-/** @deprecated Kept for compatibility. Prefer `NewsSection` for newsroom section/category naming. */
+// `beat` is kept as a compatibility alias for older callsites and persisted data.
 export type Beat = NewsSection;
 export type SourceCategory =
   | 'global'
@@ -15,10 +15,6 @@ export interface OutletFeed {
   id: string;
   name: string;
   tier: OutletTier;
-  /**
-   * Section is the preferred name for outlet-level category.
-   * `beat` remains for backward compatibility.
-   */
   section: NewsSection;
   beat: Beat;
   categories: SourceCategory[];
@@ -58,7 +54,6 @@ export interface NewsItem {
   clusterSize?: number;
   tier: OutletTier;
   publishedAt: string;
-  /** Section is the preferred display term for this field. */
   section: NewsSection;
   beat: Beat;
   confidence: number;

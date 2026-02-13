@@ -39,7 +39,7 @@ create table if not exists ingested_articles (
   language text null,
   source_type text null,
   tier smallint null,
-  beat text null,
+  section text null,
   classification_source text null,
   classification_reason text null,
   confidence real null,
@@ -51,13 +51,31 @@ create table if not exists ingested_articles (
 );
 alter table ingested_articles add column if not exists outlet_id text null;
 alter table ingested_articles add column if not exists classification_reason text null;
+alter table ingested_articles add column if not exists section text null;
+do $$
+begin
+  if exists (
+    select 1
+    from information_schema.columns
+    where table_schema = 'public'
+      and table_name = 'ingested_articles'
+      and column_name = 'beat'
+  ) then
+    update ingested_articles
+      set section = coalesce(section, beat)
+      where section is null and beat is not null;
+  end if;
+end;
+$$;
+drop index if exists idx_ingested_articles_beat;
+alter table ingested_articles drop column if exists beat;
 
 create index if not exists idx_ingested_articles_last_seen_at on ingested_articles(last_seen_at desc);
 create index if not exists idx_ingested_articles_published_at on ingested_articles(published_at desc);
 create index if not exists idx_ingested_articles_source on ingested_articles(source);
 create index if not exists idx_ingested_articles_outlet_id on ingested_articles(outlet_id);
 create index if not exists idx_ingested_articles_country on ingested_articles(country);
-create index if not exists idx_ingested_articles_beat on ingested_articles(beat);
+create index if not exists idx_ingested_articles_section on ingested_articles(section);
 
 create table if not exists ingestion_endpoint_runs (
   id bigserial primary key,
@@ -88,7 +106,6 @@ create table if not exists external_news_articles (
   publication_datetime timestamptz not null,
   publication_source text not null default 'feed',
   publication_verified boolean not null default false,
-  category text not null,
   title_en text null,
   title_original text not null,
   summary_en text null,
@@ -107,6 +124,7 @@ create table if not exists external_news_articles (
   source text not null,
   is_paywalled boolean not null default false,
   language text null,
+  section text null,
   seen_count integer not null default 1
 );
 
@@ -114,7 +132,7 @@ create index if not exists idx_external_news_articles_publication_datetime on ex
 create index if not exists idx_external_news_articles_last_seen_at on external_news_articles(last_seen_at desc);
 create index if not exists idx_external_news_articles_source on external_news_articles(source);
 create index if not exists idx_external_news_articles_url on external_news_articles(url);
-create index if not exists idx_external_news_articles_category on external_news_articles(category);
+create index if not exists idx_external_news_articles_section on external_news_articles(section);
 create index if not exists idx_external_news_articles_country on external_news_articles(country);
 
 alter table external_news_articles add column if not exists publication_source text not null default 'feed';
@@ -126,6 +144,24 @@ alter table external_news_articles add column if not exists author_email text nu
 alter table external_news_articles add column if not exists author_source text not null default 'feed';
 alter table external_news_articles add column if not exists author_verified boolean not null default false;
 alter table external_news_articles add column if not exists quality_score integer not null default 0;
+alter table external_news_articles add column if not exists section text null;
+drop index if exists idx_external_news_articles_category;
+do $$
+begin
+  if exists (
+    select 1
+    from information_schema.columns
+    where table_schema = 'public'
+      and table_name = 'external_news_articles'
+      and column_name = 'category'
+  ) then
+    update external_news_articles
+      set section = coalesce(section, category)
+      where section is null and category is not null;
+  end if;
+end;
+$$;
+alter table external_news_articles drop column if exists category;
 
 create table if not exists social_breaking_posts (
   id bigserial primary key,

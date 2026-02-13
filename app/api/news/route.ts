@@ -33,7 +33,7 @@ import {
   newsCacheMetricWriteRedis,
   newsCacheMetricWriteRedisFailed,
 } from '@/lib/news-cache-metrics';
-import type { NewsItem, OutletFeed } from '@/lib/types';
+import type { Beat, NewsItem, OutletFeed } from '@/lib/types';
 
 export const runtime = 'nodejs';
 
@@ -428,11 +428,21 @@ async function getBusinessRadarFallback(): Promise<NewsItem[]> {
     });
 
     if (!response.ok) return [];
-    const data = await response.json() as { articles?: Array<{ title: string; url: string; source?: string; publishedAt?: string; beat?: string }> };
+    const data = await response.json() as {
+      articles?: Array<{
+        title: string;
+        url: string;
+        source?: string;
+        publishedAt?: string;
+        section?: string;
+        beat?: string;
+      }>;
+    };
     const articles = (data.articles || []).slice(0, 30);
     const classified = await Promise.all(
       articles.map(async (article) => {
-        const classification = await classifyBeat({ title: article.title, fallbackBeat: 'business' });
+        const fallbackSection = (article.section || article.beat || 'business') as Beat;
+        const classification = await classifyBeat({ title: article.title, fallbackBeat: fallbackSection });
         const geo = inferGeoFromTitle(article.title);
         const newsItem = {
           id: article.url,

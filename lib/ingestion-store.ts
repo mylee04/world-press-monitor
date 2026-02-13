@@ -65,7 +65,7 @@ async function ensureSchema(): Promise<void> {
       language text null,
       source_type text null,
       tier smallint null,
-      beat text null,
+      section text null,
       classification_source text null,
       classification_reason text null,
       confidence real null,
@@ -77,12 +77,28 @@ async function ensureSchema(): Promise<void> {
     );
     alter table ingested_articles add column if not exists outlet_id text null;
     alter table ingested_articles add column if not exists classification_reason text null;
+    alter table ingested_articles add column if not exists section text null;
+    do $$
+    begin
+      if exists (
+        select 1
+        from information_schema.columns
+        where table_schema = 'public'
+          and table_name = 'ingested_articles'
+          and column_name = 'beat'
+      ) then
+        update ingested_articles
+          set section = coalesce(section, beat)
+          where section is null and beat is not null;
+      end if;
+    end;
+    $$;
     create index if not exists idx_ingested_articles_last_seen_at on ingested_articles(last_seen_at desc);
     create index if not exists idx_ingested_articles_published_at on ingested_articles(published_at desc);
     create index if not exists idx_ingested_articles_source on ingested_articles(source);
     create index if not exists idx_ingested_articles_outlet_id on ingested_articles(outlet_id);
     create index if not exists idx_ingested_articles_country on ingested_articles(country);
-    create index if not exists idx_ingested_articles_beat on ingested_articles(beat);
+    create index if not exists idx_ingested_articles_section on ingested_articles(section);
     create table if not exists ingestion_endpoint_runs (
       id bigserial primary key,
       ran_at timestamptz not null default now(),
@@ -110,7 +126,6 @@ async function ensureSchema(): Promise<void> {
       publication_datetime timestamptz not null,
       publication_source text not null default 'feed',
       publication_verified boolean not null default false,
-      category text not null,
       title_en text null,
       title_original text not null,
       summary_en text null,
@@ -129,13 +144,14 @@ async function ensureSchema(): Promise<void> {
       source text not null,
       is_paywalled boolean not null default false,
       language text null,
+      section text null,
       seen_count integer not null default 1
     );
     create index if not exists idx_external_news_articles_publication_datetime on external_news_articles(publication_datetime desc);
     create index if not exists idx_external_news_articles_last_seen_at on external_news_articles(last_seen_at desc);
     create index if not exists idx_external_news_articles_source on external_news_articles(source);
     create index if not exists idx_external_news_articles_url on external_news_articles(url);
-    create index if not exists idx_external_news_articles_category on external_news_articles(category);
+    create index if not exists idx_external_news_articles_section on external_news_articles(section);
     create index if not exists idx_external_news_articles_country on external_news_articles(country);
     alter table external_news_articles add column if not exists publication_source text not null default 'feed';
     alter table external_news_articles add column if not exists publication_verified boolean not null default false;
@@ -146,6 +162,26 @@ async function ensureSchema(): Promise<void> {
     alter table external_news_articles add column if not exists author_source text not null default 'feed';
     alter table external_news_articles add column if not exists author_verified boolean not null default false;
     alter table external_news_articles add column if not exists quality_score integer not null default 0;
+    alter table external_news_articles add column if not exists section text null;
+    drop index if exists idx_ingested_articles_beat;
+    alter table ingested_articles drop column if exists beat;
+    drop index if exists idx_external_news_articles_category;
+    do $$
+    begin
+      if exists (
+        select 1
+        from information_schema.columns
+        where table_schema = 'public'
+          and table_name = 'external_news_articles'
+          and column_name = 'category'
+      ) then
+        update external_news_articles
+          set section = coalesce(section, category)
+          where section is null and category is not null;
+      end if;
+    end;
+    $$;
+    alter table external_news_articles drop column if exists category;
 
     create table if not exists radar_summary_queue (
       id bigserial primary key,
@@ -208,7 +244,7 @@ type Persistable = {
   language: string | null;
   sourceType: string | null;
   tier: number | null;
-  beat: string | null;
+  section: string | null;
   classificationSource: string | null;
   classificationReason: string | null;
   confidence: number | null;
@@ -233,7 +269,7 @@ async function toPersistable(item: NewsItem): Promise<Persistable | null> {
     language: item.language || null,
     sourceType: item.sourceType || null,
     tier: typeof item.tier === 'number' ? item.tier : null,
-    beat: item.beat || null,
+    section: item.section || item.beat || null,
     classificationSource: item.classificationSource || null,
     classificationReason: item.classificationReason || null,
     confidence: typeof item.confidence === 'number' ? item.confidence : null,
@@ -270,7 +306,7 @@ function buildInsertSql(rows: Persistable[]): { sql: string; values: unknown[] }
       row.language,
       row.sourceType,
       row.tier,
-      row.beat,
+      row.section,
       row.classificationSource,
       row.classificationReason,
       row.confidence,
@@ -282,7 +318,7 @@ function buildInsertSql(rows: Persistable[]): { sql: string; values: unknown[] }
   const sql = `
     insert into ingested_articles (
       link, link_norm, link_hash, outlet_id, title, source, published_at, country, language, source_type, tier,
-      beat, classification_source, classification_reason, confidence, world_latam, tags, first_seen_at, last_seen_at, seen_count
+      section, classification_source, classification_reason, confidence, world_latam, tags, first_seen_at, last_seen_at, seen_count
     ) values
     ${parts.join(',')}
     on conflict (link_hash) do update set
@@ -295,7 +331,7 @@ function buildInsertSql(rows: Persistable[]): { sql: string; values: unknown[] }
       language = excluded.language,
       source_type = excluded.source_type,
       tier = excluded.tier,
-      beat = excluded.beat,
+      section = excluded.section,
       classification_source = excluded.classification_source,
       classification_reason = excluded.classification_reason,
       confidence = excluded.confidence,
@@ -336,7 +372,7 @@ type StoredNewsRow = {
   language: string | null;
   source_type: string | null;
   tier: number | null;
-  beat: string | null;
+  section: string | null;
   classification_source: string | null;
   classification_reason: string | null;
   confidence: number | null;
@@ -344,6 +380,18 @@ type StoredNewsRow = {
   tags: unknown;
   generated_at: string | null;
 };
+
+function parseNewsSection(value: string | null | undefined): NewsItem['section'] {
+  const candidate = (value || 'general').toLowerCase();
+  return candidate === 'politics'
+    || candidate === 'business'
+    || candidate === 'tech'
+    || candidate === 'security'
+    || candidate === 'climate'
+    || candidate === 'world'
+    ? (candidate as NewsItem['section'])
+    : 'general';
+}
 
 export async function readIngestedArticles(options: {
   outletIds?: string[];
@@ -388,7 +436,7 @@ export async function readIngestedArticles(options: {
       coalesce(e.language, i.language) as language,
       i.source_type,
       i.tier,
-      i.beat,
+      i.section,
       i.classification_source,
       i.classification_reason,
       i.confidence,
@@ -408,26 +456,17 @@ export async function readIngestedArticles(options: {
   const items = result.rows.map((row) => {
     const tierCandidate = Number(row.tier);
     const tier = tierCandidate === 1 || tierCandidate === 2 || tierCandidate === 3 ? tierCandidate : 2;
-    const beatCandidate = (row.beat || 'general').toLowerCase();
-    const beat: NewsItem['beat'] =
-      beatCandidate === 'politics'
-      || beatCandidate === 'business'
-      || beatCandidate === 'tech'
-      || beatCandidate === 'security'
-      || beatCandidate === 'climate'
-      || beatCandidate === 'world'
-      ? (beatCandidate as NewsItem['beat'])
-      : 'general';
-  const sourceTypeCandidate = (row.source_type || 'global').toLowerCase();
-  const sourceType: NewsItem['sourceType'] =
-    sourceTypeCandidate === 'local' || sourceTypeCandidate === 'portal'
-      ? (sourceTypeCandidate as NewsItem['sourceType'])
-      : 'global';
-  const section = beat;
-  const classificationSource: NewsItem['classificationSource'] = row.classification_source === 'llm' ? 'llm' : 'keyword';
-  const tags = Array.isArray(row.tags) ? (row.tags.filter((value) => typeof value === 'string') as string[]) : [];
+    const beat = parseNewsSection(row.section);
+    const sourceTypeCandidate = (row.source_type || 'global').toLowerCase();
+    const sourceType: NewsItem['sourceType'] =
+      sourceTypeCandidate === 'local' || sourceTypeCandidate === 'portal'
+        ? (sourceTypeCandidate as NewsItem['sourceType'])
+        : 'global';
+    const section = beat;
+    const classificationSource: NewsItem['classificationSource'] = row.classification_source === 'llm' ? 'llm' : 'keyword';
+    const tags = Array.isArray(row.tags) ? (row.tags.filter((value) => typeof value === 'string') as string[]) : [];
 
-  return {
+    return {
       id: row.link,
       outletId: row.outlet_id || undefined,
       title: row.title,
@@ -467,7 +506,7 @@ type ExternalNewsReadRow = {
   language: string | null;
   source_type: string | null;
   tier: number | null;
-  beat: string | null;
+  section: string | null;
   classification_source: string | null;
   classification_reason: string | null;
   confidence: number | null;
@@ -489,7 +528,7 @@ function mapRowToNewsItem(row: {
   language: string | null;
   source_type: string | null;
   tier: number | null;
-  beat: string | null;
+  section: string | null;
   classification_source: string | null;
   classification_reason: string | null;
   confidence: number | null;
@@ -500,16 +539,7 @@ function mapRowToNewsItem(row: {
 }): NewsItem {
   const tierCandidate = Number(row.tier);
   const tier = tierCandidate === 1 || tierCandidate === 2 || tierCandidate === 3 ? tierCandidate : 2;
-  const beatCandidate = (row.beat || 'general').toLowerCase();
-  const beat: NewsItem['beat'] =
-    beatCandidate === 'politics'
-    || beatCandidate === 'business'
-    || beatCandidate === 'tech'
-    || beatCandidate === 'security'
-    || beatCandidate === 'climate'
-    || beatCandidate === 'world'
-    ? (beatCandidate as NewsItem['beat'])
-    : 'general';
+  const beat = parseNewsSection(row.section);
   const sourceTypeCandidate = (row.source_type || 'global').toLowerCase();
   const sourceType: NewsItem['sourceType'] =
     sourceTypeCandidate === 'local' || sourceTypeCandidate === 'portal'
@@ -531,11 +561,11 @@ function mapRowToNewsItem(row: {
     link: row.link,
     source: row.source,
     language: row.language || undefined,
-      sourceType,
-      tier,
-      publishedAt: new Date(row.published_at).toISOString(),
-      section,
-      beat,
+    sourceType,
+    tier,
+    publishedAt: new Date(row.published_at).toISOString(),
+    section,
+    beat,
     confidence: typeof row.confidence === 'number' ? row.confidence : 0.5,
     classificationSource,
     classificationReason: row.classification_reason || undefined,
@@ -590,7 +620,7 @@ export async function readExternalNewsArticles(options: {
       e.language,
       i.source_type,
       i.tier,
-      coalesce(i.beat, e.category, 'general') as beat,
+      coalesce(i.section, e.section, 'general') as section,
       i.classification_source,
       i.classification_reason,
       i.confidence,
@@ -883,7 +913,6 @@ type ExternalArticlePersistable = {
   publicationDatetime: string;
   publicationSource: 'feed' | 'article_meta';
   publicationVerified: boolean;
-  category: string;
   titleEn: string | null;
   titleOriginal: string;
   summaryEn: string | null;
@@ -892,6 +921,7 @@ type ExternalArticlePersistable = {
   summaryVerified: boolean;
   qualityScore: number;
   country: string | null;
+  section: string;
   url: string;
   urlNorm: string;
   urlHash: string;
@@ -940,7 +970,7 @@ async function toExternalArticle(item: NewsItem): Promise<ExternalArticlePersist
     publicationDatetime: new Date(publicationTs).toISOString(),
     publicationSource,
     publicationVerified,
-    category: item.beat,
+    section: item.section || item.beat,
     titleEn,
     titleOriginal,
     summaryEn,
@@ -975,14 +1005,13 @@ export async function persistExternalNewsArticles(items: NewsItem[]): Promise<{ 
     group.forEach((row, i) => {
       const base = i * 19;
       parts.push(
-        `($${base + 1},$${base + 2},$${base + 3},$${base + 4},$${base + 5},$${base + 6},$${base + 7},$${base + 8},$${base + 9},$${base + 10},$${base + 11},$${base + 12},$${base + 13},now(),$${base + 14},$${base + 15},$${base + 16},$${base + 17},$${base + 18},$${base + 19},1)`
+        `($${base + 1},$${base + 2},$${base + 3},$${base + 4},$${base + 5},$${base + 6},$${base + 7},$${base + 8},$${base + 9},$${base + 10},$${base + 11},$${base + 12},$${base + 13},$${base + 14},now(),$${base + 15},$${base + 16},$${base + 17},$${base + 18},$${base + 19},1)`
       );
       values.push(
         row.externalId,
         row.publicationDatetime,
         row.publicationSource,
         row.publicationVerified,
-        row.category,
         row.titleEn,
         row.titleOriginal,
         row.summaryEn,
@@ -991,6 +1020,7 @@ export async function persistExternalNewsArticles(items: NewsItem[]): Promise<{ 
         row.summaryVerified,
         row.qualityScore,
         row.country,
+        row.section,
         row.url,
         row.urlNorm,
         row.urlHash,
@@ -1003,7 +1033,7 @@ export async function persistExternalNewsArticles(items: NewsItem[]): Promise<{ 
     await db.query(
       `
       insert into external_news_articles (
-        external_id, publication_datetime, publication_source, publication_verified, category,
+        external_id, publication_datetime, publication_source, publication_verified, section,
         title_en, title_original, summary_en, summary_original, summary_source, summary_verified, quality_score,
         country, created_at, url, url_norm, url_hash, source, is_paywalled, language, seen_count
       ) values ${parts.join(',')}
@@ -1014,7 +1044,7 @@ export async function persistExternalNewsArticles(items: NewsItem[]): Promise<{ 
           else external_news_articles.publication_source
         end,
         publication_verified = external_news_articles.publication_verified or excluded.publication_verified,
-        category = excluded.category,
+        section = excluded.section,
         title_en = coalesce(nullif(excluded.title_en, ''), external_news_articles.title_en),
         title_original = excluded.title_original,
         summary_en = coalesce(nullif(excluded.summary_en, ''), external_news_articles.summary_en),
