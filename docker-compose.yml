@@ -1,0 +1,22 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: presslab
+    ports:
+      - "${PRESSLAB_PG_PORT:-5432}:5432"
+    volumes:
+      - presslab_pgdata:/var/lib/postgresql/data
+      # Applied automatically on first boot (when the data volume is empty).
+      - ./db/schema.sql:/docker-entrypoint-initdb.d/00_schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d presslab"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  presslab_pgdata:

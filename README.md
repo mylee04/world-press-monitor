@@ -17,6 +17,61 @@ bun run dev
 
 Open `http://localhost:3000`.
 
+
+### Local PostgreSQL (Docker)
+
+Docker is the easiest way for the whole team to share the same Postgres version.
+
+1. Install Docker Desktop (macOS):
+
+```bash
+brew install --cask docker
+```
+
+Or download it from:
+
+```text
+https://www.docker.com/products/docker-desktop/
+```
+
+2. Start Postgres 16:
+
+```bash
+docker compose up -d postgres
+```
+
+If port `5432` is already in use:
+
+```bash
+PRESSLAB_PG_PORT=54321 docker compose up -d postgres
+```
+
+3. Set `DATABASE_URL` in `.env.local` (copy from `.env.example`).
+
+Default (if you used port 5432):
+
+```bash
+DATABASE_URL=postgresql://postgres:postgres@localhost:5432/presslab
+```
+
+If you used `PRESSLAB_PG_PORT=54321`:
+
+```bash
+DATABASE_URL=postgresql://postgres:postgres@localhost:54321/presslab
+```
+
+4. Schema is applied automatically on first boot. If you need to re-apply it manually:
+
+```bash
+docker compose exec -T postgres psql -U postgres -d presslab -f /docker-entrypoint-initdb.d/00_schema.sql
+```
+
+Stop the DB:
+
+```bash
+docker compose down
+```
+
 ## Environment Variables
 
 Copy `.env.example` to `.env.local` and set values as needed.
