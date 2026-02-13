@@ -29,7 +29,7 @@ const MAP_TEXT = {
   en: {
     global: 'Global',
     storiesWindow: 'stories in current window',
-    noBeatData: 'No beat data',
+    noSectionData: 'No section data',
     newsroom: 'NEWSROOM',
     coverage: 'Americas Coverage',
     resetCountry: 'Reset Country',
@@ -49,7 +49,7 @@ const MAP_TEXT = {
   es: {
     global: 'Global',
     storiesWindow: 'noticias en la ventana actual',
-    noBeatData: 'Sin datos de sección',
+    noSectionData: 'Sin datos de sección',
     newsroom: 'REDACCIÓN',
     coverage: 'Cobertura Américas',
     resetCountry: 'Reiniciar país',
@@ -136,7 +136,7 @@ export function GeoMap({
     [items]
   );
   const countryAggregates = useMemo(() => {
-    const byCountry = new Map<string, { country: string; lat: number; lon: number; count: number; beats: Map<string, number>; latestTs: number }>();
+    const byCountry = new Map<string, { country: string; lat: number; lon: number; count: number; sections: Map<string, number>; latestTs: number }>();
 
     for (const item of items) {
       const country = normalizeCountryName(item.country || item.locationName || mt.global);
@@ -156,7 +156,7 @@ export function GeoMap({
           lat,
           lon,
           count: 1,
-          beats: new Map([[item.beat, 1]]),
+          sections: new Map([[item.beat, 1]]),
           latestTs: Number.isFinite(ts) ? ts : 0
         });
         continue;
@@ -164,7 +164,7 @@ export function GeoMap({
       existing.count += 1;
       existing.lat = (existing.lat * (existing.count - 1) + lat) / existing.count;
       existing.lon = (existing.lon * (existing.count - 1) + lon) / existing.count;
-      existing.beats.set(item.beat, (existing.beats.get(item.beat) ?? 0) + 1);
+      existing.sections.set(item.beat, (existing.sections.get(item.beat) ?? 0) + 1);
       if (Number.isFinite(ts)) existing.latestTs = Math.max(existing.latestTs, ts);
     }
 
@@ -268,17 +268,17 @@ export function GeoMap({
       el.setAttribute('aria-label', `${row.country} ${row.count} stories`);
       el.addEventListener('click', () => onCountrySelect(row.country));
 
-      const topBeats = [...row.beats.entries()]
+      const topSections = [...row.sections.entries()]
         .sort((a, b) => b[1] - a[1])
         .slice(0, 2)
-        .map(([beat, count]) => `${beat} ${count}`)
+        .map(([section, count]) => `${section} ${count}`)
         .join(' · ');
 
       const popupHtml = `
         <div class="map-popup-card">
           <div class="map-popup-source">${escapeHtml(row.country)}</div>
           <div class="map-popup-title">${row.count} ${mt.storiesWindow}</div>
-          <div class="map-popup-meta">${escapeHtml(topBeats || mt.noBeatData)}</div>
+          <div class="map-popup-meta">${escapeHtml(topSections || mt.noSectionData)}</div>
         </div>
       `;
 

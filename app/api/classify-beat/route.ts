@@ -1,10 +1,9 @@
 import { Redis } from '@upstash/redis';
-import { classifyBeatByKeyword } from '@/lib/keyword-classifier';
+import { classifyBeat } from '@/lib/keyword-classifier';
 import type { Beat } from '@/lib/types';
 
 export const runtime = 'edge';
 
-const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 const CACHE_TTL_SECONDS = 60 * 60 * 24;
 
 let redisClient: Redis | null = null;
@@ -33,24 +32,18 @@ async function sha256(input: string): Promise<string> {
   return Array.from(new Uint8Array(digest)).map((b) => b.toString(16).padStart(2, '0')).join('');
 }
 
-function parseBeat(value: string): Beat {
-  if (['politics', 'business', 'tech', 'security', 'climate', 'world', 'general'].includes(value)) {
-    return value as Beat;
-  }
-  return 'general';
-}
-
 export async function POST(req: Request): Promise<Response> {
-  const body = await req.json().catch(() => null) as { title?: string; fallbackBeat?: Beat } | null;
+  const body = await req.json().catch(() => null) as { title?: string; summary?: string; fallbackBeat?: Beat } | null;
   const title = body?.title?.trim();
   const fallbackBeat = body?.fallbackBeat ?? 'general';
+  const summary = body?.summary?.trim();
+  const cacheSeed = `${title || ''}|${fallbackBeat}|${summary || ''}`;
 
   if (!title) {
     return Response.json({ error: 'title is required' }, { status: 400 });
   }
 
-  const keywordResult = classifyBeatByKeyword(title, fallbackBeat);
-  const cacheKey = `presslab:beat:${await sha256(title.toLowerCase())}`;
+  const cacheKey = `presslab:beat:${await sha256(cacheSeed.toLowerCase())}`;
 
   const redis = getRedis();
   if (redis) {
@@ -64,51 +57,8 @@ export async function POST(req: Request): Promise<Response> {
     }
   }
 
-  const groqKey = process.env.GROQ_API_KEY;
-  if (!groqKey) {
-    return Response.json(keywordResult);
-  }
-
-  const prompt = `You classify newsroom headlines into one beat.
-Return strict JSON only.
-Allowed beats: politics, business, tech, security, climate, world, general.
-JSON schema: {"beat":"...","confidence":0.0,"reason":"..."}`;
-
   try {
-    const response = await fetch(GROQ_API_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${groqKey}`
-      },
-      body: JSON.stringify({
-        model: 'llama-3.1-8b-instant',
-        temperature: 0,
-        messages: [
-          { role: 'system', content: prompt },
-          { role: 'user', content: `Headline: ${title}` }
-        ],
-        response_format: { type: 'json_object' }
-      })
-    });
-
-    if (!response.ok) {
-      return Response.json(keywordResult);
-    }
-
-    const data = await response.json();
-    const raw = data?.choices?.[0]?.message?.content;
-    const parsed = JSON.parse(raw || '{}') as { beat?: string; confidence?: number; reason?: string };
-
-    const llmResult = {
-      beat: parseBeat((parsed.beat || '').toLowerCase()),
-      confidence: typeof parsed.confidence === 'number' ? Math.max(0, Math.min(1, parsed.confidence)) : 0.6,
-      source: 'llm' as const,
-      reason: parsed.reason || 'LLM classified headline beat'
-    };
-
-    const finalResult = llmResult.confidence > keywordResult.confidence ? llmResult : keywordResult;
-
+    const finalResult = await classifyBeat({ title, summary, fallbackBeat });
     if (redis) {
       try {
         await redis.set(cacheKey, finalResult, { ex: CACHE_TTL_SECONDS });
@@ -116,9 +66,9 @@ JSON schema: {"beat":"...","confidence":0.0,"reason":"..."}`;
         // Ignore cache write failure
       }
     }
-
     return Response.json(finalResult);
   } catch {
-    return Response.json(keywordResult);
+    const fallbackResult = await classifyBeat({ title, fallbackBeat });
+    return Response.json(fallbackResult);
   }
 }

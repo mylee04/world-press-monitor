@@ -4,8 +4,8 @@ Real-time newsroom monitor built from `prd.md`, adapted from key World Monitor p
 - RSS proxy with allowlist
 - Sitemap fallback ingestion
 - Per-source circuit breaker (5-minute cooldown)
-- Two-stage beat classification (keyword instant + async Groq refinement)
-- Outlet tier filtering + beat filtering + map view
+- Two-stage section classification (keyword instant + async Groq refinement)
+- Outlet tier filtering + section filtering + map view
 - Breaking -> Draft -> Distribution workflow (Writing + Distribution tabs)
 
 ## Run
@@ -76,7 +76,7 @@ docker compose down
 
 Copy `.env.example` to `.env.local` and set values as needed.
 
-- `GROQ_API_KEY`: enables async LLM beat refinement.
+- `GROQ_API_KEY`: enables async LLM section refinement.
 - `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN`: cache LLM classifications.
 - `DATABASE_URL`: PostgreSQL connection string for Writing/Distribution draft persistence.
 - `INGEST_LOOP_INTERVAL_SEC`: independent ingest loop interval in seconds (default `300`).
@@ -149,7 +149,7 @@ Copy `.env.example` to `.env.local` and set values as needed.
 - normalized article record fields:
   - `external_id` (normalized URL hash)
   - `publication_datetime`
-  - `category` (beat)
+  - `category` (section / legacy beat)
   - `title_en`, `title_original`
   - `summary_en`, `summary_original` (feed description best-effort)
   - `country`, `url`, `source`, `is_paywalled`, `language`
@@ -158,7 +158,7 @@ Copy `.env.example` to `.env.local` and set values as needed.
   - `first_seen_at`
   - `last_seen_at`
   - `seen_count`
-- Storage includes: source, title, published time, country/language/sourceType, beat/classification, tags, world_latam flag.
+- Storage includes: source, title, published time, country/language/sourceType, section classification, tags, world_latam flag.
 - Default serving mode is now DB-first:
   - read from `external_news_articles` (enriched record) for low-latency UI loads
   - optional compatibility read mode: `NEWS_DB_READ_MODEL=ingested`
@@ -174,7 +174,7 @@ Copy `.env.example` to `.env.local` and set values as needed.
   - or `psql -d presslab -f db/schema.sql`
 - `GET /api/rss-proxy?url=...`: edge proxy with domain allowlist.
 - `GET /api/sitemap?url=...`: edge sitemap fetch/parser.
-- `POST /api/classify-beat`: LLM beat classification with cache fallback.
+- `POST /api/classify-beat`: section classification with cache fallback.
 
 ## Reporting and Alerts
 

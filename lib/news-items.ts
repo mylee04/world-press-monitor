@@ -1,4 +1,4 @@
-import { classifyBeatByKeyword } from '@/lib/keyword-classifier';
+import { classifyBeat } from '@/lib/keyword-classifier';
 import { inferGeoFromTitle } from '@/lib/geo';
 import { normalizeLinkForId } from '@/lib/pipeline';
 import type { NewsItem, OutletFeed } from '@/lib/types';
@@ -151,13 +151,14 @@ export function annotateWorldLatam(item: NewsItem): NewsItem {
   };
 }
 
-export function mapParsedOutletItemToNewsItem(
+export async function mapParsedOutletItemToNewsItem(
   outlet: OutletFeed,
   item: { title: string; description?: string; link: string; publishedAt: string }
-): NewsItem {
-  const classification = classifyBeatByKeyword(item.title, outlet.beat);
+): Promise<NewsItem> {
+  const classification = await classifyBeat({ title: item.title, summary: item.description, fallbackBeat: outlet.beat });
   const normalizedCountry = normalizeCountryName(outlet.country);
   const geo = inferGeoFromTitle(item.title, normalizedCountry);
+  const section = classification.beat;
   return annotateWorldLatam({
     id: item.link,
     outletId: outlet.id,
@@ -169,7 +170,8 @@ export function mapParsedOutletItemToNewsItem(
     sourceType: outlet.sourceType || 'global',
     tier: outlet.tier,
     publishedAt: item.publishedAt,
-    beat: classification.beat,
+    section,
+    beat: section,
     confidence: classification.confidence,
     classificationSource: classification.source,
     classificationReason: classification.reason,

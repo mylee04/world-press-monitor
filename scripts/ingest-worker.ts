@@ -2,7 +2,7 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { OUTLET_FEEDS } from '../data/outlets';
 import { parseRssOrAtom, parseSitemap } from '../lib/parsers';
-import { classifyBeatByKeyword } from '../lib/keyword-classifier';
+import { classifyBeat } from '../lib/keyword-classifier';
 import { inferGeoFromTitle } from '../lib/geo';
 import {
   readFailingEndpointBackoff,
@@ -232,10 +232,14 @@ async function runWithConcurrency<T, R>(items: T[], limit: number, fn: (item: T)
   return results;
 }
 
-function toNewsItem(outlet: OutletFeed, row: { title: string; description?: string; link: string; publishedAt: string }): NewsItem {
+async function toNewsItem(
+  outlet: OutletFeed,
+  row: { title: string; description?: string; link: string; publishedAt: string }
+): Promise<NewsItem> {
   const normalizedCountry = normalizeCountryName(outlet.country);
   const geo = inferGeoFromTitle(row.title, normalizedCountry);
-  const classification = classifyBeatByKeyword(row.title, outlet.beat);
+  const classification = await classifyBeat({ title: row.title, summary: row.description, fallbackBeat: outlet.beat });
+  const section = classification.beat;
   return annotateWorldLatam({
     id: row.link,
     outletId: outlet.id,
@@ -247,7 +251,8 @@ function toNewsItem(outlet: OutletFeed, row: { title: string; description?: stri
     sourceType: outlet.sourceType || 'global',
     tier: outlet.tier,
     publishedAt: row.publishedAt,
-    beat: classification.beat,
+    section,
+    beat: section,
     confidence: classification.confidence,
     classificationSource: classification.source,
     classificationReason: classification.reason,
@@ -300,7 +305,7 @@ async function fetchRss(outlet: OutletFeed): Promise<{ items: NewsItem[]; run: I
     }
     const xml = await response.text();
     const parsed = parseRssOrAtom(xml, RSS_ITEM_LIMIT);
-    const items = parsed.map((row) => toNewsItem(outlet, row));
+    const items = await Promise.all(parsed.map((row) => toNewsItem(outlet, row)));
     return {
       items,
       run: {
@@ -401,7 +406,7 @@ async function fetchSitemap(outlet: OutletFeed): Promise<{ items: NewsItem[]; ru
       }
     }
 
-    const items = parsed.map((row) => toNewsItem(outlet, row));
+    const items = await Promise.all(parsed.map((row) => toNewsItem(outlet, row)));
     return {
       items,
       run: {

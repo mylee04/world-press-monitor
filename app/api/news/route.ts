@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server';
 import { Redis } from '@upstash/redis';
 import { OUTLET_BY_ID, OUTLET_FEEDS } from '@/data/outlets';
-import { classifyBeatByKeyword } from '@/lib/keyword-classifier';
+import { classifyBeat } from '@/lib/keyword-classifier';
 import { inferGeoFromTitle } from '@/lib/geo';
 import {
   annotateWorldLatam,
@@ -429,26 +429,31 @@ async function getBusinessRadarFallback(): Promise<NewsItem[]> {
 
     if (!response.ok) return [];
     const data = await response.json() as { articles?: Array<{ title: string; url: string; source?: string; publishedAt?: string; beat?: string }> };
-    return (data.articles || []).slice(0, 30).map((article) => {
-      const keyword = classifyBeatByKeyword(article.title, 'business');
-      const geo = inferGeoFromTitle(article.title);
-      const newsItem = {
-        id: article.url,
-        title: article.title,
-        link: article.url,
-        source: article.source || 'Business Radar',
-        language: 'en',
-        sourceType: 'global',
-        tier: 2,
-        publishedAt: article.publishedAt || new Date().toISOString(),
-        beat: keyword.beat,
-        confidence: keyword.confidence,
-        classificationSource: keyword.source,
-        classificationReason: keyword.reason,
-        ...geo
-      } satisfies NewsItem;
-      return annotateWorldLatam(newsItem);
-    });
+    const articles = (data.articles || []).slice(0, 30);
+    const classified = await Promise.all(
+      articles.map(async (article) => {
+        const classification = await classifyBeat({ title: article.title, fallbackBeat: 'business' });
+        const geo = inferGeoFromTitle(article.title);
+        const newsItem = {
+          id: article.url,
+          title: article.title,
+          link: article.url,
+          source: article.source || 'Business Radar',
+          language: 'en',
+          sourceType: 'global',
+          tier: 2,
+          publishedAt: article.publishedAt || new Date().toISOString(),
+          beat: classification.beat,
+          section: classification.beat,
+          confidence: classification.confidence,
+          classificationSource: classification.source,
+          classificationReason: classification.reason,
+          ...geo
+        } satisfies NewsItem;
+        return annotateWorldLatam(newsItem);
+      })
+    );
+    return classified;
   } catch {
     return [];
   }
@@ -498,8 +503,8 @@ async function getGnewsBreakingOverlay(): Promise<NewsItem[]> {
   ).catch(() => []);
 
   const merged = batches.flat();
-  return merged
-    .map((article) => {
+  const classified = await Promise.all(
+    merged.map(async (article) => {
       const title = (article.title || '').trim();
       const link = (article.url || '').trim();
       const publishedAt = article.publishedAt ? new Date(article.publishedAt).toISOString() : '';
@@ -507,7 +512,8 @@ async function getGnewsBreakingOverlay(): Promise<NewsItem[]> {
 
       const fallbackCountry = inferCountryFromText(`${title} ${article.description || ''} ${link}`);
       const geo = inferGeoFromTitle(title, fallbackCountry);
-      const classification = classifyBeatByKeyword(title, 'world');
+      const classification = await classifyBeat({ title, summary: article.description || '', fallbackBeat: 'world' });
+      const section = classification.beat;
       const item = {
         id: link,
         title,
@@ -518,7 +524,8 @@ async function getGnewsBreakingOverlay(): Promise<NewsItem[]> {
         sourceType: 'portal' as const,
         tier: 2 as const,
         publishedAt,
-        beat: classification.beat,
+        section,
+        beat: section,
         confidence: classification.confidence,
         classificationSource: classification.source,
         classificationReason: classification.reason,
@@ -528,7 +535,8 @@ async function getGnewsBreakingOverlay(): Promise<NewsItem[]> {
       } satisfies NewsItem;
       return annotateWorldLatam(item);
     })
-    .filter((item): item is NewsItem => Boolean(item));
+  );
+  return classified.filter((item): item is NewsItem => Boolean(item));
 }
 
 async function runWithConcurrency<T, R>(items: T[], limit: number, fn: (item: T) => Promise<R>): Promise<R[]> {

@@ -121,7 +121,7 @@ export async function fetchOutletRss(origin: string, outlet: OutletFeed): Promis
 
     const xml = await response.text();
     const parsed = parseRssOrAtom(xml, parseLimit);
-    const items = parsed.map((item) => mapParsedOutletItemToNewsItem(outlet, item));
+    const items = await Promise.all(parsed.map((item) => mapParsedOutletItemToNewsItem(outlet, item)));
 
     markSuccess(outlet.id);
     return {
@@ -232,7 +232,7 @@ export async function fetchOutletSitemap(origin: string, outlet: OutletFeed): Pr
 
     const json = await response.json() as { items?: Array<{ title: string; description?: string; link: string; publishedAt: string }> };
     const parsed = (json.items || []).slice(0, parseLimit);
-    const items = parsed.map((item) => mapParsedOutletItemToNewsItem(outlet, item));
+    const items = await Promise.all(parsed.map((item) => mapParsedOutletItemToNewsItem(outlet, item)));
 
     markSuccess(key);
     return {

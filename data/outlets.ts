@@ -4,6 +4,7 @@ interface OutletSeed {
   name: string;
   tier: 1 | 2 | 3;
   beat: OutletFeed['beat'];
+  section?: OutletFeed['section'];
   country: string;
   language?: string;
   sourceType?: 'global' | 'local' | 'portal';
@@ -643,6 +644,7 @@ function buildOutlets(): OutletFeed[] {
       const id = slugify(seed.name);
       const existing = merged.get(seed.name);
       const category = CATEGORY_ALIAS[presetKey];
+      const section = seed.section || seed.beat;
 
       if (existing) {
         if (!existing.categories.includes(category)) {
@@ -658,6 +660,7 @@ function buildOutlets(): OutletFeed[] {
         name: seed.name,
         tier: seed.tier,
         beat: seed.beat,
+        section,
         categories: [category],
         language: seed.language || 'en',
         sourceType: seed.sourceType || 'global',

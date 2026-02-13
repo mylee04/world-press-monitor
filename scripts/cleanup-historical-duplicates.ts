@@ -24,6 +24,9 @@ type DuplicateSummary = {
   totalRows: number;
 };
 
+const DB_READY_RETRIES = 12;
+const DB_READY_WAIT_MS = 2000;
+
 const TABLES = [
   'breaking_queue',
   'distribution_content',
@@ -80,7 +83,53 @@ function getDatabaseUrl(): string {
   const line = raw.split('\n').find((row) => row.trim().startsWith('DATABASE_URL='));
   if (!line) throw new Error('DATABASE_URL not found in .env.local.');
 
-    return line.split('=', 2).slice(1).join('=').trim().replace(/^['"]|['"]$/g, '');
+  return line
+    .slice(line.indexOf('=') + 1)
+    .trim()
+    .replace(/^['"]|['"]$/g, '');
+}
+
+function maskDbUrl(url: string): string {
+  try {
+    const parsed = new URL(url);
+    const host = parsed.host;
+    const path = parsed.pathname || '/';
+    const auth = parsed.username ? `${parsed.username}:***@` : '';
+    return `${parsed.protocol}//${auth}${host}${path}`;
+  } catch {
+    return '(invalid DATABASE_URL)';
+  }
+}
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+
+async function waitForDatabase(pool: Pool): Promise<void> {
+  for (let attempt = 1; attempt <= DB_READY_RETRIES; attempt += 1) {
+    try {
+      const client = await pool.connect();
+      try {
+        await client.query('SELECT 1');
+      } finally {
+        client.release();
+      }
+      if (attempt > 1) {
+        console.log(`Connected to Postgres on attempt ${attempt}/${DB_READY_RETRIES}.`);
+      }
+      return;
+    } catch (error) {
+      if (attempt === DB_READY_RETRIES) {
+        throw error;
+      }
+      console.log(
+        `[db] Postgres not available yet (attempt ${attempt}/${DB_READY_RETRIES}). Retrying in ${DB_READY_WAIT_MS / 1000}s...`
+      );
+      await sleep(DB_READY_WAIT_MS);
+    }
+  }
 }
 
 function normalizeTableCounts(rows: TableCount[]): Map<string, number> {
@@ -196,11 +245,11 @@ WITH normalized AS (
     source,
     title,
     link_norm,
-    publication_datetime,
+    published_at,
     last_seen_at,
     seen_count,
     lower(trim(source)) AS source_norm,
-    floor(extract(epoch from publication_datetime) / 60)::bigint AS bucket,
+    floor(extract(epoch from published_at) / 60)::bigint AS bucket,
     coalesce(
       NULLIF(
         trim(
@@ -227,7 +276,7 @@ WITH normalized AS (
     id,
     source,
     title,
-    publication_datetime,
+    published_at,
     last_seen_at,
     seen_count,
     CASE
@@ -395,12 +444,12 @@ async function printExamples(pool: Pool, table: 'external_news_articles' | 'inge
   }
 
   const sql = `${INGESTED_DUP_SQL}
-    SELECT source, publication_datetime, id, title
+    SELECT source, published_at, id, title
     FROM ranked
     WHERE rn > 1
-    ORDER BY source, publication_datetime DESC, id
+    ORDER BY source, published_at DESC, id
     LIMIT ${limit};`;
-  const { rows } = await pool.query<{ source: string; publication_datetime: string; id: number; title: string }>(sql);
+  const { rows } = await pool.query<{ source: string; published_at: string; id: number; title: string }>(sql);
   if (!rows.length) {
     console.log('No ingested duplicate examples after filtering.');
     return;
@@ -408,15 +457,18 @@ async function printExamples(pool: Pool, table: 'external_news_articles' | 'inge
   console.log(`\nExample removable rows from ${table} (up to ${limit}):`);
   for (const row of rows) {
     const title = (row.title || '').replace(/\s+/g, ' ').slice(0, 110);
-    console.log(`- ${row.id} | ${row.source} | ${row.publication_datetime} | ${title}`);
+    console.log(`- ${row.id} | ${row.source} | ${row.published_at} | ${title}`);
   }
 }
 
 async function main(): Promise<void> {
   const args = parseArgs();
-  const pool = new Pool({ connectionString: getDatabaseUrl() });
+  const dbUrl = getDatabaseUrl();
+  console.log(`[db] Connecting to ${maskDbUrl(dbUrl)} ...`);
+  const pool = new Pool({ connectionString: dbUrl });
 
   try {
+    await waitForDatabase(pool);
     const beforeCounts = await getCounts(pool);
     printCounts('Counts before:', beforeCounts);
 

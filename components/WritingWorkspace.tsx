@@ -216,6 +216,7 @@ export function WritingWorkspace({ locale, drafts, setDrafts, onSentToDistributi
         tier: 2,
         publishedAt: selected.sourcePublishedAt,
         beat: 'world',
+        section: 'world',
         confidence: 0.5,
         classificationSource: 'keyword'
       });

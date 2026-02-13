@@ -1,5 +1,31 @@
 import type { Beat, BeatClassification } from '@/lib/types';
 
+const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
+const DEFAULT_GROQ_MODEL = 'llama-3.1-8b-instant';
+const DEFAULT_TRIGGER_CONFIDENCE = 0.72;
+const DEFAULT_AI_MIN_CONFIDENCE = 0.58;
+const CLASSIFY_MAX_TITLE_CHARS = 260;
+const CLASSIFY_MAX_SUMMARY_CHARS = 1800;
+
+type ClassifyParams = {
+  title: string;
+  fallbackBeat?: Beat;
+  summary?: string;
+};
+
+type CachedBeatClassification = {
+  result: BeatClassification;
+  expiresAt: number;
+};
+
+const AI_CLASSIFIER_CACHE = new Map<string, CachedBeatClassification>();
+
+const SHOULD_USE_AI_CLASSIFIER = (process.env.BEAT_CLASSIFIER_ENABLED || 'true').toLowerCase() !== 'false';
+const AI_TRIGGER_CONFIDENCE = clampEnvFloat('BEAT_CLASSIFIER_TRIGGER_CONFIDENCE', DEFAULT_TRIGGER_CONFIDENCE, 0.0, 0.99);
+const AI_MIN_CONFIDENCE = clampEnvFloat('BEAT_CLASSIFIER_MIN_AI_CONFIDENCE', DEFAULT_AI_MIN_CONFIDENCE, 0.01, 1.0);
+const AI_CACHE_TTL_MS = envInt('BEAT_CLASSIFIER_CACHE_TTL_MS', 6 * 60 * 60 * 1000, 60 * 60 * 1000);
+const AI_TIMEOUT_MS = envInt('BEAT_CLASSIFIER_AI_TIMEOUT_MS', 3500, 500);
+
 type KeywordMap = Record<string, Beat>;
 
 const HIGH_PRIORITY: KeywordMap = {
@@ -146,4 +172,162 @@ export function classifyBeatByKeyword(title: string, fallbackBeat: Beat = 'gener
   }
 
   return { beat: fallbackBeat, confidence: 0.51, source: 'keyword', reason: 'Fell back to outlet default beat' };
+}
+
+export async function classifyBeat(params: ClassifyParams): Promise<BeatClassification> {
+  const title = (params.title || '').trim();
+  const summary = (params.summary || '').trim();
+  const fallbackBeat = params.fallbackBeat || 'general';
+
+  const keywordResult = classifyBeatByKeyword(title, fallbackBeat);
+  if (!SHOULD_USE_AI_CLASSIFIER || !title) return keywordResult;
+  if (keywordResult.confidence >= AI_TRIGGER_CONFIDENCE) return keywordResult;
+
+  const groqKey = process.env.GROQ_API_KEY?.trim();
+  if (!groqKey) return keywordResult;
+
+  const cacheKey = buildCacheKey(title, summary, fallbackBeat);
+  const cached = readCache(cacheKey);
+  if (cached) return cached;
+
+  const aiResult = await callGroqClassifier(groqKey, title, summary, fallbackBeat);
+  const finalResult = aiResult && aiResult.confidence > keywordResult.confidence ? aiResult : keywordResult;
+  writeCache(cacheKey, finalResult);
+  return finalResult;
+}
+
+function envInt(name: string, fallback: number, min = Number.NEGATIVE_INFINITY, max = Number.POSITIVE_INFINITY): number {
+  const raw = process.env[name];
+  const parsed = Number.parseInt(raw || '', 10);
+  if (!Number.isFinite(parsed)) return fallback;
+  const clamped = Math.max(min, Math.min(max, parsed));
+  return clamped;
+}
+
+function clampEnvFloat(name: string, fallback: number, min = 0, max = 1): number {
+  const raw = process.env[name];
+  const parsed = Number.parseFloat(raw || '');
+  if (!Number.isFinite(parsed)) return fallback;
+  return Math.max(min, Math.min(max, parsed));
+}
+
+function normalizeText(value: string): string {
+  return value
+    .replace(/\s+/g, ' ')
+    .trim()
+    .toLowerCase()
+    .slice(0, CLASSIFY_MAX_SUMMARY_CHARS);
+}
+
+function parseBeat(value: string): Beat {
+  if (value === 'politics' || value === 'business' || value === 'tech' || value === 'security' || value === 'climate' || value === 'world' || value === 'general') {
+    return value;
+  }
+  return 'general';
+}
+
+function buildCacheKey(title: string, summary: string, fallbackBeat: Beat): string {
+  const source = `${fallbackBeat}|${normalizeText(title)}|${normalizeText(summary).slice(0, CLASSIFY_MAX_SUMMARY_CHARS)}`;
+  return source;
+}
+
+function readCache(key: string): BeatClassification | null {
+  const entry = AI_CLASSIFIER_CACHE.get(key);
+  if (!entry) return null;
+  if (entry.expiresAt <= Date.now()) {
+    AI_CLASSIFIER_CACHE.delete(key);
+    return null;
+  }
+  return entry.result;
+}
+
+function writeCache(key: string, result: BeatClassification): void {
+  AI_CLASSIFIER_CACHE.set(key, {
+    result,
+    expiresAt: Date.now() + AI_CACHE_TTL_MS
+  });
+  if (AI_CLASSIFIER_CACHE.size > 2000) {
+    const firstKey = AI_CLASSIFIER_CACHE.keys().next().value;
+    if (firstKey !== undefined) AI_CLASSIFIER_CACHE.delete(firstKey);
+  }
+}
+
+async function callGroqClassifier(apiKey: string, title: string, summary: string, fallbackBeat: Beat): Promise<BeatClassification | null> {
+  const payload = {
+    model: process.env.BEAT_CLASSIFIER_GROQ_MODEL || DEFAULT_GROQ_MODEL,
+    temperature: 0,
+    max_tokens: 180,
+    response_format: { type: 'json_object' },
+    messages: [
+      {
+        role: 'system',
+        content: [
+          'Classify newsroom headlines into one section.',
+          'Allowed sections: politics, business, tech, security, climate, world, general.',
+          'Use the headline first, then short summary as context.',
+          'Return strict JSON object only.',
+          'Schema: {"beat":"...","confidence":0.0,"reason":"..."}.'
+        ].join(' ')
+      },
+      {
+        role: 'user',
+        content: `headline: ${normalizeText(title).slice(0, CLASSIFY_MAX_TITLE_CHARS)}\nsummary: ${normalizeText(summary) || 'n/a'}\nfallback: ${fallbackBeat}`
+      }
+    ]
+  } satisfies Record<string, unknown>;
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), AI_TIMEOUT_MS);
+
+  try {
+    const response = await fetch(GROQ_API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${apiKey}`
+      },
+      body: JSON.stringify(payload),
+      signal: controller.signal
+    });
+
+    if (!response.ok) return null;
+
+    const data = await response.json();
+    const raw = data?.choices?.[0]?.message?.content;
+    const parsed = safeJsonParse(raw);
+    if (!parsed) return null;
+
+    const beat = parseBeat((String(parsed.beat || '').toLowerCase()).trim());
+    const confidence = Number(parsed.confidence);
+    if (!Number.isFinite(confidence) || confidence < AI_MIN_CONFIDENCE) return null;
+
+    return {
+      beat,
+      confidence: Math.max(0, Math.min(1, confidence)),
+      source: 'llm',
+      reason: String(parsed.reason || 'LLM classified headline section')
+    };
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+function safeJsonParse(value: unknown): { beat?: string; confidence?: number; reason?: string } | null {
+  if (typeof value !== 'string') return null;
+  const raw = value.trim();
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw);
+  } catch {
+    const start = raw.indexOf('{');
+    const end = raw.lastIndexOf('}');
+    if (start < 0 || end <= start) return null;
+    try {
+      return JSON.parse(raw.slice(start, end + 1));
+    } catch {
+      return null;
+    }
+  }
 }

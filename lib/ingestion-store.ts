@@ -418,15 +418,16 @@ export async function readIngestedArticles(options: {
       || beatCandidate === 'world'
       ? (beatCandidate as NewsItem['beat'])
       : 'general';
-    const sourceTypeCandidate = (row.source_type || 'global').toLowerCase();
-    const sourceType: NewsItem['sourceType'] =
-      sourceTypeCandidate === 'local' || sourceTypeCandidate === 'portal'
-        ? (sourceTypeCandidate as NewsItem['sourceType'])
-        : 'global';
-    const classificationSource: NewsItem['classificationSource'] = row.classification_source === 'llm' ? 'llm' : 'keyword';
-    const tags = Array.isArray(row.tags) ? (row.tags.filter((value) => typeof value === 'string') as string[]) : [];
+  const sourceTypeCandidate = (row.source_type || 'global').toLowerCase();
+  const sourceType: NewsItem['sourceType'] =
+    sourceTypeCandidate === 'local' || sourceTypeCandidate === 'portal'
+      ? (sourceTypeCandidate as NewsItem['sourceType'])
+      : 'global';
+  const section = beat;
+  const classificationSource: NewsItem['classificationSource'] = row.classification_source === 'llm' ? 'llm' : 'keyword';
+  const tags = Array.isArray(row.tags) ? (row.tags.filter((value) => typeof value === 'string') as string[]) : [];
 
-    return {
+  return {
       id: row.link,
       outletId: row.outlet_id || undefined,
       title: row.title,
@@ -437,6 +438,7 @@ export async function readIngestedArticles(options: {
       sourceType,
       tier,
       publishedAt: new Date(row.published_at).toISOString(),
+      section,
       beat,
       confidence: typeof row.confidence === 'number' ? row.confidence : 0.5,
       classificationSource,
@@ -513,6 +515,7 @@ function mapRowToNewsItem(row: {
     sourceTypeCandidate === 'local' || sourceTypeCandidate === 'portal'
       ? (sourceTypeCandidate as NewsItem['sourceType'])
       : 'global';
+  const section = beat;
   const classificationSource: NewsItem['classificationSource'] = row.classification_source === 'llm' ? 'llm' : 'keyword';
   const tags = Array.isArray(row.tags) ? (row.tags.filter((value) => typeof value === 'string') as string[]) : [];
   const publicationSource: NewsItem['publicationSource'] =
@@ -528,10 +531,11 @@ function mapRowToNewsItem(row: {
     link: row.link,
     source: row.source,
     language: row.language || undefined,
-    sourceType,
-    tier,
-    publishedAt: new Date(row.published_at).toISOString(),
-    beat,
+      sourceType,
+      tier,
+      publishedAt: new Date(row.published_at).toISOString(),
+      section,
+      beat,
     confidence: typeof row.confidence === 'number' ? row.confidence : 0.5,
     classificationSource,
     classificationReason: row.classification_reason || undefined,
