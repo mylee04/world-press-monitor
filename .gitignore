@@ -1,7 +1,9 @@
 node_modules
 .next
 .next.bak-*
+.env
 .env.local
+env.local
 tsconfig.tsbuildinfo
 .warm-daemon.pid
 audits/*.log

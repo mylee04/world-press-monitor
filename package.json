@@ -41,6 +41,7 @@
     "notify:discord-hourly:ops:dry": "bun scripts/post-hourly-ops-discord.ts --dry-run",
     "db:cleanup:duplicates": "bun scripts/cleanup-historical-duplicates.ts",
     "auth:check:radar": "bash scripts/check-radar-auth.sh",
+    "git:check-env-staged": "bash scripts/check-git-env-safety.sh",
     "promote:expansion": "bun scripts/promote-expansion-sources.ts",
     "promote:expansion:apply": "bun scripts/promote-expansion-sources.ts --apply"
   },

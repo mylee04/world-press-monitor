@@ -255,6 +255,18 @@ Copy `.env.example` to `.env.local` and set values as needed.
     - `.env.local` `RADAR_SERVICE_API_KEYS` (scoped)
     - explicit env vars (`OPS_TOKEN`, `DASH_TOKEN`, `INGEST_TOKEN`)
 
+- `bun run git:check-env-staged`
+  - safety guard: fails if `.env`, `.env.local`, `env.local` are staged for commit.
+
+Before pushing, run:
+
+```bash
+git add -A
+bun run git:check-env-staged
+git commit -m "...your message..."
+git push
+```
+
 Key KPIs include:
 - raw volume vs `15,000/24h` target
 - unique by source / unique cross-source
