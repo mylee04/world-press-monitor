@@ -180,7 +180,7 @@ Copy `.env.example` to `.env.local` and set values as needed.
   - or `psql -d presslab -f db/schema.sql`
 - `GET /api/rss-proxy?url=...`: edge proxy with domain allowlist.
 - `GET /api/sitemap?url=...`: edge sitemap fetch/parser.
-- `POST /api/classify-beat`: section classification with cache fallback.
+- `POST /api/classify-section`: section classification with cache fallback.
 
 ## Reporting and Alerts
 

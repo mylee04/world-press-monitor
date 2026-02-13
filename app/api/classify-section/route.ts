@@ -1,5 +1,5 @@
 import { Redis } from '@upstash/redis';
-import { classifyBeat } from '@/lib/keyword-classifier';
+import { classifySection } from '@/lib/keyword-classifier';
 import type { NewsSection } from '@/lib/types';
 
 export const runtime = 'edge';
@@ -37,10 +37,9 @@ export async function POST(req: Request): Promise<Response> {
     title?: string;
     summary?: string;
     fallbackSection?: NewsSection;
-    fallbackBeat?: NewsSection;
   } | null;
   const title = body?.title?.trim();
-  const fallbackSection = body?.fallbackSection || body?.fallbackBeat || 'general';
+  const fallbackSection = body?.fallbackSection || 'general';
   const summary = body?.summary?.trim();
   const cacheSeed = `${title || ''}|${fallbackSection}|${summary || ''}`;
 
@@ -63,7 +62,7 @@ export async function POST(req: Request): Promise<Response> {
   }
 
   try {
-    const finalResult = await classifyBeat({ title, summary, fallbackSection });
+    const finalResult = await classifySection({ title, summary, fallbackSection });
     if (redis) {
       try {
         await redis.set(cacheKey, finalResult, { ex: CACHE_TTL_SECONDS });
@@ -73,7 +72,7 @@ export async function POST(req: Request): Promise<Response> {
     }
     return Response.json(finalResult);
   } catch {
-    const fallbackResult = await classifyBeat({ title, fallbackSection });
+    const fallbackResult = await classifySection({ title, fallbackSection });
     return Response.json(fallbackResult);
   }
 }

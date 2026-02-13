@@ -2,7 +2,7 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { OUTLET_FEEDS } from '../data/outlets';
 import { parseRssOrAtom, parseSitemap } from '../lib/parsers';
-import { classifyBeat } from '../lib/keyword-classifier';
+import { classifySection } from '../lib/keyword-classifier';
 import { inferGeoFromTitle } from '../lib/geo';
 import {
   readFailingEndpointBackoff,
@@ -239,7 +239,7 @@ async function toNewsItem(
   const normalizedCountry = normalizeCountryName(outlet.country);
   const geo = inferGeoFromTitle(row.title, normalizedCountry);
   const fallbackSection = outlet.section || 'general';
-  const classification = await classifyBeat({ title: row.title, summary: row.description, fallbackSection });
+  const classification = await classifySection({ title: row.title, summary: row.description, fallbackSection });
   const section = classification.section;
   return annotateWorldLatam({
     id: row.link,

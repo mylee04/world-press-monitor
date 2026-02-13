@@ -1,4 +1,4 @@
-import { classifyBeat } from '@/lib/keyword-classifier';
+import { classifySection } from '@/lib/keyword-classifier';
 import { inferGeoFromTitle } from '@/lib/geo';
 import { normalizeLinkForId } from '@/lib/pipeline';
 import type { NewsItem, OutletFeed } from '@/lib/types';
@@ -160,7 +160,7 @@ export async function mapParsedOutletItemToNewsItem(
   item: { title: string; description?: string; link: string; publishedAt: string }
 ): Promise<NewsItem> {
   const fallbackSection = outlet.section || 'general';
-  const classification = await classifyBeat({ title: item.title, summary: item.description, fallbackSection });
+  const classification = await classifySection({ title: item.title, summary: item.description, fallbackSection });
   const normalizedCountry = normalizeCountryName(outlet.country);
   const geo = inferGeoFromTitle(item.title, normalizedCountry);
   const section = classification.section;

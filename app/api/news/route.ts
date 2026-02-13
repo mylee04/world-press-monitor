@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server';
 import { Redis } from '@upstash/redis';
 import { OUTLET_BY_ID, OUTLET_FEEDS } from '@/data/outlets';
-import { classifyBeat } from '@/lib/keyword-classifier';
+import { classifySection } from '@/lib/keyword-classifier';
 import { inferGeoFromTitle } from '@/lib/geo';
 import {
   annotateWorldLatam,
@@ -441,7 +441,7 @@ async function getBusinessRadarFallback(): Promise<NewsItem[]> {
     const classified = await Promise.all(
       articles.map(async (article) => {
         const fallbackSection = (article.section || 'business') as NewsSection;
-        const classification = await classifyBeat({ title: article.title, fallbackSection });
+        const classification = await classifySection({ title: article.title, fallbackSection });
         const geo = inferGeoFromTitle(article.title);
         const newsItem = {
           id: article.url,
@@ -520,7 +520,7 @@ async function getGnewsBreakingOverlay(): Promise<NewsItem[]> {
 
       const fallbackCountry = inferCountryFromText(`${title} ${article.description || ''} ${link}`);
       const geo = inferGeoFromTitle(title, fallbackCountry);
-      const classification = await classifyBeat({ title, summary: article.description || '', fallbackSection: 'world' });
+      const classification = await classifySection({ title, summary: article.description || '', fallbackSection: 'world' });
       const section = classification.section;
       const item = {
         id: link,

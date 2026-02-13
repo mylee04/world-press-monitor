@@ -13,12 +13,12 @@ type ClassifyParams = {
   summary?: string;
 };
 
-type CachedBeatClassification = {
+type CachedSectionClassification = {
   result: SectionClassification;
   expiresAt: number;
 };
 
-const AI_CLASSIFIER_CACHE = new Map<string, CachedBeatClassification>();
+const AI_CLASSIFIER_CACHE = new Map<string, CachedSectionClassification>();
 
 const SHOULD_USE_AI_CLASSIFIER = (process.env.BEAT_CLASSIFIER_ENABLED || 'true').toLowerCase() !== 'false';
 const AI_TRIGGER_CONFIDENCE = clampEnvFloat('BEAT_CLASSIFIER_TRIGGER_CONFIDENCE', DEFAULT_TRIGGER_CONFIDENCE, 0.0, 0.99);
@@ -154,7 +154,7 @@ function matchMap(title: string, map: KeywordMap): { section: NewsSection; keywo
   return null;
 }
 
-export function classifyBeatByKeyword(title: string, fallbackSection: NewsSection = 'general'): SectionClassification {
+export function classifySectionByKeyword(title: string, fallbackSection: NewsSection = 'general'): SectionClassification {
   const high = matchMap(title, HIGH_PRIORITY);
   if (high) {
     return {
@@ -178,12 +178,12 @@ export function classifyBeatByKeyword(title: string, fallbackSection: NewsSectio
   return { section: fallbackSection, confidence: 0.51, source: 'keyword', reason: 'Fell back to outlet default section' };
 }
 
-export async function classifyBeat(params: ClassifyParams): Promise<SectionClassification> {
+export async function classifySection(params: ClassifyParams): Promise<SectionClassification> {
   const title = (params.title || '').trim();
   const summary = (params.summary || '').trim();
   const fallbackSection = params.fallbackSection || 'general';
 
-  const keywordResult = classifyBeatByKeyword(title, fallbackSection);
+  const keywordResult = classifySectionByKeyword(title, fallbackSection);
   if (!SHOULD_USE_AI_CLASSIFIER || !title) return keywordResult;
   if (keywordResult.confidence >= AI_TRIGGER_CONFIDENCE) return keywordResult;
 
@@ -252,7 +252,7 @@ function normalizeText(value: string): string {
     .slice(0, CLASSIFY_MAX_SUMMARY_CHARS);
 }
 
-function parseBeat(value: string): NewsSection {
+function parseSection(value: string): NewsSection {
   if (value === 'politics' || value === 'business' || value === 'tech' || value === 'security' || value === 'climate' || value === 'world' || value === 'general') {
     return value;
   }
@@ -330,7 +330,7 @@ async function callGroqClassifier(apiKey: string, title: string, summary: string
     const parsed = safeJsonParse(raw);
     if (!parsed) return null;
 
-    const section = parseBeat((String(parsed.section || '').toLowerCase()).trim());
+    const section = parseSection((String(parsed.section || '').toLowerCase()).trim());
     const confidence = Number(parsed.confidence);
     if (!Number.isFinite(confidence) || confidence < AI_MIN_CONFIDENCE) return null;
 

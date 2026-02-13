@@ -1452,10 +1452,10 @@ export function NewsroomDashboard({
   useEffect(() => {
     const pending = items.filter((item) => item.classificationSource === 'keyword').slice(0, 25);
     pending.forEach((item) => {
-      void fetch('/api/classify-beat', {
+      void fetch('/api/classify-section', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title: item.title, fallbackBeat: item.section })
+        body: JSON.stringify({ title: item.title, fallbackSection: item.section })
       })
         .then((response) => response.json() as Promise<{ section: NewsSection; confidence: number; source: 'keyword' | 'llm'; reason?: string }>)
         .then((result) => {
