@@ -1,0 +1,4 @@
+interface:
+  display_name: "PostgreSQL Ops Runbook"
+  short_description: "Safe PostgreSQL diagnosis, migrations, and recovery"
+  default_prompt: "Handle this PostgreSQL task with safe ops steps: diagnose first, propose reversible changes, validate with SQL, and include rollback."

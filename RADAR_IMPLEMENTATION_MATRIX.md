@@ -17,6 +17,7 @@ This matrix tracks the gap between requested Radar backend capabilities and actu
 | `GET /api/radar/v1/ops/summary` | Done | `app/api/radar/v1/ops/summary/route.ts` |
 | `GET /api/radar/v1/ops/domain-metrics` | Done | `app/api/radar/v1/ops/domain-metrics/route.ts` |
 | `GET/POST /api/radar/v1/fetch` | Done | `app/api/radar/v1/fetch/route.ts` |
+| `GET /api/radar/v1/fetch/ping` | Done | `app/api/radar/v1/fetch/ping/route.ts` |
 | Legacy compatibility `GET /api/radar/articles` | Done | `app/api/radar/articles/route.ts` |
 | Legacy compatibility `GET /api/radar/sources` | Done | `app/api/radar/sources/route.ts` |
 | Legacy compatibility `GET /api/radar/ops/summary` | Done | `app/api/radar/ops/summary/route.ts` |

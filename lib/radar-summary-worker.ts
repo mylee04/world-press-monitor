@@ -24,6 +24,7 @@ export type RadarSummaryRunStats = {
   cooldownDeferred: number;
   providerUsage: {
     glm: number;
+    gemini: number;
   };
   providerErrors: {
     auth401: number;
@@ -55,6 +56,8 @@ const DEFAULT_MAX_CONTEXT_CHARS = 3500;
 const DEFAULT_MAX_SUMMARY_CHARS = 900;
 const DEFAULT_GLM_DAILY_LIMIT = 15000;
 const DEFAULT_COOLDOWN_MINUTES = 1;
+const DEFAULT_GEMINI_MODEL = 'gemini-2.0-flash-lite';
+const DEFAULT_GEMINI_BATCH_SIZE = 6;
 
 function readIntEnv(name: string, fallback: number): number {
   const parsed = Number(process.env[name] || fallback);
@@ -108,11 +111,11 @@ function parseJsonObject(text: string): Record<string, unknown> | null {
 
 function classifyProviderError(message: string): keyof RadarSummaryRunStats['providerErrors'] {
   const lower = message.toLowerCase();
-  if (lower.includes('glm_http_401')) return 'auth401';
-  if (lower.includes('glm_http_429')) return 'rateLimited429';
-  if (lower.includes('glm_http_400')) return 'badRequest400';
+  if (lower.includes('glm_http_401') || lower.includes('gemini_http_401')) return 'auth401';
+  if (lower.includes('glm_http_429') || lower.includes('gemini_http_429')) return 'rateLimited429';
+  if (lower.includes('glm_http_400') || lower.includes('gemini_http_400')) return 'badRequest400';
   if (lower.includes('timeout') || lower.includes('aborted')) return 'timeout';
-  if (lower.includes('glm_http_5')) return 'upstream5xx';
+  if (lower.includes('glm_http_5') || lower.includes('gemini_http_5')) return 'upstream5xx';
   return 'unknown';
 }
 
@@ -324,6 +327,63 @@ async function requestGlmSummary(input: {
   }
 }
 
+
+async function requestGeminiSummary(input: {
+  apiKey: string;
+  model: string;
+  prompt: string;
+  timeoutMs: number;
+}): Promise<{ summaryOriginal: string; summaryEn: string; modelUsed: string }> {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), input.timeoutMs);
+  try {
+    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(
+      input.model
+    )}:generateContent?key=${encodeURIComponent(input.apiKey)}`;
+
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      signal: controller.signal,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: input.prompt }] }],
+        generationConfig: {
+          temperature: 0.1,
+          responseMimeType: 'application/json',
+        },
+      }),
+    });
+
+    const text = await response.text();
+    if (!response.ok) {
+      throw new Error(`gemini_http_${response.status}: ${text.slice(0, 400)}`);
+    }
+
+    let top: any = null;
+    try {
+      top = JSON.parse(text);
+    } catch {
+      top = null;
+    }
+
+    const content = top?.candidates?.[0]?.content?.parts?.[0]?.text;
+    const parsed = typeof content === 'string' ? parseJsonObject(content) : parseJsonObject(text);
+    const summaryOriginal = normalizeText(String(parsed?.summary_original || ''));
+    const summaryEn = normalizeText(String(parsed?.summary_en || ''));
+    if (!summaryOriginal && !summaryEn) {
+      throw new Error('gemini_empty_summary');
+    }
+
+    return {
+      summaryOriginal: summaryOriginal || summaryEn,
+      summaryEn: summaryEn || summaryOriginal,
+      modelUsed: input.model,
+    };
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
 async function ensureSchema(pool: Pool): Promise<void> {
   await pool.query(`
     create table if not exists radar_summary_queue (
@@ -395,29 +455,30 @@ async function seedQueue(pool: Pool, limit: number): Promise<number> {
   return result.rowCount || 0;
 }
 
-async function getUsageToday(pool: Pool): Promise<number> {
+async function getUsageToday(pool: Pool, provider: 'glm' | 'gemini'): Promise<number> {
   const result = await pool.query<{ request_count: string }>(
     `
       select request_count::text
       from radar_summary_usage_daily
       where usage_date = current_date
-        and provider = 'glm'
+        and provider = $1
       limit 1
-    `
+    `,
+    [provider]
   );
   return Number(result.rows[0]?.request_count || 0);
 }
 
-async function incrementUsage(pool: Pool, count = 1): Promise<void> {
+async function incrementUsage(pool: Pool, provider: 'glm' | 'gemini', count = 1): Promise<void> {
   await pool.query(
     `
       insert into radar_summary_usage_daily (usage_date, provider, request_count, updated_at)
-      values (current_date, 'glm', $1, now())
+      values (current_date, $2, $1, now())
       on conflict (usage_date, provider) do update
       set request_count = radar_summary_usage_daily.request_count + excluded.request_count,
           updated_at = now()
     `,
-    [count]
+    [count, provider]
   );
 }
 
@@ -494,16 +555,29 @@ async function recordFetchLog(
 
 export async function processRadarSummaryQueue(): Promise<RadarSummaryRunStats> {
   const pool = getPool();
-  const batch = Math.max(1, readIntEnv('RADAR_SUMMARY_BATCH_SIZE', DEFAULT_BATCH_SIZE));
+  const glmApiKey = (process.env.GLM_API_KEY || '').trim();
+  const geminiApiKey = (process.env.GEMINI_API_KEY || '').trim();
+  const requestedProvider = (process.env.RADAR_SUMMARY_AI_PROVIDER || '').trim().toLowerCase();
+  const providerSelected = requestedProvider === 'glm' || requestedProvider === 'gemini'
+    ? (requestedProvider as 'glm' | 'gemini')
+    : geminiApiKey
+      ? 'gemini'
+      : glmApiKey
+        ? 'glm'
+        : 'none';  const configuredBatch = Math.max(1, readIntEnv('RADAR_SUMMARY_BATCH_SIZE', providerSelected === 'gemini' ? DEFAULT_GEMINI_BATCH_SIZE : DEFAULT_BATCH_SIZE));
+  const batch = providerSelected === 'gemini' ? Math.min(configuredBatch, DEFAULT_GEMINI_BATCH_SIZE) : configuredBatch;
+  if (configuredBatch != batch) {
+    console.log(`[radar-summary] clamped batch ${configuredBatch} -> ${batch} for provider ${providerSelected}`);
+  }
   const maxAttempts = Math.max(1, readIntEnv('RADAR_SUMMARY_MAX_ATTEMPTS', DEFAULT_MAX_ATTEMPTS));
   const timeoutMs = Math.max(2000, readIntEnv('RADAR_SUMMARY_TIMEOUT_MS', DEFAULT_TIMEOUT_MS));
   const maxContextChars = Math.max(500, readIntEnv('RADAR_SUMMARY_MAX_CONTEXT_CHARS', DEFAULT_MAX_CONTEXT_CHARS));
   const maxSummaryChars = Math.max(200, readIntEnv('RADAR_SUMMARY_MAX_SUMMARY_CHARS', DEFAULT_MAX_SUMMARY_CHARS));
   const glmDailyLimit = Math.max(0, readIntEnv('RADAR_SUMMARY_DAILY_GLM_LIMIT', DEFAULT_GLM_DAILY_LIMIT));
   const cooldownMinutes = Math.max(1, readIntEnv('RADAR_SUMMARY_RATE_LIMIT_COOLDOWN_MINUTES', DEFAULT_COOLDOWN_MINUTES));
-  const glmApiKey = (process.env.GLM_API_KEY || '').trim();
   const glmModel = process.env.RADAR_GLM_MODEL || 'glm-4.7-flash';
   const glmApiBaseUrl = process.env.RADAR_GLM_API_BASE_URL || 'https://open.bigmodel.cn/api/paas/v4';
+  const geminiModel = process.env.GEMINI_MODEL || DEFAULT_GEMINI_MODEL;
 
   const stats: RadarSummaryRunStats = {
     seeded: 0,
@@ -515,7 +589,7 @@ export async function processRadarSummaryQueue(): Promise<RadarSummaryRunStats> 
     retryScheduled: 0,
     deferredByQuota: 0,
     cooldownDeferred: 0,
-    providerUsage: { glm: 0 },
+    providerUsage: { glm: 0, gemini: 0 },
     providerErrors: {
       auth401: 0,
       rateLimited429: 0,
@@ -545,7 +619,7 @@ export async function processRadarSummaryQueue(): Promise<RadarSummaryRunStats> 
     const claimed = await claimQueue(pool, batch, maxAttempts);
     stats.claimed = claimed.length;
 
-    let usageToday = await getUsageToday(pool);
+    let usageToday = providerSelected === 'glm' ? await getUsageToday(pool, 'glm') : 0;
     let cooldownActive = false;
 
     for (const row of claimed) {
@@ -635,16 +709,16 @@ export async function processRadarSummaryQueue(): Promise<RadarSummaryRunStats> 
       const needEn = inferNeedsSummaryEn(row.language, row.summary_en);
       let summaryOriginal = normalizeText(row.summary_original || '');
       let summaryEn = normalizeText(row.summary_en || '');
-      let provider = 'none';
+      let providerUsed: 'none' | 'glm' | 'gemini' = 'none';
       let modelUsed = '';
       let summarySource = 'article_meta';
 
       if (needOriginal || needEn) {
-        if (!glmApiKey) {
+        if (providerSelected === 'none') {
           summaryOriginal = summaryOriginal || truncate(fetchResult.context, maxSummaryChars);
           if (!summaryEn && !needEn) summaryEn = summaryOriginal;
           summarySource = 'article_meta';
-        } else if (usageToday >= glmDailyLimit) {
+        } else if (providerSelected === 'glm' && usageToday >= glmDailyLimit) {
           await pool.query(
             `
               update radar_summary_queue
@@ -659,26 +733,42 @@ export async function processRadarSummaryQueue(): Promise<RadarSummaryRunStats> 
           stats.deferredByQuota += 1;
           continue;
         } else {
-          try {
-            const glm = await requestGlmSummary({
-              apiKey: glmApiKey,
-              apiBaseUrl: glmApiBaseUrl,
-              model: glmModel,
-              prompt: buildPrompt({
-                title: row.title_original || '',
-                context: fetchResult.context,
-                maxSummaryChars,
-              }),
-              timeoutMs,
+          try {            const prompt = buildPrompt({
+              title: row.title_original || '',
+              context: fetchResult.context,
+              maxSummaryChars,
             });
-            provider = 'glm';
-            modelUsed = glm.modelUsed;
+
+            const ai = providerSelected === 'gemini'
+              ? await requestGeminiSummary({
+                apiKey: geminiApiKey,
+                model: geminiModel,
+                prompt,
+                timeoutMs,
+              })
+              : await requestGlmSummary({
+                apiKey: glmApiKey,
+                apiBaseUrl: glmApiBaseUrl,
+                model: glmModel,
+                prompt,
+                timeoutMs,
+              });
+
+            providerUsed = providerSelected === 'gemini' ? 'gemini' : 'glm';
+            modelUsed = ai.modelUsed;
             summarySource = 'ai_article';
-            summaryOriginal = glm.summaryOriginal || summaryOriginal || truncate(fetchResult.context, maxSummaryChars);
-            summaryEn = glm.summaryEn || summaryEn || summaryOriginal;
-            usageToday += 1;
-            stats.providerUsage.glm += 1;
-            await incrementUsage(pool, 1);
+            summaryOriginal = ai.summaryOriginal || summaryOriginal || truncate(fetchResult.context, maxSummaryChars);
+            summaryEn = ai.summaryEn || summaryEn || summaryOriginal;
+
+            if (providerUsed === 'glm') {
+              usageToday += 1;
+              stats.providerUsage.glm += 1;
+              await incrementUsage(pool, 'glm', 1);
+            } else {
+              stats.providerUsage.gemini += 1;
+              await incrementUsage(pool, 'gemini', 1);
+            }
+
           } catch (error) {
             const message = error instanceof Error ? error.message : String(error);
             const bucket = classifyProviderError(message);
@@ -770,7 +860,7 @@ export async function processRadarSummaryQueue(): Promise<RadarSummaryRunStats> 
               updated_at = now()
           where id = $1
         `,
-        [queueId, attempt, provider, modelUsed]
+        [queueId, attempt, providerUsed, modelUsed]
       );
       stats.completed += 1;
     }

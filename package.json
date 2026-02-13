@@ -16,6 +16,7 @@
     "enrich:external:once": "bun scripts/enrich-external-articles.ts",
     "report:daily-sources:notify": "bun scripts/report-daily-source-counts.ts && bun scripts/post-daily-discord.ts",
     "report:us-latam-health": "bun scripts/report-us-latam-health.ts",
+    "report:summary-window": "bun scripts/report-summary-ai-source-window.ts",
     "warm:once": "bun scripts/warm-news-cache.ts --once",
     "warm:loop": "bun scripts/warm-news-cache.ts",
     "top10:once": "bun scripts/monitor-top10-major.ts --once",
@@ -32,15 +33,20 @@
     "cron:remove": "bash scripts/cron-schedule.sh remove",
     "cron:status": "bash scripts/cron-schedule.sh status",
     "db:init": "psql \"$DATABASE_URL\" -f db/schema.sql",
+    "db:studio": "drizzle-kit studio",
+    "db:introspect": "drizzle-kit introspect",
     "notify:discord-daily": "bun scripts/post-daily-discord.ts",
     "notify:discord-daily:dry": "bun scripts/post-daily-discord.ts --dry-run",
     "notify:discord-hourly:ops": "bun scripts/post-hourly-ops-discord.ts",
     "notify:discord-hourly:ops:dry": "bun scripts/post-hourly-ops-discord.ts --dry-run",
+    "db:cleanup:duplicates": "bun scripts/cleanup-historical-duplicates.ts",
+    "auth:check:radar": "bash scripts/check-radar-auth.sh",
     "promote:expansion": "bun scripts/promote-expansion-sources.ts",
     "promote:expansion:apply": "bun scripts/promote-expansion-sources.ts --apply"
   },
   "dependencies": {
     "@upstash/redis": "^1.35.6",
+    "drizzle-orm": "^0.45.1",
     "maplibre-gl": "^4.7.1",
     "next": "15.1.7",
     "pg": "^8.16.3",
@@ -52,6 +58,7 @@
     "@types/pg": "^8.16.0",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
+    "drizzle-kit": "^0.31.9",
     "playwright": "^1.58.2",
     "typescript": "^5.7.3"
   }

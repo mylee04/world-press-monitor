@@ -1,0 +1,4 @@
+interface:
+  display_name: "Source Audit & Promotion"
+  short_description: "Audit source health and apply safe promotion policies"
+  default_prompt: "Run source audit workflow, classify promote/review/demote actions, and apply only safe validated policy changes."

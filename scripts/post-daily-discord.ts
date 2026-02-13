@@ -1,5 +1,6 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { pickRadarTokenForScope } from '../lib/radar-scope-token';
 
 type Row = {
   source: string;
@@ -253,10 +254,14 @@ async function fetchWarmSummary(): Promise<WarmSummary | null> {
 async function fetchOpsSummary(): Promise<OpsSummary | null> {
   const baseUrl = envValue('NEWS_CACHE_HEALTH_URL') || envValue('APP_BASE_URL') || 'http://localhost:3000';
   const endpoint = `${baseUrl.replace(/\/$/, '')}/api/ops/ingestion`;
+  const opsToken = pickRadarTokenForScope(envValue('RADAR_SERVICE_API_KEYS'), 'read:ops');
 
   try {
     const response = await fetch(endpoint, {
-      headers: { Accept: 'application/json' },
+      headers: {
+        Accept: 'application/json',
+        ...(opsToken ? { Authorization: `Bearer ${opsToken}` } : {}),
+      },
       signal: AbortSignal.timeout(3000)
     });
     if (!response.ok) return null;

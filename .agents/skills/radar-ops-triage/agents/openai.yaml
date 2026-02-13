@@ -1,0 +1,4 @@
+interface:
+  display_name: "Radar Ops Triage"
+  short_description: "Diagnose and recover Radar ingest/summary incidents"
+  default_prompt: "Investigate this Radar ops issue with DB evidence, isolate the failing lane, apply minimal safe recovery, and report validation."

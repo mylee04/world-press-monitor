@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { pickRadarTokenForScope } from '@/lib/radar-scope-token';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -59,10 +60,15 @@ async function runIngest(req: NextRequest): Promise<Response> {
     }
 
     const healthUrl = new URL('/api/ops/health', req.nextUrl.origin);
-    const healthResponse = await fetch(healthUrl.toString(), { cache: 'no-store' }).catch(() => null);
+    const opsToken = pickRadarTokenForScope(process.env.RADAR_SERVICE_API_KEYS || '', 'read:ops');
+    const healthResponse = await fetch(healthUrl.toString(), {
+      cache: 'no-store',
+      headers: opsToken ? { Authorization: `Bearer ${opsToken}` } : undefined,
+    }).catch(() => null);
     const health = healthResponse ? await healthResponse.json().catch(() => null) : null;
 
-    if (health && String(health.status || '').toLowerCase() !== 'green') {
+    const healthStatus = String(health?.status || '').toLowerCase();
+    if (health && healthStatus && healthStatus !== 'green') {
       const alertText = Array.isArray(health.alerts)
         ? health.alerts.map((a: any) => `[${String(a.severity || '').toUpperCase()}] ${a.message}`).join(' | ')
         : 'unknown_alerts';

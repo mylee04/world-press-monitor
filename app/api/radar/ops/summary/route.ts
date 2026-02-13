@@ -6,10 +6,8 @@ export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 export async function GET(req: NextRequest): Promise<Response> {
-  if (process.env.RADAR_SERVICE_REQUIRE_AUTH !== 'false') {
-    const unauthorized = requireRadarServiceAuth(req, 'read:ops');
-    if (unauthorized) return unauthorized;
-  }
+  const unauthorized = requireRadarServiceAuth(req, 'read:ops');
+  if (unauthorized) return unauthorized;
 
   try {
     const snapshot = await getRadarServiceOpsSummary();
@@ -21,4 +19,3 @@ export async function GET(req: NextRequest): Promise<Response> {
     );
   }
 }
-

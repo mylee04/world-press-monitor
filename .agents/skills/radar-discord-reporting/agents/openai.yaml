@@ -1,0 +1,4 @@
+interface:
+  display_name: "Radar Discord Reporting"
+  short_description: "Generate and verify Radar Discord ops reports"
+  default_prompt: "Prepare the Discord ops report in dry-run first, validate metrics and severity, then provide send-ready output."

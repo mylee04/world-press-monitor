@@ -138,8 +138,8 @@ Copy `.env.example` to `.env.local` and set values as needed.
 - `POST /api/ai/repurpose`: generate distribution-ready copy (Twitter/Instagram/LinkedIn/TikTok/Newsletter).
 - `GET /api/drafts`: list persisted drafts (Postgres; memory fallback if DB is unset).
 - `POST /api/drafts`: sync full draft state to persistence.
-- `GET /api/ops/ingestion`: 24h ingestion ops summary from PostgreSQL (`external_news_articles` + endpoint run logs).
-- `GET /api/ops/health`: machine-readable health status (`green/yellow/red`) with thresholds, alerts, and 1h/24h ops metrics.
+- `GET /api/ops/ingestion`: 24h ingestion ops summary from PostgreSQL (`external_news_articles` + endpoint run logs). Requires Radar auth scope `read:ops`.
+- `GET /api/ops/health`: machine-readable health status (`green/yellow/red`) with thresholds, alerts, and 1h/24h ops metrics. Requires Radar auth scope `read:ops`.
 
 ### Ingestion Metadata Persistence
 
@@ -247,6 +247,13 @@ Copy `.env.example` to `.env.local` and set values as needed.
   - remove PressLab cron jobs
 - `bun run db:init`
   - apply `db/schema.sql` to your local PostgreSQL (`DATABASE_URL` required)
+- `bun run report:summary-window --hours 24 --all`
+  - report AI summary ratio + source-level added article counts for a time window (`1..168h`)
+- `bun run auth:check:radar`
+  - run end-to-end auth checks for Radar tokens.
+  - token load priority:
+    - `.env.local` `RADAR_SERVICE_API_KEYS` (scoped)
+    - explicit env vars (`OPS_TOKEN`, `DASH_TOKEN`, `INGEST_TOKEN`)
 
 Key KPIs include:
 - raw volume vs `15,000/24h` target
@@ -263,8 +270,8 @@ Key KPIs include:
 ## Notes
 
 - `GNews` is supplementary only in V1. Primary real-time path remains RSS/Sitemap/Google/Bing RSS.
-- Radar does not fetch article pages for publication datetime correction or summaries.
-  - `publishedAt` and snippets come from feed/sitemap metadata only.
+- Radar core ingest is feed/sitemap-first, but optional enrichment paths can fetch article pages for metadata/summary improvements.
+  - examples: `ARTICLE_TIME_ENRICH_ENABLED`, `enrich:external:once`
 - External enrichment knobs:
   - `EXTERNAL_ENRICH_AI_ENABLED=true|false`
   - `EXTERNAL_ENRICH_AI_MAX_ITEMS=120`
@@ -298,12 +305,14 @@ Key KPIs include:
 
 - PressLab now exposes authenticated Radar read endpoints for external consumers.
 - Auth:
-  - `Authorization: Bearer <RADAR_SERVICE_API_KEY>`
-  - or `x-api-key: <RADAR_SERVICE_API_KEY>`
+  - `Authorization: Bearer <TOKEN>`
+  - or `x-api-key: <TOKEN>`
 - Env:
-  - `RADAR_SERVICE_API_KEY` (single key)
-  - `RADAR_SERVICE_API_KEYS` (optional comma-separated rotation keys, supports `token:scope1|scope2`)
+  - `RADAR_SERVICE_API_KEYS` (required; comma-separated scoped keys, format `token:scope1|scope2`)
   - `RADAR_SERVICE_RATE_LIMIT_RPM` (default `240`)
+- Scope examples:
+  - `read:articles`, `read:sources`, `read:ops`, `write:ingest`, `write:summaries`, `read:all`, `*`
+- Ops endpoints (`/api/ops/*`, `/api/radar/v1/ops/*`) require `read:ops`.
 - Endpoints:
   - `GET /api/radar/v1/articles?country=AR&hours=24&limit=100&offset=0`
   - `GET /api/radar/v1/live-feed?country=AR&hours=24&limit=12`
@@ -312,6 +321,7 @@ Key KPIs include:
   - `GET /api/radar/v1/ops/summary`
   - `GET /api/radar/v1/ops/domain-metrics?windowHours=24&limit=20`
   - `GET|POST /api/radar/v1/fetch`
+  - `GET|POST /api/radar/v1/fetch/ping` (auth-only fast liveness/auth check)
 
 These are intended for UI apps to consume preprocessed DB data without running ingest logic in the request path.
 
@@ -320,6 +330,7 @@ Operational docs:
 - `RADAR_DB_OPERATIONS.md`
 - `RADAR_SERVICE_SPLIT_PRD.md`
 - `RADAR_SUMMARY_PIPELINE_PRD.md`
+- `docs/data-dictionary.md` (column definitions, defaults, and allowed values)
 
 ### Radar Cron Endpoints
 

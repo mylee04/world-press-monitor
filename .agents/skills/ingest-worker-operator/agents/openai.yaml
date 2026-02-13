@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ingest Worker Operator"
+  short_description: "Run and tune ingest/warm workers safely"
+  default_prompt: "Operate ingest and warm workers for this task, verify health metrics, and tune conservatively with rollback notes."

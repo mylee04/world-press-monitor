@@ -30,6 +30,23 @@ function getPool(): Pool | null {
   }
 }
 
+function buildOutletSourceFilterSql(params: unknown[], options: {
+  outletIds: string[];
+  sourceNames: string[];
+  outletColumn: string;
+  sourceColumn: string;
+}): string {
+  if (options.outletIds.length > 0) {
+    params.push(options.outletIds);
+    return ` and ${options.outletColumn} = any($${params.length}::text[])`;
+  }
+  if (options.sourceNames.length > 0) {
+    params.push(options.sourceNames);
+    return ` and ${options.sourceColumn} = any($${params.length}::text[])`;
+  }
+  return '';
+}
+
 async function ensureSchema(): Promise<void> {
   if (schemaReady) return;
   const db = getPool();
@@ -351,14 +368,12 @@ export async function readIngestedArticles(options: {
   const sourceNames = (options.sourceNames || []).filter(Boolean);
 
   const params: unknown[] = [String(hours), limit];
-  let filterSql = '';
-  if (outletIds.length > 0) {
-    params.push(outletIds);
-    filterSql = ` and i.outlet_id = any($${params.length}::text[])`;
-  } else if (sourceNames.length > 0) {
-    params.push(sourceNames);
-    filterSql = ` and i.source = any($${params.length}::text[])`;
-  }
+  const filterSql = buildOutletSourceFilterSql(params, {
+    outletIds,
+    sourceNames,
+    outletColumn: 'i.outlet_id',
+    sourceColumn: 'i.source'
+  });
 
   const result = await db.query<StoredNewsRow>(
     `
@@ -551,14 +566,12 @@ export async function readExternalNewsArticles(options: {
   const sourceNames = (options.sourceNames || []).filter(Boolean);
 
   const params: unknown[] = [String(hours), limit];
-  let filterSql = '';
-  if (outletIds.length > 0) {
-    params.push(outletIds);
-    filterSql = ` and i.outlet_id = any($${params.length}::text[])`;
-  } else if (sourceNames.length > 0) {
-    params.push(sourceNames);
-    filterSql = ` and e.source = any($${params.length}::text[])`;
-  }
+  const filterSql = buildOutletSourceFilterSql(params, {
+    outletIds,
+    sourceNames,
+    outletColumn: 'i.outlet_id',
+    sourceColumn: 'e.source'
+  });
 
   const result = await db.query<ExternalNewsReadRow>(
     `
@@ -746,14 +759,12 @@ export async function readLatestIngestionDiagnostics(options: {
   const sourceNames = (options.sourceNames || []).filter(Boolean);
   const runner = options.runner;
   const params: unknown[] = [String(minutes)];
-  let filterSql = '';
-  if (outletIds.length > 0) {
-    params.push(outletIds);
-    filterSql = ` and outlet_id = any($${params.length}::text[])`;
-  } else if (sourceNames.length > 0) {
-    params.push(sourceNames);
-    filterSql = ` and source = any($${params.length}::text[])`;
-  }
+  let filterSql = buildOutletSourceFilterSql(params, {
+    outletIds,
+    sourceNames,
+    outletColumn: 'outlet_id',
+    sourceColumn: 'source'
+  });
   if (runner) {
     params.push(runner);
     filterSql += ` and runner = $${params.length}`;
@@ -878,6 +889,8 @@ type ExternalArticlePersistable = {
   qualityScore: number;
   country: string | null;
   url: string;
+  urlNorm: string;
+  urlHash: string;
   source: string;
   isPaywalled: boolean;
   language: string | null;
@@ -933,6 +946,8 @@ async function toExternalArticle(item: NewsItem): Promise<ExternalArticlePersist
     qualityScore,
     country: item.country || null,
     url: item.link,
+    urlNorm: linkNorm,
+    urlHash: createHash('md5').update(linkNorm.toLowerCase()).digest('hex'),
     source: item.source,
     isPaywalled: isLikelyPaywalled(item.link, item.source),
     language
@@ -954,9 +969,9 @@ export async function persistExternalNewsArticles(items: NewsItem[]): Promise<{ 
     const values: unknown[] = [];
     const parts: string[] = [];
     group.forEach((row, i) => {
-      const base = i * 17;
+      const base = i * 19;
       parts.push(
-        `($${base + 1},$${base + 2},$${base + 3},$${base + 4},$${base + 5},$${base + 6},$${base + 7},$${base + 8},$${base + 9},$${base + 10},$${base + 11},$${base + 12},$${base + 13},now(),$${base + 14},$${base + 15},$${base + 16},$${base + 17},1)`
+        `($${base + 1},$${base + 2},$${base + 3},$${base + 4},$${base + 5},$${base + 6},$${base + 7},$${base + 8},$${base + 9},$${base + 10},$${base + 11},$${base + 12},$${base + 13},now(),$${base + 14},$${base + 15},$${base + 16},$${base + 17},$${base + 18},$${base + 19},1)`
       );
       values.push(
         row.externalId,
@@ -973,6 +988,8 @@ export async function persistExternalNewsArticles(items: NewsItem[]): Promise<{ 
         row.qualityScore,
         row.country,
         row.url,
+        row.urlNorm,
+        row.urlHash,
         row.source,
         row.isPaywalled,
         row.language
@@ -984,7 +1001,7 @@ export async function persistExternalNewsArticles(items: NewsItem[]): Promise<{ 
       insert into external_news_articles (
         external_id, publication_datetime, publication_source, publication_verified, category,
         title_en, title_original, summary_en, summary_original, summary_source, summary_verified, quality_score,
-        country, created_at, url, source, is_paywalled, language, seen_count
+        country, created_at, url, url_norm, url_hash, source, is_paywalled, language, seen_count
       ) values ${parts.join(',')}
       on conflict (external_id) do update set
         publication_datetime = excluded.publication_datetime,
@@ -1006,6 +1023,8 @@ export async function persistExternalNewsArticles(items: NewsItem[]): Promise<{ 
         quality_score = greatest(external_news_articles.quality_score, excluded.quality_score),
         country = excluded.country,
         url = excluded.url,
+        url_norm = excluded.url_norm,
+        url_hash = excluded.url_hash,
         source = excluded.source,
         is_paywalled = excluded.is_paywalled,
         language = excluded.language,

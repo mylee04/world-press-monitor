@@ -1,7 +1,9 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { Pool } from 'pg';
+import { NextRequest } from 'next/server';
 import { evaluateOpsStatus, loadOpsThresholds } from '@/lib/ops-alerts';
+import { requireRadarServiceAuth } from '@/lib/radar-service-auth';
 
 export const runtime = 'nodejs';
 
@@ -44,7 +46,10 @@ function envValue(key: string): string {
   return process.env[key] || '';
 }
 
-export async function GET(): Promise<Response> {
+export async function GET(req: NextRequest): Promise<Response> {
+  const unauthorized = requireRadarServiceAuth(req, 'read:ops');
+  if (unauthorized) return unauthorized;
+
   const databaseUrl = process.env.DATABASE_URL
     || (process.env.NODE_ENV !== 'production' ? 'postgresql://localhost:5432/presslab' : '');
   if (!databaseUrl) {

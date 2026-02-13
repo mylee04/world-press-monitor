@@ -1,4 +1,5 @@
 import type { ParsedFeedItem } from './parsers';
+import { normalizeLinkForId } from './pipeline';
 
 const STOPWORDS = new Set([
   'a', 'an', 'the', 'and', 'or', 'for', 'to', 'of', 'in', 'on', 'at', 'by', 'from', 'with',
@@ -22,34 +23,7 @@ function tokenizeTitle(title: string): string[] {
 }
 
 function canonicalizeUrl(input: string): string {
-  if (!input) return '';
-  try {
-    const parsed = new URL(input);
-    parsed.hash = '';
-    const drop = [
-      'utm_source',
-      'utm_medium',
-      'utm_campaign',
-      'utm_term',
-      'utm_content',
-      'utm_id',
-      'gclid',
-      'fbclid',
-      'ref',
-      'output',
-    ];
-    for (const key of drop) parsed.searchParams.delete(key);
-    const keep = new URLSearchParams();
-    for (const [k, v] of parsed.searchParams.entries()) {
-      if (!k.toLowerCase().startsWith('utm_')) keep.append(k, v);
-    }
-    parsed.search = keep.toString() ? `?${keep.toString()}` : '';
-    let normalized = parsed.toString();
-    normalized = normalized.replace(/\/+$/, '');
-    return normalized.toLowerCase();
-  } catch {
-    return input.trim().toLowerCase().replace(/\/+$/, '');
-  }
+  return normalizeLinkForId(input);
 }
 
 export function extractDomain(input: string): string {

@@ -28,9 +28,7 @@ function parseKeyPolicyEntry(entry: string): KeyPolicy | null {
   const trimmed = entry.trim();
   if (!trimmed) return null;
   const split = trimmed.indexOf(':');
-  if (split === -1) {
-    return { token: trimmed, scopes: new Set<RadarScope>(['*']) };
-  }
+  if (split === -1) return null;
   const token = trimmed.slice(0, split).trim();
   const scopesRaw = trimmed.slice(split + 1).trim();
   if (!token) return null;
@@ -39,11 +37,6 @@ function parseKeyPolicyEntry(entry: string): KeyPolicy | null {
 
 function readRadarServiceKeys(): KeyPolicy[] {
   const policies: KeyPolicy[] = [];
-
-  const single = (process.env.RADAR_SERVICE_API_KEY || '').trim();
-  if (single) {
-    policies.push({ token: single, scopes: new Set<RadarScope>(['*']) });
-  }
 
   const raw = process.env.RADAR_SERVICE_API_KEYS || '';
   for (const part of raw.split(',')) {
@@ -152,4 +145,3 @@ export function requireRadarServiceAuth(
 
   return null;
 }
-

@@ -113,6 +113,7 @@ Read APIs:
 
 Write/trigger APIs:
 - `GET|POST /api/radar/v1/fetch`
+- `GET|POST /api/radar/v1/fetch/ping` (auth-only ping)
 
 Cron APIs:
 - `GET|POST /api/cron/radar` (every 10m)
@@ -226,3 +227,4 @@ order by attempts desc nulls last;
 - `RADAR_SERVICE_SPLIT_PRD.md`
 - `RADAR_SUMMARY_PIPELINE_PRD.md`
 - `RADAR_SERVICE_IMPLEMENTATION_LOG.md`
+- `docs/data-dictionary.md`

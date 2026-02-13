@@ -1,0 +1,4 @@
+interface:
+  display_name: "Breaking Draft Workflow"
+  short_description: "Turn breaking signals into editor-ready drafts"
+  default_prompt: "Take this breaking candidate through editorial draft workflow with source-grounded claims and channel-ready variants."

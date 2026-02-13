@@ -5,7 +5,8 @@ const DEFAULT_TIMEOUT_MS = 7000;
 const DEFAULT_CONCURRENCY = 16;
 const DEFAULT_AI_MAX_ITEMS = 600;
 const DEFAULT_AI_MIN_BODY_CHARS = 500;
-const DEFAULT_AI_MODEL = 'gemini-2.0-flash-lite';
+const DEFAULT_AI_MODEL = 'glm-4.7-flash';
+const DEFAULT_GLM_API_BASE_URL = 'https://open.bigmodel.cn/api/paas/v4';
 const DEFAULT_AI_CATEGORIES = 'politics,business,tech,security,climate,world,general,life,event,criminal';
 const DEFAULT_TRANSLATE_LANGS = 'es';
 const DEFAULT_TRANSLATE_MAX_ITEMS = 500;
@@ -355,22 +356,225 @@ async function fetchHtml(url: string, timeoutMs: number): Promise<string | null>
   }
 }
 
-async function generateGeminiSummary(params: {
-  apiKey: string;
-  model: string;
+
+type AiProvider = 'glm' | 'gemini' | 'none';
+
+type AiCommon = {
   title: string;
   language: string | null;
   category: string;
   sourceUrl: string;
   articleText: string;
   metaSummary: string | null;
-}): Promise<{ summaryOriginal: string | null; summaryEn: string | null }> {
-  const languageHint =
-    params.language === 'es' ? 'Spanish' : params.language === 'en' ? 'English' : 'same language as title';
+};
 
+function createRateLimiter(rpm: number): <T>(fn: () => Promise<T>) => Promise<T> {
+  const rate = Math.max(0, Math.floor(rpm || 0));
+  if (rate <= 0) {
+    return async function passthrough<T>(fn: () => Promise<T>): Promise<T> {
+      return fn();
+    };
+  }
+
+  const minIntervalMs = Math.ceil(60000 / rate);
+  let last = 0;
+  let pending: Promise<void> = Promise.resolve();
+
+  return async function withRateLimit<T>(fn: () => Promise<T>): Promise<T> {
+    pending = pending.then(async () => {
+      const now = Date.now();
+      const wait = Math.max(0, last + minIntervalMs - now);
+      if (wait > 0) await new Promise((r) => setTimeout(r, wait));
+      last = Date.now();
+    });
+    await pending;
+    return fn();
+  };
+}
+
+async function glmChatJson(params: {
+  apiKey: string;
+  apiBaseUrl: string;
+  model: string;
+  prompt: string;
+  timeoutMs: number;
+}): Promise<Record<string, unknown> | null> {
+  const debugAi = (process.env.EXTERNAL_ENRICH_AI_DEBUG || '').toLowerCase() === 'true';
+  const retryMax = Math.max(1, Math.min(8, envInt('EXTERNAL_ENRICH_AI_RETRY_MAX', 4)));
+  const retryBaseMs = Math.max(200, Math.min(300000, envInt('EXTERNAL_ENRICH_AI_RETRY_BASE_MS', 15000)));
+  const endpoint = `${params.apiBaseUrl.replace(/\/+$/, '')}/chat/completions`;
+  const payload = {
+    model: params.model,
+    temperature: 0.1,
+    response_format: { type: 'json_object' },
+    messages: [
+      { role: 'system', content: 'Return strict JSON object only.' },
+      { role: 'user', content: params.prompt }
+    ]
+  };
+
+  const delay = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
+
+  for (let attempt = 0; attempt < retryMax; attempt += 1) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), params.timeoutMs);
+    try {
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        signal: controller.signal,
+        headers: {
+          Authorization: `Bearer ${params.apiKey}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const text = await res.text();
+      if (res.status === 429 || res.status === 503 || res.status === 504) {
+        if (debugAi) console.log('[enrich-external][glm] http=' + res.status + ' body=' + text.slice(0, 200));
+        if (attempt < retryMax - 1) {
+          const retryAfter = Number.parseFloat(res.headers.get('retry-after') || '');
+          const backoff = Number.isFinite(retryAfter) && retryAfter > 0
+            ? Math.floor(retryAfter * 1000)
+            : retryBaseMs * (attempt + 1) + Math.floor(Math.random() * 250);
+          await delay(backoff);
+          continue;
+        }
+        return null;
+      }
+
+      if (!res.ok) {
+        if (debugAi) console.log('[enrich-external][glm] http=' + res.status + ' body=' + text.slice(0, 200));
+        return null;
+      }
+
+      let content: unknown = null;
+      try {
+        const data = JSON.parse(text) as any;
+        content = data?.choices?.[0]?.message?.content;
+      } catch {
+        content = null;
+      }
+
+      if (debugAi) {
+        const head = typeof content === 'string' ? content.slice(0, 160) : text.slice(0, 160);
+        console.log('[enrich-external][glm] content_head=' + head);
+      }
+
+      if (typeof content === 'string') {
+        const parsed = safeParseModelJson<Record<string, unknown>>(content);
+        if (parsed) return parsed;
+      }
+
+      return safeParseModelJson<Record<string, unknown>>(text);
+    } catch {
+      if (attempt < retryMax - 1) {
+        const backoff = retryBaseMs * (attempt + 1) + Math.floor(Math.random() * 250);
+        await delay(backoff);
+        continue;
+      }
+      return null;
+    } finally {
+      clearTimeout(timeout);
+    }
+  }
+
+  return null;
+}
+
+async function geminiGenerateJson(params: {
+  apiKey: string;
+  model: string;
+  prompt: string;
+  timeoutMs: number;
+}): Promise<Record<string, unknown> | null> {
+  const debugAi = (process.env.EXTERNAL_ENRICH_AI_DEBUG || '').toLowerCase() === 'true';
+  const retryMax = Math.max(1, Math.min(8, envInt('EXTERNAL_ENRICH_AI_RETRY_MAX', 4)));
+  const retryBaseMs = Math.max(200, Math.min(300000, envInt('EXTERNAL_ENRICH_AI_RETRY_BASE_MS', 15000)));
   const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(
     params.model
   )}:generateContent?key=${encodeURIComponent(params.apiKey)}`;
+
+  const delay = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
+
+  for (let attempt = 0; attempt < retryMax; attempt += 1) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), params.timeoutMs);
+    try {
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        signal: controller.signal,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: params.prompt }] }],
+          generationConfig: {
+            temperature: 0.1,
+            responseMimeType: 'application/json'
+          }
+        })
+      });
+
+      const text = await res.text();
+      if (res.status === 429 || res.status === 503 || res.status === 504) {
+        if (debugAi) console.log('[enrich-external][gemini] http=' + res.status + ' body=' + text.slice(0, 200));
+        if (attempt < retryMax - 1) {
+          const retryAfter = Number.parseFloat(res.headers.get('retry-after') || '');
+          const backoff = Number.isFinite(retryAfter) && retryAfter > 0
+            ? Math.floor(retryAfter * 1000)
+            : retryBaseMs * (attempt + 1) + Math.floor(Math.random() * 250);
+          await delay(backoff);
+          continue;
+        }
+        return null;
+      }
+
+      if (!res.ok) {
+        if (debugAi) console.log('[enrich-external][gemini] http=' + res.status + ' body=' + text.slice(0, 200));
+        return null;
+      }
+
+      let contentText: unknown = null;
+      try {
+        const data = JSON.parse(text) as any;
+        contentText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+      } catch {
+        contentText = null;
+      }
+
+      if (debugAi) {
+        const head = typeof contentText === 'string' ? contentText.slice(0, 160) : text.slice(0, 160);
+        console.log('[enrich-external][gemini] content_head=' + head);
+      }
+
+      if (typeof contentText === 'string') {
+        const parsed = safeParseModelJson<Record<string, unknown>>(contentText);
+        if (parsed) return parsed;
+      }
+      return safeParseModelJson<Record<string, unknown>>(text);
+    } catch {
+      if (attempt < retryMax - 1) {
+        const backoff = retryBaseMs * (attempt + 1) + Math.floor(Math.random() * 250);
+        await delay(backoff);
+        continue;
+      }
+      return null;
+    } finally {
+      clearTimeout(timeout);
+    }
+  }
+
+  return null;
+}
+
+async function generateAiSummary(input: {
+  provider: AiProvider;
+  glm: { apiKey: string; apiBaseUrl: string; model: string };
+  gemini: { apiKey: string; model: string };
+  common: AiCommon;
+  timeoutMs: number;
+}): Promise<{ summaryOriginal: string | null; summaryEn: string | null }> {
+  const languageHint =
+    input.common.language === 'es' ? 'Spanish' : input.common.language === 'en' ? 'English' : 'same language as title';
 
   const prompt = [
     'You are a newsroom summarizer.',
@@ -382,85 +586,121 @@ async function generateGeminiSummary(params: {
     '- summary_original should be in the article language.',
     '- summary_en should be in English.',
     `Language hint: ${languageHint}.`,
-    `Category: ${params.category}.`,
-    `URL: ${params.sourceUrl}`,
-    `Title: ${params.title}`,
-    `Meta summary (fallback context): ${(params.metaSummary || '').slice(0, 1000)}`,
-    `Article body (clean text, may be truncated): ${params.articleText.slice(0, 12000)}`
+    `Category: ${input.common.category}.`,
+    `URL: ${input.common.sourceUrl}`,
+    `Title: ${input.common.title}`,
+    `Meta summary (fallback context): ${(input.common.metaSummary || '').slice(0, 1000)}`,
+    `Article body (clean text, may be truncated): ${input.common.articleText.slice(0, 12000)}`
   ].join('\n');
 
-  const res = await fetch(endpoint, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: {
-        temperature: 0.1,
-        responseMimeType: 'application/json'
-      }
-    })
-  });
+  const parsed =
+    input.provider === 'glm'
+      ? await glmChatJson({
+        apiKey: input.glm.apiKey,
+        apiBaseUrl: input.glm.apiBaseUrl,
+        model: input.glm.model,
+        prompt,
+        timeoutMs: input.timeoutMs
+      })
+      : input.provider === 'gemini'
+        ? await geminiGenerateJson({
+          apiKey: input.gemini.apiKey,
+          model: input.gemini.model,
+          prompt,
+          timeoutMs: input.timeoutMs
+        })
+        : null;
 
-  if (!res.ok) return { summaryOriginal: null, summaryEn: null };
-  const data = (await res.json()) as any;
-  const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-  if (!text || typeof text !== 'string') return { summaryOriginal: null, summaryEn: null };
-
-  const parsed = safeParseModelJson<{ summary_original?: string; summary_en?: string }>(text);
-  if (!parsed) {
-    return { summaryOriginal: null, summaryEn: null };
-  }
+  const summaryOriginal = normalizeSummaryText(String(parsed?.summary_original || ''));
+  const summaryEn = normalizeSummaryText(String(parsed?.summary_en || ''));
   return {
-    summaryOriginal: normalizeSummaryText(parsed.summary_original || ''),
-    summaryEn: normalizeSummaryText(parsed.summary_en || '')
+    summaryOriginal: summaryOriginal || null,
+    summaryEn: summaryEn || null
   };
 }
 
-async function translateToEnglishGemini(params: {
-  apiKey: string;
-  model: string;
+async function translateToEnglishAi(input: {
+  provider: AiProvider;
+  glm: { apiKey: string; apiBaseUrl: string; model: string };
+  gemini: { apiKey: string; model: string };
   titleOriginal: string;
   summaryOriginal: string | null;
+  timeoutMs: number;
 }): Promise<{ titleEn: string | null; summaryEn: string | null }> {
-  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(
-    params.model
-  )}:generateContent?key=${encodeURIComponent(params.apiKey)}`;
-
   const prompt = [
     'You are a newsroom translation assistant.',
     'Return ONLY valid JSON with keys: title_en, summary_en.',
     'Translate into natural journalistic English.',
     'Do not add facts not present in input.',
-    `Title original: ${params.titleOriginal}`,
-    `Summary original: ${params.summaryOriginal || ''}`
+    `Title original: ${input.titleOriginal}`,
+    `Summary original: ${input.summaryOriginal || ''}`
   ].join('\n');
 
-  const res = await fetch(endpoint, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: {
-        temperature: 0.1,
-        responseMimeType: 'application/json'
-      }
-    })
-  });
+  const parsed =
+    input.provider === 'glm'
+      ? await glmChatJson({
+        apiKey: input.glm.apiKey,
+        apiBaseUrl: input.glm.apiBaseUrl,
+        model: input.glm.model,
+        prompt,
+        timeoutMs: input.timeoutMs
+      })
+      : input.provider === 'gemini'
+        ? await geminiGenerateJson({
+          apiKey: input.gemini.apiKey,
+          model: input.gemini.model,
+          prompt,
+          timeoutMs: input.timeoutMs
+        })
+        : null;
 
-  if (!res.ok) return { titleEn: null, summaryEn: null };
-  const data = (await res.json()) as any;
-  const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-  if (!text || typeof text !== 'string') return { titleEn: null, summaryEn: null };
-
-  const parsed = safeParseModelJson<{ title_en?: string; summary_en?: string }>(text);
-  if (!parsed) {
-    return { titleEn: null, summaryEn: null };
-  }
-  const titleEn = normalizeSummaryText(parsed.title_en || '');
-  const summaryEn = normalizeSummaryText(parsed.summary_en || '');
+  const titleEn = normalizeSummaryText(String(parsed?.title_en || ''));
+  const summaryEn = normalizeSummaryText(String(parsed?.summary_en || ''));
   return {
     titleEn: titleEn || null,
     summaryEn: summaryEn || null
+  };
+}
+
+function inferGlmConcurrencyLimit(model: string): number | null {
+  const m = (model || '').toLowerCase().replace(/[^a-z0-9]+/g, '');
+  if (!m) return null;
+
+  // Concurrency limits (BigModel):
+  // GLM-4.6: 3
+  // GLM-4.6V-FlashX: 3
+  // GLM-4.7: 3
+  // GLM-4.7-Flash: 1
+  // GLM-4.7-FlashX: 3
+  // GLM-4.5: 10
+  // GLM-4.6V: 10
+  if (m.startsWith('glm47flashx')) return 3;
+  if (m.startsWith('glm47flash')) return 1;
+  if (m === 'glm47' || m.startsWith('glm47')) return 3;
+  if (m.startsWith('glm46vflashx')) return 3;
+  if (m.startsWith('glm46v')) return 10;
+  if (m === 'glm46' || m.startsWith('glm46')) return 3;
+  if (m.startsWith('glm45')) return 10;
+  return null;
+}
+
+function createSemaphore(limit: number): <T>(fn: () => Promise<T>) => Promise<T> {
+  const max = Math.max(1, Math.floor(limit || 1));
+  let active = 0;
+  const queue: Array<() => void> = [];
+
+  return async function withPermit<T>(fn: () => Promise<T>): Promise<T> {
+    if (active >= max) {
+      await new Promise<void>((resolve) => queue.push(resolve));
+    }
+    active += 1;
+    try {
+      return await fn();
+    } finally {
+      active -= 1;
+      const next = queue.shift();
+      if (next) next();
+    }
   };
 }
 
@@ -487,14 +727,36 @@ async function main(): Promise<void> {
   const aiMaxItems = envInt('EXTERNAL_ENRICH_AI_MAX_ITEMS', DEFAULT_AI_MAX_ITEMS);
   const aiMinBodyChars = envInt('EXTERNAL_ENRICH_AI_MIN_BODY_CHARS', DEFAULT_AI_MIN_BODY_CHARS);
   const aiEnabled = (process.env.EXTERNAL_ENRICH_AI_ENABLED || 'true').toLowerCase() !== 'false';
-  const aiKey = process.env.GEMINI_API_KEY || '';
-  const aiModel = process.env.GEMINI_MODEL || DEFAULT_AI_MODEL;
+  const requestedProvider = (process.env.EXTERNAL_ENRICH_AI_PROVIDER || '').trim().toLowerCase();
+  const glmKey = (process.env.GLM_API_KEY || '').trim();
+  const glmBaseUrl = (process.env.RADAR_GLM_API_BASE_URL || DEFAULT_GLM_API_BASE_URL).trim() || DEFAULT_GLM_API_BASE_URL;
+  const glmModel = (process.env.RADAR_GLM_MODEL || process.env.PRESSLAB_GLM_MODEL || process.env['presslab_GLM_MODEL'] || DEFAULT_AI_MODEL).trim() || DEFAULT_AI_MODEL;
+  const geminiKey = (process.env.GEMINI_API_KEY || '').trim();
+  const geminiModel = (process.env.GEMINI_MODEL || 'gemini-2.0-flash-lite').trim() || 'gemini-2.0-flash-lite';
+  const provider: AiProvider = requestedProvider === 'glm' || requestedProvider === 'gemini'
+    ? (requestedProvider as AiProvider)
+    : geminiKey
+      ? 'gemini'
+      : glmKey
+        ? 'glm'
+        : 'none';
+  const aiRpmDefault = provider === 'gemini' ? 6 : 0;
+  const aiRpm = envInt('EXTERNAL_ENRICH_AI_RPM', aiRpmDefault);
   const aiCategories = envCsvSet('EXTERNAL_ENRICH_AI_CATEGORIES', DEFAULT_AI_CATEGORIES);
   const translateEnabled = (process.env.EXTERNAL_ENRICH_TRANSLATE_ENABLED || 'true').toLowerCase() !== 'false';
   const translateLangs = envCsvSet('EXTERNAL_ENRICH_TRANSLATE_LANGS', DEFAULT_TRANSLATE_LANGS);
   const translateMaxItems = envInt('EXTERNAL_ENRICH_TRANSLATE_MAX_ITEMS', DEFAULT_TRANSLATE_MAX_ITEMS);
-  const canUseAi = aiEnabled && Boolean(aiKey);
-  const canTranslate = translateEnabled && Boolean(aiKey);
+  const hasProviderKey = (provider === 'gemini' && Boolean(geminiKey)) || (provider === 'glm' && Boolean(glmKey));
+  const canUseAi = aiEnabled && provider !== 'none' && hasProviderKey;
+  const canTranslate = translateEnabled && provider !== 'none' && hasProviderKey;
+  const modelConcurrencyLimit = provider === 'glm' ? inferGlmConcurrencyLimit(glmModel) : null;
+  const configuredAiConcurrency = envInt('EXTERNAL_ENRICH_AI_CONCURRENCY', modelConcurrencyLimit || 1);
+  const aiConcurrency = modelConcurrencyLimit ? Math.min(configuredAiConcurrency, modelConcurrencyLimit) : configuredAiConcurrency;
+  if (configuredAiConcurrency != aiConcurrency) {
+    console.log(`[enrich-external] clamped ai_concurrency ${configuredAiConcurrency} -> ${aiConcurrency} for provider ${provider}`);
+  }
+  const withAiPermit = createSemaphore(aiConcurrency);
+  const withAiRateLimit = createRateLimiter(aiRpm);
 
   const pool = new Pool({ connectionString: dbUrl });
   try {
@@ -593,16 +855,20 @@ async function main(): Promise<void> {
       let aiSummaryUsed = false;
       if (eligibleForAi) {
         aiAttempted += 1;
-        const ai = await generateGeminiSummary({
-          apiKey: aiKey,
-          model: aiModel,
-          title: row.title_original,
-          language: row.language,
-          category: row.category,
-          sourceUrl: row.url,
-          articleText,
-          metaSummary: meta.summary
-        }).catch(() => ({ summaryOriginal: null, summaryEn: null }));
+        const ai = await withAiPermit(() => withAiRateLimit(() => generateAiSummary({
+          provider,
+          glm: { apiKey: glmKey, apiBaseUrl: glmBaseUrl, model: glmModel },
+          gemini: { apiKey: geminiKey, model: geminiModel },
+          common: {
+            title: row.title_original,
+            language: row.language,
+            category: row.category,
+            sourceUrl: row.url,
+            articleText,
+            metaSummary: meta.summary
+          },
+          timeoutMs
+        }))).catch(() => ({ summaryOriginal: null, summaryEn: null }));
 
         if (ai.summaryOriginal || ai.summaryEn) {
           nextSummaryOriginal = ai.summaryOriginal || nextSummaryOriginal;
@@ -622,12 +888,14 @@ async function main(): Promise<void> {
 
       if (eligibleForTranslation) {
         translationAttempted += 1;
-        const tr = await translateToEnglishGemini({
-          apiKey: aiKey,
-          model: aiModel,
+        const tr = await withAiPermit(() => withAiRateLimit(() => translateToEnglishAi({
+          provider,
+          glm: { apiKey: glmKey, apiBaseUrl: glmBaseUrl, model: glmModel },
+          gemini: { apiKey: geminiKey, model: geminiModel },
           titleOriginal: row.title_original,
-          summaryOriginal: nextSummaryOriginal
-        }).catch(() => ({ titleEn: null, summaryEn: null }));
+          summaryOriginal: nextSummaryOriginal,
+          timeoutMs
+        }))).catch(() => ({ titleEn: null, summaryEn: null }));
 
         if (tr.titleEn || tr.summaryEn) {
           nextTitleEn = tr.titleEn || nextTitleEn;

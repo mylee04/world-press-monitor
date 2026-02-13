@@ -1,8 +1,13 @@
+import { NextRequest } from 'next/server';
 import { getIngestionOpsSummary24h } from '@/lib/ingestion-store';
+import { requireRadarServiceAuth } from '@/lib/radar-service-auth';
 
 export const runtime = 'nodejs';
 
-export async function GET(): Promise<Response> {
+export async function GET(req: NextRequest): Promise<Response> {
+  const unauthorized = requireRadarServiceAuth(req, 'read:ops');
+  if (unauthorized) return unauthorized;
+
   const summary = await getIngestionOpsSummary24h().catch(() => ({
     storage: 'disabled' as const,
     generatedAt: new Date().toISOString(),

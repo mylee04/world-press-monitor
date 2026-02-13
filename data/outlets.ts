@@ -86,6 +86,14 @@ const PRESET_SEEDS: Record<string, OutletSeed[]> = {
     { name: 'Montevideo Portal', tier: 2, beat: 'world', country: 'Uruguay', language: 'es', sourceType: 'local', rssUrl: 'https://www.montevideo.com.uy/anxml.aspx?59' },
     { name: 'Busqueda', tier: 2, beat: 'politics', country: 'Uruguay', language: 'es', sourceType: 'local', rssUrl: 'https://news.google.com/rss/search?q=site:busqueda.com.uy&ceid=UY:es-419&hl=es-419&gl=UY' }
   ],
+  latam_dominican: [
+    { name: 'Listin Diario', tier: 1, beat: 'world', country: 'Dominican Republic', language: 'es', sourceType: 'local', rssUrl: 'https://news.google.com/rss/search?q=site:listindiario.com&ceid=DO:es-419&hl=es-419&gl=DO' },
+    { name: 'Diario Libre', tier: 1, beat: 'world', country: 'Dominican Republic', language: 'es', sourceType: 'local', rssUrl: 'https://news.google.com/rss/search?q=site:diariolibre.com&ceid=DO:es-419&hl=es-419&gl=DO' },
+    { name: 'Noticias SIN', tier: 1, beat: 'world', country: 'Dominican Republic', language: 'es', sourceType: 'local', rssUrl: 'https://news.google.com/rss/search?q=site:noticiassin.com&ceid=DO:es-419&hl=es-419&gl=DO' },
+    { name: 'Acento', tier: 2, beat: 'politics', country: 'Dominican Republic', language: 'es', sourceType: 'local', rssUrl: 'https://news.google.com/rss/search?q=site:acento.com.do&ceid=DO:es-419&hl=es-419&gl=DO' },
+    { name: 'Hoy RD', tier: 2, beat: 'world', country: 'Dominican Republic', language: 'es', sourceType: 'local', rssUrl: 'https://news.google.com/rss/search?q=site:hoy.com.do&ceid=DO:es-419&hl=es-419&gl=DO' },
+    { name: 'El Caribe RD', tier: 2, beat: 'world', country: 'Dominican Republic', language: 'es', sourceType: 'local', rssUrl: 'https://news.google.com/rss/search?q=site:elcaribe.com.do&ceid=DO:es-419&hl=es-419&gl=DO' }
+  ],
   us_broad_topics: [
     { name: 'Google US World Topic', tier: 2, beat: 'world', country: 'US', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=US+world+news+when:1d&ceid=US:en&hl=en-US&gl=US' },
     { name: 'Google US Politics Topic', tier: 2, beat: 'politics', country: 'US', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=US+politics+when:1d&ceid=US:en&hl=en-US&gl=US' },
@@ -103,12 +111,10 @@ const PRESET_SEEDS: Record<string, OutletSeed[]> = {
     { name: 'Google Washington News', tier: 2, beat: 'world', country: 'US', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=Washington+state+news+when:1d&ceid=US:en&hl=en-US&gl=US' }
   ],
   latam_broad_topics: [
-    { name: 'Google LATAM Regional Topic', tier: 2, beat: 'world', country: 'LATAM', language: 'es', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=Latinoamerica+noticias+when:1d&ceid=US:es-419&hl=es-419&gl=US' },
     { name: 'Google Argentina Topic', tier: 2, beat: 'world', country: 'Argentina', language: 'es', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=Argentina+noticias+when:1d&ceid=AR:es-419&hl=es-419&gl=AR' },
     { name: 'Google Chile Topic', tier: 2, beat: 'world', country: 'Chile', language: 'es', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=Chile+noticias+when:1d&ceid=CL:es-419&hl=es-419&gl=CL' },
     { name: 'Google Uruguay Topic', tier: 2, beat: 'world', country: 'Uruguay', language: 'es', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=Uruguay+noticias+when:1d&ceid=UY:es-419&hl=es-419&gl=UY' },
-    { name: 'Google LATAM Politics Topic', tier: 2, beat: 'politics', country: 'LATAM', language: 'es', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=Latinoamerica+politica+when:1d&ceid=US:es-419&hl=es-419&gl=US' },
-    { name: 'Google LATAM Business Topic', tier: 2, beat: 'business', country: 'LATAM', language: 'es', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=Latinoamerica+economia+when:1d&ceid=US:es-419&hl=es-419&gl=US' }
+    { name: 'Google Dominican Republic Topic', tier: 2, beat: 'world', country: 'Dominican Republic', language: 'es', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=Republica+Dominicana+noticias+when:1d&ceid=DO:es-419&hl=es-419&gl=DO' }
   ],
   us_expansion: [
     { name: 'Boston Globe', tier: 2, beat: 'world', country: 'US', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=site:bostonglobe.com&ceid=US:en&hl=en-US&gl=US' },
@@ -203,12 +209,20 @@ const PRESET_SEEDS: Record<string, OutletSeed[]> = {
     { name: 'Telenoche UY', tier: 2, beat: 'world', country: 'Uruguay', language: 'es', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=telenoche+uruguay&ceid=UY:es-419&hl=es-419&gl=UY' },
     { name: 'UyPress', tier: 2, beat: 'world', country: 'Uruguay', language: 'es', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=site:uypress.net&ceid=UY:es-419&hl=es-419&gl=UY' },
     { name: 'Canal 10 UY', tier: 2, beat: 'world', country: 'Uruguay', language: 'es', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=site:canal10.com.uy&ceid=UY:es-419&hl=es-419&gl=UY' },
+    { name: 'CDN RD', tier: 2, beat: 'world', country: 'Dominican Republic', language: 'es', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=site:cdn.com.do&ceid=DO:es-419&hl=es-419&gl=DO' },
+    { name: 'N Digital RD', tier: 2, beat: 'world', country: 'Dominican Republic', language: 'es', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=site:n.com.do&ceid=DO:es-419&hl=es-419&gl=DO' },
+    { name: 'Z101 RD', tier: 2, beat: 'world', country: 'Dominican Republic', language: 'es', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=site:z101digital.com&ceid=DO:es-419&hl=es-419&gl=DO' },
+    { name: 'El Dia RD', tier: 2, beat: 'politics', country: 'Dominican Republic', language: 'es', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=site:eldia.com.do&ceid=DO:es-419&hl=es-419&gl=DO' },
+    { name: 'El Nuevo Diario RD', tier: 2, beat: 'world', country: 'Dominican Republic', language: 'es', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=site:elnuevodiario.com.do&ceid=DO:es-419&hl=es-419&gl=DO' },
+    { name: 'El Nacional RD', tier: 2, beat: 'world', country: 'Dominican Republic', language: 'es', sourceType: 'portal', rssUrl: 'https://news.google.com/rss/search?q=site:elnacional.com.do&ceid=DO:es-419&hl=es-419&gl=DO' },
     { name: 'Reuters Argentina Desk', tier: 2, beat: 'world', country: 'Argentina', language: 'en', sourceType: 'global', rssUrl: 'https://news.google.com/rss/search?q=Argentina+site:reuters.com&ceid=US:en&hl=en-US&gl=US' },
     { name: 'AP Argentina Desk', tier: 2, beat: 'world', country: 'Argentina', language: 'en', sourceType: 'global', rssUrl: 'https://news.google.com/rss/search?q=Argentina+site:apnews.com&ceid=US:en&hl=en-US&gl=US' },
     { name: 'Reuters Chile Desk', tier: 2, beat: 'world', country: 'Chile', language: 'en', sourceType: 'global', rssUrl: 'https://news.google.com/rss/search?q=Chile+site:reuters.com&ceid=US:en&hl=en-US&gl=US' },
     { name: 'AP Chile Desk', tier: 2, beat: 'world', country: 'Chile', language: 'en', sourceType: 'global', rssUrl: 'https://news.google.com/rss/search?q=Chile+OR+Santiago+site:apnews.com&ceid=US:en&hl=en-US&gl=US' },
     { name: 'Reuters Uruguay Desk', tier: 2, beat: 'world', country: 'Uruguay', language: 'en', sourceType: 'global', rssUrl: 'https://news.google.com/rss/search?q=Uruguay+site:reuters.com&ceid=US:en&hl=en-US&gl=US' },
-    { name: 'AP Uruguay Desk', tier: 2, beat: 'world', country: 'Uruguay', language: 'en', sourceType: 'global', rssUrl: 'https://news.google.com/rss/search?q=Uruguay+site:apnews.com&ceid=US:en&hl=en-US&gl=US' }
+    { name: 'AP Uruguay Desk', tier: 2, beat: 'world', country: 'Uruguay', language: 'en', sourceType: 'global', rssUrl: 'https://news.google.com/rss/search?q=Uruguay+site:apnews.com&ceid=US:en&hl=en-US&gl=US' },
+    { name: 'Reuters Dominican Republic Desk', tier: 2, beat: 'world', country: 'Dominican Republic', language: 'en', sourceType: 'global', rssUrl: 'https://news.google.com/rss/search?q=Dominican+Republic+site:reuters.com&ceid=US:en&hl=en-US&gl=US' },
+    { name: 'AP Dominican Republic Desk', tier: 2, beat: 'world', country: 'Dominican Republic', language: 'en', sourceType: 'global', rssUrl: 'https://news.google.com/rss/search?q=Dominican+Republic+site:apnews.com&ceid=US:en&hl=en-US&gl=US' }
   ]
 };
 
@@ -247,12 +261,10 @@ const US_BING_TOPIC_SEEDS: OutletSeed[] = [
 ];
 
 const LATAM_BING_TOPIC_SEEDS: OutletSeed[] = [
-  { name: 'Bing LATAM Topic', tier: 2, beat: 'world', country: 'LATAM', language: 'es', sourceType: 'portal', rssUrl: 'https://www.bing.com/news/search?q=Latinoamerica+noticias&format=RSS&setlang=es&qft=interval%3D%227%22' },
   { name: 'Bing Argentina Topic', tier: 2, beat: 'world', country: 'Argentina', language: 'es', sourceType: 'portal', rssUrl: 'https://www.bing.com/news/search?q=Argentina+noticias&format=RSS&setlang=es&qft=interval%3D%227%22' },
   { name: 'Bing Chile Topic', tier: 2, beat: 'world', country: 'Chile', language: 'es', sourceType: 'portal', rssUrl: 'https://www.bing.com/news/search?q=Chile+noticias&format=RSS&setlang=es&qft=interval%3D%227%22' },
   { name: 'Bing Uruguay Topic', tier: 2, beat: 'world', country: 'Uruguay', language: 'es', sourceType: 'portal', rssUrl: 'https://www.bing.com/news/search?q=Uruguay+noticias&format=RSS&setlang=es&qft=interval%3D%227%22' },
-  { name: 'Bing LATAM Politics Topic', tier: 2, beat: 'politics', country: 'LATAM', language: 'es', sourceType: 'portal', rssUrl: 'https://www.bing.com/news/search?q=Latinoamerica+politica&format=RSS&setlang=es&qft=interval%3D%227%22' },
-  { name: 'Bing LATAM Business Topic', tier: 2, beat: 'business', country: 'LATAM', language: 'es', sourceType: 'portal', rssUrl: 'https://www.bing.com/news/search?q=Latinoamerica+economia&format=RSS&setlang=es&qft=interval%3D%227%22' }
+  { name: 'Bing Dominican Republic Topic', tier: 2, beat: 'world', country: 'Dominican Republic', language: 'es', sourceType: 'portal', rssUrl: 'https://www.bing.com/news/search?q=Republica+Dominicana+noticias&format=RSS&setlang=es&qft=interval%3D%227%22' }
 ];
 
 const US_METRO_NAMES = [
@@ -398,7 +410,7 @@ const US_LATAM_FOCUS_SEEDS: OutletSeed[] = US_LATAM_FOCUS_VARIANTS.map((variant)
   };
 });
 
-const LATAM_COUNTRY_TOPIC_VARIANTS: Array<{ country: 'Argentina' | 'Chile' | 'Uruguay'; lang: string; beat: OutletFeed['beat']; q: string }> = [
+const LATAM_COUNTRY_TOPIC_VARIANTS: Array<{ country: 'Argentina' | 'Chile' | 'Uruguay' | 'Dominican Republic'; lang: string; beat: OutletFeed['beat']; q: string }> = [
   { country: 'Argentina', lang: 'es', beat: 'politics', q: 'Argentina politica hoy' },
   { country: 'Argentina', lang: 'es', beat: 'business', q: 'Argentina economia hoy' },
   { country: 'Argentina', lang: 'es', beat: 'world', q: 'Argentina sociedad hoy' },
@@ -407,13 +419,23 @@ const LATAM_COUNTRY_TOPIC_VARIANTS: Array<{ country: 'Argentina' | 'Chile' | 'Ur
   { country: 'Chile', lang: 'es', beat: 'world', q: 'Chile sociedad hoy' },
   { country: 'Uruguay', lang: 'es', beat: 'politics', q: 'Uruguay politica hoy' },
   { country: 'Uruguay', lang: 'es', beat: 'business', q: 'Uruguay economia hoy' },
-  { country: 'Uruguay', lang: 'es', beat: 'world', q: 'Uruguay sociedad hoy' }
+  { country: 'Uruguay', lang: 'es', beat: 'world', q: 'Uruguay sociedad hoy' },
+  { country: 'Dominican Republic', lang: 'es', beat: 'politics', q: 'Republica Dominicana politica hoy' },
+  { country: 'Dominican Republic', lang: 'es', beat: 'business', q: 'Republica Dominicana economia hoy' },
+  { country: 'Dominican Republic', lang: 'es', beat: 'world', q: 'Republica Dominicana sociedad hoy' }
 ];
 
 const LATAM_DETAIL_TOPIC_SEEDS: OutletSeed[] = LATAM_COUNTRY_TOPIC_VARIANTS.flatMap((variant) => {
   const googleName = `Google ${variant.country} Detail: ${variant.beat}`;
   const bingName = `Bing ${variant.country} Detail: ${variant.beat}`;
-  const googleRss = `https://news.google.com/rss/search?q=${encodeURIComponent(`${variant.q} when:1d`)}&ceid=${variant.country === 'Argentina' ? 'AR' : variant.country === 'Chile' ? 'CL' : 'UY'}:es-419&hl=es-419&gl=${variant.country === 'Argentina' ? 'AR' : variant.country === 'Chile' ? 'CL' : 'UY'}`;
+  const countryCode = variant.country === 'Argentina'
+    ? 'AR'
+    : variant.country === 'Chile'
+      ? 'CL'
+      : variant.country === 'Uruguay'
+        ? 'UY'
+        : 'DO';
+  const googleRss = `https://news.google.com/rss/search?q=${encodeURIComponent(`${variant.q} when:1d`)}&ceid=${countryCode}:es-419&hl=es-419&gl=${countryCode}`;
   const bingRss = `https://www.bing.com/news/search?q=${encodeURIComponent(variant.q)}&format=RSS&setlang=es&qft=interval%3D%227%22`;
   return [
     {
@@ -444,7 +466,18 @@ const SITEMAP_BOOSTERS: OutletSeed[] = [
   { name: 'Fox News', tier: 2, beat: 'world', country: 'US', sitemapUrl: 'https://www.foxnews.com/sitemap.xml' },
   
   { name: 'La Nacion AR', tier: 1, beat: 'world', country: 'Argentina', language: 'es', sourceType: 'local', sitemapUrl: 'https://www.lanacion.com.ar/arc/outboundfeeds/sitemap-index/?outputType=xml' },
-  { name: 'Emol', tier: 1, beat: 'world', country: 'Chile', language: 'es', sourceType: 'local', sitemapUrl: 'https://www.emol.com/sitemap.xml' }
+  { name: 'Emol', tier: 1, beat: 'world', country: 'Chile', language: 'es', sourceType: 'local', sitemapUrl: 'https://www.emol.com/sitemap.xml' },
+
+  { name: 'Listin Diario', tier: 1, beat: 'world', country: 'Dominican Republic', language: 'es', sourceType: 'local', sitemapUrl: 'https://listindiario.com/sitemap.xml' },
+  { name: 'Diario Libre', tier: 1, beat: 'world', country: 'Dominican Republic', language: 'es', sourceType: 'local', sitemapUrl: 'https://www.diariolibre.com/sitemap.xml' },
+  { name: 'Noticias SIN', tier: 1, beat: 'world', country: 'Dominican Republic', language: 'es', sourceType: 'local', sitemapUrl: 'https://noticiassin.com/wp-sitemap.xml' },
+  { name: 'Acento', tier: 2, beat: 'politics', country: 'Dominican Republic', language: 'es', sourceType: 'local', sitemapUrl: 'https://acento.com.do/wp-sitemap.xml' },
+  { name: 'Hoy RD', tier: 2, beat: 'world', country: 'Dominican Republic', language: 'es', sourceType: 'local', sitemapUrl: 'https://hoy.com.do/wp-sitemap.xml' },
+  { name: 'El Caribe RD', tier: 2, beat: 'world', country: 'Dominican Republic', language: 'es', sourceType: 'local', sitemapUrl: 'https://www.elcaribe.com.do/sitemap_index.xml' },
+  { name: 'CDN RD', tier: 2, beat: 'world', country: 'Dominican Republic', language: 'es', sourceType: 'portal', sitemapUrl: 'https://cdn.com.do/wp-sitemap.xml' },
+  { name: 'N Digital RD', tier: 2, beat: 'world', country: 'Dominican Republic', language: 'es', sourceType: 'portal', sitemapUrl: 'https://n.com.do/wp-sitemap.xml' },
+  { name: 'El Nuevo Diario RD', tier: 2, beat: 'world', country: 'Dominican Republic', language: 'es', sourceType: 'portal', sitemapUrl: 'https://elnuevodiario.com.do/wp-sitemap.xml' },
+  { name: 'El Nacional RD', tier: 2, beat: 'world', country: 'Dominican Republic', language: 'es', sourceType: 'portal', sitemapUrl: 'https://elnacional.com.do/wp-sitemap.xml' }
 ];
 
 PRESET_SEEDS.us_state_topics = US_STATE_TOPIC_SEEDS;
@@ -466,6 +499,7 @@ const CATEGORY_ALIAS: Record<string, OutletFeed['categories'][number]> = {
   latam_argentina: 'world',
   latam_chile: 'world',
   latam_uruguay: 'world',
+  latam_dominican: 'world',
   us_broad_topics: 'world',
   latam_broad_topics: 'world',
   us_state_topics: 'world',
@@ -658,6 +692,7 @@ const LATAM_SEEDS = [
   ...PRESET_SEEDS.latam_argentina,
   ...PRESET_SEEDS.latam_chile,
   ...PRESET_SEEDS.latam_uruguay,
+  ...PRESET_SEEDS.latam_dominican,
   ...PRESET_SEEDS.latam_broad_topics,
   ...PRESET_SEEDS.latam_bing_topics,
   ...PRESET_SEEDS.latam_detail_topics,
@@ -674,8 +709,16 @@ export const SOURCE_PRESETS: SourcePreset[] = [
   {
     key: 'default_live',
     label: 'Default Live',
-    description: 'Operational default: verified_core + keep_secondary (expansion candidates OFF).',
-    outletIds: OUTLET_FEEDS.filter((outlet) => outlet.defaultEnabled).map((outlet) => outlet.id)
+    description: 'Operational default: verified_core + keep_secondary (expansion candidates OFF), plus all LATAM country outlets (AR/CL/UY/DO).',
+    outletIds: OUTLET_FEEDS
+      .filter((outlet) => (
+        outlet.defaultEnabled
+        || outlet.country === 'Argentina'
+        || outlet.country === 'Chile'
+        || outlet.country === 'Uruguay'
+        || outlet.country === 'Dominican Republic'
+      ))
+      .map((outlet) => outlet.id)
   },
   {
     key: 'verified_core',
@@ -718,18 +761,36 @@ export const SOURCE_PRESETS: SourcePreset[] = [
   {
     key: 'multilingual_core',
     label: 'LATAM Core',
-    description: 'Spanish-language core outlets in AR/CL/UY.',
+    description: 'Spanish-language core outlets in AR/CL/UY/DO.',
     outletIds: [
       ...PRESET_SEEDS.latam_argentina,
       ...PRESET_SEEDS.latam_chile,
-      ...PRESET_SEEDS.latam_uruguay
+      ...PRESET_SEEDS.latam_uruguay,
+      ...PRESET_SEEDS.latam_dominican
     ].map((seed) => slugify(seed.name))
   },
   {
     key: 'regional',
     label: 'LATAM Regional',
-    description: 'Argentina, Chile, and Uruguay regional coverage.',
+    description: 'Argentina, Chile, Uruguay, and Dominican Republic regional coverage.',
     outletIds: LATAM_SEEDS.map((seed) => slugify(seed.name))
+  },
+  {
+    key: 'do_trusted_rss_sitemap',
+    label: 'DO Trusted Core',
+    description: 'Dominican Republic high-trust core (RSS + sitemap fallback).',
+    outletIds: [
+      'Listin Diario',
+      'Diario Libre',
+      'Noticias SIN',
+      'Acento',
+      'Hoy RD',
+      'El Caribe RD',
+      'CDN RD',
+      'N Digital RD',
+      'El Nuevo Diario RD',
+      'El Nacional RD'
+    ].map((name) => slugify(name))
   },
   {
     key: 'broad_capture_us',

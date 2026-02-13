@@ -12,10 +12,8 @@ function toInt(raw: string | null, fallback: number, min: number, max: number): 
 }
 
 export async function GET(req: NextRequest): Promise<Response> {
-  if (process.env.RADAR_SERVICE_REQUIRE_AUTH !== 'false') {
-    const unauthorized = requireRadarServiceAuth(req, 'read:ops');
-    if (unauthorized) return unauthorized;
-  }
+  const unauthorized = requireRadarServiceAuth(req, 'read:ops');
+  if (unauthorized) return unauthorized;
 
   try {
     const params = req.nextUrl.searchParams;
@@ -35,4 +33,3 @@ export async function GET(req: NextRequest): Promise<Response> {
     );
   }
 }
-
