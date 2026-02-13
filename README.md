@@ -267,6 +267,16 @@ git commit -m "...your message..."
 git push
 ```
 
+Enable local hook automation:
+
+```bash
+bun run git:setup-hooks
+```
+
+This enables:
+- `pre-commit` hook: blocks commit when `.env`, `.env.local`, or `env.local` are staged.
+- `pre-push` hook: blocks push when the same files are staged.
+
 Key KPIs include:
 - raw volume vs `15,000/24h` target
 - unique by source / unique cross-source

@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+repo_root="$(git rev-parse --show-toplevel)"
+cd "$repo_root"
+
+if ! command -v bun >/dev/null 2>&1; then
+  echo "[BLOCK] bun not found in PATH. Install Bun or run: bun run git:check-env-staged" >&2
+  exit 1
+fi
+
+bun run git:check-env-staged
+
