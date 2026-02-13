@@ -348,10 +348,13 @@ Key KPIs include:
 These are intended for UI apps to consume preprocessed DB data without running ingest logic in the request path.
 
 Operational docs:
-- `RADAR_IMPLEMENTATION_MATRIX.md`
-- `RADAR_DB_OPERATIONS.md`
-- `RADAR_SERVICE_SPLIT_PRD.md`
-- `RADAR_SUMMARY_PIPELINE_PRD.md`
+- `docs/radar/` (Radar architecture, PRDs, and operations references)
+  - `docs/radar/RADAR_SERVICE_SPLIT_PRD.md`
+  - `docs/radar/RADAR_IMPLEMENTATION_MATRIX.md`
+  - `docs/radar/RADAR_DB_OPERATIONS.md`
+  - `docs/radar/RADAR_SUMMARY_PIPELINE_PRD.md`
+  - `docs/radar/RADAR_SERVICE_IMPLEMENTATION_LOG.md`
+- `docs/writing/WRITING_BREAKING_FULLTEXT_PRD.md` (writing full-text draft policy)
 - `docs/data-dictionary.md` (column definitions, defaults, and allowed values)
 
 ### Radar Cron Endpoints
