@@ -10,6 +10,8 @@ audits/*.log
 audits/ingest-worker-*.json
 audits/source_daily_counts_*.csv
 audits/source_daily_counts_*.md
+audits/*.md
+!audits/README.md
 audits/us_latam_source_health_*.csv
 audits/us_latam_source_health_*.md
 
