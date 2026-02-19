@@ -30,7 +30,7 @@ You can also set them in GitHub settings manually.
 This list covers the currently configured countries and their RSS outlets.
 
 - Covered countries:
-  United States, China, Japan, Germany, India, United Kingdom, France, Italy, Canada, Russia, South Korea, Brazil, Australia, Spain, Mexico, Indonesia, Netherlands, Switzerland, Turkey, Saudi Arabia, Taiwan, Poland, Sweden, Belgium, Thailand, Iran, Argentina, Austria, Norway, United Arab Emirates
+🇺🇸 United States, 🇨🇳 China, 🇯🇵 Japan, 🇩🇪 Germany, 🇮🇳 India, 🇬🇧 United Kingdom, 🇫🇷 France, 🇮🇹 Italy, 🇨🇦 Canada, 🇷🇺 Russia, 🇰🇷 South Korea, 🇧🇷 Brazil, 🇦🇺 Australia, 🇪🇸 Spain, 🇲🇽 Mexico, 🇮🇩 Indonesia, 🇳🇱 Netherlands, 🇨🇭 Switzerland, 🇹🇷 Turkey, 🇸🇦 Saudi Arabia, 🇹🇼 Taiwan, 🇵🇱 Poland, 🇸🇪 Sweden, 🇧🇪 Belgium, 🇹🇭 Thailand, 🇮🇷 Iran, 🇦🇷 Argentina, 🇦🇹 Austria, 🇳🇴 Norway, 🇦🇪 United Arab Emirates
 
 - Last checked: 02/19/2026
 - `❌ NO_SOURCE` means no RSS source is configured for this country yet.
@@ -803,7 +803,7 @@ This list covers the currently configured countries and their RSS outlets.
 |United States|Google US Tech Topic|
 |United States|Google US World Topic|
 |United States|Google Washington News|
-### United States (US)
+### 🇺🇸 United States (US)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
 1|The New York Times|<https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml>|200|02/19/2026|valid|
@@ -925,7 +925,7 @@ This list covers the currently configured countries and their RSS outlets.
 117|Bing US Tech Topic|N/A|❌ NO_SOURCE|02/19/2026|needs verification|
 118|Bing US World Topic|N/A|❌ NO_SOURCE|02/19/2026|needs verification|
 
-### China (CN)
+### 🇨🇳 China (CN)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
 1|Xinhua Net|<https://xinhuanet.com/feed>|ERR (TLS)|02/19/2026|invalid|
@@ -959,7 +959,7 @@ This list covers the currently configured countries and their RSS outlets.
 29|China.org.cn|<https://www.china.org.cn/china/rss.xml>|ERR (TLS)|02/19/2026|invalid|
 30|Global Times US|<https://www.globaltimes.cn/rss/7/>|404 (HTTP_404)|02/19/2026|invalid|
 
-### Japan (JP)
+### 🇯🇵 Japan (JP)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
 1|NHK World (EN)|<https://www3.nhk.or.jp/rss/news/cat0.xml>|200|02/19/2026|valid|
@@ -993,7 +993,7 @@ This list covers the currently configured countries and their RSS outlets.
 29|Nikkei Asia|<https://asia.nikkei.com/rss/news>|500 (HTTP_500)|02/19/2026|invalid|
 30|Mainichi World|<https://mainichi.jp/rss/etc/english_latest.rss>|200|02/19/2026|valid|
 
-### Germany (DE)
+### 🇩🇪 Germany (DE)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
 1|Handelsblatt - Top|<https://www.handelsblatt.com/contentexport/feed/top-themen>|200|02/19/2026|valid|
@@ -1027,7 +1027,7 @@ This list covers the currently configured countries and their RSS outlets.
 29|Financial Times Germany|<https://www.ft.com/world/world?format=rss>|404 (HTTP_404)|02/19/2026|invalid|
 30|Der Spiegel|<https://www.spiegel.de/contentfeed/schlagzeilen.rss>|404 (HTTP_404)|02/19/2026|invalid|
 
-### India (IN)
+### 🇮🇳 India (IN)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
 1|The Times of India (Top Stories)|<https://timesofindia.indiatimes.com/rssfeedstopstories.cms>|200|02/19/2026|valid|
@@ -1061,7 +1061,7 @@ This list covers the currently configured countries and their RSS outlets.
 29|ABP News|<https://news.abplive.com/home/feed>|200|02/19/2026|valid|
 30|The India Bizz|<https://theindiabizz.com/feed>|200|02/19/2026|valid|
 
-### United Kingdom (GB)
+### 🇬🇧 United Kingdom (GB)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
 1|Financial Times - World|<https://www.ft.com/rss/world>|200|02/19/2026|valid|
@@ -1095,7 +1095,7 @@ This list covers the currently configured countries and their RSS outlets.
 29|The Evening Standard|<https://www.standard.co.uk/rss>|200|02/19/2026|valid|
 30|London Evening Standard|<https://www.standard.co.uk/feed>|404 (HTTP_404)|02/19/2026|invalid|
 
-### France (FR)
+### 🇫🇷 France (FR)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
 1|France 24|<https://www.france24.com/en/rss>|200|02/19/2026|valid|
@@ -1129,7 +1129,7 @@ This list covers the currently configured countries and their RSS outlets.
 29|Le Monde (EN – Environment)|<https://www.lemonde.fr/en/environment/rss_full.xml>|200|02/19/2026|valid|
 30|Le Monde (EN – Science)|<https://www.lemonde.fr/en/science/rss_full.xml>|200|02/19/2026|valid|
 
-### Italy (IT)
+### 🇮🇹 Italy (IT)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
 1|ANSA (Main)|<https://www.ansa.it/sito/ansait_rss.xml>|200|02/19/2026|valid|
@@ -1163,7 +1163,7 @@ This list covers the currently configured countries and their RSS outlets.
 29|la Città di Salerno|<https://www.lacittadisalerno.it/feed>|200|02/19/2026|valid|
 30|Notizie Geopolitiche|<https://www.notiziegeopolitiche.net/feed>|200|02/19/2026|valid|
 
-### Canada (CA)
+### 🇨🇦 Canada (CA)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
 1|Global News|<https://globalnews.ca/feed>|200|02/19/2026|valid|
@@ -1197,7 +1197,7 @@ This list covers the currently configured countries and their RSS outlets.
 29|TheCanadianPressNews (search)|<https://www.thecanadianpressnews.ca/search/?f=rss>|429 (HTTP_429)|02/19/2026|invalid|
 30|CBC News (Top Stories)|<https://www.cbc.ca/webfeed/rss/rss-topstories>|ERR (TIMEOUT)|02/19/2026|invalid|
 
-### Russia (RU)
+### 🇷🇺 Russia (RU)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
 1|TASS|<https://tass.com/feed>|404 (HTTP_404)|02/19/2026|invalid|
@@ -1231,7 +1231,7 @@ This list covers the currently configured countries and their RSS outlets.
 29|Lenta Sports|<https://lenta.ru/rss/sport>|404 (HTTP_404)|02/19/2026|invalid|
 30|RT Crimea|<https://www.rt.com/rss/regions.xml>|404 (HTTP_404)|02/19/2026|invalid|
 
-### South Korea (KR)
+### 🇰🇷 South Korea (KR)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
 1|Yonhap (EN)|<https://en.yna.co.kr/RSS/news.xml>|200|02/19/2026|valid|
@@ -1265,7 +1265,7 @@ This list covers the currently configured countries and their RSS outlets.
 29|KBS/공영방송(추적용) - RSS directory|N/A|❌ NO_SOURCE|02/19/2026|needs verification|
 30|Chosun Ilbo|N/A|❌ NO_SOURCE|02/19/2026|needs verification|
 
-### Brazil (BR)
+### 🇧🇷 Brazil (BR)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
 1|G1 (Globo - Economy)|<https://g1.globo.com/rss/g1/economia/>|200|02/19/2026|valid|
@@ -1299,7 +1299,7 @@ This list covers the currently configured countries and their RSS outlets.
 29|Estadão|<https://www.estadao.com.br/rss/ultimas>|404 (HTTP_404)|02/19/2026|invalid|
 30|UOL Brasil|<https://www.uol.com.br/urbe/rss>|404 (HTTP_404)|02/19/2026|invalid|
 
-### Australia (AU)
+### 🇦🇺 Australia (AU)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
 1|ABC News - Business|<https://www.abc.net.au/news/feed/51892/rss.xml>|200|02/19/2026|valid|
@@ -1333,7 +1333,7 @@ This list covers the currently configured countries and their RSS outlets.
 29|ABC News (Sport)|<https://www.abc.net.au/news/feed/2141674/rss.xml>|500 (HTTP_500)|02/19/2026|invalid|
 30|7news|<https://7news.com.au/feed>|200|02/19/2026|valid|
 
-### Spain (ES)
+### 🇪🇸 Spain (ES)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
 1|Expansión (Financial)|<https://e00-expansion.uecdn.es/rss/empresas.xml>|200|02/19/2026|valid|
@@ -1367,7 +1367,7 @@ This list covers the currently configured countries and their RSS outlets.
 29|El Mundo Sports|<https://e00-elmundo.uecdn.es/elmundo/rss/deportes.xml>|404 (HTTP_404)|02/19/2026|invalid|
 30|La Vanguardia Politics|<https://www.lavanguardia.com/politica/rss.xml>|404 (HTTP_404)|02/19/2026|invalid|
 
-### Mexico (MX)
+### 🇲🇽 Mexico (MX)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
 1|El Economista (Top)|<https://www.eleconomista.com.mx/rss/top-noticias>|403 (HTTP_403)|02/19/2026|invalid|
@@ -1401,7 +1401,7 @@ This list covers the currently configured countries and their RSS outlets.
 29|Proceso (Opinion)|<https://www.proceso.com.mx/opinion/rss>|404 (HTTP_404)|02/19/2026|invalid|
 30|El Financiero|<https://www.elfinanciero.com.mx/rss>|200|02/19/2026|valid|
 
-### Indonesia (ID)
+### 🇮🇩 Indonesia (ID)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
 1|Antara News|<https://www.antaranews.com/feed/>|200|02/19/2026|valid|
@@ -1435,7 +1435,7 @@ This list covers the currently configured countries and their RSS outlets.
 29|Detik|<https://www.detik.com/rss/sport>|404 (HTTP_404)|02/19/2026|invalid|
 30|Tempo|<https://www.tempo.co/feed/>|403 (HTTP_403)|02/19/2026|invalid|
 
-### Netherlands (NL)
+### 🇳🇱 Netherlands (NL)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
 1|NOS|<https://www.nos.nl/rss>|404 (HTTP_404)|02/19/2026|invalid|
@@ -1469,7 +1469,7 @@ This list covers the currently configured countries and their RSS outlets.
 29|Parool|<https://www.parool.nl/rss/nieuws/>|404 (HTTP_404)|02/19/2026|invalid|
 30|NRC|<https://www.nrc.nl/rss/>|200|02/19/2026|valid|
 
-### Switzerland (CH)
+### 🇨🇭 Switzerland (CH)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
 1|Swissinfo EN|<https://www.swissinfo.ch/eng/rss>|410 (HTTP_410)|02/19/2026|invalid|
@@ -1503,7 +1503,7 @@ This list covers the currently configured countries and their RSS outlets.
 29|Swissinfo Tech|<https://www.swissinfo.ch/eng/rss/tech>|200 (HTML_RETURNED)|02/19/2026|invalid|
 30|SRF|<https://www.srf.ch/news/bnf/headlines.rss>|404 (HTTP_404)|02/19/2026|invalid|
 
-### Turkey (TR)
+### 🇹🇷 Turkey (TR)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
 1|Anadolu Agency|<https://www.aa.com.tr/tr/rss/default.aspx>|404 (HTTP_404)|02/19/2026|invalid|
@@ -1537,7 +1537,7 @@ This list covers the currently configured countries and their RSS outlets.
 29|Yeni Safak|<https://www.yenisafak.com/tr/rss>|404 (HTTP_404)|02/19/2026|invalid|
 30|Haber Turk|<https://www.haberturk.com/rss/>|200|02/19/2026|valid|
 
-### Saudi Arabia (SA)
+### 🇸🇦 Saudi Arabia (SA)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
 1|Arab News|<https://www.arabnews.com/home/rss>|403 (HTTP_403)|02/19/2026|invalid|
@@ -1571,7 +1571,7 @@ This list covers the currently configured countries and their RSS outlets.
 29|Al Arabiya|<https://www.alarabiya.net/rss/>|403 (HTTP_403)|02/19/2026|invalid|
 30|Saudi Gazette|<https://saudigazette.com.sa/ContentFeed?section=business>|404 (HTTP_404)|02/19/2026|invalid|
 
-### Taiwan (TW)
+### 🇹🇼 Taiwan (TW)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
 1|Focus Taiwan (Economics - EN)|<https://focustaiwan.tw/rss/economics>|404 (HTTP_404)|02/19/2026|invalid|
@@ -1605,7 +1605,7 @@ This list covers the currently configured countries and their RSS outlets.
 29|Taipei Times (Local)|<https://www.taipeitimes.com/rss/local>|404 (HTTP_404)|02/19/2026|invalid|
 30|Taipei Times (Politics)|<https://www.taipeitimes.com/rss/politics>|404 (HTTP_404)|02/19/2026|invalid|
 
-### Poland (PL)
+### 🇵🇱 Poland (PL)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
 1|Gazeta Wyborcza|<https://wyborcza.pl/rss>|404 (HTTP_404)|02/19/2026|invalid|
@@ -1639,7 +1639,7 @@ This list covers the currently configured countries and their RSS outlets.
 29|Dziennik|<https://www.dziennik.pl/rss>|200 (HTML_RETURNED)|02/19/2026|invalid|
 30|Rzeczpospolita|<https://www.rp.pl/rss/aktualnosci>|404 (HTTP_404)|02/19/2026|invalid|
 
-### Sweden (SE)
+### 🇸🇪 Sweden (SE)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
 1|Aftonbladet|<https://www.aftonbladet.se/rss>|404 (HTTP_404)|02/19/2026|invalid|
@@ -1673,7 +1673,7 @@ This list covers the currently configured countries and their RSS outlets.
 29|DN|<https://www.dn.se/rss/teknik/>|404 (HTTP_404)|02/19/2026|invalid|
 30|Aftonbladet|<https://www.aftonbladet.se/rss/kultur.xml>|404 (HTTP_404)|02/19/2026|invalid|
 
-### Belgium (BE)
+### 🇧🇪 Belgium (BE)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
 1|Le Soir|<https://www.lesoir.be/1/rss>|403 (HTTP_403)|02/19/2026|invalid|
@@ -1707,7 +1707,7 @@ This list covers the currently configured countries and their RSS outlets.
 29|RTL Belgium|<https://www.rtbf.be/newsline/rss>|404 (HTTP_404)|02/19/2026|invalid|
 30|Belgium RTL|<https://www.rtbf.be/rss>|404 (HTTP_404)|02/19/2026|invalid|
 
-### Thailand (TH)
+### 🇹🇭 Thailand (TH)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
 1|Bangkok Post|<https://www.bangkokpost.com/rss>|200 (HTML_RETURNED)|02/19/2026|invalid|
@@ -1741,7 +1741,7 @@ This list covers the currently configured countries and their RSS outlets.
 29|Prachatai|<https://prachatai.com/rss/local>|403 (HTTP_403)|02/19/2026|invalid|
 30|The Nation|<https://www.nationthailand.com/rss/society>|200 (HTML_RETURNED)|02/19/2026|invalid|
 
-### Iran (IR)
+### 🇮🇷 Iran (IR)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
 1|Tehran Times|<https://www.tehrantimes.com/rss>|ERR (TIMEOUT)|02/19/2026|invalid|
@@ -1775,7 +1775,7 @@ This list covers the currently configured countries and their RSS outlets.
 29|Press TV|<https://www.presstv.com/english/rss>|403 (HTTP_403)|02/19/2026|invalid|
 30|ILNA|<https://www.ilna.ir/rss/1>|404 (HTTP_404)|02/19/2026|invalid|
 
-### Argentina (AR)
+### 🇦🇷 Argentina (AR)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
 1|La Nacion (Economy)|<https://www.lanacion.com.ar/arc/outboundfeeds/rss/?outputType=xml&rotation=economia>|200|02/19/2026|valid|
@@ -1809,7 +1809,7 @@ This list covers the currently configured countries and their RSS outlets.
 29|La Voz|<https://www.lavoz.com.ar/rss/>|200 (HTML_RETURNED)|02/19/2026|invalid|
 30|CNM Noticias|<https://www.cronica.com.ar/rss/cnm>|404 (HTTP_404)|02/19/2026|invalid|
 
-### Austria (AT)
+### 🇦🇹 Austria (AT)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
 1|Der Standard|<https://www.derstandard.at/standardplus?output=rss>|200 (HTML_RETURNED)|02/19/2026|invalid|
@@ -1843,7 +1843,7 @@ This list covers the currently configured countries and their RSS outlets.
 29|ORF|<https://rss.orf.at/wirtschaft.xml>|404 (HTTP_404)|02/19/2026|invalid|
 30|Der Standard Plus|<https://www.derstandard.at/rss/wirtschaft>|200|02/19/2026|valid|
 
-### Norway (NO)
+### 🇳🇴 Norway (NO)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
 1|NRK|<https://www.nrk.no/toppsaker.rss>|200|02/19/2026|valid|
@@ -1877,7 +1877,7 @@ This list covers the currently configured countries and their RSS outlets.
 29|TV2|<https://www.tv2.no/rss/>|200 (HTML_RETURNED)|02/19/2026|invalid|
 30|E24|<https://e24.no/rss/nyheter.xml>|200|02/19/2026|valid|
 
-### United Arab Emirates (AE)
+### 🇦🇪 United Arab Emirates (AE)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
 1|Gulf News|<https://gulfnews.com/rss>|404 (HTTP_404)|02/19/2026|invalid|

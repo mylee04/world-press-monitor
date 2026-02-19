@@ -40,6 +40,7 @@ type CliArgs = {
   reportPath: string;
   focusReasons?: Set<string>;
   outputCsv: string;
+  groupByDomain: boolean;
   limit?: number;
 };
 
@@ -321,7 +322,7 @@ const invalidRows = report.results
     suggestedAction: suggestion.note,
     priority: reasonPriority(row.failureReason || 'UNKNOWN'),
     checkedDate: report.checkedDate,
-  };
+    };
   })
   .sort((a, b) => {
     if (a.priority !== b.priority) {
@@ -335,25 +336,9 @@ const invalidRows = report.results
 
 const finalRows = typeof args.limit === 'number' ? invalidRows.slice(0, args.limit) : invalidRows;
 
-const lines = [
-  'countryName,countryCode,outlet,url,domain,httpCode,failureReason,fixAction,candidateUrls,suggestedAction,sourceCheckedDate,reportCheckedDate',
-  ...finalRows.map((row) =>
-    [
-      quote(row.countryName),
-      quote(row.countryCode),
-      quote(row.outlet),
-      quote(row.url),
-      row.domain,
-      row.httpCode === null ? '' : String(row.httpCode),
-      row.failureReason,
-      quote(row.fixAction),
-      quote(row.candidateUrls.join(' | ')),
-      quote(row.suggestedAction),
-      quote(generatedDate),
-      quote(report.checkedDate),
-    ].join(',')
-  ),
-];
+const lines = args.groupByDomain
+  ? buildDomainGroupedCsv(finalRows, generatedDate, report.checkedDate, args.limit)
+  : buildRowLevelCsv(finalRows, generatedDate, report.checkedDate);
 
 writeFileSync(args.outputCsv, `${lines.join('\n')}\n`, 'utf8');
 console.log(`Wrote fix backlog CSV: ${args.outputCsv}`);
@@ -368,6 +353,7 @@ function parseArgs(argv: string[]): CliArgs {
   const output: CliArgs = {
     reportPath: resolve(process.cwd(), 'audits', 'readme_rss_health_latest.json'),
     outputCsv: resolve(process.cwd(), 'audits', 'rss_fix_backlog.csv'),
+    groupByDomain: false,
   };
 
   for (const arg of argv) {
@@ -403,9 +389,153 @@ function parseArgs(argv: string[]): CliArgs {
       }
       continue;
     }
+
+    if (arg === '--group-by-domain') {
+      output.groupByDomain = true;
+      continue;
+    }
   }
 
   return output;
+}
+
+function buildRowLevelCsv(
+  rows: Array<{
+    countryName: string;
+    countryCode: string;
+    outlet: string;
+    url: string;
+    domain: string;
+    httpCode: number | null;
+    failureReason: string;
+    fixAction: string;
+    candidateUrls: string[];
+    suggestedAction: string;
+  }>,
+  generatedDate: string,
+  reportDate: string
+): string[] {
+  return [
+    'countryName,countryCode,outlet,url,domain,httpCode,failureReason,fixAction,candidateUrls,suggestedAction,sourceCheckedDate,reportCheckedDate',
+    ...rows.map((row) =>
+      [
+        quote(row.countryName),
+        quote(row.countryCode),
+        quote(row.outlet),
+        quote(row.url),
+        row.domain,
+        row.httpCode === null ? '' : String(row.httpCode),
+        row.failureReason,
+        quote(row.fixAction),
+        quote(row.candidateUrls.join(' | ')),
+        quote(row.suggestedAction),
+        quote(generatedDate),
+        quote(reportDate),
+      ].join(',')
+    ),
+  ];
+}
+
+function buildDomainGroupedCsv(
+  rows: Array<{
+    countryName: string;
+    countryCode: string;
+    outlet: string;
+    url: string;
+    domain: string;
+    failureReason: string;
+    fixAction: string;
+    candidateUrls: string[];
+    suggestedAction: string;
+  }>,
+  generatedDate: string,
+  reportDate: string,
+  limit?: number
+): string[] {
+  type Group = {
+    domain: string;
+    reason: string;
+    rows: number;
+    countries: Map<string, number>;
+    outlets: string[];
+    urls: string[];
+    actions: Map<string, number>;
+    candidateUrls: string[];
+    notes: string[];
+    codes: Map<string, number>;
+  };
+
+  const grouped = new Map<string, Group>();
+
+  for (const row of rows) {
+    const key = `${row.domain}|||${row.failureReason}`;
+    let group = grouped.get(key);
+    if (!group) {
+      group = {
+        domain: row.domain,
+        reason: row.failureReason,
+        rows: 0,
+        countries: new Map(),
+        outlets: [],
+        urls: [],
+        actions: new Map(),
+        candidateUrls: [],
+        notes: [],
+        codes: new Map(),
+      };
+      grouped.set(key, group);
+    }
+    group.rows += 1;
+    group.countries.set(row.countryName, (group.countries.get(row.countryName) || 0) + 1);
+    group.outlets.push(row.outlet);
+    group.urls.push(row.url);
+    group.actions.set(row.fixAction, (group.actions.get(row.fixAction) || 0) + 1);
+    for (const candidate of row.candidateUrls) {
+      if (!group.candidateUrls.includes(candidate)) {
+        group.candidateUrls.push(candidate);
+      }
+    }
+    if (row.suggestedAction && !group.notes.includes(row.suggestedAction)) {
+      group.notes.push(row.suggestedAction);
+    }
+  }
+
+  const groupedRows = Array.from(grouped.values())
+    .sort((a, b) => {
+      const reasonCmp = reasonPriority(a.reason) - reasonPriority(b.reason);
+      if (reasonCmp !== 0) return reasonCmp;
+      if (b.rows !== a.rows) return b.rows - a.rows;
+      return a.domain.localeCompare(b.domain);
+    })
+    .slice(0, limit);
+
+  const pickAction = (group: Group): string => {
+    let best: [string, number] | null = null;
+    for (const [action, cnt] of group.actions) {
+      if (!best || cnt > best[1]) {
+        best = [action, cnt];
+      }
+    }
+    return best ? best[0] : '';
+  };
+
+  return [
+    'failureReason,domain,rows,countryCount,countries,outlets,fixAction,candidateUrls,notes,urls,sourceCheckedDate,reportCheckedDate',
+    ...groupedRows.map((group) => [
+      group.reason,
+      group.domain,
+      String(group.rows),
+      String(group.countries.size),
+      quote(Array.from(group.countries.keys()).join(' | ')),
+      quote(group.outlets.slice(0, 20).join(' | ')),
+      quote(pickAction(group)),
+      quote(group.candidateUrls.join(' | ')),
+      quote(group.notes.join(' | ')),
+      quote(group.urls.slice(0, 20).join(' | ')),
+      quote(generatedDate),
+      quote(reportDate),
+    ].join(',')),
+  ];
 }
 
 function loadReport(inputPath: string): HealthReport {
