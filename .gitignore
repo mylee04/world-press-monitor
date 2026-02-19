@@ -10,9 +10,15 @@ audits/*.log
 audits/*.md
 !audits/README.md
 !audits/latest.md
-audits/ingest-worker-*.json
-audits/source_daily_counts_*.csv
-audits/us_latam_source_health_*.csv
+
+# Keep only intentionally tracked audit artifacts.
+audits/*.json
+audits/*.csv
+
+# Track the two running snapshot JSONs and the backlog file
+!audits/readme_network_precheck_latest.json
+!audits/readme_rss_health_latest.json
+!audits/rss_fix_backlog.csv
 
 # Local-only large directory (kept out of git and most tooling scans).
 listening_dashboard_shallow/
