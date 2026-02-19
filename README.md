@@ -25,9 +25,13 @@ bash scripts/setup-github-metadata.sh mylee04/world-press-monitor
 
 You can also set them in GitHub settings manually.
 
-## Country-level RSS Atlas (Top 30 countries by GDP)
+## Country-level RSS Atlas
 
-This list covers top 30 countries by GDP (high-level order) and all configured RSS outlets per country.
+This list covers the currently configured countries and their RSS outlets.
+
+- Covered countries:
+  United States, China, Japan, Germany, India, United Kingdom, France, Italy, Canada, Russia, South Korea, Brazil, Australia, Spain, Mexico, Indonesia, Netherlands, Switzerland, Turkey, Saudi Arabia, Taiwan, Poland, Sweden, Belgium, Thailand, Iran, Argentina, Austria, Norway, United Arab Emirates, Global Energy & Grid
+
 - Last checked: 02/19/2026
 - `❌ NO_SOURCE` means no RSS source is configured for this country yet.
 - `❌ 000` means not verified in the current environment yet.
