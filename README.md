@@ -1,6 +1,29 @@
 # World Press Monitor RSS Atlas
 
+![TypeScript](https://img.shields.io/badge/TypeScript-5.7.3-3178c6?logo=typescript&logoColor=white)
+![Bun](https://img.shields.io/badge/Bun-1.2-000000?logo=bun)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Ready-336791?logo=postgresql&logoColor=white)
+![License: MIT](https://img.shields.io/badge/License-MIT-blue)
+
 Maintenance-focused project for RSS source cataloging, feed validation, and periodic collection checks.
+
+Open-source project goals:
+
+- Maintain a clean global RSS source catalog with a clear signal of healthy vs broken feeds.
+- Enable reproducible daily/cron verification and catalog exports.
+- Keep PRs simple: add source URLs, run validation, and commit only source changes.
+
+Suggested GitHub tags: `rss`, `news`, `feed`, `typescript`, `postgresql`, `docker`, `bun`, `monitoring`
+
+### Open-source metadata
+
+Use `scripts/setup-github-metadata.sh` to set repository description and topics once:
+
+```bash
+bash scripts/setup-github-metadata.sh mylee04/world-press-monitor
+```
+
+You can also set them in GitHub settings manually.
 
 ## Country-level RSS Atlas (Top 30 countries by GDP)
 
@@ -1917,4 +1940,3 @@ This list covers top 30 countries by GDP (high-level order) and all configured R
 28|Energy Storage News|<https://www.energy-storage.news/rss>|200|02/19/2026|valid|
 29|Energy Storage News|<https://www.energy-storage.news/feed>|200|02/19/2026|valid|
 30|Renewable Energy Storage|<https://www.renewableenergystorage.com/feed/>|ERR (NETWORK)|02/19/2026|invalid|
-

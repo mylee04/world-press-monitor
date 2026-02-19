@@ -1,6 +1,16 @@
 {
   "name": "presslab-global-radar",
   "version": "0.1.0",
+  "description": "World Press Monitor: open-source RSS atlas and feed validation pipeline for global news sources.",
+  "license": "MIT",
+  "homepage": "https://github.com/mylee04/world-press-monitor",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mylee04/world-press-monitor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mylee04/world-press-monitor/issues"
+  },
   "private": true,
   "scripts": {
     "typecheck": "tsc --noEmit",
