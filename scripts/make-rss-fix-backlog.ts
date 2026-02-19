@@ -12,6 +12,12 @@ type HealthResult = {
   valid: boolean;
 };
 
+type FixSuggestion = {
+  action: 'REPLACE' | 'TRY_REPLACE' | 'MARK_DIRECTORY' | 'DROP_OR_GENERATE' | 'RETRY_LATER' | 'INSPECT_REQUIRED';
+  candidates: string[];
+  note: string;
+};
+
 type HealthSummary = {
   countries: number;
   totalFeeds: number;
@@ -53,6 +59,242 @@ const DEFAULT_REASON_ORDER = [
   'CONNECTION_REFUSED',
 ];
 
+const HIGH_CONFIDENCE_FIXES: Array<{
+  reason?: string;
+  outletContains?: string[];
+  countryNameContains?: string[];
+  domainContains: string[];
+  pathContains?: string[];
+  action: FixSuggestion['action'];
+  candidates: string[];
+  note: string;
+}> = [
+  {
+    domainContains: ['infobae.com'],
+    action: 'REPLACE',
+    candidates: ['https://www.infobae.com/arc/outboundfeeds/rss/?outputType=xml'],
+    note: 'Arc outboundfeeds likely requires outputType=xml.',
+  },
+  {
+    countryNameContains: ['United States'],
+    domainContains: ['ajc.com'],
+    action: 'TRY_REPLACE',
+    candidates: ['https://www.ajc.com/arc/outboundfeeds/rss/?outputType=xml'],
+    note: 'Try Arc outboundfeeds RSS candidate.',
+  },
+  {
+    countryNameContains: ['United States'],
+    domainContains: ['bostonglobe.com'],
+    action: 'TRY_REPLACE',
+    candidates: ['https://www.bostonglobe.com/arc/outboundfeeds/rss?outputType=xml'],
+    note: 'Try Arc outboundfeeds RSS candidate.',
+  },
+  {
+    countryNameContains: ['United States'],
+    domainContains: ['vanityfair.com'],
+    action: 'REPLACE',
+    candidates: ['http://feeds.feedburner.com/vfdotcomrss'],
+    note: 'Official Feedburner feed is maintained and already used in other copies.',
+  },
+  {
+    countryNameContains: ['United States'],
+    domainContains: ['esquire.com'],
+    action: 'REPLACE',
+    candidates: [
+      'https://www.esquire.com/rss/entertainment.xml',
+      'https://www.esquire.com/rss/style.xml',
+      'https://www.esquire.com/rss/food-drink.xml',
+      'https://www.esquire.com/rss/sports.xml',
+    ],
+    note: 'Official Esquire feed list is sectioned; start with entertainment/style.',
+  },
+  {
+    countryNameContains: ['United States'],
+    domainContains: ['gq.com'],
+    action: 'REPLACE',
+    candidates: ['https://www.gq.com/feed/rss'],
+    note: 'Use GQ RSS endpoint (feed/ instead of /feed).',
+  },
+  {
+    countryNameContains: ['United States'],
+    domainContains: ['espn.com'],
+    reason: 'HTTP_404',
+    action: 'TRY_REPLACE',
+    candidates: ['https://www.espn.com/espn/rss/news'],
+    note: 'Fallback to ESPN top-level section RSS.',
+  },
+  {
+    countryNameContains: ['United States'],
+    domainContains: ['space.com'],
+    reason: 'HTTP_404',
+    action: 'TRY_REPLACE',
+    candidates: ['https://www.space.com/feeds/all'],
+    note: 'Try feed namespace variant used by this publisher.',
+  },
+  {
+    countryNameContains: ['United States'],
+    domainContains: ['newsweek.com'],
+    reason: 'HTTP_404',
+    action: 'TRY_REPLACE',
+    candidates: ['https://www.newsweek.com/rss'],
+    note: 'Common legacy Newsweek RSS entry point.',
+  },
+  {
+    countryNameContains: ['United States'],
+    domainContains: ['scientificamerican.com'],
+    reason: 'HTTP_404',
+    action: 'TRY_REPLACE',
+    candidates: ['https://www.scientificamerican.com/rss/'],
+    note: 'Try RSS root path for section-based feeds.',
+  },
+  {
+    countryNameContains: ['United States'],
+    domainContains: ['nationalgeographic.com'],
+    reason: 'HTTP_404',
+    action: 'DROP_OR_GENERATE',
+    candidates: [],
+    note: 'No public canonical feed found; consider substitute source or generator.',
+  },
+  {
+    countryNameContains: ['United States'],
+    domainContains: ['pbs.org'],
+    reason: 'HTTP_404',
+    action: 'TRY_REPLACE',
+    candidates: ['https://www.pbs.org/newshour/feeds/rss/headlines'],
+    note: 'PBS often exposes section feeds under /newshour/feeds.',
+  },
+  {
+    countryNameContains: ['United States'],
+    domainContains: ['webmd.com'],
+    reason: 'HTTP_404',
+    action: 'TRY_REPLACE',
+    candidates: ['https://www.webmd.com/rss'],
+    note: 'Try alternate RSS endpoint.',
+  },
+  {
+    countryNameContains: ['United States'],
+    domainContains: ['apnews.com'],
+    reason: 'HTTP_404',
+    action: 'DROP_OR_GENERATE',
+    candidates: [],
+    note: 'AP no longer publishes open public RSS in many paths.',
+  },
+  {
+    countryNameContains: ['United States'],
+    domainContains: ['cleveland.com'],
+    action: 'REPLACE',
+    candidates: ['https://www.cleveland.com/arc/outboundfeeds/rss/?outputType=xml'],
+    note: 'Cleveland is known to expose Arc outboundfeeds XML.',
+  },
+  {
+    countryNameContains: ['United States'],
+    domainContains: ['theathletic.com'],
+    reason: 'HTTP_404',
+    action: 'DROP_OR_GENERATE',
+    candidates: [],
+    note: 'Likely paywall/auth feed; prefer generator fallback.',
+  },
+  {
+    countryNameContains: ['China'],
+    domainContains: ['chinadaily.com.cn'],
+    reason: 'HTTP_404',
+    action: 'REPLACE',
+    candidates: ['http://www.chinadaily.com.cn/rss/world_rss.xml'],
+    note: 'Known China Daily RSS XML endpoint.',
+  },
+  {
+    countryNameContains: ['China', 'Taiwan'],
+    domainContains: ['ltn.com.tw'],
+    action: 'TRY_REPLACE',
+    reason: 'HTML_RETURNED',
+    candidates: ['https://news.ltn.com.tw/rss/all.xml', 'https://news.ltn.com.tw/rss/business.xml'],
+    note: 'LTP has section RSS endpoints under news.ltn.com.tw.',
+  },
+  {
+    countryNameContains: ['Argentina'],
+    domainContains: ['reporteenergia.com'],
+    action: 'TRY_REPLACE',
+    reason: 'HTML_RETURNED',
+    candidates: ['https://www.reporteenergia.com/feed/'],
+    note: 'Reporte Energía exposes feed under /feed/.',
+  },
+  {
+    countryNameContains: ['China'],
+    domainContains: ['scmp.com'],
+    reason: 'HTML_RETURNED',
+    action: 'TRY_REPLACE',
+    candidates: ['https://www.scmp.com/rss/91/feed'],
+    note: 'SCMP RSS path has changed; try alternate feed id.',
+  },
+  {
+    countryNameContains: ['Japan'],
+    domainContains: ['mainichi.jp'],
+    action: 'TRY_REPLACE',
+    reason: 'HTML_RETURNED',
+    candidates: ['https://mainichi.jp/rss/etc/english_latest.rss'],
+    note: 'Try language section feed variant.',
+  },
+  {
+    countryNameContains: ['Japan'],
+    domainContains: ['nippon.com'],
+    action: 'TRY_REPLACE',
+    reason: 'HTML_RETURNED',
+    candidates: ['https://www.nippon.com/en/feed/'],
+    note: 'Try language-level feed endpoint.',
+  },
+  {
+    countryNameContains: ['Australia'],
+    domainContains: ['sydneytimes', 'sydneymorningherald'],
+    reason: 'HTTP_404',
+    action: 'TRY_REPLACE',
+    candidates: [],
+    note: 'Check if this publication moved to proprietary archive/JS endpoints.',
+  },
+  {
+    countryNameContains: ['France'],
+    domainContains: ['lepoint.fr'],
+    action: 'TRY_REPLACE',
+    reason: 'HTML_RETURNED',
+    candidates: [],
+    note: 'Directory/listing page behavior; locate canonical feed in page source.',
+  },
+  {
+    countryNameContains: ['South Korea', 'Korea'],
+    domainContains: ['world.kbs.co.kr'],
+    action: 'MARK_DIRECTORY',
+    reason: 'HTML_RETURNED',
+    candidates: ['http://world.kbs.co.kr/rss/rss_news.htm?lang=e'],
+    note: 'Current URL is RSS directory page; add actual feed items separately.',
+  },
+  {
+    countryNameContains: ['South Korea', 'Korea'],
+    domainContains: ['koreaherald.com'],
+    action: 'MARK_DIRECTORY',
+    reason: 'HTML_RETURNED',
+    candidates: ['https://www.koreaherald.com/rss/newsAll'],
+    note: 'RSS root is often directory-only; switch to concrete section endpoint.',
+  },
+  {
+    countryNameContains: ['South Korea', 'Korea'],
+    domainContains: ['koreatimes.co.kr', 'koreatimes.com'],
+    action: 'REPLACE',
+    reason: 'HTML_RETURNED',
+    candidates: ['https://feed.koreatimes.co.kr/k/allnews.xml'],
+    note: 'Known Koreatimes feed host for XML.',
+  },
+  {
+    countryNameContains: ['United States'],
+    domainContains: ['usatoday.com'],
+    action: 'TRY_REPLACE',
+    reason: 'HTML_RETURNED',
+    candidates: ['https://rssfeeds.usatoday.com/usatoday-NewsTopStories', 'https://rssfeeds.usatoday.com/UsatodaycomNation-TopStories'],
+    note: 'Try alternate lowercase top-stories key and fallback legacy endpoint.',
+  },
+];
+
+const DIRECTORY_INDICATORS = ['/rss', '/about_rss', 'about_rss.htm', '/rss/', '/feed?'];
+const HTML_BLOCKING_HOSTS = ['reuters.com', 'rg.ru'];
+
 const args = parseArgs(process.argv.slice(2));
 const report = loadReport(args.reportPath);
 const focus = args.focusReasons || new Set(DEFAULT_REASON_ORDER);
@@ -64,7 +306,9 @@ if (report.runtimeBlocked) {
 const invalidRows = report.results
   .filter((row) => !row.valid)
   .filter((row) => row.failureReason && focus.has(row.failureReason))
-  .map((row) => ({
+  .map((row) => {
+    const suggestion = suggestFix(row);
+    return {
     countryName: row.countryName,
     countryCode: row.countryCode,
     outlet: row.outlet,
@@ -72,10 +316,13 @@ const invalidRows = report.results
     domain: safeDomain(row.url),
     httpCode: row.httpCode,
     failureReason: row.failureReason || 'UNKNOWN',
-    suggestedAction: suggestFix(row),
+    fixAction: suggestion.action,
+    candidateUrls: suggestion.candidates,
+    suggestedAction: suggestion.note,
     priority: reasonPriority(row.failureReason || 'UNKNOWN'),
     checkedDate: report.checkedDate,
-  }))
+  };
+  })
   .sort((a, b) => {
     if (a.priority !== b.priority) {
       return a.priority - b.priority;
@@ -89,7 +336,7 @@ const invalidRows = report.results
 const finalRows = typeof args.limit === 'number' ? invalidRows.slice(0, args.limit) : invalidRows;
 
 const lines = [
-  'countryName,countryCode,outlet,url,domain,httpCode,failureReason,suggestedAction,sourceCheckedDate,reportCheckedDate',
+  'countryName,countryCode,outlet,url,domain,httpCode,failureReason,fixAction,candidateUrls,suggestedAction,sourceCheckedDate,reportCheckedDate',
   ...finalRows.map((row) =>
     [
       quote(row.countryName),
@@ -99,6 +346,8 @@ const lines = [
       row.domain,
       row.httpCode === null ? '' : String(row.httpCode),
       row.failureReason,
+      quote(row.fixAction),
+      quote(row.candidateUrls.join(' | ')),
       quote(row.suggestedAction),
       quote(generatedDate),
       quote(report.checkedDate),
@@ -207,43 +456,106 @@ function reasonPriority(reason: string): number {
   return index >= 0 ? index : DEFAULT_REASON_ORDER.length + 100;
 }
 
-function suggestFix(row: HealthResult): string {
+function suggestFix(row: HealthResult): FixSuggestion {
   const reason = row.failureReason || 'UNKNOWN';
+  const domain = safeDomain(row.url).toLowerCase();
+  const path = getPath(row.url).toLowerCase();
+
+  const directMatch = HIGH_CONFIDENCE_FIXES.find((rule) => {
+    if (rule.reason && rule.reason !== reason) {
+      return false;
+    }
+    if (rule.countryNameContains && !rule.countryNameContains.some((value) => row.countryName.toLowerCase() === value.toLowerCase())) {
+      return false;
+    }
+    if (rule.outletContains && !rule.outletContains.some((needle) => row.outlet.toLowerCase().includes(needle.toLowerCase()))) {
+      return false;
+    }
+    if (!rule.domainContains.some((needle) => domain.includes(needle.toLowerCase()))) {
+      return false;
+    }
+    if (rule.pathContains && !rule.pathContains.some((needle) => path.includes(needle.toLowerCase()))) {
+      return false;
+    }
+    return true;
+  });
+
+  if (directMatch) {
+    return {
+      action: directMatch.action,
+      candidates: directMatch.candidates,
+      note: directMatch.note,
+    };
+  }
 
   if (reason === 'HTTP_404') {
-    return 'Likely stale URL. Replace with official RSS endpoint from source section.';
+    return {
+      action: 'TRY_REPLACE',
+      candidates: [],
+      note: 'Likely stale URL. Re-check source section for canonical RSS path.',
+    };
   }
 
   if (reason === 'HTML_RETURNED') {
-    if (row.url.includes('/rss') || row.url.includes('about_rss')) {
-      return 'Looks like RSS directory/listing page. Mark as directory or replace with direct feed URL.';
+    if (DIRECTORY_INDICATORS.some((indicator) => path.includes(indicator))) {
+      return {
+        action: 'MARK_DIRECTORY',
+        candidates: [],
+        note: 'Looks like RSS directory/listing or discovery page. Replace with concrete feed URL.',
+      };
     }
-    return 'HTML is returned instead of XML. Find official feed endpoint.';
+
+    if (isKnownRssBlocker(row)) {
+      return {
+        action: 'DROP_OR_GENERATE',
+        candidates: [],
+        note: 'Blocked/auth-required HTML/anti-bot response likely. Consider generator fallback.',
+      };
+    }
+
+    return {
+      action: 'TRY_REPLACE',
+      candidates: [],
+      note: 'HTML is returned instead of XML. Find official feed endpoint.',
+    };
   }
 
   if (reason === 'HTTP_403' || reason === 'HTTP_401') {
-    return 'Source blocks request/auth required. Replace feed or mark as auth-restricted.';
+    return {
+      action: 'DROP_OR_GENERATE',
+      candidates: [],
+      note: 'Source blocks bots/auths. Prefer generator or alternative source.',
+    };
   }
 
-  if (reason === 'TLS') {
-    return 'TLS/certificate issue. Test alternate subdomain or remove unstable source.';
+  if (reason === 'TLS' || reason === 'NETWORK' || reason === 'TIMEOUT' || reason === 'HTTP_429' || reason === 'HTTP_502') {
+    return {
+      action: 'RETRY_LATER',
+      candidates: [],
+      note: 'Transient infra issue. Retry with stable runtime and longer timeout/backoff.',
+    };
   }
 
-  if (reason === 'TIMEOUT') {
-    return 'Transient timeout. Retry with lower concurrency and longer delay.';
-  }
+  return {
+    action: 'INSPECT_REQUIRED',
+    candidates: [],
+    note: 'Inspect source feed page and update to canonical RSS URL.',
+  };
+}
 
-  if (reason === 'HTTP_429') {
-    return 'Rate-limited. Backoff and retry with slower cadence.';
+function getPath(url: string): string {
+  try {
+    return new URL(url).pathname;
+  } catch {
+    return '';
   }
+}
 
-  if (reason === 'NETWORK' || reason === 'CONNECTION_RESET' || reason === 'CONNECTION_REFUSED') {
-    return 'Network-level failure. Re-run on healthy runtime or later schedule.';
+function isKnownRssBlocker(row: HealthResult): boolean {
+  try {
+    const hostname = new URL(row.url).hostname.toLowerCase();
+    return HTML_BLOCKING_HOSTS.some((domain) => hostname.includes(domain));
+  } catch {
+    return false;
   }
-
-  if (reason === 'INVALID_JSON') {
-    return 'JSON response from endpoint. Replace with true XML/Atom feed.';
-  }
-
-  return 'Inspect source feed page and update to canonical RSS URL.';
 }

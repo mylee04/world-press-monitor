@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Thu, 19 Feb 2026 06:19:47 GMT</dateCreated>
+    <dateCreated>Thu, 19 Feb 2026 06:28:43 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -10,7 +10,7 @@
       <outline text="The New York Times [valid]" title="The New York Times [valid]" type="rss" xmlUrl="https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml" htmlUrl="https://rss.nytimes.com"/>
       <outline text="Washington Post [invalid (ERR)]" title="Washington Post [invalid (ERR)]" type="rss" xmlUrl="https://washingtonpost.com/feed" htmlUrl="https://washingtonpost.com"/>
       <outline text="Wall Street Journal [valid]" title="Wall Street Journal [valid]" type="rss" xmlUrl="https://feeds.a.dj.com/rss/RSSWorldNews.xml" htmlUrl="https://feeds.a.dj.com"/>
-      <outline text="USA Today [invalid]" title="USA Today [invalid]" type="rss" xmlUrl="http://rssfeeds.usatoday.com/UsatodaycomNation-TopStories" htmlUrl="http://rssfeeds.usatoday.com"/>
+      <outline text="USA Today [needs verification]" title="USA Today [needs verification]" type="rss" xmlUrl="https://rssfeeds.usatoday.com/usatoday-NewsTopStories" htmlUrl="https://rssfeeds.usatoday.com"/>
       <outline text="LA Times [valid]" title="LA Times [valid]" type="rss" xmlUrl="https://www.latimes.com/local/rss2.0.xml" htmlUrl="https://www.latimes.com"/>
       <outline text="CNN [valid]" title="CNN [valid]" type="rss" xmlUrl="http://rss.cnn.com/rss/cnn_topstories.rss" htmlUrl="http://rss.cnn.com"/>
       <outline text="Fox News [valid]" title="Fox News [valid]" type="rss" xmlUrl="http://moxie.foxnews.com/google-publisher/latest.xml" htmlUrl="http://moxie.foxnews.com"/>
@@ -52,10 +52,10 @@
       <outline text="Slate [valid]" title="Slate [valid]" type="rss" xmlUrl="https://slate.com/feeds/all.rss" htmlUrl="https://slate.com"/>
       <outline text="The New Yorker [valid]" title="The New Yorker [valid]" type="rss" xmlUrl="https://www.newyorker.com/feed/everything" htmlUrl="https://www.newyorker.com"/>
       <outline text="The Atlantic [valid]" title="The Atlantic [valid]" type="rss" xmlUrl="https://www.theatlantic.com/feed/all/" htmlUrl="https://www.theatlantic.com"/>
-      <outline text="Boston Globe [invalid]" title="Boston Globe [invalid]" type="rss" xmlUrl="https://bostonglobe.com/feed" htmlUrl="https://bostonglobe.com"/>
+      <outline text="Boston Globe [needs verification]" title="Boston Globe [needs verification]" type="rss" xmlUrl="https://www.bostonglobe.com/arc/outboundfeeds/rss?outputType=xml" htmlUrl="https://www.bostonglobe.com"/>
       <outline text="Philadelphia Inquirer [invalid]" title="Philadelphia Inquirer [invalid]" type="rss" xmlUrl="https://inquirer.com/feed" htmlUrl="https://inquirer.com"/>
       <outline text="Miami Herald [invalid (ERR)]" title="Miami Herald [invalid (ERR)]" type="rss" xmlUrl="https://miamiherald.com/feed" htmlUrl="https://miamiherald.com"/>
-      <outline text="Atlanta Journal-Constitution [invalid]" title="Atlanta Journal-Constitution [invalid]" type="rss" xmlUrl="https://ajc.com/feed" htmlUrl="https://ajc.com"/>
+      <outline text="Atlanta Journal-Constitution [needs verification]" title="Atlanta Journal-Constitution [needs verification]" type="rss" xmlUrl="https://www.ajc.com/arc/outboundfeeds/rss/?outputType=xml" htmlUrl="https://www.ajc.com"/>
       <outline text="New York Post [valid]" title="New York Post [valid]" type="rss" xmlUrl="https://nypost.com/feed" htmlUrl="https://nypost.com"/>
       <outline text="Chicago Tribune [valid]" title="Chicago Tribune [valid]" type="rss" xmlUrl="https://chicagotribune.com/feed" htmlUrl="https://chicagotribune.com"/>
       <outline text="Detroit Free Press [invalid]" title="Detroit Free Press [invalid]" type="rss" xmlUrl="https://freep.com/feed" htmlUrl="https://freep.com"/>
@@ -82,12 +82,12 @@
       <outline text="Esquire [valid]" title="Esquire [valid]" type="rss" xmlUrl="https://www.esquire.com/rss/entertainment.xml" htmlUrl="https://www.esquire.com"/>
       <outline text="GQ [valid]" title="GQ [valid]" type="rss" xmlUrl="https://www.gq.com/feed/rss" htmlUrl="https://www.gq.com"/>
       <outline text="People [invalid]" title="People [invalid]" type="rss" xmlUrl="https://people.com/feed" htmlUrl="https://people.com"/>
-      <outline text="Scientific American [invalid]" title="Scientific American [invalid]" type="rss" xmlUrl="https://scientificamerican.com/feed" htmlUrl="https://scientificamerican.com"/>
+      <outline text="Scientific American [needs verification]" title="Scientific American [needs verification]" type="rss" xmlUrl="https://www.scientificamerican.com/rss/" htmlUrl="https://www.scientificamerican.com"/>
       <outline text="National Geographic [invalid]" title="National Geographic [invalid]" type="rss" xmlUrl="https://nationalgeographic.com/feed" htmlUrl="https://nationalgeographic.com"/>
       <outline text="STAT News [valid]" title="STAT News [valid]" type="rss" xmlUrl="https://statnews.com/feed" htmlUrl="https://statnews.com"/>
-      <outline text="WebMD [invalid]" title="WebMD [invalid]" type="rss" xmlUrl="https://webmd.com/feed" htmlUrl="https://webmd.com"/>
-      <outline text="Space.com [invalid]" title="Space.com [invalid]" type="rss" xmlUrl="https://space.com/feed" htmlUrl="https://space.com"/>
-      <outline text="ESPN [invalid]" title="ESPN [invalid]" type="rss" xmlUrl="https://espn.com/feed" htmlUrl="https://espn.com"/>
+      <outline text="WebMD [needs verification]" title="WebMD [needs verification]" type="rss" xmlUrl="https://www.webmd.com/rss" htmlUrl="https://www.webmd.com"/>
+      <outline text="Space.com [needs verification]" title="Space.com [needs verification]" type="rss" xmlUrl="https://www.space.com/feeds/all" htmlUrl="https://www.space.com"/>
+      <outline text="ESPN [needs verification]" title="ESPN [needs verification]" type="rss" xmlUrl="https://www.espn.com/espn/rss/news" htmlUrl="https://www.espn.com"/>
       <outline text="Sports Illustrated [valid]" title="Sports Illustrated [valid]" type="rss" xmlUrl="https://si.com/feed" htmlUrl="https://si.com"/>
       <outline text="Bleacher Report [invalid]" title="Bleacher Report [invalid]" type="rss" xmlUrl="https://bleacherreport.com/feed" htmlUrl="https://bleacherreport.com"/>
       <outline text="The Athletic [invalid]" title="The Athletic [invalid]" type="rss" xmlUrl="https://theathletic.com/feed" htmlUrl="https://theathletic.com"/>
@@ -101,9 +101,9 @@
       <outline text="The Intercept [valid]" title="The Intercept [valid]" type="rss" xmlUrl="https://theintercept.com/feed" htmlUrl="https://theintercept.com"/>
       <outline text="Complex [invalid]" title="Complex [invalid]" type="rss" xmlUrl="https://complex.com/feed" htmlUrl="https://complex.com"/>
       <outline text="Refinery29 [invalid]" title="Refinery29 [invalid]" type="rss" xmlUrl="https://refinery29.com/feed" htmlUrl="https://refinery29.com"/>
-      <outline text="Newsweek [invalid]" title="Newsweek [invalid]" type="rss" xmlUrl="https://newsweek.com/feed" htmlUrl="https://newsweek.com"/>
+      <outline text="Newsweek [needs verification]" title="Newsweek [needs verification]" type="rss" xmlUrl="https://www.newsweek.com/rss" htmlUrl="https://www.newsweek.com"/>
       <outline text="Time [valid]" title="Time [valid]" type="rss" xmlUrl="https://time.com/feed" htmlUrl="https://time.com"/>
-      <outline text="PBS NewsHour [invalid]" title="PBS NewsHour [invalid]" type="rss" xmlUrl="https://pbs.org/feed" htmlUrl="https://pbs.org"/>
+      <outline text="PBS NewsHour [needs verification]" title="PBS NewsHour [needs verification]" type="rss" xmlUrl="https://www.pbs.org/newshour/feeds/rss/headlines" htmlUrl="https://www.pbs.org"/>
       <outline text="Christian Science Monitor [invalid]" title="Christian Science Monitor [invalid]" type="rss" xmlUrl="https://csmonitor.com/feed" htmlUrl="https://csmonitor.com"/>
       <outline text="Semafor [invalid]" title="Semafor [invalid]" type="rss" xmlUrl="https://semafor.com/feed" htmlUrl="https://semafor.com"/>
       <outline text="Scripps News [invalid]" title="Scripps News [invalid]" type="rss" xmlUrl="https://scrippsnews.com/feed" htmlUrl="https://scrippsnews.com"/>
@@ -118,10 +118,10 @@
       <outline text="Jiemian [invalid]" title="Jiemian [invalid]" type="rss" xmlUrl="https://jiemian.com/feed" htmlUrl="https://jiemian.com"/>
       <outline text="Yicaiglobal [invalid]" title="Yicaiglobal [invalid]" type="rss" xmlUrl="https://yicaiglobal.com/feed" htmlUrl="https://yicaiglobal.com"/>
       <outline text="TechNode [valid]" title="TechNode [valid]" type="rss" xmlUrl="https://technode.com/feed" htmlUrl="https://technode.com"/>
-      <outline text="South China Morning Post [invalid]" title="South China Morning Post [invalid]" type="rss" xmlUrl="https://scmp.com/feed" htmlUrl="https://scmp.com"/>
+      <outline text="South China Morning Post [needs verification]" title="South China Morning Post [needs verification]" type="rss" xmlUrl="https://www.scmp.com/rss/91/feed" htmlUrl="https://www.scmp.com"/>
       <outline text="Initium [valid]" title="Initium [valid]" type="rss" xmlUrl="https://theinitium.com/feed" htmlUrl="https://theinitium.com"/>
       <outline text="United Daily News [invalid]" title="United Daily News [invalid]" type="rss" xmlUrl="https://udn.com/feed" htmlUrl="https://udn.com"/>
-      <outline text="Liberty Times [invalid]" title="Liberty Times [invalid]" type="rss" xmlUrl="https://ltn.com.tw/feed" htmlUrl="https://ltn.com.tw"/>
+      <outline text="Liberty Times [needs verification]" title="Liberty Times [needs verification]" type="rss" xmlUrl="https://news.ltn.com.tw/rss/all.xml" htmlUrl="https://news.ltn.com.tw"/>
       <outline text="China Times [invalid]" title="China Times [invalid]" type="rss" xmlUrl="https://chinatimes.com/feed" htmlUrl="https://chinatimes.com"/>
       <outline text="Caijing [invalid]" title="Caijing [invalid]" type="rss" xmlUrl="https://www.caijing.com.cn/rss/" htmlUrl="https://www.caijing.com.cn"/>
       <outline text="China Securities Journal [invalid]" title="China Securities Journal [invalid]" type="rss" xmlUrl="https://www.cs.com.cn/rss/" htmlUrl="https://www.cs.com.cn"/>
@@ -142,7 +142,7 @@
     </outline>
     <outline text="Japan (JP)" title="Japan (JP)">
       <outline text="NHK World (EN) [valid]" title="NHK World (EN) [valid]" type="rss" xmlUrl="https://www3.nhk.or.jp/rss/news/cat0.xml" htmlUrl="https://www3.nhk.or.jp"/>
-      <outline text="Mainichi (Biz) [invalid]" title="Mainichi (Biz) [invalid]" type="rss" xmlUrl="https://mainichi.jp/rss/etc/biz-k-b.rss" htmlUrl="https://mainichi.jp"/>
+      <outline text="Mainichi (Biz) [needs verification]" title="Mainichi (Biz) [needs verification]" type="rss" xmlUrl="https://mainichi.jp/rss/etc/english_latest.rss" htmlUrl="https://mainichi.jp"/>
       <outline text="Asahi Shimbun [valid]" title="Asahi Shimbun [valid]" type="rss" xmlUrl="https://www.asahi.com/rss/asahi/newsheadlines.rdf" htmlUrl="https://www.asahi.com"/>
       <outline text="The Japan Times [valid]" title="The Japan Times [valid]" type="rss" xmlUrl="https://www.japantimes.co.jp/feed/" htmlUrl="https://www.japantimes.co.jp"/>
       <outline text="Nikkei [invalid]" title="Nikkei [invalid]" type="rss" xmlUrl="https://www.nikkei.com/rss/" htmlUrl="https://www.nikkei.com"/>
@@ -160,17 +160,17 @@
       <outline text="Kabutan [invalid]" title="Kabutan [invalid]" type="rss" xmlUrl="https://kabutan.jp/rss.xml" htmlUrl="https://kabutan.jp"/>
       <outline text="Bloomberg Japan [invalid]" title="Bloomberg Japan [invalid]" type="rss" xmlUrl="https://www.bloomberg.co.jp/feed/" htmlUrl="https://www.bloomberg.co.jp"/>
       <outline text="Reuters Japan [invalid]" title="Reuters Japan [invalid]" type="rss" xmlUrl="https://www.reuters.com/world/asia-pacific/" htmlUrl="https://www.reuters.com"/>
-      <outline text="Nippon [invalid]" title="Nippon [invalid]" type="rss" xmlUrl="https://www.nippon.com/en/" htmlUrl="https://www.nippon.com"/>
+      <outline text="Nippon [needs verification]" title="Nippon [needs verification]" type="rss" xmlUrl="https://www.nippon.com/en/feed/" htmlUrl="https://www.nippon.com"/>
       <outline text="Nikkei Asia [invalid]" title="Nikkei Asia [invalid]" type="rss" xmlUrl="https://asia.nikkei.com/rss/feed/" htmlUrl="https://asia.nikkei.com"/>
       <outline text="Nikkei Net [invalid]" title="Nikkei Net [invalid]" type="rss" xmlUrl="https://asia.nikkei.com/rss/NI" htmlUrl="https://asia.nikkei.com"/>
       <outline text="Nikkei 20 [invalid]" title="Nikkei 20 [invalid]" type="rss" xmlUrl="https://www.nikkei.com/markets/asia/rss/" htmlUrl="https://www.nikkei.com"/>
       <outline text="NHK General [invalid]" title="NHK General [invalid]" type="rss" xmlUrl="https://www3.nhk.or.jp/rss/news/cat0.rdf" htmlUrl="https://www3.nhk.or.jp"/>
-      <outline text="Mainichi Sports [invalid]" title="Mainichi Sports [invalid]" type="rss" xmlUrl="https://mainichi.jp/rss/etc/sports.rdf" htmlUrl="https://mainichi.jp"/>
+      <outline text="Mainichi Sports [needs verification]" title="Mainichi Sports [needs verification]" type="rss" xmlUrl="https://mainichi.jp/rss/etc/english_latest.rss" htmlUrl="https://mainichi.jp"/>
       <outline text="Japan Business Federation [invalid]" title="Japan Business Federation [invalid]" type="rss" xmlUrl="https://www.keidanren.or.jp/keidanren/rss.xml" htmlUrl="https://www.keidanren.or.jp"/>
       <outline text="Nikkei (Business) [invalid]" title="Nikkei (Business) [invalid]" type="rss" xmlUrl="https://www.nikkei.com/rss/nkeg/feed/" htmlUrl="https://www.nikkei.com"/>
       <outline text="The Tokyo Shimbun [invalid]" title="The Tokyo Shimbun [invalid]" type="rss" xmlUrl="https://www.tokyo-np.co.jp/rdf/" htmlUrl="https://www.tokyo-np.co.jp"/>
       <outline text="Nikkei Asia [invalid]" title="Nikkei Asia [invalid]" type="rss" xmlUrl="https://asia.nikkei.com/rss/news" htmlUrl="https://asia.nikkei.com"/>
-      <outline text="Mainichi World [invalid]" title="Mainichi World [invalid]" type="rss" xmlUrl="https://mainichi.jp/rss/etc/" htmlUrl="https://mainichi.jp"/>
+      <outline text="Mainichi World [needs verification]" title="Mainichi World [needs verification]" type="rss" xmlUrl="https://mainichi.jp/rss/etc/english_latest.rss" htmlUrl="https://mainichi.jp"/>
     </outline>
     <outline text="Germany (DE)" title="Germany (DE)">
       <outline text="Handelsblatt - Top [valid]" title="Handelsblatt - Top [valid]" type="rss" xmlUrl="https://www.handelsblatt.com/contentexport/feed/top-themen" htmlUrl="https://www.handelsblatt.com"/>
@@ -897,11 +897,11 @@
       <outline text="Ambito Financiero [valid]" title="Ambito Financiero [valid]" type="rss" xmlUrl="https://www.ambito.com/rss/pages/home.xml" htmlUrl="https://www.ambito.com"/>
       <outline text="Perfil [valid]" title="Perfil [valid]" type="rss" xmlUrl="https://www.perfil.com/feed/" htmlUrl="https://www.perfil.com"/>
       <outline text="EconoJournal [valid]" title="EconoJournal [valid]" type="rss" xmlUrl="https://www.econojournal.com.ar/rss" htmlUrl="https://www.econojournal.com.ar"/>
-      <outline text="Reporte Energía [invalid]" title="Reporte Energía [invalid]" type="rss" xmlUrl="https://www.reporteenergia.com" htmlUrl="https://www.reporteenergia.com"/>
+      <outline text="Reporte Energía [needs verification]" title="Reporte Energía [needs verification]" type="rss" xmlUrl="https://www.reporteenergia.com/feed/" htmlUrl="https://www.reporteenergia.com"/>
       <outline text="Mining Press [invalid (ERR)]" title="Mining Press [invalid (ERR)]" type="rss" xmlUrl="https://miningpress.com" htmlUrl="https://miningpress.com"/>
       <outline text="LA Nacion (Politics) [invalid]" title="LA Nacion (Politics) [invalid]" type="rss" xmlUrl="https://www.lanacion.com.ar/politica/feed/" htmlUrl="https://www.lanacion.com.ar"/>
       <outline text="Clarín (Economy) [valid]" title="Clarín (Economy) [valid]" type="rss" xmlUrl="https://www.clarin.com/rss/economia/" htmlUrl="https://www.clarin.com"/>
-      <outline text="Infobae (Arg) [invalid]" title="Infobae (Arg) [invalid]" type="rss" xmlUrl="https://www.infobae.com/feed/" htmlUrl="https://www.infobae.com"/>
+      <outline text="Infobae (Arg) [needs verification]" title="Infobae (Arg) [needs verification]" type="rss" xmlUrl="https://www.infobae.com/arc/outboundfeeds/rss/?outputType=xml" htmlUrl="https://www.infobae.com"/>
       <outline text="Cronista (Crypto) [invalid]" title="Cronista (Crypto) [invalid]" type="rss" xmlUrl="https://www.cronista.com/feed/" htmlUrl="https://www.cronista.com"/>
       <outline text="Clarín (Mundo) [valid]" title="Clarín (Mundo) [valid]" type="rss" xmlUrl="https://www.clarin.com/rss/mundo/" htmlUrl="https://www.clarin.com"/>
       <outline text="La Nacion (Política) [invalid]" title="La Nacion (Política) [invalid]" type="rss" xmlUrl="https://www.lanacion.com.ar/politica/?output=atom" htmlUrl="https://www.lanacion.com.ar"/>
@@ -909,7 +909,7 @@
       <outline text="Página/12 (Mundo) [invalid]" title="Página/12 (Mundo) [invalid]" type="rss" xmlUrl="https://www.pagina12.com.ar/feed/rss2" htmlUrl="https://www.pagina12.com.ar"/>
       <outline text="La Voz del Interior [invalid]" title="La Voz del Interior [invalid]" type="rss" xmlUrl="https://www.lavoz.com.ar/rss" htmlUrl="https://www.lavoz.com.ar"/>
       <outline text="Cronica [invalid]" title="Cronica [invalid]" type="rss" xmlUrl="https://www.cronica.com.ar/rss" htmlUrl="https://www.cronica.com.ar"/>
-      <outline text="Infobae (Mundo) [invalid]" title="Infobae (Mundo) [invalid]" type="rss" xmlUrl="https://www.infobae.com/feeds/rss/mundo" htmlUrl="https://www.infobae.com"/>
+      <outline text="Infobae (Mundo) [needs verification]" title="Infobae (Mundo) [needs verification]" type="rss" xmlUrl="https://www.infobae.com/arc/outboundfeeds/rss/?outputType=xml" htmlUrl="https://www.infobae.com"/>
       <outline text="Ambito Financiero [valid]" title="Ambito Financiero [valid]" type="rss" xmlUrl="https://www.ambito.com/rss/negocios.xml" htmlUrl="https://www.ambito.com"/>
       <outline text="El Destape [invalid]" title="El Destape [invalid]" type="rss" xmlUrl="https://eldestapeweb.com/rss" htmlUrl="https://eldestapeweb.com"/>
       <outline text="Minuto Uno [invalid]" title="Minuto Uno [invalid]" type="rss" xmlUrl="https://www.minutouno.com/rss" htmlUrl="https://www.minutouno.com"/>

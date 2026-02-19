@@ -50,11 +50,12 @@ This list covers top 30 countries by GDP (high-level order) and all configured R
 
 
 
+
 ## Latest RSS verification snapshot
 
 - Checked endpoints: `981`
-- Valid: `385`
-- Invalid: `596`
+- Valid: `396`
+- Invalid: `585`
 - No-source rows: `37`
 - Snapshot date: `02/19/2026`
 - Source artifact: `audits/readme_rss_health_latest.json`
@@ -62,35 +63,33 @@ This list covers top 30 countries by GDP (high-level order) and all configured R
 ### Failure reasons
 |Reason|Count|
 |---|---:|
-|HTTP_404|378|
-|HTML_RETURNED|90|
-|HTTP_403|61|
+|HTTP_404|370|
+|HTML_RETURNED|85|
+|HTTP_403|64|
 |NETWORK|21|
 |TIMEOUT|14|
 |TLS|11|
 |HTTP_401|4|
 |HTTP_500|4|
 |HTTP_410|3|
-|HTTP_502|2|
 |INVALID_JSON|2|
 |HTTP_307|1|
 |HTTP_530|1|
 |HTTP_429|1|
 |HTTP_400|1|
 |HTTP_370|1|
+|HTTP_502|1|
 |HTTP_405|1|
 
 ### Invalid feeds by reason
 
-#### HTTP_404 (378)
+#### HTTP_404 (370)
 |Country|Outlet|RSS URL|HTTP|
 |---|---|---|---:|
 |Argentina|Ciudad|<https://www.ciudad.com.ar/rss>|404|
 |Argentina|CNM Noticias|<https://www.cronica.com.ar/rss/cnm>|404|
 |Argentina|Cronica|<https://www.cronica.com.ar/rss>|404|
 |Argentina|El Destape|<https://eldestapeweb.com/rss>|404|
-|Argentina|Infobae (Arg)|<https://www.infobae.com/feed/>|404|
-|Argentina|Infobae (Mundo)|<https://www.infobae.com/feeds/rss/mundo>|404|
 |Argentina|LA Nacion (Politics)|<https://www.lanacion.com.ar/politica/feed/>|404|
 |Argentina|Página/12 (Mundo)|<https://www.pagina12.com.ar/feed/rss2>|404|
 |Argentina|Perfil (Negocios)|<https://www.perfil.com/economia/feed>|404|
@@ -310,8 +309,7 @@ This list covers top 30 countries by GDP (high-level order) and all configured R
 |Russia|The Moscow Times|<https://themoscowtimes.com/feed>|404|
 |Russia|Vedomosti|<https://vedomosti.ru/feed>|404|
 |Saudi Arabia|Akhbar|<https://www.akhbarelyom.com/news/News_rss.xml>|404|
-|Saudi Arabia|Al Arabiya|<https://www.alarabiya.net/RSS>|404|
-|Saudi Arabia|Arab News|<https://www.arabnews.com/world/rss>|404|
+|Saudi Arabia|Al Arabiya|<https://www.alarabiya.net/xml/rss.xml>|404|
 |Saudi Arabia|Gulf Daily News|<https://www.gulf-daily-news.com/rss>|404|
 |Saudi Arabia|Saudi Gazette|<https://saudigazette.com.sa/ContentFeed>|404|
 |Saudi Arabia|Saudi Gazette|<https://saudigazette.com.sa/en/RSS>|404|
@@ -407,7 +405,6 @@ This list covers top 30 countries by GDP (high-level order) and all configured R
 |Turkey|TRT World|<https://www.trtworld.com/rss>|404|
 |Turkey|Yeni Safak|<https://www.yenisafak.com/tr/rss>|404|
 |United Arab Emirates|Al Bayan|<https://www.albayan.ae/rss>|404|
-|United Arab Emirates|Arabian Business|<https://www.arabianbusiness.com/rss.xml?output=1>|404|
 |United Arab Emirates|Emirates247|<https://www.emirates247.com/rss>|404|
 |United Arab Emirates|Emirates247|<https://www.emirates247.com/rss/business.xml>|404|
 |United Arab Emirates|Gulf News|<https://gulfnews.com/rss>|404|
@@ -436,35 +433,31 @@ This list covers top 30 countries by GDP (high-level order) and all configured R
 |United Kingdom|The Mirror|<https://www.mirror.co.uk/news/world/rss.xml>|404|
 |United Kingdom|The Times|<https://www.thetimes.co.uk/rss/homepage/feed.xml>|404|
 |United States|AP News|<https://apnews.com/feed>|404|
-|United States|Atlanta Journal-Constitution|<https://ajc.com/feed>|404|
+|United States|Atlanta Journal-Constitution|<https://www.ajc.com/arc/outboundfeeds/rss/?outputType=xml>|404|
 |United States|Austin American-Statesman|<https://statesman.com/feed>|404|
 |United States|Bleacher Report|<https://bleacherreport.com/feed>|404|
-|United States|Boston Globe|<https://bostonglobe.com/feed>|404|
 |United States|CBS Sports|<https://cbssports.com/feed>|404|
 |United States|Christian Science Monitor|<https://csmonitor.com/feed>|404|
 |United States|Complex|<https://complex.com/feed>|404|
 |United States|Dallas Morning News|<https://dallasnews.com/feed>|404|
 |United States|Detroit Free Press|<https://freep.com/feed>|404|
-|United States|ESPN|<https://espn.com/feed>|404|
-|United States|Houston Chronicle|<https://houstonchronicle.com/feed>|404|
 |United States|Inc Magazine|<https://www.inc.com/rss.xml>|404|
 |United States|National Geographic|<https://nationalgeographic.com/feed>|404|
-|United States|Newsweek|<https://newsweek.com/feed>|404|
-|United States|PBS NewsHour|<https://pbs.org/feed>|404|
 |United States|People|<https://people.com/feed>|404|
 |United States|Philadelphia Inquirer|<https://inquirer.com/feed>|404|
 |United States|Refinery29|<https://refinery29.com/feed>|404|
-|United States|Scientific American|<https://scientificamerican.com/feed>|404|
+|United States|San Francisco Chronicle|<https://sfchronicle.com/feed>|404|
+|United States|Scientific American|<https://www.scientificamerican.com/rss/>|404|
 |United States|Scripps News|<https://scrippsnews.com/feed>|404|
 |United States|Semafor|<https://semafor.com/feed>|404|
-|United States|Space.com|<https://space.com/feed>|404|
 |United States|Star Tribune|<https://startribune.com/feed>|404|
 |United States|Tampa Bay Times|<https://tampabay.com/feed>|404|
 |United States|The Daily Beast|<https://thedailybeast.com/feed>|404|
+|United States|Vice News|<https://vice.com/feed>|404|
 |United States|Vulture|<https://vulture.com/feed>|404|
-|United States|WebMD|<https://webmd.com/feed>|404|
+|United States|WebMD|<https://www.webmd.com/rss>|404|
 
-#### HTML_RETURNED (90)
+#### HTML_RETURNED (85)
 |Country|Outlet|RSS URL|HTTP|
 |---|---|---|---:|
 |Argentina|Cronista (Crypto)|<https://www.cronista.com/feed/>|200|
@@ -485,7 +478,6 @@ This list covers top 30 countries by GDP (high-level order) and all configured R
 |China|Caixin|<https://www.caixin.com/rss>|200|
 |China|CNR|<https://english.cctv.com/rss/>|200|
 |China|Liberty Times|<https://ltn.com.tw/feed>|200|
-|China|South China Morning Post|<https://scmp.com/feed>|200|
 |China|TechNode Alt|<https://technode.com/rss/innovation>|200|
 |France|Le Point|<https://www.lepoint.fr/24h-infos/rss.xml>|200|
 |Germany|Süddeutsche Zeitung|<https://www.sueddeutsche.de/rss/topthemen>|200|
@@ -494,10 +486,6 @@ This list covers top 30 countries by GDP (high-level order) and all configured R
 |Global Energy & Grid|Renewables Now|<https://www.renewablesnow.com/feed/>|200|
 |Iran|Iran International News|<https://www.iranintl.com/en/rss>|200|
 |Iran|ISNA (IRNA Satellite)|<https://www.isna.ir/rss>|200|
-|Japan|Mainichi (Biz)|<https://mainichi.jp/rss/etc/biz-k-b.rss>|200|
-|Japan|Mainichi Sports|<https://mainichi.jp/rss/etc/sports.rdf>|200|
-|Japan|Mainichi World|<https://mainichi.jp/rss/etc/>|200|
-|Japan|Nippon|<https://www.nippon.com/en/>|200|
 |Japan|Sangyo Times|<https://sangyo-times.jp/rss/>|200|
 |Mexico|Aristegui (Economía)|<https://aristeguinoticias.com/rss/economia/>|200|
 |Mexico|Aristegui International|<https://aristeguinoticias.com/feeds/articles/rss/>|200|
@@ -558,7 +546,7 @@ This list covers top 30 countries by GDP (high-level order) and all configured R
 |United States|The Athletic|<https://theathletic.com/feed>|200|
 |United States|USA Today|<http://rssfeeds.usatoday.com/UsatodaycomNation-TopStories>|200|
 
-#### HTTP_403 (61)
+#### HTTP_403 (64)
 |Country|Outlet|RSS URL|HTTP|
 |---|---|---|---:|
 |Australia|Herald Sun|<https://www.heraldsun.com.au/rss/>|403|
@@ -602,10 +590,12 @@ This list covers top 30 countries by GDP (high-level order) and all configured R
 |Russia|Kommersant (World)|<https://www.kommersant.ru/rss/1206>|403|
 |Russia|Kommersant Business|<https://www.kommersant.ru/rss/1207>|403|
 |Saudi Arabia|Al Arabia|<https://www.alarabiya.net/rss/gulf.xml>|403|
-|Saudi Arabia|Al Arabiya|<https://www.alarabiya.net/xml/rss.xml>|403|
+|Saudi Arabia|Al Arabiya|<https://www.alarabiya.net/RSS>|403|
+|Saudi Arabia|Al Arabiya|<https://www.alarabiya.net/rss/>|403|
 |Saudi Arabia|Al Arabiya Science|<https://www.alarabiya.net/rss/world.xml>|403|
 |Saudi Arabia|Al Arabiya World|<https://www.alarabiya.net/rss/arab-news.xml>|403|
 |Saudi Arabia|Arab News|<https://www.arabnews.com/home/rss>|403|
+|Saudi Arabia|Arab News|<https://www.arabnews.com/world/rss>|403|
 |Saudi Arabia|Arab News (Business)|<https://www.arabnews.com/economy/rss>|403|
 |Saudi Arabia|Riyad News|<https://www.arabnews.com/feed>|403|
 |Saudi Arabia|Riyad News|<https://www.arabnews.com/node/2/rss>|403|
@@ -616,12 +606,13 @@ This list covers top 30 countries by GDP (high-level order) and all configured R
 |Thailand|Prachatai|<https://prachatai.com/rss/local>|403|
 |Turkey|Bianet|<https://www.bianet.org/rss>|403|
 |United Arab Emirates|Arabian Business|<https://www.arabianbusiness.com/rss.xml>|403|
+|United Arab Emirates|Arabian Business|<https://www.arabianbusiness.com/rss.xml?output=1>|403|
+|United Arab Emirates|Arabian Business|<https://www.arabianbusiness.com/rss>|403|
 |United Kingdom|Energy Voice (North Sea Oil)|<https://www.energyvoice.com/feed/>|403|
 |United Kingdom|The Economist|<https://www.economist.com/sections/united-states/rss.xml>|403|
 |United States|Bloomberg|<https://bloomberg.com/feed>|403|
+|United States|Houston Chronicle|<https://houstonchronicle.com/feed>|403|
 |United States|Politico|<https://www.politico.com/rss/politicopicks.xml>|403|
-|United States|San Francisco Chronicle|<https://sfchronicle.com/feed>|403|
-|United States|Vice News|<https://vice.com/feed>|403|
 
 #### NETWORK (21)
 |Country|Outlet|RSS URL|HTTP|
@@ -653,10 +644,10 @@ This list covers top 30 countries by GDP (high-level order) and all configured R
 |---|---|---|---:|
 |Belgium|Gazet van Antwerpen|<https://www.gva.be/feed/>|-|
 |Canada|CBC News (Top Stories)|<https://www.cbc.ca/webfeed/rss/rss-topstories>|-|
-|India|Daily Excelsior|<https://www.dailyexcelsior.com/feed>|-|
 |Iran|Financial Tribune|<https://financialtribune.com/feed>|-|
 |Iran|Tehran Times|<https://www.tehrantimes.com/rss>|-|
 |Iran|Tehran Times (Business)|<https://www.tehrantimes.com/rss.aspx?sectionId=2>|-|
+|Russia|Meduza|<https://meduza.io/feed>|-|
 |Switzerland|24 Heures|<https://www.24heures.ch/rss>|-|
 |Switzerland|24 Heures|<https://www.24heures.ch/rss/>|-|
 |Switzerland|Tages-Anzeiger|<https://www.tagesanzeiger.ch/rss>|-|
@@ -704,12 +695,6 @@ This list covers top 30 countries by GDP (high-level order) and all configured R
 |Switzerland|Swissinfo EN|<https://www.swissinfo.ch/eng/rss>|410|
 |Turkey|Yeni Şafak|<https://www.yenisafak.com/rss.xml>|410|
 
-#### HTTP_502 (2)
-|Country|Outlet|RSS URL|HTTP|
-|---|---|---|---:|
-|Mexico|La Jornada|<https://www.jornada.com.mx/ultimas/feed>|502|
-|Russia|Meduza|<https://meduza.io/feed>|502|
-
 #### INVALID_JSON (2)
 |Country|Outlet|RSS URL|HTTP|
 |---|---|---|---:|
@@ -740,6 +725,11 @@ This list covers top 30 countries by GDP (high-level order) and all configured R
 |Country|Outlet|RSS URL|HTTP|
 |---|---|---|---:|
 |Spain|El Pais Politics|<https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/politica/portada>|370|
+
+#### HTTP_502 (1)
+|Country|Outlet|RSS URL|HTTP|
+|---|---|---|---:|
+|Mexico|La Jornada|<https://www.jornada.com.mx/ultimas/feed>|502|
 
 #### HTTP_405 (1)
 |Country|Outlet|RSS URL|HTTP|
@@ -804,7 +794,7 @@ This list covers top 30 countries by GDP (high-level order) and all configured R
 13|Reuters|<https://reuters.com/feed>|401 (HTTP_401)|02/19/2026|invalid|
 14|HuffPost|<https://www.huffpost.com/section/front-page/feed>|200|02/19/2026|valid|
 15|BuzzFeed News|<https://www.buzzfeednews.com/news.xml>|200|02/19/2026|valid|
-16|Vice News|<https://vice.com/feed>|403 (HTTP_403)|02/19/2026|invalid|
+16|Vice News|<https://vice.com/feed>|404 (HTTP_404)|02/19/2026|invalid|
 17|Vox|<https://www.vox.com/rss/index.xml>|200|02/19/2026|valid|
 18|Bloomberg|<https://bloomberg.com/feed>|403 (HTTP_403)|02/19/2026|invalid|
 19|CNBC|<https://www.cnbc.com/id/100003114/device/rss/rss.html>|200|02/19/2026|valid|
@@ -848,20 +838,20 @@ This list covers top 30 countries by GDP (high-level order) and all configured R
 57|Google Ohio News|N/A|❌ NO_SOURCE|02/19/2026|needs verification|
 58|Google Pennsylvania News|N/A|❌ NO_SOURCE|02/19/2026|needs verification|
 59|Google Washington News|N/A|❌ NO_SOURCE|02/19/2026|needs verification|
-60|Boston Globe|<https://bostonglobe.com/feed>|404 (HTTP_404)|02/19/2026|invalid|
+60|Boston Globe|<https://www.bostonglobe.com/arc/outboundfeeds/rss?outputType=xml>|200|02/19/2026|valid|
 61|Philadelphia Inquirer|<https://inquirer.com/feed>|404 (HTTP_404)|02/19/2026|invalid|
 62|Miami Herald|<https://miamiherald.com/feed>|ERR (TIMEOUT)|02/19/2026|invalid|
-63|Atlanta Journal-Constitution|<https://ajc.com/feed>|404 (HTTP_404)|02/19/2026|invalid|
+63|Atlanta Journal-Constitution|<https://www.ajc.com/arc/outboundfeeds/rss/?outputType=xml>|404 (HTTP_404)|02/19/2026|invalid|
 64|New York Post|<https://nypost.com/feed>|200|02/19/2026|valid|
 65|Chicago Tribune|<https://chicagotribune.com/feed>|200|02/19/2026|valid|
 66|Detroit Free Press|<https://freep.com/feed>|404 (HTTP_404)|02/19/2026|invalid|
 67|Star Tribune|<https://startribune.com/feed>|404 (HTTP_404)|02/19/2026|invalid|
 68|Cleveland Plain Dealer|<https://www.cleveland.com/arc/outboundfeeds/rss/?outputType=xml>|200|02/19/2026|valid|
-69|Houston Chronicle|<https://houstonchronicle.com/feed>|404 (HTTP_404)|02/19/2026|invalid|
+69|Houston Chronicle|<https://houstonchronicle.com/feed>|403 (HTTP_403)|02/19/2026|invalid|
 70|Dallas Morning News|<https://dallasnews.com/feed>|404 (HTTP_404)|02/19/2026|invalid|
 71|Austin American-Statesman|<https://statesman.com/feed>|404 (HTTP_404)|02/19/2026|invalid|
 72|Tampa Bay Times|<https://tampabay.com/feed>|404 (HTTP_404)|02/19/2026|invalid|
-73|San Francisco Chronicle|<https://sfchronicle.com/feed>|403 (HTTP_403)|02/19/2026|invalid|
+73|San Francisco Chronicle|<https://sfchronicle.com/feed>|404 (HTTP_404)|02/19/2026|invalid|
 74|Seattle Times|<https://seattletimes.com/feed>|200|02/19/2026|valid|
 75|Denver Post|<https://denverpost.com/feed>|200|02/19/2026|valid|
 76|San Jose Mercury News|<https://mercurynews.com/feed>|200|02/19/2026|valid|
@@ -878,12 +868,12 @@ This list covers top 30 countries by GDP (high-level order) and all configured R
 87|Esquire|<https://www.esquire.com/rss/entertainment.xml>|200|02/19/2026|valid|
 88|GQ|<https://www.gq.com/feed/rss>|200|02/19/2026|valid|
 89|People|<https://people.com/feed>|404 (HTTP_404)|02/19/2026|invalid|
-90|Scientific American|<https://scientificamerican.com/feed>|404 (HTTP_404)|02/19/2026|invalid|
+90|Scientific American|<https://www.scientificamerican.com/rss/>|404 (HTTP_404)|02/19/2026|invalid|
 91|National Geographic|<https://nationalgeographic.com/feed>|404 (HTTP_404)|02/19/2026|invalid|
 92|STAT News|<https://statnews.com/feed>|200|02/19/2026|valid|
-93|WebMD|<https://webmd.com/feed>|404 (HTTP_404)|02/19/2026|invalid|
-94|Space.com|<https://space.com/feed>|404 (HTTP_404)|02/19/2026|invalid|
-95|ESPN|<https://espn.com/feed>|404 (HTTP_404)|02/19/2026|invalid|
+93|WebMD|<https://www.webmd.com/rss>|404 (HTTP_404)|02/19/2026|invalid|
+94|Space.com|<https://www.space.com/feeds/all>|200|02/19/2026|valid|
+95|ESPN|<https://www.espn.com/espn/rss/news>|200|02/19/2026|valid|
 96|Sports Illustrated|<https://si.com/feed>|200|02/19/2026|valid|
 97|Bleacher Report|<https://bleacherreport.com/feed>|404 (HTTP_404)|02/19/2026|invalid|
 98|The Athletic|<https://theathletic.com/feed>|200 (HTML_RETURNED)|02/19/2026|invalid|
@@ -897,9 +887,9 @@ This list covers top 30 countries by GDP (high-level order) and all configured R
 106|The Intercept|<https://theintercept.com/feed>|200|02/19/2026|valid|
 107|Complex|<https://complex.com/feed>|404 (HTTP_404)|02/19/2026|invalid|
 108|Refinery29|<https://refinery29.com/feed>|404 (HTTP_404)|02/19/2026|invalid|
-109|Newsweek|<https://newsweek.com/feed>|404 (HTTP_404)|02/19/2026|invalid|
+109|Newsweek|<https://www.newsweek.com/rss>|200|02/19/2026|valid|
 110|Time|<https://time.com/feed>|200|02/19/2026|valid|
-111|PBS NewsHour|<https://pbs.org/feed>|404 (HTTP_404)|02/19/2026|invalid|
+111|PBS NewsHour|<https://www.pbs.org/newshour/feeds/rss/headlines>|200|02/19/2026|valid|
 112|Christian Science Monitor|<https://csmonitor.com/feed>|404 (HTTP_404)|02/19/2026|invalid|
 113|Semafor|<https://semafor.com/feed>|404 (HTTP_404)|02/19/2026|invalid|
 114|Scripps News|<https://scrippsnews.com/feed>|404 (HTTP_404)|02/19/2026|invalid|
@@ -920,7 +910,7 @@ This list covers top 30 countries by GDP (high-level order) and all configured R
 7|Jiemian|<https://jiemian.com/feed>|404 (HTTP_404)|02/19/2026|invalid|
 8|Yicaiglobal|<https://yicaiglobal.com/feed>|404 (HTTP_404)|02/19/2026|invalid|
 9|TechNode|<https://technode.com/feed>|200|02/19/2026|valid|
-10|South China Morning Post|<https://scmp.com/feed>|200 (HTML_RETURNED)|02/19/2026|invalid|
+10|South China Morning Post|<https://www.scmp.com/rss/91/feed>|200|02/19/2026|valid|
 11|Initium|<https://theinitium.com/feed>|200|02/19/2026|valid|
 12|United Daily News|<https://udn.com/feed>|404 (HTTP_404)|02/19/2026|invalid|
 13|Liberty Times|<https://ltn.com.tw/feed>|200 (HTML_RETURNED)|02/19/2026|invalid|
@@ -946,7 +936,7 @@ This list covers top 30 countries by GDP (high-level order) and all configured R
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
 1|NHK World (EN)|<https://www3.nhk.or.jp/rss/news/cat0.xml>|200|02/19/2026|valid|
-2|Mainichi (Biz)|<https://mainichi.jp/rss/etc/biz-k-b.rss>|200 (HTML_RETURNED)|02/19/2026|invalid|
+2|Mainichi (Biz)|<https://mainichi.jp/rss/etc/english_latest.rss>|200|02/19/2026|valid|
 3|Asahi Shimbun|<https://www.asahi.com/rss/asahi/newsheadlines.rdf>|200|02/19/2026|valid|
 4|The Japan Times|<https://www.japantimes.co.jp/feed/>|200|02/19/2026|valid|
 5|Nikkei|<https://www.nikkei.com/rss/>|404 (HTTP_404)|02/19/2026|invalid|
@@ -964,17 +954,17 @@ This list covers top 30 countries by GDP (high-level order) and all configured R
 17|Kabutan|<https://kabutan.jp/rss.xml>|404 (HTTP_404)|02/19/2026|invalid|
 18|Bloomberg Japan|<https://www.bloomberg.co.jp/feed/>|404 (HTTP_404)|02/19/2026|invalid|
 19|Reuters Japan|<https://www.reuters.com/world/asia-pacific/>|401 (HTTP_401)|02/19/2026|invalid|
-20|Nippon|<https://www.nippon.com/en/>|200 (HTML_RETURNED)|02/19/2026|invalid|
+20|Nippon|<https://www.nippon.com/en/feed/>|200|02/19/2026|valid|
 21|Nikkei Asia|<https://asia.nikkei.com/rss/feed/>|500 (HTTP_500)|02/19/2026|invalid|
 22|Nikkei Net|<https://asia.nikkei.com/rss/NI>|500 (HTTP_500)|02/19/2026|invalid|
 23|Nikkei 20|<https://www.nikkei.com/markets/asia/rss/>|404 (HTTP_404)|02/19/2026|invalid|
 24|NHK General|<https://www3.nhk.or.jp/rss/news/cat0.rdf>|404 (HTTP_404)|02/19/2026|invalid|
-25|Mainichi Sports|<https://mainichi.jp/rss/etc/sports.rdf>|200 (HTML_RETURNED)|02/19/2026|invalid|
+25|Mainichi Sports|<https://mainichi.jp/rss/etc/english_latest.rss>|200|02/19/2026|valid|
 26|Japan Business Federation|<https://www.keidanren.or.jp/keidanren/rss.xml>|404 (HTTP_404)|02/19/2026|invalid|
 27|Nikkei (Business)|<https://www.nikkei.com/rss/nkeg/feed/>|404 (HTTP_404)|02/19/2026|invalid|
 28|The Tokyo Shimbun|<https://www.tokyo-np.co.jp/rdf/>|404 (HTTP_404)|02/19/2026|invalid|
 29|Nikkei Asia|<https://asia.nikkei.com/rss/news>|500 (HTTP_500)|02/19/2026|invalid|
-30|Mainichi World|<https://mainichi.jp/rss/etc/>|200 (HTML_RETURNED)|02/19/2026|invalid|
+30|Mainichi World|<https://mainichi.jp/rss/etc/english_latest.rss>|200|02/19/2026|valid|
 
 ### Germany (DE)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
@@ -1031,7 +1021,7 @@ This list covers top 30 countries by GDP (high-level order) and all configured R
 16|Chandigarh City News|<https://feeds.feedburner.com/ChandigarhCityNews>|200|02/19/2026|valid|
 17|The Quint|<https://prod-qt-images.s3.amazonaws.com/production/thequint/feed.xml>|200|02/19/2026|valid|
 18|Telangana Today|<https://telanganatoday.com/feed>|200|02/19/2026|valid|
-19|Daily Excelsior|<https://www.dailyexcelsior.com/feed>|ERR (TIMEOUT)|02/19/2026|invalid|
+19|Daily Excelsior|<https://www.dailyexcelsior.com/feed>|200|02/19/2026|valid|
 20|News Today (TN)|<https://newstodaynet.com/feed>|200|02/19/2026|valid|
 21|IndiaVision|<https://www.indiavision.com/feed>|200|02/19/2026|valid|
 22|OpIndia|<https://www.opindia.com/feed>|200|02/19/2026|valid|
@@ -1189,7 +1179,7 @@ This list covers top 30 countries by GDP (high-level order) and all configured R
 4|RG.ru|<https://rg.ru/feed>|401 (HTTP_401)|02/19/2026|invalid|
 5|Kommersant|<https://kommersant.ru/feed>|404 (HTTP_404)|02/19/2026|invalid|
 6|Vedomosti|<https://vedomosti.ru/feed>|404 (HTTP_404)|02/19/2026|invalid|
-7|Meduza|<https://meduza.io/feed>|502 (HTTP_502)|02/19/2026|invalid|
+7|Meduza|<https://meduza.io/feed>|ERR (TIMEOUT)|02/19/2026|invalid|
 8|The Moscow Times|<https://themoscowtimes.com/feed>|404 (HTTP_404)|02/19/2026|invalid|
 9|Novaya Gazeta|<https://novayagazeta.eu/feed>|404 (HTTP_404)|02/19/2026|invalid|
 10|The Bell|<https://thebell.io/feed>|200|02/19/2026|valid|
@@ -1525,7 +1515,7 @@ This list covers top 30 countries by GDP (high-level order) and all configured R
 |---|---|---|---|---|---|
 1|Arab News|<https://www.arabnews.com/home/rss>|403 (HTTP_403)|02/19/2026|invalid|
 2|Saudi Gazette|<https://saudigazette.com.sa/ContentFeed>|404 (HTTP_404)|02/19/2026|invalid|
-3|Al Arabiya|<https://www.alarabiya.net/RSS>|404 (HTTP_404)|02/19/2026|invalid|
+3|Al Arabiya|<https://www.alarabiya.net/RSS>|403 (HTTP_403)|02/19/2026|invalid|
 4|Al Eqtisadiah|<https://www.alriyadh.gov.sa/en/feed>|200 (HTML_RETURNED)|02/19/2026|invalid|
 5|Riyad News|<https://www.arabnews.com/feed>|403 (HTTP_403)|02/19/2026|invalid|
 6|Riyad News|<https://www.arabnews.com/node/2/rss>|403 (HTTP_403)|02/19/2026|invalid|
@@ -1538,7 +1528,7 @@ This list covers top 30 countries by GDP (high-level order) and all configured R
 13|Al Arabia|<https://www.alarabiya.net/rss/gulf.xml>|403 (HTTP_403)|02/19/2026|invalid|
 14|Makkah Times|<https://www.makkahnewspaper.com/rss>|200 (HTML_RETURNED)|02/19/2026|invalid|
 15|Al Riyadh|<https://www.alriyadh.com/rss/politics>|ERR (TLS)|02/19/2026|invalid|
-16|Arab News|<https://www.arabnews.com/world/rss>|404 (HTTP_404)|02/19/2026|invalid|
+16|Arab News|<https://www.arabnews.com/world/rss>|403 (HTTP_403)|02/19/2026|invalid|
 17|Saudi Gazette|<https://saudigazette.com.sa/en/RSS>|404 (HTTP_404)|02/19/2026|invalid|
 18|Okaz|<https://www.okaz.com.sa/rss/news>|200|02/19/2026|valid|
 19|Akhbar Alyom|<https://www.akhbaralyom.com/rss>|ERR (NETWORK)|02/19/2026|invalid|
@@ -1550,8 +1540,8 @@ This list covers top 30 countries by GDP (high-level order) and all configured R
 25|Akhbar|<https://www.akhbarelyom.com/news/News_rss.xml>|404 (HTTP_404)|02/19/2026|invalid|
 26|Gulf Daily News|<https://www.gulf-daily-news.com/rss>|404 (HTTP_404)|02/19/2026|invalid|
 27|Saudi Gazette (World)|<https://saudigazette.com.sa/ContentFeed?section=world>|404 (HTTP_404)|02/19/2026|invalid|
-28|Al Arabiya|<https://www.alarabiya.net/xml/rss.xml>|403 (HTTP_403)|02/19/2026|invalid|
-29|Al Arabiya|<https://www.alarabiya.net/rss/>|200|02/19/2026|valid|
+28|Al Arabiya|<https://www.alarabiya.net/xml/rss.xml>|404 (HTTP_404)|02/19/2026|invalid|
+29|Al Arabiya|<https://www.alarabiya.net/rss/>|403 (HTTP_403)|02/19/2026|invalid|
 30|Saudi Gazette|<https://saudigazette.com.sa/ContentFeed?section=business>|404 (HTTP_404)|02/19/2026|invalid|
 
 ### Taiwan (TW)
@@ -1772,7 +1762,7 @@ This list covers top 30 countries by GDP (high-level order) and all configured R
 9|Mining Press|<https://miningpress.com>|ERR (TLS)|02/19/2026|invalid|
 10|LA Nacion (Politics)|<https://www.lanacion.com.ar/politica/feed/>|404 (HTTP_404)|02/19/2026|invalid|
 11|Clarín (Economy)|<https://www.clarin.com/rss/economia/>|200|02/19/2026|valid|
-12|Infobae (Arg)|<https://www.infobae.com/feed/>|404 (HTTP_404)|02/19/2026|invalid|
+12|Infobae (Arg)|<https://www.infobae.com/arc/outboundfeeds/rss/?outputType=xml>|200|02/19/2026|valid|
 13|Cronista (Crypto)|<https://www.cronista.com/feed/>|200 (HTML_RETURNED)|02/19/2026|invalid|
 14|Clarín (Mundo)|<https://www.clarin.com/rss/mundo/>|200|02/19/2026|valid|
 15|La Nacion (Política)|<https://www.lanacion.com.ar/politica/?output=atom>|200 (HTML_RETURNED)|02/19/2026|invalid|
@@ -1780,7 +1770,7 @@ This list covers top 30 countries by GDP (high-level order) and all configured R
 17|Página/12 (Mundo)|<https://www.pagina12.com.ar/feed/rss2>|404 (HTTP_404)|02/19/2026|invalid|
 18|La Voz del Interior|<https://www.lavoz.com.ar/rss>|200 (HTML_RETURNED)|02/19/2026|invalid|
 19|Cronica|<https://www.cronica.com.ar/rss>|404 (HTTP_404)|02/19/2026|invalid|
-20|Infobae (Mundo)|<https://www.infobae.com/feeds/rss/mundo>|404 (HTTP_404)|02/19/2026|invalid|
+20|Infobae (Mundo)|<https://www.infobae.com/arc/outboundfeeds/rss/?outputType=xml>|200|02/19/2026|valid|
 21|Ambito Financiero|<https://www.ambito.com/rss/negocios.xml>|200|02/19/2026|valid|
 22|El Destape|<https://eldestapeweb.com/rss>|404 (HTTP_404)|02/19/2026|invalid|
 23|Minuto Uno|<https://www.minutouno.com/rss>|200 (HTML_RETURNED)|02/19/2026|invalid|
@@ -1890,8 +1880,8 @@ This list covers top 30 countries by GDP (high-level order) and all configured R
 25|Gulf News|<https://gulfnews.com/rss/usa.xml>|404 (HTTP_404)|02/19/2026|invalid|
 26|Gulf News|<https://gulfnews.com/rss/middle-east.xml>|404 (HTTP_404)|02/19/2026|invalid|
 27|Khaleej Times|<https://www.khaleejtimes.com/rss/world.xml>|404 (HTTP_404)|02/19/2026|invalid|
-28|Arabian Business|<https://www.arabianbusiness.com/rss.xml?output=1>|404 (HTTP_404)|02/19/2026|invalid|
-29|Arabian Business|<https://www.arabianbusiness.com/rss>|200|02/19/2026|valid|
+28|Arabian Business|<https://www.arabianbusiness.com/rss.xml?output=1>|403 (HTTP_403)|02/19/2026|invalid|
+29|Arabian Business|<https://www.arabianbusiness.com/rss>|403 (HTTP_403)|02/19/2026|invalid|
 30|Al Bayan|<https://www.albayan.ae/rss>|404 (HTTP_404)|02/19/2026|invalid|
 
 ### Global Energy & Grid (Global)
@@ -1927,3 +1917,4 @@ This list covers top 30 countries by GDP (high-level order) and all configured R
 28|Energy Storage News|<https://www.energy-storage.news/rss>|200|02/19/2026|valid|
 29|Energy Storage News|<https://www.energy-storage.news/feed>|200|02/19/2026|valid|
 30|Renewable Energy Storage|<https://www.renewableenergystorage.com/feed/>|ERR (NETWORK)|02/19/2026|invalid|
+
