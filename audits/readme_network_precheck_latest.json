@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-02-19T05:58:14.403Z",
+  "generatedAt": "2026-02-19T06:15:53.197Z",
   "sampleUrl": "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml",
   "sampleHost": "rss.nytimes.com",
   "checks": {
@@ -15,9 +15,9 @@
       "ok": true,
       "host": "rss.nytimes.com",
       "ips": [
-        "151.101.1.164"
+        "151.101.193.164"
       ],
-      "raw": "151.101.1.164",
+      "raw": "151.101.193.164",
       "error": "",
       "skipped": false
     },
@@ -47,7 +47,7 @@
     "curlResolve": {
       "ok": true,
       "host": "rss.nytimes.com",
-      "ip": "151.101.1.164",
+      "ip": "151.101.193.164",
       "status": 200,
       "outputLine": "HTTP/2 200",
       "reason": ""

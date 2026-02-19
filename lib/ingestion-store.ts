@@ -14,7 +14,7 @@ function getPool(): Pool | null {
     poolDisabledReason = 'pool_failed';
     return null;
   }
-  const url = process.env.DATABASE_URL || (process.env.NODE_ENV !== 'production' ? 'postgresql://localhost:5432/presslab' : '');
+  const url = process.env.DATABASE_URL || (process.env.NODE_ENV !== 'production' ? 'postgresql://localhost:5432/wpm' : '');
   if (!url) {
     poolDisabledReason = 'missing_database_url';
     return null;

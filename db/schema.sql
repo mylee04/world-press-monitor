@@ -1,31 +1,3 @@
-create table if not exists drafts (
-  id text primary key,
-  source_article_id text not null,
-  source text not null,
-  source_link text not null,
-  source_title text not null,
-  source_published_at timestamptz not null,
-  status text not null default 'draft',
-  headline_es text not null,
-  body_es text not null,
-  created_at timestamptz not null default now(),
-  updated_at timestamptz not null default now(),
-  approved_at timestamptz null,
-  published_at timestamptz null,
-  auto_queued_from text null
-);
-alter table drafts add column if not exists auto_queued_from text null;
-
-create table if not exists distribution_content (
-  id bigserial primary key,
-  draft_id text not null references drafts(id) on delete cascade,
-  platform text not null,
-  content text not null,
-  is_published boolean not null default false,
-  updated_at timestamptz not null default now(),
-  unique(draft_id, platform)
-);
-
 create table if not exists ingested_articles (
   id bigserial primary key,
   link text not null,
@@ -163,46 +135,6 @@ end;
 $$;
 alter table external_news_articles drop column if exists category;
 
-create table if not exists social_breaking_posts (
-  id bigserial primary key,
-  provider text not null default 'x',
-  account_handle text not null,
-  post_id text not null,
-  post_url text not null,
-  author_name text null,
-  published_at timestamptz not null,
-  title text not null,
-  content text null,
-  language text null,
-  country text null,
-  tags jsonb not null default '[]'::jsonb,
-  breaking_score integer not null default 0,
-  is_breaking boolean not null default false,
-  created_at timestamptz not null default now(),
-  unique(provider, post_id)
-);
-
-create index if not exists idx_social_breaking_posts_created_at on social_breaking_posts(created_at desc);
-create index if not exists idx_social_breaking_posts_published_at on social_breaking_posts(published_at desc);
-create index if not exists idx_social_breaking_posts_breaking on social_breaking_posts(is_breaking, created_at desc);
-
-create table if not exists breaking_queue (
-  id bigserial primary key,
-  source_kind text not null default 'social_x',
-  source_ref text not null unique,
-  title text not null,
-  link text not null,
-  summary text null,
-  language text null,
-  country text null,
-  status text not null default 'new',
-  priority integer not null default 0,
-  created_at timestamptz not null default now(),
-  updated_at timestamptz not null default now()
-);
-
-create index if not exists idx_breaking_queue_status_created on breaking_queue(status, created_at desc);
-
 alter table external_news_articles add column if not exists url_norm text;
 alter table external_news_articles add column if not exists url_hash text;
 
@@ -213,13 +145,6 @@ set
 where
   url is not null
   and (url_norm is null or url_hash is null);
-
-create index if not exists idx_external_news_articles_url_hash on external_news_articles(url_hash);
-create index if not exists idx_external_news_articles_source_last_seen on external_news_articles(source, last_seen_at desc);
-create index if not exists idx_external_news_articles_language_last_seen on external_news_articles(language, last_seen_at desc);
-create index if not exists idx_external_news_articles_non_en_last_seen
-  on external_news_articles(last_seen_at desc)
-  where language is not null and lower(language) not like 'en%';
 
 create table if not exists radar_summary_queue (
   id bigserial primary key,
@@ -269,53 +194,10 @@ create index if not exists idx_radar_summary_fetch_logs_created
 create index if not exists idx_radar_summary_fetch_logs_domain_created
   on radar_summary_fetch_logs(domain, created_at desc);
 
-create index if not exists idx_ingestion_endpoint_runs_runner_attempted_ran_at
-  on ingestion_endpoint_runs(runner, attempted, ran_at desc);
-create index if not exists idx_ingestion_endpoint_runs_runner_attempted_ok_ran_at
-  on ingestion_endpoint_runs(runner, attempted, ok, ran_at desc);
-create index if not exists idx_ingestion_endpoint_runs_runner_source_ran_at
-  on ingestion_endpoint_runs(runner, source, ran_at desc);
 
-create index if not exists idx_breaking_queue_status_priority_created
-  on breaking_queue(status, priority desc, created_at desc);
-create index if not exists idx_social_breaking_posts_handle_created
-  on social_breaking_posts(account_handle, created_at desc);
-
-create index if not exists idx_ingested_articles_tags_gin on ingested_articles using gin(tags);
-create index if not exists idx_social_breaking_posts_tags_gin on social_breaking_posts using gin(tags);
 
 do $$
 begin
-  if not exists (
-    select 1
-    from pg_constraint
-    where conname = 'chk_drafts_status'
-  ) then
-    alter table drafts
-      add constraint chk_drafts_status
-      check (status in ('draft', 'approved', 'published'));
-  end if;
-
-  if not exists (
-    select 1
-    from pg_constraint
-    where conname = 'chk_distribution_platform'
-  ) then
-    alter table distribution_content
-      add constraint chk_distribution_platform
-      check (platform in ('twitter', 'instagram', 'linkedin', 'tiktok', 'newsletter'));
-  end if;
-
-  if not exists (
-    select 1
-    from pg_constraint
-    where conname = 'chk_breaking_queue_status'
-  ) then
-    alter table breaking_queue
-      add constraint chk_breaking_queue_status
-      check (status in ('new', 'queued', 'dismissed', 'processing', 'published'));
-  end if;
-
   if not exists (
     select 1
     from pg_constraint
@@ -347,31 +229,3 @@ begin
   end if;
 end
 $$;
-
-create or replace function set_row_updated_at()
-returns trigger
-language plpgsql
-as $$
-begin
-  new.updated_at = now();
-  return new;
-end;
-$$;
-
-drop trigger if exists trg_drafts_updated_at on drafts;
-create trigger trg_drafts_updated_at
-before update on drafts
-for each row
-execute function set_row_updated_at();
-
-drop trigger if exists trg_distribution_content_updated_at on distribution_content;
-create trigger trg_distribution_content_updated_at
-before update on distribution_content
-for each row
-execute function set_row_updated_at();
-
-drop trigger if exists trg_breaking_queue_updated_at on breaking_queue;
-create trigger trg_breaking_queue_updated_at
-before update on breaking_queue
-for each row
-execute function set_row_updated_at();

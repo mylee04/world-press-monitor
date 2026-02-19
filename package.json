@@ -2,10 +2,7 @@
   "name": "presslab-global-radar",
   "version": "0.1.0",
   "private": true,
-    "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+  "scripts": {
     "typecheck": "tsc --noEmit",
     "verify:latam-sources": "bun scripts/verify-latam-sources.ts",
     "verify:readme-rss": "bun scripts/verify-readme-rss.ts",
@@ -15,18 +12,15 @@
     "rss:migrate-official": "bun scripts/migrate-proxy-rss-to-official.ts",
     "atlas:export": "bun scripts/export-rss-atlas.ts",
     "atlas:export-catalog": "bun scripts/export-rss-catalog.ts",
-    "report:daily-sources": "bun scripts/report-daily-source-counts.ts && bun scripts/post-daily-discord.ts",
     "ingest:once": "bun scripts/ingest-worker.ts --once",
     "ingest:loop": "bun scripts/ingest-worker.ts",
-    "watch-ingest-health": "bash scripts/watch-ingest-health.sh",
-    "cron:install": "bash scripts/cron-schedule.sh install",
-    "cron:remove": "bash scripts/cron-schedule.sh remove",
-    "cron:status": "bash scripts/cron-schedule.sh status",
     "db:init": "psql \"$DATABASE_URL\" -f db/schema.sql",
-    "notify:discord-daily": "bun scripts/post-daily-discord.ts",
-    "notify:discord-daily:dry": "bun scripts/post-daily-discord.ts --dry-run",
-    "notify:discord-hourly:ops": "bun scripts/post-hourly-ops-discord.ts",
-    "notify:discord-hourly:ops:dry": "bun scripts/post-hourly-ops-discord.ts --dry-run"
+    "db:bootstrap-wpm": "bash scripts/bootstrap-wpm-db.sh",
+    "db:check-schema-sync": "bun scripts/check-db-schema-sync.ts",
+    "db:cleanup-legacy-tables": "bun scripts/purge-legacy-db-tables.ts",
+    "db:cleanup-legacy-tables:all": "bun scripts/purge-legacy-db-tables.ts --all",
+    "db:cleanup-legacy-tables:apply": "bun scripts/purge-legacy-db-tables.ts --apply",
+    "db:cleanup-legacy-tables:apply:all": "bun scripts/purge-legacy-db-tables.ts --all --apply"
   },
   "dependencies": {
     "@upstash/redis": "^1.35.6",

@@ -1,4 +1,0 @@
-interface:
-  display_name: "Docker Compose Troubleshooter"
-  short_description: "Diagnose and stabilize Docker/Compose runtime issues"
-  default_prompt: "Troubleshoot my Docker Compose issue. Start with triage, propose minimal safe fixes, then validate and provide rollback."

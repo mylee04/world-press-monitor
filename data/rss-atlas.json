@@ -545,7 +545,7 @@
         },
         {
           "name": "Cleveland Plain Dealer",
-          "url": "https://cleveland.com/feed",
+          "url": "https://www.cleveland.com/arc/outboundfeeds/rss/?outputType=xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/18/2026",
           "valid": "needs verification",
@@ -689,7 +689,7 @@
         },
         {
           "name": "Vanity Fair",
-          "url": "https://vanityfair.com/feed",
+          "url": "http://feeds.feedburner.com/vfdotcomrss",
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/18/2026",
           "valid": "needs verification",
@@ -697,7 +697,7 @@
         },
         {
           "name": "Esquire",
-          "url": "https://esquire.com/feed",
+          "url": "https://www.esquire.com/rss/entertainment.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/18/2026",
           "valid": "needs verification",
@@ -705,7 +705,7 @@
         },
         {
           "name": "GQ",
-          "url": "https://gq.com/feed",
+          "url": "https://www.gq.com/feed/rss",
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/18/2026",
           "valid": "needs verification",
@@ -983,7 +983,7 @@
         },
         {
           "name": "China Daily",
-          "url": "https://chinadaily.com.cn/feed",
+          "url": "http://www.chinadaily.com.cn/rss/world_rss.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/18/2026",
           "valid": "needs verification",
@@ -3229,7 +3229,7 @@
         },
         {
           "name": "Korea Times (RSS directory)",
-          "url": "https://www.koreatimes.co.kr/rss",
+          "url": "https://feed.koreatimes.co.kr/k/allnews.xml",
           "status": null,
           "checkedDate": null,
           "valid": null,
@@ -3237,7 +3237,7 @@
         },
         {
           "name": "Korea Herald (RSS directory)",
-          "url": "https://www.koreaherald.com/rss",
+          "url": "https://www.koreaherald.com/rss/newsAll",
           "status": null,
           "checkedDate": null,
           "valid": null,
@@ -3253,7 +3253,7 @@
         },
         {
           "name": "KBS World Radio (RSS directory)",
-          "url": "https://world.kbs.co.kr/service/about_rss.htm?lang=e",
+          "url": "http://world.kbs.co.kr/rss/rss_news.htm?lang=e",
           "status": null,
           "checkedDate": null,
           "valid": null,
@@ -7125,7 +7125,7 @@
         },
         {
           "name": "Infobae (General)",
-          "url": "https://www.infobae.com/arc/outboundfeeds/rss/?outputType=amp",
+          "url": "https://www.infobae.com/arc/outboundfeeds/rss/?outputType=xml",
           "status": "ERR",
           "checkedDate": "02/18/2026",
           "valid": "invalid",

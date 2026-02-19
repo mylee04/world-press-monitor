@@ -1,350 +1,982 @@
 country_code,country_name,row,outlet,url,health_status,http_status,checked_at
-US,United States,1,The New York Times,https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml,valid,200,2026-02-19T05:45:41.561Z
-US,United States,2,Washington Post,https://washingtonpost.com/feed,invalid (ERR),N/A,2026-02-19T05:45:41.561Z
-US,United States,3,Wall Street Journal,https://feeds.a.dj.com/rss/RSSWorldNews.xml,valid,200,2026-02-19T05:45:41.561Z
-US,United States,4,USA Today,http://rssfeeds.usatoday.com/UsatodaycomNation-TopStories,invalid,200,2026-02-19T05:45:41.561Z
-US,United States,5,LA Times,https://www.latimes.com/local/rss2.0.xml,valid,200,2026-02-19T05:45:41.561Z
-US,United States,6,CNN,http://rss.cnn.com/rss/cnn_topstories.rss,valid,200,2026-02-19T05:45:41.561Z
-US,United States,7,Fox News,http://moxie.foxnews.com/google-publisher/latest.xml,valid,200,2026-02-19T05:45:41.561Z
-US,United States,8,NBC News,http://feeds.nbcnews.com/nbcnews/public/news,valid,200,2026-02-19T05:45:41.561Z
-US,United States,9,CBS News,https://www.cbsnews.com/latest/rss/main,valid,200,2026-02-19T05:45:41.561Z
-US,United States,10,ABC News,https://abcnews.go.com/abcnews/topstories,valid,200,2026-02-19T05:45:41.561Z
-US,United States,11,NPR,https://feeds.npr.org/1001/rss.xml,valid,200,2026-02-19T05:45:41.561Z
-US,United States,12,AP News,https://apnews.com/feed,invalid,404,2026-02-19T05:45:41.561Z
-US,United States,13,Reuters,https://reuters.com/feed,invalid,401,2026-02-19T05:45:41.561Z
-US,United States,14,HuffPost,https://www.huffpost.com/section/front-page/feed,valid,200,2026-02-19T05:45:41.561Z
-US,United States,15,BuzzFeed News,https://www.buzzfeednews.com/news.xml,valid,200,2026-02-19T05:45:41.561Z
-US,United States,16,Vice News,https://vice.com/feed,invalid,404,2026-02-19T05:45:41.561Z
-US,United States,17,Vox,https://www.vox.com/rss/index.xml,valid,200,2026-02-19T05:45:41.561Z
-US,United States,18,Bloomberg,https://bloomberg.com/feed,invalid,403,2026-02-19T05:45:41.561Z
-US,United States,19,CNBC,https://www.cnbc.com/id/100003114/device/rss/rss.html,valid,200,2026-02-19T05:45:41.561Z
-US,United States,20,Financial Times,https://www.ft.com/?format=rss,valid,200,2026-02-19T05:45:41.561Z
-US,United States,21,Forbes,https://www.forbes.com/most-popular/feed/,valid,200,2026-02-19T05:45:41.561Z
-US,United States,22,Fortune,https://fortune.com/feed,valid,200,2026-02-19T05:45:41.561Z
-US,United States,23,Business Insider,https://www.businessinsider.com/rss,valid,200,2026-02-19T05:45:41.561Z
-US,United States,24,MarketWatch,http://feeds.marketwatch.com/marketwatch/topstories/,valid,200,2026-02-19T05:45:41.561Z
-US,United States,25,Barrons,https://feeds.barrons.com/rss/TGW,invalid (ERR),N/A,2026-02-19T05:45:41.561Z
-US,United States,26,Inc Magazine,https://www.inc.com/rss.xml,invalid,404,2026-02-19T05:45:41.561Z
-US,United States,27,Fast Company,https://www.fastcompany.com/rss,valid,200,2026-02-19T05:45:41.561Z
-US,United States,28,TechCrunch,https://techcrunch.com/feed/,valid,200,2026-02-19T05:45:41.561Z
-US,United States,29,The Verge,https://www.theverge.com/rss/index.xml,valid,200,2026-02-19T05:45:41.561Z
-US,United States,30,Wired,https://www.wired.com/feed/rss,valid,200,2026-02-19T05:45:41.561Z
-US,United States,31,Ars Technica,http://feeds.arstechnica.com/arstechnica/index,valid,200,2026-02-19T05:45:41.561Z
-US,United States,32,Engadget,https://www.engadget.com/rss.xml,valid,200,2026-02-19T05:45:41.561Z
-US,United States,33,VentureBeat,https://venturebeat.com/feed/,valid,200,2026-02-19T05:45:41.561Z
-US,United States,34,Mashable,https://mashable.com/feed,valid,200,2026-02-19T05:45:41.561Z
-US,United States,35,Gizmodo,https://gizmodo.com/rss,valid,200,2026-02-19T05:45:41.561Z
-US,United States,36,CNET,https://www.cnet.com/rss/news/,valid,200,2026-02-19T05:45:41.561Z
-US,United States,37,ZDNet,https://www.zdnet.com/news/rss.xml,valid,200,2026-02-19T05:45:41.561Z
-US,United States,38,Politico,https://www.politico.com/rss/politicopicks.xml,invalid,403,2026-02-19T05:45:41.561Z
-US,United States,39,The Hill,https://thehill.com/feed,valid,200,2026-02-19T05:45:41.561Z
-US,United States,40,Axios,https://api.axios.com/feed/,valid,200,2026-02-19T05:45:41.561Z
-US,United States,41,Breitbart,http://feeds.feedburner.com/breitbart,valid,200,2026-02-19T05:45:41.561Z
-US,United States,42,National Review,https://www.nationalreview.com/feed/,valid,200,2026-02-19T05:45:41.561Z
-US,United States,43,Slate,https://slate.com/feeds/all.rss,valid,200,2026-02-19T05:45:41.561Z
-US,United States,44,The New Yorker,https://www.newyorker.com/feed/everything,valid,200,2026-02-19T05:45:41.561Z
-US,United States,45,The Atlantic,https://www.theatlantic.com/feed/all/,valid,200,2026-02-19T05:45:41.561Z
-US,United States,60,Boston Globe,https://bostonglobe.com/feed,invalid,404,2026-02-19T05:45:41.561Z
-US,United States,61,Philadelphia Inquirer,https://inquirer.com/feed,invalid,404,2026-02-19T05:45:41.561Z
-US,United States,62,Miami Herald,https://miamiherald.com/feed,invalid (ERR),N/A,2026-02-19T05:45:41.561Z
-US,United States,63,Atlanta Journal-Constitution,https://ajc.com/feed,invalid,404,2026-02-19T05:45:41.561Z
-US,United States,64,New York Post,https://nypost.com/feed,valid,200,2026-02-19T05:45:41.561Z
-US,United States,65,Chicago Tribune,https://chicagotribune.com/feed,valid,200,2026-02-19T05:45:41.561Z
-US,United States,66,Detroit Free Press,https://freep.com/feed,invalid,404,2026-02-19T05:45:41.561Z
-US,United States,67,Star Tribune,https://startribune.com/feed,invalid,404,2026-02-19T05:45:41.561Z
-US,United States,68,Cleveland Plain Dealer,https://cleveland.com/feed,invalid,404,2026-02-19T05:45:41.561Z
-US,United States,69,Houston Chronicle,https://houstonchronicle.com/feed,invalid,404,2026-02-19T05:45:41.561Z
-US,United States,70,Dallas Morning News,https://dallasnews.com/feed,invalid,404,2026-02-19T05:45:41.561Z
-US,United States,71,Austin American-Statesman,https://statesman.com/feed,invalid,404,2026-02-19T05:45:41.561Z
-US,United States,72,Tampa Bay Times,https://tampabay.com/feed,invalid,404,2026-02-19T05:45:41.561Z
-US,United States,73,San Francisco Chronicle,https://sfchronicle.com/feed,invalid,404,2026-02-19T05:45:41.561Z
-US,United States,74,Seattle Times,https://seattletimes.com/feed,valid,200,2026-02-19T05:45:41.561Z
-US,United States,75,Denver Post,https://denverpost.com/feed,valid,200,2026-02-19T05:45:41.561Z
-US,United States,76,San Jose Mercury News,https://mercurynews.com/feed,valid,200,2026-02-19T05:45:41.561Z
-US,United States,77,Las Vegas Review-Journal,https://reviewjournal.com/feed,valid,200,2026-02-19T05:45:41.561Z
-US,United States,78,San Diego Union-Tribune,https://sandiegouniontribune.com/feed,valid,200,2026-02-19T05:45:41.561Z
-US,United States,79,Honolulu Star-Advertiser,https://staradvertiser.com/feed,valid,200,2026-02-19T05:45:41.561Z
-US,United States,80,Variety,https://variety.com/feed,valid,200,2026-02-19T05:45:41.561Z
-US,United States,81,The Hollywood Reporter,https://hollywoodreporter.com/feed,valid,200,2026-02-19T05:45:41.561Z
-US,United States,82,Deadline,https://deadline.com/feed,valid,200,2026-02-19T05:45:41.561Z
-US,United States,83,Rolling Stone,https://rollingstone.com/feed,valid,200,2026-02-19T05:45:41.561Z
-US,United States,84,Billboard,https://billboard.com/feed,valid,200,2026-02-19T05:45:41.561Z
-US,United States,85,Vulture,https://vulture.com/feed,invalid,404,2026-02-19T05:45:41.561Z
-US,United States,86,Vanity Fair,https://vanityfair.com/feed,invalid,404,2026-02-19T05:45:41.561Z
-US,United States,87,Esquire,https://esquire.com/feed,invalid,404,2026-02-19T05:45:41.561Z
-US,United States,88,GQ,https://gq.com/feed,invalid,404,2026-02-19T05:45:41.561Z
-US,United States,89,People,https://people.com/feed,invalid,404,2026-02-19T05:45:41.561Z
-US,United States,90,Scientific American,https://scientificamerican.com/feed,invalid,404,2026-02-19T05:45:41.561Z
-US,United States,91,National Geographic,https://nationalgeographic.com/feed,invalid,404,2026-02-19T05:45:41.561Z
-US,United States,92,STAT News,https://statnews.com/feed,valid,200,2026-02-19T05:45:41.561Z
-US,United States,93,WebMD,https://webmd.com/feed,invalid,404,2026-02-19T05:45:41.561Z
-US,United States,94,Space.com,https://space.com/feed,invalid,404,2026-02-19T05:45:41.561Z
-US,United States,95,ESPN,https://espn.com/feed,invalid,404,2026-02-19T05:45:41.561Z
-US,United States,96,Sports Illustrated,https://si.com/feed,valid,200,2026-02-19T05:45:41.561Z
-US,United States,97,Bleacher Report,https://bleacherreport.com/feed,invalid,404,2026-02-19T05:45:41.561Z
-US,United States,98,The Athletic,https://theathletic.com/feed,invalid,200,2026-02-19T05:45:41.561Z
-US,United States,99,CBS Sports,https://cbssports.com/feed,invalid,404,2026-02-19T05:45:41.561Z
-US,United States,100,The Daily Beast,https://thedailybeast.com/feed,invalid,404,2026-02-19T05:45:41.561Z
-US,United States,101,Mother Jones,https://motherjones.com/feed,valid,200,2026-02-19T05:45:41.561Z
-US,United States,102,ProPublica,https://propublica.org/feed,valid,200,2026-02-19T05:45:41.561Z
-US,United States,103,Reason,https://reason.com/feed,valid,200,2026-02-19T05:45:41.561Z
-US,United States,104,Jacobin,https://jacobin.com/feed,valid,200,2026-02-19T05:45:41.561Z
-US,United States,105,Quartz,https://qz.com/feed,valid,200,2026-02-19T05:45:41.561Z
-US,United States,106,The Intercept,https://theintercept.com/feed,valid,200,2026-02-19T05:45:41.561Z
-US,United States,107,Complex,https://complex.com/feed,invalid,404,2026-02-19T05:45:41.561Z
-US,United States,108,Refinery29,https://refinery29.com/feed,invalid,404,2026-02-19T05:45:41.561Z
-US,United States,109,Newsweek,https://newsweek.com/feed,invalid,404,2026-02-19T05:45:41.561Z
-US,United States,110,Time,https://time.com/feed,valid,200,2026-02-19T05:45:41.561Z
-US,United States,111,PBS NewsHour,https://pbs.org/feed,invalid,404,2026-02-19T05:45:41.561Z
-US,United States,112,Christian Science Monitor,https://csmonitor.com/feed,invalid,404,2026-02-19T05:45:41.561Z
-US,United States,113,Semafor,https://semafor.com/feed,invalid,404,2026-02-19T05:45:41.561Z
-US,United States,114,Scripps News,https://scrippsnews.com/feed,invalid,404,2026-02-19T05:45:41.561Z
-CN,China,1,Xinhua Net,https://xinhuanet.com/feed,invalid (ERR),N/A,2026-02-19T05:45:41.561Z
-CN,China,2,People's Daily,https://people.com.cn/feed,invalid,404,2026-02-19T05:45:41.561Z
-CN,China,3,Global Times,https://globaltimes.cn/feed,invalid,404,2026-02-19T05:45:41.561Z
-CN,China,4,China Daily,https://chinadaily.com.cn/feed,invalid,200,2026-02-19T05:45:41.562Z
-CN,China,5,Caixin Global,https://caixinglobal.com/feed,invalid,404,2026-02-19T05:45:41.562Z
-CN,China,6,The Paper,https://thepaper.cn/feed,invalid,404,2026-02-19T05:45:41.562Z
-CN,China,7,Jiemian,https://jiemian.com/feed,invalid,404,2026-02-19T05:45:41.562Z
-CN,China,8,Yicaiglobal,https://yicaiglobal.com/feed,invalid,404,2026-02-19T05:45:41.562Z
-CN,China,9,TechNode,https://technode.com/feed,valid,200,2026-02-19T05:45:41.562Z
-CN,China,10,South China Morning Post,https://scmp.com/feed,invalid,200,2026-02-19T05:45:41.562Z
-CN,China,11,Initium,https://theinitium.com/feed,valid,200,2026-02-19T05:45:41.562Z
-CN,China,12,United Daily News,https://udn.com/feed,invalid,404,2026-02-19T05:45:41.562Z
-CN,China,13,Liberty Times,https://ltn.com.tw/feed,invalid,200,2026-02-19T05:45:41.562Z
-CN,China,14,China Times,https://chinatimes.com/feed,invalid,404,2026-02-19T05:45:41.562Z
-JP,Japan,1,NHK World (EN),https://www3.nhk.or.jp/rss/news/cat0.xml,valid,200,2026-02-19T05:45:41.562Z
-JP,Japan,2,Mainichi (Biz),https://mainichi.jp/rss/etc/biz-k-b.rss,invalid,200,2026-02-19T05:45:41.562Z
-JP,Japan,3,Asahi Shimbun,https://www.asahi.com/rss/asahi/newsheadlines.rdf,valid,200,2026-02-19T05:45:41.562Z
-JP,Japan,4,The Japan Times,https://www.japantimes.co.jp/feed/,valid,200,2026-02-19T05:45:41.562Z
-JP,Japan,5,Nikkei,https://www.nikkei.com/rss/,invalid,404,2026-02-19T05:45:41.562Z
-JP,Japan,6,Yomiuri Shimbun,https://www.yomiuri.co.jp/rss/,invalid,404,2026-02-19T05:45:41.562Z
-JP,Japan,7,Toyo Keizai,https://toyokeizai.net/feed/,invalid,404,2026-02-19T05:45:41.562Z
-JP,Japan,8,DIAMOND,https://diamond.jp/feed/,invalid,404,2026-02-19T05:45:41.562Z
-JP,Japan,9,DIAMOND (President),https://president.jp/feed/,invalid,404,2026-02-19T05:45:41.562Z
-JP,Japan,10,Japan Macro Advisors,https://japanmacroadvisors.com/,invalid,530,2026-02-19T05:45:41.562Z
-JP,Japan,11,Denki Shimbun,https://denkishimbun.com/feed/,invalid (ERR),N/A,2026-02-19T05:45:41.562Z
-JP,Japan,12,ITmedia (EEtimes),https://eetimes.itmedia.co.jp/rss/,invalid,404,2026-02-19T05:45:41.562Z
-JP,Japan,13,Sangyo Times,https://sangyo-times.jp/rss/,invalid,200,2026-02-19T05:45:41.562Z
-JP,Japan,14,Automotive Ten-Navi,https://automotive.ten-navi.com/rss/,valid,200,2026-02-19T05:45:41.562Z
-JP,Japan,15,The Bridge,https://thebridge.jp/feed/,valid,200,2026-02-19T05:45:41.562Z
-JP,Japan,16,TechCrunch Japan,https://jp.techcrunch.com/feed/,invalid (ERR),N/A,2026-02-19T05:45:41.562Z
-JP,Japan,17,Kabutan,https://kabutan.jp/rss.xml,invalid,404,2026-02-19T05:45:41.562Z
-JP,Japan,18,Bloomberg Japan,https://www.bloomberg.co.jp/feed/,invalid,404,2026-02-19T05:45:41.562Z
-JP,Japan,19,Reuters Japan,https://www.reuters.com/world/asia-pacific/,invalid,401,2026-02-19T05:45:41.562Z
-JP,Japan,20,Nippon,https://www.nippon.com/en/,invalid,200,2026-02-19T05:45:41.562Z
-DE,Germany,1,Handelsblatt - Top,https://www.handelsblatt.com/contentexport/feed/top-themen,valid,200,2026-02-19T05:45:41.562Z
-DE,Germany,2,Handelsblatt - Finance,https://www.handelsblatt.com/contentexport/feed/finanzen,valid,200,2026-02-19T05:45:41.562Z
-DE,Germany,3,Tagesschau,https://www.tagesschau.de/xml/rss2,valid,200,2026-02-19T05:45:41.562Z
-DE,Germany,4,Der Spiegel,https://www.spiegel.de/schlagzeilen/tops/index.rss,valid,200,2026-02-19T05:45:41.562Z
-DE,Germany,5,FAZ,https://www.faz.net/rss/aktuell/,valid,200,2026-02-19T05:45:41.562Z
-DE,Germany,6,Die Zeit,https://newsfeed.zeit.de/index,valid,200,2026-02-19T05:45:41.562Z
-DE,Germany,7,Manager Magazin,https://www.manager-magazin.de/unternehmen/index.rss,valid,200,2026-02-19T05:45:41.562Z
-DE,Germany,8,WirtschaftsWoche,https://www.wiwo.de/contentexport/feed/rss/schlagzeilen,valid,200,2026-02-19T05:45:41.562Z
-DE,Germany,9,Deutsche Welle (EN),https://rss.dw.com/xml/rss-en-all,valid,200,2026-02-19T05:45:41.562Z
-DE,Germany,10,Heise Online,https://www.heise.de/rss/heise-atom.xml,valid,200,2026-02-19T05:45:41.562Z
-IN,India,1,The Times of India (Top Stories),https://timesofindia.indiatimes.com/rssfeedstopstories.cms,valid,200,2026-02-19T05:45:41.562Z
-IN,India,2,NDTV (Latest),https://feeds.feedburner.com/NDTV-LatestNews,valid,200,2026-02-19T05:45:41.562Z
-IN,India,3,India Today (India),https://www.indiatoday.in/rss/1206578,valid,200,2026-02-19T05:45:41.562Z
-IN,India,4,The Indian Express,https://indianexpress.com/feed,valid,200,2026-02-19T05:45:41.562Z
-IN,India,5,The Hindu (National),https://www.thehindu.com/news/national/?service=rss,valid,200,2026-02-19T05:45:41.562Z
-IN,India,6,Firstpost,https://www.firstpost.com/commonfeeds/v1/mfp/rss/web-stories.xml,valid,200,2026-02-19T05:45:41.562Z
-IN,India,7,Business Standard (Latest),https://www.business-standard.com/rss/latest.rss,invalid,403,2026-02-19T05:45:41.562Z
-IN,India,8,DNA India (India),https://www.dnaindia.com/feeds/india.xml,valid,200,2026-02-19T05:45:41.562Z
-IN,India,9,Storify News,https://www.storifynews.com/feed,valid,200,2026-02-19T05:45:41.562Z
-IN,India,10,Amar Ujala (Breaking),https://www.amarujala.com/rss/breaking-news.xml,valid,200,2026-02-19T05:45:41.562Z
-IN,India,11,Odishabarta,https://odishabarta.com/feed,valid,200,2026-02-19T05:45:41.562Z
-IN,India,12,The Times of Bengal,https://thetimesofbengal.com/feed,valid,200,2026-02-19T05:45:41.562Z
-IN,India,13,Scroll.in,https://feeds.feedburner.com/ScrollinArticles.rss,valid,200,2026-02-19T05:45:41.562Z
-IN,India,14,Northlines,https://thenorthlines.com/feed,valid,200,2026-02-19T05:45:41.562Z
-IN,India,15,Chandigarh Metro,https://chandigarhmetro.com/feed,valid,200,2026-02-19T05:45:41.562Z
-IN,India,16,Chandigarh City News,https://feeds.feedburner.com/ChandigarhCityNews,valid,200,2026-02-19T05:45:41.562Z
-IN,India,17,The Quint,https://prod-qt-images.s3.amazonaws.com/production/thequint/feed.xml,valid,200,2026-02-19T05:45:41.562Z
-IN,India,18,Telangana Today,https://telanganatoday.com/feed,valid,200,2026-02-19T05:45:41.562Z
-IN,India,19,Daily Excelsior,https://www.dailyexcelsior.com/feed,valid,200,2026-02-19T05:45:41.562Z
-IN,India,20,News Today (TN),https://newstodaynet.com/feed,valid,200,2026-02-19T05:45:41.562Z
-IN,India,21,IndiaVision,https://www.indiavision.com/feed,valid,200,2026-02-19T05:45:41.562Z
-IN,India,22,OpIndia,https://www.opindia.com/feed,valid,200,2026-02-19T05:45:41.562Z
-IN,India,23,OrissaPOST,https://www.orissapost.com/feed,valid,200,2026-02-19T05:45:41.562Z
-IN,India,24,India's News.Net,https://feeds.indiasnews.net/rss/701ee96610c884a6,valid,200,2026-02-19T05:45:41.562Z
-IN,India,25,TechGenYZ,https://techgenyz.com/feed,valid,200,2026-02-19T05:45:41.562Z
-IN,India,26,Kashmir News,https://kashmirnews.in/feed,valid,200,2026-02-19T05:45:41.562Z
-IN,India,27,WYM News (Blogspot),https://latestnewsupdate4you.blogspot.com/feeds/posts/default,valid,200,2026-02-19T05:45:41.562Z
-IN,India,28,Star of Mysore,https://starofmysore.com/feed,valid,200,2026-02-19T05:45:41.562Z
-IN,India,29,ABP News,https://news.abplive.com/home/feed,valid,200,2026-02-19T05:45:41.562Z
-IN,India,30,The India Bizz,https://theindiabizz.com/feed,valid,200,2026-02-19T05:45:41.562Z
-GB,United Kingdom,1,Financial Times - World,https://www.ft.com/rss/world,valid,200,2026-02-19T05:45:41.562Z
-GB,United Kingdom,2,Financial Times - Energy,https://www.ft.com/rss/companies/energy,valid,200,2026-02-19T05:45:41.562Z
-GB,United Kingdom,3,BBC News - Business,https://feeds.bbci.co.uk/news/business/rss.xml,valid,200,2026-02-19T05:45:41.562Z
-GB,United Kingdom,4,BBC News - World,https://feeds.bbci.co.uk/news/world/rss.xml,valid,200,2026-02-19T05:45:41.562Z
-GB,United Kingdom,5,The Guardian - World,https://www.theguardian.com/world/rss,valid,200,2026-02-19T05:45:41.562Z
-GB,United Kingdom,6,The Guardian - Business,https://www.theguardian.com/business/rss,valid,200,2026-02-19T05:45:41.562Z
-GB,United Kingdom,7,Sky News - World,https://feeds.skynews.com/feeds/rss/world.xml,valid,200,2026-02-19T05:45:41.562Z
-GB,United Kingdom,8,Sky News - Business,https://feeds.skynews.com/feeds/rss/business.xml,valid,200,2026-02-19T05:45:41.562Z
-GB,United Kingdom,9,Telegraph - Business,https://www.telegraph.co.uk/business/rss.xml,valid,200,2026-02-19T05:45:41.562Z
-GB,United Kingdom,10,City A.M. (London Finance),https://www.cityam.com/feed/,valid,200,2026-02-19T05:45:41.562Z
-GB,United Kingdom,11,Energy Voice (North Sea Oil),https://www.energyvoice.com/feed/,invalid,403,2026-02-19T05:45:41.562Z
-GB,United Kingdom,12,Reuters UK (legacy),https://www.reutersagency.com/feed/?best-topics=business-finance&post_type=best,invalid,404,2026-02-19T05:45:41.562Z
-FR,France,1,France 24,https://www.france24.com/en/rss,valid,200,2026-02-19T05:45:41.562Z
-FR,France,2,The Local (France),https://feeds.thelocal.com/rss/fr,valid,200,2026-02-19T05:45:41.562Z
-FR,France,3,RFI (France),https://www.rfi.fr/en/france/rss,valid,200,2026-02-19T05:45:41.562Z
-FR,France,4,RFI (All / EN),https://www.rfi.fr/en/rss,valid,200,2026-02-19T05:45:41.562Z
-FR,France,5,Mediapart,https://www.mediapart.fr/articles/feed,valid,200,2026-02-19T05:45:41.562Z
-FR,France,6,Le Monde diplomatique,https://mondediplo.com/backend,valid,200,2026-02-19T05:45:41.562Z
-FR,France,7,Midi Libre,https://www.midilibre.fr/essentiel/rss.xml,invalid,404,2026-02-19T05:45:41.562Z
-FR,France,8,Sud Ouest,https://www.sudouest.fr/essentiel/rss.xml,valid,200,2026-02-19T05:45:41.562Z
-FR,France,9,L'Est Républicain,https://www.estrepublicain.fr/rss,valid,200,2026-02-19T05:45:41.562Z
-FR,France,10,France Soir,https://www.francesoir.fr/rss.xml,valid,200,2026-02-19T05:45:41.562Z
-FR,France,11,Dernières Nouvelles d'Alsace (DNA),https://www.dna.fr/rss,valid,200,2026-02-19T05:45:41.562Z
-FR,France,12,La Croix,https://www.la-croix.com/feeds/rss/site.xml,valid,200,2026-02-19T05:45:41.562Z
-FR,France,13,Marianne,https://www.marianne.net/rss.xml,invalid,403,2026-02-19T05:45:41.562Z
-FR,France,14,La Dépêche,https://www.ladepeche.fr/rss.xml,valid,200,2026-02-19T05:45:41.562Z
-FR,France,15,20 Minutes,https://www.20minutes.fr/feeds/rss-une.xml,valid,200,2026-02-19T05:45:41.562Z
-FR,France,16,Le Point,https://www.lepoint.fr/24h-infos/rss.xml,invalid,200,2026-02-19T05:45:41.562Z
-FR,France,17,Yahoo Actualités,https://fr.news.yahoo.com/rss,valid,200,2026-02-19T05:45:41.562Z
-FR,France,18,InfoMigrants (EN),https://www.infomigrants.net/en/rss/all.xml,valid,200,2026-02-19T05:45:41.562Z
-FR,France,19,France Today,https://www.francetoday.com/feed,valid,200,2026-02-19T05:45:41.562Z
-FR,France,20,FrenchDailyNews,https://frenchdailynews.com/feed,valid,200,2026-02-19T05:45:41.562Z
-FR,France,21,Le Monde (EN – Main),https://www.lemonde.fr/en/rss/une.xml,valid,200,2026-02-19T05:45:41.562Z
-FR,France,22,Le Monde (EN – International),https://www.lemonde.fr/en/international/rss_full.xml,valid,200,2026-02-19T05:45:41.562Z
-FR,France,23,Le Monde (EN – Editorials),https://www.lemonde.fr/en/editorials/rss_full.xml,valid,200,2026-02-19T05:45:41.562Z
-FR,France,24,Le Monde (EN – Europe),https://www.lemonde.fr/en/europe/rss_full.xml,valid,200,2026-02-19T05:45:41.562Z
-FR,France,25,Le Monde (EN – United States),https://www.lemonde.fr/en/united-states/rss_full.xml,valid,200,2026-02-19T05:45:41.562Z
-FR,France,26,Le Monde (EN – Economy),https://www.lemonde.fr/en/economy/rss_full.xml,valid,200,2026-02-19T05:45:41.562Z
-FR,France,27,Le Monde (EN – Culture),https://www.lemonde.fr/en/culture/rss_full.xml,valid,200,2026-02-19T05:45:41.562Z
-FR,France,28,Le Monde (EN – Sports),https://www.lemonde.fr/en/sports/rss_full.xml,valid,200,2026-02-19T05:45:41.562Z
-FR,France,29,Le Monde (EN – Environment),https://www.lemonde.fr/en/environment/rss_full.xml,valid,200,2026-02-19T05:45:41.562Z
-FR,France,30,Le Monde (EN – Science),https://www.lemonde.fr/en/science/rss_full.xml,valid,200,2026-02-19T05:45:41.562Z
-IT,Italy,1,ANSA (Main),https://www.ansa.it/sito/ansait_rss.xml,valid,200,2026-02-19T05:45:41.562Z
-IT,Italy,2,ANSA (Top News),https://www.ansa.it/sito/notizie/topnews/topnews_rss.xml,valid,200,2026-02-19T05:45:41.562Z
-IT,Italy,3,ANSA (Cronaca),https://www.ansa.it/sito/notizie/cronaca/cronaca_rss.xml,valid,200,2026-02-19T05:45:41.562Z
-IT,Italy,4,ANSA (Politica),https://www.ansa.it/sito/notizie/politica/politica_rss.xml,valid,200,2026-02-19T05:45:41.562Z
-IT,Italy,5,ANSA (Mondo),https://www.ansa.it/sito/notizie/mondo/mondo_rss.xml,valid,200,2026-02-19T05:45:41.562Z
-IT,Italy,6,ANSA (Economia),https://www.ansa.it/sito/notizie/economia/economia_rss.xml,valid,200,2026-02-19T05:45:41.562Z
-IT,Italy,7,ANSA (Calcio),https://www.ansa.it/sito/notizie/sport/calcio/calcio_rss.xml,valid,200,2026-02-19T05:45:41.562Z
-IT,Italy,8,ANSA (Sport),https://www.ansa.it/sito/notizie/sport/sport_rss.xml,valid,200,2026-02-19T05:45:41.562Z
-IT,Italy,9,ANSA (Cinema),https://www.ansa.it/sito/notizie/cultura/cinema/cinema_rss.xml,valid,200,2026-02-19T05:45:41.562Z
-IT,Italy,10,ANSA (Cultura e Tendenze),https://www.ansa.it/sito/notizie/cultura/cultura_rss.xml,valid,200,2026-02-19T05:45:41.562Z
-IT,Italy,11,ANSA (Foto),https://www.ansa.it/sito/photogallery/foto_rss.xml,valid,200,2026-02-19T05:45:41.562Z
-IT,Italy,12,ANSA (Video),https://www.ansa.it/sito/videogallery/video_rss.xml,valid,200,2026-02-19T05:45:41.562Z
-IT,Italy,13,Corriere della Sera (Homepage),https://www.corriere.it/rss/homepage.xml,valid,200,2026-02-19T05:45:41.562Z
-IT,Italy,14,Corriere della Sera (Ultimora),https://www.corriere.it/rss/ultimora.xml,valid,200,2026-02-19T05:45:41.562Z
-IT,Italy,15,Corriere della Sera (feed-hp Homepage),https://www.corriere.it/feed-hp/homepage.xml,valid,200,2026-02-19T05:45:41.562Z
-IT,Italy,16,la Repubblica,https://www.repubblica.it/rss/homepage/rss2.0.xml,valid,200,2026-02-19T05:45:41.562Z
-IT,Italy,17,La Stampa,https://www.lastampa.it/rss/copertina.xml,valid,200,2026-02-19T05:45:41.562Z
-IT,Italy,18,Il Sole 24 Ore (Italia),https://www.ilsole24ore.com/rss/italia.xml,valid,200,2026-02-19T05:45:41.562Z
-IT,Italy,19,Il Fatto Quotidiano,https://www.ilfattoquotidiano.it/feed/,valid,200,2026-02-19T05:45:41.562Z
-IT,Italy,20,La Gazzetta dello Sport,https://www.gazzetta.it/rss/home.xml,valid,200,2026-02-19T05:45:41.562Z
-IT,Italy,21,IL Tempo,https://www.iltempo.it/rss.xml,valid,200,2026-02-19T05:45:41.562Z
-IT,Italy,22,Libero Quotidiano,https://www.liberoquotidiano.it/rss.xml,valid,200,2026-02-19T05:45:41.562Z
-IT,Italy,23,MilanoToday,https://www.milanotoday.it/rss,valid,200,2026-02-19T05:45:41.562Z
-IT,Italy,24,The Florentine,https://www.theflorentine.net/feed,valid,200,2026-02-19T05:45:41.562Z
-IT,Italy,25,Wanted in Rome,https://www.wantedinrome.com/news?format=rss,valid,200,2026-02-19T05:45:41.562Z
-IT,Italy,26,Florence Daily News,https://florencedailynews.com/feed,valid,200,2026-02-19T05:45:41.562Z
-IT,Italy,27,Alto Adige (Cronaca),https://www.altoadige.it/feed-rss/cronaca-1.169,valid,200,2026-02-19T05:45:41.562Z
-IT,Italy,28,Italia a Tavola,https://rss.italiaatavola.net/feed.xml,valid,200,2026-02-19T05:45:41.562Z
-IT,Italy,29,la Città di Salerno,https://www.lacittadisalerno.it/feed,valid,200,2026-02-19T05:45:41.562Z
-IT,Italy,30,Notizie Geopolitiche,https://www.notiziegeopolitiche.net/feed,valid,200,2026-02-19T05:45:41.562Z
-CA,Canada,1,Global News,https://globalnews.ca/feed,valid,200,2026-02-19T05:45:41.562Z
-CA,Canada,2,rabble.ca,https://rabble.ca/feed,valid,200,2026-02-19T05:45:41.562Z
-CA,Canada,3,National Post,https://nationalpost.com/feed,valid,200,2026-02-19T05:45:41.562Z
-CA,Canada,4,Toronto Sun,https://torontosun.com/feed,valid,200,2026-02-19T05:45:41.562Z
-CA,Canada,5,Financial Post,https://feeds.feedburner.com/FP_TopStories,valid,200,2026-02-19T05:45:41.562Z
-CA,Canada,6,CityNews Toronto,https://toronto.citynews.ca/feed,valid,200,2026-02-19T05:45:41.562Z
-CA,Canada,7,Calgary Herald,https://calgaryherald.com/feed,valid,200,2026-02-19T05:45:41.562Z
-CA,Canada,8,Edmonton Journal,https://edmontonjournal.com/feed,valid,200,2026-02-19T05:45:41.562Z
-CA,Canada,9,Windsor Star,https://windsorstar.com/feed,valid,200,2026-02-19T05:45:41.562Z
-CA,Canada,10,The Province,https://theprovince.com/feed,valid,200,2026-02-19T05:45:41.562Z
-CA,Canada,11,Calgary Sun,https://calgarysun.com/feed,valid,200,2026-02-19T05:45:41.562Z
-CA,Canada,12,Ottawa Sun,https://ottawasun.com/feed,valid,200,2026-02-19T05:45:41.562Z
-CA,Canada,13,The Tyee,https://thetyee.ca/rss2.xml,valid,200,2026-02-19T05:45:41.562Z
-CA,Canada,14,The StarPhoenix,https://thestarphoenix.com/feed,valid,200,2026-02-19T05:45:41.562Z
-CA,Canada,15,Edmonton Sun,https://edmontonsun.com/feed,valid,200,2026-02-19T05:45:41.562Z
-CA,Canada,16,Canada.com,https://o.canada.com/feed,valid,200,2026-02-19T05:45:41.562Z
-CA,Canada,17,Canada's National Observer,https://nationalobserver.com/front/rss,invalid,403,2026-02-19T05:45:41.562Z
-CA,Canada,18,Business In Vancouver (BIV),https://biv.com/rss,valid,200,2026-02-19T05:45:41.562Z
-CA,Canada,19,Regina Leader Post,https://leaderpost.com/feed,valid,200,2026-02-19T05:45:41.562Z
-CA,Canada,20,Owen Sound Sun Times,https://owensoundsuntimes.com/feed,valid,200,2026-02-19T05:45:41.562Z
-CA,Canada,21,Ottawa Citizen,https://ottawacitizen.com/feed,valid,200,2026-02-19T05:45:41.562Z
-CA,Canada,22,Stratford Beacon Herald,https://stratfordbeaconherald.com/feed,valid,200,2026-02-19T05:45:41.562Z
-CA,Canada,23,The Georgia Straight,https://straight.com/content/rss,valid,200,2026-02-19T05:45:41.562Z
-CA,Canada,24,Grande Prairie Daily Herald Tribune,https://dailyheraldtribune.com/feed,valid,200,2026-02-19T05:45:41.562Z
-CA,Canada,25,YGK News (Kingston),https://ygknews.ca/feed,valid,200,2026-02-19T05:45:41.562Z
-CA,Canada,26,Prince Albert Daily Herald,https://paherald.sk.ca/feed,valid,200,2026-02-19T05:45:41.562Z
-CA,Canada,27,Sunny South News,https://sunnysouthnews.com/feed,valid,200,2026-02-19T05:45:41.562Z
-CA,Canada,28,The Afro News,https://theafronews.com/feed,valid,200,2026-02-19T05:45:41.562Z
-CA,Canada,29,TheCanadianPressNews (search),https://www.thecanadianpressnews.ca/search/?f=rss,invalid,429,2026-02-19T05:45:41.562Z
-CA,Canada,30,CBC News (Top Stories),https://www.cbc.ca/webfeed/rss/rss-topstories,invalid (ERR),N/A,2026-02-19T05:45:41.562Z
-RU,Russia,1,TASS,https://tass.com/feed,invalid,404,2026-02-19T05:45:41.562Z
-RU,Russia,2,RIA,https://ria.ru/feed,invalid,404,2026-02-19T05:45:41.562Z
-RU,Russia,3,RT,https://rt.com/feed,valid,200,2026-02-19T05:45:41.562Z
-RU,Russia,4,RG.ru,https://rg.ru/feed,invalid,401,2026-02-19T05:45:41.562Z
-RU,Russia,5,Kommersant,https://kommersant.ru/feed,invalid,404,2026-02-19T05:45:41.562Z
-RU,Russia,6,Vedomosti,https://vedomosti.ru/feed,invalid,404,2026-02-19T05:45:41.562Z
-RU,Russia,7,Meduza,https://meduza.io/feed,invalid (ERR),N/A,2026-02-19T05:45:41.562Z
-RU,Russia,8,The Moscow Times,https://themoscowtimes.com/feed,invalid,404,2026-02-19T05:45:41.562Z
-RU,Russia,9,Novaya Gazeta,https://novayagazeta.eu/feed,invalid,404,2026-02-19T05:45:41.562Z
-RU,Russia,10,The Bell,https://thebell.io/feed,valid,200,2026-02-19T05:45:41.562Z
-RU,Russia,11,Oil Capital,https://oilcapital.ru/feed,invalid,200,2026-02-19T05:45:41.562Z
-RU,Russia,12,Neftgaz,https://neftegaz.ru/feed,invalid,404,2026-02-19T05:45:41.562Z
-KR,South Korea,1,Yonhap (EN),https://en.yna.co.kr/RSS/news.xml,valid,200,2026-02-19T05:45:41.562Z
-KR,South Korea,2,Donga Ilbo,https://rss.donga.com/total.xml,valid,200,2026-02-19T05:45:41.562Z
-KR,South Korea,3,Seoul Newspaper,https://www.seoul.co.kr/xml/rss/rss_top.xml,valid,200,2026-02-19T05:45:41.562Z
-KR,South Korea,4,Newsis,https://www.newsis.com/RSS/sokbo.xml,valid,200,2026-02-19T05:45:41.562Z
-KR,South Korea,5,Aju News,https://rss.ajunews.com/sokbo.xml,valid,200,2026-02-19T05:45:41.562Z
-KR,South Korea,6,KED Global (Korea Economic Daily),https://www.kedglobal.com/newsRss,valid,200,2026-02-19T05:45:41.562Z
-KR,South Korea,7,Daily NK (EN),https://www.dailynk.com/english/feed,valid,200,2026-02-19T05:45:41.562Z
-KR,South Korea,8,Korea Times (RSS directory),https://www.koreatimes.co.kr/rss,invalid,200,2026-02-19T05:45:41.562Z
-KR,South Korea,9,Korea Herald (RSS directory),https://www.koreaherald.com/rss,invalid,200,2026-02-19T05:45:41.562Z
-KR,South Korea,10,Korea Herald (NewsAll),https://www.koreaherald.com/rss/newsAll,valid,200,2026-02-19T05:45:41.562Z
-KR,South Korea,11,KBS World Radio (RSS directory),https://world.kbs.co.kr/service/about_rss.htm?lang=e,invalid,200,2026-02-19T05:45:41.562Z
-BR,Brazil,1,G1 (Globo - Economy),https://g1.globo.com/rss/g1/economia/,valid,200,2026-02-19T05:45:41.562Z
-BR,Brazil,2,G1 (Globo - Tech),https://g1.globo.com/rss/g1/tecnologia/,valid,200,2026-02-19T05:45:41.562Z
-BR,Brazil,3,Folha de S.Paulo - Top,https://feeds.folha.uol.com.br/emcimadahora/rss091.xml,valid,200,2026-02-19T05:45:41.562Z
-BR,Brazil,4,Folha de S.Paulo - Market,https://feeds.folha.uol.com.br/mercado/rss091.xml,valid,200,2026-02-19T05:45:41.562Z
-BR,Brazil,5,Estadão (Economy),https://www.estadao.com.br/rss/economia,invalid,404,2026-02-19T05:45:41.562Z
-BR,Brazil,6,Correio Braziliense,https://www.correiobraziliense.com.br/rss/noticia/economia/rss.xml,valid,200,2026-02-19T05:45:41.562Z
-BR,Brazil,7,InfoMoney,https://www.infomoney.com.br/feed/,valid,200,2026-02-19T05:45:41.562Z
-BR,Brazil,8,Canaltech,https://canaltech.com.br/rss/,valid,200,2026-02-19T05:45:41.562Z
-BR,Brazil,9,Forbes Brazil,https://forbes.com.br/feed/,valid,200,2026-02-19T05:45:41.562Z
-AU,Australia,1,ABC News - Business,https://www.abc.net.au/news/feed/51892/rss.xml,valid,200,2026-02-19T05:45:41.562Z
-AU,Australia,2,ABC News - World,https://www.abc.net.au/news/feed/52278/rss.xml,invalid,404,2026-02-19T05:45:41.562Z
-AU,Australia,3,Sydney Morning Herald - Business,https://www.smh.com.au/rss/business.xml,valid,200,2026-02-19T05:45:41.562Z
-AU,Australia,4,The Age - Business,https://www.theage.com.au/rss/business.xml,valid,200,2026-02-19T05:45:41.562Z
-AU,Australia,5,News.com.au - Finance,https://www.news.com.au/finance/feed,invalid,403,2026-02-19T05:45:41.562Z
-AU,Australia,6,The Australian - Business,https://www.theaustralian.com.au/business/rss,valid,200,2026-02-19T05:45:41.562Z
-ES,Spain,1,Expansión (Financial),https://e00-expansion.uecdn.es/rss/empresas.xml,valid,200,2026-02-19T05:45:41.562Z
-ES,Spain,2,Cinco Días (Economy),https://cincodias.elpais.com/arc/outboundfeeds/rss/?outputType=xml,valid,200,2026-02-19T05:45:41.562Z
-ES,Spain,3,El País - Economy,https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/economia/portada,valid,200,2026-02-19T05:45:41.562Z
-ES,Spain,4,El Mundo - Economy,https://e00-elmundo.uecdn.es/elmundo/rss/economia.xml,valid,200,2026-02-19T05:45:41.562Z
-ES,Spain,5,RTVE - Economy,https://www.rtve.es/api/noticias/economia/rss,invalid,404,2026-02-19T05:45:41.562Z
-MX,Mexico,1,El Economista (Top),https://www.eleconomista.com.mx/rss/top-noticias,invalid,403,2026-02-19T05:45:41.562Z
-MX,Mexico,2,El Economista (Empresas),https://www.eleconomista.com.mx/rss/empresas,invalid,403,2026-02-19T05:45:41.562Z
-MX,Mexico,3,El Universal,https://www.eluniversal.com.mx/rss.xml,invalid,404,2026-02-19T05:45:41.562Z
-MX,Mexico,4,Milenio,https://www.milenio.com/rss,valid,200,2026-02-19T05:45:41.562Z
-MX,Mexico,5,Excelsior,https://www.excelsior.com.mx/rss.xml,invalid,404,2026-02-19T05:45:41.562Z
-MX,Mexico,6,Proceso (Investigative),https://www.proceso.com.mx/rss/feed.html,valid,200,2026-02-19T05:45:41.562Z
-MX,Mexico,7,Aristegui Noticias,https://aristeguinoticias.com/feed/,invalid,200,2026-02-19T05:45:41.562Z
-MX,Mexico,8,Expansion (Biz),https://expansion.mx/rss,valid,200,2026-02-19T05:45:41.562Z
-MX,Mexico,9,Reforma,https://www.reforma.com/rss,invalid,200,2026-02-19T05:45:41.562Z
-TW,Taiwan,1,Focus Taiwan (Economics - EN),https://focustaiwan.tw/rss/economics,invalid,404,2026-02-19T05:45:41.562Z
-TW,Taiwan,2,Focus Taiwan (Sci-Tech - EN),https://focustaiwan.tw/rss/science-technology,invalid,404,2026-02-19T05:45:41.562Z
-TW,Taiwan,3,Taipei Times - Business,https://www.taipeitimes.com/xml/biz.rss,invalid,404,2026-02-19T05:45:41.562Z
-TW,Taiwan,4,Liberty Times - Business,https://news.ltn.com.tw/rss/business.xml,valid,200,2026-02-19T05:45:41.562Z
-TW,Taiwan,5,TechNews Taiwan,https://technews.tw/feed/,valid,200,2026-02-19T05:45:41.562Z
-TW,Taiwan,6,CNA (Central News Agency),https://feeds.feedburner.com/cnaFirstNews,valid,200,2026-02-19T05:45:41.562Z
-AR,Argentina,1,La Nacion (Economy),https://www.lanacion.com.ar/arc/outboundfeeds/rss/?outputType=xml&rotation=economia,valid,200,2026-02-19T05:45:41.562Z
-AR,Argentina,2,Clarín (Politics),https://www.clarin.com/rss/politica/,valid,200,2026-02-19T05:45:41.562Z
-AR,Argentina,3,Infobae (General),https://www.infobae.com/arc/outboundfeeds/rss/?outputType=amp,invalid,200,2026-02-19T05:45:41.562Z
-AR,Argentina,4,Cronista (Finance),https://www.cronista.com/files/rss/news.xml,valid,200,2026-02-19T05:45:41.562Z
-AR,Argentina,5,Ambito Financiero,https://www.ambito.com/rss/pages/home.xml,valid,200,2026-02-19T05:45:41.562Z
-AR,Argentina,6,Perfil,https://www.perfil.com/feed/,valid,200,2026-02-19T05:45:41.562Z
-AR,Argentina,7,EconoJournal,https://www.econojournal.com.ar/rss,valid,200,2026-02-19T05:45:41.562Z
-AR,Argentina,8,Reporte Energía,https://www.reporteenergia.com,invalid,200,2026-02-19T05:45:41.562Z
-AR,Argentina,9,Mining Press,https://miningpress.com,invalid (ERR),N/A,2026-02-19T05:45:41.562Z
-Global,Global Energy & Grid,1,OilPrice,https://oilprice.com/rss/main,valid,200,2026-02-19T05:45:41.562Z
-Global,Global Energy & Grid,2,Energy Intelligence,https://www.energyintel.com/rss,invalid,404,2026-02-19T05:45:41.562Z
-Global,Global Energy & Grid,3,Power Engineering,https://www.power-eng.com/feed/,valid,200,2026-02-19T05:45:41.562Z
-Global,Global Energy & Grid,4,Renewable Energy World,https://www.renewableenergyworld.com/feed/,valid,200,2026-02-19T05:45:41.562Z
-Global,Global Energy & Grid,5,Utility Dive,https://www.utilitydive.com/feeds/news/,valid,200,2026-02-19T05:45:41.562Z
-Global,Global Energy & Grid,6,CleanTechnica,https://cleantechnica.com/feed/,valid,200,2026-02-19T05:45:41.562Z
+US,United States,1,The New York Times,https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml,valid,200,2026-02-19T06:19:47.441Z
+US,United States,2,Washington Post,https://washingtonpost.com/feed,invalid (ERR),N/A,2026-02-19T06:19:47.441Z
+US,United States,3,Wall Street Journal,https://feeds.a.dj.com/rss/RSSWorldNews.xml,valid,200,2026-02-19T06:19:47.441Z
+US,United States,4,USA Today,http://rssfeeds.usatoday.com/UsatodaycomNation-TopStories,invalid,200,2026-02-19T06:19:47.441Z
+US,United States,5,LA Times,https://www.latimes.com/local/rss2.0.xml,valid,200,2026-02-19T06:19:47.441Z
+US,United States,6,CNN,http://rss.cnn.com/rss/cnn_topstories.rss,valid,200,2026-02-19T06:19:47.441Z
+US,United States,7,Fox News,http://moxie.foxnews.com/google-publisher/latest.xml,valid,200,2026-02-19T06:19:47.441Z
+US,United States,8,NBC News,http://feeds.nbcnews.com/nbcnews/public/news,valid,200,2026-02-19T06:19:47.441Z
+US,United States,9,CBS News,https://www.cbsnews.com/latest/rss/main,valid,200,2026-02-19T06:19:47.441Z
+US,United States,10,ABC News,https://abcnews.go.com/abcnews/topstories,valid,200,2026-02-19T06:19:47.441Z
+US,United States,11,NPR,https://feeds.npr.org/1001/rss.xml,valid,200,2026-02-19T06:19:47.441Z
+US,United States,12,AP News,https://apnews.com/feed,invalid,404,2026-02-19T06:19:47.441Z
+US,United States,13,Reuters,https://reuters.com/feed,invalid,401,2026-02-19T06:19:47.441Z
+US,United States,14,HuffPost,https://www.huffpost.com/section/front-page/feed,valid,200,2026-02-19T06:19:47.441Z
+US,United States,15,BuzzFeed News,https://www.buzzfeednews.com/news.xml,valid,200,2026-02-19T06:19:47.441Z
+US,United States,16,Vice News,https://vice.com/feed,invalid,403,2026-02-19T06:19:47.441Z
+US,United States,17,Vox,https://www.vox.com/rss/index.xml,valid,200,2026-02-19T06:19:47.441Z
+US,United States,18,Bloomberg,https://bloomberg.com/feed,invalid,403,2026-02-19T06:19:47.441Z
+US,United States,19,CNBC,https://www.cnbc.com/id/100003114/device/rss/rss.html,valid,200,2026-02-19T06:19:47.441Z
+US,United States,20,Financial Times,https://www.ft.com/?format=rss,valid,200,2026-02-19T06:19:47.441Z
+US,United States,21,Forbes,https://www.forbes.com/most-popular/feed/,valid,200,2026-02-19T06:19:47.441Z
+US,United States,22,Fortune,https://fortune.com/feed,valid,200,2026-02-19T06:19:47.441Z
+US,United States,23,Business Insider,https://www.businessinsider.com/rss,valid,200,2026-02-19T06:19:47.441Z
+US,United States,24,MarketWatch,http://feeds.marketwatch.com/marketwatch/topstories/,valid,200,2026-02-19T06:19:47.441Z
+US,United States,25,Barrons,https://feeds.barrons.com/rss/TGW,invalid (ERR),N/A,2026-02-19T06:19:47.441Z
+US,United States,26,Inc Magazine,https://www.inc.com/rss.xml,invalid,404,2026-02-19T06:19:47.441Z
+US,United States,27,Fast Company,https://www.fastcompany.com/rss,valid,200,2026-02-19T06:19:47.441Z
+US,United States,28,TechCrunch,https://techcrunch.com/feed/,valid,200,2026-02-19T06:19:47.441Z
+US,United States,29,The Verge,https://www.theverge.com/rss/index.xml,valid,200,2026-02-19T06:19:47.441Z
+US,United States,30,Wired,https://www.wired.com/feed/rss,valid,200,2026-02-19T06:19:47.441Z
+US,United States,31,Ars Technica,http://feeds.arstechnica.com/arstechnica/index,valid,200,2026-02-19T06:19:47.441Z
+US,United States,32,Engadget,https://www.engadget.com/rss.xml,valid,200,2026-02-19T06:19:47.441Z
+US,United States,33,VentureBeat,https://venturebeat.com/feed/,valid,200,2026-02-19T06:19:47.441Z
+US,United States,34,Mashable,https://mashable.com/feed,valid,200,2026-02-19T06:19:47.441Z
+US,United States,35,Gizmodo,https://gizmodo.com/rss,valid,200,2026-02-19T06:19:47.441Z
+US,United States,36,CNET,https://www.cnet.com/rss/news/,valid,200,2026-02-19T06:19:47.441Z
+US,United States,37,ZDNet,https://www.zdnet.com/news/rss.xml,valid,200,2026-02-19T06:19:47.441Z
+US,United States,38,Politico,https://www.politico.com/rss/politicopicks.xml,invalid,403,2026-02-19T06:19:47.441Z
+US,United States,39,The Hill,https://thehill.com/feed,valid,200,2026-02-19T06:19:47.441Z
+US,United States,40,Axios,https://api.axios.com/feed/,valid,200,2026-02-19T06:19:47.441Z
+US,United States,41,Breitbart,http://feeds.feedburner.com/breitbart,valid,200,2026-02-19T06:19:47.441Z
+US,United States,42,National Review,https://www.nationalreview.com/feed/,valid,200,2026-02-19T06:19:47.441Z
+US,United States,43,Slate,https://slate.com/feeds/all.rss,valid,200,2026-02-19T06:19:47.441Z
+US,United States,44,The New Yorker,https://www.newyorker.com/feed/everything,valid,200,2026-02-19T06:19:47.441Z
+US,United States,45,The Atlantic,https://www.theatlantic.com/feed/all/,valid,200,2026-02-19T06:19:47.441Z
+US,United States,60,Boston Globe,https://bostonglobe.com/feed,invalid,404,2026-02-19T06:19:47.441Z
+US,United States,61,Philadelphia Inquirer,https://inquirer.com/feed,invalid,404,2026-02-19T06:19:47.441Z
+US,United States,62,Miami Herald,https://miamiherald.com/feed,invalid (ERR),N/A,2026-02-19T06:19:47.441Z
+US,United States,63,Atlanta Journal-Constitution,https://ajc.com/feed,invalid,404,2026-02-19T06:19:47.441Z
+US,United States,64,New York Post,https://nypost.com/feed,valid,200,2026-02-19T06:19:47.441Z
+US,United States,65,Chicago Tribune,https://chicagotribune.com/feed,valid,200,2026-02-19T06:19:47.441Z
+US,United States,66,Detroit Free Press,https://freep.com/feed,invalid,404,2026-02-19T06:19:47.441Z
+US,United States,67,Star Tribune,https://startribune.com/feed,invalid,404,2026-02-19T06:19:47.441Z
+US,United States,68,Cleveland Plain Dealer,https://www.cleveland.com/arc/outboundfeeds/rss/?outputType=xml,valid,200,2026-02-19T06:19:47.441Z
+US,United States,69,Houston Chronicle,https://houstonchronicle.com/feed,invalid,404,2026-02-19T06:19:47.441Z
+US,United States,70,Dallas Morning News,https://dallasnews.com/feed,invalid,404,2026-02-19T06:19:47.441Z
+US,United States,71,Austin American-Statesman,https://statesman.com/feed,invalid,404,2026-02-19T06:19:47.441Z
+US,United States,72,Tampa Bay Times,https://tampabay.com/feed,invalid,404,2026-02-19T06:19:47.441Z
+US,United States,73,San Francisco Chronicle,https://sfchronicle.com/feed,invalid,403,2026-02-19T06:19:47.441Z
+US,United States,74,Seattle Times,https://seattletimes.com/feed,valid,200,2026-02-19T06:19:47.441Z
+US,United States,75,Denver Post,https://denverpost.com/feed,valid,200,2026-02-19T06:19:47.441Z
+US,United States,76,San Jose Mercury News,https://mercurynews.com/feed,valid,200,2026-02-19T06:19:47.441Z
+US,United States,77,Las Vegas Review-Journal,https://reviewjournal.com/feed,valid,200,2026-02-19T06:19:47.441Z
+US,United States,78,San Diego Union-Tribune,https://sandiegouniontribune.com/feed,valid,200,2026-02-19T06:19:47.441Z
+US,United States,79,Honolulu Star-Advertiser,https://staradvertiser.com/feed,valid,200,2026-02-19T06:19:47.441Z
+US,United States,80,Variety,https://variety.com/feed,valid,200,2026-02-19T06:19:47.441Z
+US,United States,81,The Hollywood Reporter,https://hollywoodreporter.com/feed,valid,200,2026-02-19T06:19:47.441Z
+US,United States,82,Deadline,https://deadline.com/feed,valid,200,2026-02-19T06:19:47.441Z
+US,United States,83,Rolling Stone,https://rollingstone.com/feed,valid,200,2026-02-19T06:19:47.441Z
+US,United States,84,Billboard,https://billboard.com/feed,valid,200,2026-02-19T06:19:47.441Z
+US,United States,85,Vulture,https://vulture.com/feed,invalid,404,2026-02-19T06:19:47.441Z
+US,United States,86,Vanity Fair,http://feeds.feedburner.com/vfdotcomrss,valid,200,2026-02-19T06:19:47.441Z
+US,United States,87,Esquire,https://www.esquire.com/rss/entertainment.xml,valid,200,2026-02-19T06:19:47.441Z
+US,United States,88,GQ,https://www.gq.com/feed/rss,valid,200,2026-02-19T06:19:47.441Z
+US,United States,89,People,https://people.com/feed,invalid,404,2026-02-19T06:19:47.442Z
+US,United States,90,Scientific American,https://scientificamerican.com/feed,invalid,404,2026-02-19T06:19:47.442Z
+US,United States,91,National Geographic,https://nationalgeographic.com/feed,invalid,404,2026-02-19T06:19:47.442Z
+US,United States,92,STAT News,https://statnews.com/feed,valid,200,2026-02-19T06:19:47.442Z
+US,United States,93,WebMD,https://webmd.com/feed,invalid,404,2026-02-19T06:19:47.442Z
+US,United States,94,Space.com,https://space.com/feed,invalid,404,2026-02-19T06:19:47.442Z
+US,United States,95,ESPN,https://espn.com/feed,invalid,404,2026-02-19T06:19:47.442Z
+US,United States,96,Sports Illustrated,https://si.com/feed,valid,200,2026-02-19T06:19:47.442Z
+US,United States,97,Bleacher Report,https://bleacherreport.com/feed,invalid,404,2026-02-19T06:19:47.442Z
+US,United States,98,The Athletic,https://theathletic.com/feed,invalid,200,2026-02-19T06:19:47.442Z
+US,United States,99,CBS Sports,https://cbssports.com/feed,invalid,404,2026-02-19T06:19:47.442Z
+US,United States,100,The Daily Beast,https://thedailybeast.com/feed,invalid,404,2026-02-19T06:19:47.442Z
+US,United States,101,Mother Jones,https://motherjones.com/feed,valid,200,2026-02-19T06:19:47.442Z
+US,United States,102,ProPublica,https://propublica.org/feed,valid,200,2026-02-19T06:19:47.442Z
+US,United States,103,Reason,https://reason.com/feed,valid,200,2026-02-19T06:19:47.442Z
+US,United States,104,Jacobin,https://jacobin.com/feed,valid,200,2026-02-19T06:19:47.442Z
+US,United States,105,Quartz,https://qz.com/feed,valid,200,2026-02-19T06:19:47.442Z
+US,United States,106,The Intercept,https://theintercept.com/feed,valid,200,2026-02-19T06:19:47.442Z
+US,United States,107,Complex,https://complex.com/feed,invalid,404,2026-02-19T06:19:47.442Z
+US,United States,108,Refinery29,https://refinery29.com/feed,invalid,404,2026-02-19T06:19:47.442Z
+US,United States,109,Newsweek,https://newsweek.com/feed,invalid,404,2026-02-19T06:19:47.442Z
+US,United States,110,Time,https://time.com/feed,valid,200,2026-02-19T06:19:47.442Z
+US,United States,111,PBS NewsHour,https://pbs.org/feed,invalid,404,2026-02-19T06:19:47.442Z
+US,United States,112,Christian Science Monitor,https://csmonitor.com/feed,invalid,404,2026-02-19T06:19:47.442Z
+US,United States,113,Semafor,https://semafor.com/feed,invalid,404,2026-02-19T06:19:47.442Z
+US,United States,114,Scripps News,https://scrippsnews.com/feed,invalid,404,2026-02-19T06:19:47.442Z
+CN,China,1,Xinhua Net,https://xinhuanet.com/feed,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+CN,China,2,People's Daily,https://people.com.cn/feed,invalid,404,2026-02-19T06:19:47.442Z
+CN,China,3,Global Times,https://globaltimes.cn/feed,invalid,404,2026-02-19T06:19:47.442Z
+CN,China,4,China Daily,http://www.chinadaily.com.cn/rss/world_rss.xml,valid,200,2026-02-19T06:19:47.442Z
+CN,China,5,Caixin Global,https://caixinglobal.com/feed,invalid,404,2026-02-19T06:19:47.442Z
+CN,China,6,The Paper,https://thepaper.cn/feed,invalid,404,2026-02-19T06:19:47.442Z
+CN,China,7,Jiemian,https://jiemian.com/feed,invalid,404,2026-02-19T06:19:47.442Z
+CN,China,8,Yicaiglobal,https://yicaiglobal.com/feed,invalid,404,2026-02-19T06:19:47.442Z
+CN,China,9,TechNode,https://technode.com/feed,valid,200,2026-02-19T06:19:47.442Z
+CN,China,10,South China Morning Post,https://scmp.com/feed,invalid,200,2026-02-19T06:19:47.442Z
+CN,China,11,Initium,https://theinitium.com/feed,valid,200,2026-02-19T06:19:47.442Z
+CN,China,12,United Daily News,https://udn.com/feed,invalid,404,2026-02-19T06:19:47.442Z
+CN,China,13,Liberty Times,https://ltn.com.tw/feed,invalid,200,2026-02-19T06:19:47.442Z
+CN,China,14,China Times,https://chinatimes.com/feed,invalid,404,2026-02-19T06:19:47.442Z
+CN,China,15,Caijing,https://www.caijing.com.cn/rss/,invalid,200,2026-02-19T06:19:47.442Z
+CN,China,16,China Securities Journal,https://www.cs.com.cn/rss/,invalid,403,2026-02-19T06:19:47.442Z
+CN,China,17,People,https://www.people.cn/rss/people.xml,invalid,404,2026-02-19T06:19:47.442Z
+CN,China,18,Xinhua (World),https://english.news.cn/rss/english.rss,invalid,404,2026-02-19T06:19:47.442Z
+CN,China,19,CNR,https://english.cctv.com/rss/,invalid,200,2026-02-19T06:19:47.442Z
+CN,China,20,Shanghai Daily,https://www.shine.cn/rss,invalid,307,2026-02-19T06:19:47.442Z
+CN,China,21,China Power,https://www.china.org.cn/eng/rss.xml,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+CN,China,22,Sina China,https://rss.sina.com.cn/tech/feed.xml,invalid,404,2026-02-19T06:19:47.442Z
+CN,China,23,People China,https://people.com.cn/rss/politics.xml,valid,200,2026-02-19T06:19:47.442Z
+CN,China,24,South China Morning Post (Business),https://www.scmp.com/rss/2/0/feed,invalid,404,2026-02-19T06:19:47.442Z
+CN,China,25,TechNode Alt,https://technode.com/rss/innovation,invalid,200,2026-02-19T06:19:47.442Z
+CN,China,26,China Digital Times,https://chinadigitaltimes.net/china/feed,invalid,404,2026-02-19T06:19:47.442Z
+CN,China,27,China Daily English,https://www.chinadaily.com.cn/rss/world_rss.xml,valid,200,2026-02-19T06:19:47.442Z
+CN,China,28,Caixin,https://www.caixin.com/rss,invalid,200,2026-02-19T06:19:47.442Z
+CN,China,29,China.org.cn,https://www.china.org.cn/china/rss.xml,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+CN,China,30,Global Times US,https://www.globaltimes.cn/rss/7/,invalid,404,2026-02-19T06:19:47.442Z
+JP,Japan,1,NHK World (EN),https://www3.nhk.or.jp/rss/news/cat0.xml,valid,200,2026-02-19T06:19:47.442Z
+JP,Japan,2,Mainichi (Biz),https://mainichi.jp/rss/etc/biz-k-b.rss,invalid,200,2026-02-19T06:19:47.442Z
+JP,Japan,3,Asahi Shimbun,https://www.asahi.com/rss/asahi/newsheadlines.rdf,valid,200,2026-02-19T06:19:47.442Z
+JP,Japan,4,The Japan Times,https://www.japantimes.co.jp/feed/,valid,200,2026-02-19T06:19:47.442Z
+JP,Japan,5,Nikkei,https://www.nikkei.com/rss/,invalid,404,2026-02-19T06:19:47.442Z
+JP,Japan,6,Yomiuri Shimbun,https://www.yomiuri.co.jp/rss/,invalid,404,2026-02-19T06:19:47.442Z
+JP,Japan,7,Toyo Keizai,https://toyokeizai.net/feed/,invalid,404,2026-02-19T06:19:47.442Z
+JP,Japan,8,DIAMOND,https://diamond.jp/feed/,invalid,404,2026-02-19T06:19:47.442Z
+JP,Japan,9,DIAMOND (President),https://president.jp/feed/,invalid,404,2026-02-19T06:19:47.442Z
+JP,Japan,10,Japan Macro Advisors,https://japanmacroadvisors.com/,invalid,530,2026-02-19T06:19:47.442Z
+JP,Japan,11,Denki Shimbun,https://denkishimbun.com/feed/,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+JP,Japan,12,ITmedia (EEtimes),https://eetimes.itmedia.co.jp/rss/,invalid,404,2026-02-19T06:19:47.442Z
+JP,Japan,13,Sangyo Times,https://sangyo-times.jp/rss/,invalid,200,2026-02-19T06:19:47.442Z
+JP,Japan,14,Automotive Ten-Navi,https://automotive.ten-navi.com/rss/,valid,200,2026-02-19T06:19:47.442Z
+JP,Japan,15,The Bridge,https://thebridge.jp/feed/,valid,200,2026-02-19T06:19:47.442Z
+JP,Japan,16,TechCrunch Japan,https://jp.techcrunch.com/feed/,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+JP,Japan,17,Kabutan,https://kabutan.jp/rss.xml,invalid,404,2026-02-19T06:19:47.442Z
+JP,Japan,18,Bloomberg Japan,https://www.bloomberg.co.jp/feed/,invalid,404,2026-02-19T06:19:47.442Z
+JP,Japan,19,Reuters Japan,https://www.reuters.com/world/asia-pacific/,invalid,401,2026-02-19T06:19:47.442Z
+JP,Japan,20,Nippon,https://www.nippon.com/en/,invalid,200,2026-02-19T06:19:47.442Z
+JP,Japan,21,Nikkei Asia,https://asia.nikkei.com/rss/feed/,invalid,500,2026-02-19T06:19:47.442Z
+JP,Japan,22,Nikkei Net,https://asia.nikkei.com/rss/NI,invalid,500,2026-02-19T06:19:47.442Z
+JP,Japan,23,Nikkei 20,https://www.nikkei.com/markets/asia/rss/,invalid,404,2026-02-19T06:19:47.442Z
+JP,Japan,24,NHK General,https://www3.nhk.or.jp/rss/news/cat0.rdf,invalid,404,2026-02-19T06:19:47.442Z
+JP,Japan,25,Mainichi Sports,https://mainichi.jp/rss/etc/sports.rdf,invalid,200,2026-02-19T06:19:47.442Z
+JP,Japan,26,Japan Business Federation,https://www.keidanren.or.jp/keidanren/rss.xml,invalid,404,2026-02-19T06:19:47.442Z
+JP,Japan,27,Nikkei (Business),https://www.nikkei.com/rss/nkeg/feed/,invalid,404,2026-02-19T06:19:47.442Z
+JP,Japan,28,The Tokyo Shimbun,https://www.tokyo-np.co.jp/rdf/,invalid,404,2026-02-19T06:19:47.442Z
+JP,Japan,29,Nikkei Asia,https://asia.nikkei.com/rss/news,invalid,500,2026-02-19T06:19:47.442Z
+JP,Japan,30,Mainichi World,https://mainichi.jp/rss/etc/,invalid,200,2026-02-19T06:19:47.442Z
+DE,Germany,1,Handelsblatt - Top,https://www.handelsblatt.com/contentexport/feed/top-themen,valid,200,2026-02-19T06:19:47.442Z
+DE,Germany,2,Handelsblatt - Finance,https://www.handelsblatt.com/contentexport/feed/finanzen,valid,200,2026-02-19T06:19:47.442Z
+DE,Germany,3,Tagesschau,https://www.tagesschau.de/xml/rss2,valid,200,2026-02-19T06:19:47.442Z
+DE,Germany,4,Der Spiegel,https://www.spiegel.de/schlagzeilen/tops/index.rss,valid,200,2026-02-19T06:19:47.442Z
+DE,Germany,5,FAZ,https://www.faz.net/rss/aktuell/,valid,200,2026-02-19T06:19:47.442Z
+DE,Germany,6,Die Zeit,https://newsfeed.zeit.de/index,valid,200,2026-02-19T06:19:47.442Z
+DE,Germany,7,Manager Magazin,https://www.manager-magazin.de/unternehmen/index.rss,valid,200,2026-02-19T06:19:47.442Z
+DE,Germany,8,WirtschaftsWoche,https://www.wiwo.de/contentexport/feed/rss/schlagzeilen,valid,200,2026-02-19T06:19:47.442Z
+DE,Germany,9,Deutsche Welle (EN),https://rss.dw.com/xml/rss-en-all,valid,200,2026-02-19T06:19:47.442Z
+DE,Germany,10,Heise Online,https://www.heise.de/rss/heise-atom.xml,valid,200,2026-02-19T06:19:47.442Z
+DE,Germany,11,Süddeutsche Zeitung,https://rss.sueddeutsche.de/rss/top,invalid,404,2026-02-19T06:19:47.442Z
+DE,Germany,12,Der Spiegel,https://www.spiegel.de/schlagzeilen/index.rss,valid,200,2026-02-19T06:19:47.442Z
+DE,Germany,13,Frankfurter Allgemeine,https://www.faz.net/aktuell/rss.html,invalid,404,2026-02-19T06:19:47.442Z
+DE,Germany,14,Die Welt,https://www.welt.de/feeds/topnews.rss,valid,200,2026-02-19T06:19:47.442Z
+DE,Germany,15,Manager Magazin (Startups),https://www.manager-magazin.de/magazin/rss/unternehmen/,invalid,404,2026-02-19T06:19:47.442Z
+DE,Germany,16,Focus,https://www.focus.de/rss/,valid,200,2026-02-19T06:19:47.442Z
+DE,Germany,17,Handelsblatt Economy,https://www.handelsblatt.com/contentexport/feed/finanzen/,valid,200,2026-02-19T06:19:47.442Z
+DE,Germany,18,Frankfurter Allgemeine,https://www.faz.net/rss/aktuell/wirtschaft/,valid,200,2026-02-19T06:19:47.442Z
+DE,Germany,19,Süddeutsche Zeitung,https://www.sueddeutsche.de/rss/topthemen,invalid,200,2026-02-19T06:19:47.442Z
+DE,Germany,20,Tagesspiegel,https://www.tagesspiegel.de/contentexport/feed/,valid,200,2026-02-19T06:19:47.442Z
+DE,Germany,21,Rheinische Post,https://rp-online.de/feed,invalid,403,2026-02-19T06:19:47.442Z
+DE,Germany,22,Der Standard (DE)?,https://www.standard.de/rss,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+DE,Germany,23,Sueddeutsche Economy,https://www.sueddeutsche.de/rss/wirtschaft,invalid,200,2026-02-19T06:19:47.442Z
+DE,Germany,24,Handelsblatt World,https://www.handelsblatt.com/contentexport/feed/wirtschaft,valid,200,2026-02-19T06:19:47.442Z
+DE,Germany,25,Zeit Welt,https://newsfeed.zeit.de/wirtschaft/index,valid,200,2026-02-19T06:19:47.442Z
+DE,Germany,26,SWR,https://www.swr.de/politik/unternehmen-rss.xml,invalid,404,2026-02-19T06:19:47.442Z
+DE,Germany,27,taz,https://taz.de/RSS/,invalid,403,2026-02-19T06:19:47.442Z
+DE,Germany,28,Financial Times Germany,https://www.ft.com/rss/home,valid,200,2026-02-19T06:19:47.442Z
+DE,Germany,29,Financial Times Germany,https://www.ft.com/world/world?format=rss,invalid,404,2026-02-19T06:19:47.442Z
+DE,Germany,30,Der Spiegel,https://www.spiegel.de/contentfeed/schlagzeilen.rss,invalid,404,2026-02-19T06:19:47.442Z
+IN,India,1,The Times of India (Top Stories),https://timesofindia.indiatimes.com/rssfeedstopstories.cms,valid,200,2026-02-19T06:19:47.442Z
+IN,India,2,NDTV (Latest),https://feeds.feedburner.com/NDTV-LatestNews,valid,200,2026-02-19T06:19:47.442Z
+IN,India,3,India Today (India),https://www.indiatoday.in/rss/1206578,valid,200,2026-02-19T06:19:47.442Z
+IN,India,4,The Indian Express,https://indianexpress.com/feed,valid,200,2026-02-19T06:19:47.442Z
+IN,India,5,The Hindu (National),https://www.thehindu.com/news/national/?service=rss,valid,200,2026-02-19T06:19:47.442Z
+IN,India,6,Firstpost,https://www.firstpost.com/commonfeeds/v1/mfp/rss/web-stories.xml,valid,200,2026-02-19T06:19:47.442Z
+IN,India,7,Business Standard (Latest),https://www.business-standard.com/rss/latest.rss,invalid,403,2026-02-19T06:19:47.442Z
+IN,India,8,DNA India (India),https://www.dnaindia.com/feeds/india.xml,valid,200,2026-02-19T06:19:47.442Z
+IN,India,9,Storify News,https://www.storifynews.com/feed,valid,200,2026-02-19T06:19:47.442Z
+IN,India,10,Amar Ujala (Breaking),https://www.amarujala.com/rss/breaking-news.xml,valid,200,2026-02-19T06:19:47.442Z
+IN,India,11,Odishabarta,https://odishabarta.com/feed,valid,200,2026-02-19T06:19:47.442Z
+IN,India,12,The Times of Bengal,https://thetimesofbengal.com/feed,valid,200,2026-02-19T06:19:47.442Z
+IN,India,13,Scroll.in,https://feeds.feedburner.com/ScrollinArticles.rss,valid,200,2026-02-19T06:19:47.442Z
+IN,India,14,Northlines,https://thenorthlines.com/feed,valid,200,2026-02-19T06:19:47.442Z
+IN,India,15,Chandigarh Metro,https://chandigarhmetro.com/feed,valid,200,2026-02-19T06:19:47.442Z
+IN,India,16,Chandigarh City News,https://feeds.feedburner.com/ChandigarhCityNews,valid,200,2026-02-19T06:19:47.442Z
+IN,India,17,The Quint,https://prod-qt-images.s3.amazonaws.com/production/thequint/feed.xml,valid,200,2026-02-19T06:19:47.442Z
+IN,India,18,Telangana Today,https://telanganatoday.com/feed,valid,200,2026-02-19T06:19:47.442Z
+IN,India,19,Daily Excelsior,https://www.dailyexcelsior.com/feed,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+IN,India,20,News Today (TN),https://newstodaynet.com/feed,valid,200,2026-02-19T06:19:47.442Z
+IN,India,21,IndiaVision,https://www.indiavision.com/feed,valid,200,2026-02-19T06:19:47.442Z
+IN,India,22,OpIndia,https://www.opindia.com/feed,valid,200,2026-02-19T06:19:47.442Z
+IN,India,23,OrissaPOST,https://www.orissapost.com/feed,valid,200,2026-02-19T06:19:47.442Z
+IN,India,24,India's News.Net,https://feeds.indiasnews.net/rss/701ee96610c884a6,valid,200,2026-02-19T06:19:47.442Z
+IN,India,25,TechGenYZ,https://techgenyz.com/feed,valid,200,2026-02-19T06:19:47.442Z
+IN,India,26,Kashmir News,https://kashmirnews.in/feed,valid,200,2026-02-19T06:19:47.442Z
+IN,India,27,WYM News (Blogspot),https://latestnewsupdate4you.blogspot.com/feeds/posts/default,valid,200,2026-02-19T06:19:47.442Z
+IN,India,28,Star of Mysore,https://starofmysore.com/feed,valid,200,2026-02-19T06:19:47.442Z
+IN,India,29,ABP News,https://news.abplive.com/home/feed,valid,200,2026-02-19T06:19:47.442Z
+IN,India,30,The India Bizz,https://theindiabizz.com/feed,valid,200,2026-02-19T06:19:47.442Z
+GB,United Kingdom,1,Financial Times - World,https://www.ft.com/rss/world,valid,200,2026-02-19T06:19:47.442Z
+GB,United Kingdom,2,Financial Times - Energy,https://www.ft.com/rss/companies/energy,valid,200,2026-02-19T06:19:47.442Z
+GB,United Kingdom,3,BBC News - Business,https://feeds.bbci.co.uk/news/business/rss.xml,valid,200,2026-02-19T06:19:47.442Z
+GB,United Kingdom,4,BBC News - World,https://feeds.bbci.co.uk/news/world/rss.xml,valid,200,2026-02-19T06:19:47.442Z
+GB,United Kingdom,5,The Guardian - World,https://www.theguardian.com/world/rss,valid,200,2026-02-19T06:19:47.442Z
+GB,United Kingdom,6,The Guardian - Business,https://www.theguardian.com/business/rss,valid,200,2026-02-19T06:19:47.442Z
+GB,United Kingdom,7,Sky News - World,https://feeds.skynews.com/feeds/rss/world.xml,valid,200,2026-02-19T06:19:47.442Z
+GB,United Kingdom,8,Sky News - Business,https://feeds.skynews.com/feeds/rss/business.xml,valid,200,2026-02-19T06:19:47.442Z
+GB,United Kingdom,9,Telegraph - Business,https://www.telegraph.co.uk/business/rss.xml,valid,200,2026-02-19T06:19:47.442Z
+GB,United Kingdom,10,City A.M. (London Finance),https://www.cityam.com/feed/,valid,200,2026-02-19T06:19:47.442Z
+GB,United Kingdom,11,Energy Voice (North Sea Oil),https://www.energyvoice.com/feed/,invalid,403,2026-02-19T06:19:47.442Z
+GB,United Kingdom,12,Reuters UK (legacy),https://www.reutersagency.com/feed/?best-topics=business-finance&post_type=best,invalid,404,2026-02-19T06:19:47.442Z
+GB,United Kingdom,13,The Independent,https://www.independent.co.uk/rss,valid,200,2026-02-19T06:19:47.442Z
+GB,United Kingdom,14,Financial Times UK,https://www.ft.com/?format=rss,valid,200,2026-02-19T06:19:47.442Z
+GB,United Kingdom,15,The Economist,https://www.economist.com/sections/united-states/rss.xml,invalid,403,2026-02-19T06:19:47.442Z
+GB,United Kingdom,16,The Times,https://www.thetimes.co.uk/rss/homepage/feed.xml,invalid,404,2026-02-19T06:19:47.442Z
+GB,United Kingdom,17,The Telegraph UK,https://www.telegraph.co.uk/rss.xml,valid,200,2026-02-19T06:19:47.442Z
+GB,United Kingdom,18,ITV News,https://www.itv.com/news/uk/rss.xml,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+GB,United Kingdom,19,Daily Mail,https://www.dailymail.co.uk/home/index.rss,valid,200,2026-02-19T06:19:47.442Z
+GB,United Kingdom,20,The Mirror,https://www.mirror.co.uk/news/world/rss.xml,invalid,404,2026-02-19T06:19:47.442Z
+GB,United Kingdom,21,Metro UK,https://metro.co.uk/feed/,valid,200,2026-02-19T06:19:47.442Z
+GB,United Kingdom,22,The Sun,https://www.thesun.co.uk/feed/,valid,200,2026-02-19T06:19:47.442Z
+GB,United Kingdom,23,The Guardian UK,https://www.theguardian.com/uk/rss,valid,200,2026-02-19T06:19:47.442Z
+GB,United Kingdom,24,Sky News,https://feeds.skynews.com/feeds/rss/uk.xml,valid,200,2026-02-19T06:19:47.442Z
+GB,United Kingdom,25,Financial Times,https://www.ft.com/rss/home,valid,200,2026-02-19T06:19:47.442Z
+GB,United Kingdom,26,The Times,https://www.thetimes.co.uk/world/world-news/,invalid,200,2026-02-19T06:19:47.442Z
+GB,United Kingdom,27,iNews,https://inews.co.uk/rss,valid,200,2026-02-19T06:19:47.442Z
+GB,United Kingdom,28,BBC Culture,https://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml,valid,200,2026-02-19T06:19:47.442Z
+GB,United Kingdom,29,The Evening Standard,https://www.standard.co.uk/rss,valid,200,2026-02-19T06:19:47.442Z
+GB,United Kingdom,30,London Evening Standard,https://www.standard.co.uk/feed,invalid,404,2026-02-19T06:19:47.442Z
+FR,France,1,France 24,https://www.france24.com/en/rss,valid,200,2026-02-19T06:19:47.442Z
+FR,France,2,The Local (France),https://feeds.thelocal.com/rss/fr,valid,200,2026-02-19T06:19:47.442Z
+FR,France,3,RFI (France),https://www.rfi.fr/en/france/rss,valid,200,2026-02-19T06:19:47.442Z
+FR,France,4,RFI (All / EN),https://www.rfi.fr/en/rss,valid,200,2026-02-19T06:19:47.442Z
+FR,France,5,Mediapart,https://www.mediapart.fr/articles/feed,valid,200,2026-02-19T06:19:47.442Z
+FR,France,6,Le Monde diplomatique,https://mondediplo.com/backend,valid,200,2026-02-19T06:19:47.442Z
+FR,France,7,Midi Libre,https://www.midilibre.fr/essentiel/rss.xml,invalid,404,2026-02-19T06:19:47.442Z
+FR,France,8,Sud Ouest,https://www.sudouest.fr/essentiel/rss.xml,valid,200,2026-02-19T06:19:47.442Z
+FR,France,9,L'Est Républicain,https://www.estrepublicain.fr/rss,valid,200,2026-02-19T06:19:47.442Z
+FR,France,10,France Soir,https://www.francesoir.fr/rss.xml,valid,200,2026-02-19T06:19:47.442Z
+FR,France,11,Dernières Nouvelles d'Alsace (DNA),https://www.dna.fr/rss,valid,200,2026-02-19T06:19:47.442Z
+FR,France,12,La Croix,https://www.la-croix.com/feeds/rss/site.xml,valid,200,2026-02-19T06:19:47.442Z
+FR,France,13,Marianne,https://www.marianne.net/rss.xml,invalid,403,2026-02-19T06:19:47.442Z
+FR,France,14,La Dépêche,https://www.ladepeche.fr/rss.xml,valid,200,2026-02-19T06:19:47.442Z
+FR,France,15,20 Minutes,https://www.20minutes.fr/feeds/rss-une.xml,valid,200,2026-02-19T06:19:47.442Z
+FR,France,16,Le Point,https://www.lepoint.fr/24h-infos/rss.xml,invalid,200,2026-02-19T06:19:47.442Z
+FR,France,17,Yahoo Actualités,https://fr.news.yahoo.com/rss,valid,200,2026-02-19T06:19:47.442Z
+FR,France,18,InfoMigrants (EN),https://www.infomigrants.net/en/rss/all.xml,valid,200,2026-02-19T06:19:47.442Z
+FR,France,19,France Today,https://www.francetoday.com/feed,valid,200,2026-02-19T06:19:47.442Z
+FR,France,20,FrenchDailyNews,https://frenchdailynews.com/feed,valid,200,2026-02-19T06:19:47.442Z
+FR,France,21,Le Monde (EN – Main),https://www.lemonde.fr/en/rss/une.xml,valid,200,2026-02-19T06:19:47.442Z
+FR,France,22,Le Monde (EN – International),https://www.lemonde.fr/en/international/rss_full.xml,valid,200,2026-02-19T06:19:47.442Z
+FR,France,23,Le Monde (EN – Editorials),https://www.lemonde.fr/en/editorials/rss_full.xml,valid,200,2026-02-19T06:19:47.442Z
+FR,France,24,Le Monde (EN – Europe),https://www.lemonde.fr/en/europe/rss_full.xml,valid,200,2026-02-19T06:19:47.442Z
+FR,France,25,Le Monde (EN – United States),https://www.lemonde.fr/en/united-states/rss_full.xml,valid,200,2026-02-19T06:19:47.442Z
+FR,France,26,Le Monde (EN – Economy),https://www.lemonde.fr/en/economy/rss_full.xml,valid,200,2026-02-19T06:19:47.442Z
+FR,France,27,Le Monde (EN – Culture),https://www.lemonde.fr/en/culture/rss_full.xml,valid,200,2026-02-19T06:19:47.442Z
+FR,France,28,Le Monde (EN – Sports),https://www.lemonde.fr/en/sports/rss_full.xml,valid,200,2026-02-19T06:19:47.442Z
+FR,France,29,Le Monde (EN – Environment),https://www.lemonde.fr/en/environment/rss_full.xml,valid,200,2026-02-19T06:19:47.442Z
+FR,France,30,Le Monde (EN – Science),https://www.lemonde.fr/en/science/rss_full.xml,valid,200,2026-02-19T06:19:47.442Z
+IT,Italy,1,ANSA (Main),https://www.ansa.it/sito/ansait_rss.xml,valid,200,2026-02-19T06:19:47.442Z
+IT,Italy,2,ANSA (Top News),https://www.ansa.it/sito/notizie/topnews/topnews_rss.xml,valid,200,2026-02-19T06:19:47.442Z
+IT,Italy,3,ANSA (Cronaca),https://www.ansa.it/sito/notizie/cronaca/cronaca_rss.xml,valid,200,2026-02-19T06:19:47.442Z
+IT,Italy,4,ANSA (Politica),https://www.ansa.it/sito/notizie/politica/politica_rss.xml,valid,200,2026-02-19T06:19:47.442Z
+IT,Italy,5,ANSA (Mondo),https://www.ansa.it/sito/notizie/mondo/mondo_rss.xml,valid,200,2026-02-19T06:19:47.442Z
+IT,Italy,6,ANSA (Economia),https://www.ansa.it/sito/notizie/economia/economia_rss.xml,valid,200,2026-02-19T06:19:47.442Z
+IT,Italy,7,ANSA (Calcio),https://www.ansa.it/sito/notizie/sport/calcio/calcio_rss.xml,valid,200,2026-02-19T06:19:47.442Z
+IT,Italy,8,ANSA (Sport),https://www.ansa.it/sito/notizie/sport/sport_rss.xml,valid,200,2026-02-19T06:19:47.442Z
+IT,Italy,9,ANSA (Cinema),https://www.ansa.it/sito/notizie/cultura/cinema/cinema_rss.xml,valid,200,2026-02-19T06:19:47.442Z
+IT,Italy,10,ANSA (Cultura e Tendenze),https://www.ansa.it/sito/notizie/cultura/cultura_rss.xml,valid,200,2026-02-19T06:19:47.442Z
+IT,Italy,11,ANSA (Foto),https://www.ansa.it/sito/photogallery/foto_rss.xml,valid,200,2026-02-19T06:19:47.442Z
+IT,Italy,12,ANSA (Video),https://www.ansa.it/sito/videogallery/video_rss.xml,valid,200,2026-02-19T06:19:47.442Z
+IT,Italy,13,Corriere della Sera (Homepage),https://www.corriere.it/rss/homepage.xml,valid,200,2026-02-19T06:19:47.442Z
+IT,Italy,14,Corriere della Sera (Ultimora),https://www.corriere.it/rss/ultimora.xml,valid,200,2026-02-19T06:19:47.442Z
+IT,Italy,15,Corriere della Sera (feed-hp Homepage),https://www.corriere.it/feed-hp/homepage.xml,valid,200,2026-02-19T06:19:47.442Z
+IT,Italy,16,la Repubblica,https://www.repubblica.it/rss/homepage/rss2.0.xml,valid,200,2026-02-19T06:19:47.442Z
+IT,Italy,17,La Stampa,https://www.lastampa.it/rss/copertina.xml,valid,200,2026-02-19T06:19:47.442Z
+IT,Italy,18,Il Sole 24 Ore (Italia),https://www.ilsole24ore.com/rss/italia.xml,valid,200,2026-02-19T06:19:47.442Z
+IT,Italy,19,Il Fatto Quotidiano,https://www.ilfattoquotidiano.it/feed/,valid,200,2026-02-19T06:19:47.442Z
+IT,Italy,20,La Gazzetta dello Sport,https://www.gazzetta.it/rss/home.xml,valid,200,2026-02-19T06:19:47.442Z
+IT,Italy,21,IL Tempo,https://www.iltempo.it/rss.xml,valid,200,2026-02-19T06:19:47.442Z
+IT,Italy,22,Libero Quotidiano,https://www.liberoquotidiano.it/rss.xml,valid,200,2026-02-19T06:19:47.442Z
+IT,Italy,23,MilanoToday,https://www.milanotoday.it/rss,valid,200,2026-02-19T06:19:47.442Z
+IT,Italy,24,The Florentine,https://www.theflorentine.net/feed,valid,200,2026-02-19T06:19:47.442Z
+IT,Italy,25,Wanted in Rome,https://www.wantedinrome.com/news?format=rss,valid,200,2026-02-19T06:19:47.442Z
+IT,Italy,26,Florence Daily News,https://florencedailynews.com/feed,valid,200,2026-02-19T06:19:47.442Z
+IT,Italy,27,Alto Adige (Cronaca),https://www.altoadige.it/feed-rss/cronaca-1.169,valid,200,2026-02-19T06:19:47.442Z
+IT,Italy,28,Italia a Tavola,https://rss.italiaatavola.net/feed.xml,valid,200,2026-02-19T06:19:47.442Z
+IT,Italy,29,la Città di Salerno,https://www.lacittadisalerno.it/feed,valid,200,2026-02-19T06:19:47.442Z
+IT,Italy,30,Notizie Geopolitiche,https://www.notiziegeopolitiche.net/feed,valid,200,2026-02-19T06:19:47.442Z
+CA,Canada,1,Global News,https://globalnews.ca/feed,valid,200,2026-02-19T06:19:47.442Z
+CA,Canada,2,rabble.ca,https://rabble.ca/feed,valid,200,2026-02-19T06:19:47.442Z
+CA,Canada,3,National Post,https://nationalpost.com/feed,valid,200,2026-02-19T06:19:47.442Z
+CA,Canada,4,Toronto Sun,https://torontosun.com/feed,valid,200,2026-02-19T06:19:47.442Z
+CA,Canada,5,Financial Post,https://feeds.feedburner.com/FP_TopStories,valid,200,2026-02-19T06:19:47.442Z
+CA,Canada,6,CityNews Toronto,https://toronto.citynews.ca/feed,valid,200,2026-02-19T06:19:47.442Z
+CA,Canada,7,Calgary Herald,https://calgaryherald.com/feed,valid,200,2026-02-19T06:19:47.442Z
+CA,Canada,8,Edmonton Journal,https://edmontonjournal.com/feed,valid,200,2026-02-19T06:19:47.442Z
+CA,Canada,9,Windsor Star,https://windsorstar.com/feed,valid,200,2026-02-19T06:19:47.442Z
+CA,Canada,10,The Province,https://theprovince.com/feed,valid,200,2026-02-19T06:19:47.442Z
+CA,Canada,11,Calgary Sun,https://calgarysun.com/feed,valid,200,2026-02-19T06:19:47.442Z
+CA,Canada,12,Ottawa Sun,https://ottawasun.com/feed,valid,200,2026-02-19T06:19:47.442Z
+CA,Canada,13,The Tyee,https://thetyee.ca/rss2.xml,valid,200,2026-02-19T06:19:47.442Z
+CA,Canada,14,The StarPhoenix,https://thestarphoenix.com/feed,valid,200,2026-02-19T06:19:47.442Z
+CA,Canada,15,Edmonton Sun,https://edmontonsun.com/feed,valid,200,2026-02-19T06:19:47.442Z
+CA,Canada,16,Canada.com,https://o.canada.com/feed,valid,200,2026-02-19T06:19:47.442Z
+CA,Canada,17,Canada's National Observer,https://nationalobserver.com/front/rss,invalid,403,2026-02-19T06:19:47.442Z
+CA,Canada,18,Business In Vancouver (BIV),https://biv.com/rss,valid,200,2026-02-19T06:19:47.442Z
+CA,Canada,19,Regina Leader Post,https://leaderpost.com/feed,valid,200,2026-02-19T06:19:47.442Z
+CA,Canada,20,Owen Sound Sun Times,https://owensoundsuntimes.com/feed,valid,200,2026-02-19T06:19:47.442Z
+CA,Canada,21,Ottawa Citizen,https://ottawacitizen.com/feed,valid,200,2026-02-19T06:19:47.442Z
+CA,Canada,22,Stratford Beacon Herald,https://stratfordbeaconherald.com/feed,valid,200,2026-02-19T06:19:47.442Z
+CA,Canada,23,The Georgia Straight,https://straight.com/content/rss,valid,200,2026-02-19T06:19:47.442Z
+CA,Canada,24,Grande Prairie Daily Herald Tribune,https://dailyheraldtribune.com/feed,valid,200,2026-02-19T06:19:47.442Z
+CA,Canada,25,YGK News (Kingston),https://ygknews.ca/feed,valid,200,2026-02-19T06:19:47.442Z
+CA,Canada,26,Prince Albert Daily Herald,https://paherald.sk.ca/feed,valid,200,2026-02-19T06:19:47.442Z
+CA,Canada,27,Sunny South News,https://sunnysouthnews.com/feed,valid,200,2026-02-19T06:19:47.442Z
+CA,Canada,28,The Afro News,https://theafronews.com/feed,valid,200,2026-02-19T06:19:47.442Z
+CA,Canada,29,TheCanadianPressNews (search),https://www.thecanadianpressnews.ca/search/?f=rss,invalid,429,2026-02-19T06:19:47.442Z
+CA,Canada,30,CBC News (Top Stories),https://www.cbc.ca/webfeed/rss/rss-topstories,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+RU,Russia,1,TASS,https://tass.com/feed,invalid,404,2026-02-19T06:19:47.442Z
+RU,Russia,2,RIA,https://ria.ru/feed,invalid,404,2026-02-19T06:19:47.442Z
+RU,Russia,3,RT,https://rt.com/feed,valid,200,2026-02-19T06:19:47.442Z
+RU,Russia,4,RG.ru,https://rg.ru/feed,invalid,401,2026-02-19T06:19:47.442Z
+RU,Russia,5,Kommersant,https://kommersant.ru/feed,invalid,404,2026-02-19T06:19:47.442Z
+RU,Russia,6,Vedomosti,https://vedomosti.ru/feed,invalid,404,2026-02-19T06:19:47.442Z
+RU,Russia,7,Meduza,https://meduza.io/feed,invalid,502,2026-02-19T06:19:47.442Z
+RU,Russia,8,The Moscow Times,https://themoscowtimes.com/feed,invalid,404,2026-02-19T06:19:47.442Z
+RU,Russia,9,Novaya Gazeta,https://novayagazeta.eu/feed,invalid,404,2026-02-19T06:19:47.442Z
+RU,Russia,10,The Bell,https://thebell.io/feed,valid,200,2026-02-19T06:19:47.442Z
+RU,Russia,11,Oil Capital,https://oilcapital.ru/feed,invalid,200,2026-02-19T06:19:47.442Z
+RU,Russia,12,Neftgaz,https://neftegaz.ru/feed,invalid,404,2026-02-19T06:19:47.442Z
+RU,Russia,13,Kommersant (World),https://www.kommersant.ru/rss/1206,invalid,403,2026-02-19T06:19:47.442Z
+RU,Russia,14,Interfax,https://www.interfax.ru/rss.asp,valid,200,2026-02-19T06:19:47.442Z
+RU,Russia,15,RT Economy,https://www.rt.com/rss/business,valid,200,2026-02-19T06:19:47.442Z
+RU,Russia,16,The Bell,https://thebell.io/feed/,valid,200,2026-02-19T06:19:47.442Z
+RU,Russia,17,Ria (World),https://ria.ru/export/rss2/world/index.xml,invalid,404,2026-02-19T06:19:47.442Z
+RU,Russia,18,Lenta,https://lenta.ru/rss/news,valid,200,2026-02-19T06:19:47.442Z
+RU,Russia,19,RBC,https://www.rbc.ru/rss,invalid,404,2026-02-19T06:19:47.442Z
+RU,Russia,20,Interfax,https://www.interfax.ru/news.rss,invalid,404,2026-02-19T06:19:47.442Z
+RU,Russia,21,Fontanka,https://www.fontanka.ru/fontanka.rss,invalid,404,2026-02-19T06:19:47.442Z
+RU,Russia,22,Gazeta.ru,https://www.gazeta.ru/export/rss/index.xml,invalid,404,2026-02-19T06:19:47.442Z
+RU,Russia,23,TASS Finance,https://tass.com/rss/v2.xml,valid,200,2026-02-19T06:19:47.442Z
+RU,Russia,24,RIA Economy,https://ria.ru/export/rss2/economy/index.xml,invalid,404,2026-02-19T06:19:47.442Z
+RU,Russia,25,RT News,https://www.rt.com/rss/,valid,200,2026-02-19T06:19:47.442Z
+RU,Russia,26,RT Economy,https://www.rt.com/rss/business.xml,invalid,404,2026-02-19T06:19:47.442Z
+RU,Russia,27,Kommersant Business,https://www.kommersant.ru/rss/1207,invalid,403,2026-02-19T06:19:47.442Z
+RU,Russia,28,Novaya Gazeta,https://novayagazeta.eu/rss,invalid,404,2026-02-19T06:19:47.442Z
+RU,Russia,29,Lenta Sports,https://lenta.ru/rss/sport,invalid,404,2026-02-19T06:19:47.442Z
+RU,Russia,30,RT Crimea,https://www.rt.com/rss/regions.xml,invalid,404,2026-02-19T06:19:47.442Z
+KR,South Korea,1,Yonhap (EN),https://en.yna.co.kr/RSS/news.xml,valid,200,2026-02-19T06:19:47.442Z
+KR,South Korea,2,Donga Ilbo,https://rss.donga.com/total.xml,valid,200,2026-02-19T06:19:47.442Z
+KR,South Korea,3,Seoul Newspaper,https://www.seoul.co.kr/xml/rss/rss_top.xml,valid,200,2026-02-19T06:19:47.442Z
+KR,South Korea,4,Newsis,https://www.newsis.com/RSS/sokbo.xml,valid,200,2026-02-19T06:19:47.442Z
+KR,South Korea,5,Aju News,https://rss.ajunews.com/sokbo.xml,valid,200,2026-02-19T06:19:47.442Z
+KR,South Korea,6,KED Global (Korea Economic Daily),https://www.kedglobal.com/newsRss,valid,200,2026-02-19T06:19:47.442Z
+KR,South Korea,7,Daily NK (EN),https://www.dailynk.com/english/feed,valid,200,2026-02-19T06:19:47.442Z
+KR,South Korea,8,Korea Times (RSS directory),https://feed.koreatimes.co.kr/k/allnews.xml,valid,200,2026-02-19T06:19:47.442Z
+KR,South Korea,9,Korea Herald (RSS directory),https://www.koreaherald.com/rss/newsAll,valid,200,2026-02-19T06:19:47.442Z
+KR,South Korea,10,Korea Herald (NewsAll),https://www.koreaherald.com/rss/newsAll,valid,200,2026-02-19T06:19:47.442Z
+KR,South Korea,11,KBS World Radio (RSS directory),http://world.kbs.co.kr/rss/rss_news.htm?lang=e,valid,200,2026-02-19T06:19:47.442Z
+BR,Brazil,1,G1 (Globo - Economy),https://g1.globo.com/rss/g1/economia/,valid,200,2026-02-19T06:19:47.442Z
+BR,Brazil,2,G1 (Globo - Tech),https://g1.globo.com/rss/g1/tecnologia/,valid,200,2026-02-19T06:19:47.442Z
+BR,Brazil,3,Folha de S.Paulo - Top,https://feeds.folha.uol.com.br/emcimadahora/rss091.xml,valid,200,2026-02-19T06:19:47.442Z
+BR,Brazil,4,Folha de S.Paulo - Market,https://feeds.folha.uol.com.br/mercado/rss091.xml,valid,200,2026-02-19T06:19:47.442Z
+BR,Brazil,5,Estadão (Economy),https://www.estadao.com.br/rss/economia,invalid,404,2026-02-19T06:19:47.442Z
+BR,Brazil,6,Correio Braziliense,https://www.correiobraziliense.com.br/rss/noticia/economia/rss.xml,valid,200,2026-02-19T06:19:47.442Z
+BR,Brazil,7,InfoMoney,https://www.infomoney.com.br/feed/,valid,200,2026-02-19T06:19:47.442Z
+BR,Brazil,8,Canaltech,https://canaltech.com.br/rss/,valid,200,2026-02-19T06:19:47.442Z
+BR,Brazil,9,Forbes Brazil,https://forbes.com.br/feed/,valid,200,2026-02-19T06:19:47.442Z
+BR,Brazil,10,UOL (Economy),https://www.uol.com.br/album/rssxml/,invalid,404,2026-02-19T06:19:47.442Z
+BR,Brazil,11,Estadão (Politics),https://www.estadao.com.br/politica/rss,invalid,404,2026-02-19T06:19:47.442Z
+BR,Brazil,12,Folha (World),https://www.folha.uol.com.br/ultilinks/noticias/mundo/rss091.xml,invalid,404,2026-02-19T06:19:47.442Z
+BR,Brazil,13,Brasil de Fato,https://www.brasildefato.com.br/rss,valid,200,2026-02-19T06:19:47.442Z
+BR,Brazil,14,Estado de Minas,https://www.em.com.br/feed/,valid,200,2026-02-19T06:19:47.442Z
+BR,Brazil,15,R7,https://noticias.r7.com/rss/,invalid,404,2026-02-19T06:19:47.442Z
+BR,Brazil,16,Valor (Invest),https://valor.globo.com/rss/feed.xml,invalid,404,2026-02-19T06:19:47.442Z
+BR,Brazil,17,Veja,https://veja.abril.com.br/feed/,valid,200,2026-02-19T06:19:47.442Z
+BR,Brazil,18,Estadão World,https://www.estadao.com.br/ultimas/feed,invalid,404,2026-02-19T06:19:47.442Z
+BR,Brazil,19,R7 Economy,https://noticias.r7.com/economia/feed/,invalid,404,2026-02-19T06:19:47.442Z
+BR,Brazil,20,Globo Esporte,https://ge.globo.com/rss/,invalid,404,2026-02-19T06:19:47.442Z
+BR,Brazil,21,O Estado de Minas,https://www.em.com.br/site/rss/em_d.php,invalid,404,2026-02-19T06:19:47.442Z
+BR,Brazil,22,Gazeta do Povo,https://www.gazetadopovo.com.br/feed/,invalid,200,2026-02-19T06:19:47.442Z
+BR,Brazil,23,Estado de S. Paulo,https://www.estadao.com.br/rss/,invalid,404,2026-02-19T06:19:47.442Z
+BR,Brazil,24,Terra Brasil,https://www.terra.com.br/rss/,invalid,400,2026-02-19T06:19:47.442Z
+BR,Brazil,25,Bolsas,https://valor.globo.com/rss/ultimas.xml,invalid,404,2026-02-19T06:19:47.442Z
+BR,Brazil,26,Canal Tech Brasil,https://canaltech.com.br/feed/,invalid,404,2026-02-19T06:19:47.442Z
+BR,Brazil,27,UOL Economia,https://www.uol.com.br/album/rssxml/economia/,invalid,404,2026-02-19T06:19:47.442Z
+BR,Brazil,28,Valor,https://www.valor.com.br/,invalid,200,2026-02-19T06:19:47.442Z
+BR,Brazil,29,Estadão,https://www.estadao.com.br/rss/ultimas,invalid,404,2026-02-19T06:19:47.442Z
+BR,Brazil,30,UOL Brasil,https://www.uol.com.br/urbe/rss,invalid,404,2026-02-19T06:19:47.442Z
+AU,Australia,1,ABC News - Business,https://www.abc.net.au/news/feed/51892/rss.xml,valid,200,2026-02-19T06:19:47.442Z
+AU,Australia,2,ABC News - World,https://www.abc.net.au/news/feed/52278/rss.xml,invalid,404,2026-02-19T06:19:47.442Z
+AU,Australia,3,Sydney Morning Herald - Business,https://www.smh.com.au/rss/business.xml,valid,200,2026-02-19T06:19:47.442Z
+AU,Australia,4,The Age - Business,https://www.theage.com.au/rss/business.xml,valid,200,2026-02-19T06:19:47.442Z
+AU,Australia,5,News.com.au - Finance,https://www.news.com.au/finance/feed,invalid,403,2026-02-19T06:19:47.442Z
+AU,Australia,6,The Australian - Business,https://www.theaustralian.com.au/business/rss,valid,200,2026-02-19T06:19:47.442Z
+AU,Australia,7,The Guardian Australia,https://www.theguardian.com/au/rss,valid,200,2026-02-19T06:19:47.442Z
+AU,Australia,8,ABC News (Top),https://www.abc.net.au/news/feed/1106/rss.xml,valid,200,2026-02-19T06:19:47.442Z
+AU,Australia,9,Financial Review,https://www.afr.com/rss/headlines,invalid,404,2026-02-19T06:19:47.442Z
+AU,Australia,10,Australian Broadcasting Corporation - World,https://www.abc.net.au/news/feed/51892/rss.xml?edition=world,valid,200,2026-02-19T06:19:47.442Z
+AU,Australia,11,The Guardian Australia,https://www.theguardian.com/au/rugby/rss,invalid,404,2026-02-19T06:19:47.442Z
+AU,Australia,12,The Australian,https://www.theaustralian.com.au/rss,invalid,403,2026-02-19T06:19:47.442Z
+AU,Australia,13,News.com.au,https://www.news.com.au/,invalid,403,2026-02-19T06:19:47.442Z
+AU,Australia,14,SBS World News,https://www.sbs.com.au/news/rss.xml,invalid,404,2026-02-19T06:19:47.442Z
+AU,Australia,15,SBS News (Breaking),https://www.sbs.com.au/news/feed/,invalid,404,2026-02-19T06:19:47.442Z
+AU,Australia,16,9News,https://www.9news.com.au/rss,valid,200,2026-02-19T06:19:47.442Z
+AU,Australia,17,Sydney Morning Herald,https://www.smh.com.au/rss/,invalid,404,2026-02-19T06:19:47.442Z
+AU,Australia,18,The Age,https://www.theage.com.au/rss/,invalid,404,2026-02-19T06:19:47.442Z
+AU,Australia,19,Herald Sun,https://www.heraldsun.com.au/rss/,invalid,403,2026-02-19T06:19:47.442Z
+AU,Australia,20,Canberra Times,https://www.canberratimes.com.au/rss/,invalid,404,2026-02-19T06:19:47.442Z
+AU,Australia,21,The Saturday Paper,https://www.thesaturdaypaper.com.au/feed,invalid,404,2026-02-19T06:19:47.442Z
+AU,Australia,22,ABC News Radio,https://www.abc.net.au/7.30/business/rss.xml,invalid,200,2026-02-19T06:19:47.442Z
+AU,Australia,23,News.com.au Business,https://www.news.com.au/business/feed,invalid,403,2026-02-19T06:19:47.442Z
+AU,Australia,24,Financial Review - CEO,https://www.afr.com/rss/ceo,invalid,404,2026-02-19T06:19:47.442Z
+AU,Australia,25,The Australian,https://www.theaustralian.com.au/business/?output=rss,invalid,403,2026-02-19T06:19:47.442Z
+AU,Australia,26,PerthNow,https://www.perthnow.com.au/rss.xml,invalid,404,2026-02-19T06:19:47.442Z
+AU,Australia,27,ABC News Science,https://www.abc.net.au/news/feed/1077/rss.xml,invalid,404,2026-02-19T06:19:47.442Z
+AU,Australia,28,The Australian,https://www.theaustralian.com.au/business/markets/rss,valid,200,2026-02-19T06:19:47.442Z
+AU,Australia,29,ABC News (Sport),https://www.abc.net.au/news/feed/2141674/rss.xml,invalid,500,2026-02-19T06:19:47.442Z
+AU,Australia,30,7news,https://7news.com.au/feed,valid,200,2026-02-19T06:19:47.442Z
+ES,Spain,1,Expansión (Financial),https://e00-expansion.uecdn.es/rss/empresas.xml,valid,200,2026-02-19T06:19:47.442Z
+ES,Spain,2,Cinco Días (Economy),https://cincodias.elpais.com/arc/outboundfeeds/rss/?outputType=xml,valid,200,2026-02-19T06:19:47.442Z
+ES,Spain,3,El País - Economy,https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/economia/portada,valid,200,2026-02-19T06:19:47.442Z
+ES,Spain,4,El Mundo - Economy,https://e00-elmundo.uecdn.es/elmundo/rss/economia.xml,valid,200,2026-02-19T06:19:47.442Z
+ES,Spain,5,RTVE - Economy,https://www.rtve.es/api/noticias/economia/rss,invalid,404,2026-02-19T06:19:47.442Z
+ES,Spain,6,La Vanguardia,https://www.lavanguardia.com/rss,invalid,200,2026-02-19T06:19:47.442Z
+ES,Spain,7,El Confidencial,https://www.elconfidencial.com/rss/,invalid,200,2026-02-19T06:19:47.442Z
+ES,Spain,8,El Mundo (Politics),https://e00-elmundo.uecdn.es/rss/el_mundo_portada.xml,invalid,404,2026-02-19T06:19:47.442Z
+ES,Spain,9,ABC,https://www.abc.es/rss/feeds/espana.xml,invalid,404,2026-02-19T06:19:47.442Z
+ES,Spain,10,La Razon,https://www.larazon.es/rss.xml,invalid,404,2026-02-19T06:19:47.442Z
+ES,Spain,11,El Periodico,https://www.elperiodico.com/es/rss,invalid,200,2026-02-19T06:19:47.442Z
+ES,Spain,12,20 Minutos,https://www.20minutos.es/rss/,valid,200,2026-02-19T06:19:47.442Z
+ES,Spain,13,El Economista,https://www.eleconomista.es/rss,invalid,403,2026-02-19T06:19:47.442Z
+ES,Spain,14,El Diario,https://www.eldiario.es/rss/,valid,200,2026-02-19T06:19:47.442Z
+ES,Spain,15,Agencia EFE,https://www.efe.com/efe/espana/1/rss,invalid,200,2026-02-19T06:19:47.442Z
+ES,Spain,16,eldiario,https://www.eldiario.es/rss/vida/,invalid,404,2026-02-19T06:19:47.442Z
+ES,Spain,17,La Vanguardia,https://www.lavanguardia.com/rss/,invalid,404,2026-02-19T06:19:47.442Z
+ES,Spain,18,El Pais Politics,https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/politica/portada,invalid,370,2026-02-19T06:19:47.442Z
+ES,Spain,19,Marca,https://www.marca.com/rss/,valid,200,2026-02-19T06:19:47.442Z
+ES,Spain,20,Público,https://www.publico.es/rss/home.xml,invalid,404,2026-02-19T06:19:47.442Z
+ES,Spain,21,La Sexta,https://www.lasexta.com/rss.xml,invalid,404,2026-02-19T06:19:47.442Z
+ES,Spain,22,El Economista,https://www.eleconomista.es/rss/,invalid,403,2026-02-19T06:19:47.442Z
+ES,Spain,23,La Voz de Galicia,https://www.lavozdegalicia.es/rss/sociedad,invalid,404,2026-02-19T06:19:47.442Z
+ES,Spain,24,La Vanguardia Economy,https://www.lavanguardia.com/economia/rss.xml,invalid,404,2026-02-19T06:19:47.442Z
+ES,Spain,25,El Pais,https://feeds.elpais.com/mrss-s/sections/politics,invalid,403,2026-02-19T06:19:47.442Z
+ES,Spain,26,El Periódico,https://www.elperiodico.com/es/rss/economia.xml,invalid,404,2026-02-19T06:19:47.442Z
+ES,Spain,27,La Razón,https://www.larazon.es/rss/economia/,invalid,404,2026-02-19T06:19:47.442Z
+ES,Spain,28,20 Minutos,https://www.20minutos.es/rss/espana.xml,invalid,404,2026-02-19T06:19:47.442Z
+ES,Spain,29,El Mundo Sports,https://e00-elmundo.uecdn.es/elmundo/rss/deportes.xml,invalid,404,2026-02-19T06:19:47.442Z
+ES,Spain,30,La Vanguardia Politics,https://www.lavanguardia.com/politica/rss.xml,invalid,404,2026-02-19T06:19:47.442Z
+MX,Mexico,1,El Economista (Top),https://www.eleconomista.com.mx/rss/top-noticias,invalid,403,2026-02-19T06:19:47.442Z
+MX,Mexico,2,El Economista (Empresas),https://www.eleconomista.com.mx/rss/empresas,invalid,403,2026-02-19T06:19:47.442Z
+MX,Mexico,3,El Universal,https://www.eluniversal.com.mx/rss.xml,invalid,404,2026-02-19T06:19:47.442Z
+MX,Mexico,4,Milenio,https://www.milenio.com/rss,valid,200,2026-02-19T06:19:47.442Z
+MX,Mexico,5,Excelsior,https://www.excelsior.com.mx/rss.xml,invalid,404,2026-02-19T06:19:47.442Z
+MX,Mexico,6,Proceso (Investigative),https://www.proceso.com.mx/rss/feed.html,valid,200,2026-02-19T06:19:47.442Z
+MX,Mexico,7,Aristegui Noticias,https://aristeguinoticias.com/feed/,invalid,200,2026-02-19T06:19:47.442Z
+MX,Mexico,8,Expansion (Biz),https://expansion.mx/rss,valid,200,2026-02-19T06:19:47.442Z
+MX,Mexico,9,Reforma,https://www.reforma.com/rss,invalid,200,2026-02-19T06:19:47.442Z
+MX,Mexico,10,Excélsior (Politics),https://www.excelsior.com.mx/politica.xml,invalid,404,2026-02-19T06:19:47.442Z
+MX,Mexico,11,Milenio (Economy),https://www.milenio.com/negocios/rss,invalid,404,2026-02-19T06:19:47.442Z
+MX,Mexico,12,Forbes México,https://www.forbes.com.mx/rss/,invalid,403,2026-02-19T06:19:47.442Z
+MX,Mexico,13,Aristegui (Economía),https://aristeguinoticias.com/rss/economia/,invalid,200,2026-02-19T06:19:47.442Z
+MX,Mexico,14,Sin Embargo,https://sinembargo.mx/feed,invalid,403,2026-02-19T06:19:47.442Z
+MX,Mexico,15,Proceso (Política),https://www.proceso.com.mx/politica/rss,invalid,404,2026-02-19T06:19:47.442Z
+MX,Mexico,16,Animal Político,https://www.animalpolitico.com/feed/,invalid,404,2026-02-19T06:19:47.442Z
+MX,Mexico,17,Contralínea,https://www.contralinea.com.mx/feed,valid,200,2026-02-19T06:19:47.442Z
+MX,Mexico,18,El Financiero,https://www.elfinanciero.com.mx/rss/mundo,valid,200,2026-02-19T06:19:47.442Z
+MX,Mexico,19,Reforma,https://www.reforma.com/rss?output=rss,invalid,200,2026-02-19T06:19:47.442Z
+MX,Mexico,20,Excélsior Internacional,https://www.excelsior.com.mx/opinion/rss,invalid,404,2026-02-19T06:19:47.442Z
+MX,Mexico,21,El Economista Politics,https://www.eleconomista.com.mx/rss/politica,invalid,403,2026-02-19T06:19:47.442Z
+MX,Mexico,22,Aristegui International,https://aristeguinoticias.com/feeds/articles/rss/,invalid,200,2026-02-19T06:19:47.442Z
+MX,Mexico,23,Proceso World,https://www.proceso.com.mx/rss/feed.html?output=xml,valid,200,2026-02-19T06:19:47.442Z
+MX,Mexico,24,Sin Embargo MX,https://sinembargo.mx/feed/,invalid,403,2026-02-19T06:19:47.442Z
+MX,Mexico,25,La Jornada,https://www.jornada.com.mx/ultimas/feed,invalid,502,2026-02-19T06:19:47.442Z
+MX,Mexico,26,Milenio Politics,https://www.milenio.com/politica/rss,invalid,404,2026-02-19T06:19:47.442Z
+MX,Mexico,27,Forbes Mexico,https://www.forbes.com.mx/feed/,invalid,403,2026-02-19T06:19:47.442Z
+MX,Mexico,28,Sin Embargo,https://www.sinembargo.mx/rss/,invalid,403,2026-02-19T06:19:47.442Z
+MX,Mexico,29,Proceso (Opinion),https://www.proceso.com.mx/opinion/rss,invalid,404,2026-02-19T06:19:47.442Z
+MX,Mexico,30,El Financiero,https://www.elfinanciero.com.mx/rss,valid,200,2026-02-19T06:19:47.442Z
+ID,Indonesia,1,Antara News,https://www.antaranews.com/feed/,valid,200,2026-02-19T06:19:47.442Z
+ID,Indonesia,2,The Jakarta Post,https://www.thejakartapost.com/rss,invalid,404,2026-02-19T06:19:47.442Z
+ID,Indonesia,3,CNBC Indonesia,https://www.cnbcindonesia.com/feed,invalid,404,2026-02-19T06:19:47.442Z
+ID,Indonesia,4,Detik,https://www.detik.com/rss,invalid,404,2026-02-19T06:19:47.442Z
+ID,Indonesia,5,Kompas,https://www.kompas.com/rss,invalid,404,2026-02-19T06:19:47.442Z
+ID,Indonesia,6,Tempo,https://www.tempo.co/rss,invalid,403,2026-02-19T06:19:47.442Z
+ID,Indonesia,7,Viva,https://www.viva.co.id/rss,invalid,404,2026-02-19T06:19:47.442Z
+ID,Indonesia,8,Tribunnews,https://www.tribunnews.com/rss,invalid,403,2026-02-19T06:19:47.442Z
+ID,Indonesia,9,Republika,https://www.republika.co.id/rss,valid,200,2026-02-19T06:19:47.442Z
+ID,Indonesia,10,Bisnis,https://www.bisnis.com/rss,invalid,404,2026-02-19T06:19:47.442Z
+ID,Indonesia,11,Tempo,https://www.tempo.co/feed,invalid,403,2026-02-19T06:19:47.442Z
+ID,Indonesia,12,Jakarta Globe,https://jakartaglobe.id/feed,invalid,404,2026-02-19T06:19:47.442Z
+ID,Indonesia,13,BisnisIndonesia,https://www.bisnis.com/id/home/feed,invalid,404,2026-02-19T06:19:47.442Z
+ID,Indonesia,14,Sindo News,https://www.sindonews.com/rss/home/,valid,200,2026-02-19T06:19:47.442Z
+ID,Indonesia,15,Kapanlagi,https://www.kapanlagi.com/feed/,valid,200,2026-02-19T06:19:47.442Z
+ID,Indonesia,16,Bisnis (Teknologi),https://www.bisnis.com/rss/technology,invalid,404,2026-02-19T06:19:47.442Z
+ID,Indonesia,17,Kompas,https://www.kompas.com/feed,invalid,404,2026-02-19T06:19:47.442Z
+ID,Indonesia,18,Antara TV,https://www.antaranews.com/rss/terkini,valid,200,2026-02-19T06:19:47.442Z
+ID,Indonesia,19,Kompas,https://www.kompas.com/rss/,invalid,404,2026-02-19T06:19:47.442Z
+ID,Indonesia,20,Viva,https://www.viva.co.id/rss/terkini,invalid,404,2026-02-19T06:19:47.442Z
+ID,Indonesia,21,Sindonews,https://www.sindonews.com/rss/,valid,200,2026-02-19T06:19:47.442Z
+ID,Indonesia,22,Tribunnews,https://www.tribunnews.com/feeds/,invalid,403,2026-02-19T06:19:47.442Z
+ID,Indonesia,23,Tempo,https://www.tempo.co/rss/feed.xml,invalid,404,2026-02-19T06:19:47.442Z
+ID,Indonesia,24,Republika,https://www.republika.co.id/rss/terkini,valid,200,2026-02-19T06:19:47.442Z
+ID,Indonesia,25,Bisnis,https://www.bisnis.com/feed/,invalid,404,2026-02-19T06:19:47.442Z
+ID,Indonesia,26,CNN Indonesia,https://www.cnnindonesia.com/feed/,invalid,404,2026-02-19T06:19:47.442Z
+ID,Indonesia,27,Liputan6,https://www.liputan6.com/rss,invalid,404,2026-02-19T06:19:47.442Z
+ID,Indonesia,28,Kumparan,https://kumparan.com/rss,invalid,404,2026-02-19T06:19:47.442Z
+ID,Indonesia,29,Detik,https://www.detik.com/rss/sport,invalid,404,2026-02-19T06:19:47.442Z
+ID,Indonesia,30,Tempo,https://www.tempo.co/feed/,invalid,403,2026-02-19T06:19:47.442Z
+NL,Netherlands,1,NOS,https://www.nos.nl/rss,invalid,404,2026-02-19T06:19:47.442Z
+NL,Netherlands,2,NRC,https://www.nrc.nl/rss,valid,200,2026-02-19T06:19:47.442Z
+NL,Netherlands,3,AD,https://www.ad.nl/rss.xml,valid,200,2026-02-19T06:19:47.442Z
+NL,Netherlands,4,Nu,https://www.nu.nl/rss/algemeen,valid,200,2026-02-19T06:19:47.442Z
+NL,Netherlands,5,Volkskrant,https://www.volkskrant.nl/rss,invalid,404,2026-02-19T06:19:47.442Z
+NL,Netherlands,6,RTL Nieuws,https://www.rtlnieuws.nl/service/rss/rss.xml,invalid,404,2026-02-19T06:19:47.442Z
+NL,Netherlands,7,De Telegraaf,https://www.telegraaf.nl/rss,invalid,403,2026-02-19T06:19:47.442Z
+NL,Netherlands,8,Trouw,https://www.trouw.nl/rss/algemeen/,invalid,404,2026-02-19T06:19:47.442Z
+NL,Netherlands,9,Financieel Dagblad,https://fd.nl/rss.xml,invalid,404,2026-02-19T06:19:47.442Z
+NL,Netherlands,10,Parool,https://www.parool.nl/rss,invalid,404,2026-02-19T06:19:47.442Z
+NL,Netherlands,11,NRC,https://www.nrc.nl/rss/nieuws/,invalid,404,2026-02-19T06:19:47.442Z
+NL,Netherlands,12,NPO Radio 1,https://www.npo3fm.nl/rss/,valid,200,2026-02-19T06:19:47.442Z
+NL,Netherlands,13,NOS Sport,https://feeds.nos.nl/nossport,invalid,404,2026-02-19T06:19:47.442Z
+NL,Netherlands,14,NOS Tech,https://feeds.nos.nl/nostechniek,invalid,404,2026-02-19T06:19:47.442Z
+NL,Netherlands,15,RTL Nieuws Finance,https://www.rtlnieuws.nl/service/rss/rss-finance.xml,invalid,404,2026-02-19T06:19:47.442Z
+NL,Netherlands,16,NOS Culture,https://feeds.nos.nl/noscultuur,invalid,404,2026-02-19T06:19:47.442Z
+NL,Netherlands,17,Nu.nl Technology,https://www.nu.nl/rss/tech/,invalid,404,2026-02-19T06:19:47.442Z
+NL,Netherlands,18,NOS Sport,https://www.nos.nl/rss/sport/,invalid,404,2026-02-19T06:19:47.442Z
+NL,Netherlands,19,AD,https://www.ad.nl/nieuws/rss,invalid,404,2026-02-19T06:19:47.442Z
+NL,Netherlands,20,RTL Nieuws,https://www.rtlnieuws.nl/service/rss/rss-alle-nieuws.xml,invalid,404,2026-02-19T06:19:47.442Z
+NL,Netherlands,21,NU,https://www.nu.nl/rss/algemeen/rss.xml,invalid,404,2026-02-19T06:19:47.442Z
+NL,Netherlands,22,Volkskrant,https://www.volkskrant.nl/rss/algemeen/,invalid,404,2026-02-19T06:19:47.442Z
+NL,Netherlands,23,NRC,https://www.nrc.nl/nieuws/rss/,valid,200,2026-02-19T06:19:47.442Z
+NL,Netherlands,24,NOS Politiek,https://feeds.nos.nl/nospolitiek,invalid,404,2026-02-19T06:19:47.442Z
+NL,Netherlands,25,Nieuwsuur,https://nieuwsuur.nl/nieuws/rss.xml,invalid,200,2026-02-19T06:19:47.442Z
+NL,Netherlands,26,FD,https://fd.nl/rss/economie,invalid,404,2026-02-19T06:19:47.442Z
+NL,Netherlands,27,RTL,https://www.rtlnieuws.nl/nieuws/rss.xml,valid,200,2026-02-19T06:19:47.442Z
+NL,Netherlands,28,Telegraaf,https://www.telegraaf.nl/rss/achtergrond/,invalid,403,2026-02-19T06:19:47.442Z
+NL,Netherlands,29,Parool,https://www.parool.nl/rss/nieuws/,invalid,404,2026-02-19T06:19:47.442Z
+NL,Netherlands,30,NRC,https://www.nrc.nl/rss/,valid,200,2026-02-19T06:19:47.442Z
+CH,Switzerland,1,Swissinfo EN,https://www.swissinfo.ch/eng/rss,invalid,410,2026-02-19T06:19:47.442Z
+CH,Switzerland,2,NZZ,https://www.nzz.ch/rss,invalid,200,2026-02-19T06:19:47.442Z
+CH,Switzerland,3,LeTemps,https://www.letemps.ch/rss,invalid,200,2026-02-19T06:19:47.442Z
+CH,Switzerland,4,Tages-Anzeiger,https://www.tagesanzeiger.ch/rss,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+CH,Switzerland,5,Blick,https://www.blick.ch/feed,invalid,404,2026-02-19T06:19:47.442Z
+CH,Switzerland,6,20 Minuten CH,https://www.20min.ch/feeds/0/feed,invalid,404,2026-02-19T06:19:47.442Z
+CH,Switzerland,7,SRF,https://www.srf.ch/news/feed/,invalid,404,2026-02-19T06:19:47.442Z
+CH,Switzerland,8,RTS,https://www.rts.ch/rss,invalid,404,2026-02-19T06:19:47.442Z
+CH,Switzerland,9,Radio Télévision Suisse,https://www.rts.ch/,invalid,200,2026-02-19T06:19:47.442Z
+CH,Switzerland,10,Le Temps Economy,https://www.letemps.ch/economie.rss,valid,200,2026-02-19T06:19:47.442Z
+CH,Switzerland,11,24 Heures,https://www.24heures.ch/rss,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+CH,Switzerland,12,NZZ Finance,https://www.nzz.ch/rss/wirtschaft.xml,invalid,404,2026-02-19T06:19:47.442Z
+CH,Switzerland,13,Neue Zürcher Zeitung,https://www.nzz.ch/rss/politik.xml,invalid,404,2026-02-19T06:19:47.442Z
+CH,Switzerland,14,NZZ,https://www.nzz.ch/rss/themen.rss,invalid,200,2026-02-19T06:19:47.442Z
+CH,Switzerland,15,Radio 24,https://www.rsi.ch/rss,invalid,200,2026-02-19T06:19:47.442Z
+CH,Switzerland,16,Le Temps,https://www.letemps.ch/rss/actualites,invalid,404,2026-02-19T06:19:47.442Z
+CH,Switzerland,17,24 Heures,https://www.24heures.ch/rss/,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+CH,Switzerland,18,20min,https://www.20min.ch/feeds/0/20min.rss,invalid,404,2026-02-19T06:19:47.442Z
+CH,Switzerland,19,Blick,https://www.blick.ch/feed/,invalid,404,2026-02-19T06:19:47.442Z
+CH,Switzerland,20,NZZ,https://www.nzz.ch/reisen.rss,valid,200,2026-02-19T06:19:47.442Z
+CH,Switzerland,21,Tages-Anzeiger,https://www.tagesanzeiger.ch/wirtschaft/rss.xml,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+CH,Switzerland,22,SRF,https://www.srf.ch/radio/srf-news/rss,invalid,404,2026-02-19T06:19:47.442Z
+CH,Switzerland,23,RTS,https://www.rts.ch/info/news/rss,invalid,404,2026-02-19T06:19:47.442Z
+CH,Switzerland,24,Le Matin,https://www.lematin.ch/rss/,invalid,404,2026-02-19T06:19:47.442Z
+CH,Switzerland,25,NZZ,https://www.nzz.ch/politik.rss,invalid,200,2026-02-19T06:19:47.442Z
+CH,Switzerland,26,Tages-Anzeiger,https://www.tagesanzeiger.ch/schweiz/rss.xml,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+CH,Switzerland,27,Swissinfo,https://www.swissinfo.ch/eng/rss/world,invalid,200,2026-02-19T06:19:47.442Z
+CH,Switzerland,28,NDR,https://www.ndr.ch/rss/,valid,200,2026-02-19T06:19:47.442Z
+CH,Switzerland,29,Swissinfo Tech,https://www.swissinfo.ch/eng/rss/tech,invalid,200,2026-02-19T06:19:47.442Z
+CH,Switzerland,30,SRF,https://www.srf.ch/news/bnf/headlines.rss,invalid,404,2026-02-19T06:19:47.442Z
+TR,Turkey,1,Anadolu Agency,https://www.aa.com.tr/tr/rss/default.aspx,invalid,404,2026-02-19T06:19:47.442Z
+TR,Turkey,2,Hürriyet,https://www.hurriyet.com.tr/rss/anasayfa,valid,200,2026-02-19T06:19:47.442Z
+TR,Turkey,3,Daily Sabah,https://www.dailysabah.com/rss,invalid,200,2026-02-19T06:19:47.442Z
+TR,Turkey,4,TRT World,https://www.trtworld.com/rss,invalid,404,2026-02-19T06:19:47.442Z
+TR,Turkey,5,Sabah,https://www.sabah.com.tr/rss/sondakika.xml,valid,200,2026-02-19T06:19:47.442Z
+TR,Turkey,6,Anadolu,https://www.aa.com.tr/rss,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+TR,Turkey,7,Bursa,https://www.hurriyetdailynews.com/feed,invalid,404,2026-02-19T06:19:47.442Z
+TR,Turkey,8,Milliyet,https://www.milliyet.com.tr/rss/rssnew.xml,invalid,404,2026-02-19T06:19:47.442Z
+TR,Turkey,9,Haberturk,https://www.haberturk.com/rss,valid,200,2026-02-19T06:19:47.442Z
+TR,Turkey,10,Bianet,https://www.bianet.org/rss,invalid,403,2026-02-19T06:19:47.442Z
+TR,Turkey,11,Cumhuriyet,https://www.cumhuriyet.com.tr/Rss/,valid,200,2026-02-19T06:19:47.442Z
+TR,Turkey,12,Sözcü,https://www.sozcu.com.tr/rss,invalid,200,2026-02-19T06:19:47.442Z
+TR,Turkey,13,TAKİM,https://www.t24.com.tr/rss,invalid,200,2026-02-19T06:19:47.442Z
+TR,Turkey,14,Aksam,https://www.aksam.com.tr/rss,valid,200,2026-02-19T06:19:47.442Z
+TR,Turkey,15,Takvim,https://www.takvim.com.tr/rss,invalid,200,2026-02-19T06:19:47.442Z
+TR,Turkey,16,Evrensel,https://www.evrensel.net/rss,invalid,200,2026-02-19T06:19:47.442Z
+TR,Turkey,17,Anadolu Agency Economy,https://www.aa.com.tr/tr/rss/ekonomi.xml,invalid,404,2026-02-19T06:19:47.442Z
+TR,Turkey,18,Yeni Şafak,https://www.yenisafak.com/rss.xml,invalid,410,2026-02-19T06:19:47.442Z
+TR,Turkey,19,Takvim,https://www.takvim.com.tr/rss/feed,valid,200,2026-02-19T06:19:47.442Z
+TR,Turkey,20,Haber7,https://www.haber7.com/rss,invalid,404,2026-02-19T06:19:47.442Z
+TR,Turkey,21,Sabah,https://www.sabah.com.tr/rss/,invalid,200,2026-02-19T06:19:47.442Z
+TR,Turkey,22,Sondakika,https://www.sondakika.com/rss/,invalid,404,2026-02-19T06:19:47.442Z
+TR,Turkey,23,DHA,https://www.dha.com.tr/rss,invalid,404,2026-02-19T06:19:47.442Z
+TR,Turkey,24,NTV,https://www.ntv.com.tr/rss,invalid,200,2026-02-19T06:19:47.442Z
+TR,Turkey,25,Milliyet,https://www.milliyet.com.tr/rss/rssNews/rssNews,invalid,200,2026-02-19T06:19:47.442Z
+TR,Turkey,26,Cumhuriyet,https://www.cumhuriyet.com.tr/RSS,valid,200,2026-02-19T06:19:47.442Z
+TR,Turkey,27,HuffPost Turkey,https://www.hurriyetdailynews.com/rss,valid,200,2026-02-19T06:19:47.442Z
+TR,Turkey,28,En Son Haberler,https://www.ensonhaber.com/rss,invalid,404,2026-02-19T06:19:47.442Z
+TR,Turkey,29,Yeni Safak,https://www.yenisafak.com/tr/rss,invalid,404,2026-02-19T06:19:47.442Z
+TR,Turkey,30,Haber Turk,https://www.haberturk.com/rss/,valid,200,2026-02-19T06:19:47.442Z
+SA,Saudi Arabia,1,Arab News,https://www.arabnews.com/home/rss,invalid,403,2026-02-19T06:19:47.442Z
+SA,Saudi Arabia,2,Saudi Gazette,https://saudigazette.com.sa/ContentFeed,invalid,404,2026-02-19T06:19:47.442Z
+SA,Saudi Arabia,3,Al Arabiya,https://www.alarabiya.net/RSS,invalid,404,2026-02-19T06:19:47.442Z
+SA,Saudi Arabia,4,Al Eqtisadiah,https://www.alriyadh.gov.sa/en/feed,invalid,200,2026-02-19T06:19:47.442Z
+SA,Saudi Arabia,5,Riyad News,https://www.arabnews.com/feed,invalid,403,2026-02-19T06:19:47.442Z
+SA,Saudi Arabia,6,Riyad News,https://www.arabnews.com/node/2/rss,invalid,403,2026-02-19T06:19:47.442Z
+SA,Saudi Arabia,7,Al Riyadh,https://www.alriyadh.com/rss/world,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+SA,Saudi Arabia,8,Saudi Gazette Business,https://saudigazette.com.sa/ContentFeed?sectionId=2,invalid,404,2026-02-19T06:19:47.442Z
+SA,Saudi Arabia,9,Al Arabiya World,https://www.alarabiya.net/rss/arab-news.xml,invalid,403,2026-02-19T06:19:47.442Z
+SA,Saudi Arabia,10,Al Arabiya Economy,https://www.alarabiya.net/rss/economy.xml,valid,200,2026-02-19T06:19:47.442Z
+SA,Saudi Arabia,11,Al Arabiya Science,https://www.alarabiya.net/rss/world.xml,invalid,403,2026-02-19T06:19:47.442Z
+SA,Saudi Arabia,12,Al Eqtisadiah,https://www.alriyadh.gov.sa/en/rss/economy,invalid,200,2026-02-19T06:19:47.442Z
+SA,Saudi Arabia,13,Al Arabia,https://www.alarabiya.net/rss/gulf.xml,invalid,403,2026-02-19T06:19:47.442Z
+SA,Saudi Arabia,14,Makkah Times,https://www.makkahnewspaper.com/rss,invalid,200,2026-02-19T06:19:47.442Z
+SA,Saudi Arabia,15,Al Riyadh,https://www.alriyadh.com/rss/politics,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+SA,Saudi Arabia,16,Arab News,https://www.arabnews.com/world/rss,invalid,404,2026-02-19T06:19:47.442Z
+SA,Saudi Arabia,17,Saudi Gazette,https://saudigazette.com.sa/en/RSS,invalid,404,2026-02-19T06:19:47.442Z
+SA,Saudi Arabia,18,Okaz,https://www.okaz.com.sa/rss/news,valid,200,2026-02-19T06:19:47.442Z
+SA,Saudi Arabia,19,Akhbar Alyom,https://www.akhbaralyom.com/rss,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+SA,Saudi Arabia,20,Al Eqtisadiah,https://www.ekhbarat.com/rss,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+SA,Saudi Arabia,21,Al Jazirah,https://www.aljazeera.net/rss,valid,200,2026-02-19T06:19:47.442Z
+SA,Saudi Arabia,22,Saudi Gazette (Middle East),https://saudigazette.com.sa/ContentFeed?section=middle-east,invalid,404,2026-02-19T06:19:47.442Z
+SA,Saudi Arabia,23,Arab News (Business),https://www.arabnews.com/economy/rss,invalid,403,2026-02-19T06:19:47.442Z
+SA,Saudi Arabia,24,Riyadh Bulletin,https://www.riyadhebulletin.com/rss,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+SA,Saudi Arabia,25,Akhbar,https://www.akhbarelyom.com/news/News_rss.xml,invalid,404,2026-02-19T06:19:47.442Z
+SA,Saudi Arabia,26,Gulf Daily News,https://www.gulf-daily-news.com/rss,invalid,404,2026-02-19T06:19:47.442Z
+SA,Saudi Arabia,27,Saudi Gazette (World),https://saudigazette.com.sa/ContentFeed?section=world,invalid,404,2026-02-19T06:19:47.442Z
+SA,Saudi Arabia,28,Al Arabiya,https://www.alarabiya.net/xml/rss.xml,invalid,403,2026-02-19T06:19:47.442Z
+SA,Saudi Arabia,29,Al Arabiya,https://www.alarabiya.net/rss/,valid,200,2026-02-19T06:19:47.442Z
+SA,Saudi Arabia,30,Saudi Gazette,https://saudigazette.com.sa/ContentFeed?section=business,invalid,404,2026-02-19T06:19:47.442Z
+TW,Taiwan,1,Focus Taiwan (Economics - EN),https://focustaiwan.tw/rss/economics,invalid,404,2026-02-19T06:19:47.442Z
+TW,Taiwan,2,Focus Taiwan (Sci-Tech - EN),https://focustaiwan.tw/rss/science-technology,invalid,404,2026-02-19T06:19:47.442Z
+TW,Taiwan,3,Taipei Times - Business,https://www.taipeitimes.com/xml/biz.rss,invalid,404,2026-02-19T06:19:47.442Z
+TW,Taiwan,4,Liberty Times - Business,https://news.ltn.com.tw/rss/business.xml,valid,200,2026-02-19T06:19:47.442Z
+TW,Taiwan,5,TechNews Taiwan,https://technews.tw/feed/,valid,200,2026-02-19T06:19:47.442Z
+TW,Taiwan,6,CNA (Central News Agency),https://feeds.feedburner.com/cnaFirstNews,valid,200,2026-02-19T06:19:47.442Z
+TW,Taiwan,7,United Daily News (Politics),https://udn.com/rss/udn.xml,invalid,404,2026-02-19T06:19:47.442Z
+TW,Taiwan,8,Taipei Times Tech,https://www.taipeitimes.com/rss/technology,invalid,404,2026-02-19T06:19:47.442Z
+TW,Taiwan,9,Focus Taiwan (US),https://focustaiwan.tw/rss/usa,invalid,404,2026-02-19T06:19:47.442Z
+TW,Taiwan,10,Taiwan News,https://www.taiwannews.com.tw/rss/headlines.xml,invalid,404,2026-02-19T06:19:47.442Z
+TW,Taiwan,11,Liberty Times (Technology),https://news.ltn.com.tw/rss/tech,invalid,404,2026-02-19T06:19:47.442Z
+TW,Taiwan,12,CNA (US),https://feeds.feedburner.com/CTEEnergy,invalid,404,2026-02-19T06:19:47.442Z
+TW,Taiwan,13,Taiwan Journal,https://www.taiwanjournal.com/feed/,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+TW,Taiwan,14,Formosa Reporter,https://www.formosapost.com/feed/,valid,200,2026-02-19T06:19:47.442Z
+TW,Taiwan,15,CNA English,https://www.cna.com.tw/cnaenglish/feed/,invalid,404,2026-02-19T06:19:47.442Z
+TW,Taiwan,16,United Daily News,https://udn.com/rss/index.xml,invalid,404,2026-02-19T06:19:47.442Z
+TW,Taiwan,17,Taiwan News (Politics),https://www.taiwannews.com.tw/rss/politics.xml,invalid,404,2026-02-19T06:19:47.442Z
+TW,Taiwan,18,Taiwan Review,https://taiwanreview.net/feed/,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+TW,Taiwan,19,Nownews,https://www.nownews.com/rss/all.xml,invalid,404,2026-02-19T06:19:47.442Z
+TW,Taiwan,20,Ming Pao Taiwan,https://www.mpweekly.com/rss.xml,invalid,200,2026-02-19T06:19:47.442Z
+TW,Taiwan,21,China Post Taiwan,https://chinapostnow.com/rss,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+TW,Taiwan,22,Taiwan Today,https://www.taiwantoday.tw/feed/,invalid,404,2026-02-19T06:19:47.442Z
+TW,Taiwan,23,The China Post,https://www.chinapost.com.tw/rss.xml,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+TW,Taiwan,24,United News Asia,https://www.untamednews.com/feed/,invalid,404,2026-02-19T06:19:47.442Z
+TW,Taiwan,25,Free Republic,https://www.free-r.net/rss,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+TW,Taiwan,26,Taiwan Panorama,https://www.taiwanpanorama.com/rss.xml,invalid,404,2026-02-19T06:19:47.442Z
+TW,Taiwan,27,Taiwan Today (CN),https://www.taiwantoday.tw/rss/zh.xml,invalid,404,2026-02-19T06:19:47.442Z
+TW,Taiwan,28,Focus Taiwan (World),https://focustaiwan.tw/rss/world,invalid,404,2026-02-19T06:19:47.442Z
+TW,Taiwan,29,Taipei Times (Local),https://www.taipeitimes.com/rss/local,invalid,404,2026-02-19T06:19:47.442Z
+TW,Taiwan,30,Taipei Times (Politics),https://www.taipeitimes.com/rss/politics,invalid,404,2026-02-19T06:19:47.442Z
+PL,Poland,1,Gazeta Wyborcza,https://wyborcza.pl/rss,invalid,404,2026-02-19T06:19:47.442Z
+PL,Poland,2,Onet,https://wiadomosci.onet.pl/rss,valid,200,2026-02-19T06:19:47.442Z
+PL,Poland,3,TVN24,https://tvn24.pl/tvnmeteo.xml,valid,200,2026-02-19T06:19:47.442Z
+PL,Poland,4,Interia,https://www.interia.pl/feed,invalid,404,2026-02-19T06:19:47.442Z
+PL,Poland,5,Gazeta.pl,https://wiadomosci.gazeta.pl/rss,invalid,404,2026-02-19T06:19:47.442Z
+PL,Poland,6,Rzeczpospolita,https://www.rp.pl/rss.xml,invalid,404,2026-02-19T06:19:47.442Z
+PL,Poland,7,Gazeta Wyborcza,"https://www.wyborcza.pl/0,0.html?rss",invalid,200,2026-02-19T06:19:47.442Z
+PL,Poland,8,TVN24,https://tvn24.pl/rss,invalid,404,2026-02-19T06:19:47.442Z
+PL,Poland,9,Rmf24,https://www.rmf24.pl/rss,invalid,404,2026-02-19T06:19:47.442Z
+PL,Poland,10,Rzeczpospolita,https://www.rp.pl/rss/,invalid,404,2026-02-19T06:19:47.442Z
+PL,Poland,11,Interia,https://www.interia.pl/rss/najnowsze.xml,invalid,404,2026-02-19T06:19:47.442Z
+PL,Poland,12,Fakt,https://www.fakt.pl/rss/,valid,200,2026-02-19T06:19:47.442Z
+PL,Poland,13,Wprost,https://www.wprost.pl/rss.xml,invalid,404,2026-02-19T06:19:47.442Z
+PL,Poland,14,Puls Biznesu,https://www.pb.pl/rss,invalid,200,2026-02-19T06:19:47.442Z
+PL,Poland,15,Gazeta Polska,https://www.gazetapolska.pl/feed/,invalid,404,2026-02-19T06:19:47.442Z
+PL,Poland,16,TVP,https://www.tvp.info/rss/,invalid,404,2026-02-19T06:19:47.442Z
+PL,Poland,17,Polsat News,https://www.polsatnews.pl/rss.xml,invalid,404,2026-02-19T06:19:47.442Z
+PL,Poland,18,Polish Press,https://www.polsatnews.pl/rss/world.xml,invalid,404,2026-02-19T06:19:47.442Z
+PL,Poland,19,TVN24,https://tvn24.pl/rss.xml,invalid,404,2026-02-19T06:19:47.442Z
+PL,Poland,20,Gazeta Wyborcza,https://www.wyborcza.pl/rss.xml,invalid,404,2026-02-19T06:19:47.442Z
+PL,Poland,21,Interia,https://www.interia.pl/rss,invalid,404,2026-02-19T06:19:47.442Z
+PL,Poland,22,Wprost,https://www.wprost.pl/rss/,valid,200,2026-02-19T06:19:47.442Z
+PL,Poland,23,Puls Biznesu,https://www.pb.pl/feed/,invalid,404,2026-02-19T06:19:47.442Z
+PL,Poland,24,Fakt,https://www.fakt.pl/rss/wiadomosci,invalid,404,2026-02-19T06:19:47.442Z
+PL,Poland,25,Rzeczpospolita,https://www.rp.pl/rss/rss,invalid,404,2026-02-19T06:19:47.442Z
+PL,Poland,26,Gazeta.pl,https://www.gazeta.pl/rss/,invalid,404,2026-02-19T06:19:47.442Z
+PL,Poland,27,RMF FM,https://www.rmf.fm/rss/news,invalid,404,2026-02-19T06:19:47.442Z
+PL,Poland,28,Polish News,https://www.polsatnews.pl/rss/news.xml,invalid,404,2026-02-19T06:19:47.442Z
+PL,Poland,29,Dziennik,https://www.dziennik.pl/rss,invalid,200,2026-02-19T06:19:47.442Z
+PL,Poland,30,Rzeczpospolita,https://www.rp.pl/rss/aktualnosci,invalid,404,2026-02-19T06:19:47.442Z
+SE,Sweden,1,Aftonbladet,https://www.aftonbladet.se/rss,invalid,404,2026-02-19T06:19:47.442Z
+SE,Sweden,2,Dagens Nyheter,https://www.dn.se/nyheter/rss/,valid,200,2026-02-19T06:19:47.442Z
+SE,Sweden,3,Svenska Dagbladet,https://www.svd.se/rss,invalid,404,2026-02-19T06:19:47.442Z
+SE,Sweden,4,Svenska Dagbladet (Ekonomi),https://www.svd.se/?output=rss,invalid,200,2026-02-19T06:19:47.442Z
+SE,Sweden,5,SvD,https://www.svd.se/feeds/latest.rss,invalid,404,2026-02-19T06:19:47.442Z
+SE,Sweden,6,Expressen,https://www.expressen.se/rss/feed/,invalid,404,2026-02-19T06:19:47.442Z
+SE,Sweden,7,Dagens Industri,https://www.di.se/rss/,valid,200,2026-02-19T06:19:47.442Z
+SE,Sweden,8,SVT Nyheter,https://www.svt.se/nyheter/rss.xml,valid,200,2026-02-19T06:19:47.442Z
+SE,Sweden,9,Göteborgs-Posten,https://www.gp.se/rss,valid,200,2026-02-19T06:19:47.442Z
+SE,Sweden,10,Sydsvenskan,https://www.svd.se/sydsvenska,invalid,404,2026-02-19T06:19:47.442Z
+SE,Sweden,11,Metro Stockholm,https://www.metro.se/feed,invalid,200,2026-02-19T06:19:47.442Z
+SE,Sweden,12,Aftonbladet Sport,https://www.aftonbladet.se/rss/sportbladet,invalid,404,2026-02-19T06:19:47.442Z
+SE,Sweden,13,Aftonbladet Economy,https://www.aftonbladet.se/rss/ekonomi,invalid,404,2026-02-19T06:19:47.442Z
+SE,Sweden,14,Aftonbladet Politics,https://www.aftonbladet.se/rss/nyheter,invalid,404,2026-02-19T06:19:47.442Z
+SE,Sweden,15,Aftonbladet Culture,https://www.aftonbladet.se/rss/kultur,invalid,404,2026-02-19T06:19:47.442Z
+SE,Sweden,16,Dagens Nyheter Travel,https://www.dn.se/rese/rss/,invalid,404,2026-02-19T06:19:47.442Z
+SE,Sweden,17,Sveriges Television,https://www.svt.se/nyheter/ekonomi/rss.xml,valid,200,2026-02-19T06:19:47.442Z
+SE,Sweden,18,Dagens Industri,https://www.di.se/rss/bors,invalid,404,2026-02-19T06:19:47.442Z
+SE,Sweden,19,Svd,https://www.svd.se/rss/ekonomi.xml,invalid,404,2026-02-19T06:19:47.442Z
+SE,Sweden,20,Expressen,https://www.expressen.se/rss/,invalid,200,2026-02-19T06:19:47.442Z
+SE,Sweden,21,Aftonbladet Sport,https://www.aftonbladet.se/rss/sport,invalid,404,2026-02-19T06:19:47.442Z
+SE,Sweden,22,Metro Stockholm,https://www.metro.se/rss/nyheter,invalid,200,2026-02-19T06:19:47.442Z
+SE,Sweden,23,Sydsvenskan,https://www.svd.se/rss/sydsvenskan,invalid,404,2026-02-19T06:19:47.442Z
+SE,Sweden,24,Svt,https://www.svt.se/nyheter/rss.xml?sectionId=2,valid,200,2026-02-19T06:19:47.442Z
+SE,Sweden,25,Dagens Nyheter Sport,https://www.dn.se/sport/rss,valid,200,2026-02-19T06:19:47.442Z
+SE,Sweden,26,Expressen Opinion,https://www.expressen.se/rss/opinion,invalid,404,2026-02-19T06:19:47.442Z
+SE,Sweden,27,Dagens Nyheter Business,https://www.dn.se/ekonomi/rss,valid,200,2026-02-19T06:19:47.442Z
+SE,Sweden,28,Norran,https://www.norran.se/rss,valid,200,2026-02-19T06:19:47.442Z
+SE,Sweden,29,DN,https://www.dn.se/rss/teknik/,invalid,404,2026-02-19T06:19:47.442Z
+SE,Sweden,30,Aftonbladet,https://www.aftonbladet.se/rss/kultur.xml,invalid,404,2026-02-19T06:19:47.442Z
+BE,Belgium,1,Le Soir,https://www.lesoir.be/1/rss,invalid,403,2026-02-19T06:19:47.442Z
+BE,Belgium,2,De Morgen,https://www.demorgen.be/rss.xml,valid,200,2026-02-19T06:19:47.442Z
+BE,Belgium,3,RTBF,https://www.rtbf.be/auvio/rss,invalid,200,2026-02-19T06:19:47.442Z
+BE,Belgium,4,La Libre,https://www.lalibre.be/feed/,invalid,404,2026-02-19T06:19:47.442Z
+BE,Belgium,5,De Standaard,https://www.standaard.be/feed,invalid,403,2026-02-19T06:19:47.442Z
+BE,Belgium,6,Knack,https://www.knack.be/feed/,valid,200,2026-02-19T06:19:47.442Z
+BE,Belgium,7,VRT News,https://www.vrt.be/vrtnws/nl.rss,invalid,404,2026-02-19T06:19:47.442Z
+BE,Belgium,8,De Tijd,https://www.tijd.be/rss,invalid,403,2026-02-19T06:19:47.442Z
+BE,Belgium,9,Gazet van Antwerpen,https://www.gva.be/feed/,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+BE,Belgium,10,Het Laatste Nieuws,https://www.hln.be/rss/nieuws,invalid,404,2026-02-19T06:19:47.442Z
+BE,Belgium,11,La Dernière Heure,https://www.dhnet.be/rss.xml,valid,200,2026-02-19T06:19:47.442Z
+BE,Belgium,12,Le Vif,https://www.levif.be/rss,invalid,405,2026-02-19T06:19:47.442Z
+BE,Belgium,13,RTBF,https://www.rtbf.be/rss/rss_activites.xml,invalid,404,2026-02-19T06:19:47.442Z
+BE,Belgium,14,Sudpresse,https://www.sudpresse.be/rss,invalid,403,2026-02-19T06:19:47.442Z
+BE,Belgium,15,Lavenir,https://www.lavenir.net/flux.xml,invalid,404,2026-02-19T06:19:47.442Z
+BE,Belgium,16,Het Nieuwsblad,https://www.nieuwsblad.be/rss/,valid,200,2026-02-19T06:19:47.442Z
+BE,Belgium,17,De Morgen Economy,https://www.demorgen.be/rss/economie/,invalid,404,2026-02-19T06:19:47.442Z
+BE,Belgium,18,Le Soir World,https://www.lesoir.be/arc/outboundfeeds/rss/?outputType=xml,invalid,403,2026-02-19T06:19:47.442Z
+BE,Belgium,19,La Libre Belgique,https://www.lalibre.be/rss/,valid,200,2026-02-19T06:19:47.442Z
+BE,Belgium,20,De Morgen,https://www.demorgen.be/feed/,invalid,404,2026-02-19T06:19:47.442Z
+BE,Belgium,21,Le Soir,https://www.lesoir.be/rss/,invalid,403,2026-02-19T06:19:47.442Z
+BE,Belgium,22,La Libre Belgique,https://www.lalibre.be/feeds/all,invalid,404,2026-02-19T06:19:47.442Z
+BE,Belgium,23,RTBF,https://www.rtbf.be/auvio/rss/news,invalid,200,2026-02-19T06:19:47.442Z
+BE,Belgium,24,De Tijd,https://www.tijd.be/rss/international,invalid,404,2026-02-19T06:19:47.442Z
+BE,Belgium,25,RTBF,https://www.rtbf.be/rss/,invalid,404,2026-02-19T06:19:47.442Z
+BE,Belgium,26,Le Matin,https://www.lematindemorgen.be/rss/,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+BE,Belgium,27,La Libre,https://www.lalibre.be/rss,valid,200,2026-02-19T06:19:47.442Z
+BE,Belgium,28,VRT,https://www.vrt.be/vrtnws/en/rss,invalid,404,2026-02-19T06:19:47.442Z
+BE,Belgium,29,RTL Belgium,https://www.rtbf.be/newsline/rss,invalid,404,2026-02-19T06:19:47.442Z
+BE,Belgium,30,Belgium RTL,https://www.rtbf.be/rss,invalid,404,2026-02-19T06:19:47.442Z
+TH,Thailand,1,Bangkok Post,https://www.bangkokpost.com/rss,invalid,200,2026-02-19T06:19:47.442Z
+TH,Thailand,2,The Nation,https://www.nationthailand.com/feed,invalid,200,2026-02-19T06:19:47.442Z
+TH,Thailand,3,Prachatai,https://prachatai.com/feed,invalid,403,2026-02-19T06:19:47.442Z
+TH,Thailand,4,ThaiPBS,https://www.thaipbs.or.th/rss/home,invalid,404,2026-02-19T06:19:47.442Z
+TH,Thailand,5,Khaosod,https://www.khaosod.co.th/rss.xml,invalid,404,2026-02-19T06:19:47.442Z
+TH,Thailand,6,Manager Magazine Thailand,https://www.manager.co.th/rss,invalid,404,2026-02-19T06:19:47.442Z
+TH,Thailand,7,The Nation,https://www.nationthailand.com/rss/world,invalid,200,2026-02-19T06:19:47.442Z
+TH,Thailand,8,Bangkok Post Business,https://www.bangkokpost.com/rss/,invalid,200,2026-02-19T06:19:47.442Z
+TH,Thailand,9,Thai PBS Politics,https://www.thaipbs.or.th/rss/politics.xml,invalid,404,2026-02-19T06:19:47.442Z
+TH,Thailand,10,Post Today,https://www.posttoday.com/rss,invalid,200,2026-02-19T06:19:47.442Z
+TH,Thailand,11,The Thaiger,https://thethaiger.com/feed,valid,200,2026-02-19T06:19:47.442Z
+TH,Thailand,12,Khaosod English,https://www.khaosodenglish.com/rss,valid,200,2026-02-19T06:19:47.442Z
+TH,Thailand,13,Matichon,https://www.matichon.co.th/rss,valid,200,2026-02-19T06:19:47.442Z
+TH,Thailand,14,PPTV,https://www.pptvhd36.com/rss,invalid,404,2026-02-19T06:19:47.442Z
+TH,Thailand,15,Bangkok Post,https://www.bangkokpost.com/rss/?category=world,invalid,200,2026-02-19T06:19:47.442Z
+TH,Thailand,16,Manager,https://www.manager.co.th/rss/business,invalid,404,2026-02-19T06:19:47.442Z
+TH,Thailand,17,Matichon,https://www.matichon.co.th/rss/economy,invalid,200,2026-02-19T06:19:47.442Z
+TH,Thailand,18,Prachachat,https://prachachat.net/feed/,valid,200,2026-02-19T06:19:47.442Z
+TH,Thailand,19,Khaosod,https://www.khaosod.co.th/rss/world.xml,invalid,404,2026-02-19T06:19:47.442Z
+TH,Thailand,20,Manager,https://www.manager.co.th/rss/market,invalid,404,2026-02-19T06:19:47.442Z
+TH,Thailand,21,Thaipbs,https://www.thaipbs.or.th/feed/,invalid,404,2026-02-19T06:19:47.442Z
+TH,Thailand,22,PPTV,https://www.pptvhd36.com/rss/politics.xml,invalid,404,2026-02-19T06:19:47.442Z
+TH,Thailand,23,Nation Thailand,https://www.nationthailand.com/rss/politics,invalid,200,2026-02-19T06:19:47.442Z
+TH,Thailand,24,Khaosod English,https://www.khaosodenglish.com/world/rss,invalid,404,2026-02-19T06:19:47.442Z
+TH,Thailand,25,Daily News,https://www.dailynews.co.th/rss,valid,200,2026-02-19T06:19:47.442Z
+TH,Thailand,26,Bangkok Post Economy,https://www.bangkokpost.com/rss/?department=business,invalid,200,2026-02-19T06:19:47.442Z
+TH,Thailand,27,The Thaiger,https://thethaiger.com/thailand/rss,invalid,404,2026-02-19T06:19:47.442Z
+TH,Thailand,28,Matichon,https://www.matichon.co.th/rss/world,invalid,200,2026-02-19T06:19:47.442Z
+TH,Thailand,29,Prachatai,https://prachatai.com/rss/local,invalid,403,2026-02-19T06:19:47.442Z
+TH,Thailand,30,The Nation,https://www.nationthailand.com/rss/society,invalid,200,2026-02-19T06:19:47.442Z
+IR,Iran,1,Tehran Times,https://www.tehrantimes.com/rss,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+IR,Iran,2,IRNA,https://www.irna.ir/rss,valid,200,2026-02-19T06:19:47.442Z
+IR,Iran,3,Mehr News,https://www.mehrnews.com/rss,valid,200,2026-02-19T06:19:47.442Z
+IR,Iran,4,Tasnim,https://www.tasnimnews.com/en/rss/all,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+IR,Iran,5,Fars News,https://www.farsnews.com/rss,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+IR,Iran,6,ISNA (IRNA Satellite),https://www.isna.ir/rss,invalid,200,2026-02-19T06:19:47.442Z
+IR,Iran,7,Press TV,https://www.presstv.com/rss,invalid,403,2026-02-19T06:19:47.442Z
+IR,Iran,8,ILNA,https://www.ilna.news/rss,valid,200,2026-02-19T06:19:47.442Z
+IR,Iran,9,Khabar Online,https://www.khabaronline.ir/rss,valid,200,2026-02-19T06:19:47.442Z
+IR,Iran,10,Iran International,https://www.iranintl.com/feed,valid,200,2026-02-19T06:19:47.442Z
+IR,Iran,11,Aftab Press,https://www.aftabnews.ir/rss,invalid,404,2026-02-19T06:19:47.442Z
+IR,Iran,12,Tasnim (Politics),https://www.tasnimnews.com/fa/rss/politics,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+IR,Iran,13,Mehr News (Politics),https://www.mehrnews.com/rss/politic,invalid,404,2026-02-19T06:19:47.442Z
+IR,Iran,14,Tehran Times (Business),https://www.tehrantimes.com/rss.aspx?sectionId=2,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+IR,Iran,15,ILNA,https://www.ilna.ir/rss,valid,200,2026-02-19T06:19:47.442Z
+IR,Iran,16,Tasnim,https://www.tasnimnews.com/rss/all,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+IR,Iran,17,Mehr News,https://www.mehrnews.com/feed/,invalid,404,2026-02-19T06:19:47.442Z
+IR,Iran,18,Financial Tribune,https://financialtribune.com/feed,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+IR,Iran,19,Iran News,https://irannews.org/rss,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+IR,Iran,20,Shargh,https://www.sharghdaily.com/rss,invalid,404,2026-02-19T06:19:47.442Z
+IR,Iran,21,Mehr News English,https://www.mehrnews.com/rss/english,invalid,404,2026-02-19T06:19:47.442Z
+IR,Iran,22,Iran International News,https://www.iranintl.com/en/rss,invalid,200,2026-02-19T06:19:47.442Z
+IR,Iran,23,Press TV,https://www.presstv.ir/en/rss/iran.xml,invalid,404,2026-02-19T06:19:47.442Z
+IR,Iran,24,Tasnim (Economy),https://www.tasnimnews.com/fa/rss/finance,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+IR,Iran,25,Tejarat News,https://www.tejaratnews.com/rss,valid,200,2026-02-19T06:19:47.442Z
+IR,Iran,26,Aftab,https://www.aftabnews.ir/rss/1,invalid,404,2026-02-19T06:19:47.442Z
+IR,Iran,27,IRNA (Culture),https://www.irna.ir/rss/culture.xml,invalid,404,2026-02-19T06:19:47.442Z
+IR,Iran,28,IRNA English,https://www.irna.ir/rss/en,invalid,404,2026-02-19T06:19:47.442Z
+IR,Iran,29,Press TV,https://www.presstv.com/english/rss,invalid,403,2026-02-19T06:19:47.442Z
+IR,Iran,30,ILNA,https://www.ilna.ir/rss/1,invalid,404,2026-02-19T06:19:47.442Z
+AR,Argentina,1,La Nacion (Economy),https://www.lanacion.com.ar/arc/outboundfeeds/rss/?outputType=xml&rotation=economia,valid,200,2026-02-19T06:19:47.442Z
+AR,Argentina,2,Clarín (Politics),https://www.clarin.com/rss/politica/,valid,200,2026-02-19T06:19:47.442Z
+AR,Argentina,3,Infobae (General),https://www.infobae.com/arc/outboundfeeds/rss/?outputType=xml,valid,200,2026-02-19T06:19:47.442Z
+AR,Argentina,4,Cronista (Finance),https://www.cronista.com/files/rss/news.xml,valid,200,2026-02-19T06:19:47.442Z
+AR,Argentina,5,Ambito Financiero,https://www.ambito.com/rss/pages/home.xml,valid,200,2026-02-19T06:19:47.442Z
+AR,Argentina,6,Perfil,https://www.perfil.com/feed/,valid,200,2026-02-19T06:19:47.442Z
+AR,Argentina,7,EconoJournal,https://www.econojournal.com.ar/rss,valid,200,2026-02-19T06:19:47.442Z
+AR,Argentina,8,Reporte Energía,https://www.reporteenergia.com,invalid,200,2026-02-19T06:19:47.442Z
+AR,Argentina,9,Mining Press,https://miningpress.com,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+AR,Argentina,10,LA Nacion (Politics),https://www.lanacion.com.ar/politica/feed/,invalid,404,2026-02-19T06:19:47.442Z
+AR,Argentina,11,Clarín (Economy),https://www.clarin.com/rss/economia/,valid,200,2026-02-19T06:19:47.442Z
+AR,Argentina,12,Infobae (Arg),https://www.infobae.com/feed/,invalid,404,2026-02-19T06:19:47.442Z
+AR,Argentina,13,Cronista (Crypto),https://www.cronista.com/feed/,invalid,200,2026-02-19T06:19:47.442Z
+AR,Argentina,14,Clarín (Mundo),https://www.clarin.com/rss/mundo/,valid,200,2026-02-19T06:19:47.442Z
+AR,Argentina,15,La Nacion (Política),https://www.lanacion.com.ar/politica/?output=atom,invalid,200,2026-02-19T06:19:47.442Z
+AR,Argentina,16,Perfil (Política),https://www.perfil.com/politica/feed,invalid,404,2026-02-19T06:19:47.442Z
+AR,Argentina,17,Página/12 (Mundo),https://www.pagina12.com.ar/feed/rss2,invalid,404,2026-02-19T06:19:47.442Z
+AR,Argentina,18,La Voz del Interior,https://www.lavoz.com.ar/rss,invalid,200,2026-02-19T06:19:47.442Z
+AR,Argentina,19,Cronica,https://www.cronica.com.ar/rss,invalid,404,2026-02-19T06:19:47.442Z
+AR,Argentina,20,Infobae (Mundo),https://www.infobae.com/feeds/rss/mundo,invalid,404,2026-02-19T06:19:47.442Z
+AR,Argentina,21,Ambito Financiero,https://www.ambito.com/rss/negocios.xml,valid,200,2026-02-19T06:19:47.442Z
+AR,Argentina,22,El Destape,https://eldestapeweb.com/rss,invalid,404,2026-02-19T06:19:47.442Z
+AR,Argentina,23,Minuto Uno,https://www.minutouno.com/rss,invalid,200,2026-02-19T06:19:47.442Z
+AR,Argentina,24,La Politica Online,https://www.lapoliticaonline.com/rss,invalid,200,2026-02-19T06:19:47.442Z
+AR,Argentina,25,Tiempo Argentino,https://www.tiempoar.com.ar/feed,valid,200,2026-02-19T06:19:47.442Z
+AR,Argentina,26,Todo Noticias,https://tn.com.ar/rss,invalid,404,2026-02-19T06:19:47.442Z
+AR,Argentina,27,Perfil (Negocios),https://www.perfil.com/economia/feed,invalid,404,2026-02-19T06:19:47.442Z
+AR,Argentina,28,Ciudad,https://www.ciudad.com.ar/rss,invalid,404,2026-02-19T06:19:47.442Z
+AR,Argentina,29,La Voz,https://www.lavoz.com.ar/rss/,invalid,200,2026-02-19T06:19:47.442Z
+AR,Argentina,30,CNM Noticias,https://www.cronica.com.ar/rss/cnm,invalid,404,2026-02-19T06:19:47.442Z
+AT,Austria,1,Der Standard,https://www.derstandard.at/standardplus?output=rss,invalid,200,2026-02-19T06:19:47.442Z
+AT,Austria,2,Kronen Zeitung,https://www.krone.at/2/2.0.0?output=rss,invalid,404,2026-02-19T06:19:47.442Z
+AT,Austria,3,ORF,https://rss.orf.at/news.xml,valid,200,2026-02-19T06:19:47.442Z
+AT,Austria,4,Salzburg24,https://www.salzburg24.at/rss,invalid,404,2026-02-19T06:19:47.442Z
+AT,Austria,5,Die Presse,https://www.diepresse.com/rss,valid,200,2026-02-19T06:19:47.442Z
+AT,Austria,6,Kurier,https://www.kurier.at/1.0.0/feed.rss,invalid,404,2026-02-19T06:19:47.442Z
+AT,Austria,7,Kleine Zeitung,https://www.kleinezeitung.at/home/rss.xml,invalid,404,2026-02-19T06:19:47.442Z
+AT,Austria,8,Tiroler Tageszeitung,https://www.tt.com/rss/allnews.xml,invalid,404,2026-02-19T06:19:47.442Z
+AT,Austria,9,Salzburger Nachrichten,https://www.sn.at/rss,invalid,404,2026-02-19T06:19:47.442Z
+AT,Austria,10,Wiener Zeitung,https://www.wienerzeitung.at/rss,invalid,404,2026-02-19T06:19:47.442Z
+AT,Austria,11,Der Standard,https://www.derstandard.at/rss,valid,200,2026-02-19T06:19:47.442Z
+AT,Austria,12,Heute,https://www.heute.at/feed/,invalid,404,2026-02-19T06:19:47.442Z
+AT,Austria,13,Wirtschaftsblatt,https://www.wirtschaftsblatt.at/rss,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+AT,Austria,14,ORF Aktuell,https://rss.orf.at/,valid,200,2026-02-19T06:19:47.442Z
+AT,Austria,15,Presseportal Österreich,https://www.presseportal.at/,invalid (ERR),N/A,2026-02-19T06:19:47.442Z
+AT,Austria,16,Kurier (Top News),https://www.kurier.at/feed,invalid,404,2026-02-19T06:19:47.442Z
+AT,Austria,17,Neue Donau,https://www.neue.at/feed,valid,200,2026-02-19T06:19:47.442Z
+AT,Austria,18,Kleine Zeitung (Sport),https://www.kleinezeitung.at/sport/rss,invalid,404,2026-02-19T06:19:47.442Z
+AT,Austria,19,ORF Sport,https://rss.orf.at/ardienst,invalid,404,2026-02-19T06:19:47.442Z
+AT,Austria,20,Kurier (Economy),https://www.kurier.at/rss/business.xml,invalid,404,2026-02-19T06:19:47.442Z
+AT,Austria,21,Die Presse,https://www.diepresse.com/,invalid,200,2026-02-19T06:19:47.442Z
+AT,Austria,22,Der Standard,https://www.derstandard.at/rss?section=welt,valid,200,2026-02-19T06:19:47.442Z
+AT,Austria,23,Kurier,https://www.kurier.at/2/2.0.0?output=rss,invalid,404,2026-02-19T06:19:47.442Z
+AT,Austria,24,Kleine Zeitung,https://www.kleinezeitung.at/rss/home,valid,200,2026-02-19T06:19:47.442Z
+AT,Austria,25,ORF TOP,https://rss.orf.at/world.xml,invalid,404,2026-02-19T06:19:47.442Z
+AT,Austria,26,Der Standard,https://www.derstandard.at/rss?output=amp,valid,200,2026-02-19T06:19:47.442Z
+AT,Austria,27,Wiener Zeitung,https://www.wienerzeitung.at/rss/,invalid,404,2026-02-19T06:19:47.442Z
+AT,Austria,28,Oberösterreichische Nachrichten,https://www.nachrichten.at/news/,invalid,410,2026-02-19T06:19:47.442Z
+AT,Austria,29,ORF,https://rss.orf.at/wirtschaft.xml,invalid,404,2026-02-19T06:19:47.442Z
+AT,Austria,30,Der Standard Plus,https://www.derstandard.at/rss/wirtschaft,valid,200,2026-02-19T06:19:47.442Z
+NO,Norway,1,NRK,https://www.nrk.no/toppsaker.rss,valid,200,2026-02-19T06:19:47.442Z
+NO,Norway,2,VG,https://www.vg.no/rss/feed.rss,invalid,404,2026-02-19T06:19:47.442Z
+NO,Norway,3,Aftenbladet,https://www.aftenposten.no/rss/entertainment.rss,invalid,404,2026-02-19T06:19:47.442Z
+NO,Norway,4,TV2,https://www.tv2.no/rss,invalid,200,2026-02-19T06:19:47.442Z
+NO,Norway,5,NRK News,https://www.nrk.no/nyheter/siste.rss,valid,200,2026-02-19T06:19:47.442Z
+NO,Norway,6,Aftenposten,https://www.aftenposten.no/rss/toppsaker.rss,invalid,404,2026-02-19T06:19:47.442Z
+NO,Norway,7,Dagbladet,https://www.dagbladet.no/rss/abonnent,invalid,404,2026-02-19T06:19:47.442Z
+NO,Norway,8,Bergens Tidende,https://www.bt.no/rss/toppsaker.rss,invalid,404,2026-02-19T06:19:47.442Z
+NO,Norway,9,Dagens Næringsliv,https://www.dn.no/rss/,invalid,200,2026-02-19T06:19:47.442Z
+NO,Norway,10,TV2,https://www.tv2.no/rss/toppsaker.xml,valid,200,2026-02-19T06:19:47.442Z
+NO,Norway,11,Nettavisen,https://www.nettavisen.no/rss,invalid,200,2026-02-19T06:19:47.442Z
+NO,Norway,12,E24,https://e24.no/rss,valid,200,2026-02-19T06:19:47.442Z
+NO,Norway,13,NRK Sport,https://www.nrk.no/sport/rss.xml,invalid,404,2026-02-19T06:19:47.442Z
+NO,Norway,14,Aftenposten Business,https://www.aftenposten.no/rss/okonomi.rss,invalid,404,2026-02-19T06:19:47.442Z
+NO,Norway,15,VG World,https://www.vg.no/rss/toppsaker.rss,invalid,404,2026-02-19T06:19:47.442Z
+NO,Norway,16,Dagbladet,https://www.dagbladet.no/rss/nyheter,valid,200,2026-02-19T06:19:47.442Z
+NO,Norway,17,VG,https://www.vg.no/rss/nyheter.rss,invalid,404,2026-02-19T06:19:47.443Z
+NO,Norway,18,TV2,https://www.tv2.no/rss/nyheter/,valid,200,2026-02-19T06:19:47.443Z
+NO,Norway,19,Aftenposten,https://www.aftenposten.no/rss/helse.rss,invalid,404,2026-02-19T06:19:47.443Z
+NO,Norway,20,Nettavisen,https://www.nettavisen.no/rss/nyheter,invalid,200,2026-02-19T06:19:47.443Z
+NO,Norway,21,NRK Finans,https://www.nrk.no/nyheter/okonomi.rss,invalid,404,2026-02-19T06:19:47.443Z
+NO,Norway,22,E24,https://e24.no/rss/okonomi.xml,valid,200,2026-02-19T06:19:47.443Z
+NO,Norway,23,NRK Sports,https://www.nrk.no/sport.rss,invalid,404,2026-02-19T06:19:47.443Z
+NO,Norway,24,Dagbladet,https://www.dagbladet.no/rss/inside,invalid,404,2026-02-19T06:19:47.443Z
+NO,Norway,25,Aftenbladet,https://www.aftenbladet.no/rss/toppsaker.rss,invalid,404,2026-02-19T06:19:47.443Z
+NO,Norway,26,Nettavisen,https://www.nettavisen.no/rss/tech,invalid,200,2026-02-19T06:19:47.443Z
+NO,Norway,27,TV2,https://www.tv2.no/rss/politikk.xml,valid,200,2026-02-19T06:19:47.443Z
+NO,Norway,28,NRK Tech,https://www.nrk.no/klikk.rss,invalid,404,2026-02-19T06:19:47.443Z
+NO,Norway,29,TV2,https://www.tv2.no/rss/,invalid,200,2026-02-19T06:19:47.443Z
+NO,Norway,30,E24,https://e24.no/rss/nyheter.xml,valid,200,2026-02-19T06:19:47.443Z
+AE,United Arab Emirates,1,Gulf News,https://gulfnews.com/rss,invalid,404,2026-02-19T06:19:47.443Z
+AE,United Arab Emirates,2,Khaleej Times,https://www.khaleejtimes.com/rss,invalid,404,2026-02-19T06:19:47.443Z
+AE,United Arab Emirates,3,The National,https://www.thenationalnews.com/rss,invalid,404,2026-02-19T06:19:47.443Z
+AE,United Arab Emirates,4,Khaleej Times Business,https://www.khaleejtimes.com/tech/rss,invalid,404,2026-02-19T06:19:47.443Z
+AE,United Arab Emirates,5,Arabian Business,https://www.arabianbusiness.com/rss.xml,invalid,403,2026-02-19T06:19:47.443Z
+AE,United Arab Emirates,6,The National UAE,https://www.thenationalnews.com/rss/uae.xml,invalid,404,2026-02-19T06:19:47.443Z
+AE,United Arab Emirates,7,Gulf News Business,https://gulfnews.com/business/rss,invalid,404,2026-02-19T06:19:47.443Z
+AE,United Arab Emirates,8,Khaleej Times UAE,https://www.khaleejtimes.com/uae/rss,invalid,404,2026-02-19T06:19:47.443Z
+AE,United Arab Emirates,9,Gulf News World,https://gulfnews.com/world/rss,invalid,404,2026-02-19T06:19:47.443Z
+AE,United Arab Emirates,10,The National Business,https://www.thenationalnews.com/rss/business.xml,invalid,404,2026-02-19T06:19:47.443Z
+AE,United Arab Emirates,11,The National Technology,https://www.thenationalnews.com/rss/tech,invalid,404,2026-02-19T06:19:47.443Z
+AE,United Arab Emirates,12,Emirates247,https://www.emirates247.com/rss,invalid,404,2026-02-19T06:19:47.443Z
+AE,United Arab Emirates,13,Wam News,https://wam.ae/en/rss,invalid,200,2026-02-19T06:19:47.443Z
+AE,United Arab Emirates,14,Khaleej Times Sports,https://www.khaleejtimes.com/sport/rss,invalid,404,2026-02-19T06:19:47.443Z
+AE,United Arab Emirates,15,Gulf News,https://gulfnews.com/rss/world.xml,invalid,404,2026-02-19T06:19:47.443Z
+AE,United Arab Emirates,16,Gulf News,https://gulfnews.com/rss/business.xml,invalid,404,2026-02-19T06:19:47.443Z
+AE,United Arab Emirates,17,Khaleej Times,https://www.khaleejtimes.com/rss/sports.xml,invalid,404,2026-02-19T06:19:47.443Z
+AE,United Arab Emirates,18,Khaleej Times,https://www.khaleejtimes.com/rss/business.xml,invalid,404,2026-02-19T06:19:47.443Z
+AE,United Arab Emirates,19,Emirates247,https://www.emirates247.com/rss/business.xml,invalid,404,2026-02-19T06:19:47.443Z
+AE,United Arab Emirates,20,Gulf News,https://gulfnews.com/rss/sports.xml,invalid,404,2026-02-19T06:19:47.443Z
+AE,United Arab Emirates,21,The National,https://www.thenationalnews.com/rss/world.xml,invalid,404,2026-02-19T06:19:47.443Z
+AE,United Arab Emirates,22,WAM,https://wam.ae/en/xml/rss,invalid,200,2026-02-19T06:19:47.443Z
+AE,United Arab Emirates,23,Dubai Eye,https://www.dubaieye103.com/feed/,invalid (ERR),N/A,2026-02-19T06:19:47.443Z
+AE,United Arab Emirates,24,Kuwait Times,https://www.kuwaittimes.com/feed/,invalid,404,2026-02-19T06:19:47.443Z
+AE,United Arab Emirates,25,Gulf News,https://gulfnews.com/rss/usa.xml,invalid,404,2026-02-19T06:19:47.443Z
+AE,United Arab Emirates,26,Gulf News,https://gulfnews.com/rss/middle-east.xml,invalid,404,2026-02-19T06:19:47.443Z
+AE,United Arab Emirates,27,Khaleej Times,https://www.khaleejtimes.com/rss/world.xml,invalid,404,2026-02-19T06:19:47.443Z
+AE,United Arab Emirates,28,Arabian Business,https://www.arabianbusiness.com/rss.xml?output=1,invalid,404,2026-02-19T06:19:47.443Z
+AE,United Arab Emirates,29,Arabian Business,https://www.arabianbusiness.com/rss,valid,200,2026-02-19T06:19:47.443Z
+AE,United Arab Emirates,30,Al Bayan,https://www.albayan.ae/rss,invalid,404,2026-02-19T06:19:47.443Z
+Global,Global Energy & Grid,1,OilPrice,https://oilprice.com/rss/main,valid,200,2026-02-19T06:19:47.443Z
+Global,Global Energy & Grid,2,Energy Intelligence,https://www.energyintel.com/rss,invalid,404,2026-02-19T06:19:47.443Z
+Global,Global Energy & Grid,3,Power Engineering,https://www.power-eng.com/feed/,valid,200,2026-02-19T06:19:47.443Z
+Global,Global Energy & Grid,4,Renewable Energy World,https://www.renewableenergyworld.com/feed/,valid,200,2026-02-19T06:19:47.443Z
+Global,Global Energy & Grid,5,Utility Dive,https://www.utilitydive.com/feeds/news/,valid,200,2026-02-19T06:19:47.443Z
+Global,Global Energy & Grid,6,CleanTechnica,https://cleantechnica.com/feed/,valid,200,2026-02-19T06:19:47.443Z
+Global,Global Energy & Grid,7,Energy Storage Report,https://www.energystorage.org/feed/,invalid,404,2026-02-19T06:19:47.443Z
+Global,Global Energy & Grid,8,Grid View,https://www.grid.co.uk/feed/,invalid (ERR),N/A,2026-02-19T06:19:47.443Z
+Global,Global Energy & Grid,9,Energy Voice,https://www.energyvoice.com/feed/,invalid,403,2026-02-19T06:19:47.443Z
+Global,Global Energy & Grid,10,Greentech Media,https://www.greentechmedia.com/feeds/all.xml,invalid,200,2026-02-19T06:19:47.443Z
+Global,Global Energy & Grid,11,Carbon Brief,https://www.carbonbrief.org/feed/,valid,200,2026-02-19T06:19:47.443Z
+Global,Global Energy & Grid,12,Power Magazine,https://www.powermag.com/feed/,valid,200,2026-02-19T06:19:47.443Z
+Global,Global Energy & Grid,13,Energy Central,https://energycentral.com/feed,invalid,404,2026-02-19T06:19:47.443Z
+Global,Global Energy & Grid,14,Energy Wire,https://www.energywire.com/feed/,invalid (ERR),N/A,2026-02-19T06:19:47.443Z
+Global,Global Energy & Grid,15,PV Magazine,https://www.pv-magazine.com/feed/,valid,200,2026-02-19T06:19:47.443Z
+Global,Global Energy & Grid,16,Renewables Now,https://www.renewablesnow.com/feed/,invalid,200,2026-02-19T06:19:47.443Z
+Global,Global Energy & Grid,17,Energy Post,https://energypost.eu/feed/,valid,200,2026-02-19T06:19:47.443Z
+Global,Global Energy & Grid,18,S&P Global,https://www.spglobal.com/marketintelligence/en/rss,invalid,403,2026-02-19T06:19:47.443Z
+Global,Global Energy & Grid,19,IEA,https://iea.blob.core.windows.net/assets/3d6b5c8a-4f90-4dcb-8f4b-abc.xml,invalid,404,2026-02-19T06:19:47.443Z
+Global,Global Energy & Grid,20,Clean Energy Wire,https://www.cleanenergywire.org/rss,invalid,404,2026-02-19T06:19:47.443Z
+Global,Global Energy & Grid,21,EIA,https://www.eia.gov/xml/rss/eia.xml,invalid,404,2026-02-19T06:19:47.443Z
+Global,Global Energy & Grid,22,IEA,https://iea.blob.core.windows.net/assets/energy.xml,invalid,404,2026-02-19T06:19:47.443Z
+Global,Global Energy & Grid,23,IEA Oil,https://iea.blob.core.windows.net/assets/oil.xml,invalid,404,2026-02-19T06:19:47.443Z
+Global,Global Energy & Grid,24,Reuters Energy,https://www.reuters.com/energy/feed,invalid,401,2026-02-19T06:19:47.443Z
+Global,Global Energy & Grid,25,S&P Global,https://www.spglobal.com/marketintelligence/en/rss/energy,invalid,403,2026-02-19T06:19:47.443Z
+Global,Global Energy & Grid,26,Argus Media,https://www.argusmedia.com/rss,invalid,404,2026-02-19T06:19:47.443Z
+Global,Global Energy & Grid,27,Energy Central,https://energycentral.com/feed/,invalid,404,2026-02-19T06:19:47.443Z
+Global,Global Energy & Grid,28,Energy Storage News,https://www.energy-storage.news/rss,valid,200,2026-02-19T06:19:47.443Z
+Global,Global Energy & Grid,29,Energy Storage News,https://www.energy-storage.news/feed,valid,200,2026-02-19T06:19:47.443Z
+Global,Global Energy & Grid,30,Renewable Energy Storage,https://www.renewableenergystorage.com/feed/,invalid (ERR),N/A,2026-02-19T06:19:47.443Z

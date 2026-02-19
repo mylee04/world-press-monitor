@@ -1,4 +1,0 @@
-interface:
-  display_name: "Docker + PostgreSQL Expert"
-  short_description: "Diagnose, operate, and harden Dockerized PostgreSQL systems"
-  default_prompt: "Troubleshoot and improve my Docker + PostgreSQL setup. Start with findings, then safe changes, validation, and rollback."
