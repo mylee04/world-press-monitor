@@ -1,14 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { requireRadarServiceAuth } from '@/lib/radar-service-auth';
+import { toInt } from '@/lib/query-params';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
-
-function toInt(raw: string | null, fallback: number, min: number, max: number): number {
-  const parsed = Number(raw);
-  if (!Number.isFinite(parsed)) return fallback;
-  return Math.max(min, Math.min(max, Math.floor(parsed)));
-}
 
 function toNumber(value: unknown): number {
   const n = Number(value ?? 0);
@@ -94,4 +89,3 @@ export async function GET(req: NextRequest): Promise<Response> {
   const requireAuth = process.env.RADAR_SERVICE_REQUIRE_AUTH !== 'false';
   return handleFetch(req, requireAuth);
 }
-

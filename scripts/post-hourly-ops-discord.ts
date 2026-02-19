@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { Pool } from 'pg';
-import { OUTLET_FEEDS } from '../data/outlets';
+import { OUTLET_FEEDS, PRESET_BY_KEY } from '../data/outlets';
 import { evaluateOpsStatus, loadOpsThresholds } from '../lib/ops-alerts';
 
 type WorkerSummary = {
@@ -27,7 +27,6 @@ type Args = {
   dryRun: boolean;
 };
 
-const IN_SCOPE_COUNTRIES = new Set(['united states', 'argentina', 'chile', 'uruguay', 'latam']);
 const WORKER_SUMMARY_PATH = resolve(process.cwd(), 'audits/ingest-worker-last.json');
 const SKIP_GOOGLE_QUERY_MATRIX = (process.env.INGEST_SKIP_GOOGLE_QUERY_MATRIX || 'true').toLowerCase() !== 'false';
 const SKIP_SEARCH_AGGREGATORS = (process.env.INGEST_SKIP_SEARCH_AGGREGATORS || 'true').toLowerCase() !== 'false';
@@ -68,21 +67,11 @@ function envValue(key: string): string {
   return process.env[key] || loadDotenvMap()[key] || '';
 }
 
-function normalizeCountryName(value: string): string {
-  const trimmed = (value || '').trim();
-  if (!trimmed) return 'global';
-  if (trimmed.toLowerCase() === 'us') return 'united states';
-  return trimmed.toLowerCase();
-}
-
 function inScopeOutlet(
-  country: string,
-  enabled: boolean,
   name: string,
   rssUrl?: string,
   sitemapUrl?: string
 ): boolean {
-  if (!enabled) return false;
   if (SKIP_GOOGLE_QUERY_MATRIX && /^G (State|Metro) /i.test(name)) return false;
   if (
     SKIP_SEARCH_AGGREGATORS
@@ -93,7 +82,7 @@ function inScopeOutlet(
       || sitemapUrl?.includes('www.bing.com/news/search')
     )
   ) return false;
-  return IN_SCOPE_COUNTRIES.has(normalizeCountryName(country));
+  return true;
 }
 
 function toNum(value: unknown): number {
@@ -154,9 +143,12 @@ async function main(): Promise<void> {
   const pool = new Pool({ connectionString: databaseUrl });
 
   try {
-    const configuredOutlets = OUTLET_FEEDS.filter((outlet) => inScopeOutlet(
-      outlet.country,
-      Boolean(outlet.defaultEnabled),
+    const defaultLiveOutletIds = new Set(
+      PRESET_BY_KEY.get('default_live')?.outletIds
+      || OUTLET_FEEDS.filter((outlet) => Boolean(outlet.defaultEnabled)).map((outlet) => outlet.id)
+    );
+    const defaultLiveOutlets = OUTLET_FEEDS.filter((outlet) => defaultLiveOutletIds.has(outlet.id));
+    const configuredOutlets = defaultLiveOutlets.filter((outlet) => inScopeOutlet(
       outlet.name,
       outlet.rssUrl,
       outlet.sitemapUrl
@@ -202,26 +194,15 @@ async function main(): Promise<void> {
       where runner = 'worker'
     `);
 
-    const qualityResult = await pool.query<{
+    const metadataResult = await pool.query<{
       total_24h: string;
       title_original_ok: string;
       summary_original_ok: string;
       publication_datetime_ok: string;
       section_ok: string;
       country_ok: string;
-      language_ok: string;
       source_ok: string;
       url_ok: string;
-      title_en_ok: string;
-      summary_en_ok: string;
-      non_en_total: string;
-      non_en_title_en_ok: string;
-      non_en_summary_en_ok: string;
-      publication_verified_ok: string;
-      summary_verified_ok: string;
-      summary_ai_article_ok: string;
-      summary_article_meta_ok: string;
-      avg_quality: string;
     }>(`
       select
         count(*)::text as total_24h,
@@ -230,33 +211,56 @@ async function main(): Promise<void> {
         count(*) filter (where publication_datetime is not null)::text as publication_datetime_ok,
         count(*) filter (where section is not null and btrim(section) <> '')::text as section_ok,
         count(*) filter (where country is not null and btrim(country) <> '')::text as country_ok,
-        count(*) filter (where language is not null and btrim(language) <> '')::text as language_ok,
         count(*) filter (where source is not null and btrim(source) <> '')::text as source_ok,
-        count(*) filter (where url is not null and btrim(url) <> '')::text as url_ok,
-        count(*) filter (where title_en is not null and btrim(title_en) <> '')::text as title_en_ok,
-        count(*) filter (where summary_en is not null and btrim(summary_en) <> '')::text as summary_en_ok,
-        count(*) filter (where language is not null and btrim(language) <> '' and lower(language) not like 'en%')::text as non_en_total,
-        count(*) filter (
-          where language is not null
-            and btrim(language) <> ''
-            and lower(language) not like 'en%'
-            and title_en is not null
-            and btrim(title_en) <> ''
-        )::text as non_en_title_en_ok,
-        count(*) filter (
-          where language is not null
-            and btrim(language) <> ''
-            and lower(language) not like 'en%'
-            and summary_en is not null
-            and btrim(summary_en) <> ''
-        )::text as non_en_summary_en_ok,
-        count(*) filter (where publication_verified)::text as publication_verified_ok,
-        count(*) filter (where summary_verified)::text as summary_verified_ok,
-        count(*) filter (where summary_source = 'ai_article')::text as summary_ai_article_ok,
-        count(*) filter (where summary_source = 'article_meta')::text as summary_article_meta_ok,
-        round(coalesce(avg(quality_score), 0), 1)::text as avg_quality
+        count(*) filter (where url is not null and btrim(url) <> '')::text as url_ok
       from external_news_articles
       where last_seen_at > now() - interval '24 hours'
+    `);
+
+    const countryTotalsResult = await pool.query<{
+      country: string;
+      created_1h: string;
+      active_sources_1h: string;
+    }>(`
+      select
+        coalesce(nullif(country, ''), 'Unknown') as country,
+        count(*) filter (where created_at > now() - interval '1 hour')::text as created_1h,
+        count(distinct source) filter (where last_seen_at > now() - interval '1 hour')::text as active_sources_1h
+      from external_news_articles
+      where last_seen_at > now() - interval '24 hours'
+      group by coalesce(nullif(country, ''), 'Unknown')
+      order by coalesce(nullif(country, ''), 'Unknown') asc
+    `);
+
+    const countryTopSourcesResult = await pool.query<{
+      country: string;
+      section: string;
+      source: string;
+      created_1h: string;
+    }>(`
+      select country, section, source, created_1h::text as created_1h
+      from (
+        select
+          coalesce(nullif(country, ''), 'Unknown') as country,
+          coalesce(nullif(section, ''), 'Unknown') as section,
+          coalesce(nullif(source, ''), 'Unknown') as source,
+          count(*) filter (where created_at > now() - interval '1 hour') as created_1h,
+          row_number() over (
+            partition by coalesce(nullif(country, ''), 'Unknown')
+            order by
+              count(*) filter (where created_at > now() - interval '1 hour') desc,
+              coalesce(nullif(section, ''), 'Unknown') asc,
+              coalesce(nullif(source, ''), 'Unknown') asc
+          ) as rn
+        from external_news_articles
+        where last_seen_at > now() - interval '24 hours'
+        group by
+          coalesce(nullif(country, ''), 'Unknown'),
+          coalesce(nullif(section, ''), 'Unknown'),
+          coalesce(nullif(source, ''), 'Unknown')
+      ) ranked
+      where rn = 1
+      order by country asc
     `);
 
     const breakingResult = await pool.query<{
@@ -351,26 +355,15 @@ async function main(): Promise<void> {
       run_sources_1h: '0',
       run_sources_24h: '0'
     };
-    const quality = qualityResult.rows[0] || {
+    const metadata = metadataResult.rows[0] || {
       total_24h: '0',
       title_original_ok: '0',
       summary_original_ok: '0',
       publication_datetime_ok: '0',
       section_ok: '0',
       country_ok: '0',
-      language_ok: '0',
       source_ok: '0',
       url_ok: '0',
-      title_en_ok: '0',
-      summary_en_ok: '0',
-      non_en_total: '0',
-      non_en_title_en_ok: '0',
-      non_en_summary_en_ok: '0',
-      publication_verified_ok: '0',
-      summary_verified_ok: '0',
-      summary_ai_article_ok: '0',
-      summary_article_meta_ok: '0',
-      avg_quality: '0'
     };
     const breaking = breakingResult.rows[0] || {
       article_breaking_1h: '0',
@@ -393,8 +386,7 @@ async function main(): Promise<void> {
     const attempted1h = toNum(endpoint.attempted_1h);
     const failed1h = toNum(endpoint.failed_1h);
     const parsed1h = toNum(endpoint.parsed_1h);
-    const total24h = toNum(quality.total_24h);
-    const nonEnTotal = toNum(quality.non_en_total);
+    const total24h = toNum(metadata.total_24h);
     const articleBreaking1h = toNum(breaking.article_breaking_1h);
     const articleBreaking24h = toNum(breaking.article_breaking_24h);
     const signalBreaking1h = toNum(breaking.signal_breaking_1h);
@@ -406,11 +398,6 @@ async function main(): Promise<void> {
     const socialBreaking1h = toNum(social.social_breaking_1h);
     const endpointFailureRate1h = pct(failed1h, Math.max(attempted1h, 1));
     const breakingRatio1h = pct(breaking1h, Math.max(inserted1h, 1));
-    const nonEnTitleCoveragePct = pct(toNum(quality.non_en_title_en_ok), Math.max(nonEnTotal, 1));
-    const nonEnSummaryCoveragePct = pct(toNum(quality.non_en_summary_en_ok), Math.max(nonEnTotal, 1));
-    const summaryAiArticlePct = pct(toNum(quality.summary_ai_article_ok), Math.max(total24h, 1));
-    const summaryArticleMetaPct = pct(toNum(quality.summary_article_meta_ok), Math.max(total24h, 1));
-    const summaryFeedOtherPct = Math.max(0, 100 - summaryAiArticlePct - summaryArticleMetaPct);
     const workerStaleMinutes = worker
       ? Math.max(0, Math.floor((Date.now() - new Date(worker.generatedAt).getTime()) / 60000))
       : null;
@@ -420,8 +407,6 @@ async function main(): Promise<void> {
         noIngestMinutes,
         endpointFailureRate1hPct: endpointFailureRate1h,
         queueNewTotal,
-        nonEnTitleCoveragePct,
-        nonEnSummaryCoveragePct,
         workerStaleMinutes,
       },
       thresholds
@@ -431,46 +416,51 @@ async function main(): Promise<void> {
       .map((row) => `${row.source}:${toNum(row.c)}`)
       .join(' | ') || 'none';
 
-    const workerLineEn = worker
+    const countryTotalsMap = new Map(
+      countryTotalsResult.rows.map((row) => [row.country.trim(), row])
+    );
+    const countryTopMap = new Map(
+      countryTopSourcesResult.rows.map((row) => [row.country.trim(), row])
+    );
+    const configuredCountries = [...new Set(defaultLiveOutlets.map((outlet) => outlet.country.trim()))]
+      .sort((a, b) => a.localeCompare(b));
+    const byCountryTotalsLine = configuredCountries
+      .map((country) => {
+        const row = countryTotalsMap.get(country);
+        const created1h = row ? toNum(row.created_1h) : 0;
+        const activeSources1h = row ? toNum(row.active_sources_1h) : 0;
+        return `${country}:${created1h}/${activeSources1h}`;
+      })
+      .join(' | ');
+    const byCountryTopLine = configuredCountries
+      .map((country) => {
+        const row = countryTopMap.get(country);
+        if (!row || toNum(row.created_1h) === 0) {
+          return `${country} -> n/a -> n/a (0)`;
+        }
+        return `${country} -> ${row.section} -> ${row.source} (${toNum(row.created_1h)})`;
+      })
+      .join(' | ');
+
+    const workerLine = worker
       ? `- Worker(last): outlets ${worker.worker.outletsSelected}/${worker.worker.outletsTotal} · endpoints ${worker.worker.endpointsAttempted} (fail ${worker.worker.endpointsFailed}) · persisted ${worker.worker.persisted}/${worker.worker.externalPersisted} · ${Math.round(worker.elapsedMs / 1000)}s`
       : '- Worker(last): unavailable';
-    const workerLineEs = worker
-      ? `- Worker(ultimo): fuentes ${worker.worker.outletsSelected}/${worker.worker.outletsTotal} · endpoints ${worker.worker.endpointsAttempted} (fallas ${worker.worker.endpointsFailed}) · guardado ${worker.worker.persisted}/${worker.worker.externalPersisted} · ${Math.round(worker.elapsedMs / 1000)}s`
-      : '- Worker(ultimo): no disponible';
-    const alertLineEn = health.alerts.length > 0
+    const alertLine = health.alerts.length > 0
       ? health.alerts.map((alert) => `[${alert.severity.toUpperCase()}] ${alert.message}`).join(' | ')
       : 'none';
-    const alertLineEs = health.alerts.length > 0
-      ? health.alerts.map((alert) => `[${alert.severity.toUpperCase()}] ${alert.message}`).join(' | ')
-      : 'ninguna';
 
     const message = [
-      `**PressLab Hourly Ops (US + LATAM) — ${new Date().toISOString()}**`,
-      '',
-      '**EN**',
-      `- Status: ${health.status.toUpperCase()} · Alerts: ${alertLineEn}`,
+      `**World Press Monitor Hourly Ops (Global) — ${new Date().toISOString()}**`,
+      `- Status: ${health.status.toUpperCase()} · Alerts: ${alertLine}`,
       `- Ingest 1h: new ${inserted1h} · active ${touched1h} · parsed ${parsed1h} · gap ${noIngestMinutes === null ? 'n/a' : `${noIngestMinutes.toFixed(1)}m`} · endpoint fail ${endpointFailureRate1h.toFixed(1)}% (${failed1h}/${Math.max(attempted1h, 0)})`,
       `- Scope: configured outlets ${configuredOutlets.length} (${configuredEndpoints} endpoints) · active sources 1h ${sourceActive1h} · 24h ${sourceActive24h}`,
       `- Articles: 24h ${touched24h} · breaking 1h ${breaking1h} (${breakingRatio1h.toFixed(1)}%) · queue new 1h ${queueNew1h} (total ${queueNewTotal}) · social breaking 1h ${socialBreaking1h}`,
-      `- Quality 24h: title ${formatPct(toNum(quality.title_original_ok), total24h)} · summary ${formatPct(toNum(quality.summary_original_ok), total24h)} · pub_dt ${formatPct(toNum(quality.publication_datetime_ok), total24h)} · section ${formatPct(toNum(quality.section_ok), total24h)}`,
-      `- Coverage 24h: country ${formatPct(toNum(quality.country_ok), total24h)} · language ${formatPct(toNum(quality.language_ok), total24h)} · source ${formatPct(toNum(quality.source_ok), total24h)} · url ${formatPct(toNum(quality.url_ok), total24h)}`,
-      `- Translation(non-en): title_en ${formatPct(toNum(quality.non_en_title_en_ok), nonEnTotal)} · summary_en ${formatPct(toNum(quality.non_en_summary_en_ok), nonEnTotal)} · verified(pub ${formatPct(toNum(quality.publication_verified_ok), total24h)}, summary ${formatPct(toNum(quality.summary_verified_ok), total24h)}) · avgQ ${Number(quality.avg_quality || 0).toFixed(1)}`,
-      `- Summary source 24h: ai_article ${summaryAiArticlePct.toFixed(1)}% · article_meta ${summaryArticleMetaPct.toFixed(1)}% · feed/other ${summaryFeedOtherPct.toFixed(1)}%`,
+      `- Metadata 24h: title ${formatPct(toNum(metadata.title_original_ok), total24h)} · rss_description ${formatPct(toNum(metadata.summary_original_ok), total24h)} · pub_dt ${formatPct(toNum(metadata.publication_datetime_ok), total24h)} · section ${formatPct(toNum(metadata.section_ok), total24h)}`,
+      `- Linkability 24h: country ${formatPct(toNum(metadata.country_ok), total24h)} · source ${formatPct(toNum(metadata.source_ok), total24h)} · url ${formatPct(toNum(metadata.url_ok), total24h)}`,
+      `- By country (created_1h/active_sources_1h): ${byCountryTotalsLine || 'none'}`,
+      `- By Country -> Section -> Source (created_1h): ${byCountryTopLine || 'none'}`,
       `- Top active 1h: ${topSources}`,
-      workerLineEn,
-      '',
-      '**ES**',
-      `- Estado: ${health.status.toUpperCase()} · Alertas: ${alertLineEs}`,
-      `- Ingestion 1h: nuevas ${inserted1h} · activas ${touched1h} · parseadas ${parsed1h} · brecha ${noIngestMinutes === null ? 'n/d' : `${noIngestMinutes.toFixed(1)}m`} · fallo endpoints ${endpointFailureRate1h.toFixed(1)}% (${failed1h}/${Math.max(attempted1h, 0)})`,
-      `- Alcance: fuentes configuradas ${configuredOutlets.length} (${configuredEndpoints} endpoints) · fuentes activas 1h ${sourceActive1h} · 24h ${sourceActive24h}`,
-      `- Articulos: 24h ${touched24h} · breaking 1h ${breaking1h} (${breakingRatio1h.toFixed(1)}%) · cola nueva 1h ${queueNew1h} (total ${queueNewTotal}) · social breaking 1h ${socialBreaking1h}`,
-      `- Calidad 24h: titulo ${formatPct(toNum(quality.title_original_ok), total24h)} · resumen ${formatPct(toNum(quality.summary_original_ok), total24h)} · pub_dt ${formatPct(toNum(quality.publication_datetime_ok), total24h)} · seccion ${formatPct(toNum(quality.section_ok), total24h)}`,
-      `- Cobertura 24h: pais ${formatPct(toNum(quality.country_ok), total24h)} · idioma ${formatPct(toNum(quality.language_ok), total24h)} · fuente ${formatPct(toNum(quality.source_ok), total24h)} · url ${formatPct(toNum(quality.url_ok), total24h)}`,
-      `- Traduccion(no-en): title_en ${formatPct(toNum(quality.non_en_title_en_ok), nonEnTotal)} · summary_en ${formatPct(toNum(quality.non_en_summary_en_ok), nonEnTotal)} · verificado(pub ${formatPct(toNum(quality.publication_verified_ok), total24h)}, summary ${formatPct(toNum(quality.summary_verified_ok), total24h)}) · avgQ ${Number(quality.avg_quality || 0).toFixed(1)}`,
-      `- Origen resumen 24h: ai_article ${summaryAiArticlePct.toFixed(1)}% · article_meta ${summaryArticleMetaPct.toFixed(1)}% · feed/otros ${summaryFeedOtherPct.toFixed(1)}%`,
-      `- Top activas 1h: ${topSources}`,
-      workerLineEs,
-      '',
+      workerLine,
       `- Breaking 24h total: ${breaking24h} (article ${articleBreaking24h} + signal ${signalBreaking24h})`,
       `- Endpoint runs 1h: ${runs1h}`
     ].join('\n');

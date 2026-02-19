@@ -1,15 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { requireRadarServiceAuth } from '@/lib/radar-service-auth';
 import { getRadarServiceCountryCounts } from '@/lib/radar-service-store';
+import { toInt } from '@/lib/query-params';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
-
-function toInt(raw: string | null, fallback: number, min: number, max: number): number {
-  const parsed = Number(raw);
-  if (!Number.isFinite(parsed)) return fallback;
-  return Math.max(min, Math.min(max, Math.floor(parsed)));
-}
 
 export async function GET(req: NextRequest): Promise<Response> {
   const unauthorized = requireRadarServiceAuth(req, 'read:articles');

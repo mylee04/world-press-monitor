@@ -6,8 +6,6 @@ export type OpsThresholds = {
   maxNoIngestMinutes: number;
   maxEndpointFailureRate1hPct: number;
   maxQueueNewTotal: number;
-  minNonEnTitleCoveragePct: number;
-  minNonEnSummaryCoveragePct: number;
   maxWorkerStaleMinutes: number;
 };
 
@@ -16,8 +14,6 @@ export type OpsMetrics = {
   noIngestMinutes: number | null;
   endpointFailureRate1hPct: number;
   queueNewTotal: number;
-  nonEnTitleCoveragePct: number;
-  nonEnSummaryCoveragePct: number;
   workerStaleMinutes: number | null;
 };
 
@@ -53,14 +49,6 @@ export function loadOpsThresholds(
       )
     ),
     maxQueueNewTotal: Math.max(0, toInt(getEnv('OPS_ALERT_MAX_QUEUE_NEW_TOTAL'), 500)),
-    minNonEnTitleCoveragePct: Math.max(
-      0,
-      Math.min(100, toNumber(getEnv('OPS_ALERT_MIN_NON_EN_TITLE_COVERAGE_PCT'), 70))
-    ),
-    minNonEnSummaryCoveragePct: Math.max(
-      0,
-      Math.min(100, toNumber(getEnv('OPS_ALERT_MIN_NON_EN_SUMMARY_COVERAGE_PCT'), 20))
-    ),
     maxWorkerStaleMinutes: Math.max(1, toInt(getEnv('OPS_ALERT_MAX_WORKER_STALE_MINUTES'), 25)),
   };
 }
@@ -126,22 +114,6 @@ export function evaluateOpsStatus(
       severity: 'warn',
       code: 'breaking_queue_backlog',
       message: `Queue backlog ${metrics.queueNewTotal} > ${thresholds.maxQueueNewTotal}`,
-    });
-  }
-
-  if (metrics.nonEnTitleCoveragePct < thresholds.minNonEnTitleCoveragePct) {
-    alerts.push({
-      severity: 'warn',
-      code: 'translation_title_coverage',
-      message: `non-en title_en ${metrics.nonEnTitleCoveragePct.toFixed(1)}% < ${thresholds.minNonEnTitleCoveragePct}%`,
-    });
-  }
-
-  if (metrics.nonEnSummaryCoveragePct < thresholds.minNonEnSummaryCoveragePct) {
-    alerts.push({
-      severity: 'warn',
-      code: 'translation_summary_coverage',
-      message: `non-en summary_en ${metrics.nonEnSummaryCoveragePct.toFixed(1)}% < ${thresholds.minNonEnSummaryCoveragePct}%`,
     });
   }
 

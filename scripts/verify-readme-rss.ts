@@ -1,0 +1,1038 @@
+#!/usr/bin/env bun
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import { lookup } from 'node:dns/promises';
+import { resolve } from 'node:path';
+
+type AtlasFeed = {
+  name: string;
+  url: string | null;
+  status: string | null;
+  checkedDate: string | null;
+  valid: string | null;
+  row: number;
+};
+
+type AtlasCountry = {
+  name: string;
+  code: string;
+  feeds: AtlasFeed[];
+};
+
+type Atlas = {
+  version: number;
+  generatedAt: string;
+  lastChecked: string;
+  countries: AtlasCountry[];
+};
+
+type CheckTask = {
+  countryCode: string;
+  countryName: string;
+  outlet: string;
+  url: string;
+  feedRow: number;
+};
+
+type EndpointResult = {
+  countryCode: string;
+  countryName: string;
+  outlet: string;
+  url: string;
+  feedRow: number;
+  httpCode: number | null;
+  failureReason: string | null;
+  valid: boolean;
+  checkedAt: string;
+  xmlDetected: boolean;
+};
+
+type NetworkProbeResult = {
+  ok: boolean;
+  host: string;
+  ips: string[];
+  raw: string;
+  error: string;
+  skipped: boolean;
+};
+
+type CommandResult = {
+  ok: boolean;
+  command: string;
+  code: number | null;
+  stdout: string;
+  stderr: string;
+  error: string;
+};
+
+type ResolveProbeResult = {
+  ok: boolean;
+  host: string;
+  ip: string | null;
+  status: number | null;
+  outputLine: string;
+  reason: string;
+};
+
+type TextProbeResult = {
+  ok: boolean;
+  value?: string;
+  error: string;
+  skipped: boolean;
+};
+
+const README_PATH = process.env.README_PATH || resolve(process.cwd(), 'README.md');
+const ATLAS_PATH = process.env.ATLAS_PATH || resolve(process.cwd(), 'data/rss-atlas.json');
+const OUTPUT_DIR = resolve(process.cwd(), 'audits');
+const NOW = new Date();
+const CHECKED_DATE = toCheckedDate(NOW);
+
+const BATCH_SIZE = clampInt(process.env.RSS_BATCH_SIZE, 1, 150, 30);
+const BATCH_DELAY_MS = clampInt(process.env.RSS_BATCH_DELAY_MS, 0, 5000, 500);
+const REQUEST_TIMEOUT_MS = clampInt(process.env.RSS_REQUEST_TIMEOUT_MS, 5000, 30000, 15000);
+const REQUEST_JITTER_MS = clampInt(process.env.RSS_REQUEST_JITTER_MS, 0, 3000, 150);
+const PRECHECK_TIMEOUT_MS = clampInt(process.env.RSS_PRECHECK_TIMEOUT_MS, 1000, 30000, 5000);
+const SHOULD_PRECHECK = process.argv.includes('--precheck') || process.argv.includes('--preflight');
+const PRECHECK_URL = process.env.RSS_PRECHECK_URL || '';
+
+const COUNTRY_SECTION_HEADER = /^###\s+(.+?)\s+\(([^)]+)\)$/;
+const XML_MARKERS = ['<rss', '<feed', '<urlset', '<sitemapindex', '<?xml'];
+const USER_AGENT = 'PressLab-RSSReadmeVerifier/1.0 (+https://github.com/mylee04/world-press-monitor)';
+const GETENT_TIMEOUT_MS = clampInt(process.env.RSS_PRECHECK_GETENT_TIMEOUT_MS, 500, 10000, 3000);
+const SNAPSHOT_HEADING = '## Latest RSS verification snapshot';
+
+async function main(): Promise<void> {
+  const atlas = loadAtlas();
+  if (SHOULD_PRECHECK) {
+    const precheckOk = await runNetworkPrecheck(atlas);
+    if (!precheckOk) {
+      console.log('Precheck status: NO_NETWORK/DNS_BROKEN');
+      console.log('Abort: Full verification skipped to avoid mass false invalid marking.');
+      process.exit(2);
+    }
+  }
+  const source = readFileSync(README_PATH, 'utf8');
+  const sourceLines = source.split(/\r?\n/);
+
+  const tasks = buildCheckTasks(atlas);
+  const results = await verifyEndpoints(tasks);
+  const resultMap = buildResultMap(results);
+  const summaryCounts = {
+    countries: atlas.countries.length,
+    totalFeeds: atlas.countries.reduce((acc, country) => acc + country.feeds.length, 0),
+    checkedFeeds: results.length,
+    valid: results.filter((result) => result.valid).length,
+    invalid: results.filter((result) => !result.valid).length,
+    failureReasons: summarizeFailureReasons(results),
+    skippedNoSource: atlas.countries.reduce(
+      (acc, country) => acc + country.feeds.filter((feed) => !feed.url).length,
+      0
+    ),
+  };
+
+  const isRuntimeBlocked = isLikelyRuntimeNetworkFailure(results, summaryCounts);
+  if (isRuntimeBlocked) {
+    const stamp = NOW.toISOString().slice(0, 10);
+    const outputPath = resolve(OUTPUT_DIR, `readme_rss_health_${stamp}.json`);
+    const latestPath = resolve(OUTPUT_DIR, 'readme_rss_health_latest.json');
+    const payload = {
+      generatedAt: NOW.toISOString(),
+      checkedDate: CHECKED_DATE,
+      sourceFile: README_PATH,
+      atlasFile: ATLAS_PATH,
+      runtimeBlocked: true,
+      summary: summaryCounts,
+      results,
+    };
+
+    mkdirSync(OUTPUT_DIR, { recursive: true });
+    writeFileSync(outputPath, `${JSON.stringify(payload, null, 2)}\n`, 'utf8');
+    writeFileSync(latestPath, `${JSON.stringify(payload, null, 2)}\n`, 'utf8');
+
+    console.log('Validation appears to be blocked in this runtime: all checked feeds failed with NETWORK.');
+    console.log('Skipping README snapshot overwrite to avoid false invalid marking from environment-level failures.');
+    return;
+  }
+
+  const preface = getReadmePreface(sourceLines, summaryCounts, results, atlas);
+  const updatedSections = renderCountrySections(atlas, resultMap);
+  const updatedReadme = `${updateHeaderCheckedDate(preface)}\n${updatedSections.join('\n')}\n`;
+  writeFileSync(README_PATH, updatedReadme, 'utf8');
+
+  const stamp = NOW.toISOString().slice(0, 10);
+  mkdirSync(OUTPUT_DIR, { recursive: true });
+  const reportPath = resolve(OUTPUT_DIR, `readme_rss_health_${stamp}.json`);
+  const latestPath = resolve(OUTPUT_DIR, 'readme_rss_health_latest.json');
+  const payload = {
+    generatedAt: NOW.toISOString(),
+    checkedDate: CHECKED_DATE,
+    sourceFile: README_PATH,
+    atlasFile: ATLAS_PATH,
+    summary: summaryCounts,
+    results,
+  };
+
+  writeFileSync(reportPath, `${JSON.stringify(payload, null, 2)}\n`, 'utf8');
+  writeFileSync(latestPath, `${JSON.stringify(payload, null, 2)}\n`, 'utf8');
+
+  console.log(`Checked ${summaryCounts.checkedFeeds} RSS endpoints`);
+  console.log(`Valid: ${summaryCounts.valid}`);
+  console.log(`Invalid: ${summaryCounts.invalid}`);
+  console.log(`No-source rows: ${summaryCounts.skippedNoSource}`);
+  if (Object.keys(summaryCounts.failureReasons).length > 0) {
+    console.log(`Failure reasons:`);
+    for (const [reason, count] of Object.entries(summaryCounts.failureReasons).sort((a, b) => b[1] - a[1])) {
+      console.log(`  ${reason}: ${count}`);
+    }
+  } else {
+    console.log(`Failure reasons: none`);
+  }
+  console.log(`Wrote README: ${README_PATH}`);
+  console.log(`Wrote report: ${reportPath}`);
+}
+
+function loadAtlas(): Atlas {
+  const raw = readFileSync(ATLAS_PATH, 'utf8');
+  const parsed = JSON.parse(raw) as Atlas;
+  if (!Array.isArray(parsed.countries)) {
+    throw new Error(`Invalid atlas format in ${ATLAS_PATH}`);
+  }
+  return parsed;
+}
+
+function buildCheckTasks(atlas: Atlas): CheckTask[] {
+  const tasks: CheckTask[] = [];
+  for (const country of atlas.countries) {
+    for (const feed of country.feeds) {
+      if (!feed.url) continue;
+      tasks.push({
+        countryCode: country.code,
+        countryName: country.name,
+        outlet: feed.name,
+        url: feed.url,
+        feedRow: Number.isFinite(feed.row) ? feed.row : 0,
+      });
+    }
+  }
+  return tasks;
+}
+
+async function runNetworkPrecheck(atlas: Atlas): Promise<boolean> {
+  const isMac = process.platform === 'darwin';
+  const sampleFeed =
+    PRECHECK_URL || atlas.countries.flatMap((country) => country.feeds).find((feed) => feed.url)?.url;
+
+  if (!sampleFeed) {
+    console.log('Precheck skipped: no candidate RSS URL available');
+    return false;
+  }
+
+  console.log('--- Network precheck ---');
+  let host = '';
+  try {
+    host = new URL(sampleFeed).hostname;
+  } catch {
+    console.log(`Precheck URL parse failed: ${sampleFeed}`);
+    return false;
+  }
+
+  const googleDnsGetent = isMac ? skippedGetentResult('www.google.com') : probeGetentDns('www.google.com');
+  const sampleDnsGetent = isMac ? skippedGetentResult(host) : probeGetentDns(host);
+  const googleDnsNode = await probeDns('www.google.com');
+  const sampleDnsNode = await probeDns(host);
+  const resolvConf = readTextFile('/etc/resolv.conf');
+  const nsswitchConf = isMac
+    ? { ok: false, value: '', error: 'SKIP_MACOS', skipped: true }
+    : { ...readTextFile('/etc/nsswitch.conf'), skipped: false };
+
+  const httpResult = await probeHttp(sampleFeed);
+  const resolvedIp = sampleDnsGetent.ips[0] || sampleDnsNode.ips[0] || null;
+  const curlResolveResult = resolvedIp ? await probeCurlResolve(sampleFeed, host, resolvedIp) : null;
+  const googleResolveResult = await probeCurlResolve('https://www.google.com', 'www.google.com', googleDnsGetent.ips[0] || googleDnsNode.ips[0]);
+
+  if (sampleDnsGetent.skipped) {
+    console.log(`DNS (getent) ${host}: SKIP (not available on macOS)`);
+  } else {
+    console.log(
+      `DNS (getent) ${host}: ${sampleDnsGetent.ok ? `OK (${sampleDnsGetent.ips.join(', ')})` : `FAIL (${sampleDnsGetent.error})`}`
+    );
+  }
+  console.log(`DNS (node) ${host}: ${sampleDnsNode.ok ? `OK (${sampleDnsNode.ips.join(', ')})` : `FAIL (${sampleDnsNode.error})`}`);
+  if (googleDnsGetent.skipped) {
+    console.log(`DNS (getent) www.google.com: SKIP (not available on macOS)`);
+  } else {
+    console.log(
+      `DNS (getent) www.google.com: ${
+        googleDnsGetent.ok ? `OK (${googleDnsGetent.ips.join(', ')})` : `FAIL (${googleDnsGetent.error})`
+      }`
+    );
+  }
+  console.log(`DNS (node) www.google.com: ${googleDnsNode.ok ? `OK (${googleDnsNode.ips.join(', ')})` : `FAIL (${googleDnsNode.error})`}`);
+
+  if (resolvConf.ok) {
+    const lines = getConfLines(resolvConf.value);
+    console.log('resolv.conf:');
+    for (const line of lines.slice(0, 8)) {
+      console.log(`  ${line}`);
+    }
+  } else {
+    console.log(`resolv.conf: FAIL (${resolvConf.error})`);
+  }
+
+  if (nsswitchConf.skipped) {
+    console.log('nsswitch.conf: SKIP (not used on macOS)');
+  } else if (nsswitchConf.ok) {
+    const hostsLine = extractNsswitchHostsLine(nsswitchConf.value);
+    console.log(`nsswitch hosts line: ${hostsLine || '(none)'}`);
+  } else {
+    console.log(`nsswitch.conf: FAIL (${nsswitchConf.error})`);
+  }
+
+  console.log(
+    `HTTP ${sampleFeed}: ${httpResult.ok ? 'OK' : 'FAIL'} (${httpResult.status ?? 'ERR'}) ${httpResult.extra}`
+  );
+  if (curlResolveResult) {
+    if (curlResolveResult.ok) {
+      console.log(`curl --resolve ${host} OK (${curlResolveResult.status})`);
+    } else {
+      console.log(`curl --resolve ${host} FAIL: ${curlResolveResult.reason}`);
+    }
+  } else {
+    console.log(`curl --resolve ${host}: SKIPPED (no resolved IP)`);
+  }
+  if (googleResolveResult.ok) {
+    console.log(`curl --resolve www.google.com OK (${googleResolveResult.status})`);
+  } else {
+    console.log(`curl --resolve www.google.com ${googleResolveResult.ok ? 'OK' : `FAIL (${googleResolveResult.reason})`}`);
+  }
+
+  const recommendations = inferPrecheckRecommendations({
+    host,
+    sampleFeed,
+    sampleDnsGetent,
+    sampleDnsNode,
+    googleDnsGetent,
+    googleDnsNode,
+    curlResolveResult,
+    googleResolveResult,
+    httpResult,
+  });
+
+  const reportPayload = {
+    generatedAt: NOW.toISOString(),
+    sampleUrl: sampleFeed,
+    sampleHost: host,
+    checks: {
+      sampleDnsGetent,
+      sampleDnsNode,
+      googleDnsGetent,
+      googleDnsNode,
+      httpSample: {
+        ok: httpResult.ok,
+        status: httpResult.status,
+        note: httpResult.extra,
+      },
+      curlResolve: curlResolveResult,
+      googleCurlResolve: googleResolveResult,
+      resolvConf: {
+        ok: resolvConf.ok,
+        content: resolvConf.value || '',
+      },
+      nsswitchConf: {
+        ok: nsswitchConf.ok,
+        content: nsswitchConf.value || '',
+        skipped: nsswitchConf.skipped,
+      },
+    },
+    recommendations,
+  };
+
+  const precheckPath = resolve(OUTPUT_DIR, 'readme_network_precheck_latest.json');
+  mkdirSync(OUTPUT_DIR, { recursive: true });
+  writeFileSync(precheckPath, `${JSON.stringify(reportPayload, null, 2)}\n`, 'utf8');
+  console.log('Precheck report:');
+  for (const line of recommendations.slice(0, 6)) {
+    console.log(`  - ${line}`);
+  }
+  console.log(`Wrote precheck report: ${precheckPath}`);
+  const canResolveSample = sampleDnsGetent.ok || sampleDnsNode.ok;
+  const canResolveGoogle = googleDnsGetent.ok || googleDnsNode.ok;
+  const networkUsable = canResolveSample && canResolveGoogle;
+  if (!networkUsable) {
+    console.log('Precheck warning: full verification is blocked in this runtime. DNS/BASIC EGRESS likely broken.');
+  } else {
+    console.log('Precheck check: DNS baseline appears available. Continuing is safe.');
+  }
+  console.log('--- End precheck ---');
+  return networkUsable;
+}
+
+function getConfLines(content: string): string[] {
+  return content
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0 && !line.startsWith('#'));
+}
+
+function extractNsswitchHostsLine(content: string): string {
+  const line = content
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .find((line) => /^hosts:/.test(line));
+  return line || '';
+}
+
+function readTextFile(path: string): TextProbeResult {
+  try {
+    return { ok: true, value: readFileSync(path, 'utf8'), error: '', skipped: false };
+  } catch (error) {
+    return { ok: false, value: '', error: String(error), skipped: false };
+  }
+}
+
+function skippedGetentResult(hostname: string): NetworkProbeResult {
+  return {
+    ok: false,
+    host: hostname,
+    ips: [],
+    raw: '',
+    error: 'SKIPPED_DARWIN',
+    skipped: true,
+  };
+}
+
+function probeGetentDns(hostname: string): NetworkProbeResult {
+  const command = `getent hosts ${hostname}`;
+  const result = runCommand('getent', ['hosts', hostname], GETENT_TIMEOUT_MS);
+  if (!result.ok) {
+    return {
+      ok: false,
+      host: hostname,
+      ips: [],
+      raw: joinStreams(result.stdout, result.stderr),
+      error: result.error || result.stderr || `exit ${result.code}`,
+      skipped: false,
+    };
+  }
+  const ips = parseIpsFromGetent(result.stdout || '');
+  if (ips.length === 0) {
+    return {
+      ok: false,
+      host: hostname,
+      ips: [],
+      raw: result.stdout,
+      error: 'NO_IP',
+      skipped: false,
+    };
+  }
+  return { ok: true, host: hostname, ips, raw: result.stdout, error: '', skipped: false };
+}
+
+function parseIpsFromGetent(raw: string): string[] {
+  const ips: string[] = [];
+  for (const line of raw.split(/\r?\n/)) {
+    const trimmed = line.trim();
+    if (!trimmed) continue;
+    const firstToken = trimmed.split(/\s+/)[0];
+    if (!firstToken) continue;
+    if (/^\d{1,3}(\.\d{1,3}){3}$/.test(firstToken) || /^[0-9a-fA-F:]+$/.test(firstToken)) {
+      if (!ips.includes(firstToken)) {
+        ips.push(firstToken);
+      }
+    }
+  }
+  return ips;
+}
+
+async function probeCurlResolve(url: string, host: string, ip?: string | null): Promise<ResolveProbeResult> {
+  if (!ip) {
+    return { ok: false, host, ip: null, status: null, outputLine: '', reason: 'NO_RESOLVED_IP' };
+  }
+
+  let resolvedIp = ip;
+  const parsed = new URL(url);
+  const port = parsed.port || (parsed.protocol === 'https:' ? '443' : '80');
+  const resolveArg = `${host}:${port}:${resolvedIp}`;
+  const result = runCommand('curl', ['-sSI', '--max-time', `${Math.max(1, Math.floor(PRECHECK_TIMEOUT_MS / 1000))}`, '--resolve', resolveArg, url], PRECHECK_TIMEOUT_MS + 1000);
+  if (!result.ok) {
+    return {
+      ok: false,
+      host,
+      ip: resolvedIp,
+      status: null,
+      outputLine: joinStreams(result.stdout, result.stderr),
+      reason: result.error || result.stderr || `exit ${result.code}`,
+    };
+  }
+  const firstLine = result.stdout.split(/\r?\n/)[0]?.trim() || '';
+  const match = firstLine.match(/HTTP\/\d(?:\.\d)?\s+(\d{3})/);
+  if (!match) {
+    return {
+      ok: false,
+      host,
+      ip: resolvedIp,
+      status: null,
+      outputLine: firstLine || result.stdout,
+      reason: 'NO_HTTP_STATUS',
+    };
+  }
+  const status = Number.parseInt(match[1], 10);
+  if (Number.isNaN(status)) {
+    return { ok: false, host, ip: resolvedIp, status: null, outputLine: firstLine, reason: 'INVALID_HTTP_STATUS' };
+  }
+  return {
+    ok: status >= 200 && status < 300,
+    host,
+    ip: resolvedIp,
+    status,
+    outputLine: firstLine,
+    reason: status >= 200 && status < 300 ? '' : `HTTP_${status}`,
+  };
+}
+
+function runCommand(command: string, args: string[], timeoutMs: number): CommandResult {
+  try {
+    const result = spawnSync(command, args, {
+      encoding: 'utf8',
+      timeout: timeoutMs,
+      stdio: ['ignore', 'pipe', 'pipe'],
+      shell: false,
+    });
+    const stdout = (result.stdout || '').trim();
+    const stderr = (result.stderr || '').trim();
+    const commandError = result.error ? String(result.error) : '';
+    const exitText = result.status === null ? 'null' : `${result.status}`;
+    return {
+      ok: result.status === 0 && !result.error,
+      command: `${command} ${args.join(' ')}`,
+      code: result.status,
+      stdout,
+      stderr,
+      error: commandError || (result.status === 0 ? '' : `exit ${exitText}`),
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      command: `${command} ${args.join(' ')}`,
+      code: null,
+      stdout: '',
+      stderr: '',
+      error: String(error),
+    };
+  }
+}
+
+function inferPrecheckRecommendations(input: {
+  host: string;
+  sampleFeed: string;
+  sampleDnsGetent: NetworkProbeResult;
+  sampleDnsNode: NetworkProbeResult;
+  googleDnsGetent: NetworkProbeResult;
+  googleDnsNode: NetworkProbeResult;
+  curlResolveResult: ResolveProbeResult | null;
+  googleResolveResult: ResolveProbeResult;
+  httpResult: { ok: boolean; status: number | null; note: string };
+}): string[] {
+  const lines: string[] = [];
+  const dnsHealthy = input.sampleDnsGetent.ok || input.sampleDnsNode.ok;
+  const googleHealthy = input.googleDnsGetent.ok || input.googleDnsNode.ok;
+  const getentSkipped = input.sampleDnsGetent.skipped || input.googleDnsGetent.skipped;
+
+  if (!dnsHealthy || !googleHealthy) {
+    lines.push('DNS resolution is failing in this runtime. Check system resolver, /etc/resolv.conf, and container DNS settings.');
+    lines.push('If you changed DNS/VPN/proxy recently, try a clean network profile and retry precheck.');
+    if (!input.sampleDnsGetent.ok && !input.sampleDnsGetent.skipped) {
+      lines.push(`No hostname->IP mapping for ${input.host}. This usually means getaddrinfo/system resolver is blocked.`);
+    }
+  }
+
+  if (input.httpResult.ok && !input.sampleDnsGetent.ok && !input.sampleDnsGetent.skipped) {
+    lines.push('HTTP works but getent DNS failed => getent path/permissions likely missing. Keep getaddrinfo preflight as primary.');
+  }
+
+  if (getentSkipped && input.httpResult.ok) {
+    lines.push('Running on macOS: getent/nsswitch checks are intentionally skipped; this is informational only.');
+  }
+
+  if (!input.httpResult.ok && input.curlResolveResult && input.curlResolveResult.ok) {
+    lines.push('curl --resolve works while Node fetch failed. Runtime fetch path may be blocked by proxy/TLS policies.');
+  }
+
+  if (!input.httpResult.ok && !input.curlResolveResult?.ok) {
+    lines.push('Downstream endpoint access is blocked from this runtime. Run the same command on another host that can reach the internet.');
+  }
+
+  if (!input.curlResolveResult && (input.sampleDnsGetent.ok || input.sampleDnsNode.ok)) {
+    lines.push('No resolved IP available for curl --resolve check. Retry after resolving with a working resolver command.');
+  }
+
+  if (lines.length === 0) {
+    lines.push('No major precheck failure detected; full verification can proceed.');
+  }
+  return lines;
+}
+
+function joinStreams(stdout: string, stderr: string): string {
+  const s = `${stdout || ''}`.trim();
+  const e = `${stderr || ''}`.trim();
+  return [s, e].filter(Boolean).join('\n');
+}
+
+function probeDns(hostname: string): Promise<NetworkProbeResult> {
+  return withTimeout<{ address: string | undefined }>(
+    lookup(hostname, { all: false }).then((result) => ({ address: result.address })),
+    PRECHECK_TIMEOUT_MS
+  )
+    .then(({ address }) => {
+      const ips = address ? [address] : [];
+      return {
+        ok: true,
+        host: hostname,
+        ips,
+        raw: address || '',
+        error: '',
+        skipped: false,
+      };
+    })
+    .catch((error) => ({
+      ok: false,
+      host: hostname,
+      ips: [],
+      raw: '',
+      error: classifyLookupError(error),
+      skipped: false,
+    }));
+}
+
+async function probeHttp(url: string): Promise<{ ok: boolean; status: number | null; extra: string }> {
+  try {
+    const response = await fetchWithTimeout(url, PRECHECK_TIMEOUT_MS);
+    const body = await response.text();
+    const bodyStart = body.slice(0, 512).toLowerCase();
+    const contentType = response.headers.get('content-type') || '';
+    const looksLikeXml = contentType.includes('xml') || contentType.includes('rss');
+    const xmlDetected = XML_MARKERS.some((marker) => bodyStart.includes(marker));
+    const ok = response.status >= 200 && response.status < 300 && (looksLikeXml || xmlDetected);
+    return {
+      ok,
+      status: response.status,
+      extra: ok ? 'xml-like response' : classifyHttpBodyFailure(bodyStart, contentType),
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      status: null,
+      extra: classifyFetchError(error),
+    };
+  }
+}
+
+async function withTimeout<T>(promise: Promise<T>, timeoutMs: number): Promise<T> {
+  return Promise.race([
+    promise,
+    new Promise<T>((_, reject) => {
+      setTimeout(() => {
+        reject(new Error('TIMEOUT'));
+      }, timeoutMs);
+    }),
+  ]);
+}
+
+function classifyLookupError(error: unknown): string {
+  const message = String(error).toLowerCase();
+  if (message.includes('timeout')) return 'TIMEOUT';
+  if (message.includes('eai_again') || message.includes('not found') || message.includes('enotfound')) return 'DNS';
+  return 'NETWORK';
+}
+
+type FailureCount = Record<string, number>;
+type SummaryCounts = {
+  countries: number;
+  totalFeeds: number;
+  checkedFeeds: number;
+  valid: number;
+  invalid: number;
+  failureReasons: FailureCount;
+  skippedNoSource: number;
+};
+
+type InvalidItem = {
+  country: string;
+  outlet: string;
+  url: string;
+  reason: string;
+  httpCode: number | null;
+};
+
+function getReadmePreface(sourceLines: string[], summary: SummaryCounts, results: EndpointResult[], atlas: Atlas): string {
+  const firstSection = sourceLines.findIndex((line) => COUNTRY_SECTION_HEADER.test(line));
+  const cut = firstSection >= 0 ? sourceLines.slice(0, firstSection) : sourceLines;
+  const snapshotStart = cut.findIndex((line) => line.trim() === SNAPSHOT_HEADING);
+  const trimmed = snapshotStart >= 0 ? removeExistingSnapshot(cut, snapshotStart) : cut;
+  const snapshotSection = renderVerificationSnapshot(summary, results, atlas);
+  const updated = [...trimmed, '', snapshotSection].filter((line, index, arr) => {
+    const prev = arr[index - 1];
+    if (!prev || !line) return true;
+    return !(prev === '' && line === '');
+  });
+  return `${updateHeaderCheckedDate(updated.join('\n')).replace(/\n+$/, '')}`;
+}
+
+function removeExistingSnapshot(lines: string[], startIndex: number): string[] {
+  let end = startIndex + 1;
+  while (end < lines.length) {
+    if (COUNTRY_SECTION_HEADER.test(lines[end]) || (lines[end].startsWith('## ') && lines[end].trim() !== SNAPSHOT_HEADING)) {
+      break;
+    }
+    end += 1;
+  }
+  return [...lines.slice(0, startIndex), ...lines.slice(end)];
+}
+
+function renderVerificationSnapshot(summary: SummaryCounts, results: EndpointResult[], atlas: Atlas): string {
+  const lines: string[] = [];
+  const invalidItems: InvalidItem[] = results
+    .filter((result) => !result.valid && result.failureReason)
+    .map((result) => ({
+      country: result.countryName,
+      outlet: result.outlet,
+      url: result.url,
+      reason: result.failureReason!,
+      httpCode: result.httpCode,
+    }));
+
+  const noSourceItems = atlas.countries.flatMap((country) =>
+    country.feeds
+      .filter((feed) => !feed.url)
+      .map((feed) => ({ country: country.name, outlet: feed.name }))
+  );
+
+  const grouped = new Map<string, InvalidItem[]>();
+  for (const item of invalidItems) {
+    const list = grouped.get(item.reason) || [];
+    list.push(item);
+    grouped.set(item.reason, list);
+  }
+
+  lines.push(SNAPSHOT_HEADING);
+  lines.push('');
+  lines.push(`- Checked endpoints: \`${summary.checkedFeeds}\``);
+  lines.push(`- Valid: \`${summary.valid}\``);
+  lines.push(`- Invalid: \`${summary.invalid}\``);
+  lines.push(`- No-source rows: \`${summary.skippedNoSource}\``);
+  lines.push(`- Snapshot date: \`${CHECKED_DATE}\``);
+  lines.push(`- Source artifact: \`audits/readme_rss_health_latest.json\``);
+  lines.push('');
+  lines.push('### Failure reasons');
+  lines.push('|Reason|Count|');
+  lines.push('|---|---:|');
+  for (const [reason, count] of Object.entries(summary.failureReasons).sort((a, b) => b[1] - a[1])) {
+    lines.push(`|${reason}|${count}|`);
+  }
+
+  lines.push('');
+  lines.push('### Invalid feeds by reason');
+  for (const [reason, items] of [...grouped.entries()].sort((a, b) => b[1].length - a[1].length)) {
+    const sorted = [...items].sort((left, right) => {
+      const byCountry = left.country.localeCompare(right.country);
+      return byCountry !== 0 ? byCountry : left.outlet.localeCompare(right.outlet);
+    });
+    lines.push('');
+    lines.push(`#### ${reason} (${items.length})`);
+    lines.push('|Country|Outlet|RSS URL|HTTP|');
+    lines.push('|---|---|---|---:|');
+    for (const item of sorted) {
+      lines.push(`|${item.country}|${item.outlet}|<${item.url}>|${item.httpCode === null ? '-' : item.httpCode}|`);
+    }
+  }
+
+  lines.push('');
+  lines.push('### No-source rows');
+  if (noSourceItems.length === 0) {
+    lines.push('- none');
+  } else {
+    const sortedNoSource = [...noSourceItems].sort((left, right) => {
+      const byCountry = left.country.localeCompare(right.country);
+      return byCountry !== 0 ? byCountry : left.outlet.localeCompare(right.outlet);
+    });
+    lines.push('|Country|Outlet|');
+    lines.push('|---|---|');
+    for (const item of sortedNoSource) {
+      lines.push(`|${item.country}|${item.outlet}|`);
+    }
+  }
+  return lines.join('\n');
+}
+
+function renderCountrySections(atlas: Atlas, resultMap: Map<string, EndpointResult>): string[] {
+  const lines: string[] = [];
+
+  for (const country of atlas.countries) {
+    lines.push(`### ${country.name} (${country.code})`);
+    lines.push('|No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|');
+    lines.push('|---|---|---|---|---|---|');
+
+    if (!country.feeds.length) {
+      lines.push(
+        formatRow({
+          row: 1,
+          outlet: 'No RSS source configured',
+          url: 'N/A',
+          status: '❌ NO_SOURCE',
+          checkedDate: CHECKED_DATE,
+          validLabel: 'needs verification',
+        })
+      );
+    } else {
+      for (const feed of country.feeds) {
+        const row = Number.isFinite(feed.row) ? feed.row : 1;
+        if (!feed.url) {
+          lines.push(
+            formatRow({
+              row,
+              outlet: feed.name,
+              url: 'N/A',
+              status: '❌ NO_SOURCE',
+              checkedDate: CHECKED_DATE,
+              validLabel: 'needs verification',
+            })
+          );
+          continue;
+        }
+
+        const key = makeResultKey(country.code, feed.name, feed.url);
+        const result = resultMap.get(key);
+        if (!result) {
+          lines.push(
+            formatRow({
+              row,
+              outlet: feed.name,
+              url: feed.url,
+              status: 'needs check',
+              checkedDate: CHECKED_DATE,
+              validLabel: 'needs verification',
+            })
+          );
+          continue;
+        }
+
+        lines.push(
+          formatRow({
+            row,
+            outlet: feed.name,
+            url: feed.url,
+            status: formatStatus(result),
+            checkedDate: CHECKED_DATE,
+            validLabel: result.valid ? 'valid' : 'invalid',
+          })
+        );
+      }
+    }
+
+    lines.push('');
+  }
+
+  return lines;
+}
+
+function buildResultMap(results: EndpointResult[]): Map<string, EndpointResult> {
+  const map = new Map<string, EndpointResult>();
+  for (const result of results) {
+    map.set(makeResultKey(result.countryCode, result.outlet, result.url), result);
+  }
+  return map;
+}
+
+function makeResultKey(countryCode: string, outlet: string, url: string): string {
+  return `${countryCode}|${outlet}|${url}`;
+}
+
+async function verifyEndpoints(tasks: CheckTask[]): Promise<EndpointResult[]> {
+  const results: EndpointResult[] = [];
+
+  for (let start = 0; start < tasks.length; start += BATCH_SIZE) {
+    const batch = tasks.slice(start, start + BATCH_SIZE);
+    const batchResults = await Promise.all(
+      batch.map(async (task) => {
+        if (REQUEST_JITTER_MS > 0) {
+          await sleep(Math.floor(Math.random() * REQUEST_JITTER_MS));
+        }
+        return checkEndpoint(task);
+      })
+    );
+
+    results.push(...batchResults);
+    if (start + BATCH_SIZE < tasks.length && BATCH_DELAY_MS > 0) {
+      await sleep(BATCH_DELAY_MS);
+    }
+  }
+
+  return results;
+}
+
+async function checkEndpoint(task: CheckTask): Promise<EndpointResult> {
+  try {
+    const response = await fetchWithTimeout(task.url, REQUEST_TIMEOUT_MS);
+    const body = await response.text();
+    const bodyStart = body.slice(0, 2000).toLowerCase();
+    const xmlDetected = XML_MARKERS.some((marker) => bodyStart.includes(marker));
+    const contentType = response.headers.get('content-type') || '';
+    const looksLikeXml = contentType.includes('xml') || contentType.includes('rss');
+    const valid = response.status >= 200 && response.status < 300 && (xmlDetected || looksLikeXml);
+    const isSuccessHttpStatus = response.status >= 200 && response.status < 300;
+    const failureReason = isSuccessHttpStatus
+      ? valid
+        ? null
+        : classifyHttpBodyFailure(bodyStart, contentType)
+      : `HTTP_${response.status}`;
+
+    return {
+      countryCode: task.countryCode,
+      countryName: task.countryName,
+      outlet: task.outlet,
+      url: task.url,
+      feedRow: task.feedRow,
+      httpCode: response.status,
+      failureReason,
+      valid,
+      checkedAt: NOW.toISOString(),
+      xmlDetected,
+    };
+  } catch (error) {
+    return {
+      countryCode: task.countryCode,
+      countryName: task.countryName,
+      outlet: task.outlet,
+      url: task.url,
+      feedRow: task.feedRow,
+      httpCode: null,
+      failureReason: classifyFetchError(error),
+      valid: false,
+      checkedAt: NOW.toISOString(),
+      xmlDetected: false,
+    };
+  }
+}
+
+function formatRow(params: {
+  row: number;
+  outlet: string;
+  url: string;
+  status: string;
+  checkedDate: string;
+  validLabel: string;
+}): string {
+  const urlDisplay = params.url === 'N/A' ? 'N/A' : `<${params.url}>`;
+  return `${params.row}|${params.outlet}|${urlDisplay}|${params.status}|${params.checkedDate}|${params.validLabel}|`;
+}
+
+function formatStatus(result: EndpointResult): string {
+  if (result.httpCode === null) {
+    return `ERR (${result.failureReason || 'NETWORK'})`;
+  }
+  if (result.valid) {
+    return String(result.httpCode);
+  }
+  return `${result.httpCode} (${result.failureReason || 'INVALID'})`;
+}
+
+function classifyFetchError(error: unknown): string {
+  const message = String(error).toLowerCase();
+  if (message.includes('dns') || message.includes('could not resolve host') || message.includes('getaddrinfo')) {
+    return 'DNS';
+  }
+  if (message.includes('abort') || message.includes('timeout')) {
+    return 'TIMEOUT';
+  }
+  if (message.includes('certificate') || message.includes('ssl') || message.includes('tls')) {
+    return 'TLS';
+  }
+  if (message.includes('connection refused')) {
+    return 'CONNECTION_REFUSED';
+  }
+  if (message.includes('econnreset') || message.includes('socket hang up')) {
+    return 'CONNECTION_RESET';
+  }
+  return 'NETWORK';
+}
+
+function classifyHttpBodyFailure(bodyStart: string, contentType: string): string {
+  if (contentType.includes('json')) return 'INVALID_JSON';
+  if (contentType.includes('text/html')) return 'HTML_RETURNED';
+  if (bodyStart.startsWith('<!doctype html')) return 'HTML_RETURNED';
+  return 'INVALID_FEED_FORMAT';
+}
+
+function summarizeFailureReasons(results: EndpointResult[]): Record<string, number> {
+  const counters: Record<string, number> = {};
+  for (const result of results) {
+    if (!result.failureReason) continue;
+    counters[result.failureReason] = (counters[result.failureReason] || 0) + 1;
+  }
+  return counters;
+}
+
+function isLikelyRuntimeNetworkFailure(results: EndpointResult[], summary: SummaryCounts): boolean {
+  return (
+    summary.checkedFeeds > 0 &&
+    summary.invalid === summary.checkedFeeds &&
+    Object.keys(summary.failureReasons).length === 1 &&
+    summary.failureReasons.NETWORK === summary.invalid &&
+    results.every((result) => result.failureReason === 'NETWORK')
+  );
+}
+
+function fetchWithTimeout(url: string, timeoutMs: number): Promise<Response> {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+
+  return fetch(url, {
+    method: 'GET',
+    headers: {
+      'User-Agent': USER_AGENT,
+      Accept: 'application/rss+xml, application/xml, text/xml, */*',
+    },
+    redirect: 'follow',
+    signal: controller.signal,
+  }).finally(() => {
+    clearTimeout(timeout);
+  });
+}
+
+function updateHeaderCheckedDate(contents: string): string {
+  if (!contents.includes('- Last checked:')) {
+    return contents;
+  }
+
+  return contents.replace(
+    /- Last checked:\s*\d{2}\/\d{2}\/\d{4}/,
+    `- Last checked: ${CHECKED_DATE}`
+  );
+}
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+
+function clampInt(value: string | undefined, min: number, max: number, fallback: number): number {
+  if (!value) return fallback;
+  const parsed = Number.parseInt(value, 10);
+  if (Number.isNaN(parsed) || parsed < min || parsed > max) {
+    return fallback;
+  }
+  return parsed;
+}
+
+function toCheckedDate(date: Date): string {
+  const mm = `${date.getMonth() + 1}`.padStart(2, '0');
+  const dd = `${date.getDate()}`.padStart(2, '0');
+  const yyyy = date.getFullYear();
+  return `${mm}/${dd}/${yyyy}`;
+}
+
+void main().catch((error) => {
+  console.error(error);
+  process.exit(1);
+});

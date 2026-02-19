@@ -1,153 +1,107 @@
-# [PRD] PressLab Global Radar - Breaking-First Research Platform
+# [PRD] World Press Monitor Core API (Metadata-First)
 
-## 1. Executive Summary
+## 1. Product Definition
 
-PressLab Global Radar is a breaking-news-first monitoring and drafting platform.
-The first objective is to continuously monitor top-tier US/global sources, ingest high-quality article metadata with low latency, and generate journalist-ready Spanish drafts for LATAM publishing workflows.
+World Press Monitor is a backend-first monitoring API.
+It ingests RSS/sitemap signals, stores structured metadata, and serves API consumers (dashboards, automations, alerts) without requiring a coupled frontend in this repository.
 
-This PRD is scoped for research and product validation.
+Core content model is metadata-first:
+- headline (`title_original`, optional `title_en`)
+- feed description (`summary_original`, optional `summary_en`)
+- publication timestamp and section
+- country/source metadata
+- canonical source URL (link-out)
 
-## 2. Product Goals
+## 2. Goals
 
-1. Catch high-impact breaking signals from top journalistic sources as early as possible.
-2. Keep ingestion quality high (freshness, source reliability, dedup quality, timestamp quality).
-3. Reduce time-to-draft so journalists can approve and publish quickly.
-4. Preserve editorial control: no automatic final publication without journalist confirmation.
+1. Keep global ingest running continuously with clear source health visibility.
+2. Serve fast DB-first API responses for article and ops consumers.
+3. Preserve legal-safe distribution model: link-out to origin, no full article-body redistribution.
+4. Provide transparent per-country source inventory and endpoint status reporting.
 
 ## 3. Non-Goals
 
-1. Fully autonomous publishing without human approval.
-2. Full-article unauthorized replication pipelines.
-3. Bot-evasion or protection-circumvention architecture.
+1. Frontend UI ownership in this repo.
+2. Automatic publication to end-user channels.
+3. Full-text scraping/republishing pipelines.
+4. Circumvention-oriented anti-bot systems.
 
-## 4. Core User Workflow
+## 4. Backend Scope
 
-1. Monitor detects breaking candidate from major sources.
-2. System clusters related updates and ranks urgency/confidence.
-3. AI generates Spanish draft (headline + body + source citations).
-4. Journalist edits/approves in Writing workspace.
-5. Approved draft is sent to Distribution workspace and published to selected channels.
+1. Ingestion: RSS + sitemap fetch with endpoint run logs.
+2. Storage: PostgreSQL canonical table `external_news_articles`.
+3. Serving: API routes under `/api/*` with DB-first reads.
+4. Operations: hourly/daily scripts and Discord reporting.
+5. Health: machine-readable ops status (`green/yellow/red`) via `/api/ops/health`.
 
-## 5. Data Ingestion Strategy
+## 5. Source Inventory (Current)
 
-### 5.1 Two Lanes
+### 5.1 Configured Countries
 
-1. Breaking Lane (speed-first)
-- Top 10 major sources (high signal, high trust).
-- Fast polling window for latest updates.
-- Tight ranking for breaking candidates.
+| Country | Outlets (All) | Outlets (Default Live) | RSS Endpoints (Default Live) | Sitemap Endpoints (Default Live) |
+| --- | ---: | ---: | ---: | ---: |
+| US | 2342 | 130 | 130 | 4 |
+| Argentina | 31 | 31 | 31 | 1 |
+| Chile | 27 | 27 | 27 | 1 |
+| Uruguay | 22 | 22 | 22 | 0 |
+| Dominican Republic | 22 | 22 | 22 | 10 |
+| **Total** | **2444** | **232** | **232** | **16** |
 
-2. Coverage Lane (completeness-first)
-- Broader RSS/Sitemap/API source coverage.
-- Larger window ingestion for context and backfill.
-- Quality controls: dedup, source scoring, endpoint health.
+Source of truth: `data/outlets.ts` (`OUTLET_FEEDS` + `default_live` preset).
 
-### 5.2 Source Policy
+### 5.2 Reporting Requirement
 
-1. Tier 1: Major trusted outlets and wires.
-2. Tier 2: Secondary or regional expansion.
-3. Tier 3: Exploratory sources (off by default until verified).
+Hourly ops output must always include all configured countries with:
+1. `created_1h` and active-source counts.
+2. `By Country -> Section -> Source (created_1h)` top line per country.
 
-## 6. Ingestion Quality Requirements
+## 6. Endpoint Health Transparency
 
-1. Freshness
-- Minimize lag from source publication to platform visibility.
-- Track lag percentiles and stale-source alerts.
+Endpoint checks and reports expose operational status categories:
 
-2. Reliability
-- Endpoint success-rate monitoring by source and method.
-- Circuit-breaker behavior on repeated endpoint failures.
+1. `200`: endpoint responded and parsed.
+2. `blocked`: endpoint reachable but blocked/forbidden/paywalled/anti-bot limited.
+3. `failure`: timeout, transport error, invalid feed/sitemap payload, or parser failure.
 
-3. Timestamp Accuracy
-- Prefer source publication timestamps.
-- Apply metadata enrichment where feed timestamps are weak.
+Primary commands:
+- `bun run audit:daily-sources` (network audit: endpoint-level status)
+- `bun run report:daily-sources` (DB-backed volume/quality report)
+- `bun run notify:discord-hourly:ops` (global hourly summary)
 
-4. Deduplication
-- URL normalization + link hash clustering.
-- Cross-source duplicate detection for same event.
+## 7. API Contract (Core)
 
-## 7. Breaking Detection
+1. `GET /api/news`
+   - DB-first read from `external_news_articles`.
+   - optional live fallback depending on runtime flags.
+2. `GET /api/ops/health`
+   - status, alerts, ingest/endpoints/breaking/worker metrics.
+   - quality object focuses on metadata coverage, not translation quality gating.
+3. Radar read endpoints under `/api/radar/v1/*`
+   - authenticated external consumption for article/sources/ops views.
 
-### 7.1 Signals
+## 8. Ops Alerts and Thresholds
 
-1. Major-source recency spikes.
-2. Breaking term patterns in headline/metadata.
-3. Multi-source convergence in short windows.
-4. Optional social signal (supplementary, not single point of truth).
+Threshold-based alerts prioritize ingest reliability:
 
-### 7.2 Prioritization
+1. minimum inserted volume in 1h.
+2. max ingest heartbeat gap.
+3. max endpoint failure rate in 1h.
+4. max breaking queue backlog.
+5. max worker stale minutes.
 
-1. Source confidence.
-2. Event recency.
-3. Cross-source confirmation count.
-4. Topic criticality (politics, macro economy, security, disaster, etc.).
+Translation-specific coverage is not used as an alert gate in this mode.
 
-## 8. AI Workflow
+## 9. Deployment Model
 
-### 8.1 Classification
+1. API serving: Vercel (or equivalent) for request/response endpoints.
+2. Worker execution: scheduler-friendly runtime (GitHub Actions, Cloud Run, Railway, VM cron).
+3. Fallback for blocked feeds: legal relay/proxy pattern with strict domain allowlist (Railway is acceptable as fallback host).
+4. Data policy: metadata + source URL storage, link-out to original publication.
 
-1. Stage 1: instant keyword-based beat assignment.
-2. Stage 2: async LLM refinement with confidence scoring.
+## 10. Success Metrics
 
-### 8.2 Draft Generation
-
-1. Auto-generate Spanish draft from structured metadata.
-2. Include source links and publication context.
-3. Keep model output editable and auditable in UI.
-
-## 9. Journalist Experience
-
-1. Live Feed showing latest RSS/Sitemap-ingested items.
-2. Major Watch panel for Top 10 breaking overview.
-3. Breaking Queue for queued candidates.
-4. Writing workspace for review/edit/approval.
-5. Distribution workspace for channel-specific copy and publishing.
-
-## 10. KPIs
-
-1. Ingestion latency (p50/p90).
-2. Time-to-draft from first signal.
-3. Journalist approval time.
-4. Endpoint failure rate.
-5. Duplicate rate.
-6. Share of breaking candidates confirmed by journalists.
-
-## 11. Architecture (Current Direction)
-
-1. Frontend: Next.js + React.
-2. Ingestion API: Next API routes with RSS/Sitemap proxy paths.
-3. Storage: PostgreSQL with `external_news_articles` as canonical SoT (+ endpoint runs, optional legacy `ingested_articles` compatibility writes).
-4. Serving model: DB-first read (`external_news_articles` first), optional live crawl fallback when DB is empty/stale.
-5. Cache: optional Redis + in-memory response cache.
-6. AI: LLM classification/draft generation services.
-7. Ops: scheduled independent ingest worker + monitor/enrich/report scripts (always-on ingestion posture even when web app is down).
-8. Health model: `/api/ops/health` exposes machine-readable `green/yellow/red` with threshold-based WARN/CRIT alerts.
-9. Ops alerting includes ingest-gap detection (`OPS_ALERT_MAX_NO_INGEST_MINUTES`, default 10m) to catch stalled pipelines quickly.
-
-## 12. Roadmap
-
-### Phase 1 - Top10 Breaking Foundation
-
-1. Top 10 major-source monitoring loop.
-2. RSS/Sitemap live stream surfaced in dashboard.
-3. Breaking queue -> writing draft flow.
-
-### Phase 2 - Quality Hardening
-
-1. Timestamp enrichment and dedup hardening.
-2. Endpoint health analytics and alerting.
-3. Source-policy automation (promote/demote by quality).
-4. DB-first read SLOs (p95 response + DB freshness guardrails).
-5. Hourly ops digest to Discord (ingest volume, source coverage, column-level quality, breaking ratio).
-
-### Phase 3 - Publishing Acceleration
-
-1. Faster drafting templates by beat.
-2. Distribution automation per channel.
-3. Editorial analytics for speed and hit-rate.
-
-## 13. Example Scenario
-
-A macroeconomy reporter monitors Top 10 sources.
-When a US macro breaking story appears, PressLab detects it, creates a Spanish draft, and sends it to Writing.
-After journalist confirmation, the story is distributed to LATAM publishing channels with minimal delay.
+1. stable hourly ingest volume and low ingest gaps.
+2. low endpoint failure rate by source.
+3. complete by-country hourly visibility for all configured countries.
+4. high metadata completeness (`title_original`, `summary_original`, `url`, `source`, `publication_datetime`).
+5. predictable API latency from DB-first serving.

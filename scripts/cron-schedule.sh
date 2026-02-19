@@ -2,8 +2,8 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-CRON_TAG_START="# >>> presslab-auto >>>"
-CRON_TAG_END="# <<< presslab-auto <<<"
+CRON_TAG_START="# >>> wpm-auto >>>"
+CRON_TAG_END="# <<< wpm-auto <<<"
 BUN_BIN="$(command -v bun || true)"
 SHELL_BIN="$(command -v zsh || echo /bin/zsh)"
 
@@ -16,9 +16,8 @@ build_block() {
   cat <<EOF
 $CRON_TAG_START
 */5 * * * * cd "$ROOT_DIR" && $SHELL_BIN -lc 'set -a; source ./.env.local; set +a; "$BUN_BIN" scripts/ingest-worker.ts --once >> ./audits/cron-ingest.log 2>&1'
-*/5 * * * * cd "$ROOT_DIR" && $SHELL_BIN -lc 'set -a; source ./.env.local; set +a; "$BUN_BIN" scripts/collect-x-breaking.ts >> ./audits/cron-x-breaking.log 2>&1'
-*/5 * * * * cd "$ROOT_DIR" && $SHELL_BIN -lc 'set -a; source ./.env.local; set +a; "$BUN_BIN" scripts/enrich-external-articles.ts >> ./audits/cron-enrich.log 2>&1'
-* * * * * cd "$ROOT_DIR" && $SHELL_BIN -lc 'set -a; source ./.env.local; set +a; "$BUN_BIN" scripts/process-radar-summaries.ts >> ./audits/cron-radar-summary.log 2>&1'
+*/5 * * * * cd "$ROOT_DIR" && $SHELL_BIN -lc 'set -a; source ./.env.local; set +a; bash scripts/watch-ingest-health.sh >> ./audits/cron-watch-ingest-health.log 2>&1'
+0 0 * * * cd "$ROOT_DIR" && $SHELL_BIN -lc 'set -a; source ./.env.local; set +a; ("$BUN_BIN" scripts/verify-readme-rss.ts && "$BUN_BIN" scripts/export-rss-catalog.ts) >> ./audits/cron-verify-readme-rss.log 2>&1'
 0 * * * * cd "$ROOT_DIR" && $SHELL_BIN -lc 'set -a; source ./.env.local; set +a; "$BUN_BIN" scripts/post-hourly-ops-discord.ts >> ./audits/cron-hourly-ops.log 2>&1'
 15 0 * * * cd "$ROOT_DIR" && $SHELL_BIN -lc 'set -a; source ./.env.local; set +a; ("$BUN_BIN" scripts/report-daily-source-counts.ts && "$BUN_BIN" scripts/post-daily-discord.ts) >> ./audits/cron-report.log 2>&1'
 $CRON_TAG_END
@@ -46,7 +45,7 @@ install_cron() {
     printf "%s\n" "$stripped"
     build_block
   } | crontab -
-  echo "Installed PressLab cron schedule."
+  echo "Installed WPM cron schedule."
   status_cron
 }
 
@@ -55,21 +54,21 @@ remove_cron() {
   existing="$(current_crontab)"
   stripped="$(printf "%s\n" "$existing" | strip_block)"
   printf "%s\n" "$stripped" | crontab -
-  echo "Removed PressLab cron schedule."
+  echo "Removed WPM cron schedule."
 }
 
 status_cron() {
   local existing
   existing="$(current_crontab)"
   if printf "%s\n" "$existing" | grep -qF "$CRON_TAG_START"; then
-    echo "PressLab cron schedule: installed"
+    echo "WPM cron schedule: installed"
     printf "%s\n" "$existing" | awk -v start="$CRON_TAG_START" -v end="$CRON_TAG_END" '
       $0 == start { inside=1; next }
       $0 == end { inside=0; next }
       inside { print }
     '
   else
-    echo "PressLab cron schedule: not installed"
+    echo "WPM cron schedule: not installed"
   fi
 }
 

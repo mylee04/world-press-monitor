@@ -1,37 +1,34 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { requireRadarServiceAuth } from '@/lib/radar-service-auth';
 import { getRadarServiceSources } from '@/lib/radar-service-store';
+import { executeRadarGetRoute } from '@/lib/radar-route-executor';
+import { toInt } from '@/lib/query-params';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-function toInt(raw: string | null, fallback: number, min: number, max: number): number {
-  const parsed = Number(raw);
-  if (!Number.isFinite(parsed)) return fallback;
-  return Math.max(min, Math.min(max, Math.floor(parsed)));
-}
+type SourcesQuery = {
+  hours: number;
+  limit: number;
+};
 
 export async function GET(req: NextRequest): Promise<Response> {
-  if (process.env.RADAR_SERVICE_REQUIRE_AUTH !== 'false') {
-    const unauthorized = requireRadarServiceAuth(req, 'read:sources');
-    if (unauthorized) return unauthorized;
-  }
-
-  try {
-    const params = req.nextUrl.searchParams;
-    const hours = toInt(params.get('hours'), 24, 1, 168);
-    const limit = toInt(params.get('limit'), 500, 1, 1000);
-    const sources = await getRadarServiceSources({ hours, limit });
-    return NextResponse.json({
+  return executeRadarGetRoute<SourcesQuery, Awaited<ReturnType<typeof getRadarServiceSources>>>({
+    req,
+    scope: 'read:sources',
+    requireAuth: process.env.RADAR_SERVICE_REQUIRE_AUTH !== 'false',
+    parseParams: (searchParams) => ({
+      hours: toInt(searchParams.get('hours'), 24, 1, 168),
+      limit: toInt(searchParams.get('limit'), 500, 1, 1000),
+    }),
+    runQuery: (query) => getRadarServiceSources({
+      hours: query.hours,
+      limit: query.limit,
+    }),
+    toResponse: (sources) => NextResponse.json({
       sources,
       seeded: false,
       inserted: 0,
-    });
-  } catch (error) {
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Failed to fetch RSS sources' },
-      { status: 500 }
-    );
-  }
+    }),
+    getErrorMessage: (error) => error instanceof Error ? error.message : 'Failed to fetch RSS sources',
+  });
 }
-

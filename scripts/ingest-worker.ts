@@ -2,6 +2,8 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { OUTLET_FEEDS } from '../data/outlets';
 import { parseRssOrAtom, parseSitemap } from '../lib/parsers';
+import { runWithConcurrency } from '../lib/concurrency';
+import { fetchWithRetry, isSearchAggregatorUrl } from '../lib/fetch-utils';
 import { classifySection } from '../lib/keyword-classifier';
 import { inferGeoFromTitle } from '../lib/geo';
 import {
@@ -135,10 +137,8 @@ function inScopeOutlet(outlet: OutletFeed): boolean {
   if (
     SKIP_SEARCH_AGGREGATORS
     && (
-      outlet.rssUrl?.includes('news.google.com/rss/search')
-      || outlet.rssUrl?.includes('www.bing.com/news/search')
-      || outlet.sitemapUrl?.includes('news.google.com/rss/search')
-      || outlet.sitemapUrl?.includes('www.bing.com/news/search')
+      isSearchAggregatorUrl(outlet.rssUrl || '')
+      || isSearchAggregatorUrl(outlet.sitemapUrl || '')
     )
   ) return false;
   const country = normalizeText(normalizeCountryName(outlet.country));
@@ -157,54 +157,20 @@ function parseSitemapIndex(xml: string): string[] {
     .slice(0, SITEMAP_INDEX_CHILDREN_LIMIT);
 }
 
-async function fetchWithTimeout(url: string, timeoutMs = FETCH_TIMEOUT_MS): Promise<Response> {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), timeoutMs);
-  try {
-    return await fetch(url, {
-      signal: controller.signal,
-      headers: {
-        'User-Agent': 'PressLabIngestWorker/1.0 (+https://presslab.local)',
-        Accept: 'application/xml, text/xml, application/rss+xml, application/atom+xml, */*',
-      },
-    });
-  } finally {
-    clearTimeout(timeout);
-  }
-}
+const FEED_FETCH_HEADERS = {
+  'User-Agent': 'PressLabIngestWorker/1.0 (+https://presslab.local)',
+  Accept: 'application/xml, text/xml, application/rss+xml, application/atom+xml, */*',
+};
 
-function isRetryableStatus(status: number): boolean {
-  return status === 429 || status === 503 || status === 504;
-}
-
-function isSearchAggregator(url: string): boolean {
-  return url.includes('news.google.com/rss/search') || url.includes('www.bing.com/news/search');
-}
-
-function delay(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-async function fetchWithRetry(url: string): Promise<Response> {
-  const attempts = isSearchAggregator(url) ? 3 : 1;
-  let lastResponse: Response | null = null;
-
-  for (let i = 0; i < attempts; i += 1) {
-    try {
-      const response = await fetchWithTimeout(url);
-      if (!isRetryableStatus(response.status) || i === attempts - 1) {
-        return response;
-      }
-      lastResponse = response;
-    } catch (error) {
-      if (i === attempts - 1) throw error;
-    }
-    const backoff = 200 + i * 300 + Math.floor(Math.random() * 200);
-    await delay(backoff);
-  }
-
-  if (lastResponse) return lastResponse;
-  return fetchWithTimeout(url);
+async function fetchWithRetryFeed(url: string): Promise<Response> {
+  return fetchWithRetry(url, {
+    timeoutMs: FETCH_TIMEOUT_MS,
+    fetchOptions: {
+      headers: FEED_FETCH_HEADERS
+    },
+    attempts: isSearchAggregatorUrl(url) ? 3 : 1,
+    backoffMs: (attempt) => 200 + attempt * 300 + Math.floor(Math.random() * 200),
+  });
 }
 
 function dedupeAndSort(items: NewsItem[]): NewsItem[] {
@@ -216,20 +182,6 @@ function dedupeAndSort(items: NewsItem[]): NewsItem[] {
     }
   }
   return [...byLink.values()].sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
-}
-
-async function runWithConcurrency<T, R>(items: T[], limit: number, fn: (item: T) => Promise<R>): Promise<R[]> {
-  const results: R[] = new Array(items.length);
-  let idx = 0;
-  async function worker(): Promise<void> {
-    while (idx < items.length) {
-      const current = idx;
-      idx += 1;
-      results[current] = await fn(items[current]);
-    }
-  }
-  await Promise.all(Array.from({ length: Math.min(limit, items.length) }, () => worker()));
-  return results;
 }
 
 async function toNewsItem(
@@ -283,7 +235,7 @@ async function fetchRss(outlet: OutletFeed): Promise<{ items: NewsItem[]; run: I
   }
 
   try {
-    const response = await fetchWithRetry(outlet.rssUrl);
+    const response = await fetchWithRetryFeed(outlet.rssUrl);
     if (!response.ok) {
       return {
         items: [],
@@ -364,7 +316,7 @@ async function fetchSitemap(outlet: OutletFeed): Promise<{ items: NewsItem[]; ru
   }
 
   try {
-    const response = await fetchWithRetry(outlet.sitemapUrl);
+    const response = await fetchWithRetryFeed(outlet.sitemapUrl);
     if (!response.ok) {
       return {
         items: [],
@@ -393,7 +345,7 @@ async function fetchSitemap(outlet: OutletFeed): Promise<{ items: NewsItem[]; ru
         const childResults = await Promise.all(
           children.map(async (childUrl) => {
             try {
-              const childResponse = await fetchWithRetry(childUrl);
+              const childResponse = await fetchWithRetryFeed(childUrl);
               if (!childResponse.ok) return [];
               const childXml = await childResponse.text();
               return parseSitemap(childXml, Math.max(8, Math.floor(SITEMAP_ITEM_LIMIT / children.length)));

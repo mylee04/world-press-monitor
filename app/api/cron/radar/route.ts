@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { pickRadarTokenForScope } from '@/lib/radar-scope-token';
+import { toInt } from '@/lib/query-params';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -14,12 +15,6 @@ function isAuthorized(req: NextRequest): boolean {
   if (!secret) return false;
   const auth = req.headers.get('authorization') || '';
   return auth === `Bearer ${secret}`;
-}
-
-function toInt(raw: string | null, fallback: number, min: number, max: number): number {
-  const parsed = Number(raw);
-  if (!Number.isFinite(parsed)) return fallback;
-  return Math.max(min, Math.min(max, Math.floor(parsed)));
 }
 
 async function postDiscord(content: string): Promise<void> {

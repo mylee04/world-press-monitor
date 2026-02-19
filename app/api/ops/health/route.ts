@@ -106,35 +106,25 @@ export async function GET(req: NextRequest): Promise<Response> {
       where runner = 'worker'
     `);
 
-    const qualityResult = await pool.query<{
+    const metadataResult = await pool.query<{
       total_24h: string;
-      non_en_total: string;
-      non_en_title_en_ok: string;
-      non_en_summary_en_ok: string;
-      summary_ai_article_ok: string;
-      summary_article_meta_ok: string;
-      avg_quality: string;
+      title_original_ok: string;
+      summary_original_ok: string;
+      publication_datetime_ok: string;
+      section_ok: string;
+      country_ok: string;
+      source_ok: string;
+      url_ok: string;
     }>(`
       select
         count(*)::text as total_24h,
-        count(*) filter (where language is not null and btrim(language) <> '' and lower(language) not like 'en%')::text as non_en_total,
-        count(*) filter (
-          where language is not null
-            and btrim(language) <> ''
-            and lower(language) not like 'en%'
-            and title_en is not null
-            and btrim(title_en) <> ''
-        )::text as non_en_title_en_ok,
-        count(*) filter (
-          where language is not null
-            and btrim(language) <> ''
-            and lower(language) not like 'en%'
-            and summary_en is not null
-            and btrim(summary_en) <> ''
-        )::text as non_en_summary_en_ok,
-        count(*) filter (where summary_source = 'ai_article')::text as summary_ai_article_ok,
-        count(*) filter (where summary_source = 'article_meta')::text as summary_article_meta_ok,
-        round(coalesce(avg(quality_score), 0), 1)::text as avg_quality
+        count(*) filter (where title_original is not null and btrim(title_original) <> '')::text as title_original_ok,
+        count(*) filter (where summary_original is not null and btrim(summary_original) <> '')::text as summary_original_ok,
+        count(*) filter (where publication_datetime is not null)::text as publication_datetime_ok,
+        count(*) filter (where section is not null and btrim(section) <> '')::text as section_ok,
+        count(*) filter (where country is not null and btrim(country) <> '')::text as country_ok,
+        count(*) filter (where source is not null and btrim(source) <> '')::text as source_ok,
+        count(*) filter (where url is not null and btrim(url) <> '')::text as url_ok
       from external_news_articles
       where last_seen_at > now() - interval '24 hours'
     `);
@@ -177,14 +167,15 @@ export async function GET(req: NextRequest): Promise<Response> {
       failed_1h: '0',
       parsed_1h: '0',
     };
-    const quality = qualityResult.rows[0] || {
+    const metadata = metadataResult.rows[0] || {
       total_24h: '0',
-      non_en_total: '0',
-      non_en_title_en_ok: '0',
-      non_en_summary_en_ok: '0',
-      summary_ai_article_ok: '0',
-      summary_article_meta_ok: '0',
-      avg_quality: '0',
+      title_original_ok: '0',
+      summary_original_ok: '0',
+      publication_datetime_ok: '0',
+      section_ok: '0',
+      country_ok: '0',
+      source_ok: '0',
+      url_ok: '0',
     };
     const breaking = breakingResult.rows[0] || {
       breaking_1h: '0',
@@ -196,10 +187,7 @@ export async function GET(req: NextRequest): Promise<Response> {
     const noIngestMinutes = noIngestMinutesRaw < 0 ? null : noIngestMinutesRaw;
     const attempted1h = toNum(endpoint.attempted_1h);
     const failed1h = toNum(endpoint.failed_1h);
-    const nonEnTotal = toNum(quality.non_en_total);
     const endpointFailureRate1hPct = pct(failed1h, Math.max(attempted1h, 1));
-    const nonEnTitleCoveragePct = pct(toNum(quality.non_en_title_en_ok), Math.max(nonEnTotal, 1));
-    const nonEnSummaryCoveragePct = pct(toNum(quality.non_en_summary_en_ok), Math.max(nonEnTotal, 1));
     const workerStaleMinutes = worker
       ? Math.max(0, Math.floor((Date.now() - new Date(worker.generatedAt).getTime()) / 60000))
       : null;
@@ -210,8 +198,6 @@ export async function GET(req: NextRequest): Promise<Response> {
         noIngestMinutes,
         endpointFailureRate1hPct,
         queueNewTotal: toNum(breaking.queue_new_total),
-        nonEnTitleCoveragePct,
-        nonEnSummaryCoveragePct,
         workerStaleMinutes,
       },
       thresholds
@@ -239,15 +225,24 @@ export async function GET(req: NextRequest): Promise<Response> {
           failureRate1hPct: endpointFailureRate1hPct,
         },
         quality: {
-          total24h: toNum(quality.total_24h),
-          nonEnTotal,
-          nonEnTitleCoveragePct,
-          nonEnSummaryCoveragePct,
-          summarySource: {
-            aiArticlePct: pct(toNum(quality.summary_ai_article_ok), Math.max(toNum(quality.total_24h), 1)),
-            articleMetaPct: pct(toNum(quality.summary_article_meta_ok), Math.max(toNum(quality.total_24h), 1)),
+          total24h: toNum(metadata.total_24h),
+          metadataCoverage: {
+            titleOriginalPct: pct(toNum(metadata.title_original_ok), Math.max(toNum(metadata.total_24h), 1)),
+            summaryOriginalPct: pct(toNum(metadata.summary_original_ok), Math.max(toNum(metadata.total_24h), 1)),
+            publicationDatetimePct: pct(toNum(metadata.publication_datetime_ok), Math.max(toNum(metadata.total_24h), 1)),
+            sectionPct: pct(toNum(metadata.section_ok), Math.max(toNum(metadata.total_24h), 1)),
+            countryPct: pct(toNum(metadata.country_ok), Math.max(toNum(metadata.total_24h), 1)),
+            sourcePct: pct(toNum(metadata.source_ok), Math.max(toNum(metadata.total_24h), 1)),
+            urlPct: pct(toNum(metadata.url_ok), Math.max(toNum(metadata.total_24h), 1)),
           },
-          avgQuality: Number.parseFloat(quality.avg_quality || '0') || 0,
+          nonEnTotal: 0,
+          nonEnTitleCoveragePct: 0,
+          nonEnSummaryCoveragePct: 0,
+          summarySource: {
+            aiArticlePct: 0,
+            articleMetaPct: 0,
+          },
+          avgQuality: 0,
         },
         breaking: {
           breaking1h: toNum(breaking.breaking_1h),
