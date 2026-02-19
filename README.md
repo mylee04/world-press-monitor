@@ -30,7 +30,7 @@ You can also set them in GitHub settings manually.
 This list covers the currently configured countries and their RSS outlets.
 
 - Covered countries:
-  United States, China, Japan, Germany, India, United Kingdom, France, Italy, Canada, Russia, South Korea, Brazil, Australia, Spain, Mexico, Indonesia, Netherlands, Switzerland, Turkey, Saudi Arabia, Taiwan, Poland, Sweden, Belgium, Thailand, Iran, Argentina, Austria, Norway, United Arab Emirates, Global Energy & Grid
+  United States, China, Japan, Germany, India, United Kingdom, France, Italy, Canada, Russia, South Korea, Brazil, Australia, Spain, Mexico, Indonesia, Netherlands, Switzerland, Turkey, Saudi Arabia, Taiwan, Poland, Sweden, Belgium, Thailand, Iran, Argentina, Austria, Norway, United Arab Emirates
 
 - Last checked: 02/19/2026
 - `❌ NO_SOURCE` means no RSS source is configured for this country yet.
