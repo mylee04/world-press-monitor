@@ -3340,6 +3340,158 @@
           "checkedDate": "02/19/2026",
           "valid": "needs verification",
           "row": 25
+        },
+        {
+          "name": "EL PAÍS - Últimas",
+          "url": "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/ultimas-noticias/portada",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 26
+        },
+        {
+          "name": "EL PAÍS - Internacional",
+          "url": "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/internacional/portada",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 27
+        },
+        {
+          "name": "EL PAÍS - Opinión",
+          "url": "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/opinion/portada",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 28
+        },
+        {
+          "name": "EL PAÍS - España",
+          "url": "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/espana/portada",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 29
+        },
+        {
+          "name": "EL PAÍS - Sociedad",
+          "url": "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/sociedad/portada",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 30
+        },
+        {
+          "name": "EL PAÍS - Ciencia",
+          "url": "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/ciencia/portada",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 31
+        },
+        {
+          "name": "EL PAÍS - Tecnología",
+          "url": "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/tecnologia/portada",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 32
+        },
+        {
+          "name": "EL PAÍS - Cultura",
+          "url": "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/cultura/portada",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 33
+        },
+        {
+          "name": "EL PAÍS - Deportes",
+          "url": "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/deportes/portada",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 34
+        },
+        {
+          "name": "EL PAÍS - Gente",
+          "url": "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/gente/portada",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 35
+        },
+        {
+          "name": "EL PAÍS - Clima y medio ambiente",
+          "url": "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/clima-y-medio-ambiente/portada",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 36
+        },
+        {
+          "name": "La Vanguardia - Portada",
+          "url": "https://www.lavanguardia.com/rss/home.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 37
+        },
+        {
+          "name": "La Vanguardia - Internacional",
+          "url": "https://www.lavanguardia.com/rss/internacional.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 38
+        },
+        {
+          "name": "La Vanguardia - Política",
+          "url": "https://www.lavanguardia.com/rss/politica.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 39
+        },
+        {
+          "name": "La Vanguardia - Opinión",
+          "url": "https://www.lavanguardia.com/rss/opinion.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 40
+        },
+        {
+          "name": "La Vanguardia - Sociedad",
+          "url": "https://www.lavanguardia.com/rss/sociedad.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 41
+        },
+        {
+          "name": "La Vanguardia - Deportes",
+          "url": "https://www.lavanguardia.com/rss/deportes.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 42
+        },
+        {
+          "name": "El Mundo - Portada",
+          "url": "https://e00-elmundo.uecdn.es/rss/portada.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 43
+        },
+        {
+          "name": "The Local Spain (EN)",
+          "url": "https://feeds.thelocal.com/rss/es",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 44
         }
       ]
     },
@@ -3942,6 +4094,174 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 30
+        },
+        {
+          "name": "NOS Nieuws - Binnenland",
+          "url": "https://feeds.nos.nl/nosnieuwsbinnenland",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 31
+        },
+        {
+          "name": "NOS Nieuws - Buitenland",
+          "url": "https://feeds.nos.nl/nosnieuwsbuitenland",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 32
+        },
+        {
+          "name": "NOS Nieuws - Politiek",
+          "url": "https://feeds.nos.nl/nosnieuwspolitiek",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 33
+        },
+        {
+          "name": "NOS Nieuws - Economie",
+          "url": "https://feeds.nos.nl/nosnieuwseconomie",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 34
+        },
+        {
+          "name": "NOS Nieuws - Opmerkelijk",
+          "url": "https://feeds.nos.nl/nosnieuwsopmerkelijk",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 35
+        },
+        {
+          "name": "NOS Nieuws - Koningshuis",
+          "url": "https://feeds.nos.nl/nosnieuwskoningshuis",
+          "status": "⏩ OFFICIAL",
+          "valid": "needs verification",
+          "checkedDate": null,
+          "row": 36
+        },
+        {
+          "name": "NOS Nieuws - Cultuur & media",
+          "url": "https://feeds.nos.nl/nosnieuwscultuurenmedia",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 37
+        },
+        {
+          "name": "NOS Sport - Algemeen",
+          "url": "https://feeds.nos.nl/nossportalgemeen",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 38
+        },
+        {
+          "name": "NOS Sport - Voetbal",
+          "url": "https://feeds.nos.nl/nosvoetbal",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 39
+        },
+        {
+          "name": "NOS Sport - Wielrennen",
+          "url": "https://feeds.nos.nl/nossportwielrennen",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 40
+        },
+        {
+          "name": "NOS Sport - Schaatsen",
+          "url": "https://feeds.nos.nl/nossportschaatsen",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 41
+        },
+        {
+          "name": "NOS Sport - Tennis",
+          "url": "https://feeds.nos.nl/nossporttennis",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 42
+        },
+        {
+          "name": "NOS Sport - Formule 1",
+          "url": "https://feeds.nos.nl/nossportformule1",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 43
+        },
+        {
+          "name": "NOS op 3",
+          "url": "https://feeds.nos.nl/nosop3",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 44
+        },
+        {
+          "name": "NOS Jeugdjournaal",
+          "url": "https://feeds.nos.nl/jeugdjournaal",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 45
+        },
+        {
+          "name": "De Telegraaf",
+          "url": "https://www.telegraaf.nl/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 46
+        },
+        {
+          "name": "de Volkskrant",
+          "url": "https://www.volkskrant.nl/voorpagina/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 47
+        },
+        {
+          "name": "Trouw",
+          "url": "https://www.trouw.nl/voorpagina/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 48
+        },
+        {
+          "name": "Het Parool",
+          "url": "https://www.parool.nl/voorpagina/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 49
+        },
+        {
+          "name": "Het Financieele Dagblad (FD)",
+          "url": "https://fd.nl/?rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 50
+        },
+        {
+          "name": "Tweakers (Mixed)",
+          "url": "https://tweakers.net/feeds/mixed.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 51
         }
       ]
     },
@@ -5138,6 +5458,174 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 28
+        },
+        {
+          "name": "Aftonbladet - Nyheter (All)",
+          "url": "https://rss.aftonbladet.se/rss2/small/pages/sections/senastenytt/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 29
+        },
+        {
+          "name": "Aftonbladet - Sportbladet",
+          "url": "https://rss.aftonbladet.se/rss2/small/pages/sections/senastenytt/sport/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 30
+        },
+        {
+          "name": "Aftonbladet - Sportbladet Fotboll",
+          "url": "https://rss.aftonbladet.se/rss2/small/pages/sections/sportbladet/fotboll/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 31
+        },
+        {
+          "name": "Aftonbladet - Sportbladet Hockey",
+          "url": "https://rss.aftonbladet.se/rss2/small/pages/sections/sportbladet/hockey/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 32
+        },
+        {
+          "name": "Aftonbladet - Nöjesbladet",
+          "url": "https://rss.aftonbladet.se/rss2/small/pages/sections/nojesbladet/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 33
+        },
+        {
+          "name": "Aftonbladet - Kultur",
+          "url": "https://rss.aftonbladet.se/rss2/small/pages/sections/kultur/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 34
+        },
+        {
+          "name": "Expressen - Nyheter",
+          "url": "https://feeds.expressen.se/nyheter/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 35
+        },
+        {
+          "name": "GT - Nyheter",
+          "url": "https://feeds.expressen.se/gt/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 36
+        },
+        {
+          "name": "Svenska Dagbladet - Frontpage",
+          "url": "https://www.svd.se/?service=rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 37
+        },
+        {
+          "name": "The Local Sweden (EN)",
+          "url": "https://feeds.thelocal.com/rss/se",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 38
+        },
+        {
+          "name": "Sveriges Radio - Ekot nyhetssändning (pod)",
+          "url": "https://api.sr.se/api/rss/pod/3795",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 39
+        },
+        {
+          "name": "Sveriges Radio - P3 Nyheter på en minut (pod)",
+          "url": "https://api.sr.se/api/rss/pod/22376",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 40
+        },
+        {
+          "name": "Sveriges Radio - Radio Sweden på lätt svenska (program)",
+          "url": "https://api.sr.se/api/rss/program/4916?format=1",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 41
+        },
+        {
+          "name": "Radio Sweden - Sweden Today (podcast xml)",
+          "url": "http://sverigesradio.se/Podradio/xml/SRI_en_sweToday.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 42
+        },
+        {
+          "name": "Proletären",
+          "url": "https://proletaren.se/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 43
+        },
+        {
+          "name": "SVT Lokal - Sydnytt",
+          "url": "http://svt.se/nyheter/regionalt/sydnytt/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 44
+        },
+        {
+          "name": "SVT Lokal - Blekingenytt",
+          "url": "http://svt.se/nyheter/regionalt/blekingenytt/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 45
+        },
+        {
+          "name": "SVT Lokal - Mittnytt",
+          "url": "http://svt.se/nyheter/regionalt/mittnytt/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 46
+        },
+        {
+          "name": "SVT Lokal - Jämtlandsnytt",
+          "url": "http://svt.se/nyheter/regionalt/jamtlandsnytt/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 47
+        },
+        {
+          "name": "Sydsvenskan (fallback)",
+          "url": "https://www.sydsvenskan.se/feeds/feed.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 48
+        },
+        {
+          "name": "Nerikes Allehanda (fallback)",
+          "url": "https://www.na.se/feeds/feed.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 49
         }
       ]
     },
@@ -5224,6 +5712,78 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 27
+        },
+        {
+          "name": "The Bulletin (EN)",
+          "url": "https://www.thebulletin.be/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 28
+        },
+        {
+          "name": "HLN (Het Laatste Nieuws)",
+          "url": "https://www.hln.be/home/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 29
+        },
+        {
+          "name": "Brussels Morning",
+          "url": "https://brusselsmorning.com/feed",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 30
+        },
+        {
+          "name": "L'Echo",
+          "url": "https://www.lecho.be/rss/top_stories.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 31
+        },
+        {
+          "name": "De Standaard (example section)",
+          "url": "https://www.standaard.be/rss/section/1f2838d4-99ea-49f0-9102-138784c7ea7c",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 32
+        },
+        {
+          "name": "Het Nieuwsblad (example section)",
+          "url": "https://www.nieuwsblad.be/rss/section/55178e67-15a8-4ddd-a3d8-bfe5708f8932",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 33
+        },
+        {
+          "name": "Le Soir (main)",
+          "url": "https://www.lesoir.be/rss2/9/cible_principale",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 34
+        },
+        {
+          "name": "Brussels Times",
+          "url": "https://www.brusselstimes.com/rss-feed",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 35
+        },
+        {
+          "name": "City of Brussels (official)",
+          "url": "https://www.brussels.be/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 36
         }
       ]
     },
@@ -6976,6 +7536,190 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 30
+        },
+        {
+          "name": "VG - Forsiden",
+          "url": "https://www.vg.no/rss/feed/forsiden/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 31
+        },
+        {
+          "name": "VG - Innenriks",
+          "url": "https://www.vg.no/rss/feed/?categories=1069",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 32
+        },
+        {
+          "name": "VG - Utenriks",
+          "url": "https://www.vg.no/rss/feed/?categories=1070",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 33
+        },
+        {
+          "name": "E24 - Børs og finans",
+          "url": "https://e24.no/rss2/?seksjon=boers-og-finans",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 34
+        },
+        {
+          "name": "E24 - Aksjetips",
+          "url": "http://e24.no/rss2/?seksjon=aksjetips",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 35
+        },
+        {
+          "name": "E24 - IT & Telekom",
+          "url": "http://e24.no/rss2/?seksjon=it",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 36
+        },
+        {
+          "name": "NRK - RSS oversikt (directory)",
+          "url": "https://www.nrk.no/rss/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 37
+        },
+        {
+          "name": "NRK - Innenriks",
+          "url": "https://www.nrk.no/norge/toppsaker.rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 38
+        },
+        {
+          "name": "TV2 - Nyheter",
+          "url": "https://www.tv2.no/rss/nyheter",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 39
+        },
+        {
+          "name": "TV2 - Innenriks",
+          "url": "https://www.tv2.no/rss/nyheter/innenriks",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 40
+        },
+        {
+          "name": "TV2 - Utenriks",
+          "url": "https://www.tv2.no/rss/nyheter/utenriks",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 41
+        },
+        {
+          "name": "TV2 - Sport",
+          "url": "https://www.tv2.no/rss/sport",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 42
+        },
+        {
+          "name": "TV2 - Underholdning",
+          "url": "https://www.tv2.no/rss/underholdning",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 43
+        },
+        {
+          "name": "Nettavisen - Alle saker",
+          "url": "https://www.nettavisen.no/service/rich-rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 44
+        },
+        {
+          "name": "Nettavisen - Nyheter",
+          "url": "https://www.nettavisen.no/service/rich-rss?tag=nyheter",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 45
+        },
+        {
+          "name": "Nettavisen - Sport",
+          "url": "https://www.nettavisen.no/service/rich-rss?tag=sport",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 46
+        },
+        {
+          "name": "Dagbladet",
+          "url": "https://www.dagbladet.no/?lab_viewport=rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 47
+        },
+        {
+          "name": "Aftenposten",
+          "url": "https://www.aftenposten.no/rss/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 48
+        },
+        {
+          "name": "Dagsavisen",
+          "url": "https://www.dagsavisen.no/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 49
+        },
+        {
+          "name": "DN - RSS directory",
+          "url": "https://services.dn.no/tools/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 50
+        },
+        {
+          "name": "DN - Alle nyheter",
+          "url": "https://services.dn.no/api/feed/rss/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 51
+        },
+        {
+          "name": "Finansavisen",
+          "url": "https://ws.finansavisen.no/api/articles.rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 52
+        },
+        {
+          "name": "Finansavisen - Børs",
+          "url": "https://ws.finansavisen.no/api/articles.rss?category=B%C3%B8rs",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 53
         }
       ]
     },

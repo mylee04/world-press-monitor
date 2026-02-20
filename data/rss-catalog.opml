@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Fri, 20 Feb 2026 05:50:12 GMT</dateCreated>
+    <dateCreated>Fri, 20 Feb 2026 14:28:37 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -317,7 +317,7 @@
       <outline text="Ottawa Sun [valid]" title="Ottawa Sun [valid]" type="rss" xmlUrl="https://ottawasun.com/feed" htmlUrl="https://ottawasun.com"/>
       <outline text="The Tyee [valid]" title="The Tyee [valid]" type="rss" xmlUrl="https://thetyee.ca/rss2.xml" htmlUrl="https://thetyee.ca"/>
       <outline text="The StarPhoenix [valid]" title="The StarPhoenix [valid]" type="rss" xmlUrl="https://thestarphoenix.com/feed" htmlUrl="https://thestarphoenix.com"/>
-      <outline text="Edmonton Sun [valid]" title="Edmonton Sun [valid]" type="rss" xmlUrl="https://edmontonsun.com/feed" htmlUrl="https://edmontonsun.com"/>
+      <outline text="Edmonton Sun [invalid (ERR)]" title="Edmonton Sun [invalid (ERR)]" type="rss" xmlUrl="https://edmontonsun.com/feed" htmlUrl="https://edmontonsun.com"/>
       <outline text="Canada.com [valid]" title="Canada.com [valid]" type="rss" xmlUrl="https://o.canada.com/feed" htmlUrl="https://o.canada.com"/>
       <outline text="Business In Vancouver (BIV) [valid]" title="Business In Vancouver (BIV) [valid]" type="rss" xmlUrl="https://biv.com/rss" htmlUrl="https://biv.com"/>
       <outline text="Regina Leader Post [valid]" title="Regina Leader Post [valid]" type="rss" xmlUrl="https://leaderpost.com/feed" htmlUrl="https://leaderpost.com"/>
@@ -404,7 +404,7 @@
       <outline text="Agência Pública [valid]" title="Agência Pública [valid]" type="rss" xmlUrl="https://apublica.org/feed/" htmlUrl="https://apublica.org"/>
       <outline text="Nexo Jornal [valid]" title="Nexo Jornal [valid]" type="rss" xmlUrl="https://www.nexojornal.com.br/rss.xml" htmlUrl="https://www.nexojornal.com.br"/>
       <outline text="Jornal GGN [valid]" title="Jornal GGN [valid]" type="rss" xmlUrl="https://jornalggn.com.br/feed/" htmlUrl="https://jornalggn.com.br"/>
-      <outline text="Jacobin Brasil [invalid (ERR)]" title="Jacobin Brasil [invalid (ERR)]" type="rss" xmlUrl="https://jacobin.com.br/feed" htmlUrl="https://jacobin.com.br"/>
+      <outline text="Jacobin Brasil [valid]" title="Jacobin Brasil [valid]" type="rss" xmlUrl="https://jacobin.com.br/feed" htmlUrl="https://jacobin.com.br"/>
       <outline text="CartaCapital [valid]" title="CartaCapital [valid]" type="rss" xmlUrl="https://www.cartacapital.com.br/feed" htmlUrl="https://www.cartacapital.com.br"/>
     </outline>
     <outline text="Australia (AU)" title="Australia (AU)">
@@ -440,6 +440,25 @@
       <outline text="eldiario [valid]" title="eldiario [valid]" type="rss" xmlUrl="https://www.eldiario.es/rss/" htmlUrl="https://www.eldiario.es"/>
       <outline text="Marca [valid]" title="Marca [valid]" type="rss" xmlUrl="https://www.marca.com/rss/" htmlUrl="https://www.marca.com"/>
       <outline text="El Pais [valid]" title="El Pais [valid]" type="rss" xmlUrl="https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/portada" htmlUrl="https://feeds.elpais.com"/>
+      <outline text="EL PAÍS - Últimas [valid]" title="EL PAÍS - Últimas [valid]" type="rss" xmlUrl="https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/ultimas-noticias/portada" htmlUrl="https://feeds.elpais.com"/>
+      <outline text="EL PAÍS - Internacional [valid]" title="EL PAÍS - Internacional [valid]" type="rss" xmlUrl="https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/internacional/portada" htmlUrl="https://feeds.elpais.com"/>
+      <outline text="EL PAÍS - Opinión [valid]" title="EL PAÍS - Opinión [valid]" type="rss" xmlUrl="https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/opinion/portada" htmlUrl="https://feeds.elpais.com"/>
+      <outline text="EL PAÍS - España [valid]" title="EL PAÍS - España [valid]" type="rss" xmlUrl="https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/espana/portada" htmlUrl="https://feeds.elpais.com"/>
+      <outline text="EL PAÍS - Sociedad [valid]" title="EL PAÍS - Sociedad [valid]" type="rss" xmlUrl="https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/sociedad/portada" htmlUrl="https://feeds.elpais.com"/>
+      <outline text="EL PAÍS - Ciencia [valid]" title="EL PAÍS - Ciencia [valid]" type="rss" xmlUrl="https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/ciencia/portada" htmlUrl="https://feeds.elpais.com"/>
+      <outline text="EL PAÍS - Tecnología [valid]" title="EL PAÍS - Tecnología [valid]" type="rss" xmlUrl="https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/tecnologia/portada" htmlUrl="https://feeds.elpais.com"/>
+      <outline text="EL PAÍS - Cultura [valid]" title="EL PAÍS - Cultura [valid]" type="rss" xmlUrl="https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/cultura/portada" htmlUrl="https://feeds.elpais.com"/>
+      <outline text="EL PAÍS - Deportes [valid]" title="EL PAÍS - Deportes [valid]" type="rss" xmlUrl="https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/deportes/portada" htmlUrl="https://feeds.elpais.com"/>
+      <outline text="EL PAÍS - Gente [valid]" title="EL PAÍS - Gente [valid]" type="rss" xmlUrl="https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/gente/portada" htmlUrl="https://feeds.elpais.com"/>
+      <outline text="EL PAÍS - Clima y medio ambiente [valid]" title="EL PAÍS - Clima y medio ambiente [valid]" type="rss" xmlUrl="https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/clima-y-medio-ambiente/portada" htmlUrl="https://feeds.elpais.com"/>
+      <outline text="La Vanguardia - Portada [valid]" title="La Vanguardia - Portada [valid]" type="rss" xmlUrl="https://www.lavanguardia.com/rss/home.xml" htmlUrl="https://www.lavanguardia.com"/>
+      <outline text="La Vanguardia - Internacional [valid]" title="La Vanguardia - Internacional [valid]" type="rss" xmlUrl="https://www.lavanguardia.com/rss/internacional.xml" htmlUrl="https://www.lavanguardia.com"/>
+      <outline text="La Vanguardia - Política [valid]" title="La Vanguardia - Política [valid]" type="rss" xmlUrl="https://www.lavanguardia.com/rss/politica.xml" htmlUrl="https://www.lavanguardia.com"/>
+      <outline text="La Vanguardia - Opinión [valid]" title="La Vanguardia - Opinión [valid]" type="rss" xmlUrl="https://www.lavanguardia.com/rss/opinion.xml" htmlUrl="https://www.lavanguardia.com"/>
+      <outline text="La Vanguardia - Sociedad [valid]" title="La Vanguardia - Sociedad [valid]" type="rss" xmlUrl="https://www.lavanguardia.com/rss/sociedad.xml" htmlUrl="https://www.lavanguardia.com"/>
+      <outline text="La Vanguardia - Deportes [valid]" title="La Vanguardia - Deportes [valid]" type="rss" xmlUrl="https://www.lavanguardia.com/rss/deportes.xml" htmlUrl="https://www.lavanguardia.com"/>
+      <outline text="El Mundo - Portada [valid]" title="El Mundo - Portada [valid]" type="rss" xmlUrl="https://e00-elmundo.uecdn.es/rss/portada.xml" htmlUrl="https://e00-elmundo.uecdn.es"/>
+      <outline text="The Local Spain (EN) [valid]" title="The Local Spain (EN) [valid]" type="rss" xmlUrl="https://feeds.thelocal.com/rss/es" htmlUrl="https://feeds.thelocal.com"/>
     </outline>
     <outline text="Mexico (MX)" title="Mexico (MX)">
       <outline text="Proceso (Investigative) [valid]" title="Proceso (Investigative) [valid]" type="rss" xmlUrl="https://www.proceso.com.mx/rss/feed.html" htmlUrl="https://www.proceso.com.mx"/>
@@ -476,7 +495,7 @@
       <outline text="ANTARA - Politik [valid]" title="ANTARA - Politik [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/politik.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Hukum [valid]" title="ANTARA - Hukum [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/hukum.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Ekonomi [valid]" title="ANTARA - Ekonomi [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/ekonomi.xml" htmlUrl="https://www.antaranews.com"/>
-      <outline text="ANTARA - Ekonomi (Finansial) [valid]" title="ANTARA - Ekonomi (Finansial) [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/ekonomi-finansial.xml" htmlUrl="https://www.antaranews.com"/>
+      <outline text="ANTARA - Ekonomi (Finansial) [invalid (ERR)]" title="ANTARA - Ekonomi (Finansial) [invalid (ERR)]" type="rss" xmlUrl="https://www.antaranews.com/rss/ekonomi-finansial.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Ekonomi (Bisnis) [valid]" title="ANTARA - Ekonomi (Bisnis) [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/ekonomi-bisnis.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Ekonomi (Bursa) [valid]" title="ANTARA - Ekonomi (Bursa) [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/ekonomi-bursa.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Metro [valid]" title="ANTARA - Metro [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/metro.xml" htmlUrl="https://www.antaranews.com"/>
@@ -495,7 +514,7 @@
       <outline text="ANTARA - Olahraga (Bola Basket) [valid]" title="ANTARA - Olahraga (Bola Basket) [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/olahraga-bola-basket.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Olahraga (Tenis) [valid]" title="ANTARA - Olahraga (Tenis) [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/olahraga-tenis.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Olahraga (Balap) [valid]" title="ANTARA - Olahraga (Balap) [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/olahraga-balap.xml" htmlUrl="https://www.antaranews.com"/>
-      <outline text="ANTARA - Humaniora [valid]" title="ANTARA - Humaniora [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/humaniora.xml" htmlUrl="https://www.antaranews.com"/>
+      <outline text="ANTARA - Humaniora [invalid (ERR)]" title="ANTARA - Humaniora [invalid (ERR)]" type="rss" xmlUrl="https://www.antaranews.com/rss/humaniora.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Lifestyle [valid]" title="ANTARA - Lifestyle [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/lifestyle.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Hiburan [valid]" title="ANTARA - Hiburan [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/hiburan.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Dunia [valid]" title="ANTARA - Dunia [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/dunia.xml" htmlUrl="https://www.antaranews.com"/>
@@ -519,6 +538,27 @@
       <outline text="Nieuwsuur [valid]" title="Nieuwsuur [valid]" type="rss" xmlUrl="https://feeds.nos.nl/nieuwsuuralgemeen" htmlUrl="https://feeds.nos.nl"/>
       <outline text="RTL [valid]" title="RTL [valid]" type="rss" xmlUrl="https://www.rtlnieuws.nl/nieuws/rss.xml" htmlUrl="https://www.rtlnieuws.nl"/>
       <outline text="NRC [valid]" title="NRC [valid]" type="rss" xmlUrl="https://www.nrc.nl/rss/" htmlUrl="https://www.nrc.nl"/>
+      <outline text="NOS Nieuws - Binnenland [valid]" title="NOS Nieuws - Binnenland [valid]" type="rss" xmlUrl="https://feeds.nos.nl/nosnieuwsbinnenland" htmlUrl="https://feeds.nos.nl"/>
+      <outline text="NOS Nieuws - Buitenland [valid]" title="NOS Nieuws - Buitenland [valid]" type="rss" xmlUrl="https://feeds.nos.nl/nosnieuwsbuitenland" htmlUrl="https://feeds.nos.nl"/>
+      <outline text="NOS Nieuws - Politiek [valid]" title="NOS Nieuws - Politiek [valid]" type="rss" xmlUrl="https://feeds.nos.nl/nosnieuwspolitiek" htmlUrl="https://feeds.nos.nl"/>
+      <outline text="NOS Nieuws - Economie [valid]" title="NOS Nieuws - Economie [valid]" type="rss" xmlUrl="https://feeds.nos.nl/nosnieuwseconomie" htmlUrl="https://feeds.nos.nl"/>
+      <outline text="NOS Nieuws - Opmerkelijk [valid]" title="NOS Nieuws - Opmerkelijk [valid]" type="rss" xmlUrl="https://feeds.nos.nl/nosnieuwsopmerkelijk" htmlUrl="https://feeds.nos.nl"/>
+      <outline text="NOS Nieuws - Koningshuis [valid]" title="NOS Nieuws - Koningshuis [valid]" type="rss" xmlUrl="https://feeds.nos.nl/nosnieuwskoningshuis" htmlUrl="https://feeds.nos.nl"/>
+      <outline text="NOS Nieuws - Cultuur &amp; media [valid]" title="NOS Nieuws - Cultuur &amp; media [valid]" type="rss" xmlUrl="https://feeds.nos.nl/nosnieuwscultuurenmedia" htmlUrl="https://feeds.nos.nl"/>
+      <outline text="NOS Sport - Algemeen [valid]" title="NOS Sport - Algemeen [valid]" type="rss" xmlUrl="https://feeds.nos.nl/nossportalgemeen" htmlUrl="https://feeds.nos.nl"/>
+      <outline text="NOS Sport - Voetbal [valid]" title="NOS Sport - Voetbal [valid]" type="rss" xmlUrl="https://feeds.nos.nl/nosvoetbal" htmlUrl="https://feeds.nos.nl"/>
+      <outline text="NOS Sport - Wielrennen [valid]" title="NOS Sport - Wielrennen [valid]" type="rss" xmlUrl="https://feeds.nos.nl/nossportwielrennen" htmlUrl="https://feeds.nos.nl"/>
+      <outline text="NOS Sport - Schaatsen [valid]" title="NOS Sport - Schaatsen [valid]" type="rss" xmlUrl="https://feeds.nos.nl/nossportschaatsen" htmlUrl="https://feeds.nos.nl"/>
+      <outline text="NOS Sport - Tennis [valid]" title="NOS Sport - Tennis [valid]" type="rss" xmlUrl="https://feeds.nos.nl/nossporttennis" htmlUrl="https://feeds.nos.nl"/>
+      <outline text="NOS Sport - Formule 1 [valid]" title="NOS Sport - Formule 1 [valid]" type="rss" xmlUrl="https://feeds.nos.nl/nossportformule1" htmlUrl="https://feeds.nos.nl"/>
+      <outline text="NOS op 3 [valid]" title="NOS op 3 [valid]" type="rss" xmlUrl="https://feeds.nos.nl/nosop3" htmlUrl="https://feeds.nos.nl"/>
+      <outline text="NOS Jeugdjournaal [valid]" title="NOS Jeugdjournaal [valid]" type="rss" xmlUrl="https://feeds.nos.nl/jeugdjournaal" htmlUrl="https://feeds.nos.nl"/>
+      <outline text="De Telegraaf [invalid]" title="De Telegraaf [invalid]" type="rss" xmlUrl="https://www.telegraaf.nl/rss" htmlUrl="https://www.telegraaf.nl"/>
+      <outline text="de Volkskrant [valid]" title="de Volkskrant [valid]" type="rss" xmlUrl="https://www.volkskrant.nl/voorpagina/rss.xml" htmlUrl="https://www.volkskrant.nl"/>
+      <outline text="Trouw [valid]" title="Trouw [valid]" type="rss" xmlUrl="https://www.trouw.nl/voorpagina/rss.xml" htmlUrl="https://www.trouw.nl"/>
+      <outline text="Het Parool [valid]" title="Het Parool [valid]" type="rss" xmlUrl="https://www.parool.nl/voorpagina/rss.xml" htmlUrl="https://www.parool.nl"/>
+      <outline text="Het Financieele Dagblad (FD) [valid]" title="Het Financieele Dagblad (FD) [valid]" type="rss" xmlUrl="https://fd.nl/?rss" htmlUrl="https://fd.nl"/>
+      <outline text="Tweakers (Mixed) [valid]" title="Tweakers (Mixed) [valid]" type="rss" xmlUrl="https://tweakers.net/feeds/mixed.xml" htmlUrl="https://tweakers.net"/>
     </outline>
     <outline text="Switzerland (CH)" title="Switzerland (CH)">
       <outline text="Le Temps Economy [valid]" title="Le Temps Economy [valid]" type="rss" xmlUrl="https://www.letemps.ch/economie.rss" htmlUrl="https://www.letemps.ch"/>
@@ -632,7 +672,7 @@
     </outline>
     <outline text="Poland (PL)" title="Poland (PL)">
       <outline text="Onet [valid]" title="Onet [valid]" type="rss" xmlUrl="https://wiadomosci.onet.pl/rss" htmlUrl="https://wiadomosci.onet.pl"/>
-      <outline text="TVN24 [invalid (ERR)]" title="TVN24 [invalid (ERR)]" type="rss" xmlUrl="https://tvn24.pl/tvnmeteo.xml" htmlUrl="https://tvn24.pl"/>
+      <outline text="TVN24 [valid]" title="TVN24 [valid]" type="rss" xmlUrl="https://tvn24.pl/tvnmeteo.xml" htmlUrl="https://tvn24.pl"/>
       <outline text="Fakt [valid]" title="Fakt [valid]" type="rss" xmlUrl="https://www.fakt.pl/rss/" htmlUrl="https://www.fakt.pl"/>
       <outline text="Wprost [valid]" title="Wprost [valid]" type="rss" xmlUrl="https://www.wprost.pl/rss/" htmlUrl="https://www.wprost.pl"/>
       <outline text="RMF24 (Main) [valid]" title="RMF24 (Main) [valid]" type="rss" xmlUrl="https://www.rmf24.pl/feed" htmlUrl="https://www.rmf24.pl"/>
@@ -676,6 +716,27 @@
       <outline text="Dagens Nyheter Sport [valid]" title="Dagens Nyheter Sport [valid]" type="rss" xmlUrl="https://www.dn.se/sport/rss" htmlUrl="https://www.dn.se"/>
       <outline text="Dagens Nyheter Business [valid]" title="Dagens Nyheter Business [valid]" type="rss" xmlUrl="https://www.dn.se/ekonomi/rss" htmlUrl="https://www.dn.se"/>
       <outline text="Norran [valid]" title="Norran [valid]" type="rss" xmlUrl="https://www.norran.se/rss" htmlUrl="https://www.norran.se"/>
+      <outline text="Aftonbladet - Nyheter (All) [valid]" title="Aftonbladet - Nyheter (All) [valid]" type="rss" xmlUrl="https://rss.aftonbladet.se/rss2/small/pages/sections/senastenytt/" htmlUrl="https://rss.aftonbladet.se"/>
+      <outline text="Aftonbladet - Sportbladet [valid]" title="Aftonbladet - Sportbladet [valid]" type="rss" xmlUrl="https://rss.aftonbladet.se/rss2/small/pages/sections/senastenytt/sport/" htmlUrl="https://rss.aftonbladet.se"/>
+      <outline text="Aftonbladet - Sportbladet Fotboll [valid]" title="Aftonbladet - Sportbladet Fotboll [valid]" type="rss" xmlUrl="https://rss.aftonbladet.se/rss2/small/pages/sections/sportbladet/fotboll/" htmlUrl="https://rss.aftonbladet.se"/>
+      <outline text="Aftonbladet - Sportbladet Hockey [valid]" title="Aftonbladet - Sportbladet Hockey [valid]" type="rss" xmlUrl="https://rss.aftonbladet.se/rss2/small/pages/sections/sportbladet/hockey/" htmlUrl="https://rss.aftonbladet.se"/>
+      <outline text="Aftonbladet - Nöjesbladet [valid]" title="Aftonbladet - Nöjesbladet [valid]" type="rss" xmlUrl="https://rss.aftonbladet.se/rss2/small/pages/sections/nojesbladet/" htmlUrl="https://rss.aftonbladet.se"/>
+      <outline text="Aftonbladet - Kultur [valid]" title="Aftonbladet - Kultur [valid]" type="rss" xmlUrl="https://rss.aftonbladet.se/rss2/small/pages/sections/kultur/" htmlUrl="https://rss.aftonbladet.se"/>
+      <outline text="Expressen - Nyheter [valid]" title="Expressen - Nyheter [valid]" type="rss" xmlUrl="https://feeds.expressen.se/nyheter/" htmlUrl="https://feeds.expressen.se"/>
+      <outline text="GT - Nyheter [valid]" title="GT - Nyheter [valid]" type="rss" xmlUrl="https://feeds.expressen.se/gt/" htmlUrl="https://feeds.expressen.se"/>
+      <outline text="Svenska Dagbladet - Frontpage [valid]" title="Svenska Dagbladet - Frontpage [valid]" type="rss" xmlUrl="https://www.svd.se/?service=rss" htmlUrl="https://www.svd.se"/>
+      <outline text="The Local Sweden (EN) [valid]" title="The Local Sweden (EN) [valid]" type="rss" xmlUrl="https://feeds.thelocal.com/rss/se" htmlUrl="https://feeds.thelocal.com"/>
+      <outline text="Sveriges Radio - Ekot nyhetssändning (pod) [valid]" title="Sveriges Radio - Ekot nyhetssändning (pod) [valid]" type="rss" xmlUrl="https://api.sr.se/api/rss/pod/3795" htmlUrl="https://api.sr.se"/>
+      <outline text="Sveriges Radio - P3 Nyheter på en minut (pod) [valid]" title="Sveriges Radio - P3 Nyheter på en minut (pod) [valid]" type="rss" xmlUrl="https://api.sr.se/api/rss/pod/22376" htmlUrl="https://api.sr.se"/>
+      <outline text="Sveriges Radio - Radio Sweden på lätt svenska (program) [valid]" title="Sveriges Radio - Radio Sweden på lätt svenska (program) [valid]" type="rss" xmlUrl="https://api.sr.se/api/rss/program/4916?format=1" htmlUrl="https://api.sr.se"/>
+      <outline text="Radio Sweden - Sweden Today (podcast xml) [invalid]" title="Radio Sweden - Sweden Today (podcast xml) [invalid]" type="rss" xmlUrl="http://sverigesradio.se/Podradio/xml/SRI_en_sweToday.xml" htmlUrl="http://sverigesradio.se"/>
+      <outline text="Proletären [valid]" title="Proletären [valid]" type="rss" xmlUrl="https://proletaren.se/rss.xml" htmlUrl="https://proletaren.se"/>
+      <outline text="SVT Lokal - Sydnytt [valid]" title="SVT Lokal - Sydnytt [valid]" type="rss" xmlUrl="http://svt.se/nyheter/regionalt/sydnytt/rss.xml" htmlUrl="http://svt.se"/>
+      <outline text="SVT Lokal - Blekingenytt [valid]" title="SVT Lokal - Blekingenytt [valid]" type="rss" xmlUrl="http://svt.se/nyheter/regionalt/blekingenytt/rss.xml" htmlUrl="http://svt.se"/>
+      <outline text="SVT Lokal - Mittnytt [valid]" title="SVT Lokal - Mittnytt [valid]" type="rss" xmlUrl="http://svt.se/nyheter/regionalt/mittnytt/rss.xml" htmlUrl="http://svt.se"/>
+      <outline text="SVT Lokal - Jämtlandsnytt [valid]" title="SVT Lokal - Jämtlandsnytt [valid]" type="rss" xmlUrl="http://svt.se/nyheter/regionalt/jamtlandsnytt/rss.xml" htmlUrl="http://svt.se"/>
+      <outline text="Sydsvenskan (fallback) [valid]" title="Sydsvenskan (fallback) [valid]" type="rss" xmlUrl="https://www.sydsvenskan.se/feeds/feed.xml" htmlUrl="https://www.sydsvenskan.se"/>
+      <outline text="Nerikes Allehanda (fallback) [valid]" title="Nerikes Allehanda (fallback) [valid]" type="rss" xmlUrl="https://www.na.se/feeds/feed.xml" htmlUrl="https://www.na.se"/>
     </outline>
     <outline text="Belgium (BE)" title="Belgium (BE)">
       <outline text="De Morgen [valid]" title="De Morgen [valid]" type="rss" xmlUrl="https://www.demorgen.be/rss.xml" htmlUrl="https://www.demorgen.be"/>
@@ -688,6 +749,15 @@
       <outline text="Het Nieuwsblad [valid]" title="Het Nieuwsblad [valid]" type="rss" xmlUrl="https://www.nieuwsblad.be/rss/" htmlUrl="https://www.nieuwsblad.be"/>
       <outline text="La Libre Belgique [valid]" title="La Libre Belgique [valid]" type="rss" xmlUrl="https://www.lalibre.be/rss/" htmlUrl="https://www.lalibre.be"/>
       <outline text="La Libre [valid]" title="La Libre [valid]" type="rss" xmlUrl="https://www.lalibre.be/rss" htmlUrl="https://www.lalibre.be"/>
+      <outline text="The Bulletin (EN) [valid]" title="The Bulletin (EN) [valid]" type="rss" xmlUrl="https://www.thebulletin.be/rss.xml" htmlUrl="https://www.thebulletin.be"/>
+      <outline text="HLN (Het Laatste Nieuws) [valid]" title="HLN (Het Laatste Nieuws) [valid]" type="rss" xmlUrl="https://www.hln.be/home/rss.xml" htmlUrl="https://www.hln.be"/>
+      <outline text="Brussels Morning [valid]" title="Brussels Morning [valid]" type="rss" xmlUrl="https://brusselsmorning.com/feed" htmlUrl="https://brusselsmorning.com"/>
+      <outline text="L&apos;Echo [valid]" title="L&apos;Echo [valid]" type="rss" xmlUrl="https://www.lecho.be/rss/top_stories.xml" htmlUrl="https://www.lecho.be"/>
+      <outline text="De Standaard (example section) [invalid]" title="De Standaard (example section) [invalid]" type="rss" xmlUrl="https://www.standaard.be/rss/section/1f2838d4-99ea-49f0-9102-138784c7ea7c" htmlUrl="https://www.standaard.be"/>
+      <outline text="Het Nieuwsblad (example section) [invalid (ERR)]" title="Het Nieuwsblad (example section) [invalid (ERR)]" type="rss" xmlUrl="https://www.nieuwsblad.be/rss/section/55178e67-15a8-4ddd-a3d8-bfe5708f8932" htmlUrl="https://www.nieuwsblad.be"/>
+      <outline text="Le Soir (main) [invalid]" title="Le Soir (main) [invalid]" type="rss" xmlUrl="https://www.lesoir.be/rss2/9/cible_principale" htmlUrl="https://www.lesoir.be"/>
+      <outline text="Brussels Times [invalid]" title="Brussels Times [invalid]" type="rss" xmlUrl="https://www.brusselstimes.com/rss-feed" htmlUrl="https://www.brusselstimes.com"/>
+      <outline text="City of Brussels (official) [valid]" title="City of Brussels (official) [valid]" type="rss" xmlUrl="https://www.brussels.be/rss.xml" htmlUrl="https://www.brussels.be"/>
     </outline>
     <outline text="Thailand (TH)" title="Thailand (TH)">
       <outline text="The Thaiger [valid]" title="The Thaiger [valid]" type="rss" xmlUrl="https://thethaiger.com/feed" htmlUrl="https://thethaiger.com"/>
@@ -740,13 +810,13 @@
       <outline text="Tehran Times - International [invalid (ERR)]" title="Tehran Times - International [invalid (ERR)]" type="rss" xmlUrl="https://www.tehrantimes.com/rss/tp/702" htmlUrl="https://www.tehrantimes.com"/>
       <outline text="Tehran Times - Multimedia [invalid (ERR)]" title="Tehran Times - Multimedia [invalid (ERR)]" type="rss" xmlUrl="https://www.tehrantimes.com/rss/tp/717" htmlUrl="https://www.tehrantimes.com"/>
       <outline text="Tehran Times - Tourism [invalid (ERR)]" title="Tehran Times - Tourism [invalid (ERR)]" type="rss" xmlUrl="https://www.tehrantimes.com/rss/tp/807" htmlUrl="https://www.tehrantimes.com"/>
-      <outline text="MehrNews (EN) - Latest [valid]" title="MehrNews (EN) - Latest [valid]" type="rss" xmlUrl="https://en.mehrnews.com/rss/pl/118" htmlUrl="https://en.mehrnews.com"/>
-      <outline text="MehrNews (EN) - Iran [valid]" title="MehrNews (EN) - Iran [valid]" type="rss" xmlUrl="https://en.mehrnews.com/rss/tp/575" htmlUrl="https://en.mehrnews.com"/>
-      <outline text="MehrNews (EN) - Iran &gt; Iran [valid]" title="MehrNews (EN) - Iran &gt; Iran [valid]" type="rss" xmlUrl="https://en.mehrnews.com/rss/tp/905" htmlUrl="https://en.mehrnews.com"/>
-      <outline text="MehrNews (EN) - Ethnic Groups [valid]" title="MehrNews (EN) - Ethnic Groups [valid]" type="rss" xmlUrl="https://en.mehrnews.com/rss/tp/897" htmlUrl="https://en.mehrnews.com"/>
-      <outline text="MehrNews (EN) - Nature [valid]" title="MehrNews (EN) - Nature [valid]" type="rss" xmlUrl="https://en.mehrnews.com/rss/tp/898" htmlUrl="https://en.mehrnews.com"/>
-      <outline text="MehrNews (EN) - Historical Sites [valid]" title="MehrNews (EN) - Historical Sites [valid]" type="rss" xmlUrl="https://en.mehrnews.com/rss/tp/899" htmlUrl="https://en.mehrnews.com"/>
-      <outline text="MehrNews (EN) - Souvenirs [valid]" title="MehrNews (EN) - Souvenirs [valid]" type="rss" xmlUrl="https://en.mehrnews.com/rss/tp/900" htmlUrl="https://en.mehrnews.com"/>
+      <outline text="MehrNews (EN) - Latest [invalid (ERR)]" title="MehrNews (EN) - Latest [invalid (ERR)]" type="rss" xmlUrl="https://en.mehrnews.com/rss/pl/118" htmlUrl="https://en.mehrnews.com"/>
+      <outline text="MehrNews (EN) - Iran [invalid (ERR)]" title="MehrNews (EN) - Iran [invalid (ERR)]" type="rss" xmlUrl="https://en.mehrnews.com/rss/tp/575" htmlUrl="https://en.mehrnews.com"/>
+      <outline text="MehrNews (EN) - Iran &gt; Iran [invalid (ERR)]" title="MehrNews (EN) - Iran &gt; Iran [invalid (ERR)]" type="rss" xmlUrl="https://en.mehrnews.com/rss/tp/905" htmlUrl="https://en.mehrnews.com"/>
+      <outline text="MehrNews (EN) - Ethnic Groups [invalid (ERR)]" title="MehrNews (EN) - Ethnic Groups [invalid (ERR)]" type="rss" xmlUrl="https://en.mehrnews.com/rss/tp/897" htmlUrl="https://en.mehrnews.com"/>
+      <outline text="MehrNews (EN) - Nature [invalid (ERR)]" title="MehrNews (EN) - Nature [invalid (ERR)]" type="rss" xmlUrl="https://en.mehrnews.com/rss/tp/898" htmlUrl="https://en.mehrnews.com"/>
+      <outline text="MehrNews (EN) - Historical Sites [invalid (ERR)]" title="MehrNews (EN) - Historical Sites [invalid (ERR)]" type="rss" xmlUrl="https://en.mehrnews.com/rss/tp/899" htmlUrl="https://en.mehrnews.com"/>
+      <outline text="MehrNews (EN) - Souvenirs [invalid (ERR)]" title="MehrNews (EN) - Souvenirs [invalid (ERR)]" type="rss" xmlUrl="https://en.mehrnews.com/rss/tp/900" htmlUrl="https://en.mehrnews.com"/>
       <outline text="MehrNews (EN) - Persian Cuisine [invalid (ERR)]" title="MehrNews (EN) - Persian Cuisine [invalid (ERR)]" type="rss" xmlUrl="https://en.mehrnews.com/rss/tp/901" htmlUrl="https://en.mehrnews.com"/>
       <outline text="ISNA (EN) - Social [invalid (ERR)]" title="ISNA (EN) - Social [invalid (ERR)]" type="rss" xmlUrl="https://en.isna.ir/rss/tp/8" htmlUrl="https://en.isna.ir"/>
       <outline text="ISNA (EN) - Economy [invalid (ERR)]" title="ISNA (EN) - Economy [invalid (ERR)]" type="rss" xmlUrl="https://en.isna.ir/rss/tp/33" htmlUrl="https://en.isna.ir"/>
@@ -879,7 +949,7 @@
     <outline text="Austria (AT)" title="Austria (AT)">
       <outline text="Der Standard [valid]" title="Der Standard [valid]" type="rss" xmlUrl="https://www.derstandard.at/rss" htmlUrl="https://www.derstandard.at"/>
       <outline text="ORF [valid]" title="ORF [valid]" type="rss" xmlUrl="https://rss.orf.at/news.xml" htmlUrl="https://rss.orf.at"/>
-      <outline text="Die Presse [valid]" title="Die Presse [valid]" type="rss" xmlUrl="https://www.diepresse.com/rss" htmlUrl="https://www.diepresse.com"/>
+      <outline text="Die Presse [invalid (ERR)]" title="Die Presse [invalid (ERR)]" type="rss" xmlUrl="https://www.diepresse.com/rss" htmlUrl="https://www.diepresse.com"/>
       <outline text="Tiroler Tageszeitung [valid]" title="Tiroler Tageszeitung [valid]" type="rss" xmlUrl="https://www.tt.com/rss/news.xml" htmlUrl="https://www.tt.com"/>
       <outline text="ORF Aktuell [valid]" title="ORF Aktuell [valid]" type="rss" xmlUrl="https://rss.orf.at/" htmlUrl="https://rss.orf.at"/>
       <outline text="Kurier (Top News) [valid]" title="Kurier (Top News) [valid]" type="rss" xmlUrl="https://kurier.at/xml/rssd" htmlUrl="https://kurier.at"/>
@@ -917,6 +987,29 @@
       <outline text="E24 [valid]" title="E24 [valid]" type="rss" xmlUrl="https://e24.no/rss/okonomi.xml" htmlUrl="https://e24.no"/>
       <outline text="TV2 [valid]" title="TV2 [valid]" type="rss" xmlUrl="https://www.tv2.no/rss/politikk.xml" htmlUrl="https://www.tv2.no"/>
       <outline text="E24 [valid]" title="E24 [valid]" type="rss" xmlUrl="https://e24.no/rss/nyheter.xml" htmlUrl="https://e24.no"/>
+      <outline text="VG - Forsiden [invalid]" title="VG - Forsiden [invalid]" type="rss" xmlUrl="https://www.vg.no/rss/feed/forsiden/" htmlUrl="https://www.vg.no"/>
+      <outline text="VG - Innenriks [valid]" title="VG - Innenriks [valid]" type="rss" xmlUrl="https://www.vg.no/rss/feed/?categories=1069" htmlUrl="https://www.vg.no"/>
+      <outline text="VG - Utenriks [valid]" title="VG - Utenriks [valid]" type="rss" xmlUrl="https://www.vg.no/rss/feed/?categories=1070" htmlUrl="https://www.vg.no"/>
+      <outline text="E24 - Børs og finans [valid]" title="E24 - Børs og finans [valid]" type="rss" xmlUrl="https://e24.no/rss2/?seksjon=boers-og-finans" htmlUrl="https://e24.no"/>
+      <outline text="E24 - Aksjetips [valid]" title="E24 - Aksjetips [valid]" type="rss" xmlUrl="http://e24.no/rss2/?seksjon=aksjetips" htmlUrl="http://e24.no"/>
+      <outline text="E24 - IT &amp; Telekom [valid]" title="E24 - IT &amp; Telekom [valid]" type="rss" xmlUrl="http://e24.no/rss2/?seksjon=it" htmlUrl="http://e24.no"/>
+      <outline text="NRK - RSS oversikt (directory) [invalid]" title="NRK - RSS oversikt (directory) [invalid]" type="rss" xmlUrl="https://www.nrk.no/rss/" htmlUrl="https://www.nrk.no"/>
+      <outline text="NRK - Innenriks [valid]" title="NRK - Innenriks [valid]" type="rss" xmlUrl="https://www.nrk.no/norge/toppsaker.rss" htmlUrl="https://www.nrk.no"/>
+      <outline text="TV2 - Nyheter [valid]" title="TV2 - Nyheter [valid]" type="rss" xmlUrl="https://www.tv2.no/rss/nyheter" htmlUrl="https://www.tv2.no"/>
+      <outline text="TV2 - Innenriks [valid]" title="TV2 - Innenriks [valid]" type="rss" xmlUrl="https://www.tv2.no/rss/nyheter/innenriks" htmlUrl="https://www.tv2.no"/>
+      <outline text="TV2 - Utenriks [valid]" title="TV2 - Utenriks [valid]" type="rss" xmlUrl="https://www.tv2.no/rss/nyheter/utenriks" htmlUrl="https://www.tv2.no"/>
+      <outline text="TV2 - Sport [valid]" title="TV2 - Sport [valid]" type="rss" xmlUrl="https://www.tv2.no/rss/sport" htmlUrl="https://www.tv2.no"/>
+      <outline text="TV2 - Underholdning [valid]" title="TV2 - Underholdning [valid]" type="rss" xmlUrl="https://www.tv2.no/rss/underholdning" htmlUrl="https://www.tv2.no"/>
+      <outline text="Nettavisen - Alle saker [valid]" title="Nettavisen - Alle saker [valid]" type="rss" xmlUrl="https://www.nettavisen.no/service/rich-rss" htmlUrl="https://www.nettavisen.no"/>
+      <outline text="Nettavisen - Nyheter [valid]" title="Nettavisen - Nyheter [valid]" type="rss" xmlUrl="https://www.nettavisen.no/service/rich-rss?tag=nyheter" htmlUrl="https://www.nettavisen.no"/>
+      <outline text="Nettavisen - Sport [valid]" title="Nettavisen - Sport [valid]" type="rss" xmlUrl="https://www.nettavisen.no/service/rich-rss?tag=sport" htmlUrl="https://www.nettavisen.no"/>
+      <outline text="Dagbladet [valid]" title="Dagbladet [valid]" type="rss" xmlUrl="https://www.dagbladet.no/?lab_viewport=rss" htmlUrl="https://www.dagbladet.no"/>
+      <outline text="Aftenposten [valid]" title="Aftenposten [valid]" type="rss" xmlUrl="https://www.aftenposten.no/rss/" htmlUrl="https://www.aftenposten.no"/>
+      <outline text="Dagsavisen [valid]" title="Dagsavisen [valid]" type="rss" xmlUrl="https://www.dagsavisen.no/rss" htmlUrl="https://www.dagsavisen.no"/>
+      <outline text="DN - RSS directory [invalid]" title="DN - RSS directory [invalid]" type="rss" xmlUrl="https://services.dn.no/tools/rss" htmlUrl="https://services.dn.no"/>
+      <outline text="DN - Alle nyheter [valid]" title="DN - Alle nyheter [valid]" type="rss" xmlUrl="https://services.dn.no/api/feed/rss/" htmlUrl="https://services.dn.no"/>
+      <outline text="Finansavisen [valid]" title="Finansavisen [valid]" type="rss" xmlUrl="https://ws.finansavisen.no/api/articles.rss" htmlUrl="https://ws.finansavisen.no"/>
+      <outline text="Finansavisen - Børs [valid]" title="Finansavisen - Børs [valid]" type="rss" xmlUrl="https://ws.finansavisen.no/api/articles.rss?category=B%C3%B8rs" htmlUrl="https://ws.finansavisen.no"/>
     </outline>
     <outline text="Global Energy &amp; Grid (Global)" title="Global Energy &amp; Grid (Global)">
       <outline text="OilPrice [valid]" title="OilPrice [valid]" type="rss" xmlUrl="https://oilprice.com/rss/main" htmlUrl="https://oilprice.com"/>
