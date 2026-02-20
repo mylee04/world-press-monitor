@@ -638,7 +638,9 @@ const playgroundHtml = `
       function tokenHeader() {
         const raw = tokenInput.value.trim();
         if (!raw) return {};
-        return raw.startsWith('Bearer ') ? { Authorization: raw } : { Authorization: `Bearer ${raw}` };
+        return raw.startsWith('Bearer ')
+          ? { Authorization: raw }
+          : { Authorization: 'Bearer '.concat(raw) };
       }
 
       function filtersEndpoint() {
