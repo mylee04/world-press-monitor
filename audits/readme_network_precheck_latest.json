@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-02-19T06:15:53.197Z",
+  "generatedAt": "2026-02-19T23:00:56.844Z",
   "sampleUrl": "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml",
   "sampleHost": "rss.nytimes.com",
   "checks": {
@@ -12,13 +12,11 @@
       "skipped": true
     },
     "sampleDnsNode": {
-      "ok": true,
+      "ok": false,
       "host": "rss.nytimes.com",
-      "ips": [
-        "151.101.193.164"
-      ],
-      "raw": "151.101.193.164",
-      "error": "",
+      "ips": [],
+      "raw": "",
+      "error": "DNS",
       "skipped": false
     },
     "googleDnsGetent": {
@@ -30,35 +28,26 @@
       "skipped": true
     },
     "googleDnsNode": {
-      "ok": true,
+      "ok": false,
       "host": "www.google.com",
-      "ips": [
-        "142.251.153.119"
-      ],
-      "raw": "142.251.153.119",
-      "error": "",
+      "ips": [],
+      "raw": "",
+      "error": "DNS",
       "skipped": false
     },
     "httpSample": {
-      "ok": true,
-      "status": 200,
-      "note": "xml-like response"
+      "ok": false,
+      "status": null,
+      "note": "NETWORK"
     },
-    "curlResolve": {
-      "ok": true,
-      "host": "rss.nytimes.com",
-      "ip": "151.101.193.164",
-      "status": 200,
-      "outputLine": "HTTP/2 200",
-      "reason": ""
-    },
+    "curlResolve": null,
     "googleCurlResolve": {
-      "ok": true,
+      "ok": false,
       "host": "www.google.com",
-      "ip": "142.251.153.119",
-      "status": 200,
-      "outputLine": "HTTP/2 200",
-      "reason": ""
+      "ip": null,
+      "status": null,
+      "outputLine": "",
+      "reason": "NO_RESOLVED_IP"
     },
     "resolvConf": {
       "ok": true,
@@ -71,6 +60,8 @@
     }
   },
   "recommendations": [
-    "Running on macOS: getent/nsswitch checks are intentionally skipped; this is informational only."
+    "DNS resolution is failing in this runtime. Check system resolver, /etc/resolv.conf, and container DNS settings.",
+    "If you changed DNS/VPN/proxy recently, try a clean network profile and retry precheck.",
+    "Downstream endpoint access is blocked from this runtime. Run the same command on another host that can reach the internet."
   ]
 }

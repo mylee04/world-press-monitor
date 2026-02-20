@@ -52,230 +52,353 @@ async function ensureSchema(): Promise<void> {
   const db = getPool();
   if (!db) return;
   await db.query(`
-    create table if not exists ingested_articles (
-      id bigserial primary key,
-      link text not null,
-      link_norm text not null,
-      link_hash text not null unique,
-      outlet_id text null,
-      title text not null,
-      source text not null,
-      published_at timestamptz not null,
-      country text null,
-      language text null,
-      source_type text null,
-      tier smallint null,
-      section text null,
-      classification_source text null,
-      classification_reason text null,
-      confidence real null,
-      world_latam boolean not null default false,
-      tags jsonb not null default '[]'::jsonb,
-      first_seen_at timestamptz not null default now(),
-      last_seen_at timestamptz not null default now(),
-      seen_count integer not null default 1
-    );
-    alter table ingested_articles add column if not exists outlet_id text null;
-    alter table ingested_articles add column if not exists classification_reason text null;
-    alter table ingested_articles add column if not exists section text null;
     do $$
     begin
       if exists (
         select 1
-        from information_schema.columns
+        from information_schema.tables
         where table_schema = 'public'
-          and table_name = 'ingested_articles'
-          and column_name = 'beat'
+          and table_name = 'external_news_articles'
+          and not exists (
+            select 1
+            from information_schema.tables
+            where table_schema = 'public'
+              and table_name = 'news_articles'
+          )
       ) then
-        update ingested_articles
-          set section = coalesce(section, beat)
-          where section is null and beat is not null;
+        alter table external_news_articles rename to news_articles;
+      end if;
+
+      if exists (
+        select 1
+        from information_schema.tables
+        where table_schema = 'public'
+          and table_name = 'ingestion_endpoint_runs'
+          and not exists (
+            select 1
+            from information_schema.tables
+            where table_schema = 'public'
+              and table_name = 'rss_health_status'
+          )
+      ) then
+        alter table ingestion_endpoint_runs rename to rss_health_status;
       end if;
     end;
     $$;
-    create index if not exists idx_ingested_articles_last_seen_at on ingested_articles(last_seen_at desc);
-    create index if not exists idx_ingested_articles_published_at on ingested_articles(published_at desc);
-    create index if not exists idx_ingested_articles_source on ingested_articles(source);
-    create index if not exists idx_ingested_articles_outlet_id on ingested_articles(outlet_id);
-    create index if not exists idx_ingested_articles_country on ingested_articles(country);
-    create index if not exists idx_ingested_articles_section on ingested_articles(section);
-    create table if not exists ingestion_endpoint_runs (
+
+    create table if not exists rss_health_status (
       id bigserial primary key,
       ran_at timestamptz not null default now(),
       runner text not null default 'api_news',
       outlet_id text not null,
       source text not null,
       method text not null,
+      country text not null default 'Global',
       attempted boolean not null default false,
       circuit_open boolean not null default false,
       ok boolean not null default false,
       status_code integer null,
       parsed_count integer not null default 0,
+      fetched_count integer not null default 0,
       parsed_limit integer null,
       sample_capped boolean not null default false,
       recent24h integer not null default 0,
+      missing_title_count integer not null default 0,
+      missing_summary_count integer not null default 0,
+      missing_published_at_count integer not null default 0,
+      missing_link_count integer not null default 0,
       error text null
     );
-    alter table ingestion_endpoint_runs add column if not exists runner text not null default 'api_news';
-    create index if not exists idx_ingestion_endpoint_runs_ran_at on ingestion_endpoint_runs(ran_at desc);
-    create index if not exists idx_ingestion_endpoint_runs_source on ingestion_endpoint_runs(source);
-    create index if not exists idx_ingestion_endpoint_runs_outlet_id on ingestion_endpoint_runs(outlet_id);
-    create index if not exists idx_ingestion_endpoint_runs_runner_ran_at on ingestion_endpoint_runs(runner, ran_at desc);
-    create table if not exists external_news_articles (
+    alter table rss_health_status add column if not exists runner text not null default 'api_news';
+    alter table rss_health_status add column if not exists country text not null default 'Global';
+    alter table rss_health_status add column if not exists fetched_count integer not null default 0;
+    alter table rss_health_status add column if not exists missing_title_count integer not null default 0;
+    alter table rss_health_status add column if not exists missing_summary_count integer not null default 0;
+    alter table rss_health_status add column if not exists missing_published_at_count integer not null default 0;
+    alter table rss_health_status add column if not exists missing_link_count integer not null default 0;
+    create index if not exists idx_rss_health_status_ran_at on rss_health_status(ran_at desc);
+    create index if not exists idx_rss_health_status_country on rss_health_status(country);
+    create index if not exists idx_rss_health_status_source on rss_health_status(source);
+    create index if not exists idx_rss_health_status_outlet_id on rss_health_status(outlet_id);
+    create index if not exists idx_rss_health_status_runner_ran_at on rss_health_status(runner, ran_at desc);
+    drop index if exists idx_ingestion_endpoint_runs_ran_at;
+    drop index if exists idx_ingestion_endpoint_runs_source;
+    drop index if exists idx_ingestion_endpoint_runs_outlet_id;
+    drop index if exists idx_ingestion_endpoint_runs_runner_ran_at;
+    create table if not exists news_articles (
       external_id text primary key,
       publication_datetime timestamptz not null,
-      publication_source text not null default 'feed',
-      publication_verified boolean not null default false,
-      title_en text null,
       title_original text not null,
-      summary_en text null,
       summary_original text null,
-      summary_source text not null default 'feed',
-      summary_verified boolean not null default false,
-      author_name text null,
-      author_email text null,
-      author_source text not null default 'feed',
-      author_verified boolean not null default false,
-      quality_score integer not null default 0,
       country text null,
       created_at timestamptz not null default now(),
-      last_seen_at timestamptz not null default now(),
+      updated_at timestamptz not null default now(),
       url text not null,
       source text not null,
-      is_paywalled boolean not null default false,
       language text null,
-      section text null,
-      seen_count integer not null default 1
+      section text null
     );
-    create index if not exists idx_external_news_articles_publication_datetime on external_news_articles(publication_datetime desc);
-    create index if not exists idx_external_news_articles_last_seen_at on external_news_articles(last_seen_at desc);
-    create index if not exists idx_external_news_articles_source on external_news_articles(source);
-    create index if not exists idx_external_news_articles_url on external_news_articles(url);
-    create index if not exists idx_external_news_articles_section on external_news_articles(section);
-    create index if not exists idx_external_news_articles_country on external_news_articles(country);
-    alter table external_news_articles add column if not exists publication_source text not null default 'feed';
-    alter table external_news_articles add column if not exists publication_verified boolean not null default false;
-    alter table external_news_articles add column if not exists summary_source text not null default 'feed';
-    alter table external_news_articles add column if not exists summary_verified boolean not null default false;
-    alter table external_news_articles add column if not exists author_name text null;
-    alter table external_news_articles add column if not exists author_email text null;
-    alter table external_news_articles add column if not exists author_source text not null default 'feed';
-    alter table external_news_articles add column if not exists author_verified boolean not null default false;
-    alter table external_news_articles add column if not exists quality_score integer not null default 0;
-    alter table external_news_articles add column if not exists section text null;
-    drop index if exists idx_ingested_articles_beat;
-    alter table ingested_articles drop column if exists beat;
-    drop index if exists idx_external_news_articles_category;
+    alter table news_articles add column if not exists updated_at timestamptz not null default now();
+    create index if not exists idx_news_articles_created_at on news_articles(created_at desc);
+    create index if not exists idx_news_articles_updated_at on news_articles(updated_at desc);
+    create index if not exists idx_news_articles_source on news_articles(source);
+    create index if not exists idx_news_articles_url on news_articles(url);
+    create index if not exists idx_news_articles_section on news_articles(section);
+    create index if not exists idx_news_articles_country on news_articles(country);
+    create table if not exists ingest_feed_watermarks (
+      outlet_id text not null,
+      source text not null,
+      country text not null default 'Global',
+      method text not null,
+      last_publication_at timestamptz,
+      last_fetched_at timestamptz not null default now(),
+      created_at timestamptz not null default now(),
+      updated_at timestamptz not null default now(),
+      primary key (outlet_id, method)
+    );
+    create index if not exists idx_ingest_feed_watermarks_source on ingest_feed_watermarks(source);
+    create index if not exists idx_ingest_feed_watermarks_country on ingest_feed_watermarks(country);
+    create table if not exists ingest_ops_hourly (
+      hour_bucket timestamptz not null,
+      runner text not null default 'worker',
+      outlet_id text not null,
+      source text not null,
+      country text not null default 'Global',
+      method text not null,
+      attempted_runs integer not null default 0,
+      successful_runs integer not null default 0,
+      failed_runs integer not null default 0,
+      fetched_count integer not null default 0,
+      valid_count integer not null default 0,
+      missing_title_count integer not null default 0,
+      missing_summary_count integer not null default 0,
+      missing_published_at_count integer not null default 0,
+      missing_link_count integer not null default 0,
+      created_at timestamptz not null default now(),
+      updated_at timestamptz not null default now(),
+      primary key (hour_bucket, runner, outlet_id, method)
+    );
+    create index if not exists idx_ingest_ops_hourly_source on ingest_ops_hourly(source);
+    create index if not exists idx_ingest_ops_hourly_country on ingest_ops_hourly(country);
+    create index if not exists idx_ingest_ops_hourly_hour on ingest_ops_hourly(hour_bucket desc);
+    create table if not exists ingest_ops_daily (
+      day_bucket date not null,
+      runner text not null default 'worker',
+      outlet_id text not null,
+      source text not null,
+      country text not null default 'Global',
+      method text not null,
+      attempted_runs integer not null default 0,
+      successful_runs integer not null default 0,
+      failed_runs integer not null default 0,
+      fetched_count integer not null default 0,
+      valid_count integer not null default 0,
+      missing_title_count integer not null default 0,
+      missing_summary_count integer not null default 0,
+      missing_published_at_count integer not null default 0,
+      missing_link_count integer not null default 0,
+      created_at timestamptz not null default now(),
+      updated_at timestamptz not null default now(),
+      primary key (day_bucket, runner, outlet_id, method)
+    );
+    create index if not exists idx_ingest_ops_daily_source on ingest_ops_daily(source);
+    create index if not exists idx_ingest_ops_daily_country on ingest_ops_daily(country);
+    create index if not exists idx_ingest_ops_daily_day on ingest_ops_daily(day_bucket desc);
+    drop index if exists idx_external_news_articles_last_seen_at;
+    drop index if exists idx_external_news_articles_publication_datetime;
+    drop index if exists idx_external_news_articles_source;
+    drop index if exists idx_external_news_articles_url;
+    drop index if exists idx_external_news_articles_section;
+    drop index if exists idx_external_news_articles_country;
+    alter table news_articles drop column if exists seen_count;
+    alter table news_articles drop column if exists last_seen_at;
+    drop index if exists idx_news_articles_last_seen_at;
+
+    drop index if exists idx_news_articles_category;
     do $$
     begin
       if exists (
         select 1
         from information_schema.columns
         where table_schema = 'public'
-          and table_name = 'external_news_articles'
+          and table_name = 'news_articles'
           and column_name = 'category'
       ) then
-        update external_news_articles
+        update news_articles
           set section = coalesce(section, category)
           where section is null and category is not null;
       end if;
     end;
     $$;
-    alter table external_news_articles drop column if exists category;
+    alter table news_articles drop column if exists category;
+    alter table news_articles drop column if exists url_norm;
+    alter table news_articles drop column if exists url_hash;
+    alter table news_articles drop column if exists title_en;
+    alter table news_articles drop column if exists summary_en;
+    alter table news_articles drop column if exists publication_source;
+    alter table news_articles drop column if exists publication_verified;
+    alter table news_articles drop column if exists summary_source;
+    alter table news_articles drop column if exists summary_verified;
+    alter table news_articles drop column if exists author_name;
+    alter table news_articles drop column if exists author_email;
+    alter table news_articles drop column if exists author_source;
+    alter table news_articles drop column if exists author_verified;
+    alter table news_articles drop column if exists quality_score;
+    alter table news_articles drop column if exists is_paywalled;
+    alter table news_articles drop column if exists seen_count;
+    drop table if exists radar_summary_fetch_logs;
+    drop table if exists radar_summary_usage_daily;
+    drop table if exists radar_summary_queue;
+    drop table if exists ingested_articles;
 
-    create table if not exists radar_summary_queue (
-      id bigserial primary key,
-      article_external_id text not null unique references external_news_articles(external_id) on delete cascade,
-      status text not null default 'pending',
-      attempt_count integer not null default 0,
-      next_retry_at timestamptz not null default now(),
-      last_error text null,
-      provider text null,
-      model text null,
-      started_at timestamptz null,
-      completed_at timestamptz null,
-      created_at timestamptz not null default now(),
-      updated_at timestamptz not null default now()
-    );
-    create index if not exists idx_radar_summary_queue_status_retry on radar_summary_queue(status, next_retry_at, id);
-    create index if not exists idx_radar_summary_queue_updated on radar_summary_queue(updated_at desc);
-
-    create table if not exists radar_summary_usage_daily (
-      usage_date date not null,
-      provider text not null,
-      request_count integer not null default 0,
-      updated_at timestamptz not null default now(),
-      primary key (usage_date, provider)
-    );
-
-    create table if not exists radar_summary_fetch_logs (
-      id bigserial primary key,
-      queue_id bigint null references radar_summary_queue(id) on delete set null,
-      article_external_id text null,
-      domain text not null default 'unknown',
-      attempt_count integer not null default 1,
-      outcome text not null,
-      failure_code text null,
-      http_status integer null,
-      used_fallback boolean not null default false,
-      context_source text null,
-      latency_ms integer null,
-      created_at timestamptz not null default now()
-    );
-    create index if not exists idx_radar_summary_fetch_logs_created on radar_summary_fetch_logs(created_at desc);
-    create index if not exists idx_radar_summary_fetch_logs_domain_created on radar_summary_fetch_logs(domain, created_at desc);
-  `);
+    `);
   schemaReady = true;
+}
+
+async function executeIngestionQuery(db: Pool, queryText: string, values: unknown[], label: string): Promise<void> {
+  try {
+    await db.query(queryText, values);
+  } catch (error) {
+    if (process.env.INGEST_SQL_DEBUG === '1') {
+      console.error(`[ingest-store] ${label} failed`);
+      console.error(queryText);
+      console.error(`param_count=${values.length}`);
+      console.error(values.slice(0, 30));
+    }
+    throw error;
+  }
 }
 
 async function sha256Hex(value: string): Promise<string> {
   return createHash('sha256').update(value).digest('hex');
 }
 
-type Persistable = {
-  link: string;
-  linkNorm: string;
-  linkHash: string;
-  outletId: string | null;
-  title: string;
+type FeedWatermark = {
+  outletId: string;
   source: string;
-  publishedAt: string;
-  country: string | null;
-  language: string | null;
-  sourceType: string | null;
-  tier: number | null;
-  section: string | null;
-  classificationSource: string | null;
-  classificationReason: string | null;
-  confidence: number | null;
-  worldLatam: boolean;
-  tags: string[];
+  country: string;
+  method: 'rss' | 'sitemap';
+  lastPublicationAt: string | null;
 };
 
-async function toPersistable(item: NewsItem): Promise<Persistable | null> {
-  const linkNorm = normalizeLinkForId(item.link);
-  if (!linkNorm) return null;
-  const publishedAtTs = new Date(item.publishedAt).getTime();
-  if (!Number.isFinite(publishedAtTs)) return null;
-  return {
-    link: item.link,
-    linkNorm,
-    linkHash: await sha256Hex(linkNorm),
-    outletId: item.outletId || null,
-    title: item.title,
-    source: item.source,
-    publishedAt: new Date(publishedAtTs).toISOString(),
-    country: item.country || null,
-    language: item.language || null,
-    sourceType: item.sourceType || null,
-    tier: typeof item.tier === 'number' ? item.tier : null,
-    section: item.section || null,
-    classificationSource: item.classificationSource || null,
-    classificationReason: item.classificationReason || null,
-    confidence: typeof item.confidence === 'number' ? item.confidence : null,
-    worldLatam: Boolean(item.worldLatam),
-    tags: Array.isArray(item.tags) ? item.tags : []
-  };
+type FeedWatermarkDbRow = {
+  outlet_id: string;
+  source: string;
+  country: string;
+  method: string;
+  last_publication_at: string | null;
+};
+
+function getFeedWatermarkKey(outletId: string, method: 'rss' | 'sitemap'): string {
+  return `${outletId}:${method}`;
+}
+
+export async function readIngestionFeedWatermarks(rows: Array<{ outletId: string; method: 'rss' | 'sitemap' }>): Promise<Map<string, string | null>> {
+  const db = getPool();
+  if (!db) return new Map();
+  if (!rows.length) return new Map();
+  await ensureSchema();
+
+  const unique = new Map<string, { outletId: string; method: 'rss' | 'sitemap' }>();
+  for (const row of rows) {
+    if (!row.outletId) continue;
+    unique.set(getFeedWatermarkKey(row.outletId, row.method), row);
+  }
+  const requests = [...unique.values()];
+  if (!requests.length) return new Map();
+
+  const values: string[] = [];
+  const placeholders = requests
+    .map((request, index) => {
+      const base = index * 2;
+      values.push(request.outletId);
+      values.push(request.method);
+      return `($${base + 1}, $${base + 2})`;
+    })
+    .join(', ');
+  const result = await db.query<FeedWatermarkDbRow>(
+    `
+    with requested(outlet_id, method) as (
+      values ${placeholders}
+    )
+    select
+      r.outlet_id,
+      r.method,
+      w.source,
+      w.country,
+      w.last_publication_at
+    from requested r
+    left join ingest_feed_watermarks w
+      on w.outlet_id = r.outlet_id
+      and w.method = r.method
+    `,
+    values
+  );
+
+  const map = new Map<string, string | null>();
+  for (const request of requests) {
+    map.set(getFeedWatermarkKey(request.outletId, request.method), null);
+  }
+  for (const row of result.rows) {
+    map.set(getFeedWatermarkKey(row.outlet_id, row.method as 'rss' | 'sitemap'), row.last_publication_at || null);
+  }
+  return map;
+}
+
+export async function upsertIngestionFeedWatermarks(rows: FeedWatermark[]): Promise<void> {
+  const db = getPool();
+  if (!db || !rows.length) return;
+  await ensureSchema();
+
+  const deduped = new Map<string, FeedWatermark>();
+  for (const row of rows) {
+    if (!row.outletId || !row.method) continue;
+    const key = getFeedWatermarkKey(row.outletId, row.method);
+    const current = deduped.get(key);
+    if (!current || (row.lastPublicationAt && (!current.lastPublicationAt || row.lastPublicationAt > current.lastPublicationAt))) {
+      deduped.set(key, row);
+    }
+  }
+
+  const values: unknown[] = [];
+  const parts: string[] = [];
+  [...deduped.values()].forEach((row, index) => {
+    const base = index * 5;
+    parts.push(
+      `($${base + 1}::text,$${base + 2}::text,$${base + 3}::text,$${base + 4}::text,$${base + 5}::timestamptz,now(),now())`
+    );
+    values.push(
+      row.outletId,
+      row.source,
+      row.country,
+      row.method,
+      row.lastPublicationAt
+    );
+  });
+
+  if (!parts.length) return;
+
+  await executeIngestionQuery(
+    db,
+    `
+    insert into ingest_feed_watermarks (
+      outlet_id, source, country, method, last_publication_at, last_fetched_at, updated_at
+    ) values ${parts.join(',')}
+    on conflict (outlet_id, method) do update set
+      source = excluded.source,
+      country = excluded.country,
+      last_publication_at = case
+        when ingest_feed_watermarks.last_publication_at is null then excluded.last_publication_at
+        when excluded.last_publication_at is null then ingest_feed_watermarks.last_publication_at
+        when excluded.last_publication_at > ingest_feed_watermarks.last_publication_at then excluded.last_publication_at
+        else ingest_feed_watermarks.last_publication_at
+      end,
+      last_fetched_at = excluded.last_fetched_at,
+      updated_at = now()
+    `,
+    values,
+    'upsertIngestionFeedWatermarks'
+  );
 }
 
 function chunk<T>(items: T[], size: number): T[][] {
@@ -285,101 +408,6 @@ function chunk<T>(items: T[], size: number): T[][] {
   }
   return out;
 }
-
-function buildInsertSql(rows: Persistable[]): { sql: string; values: unknown[] } {
-  const values: unknown[] = [];
-  const parts: string[] = [];
-  rows.forEach((row, i) => {
-    const base = i * 17;
-    parts.push(
-      `($${base + 1},$${base + 2},$${base + 3},$${base + 4},$${base + 5},$${base + 6},$${base + 7},$${base + 8},$${base + 9},$${base + 10},$${base + 11},$${base + 12},$${base + 13},$${base + 14},$${base + 15},$${base + 16},$${base + 17}::jsonb,now(),now(),1)`
-    );
-    values.push(
-      row.link,
-      row.linkNorm,
-      row.linkHash,
-      row.outletId,
-      row.title,
-      row.source,
-      row.publishedAt,
-      row.country,
-      row.language,
-      row.sourceType,
-      row.tier,
-      row.section,
-      row.classificationSource,
-      row.classificationReason,
-      row.confidence,
-      row.worldLatam,
-      JSON.stringify(row.tags)
-    );
-  });
-
-  const sql = `
-    insert into ingested_articles (
-      link, link_norm, link_hash, outlet_id, title, source, published_at, country, language, source_type, tier,
-      section, classification_source, classification_reason, confidence, world_latam, tags, first_seen_at, last_seen_at, seen_count
-    ) values
-    ${parts.join(',')}
-    on conflict (link_hash) do update set
-      link = excluded.link,
-      outlet_id = excluded.outlet_id,
-      title = excluded.title,
-      source = excluded.source,
-      published_at = excluded.published_at,
-      country = excluded.country,
-      language = excluded.language,
-      source_type = excluded.source_type,
-      tier = excluded.tier,
-      section = excluded.section,
-      classification_source = excluded.classification_source,
-      classification_reason = excluded.classification_reason,
-      confidence = excluded.confidence,
-      world_latam = excluded.world_latam,
-      tags = excluded.tags,
-      last_seen_at = now(),
-      seen_count = ingested_articles.seen_count + 1
-  `;
-
-  return { sql, values };
-}
-
-export async function persistIngestedArticles(items: NewsItem[]): Promise<{ persisted: number; storage: 'postgres' | 'disabled'; reason?: string }> {
-  const db = getPool();
-  if (!db) return { persisted: 0, storage: 'disabled', reason: poolDisabledReason };
-  if (!items.length) return { persisted: 0, storage: 'postgres' };
-
-  await ensureSchema();
-  const prepared = (await Promise.all(items.map(toPersistable))).filter((row): row is Persistable => Boolean(row));
-  if (!prepared.length) return { persisted: 0, storage: 'postgres' };
-
-  const groups = chunk(prepared, 300);
-  for (const rows of groups) {
-    const { sql, values } = buildInsertSql(rows);
-    await db.query(sql, values);
-  }
-  return { persisted: prepared.length, storage: 'postgres' };
-}
-
-type StoredNewsRow = {
-  link: string;
-  outlet_id: string | null;
-  title: string;
-  description: string | null;
-  source: string;
-  published_at: string;
-  country: string | null;
-  language: string | null;
-  source_type: string | null;
-  tier: number | null;
-  section: string | null;
-  classification_source: string | null;
-  classification_reason: string | null;
-  confidence: number | null;
-  world_latam: boolean;
-  tags: unknown;
-  generated_at: string | null;
-};
 
 function parseNewsSection(value: string | null | undefined): NewsItem['section'] {
   const candidate = (value || 'general').toLowerCase();
@@ -391,106 +419,6 @@ function parseNewsSection(value: string | null | undefined): NewsItem['section']
     || candidate === 'world'
     ? (candidate as NewsItem['section'])
     : 'general';
-}
-
-export async function readIngestedArticles(options: {
-  outletIds?: string[];
-  sourceNames?: string[];
-  limit?: number;
-  hours?: number;
-}): Promise<{
-  storage: 'postgres' | 'disabled';
-  reason?: string;
-  generatedAt: string | null;
-  items: NewsItem[];
-}> {
-  const db = getPool();
-  if (!db) {
-    return { storage: 'disabled', reason: poolDisabledReason, generatedAt: null, items: [] };
-  }
-  await ensureSchema();
-
-  const limit = Math.max(1, Math.min(20000, Math.floor(options.limit || 1000)));
-  const hours = Math.max(1, Math.min(168, Math.floor(options.hours || 48)));
-  const outletIds = (options.outletIds || []).filter(Boolean);
-  const sourceNames = (options.sourceNames || []).filter(Boolean);
-
-  const params: unknown[] = [String(hours), limit];
-  const filterSql = buildOutletSourceFilterSql(params, {
-    outletIds,
-    sourceNames,
-    outletColumn: 'i.outlet_id',
-    sourceColumn: 'i.source'
-  });
-
-  const result = await db.query<StoredNewsRow>(
-    `
-    select
-      i.link,
-      i.outlet_id,
-      i.title,
-      coalesce(e.summary_original, null) as description,
-      i.source,
-      i.published_at,
-      i.country,
-      coalesce(e.language, i.language) as language,
-      i.source_type,
-      i.tier,
-      i.section,
-      i.classification_source,
-      i.classification_reason,
-      i.confidence,
-      i.world_latam,
-      i.tags,
-      max(i.last_seen_at) over() as generated_at
-    from ingested_articles i
-    left join external_news_articles e on e.url = i.link
-    where i.last_seen_at > now() - ($1::text || ' hours')::interval
-      ${filterSql}
-    order by i.published_at desc
-    limit $2
-    `,
-    params
-  );
-
-  const items = result.rows.map((row) => {
-    const tierCandidate = Number(row.tier);
-    const tier = tierCandidate === 1 || tierCandidate === 2 || tierCandidate === 3 ? tierCandidate : 2;
-    const section = parseNewsSection(row.section);
-    const sourceTypeCandidate = (row.source_type || 'global').toLowerCase();
-    const sourceType: NewsItem['sourceType'] =
-      sourceTypeCandidate === 'local' || sourceTypeCandidate === 'portal'
-        ? (sourceTypeCandidate as NewsItem['sourceType'])
-        : 'global';
-    const classificationSource: NewsItem['classificationSource'] = row.classification_source === 'llm' ? 'llm' : 'keyword';
-    const tags = Array.isArray(row.tags) ? (row.tags.filter((value) => typeof value === 'string') as string[]) : [];
-
-    return {
-      id: row.link,
-      outletId: row.outlet_id || undefined,
-      title: row.title,
-      description: row.description || '',
-      link: row.link,
-      source: row.source,
-      language: row.language || undefined,
-      sourceType,
-      tier,
-      publishedAt: new Date(row.published_at).toISOString(),
-      section,
-      confidence: typeof row.confidence === 'number' ? row.confidence : 0.5,
-      classificationSource,
-      classificationReason: row.classification_reason || undefined,
-      country: row.country || undefined,
-      worldLatam: Boolean(row.world_latam),
-      tags
-    } satisfies NewsItem;
-  });
-
-  return {
-    storage: 'postgres',
-    generatedAt: result.rows[0]?.generated_at ? new Date(result.rows[0].generated_at).toISOString() : null,
-    items
-  };
 }
 
 type ExternalNewsReadRow = {
@@ -510,8 +438,6 @@ type ExternalNewsReadRow = {
   confidence: number | null;
   world_latam: boolean | null;
   tags: unknown;
-  publication_source: string | null;
-  summary_source: string | null;
   generated_at: string | null;
 };
 
@@ -532,8 +458,6 @@ function mapRowToNewsItem(row: {
   confidence: number | null;
   world_latam: boolean | null;
   tags: unknown;
-  publication_source?: string | null;
-  summary_source?: string | null;
 }): NewsItem {
   const tierCandidate = Number(row.tier);
   const tier = tierCandidate === 1 || tierCandidate === 2 || tierCandidate === 3 ? tierCandidate : 2;
@@ -545,11 +469,6 @@ function mapRowToNewsItem(row: {
       : 'global';
   const classificationSource: NewsItem['classificationSource'] = row.classification_source === 'llm' ? 'llm' : 'keyword';
   const tags = Array.isArray(row.tags) ? (row.tags.filter((value) => typeof value === 'string') as string[]) : [];
-  const publicationSource: NewsItem['publicationSource'] =
-    row.publication_source === 'article_meta' ? 'article_meta' : 'feed';
-  const summarySource: NewsItem['summarySource'] =
-    row.summary_source === 'article_meta' ? 'article_meta' : 'feed';
-
   return {
     id: row.link,
     outletId: row.outlet_id || undefined,
@@ -568,9 +487,161 @@ function mapRowToNewsItem(row: {
     country: row.country || undefined,
     worldLatam: Boolean(row.world_latam),
     tags,
-    publicationSource,
-    summarySource
+    publicationSource: 'feed',
+    summarySource: row.description ? 'feed' : undefined
   } satisfies NewsItem;
+}
+
+export interface NewsApiItem {
+  id: string;
+  source: string;
+  title: string;
+  summary: string | null;
+  url: string;
+  country: string | null;
+  language: string | null;
+  section: string | null;
+  publicationDatetime: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface NewsApiReadResult {
+  storage: 'postgres' | 'disabled';
+  reason?: string;
+  generatedAt: string | null;
+  items: NewsApiItem[];
+}
+
+type NewsApiReadRow = {
+  id: string;
+  source: string;
+  title: string;
+  summary: string | null;
+  url: string;
+  country: string | null;
+  language: string | null;
+  section: string | null;
+  publication_datetime: string;
+  created_at: string;
+  updated_at: string;
+  generated_at: string | null;
+};
+
+function parseNewsApiFilterList(values: string[] | undefined): string[] {
+  return [
+    ...new Set(
+      (values || [])
+        .flatMap((value) => value.split(','))
+        .map((item) => item.trim())
+        .filter(Boolean)
+    )
+  ];
+}
+
+export async function readNewsArticlesForApi(options: {
+  sourceNames?: string[];
+  countries?: string[];
+  sections?: string[];
+  limit?: number;
+  offset?: number;
+  hours?: number;
+  from?: string | null;
+  to?: string | null;
+}): Promise<NewsApiReadResult> {
+  const db = getPool();
+  if (!db) {
+    return { storage: 'disabled', reason: poolDisabledReason, generatedAt: null, items: [] };
+  }
+  await ensureSchema();
+
+  const limit = Math.max(1, Math.min(200, Math.floor(options.limit || 100)));
+  const offset = Math.max(0, Math.floor(options.offset || 0));
+  const sourceNames = parseNewsApiFilterList(options.sourceNames);
+  const countries = parseNewsApiFilterList(options.countries);
+  const sections = parseNewsApiFilterList(options.sections);
+  const params: unknown[] = [];
+  const whereClauses: string[] = [];
+
+  if (sourceNames.length > 0) {
+    params.push(sourceNames);
+    whereClauses.push(`and e.source = any($${params.length}::text[])`);
+  }
+
+  if (countries.length > 0) {
+    params.push(countries);
+    whereClauses.push(`and e.country = any($${params.length}::text[])`);
+  }
+
+  if (sections.length > 0) {
+    params.push(sections);
+    whereClauses.push(`and e.section = any($${params.length}::text[])`);
+  }
+
+  if (options.from) {
+    params.push(options.from);
+    whereClauses.push(`and e.created_at >= $${params.length}`);
+  }
+
+  if (options.to) {
+    params.push(options.to);
+    whereClauses.push(`and e.created_at <= $${params.length}`);
+  }
+
+  if (!options.from && !options.to) {
+    const hours = Math.max(1, Math.min(720, Math.floor(options.hours || 48)));
+    params.push(hours);
+    whereClauses.push(`and e.created_at > now() - ($${params.length}::int * interval '1 hour')`);
+  }
+
+  params.push(limit);
+  const limitIndex = params.length;
+  params.push(offset);
+  const offsetIndex = params.length;
+
+  const result = await db.query<NewsApiReadRow>(
+    `
+    select
+      e.external_id as id,
+      e.source,
+      e.title_original as title,
+      e.summary_original as summary,
+      e.url,
+      e.country,
+      e.language,
+      e.section,
+      e.publication_datetime,
+      e.created_at,
+      e.updated_at,
+      max(e.created_at) over() as generated_at
+    from news_articles e
+    where 1 = 1
+      ${whereClauses.join('\n      ')}
+    order by e.created_at desc
+    limit $${limitIndex} offset $${offsetIndex}
+    `,
+    params
+  );
+
+  const items = result.rows.map((row) => ({
+    id: row.id,
+    source: row.source,
+    title: row.title,
+    summary: row.summary,
+    url: row.url,
+    country: row.country,
+    language: row.language,
+    section: row.section,
+    publicationDatetime: row.publication_datetime,
+    createdAt: row.created_at,
+    updatedAt: row.updated_at
+  }));
+
+  return {
+    storage: 'postgres',
+    generatedAt: result.rows[0]?.generated_at ? new Date(result.rows[0].generated_at).toISOString() : null,
+    items
+  };
 }
 
 export async function readExternalNewsArticles(options: {
@@ -599,7 +670,7 @@ export async function readExternalNewsArticles(options: {
   const filterSql = buildOutletSourceFilterSql(params, {
     outletIds,
     sourceNames,
-    outletColumn: 'i.outlet_id',
+    outletColumn: 'e.source',
     sourceColumn: 'e.source'
   });
 
@@ -607,27 +678,24 @@ export async function readExternalNewsArticles(options: {
     `
     select
       e.url as link,
-      i.outlet_id,
+      null::text as outlet_id,
       e.title_original as title,
       e.summary_original as description,
       e.source,
       e.publication_datetime as published_at,
       e.country,
       e.language,
-      i.source_type,
-      i.tier,
-      coalesce(i.section, e.section, 'general') as section,
-      i.classification_source,
-      i.classification_reason,
-      i.confidence,
-      i.world_latam,
-      i.tags,
-      e.publication_source,
-      e.summary_source,
-      max(e.last_seen_at) over() as generated_at
-    from external_news_articles e
-    left join ingested_articles i on i.link = e.url
-    where e.last_seen_at > now() - ($1::text || ' hours')::interval
+      null::text as source_type,
+      null::int as tier,
+      coalesce(e.section, 'general') as section,
+      null::text as classification_source,
+      null::text as classification_reason,
+      null::real as confidence,
+      false::boolean as world_latam,
+      '[]'::jsonb as tags,
+      max(e.created_at) over() as generated_at
+    from news_articles e
+    where e.created_at > now() - ($1::text || ' hours')::interval
       ${filterSql}
     order by e.publication_datetime desc
     limit $2
@@ -666,8 +734,6 @@ export interface IngestionOpsSummary {
     failedRuns24h: number;
     failureRate24h: number;
     externalArticles24h: number;
-    translatedTitleCoverage24h: number;
-    translatedSummaryCoverage24h: number;
   };
   topSources24h: IngestionOpsSourceRow[];
 }
@@ -675,6 +741,7 @@ export interface IngestionOpsSummary {
 export interface IngestionEndpointRun {
   outletId: string;
   source: string;
+  country: string;
   method: 'rss' | 'sitemap';
   runner?: 'worker' | 'api_news' | 'warm';
   attempted: boolean;
@@ -682,10 +749,60 @@ export interface IngestionEndpointRun {
   ok: boolean;
   statusCode: number | null;
   parsedCount: number;
+  fetchedCount: number;
   parsedLimit?: number;
   sampleCapped?: boolean;
   recent24h: number;
+  missingTitleCount: number;
+  missingSummaryCount: number;
+  missingPublishedAtCount: number;
+  missingLinkCount: number;
   error?: string;
+}
+
+type IngestOpsReadBaseOptions = {
+  runner?: 'worker' | 'api_news' | 'warm';
+  outletIds?: string[];
+  sourceNames?: string[];
+  countries?: string[];
+  method?: 'rss' | 'sitemap';
+  limit?: number;
+};
+
+export interface IngestOpsHourlyRow {
+  bucket: string;
+  runner: 'worker' | 'api_news' | 'warm';
+  outletId: string;
+  source: string;
+  country: string;
+  method: 'rss' | 'sitemap';
+  attemptedRuns: number;
+  successfulRuns: number;
+  failedRuns: number;
+  fetchedCount: number;
+  validCount: number;
+  missingTitleCount: number;
+  missingSummaryCount: number;
+  missingPublishedAtCount: number;
+  missingLinkCount: number;
+}
+
+export interface IngestOpsDailyRow {
+  bucket: string;
+  runner: 'worker' | 'api_news' | 'warm';
+  outletId: string;
+  source: string;
+  country: string;
+  method: 'rss' | 'sitemap';
+  attemptedRuns: number;
+  successfulRuns: number;
+  failedRuns: number;
+  fetchedCount: number;
+  validCount: number;
+  missingTitleCount: number;
+  missingSummaryCount: number;
+  missingPublishedAtCount: number;
+  missingLinkCount: number;
 }
 
 export interface EndpointBackoffRow {
@@ -734,7 +851,7 @@ export async function readFailingEndpointBackoff(options: {
         method,
         count(*) filter (where attempted)::int as attempted,
         count(*) filter (where attempted and not ok)::int as failed
-      from ingestion_endpoint_runs
+      from rss_health_status
       where ran_at > now() - ($1::text || ' minutes')::interval
         and runner = $2
       group by outlet_id, source, method
@@ -764,6 +881,242 @@ export async function readFailingEndpointBackoff(options: {
       attempted: Number(row.attempted) || 0,
       failed: Number(row.failed) || 0,
       failPct: Number(row.fail_pct) || 0
+    }))
+  };
+}
+
+export async function readIngestOpsHourly(options: IngestOpsReadBaseOptions & {
+  hours?: number;
+  from?: string | Date;
+  to?: string | Date;
+} = {}): Promise<{ storage: 'postgres' | 'disabled'; reason?: string; rows: IngestOpsHourlyRow[] }> {
+  const db = getPool();
+  if (!db) return { storage: 'disabled', reason: poolDisabledReason, rows: [] };
+  await ensureSchema();
+
+  const hours = Math.max(1, Math.min(24 * 30, Math.floor(options.hours || 24)));
+  const runner = options.runner;
+  const method = options.method;
+  const outletIds = (options.outletIds || []).filter(Boolean);
+  const sourceNames = (options.sourceNames || []).filter(Boolean);
+  const countries = (options.countries || []).filter(Boolean);
+  const from = options.from ? new Date(options.from) : null;
+  const to = options.to ? new Date(options.to) : null;
+  const limit = Math.max(1, Math.min(5000, Math.floor(options.limit || 1000)));
+
+  const params: unknown[] = [String(hours)];
+  const whereParts: string[] = [];
+
+  if (runner) {
+    params.push(runner);
+    whereParts.push(`and runner = $${params.length}`);
+  }
+  if (method) {
+    params.push(method);
+    whereParts.push(`and method = $${params.length}`);
+  }
+  if (from && Number.isFinite(from.getTime())) {
+    params.push(from.toISOString());
+    whereParts.push(`and hour_bucket >= $${params.length}::timestamptz`);
+  } else {
+    whereParts.push(`and hour_bucket > now() - ($1::text || ' hours')::interval`);
+  }
+  if (to && Number.isFinite(to.getTime())) {
+    params.push(to.toISOString());
+    whereParts.push(`and hour_bucket <= $${params.length}::timestamptz`);
+  }
+  if (countries.length > 0) {
+    params.push(countries);
+    whereParts.push(`and country = any($${params.length}::text[])`);
+  }
+
+  const filterSql = buildOutletSourceFilterSql(params, {
+    outletIds,
+    sourceNames,
+    outletColumn: 'outlet_id',
+    sourceColumn: 'source'
+  });
+
+  const result = await db.query<{
+    hour_bucket: string;
+    runner: 'worker' | 'api_news' | 'warm';
+    outlet_id: string;
+    source: string;
+    country: string;
+    method: 'rss' | 'sitemap';
+    attempted_runs: number;
+    successful_runs: number;
+    failed_runs: number;
+    fetched_count: number;
+    valid_count: number;
+    missing_title_count: number;
+    missing_summary_count: number;
+    missing_published_at_count: number;
+    missing_link_count: number;
+  }>(
+    `
+    select
+      hour_bucket,
+      runner,
+      outlet_id,
+      source,
+      country,
+      method,
+      attempted_runs,
+      successful_runs,
+      failed_runs,
+      fetched_count,
+      valid_count,
+      missing_title_count,
+      missing_summary_count,
+      missing_published_at_count,
+      missing_link_count
+    from ingest_ops_hourly
+    where 1=1
+      ${whereParts.join('\n      ')}
+      ${filterSql}
+    order by hour_bucket desc
+    limit $${params.length + 1}
+    `,
+    [...params, limit]
+  );
+
+  return {
+    storage: 'postgres',
+    rows: result.rows.map((row) => ({
+      bucket: new Date(row.hour_bucket).toISOString(),
+      runner: row.runner,
+      outletId: row.outlet_id,
+      source: row.source,
+      country: row.country,
+      method: row.method,
+      attemptedRuns: Number(row.attempted_runs) || 0,
+      successfulRuns: Number(row.successful_runs) || 0,
+      failedRuns: Number(row.failed_runs) || 0,
+      fetchedCount: Number(row.fetched_count) || 0,
+      validCount: Number(row.valid_count) || 0,
+      missingTitleCount: Number(row.missing_title_count) || 0,
+      missingSummaryCount: Number(row.missing_summary_count) || 0,
+      missingPublishedAtCount: Number(row.missing_published_at_count) || 0,
+      missingLinkCount: Number(row.missing_link_count) || 0
+    }))
+  };
+}
+
+export async function readIngestOpsDaily(options: IngestOpsReadBaseOptions & {
+  days?: number;
+  from?: string | Date;
+  to?: string | Date;
+} = {}): Promise<{ storage: 'postgres' | 'disabled'; reason?: string; rows: IngestOpsDailyRow[] }> {
+  const db = getPool();
+  if (!db) return { storage: 'disabled', reason: poolDisabledReason, rows: [] };
+  await ensureSchema();
+
+  const days = Math.max(1, Math.min(365, Math.floor(options.days || 30)));
+  const runner = options.runner;
+  const method = options.method;
+  const outletIds = (options.outletIds || []).filter(Boolean);
+  const sourceNames = (options.sourceNames || []).filter(Boolean);
+  const countries = (options.countries || []).filter(Boolean);
+  const from = options.from ? new Date(options.from) : null;
+  const to = options.to ? new Date(options.to) : null;
+  const limit = Math.max(1, Math.min(5000, Math.floor(options.limit || 1000)));
+
+  const params: unknown[] = [String(days)];
+  const whereParts: string[] = [];
+
+  if (runner) {
+    params.push(runner);
+    whereParts.push(`and runner = $${params.length}`);
+  }
+  if (method) {
+    params.push(method);
+    whereParts.push(`and method = $${params.length}`);
+  }
+  if (from && Number.isFinite(from.getTime())) {
+    params.push(from.toISOString().slice(0, 10));
+    whereParts.push(`and day_bucket >= $${params.length}::date`);
+  } else {
+    whereParts.push(`and day_bucket > (now() - ($1::text || ' days')::interval)::date`);
+  }
+  if (to && Number.isFinite(to.getTime())) {
+    params.push(to.toISOString().slice(0, 10));
+    whereParts.push(`and day_bucket <= $${params.length}::date`);
+  }
+  if (countries.length > 0) {
+    params.push(countries);
+    whereParts.push(`and country = any($${params.length}::text[])`);
+  }
+
+  const filterSql = buildOutletSourceFilterSql(params, {
+    outletIds,
+    sourceNames,
+    outletColumn: 'outlet_id',
+    sourceColumn: 'source'
+  });
+
+  const result = await db.query<{
+    day_bucket: string;
+    runner: 'worker' | 'api_news' | 'warm';
+    outlet_id: string;
+    source: string;
+    country: string;
+    method: 'rss' | 'sitemap';
+    attempted_runs: number;
+    successful_runs: number;
+    failed_runs: number;
+    fetched_count: number;
+    valid_count: number;
+    missing_title_count: number;
+    missing_summary_count: number;
+    missing_published_at_count: number;
+    missing_link_count: number;
+  }>(
+    `
+    select
+      day_bucket,
+      runner,
+      outlet_id,
+      source,
+      country,
+      method,
+      attempted_runs,
+      successful_runs,
+      failed_runs,
+      fetched_count,
+      valid_count,
+      missing_title_count,
+      missing_summary_count,
+      missing_published_at_count,
+      missing_link_count
+    from ingest_ops_daily
+    where 1=1
+      ${whereParts.join('\n      ')}
+      ${filterSql}
+    order by day_bucket desc
+    limit $${params.length + 1}
+    `,
+    [...params, limit]
+  );
+
+  return {
+    storage: 'postgres',
+    rows: result.rows.map((row) => ({
+      bucket: row.day_bucket,
+      runner: row.runner,
+      outletId: row.outlet_id,
+      source: row.source,
+      country: row.country,
+      method: row.method,
+      attemptedRuns: Number(row.attempted_runs) || 0,
+      successfulRuns: Number(row.successful_runs) || 0,
+      failedRuns: Number(row.failed_runs) || 0,
+      fetchedCount: Number(row.fetched_count) || 0,
+      validCount: Number(row.valid_count) || 0,
+      missingTitleCount: Number(row.missing_title_count) || 0,
+      missingSummaryCount: Number(row.missing_summary_count) || 0,
+      missingPublishedAtCount: Number(row.missing_published_at_count) || 0,
+      missingLinkCount: Number(row.missing_link_count) || 0
     }))
   };
 }
@@ -805,31 +1158,43 @@ export async function readLatestIngestionDiagnostics(options: {
     outlet_id: string;
     source: string;
     method: string;
+    country: string;
     attempted: boolean;
     circuit_open: boolean;
     ok: boolean;
     status_code: number | null;
     parsed_count: number;
+    fetched_count: number;
     parsed_limit: number | null;
     sample_capped: boolean;
     recent24h: number;
+    missing_title_count: number;
+    missing_summary_count: number;
+    missing_published_at_count: number;
+    missing_link_count: number;
     error: string | null;
   }>(
     `
     select distinct on (outlet_id, method)
       outlet_id,
       source,
+      country,
       method,
       attempted,
       circuit_open,
       ok,
       status_code,
       parsed_count,
+      fetched_count,
       parsed_limit,
       sample_capped,
       recent24h,
+      missing_title_count,
+      missing_summary_count,
+      missing_published_at_count,
+      missing_link_count,
       error
-    from ingestion_endpoint_runs
+    from rss_health_status
     where ran_at > now() - ($1::text || ' minutes')::interval
       ${filterSql}
     order by outlet_id, method, ran_at desc
@@ -844,14 +1209,20 @@ export async function readLatestIngestionDiagnostics(options: {
       outletId: row.outlet_id,
       source: row.source,
       method: row.method === 'sitemap' ? 'sitemap' : 'rss',
+      country: row.country,
       attempted: Boolean(row.attempted),
       circuitOpen: Boolean(row.circuit_open),
       ok: Boolean(row.ok),
       statusCode: row.status_code,
       parsedCount: row.parsed_count || 0,
+      fetchedCount: row.fetched_count || 0,
       parsedLimit: row.parsed_limit || undefined,
       sampleCapped: Boolean(row.sample_capped),
       recent24h: row.recent24h || 0,
+      missingTitleCount: row.missing_title_count || 0,
+      missingSummaryCount: row.missing_summary_count || 0,
+      missingPublishedAtCount: row.missing_published_at_count || 0,
+      missingLinkCount: row.missing_link_count || 0,
       error: row.error || undefined
     }))
   };
@@ -872,75 +1243,246 @@ export async function persistIngestionDiagnostics(
     const values: unknown[] = [];
     const parts: string[] = [];
     rows.forEach((row, i) => {
-      const base = i * 13;
-      parts.push(`($${base + 1},$${base + 2},$${base + 3},$${base + 4},$${base + 5},$${base + 6},$${base + 7},$${base + 8},$${base + 9},$${base + 10},$${base + 11},$${base + 12},$${base + 13})`);
+      const base = i * 19;
+      parts.push(
+        `($${base + 1}::text,$${base + 2}::text,$${base + 3}::text,$${base + 4}::text,$${base + 5}::text,$${base + 6}::boolean,$${base + 7}::boolean,$${base + 8}::boolean,$${base + 9}::int,$${base + 10}::int,$${base + 11}::int,$${base + 12}::int,$${base + 13}::boolean,$${base + 14}::int,$${base + 15}::int,$${base + 16}::int,$${base + 17}::int,$${base + 18}::int,$${base + 19}::text)`
+      );
       values.push(
         row.runner || defaultRunner,
         row.outletId,
         row.source,
+        row.country,
         row.method,
         Boolean(row.attempted),
         Boolean(row.circuitOpen),
         Boolean(row.ok),
         row.statusCode ?? null,
         row.parsedCount ?? 0,
+        row.fetchedCount ?? 0,
         row.parsedLimit ?? null,
         Boolean(row.sampleCapped),
         row.recent24h ?? 0,
+        row.missingTitleCount ?? 0,
+        row.missingSummaryCount ?? 0,
+        row.missingPublishedAtCount ?? 0,
+        row.missingLinkCount ?? 0,
         row.error ?? null
       );
     });
-    await db.query(
+    await executeIngestionQuery(
+      db,
       `
-      insert into ingestion_endpoint_runs (
-        runner, outlet_id, source, method, attempted, circuit_open, ok, status_code, parsed_count,
-        parsed_limit, sample_capped, recent24h, error
+      insert into rss_health_status (
+        runner, outlet_id, source, country, method, attempted, circuit_open, ok, status_code, parsed_count,
+        fetched_count, parsed_limit, sample_capped, recent24h,
+        missing_title_count, missing_summary_count, missing_published_at_count, missing_link_count, error
       ) values ${parts.join(',')}
       `,
-      values
+      values,
+      'persistIngestionDiagnostics.rss_health_status'
     );
+    await upsertIngestOpsRollups(db, rows, defaultRunner);
   }
 
   return { persisted: runs.length, storage: 'postgres' };
 }
 
+type IngestionOpsRollupRow = {
+  country: string;
+  outletId: string;
+  source: string;
+  method: 'rss' | 'sitemap';
+  runner: 'worker' | 'api_news' | 'warm';
+  attemptedRuns: number;
+  successfulRuns: number;
+  failedRuns: number;
+  fetchedCount: number;
+  validCount: number;
+  missingTitleCount: number;
+  missingSummaryCount: number;
+  missingPublishedAtCount: number;
+  missingLinkCount: number;
+};
+
+function normalizeIngestCountry(country: string | undefined): string {
+  const value = (country || '').trim();
+  return value || 'Global';
+}
+
+function coerceInt(value: number | null | undefined): number {
+  const normalized = Math.floor(Number(value ?? 0));
+  return normalized > 0 ? normalized : 0;
+}
+
+async function upsertIngestOpsRollups(db: Pool, runs: IngestionEndpointRun[], defaultRunner: 'worker' | 'api_news' | 'warm'): Promise<void> {
+  const rows: IngestionOpsRollupRow[] = runs.map((row) => ({
+    country: normalizeIngestCountry(row.country),
+    outletId: row.outletId,
+    source: row.source,
+    method: row.method,
+    runner: row.runner || defaultRunner,
+    attemptedRuns: row.attempted ? 1 : 0,
+    successfulRuns: row.attempted && row.ok ? 1 : 0,
+    failedRuns: row.attempted && !row.ok ? 1 : 0,
+    fetchedCount: coerceInt(row.fetchedCount),
+    validCount: coerceInt(row.parsedCount),
+    missingTitleCount: coerceInt(row.missingTitleCount),
+    missingSummaryCount: coerceInt(row.missingSummaryCount),
+    missingPublishedAtCount: coerceInt(row.missingPublishedAtCount),
+    missingLinkCount: coerceInt(row.missingLinkCount),
+  }));
+  if (!rows.length) return;
+
+  const dedupedRows = [...rows.reduce((acc, row) => {
+    const key = `${row.runner}|${row.outletId}|${row.method}`;
+    const existing = acc.get(key);
+    if (!existing) {
+      acc.set(key, { ...row });
+      return acc;
+    }
+    existing.attemptedRuns += row.attemptedRuns;
+    existing.successfulRuns += row.successfulRuns;
+    existing.failedRuns += row.failedRuns;
+    existing.fetchedCount += row.fetchedCount;
+    existing.validCount += row.validCount;
+    existing.missingTitleCount += row.missingTitleCount;
+    existing.missingSummaryCount += row.missingSummaryCount;
+    existing.missingPublishedAtCount += row.missingPublishedAtCount;
+    existing.missingLinkCount += row.missingLinkCount;
+    if (row.country && (!existing.country || row.country !== 'Global')) {
+      existing.country = row.country;
+    }
+    if (row.source) {
+      existing.source = row.source;
+    }
+    return acc;
+  }, new Map<string, IngestionOpsRollupRow>()).values()];
+
+  const bucketGroups = chunk(dedupedRows, 200);
+  for (const groupedRows of bucketGroups) {
+    const values: unknown[] = [];
+    const parts: string[] = [];
+      groupedRows.forEach((row, index) => {
+      const base = index * 14;
+      parts.push(`
+        (date_trunc('hour', now()),
+         $${base + 1}::text, $${base + 2}::text, $${base + 3}::text, $${base + 4}::text, $${base + 5}::text,
+         $${base + 6}::int, $${base + 7}::int, $${base + 8}::int, $${base + 9}::int, $${base + 10}::int,
+         $${base + 11}::int, $${base + 12}::int, $${base + 13}::int, $${base + 14}::int)`
+      );
+      values.push(
+        row.runner,
+        row.outletId,
+        row.source,
+        row.country,
+        row.method,
+        row.attemptedRuns,
+        row.successfulRuns,
+        row.failedRuns,
+        row.fetchedCount,
+        row.validCount,
+        row.missingTitleCount,
+        row.missingSummaryCount,
+        row.missingPublishedAtCount,
+        row.missingLinkCount
+      );
+    });
+
+    await executeIngestionQuery(
+      db,
+      `
+      insert into ingest_ops_hourly (
+        hour_bucket, runner, outlet_id, source, country, method,
+        attempted_runs, successful_runs, failed_runs,
+        fetched_count, valid_count,
+        missing_title_count, missing_summary_count, missing_published_at_count, missing_link_count
+      ) values ${parts.join(',')}
+      on conflict (hour_bucket, runner, outlet_id, method) do update set
+        attempted_runs = ingest_ops_hourly.attempted_runs + excluded.attempted_runs,
+        successful_runs = ingest_ops_hourly.successful_runs + excluded.successful_runs,
+        failed_runs = ingest_ops_hourly.failed_runs + excluded.failed_runs,
+        fetched_count = ingest_ops_hourly.fetched_count + excluded.fetched_count,
+        valid_count = ingest_ops_hourly.valid_count + excluded.valid_count,
+        missing_title_count = ingest_ops_hourly.missing_title_count + excluded.missing_title_count,
+        missing_summary_count = ingest_ops_hourly.missing_summary_count + excluded.missing_summary_count,
+        missing_published_at_count = ingest_ops_hourly.missing_published_at_count + excluded.missing_published_at_count,
+        missing_link_count = ingest_ops_hourly.missing_link_count + excluded.missing_link_count,
+        country = excluded.country,
+        source = excluded.source,
+        updated_at = now()
+      `,
+      values,
+      'upsertIngestOpsRollups.hourly'
+    );
+
+    const dailyValues: unknown[] = [];
+    const dailyParts: string[] = [];
+    groupedRows.forEach((row, index) => {
+      const base = index * 14;
+      dailyParts.push(`
+        (date_trunc('day', now())::date,
+         $${base + 1}::text, $${base + 2}::text, $${base + 3}::text, $${base + 4}::text, $${base + 5}::text,
+         $${base + 6}::int, $${base + 7}::int, $${base + 8}::int, $${base + 9}::int, $${base + 10}::int,
+         $${base + 11}::int, $${base + 12}::int, $${base + 13}::int, $${base + 14}::int)`
+      );
+      dailyValues.push(
+        row.runner,
+        row.outletId,
+        row.source,
+        row.country,
+        row.method,
+        row.attemptedRuns,
+        row.successfulRuns,
+        row.failedRuns,
+        row.fetchedCount,
+        row.validCount,
+        row.missingTitleCount,
+        row.missingSummaryCount,
+        row.missingPublishedAtCount,
+        row.missingLinkCount
+      );
+    });
+
+    await executeIngestionQuery(
+      db,
+      `
+      insert into ingest_ops_daily (
+        day_bucket, runner, outlet_id, source, country, method,
+        attempted_runs, successful_runs, failed_runs,
+        fetched_count, valid_count,
+        missing_title_count, missing_summary_count, missing_published_at_count, missing_link_count
+      ) values ${dailyParts.join(',')}
+      on conflict (day_bucket, runner, outlet_id, method) do update set
+        attempted_runs = ingest_ops_daily.attempted_runs + excluded.attempted_runs,
+        successful_runs = ingest_ops_daily.successful_runs + excluded.successful_runs,
+        failed_runs = ingest_ops_daily.failed_runs + excluded.failed_runs,
+        fetched_count = ingest_ops_daily.fetched_count + excluded.fetched_count,
+        valid_count = ingest_ops_daily.valid_count + excluded.valid_count,
+        missing_title_count = ingest_ops_daily.missing_title_count + excluded.missing_title_count,
+        missing_summary_count = ingest_ops_daily.missing_summary_count + excluded.missing_summary_count,
+        missing_published_at_count = ingest_ops_daily.missing_published_at_count + excluded.missing_published_at_count,
+        missing_link_count = ingest_ops_daily.missing_link_count + excluded.missing_link_count,
+        country = excluded.country,
+        source = excluded.source,
+        updated_at = now()
+      `,
+      dailyValues,
+      'upsertIngestOpsRollups.daily'
+    );
+  }
+}
+
 type ExternalArticlePersistable = {
   externalId: string;
   publicationDatetime: string;
-  publicationSource: 'feed' | 'article_meta';
-  publicationVerified: boolean;
-  titleEn: string | null;
   titleOriginal: string;
-  summaryEn: string | null;
   summaryOriginal: string | null;
-  summarySource: 'feed' | 'article_meta';
-  summaryVerified: boolean;
-  qualityScore: number;
   country: string | null;
-  section: string;
+  section: string | null;
   url: string;
-  urlNorm: string;
-  urlHash: string;
   source: string;
-  isPaywalled: boolean;
   language: string | null;
 };
-
-const PAYWALL_DOMAIN_HINTS = [
-  'nytimes.com',
-  'wsj.com',
-  'ft.com',
-  'theathletic.com',
-  'barrons.com',
-  'economist.com',
-  'washingtonpost.com',
-  'bloomberg.com'
-];
-
-function isLikelyPaywalled(link: string, source: string): boolean {
-  const hay = `${(link || '').toLowerCase()} ${(source || '').toLowerCase()}`;
-  return PAYWALL_DOMAIN_HINTS.some((needle) => hay.includes(needle));
-}
 
 async function toExternalArticle(item: NewsItem): Promise<ExternalArticlePersistable | null> {
   const linkNorm = normalizeLinkForId(item.link);
@@ -953,38 +1495,20 @@ async function toExternalArticle(item: NewsItem): Promise<ExternalArticlePersist
   if (!titleOriginal) return null;
   const summaryOriginal = (item.description || '').trim() || null;
 
-  const titleEn = language === 'en' ? titleOriginal : null;
-  const summaryEn = language === 'en' ? summaryOriginal : null;
-  const publicationSource = item.publicationSource || 'feed';
-  const summarySource = item.summarySource || 'feed';
-  const publicationVerified = publicationSource === 'article_meta';
-  const summaryVerified = summarySource === 'article_meta';
-  const qualityScore = (publicationVerified ? 60 : 25) + (summaryVerified ? 40 : 15);
-
   return {
     externalId: await sha256Hex(linkNorm),
     publicationDatetime: new Date(publicationTs).toISOString(),
-    publicationSource,
-    publicationVerified,
     section: item.section,
-    titleEn,
     titleOriginal,
-    summaryEn,
     summaryOriginal,
-    summarySource,
-    summaryVerified,
-    qualityScore,
     country: item.country || null,
     url: item.link,
-    urlNorm: linkNorm,
-    urlHash: createHash('md5').update(linkNorm.toLowerCase()).digest('hex'),
     source: item.source,
-    isPaywalled: isLikelyPaywalled(item.link, item.source),
     language
   };
 }
 
-export async function persistExternalNewsArticles(items: NewsItem[]): Promise<{ persisted: number; storage: 'postgres' | 'disabled'; reason?: string; queuedSummaries?: number }> {
+export async function persistExternalNewsArticles(items: NewsItem[]): Promise<{ persisted: number; storage: 'postgres' | 'disabled'; reason?: string }> {
   const db = getPool();
   if (!db) return { persisted: 0, storage: 'disabled', reason: poolDisabledReason };
   if (!items.length) return { persisted: 0, storage: 'postgres' };
@@ -992,109 +1516,60 @@ export async function persistExternalNewsArticles(items: NewsItem[]): Promise<{ 
   await ensureSchema();
   const rows = (await Promise.all(items.map(toExternalArticle))).filter((row): row is ExternalArticlePersistable => Boolean(row));
   if (!rows.length) return { persisted: 0, storage: 'postgres' };
+  const dedupedRows = [...rows.reduce((acc, row) => {
+    const current = acc.get(row.externalId);
+    if (!current || new Date(row.publicationDatetime).getTime() > new Date(current.publicationDatetime).getTime()) {
+      acc.set(row.externalId, row);
+    }
+    return acc;
+  }, new Map<string, ExternalArticlePersistable>()).values()];
 
-  const groups = chunk(rows, 250);
-  let queuedSummaries = 0;
+  const groups = chunk(dedupedRows, 250);
   for (const group of groups) {
     const values: unknown[] = [];
     const parts: string[] = [];
     group.forEach((row, i) => {
-      const base = i * 19;
+      const base = i * 9;
       parts.push(
-        `($${base + 1},$${base + 2},$${base + 3},$${base + 4},$${base + 5},$${base + 6},$${base + 7},$${base + 8},$${base + 9},$${base + 10},$${base + 11},$${base + 12},$${base + 13},$${base + 14},now(),$${base + 15},$${base + 16},$${base + 17},$${base + 18},$${base + 19},1)`
+        `($${base + 1}::text,$${base + 2}::timestamptz,$${base + 3}::text,$${base + 4}::text,$${base + 5}::text,$${base + 6}::text,$${base + 7}::text,$${base + 8}::text,$${base + 9}::text,now(),now())`
       );
       values.push(
         row.externalId,
         row.publicationDatetime,
-        row.publicationSource,
-        row.publicationVerified,
-        row.titleEn,
-        row.titleOriginal,
-        row.summaryEn,
-        row.summaryOriginal,
-        row.summarySource,
-        row.summaryVerified,
-        row.qualityScore,
-        row.country,
         row.section,
+        row.titleOriginal,
+        row.summaryOriginal,
+        row.country,
         row.url,
-        row.urlNorm,
-        row.urlHash,
         row.source,
-        row.isPaywalled,
         row.language
       );
     });
 
-    await db.query(
+    await executeIngestionQuery(
+      db,
       `
-      insert into external_news_articles (
-        external_id, publication_datetime, publication_source, publication_verified, section,
-        title_en, title_original, summary_en, summary_original, summary_source, summary_verified, quality_score,
-        country, created_at, url, url_norm, url_hash, source, is_paywalled, language, seen_count
+      insert into news_articles (
+        external_id, publication_datetime, section, title_original, summary_original,
+        country, url, source, language, created_at, updated_at
       ) values ${parts.join(',')}
       on conflict (external_id) do update set
         publication_datetime = excluded.publication_datetime,
-        publication_source = case
-          when excluded.publication_verified then excluded.publication_source
-          else external_news_articles.publication_source
-        end,
-        publication_verified = external_news_articles.publication_verified or excluded.publication_verified,
         section = excluded.section,
-        title_en = coalesce(nullif(excluded.title_en, ''), external_news_articles.title_en),
         title_original = excluded.title_original,
-        summary_en = coalesce(nullif(excluded.summary_en, ''), external_news_articles.summary_en),
-        summary_original = coalesce(nullif(excluded.summary_original, ''), external_news_articles.summary_original),
-        summary_source = case
-          when excluded.summary_verified then excluded.summary_source
-          else external_news_articles.summary_source
-        end,
-        summary_verified = external_news_articles.summary_verified or excluded.summary_verified,
-        quality_score = greatest(external_news_articles.quality_score, excluded.quality_score),
+        summary_original = coalesce(nullif(excluded.summary_original, ''), news_articles.summary_original),
         country = excluded.country,
         url = excluded.url,
-        url_norm = excluded.url_norm,
-        url_hash = excluded.url_hash,
         source = excluded.source,
-        is_paywalled = excluded.is_paywalled,
         language = excluded.language,
-        last_seen_at = now(),
-        seen_count = external_news_articles.seen_count + 1
+        updated_at = now()
       `,
-      values
+      values,
+      'persistExternalNewsArticles.insert'
     );
-
-    const externalIds = group.map((row) => row.externalId);
-    if (externalIds.length > 0) {
-      const enqueue = await db.query(
-        `
-          insert into radar_summary_queue (article_external_id, status, next_retry_at, created_at, updated_at)
-          select e.external_id, 'pending', now(), now(), now()
-          from external_news_articles e
-          where e.external_id = any($1::text[])
-            and (
-              coalesce(btrim(e.summary_original), '') = ''
-              or (
-                e.language is not null
-                and lower(e.language) not like 'en%'
-                and coalesce(btrim(e.summary_en), '') = ''
-              )
-            )
-          on conflict (article_external_id) do update
-          set
-            status = case
-              when radar_summary_queue.status = 'done' then radar_summary_queue.status
-              else 'pending'
-            end,
-            updated_at = now()
-        `,
-        [externalIds]
-      );
-      queuedSummaries += enqueue.rowCount || 0;
-    }
   }
 
-  return { persisted: rows.length, storage: 'postgres', queuedSummaries };
+  return { persisted: dedupedRows.length, storage: 'postgres' };
 }
 
 export async function getIngestionOpsSummary24h(): Promise<IngestionOpsSummary> {
@@ -1112,9 +1587,7 @@ export async function getIngestionOpsSummary24h(): Promise<IngestionOpsSummary> 
         endpointRuns24h: 0,
         failedRuns24h: 0,
         failureRate24h: 0,
-        externalArticles24h: 0,
-        translatedTitleCoverage24h: 0,
-        translatedSummaryCoverage24h: 0
+        externalArticles24h: 0
       },
       topSources24h: []
     };
@@ -1130,10 +1603,10 @@ export async function getIngestionOpsSummary24h(): Promise<IngestionOpsSummary> 
     select
       count(*)::text as unique_items_24h,
       count(distinct source)::text as source_count_24h,
-      coalesce(sum(seen_count), 0)::text as seen_total_24h,
-      count(*) filter (where seen_count > 1)::text as duplicate_candidates_24h
-    from external_news_articles
-    where last_seen_at > now() - interval '24 hours'
+      '0'::text as seen_total_24h,
+      '0'::text as duplicate_candidates_24h
+    from news_articles
+    where created_at > now() - interval '24 hours'
   `);
 
   const runTotals = await db.query<{
@@ -1143,34 +1616,9 @@ export async function getIngestionOpsSummary24h(): Promise<IngestionOpsSummary> 
     select
       count(*)::text as endpoint_runs_24h,
       count(*) filter (where attempted and not ok)::text as failed_runs_24h
-    from ingestion_endpoint_runs
+    from rss_health_status
     where ran_at > now() - interval '24 hours'
       and runner = 'worker'
-  `);
-
-  const translationTotals = await db.query<{
-    external_articles_24h: string;
-    translated_title_count_24h: string;
-    translated_summary_count_24h: string;
-  }>(`
-    select
-      count(*)::text as external_articles_24h,
-      count(*) filter (
-        where language is not null
-          and btrim(language) <> ''
-          and lower(language) not like 'en%'
-          and title_en is not null
-          and btrim(title_en) <> ''
-      )::text as translated_title_count_24h,
-      count(*) filter (
-        where language is not null
-          and btrim(language) <> ''
-          and lower(language) not like 'en%'
-          and summary_en is not null
-          and btrim(summary_en) <> ''
-      )::text as translated_summary_count_24h
-    from external_news_articles
-    where last_seen_at > now() - interval '24 hours'
   `);
 
   const top = await db.query<{
@@ -1185,10 +1633,10 @@ export async function getIngestionOpsSummary24h(): Promise<IngestionOpsSummary> 
       select
         source,
         count(*)::int as unique_items_24h,
-        coalesce(sum(seen_count), 0)::int as seen_total_24h,
-        count(*) filter (where seen_count > 1)::int as duplicate_candidates_24h
-      from external_news_articles
-      where last_seen_at > now() - interval '24 hours'
+        0::int as seen_total_24h,
+        0::int as duplicate_candidates_24h
+      from news_articles
+      where created_at > now() - interval '24 hours'
       group by source
     ),
     run_rollup as (
@@ -1196,7 +1644,7 @@ export async function getIngestionOpsSummary24h(): Promise<IngestionOpsSummary> 
         source,
         count(*)::int as endpoint_runs_24h,
         count(*) filter (where attempted and not ok)::int as failed_runs_24h
-      from ingestion_endpoint_runs
+      from rss_health_status
       where ran_at > now() - interval '24 hours'
         and runner = 'worker'
       group by source
@@ -1228,15 +1676,6 @@ export async function getIngestionOpsSummary24h(): Promise<IngestionOpsSummary> 
   const duplicateCandidates24h = Number(t.duplicate_candidates_24h || 0);
   const endpointRuns24h = Number(r.endpoint_runs_24h || 0);
   const failedRuns24h = Number(r.failed_runs_24h || 0);
-  const tr = translationTotals.rows[0] || {
-    external_articles_24h: '0',
-    translated_title_count_24h: '0',
-    translated_summary_count_24h: '0'
-  };
-  const externalArticles24h = Number(tr.external_articles_24h || 0);
-  const translatedTitleCount24h = Number(tr.translated_title_count_24h || 0);
-  const translatedSummaryCount24h = Number(tr.translated_summary_count_24h || 0);
-
   return {
     storage: 'postgres',
     generatedAt: new Date().toISOString(),
@@ -1249,9 +1688,7 @@ export async function getIngestionOpsSummary24h(): Promise<IngestionOpsSummary> 
       endpointRuns24h,
       failedRuns24h,
       failureRate24h: endpointRuns24h > 0 ? (failedRuns24h / endpointRuns24h) * 100 : 0,
-      externalArticles24h,
-      translatedTitleCoverage24h: externalArticles24h > 0 ? (translatedTitleCount24h / externalArticles24h) * 100 : 0,
-      translatedSummaryCoverage24h: externalArticles24h > 0 ? (translatedSummaryCount24h / externalArticles24h) * 100 : 0
+      externalArticles24h: Number(t.unique_items_24h || 0)
     },
     topSources24h: top.rows.map((row) => ({
       source: row.source,

@@ -5,6 +5,31 @@ export interface ParsedFeedItem {
   publishedAt: string;
 }
 
+export interface ParsedFeedStats {
+  totalCandidates: number;
+  validCount: number;
+  missingTitleCount: number;
+  missingSummaryCount: number;
+  missingPublishedAtCount: number;
+  missingLinkCount: number;
+}
+
+export interface ParsedFeedBatch {
+  items: ParsedFeedItem[];
+  stats: ParsedFeedStats;
+}
+
+interface ParsedFeedItemWithMissing {
+  title: string;
+  description: string;
+  link: string;
+  publishedAt: string;
+  missingTitle: boolean;
+  missingSummary: boolean;
+  missingLink: boolean;
+  missingPublishedAt: boolean;
+}
+
 function clean(text: string): string {
   return text.replace(/<!\[CDATA\[(.*?)\]\]>/gs, '$1').trim();
 }
@@ -75,48 +100,112 @@ function parsePublishedAt(body: string, fallbackLink = ''): string {
   return inferPublishedAtFromLink(fallbackLink);
 }
 
+function summarizeStats(rows: ParsedFeedItemWithMissing[]): ParsedFeedStats {
+  return {
+    totalCandidates: rows.length,
+    validCount: rows.filter((row) => !row.missingTitle && !row.missingLink && !row.missingPublishedAt).length,
+    missingTitleCount: rows.filter((row) => row.missingTitle).length,
+    missingSummaryCount: rows.filter((row) => row.missingSummary).length,
+    missingPublishedAtCount: rows.filter((row) => row.missingPublishedAt).length,
+    missingLinkCount: rows.filter((row) => row.missingLink).length
+  };
+}
+
+function toItems(rows: ParsedFeedItemWithMissing[]): ParsedFeedItem[] {
+  return rows
+    .filter((row) => !row.missingTitle && !row.missingLink && !row.missingPublishedAt)
+    .map((row) => ({
+      title: row.title,
+      description: row.description,
+      link: row.link,
+      publishedAt: row.publishedAt
+    }));
+}
+
 export function parseRssOrAtom(xml: string, limit = 10): ParsedFeedItem[] {
-  const items = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/gi)].map((match) => match[1]);
-  if (items.length > 0) {
-    return items
-      .slice(0, limit)
-      .map((body) => {
-        const title = parseTag(body, 'title');
-        const link = parseTag(body, 'link');
-        return {
-          title,
-          description: parseDescription(body),
-          link,
-          publishedAt: parsePublishedAt(body, link)
-        };
-      })
-      .filter((item) => item.title && item.link && item.publishedAt);
+  return parseRssOrAtomWithStats(xml, limit).items;
+}
+
+export function parseRssOrAtomWithStats(xml: string, limit = 10): ParsedFeedBatch {
+  const rows = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/gi)]
+    .map((match) => match[1])
+    .slice(0, limit)
+    .map((body) => {
+      const title = parseTag(body, 'title');
+      const link = parseTag(body, 'link');
+      const description = parseDescription(body);
+      const publishedAt = parsePublishedAt(body, link);
+      return {
+        title,
+        description,
+        link,
+        publishedAt,
+        missingTitle: !title,
+        missingLink: !link,
+        missingSummary: !description,
+        missingPublishedAt: !publishedAt,
+      };
+    });
+
+  if (rows.length > 0) {
+    return {
+      items: toItems(rows),
+      stats: summarizeStats(rows),
+    };
   }
 
-  const entries = [...xml.matchAll(/<entry>([\s\S]*?)<\/entry>/gi)].map((match) => match[1]);
-  return entries
+  const entryRows = [...xml.matchAll(/<entry>([\s\S]*?)<\/entry>/gi)]
+    .map((match) => match[1])
     .slice(0, limit)
     .map((body) => {
       const linkHref = body.match(/<link[^>]+href=["']([^"']+)["']/i)?.[1] || '';
+      const title = parseTag(body, 'title');
+      const description = parseDescription(body);
+      const publishedAt = parsePublishedAt(body, linkHref);
       return {
-        title: parseTag(body, 'title'),
-        description: parseDescription(body),
+        title,
+        description,
         link: linkHref,
-        publishedAt: parsePublishedAt(body, linkHref)
+        publishedAt,
+        missingTitle: !title,
+        missingLink: !linkHref,
+        missingSummary: !description,
+        missingPublishedAt: !publishedAt,
       };
-    })
-    .filter((item) => item.title && item.link && item.publishedAt);
+    });
+
+  return {
+    items: toItems(entryRows),
+    stats: summarizeStats(entryRows)
+  };
 }
 
 export function parseSitemap(xml: string, limit = 12): ParsedFeedItem[] {
-  const urls = [...xml.matchAll(/<url>([\s\S]*?)<\/url>/gi)].map((match) => match[1]);
-  return urls
+  return parseSitemapWithStats(xml, limit).items;
+}
+
+export function parseSitemapWithStats(xml: string, limit = 12): ParsedFeedBatch {
+  const rows = [...xml.matchAll(/<url>([\s\S]*?)<\/url>/gi)]
+    .map((match) => match[1])
     .slice(0, limit)
     .map((body) => {
       const link = parseTag(body, 'loc');
       const title = link.split('/').pop()?.replace(/[-_]/g, ' ') || link;
       const publishedAt = normalizePublishedAt(parseTag(body, 'lastmod')) || inferPublishedAtFromLink(link);
-      return { title, description: '', link, publishedAt };
-    })
-    .filter((item) => item.link && item.publishedAt);
+      return {
+        title,
+        description: '',
+        link,
+        publishedAt,
+        missingTitle: !title,
+        missingLink: !link,
+        missingSummary: true,
+        missingPublishedAt: !publishedAt,
+      };
+    });
+
+  return {
+    items: toItems(rows),
+    stats: summarizeStats(rows),
+  };
 }
