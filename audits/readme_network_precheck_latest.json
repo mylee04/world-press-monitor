@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-02-19T23:00:56.844Z",
+  "generatedAt": "2026-02-20T05:18:34.247Z",
   "sampleUrl": "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml",
   "sampleHost": "rss.nytimes.com",
   "checks": {
@@ -12,11 +12,13 @@
       "skipped": true
     },
     "sampleDnsNode": {
-      "ok": false,
+      "ok": true,
       "host": "rss.nytimes.com",
-      "ips": [],
-      "raw": "",
-      "error": "DNS",
+      "ips": [
+        "151.101.65.164"
+      ],
+      "raw": "151.101.65.164",
+      "error": "",
       "skipped": false
     },
     "googleDnsGetent": {
@@ -28,26 +30,35 @@
       "skipped": true
     },
     "googleDnsNode": {
-      "ok": false,
+      "ok": true,
       "host": "www.google.com",
-      "ips": [],
-      "raw": "",
-      "error": "DNS",
+      "ips": [
+        "142.251.186.147"
+      ],
+      "raw": "142.251.186.147",
+      "error": "",
       "skipped": false
     },
     "httpSample": {
-      "ok": false,
-      "status": null,
-      "note": "NETWORK"
+      "ok": true,
+      "status": 200,
+      "note": "xml-like response"
     },
-    "curlResolve": null,
+    "curlResolve": {
+      "ok": true,
+      "host": "rss.nytimes.com",
+      "ip": "151.101.65.164",
+      "status": 200,
+      "outputLine": "HTTP/2 200",
+      "reason": ""
+    },
     "googleCurlResolve": {
-      "ok": false,
+      "ok": true,
       "host": "www.google.com",
-      "ip": null,
-      "status": null,
-      "outputLine": "",
-      "reason": "NO_RESOLVED_IP"
+      "ip": "142.251.186.147",
+      "status": 200,
+      "outputLine": "HTTP/2 200",
+      "reason": ""
     },
     "resolvConf": {
       "ok": true,
@@ -60,8 +71,6 @@
     }
   },
   "recommendations": [
-    "DNS resolution is failing in this runtime. Check system resolver, /etc/resolv.conf, and container DNS settings.",
-    "If you changed DNS/VPN/proxy recently, try a clean network profile and retry precheck.",
-    "Downstream endpoint access is blocked from this runtime. Run the same command on another host that can reach the internet."
+    "Running on macOS: getent/nsswitch checks are intentionally skipped; this is informational only."
   ]
 }

@@ -50,3 +50,5 @@ error: script "ingest:ops:hourly" exited with code 1
 /bin/sh: /Users/myungeunlee/Desktop/mylee/world-press-monitor/scripts/run-ingest-ops-hourly.sh: Permission denied
 /bin/sh: /Users/myungeunlee/Desktop/mylee/world-press-monitor/scripts/run-ingest-ops-hourly.sh: Permission denied
 /bin/sh: /Users/myungeunlee/Desktop/mylee/world-press-monitor/scripts/run-ingest-ops-hourly.sh: Permission denied
+/bin/sh: /Users/myungeunlee/Desktop/mylee/world-press-monitor/scripts/run-ingest-ops-hourly.sh: Permission denied
+/bin/sh: /Users/myungeunlee/Desktop/mylee/world-press-monitor/scripts/run-ingest-ops-hourly.sh: Permission denied

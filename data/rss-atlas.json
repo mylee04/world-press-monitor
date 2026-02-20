@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-02-19T20:52:55.192Z",
+  "generatedAt": "2026-02-20T05:20:33.829Z",
   "lastChecked": "02/19/2026",
   "countries": [
     {
@@ -539,7 +539,7 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/18/2026",
           "valid": "needs verification",
-          "row": 4
+          "row": 1
         },
         {
           "name": "TechNode",
@@ -547,7 +547,7 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/18/2026",
           "valid": "needs verification",
-          "row": 9
+          "row": 2
         },
         {
           "name": "South China Morning Post",
@@ -555,7 +555,7 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/19/2026",
           "valid": "needs verification",
-          "row": 10
+          "row": 3
         },
         {
           "name": "Initium",
@@ -563,7 +563,7 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/18/2026",
           "valid": "needs verification",
-          "row": 11
+          "row": 4
         },
         {
           "name": "Liberty Times",
@@ -571,7 +571,7 @@
           "checkedDate": "02/19/2026",
           "status": "⏩ OFFICIAL",
           "valid": "needs verification",
-          "row": 13
+          "row": 5
         },
         {
           "name": "People China",
@@ -579,15 +579,7 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 23
-        },
-        {
-          "name": "South China Morning Post (Business)",
-          "url": "https://www.scmp.com/rss/91/feed",
-          "status": "⏩ OFFICIAL",
-          "checkedDate": "02/19/2026",
-          "valid": "needs verification",
-          "row": 24
+          "row": 6
         },
         {
           "name": "China Daily English",
@@ -595,7 +587,151 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 27
+          "row": 7
+        },
+        {
+          "name": "China Daily - China",
+          "url": "http://www.chinadaily.com.cn/rss/china_rss.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 8
+        },
+        {
+          "name": "China Daily - BizChina",
+          "url": "http://www.chinadaily.com.cn/rss/bizchina_rss.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 9
+        },
+        {
+          "name": "China Daily - Opinion",
+          "url": "http://www.chinadaily.com.cn/rss/opinion_rss.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 10
+        },
+        {
+          "name": "China Daily - Sports",
+          "url": "http://www.chinadaily.com.cn/rss/sports_rss.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 11
+        },
+        {
+          "name": "China Daily - Entertainment",
+          "url": "http://www.chinadaily.com.cn/rss/entertainment_rss.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 12
+        },
+        {
+          "name": "China Daily - Lifestyle",
+          "url": "http://www.chinadaily.com.cn/rss/lifestyle_rss.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 13
+        },
+        {
+          "name": "China Daily - Photos",
+          "url": "http://www.chinadaily.com.cn/rss/photo_rss.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 14
+        },
+        {
+          "name": "China Daily - China Daily (main)",
+          "url": "http://www.chinadaily.com.cn/rss/cndy_rss.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 15
+        },
+        {
+          "name": "China Daily - HK Edition",
+          "url": "http://www.chinadaily.com.cn/rss/hk_rss.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 16
+        },
+        {
+          "name": "China Daily - USA (kindle)",
+          "url": "http://usa.chinadaily.com.cn/usa_kindle.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 17
+        },
+        {
+          "name": "China Daily - EU Weekly",
+          "url": "http://europe.chinadaily.com.cn/euweekly_rss.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 18
+        },
+        {
+          "name": "People.cn - Politics",
+          "url": "http://www.people.com.cn/rss/politics.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 19
+        },
+        {
+          "name": "People.cn - Society",
+          "url": "http://www.people.com.cn/rss/society.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 20
+        },
+        {
+          "name": "People.cn - Legal",
+          "url": "http://www.people.com.cn/rss/legal.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 21
+        },
+        {
+          "name": "People.cn - World",
+          "url": "http://www.people.com.cn/rss/world.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 22
+        },
+        {
+          "name": "People.cn - Opinion",
+          "url": "http://www.people.com.cn/rss/opinion.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 23
+        },
+        {
+          "name": "People.cn - ChinaPic",
+          "url": "http://www.people.com.cn/rss/chinapic.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 24
+        },
+        {
+          "name": "CGTN Documentary",
+          "url": "https://news.cgtn.com/rss/documentary/CGTN-Documentary.rss",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 25
         }
       ]
     },
@@ -641,7 +777,7 @@
           "status": "ERR",
           "checkedDate": "02/18/2026",
           "valid": "invalid",
-          "row": 14
+          "row": 5
         },
         {
           "name": "The Bridge",
@@ -649,7 +785,7 @@
           "status": "ERR",
           "checkedDate": "02/18/2026",
           "valid": "invalid",
-          "row": 15
+          "row": 6
         },
         {
           "name": "Nippon",
@@ -657,23 +793,255 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/19/2026",
           "valid": "needs verification",
+          "row": 7
+        },
+        {
+          "name": "NHK News Web - cat1",
+          "url": "https://www3.nhk.or.jp/rss/news/cat1.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 8
+        },
+        {
+          "name": "NHK News Web - cat2",
+          "url": "https://www3.nhk.or.jp/rss/news/cat2.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 9
+        },
+        {
+          "name": "NHK News Web - cat3",
+          "url": "https://www3.nhk.or.jp/rss/news/cat3.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 10
+        },
+        {
+          "name": "NHK News Web - cat4",
+          "url": "https://www3.nhk.or.jp/rss/news/cat4.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 11
+        },
+        {
+          "name": "NHK News Web - cat5",
+          "url": "https://www3.nhk.or.jp/rss/news/cat5.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 12
+        },
+        {
+          "name": "NHK News Web - cat6",
+          "url": "https://www3.nhk.or.jp/rss/news/cat6.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 13
+        },
+        {
+          "name": "NHK News Web - cat7",
+          "url": "https://www3.nhk.or.jp/rss/news/cat7.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 14
+        },
+        {
+          "name": "ITmedia - 総合記事一覧",
+          "url": "https://rss.itmedia.co.jp/rss/2.0/itmedia_all.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 15
+        },
+        {
+          "name": "ITmedia - TOP STORIES",
+          "url": "https://rss.itmedia.co.jp/rss/2.0/topstory.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 16
+        },
+        {
+          "name": "ITmedia NEWS - 新着(速報)",
+          "url": "https://rss.itmedia.co.jp/rss/2.0/news_bursts.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 17
+        },
+        {
+          "name": "ITmedia NEWS - 国内",
+          "url": "https://rss.itmedia.co.jp/rss/2.0/news_domestic.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 18
+        },
+        {
+          "name": "ITmedia NEWS - 海外",
+          "url": "https://rss.itmedia.co.jp/rss/2.0/news_foreign.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 19
+        },
+        {
+          "name": "ITmedia NEWS - 製品動向",
+          "url": "https://rss.itmedia.co.jp/rss/2.0/news_products.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
           "row": 20
         },
         {
-          "name": "Mainichi Sports",
-          "url": "https://mainichi.jp/rss/etc/english_latest.rss",
-          "status": "⏩ OFFICIAL",
-          "checkedDate": "02/19/2026",
+          "name": "ITmedia NEWS - セキュリティ",
+          "url": "https://rss.itmedia.co.jp/rss/2.0/news_security.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 21
+        },
+        {
+          "name": "ITmedia NEWS - 科学・テクノロジー",
+          "url": "https://rss.itmedia.co.jp/rss/2.0/news_technology.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 22
+        },
+        {
+          "name": "ITmedia NEWS - ネットトピック",
+          "url": "https://rss.itmedia.co.jp/rss/2.0/news_nettopics.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 23
+        },
+        {
+          "name": "ITmedia NEWS - 企業・業界動向",
+          "url": "https://rss.itmedia.co.jp/rss/2.0/news_industry.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 24
+        },
+        {
+          "name": "ITmedia NEWS - Special",
+          "url": "https://rss.itmedia.co.jp/rss/2.0/news_special.xml",
+          "status": null,
+          "checkedDate": null,
           "valid": "needs verification",
           "row": 25
         },
         {
-          "name": "Mainichi World",
-          "url": "https://mainichi.jp/rss/etc/english_latest.rss",
-          "status": "⏩ OFFICIAL",
-          "checkedDate": "02/19/2026",
+          "name": "ITmedia AI+",
+          "url": "https://rss.itmedia.co.jp/rss/2.0/aiplus.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 26
+        },
+        {
+          "name": "ITmedia Mobile",
+          "url": "https://rss.itmedia.co.jp/rss/2.0/mobile.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 27
+        },
+        {
+          "name": "ITmedia PC USER",
+          "url": "https://rss.itmedia.co.jp/rss/2.0/pcuser.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 28
+        },
+        {
+          "name": "ITmedia ビジネスオンライン",
+          "url": "https://rss.itmedia.co.jp/rss/2.0/business.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 29
+        },
+        {
+          "name": "ITmedia エンタープライズ",
+          "url": "https://rss.itmedia.co.jp/rss/2.0/enterprise.xml",
+          "status": null,
+          "checkedDate": null,
           "valid": "needs verification",
           "row": 30
+        },
+        {
+          "name": "J-CASTニュース (総合)",
+          "url": "https://www.j-cast.com/index.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 31
+        },
+        {
+          "name": "J-CASTトレンド",
+          "url": "https://www.j-cast.com/trend/index.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 32
+        },
+        {
+          "name": "J-CAST会社ウォッチ",
+          "url": "https://www.j-cast.com/kaisha/index.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 33
+        },
+        {
+          "name": "BOOKウォッチ",
+          "url": "https://books.j-cast.com/rss.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 34
+        },
+        {
+          "name": "INTERNET Watch (Impress)",
+          "url": "https://internet.watch.impress.co.jp/data/rss/1.0/iw/feed.rdf",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 35
+        },
+        {
+          "name": "Impress Watch (総合)",
+          "url": "https://www.watch.impress.co.jp/data/rss/1.0/ipw/feed.rdf",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 36
+        },
+        {
+          "name": "GIGAZINE (Atom)",
+          "url": "https://gigazine.net/news/rss_atom/",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 37
+        },
+        {
+          "name": "PR TIMES (プレスリリース)",
+          "url": "https://prtimes.jp/index.rdf",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 38
         }
       ]
     },
@@ -767,7 +1135,7 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 12
+          "row": 11
         },
         {
           "name": "Die Welt",
@@ -775,7 +1143,7 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 14
+          "row": 12
         },
         {
           "name": "Focus",
@@ -783,7 +1151,7 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 16
+          "row": 13
         },
         {
           "name": "Handelsblatt Economy",
@@ -791,7 +1159,7 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 17
+          "row": 14
         },
         {
           "name": "Frankfurter Allgemeine",
@@ -799,7 +1167,7 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 18
+          "row": 15
         },
         {
           "name": "Tagesspiegel",
@@ -807,7 +1175,7 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 20
+          "row": 16
         },
         {
           "name": "Handelsblatt World",
@@ -815,7 +1183,7 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 24
+          "row": 17
         },
         {
           "name": "Zeit Welt",
@@ -823,7 +1191,7 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 25
+          "row": 18
         },
         {
           "name": "Financial Times Germany",
@@ -831,7 +1199,223 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
+          "row": 19
+        },
+        {
+          "name": "Süddeutsche - Top-Themen",
+          "url": "https://rss.sueddeutsche.de/rss/Topthemen",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 20
+        },
+        {
+          "name": "Süddeutsche - Alles",
+          "url": "https://rss.sueddeutsche.de/rss/Alles",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 21
+        },
+        {
+          "name": "Süddeutsche - Eilmeldungen",
+          "url": "https://rss.sueddeutsche.de/rss/Eilmeldungen",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 22
+        },
+        {
+          "name": "Süddeutsche - Politik",
+          "url": "https://rss.sueddeutsche.de/rss/Politik",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 23
+        },
+        {
+          "name": "Süddeutsche - Wirtschaft",
+          "url": "https://rss.sueddeutsche.de/rss/Wirtschaft",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 24
+        },
+        {
+          "name": "Süddeutsche - Panorama",
+          "url": "https://rss.sueddeutsche.de/rss/Panorama",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 25
+        },
+        {
+          "name": "Süddeutsche - Sport",
+          "url": "https://rss.sueddeutsche.de/rss/Sport",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 27
+        },
+        {
+          "name": "Süddeutsche - München",
+          "url": "https://rss.sueddeutsche.de/rss/Muenchen",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
           "row": 28
+        },
+        {
+          "name": "Süddeutsche - Bayern",
+          "url": "https://rss.sueddeutsche.de/rss/Bayern",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 29
+        },
+        {
+          "name": "Süddeutsche - Kultur",
+          "url": "https://rss.sueddeutsche.de/rss/Kultur",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 30
+        },
+        {
+          "name": "Süddeutsche - Medien",
+          "url": "https://rss.sueddeutsche.de/rss/Medien",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 31
+        },
+        {
+          "name": "Süddeutsche - Wissen",
+          "url": "https://rss.sueddeutsche.de/rss/Wissen",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 32
+        },
+        {
+          "name": "Süddeutsche - Gesundheit",
+          "url": "https://rss.sueddeutsche.de/rss/Gesundheit",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 33
+        },
+        {
+          "name": "Süddeutsche - Karriere",
+          "url": "https://rss.sueddeutsche.de/rss/Karriere",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 34
+        },
+        {
+          "name": "Süddeutsche - Bildung",
+          "url": "https://rss.sueddeutsche.de/rss/Bildung",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 35
+        },
+        {
+          "name": "Süddeutsche - Reise",
+          "url": "https://rss.sueddeutsche.de/rss/Reise",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 36
+        },
+        {
+          "name": "Süddeutsche - Auto",
+          "url": "https://rss.sueddeutsche.de/rss/Auto",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 37
+        },
+        {
+          "name": "Süddeutsche - Stil",
+          "url": "https://rss.sueddeutsche.de/rss/Stil",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 38
+        },
+        {
+          "name": "Deutschlandfunk - Nachrichten",
+          "url": "https://www.deutschlandfunk.de/nachrichten-100.rss",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 39
+        },
+        {
+          "name": "Deutschlandfunk - Politikportal",
+          "url": "https://www.deutschlandfunk.de/politikportal-100.rss",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 40
+        },
+        {
+          "name": "Deutschlandfunk - Wirtschaft",
+          "url": "https://www.deutschlandfunk.de/wirtschaft-106.rss",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 41
+        },
+        {
+          "name": "Deutschlandfunk - Wissen",
+          "url": "https://www.deutschlandfunk.de/wissen-106.rss",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 42
+        },
+        {
+          "name": "Deutschlandfunk - Kulturportal",
+          "url": "https://www.deutschlandfunk.de/kulturportal-100.rss",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 43
+        },
+        {
+          "name": "Deutschlandfunk - Europa",
+          "url": "https://www.deutschlandfunk.de/europa-112.rss",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 44
+        },
+        {
+          "name": "Deutschlandfunk - Gesellschaft",
+          "url": "https://www.deutschlandfunk.de/gesellschaft-106.rss",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 45
+        },
+        {
+          "name": "Deutschlandfunk - Sportportal",
+          "url": "https://www.deutschlandfunk.de/sportportal-100.rss",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 46
+        },
+        {
+          "name": "taz.de (gesamt)",
+          "url": "https://taz.de/!a=;rss/",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 47
         }
       ]
     },
@@ -974,14 +1558,6 @@
           "checkedDate": null,
           "valid": null,
           "row": 18
-        },
-        {
-          "name": "Daily Excelsior",
-          "url": "https://www.dailyexcelsior.com/feed",
-          "status": null,
-          "checkedDate": null,
-          "valid": null,
-          "row": 19
         },
         {
           "name": "News Today (TN)",
@@ -1939,7 +2515,7 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/18/2026",
           "valid": "needs verification",
-          "row": 3
+          "row": 1
         },
         {
           "name": "The Bell",
@@ -1947,7 +2523,7 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/18/2026",
           "valid": "needs verification",
-          "row": 10
+          "row": 2
         },
         {
           "name": "Interfax",
@@ -1955,7 +2531,7 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 14
+          "row": 3
         },
         {
           "name": "RT Economy",
@@ -1963,7 +2539,7 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 15
+          "row": 4
         },
         {
           "name": "The Bell",
@@ -1971,7 +2547,7 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 16
+          "row": 5
         },
         {
           "name": "Lenta",
@@ -1979,7 +2555,7 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 18
+          "row": 6
         },
         {
           "name": "TASS Finance",
@@ -1987,7 +2563,7 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 23
+          "row": 7
         },
         {
           "name": "RT News",
@@ -1995,7 +2571,47 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 25
+          "row": 8
+        },
+        {
+          "name": "Kommersant (Главное)",
+          "url": "https://www.kommersant.ru/RSS/main.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 9
+        },
+        {
+          "name": "The Moscow Times",
+          "url": "https://www.themoscowtimes.com/rss/news",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 10
+        },
+        {
+          "name": "PravdaReport",
+          "url": "https://www.pravdareport.com/export.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 11
+        },
+        {
+          "name": "Meduza (all)",
+          "url": "https://meduza.io/rss2/all",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 12
+        },
+        {
+          "name": "Habr (all)",
+          "url": "https://habr.com/ru/rss/all/all/?fl=ru",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 13
         }
       ]
     },
@@ -2008,7 +2624,7 @@
           "url": "https://en.yna.co.kr/RSS/news.xml",
           "status": null,
           "checkedDate": null,
-          "valid": null,
+          "valid": "needs verification",
           "row": 1
         },
         {
@@ -2016,7 +2632,7 @@
           "url": "https://rss.donga.com/total.xml",
           "status": null,
           "checkedDate": null,
-          "valid": null,
+          "valid": "needs verification",
           "row": 2
         },
         {
@@ -2024,7 +2640,7 @@
           "url": "https://www.seoul.co.kr/xml/rss/rss_top.xml",
           "status": null,
           "checkedDate": null,
-          "valid": null,
+          "valid": "needs verification",
           "row": 3
         },
         {
@@ -2032,7 +2648,7 @@
           "url": "https://www.newsis.com/RSS/sokbo.xml",
           "status": null,
           "checkedDate": null,
-          "valid": null,
+          "valid": "needs verification",
           "row": 4
         },
         {
@@ -2040,7 +2656,7 @@
           "url": "https://rss.ajunews.com/sokbo.xml",
           "status": null,
           "checkedDate": null,
-          "valid": null,
+          "valid": "needs verification",
           "row": 5
         },
         {
@@ -2048,7 +2664,7 @@
           "url": "https://www.kedglobal.com/newsRss",
           "status": null,
           "checkedDate": null,
-          "valid": null,
+          "valid": "needs verification",
           "row": 6
         },
         {
@@ -2056,7 +2672,7 @@
           "url": "https://www.dailynk.com/english/feed",
           "status": null,
           "checkedDate": null,
-          "valid": null,
+          "valid": "needs verification",
           "row": 7
         },
         {
@@ -2064,7 +2680,7 @@
           "url": "https://feed.koreatimes.co.kr/k/allnews.xml",
           "status": null,
           "checkedDate": null,
-          "valid": null,
+          "valid": "needs verification",
           "row": 8
         },
         {
@@ -2072,24 +2688,240 @@
           "url": "https://www.koreaherald.com/rss/newsAll",
           "status": null,
           "checkedDate": null,
-          "valid": null,
+          "valid": "needs verification",
           "row": 9
-        },
-        {
-          "name": "Korea Herald (NewsAll)",
-          "url": "https://www.koreaherald.com/rss/newsAll",
-          "status": null,
-          "checkedDate": null,
-          "valid": null,
-          "row": 10
         },
         {
           "name": "KBS World Radio (RSS directory)",
           "url": "http://world.kbs.co.kr/rss/rss_news.htm?lang=e",
           "status": null,
           "checkedDate": null,
-          "valid": null,
+          "valid": "needs verification",
+          "row": 10
+        },
+        {
+          "name": "한국경제 - 전체뉴스",
+          "url": "https://www.hankyung.com/feed/all-news",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
           "row": 11
+        },
+        {
+          "name": "한국경제 - 증권",
+          "url": "https://www.hankyung.com/feed/finance",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 12
+        },
+        {
+          "name": "한국경제 - 경제",
+          "url": "https://www.hankyung.com/feed/economy",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 13
+        },
+        {
+          "name": "한국경제 - 부동산",
+          "url": "https://www.hankyung.com/feed/realestate",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 14
+        },
+        {
+          "name": "한국경제 - IT",
+          "url": "https://www.hankyung.com/feed/it",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 15
+        },
+        {
+          "name": "한국경제 - 정치",
+          "url": "https://www.hankyung.com/feed/politics",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 16
+        },
+        {
+          "name": "한국경제 - 국제",
+          "url": "https://www.hankyung.com/feed/international",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 17
+        },
+        {
+          "name": "매일경제 - 뉴스 헤드라인",
+          "url": "https://www.mk.co.kr/rss/30000001/",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 18
+        },
+        {
+          "name": "매일경제 - 뉴스 전체뉴스",
+          "url": "https://www.mk.co.kr/rss/40300001/",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 19
+        },
+        {
+          "name": "매일경제 - 뉴스 경제",
+          "url": "https://www.mk.co.kr/rss/30100041/",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 20
+        },
+        {
+          "name": "매일경제 - 뉴스 정치",
+          "url": "https://www.mk.co.kr/rss/30200030/",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 21
+        },
+        {
+          "name": "매일경제 - 뉴스 사회",
+          "url": "https://www.mk.co.kr/rss/50400012/",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 22
+        },
+        {
+          "name": "SBS - 정치",
+          "url": "https://news.sbs.co.kr/news/SectionRssFeed.do?sectionId=01&plink=RSSREADER",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 23
+        },
+        {
+          "name": "SBS - 경제",
+          "url": "https://news.sbs.co.kr/news/SectionRssFeed.do?sectionId=02&plink=RSSREADER",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 24
+        },
+        {
+          "name": "SBS - 사회",
+          "url": "https://news.sbs.co.kr/news/SectionRssFeed.do?sectionId=03&plink=RSSREADER",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 25
+        },
+        {
+          "name": "SBS - 생활/문화",
+          "url": "https://news.sbs.co.kr/news/SectionRssFeed.do?sectionId=07&plink=RSSREADER",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 26
+        },
+        {
+          "name": "SBS - 국제/글로벌",
+          "url": "https://news.sbs.co.kr/news/SectionRssFeed.do?sectionId=08&plink=RSSREADER",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 27
+        },
+        {
+          "name": "SBS - 연예/방송",
+          "url": "https://news.sbs.co.kr/news/SectionRssFeed.do?sectionId=14&plink=RSSREADER",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 28
+        },
+        {
+          "name": "SBS - 스포츠",
+          "url": "https://news.sbs.co.kr/news/SectionRssFeed.do?sectionId=09&plink=RSSREADER",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 29
+        },
+        {
+          "name": "한겨레 - 국제",
+          "url": "https://www.hani.co.kr/rss/international/",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 30
+        },
+        {
+          "name": "한겨레 - 문화",
+          "url": "https://www.hani.co.kr/rss/culture/",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 31
+        },
+        {
+          "name": "한겨레 - 스포츠",
+          "url": "https://www.hani.co.kr/rss/sports/",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 32
+        },
+        {
+          "name": "한겨레:온 - 섹션1",
+          "url": "https://www.hanion.co.kr/rss/S1N1.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 33
+        },
+        {
+          "name": "한겨레:온 - 섹션2",
+          "url": "https://www.hanion.co.kr/rss/S1N2.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 34
+        },
+        {
+          "name": "한겨레:온 - 섹션3",
+          "url": "https://www.hanion.co.kr/rss/S1N3.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 35
+        },
+        {
+          "name": "경향신문 - 전체",
+          "url": "https://www.khan.co.kr/rss/rssdata/total_news.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 36
+        },
+        {
+          "name": "MBC 주요뉴스",
+          "url": "https://imnews.imbc.com/rss/google_news/narrativeNews.rss",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 41
+        },
+        {
+          "name": "조선닷컴 (전체)",
+          "url": "https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 42
         }
       ]
     },
@@ -2135,7 +2967,7 @@
           "status": "ERR",
           "checkedDate": "02/18/2026",
           "valid": "invalid",
-          "row": 6
+          "row": 5
         },
         {
           "name": "InfoMoney",
@@ -2143,7 +2975,7 @@
           "status": "ERR",
           "checkedDate": "02/18/2026",
           "valid": "invalid",
-          "row": 7
+          "row": 6
         },
         {
           "name": "Canaltech",
@@ -2151,7 +2983,7 @@
           "status": "ERR",
           "checkedDate": "02/18/2026",
           "valid": "invalid",
-          "row": 8
+          "row": 7
         },
         {
           "name": "Forbes Brazil",
@@ -2159,15 +2991,7 @@
           "status": "ERR",
           "checkedDate": "02/18/2026",
           "valid": "invalid",
-          "row": 9
-        },
-        {
-          "name": "Brasil de Fato",
-          "url": "https://www.brasildefato.com.br/rss",
-          "status": "⏩ OFFICIAL",
-          "checkedDate": null,
-          "valid": "needs verification",
-          "row": 13
+          "row": 8
         },
         {
           "name": "Estado de Minas",
@@ -2175,7 +2999,7 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 14
+          "row": 10
         },
         {
           "name": "Veja",
@@ -2183,15 +3007,87 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
+          "row": 11
+        },
+        {
+          "name": "Folha - Poder (정치)",
+          "url": "https://feeds.folha.uol.com.br/poder/rss091.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 12
+        },
+        {
+          "name": "Folha - Mundo",
+          "url": "https://feeds.folha.uol.com.br/mundo/rss091.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 13
+        },
+        {
+          "name": "Folha - Cotidiano",
+          "url": "https://feeds.folha.uol.com.br/cotidiano/rss091.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 14
+        },
+        {
+          "name": "Folha - Esporte",
+          "url": "https://feeds.folha.uol.com.br/esporte/rss091.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 15
+        },
+        {
+          "name": "Folha - Ilustrada (문화)",
+          "url": "https://feeds.folha.uol.com.br/ilustrada/rss091.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 16
+        },
+        {
+          "name": "Agência Pública",
+          "url": "https://apublica.org/feed/",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
           "row": 17
         },
         {
-          "name": "Canal Tech Brasil",
-          "url": "https://canaltech.com.br/rss/",
-          "status": "⏩ OFFICIAL",
-          "checkedDate": "02/19/2026",
+          "name": "Nexo Jornal",
+          "url": "https://www.nexojornal.com.br/rss.xml",
+          "status": null,
+          "checkedDate": null,
           "valid": "needs verification",
-          "row": 26
+          "row": 18
+        },
+        {
+          "name": "Jornal GGN",
+          "url": "https://jornalggn.com.br/feed/",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 19
+        },
+        {
+          "name": "Jacobin Brasil",
+          "url": "https://jacobin.com.br/feed",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 22
+        },
+        {
+          "name": "CartaCapital",
+          "url": "https://www.cartacapital.com.br/feed",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 23
         }
       ]
     },
@@ -2452,14 +3348,6 @@
       "code": "MX",
       "feeds": [
         {
-          "name": "Milenio",
-          "url": "https://www.milenio.com/rss",
-          "status": "ERR",
-          "checkedDate": "02/18/2026",
-          "valid": "invalid",
-          "row": 4
-        },
-        {
           "name": "Proceso (Investigative)",
           "url": "https://www.proceso.com.mx/rss/feed.html",
           "status": "ERR",
@@ -2506,6 +3394,126 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 30
+        },
+        {
+          "name": "Aristegui (Main)",
+          "url": "https://editorial.aristeguinoticias.com/feed/",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 7
+        },
+        {
+          "name": "Aristegui (México)",
+          "url": "https://editorial.aristeguinoticias.com/category/mexico/feed/",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 8
+        },
+        {
+          "name": "Aristegui (Dinero y Economía)",
+          "url": "https://editorial.aristeguinoticias.com/category/dinero-y-economia/feed/",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 9
+        },
+        {
+          "name": "Aristegui (Mundo)",
+          "url": "https://editorial.aristeguinoticias.com/category/mundo/feed/",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 10
+        },
+        {
+          "name": "Aristegui En Vivo - Entérate",
+          "url": "https://editorial.aristeguinoticias.com/category/aristegui-en-vivo/enterate/feed",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 11
+        },
+        {
+          "name": "Aristegui En Vivo - Programas completos",
+          "url": "https://editorial.aristeguinoticias.com/category/aristegui-en-vivo/programas-completos/feed",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 12
+        },
+        {
+          "name": "Aristegui En Vivo - Entrevistas completas",
+          "url": "https://editorial.aristeguinoticias.com/category/aristegui-en-vivo/entrevistas-completos/feed",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 13
+        },
+        {
+          "name": "Aristegui En Vivo - Mesa política",
+          "url": "https://editorial.aristeguinoticias.com/category/aristegui-en-vivo/mesa-politica-en-vivo/feed",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 14
+        },
+        {
+          "name": "Aristegui En Vivo - Investigaciones especiales",
+          "url": "https://editorial.aristeguinoticias.com/category/aristegui-en-vivo/investigaciones-especiales/feed",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 15
+        },
+        {
+          "name": "Aristegui En Vivo - Enlaces en vivo",
+          "url": "https://editorial.aristeguinoticias.com/category/aristegui-en-vivo/enlaces-en-vivo/feed",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 16
+        },
+        {
+          "name": "Aristegui En Vivo - Titulares del día",
+          "url": "https://editorial.aristeguinoticias.com/category/aristegui-en-vivo/titulares-del-dia/feed",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 17
+        },
+        {
+          "name": "Aristegui En Vivo - Deportes",
+          "url": "https://editorial.aristeguinoticias.com/category/aristegui-en-vivo/deportes-aristegui-en-vivo/feed",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 18
+        },
+        {
+          "name": "Aristegui En Vivo - Dinero y Economía",
+          "url": "https://editorial.aristeguinoticias.com/category/aristegui-en-vivo/dinero-y-economia/feed",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 19
+        },
+        {
+          "name": "Aristegui En Vivo - Niñonautas",
+          "url": "https://editorial.aristeguinoticias.com/category/aristegui-en-vivo/ninonautas/feed",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 20
+        },
+        {
+          "name": "Aristegui En Vivo - Las plumas de la serpiente",
+          "url": "https://editorial.aristeguinoticias.com/category/aristegui-en-vivo/las-plumas-de-la-serpiente/feed",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 21
         }
       ]
     },
@@ -2676,6 +3684,190 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 28
+        },
+        {
+          "name": "SRF News (Latest)",
+          "url": "https://www.srf.ch/news/bnf/rss/19032223",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 4
+        },
+        {
+          "name": "SRF News (Switzerland)",
+          "url": "https://www.srf.ch/news/bnf/rss/1890",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 5
+        },
+        {
+          "name": "SRF News (International)",
+          "url": "https://www.srf.ch/news/bnf/rss/1922",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 6
+        },
+        {
+          "name": "SRF News (Economy)",
+          "url": "https://www.srf.ch/news/bnf/rss/1926",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 7
+        },
+        {
+          "name": "SRF Sport (Football)",
+          "url": "https://www.srf.ch/sport/bnf/rss/2562",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 8
+        },
+        {
+          "name": "SRF Sport (Ice Hockey)",
+          "url": "https://www.srf.ch/sport/bnf/rss/3418",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 9
+        },
+        {
+          "name": "SRF Sport (Tennis)",
+          "url": "https://www.srf.ch/sport/bnf/rss/2814",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 10
+        },
+        {
+          "name": "SRF Sport (Alpine Skiing)",
+          "url": "https://www.srf.ch/sport/bnf/rss/787950",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 11
+        },
+        {
+          "name": "SRF Wissen (Health)",
+          "url": "https://www.srf.ch/bnf/rss/19919909",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 12
+        },
+        {
+          "name": "SRF Wissen (Tech)",
+          "url": "https://www.srf.ch/bnf/rss/19920122",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 13
+        },
+        {
+          "name": "Blick (Schweiz)",
+          "url": "https://www.blick.ch/schweiz/rss.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 14
+        },
+        {
+          "name": "Blick (Ausland)",
+          "url": "https://www.blick.ch/ausland/rss.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 15
+        },
+        {
+          "name": "Blick (Wirtschaft)",
+          "url": "https://www.blick.ch/wirtschaft/rss.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 16
+        },
+        {
+          "name": "Blick (Politik)",
+          "url": "https://www.blick.ch/politik/rss.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 17
+        },
+        {
+          "name": "Blick (Sport)",
+          "url": "https://www.blick.ch/sport/rss.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 18
+        },
+        {
+          "name": "Blick Sport (Fussball)",
+          "url": "https://www.blick.ch/sport/fussball/rss.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 19
+        },
+        {
+          "name": "Blick Sport (Eishockey)",
+          "url": "https://www.blick.ch/sport/eishockey/rss.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 20
+        },
+        {
+          "name": "Blick Sport (Ski)",
+          "url": "https://www.blick.ch/sport/ski/rss.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 21
+        },
+        {
+          "name": "Blick Sport (Tennis)",
+          "url": "https://www.blick.ch/sport/tennis/rss.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 22
+        },
+        {
+          "name": "Blick (Digital)",
+          "url": "https://www.blick.ch/digital/rss.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 23
+        },
+        {
+          "name": "Le News (EN)",
+          "url": "https://lenews.ch/feed",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 24
+        },
+        {
+          "name": "The Local Switzerland (EN)",
+          "url": "https://feeds.thelocal.com/rss/ch",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 25
+        },
+        {
+          "name": "NZZ (Latest)",
+          "url": "https://www.nzz.ch/recent.rss",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 26
         }
       ]
     },
@@ -2776,6 +3968,38 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 21
+        },
+        {
+          "name": "Al Madina",
+          "url": "https://www.al-madina.com/rssFeed/193",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 10
+        },
+        {
+          "name": "Al Bilad Daily",
+          "url": "https://albiladdaily.com/feed",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 11
+        },
+        {
+          "name": "Makkah Newspaper",
+          "url": "https://makkahnewspaper.com/rssFeed/0",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 12
+        },
+        {
+          "name": "Al Jazirah",
+          "url": "https://www.al-jazirah.com/rss/ln.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 13
         }
       ]
     },
@@ -2814,6 +4038,230 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 14
+        },
+        {
+          "name": "CNA 政治",
+          "url": "https://feeds.feedburner.com/rsscna/politics",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 5
+        },
+        {
+          "name": "CNA 國際",
+          "url": "https://feeds.feedburner.com/rsscna/intworld",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 6
+        },
+        {
+          "name": "CNA 兩岸",
+          "url": "https://feeds.feedburner.com/rsscna/mainland",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 7
+        },
+        {
+          "name": "CNA 產經證券",
+          "url": "https://feeds.feedburner.com/rsscna/finance",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 8
+        },
+        {
+          "name": "CNA 科技",
+          "url": "https://feeds.feedburner.com/rsscna/technology",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 9
+        },
+        {
+          "name": "CNA 生活",
+          "url": "https://feeds.feedburner.com/rsscna/lifehealth",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 10
+        },
+        {
+          "name": "CNA 社會",
+          "url": "https://feeds.feedburner.com/rsscna/social",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 11
+        },
+        {
+          "name": "CNA 地方",
+          "url": "https://feeds.feedburner.com/rsscna/local",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 12
+        },
+        {
+          "name": "CNA 文化",
+          "url": "https://feeds.feedburner.com/rsscna/culture",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 13
+        },
+        {
+          "name": "CNA 運動",
+          "url": "https://feeds.feedburner.com/rsscna/sport",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 14
+        },
+        {
+          "name": "CNA 娛樂",
+          "url": "https://feeds.feedburner.com/rsscna/stars",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 15
+        },
+        {
+          "name": "Liberty Times 即時",
+          "url": "https://news.ltn.com.tw/rss/all.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 16
+        },
+        {
+          "name": "Liberty Times 政治",
+          "url": "https://news.ltn.com.tw/rss/politics.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 17
+        },
+        {
+          "name": "Liberty Times 社會",
+          "url": "https://news.ltn.com.tw/rss/society.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 18
+        },
+        {
+          "name": "Liberty Times 生活",
+          "url": "https://news.ltn.com.tw/rss/life.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 19
+        },
+        {
+          "name": "Liberty Times 評論",
+          "url": "https://news.ltn.com.tw/rss/opinion.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 20
+        },
+        {
+          "name": "Liberty Times 國際",
+          "url": "https://news.ltn.com.tw/rss/world.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 21
+        },
+        {
+          "name": "Liberty Times 體育",
+          "url": "https://news.ltn.com.tw/rss/sports.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 22
+        },
+        {
+          "name": "Liberty Times 娛樂",
+          "url": "https://news.ltn.com.tw/rss/entertainment.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 23
+        },
+        {
+          "name": "Liberty Times 藝文",
+          "url": "https://news.ltn.com.tw/rss/art.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 24
+        },
+        {
+          "name": "Liberty Times 軍武",
+          "url": "https://news.ltn.com.tw/rss/def.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 25
+        },
+        {
+          "name": "Liberty Times 地方",
+          "url": "https://news.ltn.com.tw/rss/local.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 26
+        },
+        {
+          "name": "Liberty Times 蒐奇",
+          "url": "https://news.ltn.com.tw/rss/novelty.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 28
+        },
+        {
+          "name": "Taipei Times (EN)",
+          "url": "https://www.taipeitimes.com/xml/index.rss",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 29
+        },
+        {
+          "name": "The Reporter",
+          "url": "https://www.twreporter.org/a/rss2.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 30
+        },
+        {
+          "name": "Newtalk 全部",
+          "url": "https://newtalk.tw/rss/all/",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 31
+        },
+        {
+          "name": "Newtalk 政治",
+          "url": "https://newtalk.tw/rss/category/2",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 32
+        },
+        {
+          "name": "Youth Daily News 軍聞",
+          "url": "https://www.ydn.com.tw/tw/Home/RSS.aspx?TID=2",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 33
         }
       ]
     },
@@ -2852,6 +4300,246 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 22
+        },
+        {
+          "name": "RMF24 (Main)",
+          "url": "https://www.rmf24.pl/feed",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 5
+        },
+        {
+          "name": "RMF24 Fakty",
+          "url": "https://www.rmf24.pl/fakty/feed",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 6
+        },
+        {
+          "name": "RMF24 Polska",
+          "url": "https://www.rmf24.pl/fakty/polska/feed",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 7
+        },
+        {
+          "name": "RMF24 Polityka",
+          "url": "https://www.rmf24.pl/fakty/polityka/feed",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 8
+        },
+        {
+          "name": "RMF24 Świat",
+          "url": "https://www.rmf24.pl/fakty/swiat/feed",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 9
+        },
+        {
+          "name": "RMF24 Ekonomia",
+          "url": "https://www.rmf24.pl/ekonomia/feed",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 10
+        },
+        {
+          "name": "RMF24 Nauka",
+          "url": "https://www.rmf24.pl/nauka/feed",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 11
+        },
+        {
+          "name": "RMF24 Kultura",
+          "url": "https://www.rmf24.pl/kultura/feed",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 12
+        },
+        {
+          "name": "RMF24 Sport",
+          "url": "https://www.rmf24.pl/sport/feed",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 13
+        },
+        {
+          "name": "RMF24 Ciekawostki",
+          "url": "https://www.rmf24.pl/rozrywka/ciekawostki/feed",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 14
+        },
+        {
+          "name": "RMF24 Komentarze",
+          "url": "https://www.rmf24.pl/tylko-w-rmf24/komentarze/feed",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 15
+        },
+        {
+          "name": "RMF24 Podsumowanie dnia",
+          "url": "https://www.rmf24.pl/fakty/podsumowanie-dnia/feed",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 16
+        },
+        {
+          "name": "PolsatNews Wszystkie",
+          "url": "https://www.polsatnews.pl/rss/wszystkie.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 17
+        },
+        {
+          "name": "PolsatNews Polska",
+          "url": "https://www.polsatnews.pl/rss/polska.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 18
+        },
+        {
+          "name": "PolsatNews Świat",
+          "url": "https://www.polsatnews.pl/rss/swiat.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 19
+        },
+        {
+          "name": "PolsatNews Wideo",
+          "url": "https://www.polsatnews.pl/rss/wideo.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 20
+        },
+        {
+          "name": "PolsatNews Biznes",
+          "url": "https://www.polsatnews.pl/rss/biznes.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 21
+        },
+        {
+          "name": "PolsatNews Technologie",
+          "url": "https://www.polsatnews.pl/rss/technologie.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 22
+        },
+        {
+          "name": "PolsatNews Moto",
+          "url": "https://www.polsatnews.pl/rss/moto.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 23
+        },
+        {
+          "name": "PolsatNews Kultura",
+          "url": "https://www.polsatnews.pl/rss/kultura.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 24
+        },
+        {
+          "name": "PolsatNews Sport",
+          "url": "https://www.polsatnews.pl/rss/sport.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 25
+        },
+        {
+          "name": "PolsatNews Czysta Polska",
+          "url": "https://www.polsatnews.pl/rss/czysta-polska.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 26
+        },
+        {
+          "name": "Nauka w Polsce (All)",
+          "url": "https://naukawpolsce.pl/all/rss.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 27
+        },
+        {
+          "name": "Nauka w Polsce (Science categories)",
+          "url": "https://naukawpolsce.pl/naukowy/rss.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 28
+        },
+        {
+          "name": "Nauka w Polsce (Technologia)",
+          "url": "https://naukawpolsce.pl/technologia/rss.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 29
+        },
+        {
+          "name": "Nauka w Polsce (Blog)",
+          "url": "https://naukawpolsce.pl/blog/rss.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 30
+        },
+        {
+          "name": "PAP MediaRoom (All)",
+          "url": "https://pap-mediaroom.pl/rss.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 31
+        },
+        {
+          "name": "PAP MediaRoom (Biznes i finanse)",
+          "url": "https://pap-mediaroom.pl/kategoria/biznes-i-finanse/rss.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 32
+        },
+        {
+          "name": "PAP MediaRoom (Nauka i technologie)",
+          "url": "https://pap-mediaroom.pl/kategoria/nauka-i-technologie/rss.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 33
+        },
+        {
+          "name": "PAP MediaRoom (Kalendarium)",
+          "url": "https://pap-mediaroom.pl/kalendarium/rss.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 34
         }
       ]
     },
@@ -3458,14 +5146,6 @@
           "row": 13
         },
         {
-          "name": "El Mostrador",
-          "url": "https://www.elmostrador.cl/feed/",
-          "status": "⏩ OFFICIAL",
-          "checkedDate": null,
-          "valid": "needs verification",
-          "row": 10
-        },
-        {
           "name": "CIPER Chile",
           "url": "https://www.ciperchile.cl/feed/",
           "status": "⏩ OFFICIAL",
@@ -3480,14 +5160,6 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 15
-        },
-        {
-          "name": "El Dínamo",
-          "url": "https://www.eldinamo.cl/feed/",
-          "status": "⏩ OFFICIAL",
-          "checkedDate": null,
-          "valid": "needs verification",
-          "row": 12
         },
         {
           "name": "Bing News - Chile (Top)",
@@ -3656,14 +5328,6 @@
           "row": 5
         },
         {
-          "name": "Diario Libre - Revista",
-          "url": "https://www.diariolibre.com/rss/revista.xml",
-          "status": "⏩ OFFICIAL",
-          "checkedDate": null,
-          "valid": "needs verification",
-          "row": 6
-        },
-        {
           "name": "Diario Libre - Deportes",
           "url": "https://www.diariolibre.com/rss/deportes.xml",
           "status": "⏩ OFFICIAL",
@@ -3678,14 +5342,6 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 8
-        },
-        {
-          "name": "Diario Libre - Planeta",
-          "url": "https://www.diariolibre.com/rss/planeta.xml",
-          "status": "⏩ OFFICIAL",
-          "checkedDate": null,
-          "valid": "needs verification",
-          "row": 9
         },
         {
           "name": "Diario Libre - Videos",
@@ -3782,62 +5438,6 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 21
-        },
-        {
-          "name": "Acento - Portada",
-          "url": "https://acento.com.do/feed/",
-          "status": "⏩ OFFICIAL",
-          "checkedDate": null,
-          "valid": "needs verification",
-          "row": 22
-        },
-        {
-          "name": "Acento - Actualidad",
-          "url": "https://acento.com.do/categoria/actualidad/feed/",
-          "status": "⏩ OFFICIAL",
-          "checkedDate": null,
-          "valid": "needs verification",
-          "row": 23
-        },
-        {
-          "name": "Acento - Economía",
-          "url": "https://acento.com.do/categoria/economia/feed/",
-          "status": "⏩ OFFICIAL",
-          "checkedDate": null,
-          "valid": "needs verification",
-          "row": 24
-        },
-        {
-          "name": "Acento - Opinión",
-          "url": "https://acento.com.do/categoria/opinion/feed/",
-          "status": "⏩ OFFICIAL",
-          "checkedDate": null,
-          "valid": "needs verification",
-          "row": 25
-        },
-        {
-          "name": "Acento - Deportes",
-          "url": "https://acento.com.do/categoria/deportes/feed/",
-          "status": "⏩ OFFICIAL",
-          "checkedDate": null,
-          "valid": "needs verification",
-          "row": 26
-        },
-        {
-          "name": "elCaribe",
-          "url": "https://www.elcaribe.com.do/feed/",
-          "status": "⏩ OFFICIAL",
-          "checkedDate": null,
-          "valid": "needs verification",
-          "row": 27
-        },
-        {
-          "name": "Hoy Digital",
-          "url": "https://hoy.com.do/feed/",
-          "status": "⏩ OFFICIAL",
-          "checkedDate": null,
-          "valid": "needs verification",
-          "row": 28
         },
         {
           "name": "El Nacional",
@@ -4121,7 +5721,7 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 3
+          "row": 2
         },
         {
           "name": "Die Presse",
@@ -4129,7 +5729,7 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 5
+          "row": 3
         },
         {
           "name": "Tiroler Tageszeitung",
@@ -4137,15 +5737,7 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/19/2026",
           "valid": "needs verification",
-          "row": 8
-        },
-        {
-          "name": "Der Standard",
-          "url": "https://www.derstandard.at/rss",
-          "status": "⏩ OFFICIAL",
-          "checkedDate": null,
-          "valid": "needs verification",
-          "row": 11
+          "row": 4
         },
         {
           "name": "ORF Aktuell",
@@ -4153,7 +5745,7 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 14
+          "row": 5
         },
         {
           "name": "Kurier (Top News)",
@@ -4161,7 +5753,7 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/19/2026",
           "valid": "needs verification",
-          "row": 16
+          "row": 6
         },
         {
           "name": "Neue Donau",
@@ -4169,7 +5761,7 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 17
+          "row": 7
         },
         {
           "name": "Der Standard",
@@ -4177,7 +5769,7 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 22
+          "row": 8
         },
         {
           "name": "Kleine Zeitung",
@@ -4185,7 +5777,7 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 24
+          "row": 9
         },
         {
           "name": "Der Standard",
@@ -4193,15 +5785,7 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 26
-        },
-        {
-          "name": "ORF",
-          "url": "https://rss.orf.at/news.xml",
-          "status": "⏩ OFFICIAL",
-          "checkedDate": "02/19/2026",
-          "valid": "needs verification",
-          "row": 29
+          "row": 10
         },
         {
           "name": "Der Standard Plus",
@@ -4209,7 +5793,151 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 30
+          "row": 11
+        },
+        {
+          "name": "derStandard - International",
+          "url": "https://www.derstandard.at/rss/international",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 12
+        },
+        {
+          "name": "derStandard - Inland",
+          "url": "https://www.derstandard.at/rss/inland",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 13
+        },
+        {
+          "name": "derStandard - Web",
+          "url": "https://www.derstandard.at/rss/web",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 14
+        },
+        {
+          "name": "derStandard - Sport",
+          "url": "https://www.derstandard.at/rss/sport",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 15
+        },
+        {
+          "name": "derStandard - Panorama",
+          "url": "https://www.derstandard.at/rss/panorama",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 16
+        },
+        {
+          "name": "derStandard - Etat",
+          "url": "https://www.derstandard.at/rss/etat",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 17
+        },
+        {
+          "name": "derStandard - Kultur",
+          "url": "https://www.derstandard.at/rss/kultur",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 18
+        },
+        {
+          "name": "derStandard - Wissenschaft",
+          "url": "https://www.derstandard.at/rss/wissenschaft",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 19
+        },
+        {
+          "name": "derStandard - Gesundheit",
+          "url": "https://www.derstandard.at/rss/gesundheit",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 20
+        },
+        {
+          "name": "derStandard - Lifestyle",
+          "url": "https://www.derstandard.at/rss/lifestyle",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 21
+        },
+        {
+          "name": "derStandard - Karriere",
+          "url": "https://www.derstandard.at/rss/karriere",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 22
+        },
+        {
+          "name": "derStandard - Immobilien",
+          "url": "https://www.derstandard.at/rss/immobilien",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 23
+        },
+        {
+          "name": "derStandard - Diskurs",
+          "url": "https://www.derstandard.at/rss/diskurs",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 24
+        },
+        {
+          "name": "derStandard - dieStandard.at",
+          "url": "https://www.derstandard.at/rss/diestandard",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 25
+        },
+        {
+          "name": "derStandard - Live",
+          "url": "https://www.derstandard.at/rss/live",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 26
+        },
+        {
+          "name": "derStandard - Video",
+          "url": "https://www.derstandard.at/rss/video",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 27
+        },
+        {
+          "name": "derStandard - Podcast",
+          "url": "https://www.derstandard.at/rss/podcast",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 28
+        },
+        {
+          "name": "derStandard - Recht",
+          "url": "https://www.derstandard.at/rss/recht",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 29
         }
       ]
     },

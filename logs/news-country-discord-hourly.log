@@ -1,0 +1,34 @@
+bash: /Users/myungeunlee/Desktop/mylee/world-press-monitor/scripts/run-news-country-discord-report.sh: Operation not permitted
+
+[2026-02-20 03:58:48 UTC] Start news country discord report
+Project: /Users/myungeunlee/Desktop/mylee/world-press-monitor
+Command: bun run news:country:discord
+$ bun scripts/report-news-by-country-discord.ts
+[news-country-discord] failed connect ECONNREFUSED 127.0.0.1:1304
+error: script "news:country:discord" exited with code 1
+++ date -u '+%Y-%m-%d %H:%M:%S %Z'
++ printf '\n[%s] Start news country discord report\n' '2026-02-20 03:58:50 UTC'
+
+[2026-02-20 03:58:50 UTC] Start news country discord report
++ printf 'Project: %s\n' /Users/myungeunlee/Desktop/mylee/world-press-monitor
+Project: /Users/myungeunlee/Desktop/mylee/world-press-monitor
++ printf 'Command: %s\n' 'bun run news:country:discord'
+Command: bun run news:country:discord
++ bun run news:country:discord
+$ bun scripts/report-news-by-country-discord.ts
+[news-country-discord] posted 1 message(s), 40 country rows (show 40).
+
+[2026-02-20 03:58:53 UTC] Start news country discord report
+Project: /Users/myungeunlee/Desktop/mylee/world-press-monitor
+Command: bun run news:country:discord
+$ bun scripts/report-news-by-country-discord.ts
+[news-country-discord] posted 1 message(s), 40 country rows (show 40).
+
+[2026-02-20 03:59:07 UTC] Start news country discord report
+Project: /Users/myungeunlee/Desktop/mylee/world-press-monitor
+Command: bun run news:country:discord
+$ bun scripts/report-news-by-country-discord.ts
+[news-country-discord] failed connect ECONNREFUSED 127.0.0.1:1304
+error: script "news:country:discord" exited with code 1
+bash: /Users/myungeunlee/Desktop/mylee/world-press-monitor/scripts/run-news-country-discord-report.sh: Operation not permitted
+/bin/bash: /Users/myungeunlee/Desktop/mylee/world-press-monitor/scripts/run-news-country-discord-report.sh: Operation not permitted

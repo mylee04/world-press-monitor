@@ -6,12 +6,13 @@ PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 MARKER="## WPM-NEWS-COUNTRY-DISCORD"
 CRON_TZ="America/Chicago"
 CRON_MINUTE="${NEWS_COUNTRY_REPORT_CRON_MINUTE:-55}"
+RUNNER="${PROJECT_ROOT}/scripts/run-news-country-discord-report.sh"
 
 if [ -n "${NEWS_COUNTRY_REPORT_TZ:-}" ]; then
   CRON_TZ="${NEWS_COUNTRY_REPORT_TZ}"
 fi
 
-CRON_LINE="${CRON_MINUTE} * * * * TZ=${CRON_TZ} bash ${PROJECT_ROOT}/scripts/run-news-country-discord-report.sh >> ${PROJECT_ROOT}/logs/news-country-discord-hourly.log 2>&1"
+CRON_LINE="${CRON_MINUTE} * * * * TZ=${CRON_TZ} /bin/bash ${RUNNER} >> ${PROJECT_ROOT}/logs/news-country-discord-hourly.log 2>&1"
 
 usage() {
   cat <<'USAGE'
@@ -43,7 +44,7 @@ case "${1:-install}" in
   install)
     ensure_cron_available
     CURRENT="$(crontab -l 2>/dev/null || true)"
-    CLEANED="$(echo "${CURRENT}" | awk -v m="${MARKER}" -v l="${CRON_LINE}" '$0 !~ m && $0 !~ l {print}')"
+    CLEANED="$(echo "${CURRENT}" | awk -v m="${MARKER}" -v r="${RUNNER}" '$0 !~ m && index($0, r) == 0 {print}')"
     {
       echo "${CLEANED}"
       print_entry
@@ -56,7 +57,7 @@ case "${1:-install}" in
     ensure_cron_available
     CURRENT="$(crontab -l 2>/dev/null || true)"
     echo "${CURRENT}" |
-      awk -v m="${MARKER}" -v l="${CRON_LINE}" '$0 !~ m && $0 !~ l {print}' |
+      awk -v m="${MARKER}" -v r="${RUNNER}" '$0 !~ m && index($0, r) == 0 {print}' |
       crontab -
     echo "Removed cron job if it existed."
     ;;

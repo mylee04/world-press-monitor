@@ -94,6 +94,7 @@ const REQUEST_JITTER_MS = clampInt(process.env.RSS_REQUEST_JITTER_MS, 0, 3000, 1
 const PRECHECK_TIMEOUT_MS = clampInt(process.env.RSS_PRECHECK_TIMEOUT_MS, 1000, 30000, 5000);
 const SHOULD_PRECHECK = process.argv.includes('--precheck') || process.argv.includes('--preflight');
 const PRECHECK_URL = process.env.RSS_PRECHECK_URL || '';
+const ONLY_VALID_IN_README = process.argv.includes('--valid-only');
 
 const COUNTRY_SECTION_HEADER = /^###\s+(.+?)\s+\(([^)]+)\)$/;
 const XML_MARKERS = ['<rss', '<feed', '<urlset', '<sitemapindex', '<?xml'];
@@ -155,7 +156,7 @@ async function main(): Promise<void> {
   }
 
   const preface = getReadmePreface(sourceLines, summaryCounts, results, atlas);
-  const updatedSections = renderCountrySections(atlas, resultMap);
+  const updatedSections = renderCountrySections(atlas, resultMap, ONLY_VALID_IN_README);
   const updatedReadme = `${updateHeaderCheckedDate(preface)}\n${updatedSections.join('\n')}\n`;
   writeFileSync(README_PATH, updatedReadme, 'utf8');
 
@@ -764,7 +765,11 @@ function renderVerificationSnapshot(summary: SummaryCounts, results: EndpointRes
   return lines.join('\n');
 }
 
-function renderCountrySections(atlas: Atlas, resultMap: Map<string, EndpointResult>): string[] {
+function renderCountrySections(
+  atlas: Atlas,
+  resultMap: Map<string, EndpointResult>,
+  onlyValid: boolean
+): string[] {
   const lines: string[] = [];
 
   for (const country of atlas.countries) {
@@ -773,60 +778,78 @@ function renderCountrySections(atlas: Atlas, resultMap: Map<string, EndpointResu
     lines.push('|---|---|---|---|---|---|');
 
     if (!country.feeds.length) {
-      lines.push(
-        formatRow({
-          row: 1,
-          outlet: 'No RSS source configured',
-          url: 'N/A',
-          status: '❌ NO_SOURCE',
-          checkedDate: CHECKED_DATE,
-          validLabel: 'needs verification',
-        })
-      );
-    } else {
-      for (const feed of country.feeds) {
-        const row = Number.isFinite(feed.row) ? feed.row : 1;
-        if (!feed.url) {
-          lines.push(
-            formatRow({
-              row,
-              outlet: feed.name,
-              url: 'N/A',
-              status: '❌ NO_SOURCE',
-              checkedDate: CHECKED_DATE,
-              validLabel: 'needs verification',
-            })
-          );
-          continue;
-        }
+      if (onlyValid) {
+        lines.push('- no valid RSS feeds in this country.');
+      } else {
+        lines.push(
+          formatRow({
+            row: 1,
+            outlet: 'No RSS source configured',
+            url: 'N/A',
+            status: '❌ NO_SOURCE',
+            checkedDate: CHECKED_DATE,
+            validLabel: 'needs verification',
+          })
+        );
+      }
+      lines.push('');
+      continue;
+    }
 
-        const key = makeResultKey(country.code, feed.name, feed.url);
-        const result = resultMap.get(key);
-        if (!result) {
-          lines.push(
-            formatRow({
-              row,
-              outlet: feed.name,
-              url: feed.url,
-              status: 'needs check',
-              checkedDate: CHECKED_DATE,
-              validLabel: 'needs verification',
-            })
-          );
-          continue;
-        }
+    let rowCounter = 0;
+    for (const feed of country.feeds) {
+      if (!feed.url) {
+        if (onlyValid) continue;
+        const row = ++rowCounter;
+        lines.push(
+          formatRow({
+            row,
+            outlet: feed.name,
+            url: 'N/A',
+            status: '❌ NO_SOURCE',
+            checkedDate: CHECKED_DATE,
+            validLabel: 'needs verification',
+          })
+        );
+        continue;
+      }
 
+      const key = makeResultKey(country.code, feed.name, feed.url);
+      const result = resultMap.get(key);
+      if (onlyValid && (!result || !result.valid)) {
+        continue;
+      }
+
+      const row = ++rowCounter;
+
+      if (!result) {
         lines.push(
           formatRow({
             row,
             outlet: feed.name,
             url: feed.url,
-            status: formatStatus(result),
+            status: 'needs check',
             checkedDate: CHECKED_DATE,
-            validLabel: result.valid ? 'valid' : 'invalid',
+            validLabel: 'needs verification',
           })
         );
+        continue;
       }
+
+      lines.push(
+        formatRow({
+          row,
+          outlet: feed.name,
+          url: feed.url,
+          status: formatStatus(result),
+          checkedDate: CHECKED_DATE,
+          validLabel: result.valid ? 'valid' : 'invalid',
+        })
+      );
+    }
+
+    if (onlyValid && rowCounter === 0) {
+      lines.push('- no valid RSS feeds in this country.');
     }
 
     lines.push('');

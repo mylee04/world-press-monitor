@@ -8,6 +8,15 @@ let poolFailed = false;
 let schemaReady = false;
 let poolDisabledReason = 'not_initialized';
 
+const publicationMaxAgeDays = (() => {
+  const rawValue = process.env.NEWS_PUBLICATION_MAX_AGE_DAYS;
+  if (!rawValue) return 7;
+  const parsed = Number.parseInt(rawValue, 10);
+  if (!Number.isFinite(parsed) || parsed < 0) return 7;
+  return parsed;
+})();
+const publicationMaxAgeMs = publicationMaxAgeDays === 0 ? 0 : publicationMaxAgeDays * 24 * 60 * 60 * 1000;
+
 function getPool(): Pool | null {
   if (pool) return pool;
   if (poolFailed) {
@@ -1489,6 +1498,7 @@ async function toExternalArticle(item: NewsItem): Promise<ExternalArticlePersist
   if (!linkNorm) return null;
   const publicationTs = new Date(item.publishedAt).getTime();
   if (!Number.isFinite(publicationTs)) return null;
+  if (publicationMaxAgeMs > 0 && publicationTs < Date.now() - publicationMaxAgeMs) return null;
 
   const language = item.language || null;
   const titleOriginal = item.title || '';

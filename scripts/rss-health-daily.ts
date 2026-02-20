@@ -61,6 +61,7 @@ const discordWebhookUrl = (process.env.RSS_HEALTH_DISCORD_WEBHOOK_URL || process
 const discordUsername = process.env.RSS_HEALTH_DISCORD_USERNAME || 'RSS Health';
 const discordMention = process.env.RSS_HEALTH_DISCORD_MENTION || '';
 const discordTimeoutMs = clampInt(process.env.RSS_HEALTH_DISCORD_TIMEOUT_MS, 1000, 20000, 5000);
+const VERIFY_ARGS_BASE = ['run', 'verify:readme-rss', '--valid-only'];
 
 function clampInt(raw: string | undefined, min: number, max: number, fallback: number): number {
   const parsed = Number.parseInt(raw ?? '', 10);
@@ -258,9 +259,9 @@ async function sendDiscordNotification(report: HealthReport, pruneStats: { befor
 async function main(): Promise<void> {
   console.log('--- Daily RSS health pipeline start ---');
   if (doPrecheck) {
-    runCommand('Precheck + verify', 'bun', ['run', 'verify:readme-rss:precheck']);
+    runCommand('Precheck + verify', 'bun', [...VERIFY_ARGS_BASE, '--precheck']);
   } else {
-    runCommand('Verify', 'bun', ['run', 'verify:readme-rss']);
+    runCommand('Verify', 'bun', [...VERIFY_ARGS_BASE]);
   }
 
   const atlas = loadAtlas();

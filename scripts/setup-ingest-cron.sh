@@ -45,7 +45,7 @@ case "${1:-install}" in
   install)
     ensure_cron_available
     CURRENT="$(crontab -l 2>/dev/null || true)"
-    CLEANED="$(echo "${CURRENT}" | awk -v m="${MARKER}" -v h="${RUNNER}" '\
+CLEANED="$(echo "${CURRENT}" | awk -v m="${MARKER}" -v h="${RUNNER}" '\
           index($0, m) == 0 && index($0, h) == 0 {print}')"
     {
       echo "${CLEANED}"
