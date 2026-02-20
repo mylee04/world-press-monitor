@@ -271,7 +271,7 @@ async function runNetworkPrecheck(atlas: Atlas): Promise<boolean> {
   console.log(`DNS (node) www.google.com: ${googleDnsNode.ok ? `OK (${googleDnsNode.ips.join(', ')})` : `FAIL (${googleDnsNode.error})`}`);
 
   if (resolvConf.ok) {
-    const lines = getConfLines(resolvConf.value);
+    const lines = getConfLines(resolvConf.value || '');
     console.log('resolv.conf:');
     for (const line of lines.slice(0, 8)) {
       console.log(`  ${line}`);
@@ -283,7 +283,7 @@ async function runNetworkPrecheck(atlas: Atlas): Promise<boolean> {
   if (nsswitchConf.skipped) {
     console.log('nsswitch.conf: SKIP (not used on macOS)');
   } else if (nsswitchConf.ok) {
-    const hostsLine = extractNsswitchHostsLine(nsswitchConf.value);
+    const hostsLine = extractNsswitchHostsLine(nsswitchConf.value || '');
     console.log(`nsswitch hosts line: ${hostsLine || '(none)'}`);
   } else {
     console.log(`nsswitch.conf: FAIL (${nsswitchConf.error})`);
@@ -316,7 +316,11 @@ async function runNetworkPrecheck(atlas: Atlas): Promise<boolean> {
     googleDnsNode,
     curlResolveResult,
     googleResolveResult,
-    httpResult,
+    httpResult: {
+      ok: httpResult.ok,
+      status: httpResult.status,
+      note: httpResult.extra,
+    },
   });
 
   const reportPayload = {

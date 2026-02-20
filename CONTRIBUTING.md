@@ -40,3 +40,10 @@ bun run rss:health:once
 - Keep scripts and core data model changes small and reviewable.
 - Prefer deterministic commands and script outputs.
 - Keep temporary logs and local run artifacts out of commits.
+
+## Before commit / PR
+
+- Required checks before commit / PR:
+  - Local check: `bun run typecheck`
+  - Before commit / push: run the same command again
+- There is no separate `lint` script yet, so `bun run typecheck` is the CI gate.

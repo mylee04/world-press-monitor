@@ -2,6 +2,7 @@ import {
   readNewsArticlesForApi,
   type NewsApiItem
 } from '@/lib/ingestion-store';
+import { createServer, type IncomingMessage, type ServerResponse } from 'node:http';
 
 type NewsApiResponse = {
   storage: 'postgres' | 'disabled';
@@ -89,16 +90,26 @@ function corsHeaders(origin: string | null): Record<string, string> {
   };
 }
 
-function jsonResponse(payload: unknown, status = 200, origin: string | null = null): Response {
+type JsonResponse = {
+  status: number;
+  headers: Record<string, string>;
+  body: string;
+};
+
+function jsonResponse(payload: unknown, status = 200, origin: string | null = null): JsonResponse {
   const headers = {
     ...corsHeaders(origin),
     'content-type': 'application/json; charset=utf-8',
     'cache-control': 'no-store'
   };
-  return new Response(JSON.stringify(payload), { status, headers });
+  return {
+    status,
+    headers,
+    body: JSON.stringify(payload),
+  };
 }
 
-function unauthorizedResponse(origin: string | null): Response {
+function unauthorizedResponse(origin: string | null): JsonResponse {
   return jsonResponse(
     {
       error: 'unauthorized',
@@ -109,9 +120,17 @@ function unauthorizedResponse(origin: string | null): Response {
   );
 }
 
-function isAuthorized(req: Request): boolean {
+function getHeaderValue(headers: IncomingMessage['headers'], key: string): string {
+  const value = headers[key.toLowerCase()];
+  if (Array.isArray(value)) {
+    return value[0] || '';
+  }
+  return value || '';
+}
+
+function isAuthorized(req: IncomingMessage): boolean {
   const token = process.env.NEWS_API_TOKEN?.trim() || '';
-  const authHeader = req.headers.get('authorization') || '';
+  const authHeader = getHeaderValue(req.headers, 'authorization').trim();
   return authHeader === `Bearer ${token}` || authHeader === token;
 }
 
@@ -124,134 +143,168 @@ if (!requiredApiToken) {
   process.exit(1);
 }
 
-const server = Bun.serve({
-  port,
-  hostname: host,
-  async fetch(req) {
-    const url = new URL(req.url);
-    const path = url.pathname.replace(/\/+$/, '') || '/';
-    const origin = req.headers.get('origin');
+function sendJsonResponse(res: ServerResponse, response: JsonResponse): void {
+  res.statusCode = response.status;
+  for (const [key, value] of Object.entries(response.headers)) {
+    res.setHeader(key, value);
+  }
+  res.end(response.body);
+}
 
-    if (req.method === 'OPTIONS') {
-      return jsonResponse({}, 204, origin);
-    }
+const server = createServer(async (req: IncomingMessage, res: ServerResponse) => {
+  if (!req.url) {
+    sendJsonResponse(res, jsonResponse({ error: 'bad_request', message: 'Missing request URL.' }, 400, null));
+    return;
+  }
 
-    if (req.method !== 'GET') {
-      return jsonResponse(
+  const url = new URL(req.url, `http://${host}:${port}`);
+  const path = url.pathname.replace(/\/+$/, '') || '/';
+  const origin = getHeaderValue(req.headers, 'origin');
+
+  if (req.method === 'OPTIONS') {
+    sendJsonResponse(res, jsonResponse({}, 204, origin));
+    return;
+  }
+
+  if (req.method !== 'GET') {
+    sendJsonResponse(
+      res,
+      jsonResponse(
         {
           error: 'method_not_allowed',
           message: 'Only GET is supported.'
         },
         405,
         origin
-      );
+      )
+    );
+    return;
+  }
+
+  if (path === '/health') {
+    const health = await readNewsArticlesForApi({ limit: 1 });
+    const response: HealthResponse = {
+      status: health.storage === 'postgres' ? 'ok' : 'degraded',
+      checkedAt: new Date().toISOString(),
+      storage: health.storage,
+      reason: health.reason
+    };
+    sendJsonResponse(res, jsonResponse(response, 200, origin));
+    return;
+  }
+
+  if (path === '/api/news') {
+    if (!isAuthorized(req)) {
+      sendJsonResponse(res, unauthorizedResponse(origin));
+      return;
     }
 
-    if (path === '/health') {
-      const health = await readNewsArticlesForApi({ limit: 1 });
-      const response: HealthResponse = {
-        status: health.storage === 'postgres' ? 'ok' : 'degraded',
-        checkedAt: new Date().toISOString(),
-        storage: health.storage,
-        reason: health.reason
-      };
-      return jsonResponse(response, 200, origin);
-    }
+    try {
+      const sourceNames = getQueryList(url.searchParams, 'source');
+      const countries = getQueryList(url.searchParams, 'country');
+      const sections = getQueryList(url.searchParams, 'section');
+      const limit = parseIntParam(url.searchParams.get('limit'), 100, 1, 200);
+      const offset = parseIntParam(url.searchParams.get('offset'), 0, 0, 100000);
+      const from = parseDateParam(url.searchParams.get('from'));
+      const to = parseDateParam(url.searchParams.get('to'));
+      const hours = parseIntParam(url.searchParams.get('hours'), 48, 1, 720);
 
-    if (path === '/api/news') {
-      if (!isAuthorized(req)) {
-        return unauthorizedResponse(origin);
-      }
-
-      try {
-        const sourceNames = getQueryList(url.searchParams, 'source');
-        const countries = getQueryList(url.searchParams, 'country');
-        const sections = getQueryList(url.searchParams, 'section');
-        const limit = parseIntParam(url.searchParams.get('limit'), 100, 1, 200);
-        const offset = parseIntParam(url.searchParams.get('offset'), 0, 0, 100000);
-        const from = parseDateParam(url.searchParams.get('from'));
-        const to = parseDateParam(url.searchParams.get('to'));
-        const hours = parseIntParam(url.searchParams.get('hours'), 48, 1, 720);
-
-        if (from && to && new Date(from).getTime() > new Date(to).getTime()) {
-          return jsonResponse(
+      if (from && to && new Date(from).getTime() > new Date(to).getTime()) {
+        sendJsonResponse(
+          res,
+          jsonResponse(
             {
               error: 'invalid_range',
               message: '`from` must be <= `to`.'
             },
             400,
             origin
-          );
-        }
+          )
+        );
+        return;
+      }
 
-        const news = await readNewsArticlesForApi({
-          sourceNames,
-          countries,
-          sections,
+      const news = await readNewsArticlesForApi({
+        sourceNames,
+        countries,
+        sections,
+        limit,
+        offset,
+        from,
+        to,
+        hours: from || to ? undefined : hours
+      });
+
+      if (news.storage === 'disabled') {
+        const errorPayload: ApiError = {
+          error: 'storage_unavailable',
+          message: news.reason || 'News storage is not available.'
+        };
+        sendJsonResponse(res, jsonResponse(errorPayload, 503, origin));
+        return;
+      }
+
+      const response: NewsApiResponse = {
+        storage: news.storage,
+        generatedAt: news.generatedAt,
+        params: {
           limit,
           offset,
+          hours: from || to ? undefined : hours,
           from,
           to,
-          hours: from || to ? undefined : hours
-        });
-
-        if (news.storage === 'disabled') {
-          const errorPayload: ApiError = {
-            error: 'storage_unavailable',
-            message: news.reason || 'News storage is not available.'
-          };
-          return jsonResponse(errorPayload, 503, origin);
-        }
-
-        const response: NewsApiResponse = {
-          storage: news.storage,
-          generatedAt: news.generatedAt,
-          params: {
-            limit,
-            offset,
-            hours: from || to ? undefined : hours,
-            from,
-            to,
-            sources: sourceNames,
-            countries,
-            sections
-          },
-          items: news.items
-        };
-        return jsonResponse(response, 200, origin);
-      } catch (error) {
-        if (error instanceof Error && error.message === 'invalid-date') {
-          return jsonResponse(
+          sources: sourceNames,
+          countries,
+          sections
+        },
+        items: news.items
+      };
+      sendJsonResponse(res, jsonResponse(response, 200, origin));
+    } catch (error) {
+      if (error instanceof Error && error.message === 'invalid-date') {
+        sendJsonResponse(
+          res,
+          jsonResponse(
             {
               error: 'invalid_date',
               message: '`from` and `to` must be valid ISO date strings.'
             },
             400,
             origin
-          );
-        }
+          )
+        );
+        return;
+      }
 
-        console.error('[api-news] request failed', error);
-        return jsonResponse(
+      console.error('[api-news] request failed', error);
+      sendJsonResponse(
+        res,
+        jsonResponse(
           {
             error: 'internal_error',
             message: 'Failed to read news articles.'
           },
           500,
           origin
-        );
-      }
+        )
+      );
     }
+    return;
+  }
 
-    return jsonResponse(
+  sendJsonResponse(
+    res,
+    jsonResponse(
       {
         error: 'not_found',
         message: 'Endpoint not found.'
       },
       404,
       origin
-    );
-  }
+    )
+  );
 });
 
-console.log(`[api-news] listening on http://${host}:${server.port}`);
+server.listen(port, host, () => {
+  console.log(`[api-news] listening on http://${host}:${port}`);
+});

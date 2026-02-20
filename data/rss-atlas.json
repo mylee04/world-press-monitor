@@ -3568,6 +3568,294 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 24
+        },
+        {
+          "name": "ANTARA - Terkini",
+          "url": "https://www.antaranews.com/rss/terkini.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 25
+        },
+        {
+          "name": "ANTARA - Top News",
+          "url": "https://www.antaranews.com/rss/top-news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 26
+        },
+        {
+          "name": "ANTARA - Politik",
+          "url": "https://www.antaranews.com/rss/politik.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 27
+        },
+        {
+          "name": "ANTARA - Hukum",
+          "url": "https://www.antaranews.com/rss/hukum.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 28
+        },
+        {
+          "name": "ANTARA - Ekonomi",
+          "url": "https://www.antaranews.com/rss/ekonomi.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 29
+        },
+        {
+          "name": "ANTARA - Ekonomi (Finansial)",
+          "url": "https://www.antaranews.com/rss/ekonomi-finansial.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 30
+        },
+        {
+          "name": "ANTARA - Ekonomi (Bisnis)",
+          "url": "https://www.antaranews.com/rss/ekonomi-bisnis.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 31
+        },
+        {
+          "name": "ANTARA - Ekonomi (Bursa)",
+          "url": "https://www.antaranews.com/rss/ekonomi-bursa.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 32
+        },
+        {
+          "name": "ANTARA - Metro",
+          "url": "https://www.antaranews.com/rss/metro.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 33
+        },
+        {
+          "name": "ANTARA - Metro (Kriminalitas)",
+          "url": "https://www.antaranews.com/rss/metro-kriminalitas.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 34
+        },
+        {
+          "name": "ANTARA - Metro (Lintas Kota)",
+          "url": "https://www.antaranews.com/rss/metro-lintas-kota.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 35
+        },
+        {
+          "name": "ANTARA - Metro (Lenggang Jakarta)",
+          "url": "https://www.antaranews.com/rss/metro-lenggang-jakarta.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 36
+        },
+        {
+          "name": "ANTARA - Sepakbola",
+          "url": "https://www.antaranews.com/rss/sepakbola.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 37
+        },
+        {
+          "name": "ANTARA - Sepakbola (Liga Indonesia)",
+          "url": "https://www.antaranews.com/rss/sepakbola-liga-indonesia.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 38
+        },
+        {
+          "name": "ANTARA - Sepakbola (Internasional)",
+          "url": "https://www.antaranews.com/rss/sepakbola-internasional.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 39
+        },
+        {
+          "name": "ANTARA - Sepakbola (Liga Inggris)",
+          "url": "https://www.antaranews.com/rss/sepakbola-liga-inggris-premier.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 40
+        },
+        {
+          "name": "ANTARA - Sepakbola (Liga Spanyol)",
+          "url": "https://www.antaranews.com/rss/sepakbola-liga-spanyol.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 41
+        },
+        {
+          "name": "ANTARA - Sepakbola (Liga Italia)",
+          "url": "https://www.antaranews.com/rss/sepakbola-liga-italia-seri-a.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 42
+        },
+        {
+          "name": "ANTARA - Liga Champions",
+          "url": "https://www.antaranews.com/rss/sepakbola-liga-champions.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 43
+        },
+        {
+          "name": "ANTARA - Olahraga",
+          "url": "https://www.antaranews.com/rss/olahraga.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 44
+        },
+        {
+          "name": "ANTARA - Olahraga (Bulutangkis)",
+          "url": "https://www.antaranews.com/rss/olahraga-bulutangkis.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 45
+        },
+        {
+          "name": "ANTARA - Olahraga (Bola Basket)",
+          "url": "https://www.antaranews.com/rss/olahraga-bola-basket.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 46
+        },
+        {
+          "name": "ANTARA - Olahraga (Tenis)",
+          "url": "https://www.antaranews.com/rss/olahraga-tenis.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 47
+        },
+        {
+          "name": "ANTARA - Olahraga (Balap)",
+          "url": "https://www.antaranews.com/rss/olahraga-balap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 48
+        },
+        {
+          "name": "ANTARA - Humaniora",
+          "url": "https://www.antaranews.com/rss/humaniora.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 49
+        },
+        {
+          "name": "ANTARA - Lifestyle",
+          "url": "https://www.antaranews.com/rss/lifestyle.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 50
+        },
+        {
+          "name": "ANTARA - Hiburan",
+          "url": "https://www.antaranews.com/rss/hiburan.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 51
+        },
+        {
+          "name": "ANTARA - Dunia",
+          "url": "https://www.antaranews.com/rss/dunia.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 52
+        },
+        {
+          "name": "ANTARA - Dunia (ASEAN)",
+          "url": "https://www.antaranews.com/rss/dunia-asean.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 53
+        },
+        {
+          "name": "ANTARA - Tekno",
+          "url": "https://www.antaranews.com/rss/tekno.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 54
+        },
+        {
+          "name": "RM.ID - Semua berita",
+          "url": "https://rm.id/rss-rakyat-merdeka",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 55
+        },
+        {
+          "name": "RM.ID - Nasional",
+          "url": "https://rm.id/rss-rakyat-merdeka/nasional",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 56
+        },
+        {
+          "name": "RM.ID - Internasional",
+          "url": "https://rm.id/rss-rakyat-merdeka/internasional",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 57
+        },
+        {
+          "name": "RM.ID - Ekonomi Bisnis",
+          "url": "https://rm.id/rss-rakyat-merdeka/ekonomi-bisnis",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 58
+        },
+        {
+          "name": "RM.ID - Bank & Finance",
+          "url": "https://rm.id/rss-rakyat-merdeka/bank-finance",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 59
+        },
+        {
+          "name": "RM.ID - Indonesianomics",
+          "url": "https://rm.id/rss-rakyat-merdeka/indonesianomics",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 60
         }
       ]
     },
@@ -3946,6 +4234,238 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 30
+        },
+        {
+          "name": "Hürriyet (Anasayfa)",
+          "url": "http://www.hurriyet.com.tr/rss/anasayfa",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 31
+        },
+        {
+          "name": "Hürriyet (Gündem)",
+          "url": "http://www.hurriyet.com.tr/rss/gundem",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 32
+        },
+        {
+          "name": "Hürriyet (Ekonomi)",
+          "url": "http://www.hurriyet.com.tr/rss/ekonomi",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 33
+        },
+        {
+          "name": "Hürriyet (Magazin)",
+          "url": "http://www.hurriyet.com.tr/rss/magazin",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 34
+        },
+        {
+          "name": "Hürriyet (Spor)",
+          "url": "http://www.hurriyet.com.tr/rss/spor",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 35
+        },
+        {
+          "name": "Hürriyet (Dünya)",
+          "url": "http://www.hurriyet.com.tr/rss/dunya",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 36
+        },
+        {
+          "name": "Hürriyet (Teknoloji)",
+          "url": "http://www.hurriyet.com.tr/rss/teknoloji",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 37
+        },
+        {
+          "name": "Hürriyet (Sağlık)",
+          "url": "http://www.hurriyet.com.tr/rss/saglik",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 38
+        },
+        {
+          "name": "Hürriyet (Astroloji)",
+          "url": "http://www.hurriyet.com.tr/rss/astroloji",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 39
+        },
+        {
+          "name": "Sabah (Anasayfa)",
+          "url": "https://www.sabah.com.tr/rss/anasayfa.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 40
+        },
+        {
+          "name": "Sabah (Ekonomi)",
+          "url": "https://www.sabah.com.tr/rss/ekonomi.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 41
+        },
+        {
+          "name": "Sabah (Spor)",
+          "url": "https://www.sabah.com.tr/rss/spor.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 42
+        },
+        {
+          "name": "Sabah (Gündem)",
+          "url": "https://www.sabah.com.tr/rss/gundem.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 43
+        },
+        {
+          "name": "Sabah (Yaşam)",
+          "url": "https://www.sabah.com.tr/rss/yasam.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 44
+        },
+        {
+          "name": "Sabah (Dünya)",
+          "url": "https://www.sabah.com.tr/rss/dunya.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 45
+        },
+        {
+          "name": "Sabah (Teknoloji)",
+          "url": "https://www.sabah.com.tr/rss/teknoloji.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 46
+        },
+        {
+          "name": "Sabah (Turizm)",
+          "url": "https://www.sabah.com.tr/rss/turizm.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 47
+        },
+        {
+          "name": "Sabah (Otomobil)",
+          "url": "https://www.sabah.com.tr/rss/otomobil.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 48
+        },
+        {
+          "name": "CNN Türk (All / News)",
+          "url": "https://www.cnnturk.com/feed/rss/all/news",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 49
+        },
+        {
+          "name": "CNN Türk (Türkiye / News)",
+          "url": "https://www.cnnturk.com/feed/rss/turkiye/news",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 50
+        },
+        {
+          "name": "CNN Türk (Dünya / News)",
+          "url": "https://www.cnnturk.com/feed/rss/dunya/news",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 51
+        },
+        {
+          "name": "CNN Türk (Ekonomi / News)",
+          "url": "https://www.cnnturk.com/feed/rss/ekonomi/news",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 52
+        },
+        {
+          "name": "CNN Türk (Bilim-Teknoloji / News)",
+          "url": "https://www.cnnturk.com/feed/rss/bilim-teknoloji/news",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 53
+        },
+        {
+          "name": "CNN Türk (Spor / News)",
+          "url": "https://www.cnnturk.com/feed/rss/spor/news",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 54
+        },
+        {
+          "name": "CNN Türk (Sağlık / News)",
+          "url": "https://www.cnnturk.com/feed/rss/saglik/news",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 55
+        },
+        {
+          "name": "TRT Haber (Son Dakika)",
+          "url": "http://www.trthaber.com/sondakika.rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 56
+        },
+        {
+          "name": "Habertürk (Main)",
+          "url": "http://www.haberturk.com/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 57
+        },
+        {
+          "name": "Dünya (Main)",
+          "url": "https://www.dunya.com/rss?dunya",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 58
+        },
+        {
+          "name": "BBC Türkçe",
+          "url": "https://feeds.bbci.co.uk/turkce/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 59
         }
       ]
     },
@@ -4750,6 +5270,206 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 25
+        },
+        {
+          "name": "Prachatai English (Feedburner)",
+          "url": "http://feeds.feedburner.com/prachataienglish",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 26
+        },
+        {
+          "name": "Thai PBS (news feed endpoint)",
+          "url": "https://news.thaipbs.or.th/rss/news",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 27
+        },
+        {
+          "name": "Thairath (News)",
+          "url": "http://www.thairath.co.th/rss/news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 28
+        },
+        {
+          "name": "Thairath (Sport)",
+          "url": "http://www.thairath.co.th/rss/sport.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 29
+        },
+        {
+          "name": "Sanook - Hot News",
+          "url": "http://rssfeeds.sanook.com/rss/feeds/sanook/hot.news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 30
+        },
+        {
+          "name": "Sanook - Daily News",
+          "url": "http://rssfeeds.sanook.com/rss/feeds/sanook/news.index.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 31
+        },
+        {
+          "name": "Sanook - Politics",
+          "url": "http://rssfeeds.sanook.com/rss/feeds/sanook/news.politic.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 32
+        },
+        {
+          "name": "Sanook - Crime",
+          "url": "http://rssfeeds.sanook.com/rss/feeds/sanook/news.crime.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 33
+        },
+        {
+          "name": "Sanook - World",
+          "url": "http://rssfeeds.sanook.com/rss/feeds/sanook/news.world.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 34
+        },
+        {
+          "name": "Sanook - Economy",
+          "url": "http://rssfeeds.sanook.com/rss/feeds/sanook/news.economic.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 35
+        },
+        {
+          "name": "Sanook - Tech (News)",
+          "url": "http://rssfeeds.sanook.com/rss/feeds/sanook/hitech.news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 36
+        },
+        {
+          "name": "Sanook - Tech (Computer)",
+          "url": "http://rssfeeds.sanook.com/rss/feeds/sanook/hitech.computer.index.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 37
+        },
+        {
+          "name": "Sanook - Tech (Mobile)",
+          "url": "http://rssfeeds.sanook.com/rss/feeds/sanook/hitech.mobile.index.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 38
+        },
+        {
+          "name": "Sanook - Travel",
+          "url": "http://rssfeeds.sanook.com/rss/feeds/sanook/travel.index.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 39
+        },
+        {
+          "name": "Sanook - Movies",
+          "url": "http://rssfeeds.sanook.com/rss/feeds/sanook/movie.news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 40
+        },
+        {
+          "name": "PressDisplay - Bangkok Post",
+          "url": "https://www.pressdisplay.com/pressdisplay/services/rss.ashx?cid=1264",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 41
+        },
+        {
+          "name": "PressDisplay - Daily News Thailand",
+          "url": "https://www.pressdisplay.com/pressdisplay/services/rss.ashx?cid=4863",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 42
+        },
+        {
+          "name": "PressDisplay - Krungthep Turakij",
+          "url": "https://www.pressdisplay.com/pressdisplay/services/rss.ashx?cid=5261&type=full",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 43
+        },
+        {
+          "name": "PressDisplay - The Phuket News",
+          "url": "https://www.pressdisplay.com/pressdisplay/services/rss.ashx?cid=eff9&type=full",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 44
+        },
+        {
+          "name": "PressDisplay - Novosti Phuketa",
+          "url": "https://www.pressdisplay.com/pressdisplay/services/rss.ashx?cid=9wv3&type=full",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 45
+        },
+        {
+          "name": "PressDisplay - Window On Phuket",
+          "url": "https://www.pressdisplay.com/pressdisplay/services/rss.ashx?cid=9wv4&type=full",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 46
+        },
+        {
+          "name": "PressDisplay - Where to Eat in Phuket",
+          "url": "https://www.pressdisplay.com/pressdisplay/services/rss.ashx?cid=9wv5&type=full",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 47
+        },
+        {
+          "name": "PressDisplay - Prestige (Thailand)",
+          "url": "https://www.pressdisplay.com/pressdisplay/services/rss.ashx?cid=9vw7&type=full",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 48
+        },
+        {
+          "name": "PressDisplay - Hello! (Thailand)",
+          "url": "https://www.pressdisplay.com/pressdisplay/services/rss.ashx?cid=9vw6&type=full",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 49
+        },
+        {
+          "name": "Khaosod English - Food (category)",
+          "url": "http://www.khaosodenglish.com/category/life/food/feed",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 50
         }
       ]
     },
@@ -4812,6 +5532,246 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 25
+        },
+        {
+          "name": "Tehran Times - Latest",
+          "url": "https://www.tehrantimes.com/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 26
+        },
+        {
+          "name": "Tehran Times - Homepage",
+          "url": "https://www.tehrantimes.com/rss-homepage",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 27
+        },
+        {
+          "name": "Tehran Times - Breaking",
+          "url": "https://www.tehrantimes.com/rss/pl/617",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 28
+        },
+        {
+          "name": "Tehran Times - Society",
+          "url": "https://www.tehrantimes.com/rss/tp/696",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 29
+        },
+        {
+          "name": "Tehran Times - Economy",
+          "url": "https://www.tehrantimes.com/rss/tp/697",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 30
+        },
+        {
+          "name": "Tehran Times - Politics",
+          "url": "https://www.tehrantimes.com/rss/tp/698",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 31
+        },
+        {
+          "name": "Tehran Times - Sports",
+          "url": "https://www.tehrantimes.com/rss/tp/699",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 32
+        },
+        {
+          "name": "Tehran Times - Culture",
+          "url": "https://www.tehrantimes.com/rss/tp/700",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 33
+        },
+        {
+          "name": "Tehran Times - International",
+          "url": "https://www.tehrantimes.com/rss/tp/702",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 34
+        },
+        {
+          "name": "Tehran Times - Multimedia",
+          "url": "https://www.tehrantimes.com/rss/tp/717",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 35
+        },
+        {
+          "name": "Tehran Times - Tourism",
+          "url": "https://www.tehrantimes.com/rss/tp/807",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 36
+        },
+        {
+          "name": "MehrNews (EN) - Latest",
+          "url": "https://en.mehrnews.com/rss/pl/118",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 37
+        },
+        {
+          "name": "MehrNews (EN) - Iran",
+          "url": "https://en.mehrnews.com/rss/tp/575",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 38
+        },
+        {
+          "name": "MehrNews (EN) - Iran > Iran",
+          "url": "https://en.mehrnews.com/rss/tp/905",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 39
+        },
+        {
+          "name": "MehrNews (EN) - Ethnic Groups",
+          "url": "https://en.mehrnews.com/rss/tp/897",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 40
+        },
+        {
+          "name": "MehrNews (EN) - Nature",
+          "url": "https://en.mehrnews.com/rss/tp/898",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 41
+        },
+        {
+          "name": "MehrNews (EN) - Historical Sites",
+          "url": "https://en.mehrnews.com/rss/tp/899",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 42
+        },
+        {
+          "name": "MehrNews (EN) - Souvenirs",
+          "url": "https://en.mehrnews.com/rss/tp/900",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 43
+        },
+        {
+          "name": "MehrNews (EN) - Persian Cuisine",
+          "url": "https://en.mehrnews.com/rss/tp/901",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 44
+        },
+        {
+          "name": "ISNA (EN) - Social",
+          "url": "https://en.isna.ir/rss/tp/8",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 45
+        },
+        {
+          "name": "ISNA (EN) - Economy",
+          "url": "https://en.isna.ir/rss/tp/33",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 46
+        },
+        {
+          "name": "ISNA (EN) - Politics",
+          "url": "https://en.isna.ir/rss/tp/13",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 47
+        },
+        {
+          "name": "ISNA (EN) - Culture & Art",
+          "url": "https://en.isna.ir/rss/tp/19",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 48
+        },
+        {
+          "name": "ISNA (EN) - Sports",
+          "url": "https://en.isna.ir/rss/tp/23",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 49
+        },
+        {
+          "name": "ISNA (EN) - Photos",
+          "url": "https://en.isna.ir/rss/tp/27",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 50
+        },
+        {
+          "name": "Tasnim (EN) - Top Stories",
+          "url": "https://www.tasnimnews.ir/en/rss/feed/0/0/8/1/TopStories",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 51
+        },
+        {
+          "name": "Tasnim (EN) - All Stories",
+          "url": "https://www.tasnimnews.ir/en/rss/feed/0/0/0/0/AllStories",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 52
+        },
+        {
+          "name": "Tasnim (EN) - Politics",
+          "url": "https://www.tasnimnews.ir/en/rss/feeds/1192/0/0/0",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 53
+        },
+        {
+          "name": "Tasnim (EN) - Economy",
+          "url": "https://www.tasnimnews.ir/en/rss/feeds/1193/0/0/0",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 54
+        },
+        {
+          "name": "Tasnim (EN) - World",
+          "url": "https://www.tasnimnews.ir/en/rss/feeds/1194/0/0/0",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 55
         }
       ]
     },

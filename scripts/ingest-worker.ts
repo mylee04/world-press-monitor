@@ -13,7 +13,7 @@ import {
   upsertIngestionFeedWatermarks,
   type IngestionEndpointRun,
 } from '../lib/ingestion-store';
-import type { NewsItem, OutletFeed } from '../lib/types';
+import type { NewsItem, OutletFeed, OutletTier } from '../lib/types';
 
 const FETCH_TIMEOUT_MS = Math.max(
   3000,
@@ -182,7 +182,7 @@ function loadAtlasOutlets(): OutletFeed[] {
         .map((feed) => ({
           id: makeOutletId(countryName, feed.name, feed.url),
           name: feed.name,
-          tier: 1,
+          tier: 1 as OutletTier,
           section: 'general',
           categories: ['global'],
           language: 'en',
@@ -191,7 +191,7 @@ function loadAtlasOutlets(): OutletFeed[] {
           defaultEnabled: true,
           country: countryName,
           rssUrl: feed.url
-        }));
+        }) satisfies OutletFeed);
     });
     outlets.sort((a, b) => a.country.localeCompare(b.country) || a.name.localeCompare(b.name));
     if (outlets.length > 0) {

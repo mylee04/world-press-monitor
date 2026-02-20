@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-02-20T05:18:34.247Z",
+  "generatedAt": "2026-02-20T05:47:23.654Z",
   "sampleUrl": "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml",
   "sampleHost": "rss.nytimes.com",
   "checks": {
@@ -15,9 +15,9 @@
       "ok": true,
       "host": "rss.nytimes.com",
       "ips": [
-        "151.101.65.164"
+        "151.101.193.164"
       ],
-      "raw": "151.101.65.164",
+      "raw": "151.101.193.164",
       "error": "",
       "skipped": false
     },
@@ -33,9 +33,9 @@
       "ok": true,
       "host": "www.google.com",
       "ips": [
-        "142.251.186.147"
+        "142.251.116.99"
       ],
-      "raw": "142.251.186.147",
+      "raw": "142.251.116.99",
       "error": "",
       "skipped": false
     },
@@ -47,7 +47,7 @@
     "curlResolve": {
       "ok": true,
       "host": "rss.nytimes.com",
-      "ip": "151.101.65.164",
+      "ip": "151.101.193.164",
       "status": 200,
       "outputLine": "HTTP/2 200",
       "reason": ""
@@ -55,7 +55,7 @@
     "googleCurlResolve": {
       "ok": true,
       "host": "www.google.com",
-      "ip": "142.251.186.147",
+      "ip": "142.251.116.99",
       "status": 200,
       "outputLine": "HTTP/2 200",
       "reason": ""

@@ -49,67 +49,12 @@ GitHub Actions is also configured:
  - Schedule: 00:30 AM America/Chicago (cron is UTC in Actions; currently set at 06:30 UTC, so it runs at 01:30 during CDT and 00:30 during CST)
 - Manual run: Actions tab → `RSS Health Daily` → `Run workflow`
 
-### GitHub Actions secrets (optional)
-
-Discord notification can be configured per repository secret. If a secret is missing, the workflow still runs normally.
-
- - `RSS_HEALTH_DISCORD_WEBHOOK_URL`: required for Discord notifications
- - `RSS_HEALTH_DISCORD_MENTION`: optional mention/ping text (for example `@here`)
- - `RSS_HEALTH_DISCORD_USERNAME`: optional bot username
- - `RSS_HEALTH_DISCORD_TIMEOUT_MS`: optional timeout override (ms)
-
-Optional CLI alternative for local/manual runs:
- - `bun run rss:health:daily` (uses `.env.local`)
-
-Quick set from terminal (GitHub CLI):
-
-```bash
-gh secret set RSS_HEALTH_DISCORD_WEBHOOK_URL
-gh secret set RSS_HEALTH_DISCORD_MENTION
-gh secret set RSS_HEALTH_DISCORD_USERNAME
-gh secret set RSS_HEALTH_DISCORD_TIMEOUT_MS
-```
-
-Run on-demand:
-- `bun run rss:health:once`
-
-If a feed shows `invalid`, it stays in `README.md` so contributors can see and replace it. Update RSS URLs in `data/rss-atlas.json` and run again:
-- `bun run rss:health:once`
-
-This keeps README updates simple and focused: add/update source URLs first, then re-run health check.
-
-## Public API
-
-The news feed API is deployed on Render and reads from Neon-backed persisted articles.
-
-- Base URL: your Render service URL (currently private)
-- Available endpoints:
-  - `/health`
-  - `/api/news`
-- Authentication:
-  - Required `NEWS_API_TOKEN`
-  - Send it as:
-    - `Authorization: Bearer <TOKEN>`
-    - or raw token in the same `Authorization` header
-- Planned update:
-  - API public access (open/no token) will be enabled later.
-
-Example:
-
-```bash
-curl -H "Authorization: Bearer $NEWS_API_TOKEN" \
-  "https://<your-render-service>/api/news?country=US&limit=10"
-```
-
-`NEWS_API_TOKEN` is currently required for any `/api/news` request.
-
-
 
 ## Latest RSS verification snapshot
 
-- Checked endpoints: `753`
-- Valid: `739`
-- Invalid: `14`
+- Checked endpoints: `859`
+- Valid: `836`
+- Invalid: `23`
 - No-source rows: `0`
 - Snapshot date: `02/19/2026`
 - Source artifact: `audits/readme_rss_health_latest.json`
@@ -117,42 +62,46 @@ curl -H "Authorization: Bearer $NEWS_API_TOKEN" \
 ### Failure reasons
 |Reason|Count|
 |---|---:|
-|HTTP_403|7|
-|HTML_RETURNED|3|
-|HTTP_404|2|
-|TIMEOUT|2|
+|TIMEOUT|20|
+|HTTP_504|2|
+|HTML_RETURNED|1|
 
 ### Invalid feeds by reason
 
-#### HTTP_403 (7)
+#### TIMEOUT (20)
 |Country|Outlet|RSS URL|HTTP|
 |---|---|---|---:|
-|Saudi Arabia|Arab News (Economy)|<https://www.arabnews.com/cat/4/rss.xml>|403|
-|Saudi Arabia|Arab News (Frontpage)|<https://www.arabnews.com/rss.xml>|403|
-|Saudi Arabia|Arab News (Life & Style)|<https://www.arabnews.com/cat/8/rss.xml>|403|
-|Saudi Arabia|Arab News (Middle East)|<https://www.arabnews.com/cat/2/rss.xml>|403|
-|Saudi Arabia|Arab News (Saudi Arabia)|<https://www.arabnews.com/cat/1/rss.xml>|403|
-|Saudi Arabia|Arab News (Sports)|<https://www.arabnews.com/cat/5/rss.xml>|403|
-|Saudi Arabia|Arab News (World)|<https://www.arabnews.com/cat/3/rss.xml>|403|
+|Brazil|Jacobin Brasil|<https://jacobin.com.br/feed>|-|
+|Iran|ISNA (EN) - Culture & Art|<https://en.isna.ir/rss/tp/19>|-|
+|Iran|ISNA (EN) - Economy|<https://en.isna.ir/rss/tp/33>|-|
+|Iran|ISNA (EN) - Photos|<https://en.isna.ir/rss/tp/27>|-|
+|Iran|ISNA (EN) - Politics|<https://en.isna.ir/rss/tp/13>|-|
+|Iran|ISNA (EN) - Social|<https://en.isna.ir/rss/tp/8>|-|
+|Iran|ISNA (EN) - Sports|<https://en.isna.ir/rss/tp/23>|-|
+|Iran|MehrNews (EN) - Persian Cuisine|<https://en.mehrnews.com/rss/tp/901>|-|
+|Iran|Tehran Times - Breaking|<https://www.tehrantimes.com/rss/pl/617>|-|
+|Iran|Tehran Times - Culture|<https://www.tehrantimes.com/rss/tp/700>|-|
+|Iran|Tehran Times - Economy|<https://www.tehrantimes.com/rss/tp/697>|-|
+|Iran|Tehran Times - Homepage|<https://www.tehrantimes.com/rss-homepage>|-|
+|Iran|Tehran Times - International|<https://www.tehrantimes.com/rss/tp/702>|-|
+|Iran|Tehran Times - Latest|<https://www.tehrantimes.com/rss>|-|
+|Iran|Tehran Times - Multimedia|<https://www.tehrantimes.com/rss/tp/717>|-|
+|Iran|Tehran Times - Politics|<https://www.tehrantimes.com/rss/tp/698>|-|
+|Iran|Tehran Times - Society|<https://www.tehrantimes.com/rss/tp/696>|-|
+|Iran|Tehran Times - Sports|<https://www.tehrantimes.com/rss/tp/699>|-|
+|Iran|Tehran Times - Tourism|<https://www.tehrantimes.com/rss/tp/807>|-|
+|Poland|TVN24|<https://tvn24.pl/tvnmeteo.xml>|-|
 
-#### HTML_RETURNED (3)
+#### HTTP_504 (2)
 |Country|Outlet|RSS URL|HTTP|
 |---|---|---|---:|
-|Mexico|Milenio (RSS directory/API)|<https://www.milenio.com/api/v1/rss>|200|
-|Mexico|Proceso (RSS directory)|<https://www.proceso.com.mx/rss/>|200|
-|Saudi Arabia|Saudi Gazette (directory)|<https://saudigazette.com.sa/rss>|200|
+|Thailand|Thairath (News)|<http://www.thairath.co.th/rss/news.xml>|504|
+|Thailand|Thairath (Sport)|<http://www.thairath.co.th/rss/sport.xml>|504|
 
-#### HTTP_404 (2)
+#### HTML_RETURNED (1)
 |Country|Outlet|RSS URL|HTTP|
 |---|---|---|---:|
-|Mexico|Milenio (Main)|<https://www.milenio.com/rss>|404|
-|Taiwan|Liberty Times 人物|<https://news.ltn.com.tw/rss/people.xml>|404|
-
-#### TIMEOUT (2)
-|Country|Outlet|RSS URL|HTTP|
-|---|---|---|---:|
-|Dominican Republic|Diario Libre - Planeta|<https://www.diariolibre.com/rss/planeta.xml>|-|
-|Dominican Republic|Diario Libre - Revista|<https://www.diariolibre.com/rss/revista.xml>|-|
+|Turkey|Hürriyet (Sağlık)|<http://www.hurriyet.com.tr/rss/saglik>|200|
 
 ### No-source rows
 - none
@@ -578,7 +527,7 @@ curl -H "Authorization: Bearer $NEWS_API_TOKEN" \
 16|Agência Pública|<https://apublica.org/feed/>|200|02/19/2026|valid|
 17|Nexo Jornal|<https://www.nexojornal.com.br/rss.xml>|200|02/19/2026|valid|
 18|Jornal GGN|<https://jornalggn.com.br/feed/>|200|02/19/2026|valid|
-19|Jacobin Brasil|<https://jacobin.com.br/feed>|200|02/19/2026|valid|
+19|Jacobin Brasil|<https://jacobin.com.br/feed>|ERR (TIMEOUT)|02/19/2026|invalid|
 20|CartaCapital|<https://www.cartacapital.com.br/feed>|200|02/19/2026|valid|
 
 ### Australia (AU)
@@ -653,6 +602,42 @@ curl -H "Authorization: Bearer $NEWS_API_TOKEN" \
 4|Antara TV|<https://www.antaranews.com/rss/terkini>|200|02/19/2026|valid|
 5|Sindonews|<https://www.sindonews.com/rss/>|200|02/19/2026|valid|
 6|Republika|<https://www.republika.co.id/rss/terkini>|200|02/19/2026|valid|
+7|ANTARA - Terkini|<https://www.antaranews.com/rss/terkini.xml>|200|02/19/2026|valid|
+8|ANTARA - Top News|<https://www.antaranews.com/rss/top-news.xml>|200|02/19/2026|valid|
+9|ANTARA - Politik|<https://www.antaranews.com/rss/politik.xml>|200|02/19/2026|valid|
+10|ANTARA - Hukum|<https://www.antaranews.com/rss/hukum.xml>|200|02/19/2026|valid|
+11|ANTARA - Ekonomi|<https://www.antaranews.com/rss/ekonomi.xml>|200|02/19/2026|valid|
+12|ANTARA - Ekonomi (Finansial)|<https://www.antaranews.com/rss/ekonomi-finansial.xml>|200|02/19/2026|valid|
+13|ANTARA - Ekonomi (Bisnis)|<https://www.antaranews.com/rss/ekonomi-bisnis.xml>|200|02/19/2026|valid|
+14|ANTARA - Ekonomi (Bursa)|<https://www.antaranews.com/rss/ekonomi-bursa.xml>|200|02/19/2026|valid|
+15|ANTARA - Metro|<https://www.antaranews.com/rss/metro.xml>|200|02/19/2026|valid|
+16|ANTARA - Metro (Kriminalitas)|<https://www.antaranews.com/rss/metro-kriminalitas.xml>|200|02/19/2026|valid|
+17|ANTARA - Metro (Lintas Kota)|<https://www.antaranews.com/rss/metro-lintas-kota.xml>|200|02/19/2026|valid|
+18|ANTARA - Metro (Lenggang Jakarta)|<https://www.antaranews.com/rss/metro-lenggang-jakarta.xml>|200|02/19/2026|valid|
+19|ANTARA - Sepakbola|<https://www.antaranews.com/rss/sepakbola.xml>|200|02/19/2026|valid|
+20|ANTARA - Sepakbola (Liga Indonesia)|<https://www.antaranews.com/rss/sepakbola-liga-indonesia.xml>|200|02/19/2026|valid|
+21|ANTARA - Sepakbola (Internasional)|<https://www.antaranews.com/rss/sepakbola-internasional.xml>|200|02/19/2026|valid|
+22|ANTARA - Sepakbola (Liga Inggris)|<https://www.antaranews.com/rss/sepakbola-liga-inggris-premier.xml>|200|02/19/2026|valid|
+23|ANTARA - Sepakbola (Liga Spanyol)|<https://www.antaranews.com/rss/sepakbola-liga-spanyol.xml>|200|02/19/2026|valid|
+24|ANTARA - Sepakbola (Liga Italia)|<https://www.antaranews.com/rss/sepakbola-liga-italia-seri-a.xml>|200|02/19/2026|valid|
+25|ANTARA - Liga Champions|<https://www.antaranews.com/rss/sepakbola-liga-champions.xml>|200|02/19/2026|valid|
+26|ANTARA - Olahraga|<https://www.antaranews.com/rss/olahraga.xml>|200|02/19/2026|valid|
+27|ANTARA - Olahraga (Bulutangkis)|<https://www.antaranews.com/rss/olahraga-bulutangkis.xml>|200|02/19/2026|valid|
+28|ANTARA - Olahraga (Bola Basket)|<https://www.antaranews.com/rss/olahraga-bola-basket.xml>|200|02/19/2026|valid|
+29|ANTARA - Olahraga (Tenis)|<https://www.antaranews.com/rss/olahraga-tenis.xml>|200|02/19/2026|valid|
+30|ANTARA - Olahraga (Balap)|<https://www.antaranews.com/rss/olahraga-balap.xml>|200|02/19/2026|valid|
+31|ANTARA - Humaniora|<https://www.antaranews.com/rss/humaniora.xml>|200|02/19/2026|valid|
+32|ANTARA - Lifestyle|<https://www.antaranews.com/rss/lifestyle.xml>|200|02/19/2026|valid|
+33|ANTARA - Hiburan|<https://www.antaranews.com/rss/hiburan.xml>|200|02/19/2026|valid|
+34|ANTARA - Dunia|<https://www.antaranews.com/rss/dunia.xml>|200|02/19/2026|valid|
+35|ANTARA - Dunia (ASEAN)|<https://www.antaranews.com/rss/dunia-asean.xml>|200|02/19/2026|valid|
+36|ANTARA - Tekno|<https://www.antaranews.com/rss/tekno.xml>|200|02/19/2026|valid|
+37|RM.ID - Semua berita|<https://rm.id/rss-rakyat-merdeka>|200|02/19/2026|valid|
+38|RM.ID - Nasional|<https://rm.id/rss-rakyat-merdeka/nasional>|200|02/19/2026|valid|
+39|RM.ID - Internasional|<https://rm.id/rss-rakyat-merdeka/internasional>|200|02/19/2026|valid|
+40|RM.ID - Ekonomi Bisnis|<https://rm.id/rss-rakyat-merdeka/ekonomi-bisnis>|200|02/19/2026|valid|
+41|RM.ID - Bank & Finance|<https://rm.id/rss-rakyat-merdeka/bank-finance>|200|02/19/2026|valid|
+42|RM.ID - Indonesianomics|<https://rm.id/rss-rakyat-merdeka/indonesianomics>|200|02/19/2026|valid|
 
 ### Netherlands (NL)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
@@ -710,6 +695,35 @@ curl -H "Authorization: Bearer $NEWS_API_TOKEN" \
 7|Cumhuriyet|<https://www.cumhuriyet.com.tr/RSS>|200|02/19/2026|valid|
 8|HuffPost Turkey|<https://www.hurriyetdailynews.com/rss>|200|02/19/2026|valid|
 9|Haber Turk|<https://www.haberturk.com/rss/>|200|02/19/2026|valid|
+10|Hürriyet (Anasayfa)|<http://www.hurriyet.com.tr/rss/anasayfa>|200|02/19/2026|valid|
+11|Hürriyet (Gündem)|<http://www.hurriyet.com.tr/rss/gundem>|200|02/19/2026|valid|
+12|Hürriyet (Ekonomi)|<http://www.hurriyet.com.tr/rss/ekonomi>|200|02/19/2026|valid|
+13|Hürriyet (Magazin)|<http://www.hurriyet.com.tr/rss/magazin>|200|02/19/2026|valid|
+14|Hürriyet (Spor)|<http://www.hurriyet.com.tr/rss/spor>|200|02/19/2026|valid|
+15|Hürriyet (Dünya)|<http://www.hurriyet.com.tr/rss/dunya>|200|02/19/2026|valid|
+16|Hürriyet (Teknoloji)|<http://www.hurriyet.com.tr/rss/teknoloji>|200|02/19/2026|valid|
+17|Hürriyet (Sağlık)|<http://www.hurriyet.com.tr/rss/saglik>|200 (HTML_RETURNED)|02/19/2026|invalid|
+18|Hürriyet (Astroloji)|<http://www.hurriyet.com.tr/rss/astroloji>|200|02/19/2026|valid|
+19|Sabah (Anasayfa)|<https://www.sabah.com.tr/rss/anasayfa.xml>|200|02/19/2026|valid|
+20|Sabah (Ekonomi)|<https://www.sabah.com.tr/rss/ekonomi.xml>|200|02/19/2026|valid|
+21|Sabah (Spor)|<https://www.sabah.com.tr/rss/spor.xml>|200|02/19/2026|valid|
+22|Sabah (Gündem)|<https://www.sabah.com.tr/rss/gundem.xml>|200|02/19/2026|valid|
+23|Sabah (Yaşam)|<https://www.sabah.com.tr/rss/yasam.xml>|200|02/19/2026|valid|
+24|Sabah (Dünya)|<https://www.sabah.com.tr/rss/dunya.xml>|200|02/19/2026|valid|
+25|Sabah (Teknoloji)|<https://www.sabah.com.tr/rss/teknoloji.xml>|200|02/19/2026|valid|
+26|Sabah (Turizm)|<https://www.sabah.com.tr/rss/turizm.xml>|200|02/19/2026|valid|
+27|Sabah (Otomobil)|<https://www.sabah.com.tr/rss/otomobil.xml>|200|02/19/2026|valid|
+28|CNN Türk (All / News)|<https://www.cnnturk.com/feed/rss/all/news>|200|02/19/2026|valid|
+29|CNN Türk (Türkiye / News)|<https://www.cnnturk.com/feed/rss/turkiye/news>|200|02/19/2026|valid|
+30|CNN Türk (Dünya / News)|<https://www.cnnturk.com/feed/rss/dunya/news>|200|02/19/2026|valid|
+31|CNN Türk (Ekonomi / News)|<https://www.cnnturk.com/feed/rss/ekonomi/news>|200|02/19/2026|valid|
+32|CNN Türk (Bilim-Teknoloji / News)|<https://www.cnnturk.com/feed/rss/bilim-teknoloji/news>|200|02/19/2026|valid|
+33|CNN Türk (Spor / News)|<https://www.cnnturk.com/feed/rss/spor/news>|200|02/19/2026|valid|
+34|CNN Türk (Sağlık / News)|<https://www.cnnturk.com/feed/rss/saglik/news>|200|02/19/2026|valid|
+35|TRT Haber (Son Dakika)|<http://www.trthaber.com/sondakika.rss>|200|02/19/2026|valid|
+36|Habertürk (Main)|<http://www.haberturk.com/rss>|200|02/19/2026|valid|
+37|Dünya (Main)|<https://www.dunya.com/rss?dunya>|200|02/19/2026|valid|
+38|BBC Türkçe|<https://feeds.bbci.co.uk/turkce/rss.xml>|200|02/19/2026|valid|
 
 ### Saudi Arabia (SA)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
@@ -761,7 +775,7 @@ curl -H "Authorization: Bearer $NEWS_API_TOKEN" \
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
 1|Onet|<https://wiadomosci.onet.pl/rss>|200|02/19/2026|valid|
-2|TVN24|<https://tvn24.pl/tvnmeteo.xml>|200|02/19/2026|valid|
+2|TVN24|<https://tvn24.pl/tvnmeteo.xml>|ERR (TIMEOUT)|02/19/2026|invalid|
 3|Fakt|<https://www.fakt.pl/rss/>|200|02/19/2026|valid|
 4|Wprost|<https://www.wprost.pl/rss/>|200|02/19/2026|valid|
 5|RMF24 (Main)|<https://www.rmf24.pl/feed>|200|02/19/2026|valid|
@@ -830,6 +844,31 @@ curl -H "Authorization: Bearer $NEWS_API_TOKEN" \
 3|Matichon|<https://www.matichon.co.th/rss>|200|02/19/2026|valid|
 4|Prachachat|<https://prachachat.net/feed/>|200|02/19/2026|valid|
 5|Daily News|<https://www.dailynews.co.th/rss>|200|02/19/2026|valid|
+6|Prachatai English (Feedburner)|<http://feeds.feedburner.com/prachataienglish>|200|02/19/2026|valid|
+7|Thai PBS (news feed endpoint)|<https://news.thaipbs.or.th/rss/news>|200|02/19/2026|valid|
+8|Thairath (News)|<http://www.thairath.co.th/rss/news.xml>|504 (HTTP_504)|02/19/2026|invalid|
+9|Thairath (Sport)|<http://www.thairath.co.th/rss/sport.xml>|504 (HTTP_504)|02/19/2026|invalid|
+10|Sanook - Hot News|<http://rssfeeds.sanook.com/rss/feeds/sanook/hot.news.xml>|200|02/19/2026|valid|
+11|Sanook - Daily News|<http://rssfeeds.sanook.com/rss/feeds/sanook/news.index.xml>|200|02/19/2026|valid|
+12|Sanook - Politics|<http://rssfeeds.sanook.com/rss/feeds/sanook/news.politic.xml>|200|02/19/2026|valid|
+13|Sanook - Crime|<http://rssfeeds.sanook.com/rss/feeds/sanook/news.crime.xml>|200|02/19/2026|valid|
+14|Sanook - World|<http://rssfeeds.sanook.com/rss/feeds/sanook/news.world.xml>|200|02/19/2026|valid|
+15|Sanook - Economy|<http://rssfeeds.sanook.com/rss/feeds/sanook/news.economic.xml>|200|02/19/2026|valid|
+16|Sanook - Tech (News)|<http://rssfeeds.sanook.com/rss/feeds/sanook/hitech.news.xml>|200|02/19/2026|valid|
+17|Sanook - Tech (Computer)|<http://rssfeeds.sanook.com/rss/feeds/sanook/hitech.computer.index.xml>|200|02/19/2026|valid|
+18|Sanook - Tech (Mobile)|<http://rssfeeds.sanook.com/rss/feeds/sanook/hitech.mobile.index.xml>|200|02/19/2026|valid|
+19|Sanook - Travel|<http://rssfeeds.sanook.com/rss/feeds/sanook/travel.index.xml>|200|02/19/2026|valid|
+20|Sanook - Movies|<http://rssfeeds.sanook.com/rss/feeds/sanook/movie.news.xml>|200|02/19/2026|valid|
+21|PressDisplay - Bangkok Post|<https://www.pressdisplay.com/pressdisplay/services/rss.ashx?cid=1264>|200|02/19/2026|valid|
+22|PressDisplay - Daily News Thailand|<https://www.pressdisplay.com/pressdisplay/services/rss.ashx?cid=4863>|200|02/19/2026|valid|
+23|PressDisplay - Krungthep Turakij|<https://www.pressdisplay.com/pressdisplay/services/rss.ashx?cid=5261&type=full>|200|02/19/2026|valid|
+24|PressDisplay - The Phuket News|<https://www.pressdisplay.com/pressdisplay/services/rss.ashx?cid=eff9&type=full>|200|02/19/2026|valid|
+25|PressDisplay - Novosti Phuketa|<https://www.pressdisplay.com/pressdisplay/services/rss.ashx?cid=9wv3&type=full>|200|02/19/2026|valid|
+26|PressDisplay - Window On Phuket|<https://www.pressdisplay.com/pressdisplay/services/rss.ashx?cid=9wv4&type=full>|200|02/19/2026|valid|
+27|PressDisplay - Where to Eat in Phuket|<https://www.pressdisplay.com/pressdisplay/services/rss.ashx?cid=9wv5&type=full>|200|02/19/2026|valid|
+28|PressDisplay - Prestige (Thailand)|<https://www.pressdisplay.com/pressdisplay/services/rss.ashx?cid=9vw7&type=full>|200|02/19/2026|valid|
+29|PressDisplay - Hello! (Thailand)|<https://www.pressdisplay.com/pressdisplay/services/rss.ashx?cid=9vw6&type=full>|200|02/19/2026|valid|
+30|Khaosod English - Food (category)|<http://www.khaosodenglish.com/category/life/food/feed>|200|02/19/2026|valid|
 
 ### Iran (IR)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
@@ -841,6 +880,36 @@ curl -H "Authorization: Bearer $NEWS_API_TOKEN" \
 5|Iran International|<https://www.iranintl.com/feed>|200|02/19/2026|valid|
 6|ILNA|<https://www.ilna.ir/rss>|200|02/19/2026|valid|
 7|Tejarat News|<https://www.tejaratnews.com/rss>|200|02/19/2026|valid|
+8|Tehran Times - Latest|<https://www.tehrantimes.com/rss>|ERR (TIMEOUT)|02/19/2026|invalid|
+9|Tehran Times - Homepage|<https://www.tehrantimes.com/rss-homepage>|ERR (TIMEOUT)|02/19/2026|invalid|
+10|Tehran Times - Breaking|<https://www.tehrantimes.com/rss/pl/617>|ERR (TIMEOUT)|02/19/2026|invalid|
+11|Tehran Times - Society|<https://www.tehrantimes.com/rss/tp/696>|ERR (TIMEOUT)|02/19/2026|invalid|
+12|Tehran Times - Economy|<https://www.tehrantimes.com/rss/tp/697>|ERR (TIMEOUT)|02/19/2026|invalid|
+13|Tehran Times - Politics|<https://www.tehrantimes.com/rss/tp/698>|ERR (TIMEOUT)|02/19/2026|invalid|
+14|Tehran Times - Sports|<https://www.tehrantimes.com/rss/tp/699>|ERR (TIMEOUT)|02/19/2026|invalid|
+15|Tehran Times - Culture|<https://www.tehrantimes.com/rss/tp/700>|ERR (TIMEOUT)|02/19/2026|invalid|
+16|Tehran Times - International|<https://www.tehrantimes.com/rss/tp/702>|ERR (TIMEOUT)|02/19/2026|invalid|
+17|Tehran Times - Multimedia|<https://www.tehrantimes.com/rss/tp/717>|ERR (TIMEOUT)|02/19/2026|invalid|
+18|Tehran Times - Tourism|<https://www.tehrantimes.com/rss/tp/807>|ERR (TIMEOUT)|02/19/2026|invalid|
+19|MehrNews (EN) - Latest|<https://en.mehrnews.com/rss/pl/118>|200|02/19/2026|valid|
+20|MehrNews (EN) - Iran|<https://en.mehrnews.com/rss/tp/575>|200|02/19/2026|valid|
+21|MehrNews (EN) - Iran > Iran|<https://en.mehrnews.com/rss/tp/905>|200|02/19/2026|valid|
+22|MehrNews (EN) - Ethnic Groups|<https://en.mehrnews.com/rss/tp/897>|200|02/19/2026|valid|
+23|MehrNews (EN) - Nature|<https://en.mehrnews.com/rss/tp/898>|200|02/19/2026|valid|
+24|MehrNews (EN) - Historical Sites|<https://en.mehrnews.com/rss/tp/899>|200|02/19/2026|valid|
+25|MehrNews (EN) - Souvenirs|<https://en.mehrnews.com/rss/tp/900>|200|02/19/2026|valid|
+26|MehrNews (EN) - Persian Cuisine|<https://en.mehrnews.com/rss/tp/901>|ERR (TIMEOUT)|02/19/2026|invalid|
+27|ISNA (EN) - Social|<https://en.isna.ir/rss/tp/8>|ERR (TIMEOUT)|02/19/2026|invalid|
+28|ISNA (EN) - Economy|<https://en.isna.ir/rss/tp/33>|ERR (TIMEOUT)|02/19/2026|invalid|
+29|ISNA (EN) - Politics|<https://en.isna.ir/rss/tp/13>|ERR (TIMEOUT)|02/19/2026|invalid|
+30|ISNA (EN) - Culture & Art|<https://en.isna.ir/rss/tp/19>|ERR (TIMEOUT)|02/19/2026|invalid|
+31|ISNA (EN) - Sports|<https://en.isna.ir/rss/tp/23>|ERR (TIMEOUT)|02/19/2026|invalid|
+32|ISNA (EN) - Photos|<https://en.isna.ir/rss/tp/27>|ERR (TIMEOUT)|02/19/2026|invalid|
+33|Tasnim (EN) - Top Stories|<https://www.tasnimnews.ir/en/rss/feed/0/0/8/1/TopStories>|200|02/19/2026|valid|
+34|Tasnim (EN) - All Stories|<https://www.tasnimnews.ir/en/rss/feed/0/0/0/0/AllStories>|200|02/19/2026|valid|
+35|Tasnim (EN) - Politics|<https://www.tasnimnews.ir/en/rss/feeds/1192/0/0/0>|200|02/19/2026|valid|
+36|Tasnim (EN) - Economy|<https://www.tasnimnews.ir/en/rss/feeds/1193/0/0/0>|200|02/19/2026|valid|
+37|Tasnim (EN) - World|<https://www.tasnimnews.ir/en/rss/feeds/1194/0/0/0>|200|02/19/2026|valid|
 
 ### Argentina (AR)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
@@ -1026,3 +1095,4 @@ curl -H "Authorization: Bearer $NEWS_API_TOKEN" \
 9|Energy Post|<https://energypost.eu/feed/>|200|02/19/2026|valid|
 10|Energy Storage News|<https://www.energy-storage.news/rss>|200|02/19/2026|valid|
 11|Energy Storage News|<https://www.energy-storage.news/feed>|200|02/19/2026|valid|
+
