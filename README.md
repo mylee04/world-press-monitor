@@ -49,6 +49,31 @@ If status is wrong, update RSS URLs in `data/rss-atlas.json` and run again:
 
 This keeps README updates simple and focused: add/update source URLs first, then re-run health check.
 
+## Public API
+
+The news feed API is deployed on Render and reads from Neon-backed persisted articles.
+
+- Base URL: your Render service URL (currently private)
+- Available endpoints:
+  - `/health`
+  - `/api/news`
+- Authentication:
+  - Required `NEWS_API_TOKEN`
+  - Send it as:
+    - `Authorization: Bearer <TOKEN>`
+    - or raw token in the same `Authorization` header
+- Planned update:
+  - API public access (open/no token) will be enabled later.
+
+Example:
+
+```bash
+curl -H "Authorization: Bearer $NEWS_API_TOKEN" \
+  "https://<your-render-service>/api/news?country=US&limit=10"
+```
+
+`NEWS_API_TOKEN` is currently required for any `/api/news` request.
+
 
 
 ## Latest RSS verification snapshot
@@ -972,4 +997,3 @@ This keeps README updates simple and focused: add/update source URLs first, then
 9|Energy Post|<https://energypost.eu/feed/>|200|02/19/2026|valid|
 10|Energy Storage News|<https://www.energy-storage.news/rss>|200|02/19/2026|valid|
 11|Energy Storage News|<https://www.energy-storage.news/feed>|200|02/19/2026|valid|
-
