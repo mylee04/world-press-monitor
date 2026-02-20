@@ -23,7 +23,7 @@ function getPool(): Pool | null {
     poolDisabledReason = 'pool_failed';
     return null;
   }
-  const url = process.env.DATABASE_URL || (process.env.NODE_ENV !== 'production' ? 'postgresql://localhost:5432/wpm' : '');
+  const url = process.env.DATABASE_URL?.trim();
   if (!url) {
     poolDisabledReason = 'missing_database_url';
     return null;
@@ -134,11 +134,11 @@ async function ensureSchema(): Promise<void> {
     drop index if exists idx_ingestion_endpoint_runs_source;
     drop index if exists idx_ingestion_endpoint_runs_outlet_id;
     drop index if exists idx_ingestion_endpoint_runs_runner_ran_at;
-    create table if not exists news_articles (
+create table if not exists news_articles (
       external_id text primary key,
       publication_datetime timestamptz not null,
       title_original text not null,
-      summary_original text null,
+      snippet_original text null,
       country text null,
       created_at timestamptz not null default now(),
       updated_at timestamptz not null default now(),
@@ -236,6 +236,32 @@ async function ensureSchema(): Promise<void> {
         update news_articles
           set section = coalesce(section, category)
           where section is null and category is not null;
+      end if;
+    end;
+    $$;
+    do $$
+    begin
+      if exists (
+        select 1
+        from information_schema.columns
+        where table_schema = 'public'
+          and table_name = 'news_articles'
+          and column_name = 'summary_original'
+      ) then
+        if exists (
+          select 1
+          from information_schema.columns
+            where table_schema = 'public'
+              and table_name = 'news_articles'
+              and column_name = 'snippet_original'
+        ) then
+          update news_articles
+            set snippet_original = coalesce(snippet_original, summary_original)
+            where snippet_original is null;
+          alter table news_articles drop column summary_original;
+        else
+          alter table news_articles rename column summary_original to snippet_original;
+        end if;
       end if;
     end;
     $$;
@@ -505,7 +531,7 @@ export interface NewsApiItem {
   id: string;
   source: string;
   title: string;
-  summary: string | null;
+  snippet: string | null;
   url: string;
   country: string | null;
   language: string | null;
@@ -519,14 +545,30 @@ export interface NewsApiReadResult {
   storage: 'postgres' | 'disabled';
   reason?: string;
   generatedAt: string | null;
+  totalCount: number;
   items: NewsApiItem[];
 }
+
+export interface NewsApiFiltersResult {
+  storage: 'postgres' | 'disabled';
+  reason?: string;
+  filters: {
+    countries: string[];
+    languages: string[];
+    sources: string[];
+    sections: string[];
+  };
+}
+
+type NewsApiFilterRow = {
+  value: string;
+};
 
 type NewsApiReadRow = {
   id: string;
   source: string;
   title: string;
-  summary: string | null;
+  snippet_original: string | null;
   url: string;
   country: string | null;
   language: string | null;
@@ -552,15 +594,18 @@ export async function readNewsArticlesForApi(options: {
   sourceNames?: string[];
   countries?: string[];
   sections?: string[];
+  languages?: string[];
   limit?: number;
   offset?: number;
   hours?: number;
   from?: string | null;
   to?: string | null;
+  publicationFrom?: string | null;
+  publicationTo?: string | null;
 }): Promise<NewsApiReadResult> {
   const db = getPool();
   if (!db) {
-    return { storage: 'disabled', reason: poolDisabledReason, generatedAt: null, items: [] };
+    return { storage: 'disabled', reason: poolDisabledReason, generatedAt: null, totalCount: 0, items: [] };
   }
   await ensureSchema();
 
@@ -569,6 +614,7 @@ export async function readNewsArticlesForApi(options: {
   const sourceNames = parseNewsApiFilterList(options.sourceNames);
   const countries = parseNewsApiFilterList(options.countries);
   const sections = parseNewsApiFilterList(options.sections);
+  const languages = parseNewsApiFilterList(options.languages);
   const params: unknown[] = [];
   const whereClauses: string[] = [];
 
@@ -587,21 +633,44 @@ export async function readNewsArticlesForApi(options: {
     whereClauses.push(`and e.section = any($${params.length}::text[])`);
   }
 
-  if (options.from) {
-    params.push(options.from);
-    whereClauses.push(`and e.created_at >= $${params.length}`);
+  if (languages.length > 0) {
+    params.push(languages);
+    whereClauses.push(`and e.language = any($${params.length}::text[])`);
   }
 
-  if (options.to) {
-    params.push(options.to);
-    whereClauses.push(`and e.created_at <= $${params.length}`);
+  const publicationFrom = options.publicationFrom || options.from || null;
+  const publicationTo = options.publicationTo || options.to || null;
+
+  if (publicationFrom) {
+    params.push(publicationFrom);
+    whereClauses.push(`and e.publication_datetime >= $${params.length}`);
   }
 
-  if (!options.from && !options.to) {
+  if (publicationTo) {
+    params.push(publicationTo);
+    whereClauses.push(`and e.publication_datetime <= $${params.length}`);
+  }
+
+  if (!publicationFrom && !publicationTo) {
     const hours = Math.max(1, Math.min(720, Math.floor(options.hours || 48)));
     params.push(hours);
-    whereClauses.push(`and e.created_at > now() - ($${params.length}::int * interval '1 hour')`);
+    whereClauses.push(`and e.publication_datetime > now() - ($${params.length}::int * interval '1 hour')`);
   }
+
+  const whereSql = `
+    where 1 = 1
+    ${whereClauses.join('\n    ')}`;
+
+  const totalResult = await db.query<{ total: string }>(
+    `
+    select count(*)::bigint as total
+    from news_articles e
+    ${whereSql}
+    `,
+    params
+  );
+
+  const totalCount = totalResult.rows[0] ? Number(totalResult.rows[0].total) : 0;
 
   params.push(limit);
   const limitIndex = params.length;
@@ -614,7 +683,7 @@ export async function readNewsArticlesForApi(options: {
       e.external_id as id,
       e.source,
       e.title_original as title,
-      e.summary_original as summary,
+      e.snippet_original,
       e.url,
       e.country,
       e.language,
@@ -624,9 +693,8 @@ export async function readNewsArticlesForApi(options: {
       e.updated_at,
       max(e.created_at) over() as generated_at
     from news_articles e
-    where 1 = 1
-      ${whereClauses.join('\n      ')}
-    order by e.created_at desc
+    ${whereSql}
+    order by e.publication_datetime desc, e.created_at desc
     limit $${limitIndex} offset $${offsetIndex}
     `,
     params
@@ -636,7 +704,7 @@ export async function readNewsArticlesForApi(options: {
     id: row.id,
     source: row.source,
     title: row.title,
-    summary: row.summary,
+    snippet: row.snippet_original,
     url: row.url,
     country: row.country,
     language: row.language,
@@ -648,8 +716,64 @@ export async function readNewsArticlesForApi(options: {
 
   return {
     storage: 'postgres',
+    totalCount,
     generatedAt: result.rows[0]?.generated_at ? new Date(result.rows[0].generated_at).toISOString() : null,
     items
+  };
+}
+
+export async function readNewsApiFilters(): Promise<NewsApiFiltersResult> {
+  const db = getPool();
+  if (!db) {
+    return {
+      storage: 'disabled',
+      reason: poolDisabledReason,
+      filters: {
+        countries: [],
+        languages: [],
+        sources: [],
+        sections: []
+      }
+    };
+  }
+
+  await ensureSchema();
+
+  const [countriesResult, languagesResult, sourcesResult, sectionsResult] = await Promise.all([
+    db.query<NewsApiFilterRow>(
+      `select distinct trim(country) as value
+       from news_articles
+       where country is not null and trim(country) <> ''
+       order by lower(trim(country))`
+    ),
+    db.query<NewsApiFilterRow>(
+      `select distinct trim(language) as value
+       from news_articles
+       where language is not null and trim(language) <> ''
+       order by lower(trim(language))`
+    ),
+    db.query<NewsApiFilterRow>(
+      `select distinct trim(source) as value
+       from news_articles
+       where source is not null and trim(source) <> ''
+       order by lower(trim(source))`
+    ),
+    db.query<NewsApiFilterRow>(
+      `select distinct trim(section) as value
+       from news_articles
+       where section is not null and trim(section) <> ''
+       order by lower(trim(section))`
+    )
+  ]);
+
+  return {
+    storage: 'postgres',
+    filters: {
+      countries: countriesResult.rows.map((row) => row.value),
+      languages: languagesResult.rows.map((row) => row.value),
+      sources: sourcesResult.rows.map((row) => row.value),
+      sections: sectionsResult.rows.map((row) => row.value)
+    }
   };
 }
 
@@ -689,7 +813,7 @@ export async function readExternalNewsArticles(options: {
       e.url as link,
       null::text as outlet_id,
       e.title_original as title,
-      e.summary_original as description,
+      e.snippet_original as description,
       e.source,
       e.publication_datetime as published_at,
       e.country,
@@ -1485,7 +1609,7 @@ type ExternalArticlePersistable = {
   externalId: string;
   publicationDatetime: string;
   titleOriginal: string;
-  summaryOriginal: string | null;
+  snippetOriginal: string | null;
   country: string | null;
   section: string | null;
   url: string;
@@ -1503,14 +1627,14 @@ async function toExternalArticle(item: NewsItem): Promise<ExternalArticlePersist
   const language = item.language || null;
   const titleOriginal = item.title || '';
   if (!titleOriginal) return null;
-  const summaryOriginal = (item.description || '').trim() || null;
+  const snippetOriginal = (item.description || '').trim() || null;
 
   return {
     externalId: await sha256Hex(linkNorm),
     publicationDatetime: new Date(publicationTs).toISOString(),
     section: item.section,
     titleOriginal,
-    summaryOriginal,
+    snippetOriginal,
     country: item.country || null,
     url: item.link,
     source: item.source,
@@ -1548,7 +1672,7 @@ export async function persistExternalNewsArticles(items: NewsItem[]): Promise<{ 
         row.publicationDatetime,
         row.section,
         row.titleOriginal,
-        row.summaryOriginal,
+        row.snippetOriginal,
         row.country,
         row.url,
         row.source,
@@ -1560,14 +1684,14 @@ export async function persistExternalNewsArticles(items: NewsItem[]): Promise<{ 
       db,
       `
       insert into news_articles (
-        external_id, publication_datetime, section, title_original, summary_original,
+        external_id, publication_datetime, section, title_original, snippet_original,
         country, url, source, language, created_at, updated_at
       ) values ${parts.join(',')}
       on conflict (external_id) do update set
         publication_datetime = excluded.publication_datetime,
         section = excluded.section,
         title_original = excluded.title_original,
-        summary_original = coalesce(nullif(excluded.summary_original, ''), news_articles.summary_original),
+        snippet_original = coalesce(nullif(excluded.snippet_original, ''), news_articles.snippet_original),
         country = excluded.country,
         url = excluded.url,
         source = excluded.source,
