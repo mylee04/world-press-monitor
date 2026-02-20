@@ -46,8 +46,29 @@ Run health check (daily) locally:
 
 GitHub Actions is also configured:
 - Workflow: `.github/workflows/rss-health-daily.yml`
- - Schedule: 00:30 AM America/Chicago (typically 06:30 UTC; may be 07:30 UTC during daylight-saving periods)
+ - Schedule: 00:30 AM America/Chicago (cron is UTC in Actions; currently set at 06:30 UTC, so it runs at 01:30 during CDT and 00:30 during CST)
 - Manual run: Actions tab → `RSS Health Daily` → `Run workflow`
+
+### GitHub Actions secrets (optional)
+
+Discord notification can be configured per repository secret. If a secret is missing, the workflow still runs normally.
+
+ - `RSS_HEALTH_DISCORD_WEBHOOK_URL`: required for Discord notifications
+ - `RSS_HEALTH_DISCORD_MENTION`: optional mention/ping text (for example `@here`)
+ - `RSS_HEALTH_DISCORD_USERNAME`: optional bot username
+ - `RSS_HEALTH_DISCORD_TIMEOUT_MS`: optional timeout override (ms)
+
+Optional CLI alternative for local/manual runs:
+ - `bun run rss:health:daily` (uses `.env.local`)
+
+Quick set from terminal (GitHub CLI):
+
+```bash
+gh secret set RSS_HEALTH_DISCORD_WEBHOOK_URL
+gh secret set RSS_HEALTH_DISCORD_MENTION
+gh secret set RSS_HEALTH_DISCORD_USERNAME
+gh secret set RSS_HEALTH_DISCORD_TIMEOUT_MS
+```
 
 Run on-demand:
 - `bun run rss:health:once`

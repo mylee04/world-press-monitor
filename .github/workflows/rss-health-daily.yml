@@ -3,7 +3,8 @@ name: RSS Health Daily
 on:
   schedule:
     # Runs at 00:30 America/Chicago.
-    # GitHub Actions schedules are UTC; 06:30 UTC keeps this at 00:30 CST (non-DST).
+    # GitHub Actions schedules are UTC; 06:30 UTC maps to 00:30 CST and 01:30 CDT.
+    # (GitHub cron has no per-workflow timezone config.)
     - cron: "30 6 * * *"
   workflow_dispatch:
 
