@@ -45,7 +45,7 @@ build_cron_env_prefix() {
 }
 
 ENV_PREFIX="$(build_cron_env_prefix)"
-CRON_LINE="0 1 * * * ${ENV_PREFIX} ${RUNNER} >> ${PROJECT_ROOT}/logs/rss-health-daily.log 2>&1"
+CRON_LINE="30 0 * * * ${ENV_PREFIX} ${RUNNER} >> ${PROJECT_ROOT}/logs/rss-health-daily.log 2>&1"
 
 usage() {
   cat <<'USAGE'
@@ -55,7 +55,7 @@ Usage:
   scripts/setup-rss-health-cron.sh print
 
 Commands:
-  install   Add or refresh daily 01:00 America/Chicago cron job.
+  install   Add or refresh daily 00:30 America/Chicago cron job.
   uninstall Remove WPM RSS health cron job.
   print     Print crontab entry only.
 USAGE

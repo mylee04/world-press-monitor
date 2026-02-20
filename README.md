@@ -41,10 +41,18 @@ This list covers the currently configured countries and their RSS outlets.
 Source of truth:
 - `data/rss-atlas.json`
 
-Run health check (daily):
+Run health check (daily) locally:
 - `bun run rss:health:daily`
 
-If status is wrong, update RSS URLs in `data/rss-atlas.json` and run again:
+GitHub Actions is also configured:
+- Workflow: `.github/workflows/rss-health-daily.yml`
+ - Schedule: 00:30 AM America/Chicago (typically 06:30 UTC; may be 07:30 UTC during daylight-saving periods)
+- Manual run: Actions tab → `RSS Health Daily` → `Run workflow`
+
+Run on-demand:
+- `bun run rss:health:once`
+
+If a feed shows `invalid`, it stays in `README.md` so contributors can see and replace it. Update RSS URLs in `data/rss-atlas.json` and run again:
 - `bun run rss:health:once`
 
 This keeps README updates simple and focused: add/update source URLs first, then re-run health check.

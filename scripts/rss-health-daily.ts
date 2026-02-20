@@ -57,11 +57,12 @@ const argv = new Set(process.argv.slice(2));
 const doPrecheck = !argv.has('--no-precheck');
 const doExport = !argv.has('--skip-export');
 const doDiscordNotify = !argv.has('--no-discord');
+const doPrune = argv.has('--prune-invalid');
 const discordWebhookUrl = (process.env.RSS_HEALTH_DISCORD_WEBHOOK_URL || process.env.DISCORD_WEBHOOK_URL || '').trim();
 const discordUsername = process.env.RSS_HEALTH_DISCORD_USERNAME || 'RSS Health';
 const discordMention = process.env.RSS_HEALTH_DISCORD_MENTION || '';
 const discordTimeoutMs = clampInt(process.env.RSS_HEALTH_DISCORD_TIMEOUT_MS, 1000, 20000, 5000);
-const VERIFY_ARGS_BASE = ['run', 'verify:readme-rss', '--valid-only'];
+const VERIFY_ARGS_BASE = ['run', 'verify:readme-rss'];
 
 function clampInt(raw: string | undefined, min: number, max: number, fallback: number): number {
   const parsed = Number.parseInt(raw ?? '', 10);
@@ -294,10 +295,25 @@ async function main(): Promise<void> {
     return;
   }
 
-  const stats = pruneAtlasToValid(atlas, report);
-  writeFileSync(ATLAS_PATH, `${JSON.stringify(atlas, null, 2)}\n`, 'utf8');
+  const totalFeeds = atlas.countries.reduce((acc, country) => acc + country.feeds.length, 0);
+  let stats = {
+    before: totalFeeds,
+    after: totalFeeds,
+    removedInvalid: 0,
+    removedNoUrl: 0,
+  };
 
-  console.log(`Pruned atlas: before=${stats.before} after=${stats.after}, removed_invalid=${stats.removedInvalid}, removed_no_url=${stats.removedNoUrl}`);
+  if (doPrune) {
+    const pruneStats = pruneAtlasToValid(atlas, report);
+    stats = pruneStats;
+    writeFileSync(ATLAS_PATH, `${JSON.stringify(atlas, null, 2)}\n`, 'utf8');
+  }
+
+  console.log(
+    doPrune
+      ? `Pruned atlas: before=${stats.before} after=${stats.after}, removed_invalid=${stats.removedInvalid}, removed_no_url=${stats.removedNoUrl}`
+      : `Keeping invalid feeds in atlas for visibility: total=${stats.before}`
+  );
 
   if (doExport) {
     runCommand('Export catalog', 'bun', ['run', 'atlas:export-catalog']);
