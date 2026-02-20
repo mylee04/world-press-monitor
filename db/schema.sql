@@ -125,7 +125,7 @@ create table if not exists news_articles (
   external_id text primary key,
   publication_datetime timestamptz not null,
   title_original text not null,
-  summary_original text null,
+  snippet_original text null,
   country text null,
   created_at timestamptz not null default now(),
   url text not null,
@@ -161,6 +161,32 @@ begin
     update news_articles
       set section = coalesce(section, category)
       where section is null and category is not null;
+  end if;
+end;
+$$;
+do $$
+begin
+  if exists (
+    select 1
+    from information_schema.columns
+    where table_schema = 'public'
+      and table_name = 'news_articles'
+      and column_name = 'summary_original'
+  ) then
+    if exists (
+      select 1
+      from information_schema.columns
+      where table_schema = 'public'
+        and table_name = 'news_articles'
+        and column_name = 'snippet_original'
+    ) then
+      update news_articles
+        set snippet_original = coalesce(snippet_original, summary_original)
+        where snippet_original is null;
+      alter table news_articles drop column summary_original;
+    else
+      alter table news_articles rename column summary_original to snippet_original;
+    end if;
   end if;
 end;
 $$;

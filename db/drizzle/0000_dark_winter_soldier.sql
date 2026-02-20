@@ -29,7 +29,7 @@ CREATE TABLE "news_articles" (
 	"external_id" text PRIMARY KEY NOT NULL,
 	"publication_datetime" timestamp with time zone NOT NULL,
 	"title_original" text NOT NULL,
-	"summary_original" text,
+	"snippet_original" text,
 	"country" text,
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
 	"url" text NOT NULL,

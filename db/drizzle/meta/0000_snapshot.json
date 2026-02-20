@@ -267,8 +267,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "summary_original": {
-          "name": "summary_original",
+        "snippet_original": {
+          "name": "snippet_original",
           "type": "text",
           "primaryKey": false,
           "notNull": false

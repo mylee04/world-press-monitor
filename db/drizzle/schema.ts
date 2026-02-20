@@ -37,7 +37,7 @@ export const newsArticles = pgTable("news_articles", {
 	externalId: text("external_id").primaryKey().notNull(),
 	publicationDatetime: timestamp("publication_datetime", { withTimezone: true, mode: 'string' }).notNull(),
 	titleOriginal: text("title_original").notNull(),
-	summaryOriginal: text("summary_original"),
+	snippetOriginal: text("snippet_original"),
 	country: text(),
 	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
 	url: text().notNull(),
