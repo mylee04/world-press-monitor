@@ -38,106 +38,16 @@ This list covers the currently configured countries and their RSS outlets.
 
 ## Health Check Workflow
 
-- Source-of-truth config: `data/rss-atlas.json`
-- Run one-time verification/update: `bun run verify:readme-rss`
-- Run precheck only (DNS + sample HTTP) before full verification: `bun run verify:readme-rss --precheck` (or `bun run verify:readme-rss:precheck`)
-  - If precheck fails (DNS/BASIC egress), command exits with `NO_NETWORK/DNS_BROKEN` and skips full verification.
-- Run one-time verification + catalog export (with network precheck): `bun run rss:health:once`
-- Run daily verify+prune+export in one step: `bun run rss:health:daily`
-- Send Discord webhook on each run (optional): set `RSS_HEALTH_DISCORD_WEBHOOK_URL` (or `DISCORD_WEBHOOK_URL`) first
-  - Optional: `RSS_HEALTH_DISCORD_MENTION`, `RSS_HEALTH_DISCORD_USERNAME`, `RSS_HEALTH_DISCORD_TIMEOUT_MS`
-  - Disable for a run: `bun run rss:health:daily -- --no-discord`
-  - `cron setup` also reads `./.env.local` automatically and embeds those values into the job.
-- Set cron once for automatic daily run at 01:00 AM CST: `bun run rss:health:cron:setup`
-- Remove cron: `bun run rss:health:cron:remove`
-- Run only the scheduled daily task command once (for quick test): `bun run rss:health:cron:run`
-- Ingest ops metrics
-  - `bun run ingest:ops:hourly` (read last 1h from `ingest_ops_hourly`, write JSON)
-  - `bun run ingest:ops:daily` (read last 1d from `ingest_ops_daily`, write JSON)
-  - `bun run ingest:ops:cron:setup` installs two cron jobs:
-    - hourly at minute 0 every hour
-    - daily at 02:00 America/Chicago
-  - optional envs:
-    - `INGEST_OPS_RUNNER` (`worker|api_news|warm`, default `worker`)
-    - `INGEST_OPS_METHOD` (`rss|sitemap`, optional)
-  - remove cron: `bun run ingest:ops:cron:remove`
-  - print cron entries: `bun run ingest:ops:cron:print`
-  - quick run-hourly: `bun run ingest:ops:cron:run:hourly`
-  - quick run-daily: `bun run ingest:ops:cron:run:daily`
-- Ingest feed to database
-  - `bun run ingest:once` (fetch+persist current batch immediately, default all enabled RSS/Sitemap feeds)
-  - `bun run ingest:cron:setup` installs hourly ingestion at `:00` (default `America/Chicago`)
-  - `bun run ingest:cron:remove`
-  - `bun run ingest:cron:print`
-  - optional env: `INGEST_TZ` (default `America/Chicago`), `INGEST_OUTLET_CHUNK_SIZE` (default all when unset in cron run)
- - News API (from persisted `news_articles`)
-  - `bun run api:news:serve`
-  - Endpoints:
-    - `GET /health`
-    - `GET /api/news?source=...&country=...&section=...&from=...&to=...&hours=...&limit=...&offset=...`
-  - Required for startup:
-    - `NEWS_API_TOKEN`
-  - Optional env:
-    - `NEWS_API_PORT` (default `4100`)
-    - `NEWS_API_HOST` (default `0.0.0.0`)
-    - `NEWS_API_CORS_ORIGINS` (comma-separated allowlist; empty => `*`)
-  - incremental pull example (createdAt 기준):
-    - `bun run api:news:incremental` (stores cursor in `.wpm-news-api-cursor.json`)
-    - env vars:
-      - `NEWS_API_BASE_URL` (default `http://127.0.0.1:4100`)
-      - `NEWS_API_COUNTRY_FILTER` (comma-separated)
-      - `NEWS_API_SOURCE_FILTER` (comma-separated)
-      - `NEWS_API_SECTION_FILTER` (comma-separated)
-      - `NEWS_API_OUTPUT_MODE` (`json|ndjson|summary`)
-      - `NEWS_API_OVERLAP_SECONDS` (default `120`, overlap 윈도우 중복 완화)
-      - `NEWS_API_CURSOR_FILE` (default `.wpm-news-api-cursor.json`)
-  - one-shot curl example (createdAt 범위 지정):
-    - `curl "http://127.0.0.1:4100/api/news?from=2026-02-19T00:00:00.000Z&to=2026-02-19T01:00:00.000Z&country=US&source=CBS%20News&limit=200"`
-- News 집계
-  - `bun run stats:news:by-country`
-    - 출력을 기준으로 `articles_last_1h`, `articles_last_24h` 를 국가별로 확인 가능
-- Generate editable backlog CSV for failures: `bun run rss:health:backlog`
-- Optional focus only: `bun run rss:health:backlog -- --reasons=HTTP_404,HTML_RETURNED --limit=100`
-- Export `data/rss-atlas.json` from the current README: `bun run atlas:export`
-- Export CSV + OPML subscription catalogs from current atlas: `bun run atlas:export-catalog`
-- Generated health reports are written to:
-  - `audits/readme_rss_health_latest.json`
-  - `audits/readme_rss_health_YYYY-MM-DD.json`
-  - `audits/readme_network_precheck_latest.json` (when `--precheck` runs)
-- Verify DB schema sync between `db/schema.sql` and `lib/ingestion-store.ts` startup DDL: `bun run db:check-schema-sync`
-- Recreate/restart Postgres data for the main `wpm` DB (with optional presslab migration and schema sync): `bun run db:bootstrap-wpm`  
-  - Use `bun run db:bootstrap-wpm -- --fresh` to drop and recreate the postgres volume
-- Remove legacy tables from current DB (safe hints, dry-run by default): `bun run db:cleanup-legacy-tables`
-  - Apply removals: `bun run db:cleanup-legacy-tables:apply`
-  - Include all non-schema tables in cleanup (except migration metadata): `bun run db:cleanup-legacy-tables:all`
-  - Apply broad cleanup: `bun run db:cleanup-legacy-tables:apply:all`
-- `getent` + `nsswitch` checks are Linux-specific; on macOS they are intentionally marked `SKIP`.
-- HTTP Status column now carries quick failure clues:
-  - `ERR (DNS)`: domain lookup/host resolution failed
-  - `ERR (TIMEOUT)`: request timed out
-  - `ERR (TLS)`: certificate or TLS issue
-  - `ERR (NETWORK)`: generic network failure
-- Optional tuning envs:
-  - `RSS_BATCH_SIZE` (default 30)
-  - `RSS_BATCH_DELAY_MS` (default 500)
-  - `RSS_REQUEST_TIMEOUT_MS` (default 15000)
-  - `RSS_REQUEST_JITTER_MS` (default 150)
-- Ingest ops cron tuning:
-  - `INGEST_OPS_TZ` (default `America/Chicago`)
-- Migrate search-aggregated sources (Google/Bing style URLs) to candidate official RSS URLs:
-  - `RSS_MIGRATE_OFFLINE_MODE=1 bun run rss:migrate-official`
-- Regenerate README from atlas after manual migration: `bun run atlas:export`
- 
+Source of truth:
+- `data/rss-atlas.json`
 
+Run health check (daily):
+- `bun run rss:health:daily`
 
+If status is wrong, update RSS URLs in `data/rss-atlas.json` and run again:
+- `bun run rss:health:once`
 
-
-
-
-
-
-
-
+This keeps README updates simple and focused: add/update source URLs first, then re-run health check.
 
 ## Latest RSS verification snapshot
 
@@ -160,82 +70,82 @@ This list covers the currently configured countries and their RSS outlets.
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
 1|The New York Times|<https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml>|200|02/19/2026|valid|
-3|Wall Street Journal|<https://feeds.a.dj.com/rss/RSSWorldNews.xml>|200|02/19/2026|valid|
-5|LA Times|<https://www.latimes.com/local/rss2.0.xml>|200|02/19/2026|valid|
-6|CNN|<http://rss.cnn.com/rss/cnn_topstories.rss>|200|02/19/2026|valid|
-7|Fox News|<http://moxie.foxnews.com/google-publisher/latest.xml>|200|02/19/2026|valid|
-8|NBC News|<http://feeds.nbcnews.com/nbcnews/public/news>|200|02/19/2026|valid|
-9|CBS News|<https://www.cbsnews.com/latest/rss/main>|200|02/19/2026|valid|
-10|ABC News|<https://abcnews.go.com/abcnews/topstories>|200|02/19/2026|valid|
-11|NPR|<https://feeds.npr.org/1001/rss.xml>|200|02/19/2026|valid|
-14|HuffPost|<https://www.huffpost.com/section/front-page/feed>|200|02/19/2026|valid|
-15|BuzzFeed News|<https://www.buzzfeednews.com/news.xml>|200|02/19/2026|valid|
-17|Vox|<https://www.vox.com/rss/index.xml>|200|02/19/2026|valid|
-19|CNBC|<https://www.cnbc.com/id/100003114/device/rss/rss.html>|200|02/19/2026|valid|
-20|Financial Times|<https://www.ft.com/?format=rss>|200|02/19/2026|valid|
-21|Forbes|<https://www.forbes.com/most-popular/feed/>|200|02/19/2026|valid|
-22|Fortune|<https://fortune.com/feed>|200|02/19/2026|valid|
-23|Business Insider|<https://www.businessinsider.com/rss>|200|02/19/2026|valid|
-24|MarketWatch|<http://feeds.marketwatch.com/marketwatch/topstories/>|200|02/19/2026|valid|
-27|Fast Company|<https://www.fastcompany.com/rss>|200|02/19/2026|valid|
-28|TechCrunch|<https://techcrunch.com/feed/>|200|02/19/2026|valid|
-29|The Verge|<https://www.theverge.com/rss/index.xml>|200|02/19/2026|valid|
-30|Wired|<https://www.wired.com/feed/rss>|200|02/19/2026|valid|
-31|Ars Technica|<http://feeds.arstechnica.com/arstechnica/index>|200|02/19/2026|valid|
-32|Engadget|<https://www.engadget.com/rss.xml>|200|02/19/2026|valid|
-33|VentureBeat|<https://venturebeat.com/feed/>|200|02/19/2026|valid|
-34|Mashable|<https://mashable.com/feed>|200|02/19/2026|valid|
-35|Gizmodo|<https://gizmodo.com/rss>|200|02/19/2026|valid|
-36|CNET|<https://www.cnet.com/rss/news/>|200|02/19/2026|valid|
-37|ZDNet|<https://www.zdnet.com/news/rss.xml>|200|02/19/2026|valid|
-39|The Hill|<https://thehill.com/feed>|200|02/19/2026|valid|
-40|Axios|<https://api.axios.com/feed/>|200|02/19/2026|valid|
-41|Breitbart|<http://feeds.feedburner.com/breitbart>|200|02/19/2026|valid|
-42|National Review|<https://www.nationalreview.com/feed/>|200|02/19/2026|valid|
-43|Slate|<https://slate.com/feeds/all.rss>|200|02/19/2026|valid|
-44|The New Yorker|<https://www.newyorker.com/feed/everything>|200|02/19/2026|valid|
-45|The Atlantic|<https://www.theatlantic.com/feed/all/>|200|02/19/2026|valid|
-60|Boston Globe|<https://www.bostonglobe.com/arc/outboundfeeds/rss?outputType=xml>|200|02/19/2026|valid|
-64|New York Post|<https://nypost.com/feed>|200|02/19/2026|valid|
-65|Chicago Tribune|<https://chicagotribune.com/feed>|200|02/19/2026|valid|
-74|Seattle Times|<https://seattletimes.com/feed>|200|02/19/2026|valid|
-75|Denver Post|<https://denverpost.com/feed>|200|02/19/2026|valid|
-76|San Jose Mercury News|<https://mercurynews.com/feed>|200|02/19/2026|valid|
-77|Las Vegas Review-Journal|<https://reviewjournal.com/feed>|200|02/19/2026|valid|
-78|San Diego Union-Tribune|<https://sandiegouniontribune.com/feed>|200|02/19/2026|valid|
-79|Honolulu Star-Advertiser|<https://staradvertiser.com/feed>|200|02/19/2026|valid|
-80|Variety|<https://variety.com/feed>|200|02/19/2026|valid|
-81|The Hollywood Reporter|<https://hollywoodreporter.com/feed>|200|02/19/2026|valid|
-82|Deadline|<https://deadline.com/feed>|200|02/19/2026|valid|
-83|Rolling Stone|<https://rollingstone.com/feed>|200|02/19/2026|valid|
-84|Billboard|<https://billboard.com/feed>|200|02/19/2026|valid|
-86|Vanity Fair|<http://feeds.feedburner.com/vfdotcomrss>|200|02/19/2026|valid|
-87|Esquire|<https://www.esquire.com/rss/entertainment.xml>|200|02/19/2026|valid|
-88|GQ|<https://www.gq.com/feed/rss>|200|02/19/2026|valid|
-94|Space.com|<https://www.space.com/feeds/all>|200|02/19/2026|valid|
-95|ESPN|<https://www.espn.com/espn/rss/news>|200|02/19/2026|valid|
-96|Sports Illustrated|<https://si.com/feed>|200|02/19/2026|valid|
-101|Mother Jones|<https://motherjones.com/feed>|200|02/19/2026|valid|
-102|ProPublica|<https://propublica.org/feed>|200|02/19/2026|valid|
-103|Reason|<https://reason.com/feed>|200|02/19/2026|valid|
-104|Jacobin|<https://jacobin.com/feed>|200|02/19/2026|valid|
-105|Quartz|<https://qz.com/feed>|200|02/19/2026|valid|
-106|The Intercept|<https://theintercept.com/feed>|200|02/19/2026|valid|
-109|Newsweek|<https://www.newsweek.com/rss>|200|02/19/2026|valid|
-110|Time|<https://time.com/feed>|200|02/19/2026|valid|
-111|PBS NewsHour|<https://www.pbs.org/newshour/feeds/rss/headlines>|200|02/19/2026|valid|
+2|Wall Street Journal|<https://feeds.a.dj.com/rss/RSSWorldNews.xml>|200|02/19/2026|valid|
+3|LA Times|<https://www.latimes.com/local/rss2.0.xml>|200|02/19/2026|valid|
+4|CNN|<http://rss.cnn.com/rss/cnn_topstories.rss>|200|02/19/2026|valid|
+5|Fox News|<http://moxie.foxnews.com/google-publisher/latest.xml>|200|02/19/2026|valid|
+6|NBC News|<http://feeds.nbcnews.com/nbcnews/public/news>|200|02/19/2026|valid|
+7|CBS News|<https://www.cbsnews.com/latest/rss/main>|200|02/19/2026|valid|
+8|ABC News|<https://abcnews.go.com/abcnews/topstories>|200|02/19/2026|valid|
+9|NPR|<https://feeds.npr.org/1001/rss.xml>|200|02/19/2026|valid|
+10|HuffPost|<https://www.huffpost.com/section/front-page/feed>|200|02/19/2026|valid|
+11|BuzzFeed News|<https://www.buzzfeednews.com/news.xml>|200|02/19/2026|valid|
+12|Vox|<https://www.vox.com/rss/index.xml>|200|02/19/2026|valid|
+13|CNBC|<https://www.cnbc.com/id/100003114/device/rss/rss.html>|200|02/19/2026|valid|
+14|Financial Times|<https://www.ft.com/?format=rss>|200|02/19/2026|valid|
+15|Forbes|<https://www.forbes.com/most-popular/feed/>|200|02/19/2026|valid|
+16|Fortune|<https://fortune.com/feed>|200|02/19/2026|valid|
+17|Business Insider|<https://www.businessinsider.com/rss>|200|02/19/2026|valid|
+18|MarketWatch|<http://feeds.marketwatch.com/marketwatch/topstories/>|200|02/19/2026|valid|
+19|Fast Company|<https://www.fastcompany.com/rss>|200|02/19/2026|valid|
+20|TechCrunch|<https://techcrunch.com/feed/>|200|02/19/2026|valid|
+21|The Verge|<https://www.theverge.com/rss/index.xml>|200|02/19/2026|valid|
+22|Wired|<https://www.wired.com/feed/rss>|200|02/19/2026|valid|
+23|Ars Technica|<http://feeds.arstechnica.com/arstechnica/index>|200|02/19/2026|valid|
+24|Engadget|<https://www.engadget.com/rss.xml>|200|02/19/2026|valid|
+25|VentureBeat|<https://venturebeat.com/feed/>|200|02/19/2026|valid|
+26|Mashable|<https://mashable.com/feed>|200|02/19/2026|valid|
+27|Gizmodo|<https://gizmodo.com/rss>|200|02/19/2026|valid|
+28|CNET|<https://www.cnet.com/rss/news/>|200|02/19/2026|valid|
+29|ZDNet|<https://www.zdnet.com/news/rss.xml>|200|02/19/2026|valid|
+30|The Hill|<https://thehill.com/feed>|200|02/19/2026|valid|
+31|Axios|<https://api.axios.com/feed/>|200|02/19/2026|valid|
+32|Breitbart|<http://feeds.feedburner.com/breitbart>|200|02/19/2026|valid|
+33|National Review|<https://www.nationalreview.com/feed/>|200|02/19/2026|valid|
+34|Slate|<https://slate.com/feeds/all.rss>|200|02/19/2026|valid|
+35|The New Yorker|<https://www.newyorker.com/feed/everything>|200|02/19/2026|valid|
+36|The Atlantic|<https://www.theatlantic.com/feed/all/>|200|02/19/2026|valid|
+37|Boston Globe|<https://www.bostonglobe.com/arc/outboundfeeds/rss?outputType=xml>|200|02/19/2026|valid|
+38|New York Post|<https://nypost.com/feed>|200|02/19/2026|valid|
+39|Chicago Tribune|<https://chicagotribune.com/feed>|200|02/19/2026|valid|
+40|Seattle Times|<https://seattletimes.com/feed>|200|02/19/2026|valid|
+41|Denver Post|<https://denverpost.com/feed>|200|02/19/2026|valid|
+42|San Jose Mercury News|<https://mercurynews.com/feed>|200|02/19/2026|valid|
+43|Las Vegas Review-Journal|<https://reviewjournal.com/feed>|200|02/19/2026|valid|
+44|San Diego Union-Tribune|<https://sandiegouniontribune.com/feed>|200|02/19/2026|valid|
+45|Honolulu Star-Advertiser|<https://staradvertiser.com/feed>|200|02/19/2026|valid|
+46|Variety|<https://variety.com/feed>|200|02/19/2026|valid|
+47|The Hollywood Reporter|<https://hollywoodreporter.com/feed>|200|02/19/2026|valid|
+48|Deadline|<https://deadline.com/feed>|200|02/19/2026|valid|
+49|Rolling Stone|<https://rollingstone.com/feed>|200|02/19/2026|valid|
+50|Billboard|<https://billboard.com/feed>|200|02/19/2026|valid|
+51|Vanity Fair|<http://feeds.feedburner.com/vfdotcomrss>|200|02/19/2026|valid|
+52|Esquire|<https://www.esquire.com/rss/entertainment.xml>|200|02/19/2026|valid|
+53|GQ|<https://www.gq.com/feed/rss>|200|02/19/2026|valid|
+54|Space.com|<https://www.space.com/feeds/all>|200|02/19/2026|valid|
+55|ESPN|<https://www.espn.com/espn/rss/news>|200|02/19/2026|valid|
+56|Sports Illustrated|<https://si.com/feed>|200|02/19/2026|valid|
+57|Mother Jones|<https://motherjones.com/feed>|200|02/19/2026|valid|
+58|ProPublica|<https://propublica.org/feed>|200|02/19/2026|valid|
+59|Reason|<https://reason.com/feed>|200|02/19/2026|valid|
+60|Jacobin|<https://jacobin.com/feed>|200|02/19/2026|valid|
+61|Quartz|<https://qz.com/feed>|200|02/19/2026|valid|
+62|The Intercept|<https://theintercept.com/feed>|200|02/19/2026|valid|
+63|Newsweek|<https://www.newsweek.com/rss>|200|02/19/2026|valid|
+64|Time|<https://time.com/feed>|200|02/19/2026|valid|
+65|PBS NewsHour|<https://www.pbs.org/newshour/feeds/rss/headlines>|200|02/19/2026|valid|
 
 ### China (CN)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
-4|China Daily|<http://www.chinadaily.com.cn/rss/world_rss.xml>|200|02/19/2026|valid|
-9|TechNode|<https://technode.com/feed>|200|02/19/2026|valid|
-10|South China Morning Post|<https://www.scmp.com/rss/91/feed>|200|02/19/2026|valid|
-11|Initium|<https://theinitium.com/feed>|200|02/19/2026|valid|
-13|Liberty Times|<https://news.ltn.com.tw/rss/all.xml>|200|02/19/2026|valid|
-23|People China|<https://people.com.cn/rss/politics.xml>|200|02/19/2026|valid|
-24|South China Morning Post (Business)|<https://www.scmp.com/rss/91/feed>|200|02/19/2026|valid|
-27|China Daily English|<https://www.chinadaily.com.cn/rss/world_rss.xml>|200|02/19/2026|valid|
+1|China Daily|<http://www.chinadaily.com.cn/rss/world_rss.xml>|200|02/19/2026|valid|
+2|TechNode|<https://technode.com/feed>|200|02/19/2026|valid|
+3|South China Morning Post|<https://www.scmp.com/rss/91/feed>|200|02/19/2026|valid|
+4|Initium|<https://theinitium.com/feed>|200|02/19/2026|valid|
+5|Liberty Times|<https://news.ltn.com.tw/rss/all.xml>|200|02/19/2026|valid|
+6|People China|<https://people.com.cn/rss/politics.xml>|200|02/19/2026|valid|
+7|South China Morning Post (Business)|<https://www.scmp.com/rss/91/feed>|200|02/19/2026|valid|
+8|China Daily English|<https://www.chinadaily.com.cn/rss/world_rss.xml>|200|02/19/2026|valid|
 
 ### Japan (JP)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
@@ -244,11 +154,11 @@ This list covers the currently configured countries and their RSS outlets.
 2|Mainichi (Biz)|<https://mainichi.jp/rss/etc/english_latest.rss>|200|02/19/2026|valid|
 3|Asahi Shimbun|<https://www.asahi.com/rss/asahi/newsheadlines.rdf>|200|02/19/2026|valid|
 4|The Japan Times|<https://www.japantimes.co.jp/feed/>|200|02/19/2026|valid|
-14|Automotive Ten-Navi|<https://automotive.ten-navi.com/rss/>|200|02/19/2026|valid|
-15|The Bridge|<https://thebridge.jp/feed/>|200|02/19/2026|valid|
-20|Nippon|<https://www.nippon.com/en/feed/>|200|02/19/2026|valid|
-25|Mainichi Sports|<https://mainichi.jp/rss/etc/english_latest.rss>|200|02/19/2026|valid|
-30|Mainichi World|<https://mainichi.jp/rss/etc/english_latest.rss>|200|02/19/2026|valid|
+5|Automotive Ten-Navi|<https://automotive.ten-navi.com/rss/>|200|02/19/2026|valid|
+6|The Bridge|<https://thebridge.jp/feed/>|200|02/19/2026|valid|
+7|Nippon|<https://www.nippon.com/en/feed/>|200|02/19/2026|valid|
+8|Mainichi Sports|<https://mainichi.jp/rss/etc/english_latest.rss>|200|02/19/2026|valid|
+9|Mainichi World|<https://mainichi.jp/rss/etc/english_latest.rss>|200|02/19/2026|valid|
 
 ### Germany (DE)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
@@ -263,15 +173,15 @@ This list covers the currently configured countries and their RSS outlets.
 8|WirtschaftsWoche|<https://www.wiwo.de/contentexport/feed/rss/schlagzeilen>|200|02/19/2026|valid|
 9|Deutsche Welle (EN)|<https://rss.dw.com/xml/rss-en-all>|200|02/19/2026|valid|
 10|Heise Online|<https://www.heise.de/rss/heise-atom.xml>|200|02/19/2026|valid|
-12|Der Spiegel|<https://www.spiegel.de/schlagzeilen/index.rss>|200|02/19/2026|valid|
-14|Die Welt|<https://www.welt.de/feeds/topnews.rss>|200|02/19/2026|valid|
-16|Focus|<https://www.focus.de/rss/>|200|02/19/2026|valid|
-17|Handelsblatt Economy|<https://www.handelsblatt.com/contentexport/feed/finanzen/>|200|02/19/2026|valid|
-18|Frankfurter Allgemeine|<https://www.faz.net/rss/aktuell/wirtschaft/>|200|02/19/2026|valid|
-20|Tagesspiegel|<https://www.tagesspiegel.de/contentexport/feed/>|200|02/19/2026|valid|
-24|Handelsblatt World|<https://www.handelsblatt.com/contentexport/feed/wirtschaft>|200|02/19/2026|valid|
-25|Zeit Welt|<https://newsfeed.zeit.de/wirtschaft/index>|200|02/19/2026|valid|
-28|Financial Times Germany|<https://www.ft.com/rss/home>|200|02/19/2026|valid|
+11|Der Spiegel|<https://www.spiegel.de/schlagzeilen/index.rss>|200|02/19/2026|valid|
+12|Die Welt|<https://www.welt.de/feeds/topnews.rss>|200|02/19/2026|valid|
+13|Focus|<https://www.focus.de/rss/>|200|02/19/2026|valid|
+14|Handelsblatt Economy|<https://www.handelsblatt.com/contentexport/feed/finanzen/>|200|02/19/2026|valid|
+15|Frankfurter Allgemeine|<https://www.faz.net/rss/aktuell/wirtschaft/>|200|02/19/2026|valid|
+16|Tagesspiegel|<https://www.tagesspiegel.de/contentexport/feed/>|200|02/19/2026|valid|
+17|Handelsblatt World|<https://www.handelsblatt.com/contentexport/feed/wirtschaft>|200|02/19/2026|valid|
+18|Zeit Welt|<https://newsfeed.zeit.de/wirtschaft/index>|200|02/19/2026|valid|
+19|Financial Times Germany|<https://www.ft.com/rss/home>|200|02/19/2026|valid|
 
 ### India (IN)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
@@ -282,28 +192,28 @@ This list covers the currently configured countries and their RSS outlets.
 4|The Indian Express|<https://indianexpress.com/feed>|200|02/19/2026|valid|
 5|The Hindu (National)|<https://www.thehindu.com/news/national/?service=rss>|200|02/19/2026|valid|
 6|Firstpost|<https://www.firstpost.com/commonfeeds/v1/mfp/rss/web-stories.xml>|200|02/19/2026|valid|
-8|DNA India (India)|<https://www.dnaindia.com/feeds/india.xml>|200|02/19/2026|valid|
-9|Storify News|<https://www.storifynews.com/feed>|200|02/19/2026|valid|
-10|Amar Ujala (Breaking)|<https://www.amarujala.com/rss/breaking-news.xml>|200|02/19/2026|valid|
-11|Odishabarta|<https://odishabarta.com/feed>|200|02/19/2026|valid|
-12|The Times of Bengal|<https://thetimesofbengal.com/feed>|200|02/19/2026|valid|
-13|Scroll.in|<https://feeds.feedburner.com/ScrollinArticles.rss>|200|02/19/2026|valid|
-14|Northlines|<https://thenorthlines.com/feed>|200|02/19/2026|valid|
-15|Chandigarh Metro|<https://chandigarhmetro.com/feed>|200|02/19/2026|valid|
-16|Chandigarh City News|<https://feeds.feedburner.com/ChandigarhCityNews>|200|02/19/2026|valid|
-17|The Quint|<https://prod-qt-images.s3.amazonaws.com/production/thequint/feed.xml>|200|02/19/2026|valid|
-18|Telangana Today|<https://telanganatoday.com/feed>|200|02/19/2026|valid|
-19|Daily Excelsior|<https://www.dailyexcelsior.com/feed>|200|02/19/2026|valid|
-20|News Today (TN)|<https://newstodaynet.com/feed>|200|02/19/2026|valid|
-21|IndiaVision|<https://www.indiavision.com/feed>|200|02/19/2026|valid|
-22|OpIndia|<https://www.opindia.com/feed>|200|02/19/2026|valid|
-23|OrissaPOST|<https://www.orissapost.com/feed>|200|02/19/2026|valid|
-24|India's News.Net|<https://feeds.indiasnews.net/rss/701ee96610c884a6>|200|02/19/2026|valid|
-25|TechGenYZ|<https://techgenyz.com/feed>|200|02/19/2026|valid|
-27|WYM News (Blogspot)|<https://latestnewsupdate4you.blogspot.com/feeds/posts/default>|200|02/19/2026|valid|
-28|Star of Mysore|<https://starofmysore.com/feed>|200|02/19/2026|valid|
-29|ABP News|<https://news.abplive.com/home/feed>|200|02/19/2026|valid|
-30|The India Bizz|<https://theindiabizz.com/feed>|200|02/19/2026|valid|
+7|DNA India (India)|<https://www.dnaindia.com/feeds/india.xml>|200|02/19/2026|valid|
+8|Storify News|<https://www.storifynews.com/feed>|200|02/19/2026|valid|
+9|Amar Ujala (Breaking)|<https://www.amarujala.com/rss/breaking-news.xml>|200|02/19/2026|valid|
+10|Odishabarta|<https://odishabarta.com/feed>|200|02/19/2026|valid|
+11|The Times of Bengal|<https://thetimesofbengal.com/feed>|200|02/19/2026|valid|
+12|Scroll.in|<https://feeds.feedburner.com/ScrollinArticles.rss>|200|02/19/2026|valid|
+13|Northlines|<https://thenorthlines.com/feed>|200|02/19/2026|valid|
+14|Chandigarh Metro|<https://chandigarhmetro.com/feed>|200|02/19/2026|valid|
+15|Chandigarh City News|<https://feeds.feedburner.com/ChandigarhCityNews>|200|02/19/2026|valid|
+16|The Quint|<https://prod-qt-images.s3.amazonaws.com/production/thequint/feed.xml>|200|02/19/2026|valid|
+17|Telangana Today|<https://telanganatoday.com/feed>|200|02/19/2026|valid|
+18|Daily Excelsior|<https://www.dailyexcelsior.com/feed>|200|02/19/2026|valid|
+19|News Today (TN)|<https://newstodaynet.com/feed>|200|02/19/2026|valid|
+20|IndiaVision|<https://www.indiavision.com/feed>|200|02/19/2026|valid|
+21|OpIndia|<https://www.opindia.com/feed>|200|02/19/2026|valid|
+22|OrissaPOST|<https://www.orissapost.com/feed>|200|02/19/2026|valid|
+23|India's News.Net|<https://feeds.indiasnews.net/rss/701ee96610c884a6>|200|02/19/2026|valid|
+24|TechGenYZ|<https://techgenyz.com/feed>|200|02/19/2026|valid|
+25|WYM News (Blogspot)|<https://latestnewsupdate4you.blogspot.com/feeds/posts/default>|200|02/19/2026|valid|
+26|Star of Mysore|<https://starofmysore.com/feed>|200|02/19/2026|valid|
+27|ABP News|<https://news.abplive.com/home/feed>|200|02/19/2026|valid|
+28|The India Bizz|<https://theindiabizz.com/feed>|200|02/19/2026|valid|
 
 ### United Kingdom (GB)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
@@ -318,18 +228,18 @@ This list covers the currently configured countries and their RSS outlets.
 8|Sky News - Business|<https://feeds.skynews.com/feeds/rss/business.xml>|200|02/19/2026|valid|
 9|Telegraph - Business|<https://www.telegraph.co.uk/business/rss.xml>|200|02/19/2026|valid|
 10|City A.M. (London Finance)|<https://www.cityam.com/feed/>|200|02/19/2026|valid|
-13|The Independent|<https://www.independent.co.uk/rss>|200|02/19/2026|valid|
-14|Financial Times UK|<https://www.ft.com/?format=rss>|200|02/19/2026|valid|
-17|The Telegraph UK|<https://www.telegraph.co.uk/rss.xml>|200|02/19/2026|valid|
-19|Daily Mail|<https://www.dailymail.co.uk/home/index.rss>|200|02/19/2026|valid|
-21|Metro UK|<https://metro.co.uk/feed/>|200|02/19/2026|valid|
-22|The Sun|<https://www.thesun.co.uk/feed/>|200|02/19/2026|valid|
-23|The Guardian UK|<https://www.theguardian.com/uk/rss>|200|02/19/2026|valid|
-24|Sky News|<https://feeds.skynews.com/feeds/rss/uk.xml>|200|02/19/2026|valid|
-25|Financial Times|<https://www.ft.com/rss/home>|200|02/19/2026|valid|
-27|iNews|<https://inews.co.uk/rss>|200|02/19/2026|valid|
-28|BBC Culture|<https://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml>|200|02/19/2026|valid|
-29|The Evening Standard|<https://www.standard.co.uk/rss>|200|02/19/2026|valid|
+11|The Independent|<https://www.independent.co.uk/rss>|200|02/19/2026|valid|
+12|Financial Times UK|<https://www.ft.com/?format=rss>|200|02/19/2026|valid|
+13|The Telegraph UK|<https://www.telegraph.co.uk/rss.xml>|200|02/19/2026|valid|
+14|Daily Mail|<https://www.dailymail.co.uk/home/index.rss>|200|02/19/2026|valid|
+15|Metro UK|<https://metro.co.uk/feed/>|200|02/19/2026|valid|
+16|The Sun|<https://www.thesun.co.uk/feed/>|200|02/19/2026|valid|
+17|The Guardian UK|<https://www.theguardian.com/uk/rss>|200|02/19/2026|valid|
+18|Sky News|<https://feeds.skynews.com/feeds/rss/uk.xml>|200|02/19/2026|valid|
+19|Financial Times|<https://www.ft.com/rss/home>|200|02/19/2026|valid|
+20|iNews|<https://inews.co.uk/rss>|200|02/19/2026|valid|
+21|BBC Culture|<https://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml>|200|02/19/2026|valid|
+22|The Evening Standard|<https://www.standard.co.uk/rss>|200|02/19/2026|valid|
 
 ### France (FR)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
@@ -340,27 +250,27 @@ This list covers the currently configured countries and their RSS outlets.
 4|RFI (All / EN)|<https://www.rfi.fr/en/rss>|200|02/19/2026|valid|
 5|Mediapart|<https://www.mediapart.fr/articles/feed>|200|02/19/2026|valid|
 6|Le Monde diplomatique|<https://mondediplo.com/backend>|200|02/19/2026|valid|
-8|Sud Ouest|<https://www.sudouest.fr/essentiel/rss.xml>|200|02/19/2026|valid|
-9|L'Est Républicain|<https://www.estrepublicain.fr/rss>|200|02/19/2026|valid|
-10|France Soir|<https://www.francesoir.fr/rss.xml>|200|02/19/2026|valid|
-11|Dernières Nouvelles d'Alsace (DNA)|<https://www.dna.fr/rss>|200|02/19/2026|valid|
-12|La Croix|<https://www.la-croix.com/feeds/rss/site.xml>|200|02/19/2026|valid|
-14|La Dépêche|<https://www.ladepeche.fr/rss.xml>|200|02/19/2026|valid|
-15|20 Minutes|<https://www.20minutes.fr/feeds/rss-une.xml>|200|02/19/2026|valid|
-17|Yahoo Actualités|<https://fr.news.yahoo.com/rss>|200|02/19/2026|valid|
-18|InfoMigrants (EN)|<https://www.infomigrants.net/en/rss/all.xml>|200|02/19/2026|valid|
-19|France Today|<https://www.francetoday.com/feed>|200|02/19/2026|valid|
-20|FrenchDailyNews|<https://frenchdailynews.com/feed>|200|02/19/2026|valid|
-21|Le Monde (EN – Main)|<https://www.lemonde.fr/en/rss/une.xml>|200|02/19/2026|valid|
-22|Le Monde (EN – International)|<https://www.lemonde.fr/en/international/rss_full.xml>|200|02/19/2026|valid|
-23|Le Monde (EN – Editorials)|<https://www.lemonde.fr/en/editorials/rss_full.xml>|200|02/19/2026|valid|
-24|Le Monde (EN – Europe)|<https://www.lemonde.fr/en/europe/rss_full.xml>|200|02/19/2026|valid|
-25|Le Monde (EN – United States)|<https://www.lemonde.fr/en/united-states/rss_full.xml>|200|02/19/2026|valid|
-26|Le Monde (EN – Economy)|<https://www.lemonde.fr/en/economy/rss_full.xml>|200|02/19/2026|valid|
-27|Le Monde (EN – Culture)|<https://www.lemonde.fr/en/culture/rss_full.xml>|200|02/19/2026|valid|
-28|Le Monde (EN – Sports)|<https://www.lemonde.fr/en/sports/rss_full.xml>|200|02/19/2026|valid|
-29|Le Monde (EN – Environment)|<https://www.lemonde.fr/en/environment/rss_full.xml>|200|02/19/2026|valid|
-30|Le Monde (EN – Science)|<https://www.lemonde.fr/en/science/rss_full.xml>|200|02/19/2026|valid|
+7|Sud Ouest|<https://www.sudouest.fr/essentiel/rss.xml>|200|02/19/2026|valid|
+8|L'Est Républicain|<https://www.estrepublicain.fr/rss>|200|02/19/2026|valid|
+9|France Soir|<https://www.francesoir.fr/rss.xml>|200|02/19/2026|valid|
+10|Dernières Nouvelles d'Alsace (DNA)|<https://www.dna.fr/rss>|200|02/19/2026|valid|
+11|La Croix|<https://www.la-croix.com/feeds/rss/site.xml>|200|02/19/2026|valid|
+12|La Dépêche|<https://www.ladepeche.fr/rss.xml>|200|02/19/2026|valid|
+13|20 Minutes|<https://www.20minutes.fr/feeds/rss-une.xml>|200|02/19/2026|valid|
+14|Yahoo Actualités|<https://fr.news.yahoo.com/rss>|200|02/19/2026|valid|
+15|InfoMigrants (EN)|<https://www.infomigrants.net/en/rss/all.xml>|200|02/19/2026|valid|
+16|France Today|<https://www.francetoday.com/feed>|200|02/19/2026|valid|
+17|FrenchDailyNews|<https://frenchdailynews.com/feed>|200|02/19/2026|valid|
+18|Le Monde (EN – Main)|<https://www.lemonde.fr/en/rss/une.xml>|200|02/19/2026|valid|
+19|Le Monde (EN – International)|<https://www.lemonde.fr/en/international/rss_full.xml>|200|02/19/2026|valid|
+20|Le Monde (EN – Editorials)|<https://www.lemonde.fr/en/editorials/rss_full.xml>|200|02/19/2026|valid|
+21|Le Monde (EN – Europe)|<https://www.lemonde.fr/en/europe/rss_full.xml>|200|02/19/2026|valid|
+22|Le Monde (EN – United States)|<https://www.lemonde.fr/en/united-states/rss_full.xml>|200|02/19/2026|valid|
+23|Le Monde (EN – Economy)|<https://www.lemonde.fr/en/economy/rss_full.xml>|200|02/19/2026|valid|
+24|Le Monde (EN – Culture)|<https://www.lemonde.fr/en/culture/rss_full.xml>|200|02/19/2026|valid|
+25|Le Monde (EN – Sports)|<https://www.lemonde.fr/en/sports/rss_full.xml>|200|02/19/2026|valid|
+26|Le Monde (EN – Environment)|<https://www.lemonde.fr/en/environment/rss_full.xml>|200|02/19/2026|valid|
+27|Le Monde (EN – Science)|<https://www.lemonde.fr/en/science/rss_full.xml>|200|02/19/2026|valid|
 
 ### Italy (IT)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
@@ -415,28 +325,28 @@ This list covers the currently configured countries and their RSS outlets.
 14|The StarPhoenix|<https://thestarphoenix.com/feed>|200|02/19/2026|valid|
 15|Edmonton Sun|<https://edmontonsun.com/feed>|200|02/19/2026|valid|
 16|Canada.com|<https://o.canada.com/feed>|200|02/19/2026|valid|
-18|Business In Vancouver (BIV)|<https://biv.com/rss>|200|02/19/2026|valid|
-19|Regina Leader Post|<https://leaderpost.com/feed>|200|02/19/2026|valid|
-20|Owen Sound Sun Times|<https://owensoundsuntimes.com/feed>|200|02/19/2026|valid|
-22|Stratford Beacon Herald|<https://stratfordbeaconherald.com/feed>|200|02/19/2026|valid|
-23|The Georgia Straight|<https://straight.com/content/rss>|200|02/19/2026|valid|
-24|Grande Prairie Daily Herald Tribune|<https://dailyheraldtribune.com/feed>|200|02/19/2026|valid|
-25|YGK News (Kingston)|<https://ygknews.ca/feed>|200|02/19/2026|valid|
-26|Prince Albert Daily Herald|<https://paherald.sk.ca/feed>|200|02/19/2026|valid|
-27|Sunny South News|<https://sunnysouthnews.com/feed>|200|02/19/2026|valid|
-28|The Afro News|<https://theafronews.com/feed>|200|02/19/2026|valid|
+17|Business In Vancouver (BIV)|<https://biv.com/rss>|200|02/19/2026|valid|
+18|Regina Leader Post|<https://leaderpost.com/feed>|200|02/19/2026|valid|
+19|Owen Sound Sun Times|<https://owensoundsuntimes.com/feed>|200|02/19/2026|valid|
+20|Stratford Beacon Herald|<https://stratfordbeaconherald.com/feed>|200|02/19/2026|valid|
+21|The Georgia Straight|<https://straight.com/content/rss>|200|02/19/2026|valid|
+22|Grande Prairie Daily Herald Tribune|<https://dailyheraldtribune.com/feed>|200|02/19/2026|valid|
+23|YGK News (Kingston)|<https://ygknews.ca/feed>|200|02/19/2026|valid|
+24|Prince Albert Daily Herald|<https://paherald.sk.ca/feed>|200|02/19/2026|valid|
+25|Sunny South News|<https://sunnysouthnews.com/feed>|200|02/19/2026|valid|
+26|The Afro News|<https://theafronews.com/feed>|200|02/19/2026|valid|
 
 ### Russia (RU)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
-3|RT|<https://rt.com/feed>|200|02/19/2026|valid|
-10|The Bell|<https://thebell.io/feed>|200|02/19/2026|valid|
-14|Interfax|<https://www.interfax.ru/rss.asp>|200|02/19/2026|valid|
-15|RT Economy|<https://www.rt.com/rss/business>|200|02/19/2026|valid|
-16|The Bell|<https://thebell.io/feed/>|200|02/19/2026|valid|
-18|Lenta|<https://lenta.ru/rss/news>|200|02/19/2026|valid|
-23|TASS Finance|<https://tass.com/rss/v2.xml>|200|02/19/2026|valid|
-25|RT News|<https://www.rt.com/rss/>|200|02/19/2026|valid|
+1|RT|<https://rt.com/feed>|200|02/19/2026|valid|
+2|The Bell|<https://thebell.io/feed>|200|02/19/2026|valid|
+3|Interfax|<https://www.interfax.ru/rss.asp>|200|02/19/2026|valid|
+4|RT Economy|<https://www.rt.com/rss/business>|200|02/19/2026|valid|
+5|The Bell|<https://thebell.io/feed/>|200|02/19/2026|valid|
+6|Lenta|<https://lenta.ru/rss/news>|200|02/19/2026|valid|
+7|TASS Finance|<https://tass.com/rss/v2.xml>|200|02/19/2026|valid|
+8|RT News|<https://www.rt.com/rss/>|200|02/19/2026|valid|
 
 ### South Korea (KR)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
@@ -460,14 +370,14 @@ This list covers the currently configured countries and their RSS outlets.
 2|G1 (Globo - Tech)|<https://g1.globo.com/rss/g1/tecnologia/>|200|02/19/2026|valid|
 3|Folha de S.Paulo - Top|<https://feeds.folha.uol.com.br/emcimadahora/rss091.xml>|200|02/19/2026|valid|
 4|Folha de S.Paulo - Market|<https://feeds.folha.uol.com.br/mercado/rss091.xml>|200|02/19/2026|valid|
-6|Correio Braziliense|<https://www.correiobraziliense.com.br/rss/noticia/economia/rss.xml>|200|02/19/2026|valid|
-7|InfoMoney|<https://www.infomoney.com.br/feed/>|200|02/19/2026|valid|
-8|Canaltech|<https://canaltech.com.br/rss/>|200|02/19/2026|valid|
-9|Forbes Brazil|<https://forbes.com.br/feed/>|200|02/19/2026|valid|
-13|Brasil de Fato|<https://www.brasildefato.com.br/rss>|200|02/19/2026|valid|
-14|Estado de Minas|<https://www.em.com.br/feed/>|200|02/19/2026|valid|
-17|Veja|<https://veja.abril.com.br/feed/>|200|02/19/2026|valid|
-26|Canal Tech Brasil|<https://canaltech.com.br/rss/>|200|02/19/2026|valid|
+5|Correio Braziliense|<https://www.correiobraziliense.com.br/rss/noticia/economia/rss.xml>|200|02/19/2026|valid|
+6|InfoMoney|<https://www.infomoney.com.br/feed/>|200|02/19/2026|valid|
+7|Canaltech|<https://canaltech.com.br/rss/>|200|02/19/2026|valid|
+8|Forbes Brazil|<https://forbes.com.br/feed/>|200|02/19/2026|valid|
+9|Brasil de Fato|<https://www.brasildefato.com.br/rss>|200|02/19/2026|valid|
+10|Estado de Minas|<https://www.em.com.br/feed/>|200|02/19/2026|valid|
+11|Veja|<https://veja.abril.com.br/feed/>|200|02/19/2026|valid|
+12|Canal Tech Brasil|<https://canaltech.com.br/rss/>|200|02/19/2026|valid|
 
 ### Australia (AU)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
@@ -477,20 +387,20 @@ This list covers the currently configured countries and their RSS outlets.
 3|ABC News - Top Stories|<https://www.abc.net.au/news/feed/10719986/rss.xml>|200|02/19/2026|valid|
 4|Sydney Morning Herald - Business|<https://www.smh.com.au/rss/business.xml>|200|02/19/2026|valid|
 5|The Age - Business|<https://www.theage.com.au/rss/business.xml>|200|02/19/2026|valid|
-7|The Australian - Business|<https://www.theaustralian.com.au/business/rss>|200|02/19/2026|valid|
-8|The Guardian Australia|<https://www.theguardian.com/au/rss>|200|02/19/2026|valid|
-9|ABC News (Top)|<https://www.abc.net.au/news/feed/1106/rss.xml>|200|02/19/2026|valid|
-11|Australian Broadcasting Corporation - World|<https://www.abc.net.au/news/feed/51892/rss.xml?edition=world>|200|02/19/2026|valid|
-12|The Guardian Australia|<https://www.theguardian.com/australia-news/rss>|200|02/19/2026|valid|
-15|SBS World News|<https://www.sbs.com.au/news/topic/latest/feed>|200|02/19/2026|valid|
-16|SBS News (Breaking)|<https://www.sbs.com.au/news/feed>|200|02/19/2026|valid|
-17|9News|<https://www.9news.com.au/rss>|200|02/19/2026|valid|
-18|Sydney Morning Herald|<https://www.smh.com.au/rss/feed.xml>|200|02/19/2026|valid|
-19|The Age|<https://www.theage.com.au/rss/feed.xml>|200|02/19/2026|valid|
-21|Canberra Times|<https://www.canberratimes.com.au/rss.xml>|200|02/19/2026|valid|
-27|PerthNow|<https://www.perthnow.com.au/news/feed>|200|02/19/2026|valid|
-29|The Australian|<https://www.theaustralian.com.au/business/markets/rss>|200|02/19/2026|valid|
-31|7news|<https://7news.com.au/feed>|200|02/19/2026|valid|
+6|The Australian - Business|<https://www.theaustralian.com.au/business/rss>|200|02/19/2026|valid|
+7|The Guardian Australia|<https://www.theguardian.com/au/rss>|200|02/19/2026|valid|
+8|ABC News (Top)|<https://www.abc.net.au/news/feed/1106/rss.xml>|200|02/19/2026|valid|
+9|Australian Broadcasting Corporation - World|<https://www.abc.net.au/news/feed/51892/rss.xml?edition=world>|200|02/19/2026|valid|
+10|The Guardian Australia|<https://www.theguardian.com/australia-news/rss>|200|02/19/2026|valid|
+11|SBS World News|<https://www.sbs.com.au/news/topic/latest/feed>|200|02/19/2026|valid|
+12|SBS News (Breaking)|<https://www.sbs.com.au/news/feed>|200|02/19/2026|valid|
+13|9News|<https://www.9news.com.au/rss>|200|02/19/2026|valid|
+14|Sydney Morning Herald|<https://www.smh.com.au/rss/feed.xml>|200|02/19/2026|valid|
+15|The Age|<https://www.theage.com.au/rss/feed.xml>|200|02/19/2026|valid|
+16|Canberra Times|<https://www.canberratimes.com.au/rss.xml>|200|02/19/2026|valid|
+17|PerthNow|<https://www.perthnow.com.au/news/feed>|200|02/19/2026|valid|
+18|The Australian|<https://www.theaustralian.com.au/business/markets/rss>|200|02/19/2026|valid|
+19|7news|<https://7news.com.au/feed>|200|02/19/2026|valid|
 
 ### Spain (ES)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
@@ -499,34 +409,34 @@ This list covers the currently configured countries and their RSS outlets.
 2|Cinco Días (Economy)|<https://cincodias.elpais.com/arc/outboundfeeds/rss/?outputType=xml>|200|02/19/2026|valid|
 3|El País - Economy|<https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/economia/portada>|200|02/19/2026|valid|
 4|El Mundo - Economy|<https://e00-elmundo.uecdn.es/elmundo/rss/economia.xml>|200|02/19/2026|valid|
-7|El Confidencial|<https://rss.elconfidencial.com/espana/>|200|02/19/2026|valid|
-11|El Periodico|<https://www.elperiodico.com/es/rss/rss_portada.xml>|200|02/19/2026|valid|
-12|20 Minutos|<https://www.20minutos.es/rss/>|200|02/19/2026|valid|
-14|El Diario|<https://www.eldiario.es/rss/>|200|02/19/2026|valid|
-16|eldiario|<https://www.eldiario.es/rss/>|200|02/19/2026|valid|
-19|Marca|<https://www.marca.com/rss/>|200|02/19/2026|valid|
-25|El Pais|<https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/portada>|200|02/19/2026|valid|
+5|El Confidencial|<https://rss.elconfidencial.com/espana/>|200|02/19/2026|valid|
+6|El Periodico|<https://www.elperiodico.com/es/rss/rss_portada.xml>|200|02/19/2026|valid|
+7|20 Minutos|<https://www.20minutos.es/rss/>|200|02/19/2026|valid|
+8|El Diario|<https://www.eldiario.es/rss/>|200|02/19/2026|valid|
+9|eldiario|<https://www.eldiario.es/rss/>|200|02/19/2026|valid|
+10|Marca|<https://www.marca.com/rss/>|200|02/19/2026|valid|
+11|El Pais|<https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/portada>|200|02/19/2026|valid|
 
 ### Mexico (MX)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
-4|Milenio|<https://www.milenio.com/rss>|200|02/19/2026|valid|
-6|Proceso (Investigative)|<https://www.proceso.com.mx/rss/feed.html>|200|02/19/2026|valid|
-8|Expansion (Biz)|<https://expansion.mx/rss>|200|02/19/2026|valid|
-17|Contralínea|<https://www.contralinea.com.mx/feed>|200|02/19/2026|valid|
-18|El Financiero|<https://www.elfinanciero.com.mx/rss/mundo>|200|02/19/2026|valid|
-23|Proceso World|<https://www.proceso.com.mx/rss/feed.html?output=xml>|200|02/19/2026|valid|
-30|El Financiero|<https://www.elfinanciero.com.mx/rss>|200|02/19/2026|valid|
+1|Milenio|<https://www.milenio.com/rss>|200|02/19/2026|valid|
+2|Proceso (Investigative)|<https://www.proceso.com.mx/rss/feed.html>|200|02/19/2026|valid|
+3|Expansion (Biz)|<https://expansion.mx/rss>|200|02/19/2026|valid|
+4|Contralínea|<https://www.contralinea.com.mx/feed>|200|02/19/2026|valid|
+5|El Financiero|<https://www.elfinanciero.com.mx/rss/mundo>|200|02/19/2026|valid|
+6|Proceso World|<https://www.proceso.com.mx/rss/feed.html?output=xml>|200|02/19/2026|valid|
+7|El Financiero|<https://www.elfinanciero.com.mx/rss>|200|02/19/2026|valid|
 
 ### Indonesia (ID)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
-9|Republika|<https://www.republika.co.id/rss>|200|02/19/2026|valid|
-14|Sindo News|<https://www.sindonews.com/rss/home/>|200|02/19/2026|valid|
-15|Kapanlagi|<https://www.kapanlagi.com/feed/>|200|02/19/2026|valid|
-18|Antara TV|<https://www.antaranews.com/rss/terkini>|200|02/19/2026|valid|
-21|Sindonews|<https://www.sindonews.com/rss/>|200|02/19/2026|valid|
-24|Republika|<https://www.republika.co.id/rss/terkini>|200|02/19/2026|valid|
+1|Republika|<https://www.republika.co.id/rss>|200|02/19/2026|valid|
+2|Sindo News|<https://www.sindonews.com/rss/home/>|200|02/19/2026|valid|
+3|Kapanlagi|<https://www.kapanlagi.com/feed/>|200|02/19/2026|valid|
+4|Antara TV|<https://www.antaranews.com/rss/terkini>|200|02/19/2026|valid|
+5|Sindonews|<https://www.sindonews.com/rss/>|200|02/19/2026|valid|
+6|Republika|<https://www.republika.co.id/rss/terkini>|200|02/19/2026|valid|
 
 ### Netherlands (NL)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
@@ -535,101 +445,101 @@ This list covers the currently configured countries and their RSS outlets.
 2|NRC|<https://www.nrc.nl/rss>|200|02/19/2026|valid|
 3|AD|<https://www.ad.nl/rss.xml>|200|02/19/2026|valid|
 4|Nu|<https://www.nu.nl/rss/algemeen>|200|02/19/2026|valid|
-12|NPO Radio 1|<https://www.npo3fm.nl/rss/>|200|02/19/2026|valid|
-14|NOS Tech|<https://feeds.nos.nl/nosnieuwstech>|200|02/19/2026|valid|
-23|NRC|<https://www.nrc.nl/nieuws/rss/>|200|02/19/2026|valid|
-25|Nieuwsuur|<https://feeds.nos.nl/nieuwsuuralgemeen>|200|02/19/2026|valid|
-27|RTL|<https://www.rtlnieuws.nl/nieuws/rss.xml>|200|02/19/2026|valid|
-30|NRC|<https://www.nrc.nl/rss/>|200|02/19/2026|valid|
+5|NPO Radio 1|<https://www.npo3fm.nl/rss/>|200|02/19/2026|valid|
+6|NOS Tech|<https://feeds.nos.nl/nosnieuwstech>|200|02/19/2026|valid|
+7|NRC|<https://www.nrc.nl/nieuws/rss/>|200|02/19/2026|valid|
+8|Nieuwsuur|<https://feeds.nos.nl/nieuwsuuralgemeen>|200|02/19/2026|valid|
+9|RTL|<https://www.rtlnieuws.nl/nieuws/rss.xml>|200|02/19/2026|valid|
+10|NRC|<https://www.nrc.nl/rss/>|200|02/19/2026|valid|
 
 ### Switzerland (CH)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
-10|Le Temps Economy|<https://www.letemps.ch/economie.rss>|200|02/19/2026|valid|
-20|NZZ|<https://www.nzz.ch/reisen.rss>|200|02/19/2026|valid|
-28|NDR|<https://www.ndr.ch/rss/>|200|02/19/2026|valid|
+1|Le Temps Economy|<https://www.letemps.ch/economie.rss>|200|02/19/2026|valid|
+2|NZZ|<https://www.nzz.ch/reisen.rss>|200|02/19/2026|valid|
+3|NDR|<https://www.ndr.ch/rss/>|200|02/19/2026|valid|
 
 ### Turkey (TR)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
-2|Hürriyet|<https://www.hurriyet.com.tr/rss/anasayfa>|200|02/19/2026|valid|
-5|Sabah|<https://www.sabah.com.tr/rss/sondakika.xml>|200|02/19/2026|valid|
-9|Haberturk|<https://www.haberturk.com/rss>|200|02/19/2026|valid|
-11|Cumhuriyet|<https://www.cumhuriyet.com.tr/Rss/>|200|02/19/2026|valid|
-14|Aksam|<https://www.aksam.com.tr/rss>|200|02/19/2026|valid|
-19|Takvim|<https://www.takvim.com.tr/rss/feed>|200|02/19/2026|valid|
-26|Cumhuriyet|<https://www.cumhuriyet.com.tr/RSS>|200|02/19/2026|valid|
-27|HuffPost Turkey|<https://www.hurriyetdailynews.com/rss>|200|02/19/2026|valid|
-30|Haber Turk|<https://www.haberturk.com/rss/>|200|02/19/2026|valid|
+1|Hürriyet|<https://www.hurriyet.com.tr/rss/anasayfa>|200|02/19/2026|valid|
+2|Sabah|<https://www.sabah.com.tr/rss/sondakika.xml>|200|02/19/2026|valid|
+3|Haberturk|<https://www.haberturk.com/rss>|200|02/19/2026|valid|
+4|Cumhuriyet|<https://www.cumhuriyet.com.tr/Rss/>|200|02/19/2026|valid|
+5|Aksam|<https://www.aksam.com.tr/rss>|200|02/19/2026|valid|
+6|Takvim|<https://www.takvim.com.tr/rss/feed>|200|02/19/2026|valid|
+7|Cumhuriyet|<https://www.cumhuriyet.com.tr/RSS>|200|02/19/2026|valid|
+8|HuffPost Turkey|<https://www.hurriyetdailynews.com/rss>|200|02/19/2026|valid|
+9|Haber Turk|<https://www.haberturk.com/rss/>|200|02/19/2026|valid|
 
 ### Saudi Arabia (SA)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
-18|Okaz|<https://www.okaz.com.sa/rss/news>|200|02/19/2026|valid|
-21|Al Jazirah|<https://www.aljazeera.net/rss>|200|02/19/2026|valid|
+1|Okaz|<https://www.okaz.com.sa/rss/news>|200|02/19/2026|valid|
+2|Al Jazirah|<https://www.aljazeera.net/rss>|200|02/19/2026|valid|
 
 ### Taiwan (TW)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
-4|Liberty Times - Business|<https://news.ltn.com.tw/rss/business.xml>|200|02/19/2026|valid|
-5|TechNews Taiwan|<https://technews.tw/feed/>|200|02/19/2026|valid|
-6|CNA (Central News Agency)|<https://feeds.feedburner.com/cnaFirstNews>|200|02/19/2026|valid|
-14|Formosa Reporter|<https://www.formosapost.com/feed/>|200|02/19/2026|valid|
+1|Liberty Times - Business|<https://news.ltn.com.tw/rss/business.xml>|200|02/19/2026|valid|
+2|TechNews Taiwan|<https://technews.tw/feed/>|200|02/19/2026|valid|
+3|CNA (Central News Agency)|<https://feeds.feedburner.com/cnaFirstNews>|200|02/19/2026|valid|
+4|Formosa Reporter|<https://www.formosapost.com/feed/>|200|02/19/2026|valid|
 
 ### Poland (PL)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
-2|Onet|<https://wiadomosci.onet.pl/rss>|200|02/19/2026|valid|
-3|TVN24|<https://tvn24.pl/tvnmeteo.xml>|200|02/19/2026|valid|
-12|Fakt|<https://www.fakt.pl/rss/>|200|02/19/2026|valid|
-22|Wprost|<https://www.wprost.pl/rss/>|200|02/19/2026|valid|
+1|Onet|<https://wiadomosci.onet.pl/rss>|200|02/19/2026|valid|
+2|TVN24|<https://tvn24.pl/tvnmeteo.xml>|200|02/19/2026|valid|
+3|Fakt|<https://www.fakt.pl/rss/>|200|02/19/2026|valid|
+4|Wprost|<https://www.wprost.pl/rss/>|200|02/19/2026|valid|
 
 ### Sweden (SE)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
-2|Dagens Nyheter|<https://www.dn.se/nyheter/rss/>|200|02/19/2026|valid|
-7|Dagens Industri|<https://www.di.se/rss/>|200|02/19/2026|valid|
-8|SVT Nyheter|<https://www.svt.se/nyheter/rss.xml>|200|02/19/2026|valid|
-9|Göteborgs-Posten|<https://www.gp.se/rss>|200|02/19/2026|valid|
-17|Sveriges Television|<https://www.svt.se/nyheter/ekonomi/rss.xml>|200|02/19/2026|valid|
-24|Svt|<https://www.svt.se/nyheter/rss.xml?sectionId=2>|200|02/19/2026|valid|
-25|Dagens Nyheter Sport|<https://www.dn.se/sport/rss>|200|02/19/2026|valid|
-27|Dagens Nyheter Business|<https://www.dn.se/ekonomi/rss>|200|02/19/2026|valid|
-28|Norran|<https://www.norran.se/rss>|200|02/19/2026|valid|
+1|Dagens Nyheter|<https://www.dn.se/nyheter/rss/>|200|02/19/2026|valid|
+2|Dagens Industri|<https://www.di.se/rss/>|200|02/19/2026|valid|
+3|SVT Nyheter|<https://www.svt.se/nyheter/rss.xml>|200|02/19/2026|valid|
+4|Göteborgs-Posten|<https://www.gp.se/rss>|200|02/19/2026|valid|
+5|Sveriges Television|<https://www.svt.se/nyheter/ekonomi/rss.xml>|200|02/19/2026|valid|
+6|Svt|<https://www.svt.se/nyheter/rss.xml?sectionId=2>|200|02/19/2026|valid|
+7|Dagens Nyheter Sport|<https://www.dn.se/sport/rss>|200|02/19/2026|valid|
+8|Dagens Nyheter Business|<https://www.dn.se/ekonomi/rss>|200|02/19/2026|valid|
+9|Norran|<https://www.norran.se/rss>|200|02/19/2026|valid|
 
 ### Belgium (BE)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
-2|De Morgen|<https://www.demorgen.be/rss.xml>|200|02/19/2026|valid|
-4|La Libre|<https://www.lalibre.be/arc/outboundfeeds/rss/section/belgique/?outputType=xml>|200|02/19/2026|valid|
-6|Knack|<https://www.knack.be/feed/>|200|02/19/2026|valid|
-7|VRT News|<https://www.vrt.be/vrtnws/nl.rss.articles.xml>|200|02/19/2026|valid|
-11|La Dernière Heure|<https://www.dhnet.be/rss.xml>|200|02/19/2026|valid|
-12|Le Vif|<https://www.levif.be/feed/>|200|02/19/2026|valid|
-13|RTBF|<https://rss.rtbf.be/article/rss/highlight_rtbf_info.xml?source=internal>|200|02/19/2026|valid|
-16|Het Nieuwsblad|<https://www.nieuwsblad.be/rss/>|200|02/19/2026|valid|
-19|La Libre Belgique|<https://www.lalibre.be/rss/>|200|02/19/2026|valid|
-27|La Libre|<https://www.lalibre.be/rss>|200|02/19/2026|valid|
+1|De Morgen|<https://www.demorgen.be/rss.xml>|200|02/19/2026|valid|
+2|La Libre|<https://www.lalibre.be/arc/outboundfeeds/rss/section/belgique/?outputType=xml>|200|02/19/2026|valid|
+3|Knack|<https://www.knack.be/feed/>|200|02/19/2026|valid|
+4|VRT News|<https://www.vrt.be/vrtnws/nl.rss.articles.xml>|200|02/19/2026|valid|
+5|La Dernière Heure|<https://www.dhnet.be/rss.xml>|200|02/19/2026|valid|
+6|Le Vif|<https://www.levif.be/feed/>|200|02/19/2026|valid|
+7|RTBF|<https://rss.rtbf.be/article/rss/highlight_rtbf_info.xml?source=internal>|200|02/19/2026|valid|
+8|Het Nieuwsblad|<https://www.nieuwsblad.be/rss/>|200|02/19/2026|valid|
+9|La Libre Belgique|<https://www.lalibre.be/rss/>|200|02/19/2026|valid|
+10|La Libre|<https://www.lalibre.be/rss>|200|02/19/2026|valid|
 
 ### Thailand (TH)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
-11|The Thaiger|<https://thethaiger.com/feed>|200|02/19/2026|valid|
-12|Khaosod English|<https://www.khaosodenglish.com/rss>|200|02/19/2026|valid|
-13|Matichon|<https://www.matichon.co.th/rss>|200|02/19/2026|valid|
-18|Prachachat|<https://prachachat.net/feed/>|200|02/19/2026|valid|
-25|Daily News|<https://www.dailynews.co.th/rss>|200|02/19/2026|valid|
+1|The Thaiger|<https://thethaiger.com/feed>|200|02/19/2026|valid|
+2|Khaosod English|<https://www.khaosodenglish.com/rss>|200|02/19/2026|valid|
+3|Matichon|<https://www.matichon.co.th/rss>|200|02/19/2026|valid|
+4|Prachachat|<https://prachachat.net/feed/>|200|02/19/2026|valid|
+5|Daily News|<https://www.dailynews.co.th/rss>|200|02/19/2026|valid|
 
 ### Iran (IR)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
-2|IRNA|<https://www.irna.ir/rss>|200|02/19/2026|valid|
-3|Mehr News|<https://www.mehrnews.com/rss>|200|02/19/2026|valid|
-8|ILNA|<https://www.ilna.news/rss>|200|02/19/2026|valid|
-9|Khabar Online|<https://www.khabaronline.ir/rss>|200|02/19/2026|valid|
-10|Iran International|<https://www.iranintl.com/feed>|200|02/19/2026|valid|
-15|ILNA|<https://www.ilna.ir/rss>|200|02/19/2026|valid|
-25|Tejarat News|<https://www.tejaratnews.com/rss>|200|02/19/2026|valid|
+1|IRNA|<https://www.irna.ir/rss>|200|02/19/2026|valid|
+2|Mehr News|<https://www.mehrnews.com/rss>|200|02/19/2026|valid|
+3|ILNA|<https://www.ilna.news/rss>|200|02/19/2026|valid|
+4|Khabar Online|<https://www.khabaronline.ir/rss>|200|02/19/2026|valid|
+5|Iran International|<https://www.iranintl.com/feed>|200|02/19/2026|valid|
+6|ILNA|<https://www.ilna.ir/rss>|200|02/19/2026|valid|
+7|Tejarat News|<https://www.tejaratnews.com/rss>|200|02/19/2026|valid|
 
 ### Argentina (AR)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
@@ -770,43 +680,43 @@ This list covers the currently configured countries and their RSS outlets.
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
 1|Der Standard|<https://www.derstandard.at/rss>|200|02/19/2026|valid|
-3|ORF|<https://rss.orf.at/news.xml>|200|02/19/2026|valid|
-5|Die Presse|<https://www.diepresse.com/rss>|200|02/19/2026|valid|
-8|Tiroler Tageszeitung|<https://www.tt.com/rss/news.xml>|200|02/19/2026|valid|
-11|Der Standard|<https://www.derstandard.at/rss>|200|02/19/2026|valid|
-14|ORF Aktuell|<https://rss.orf.at/>|200|02/19/2026|valid|
-16|Kurier (Top News)|<https://kurier.at/xml/rssd>|200|02/19/2026|valid|
-17|Neue Donau|<https://www.neue.at/feed>|200|02/19/2026|valid|
-22|Der Standard|<https://www.derstandard.at/rss?section=welt>|200|02/19/2026|valid|
-24|Kleine Zeitung|<https://www.kleinezeitung.at/rss/home>|200|02/19/2026|valid|
-26|Der Standard|<https://www.derstandard.at/rss?output=amp>|200|02/19/2026|valid|
-29|ORF|<https://rss.orf.at/news.xml>|200|02/19/2026|valid|
-30|Der Standard Plus|<https://www.derstandard.at/rss/wirtschaft>|200|02/19/2026|valid|
+2|ORF|<https://rss.orf.at/news.xml>|200|02/19/2026|valid|
+3|Die Presse|<https://www.diepresse.com/rss>|200|02/19/2026|valid|
+4|Tiroler Tageszeitung|<https://www.tt.com/rss/news.xml>|200|02/19/2026|valid|
+5|Der Standard|<https://www.derstandard.at/rss>|200|02/19/2026|valid|
+6|ORF Aktuell|<https://rss.orf.at/>|200|02/19/2026|valid|
+7|Kurier (Top News)|<https://kurier.at/xml/rssd>|200|02/19/2026|valid|
+8|Neue Donau|<https://www.neue.at/feed>|200|02/19/2026|valid|
+9|Der Standard|<https://www.derstandard.at/rss?section=welt>|200|02/19/2026|valid|
+10|Kleine Zeitung|<https://www.kleinezeitung.at/rss/home>|200|02/19/2026|valid|
+11|Der Standard|<https://www.derstandard.at/rss?output=amp>|200|02/19/2026|valid|
+12|ORF|<https://rss.orf.at/news.xml>|200|02/19/2026|valid|
+13|Der Standard Plus|<https://www.derstandard.at/rss/wirtschaft>|200|02/19/2026|valid|
 
 ### Norway (NO)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
 1|NRK|<https://www.nrk.no/toppsaker.rss>|200|02/19/2026|valid|
-5|NRK News|<https://www.nrk.no/nyheter/siste.rss>|200|02/19/2026|valid|
-10|TV2|<https://www.tv2.no/rss/toppsaker.xml>|200|02/19/2026|valid|
-12|E24|<https://e24.no/rss>|200|02/19/2026|valid|
-16|Dagbladet|<https://www.dagbladet.no/rss/nyheter>|200|02/19/2026|valid|
-18|TV2|<https://www.tv2.no/rss/nyheter/>|200|02/19/2026|valid|
-22|E24|<https://e24.no/rss/okonomi.xml>|200|02/19/2026|valid|
-27|TV2|<https://www.tv2.no/rss/politikk.xml>|200|02/19/2026|valid|
-30|E24|<https://e24.no/rss/nyheter.xml>|200|02/19/2026|valid|
+2|NRK News|<https://www.nrk.no/nyheter/siste.rss>|200|02/19/2026|valid|
+3|TV2|<https://www.tv2.no/rss/toppsaker.xml>|200|02/19/2026|valid|
+4|E24|<https://e24.no/rss>|200|02/19/2026|valid|
+5|Dagbladet|<https://www.dagbladet.no/rss/nyheter>|200|02/19/2026|valid|
+6|TV2|<https://www.tv2.no/rss/nyheter/>|200|02/19/2026|valid|
+7|E24|<https://e24.no/rss/okonomi.xml>|200|02/19/2026|valid|
+8|TV2|<https://www.tv2.no/rss/politikk.xml>|200|02/19/2026|valid|
+9|E24|<https://e24.no/rss/nyheter.xml>|200|02/19/2026|valid|
 
 ### Global Energy & Grid (Global)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
 1|OilPrice|<https://oilprice.com/rss/main>|200|02/19/2026|valid|
-3|Power Engineering|<https://www.power-eng.com/feed/>|200|02/19/2026|valid|
-4|Renewable Energy World|<https://www.renewableenergyworld.com/feed/>|200|02/19/2026|valid|
-5|Utility Dive|<https://www.utilitydive.com/feeds/news/>|200|02/19/2026|valid|
-6|CleanTechnica|<https://cleantechnica.com/feed/>|200|02/19/2026|valid|
-11|Carbon Brief|<https://www.carbonbrief.org/feed/>|200|02/19/2026|valid|
-12|Power Magazine|<https://www.powermag.com/feed/>|200|02/19/2026|valid|
-15|PV Magazine|<https://www.pv-magazine.com/feed/>|200|02/19/2026|valid|
-17|Energy Post|<https://energypost.eu/feed/>|200|02/19/2026|valid|
-28|Energy Storage News|<https://www.energy-storage.news/rss>|200|02/19/2026|valid|
-29|Energy Storage News|<https://www.energy-storage.news/feed>|200|02/19/2026|valid|
+2|Power Engineering|<https://www.power-eng.com/feed/>|200|02/19/2026|valid|
+3|Renewable Energy World|<https://www.renewableenergyworld.com/feed/>|200|02/19/2026|valid|
+4|Utility Dive|<https://www.utilitydive.com/feeds/news/>|200|02/19/2026|valid|
+5|CleanTechnica|<https://cleantechnica.com/feed/>|200|02/19/2026|valid|
+6|Carbon Brief|<https://www.carbonbrief.org/feed/>|200|02/19/2026|valid|
+7|Power Magazine|<https://www.powermag.com/feed/>|200|02/19/2026|valid|
+8|PV Magazine|<https://www.pv-magazine.com/feed/>|200|02/19/2026|valid|
+9|Energy Post|<https://energypost.eu/feed/>|200|02/19/2026|valid|
+10|Energy Storage News|<https://www.energy-storage.news/rss>|200|02/19/2026|valid|
+11|Energy Storage News|<https://www.energy-storage.news/feed>|200|02/19/2026|valid|
