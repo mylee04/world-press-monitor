@@ -645,7 +645,7 @@ const playgroundHtml = `
 
       function filtersEndpoint() {
         const baseUrl = baseUrlInput.value.trim().replace(/\/+$/, '') || host;
-        return `${baseUrl}/api/filters`;
+        return baseUrl + '/api/filters';
       }
 
       async function loadFilterOptions() {
@@ -657,12 +657,12 @@ const playgroundHtml = `
         try {
           const response = await fetch(filtersEndpoint(), { headers });
           const text = await response.text();
-          if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: ${text}`);
+        if (!response.ok) {
+            throw new Error('HTTP ' + response.status + ': ' + text);
           }
           const payload = JSON.parse(text);
           if (payload.storage === 'disabled') {
-            throw new Error(`Storage disabled: ${payload.reason || 'storage unavailable'}`);
+            throw new Error('Storage disabled: ' + (payload.reason || 'storage unavailable'));
           }
           const filters = payload.filters || {};
           fillOptions(countriesSelect, filters.countries || []);
@@ -704,12 +704,12 @@ const playgroundHtml = `
         if (publicationTo) params.set('publication_to', publicationTo);
 
         const query = params.toString();
-        return `${baseUrl}/api/news${query ? `?${query}` : ''}`;
+        return baseUrl + '/api/news' + (query ? '?' + query : '');
       }
 
       async function fetchNews() {
         const apiUrl = buildUrl();
-        urlLine.textContent = `Query URL: ${apiUrl}`;
+        urlLine.textContent = 'Query URL: ' + apiUrl;
         statusEl.textContent = 'Requesting...';
         downloadBtn.disabled = true;
         downloadCsvBtn.disabled = true;
@@ -723,14 +723,14 @@ const playgroundHtml = `
           const response = await fetch(apiUrl, { headers });
       const text = await response.text();
       if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${text}`);
+          throw new Error('HTTP ' + response.status + ': ' + text);
       }
       const payload = JSON.parse(text);
       lastPayload = payload;
       resultEl.textContent = JSON.stringify(payload, null, 2);
       const total = typeof payload.total === 'number' ? payload.total : 0;
       const returned = Array.isArray(payload.items) ? payload.items.length : 0;
-          statusEl.textContent = `OK — total ${total}, returned ${returned}`;
+          statusEl.textContent = 'OK - total ' + total + ', returned ' + returned;
           downloadBtn.disabled = false;
           downloadCsvBtn.disabled = false;
           storage.setItem('wpm-playground-base', baseUrlInput.value.trim() || window.location.origin);
@@ -747,7 +747,7 @@ const playgroundHtml = `
       function escapeCsvValue(value) {
         const asString = value === null || value === undefined ? '' : String(value);
         const normalized = asString.replace(/\r/g, ' ').replace(/\n/g, ' ');
-        return `"${normalized.replace(/"/g, '""')}"`;
+        return '"' + normalized.replace(/"/g, '""') + '"';
       }
 
       function downloadCsv() {
@@ -766,7 +766,7 @@ const playgroundHtml = `
           'updatedAt'
         ];
         const rows = [];
-        rows.push(`# total,${typeof lastPayload.total === 'number' ? lastPayload.total : 0}`);
+        rows.push('# total,' + (typeof lastPayload.total === 'number' ? lastPayload.total : 0));
         rows.push(csvColumns.map((column) => escapeCsvValue(column)).join(','));
         for (const item of lastPayload.items) {
           rows.push(csvColumns.map((column) => escapeCsvValue(item[column])).join(','));
@@ -776,7 +776,7 @@ const playgroundHtml = `
         const a = document.createElement('a');
         const ts = new Date().toISOString().replace(/[:.]/g, '-');
         a.href = href;
-        a.download = `news-api-response-${ts}.csv`;
+        a.download = 'news-api-response-' + ts + '.csv';
         a.click();
         URL.revokeObjectURL(href);
       }
@@ -788,7 +788,7 @@ const playgroundHtml = `
         const a = document.createElement('a');
         const ts = new Date().toISOString().replace(/[:.]/g, '-');
         a.href = href;
-        a.download = `news-api-response-${ts}.json`;
+        a.download = 'news-api-response-' + ts + '.json';
         a.click();
         URL.revokeObjectURL(href);
       }
