@@ -91,6 +91,7 @@ const BATCH_SIZE = clampInt(process.env.RSS_BATCH_SIZE, 1, 150, 30);
 const BATCH_DELAY_MS = clampInt(process.env.RSS_BATCH_DELAY_MS, 0, 5000, 500);
 const REQUEST_TIMEOUT_MS = clampInt(process.env.RSS_REQUEST_TIMEOUT_MS, 5000, 30000, 15000);
 const REQUEST_JITTER_MS = clampInt(process.env.RSS_REQUEST_JITTER_MS, 0, 3000, 150);
+const MAX_HTTP_REDIRECTS = clampInt(process.env.RSS_MAX_REDIRECTS, 1, 20, 8);
 const PRECHECK_TIMEOUT_MS = clampInt(process.env.RSS_PRECHECK_TIMEOUT_MS, 1000, 30000, 5000);
 const SHOULD_PRECHECK = process.argv.includes('--precheck') || process.argv.includes('--preflight');
 const PRECHECK_URL = process.env.RSS_PRECHECK_URL || '';
@@ -899,7 +900,7 @@ async function verifyEndpoints(tasks: CheckTask[]): Promise<EndpointResult[]> {
 
 async function checkEndpoint(task: CheckTask): Promise<EndpointResult> {
   try {
-    const response = await fetchWithTimeout(task.url, REQUEST_TIMEOUT_MS);
+    const { response } = await fetchWithRedirects(task.url, REQUEST_TIMEOUT_MS, MAX_HTTP_REDIRECTS);
     const body = await response.text();
     const bodyStart = body.slice(0, 2000).toLowerCase();
     const xmlDetected = XML_MARKERS.some((marker) => bodyStart.includes(marker));
@@ -965,6 +966,12 @@ function formatStatus(result: EndpointResult): string {
 
 function classifyFetchError(error: unknown): string {
   const message = String(error).toLowerCase();
+  if (message.includes('redirect') && message.includes('loop')) {
+    return 'HTTP_REDIRECT_LOOP';
+  }
+  if (message.includes('too many redirects')) {
+    return 'HTTP_REDIRECT_LOOP';
+  }
   if (message.includes('dns') || message.includes('could not resolve host') || message.includes('getaddrinfo')) {
     return 'DNS';
   }
@@ -1019,11 +1026,57 @@ function fetchWithTimeout(url: string, timeoutMs: number): Promise<Response> {
       'User-Agent': USER_AGENT,
       Accept: 'application/rss+xml, application/xml, text/xml, */*',
     },
-    redirect: 'follow',
+    redirect: 'manual',
     signal: controller.signal,
   }).finally(() => {
     clearTimeout(timeout);
   });
+}
+
+type FetchRedirectResult = {
+  response: Response;
+  redirectCount: number;
+  finalUrl: string;
+};
+
+async function fetchWithRedirects(
+  initialUrl: string,
+  timeoutMs: number,
+  maxRedirects: number
+): Promise<FetchRedirectResult> {
+  let currentUrl = initialUrl;
+  let redirectCount = 0;
+  const visited = new Set<string>();
+  const startedAt = Date.now();
+
+  while (true) {
+    const elapsed = Date.now() - startedAt;
+    const remaining = Math.max(500, timeoutMs - elapsed);
+
+    const response = await fetchWithTimeout(currentUrl, remaining);
+    const status = response.status;
+
+    if (status >= 300 && status < 400) {
+      const location = response.headers.get('location');
+      if (location) {
+        await response.arrayBuffer().catch(() => {});
+        const nextUrl = new URL(location, currentUrl).toString();
+        redirectCount += 1;
+        if (redirectCount > maxRedirects) {
+          throw new Error(`Too many redirects: ${maxRedirects}`);
+        }
+        if (visited.has(nextUrl)) {
+          throw new Error(`Redirect loop detected: ${nextUrl}`);
+        }
+        visited.add(currentUrl);
+        currentUrl = nextUrl;
+        continue;
+      }
+      return { response, redirectCount, finalUrl: currentUrl };
+    }
+
+    return { response, redirectCount, finalUrl: currentUrl };
+  }
 }
 
 function updateHeaderCheckedDate(contents: string): string {

@@ -18,8 +18,11 @@ LIMIT="${NEWS_API_LIMIT:-10}"
 COUNTRY="${NEWS_API_COUNTRY:-}"
 SOURCE="${NEWS_API_SOURCE:-}"
 SECTION="${NEWS_API_SECTION:-}"
+LANGUAGE="${NEWS_API_LANGUAGE:-}"
 FROM="${NEWS_API_FROM:-}"
 TO="${NEWS_API_TO:-}"
+PUB_FROM="${NEWS_API_PUBLICATION_FROM:-}"
+PUB_TO="${NEWS_API_PUBLICATION_TO:-}"
 
 if [ -z "${TOKEN}" ]; then
   echo "ERROR: NEWS_API_TOKEN is missing in .env.local"
@@ -37,11 +40,20 @@ fi
 if [ -n "${SECTION}" ]; then
   QS+=("section=${SECTION}")
 fi
+if [ -n "${LANGUAGE}" ]; then
+  QS+=("language=${LANGUAGE}")
+fi
 if [ -n "${FROM}" ]; then
   QS+=("from=${FROM}")
 fi
 if [ -n "${TO}" ]; then
   QS+=("to=${TO}")
+fi
+if [ -n "${PUB_FROM}" ]; then
+  QS+=("publication_from=${PUB_FROM}")
+fi
+if [ -n "${PUB_TO}" ]; then
+  QS+=("publication_to=${PUB_TO}")
 fi
 
 QUERY="$(printf '%s&' "${QS[@]}" | sed 's/&$//')"

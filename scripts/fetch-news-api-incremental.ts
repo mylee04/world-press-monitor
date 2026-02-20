@@ -11,7 +11,7 @@ type ApiNewsItem = {
   id: string;
   source: string;
   title: string;
-  summary: string | null;
+  snippet: string | null;
   url: string;
   country: string | null;
   language: string | null;
