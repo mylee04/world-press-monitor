@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Fri, 20 Feb 2026 14:28:37 GMT</dateCreated>
+    <dateCreated>Fri, 20 Feb 2026 15:16:51 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -317,8 +317,8 @@
       <outline text="Ottawa Sun [valid]" title="Ottawa Sun [valid]" type="rss" xmlUrl="https://ottawasun.com/feed" htmlUrl="https://ottawasun.com"/>
       <outline text="The Tyee [valid]" title="The Tyee [valid]" type="rss" xmlUrl="https://thetyee.ca/rss2.xml" htmlUrl="https://thetyee.ca"/>
       <outline text="The StarPhoenix [valid]" title="The StarPhoenix [valid]" type="rss" xmlUrl="https://thestarphoenix.com/feed" htmlUrl="https://thestarphoenix.com"/>
-      <outline text="Edmonton Sun [invalid (ERR)]" title="Edmonton Sun [invalid (ERR)]" type="rss" xmlUrl="https://edmontonsun.com/feed" htmlUrl="https://edmontonsun.com"/>
-      <outline text="Canada.com [valid]" title="Canada.com [valid]" type="rss" xmlUrl="https://o.canada.com/feed" htmlUrl="https://o.canada.com"/>
+      <outline text="Edmonton Sun [valid]" title="Edmonton Sun [valid]" type="rss" xmlUrl="https://edmontonsun.com/feed" htmlUrl="https://edmontonsun.com"/>
+      <outline text="Canada.com [invalid (ERR)]" title="Canada.com [invalid (ERR)]" type="rss" xmlUrl="https://o.canada.com/feed" htmlUrl="https://o.canada.com"/>
       <outline text="Business In Vancouver (BIV) [valid]" title="Business In Vancouver (BIV) [valid]" type="rss" xmlUrl="https://biv.com/rss" htmlUrl="https://biv.com"/>
       <outline text="Regina Leader Post [valid]" title="Regina Leader Post [valid]" type="rss" xmlUrl="https://leaderpost.com/feed" htmlUrl="https://leaderpost.com"/>
       <outline text="Owen Sound Sun Times [valid]" title="Owen Sound Sun Times [valid]" type="rss" xmlUrl="https://owensoundsuntimes.com/feed" htmlUrl="https://owensoundsuntimes.com"/>
@@ -490,12 +490,12 @@
       <outline text="Antara TV [valid]" title="Antara TV [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/terkini" htmlUrl="https://www.antaranews.com"/>
       <outline text="Sindonews [valid]" title="Sindonews [valid]" type="rss" xmlUrl="https://www.sindonews.com/rss/" htmlUrl="https://www.sindonews.com"/>
       <outline text="Republika [valid]" title="Republika [valid]" type="rss" xmlUrl="https://www.republika.co.id/rss/terkini" htmlUrl="https://www.republika.co.id"/>
-      <outline text="ANTARA - Terkini [valid]" title="ANTARA - Terkini [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/terkini.xml" htmlUrl="https://www.antaranews.com"/>
+      <outline text="ANTARA - Terkini [invalid (ERR)]" title="ANTARA - Terkini [invalid (ERR)]" type="rss" xmlUrl="https://www.antaranews.com/rss/terkini.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Top News [valid]" title="ANTARA - Top News [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/top-news.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Politik [valid]" title="ANTARA - Politik [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/politik.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Hukum [valid]" title="ANTARA - Hukum [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/hukum.xml" htmlUrl="https://www.antaranews.com"/>
-      <outline text="ANTARA - Ekonomi [valid]" title="ANTARA - Ekonomi [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/ekonomi.xml" htmlUrl="https://www.antaranews.com"/>
-      <outline text="ANTARA - Ekonomi (Finansial) [invalid (ERR)]" title="ANTARA - Ekonomi (Finansial) [invalid (ERR)]" type="rss" xmlUrl="https://www.antaranews.com/rss/ekonomi-finansial.xml" htmlUrl="https://www.antaranews.com"/>
+      <outline text="ANTARA - Ekonomi [invalid (ERR)]" title="ANTARA - Ekonomi [invalid (ERR)]" type="rss" xmlUrl="https://www.antaranews.com/rss/ekonomi.xml" htmlUrl="https://www.antaranews.com"/>
+      <outline text="ANTARA - Ekonomi (Finansial) [valid]" title="ANTARA - Ekonomi (Finansial) [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/ekonomi-finansial.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Ekonomi (Bisnis) [valid]" title="ANTARA - Ekonomi (Bisnis) [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/ekonomi-bisnis.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Ekonomi (Bursa) [valid]" title="ANTARA - Ekonomi (Bursa) [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/ekonomi-bursa.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Metro [valid]" title="ANTARA - Metro [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/metro.xml" htmlUrl="https://www.antaranews.com"/>
@@ -514,7 +514,7 @@
       <outline text="ANTARA - Olahraga (Bola Basket) [valid]" title="ANTARA - Olahraga (Bola Basket) [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/olahraga-bola-basket.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Olahraga (Tenis) [valid]" title="ANTARA - Olahraga (Tenis) [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/olahraga-tenis.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Olahraga (Balap) [valid]" title="ANTARA - Olahraga (Balap) [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/olahraga-balap.xml" htmlUrl="https://www.antaranews.com"/>
-      <outline text="ANTARA - Humaniora [invalid (ERR)]" title="ANTARA - Humaniora [invalid (ERR)]" type="rss" xmlUrl="https://www.antaranews.com/rss/humaniora.xml" htmlUrl="https://www.antaranews.com"/>
+      <outline text="ANTARA - Humaniora [valid]" title="ANTARA - Humaniora [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/humaniora.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Lifestyle [valid]" title="ANTARA - Lifestyle [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/lifestyle.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Hiburan [valid]" title="ANTARA - Hiburan [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/hiburan.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Dunia [valid]" title="ANTARA - Dunia [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/dunia.xml" htmlUrl="https://www.antaranews.com"/>
@@ -810,20 +810,20 @@
       <outline text="Tehran Times - International [invalid (ERR)]" title="Tehran Times - International [invalid (ERR)]" type="rss" xmlUrl="https://www.tehrantimes.com/rss/tp/702" htmlUrl="https://www.tehrantimes.com"/>
       <outline text="Tehran Times - Multimedia [invalid (ERR)]" title="Tehran Times - Multimedia [invalid (ERR)]" type="rss" xmlUrl="https://www.tehrantimes.com/rss/tp/717" htmlUrl="https://www.tehrantimes.com"/>
       <outline text="Tehran Times - Tourism [invalid (ERR)]" title="Tehran Times - Tourism [invalid (ERR)]" type="rss" xmlUrl="https://www.tehrantimes.com/rss/tp/807" htmlUrl="https://www.tehrantimes.com"/>
-      <outline text="MehrNews (EN) - Latest [invalid (ERR)]" title="MehrNews (EN) - Latest [invalid (ERR)]" type="rss" xmlUrl="https://en.mehrnews.com/rss/pl/118" htmlUrl="https://en.mehrnews.com"/>
-      <outline text="MehrNews (EN) - Iran [invalid (ERR)]" title="MehrNews (EN) - Iran [invalid (ERR)]" type="rss" xmlUrl="https://en.mehrnews.com/rss/tp/575" htmlUrl="https://en.mehrnews.com"/>
-      <outline text="MehrNews (EN) - Iran &gt; Iran [invalid (ERR)]" title="MehrNews (EN) - Iran &gt; Iran [invalid (ERR)]" type="rss" xmlUrl="https://en.mehrnews.com/rss/tp/905" htmlUrl="https://en.mehrnews.com"/>
-      <outline text="MehrNews (EN) - Ethnic Groups [invalid (ERR)]" title="MehrNews (EN) - Ethnic Groups [invalid (ERR)]" type="rss" xmlUrl="https://en.mehrnews.com/rss/tp/897" htmlUrl="https://en.mehrnews.com"/>
-      <outline text="MehrNews (EN) - Nature [invalid (ERR)]" title="MehrNews (EN) - Nature [invalid (ERR)]" type="rss" xmlUrl="https://en.mehrnews.com/rss/tp/898" htmlUrl="https://en.mehrnews.com"/>
-      <outline text="MehrNews (EN) - Historical Sites [invalid (ERR)]" title="MehrNews (EN) - Historical Sites [invalid (ERR)]" type="rss" xmlUrl="https://en.mehrnews.com/rss/tp/899" htmlUrl="https://en.mehrnews.com"/>
-      <outline text="MehrNews (EN) - Souvenirs [invalid (ERR)]" title="MehrNews (EN) - Souvenirs [invalid (ERR)]" type="rss" xmlUrl="https://en.mehrnews.com/rss/tp/900" htmlUrl="https://en.mehrnews.com"/>
-      <outline text="MehrNews (EN) - Persian Cuisine [invalid (ERR)]" title="MehrNews (EN) - Persian Cuisine [invalid (ERR)]" type="rss" xmlUrl="https://en.mehrnews.com/rss/tp/901" htmlUrl="https://en.mehrnews.com"/>
-      <outline text="ISNA (EN) - Social [invalid (ERR)]" title="ISNA (EN) - Social [invalid (ERR)]" type="rss" xmlUrl="https://en.isna.ir/rss/tp/8" htmlUrl="https://en.isna.ir"/>
-      <outline text="ISNA (EN) - Economy [invalid (ERR)]" title="ISNA (EN) - Economy [invalid (ERR)]" type="rss" xmlUrl="https://en.isna.ir/rss/tp/33" htmlUrl="https://en.isna.ir"/>
-      <outline text="ISNA (EN) - Politics [invalid (ERR)]" title="ISNA (EN) - Politics [invalid (ERR)]" type="rss" xmlUrl="https://en.isna.ir/rss/tp/13" htmlUrl="https://en.isna.ir"/>
-      <outline text="ISNA (EN) - Culture &amp; Art [invalid (ERR)]" title="ISNA (EN) - Culture &amp; Art [invalid (ERR)]" type="rss" xmlUrl="https://en.isna.ir/rss/tp/19" htmlUrl="https://en.isna.ir"/>
-      <outline text="ISNA (EN) - Sports [invalid (ERR)]" title="ISNA (EN) - Sports [invalid (ERR)]" type="rss" xmlUrl="https://en.isna.ir/rss/tp/23" htmlUrl="https://en.isna.ir"/>
-      <outline text="ISNA (EN) - Photos [invalid (ERR)]" title="ISNA (EN) - Photos [invalid (ERR)]" type="rss" xmlUrl="https://en.isna.ir/rss/tp/27" htmlUrl="https://en.isna.ir"/>
+      <outline text="MehrNews (EN) - Latest [valid]" title="MehrNews (EN) - Latest [valid]" type="rss" xmlUrl="https://en.mehrnews.com/rss/pl/118" htmlUrl="https://en.mehrnews.com"/>
+      <outline text="MehrNews (EN) - Iran [valid]" title="MehrNews (EN) - Iran [valid]" type="rss" xmlUrl="https://en.mehrnews.com/rss/tp/575" htmlUrl="https://en.mehrnews.com"/>
+      <outline text="MehrNews (EN) - Iran &gt; Iran [valid]" title="MehrNews (EN) - Iran &gt; Iran [valid]" type="rss" xmlUrl="https://en.mehrnews.com/rss/tp/905" htmlUrl="https://en.mehrnews.com"/>
+      <outline text="MehrNews (EN) - Ethnic Groups [valid]" title="MehrNews (EN) - Ethnic Groups [valid]" type="rss" xmlUrl="https://en.mehrnews.com/rss/tp/897" htmlUrl="https://en.mehrnews.com"/>
+      <outline text="MehrNews (EN) - Nature [valid]" title="MehrNews (EN) - Nature [valid]" type="rss" xmlUrl="https://en.mehrnews.com/rss/tp/898" htmlUrl="https://en.mehrnews.com"/>
+      <outline text="MehrNews (EN) - Historical Sites [valid]" title="MehrNews (EN) - Historical Sites [valid]" type="rss" xmlUrl="https://en.mehrnews.com/rss/tp/899" htmlUrl="https://en.mehrnews.com"/>
+      <outline text="MehrNews (EN) - Souvenirs [valid]" title="MehrNews (EN) - Souvenirs [valid]" type="rss" xmlUrl="https://en.mehrnews.com/rss/tp/900" htmlUrl="https://en.mehrnews.com"/>
+      <outline text="MehrNews (EN) - Persian Cuisine [valid]" title="MehrNews (EN) - Persian Cuisine [valid]" type="rss" xmlUrl="https://en.mehrnews.com/rss/tp/901" htmlUrl="https://en.mehrnews.com"/>
+      <outline text="ISNA (EN) - Social [invalid]" title="ISNA (EN) - Social [invalid]" type="rss" xmlUrl="https://en.isna.ir/rss/tp/8" htmlUrl="https://en.isna.ir"/>
+      <outline text="ISNA (EN) - Economy [invalid]" title="ISNA (EN) - Economy [invalid]" type="rss" xmlUrl="https://en.isna.ir/rss/tp/33" htmlUrl="https://en.isna.ir"/>
+      <outline text="ISNA (EN) - Politics [invalid]" title="ISNA (EN) - Politics [invalid]" type="rss" xmlUrl="https://en.isna.ir/rss/tp/13" htmlUrl="https://en.isna.ir"/>
+      <outline text="ISNA (EN) - Culture &amp; Art [invalid]" title="ISNA (EN) - Culture &amp; Art [invalid]" type="rss" xmlUrl="https://en.isna.ir/rss/tp/19" htmlUrl="https://en.isna.ir"/>
+      <outline text="ISNA (EN) - Sports [invalid]" title="ISNA (EN) - Sports [invalid]" type="rss" xmlUrl="https://en.isna.ir/rss/tp/23" htmlUrl="https://en.isna.ir"/>
+      <outline text="ISNA (EN) - Photos [invalid]" title="ISNA (EN) - Photos [invalid]" type="rss" xmlUrl="https://en.isna.ir/rss/tp/27" htmlUrl="https://en.isna.ir"/>
       <outline text="Tasnim (EN) - Top Stories [valid]" title="Tasnim (EN) - Top Stories [valid]" type="rss" xmlUrl="https://www.tasnimnews.ir/en/rss/feed/0/0/8/1/TopStories" htmlUrl="https://www.tasnimnews.ir"/>
       <outline text="Tasnim (EN) - All Stories [valid]" title="Tasnim (EN) - All Stories [valid]" type="rss" xmlUrl="https://www.tasnimnews.ir/en/rss/feed/0/0/0/0/AllStories" htmlUrl="https://www.tasnimnews.ir"/>
       <outline text="Tasnim (EN) - Politics [valid]" title="Tasnim (EN) - Politics [valid]" type="rss" xmlUrl="https://www.tasnimnews.ir/en/rss/feeds/1192/0/0/0" htmlUrl="https://www.tasnimnews.ir"/>
@@ -831,7 +831,7 @@
       <outline text="Tasnim (EN) - World [valid]" title="Tasnim (EN) - World [valid]" type="rss" xmlUrl="https://www.tasnimnews.ir/en/rss/feeds/1194/0/0/0" htmlUrl="https://www.tasnimnews.ir"/>
     </outline>
     <outline text="Argentina (AR)" title="Argentina (AR)">
-      <outline text="Ámbito - Portada [valid]" title="Ámbito - Portada [valid]" type="rss" xmlUrl="https://www.ambito.com/rss/pages/home.xml" htmlUrl="https://www.ambito.com"/>
+      <outline text="Ámbito - Portada [invalid]" title="Ámbito - Portada [invalid]" type="rss" xmlUrl="https://www.ambito.com/rss/pages/home.xml" htmlUrl="https://www.ambito.com"/>
       <outline text="Ámbito - Últimas noticias [valid]" title="Ámbito - Últimas noticias [valid]" type="rss" xmlUrl="https://www.ambito.com/rss/pages/ultimas-noticias.xml" htmlUrl="https://www.ambito.com"/>
       <outline text="Ámbito - Economía [valid]" title="Ámbito - Economía [valid]" type="rss" xmlUrl="https://www.ambito.com/rss/pages/economia.xml" htmlUrl="https://www.ambito.com"/>
       <outline text="Ámbito - Finanzas [valid]" title="Ámbito - Finanzas [valid]" type="rss" xmlUrl="https://www.ambito.com/rss/pages/finanzas.xml" htmlUrl="https://www.ambito.com"/>
@@ -949,7 +949,7 @@
     <outline text="Austria (AT)" title="Austria (AT)">
       <outline text="Der Standard [valid]" title="Der Standard [valid]" type="rss" xmlUrl="https://www.derstandard.at/rss" htmlUrl="https://www.derstandard.at"/>
       <outline text="ORF [valid]" title="ORF [valid]" type="rss" xmlUrl="https://rss.orf.at/news.xml" htmlUrl="https://rss.orf.at"/>
-      <outline text="Die Presse [invalid (ERR)]" title="Die Presse [invalid (ERR)]" type="rss" xmlUrl="https://www.diepresse.com/rss" htmlUrl="https://www.diepresse.com"/>
+      <outline text="Die Presse [valid]" title="Die Presse [valid]" type="rss" xmlUrl="https://www.diepresse.com/rss" htmlUrl="https://www.diepresse.com"/>
       <outline text="Tiroler Tageszeitung [valid]" title="Tiroler Tageszeitung [valid]" type="rss" xmlUrl="https://www.tt.com/rss/news.xml" htmlUrl="https://www.tt.com"/>
       <outline text="ORF Aktuell [valid]" title="ORF Aktuell [valid]" type="rss" xmlUrl="https://rss.orf.at/" htmlUrl="https://rss.orf.at"/>
       <outline text="Kurier (Top News) [valid]" title="Kurier (Top News) [valid]" type="rss" xmlUrl="https://kurier.at/xml/rssd" htmlUrl="https://kurier.at"/>

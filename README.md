@@ -51,11 +51,12 @@ GitHub Actions is also configured:
 
 
 
+
 ## Latest RSS verification snapshot
 
 - Checked endpoints: `952`
-- Valid: `911`
-- Invalid: `41`
+- Valid: `919`
+- Invalid: `33`
 - No-source rows: `0`
 - Snapshot date: `02/20/2026`
 - Source artifact: `audits/readme_rss_health_latest.json`
@@ -63,36 +64,29 @@ GitHub Actions is also configured:
 ### Failure reasons
 |Reason|Count|
 |---|---:|
-|TIMEOUT|30|
-|HTML_RETURNED|4|
+|HTTP_REDIRECT_LOOP|12|
+|HTML_RETURNED|10|
 |HTTP_403|3|
-|HTTP_404|2|
+|HTTP_404|3|
+|TIMEOUT|2|
 |HTTP_504|2|
+|NETWORK|1|
+
+Failure meaning:
+- `HTTP_REDIRECT_LOOP`: URL keeps redirecting without reaching a final RSS payload (auth pages, cloud anti-bot, or endpoint changes).
+- `HTML_RETURNED`: URL is valid web page but not an RSS/Atom feed (directory/home/listing pages).
+- `HTTP_403`: Access denied, likely blocked by bot protection or regional/geolocation policy.
+- `HTTP_404`: Path is gone or RSS endpoint changed.
+- `TIMEOUT`: Request took too long to respond; may be temporary network/source slowness.
+- `HTTP_504`: Upstream service timeout from source/CDN; usually transient.
+- `NETWORK`: DNS/egress/network layer issue at the time of check.
 
 ### Invalid feeds by reason
 
-#### TIMEOUT (30)
+#### HTTP_REDIRECT_LOOP (12)
 |Country|Outlet|RSS URL|HTTP|
 |---|---|---|---:|
-|Austria|Die Presse|<https://www.diepresse.com/rss>|-|
 |Belgium|Het Nieuwsblad (example section)|<https://www.nieuwsblad.be/rss/section/55178e67-15a8-4ddd-a3d8-bfe5708f8932>|-|
-|Canada|Edmonton Sun|<https://edmontonsun.com/feed>|-|
-|Indonesia|ANTARA - Ekonomi (Finansial)|<https://www.antaranews.com/rss/ekonomi-finansial.xml>|-|
-|Indonesia|ANTARA - Humaniora|<https://www.antaranews.com/rss/humaniora.xml>|-|
-|Iran|ISNA (EN) - Culture & Art|<https://en.isna.ir/rss/tp/19>|-|
-|Iran|ISNA (EN) - Economy|<https://en.isna.ir/rss/tp/33>|-|
-|Iran|ISNA (EN) - Photos|<https://en.isna.ir/rss/tp/27>|-|
-|Iran|ISNA (EN) - Politics|<https://en.isna.ir/rss/tp/13>|-|
-|Iran|ISNA (EN) - Social|<https://en.isna.ir/rss/tp/8>|-|
-|Iran|ISNA (EN) - Sports|<https://en.isna.ir/rss/tp/23>|-|
-|Iran|MehrNews (EN) - Ethnic Groups|<https://en.mehrnews.com/rss/tp/897>|-|
-|Iran|MehrNews (EN) - Historical Sites|<https://en.mehrnews.com/rss/tp/899>|-|
-|Iran|MehrNews (EN) - Iran|<https://en.mehrnews.com/rss/tp/575>|-|
-|Iran|MehrNews (EN) - Iran > Iran|<https://en.mehrnews.com/rss/tp/905>|-|
-|Iran|MehrNews (EN) - Latest|<https://en.mehrnews.com/rss/pl/118>|-|
-|Iran|MehrNews (EN) - Nature|<https://en.mehrnews.com/rss/tp/898>|-|
-|Iran|MehrNews (EN) - Persian Cuisine|<https://en.mehrnews.com/rss/tp/901>|-|
-|Iran|MehrNews (EN) - Souvenirs|<https://en.mehrnews.com/rss/tp/900>|-|
 |Iran|Tehran Times - Breaking|<https://www.tehrantimes.com/rss/pl/617>|-|
 |Iran|Tehran Times - Culture|<https://www.tehrantimes.com/rss/tp/700>|-|
 |Iran|Tehran Times - Economy|<https://www.tehrantimes.com/rss/tp/697>|-|
@@ -105,10 +99,16 @@ GitHub Actions is also configured:
 |Iran|Tehran Times - Sports|<https://www.tehrantimes.com/rss/tp/699>|-|
 |Iran|Tehran Times - Tourism|<https://www.tehrantimes.com/rss/tp/807>|-|
 
-#### HTML_RETURNED (4)
+#### HTML_RETURNED (10)
 |Country|Outlet|RSS URL|HTTP|
 |---|---|---|---:|
 |Belgium|Brussels Times|<https://www.brusselstimes.com/rss-feed>|200|
+|Iran|ISNA (EN) - Culture & Art|<https://en.isna.ir/rss/tp/19>|200|
+|Iran|ISNA (EN) - Economy|<https://en.isna.ir/rss/tp/33>|200|
+|Iran|ISNA (EN) - Photos|<https://en.isna.ir/rss/tp/27>|200|
+|Iran|ISNA (EN) - Politics|<https://en.isna.ir/rss/tp/13>|200|
+|Iran|ISNA (EN) - Social|<https://en.isna.ir/rss/tp/8>|200|
+|Iran|ISNA (EN) - Sports|<https://en.isna.ir/rss/tp/23>|200|
 |Norway|DN - RSS directory|<https://services.dn.no/tools/rss>|200|
 |Norway|NRK - RSS oversikt (directory)|<https://www.nrk.no/rss/>|200|
 |Turkey|Hürriyet (Sağlık)|<http://www.hurriyet.com.tr/rss/saglik>|200|
@@ -120,17 +120,29 @@ GitHub Actions is also configured:
 |Belgium|Le Soir (main)|<https://www.lesoir.be/rss2/9/cible_principale>|403|
 |Netherlands|De Telegraaf|<https://www.telegraaf.nl/rss>|403|
 
-#### HTTP_404 (2)
+#### HTTP_404 (3)
 |Country|Outlet|RSS URL|HTTP|
 |---|---|---|---:|
+|Argentina|Ámbito - Portada|<https://www.ambito.com/rss/pages/home.xml>|404|
 |Norway|VG - Forsiden|<https://www.vg.no/rss/feed/forsiden/>|404|
 |Sweden|Radio Sweden - Sweden Today (podcast xml)|<http://sverigesradio.se/Podradio/xml/SRI_en_sweToday.xml>|404|
+
+#### TIMEOUT (2)
+|Country|Outlet|RSS URL|HTTP|
+|---|---|---|---:|
+|Canada|Canada.com|<https://o.canada.com/feed>|-|
+|Indonesia|ANTARA - Ekonomi|<https://www.antaranews.com/rss/ekonomi.xml>|-|
 
 #### HTTP_504 (2)
 |Country|Outlet|RSS URL|HTTP|
 |---|---|---|---:|
 |Thailand|Thairath (News)|<http://www.thairath.co.th/rss/news.xml>|504|
 |Thailand|Thairath (Sport)|<http://www.thairath.co.th/rss/sport.xml>|504|
+
+#### NETWORK (1)
+|Country|Outlet|RSS URL|HTTP|
+|---|---|---|---:|
+|Indonesia|ANTARA - Terkini|<https://www.antaranews.com/rss/terkini.xml>|-|
 
 ### No-source rows
 - none
@@ -463,8 +475,8 @@ GitHub Actions is also configured:
 12|Ottawa Sun|<https://ottawasun.com/feed>|200|02/20/2026|valid|
 13|The Tyee|<https://thetyee.ca/rss2.xml>|200|02/20/2026|valid|
 14|The StarPhoenix|<https://thestarphoenix.com/feed>|200|02/20/2026|valid|
-15|Edmonton Sun|<https://edmontonsun.com/feed>|ERR (TIMEOUT)|02/20/2026|invalid|
-16|Canada.com|<https://o.canada.com/feed>|200|02/20/2026|valid|
+15|Edmonton Sun|<https://edmontonsun.com/feed>|200|02/20/2026|valid|
+16|Canada.com|<https://o.canada.com/feed>|ERR (TIMEOUT)|02/20/2026|invalid|
 17|Business In Vancouver (BIV)|<https://biv.com/rss>|200|02/20/2026|valid|
 18|Regina Leader Post|<https://leaderpost.com/feed>|200|02/20/2026|valid|
 19|Owen Sound Sun Times|<https://owensoundsuntimes.com/feed>|200|02/20/2026|valid|
@@ -650,12 +662,12 @@ GitHub Actions is also configured:
 4|Antara TV|<https://www.antaranews.com/rss/terkini>|200|02/20/2026|valid|
 5|Sindonews|<https://www.sindonews.com/rss/>|200|02/20/2026|valid|
 6|Republika|<https://www.republika.co.id/rss/terkini>|200|02/20/2026|valid|
-7|ANTARA - Terkini|<https://www.antaranews.com/rss/terkini.xml>|200|02/20/2026|valid|
+7|ANTARA - Terkini|<https://www.antaranews.com/rss/terkini.xml>|ERR (NETWORK)|02/20/2026|invalid|
 8|ANTARA - Top News|<https://www.antaranews.com/rss/top-news.xml>|200|02/20/2026|valid|
 9|ANTARA - Politik|<https://www.antaranews.com/rss/politik.xml>|200|02/20/2026|valid|
 10|ANTARA - Hukum|<https://www.antaranews.com/rss/hukum.xml>|200|02/20/2026|valid|
-11|ANTARA - Ekonomi|<https://www.antaranews.com/rss/ekonomi.xml>|200|02/20/2026|valid|
-12|ANTARA - Ekonomi (Finansial)|<https://www.antaranews.com/rss/ekonomi-finansial.xml>|ERR (TIMEOUT)|02/20/2026|invalid|
+11|ANTARA - Ekonomi|<https://www.antaranews.com/rss/ekonomi.xml>|ERR (TIMEOUT)|02/20/2026|invalid|
+12|ANTARA - Ekonomi (Finansial)|<https://www.antaranews.com/rss/ekonomi-finansial.xml>|200|02/20/2026|valid|
 13|ANTARA - Ekonomi (Bisnis)|<https://www.antaranews.com/rss/ekonomi-bisnis.xml>|200|02/20/2026|valid|
 14|ANTARA - Ekonomi (Bursa)|<https://www.antaranews.com/rss/ekonomi-bursa.xml>|200|02/20/2026|valid|
 15|ANTARA - Metro|<https://www.antaranews.com/rss/metro.xml>|200|02/20/2026|valid|
@@ -674,7 +686,7 @@ GitHub Actions is also configured:
 28|ANTARA - Olahraga (Bola Basket)|<https://www.antaranews.com/rss/olahraga-bola-basket.xml>|200|02/20/2026|valid|
 29|ANTARA - Olahraga (Tenis)|<https://www.antaranews.com/rss/olahraga-tenis.xml>|200|02/20/2026|valid|
 30|ANTARA - Olahraga (Balap)|<https://www.antaranews.com/rss/olahraga-balap.xml>|200|02/20/2026|valid|
-31|ANTARA - Humaniora|<https://www.antaranews.com/rss/humaniora.xml>|ERR (TIMEOUT)|02/20/2026|invalid|
+31|ANTARA - Humaniora|<https://www.antaranews.com/rss/humaniora.xml>|200|02/20/2026|valid|
 32|ANTARA - Lifestyle|<https://www.antaranews.com/rss/lifestyle.xml>|200|02/20/2026|valid|
 33|ANTARA - Hiburan|<https://www.antaranews.com/rss/hiburan.xml>|200|02/20/2026|valid|
 34|ANTARA - Dunia|<https://www.antaranews.com/rss/dunia.xml>|200|02/20/2026|valid|
@@ -930,7 +942,7 @@ GitHub Actions is also configured:
 13|Brussels Morning|<https://brusselsmorning.com/feed>|200|02/20/2026|valid|
 14|L'Echo|<https://www.lecho.be/rss/top_stories.xml>|200|02/20/2026|valid|
 15|De Standaard (example section)|<https://www.standaard.be/rss/section/1f2838d4-99ea-49f0-9102-138784c7ea7c>|403 (HTTP_403)|02/20/2026|invalid|
-16|Het Nieuwsblad (example section)|<https://www.nieuwsblad.be/rss/section/55178e67-15a8-4ddd-a3d8-bfe5708f8932>|ERR (TIMEOUT)|02/20/2026|invalid|
+16|Het Nieuwsblad (example section)|<https://www.nieuwsblad.be/rss/section/55178e67-15a8-4ddd-a3d8-bfe5708f8932>|ERR (HTTP_REDIRECT_LOOP)|02/20/2026|invalid|
 17|Le Soir (main)|<https://www.lesoir.be/rss2/9/cible_principale>|403 (HTTP_403)|02/20/2026|invalid|
 18|Brussels Times|<https://www.brusselstimes.com/rss-feed>|200 (HTML_RETURNED)|02/20/2026|invalid|
 19|City of Brussels (official)|<https://www.brussels.be/rss.xml>|200|02/20/2026|valid|
@@ -979,31 +991,31 @@ GitHub Actions is also configured:
 5|Iran International|<https://www.iranintl.com/feed>|200|02/20/2026|valid|
 6|ILNA|<https://www.ilna.ir/rss>|200|02/20/2026|valid|
 7|Tejarat News|<https://www.tejaratnews.com/rss>|200|02/20/2026|valid|
-8|Tehran Times - Latest|<https://www.tehrantimes.com/rss>|ERR (TIMEOUT)|02/20/2026|invalid|
-9|Tehran Times - Homepage|<https://www.tehrantimes.com/rss-homepage>|ERR (TIMEOUT)|02/20/2026|invalid|
-10|Tehran Times - Breaking|<https://www.tehrantimes.com/rss/pl/617>|ERR (TIMEOUT)|02/20/2026|invalid|
-11|Tehran Times - Society|<https://www.tehrantimes.com/rss/tp/696>|ERR (TIMEOUT)|02/20/2026|invalid|
-12|Tehran Times - Economy|<https://www.tehrantimes.com/rss/tp/697>|ERR (TIMEOUT)|02/20/2026|invalid|
-13|Tehran Times - Politics|<https://www.tehrantimes.com/rss/tp/698>|ERR (TIMEOUT)|02/20/2026|invalid|
-14|Tehran Times - Sports|<https://www.tehrantimes.com/rss/tp/699>|ERR (TIMEOUT)|02/20/2026|invalid|
-15|Tehran Times - Culture|<https://www.tehrantimes.com/rss/tp/700>|ERR (TIMEOUT)|02/20/2026|invalid|
-16|Tehran Times - International|<https://www.tehrantimes.com/rss/tp/702>|ERR (TIMEOUT)|02/20/2026|invalid|
-17|Tehran Times - Multimedia|<https://www.tehrantimes.com/rss/tp/717>|ERR (TIMEOUT)|02/20/2026|invalid|
-18|Tehran Times - Tourism|<https://www.tehrantimes.com/rss/tp/807>|ERR (TIMEOUT)|02/20/2026|invalid|
-19|MehrNews (EN) - Latest|<https://en.mehrnews.com/rss/pl/118>|ERR (TIMEOUT)|02/20/2026|invalid|
-20|MehrNews (EN) - Iran|<https://en.mehrnews.com/rss/tp/575>|ERR (TIMEOUT)|02/20/2026|invalid|
-21|MehrNews (EN) - Iran > Iran|<https://en.mehrnews.com/rss/tp/905>|ERR (TIMEOUT)|02/20/2026|invalid|
-22|MehrNews (EN) - Ethnic Groups|<https://en.mehrnews.com/rss/tp/897>|ERR (TIMEOUT)|02/20/2026|invalid|
-23|MehrNews (EN) - Nature|<https://en.mehrnews.com/rss/tp/898>|ERR (TIMEOUT)|02/20/2026|invalid|
-24|MehrNews (EN) - Historical Sites|<https://en.mehrnews.com/rss/tp/899>|ERR (TIMEOUT)|02/20/2026|invalid|
-25|MehrNews (EN) - Souvenirs|<https://en.mehrnews.com/rss/tp/900>|ERR (TIMEOUT)|02/20/2026|invalid|
-26|MehrNews (EN) - Persian Cuisine|<https://en.mehrnews.com/rss/tp/901>|ERR (TIMEOUT)|02/20/2026|invalid|
-27|ISNA (EN) - Social|<https://en.isna.ir/rss/tp/8>|ERR (TIMEOUT)|02/20/2026|invalid|
-28|ISNA (EN) - Economy|<https://en.isna.ir/rss/tp/33>|ERR (TIMEOUT)|02/20/2026|invalid|
-29|ISNA (EN) - Politics|<https://en.isna.ir/rss/tp/13>|ERR (TIMEOUT)|02/20/2026|invalid|
-30|ISNA (EN) - Culture & Art|<https://en.isna.ir/rss/tp/19>|ERR (TIMEOUT)|02/20/2026|invalid|
-31|ISNA (EN) - Sports|<https://en.isna.ir/rss/tp/23>|ERR (TIMEOUT)|02/20/2026|invalid|
-32|ISNA (EN) - Photos|<https://en.isna.ir/rss/tp/27>|ERR (TIMEOUT)|02/20/2026|invalid|
+8|Tehran Times - Latest|<https://www.tehrantimes.com/rss>|ERR (HTTP_REDIRECT_LOOP)|02/20/2026|invalid|
+9|Tehran Times - Homepage|<https://www.tehrantimes.com/rss-homepage>|ERR (HTTP_REDIRECT_LOOP)|02/20/2026|invalid|
+10|Tehran Times - Breaking|<https://www.tehrantimes.com/rss/pl/617>|ERR (HTTP_REDIRECT_LOOP)|02/20/2026|invalid|
+11|Tehran Times - Society|<https://www.tehrantimes.com/rss/tp/696>|ERR (HTTP_REDIRECT_LOOP)|02/20/2026|invalid|
+12|Tehran Times - Economy|<https://www.tehrantimes.com/rss/tp/697>|ERR (HTTP_REDIRECT_LOOP)|02/20/2026|invalid|
+13|Tehran Times - Politics|<https://www.tehrantimes.com/rss/tp/698>|ERR (HTTP_REDIRECT_LOOP)|02/20/2026|invalid|
+14|Tehran Times - Sports|<https://www.tehrantimes.com/rss/tp/699>|ERR (HTTP_REDIRECT_LOOP)|02/20/2026|invalid|
+15|Tehran Times - Culture|<https://www.tehrantimes.com/rss/tp/700>|ERR (HTTP_REDIRECT_LOOP)|02/20/2026|invalid|
+16|Tehran Times - International|<https://www.tehrantimes.com/rss/tp/702>|ERR (HTTP_REDIRECT_LOOP)|02/20/2026|invalid|
+17|Tehran Times - Multimedia|<https://www.tehrantimes.com/rss/tp/717>|ERR (HTTP_REDIRECT_LOOP)|02/20/2026|invalid|
+18|Tehran Times - Tourism|<https://www.tehrantimes.com/rss/tp/807>|ERR (HTTP_REDIRECT_LOOP)|02/20/2026|invalid|
+19|MehrNews (EN) - Latest|<https://en.mehrnews.com/rss/pl/118>|200|02/20/2026|valid|
+20|MehrNews (EN) - Iran|<https://en.mehrnews.com/rss/tp/575>|200|02/20/2026|valid|
+21|MehrNews (EN) - Iran > Iran|<https://en.mehrnews.com/rss/tp/905>|200|02/20/2026|valid|
+22|MehrNews (EN) - Ethnic Groups|<https://en.mehrnews.com/rss/tp/897>|200|02/20/2026|valid|
+23|MehrNews (EN) - Nature|<https://en.mehrnews.com/rss/tp/898>|200|02/20/2026|valid|
+24|MehrNews (EN) - Historical Sites|<https://en.mehrnews.com/rss/tp/899>|200|02/20/2026|valid|
+25|MehrNews (EN) - Souvenirs|<https://en.mehrnews.com/rss/tp/900>|200|02/20/2026|valid|
+26|MehrNews (EN) - Persian Cuisine|<https://en.mehrnews.com/rss/tp/901>|200|02/20/2026|valid|
+27|ISNA (EN) - Social|<https://en.isna.ir/rss/tp/8>|200 (HTML_RETURNED)|02/20/2026|invalid|
+28|ISNA (EN) - Economy|<https://en.isna.ir/rss/tp/33>|200 (HTML_RETURNED)|02/20/2026|invalid|
+29|ISNA (EN) - Politics|<https://en.isna.ir/rss/tp/13>|200 (HTML_RETURNED)|02/20/2026|invalid|
+30|ISNA (EN) - Culture & Art|<https://en.isna.ir/rss/tp/19>|200 (HTML_RETURNED)|02/20/2026|invalid|
+31|ISNA (EN) - Sports|<https://en.isna.ir/rss/tp/23>|200 (HTML_RETURNED)|02/20/2026|invalid|
+32|ISNA (EN) - Photos|<https://en.isna.ir/rss/tp/27>|200 (HTML_RETURNED)|02/20/2026|invalid|
 33|Tasnim (EN) - Top Stories|<https://www.tasnimnews.ir/en/rss/feed/0/0/8/1/TopStories>|200|02/20/2026|valid|
 34|Tasnim (EN) - All Stories|<https://www.tasnimnews.ir/en/rss/feed/0/0/0/0/AllStories>|200|02/20/2026|valid|
 35|Tasnim (EN) - Politics|<https://www.tasnimnews.ir/en/rss/feeds/1192/0/0/0>|200|02/20/2026|valid|
@@ -1013,7 +1025,7 @@ GitHub Actions is also configured:
 ### Argentina (AR)
 |No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|
 |---|---|---|---|---|---|
-1|Ámbito - Portada|<https://www.ambito.com/rss/pages/home.xml>|200|02/20/2026|valid|
+1|Ámbito - Portada|<https://www.ambito.com/rss/pages/home.xml>|404 (HTTP_404)|02/20/2026|invalid|
 2|Ámbito - Últimas noticias|<https://www.ambito.com/rss/pages/ultimas-noticias.xml>|200|02/20/2026|valid|
 3|Ámbito - Economía|<https://www.ambito.com/rss/pages/economia.xml>|200|02/20/2026|valid|
 4|Ámbito - Finanzas|<https://www.ambito.com/rss/pages/finanzas.xml>|200|02/20/2026|valid|
@@ -1139,7 +1151,7 @@ GitHub Actions is also configured:
 |---|---|---|---|---|---|
 1|Der Standard|<https://www.derstandard.at/rss>|200|02/20/2026|valid|
 2|ORF|<https://rss.orf.at/news.xml>|200|02/20/2026|valid|
-3|Die Presse|<https://www.diepresse.com/rss>|ERR (TIMEOUT)|02/20/2026|invalid|
+3|Die Presse|<https://www.diepresse.com/rss>|200|02/20/2026|valid|
 4|Tiroler Tageszeitung|<https://www.tt.com/rss/news.xml>|200|02/20/2026|valid|
 5|ORF Aktuell|<https://rss.orf.at/>|200|02/20/2026|valid|
 6|Kurier (Top News)|<https://kurier.at/xml/rssd>|200|02/20/2026|valid|
@@ -1217,4 +1229,3 @@ GitHub Actions is also configured:
 9|Energy Post|<https://energypost.eu/feed/>|200|02/20/2026|valid|
 10|Energy Storage News|<https://www.energy-storage.news/rss>|200|02/20/2026|valid|
 11|Energy Storage News|<https://www.energy-storage.news/feed>|200|02/20/2026|valid|
-

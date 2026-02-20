@@ -8,6 +8,7 @@ tsconfig.tsbuildinfo
 .warm-daemon.pid
 audits/*.log
 audits/*.md
+logs/*.log
 !audits/README.md
 !audits/latest.md
 
