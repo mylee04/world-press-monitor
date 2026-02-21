@@ -741,28 +741,40 @@ export async function readNewsApiFilters(): Promise<NewsApiFiltersResult> {
 
   const [countriesResult, languagesResult, sourcesResult, sectionsResult] = await Promise.all([
     db.query<NewsApiFilterRow>(
-      `select distinct trim(country) as value
-       from news_articles
-       where country is not null and trim(country) <> ''
-       order by lower(trim(country))`
+      `select value
+       from (
+         select distinct trim(country) as value, lower(trim(country)) as sort_key
+         from news_articles
+         where country is not null and trim(country) <> ''
+       ) t
+       order by t.sort_key`
     ),
     db.query<NewsApiFilterRow>(
-      `select distinct trim(language) as value
-       from news_articles
-       where language is not null and trim(language) <> ''
-       order by lower(trim(language))`
+      `select value
+       from (
+         select distinct trim(language) as value, lower(trim(language)) as sort_key
+         from news_articles
+         where language is not null and trim(language) <> ''
+       ) t
+       order by t.sort_key`
     ),
     db.query<NewsApiFilterRow>(
-      `select distinct trim(source) as value
-       from news_articles
-       where source is not null and trim(source) <> ''
-       order by lower(trim(source))`
+      `select value
+       from (
+         select distinct trim(source) as value, lower(trim(source)) as sort_key
+         from news_articles
+         where source is not null and trim(source) <> ''
+       ) t
+       order by t.sort_key`
     ),
     db.query<NewsApiFilterRow>(
-      `select distinct trim(section) as value
-       from news_articles
-       where section is not null and trim(section) <> ''
-       order by lower(trim(section))`
+      `select value
+       from (
+         select distinct trim(section) as value, lower(trim(section)) as sort_key
+         from news_articles
+         where section is not null and trim(section) <> ''
+       ) t
+       order by t.sort_key`
     )
   ]);
 
