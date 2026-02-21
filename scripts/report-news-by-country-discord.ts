@@ -13,6 +13,22 @@ const DEFAULT_WEBHOOK_ENV_VARS = ['WPM_HOURLY_DISCORD_WEBHOOK'];
 const DEFAULT_LOG_PREFIX = '[news-country-discord]';
 const MAX_DISCORD_CHARS = 1900;
 
+function redactWebhookUrlForLog(raw: string): string {
+  try {
+    const parsed = new URL(raw);
+    const parts = parsed.pathname.split('/').filter(Boolean);
+    const id = parts[parts.length - 2] ?? '';
+    const token = parts[parts.length - 1] ?? '';
+    return `${parsed.origin}${parts.length > 0 ? `.../${id}/${token.slice(-8)}` : ''}`;
+  } catch {
+    return '[invalid-url]';
+  }
+}
+
+function formatElapsedMs(startMs: number): number {
+  return Date.now() - startMs;
+}
+
 function pickWebhookUrl(): string {
   for (const key of DEFAULT_WEBHOOK_ENV_VARS) {
     const raw = process.env[key];
@@ -61,6 +77,7 @@ function splitIntoChunks(lines: string[]): string[] {
 }
 
 async function postToDiscord(webhookUrl: string, content: string): Promise<void> {
+  const startedAt = Date.now();
   const response = await fetch(webhookUrl, {
     method: 'POST',
     headers: {
@@ -69,6 +86,7 @@ async function postToDiscord(webhookUrl: string, content: string): Promise<void>
     body: JSON.stringify({ content })
   });
 
+  console.log(`${DEFAULT_LOG_PREFIX} discord_http_status=${response.status} elapsed_ms=${formatElapsedMs(startedAt)} url=${redactWebhookUrlForLog(webhookUrl)}`);
   if (!response.ok) {
     const text = await response.text().catch(() => '');
     throw new Error(`discord_webhook_http_${response.status}: ${text.slice(0, 400)}`);
