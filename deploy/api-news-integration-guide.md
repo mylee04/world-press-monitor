@@ -1,10 +1,10 @@
 # WPM /api/news 외부 연동 가이드 (Render 기준 최신판)
 
-이 문서는 현재 운영 중인 Render 배포 기준으로 동료 서비스에서 `news_articles` 조회 API를 사용하는 방법을 정리한 가이드입니다.
+이 문서는 동료 서비스에서 `news_articles` 조회 API를 사용하는 방법을 정리한 가이드입니다.
 
-⚠️ **중요**: `/api/filters`, `/docs`, `/openapi.json`, `/playground` 라우트는 지금은 로컬 코드에만 반영된 상태입니다.  
-**아직 Render에 배포되지 않아 현재는 실제로 호출되지 않습니다.**  
-팀 공유용 문서로 남겨두고, 배포 후 바로 사용하세요.
+⚠️ 운영 버전 기준:
+- `/health`, `/api/news`는 실제 호출 가능.
+- `/api/filters`, `/docs`, `/openapi.json`, `/playground`는 배포 상태를 확인 후 사용하세요.
 
 ## 1) 서비스 개요
 
@@ -63,12 +63,50 @@ NODE_ENV=production
 - `hours` (1~720, 기본 48)
 - `from`, `to` (ISO datetime, 기존 호환용)
 - `publication_from`, `publication_to` (publication_datetime 기준)
+- `created_from`, `created_to` (created_at 범위 증분 동기화용)
+- `updated_from`, `updated_to` (updated_at 범위 증분 동기화용)
+
+> alias도 지원됩니다:  
+> `min_createdAt` / `min_created_at`, `max_createdAt` / `max_created_at`  
+> `min_updatedAt` / `min_updated_at`, `max_updatedAt` / `max_updated_at`
 
 필터 파라미터
 - `country` (복수 가능: `United States,Japan`)
 - `source` (복수 가능)
 - `section` (복수 가능)
 - `language` (복수 가능)
+
+### 증분 수집 추천 패턴 (중복/누락 방지)
+동료가 매 시간 기준 점진 동기화를 할 때, **마지막으로 수집한 시각(예: updatedAt)**를 저장해두고 이후 구간만 조회하세요.
+
+1회 기준 호출(초기):
+```bash
+curl -H "Authorization: Bearer <TOKEN>" \
+  "https://world-press-monitor.onrender.com/api/news?hours=24&country=United%20States&limit=100"
+```
+
+다음 호출(증분):
+```bash
+curl -H "Authorization: Bearer <TOKEN>" \
+  "https://world-press-monitor.onrender.com/api/news?updated_from=2026-02-21T12:00:00.000Z&country=United%20States&limit=100"
+```
+
+권장 동작:
+- 새 데이터만 안전하게 받으려면 `created_from` 사용.
+- 수정된 기사가 반영되도록 하려면 `updated_from` 사용(권장).
+- 클라이언트에서 `id` 또는 `url` 기준으로 2차 dedupe 적용.
+
+### created 기준 증분 수집이 기본 동작이라는 점 (권장)
+
+우리가 지금 운영 중인 수집 특성상, 일단은 `created_from/created_to`를 기본 증분 기준으로 쓰는 걸 권장합니다.
+
+- 기본 규칙:
+  - 매 호출마다 마지막 수집 시각을 `created_from`에 넣고(`YYYY-MM-DDTHH:mm:ss.sssZ`),
+  - `created_to`는 호출 시각(`Tnow`)으로 둡니다.
+  - 예: 01:00~02:00 구간은 `created_from=2026-02-21T01:00:00Z&created_to=2026-02-21T02:00:00Z`
+- 왜 `updated_from`이 보조인지:
+  - `updated_from`은 RSS 데이터 자체가 늦게 바뀌는 경우(메타데이터 갱신/재배포) 보강용입니다.
+  - 초기 설계는 “새로 들어온 것”(created) 기준, 보강은 선택적(updated)로 보세요.
 
 응답 핵심
 - `total`: 전체 매칭 건수
@@ -131,12 +169,8 @@ ORDER BY pg_total_relation_size(format('%I.%I', table_schema, table_name)::regcl
 
 ## 9) 배포 전/후 팀 공유 체크리스트
 
-### 배포 전 (현재)
-- 실제 사용 가능: `GET /health`, `GET /api/news`
-- 아직 미사용: `/api/filters`, `/docs`, `/openapi.json`, `/playground`
-
-### 배포 전 안내 문구 (팀 전달용)
-- `/api/filters`, `/docs`, `/openapi.json`, `/playground`는 현재 배포되지 않아 미호출 상태입니다. 배포 후 아래 항목이 열리면 사용 가능합니다.
+### 배포 가이드 (팀 전달용)
+- `/api/filters`, `/docs`, `/openapi.json`, `/playground`는 배포 후 확인 가능한 상태입니다.
 
 ### 배포 후 꼭 확인할 항목
 - 헬스체크:

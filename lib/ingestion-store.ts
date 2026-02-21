@@ -602,6 +602,10 @@ export async function readNewsArticlesForApi(options: {
   to?: string | null;
   publicationFrom?: string | null;
   publicationTo?: string | null;
+  minCreatedAt?: string | null;
+  maxCreatedAt?: string | null;
+  minUpdatedAt?: string | null;
+  maxUpdatedAt?: string | null;
 }): Promise<NewsApiReadResult> {
   const db = getPool();
   if (!db) {
@@ -640,6 +644,10 @@ export async function readNewsArticlesForApi(options: {
 
   const publicationFrom = options.publicationFrom || options.from || null;
   const publicationTo = options.publicationTo || options.to || null;
+  const minCreatedAt = options.minCreatedAt || null;
+  const maxCreatedAt = options.maxCreatedAt || null;
+  const minUpdatedAt = options.minUpdatedAt || null;
+  const maxUpdatedAt = options.maxUpdatedAt || null;
 
   if (publicationFrom) {
     params.push(publicationFrom);
@@ -651,7 +659,27 @@ export async function readNewsArticlesForApi(options: {
     whereClauses.push(`and e.publication_datetime <= $${params.length}`);
   }
 
-  if (!publicationFrom && !publicationTo) {
+  if (minCreatedAt) {
+    params.push(minCreatedAt);
+    whereClauses.push(`and e.created_at >= $${params.length}`);
+  }
+
+  if (maxCreatedAt) {
+    params.push(maxCreatedAt);
+    whereClauses.push(`and e.created_at <= $${params.length}`);
+  }
+
+  if (minUpdatedAt) {
+    params.push(minUpdatedAt);
+    whereClauses.push(`and e.updated_at >= $${params.length}`);
+  }
+
+  if (maxUpdatedAt) {
+    params.push(maxUpdatedAt);
+    whereClauses.push(`and e.updated_at <= $${params.length}`);
+  }
+
+  if (!publicationFrom && !publicationTo && !minCreatedAt && !maxCreatedAt && !minUpdatedAt && !maxUpdatedAt) {
     const hours = Math.max(1, Math.min(720, Math.floor(options.hours || 48)));
     params.push(hours);
     whereClauses.push(`and e.publication_datetime > now() - ($${params.length}::int * interval '1 hour')`);

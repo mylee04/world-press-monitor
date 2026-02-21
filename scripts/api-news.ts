@@ -17,6 +17,10 @@ type NewsApiResponse = {
     to?: string | null;
     publicationFrom?: string | null;
     publicationTo?: string | null;
+    minCreatedAt?: string | null;
+    maxCreatedAt?: string | null;
+    minUpdatedAt?: string | null;
+    maxUpdatedAt?: string | null;
     sources: string[];
     countries: string[];
     sections: string[];
@@ -159,14 +163,14 @@ const openApiSpec = {
             schema: { type: 'integer', minimum: 1, maximum: 720 },
             required: false,
             description: 'Window in hours (default 48).'
-          },
-          {
-            name: 'from',
-            in: 'query',
-            schema: { type: 'string', format: 'date-time' },
-            required: false,
-            description: 'ISO datetime lower bound (UTC).'
-          },
+        },
+        {
+          name: 'from',
+          in: 'query',
+          schema: { type: 'string', format: 'date-time' },
+          required: false,
+          description: 'ISO datetime lower bound (UTC).'
+        },
           {
             name: 'to',
             in: 'query',
@@ -209,13 +213,41 @@ const openApiSpec = {
             required: false,
             description: 'Alias for publication_datetime lower bound (UTC).'
           },
-          {
-            name: 'publication_to',
-            in: 'query',
-            schema: { type: 'string', format: 'date-time' },
-            required: false,
-            description: 'Alias for publication_datetime upper bound (UTC).'
-          }
+        {
+          name: 'publication_to',
+          in: 'query',
+          schema: { type: 'string', format: 'date-time' },
+          required: false,
+          description: 'Alias for publication_datetime upper bound (UTC).'
+        },
+        {
+          name: 'min_createdAt',
+          in: 'query',
+          schema: { type: 'string', format: 'date-time' },
+          required: false,
+          description: 'Filter by created_at >= value (alias: min_created_at, created_from).'
+        },
+        {
+          name: 'max_createdAt',
+          in: 'query',
+          schema: { type: 'string', format: 'date-time' },
+          required: false,
+          description: 'Filter by created_at <= value (alias: max_created_at, created_to).'
+        },
+        {
+          name: 'min_updatedAt',
+          in: 'query',
+          schema: { type: 'string', format: 'date-time' },
+          required: false,
+          description: 'Filter by updated_at >= value (alias: min_updated_at).'
+        },
+        {
+          name: 'max_updatedAt',
+          in: 'query',
+          schema: { type: 'string', format: 'date-time' },
+          required: false,
+          description: 'Filter by updated_at <= value (alias: max_updated_at).'
+        }
         ],
         responses: {
           200: {
@@ -238,6 +270,10 @@ const openApiSpec = {
                         to: { type: ['string', 'null'], format: 'date-time' },
                         publicationFrom: { type: ['string', 'null'], format: 'date-time' },
                         publicationTo: { type: ['string', 'null'], format: 'date-time' },
+                        minCreatedAt: { type: ['string', 'null'], format: 'date-time' },
+                        maxCreatedAt: { type: ['string', 'null'], format: 'date-time' },
+                        minUpdatedAt: { type: ['string', 'null'], format: 'date-time' },
+                        maxUpdatedAt: { type: ['string', 'null'], format: 'date-time' },
                         sources: { type: 'array', items: { type: 'string' } },
                         countries: { type: 'array', items: { type: 'string' } },
                         sections: { type: 'array', items: { type: 'string' } },
@@ -519,6 +555,22 @@ const playgroundHtml = `
 
       <div class="grid">
         <div>
+          <label>created_from</label>
+          <input id="createdFrom" type="datetime-local" />
+        </div>
+        <div>
+          <label>created_to</label>
+          <input id="createdTo" type="datetime-local" />
+        </div>
+        <div>
+          <label>updated_from</label>
+          <input id="updatedFrom" type="datetime-local" />
+        </div>
+        <div>
+          <label>updated_to</label>
+          <input id="updatedTo" type="datetime-local" />
+        </div>
+        <div>
           <label>publication_from</label>
           <input id="publicationFrom" type="datetime-local" />
         </div>
@@ -561,6 +613,10 @@ const playgroundHtml = `
       const sectionsSelect = document.getElementById('sections');
       const publicationFromInput = document.getElementById('publicationFrom');
       const publicationToInput = document.getElementById('publicationTo');
+      const createdFromInput = document.getElementById('createdFrom');
+      const createdToInput = document.getElementById('createdTo');
+      const updatedFromInput = document.getElementById('updatedFrom');
+      const updatedToInput = document.getElementById('updatedTo');
       const hoursInput = document.getElementById('hours');
       const limitInput = document.getElementById('limit');
       const offsetInput = document.getElementById('offset');
@@ -692,6 +748,10 @@ const playgroundHtml = `
         const hours = hoursInput.value.trim();
         const publicationFrom = toIso(publicationFromInput.value);
         const publicationTo = toIso(publicationToInput.value);
+        const createdFrom = toIso(createdFromInput.value);
+        const createdTo = toIso(createdToInput.value);
+        const updatedFrom = toIso(updatedFromInput.value);
+        const updatedTo = toIso(updatedToInput.value);
 
         if (countries) params.set('country', countries);
         if (languages) params.set('language', languages);
@@ -702,6 +762,10 @@ const playgroundHtml = `
         if (offset) params.set('offset', offset);
         if (publicationFrom) params.set('publication_from', publicationFrom);
         if (publicationTo) params.set('publication_to', publicationTo);
+        if (createdFrom) params.set('created_from', createdFrom);
+        if (createdTo) params.set('created_to', createdTo);
+        if (updatedFrom) params.set('updated_from', updatedFrom);
+        if (updatedTo) params.set('updated_to', updatedTo);
 
         const query = params.toString();
         return baseUrl + '/api/news' + (query ? '?' + query : '');
@@ -1033,7 +1097,49 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
       const legacyTo = parseDateParam(url.searchParams.get('to'));
       const from = parseDateParam(url.searchParams.get('publication_from')) || legacyFrom;
       const to = parseDateParam(url.searchParams.get('publication_to')) || legacyTo;
+      const minCreatedAt = parseDateParam(url.searchParams.get('min_createdAt') ||
+        url.searchParams.get('min_created_at') ||
+        url.searchParams.get('created_from'));
+      const maxCreatedAt = parseDateParam(url.searchParams.get('max_createdAt') ||
+        url.searchParams.get('max_created_at') ||
+        url.searchParams.get('created_to'));
+      const minUpdatedAt = parseDateParam(url.searchParams.get('min_updatedAt') ||
+        url.searchParams.get('min_updated_at') ||
+        url.searchParams.get('updated_from'));
+      const maxUpdatedAt = parseDateParam(url.searchParams.get('max_updatedAt') ||
+        url.searchParams.get('max_updated_at') ||
+        url.searchParams.get('updated_to'));
       const hours = parseIntParam(url.searchParams.get('hours'), 48, 1, 720);
+
+      if (minCreatedAt && maxCreatedAt && new Date(minCreatedAt).getTime() > new Date(maxCreatedAt).getTime()) {
+        sendJsonResponse(
+          res,
+          jsonResponse(
+            {
+              error: 'invalid_range',
+              message: '`min_createdAt` must be <= `max_createdAt`.'
+            },
+            400,
+            origin
+          )
+        );
+        return;
+      }
+
+      if (minUpdatedAt && maxUpdatedAt && new Date(minUpdatedAt).getTime() > new Date(maxUpdatedAt).getTime()) {
+        sendJsonResponse(
+          res,
+          jsonResponse(
+            {
+              error: 'invalid_range',
+              message: '`min_updatedAt` must be <= `max_updatedAt`.'
+            },
+            400,
+            origin
+          )
+        );
+        return;
+      }
 
       if (from && to && new Date(from).getTime() > new Date(to).getTime()) {
         sendJsonResponse(
@@ -1059,6 +1165,10 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
         offset,
         publicationFrom: from,
         publicationTo: to,
+        minCreatedAt,
+        maxCreatedAt,
+        minUpdatedAt,
+        maxUpdatedAt,
         hours: from || to ? undefined : hours
       });
 
@@ -1081,6 +1191,10 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
           hours: from || to ? undefined : hours,
           publicationFrom: from,
           publicationTo: to,
+          minCreatedAt,
+          maxCreatedAt,
+          minUpdatedAt,
+          maxUpdatedAt,
           from,
           to,
           sources: sourceNames,
@@ -1098,7 +1212,8 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
           jsonResponse(
             {
               error: 'invalid_date',
-              message: '`from`/`to` or `publication_from`/`publication_to` must be valid ISO date strings.'
+              message:
+                '`from`/`to`, `publication_from`/`publication_to`, `created_from`/`created_to`, `updated_from`/`updated_to` must be valid ISO date strings.'
             },
             400,
             origin
