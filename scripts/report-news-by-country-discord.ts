@@ -129,7 +129,7 @@ async function main(): Promise<void> {
       .map((row, index) => `${index + 1}. ${row.country}: 1h ${row.count_last_1h}, 24h ${row.count_last_24h}`);
 
     const header = [
-      `📰 PressLab Hourly Country Intake (${new Date().toISOString()})`,
+      `📰 Hourly News Data Intake by Country (${new Date().toISOString()})`,
       `Source: news_articles`,
       `Last 1h: ${total1h.toLocaleString()} / Last 24h: ${total24h.toLocaleString()}`,
       lines.length > 0 ? '' : 'No records in news_articles.'
