@@ -40,6 +40,20 @@ type HealthSummary = {
   invalid: number;
   failureReasons: Record<string, number>;
   skippedNoSource: number;
+  sitemapFallback?: {
+    checkedInvalidFeeds: number;
+    attemptedFeeds: number;
+    succeededFeeds: number;
+    failedFeeds: number;
+    noCandidateFeeds: number;
+    candidateAttempts: number;
+    sampleSuccesses: Array<{
+      country: string;
+      outlet: string;
+      rssUrl: string;
+      sitemapUrl: string;
+    }>;
+  };
 };
 
 type HealthReport = {
@@ -190,6 +204,9 @@ async function sendDiscordNotification(report: HealthReport, pruneStats: { befor
   const topFailures = summarizeTopReasons(summary.failureReasons, 6)
     .map(([reason, count]) => `- ${reason}: ${count}`)
     .join('\n');
+  const sitemapFallbackSummary = summary.sitemapFallback
+    ? `Sitemap fallback (checked \`${summary.sitemapFallback.checkedInvalidFeeds}\` invalid, candidates \`${summary.sitemapFallback.candidateAttempts}\`, attempted \`${summary.sitemapFallback.attemptedFeeds}\`, success \`${summary.sitemapFallback.succeededFeeds}\`, failed \`${summary.sitemapFallback.failedFeeds}\`, no-candidate \`${summary.sitemapFallback.noCandidateFeeds}\`)`
+    : 'Sitemap fallback: not run';
 
   const description = clampSummaryString(
     [
@@ -219,6 +236,11 @@ async function sendDiscordNotification(report: HealthReport, pruneStats: { befor
             name: 'Top failures',
             value: clampSummaryString(topFailures || 'None', 1024),
             inline: false,
+          },
+          {
+            name: 'Sitemap fallback',
+            value: clampSummaryString(sitemapFallbackSummary, 1024),
+            inline: true,
           },
           {
             name: 'All feeds',

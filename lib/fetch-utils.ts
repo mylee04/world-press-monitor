@@ -11,10 +11,6 @@ export type RetryFetchOptions = {
 const DEFAULT_TIMEOUT_MS = 12000;
 const DEFAULT_ATTEMPTS = 1;
 
-export function isSearchAggregatorUrl(url: string): boolean {
-  return url.includes('news.google.com/rss/search') || url.includes('www.bing.com/news/search');
-}
-
 export function isRetryableStatus(status: number): boolean {
   return status === 429 || status === 503 || status === 504;
 }
@@ -55,4 +51,3 @@ export async function fetchWithRetry(url: string, options: RetryFetchOptions = {
   // Defensive fallback; loop should return/throw before this point.
   throw new Error('fetch_with_retry_exhausted');
 }
-

@@ -2,7 +2,7 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { parseRssOrAtomWithStats, parseSitemapWithStats } from '../lib/parsers';
 import { runWithConcurrency } from '../lib/concurrency';
-import { fetchWithRetry, isSearchAggregatorUrl } from '../lib/fetch-utils';
+import { fetchWithRetry } from '../lib/fetch-utils';
 import { classifySection } from '../lib/keyword-classifier';
 import { inferGeoFromTitle } from '../lib/geo';
 import {
@@ -340,47 +340,7 @@ async function trySitemapFallback(outlet: OutletFeed): Promise<ParsedSitemapResu
   return null;
 }
 
-type GoogleNewsHint = {
-  keys: string[];
-  gl: string;
-  hl: string;
-  ceidLang: string;
-};
-
-const GOOGLE_NEWS_FALLBACK_QUERY_DAYS = Math.max(
-  1,
-  Math.min(14, Number.parseInt(process.env.INGEST_GOOGLE_NEWS_DAYS || '1', 10) || 1)
-);
-const ENABLE_GOOGLE_NEWS_FALLBACK = parseBoolEnv(process.env.INGEST_GOOGLE_NEWS_FALLBACK, false);
 const ENABLE_RSS_TO_SITEMAP_FALLBACK = parseBoolEnv(process.env.INGEST_RSS_SITEMAP_FALLBACK, true);
-const GOOGLE_NEWS_LOCALE_HINTS: GoogleNewsHint[] = [
-  { keys: ['united states', 'usa'], gl: 'US', hl: 'en-US', ceidLang: 'en' },
-  { keys: ['united kingdom', 'uk', 'england', 'britain'], gl: 'GB', hl: 'en-GB', ceidLang: 'en' },
-  { keys: ['south korea', 'korea'], gl: 'KR', hl: 'ko', ceidLang: 'ko' },
-  { keys: ['japan'], gl: 'JP', hl: 'ja', ceidLang: 'ja' },
-  { keys: ['germany'], gl: 'DE', hl: 'de', ceidLang: 'de' },
-  { keys: ['france'], gl: 'FR', hl: 'fr', ceidLang: 'fr' },
-  { keys: ['italy'], gl: 'IT', hl: 'it', ceidLang: 'it' },
-  { keys: ['india'], gl: 'IN', hl: 'en-IN', ceidLang: 'en' },
-  { keys: ['canada'], gl: 'CA', hl: 'en-CA', ceidLang: 'en' },
-  { keys: ['brazil'], gl: 'BR', hl: 'pt-BR', ceidLang: 'pt' },
-  { keys: ['argentina'], gl: 'AR', hl: 'es-419', ceidLang: 'es' },
-  { keys: ['chile'], gl: 'CL', hl: 'es-419', ceidLang: 'es' },
-  { keys: ['uruguay'], gl: 'UY', hl: 'es-419', ceidLang: 'es' },
-  { keys: ['dominican', 'dominic'], gl: 'DO', hl: 'es-419', ceidLang: 'es' },
-  { keys: ['spain'], gl: 'ES', hl: 'es', ceidLang: 'es' },
-  { keys: ['mexico'], gl: 'MX', hl: 'es-419', ceidLang: 'es' },
-  { keys: ['sweden'], gl: 'SE', hl: 'sv', ceidLang: 'sv' },
-  { keys: ['norway'], gl: 'NO', hl: 'no', ceidLang: 'no' },
-  { keys: ['netherlands'], gl: 'NL', hl: 'nl', ceidLang: 'nl' },
-  { keys: ['australia'], gl: 'AU', hl: 'en-AU', ceidLang: 'en' },
-  { keys: ['china'], gl: 'CN', hl: 'zh-CN', ceidLang: 'zh' },
-  { keys: ['russia'], gl: 'RU', hl: 'ru', ceidLang: 'ru' },
-  { keys: ['taiwan'], gl: 'TW', hl: 'zh-TW', ceidLang: 'zh' },
-  { keys: ['israel'], gl: 'IL', hl: 'en', ceidLang: 'en' },
-  { keys: ['saudi', 'qatar'], gl: 'SA', hl: 'en', ceidLang: 'en' },
-  { keys: ['saudi arabia'], gl: 'SA', hl: 'en', ceidLang: 'en' }
-];
 
 const FEED_FETCH_HEADERS = {
   'User-Agent':
@@ -391,33 +351,6 @@ const FEED_FETCH_HEADERS = {
   Connection: 'keep-alive',
   'Upgrade-Insecure-Requests': '1'
 };
-
-function resolveGoogleNewsHint(countryName: string): GoogleNewsHint {
-  const candidate = normalizeText(countryName);
-  for (const hint of GOOGLE_NEWS_LOCALE_HINTS) {
-    if (hint.keys.some((key) => candidate.includes(key))) {
-      return hint;
-    }
-  }
-  return { keys: ['default'], gl: 'US', hl: 'en-US', ceidLang: 'en' };
-}
-
-function makeGoogleNewsSearchUrl(sourceUrl: string, countryName: string): string | null {
-  try {
-    const url = new URL(sourceUrl);
-    const host = url.hostname.replace(/^www\./, '');
-    const hint = resolveGoogleNewsHint(countryName);
-    const query = new URLSearchParams({
-      q: `site:${host} when:${GOOGLE_NEWS_FALLBACK_QUERY_DAYS}d`,
-      hl: hint.hl,
-      gl: hint.gl,
-      ceid: `${hint.gl}:${hint.ceidLang}`,
-    });
-    return `https://news.google.com/rss/search?${query.toString()}`;
-  } catch {
-    return null;
-  }
-}
 
 function normalizeResponseContentType(response: Response): string {
   return (response.headers.get('content-type') || '').toLowerCase();
@@ -443,8 +376,7 @@ function describeFeedFailure(response: Response, body: string): string {
   return '';
 }
 
-function shouldRetryWithGoogleNews(response: Response, body: string, isSearchSource = false): boolean {
-  if (isSearchSource) return false;
+function shouldRetryWithSitemap(response: Response, body: string): boolean {
   if (!response.ok) return isFallbackRetryStatus(response.status);
   return isLikelyHtmlResponse(response, body);
 }
@@ -452,13 +384,13 @@ function shouldRetryWithGoogleNews(response: Response, body: string, isSearchSou
 type FeedFetchResult = {
   requestedUrl: string;
   finalUrl: string;
-  usedFallback: boolean;
+  shouldUseSitemapFallback: boolean;
   response: Response;
   body: string;
   failureReason?: string;
 };
 
-type FallbackKind = 'none' | 'sitemap' | 'google_news';
+type FallbackKind = 'none' | 'sitemap';
 
 type EndpointResult = {
   items: NewsItem[];
@@ -466,106 +398,38 @@ type EndpointResult = {
   fallbackUsed: FallbackKind;
 };
 
-function getFallbackKind(feedResult: FeedFetchResult, method: string | undefined): FallbackKind {
-  if (!feedResult.usedFallback) return 'none';
-  if (method && method.includes('news.google.com')) return 'google_news';
-  return 'sitemap';
+function getFallbackKind(feedResult: FeedFetchResult): FallbackKind {
+  return feedResult.shouldUseSitemapFallback ? 'sitemap' : 'none';
 }
 
-async function fetchFeedWithFallback(url: string, countryName: string): Promise<FeedFetchResult> {
+async function fetchFeedWithFallback(url: string): Promise<FeedFetchResult> {
   const requestedUrl = url;
-  const fallbackUrl = (!ENABLE_GOOGLE_NEWS_FALLBACK || isSearchAggregatorUrl(requestedUrl))
-    ? null
-    : makeGoogleNewsSearchUrl(requestedUrl, countryName);
-  const tryFallback = async (primaryFailure: string): Promise<FeedFetchResult | null> => {
-    if (!fallbackUrl) {
-      return {
-        requestedUrl,
-        finalUrl: requestedUrl,
-        usedFallback: false,
-        response: new Response('', { status: 0, statusText: 'fallback_unavailable' }),
-        body: '',
-        failureReason: `${primaryFailure || 'primary_invalid'};fallback_unavailable`
-      };
-    }
-    try {
-      const fallback = await fetchWithRetryFeed(fallbackUrl);
-      const fallbackBody = await fallback.text();
-      if (!shouldRetryWithGoogleNews(fallback, fallbackBody, true)) {
-        console.log(`[ingest-worker] using google news fallback: ${requestedUrl} -> ${fallbackUrl}`);
-        return {
-          requestedUrl,
-          finalUrl: fallbackUrl,
-          usedFallback: true,
-          response: fallback,
-          body: fallbackBody,
-        };
-      }
-      return {
-        requestedUrl,
-        finalUrl: fallbackUrl,
-        usedFallback: true,
-        response: fallback,
-        body: fallbackBody,
-        failureReason: `${primaryFailure || 'primary_invalid'};fallback_${describeFeedFailure(fallback, fallbackBody) || 'invalid_feed'}`
-      };
-    } catch (error) {
-      const message = error instanceof Error ? error.message : String(error);
-      return {
-        requestedUrl,
-        finalUrl: requestedUrl,
-        usedFallback: true,
-        response: new Response('', { status: 0, statusText: message }),
-        body: '',
-        failureReason: `${primaryFailure || 'primary_invalid'};fallback_error:${message}`
-      };
-    }
-  };
 
   try {
-    const primary = await fetchWithRetryFeed(requestedUrl);
-    const primaryBody = await primary.text();
-    const primaryFailure = describeFeedFailure(primary, primaryBody);
+      const primary = await fetchWithRetryFeed(requestedUrl);
+      const primaryBody = await primary.text();
+      const primaryFailure = describeFeedFailure(primary, primaryBody);
+      const shouldUseSitemapFallback = shouldRetryWithSitemap(primary, primaryBody);
 
-    if (!shouldRetryWithGoogleNews(primary, primaryBody, isSearchAggregatorUrl(requestedUrl))) {
       return {
         requestedUrl,
         finalUrl: requestedUrl,
-        usedFallback: false,
+        shouldUseSitemapFallback,
         response: primary,
         body: primaryBody,
-        failureReason: primaryFailure || undefined,
+        failureReason: primaryFailure || 'primary_invalid'
+      };
+    } catch (error) {
+      const primaryMessage = error instanceof Error ? error.message : String(error);
+      return {
+        requestedUrl,
+        finalUrl: requestedUrl,
+        shouldUseSitemapFallback: true,
+        response: new Response('', { status: 0, statusText: primaryMessage }),
+        body: '',
+        failureReason: `network_error:${primaryMessage}`
       };
     }
-
-    const fallbackResult = await tryFallback(primaryFailure);
-    if (fallbackResult) {
-      return fallbackResult;
-    }
-
-    return {
-      requestedUrl,
-      finalUrl: requestedUrl,
-      usedFallback: false,
-      response: primary,
-      body: primaryBody,
-      failureReason: primaryFailure || 'primary_invalid'
-    };
-  } catch (error) {
-    const primaryMessage = error instanceof Error ? error.message : String(error);
-    const fallbackResult = await tryFallback(`network_error:${primaryMessage}`);
-    if (fallbackResult) {
-      return fallbackResult;
-    }
-    return {
-      requestedUrl,
-      finalUrl: requestedUrl,
-      usedFallback: false,
-      response: new Response('', { status: 0, statusText: primaryMessage }),
-      body: '',
-      failureReason: `network_error:${primaryMessage}`
-    };
-  }
 }
 
 async function fetchWithRetryFeed(url: string): Promise<Response> {
@@ -574,7 +438,7 @@ async function fetchWithRetryFeed(url: string): Promise<Response> {
     fetchOptions: {
       headers: FEED_FETCH_HEADERS
     },
-    attempts: isSearchAggregatorUrl(url) ? 3 : 1,
+    attempts: 1,
     backoffMs: (attempt) => 200 + attempt * 300 + Math.floor(Math.random() * 200),
   });
 }
@@ -649,11 +513,10 @@ async function fetchRss(outlet: OutletFeed): Promise<EndpointResult> {
   }
 
   try {
-    const feedResult = await fetchFeedWithFallback(outlet.rssUrl, country);
-    const rssFallbackUsed = getFallbackKind(feedResult, feedResult.finalUrl);
+    const feedResult = await fetchFeedWithFallback(outlet.rssUrl);
     if (feedResult.failureReason || !feedResult.response.ok) {
-      let fallbackUsed = getFallbackKind(feedResult, feedResult.finalUrl);
-      if (ENABLE_RSS_TO_SITEMAP_FALLBACK) {
+      const fallbackUsed: FallbackKind = getFallbackKind(feedResult);
+      if (ENABLE_RSS_TO_SITEMAP_FALLBACK && feedResult.shouldUseSitemapFallback) {
         const sitemapParsed = await trySitemapFallback(outlet);
         if (sitemapParsed) {
           const items = await Promise.all(sitemapParsed.items.map((row) => toNewsItem(outlet, row)));
@@ -712,6 +575,7 @@ async function fetchRss(outlet: OutletFeed): Promise<EndpointResult> {
     const xml = feedResult.body;
     const parsed = parseRssOrAtomWithStats(xml, RSS_ITEM_LIMIT);
     const items = await Promise.all(parsed.items.map((row) => toNewsItem(outlet, row)));
+    const rssFallbackUsed: FallbackKind = getFallbackKind(feedResult);
     return {
       items,
       run: {
@@ -1003,8 +867,6 @@ async function runOnce(): Promise<void> {
   const fallbackSummary = {
     rssSitemapFallbackAttempts: 0,
     rssSitemapFallbackSuccess: 0,
-    rssGoogleNewsFallbackAttempts: 0,
-    rssGoogleNewsFallbackSuccess: 0,
   };
 
   const results = await runWithConcurrency(dedupedEndpoints, FETCH_CONCURRENCY, async (endpoint) => {
@@ -1056,12 +918,6 @@ async function runOnce(): Promise<void> {
         fallbackSummary.rssSitemapFallbackSuccess += 1;
       }
       continue;
-    }
-    if (result.fallbackUsed === 'google_news') {
-      fallbackSummary.rssGoogleNewsFallbackAttempts += 1;
-      if (result.run.ok) {
-        fallbackSummary.rssGoogleNewsFallbackSuccess += 1;
-      }
     }
   }
 
@@ -1124,7 +980,7 @@ async function runOnce(): Promise<void> {
   writeFileSync(SUMMARY_FILE, JSON.stringify(summary, null, 2), 'utf8');
   writeState({ offset: nextOffset, updatedAt: summary.generatedAt });
   console.log(
-    `[ingest-worker] outlets=${selected.length}/${allOutlets.length} endpoints=${attempted} ok=${okEndpoints} failed=${failedEndpoints} backoff=${failingKeys.size} unique=${merged.length} persisted=${persistedExternal.persisted} external=${persistedExternal.persisted} sitemapFallback=${fallbackSummary.rssSitemapFallbackSuccess}/${fallbackSummary.rssSitemapFallbackAttempts} googleNewsFallback=${fallbackSummary.rssGoogleNewsFallbackSuccess}/${fallbackSummary.rssGoogleNewsFallbackAttempts} elapsedMs=${summary.elapsedMs}`
+    `[ingest-worker] outlets=${selected.length}/${allOutlets.length} endpoints=${attempted} ok=${okEndpoints} failed=${failedEndpoints} backoff=${failingKeys.size} unique=${merged.length} persisted=${persistedExternal.persisted} external=${persistedExternal.persisted} sitemapFallback=${fallbackSummary.rssSitemapFallbackSuccess}/${fallbackSummary.rssSitemapFallbackAttempts} elapsedMs=${summary.elapsedMs}`
   );
 }
 

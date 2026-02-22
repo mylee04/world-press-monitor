@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Sun, 22 Feb 2026 05:59:02 GMT</dateCreated>
+    <dateCreated>Sun, 22 Feb 2026 06:28:57 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -22,7 +22,7 @@
       <outline text="CNBC [valid]" title="CNBC [valid]" type="rss" xmlUrl="https://www.cnbc.com/id/100003114/device/rss/rss.html" htmlUrl="https://www.cnbc.com"/>
       <outline text="Financial Times [valid]" title="Financial Times [valid]" type="rss" xmlUrl="https://www.ft.com/?format=rss" htmlUrl="https://www.ft.com"/>
       <outline text="Forbes [valid]" title="Forbes [valid]" type="rss" xmlUrl="https://www.forbes.com/most-popular/feed/" htmlUrl="https://www.forbes.com"/>
-      <outline text="Fortune [invalid (ERR)]" title="Fortune [invalid (ERR)]" type="rss" xmlUrl="https://fortune.com/feed" htmlUrl="https://fortune.com"/>
+      <outline text="Fortune [valid]" title="Fortune [valid]" type="rss" xmlUrl="https://fortune.com/feed" htmlUrl="https://fortune.com"/>
       <outline text="Business Insider [valid]" title="Business Insider [valid]" type="rss" xmlUrl="https://www.businessinsider.com/rss" htmlUrl="https://www.businessinsider.com"/>
       <outline text="MarketWatch [valid]" title="MarketWatch [valid]" type="rss" xmlUrl="http://feeds.marketwatch.com/marketwatch/topstories/" htmlUrl="http://feeds.marketwatch.com"/>
       <outline text="Fast Company [valid]" title="Fast Company [valid]" type="rss" xmlUrl="https://www.fastcompany.com/rss" htmlUrl="https://www.fastcompany.com"/>
@@ -46,12 +46,12 @@
       <outline text="Boston Globe [valid]" title="Boston Globe [valid]" type="rss" xmlUrl="https://www.bostonglobe.com/arc/outboundfeeds/rss?outputType=xml" htmlUrl="https://www.bostonglobe.com"/>
       <outline text="New York Post [valid]" title="New York Post [valid]" type="rss" xmlUrl="https://nypost.com/feed" htmlUrl="https://nypost.com"/>
       <outline text="Chicago Tribune [valid]" title="Chicago Tribune [valid]" type="rss" xmlUrl="https://chicagotribune.com/feed" htmlUrl="https://chicagotribune.com"/>
-      <outline text="Seattle Times [invalid (ERR)]" title="Seattle Times [invalid (ERR)]" type="rss" xmlUrl="https://seattletimes.com/feed" htmlUrl="https://seattletimes.com"/>
+      <outline text="Seattle Times [valid]" title="Seattle Times [valid]" type="rss" xmlUrl="https://seattletimes.com/feed" htmlUrl="https://seattletimes.com"/>
       <outline text="Denver Post [valid]" title="Denver Post [valid]" type="rss" xmlUrl="https://denverpost.com/feed" htmlUrl="https://denverpost.com"/>
       <outline text="San Jose Mercury News [valid]" title="San Jose Mercury News [valid]" type="rss" xmlUrl="https://mercurynews.com/feed" htmlUrl="https://mercurynews.com"/>
       <outline text="Las Vegas Review-Journal [valid]" title="Las Vegas Review-Journal [valid]" type="rss" xmlUrl="https://reviewjournal.com/feed" htmlUrl="https://reviewjournal.com"/>
       <outline text="San Diego Union-Tribune [valid]" title="San Diego Union-Tribune [valid]" type="rss" xmlUrl="https://sandiegouniontribune.com/feed" htmlUrl="https://sandiegouniontribune.com"/>
-      <outline text="Honolulu Star-Advertiser [invalid (ERR)]" title="Honolulu Star-Advertiser [invalid (ERR)]" type="rss" xmlUrl="https://staradvertiser.com/feed" htmlUrl="https://staradvertiser.com"/>
+      <outline text="Honolulu Star-Advertiser [valid]" title="Honolulu Star-Advertiser [valid]" type="rss" xmlUrl="https://staradvertiser.com/feed" htmlUrl="https://staradvertiser.com"/>
       <outline text="Variety [valid]" title="Variety [valid]" type="rss" xmlUrl="https://variety.com/feed" htmlUrl="https://variety.com"/>
       <outline text="The Hollywood Reporter [valid]" title="The Hollywood Reporter [valid]" type="rss" xmlUrl="https://hollywoodreporter.com/feed" htmlUrl="https://hollywoodreporter.com"/>
       <outline text="Deadline [valid]" title="Deadline [valid]" type="rss" xmlUrl="https://deadline.com/feed" htmlUrl="https://deadline.com"/>
@@ -228,7 +228,7 @@
       <outline text="News Today (TN) [valid]" title="News Today (TN) [valid]" type="rss" xmlUrl="https://newstodaynet.com/feed" htmlUrl="https://newstodaynet.com"/>
       <outline text="IndiaVision [valid]" title="IndiaVision [valid]" type="rss" xmlUrl="https://www.indiavision.com/feed" htmlUrl="https://www.indiavision.com"/>
       <outline text="OpIndia [valid]" title="OpIndia [valid]" type="rss" xmlUrl="https://www.opindia.com/feed" htmlUrl="https://www.opindia.com"/>
-      <outline text="OrissaPOST [invalid (ERR)]" title="OrissaPOST [invalid (ERR)]" type="rss" xmlUrl="https://www.orissapost.com/feed" htmlUrl="https://www.orissapost.com"/>
+      <outline text="OrissaPOST [valid]" title="OrissaPOST [valid]" type="rss" xmlUrl="https://www.orissapost.com/feed" htmlUrl="https://www.orissapost.com"/>
       <outline text="India&apos;s News.Net [valid]" title="India&apos;s News.Net [valid]" type="rss" xmlUrl="https://feeds.indiasnews.net/rss/701ee96610c884a6" htmlUrl="https://feeds.indiasnews.net"/>
       <outline text="TechGenYZ [valid]" title="TechGenYZ [valid]" type="rss" xmlUrl="https://techgenyz.com/feed" htmlUrl="https://techgenyz.com"/>
       <outline text="WYM News (Blogspot) [valid]" title="WYM News (Blogspot) [valid]" type="rss" xmlUrl="https://latestnewsupdate4you.blogspot.com/feeds/posts/default" htmlUrl="https://latestnewsupdate4you.blogspot.com"/>
@@ -341,7 +341,7 @@
       <outline text="Business In Vancouver (BIV) [valid]" title="Business In Vancouver (BIV) [valid]" type="rss" xmlUrl="https://biv.com/rss" htmlUrl="https://biv.com"/>
       <outline text="Regina Leader Post [valid]" title="Regina Leader Post [valid]" type="rss" xmlUrl="https://leaderpost.com/feed" htmlUrl="https://leaderpost.com"/>
       <outline text="Owen Sound Sun Times [valid]" title="Owen Sound Sun Times [valid]" type="rss" xmlUrl="https://owensoundsuntimes.com/feed" htmlUrl="https://owensoundsuntimes.com"/>
-      <outline text="Stratford Beacon Herald [invalid (ERR)]" title="Stratford Beacon Herald [invalid (ERR)]" type="rss" xmlUrl="https://stratfordbeaconherald.com/feed" htmlUrl="https://stratfordbeaconherald.com"/>
+      <outline text="Stratford Beacon Herald [valid]" title="Stratford Beacon Herald [valid]" type="rss" xmlUrl="https://stratfordbeaconherald.com/feed" htmlUrl="https://stratfordbeaconherald.com"/>
       <outline text="The Georgia Straight [valid]" title="The Georgia Straight [valid]" type="rss" xmlUrl="https://straight.com/content/rss" htmlUrl="https://straight.com"/>
       <outline text="Grande Prairie Daily Herald Tribune [valid]" title="Grande Prairie Daily Herald Tribune [valid]" type="rss" xmlUrl="https://dailyheraldtribune.com/feed" htmlUrl="https://dailyheraldtribune.com"/>
       <outline text="YGK News (Kingston) [valid]" title="YGK News (Kingston) [valid]" type="rss" xmlUrl="https://ygknews.ca/feed" htmlUrl="https://ygknews.ca"/>
@@ -370,7 +370,7 @@
       <outline text="Seoul Newspaper [valid]" title="Seoul Newspaper [valid]" type="rss" xmlUrl="https://www.seoul.co.kr/xml/rss/rss_top.xml" htmlUrl="https://www.seoul.co.kr"/>
       <outline text="Newsis [valid]" title="Newsis [valid]" type="rss" xmlUrl="https://www.newsis.com/RSS/sokbo.xml" htmlUrl="https://www.newsis.com"/>
       <outline text="Aju News [valid]" title="Aju News [valid]" type="rss" xmlUrl="https://rss.ajunews.com/sokbo.xml" htmlUrl="https://rss.ajunews.com"/>
-      <outline text="KED Global (Korea Economic Daily) [invalid (ERR)]" title="KED Global (Korea Economic Daily) [invalid (ERR)]" type="rss" xmlUrl="https://www.kedglobal.com/newsRss" htmlUrl="https://www.kedglobal.com"/>
+      <outline text="KED Global (Korea Economic Daily) [valid]" title="KED Global (Korea Economic Daily) [valid]" type="rss" xmlUrl="https://www.kedglobal.com/newsRss" htmlUrl="https://www.kedglobal.com"/>
       <outline text="Daily NK (EN) [valid]" title="Daily NK (EN) [valid]" type="rss" xmlUrl="https://www.dailynk.com/english/feed" htmlUrl="https://www.dailynk.com"/>
       <outline text="Korea Times (RSS directory) [valid]" title="Korea Times (RSS directory) [valid]" type="rss" xmlUrl="https://feed.koreatimes.co.kr/k/allnews.xml" htmlUrl="https://feed.koreatimes.co.kr"/>
       <outline text="Korea Herald (RSS directory) [valid]" title="Korea Herald (RSS directory) [valid]" type="rss" xmlUrl="https://www.koreaherald.com/rss/newsAll" htmlUrl="https://www.koreaherald.com"/>
@@ -530,10 +530,10 @@
       <outline text="Sindonews [valid]" title="Sindonews [valid]" type="rss" xmlUrl="https://www.sindonews.com/rss/" htmlUrl="https://www.sindonews.com"/>
       <outline text="Republika [valid]" title="Republika [valid]" type="rss" xmlUrl="https://www.republika.co.id/rss/terkini" htmlUrl="https://www.republika.co.id"/>
       <outline text="ANTARA - Terkini [valid]" title="ANTARA - Terkini [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/terkini.xml" htmlUrl="https://www.antaranews.com"/>
-      <outline text="ANTARA - Top News [invalid (ERR)]" title="ANTARA - Top News [invalid (ERR)]" type="rss" xmlUrl="https://www.antaranews.com/rss/top-news.xml" htmlUrl="https://www.antaranews.com"/>
-      <outline text="ANTARA - Politik [invalid (ERR)]" title="ANTARA - Politik [invalid (ERR)]" type="rss" xmlUrl="https://www.antaranews.com/rss/politik.xml" htmlUrl="https://www.antaranews.com"/>
+      <outline text="ANTARA - Top News [valid]" title="ANTARA - Top News [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/top-news.xml" htmlUrl="https://www.antaranews.com"/>
+      <outline text="ANTARA - Politik [valid]" title="ANTARA - Politik [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/politik.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Hukum [valid]" title="ANTARA - Hukum [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/hukum.xml" htmlUrl="https://www.antaranews.com"/>
-      <outline text="ANTARA - Ekonomi [invalid (ERR)]" title="ANTARA - Ekonomi [invalid (ERR)]" type="rss" xmlUrl="https://www.antaranews.com/rss/ekonomi.xml" htmlUrl="https://www.antaranews.com"/>
+      <outline text="ANTARA - Ekonomi [valid]" title="ANTARA - Ekonomi [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/ekonomi.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Ekonomi (Finansial) [valid]" title="ANTARA - Ekonomi (Finansial) [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/ekonomi-finansial.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Ekonomi (Bisnis) [valid]" title="ANTARA - Ekonomi (Bisnis) [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/ekonomi-bisnis.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Ekonomi (Bursa) [valid]" title="ANTARA - Ekonomi (Bursa) [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/ekonomi-bursa.xml" htmlUrl="https://www.antaranews.com"/>
@@ -592,7 +592,7 @@
       <outline text="NOS Sport - Formule 1 [valid]" title="NOS Sport - Formule 1 [valid]" type="rss" xmlUrl="https://feeds.nos.nl/nossportformule1" htmlUrl="https://feeds.nos.nl"/>
       <outline text="NOS op 3 [valid]" title="NOS op 3 [valid]" type="rss" xmlUrl="https://feeds.nos.nl/nosop3" htmlUrl="https://feeds.nos.nl"/>
       <outline text="NOS Jeugdjournaal [valid]" title="NOS Jeugdjournaal [valid]" type="rss" xmlUrl="https://feeds.nos.nl/jeugdjournaal" htmlUrl="https://feeds.nos.nl"/>
-      <outline text="De Telegraaf [valid]" title="De Telegraaf [valid]" type="rss" xmlUrl="https://www.telegraaf.nl/rss" htmlUrl="https://www.telegraaf.nl"/>
+      <outline text="De Telegraaf [invalid]" title="De Telegraaf [invalid]" type="rss" xmlUrl="https://www.telegraaf.nl/rss" htmlUrl="https://www.telegraaf.nl"/>
       <outline text="de Volkskrant [valid]" title="de Volkskrant [valid]" type="rss" xmlUrl="https://www.volkskrant.nl/voorpagina/rss.xml" htmlUrl="https://www.volkskrant.nl"/>
       <outline text="Trouw [valid]" title="Trouw [valid]" type="rss" xmlUrl="https://www.trouw.nl/voorpagina/rss.xml" htmlUrl="https://www.trouw.nl"/>
       <outline text="Het Parool [valid]" title="Het Parool [valid]" type="rss" xmlUrl="https://www.parool.nl/voorpagina/rss.xml" htmlUrl="https://www.parool.nl"/>
@@ -755,12 +755,12 @@
       <outline text="Dagens Nyheter Sport [valid]" title="Dagens Nyheter Sport [valid]" type="rss" xmlUrl="https://www.dn.se/sport/rss" htmlUrl="https://www.dn.se"/>
       <outline text="Dagens Nyheter Business [valid]" title="Dagens Nyheter Business [valid]" type="rss" xmlUrl="https://www.dn.se/ekonomi/rss" htmlUrl="https://www.dn.se"/>
       <outline text="Norran [valid]" title="Norran [valid]" type="rss" xmlUrl="https://www.norran.se/rss" htmlUrl="https://www.norran.se"/>
-      <outline text="Aftonbladet - Nyheter (All) [invalid (ERR)]" title="Aftonbladet - Nyheter (All) [invalid (ERR)]" type="rss" xmlUrl="https://rss.aftonbladet.se/rss2/small/pages/sections/senastenytt/" htmlUrl="https://rss.aftonbladet.se"/>
-      <outline text="Aftonbladet - Sportbladet [invalid (ERR)]" title="Aftonbladet - Sportbladet [invalid (ERR)]" type="rss" xmlUrl="https://rss.aftonbladet.se/rss2/small/pages/sections/senastenytt/sport/" htmlUrl="https://rss.aftonbladet.se"/>
-      <outline text="Aftonbladet - Sportbladet Fotboll [invalid (ERR)]" title="Aftonbladet - Sportbladet Fotboll [invalid (ERR)]" type="rss" xmlUrl="https://rss.aftonbladet.se/rss2/small/pages/sections/sportbladet/fotboll/" htmlUrl="https://rss.aftonbladet.se"/>
-      <outline text="Aftonbladet - Sportbladet Hockey [invalid (ERR)]" title="Aftonbladet - Sportbladet Hockey [invalid (ERR)]" type="rss" xmlUrl="https://rss.aftonbladet.se/rss2/small/pages/sections/sportbladet/hockey/" htmlUrl="https://rss.aftonbladet.se"/>
-      <outline text="Aftonbladet - Nöjesbladet [invalid (ERR)]" title="Aftonbladet - Nöjesbladet [invalid (ERR)]" type="rss" xmlUrl="https://rss.aftonbladet.se/rss2/small/pages/sections/nojesbladet/" htmlUrl="https://rss.aftonbladet.se"/>
-      <outline text="Aftonbladet - Kultur [invalid (ERR)]" title="Aftonbladet - Kultur [invalid (ERR)]" type="rss" xmlUrl="https://rss.aftonbladet.se/rss2/small/pages/sections/kultur/" htmlUrl="https://rss.aftonbladet.se"/>
+      <outline text="Aftonbladet - Nyheter (All) [valid]" title="Aftonbladet - Nyheter (All) [valid]" type="rss" xmlUrl="https://rss.aftonbladet.se/rss2/small/pages/sections/senastenytt/" htmlUrl="https://rss.aftonbladet.se"/>
+      <outline text="Aftonbladet - Sportbladet [valid]" title="Aftonbladet - Sportbladet [valid]" type="rss" xmlUrl="https://rss.aftonbladet.se/rss2/small/pages/sections/senastenytt/sport/" htmlUrl="https://rss.aftonbladet.se"/>
+      <outline text="Aftonbladet - Sportbladet Fotboll [valid]" title="Aftonbladet - Sportbladet Fotboll [valid]" type="rss" xmlUrl="https://rss.aftonbladet.se/rss2/small/pages/sections/sportbladet/fotboll/" htmlUrl="https://rss.aftonbladet.se"/>
+      <outline text="Aftonbladet - Sportbladet Hockey [valid]" title="Aftonbladet - Sportbladet Hockey [valid]" type="rss" xmlUrl="https://rss.aftonbladet.se/rss2/small/pages/sections/sportbladet/hockey/" htmlUrl="https://rss.aftonbladet.se"/>
+      <outline text="Aftonbladet - Nöjesbladet [valid]" title="Aftonbladet - Nöjesbladet [valid]" type="rss" xmlUrl="https://rss.aftonbladet.se/rss2/small/pages/sections/nojesbladet/" htmlUrl="https://rss.aftonbladet.se"/>
+      <outline text="Aftonbladet - Kultur [valid]" title="Aftonbladet - Kultur [valid]" type="rss" xmlUrl="https://rss.aftonbladet.se/rss2/small/pages/sections/kultur/" htmlUrl="https://rss.aftonbladet.se"/>
       <outline text="Expressen - Nyheter [valid]" title="Expressen - Nyheter [valid]" type="rss" xmlUrl="https://feeds.expressen.se/nyheter/" htmlUrl="https://feeds.expressen.se"/>
       <outline text="GT - Nyheter [valid]" title="GT - Nyheter [valid]" type="rss" xmlUrl="https://feeds.expressen.se/gt/" htmlUrl="https://feeds.expressen.se"/>
       <outline text="Svenska Dagbladet - Frontpage [valid]" title="Svenska Dagbladet - Frontpage [valid]" type="rss" xmlUrl="https://www.svd.se/?service=rss" htmlUrl="https://www.svd.se"/>
@@ -923,21 +923,6 @@
       <outline text="La Prensa Austral [valid]" title="La Prensa Austral [valid]" type="rss" xmlUrl="https://laprensaaustral.cl/feed/" htmlUrl="https://laprensaaustral.cl"/>
       <outline text="CIPER Chile [valid]" title="CIPER Chile [valid]" type="rss" xmlUrl="https://www.ciperchile.cl/feed/" htmlUrl="https://www.ciperchile.cl"/>
       <outline text="Radio Universidad de Chile [valid]" title="Radio Universidad de Chile [valid]" type="rss" xmlUrl="https://radio.uchile.cl/feed/" htmlUrl="https://radio.uchile.cl"/>
-      <outline text="Bing News - Chile (Top) [valid]" title="Bing News - Chile (Top) [valid]" type="rss" xmlUrl="https://www.bing.com/news/search?q=Chile&amp;format=RSS" htmlUrl="https://www.bing.com"/>
-      <outline text="Bing News - Chile política [valid]" title="Bing News - Chile política [valid]" type="rss" xmlUrl="https://www.bing.com/news/search?q=Chile%20politica&amp;format=RSS" htmlUrl="https://www.bing.com"/>
-      <outline text="Bing News - Chile economía [valid]" title="Bing News - Chile economía [valid]" type="rss" xmlUrl="https://www.bing.com/news/search?q=Chile%20economia&amp;format=RSS" htmlUrl="https://www.bing.com"/>
-      <outline text="Bing News - Chile energía [valid]" title="Bing News - Chile energía [valid]" type="rss" xmlUrl="https://www.bing.com/news/search?q=Chile%20energia&amp;format=RSS" htmlUrl="https://www.bing.com"/>
-      <outline text="Bing News - Chile minería [valid]" title="Bing News - Chile minería [valid]" type="rss" xmlUrl="https://www.bing.com/news/search?q=Chile%20mineria&amp;format=RSS" htmlUrl="https://www.bing.com"/>
-      <outline text="Bing News - Chile tecnología [valid]" title="Bing News - Chile tecnología [valid]" type="rss" xmlUrl="https://www.bing.com/news/search?q=Chile%20tecnologia&amp;format=RSS" htmlUrl="https://www.bing.com"/>
-      <outline text="Bing News - Chile deportes [valid]" title="Bing News - Chile deportes [valid]" type="rss" xmlUrl="https://www.bing.com/news/search?q=Chile%20deportes&amp;format=RSS" htmlUrl="https://www.bing.com"/>
-      <outline text="Bing News - Chile fútbol [valid]" title="Bing News - Chile fútbol [valid]" type="rss" xmlUrl="https://www.bing.com/news/search?q=Chile%20futbol&amp;format=RSS" htmlUrl="https://www.bing.com"/>
-      <outline text="Bing News - Santiago Chile [valid]" title="Bing News - Santiago Chile [valid]" type="rss" xmlUrl="https://www.bing.com/news/search?q=Santiago%20Chile&amp;format=RSS" htmlUrl="https://www.bing.com"/>
-      <outline text="Bing News - site:df.cl [valid]" title="Bing News - site:df.cl [valid]" type="rss" xmlUrl="https://www.bing.com/news/search?q=site%3Adf.cl&amp;format=RSS" htmlUrl="https://www.bing.com"/>
-      <outline text="Bing News - site:theclinic.cl [valid]" title="Bing News - site:theclinic.cl [valid]" type="rss" xmlUrl="https://www.bing.com/news/search?q=site%3Atheclinic.cl&amp;format=RSS" htmlUrl="https://www.bing.com"/>
-      <outline text="Bing News - site:lanacion.cl [valid]" title="Bing News - site:lanacion.cl [valid]" type="rss" xmlUrl="https://www.bing.com/news/search?q=site%3Alanacion.cl&amp;format=RSS" htmlUrl="https://www.bing.com"/>
-      <outline text="Bing News - site:biobiochile.cl [valid]" title="Bing News - site:biobiochile.cl [valid]" type="rss" xmlUrl="https://www.bing.com/news/search?q=site%3Abiobiochile.cl&amp;format=RSS" htmlUrl="https://www.bing.com"/>
-      <outline text="Bing News - site:emol.com [valid]" title="Bing News - site:emol.com [valid]" type="rss" xmlUrl="https://www.bing.com/news/search?q=site%3Aemol.com&amp;format=RSS" htmlUrl="https://www.bing.com"/>
-      <outline text="Bing News - site:latercera.com [valid]" title="Bing News - site:latercera.com [valid]" type="rss" xmlUrl="https://www.bing.com/news/search?q=site%3Alatercera.com&amp;format=RSS" htmlUrl="https://www.bing.com"/>
       <outline text="La Tercera - Home [valid]" title="La Tercera - Home [valid]" type="rss" xmlUrl="https://www.latercera.com/arc/outboundfeeds/rss/?outputType=xml" htmlUrl="https://www.latercera.com"/>
       <outline text="Pulso (La Tercera Biz) [valid]" title="Pulso (La Tercera Biz) [valid]" type="rss" xmlUrl="https://www.latercera.com/arc/outboundfeeds/rss/?outputType=xml&amp;rotation=pulso" htmlUrl="https://www.latercera.com"/>
       <outline text="Emol - Nacional [invalid]" title="Emol - Nacional [invalid]" type="rss" xmlUrl="https://www.emol.com/rss/rss_nacional.xml" htmlUrl="https://www.emol.com"/>
