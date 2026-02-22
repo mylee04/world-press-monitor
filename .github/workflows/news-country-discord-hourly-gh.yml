@@ -42,3 +42,4 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           WPM_HOURLY_DISCORD_WEBHOOK: ${{ secrets.WPM_HOURLY_DISCORD_WEBHOOK }}
+          NEWS_COUNTRY_REPORT_EXCLUDED_COUNTRIES: "Global Energy & Grid, Egypt, Singapore, Ukraine, Nigeria, South Africa, Qatar"

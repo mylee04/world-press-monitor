@@ -1,6 +1,8 @@
 #!/usr/bin/env bun
 
 import { Pool } from 'pg';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 
 type CountryRow = {
   country: string;
@@ -8,7 +10,17 @@ type CountryRow = {
   count_last_24h: string;
 };
 
+type AtlasCountry = {
+  name: string;
+  code?: string;
+};
+
+type AtlasCatalog = {
+  countries?: AtlasCountry[];
+};
+
 const DEFAULT_WEBHOOK_ENV_VARS = ['WPM_HOURLY_DISCORD_WEBHOOK'];
+const DEFAULT_ATLAS_PATH = resolve(process.cwd(), 'data/rss-atlas.json');
 
 const DEFAULT_LOG_PREFIX = '[news-country-discord]';
 const MAX_DISCORD_CHARS = 1900;
@@ -76,6 +88,51 @@ function splitIntoChunks(lines: string[]): string[] {
   return chunks.map((chunk) => chunk.trim()).filter((chunk) => chunk.length > 0);
 }
 
+function normalizeCountryValue(value: string): string {
+  return value.trim().toLowerCase().replace(/\s+/g, ' ');
+}
+
+function parseCountrySetFromEnv(raw: string | undefined): Set<string> {
+  if (!raw) return new Set();
+  return new Set(
+    raw
+      .split(',')
+      .map((value) => normalizeCountryValue(value))
+      .filter((value) => value.length > 0),
+  );
+}
+
+function loadAtlasCountries(filePath: string): Set<string> {
+  try {
+    const atlasRaw = readFileSync(filePath, 'utf8');
+    const parsed = JSON.parse(atlasRaw) as AtlasCatalog;
+    if (!Array.isArray(parsed.countries)) return new Set();
+
+    const set = new Set<string>();
+    for (const country of parsed.countries) {
+      if (country?.name) set.add(normalizeCountryValue(country.name));
+      if (country?.code) set.add(normalizeCountryValue(country.code));
+    }
+    return set;
+  } catch (error) {
+    console.warn(
+      `${DEFAULT_LOG_PREFIX} failed to read atlas countries (${filePath}): ${error instanceof Error ? error.message : String(error)}`,
+    );
+    return new Set();
+  }
+}
+
+function buildCountryFilterSet(): Set<string> {
+  const explicitActive = parseCountrySetFromEnv(process.env.NEWS_COUNTRY_REPORT_ACTIVE_COUNTRIES);
+  if (explicitActive.size > 0) return explicitActive;
+
+  const atlasPath = process.env.ATLAS_PATH || DEFAULT_ATLAS_PATH;
+  const fromAtlas = loadAtlasCountries(atlasPath);
+  if (fromAtlas.size > 0) return fromAtlas;
+
+  return new Set();
+}
+
 async function postToDiscord(webhookUrl: string, content: string): Promise<void> {
   const startedAt = Date.now();
   const response = await fetch(webhookUrl, {
@@ -119,11 +176,25 @@ async function main(): Promise<void> {
 
     const result = await pool.query<CountryRow>(query);
     const rows = result.rows;
-    const topCountries = parseTopCountriesLimit();
-    const selectedRows = topCountries > 0 ? rows.slice(0, topCountries) : rows;
+    const countryFilter = buildCountryFilterSet();
+    const excludedCountries = parseCountrySetFromEnv(process.env.NEWS_COUNTRY_REPORT_EXCLUDED_COUNTRIES);
 
-    const total1h = rows.reduce((acc, row) => acc + Number(row.count_last_1h), 0);
-    const total24h = rows.reduce((acc, row) => acc + Number(row.count_last_24h), 0);
+    const filteredRows = rows.filter((row) => {
+      const normalized = normalizeCountryValue(row.country);
+      if (countryFilter.size > 0 && !countryFilter.has(normalized)) return false;
+      if (excludedCountries.size > 0 && excludedCountries.has(normalized)) return false;
+      return true;
+    });
+
+    const unexpectedCountries = rows
+      .filter((row) => countryFilter.size > 0 && !countryFilter.has(normalizeCountryValue(row.country)))
+      .map((row) => row.country);
+
+    const topCountries = parseTopCountriesLimit();
+    const selectedRows = topCountries > 0 ? filteredRows.slice(0, topCountries) : filteredRows;
+
+    const total1h = filteredRows.reduce((acc, row) => acc + Number(row.count_last_1h), 0);
+    const total24h = filteredRows.reduce((acc, row) => acc + Number(row.count_last_24h), 0);
 
     const lines = selectedRows
       .map((row, index) => `${index + 1}. ${row.country}: 1h ${row.count_last_1h}, 24h ${row.count_last_24h}`);
@@ -132,15 +203,21 @@ async function main(): Promise<void> {
       `📰 Hourly News Data Intake by Country (${new Date().toISOString()})`,
       `Source: news_articles`,
       `Last 1h: ${total1h.toLocaleString()} / Last 24h: ${total24h.toLocaleString()}`,
+      countryFilter.size > 0 ? `Countries in scope: ${countryFilter.size}` : 'Countries in scope: all',
+      unexpectedCountries.length > 0 ? `Unexpected countries in data: ${unexpectedCountries.join(', ')}` : '',
       lines.length > 0 ? '' : 'No records in news_articles.'
     ].join('\n');
 
-    const chunks = splitIntoChunks([header, ...(lines.length > 0 ? lines : []), `Total ${rows.length} countries. Showing ${lines.length}.`]);
+    const chunks = splitIntoChunks([
+      header,
+      ...(lines.length > 0 ? lines : []),
+      `Total ${filteredRows.length} countries. Showing ${selectedRows.length}.`,
+    ]);
 
     for (const content of chunks) {
       await postToDiscord(webhookUrl, content);
     }
-    console.log(`${DEFAULT_LOG_PREFIX} posted ${chunks.length} message(s), ${rows.length} country rows (show ${lines.length}).`);
+    console.log(`${DEFAULT_LOG_PREFIX} posted ${chunks.length} message(s), ${filteredRows.length} country rows (show ${selectedRows.length}).`);
   } finally {
     await pool.end().catch(() => void 0);
   }
