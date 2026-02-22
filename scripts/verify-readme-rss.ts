@@ -3,6 +3,7 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { lookup } from 'node:dns/promises';
 import { resolve } from 'node:path';
+import { gunzipSync } from 'node:zlib';
 
 type AtlasFeed = {
   name: string;
@@ -118,18 +119,30 @@ async function main(): Promise<void> {
 
   const tasks = buildCheckTasks(atlas);
   const results = await verifyEndpoints(tasks);
+  const invalidResults = results.filter((result) => !result.valid);
+  const sitemapFallback = await checkSitemapFallbackForInvalid(invalidResults);
+  const recoveredFeedKeys = new Set(
+    sitemapFallback.recoveredFeeds.map((item) => makeResultKey(item.countryCode, item.outlet, item.rssUrl))
+  );
   const resultMap = buildResultMap(results);
+  const effectiveValidCount = results.filter(
+    (result) => result.valid || recoveredFeedKeys.has(makeResultKey(result.countryCode, result.outlet, result.url))
+  ).length;
+  const effectiveInvalidResults = results.filter(
+    (result) => !result.valid && !recoveredFeedKeys.has(makeResultKey(result.countryCode, result.outlet, result.url))
+  );
   const summaryCounts = {
     countries: atlas.countries.length,
     totalFeeds: atlas.countries.reduce((acc, country) => acc + country.feeds.length, 0),
     checkedFeeds: results.length,
-    valid: results.filter((result) => result.valid).length,
-    invalid: results.filter((result) => !result.valid).length,
-    failureReasons: summarizeFailureReasons(results),
+    valid: effectiveValidCount,
+    invalid: effectiveInvalidResults.length,
+    failureReasons: summarizeFailureReasons(effectiveInvalidResults),
     skippedNoSource: atlas.countries.reduce(
       (acc, country) => acc + country.feeds.filter((feed) => !feed.url).length,
-      0
+      0,
     ),
+    sitemapFallback,
   };
 
   const isRuntimeBlocked = isLikelyRuntimeNetworkFailure(results, summaryCounts);
@@ -156,8 +169,8 @@ async function main(): Promise<void> {
     return;
   }
 
-  const preface = getReadmePreface(sourceLines, summaryCounts, results, atlas);
-  const updatedSections = renderCountrySections(atlas, resultMap, ONLY_VALID_IN_README);
+  const preface = getReadmePreface(sourceLines, summaryCounts, results, atlas, recoveredFeedKeys);
+  const updatedSections = renderCountrySections(atlas, resultMap, recoveredFeedKeys, ONLY_VALID_IN_README);
   const updatedReadme = `${updateHeaderCheckedDate(preface)}\n${updatedSections.join('\n')}\n`;
   writeFileSync(README_PATH, updatedReadme, 'utf8');
 
@@ -181,6 +194,10 @@ async function main(): Promise<void> {
   console.log(`Valid: ${summaryCounts.valid}`);
   console.log(`Invalid: ${summaryCounts.invalid}`);
   console.log(`No-source rows: ${summaryCounts.skippedNoSource}`);
+  if (summaryCounts.sitemapFallback) {
+    const fallback = summaryCounts.sitemapFallback;
+    console.log(`Sitemap fallback checks: checked=${fallback.checkedInvalidFeeds}, attempted=${fallback.attemptedFeeds}, success=${fallback.succeededFeeds}, failed=${fallback.failedFeeds}, no-candidate=${fallback.noCandidateFeeds}`);
+  }
   if (Object.keys(summaryCounts.failureReasons).length > 0) {
     console.log(`Failure reasons:`);
     for (const [reason, count] of Object.entries(summaryCounts.failureReasons).sort((a, b) => b[1] - a[1])) {
@@ -652,6 +669,23 @@ function classifyLookupError(error: unknown): string {
 }
 
 type FailureCount = Record<string, number>;
+type SitemapFallbackDetail = {
+  countryCode: string;
+  country: string;
+  outlet: string;
+  rssUrl: string;
+  sitemapUrl: string;
+};
+type SitemapFallbackSummary = {
+  checkedInvalidFeeds: number;
+  attemptedFeeds: number;
+  succeededFeeds: number;
+  failedFeeds: number;
+  noCandidateFeeds: number;
+  candidateAttempts: number;
+  recoveredFeeds: SitemapFallbackDetail[];
+  sampleSuccesses: SitemapFallbackDetail[];
+};
 type SummaryCounts = {
   countries: number;
   totalFeeds: number;
@@ -660,6 +694,7 @@ type SummaryCounts = {
   invalid: number;
   failureReasons: FailureCount;
   skippedNoSource: number;
+  sitemapFallback?: SitemapFallbackSummary;
 };
 
 type InvalidItem = {
@@ -670,12 +705,18 @@ type InvalidItem = {
   httpCode: number | null;
 };
 
-function getReadmePreface(sourceLines: string[], summary: SummaryCounts, results: EndpointResult[], atlas: Atlas): string {
+function getReadmePreface(
+  sourceLines: string[],
+  summary: SummaryCounts,
+  results: EndpointResult[],
+  atlas: Atlas,
+  recoveredFeedKeys: Set<string>
+): string {
   const firstSection = sourceLines.findIndex((line) => COUNTRY_SECTION_HEADER.test(line));
   const cut = firstSection >= 0 ? sourceLines.slice(0, firstSection) : sourceLines;
   const snapshotStart = cut.findIndex((line) => line.trim() === SNAPSHOT_HEADING);
   const trimmed = snapshotStart >= 0 ? removeExistingSnapshot(cut, snapshotStart) : cut;
-  const snapshotSection = renderVerificationSnapshot(summary, results, atlas);
+  const snapshotSection = renderVerificationSnapshot(summary, results, atlas, recoveredFeedKeys);
   const updated = [...trimmed, '', snapshotSection].filter((line, index, arr) => {
     const prev = arr[index - 1];
     if (!prev || !line) return true;
@@ -695,10 +736,20 @@ function removeExistingSnapshot(lines: string[], startIndex: number): string[] {
   return [...lines.slice(0, startIndex), ...lines.slice(end)];
 }
 
-function renderVerificationSnapshot(summary: SummaryCounts, results: EndpointResult[], atlas: Atlas): string {
+function renderVerificationSnapshot(
+  summary: SummaryCounts,
+  results: EndpointResult[],
+  atlas: Atlas,
+  recoveredFeedKeys: Set<string>
+): string {
   const lines: string[] = [];
   const invalidItems: InvalidItem[] = results
-    .filter((result) => !result.valid && result.failureReason)
+    .filter(
+      (result) =>
+        !result.valid &&
+        result.failureReason !== null &&
+        !recoveredFeedKeys.has(makeResultKey(result.countryCode, result.outlet, result.url))
+    )
     .map((result) => ({
       country: result.countryName,
       outlet: result.outlet,
@@ -725,7 +776,16 @@ function renderVerificationSnapshot(summary: SummaryCounts, results: EndpointRes
   lines.push(`- Checked endpoints: \`${summary.checkedFeeds}\``);
   lines.push(`- Valid: \`${summary.valid}\``);
   lines.push(`- Invalid: \`${summary.invalid}\``);
+  if (summary.sitemapFallback && summary.sitemapFallback.succeededFeeds > 0) {
+    lines.push(`- Recovered via sitemap: \`${summary.sitemapFallback.succeededFeeds}\``);
+  }
   lines.push(`- No-source rows: \`${summary.skippedNoSource}\``);
+  if (summary.sitemapFallback) {
+    const fallback = summary.sitemapFallback;
+    lines.push(
+      `- Sitemap fallback checks: checked \`${fallback.checkedInvalidFeeds}\`, attempted \`${fallback.attemptedFeeds}\`, success \`${fallback.succeededFeeds}\`, failed \`${fallback.failedFeeds}\`, no-candidate \`${fallback.noCandidateFeeds}\`, candidates \`${fallback.candidateAttempts}\``
+    );
+  }
   lines.push(`- Snapshot date: \`${CHECKED_DATE}\``);
   lines.push(`- Source artifact: \`audits/readme_rss_health_latest.json\``);
   lines.push('');
@@ -752,6 +812,16 @@ function renderVerificationSnapshot(summary: SummaryCounts, results: EndpointRes
     }
   }
 
+  if (summary.sitemapFallback && summary.sitemapFallback.sampleSuccesses.length > 0) {
+    lines.push('');
+    lines.push('### Sitemap fallback successes');
+    lines.push('|Country|Outlet|Failed RSS URL|Recovered via sitemap|');
+    lines.push('|---|---|---|---|');
+    for (const item of summary.sitemapFallback.sampleSuccesses) {
+      lines.push(`|${item.country}|${item.outlet}|<${item.rssUrl}>|<${item.sitemapUrl}>|`);
+    }
+  }
+
   lines.push('');
   lines.push('### No-source rows');
   if (noSourceItems.length === 0) {
@@ -773,6 +843,7 @@ function renderVerificationSnapshot(summary: SummaryCounts, results: EndpointRes
 function renderCountrySections(
   atlas: Atlas,
   resultMap: Map<string, EndpointResult>,
+  recoveredFeedKeys: Set<string>,
   onlyValid: boolean
 ): string[] {
   const lines: string[] = [];
@@ -821,7 +892,8 @@ function renderCountrySections(
 
       const key = makeResultKey(country.code, feed.name, feed.url);
       const result = resultMap.get(key);
-      if (onlyValid && (!result || !result.valid)) {
+      const recovered = result !== undefined && recoveredFeedKeys.has(key);
+      if (onlyValid && (!result || (!result.valid && !recovered))) {
         continue;
       }
 
@@ -846,9 +918,9 @@ function renderCountrySections(
           row,
           outlet: feed.name,
           url: feed.url,
-          status: formatStatus(result),
+          status: recovered ? 'Recovered via sitemap' : formatStatus(result),
           checkedDate: CHECKED_DATE,
-          validLabel: result.valid ? 'valid' : 'invalid',
+          validLabel: result && (result.valid || recovered) ? 'valid' : 'invalid',
         })
       );
     }
@@ -896,6 +968,301 @@ async function verifyEndpoints(tasks: CheckTask[]): Promise<EndpointResult[]> {
   }
 
   return results;
+}
+
+async function checkSitemapFallbackForInvalid(invalidResults: EndpointResult[]): Promise<SitemapFallbackSummary> {
+  const summary: SitemapFallbackSummary = {
+    checkedInvalidFeeds: invalidResults.length,
+    attemptedFeeds: 0,
+    succeededFeeds: 0,
+    failedFeeds: 0,
+    noCandidateFeeds: 0,
+    candidateAttempts: 0,
+    recoveredFeeds: [],
+    sampleSuccesses: [],
+  };
+
+  for (let start = 0; start < invalidResults.length; start += BATCH_SIZE) {
+    const batch = invalidResults.slice(start, start + BATCH_SIZE);
+    const batchChecks = await Promise.all(
+      batch.map(async (result) => {
+        if (REQUEST_JITTER_MS > 0) {
+          await sleep(Math.floor(Math.random() * REQUEST_JITTER_MS));
+        }
+
+        const candidates = await buildSitemapFallbackUrls(result.url);
+        if (candidates.length === 0) {
+          return {
+            outcome: 'no_candidate' as const,
+            result,
+            candidate: undefined,
+            attempts: 0,
+          };
+        }
+
+        let attempts = 0;
+        for (const candidate of candidates) {
+          const candidateResult = await checkSitemapFallbackCandidate(candidate, 0);
+          attempts += candidateResult.attempts;
+          if (candidateResult.ok) {
+            return {
+              outcome: 'success' as const,
+              result,
+              candidate: candidateResult.recoveredUrl || candidate,
+              attempts,
+            };
+          }
+        }
+        return {
+          outcome: 'failed' as const,
+          result,
+          candidate: candidates[0],
+          attempts,
+        };
+      })
+    );
+
+    for (const checkResult of batchChecks) {
+      summary.candidateAttempts += checkResult.attempts;
+      if (checkResult.outcome === 'no_candidate') {
+        summary.noCandidateFeeds += 1;
+      } else {
+        summary.attemptedFeeds += 1;
+        if (checkResult.outcome === 'success' && checkResult.candidate) {
+          summary.succeededFeeds += 1;
+          const recovered = {
+            countryCode: checkResult.result.countryCode,
+            country: checkResult.result.countryName,
+            outlet: checkResult.result.outlet,
+            rssUrl: checkResult.result.url,
+            sitemapUrl: checkResult.candidate,
+          };
+          summary.recoveredFeeds.push(recovered);
+          if (summary.sampleSuccesses.length < 20) {
+            summary.sampleSuccesses.push(recovered);
+          }
+        } else {
+          summary.failedFeeds += 1;
+        }
+      }
+    }
+
+    if (start + BATCH_SIZE < invalidResults.length && BATCH_DELAY_MS > 0) {
+      await sleep(BATCH_DELAY_MS);
+    }
+  }
+
+  return summary;
+}
+
+async function buildSitemapFallbackUrls(sourceUrl: string): Promise<string[]> {
+  const urls: string[] = [];
+
+  try {
+    const parsed = new URL(sourceUrl);
+    const root = `${parsed.protocol}://${parsed.host}`;
+    const basePath = parsed.pathname.endsWith('/') ? parsed.pathname : `${parsed.pathname.replace(/\/[^/]*$/, '')}/`;
+    urls.push(`${root}${basePath}sitemap_news.xml`);
+    urls.push(`${root}${basePath}sitemap-news.xml`);
+    urls.push(`${root}${basePath}sitemap.xml`);
+    urls.push(`${root}${basePath}sitemap_index.xml`);
+    urls.push(`${root}/sitemap_news.xml`);
+    urls.push(`${root}/sitemap-news.xml`);
+    urls.push(`${root}/sitemap.xml`);
+    urls.push(`${root}/sitemap_index.xml`);
+    const robotsUrls = await extractSitemapUrlsFromRobots(sourceUrl);
+    urls.push(...robotsUrls);
+  } catch {
+    return dedupeStrings(urls);
+  }
+
+  return prioritizeSitemapCandidates(dedupeStrings(urls));
+}
+
+async function checkSitemapFallbackCandidate(
+  url: string,
+  depth: number
+): Promise<{ ok: boolean; status: number | null; reason: string; attempts: number; recoveredUrl?: string }> {
+  try {
+    if (depth > 2) {
+      return { ok: false, status: null, reason: 'SITEMAP_DEPTH_LIMIT', attempts: 0 };
+    }
+
+    const { response } = await fetchWithRedirects(url, REQUEST_TIMEOUT_MS, MAX_HTTP_REDIRECTS);
+    const { bodyStart, bodyText } = await readSitemapBody(url, response);
+    const contentType = response.headers.get('content-type') || '';
+    const xmlDetected = XML_MARKERS.some((marker) => bodyStart.includes(marker));
+    const rootXml = classifySitemapRoot(bodyStart);
+
+    if (rootXml === 'sitemapindex' && depth < 2) {
+      const childCandidates = prioritizeSitemapCandidates(extractSitemapLocs(bodyText, url));
+      if (childCandidates.length === 0) {
+        return { ok: false, status: response.status, reason: 'SITEMAPINDEX_NO_CHILD_URLS', attempts: 1 };
+      }
+      let attempts = 1;
+      for (const child of childCandidates.slice(0, 12)) {
+        const childResult = await checkSitemapFallbackCandidate(child, depth + 1);
+        attempts += childResult.attempts;
+        if (childResult.ok) {
+          return {
+            ok: true,
+            status: childResult.status,
+            reason: childResult.reason,
+            attempts,
+            recoveredUrl: childResult.recoveredUrl || child,
+          };
+        }
+      }
+      return { ok: false, status: response.status, reason: 'SITEMAPINDEX_NO_VALID_URLSET', attempts };
+    }
+
+    const looksLikeXml = contentType.includes('xml') || contentType.includes('rss') || contentType.includes('atom');
+    const looksLikeUrlset = rootXml === 'urlset' || /<url>/i.test(bodyStart);
+    if (response.status >= 200 && response.status < 300 && xmlDetected && looksLikeXml && looksLikeUrlset) {
+      return { ok: true, status: response.status, reason: 'OK', attempts: 1 };
+    }
+    if (response.status >= 200 && response.status < 300) {
+      return { ok: false, status: response.status, reason: classifyHttpBodyFailure(bodyStart, contentType), attempts: 1 };
+    }
+    return { ok: false, status: response.status, reason: `HTTP_${response.status}`, attempts: 1 };
+  } catch (error) {
+    return { ok: false, status: null, reason: classifyFetchError(error), attempts: 0 };
+  }
+}
+
+function prioritizeSitemapCandidates(urls: string[]): string[] {
+  return dedupeStrings(urls).sort((a, b) => scoreSitemapCandidate(b) - scoreSitemapCandidate(a));
+}
+
+function scoreSitemapCandidate(url: string): number {
+  const lower = url.toLowerCase();
+  if (!lower.includes('sitemap')) return 0;
+  let score = 20;
+  if (lower.includes('news')) score += 100;
+  if (lower.includes('today')) score += 40;
+  if (lower.includes('breaking')) score += 30;
+  if (lower.includes('sitemap-news')) score += 60;
+  if (lower.includes('sitemap_news')) score += 60;
+  if (lower.includes('sitemap_index')) score += 20;
+  if (lower.includes('sitemapindex')) score += 10;
+  if (lower.includes('image') || lower.includes('photo')) score -= 20;
+  return score;
+}
+
+function classifySitemapRoot(xmlText: string): 'sitemapindex' | 'urlset' | 'other' {
+  const lower = xmlText.toLowerCase();
+  if (lower.includes('<sitemapindex')) return 'sitemapindex';
+  if (lower.includes('<urlset')) return 'urlset';
+  return 'other';
+}
+
+function extractSitemapLocs(xmlText: string, baseUrl?: string): string[] {
+  const urls: string[] = [];
+  const normalized = normalizeSitemapXmlText(xmlText);
+  if (!normalized) {
+    return urls;
+  }
+
+  for (const match of normalized.matchAll(/<loc>(.*?)<\/loc>/g)) {
+    const raw = match?.[1]?.trim();
+    if (!raw) {
+      continue;
+    }
+    urls.push(raw);
+  }
+  if (baseUrl) {
+    try {
+      const base = new URL(baseUrl);
+      const absoluteUrls: string[] = [];
+      for (const rawLoc of urls) {
+        try {
+          if (rawLoc.startsWith('http://') || rawLoc.startsWith('https://')) {
+            absoluteUrls.push(rawLoc);
+          } else {
+            absoluteUrls.push(new URL(rawLoc, base).toString());
+          }
+        } catch {
+          continue;
+        }
+      }
+      return absoluteUrls;
+    } catch {
+      return urls;
+    }
+  }
+  return urls;
+}
+
+function normalizeSitemapXmlText(xmlText: string): string {
+  return xmlText
+    .replace(/<\?[\s\S]*?\?>/g, '')
+    .replace(/<\!DOCTYPE[\s\S]*?>/i, '')
+    .trim();
+}
+
+async function extractSitemapUrlsFromRobots(sourceUrl: string): Promise<string[]> {
+  try {
+    const parsed = new URL(sourceUrl);
+    const robotsUrl = `${parsed.origin}/robots.txt`;
+    const { response } = await fetchWithRedirects(robotsUrl, REQUEST_TIMEOUT_MS, MAX_HTTP_REDIRECTS);
+    if (!response.ok) {
+      return [];
+    }
+    const robotsText = await response.text();
+    const lines = robotsText.split(/\r?\n/);
+    const urls: string[] = [];
+    for (const line of lines) {
+      const match = /^sitemap:\s*(.+)$/i.exec(line.trim());
+      if (!match) continue;
+      const raw = match[1]?.trim();
+      if (!raw) continue;
+      try {
+        urls.push(new URL(raw, parsed.origin).toString());
+      } catch {
+        continue;
+      }
+    }
+    return urls;
+  } catch {
+    return [];
+  }
+}
+
+async function readSitemapBody(url: string, response: Response): Promise<{ bodyText: string; bodyStart: string }> {
+  const contentType = response.headers.get('content-type') || '';
+  const contentEncoding = response.headers.get('content-encoding') || '';
+  const bytes = new Uint8Array(await response.arrayBuffer());
+  let bodyText = '';
+  const isGzip =
+    url.toLowerCase().endsWith('.gz') ||
+    contentType.includes('gzip') ||
+    contentEncoding.includes('gzip') ||
+    (bytes.length >= 2 && bytes[0] === 0x1f && bytes[1] === 0x8b);
+  try {
+    if (isGzip) {
+      bodyText = new TextDecoder().decode(gunzipSync(Buffer.from(bytes)));
+    } else {
+      bodyText = new TextDecoder().decode(bytes);
+    }
+  } catch {
+    bodyText = new TextDecoder().decode(bytes);
+  }
+  return {
+    bodyText,
+    bodyStart: bodyText.slice(0, 4000).toLowerCase(),
+  };
+}
+
+function dedupeStrings(values: string[]): string[] {
+  const seen = new Set<string>();
+  const deduped: string[] = [];
+  for (const value of values) {
+    const normalized = value.trim();
+    if (!normalized || seen.has(normalized)) continue;
+    seen.add(normalized);
+    deduped.push(normalized);
+  }
+  return deduped;
 }
 
 async function checkEndpoint(task: CheckTask): Promise<EndpointResult> {
