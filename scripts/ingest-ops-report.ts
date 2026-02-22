@@ -28,6 +28,13 @@ type Aggregates = {
   missingLink: number;
 };
 
+type MethodAggregate = {
+  method: string;
+  attempts: number;
+  successes: number;
+  failures: number;
+};
+
 type KeyedRow = {
   key: string;
   value: Aggregates;
@@ -115,6 +122,7 @@ async function runHourlyReport(filters: {
   const totals = sumRows(result.rows);
   const topSources = topFailureRows(result.rows, filters.limit);
   const byCountry = aggregateByCountry(result.rows);
+  const methodStats = aggregateMethodStats(result.rows);
   const failureReasons = await readIngestFailureReasons({
     runner: filters.runner,
     method: filters.method,
@@ -129,6 +137,7 @@ async function runHourlyReport(filters: {
 
   console.log(`[ingest-ops] mode=hourly status=${status} runner=${filters.runner} records=${result.rows.length} buckets=${filters.hours}h`);
   console.log(`[ingest-ops] attempts=${totals.attempts} ok=${totals.successes} fail=${totals.failures} failureRate=${percent(totals.failures, totals.attempts)}%`);
+  console.log(`[ingest-ops] method_stats=${formatMethodStats(methodStats)}`);
   console.log(
     `[ingest-ops] fetched=${totals.fetched} valid=${totals.valid} missingTitle=${totals.missingTitle} missingSummary=${totals.missingSummary} missingPublished=${totals.missingPublishedAt} missingLink=${totals.missingLink}`
   );
@@ -222,6 +231,7 @@ async function runWeeklyReport(filters: {
   const totals = sumRows(result.rows);
   const topSources = topFailureRows(result.rows, filters.limit);
   const byCountry = aggregateByCountry(result.rows);
+  const methodStats = aggregateMethodStats(result.rows);
   const failureReasons = await readIngestFailureReasons({
     runner: filters.runner,
     method: filters.method,
@@ -237,6 +247,7 @@ async function runWeeklyReport(filters: {
 
   console.log(`[ingest-ops] mode=weekly status=${status} runner=${filters.runner} records=${result.rows.length} days=${filters.days}`);
   console.log(`[ingest-ops] attempts=${totals.attempts} ok=${totals.successes} fail=${totals.failures} failureRate=${percent(totals.failures, totals.attempts)}%`);
+  console.log(`[ingest-ops] method_stats=${formatMethodStats(methodStats)}`);
   console.log(
     `[ingest-ops] fetched=${totals.fetched} valid=${totals.valid} missingTitle=${totals.missingTitle} missingSummary=${totals.missingSummary} missingPublished=${totals.missingPublishedAt} missingLink=${totals.missingLink}`
   );
@@ -330,6 +341,7 @@ async function runDailyReport(filters: {
   const totals = sumRows(result.rows);
   const topSources = topFailureRows(result.rows, filters.limit);
   const byCountry = aggregateByCountry(result.rows);
+  const methodStats = aggregateMethodStats(result.rows);
   const failureReasons = await readIngestFailureReasons({
     runner: filters.runner,
     method: filters.method,
@@ -344,6 +356,7 @@ async function runDailyReport(filters: {
 
   console.log(`[ingest-ops] mode=daily status=${status} runner=${filters.runner} records=${result.rows.length} days=${filters.days}`);
   console.log(`[ingest-ops] attempts=${totals.attempts} ok=${totals.successes} fail=${totals.failures} failureRate=${percent(totals.failures, totals.attempts)}%`);
+  console.log(`[ingest-ops] method_stats=${formatMethodStats(methodStats)}`);
   console.log(
     `[ingest-ops] fetched=${totals.fetched} valid=${totals.valid} missingTitle=${totals.missingTitle} missingSummary=${totals.missingSummary} missingPublished=${totals.missingPublishedAt} missingLink=${totals.missingLink}`
   );
@@ -446,6 +459,7 @@ async function sendIngestOpsDiscordReport(params: {
     `Mode: ${params.mode}`,
     `Runner: ${params.filters.runner}`,
     `Method: ${params.filters.method || 'rss+sitemap'}`,
+    `Method stats: ${formatMethodStats(aggregateMethodStats(params.results))}`,
     `Rows: ${params.results.length}`,
     `Attempts: ${totalAttempts}`,
     `OK: ${params.totals.successes}`,
@@ -687,6 +701,47 @@ function failureReasonPriority(reason: string, priorityMap: Map<string, number>)
 function percent(numerator: number, denominator: number): string {
   if (!denominator) return '0.00';
   return (numerator / denominator * 100).toFixed(2);
+}
+
+function aggregateMethodStats(rows: Array<IngestOpsHourlyRow | IngestOpsDailyRow>): MethodAggregate[] {
+  const byMethod = new Map<string, MethodAggregate>();
+  for (const row of rows) {
+    const method = row.method || 'unknown';
+    const existing = byMethod.get(method);
+    if (!existing) {
+      byMethod.set(method, {
+        method,
+        attempts: row.attemptedRuns,
+        successes: row.successfulRuns,
+        failures: row.failedRuns
+      });
+      continue;
+    }
+    existing.attempts += row.attemptedRuns;
+    existing.successes += row.successfulRuns;
+    existing.failures += row.failedRuns;
+  }
+
+  const orderedMethods = ['rss', 'sitemap', 'unknown'];
+  const rowsOrdered: MethodAggregate[] = [];
+  for (const method of orderedMethods) {
+    const row = byMethod.get(method);
+    if (row) rowsOrdered.push(row);
+    byMethod.delete(method);
+  }
+
+  for (const row of byMethod.values()) {
+    rowsOrdered.push(row);
+  }
+
+  return rowsOrdered;
+}
+
+function formatMethodStats(rows: MethodAggregate[]): string {
+  if (rows.length === 0) return 'n/a';
+  return rows
+    .map((row) => `${row.method} attempted=${row.attempts}, ok=${row.successes}, fail=${row.failures} (${percent(row.failures, row.attempts)}%)`)
+    .join('; ');
 }
 
 function sumRows(rows: IngestOpsHourlyRow[] | IngestOpsDailyRow[]): Aggregates {
