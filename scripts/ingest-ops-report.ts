@@ -10,7 +10,7 @@ import {
   type IngestOpsHourlyRow
 } from '../lib/ingestion-store';
 
-type Mode = 'hourly' | 'daily';
+type Mode = 'hourly' | 'daily' | 'weekly';
 
 const DEFAULT_LOG_PREFIX = '[ingest-ops]';
 const DISCORD_WEBHOOK_ENV_KEYS = ['WPM_HOURLY_DISCORD_WEBHOOK', 'INGEST_OPS_DISCORD_WEBHOOK', 'RSS_HEALTH_DISCORD_WEBHOOK', 'DISCORD_WEBHOOK_URL'];
@@ -34,7 +34,7 @@ type KeyedRow = {
 };
 
 const mode = resolveMode(process.argv.slice(2));
-const limit = parseIntArg(process.argv.slice(2), 'limit', mode === 'daily' ? 500 : 5000);
+const limit = parseIntArg(process.argv.slice(2), 'limit', mode === 'daily' || mode === 'weekly' ? 500 : 5000);
 const runnerArg = parseArgValue(process.argv.slice(2), 'runner');
 const methodArg = parseArgValue(process.argv.slice(2), 'method');
 const runner = parseRunner(runnerArg || process.env.INGEST_OPS_REPORT_RUNNER || process.env.INGEST_OPS_RUNNER || 'worker');
@@ -43,7 +43,7 @@ const countriesFilter = parseCsvArg(process.argv.slice(2), 'countries');
 const outletsFilter = parseCsvArg(process.argv.slice(2), 'outlets');
 const sourcesFilter = parseCsvArg(process.argv.slice(2), 'sources');
 const hours = parseIntArg(process.argv.slice(2), 'hours', 1, 1, 24 * 30);
-const days = parseIntArg(process.argv.slice(2), 'days', 1, 1, 365);
+const days = parseIntArg(process.argv.slice(2), 'days', mode === 'weekly' ? 7 : 1, 1, 365);
 const writeJson = parseBoolArg(process.argv.slice(2), 'write-json');
 const sendDiscord = parseBoolArg(process.argv.slice(2), 'discord');
 
@@ -57,8 +57,18 @@ if (mode === 'hourly') {
     sourceNames: sourcesFilter,
     hours
   });
-} else {
+} else if (mode === 'daily') {
   runDailyReport({
+    runner,
+    limit,
+    method: method === 'rss' || method === 'sitemap' ? method : undefined,
+    countries: countriesFilter,
+    outletIds: outletsFilter,
+    sourceNames: sourcesFilter,
+    days
+  });
+} else if (mode === 'weekly') {
+  runWeeklyReport({
     runner,
     limit,
     method: method === 'rss' || method === 'sitemap' ? method : undefined,
@@ -171,6 +181,114 @@ async function runHourlyReport(filters: {
       results: result.rows,
       topSources: topSources.slice(0, 10),
       failureReasons: failureReasons.storage === 'postgres' ? failureReasons.rows : [],
+      topFailureReasonCap: 10
+    });
+  }
+}
+
+async function runWeeklyReport(filters: {
+  runner: 'worker' | 'api_news' | 'warm';
+  method?: 'rss' | 'sitemap';
+  countries: string[];
+  outletIds: string[];
+  sourceNames: string[];
+  days: number;
+  limit: number;
+}): Promise<void> {
+  const result = await readIngestOpsDaily({
+    runner: filters.runner,
+    method: filters.method,
+    countries: filters.countries,
+    outletIds: filters.outletIds,
+    sourceNames: filters.sourceNames,
+    days: filters.days,
+    limit: filters.limit
+  });
+
+  if (result.storage !== 'postgres') {
+    console.error(`[ingest-ops] storage_disabled: ${result.reason || 'unknown'}`);
+    process.exitCode = 1;
+    return;
+  }
+
+  if (!result.rows.length) {
+    console.log(`[ingest-ops] mode=weekly runner=${filters.runner} rows=0`);
+    console.log('[ingest-ops] no diagnostic rows in last ' + `${filters.days}d for table ingest_ops_daily.`);
+    console.log('[ingest-ops] likely causes: no completed daily rollup yet, different runner, or missing pipeline persistence.');
+    console.log('[ingest-ops] quick checks: bun run ingest:once (or run worker loop), then rerun with --days=7');
+    return;
+  }
+
+  const totals = sumRows(result.rows);
+  const topSources = topFailureRows(result.rows, filters.limit);
+  const byCountry = aggregateByCountry(result.rows);
+  const failureReasons = await readIngestFailureReasons({
+    runner: filters.runner,
+    method: filters.method,
+    countries: filters.countries,
+    outletIds: filters.outletIds,
+    sourceNames: filters.sourceNames,
+    days: filters.days,
+    limit: Math.max(filters.limit, 20)
+  });
+  const prioritizedFailureReasons = prioritizeFailureReasonsForWeekly(failureReasons.storage === 'postgres' ? failureReasons.rows : []);
+  const status = totals.failures > 0 ? 'degraded' : 'healthy';
+  const shouldNotifyDiscord = sendDiscord && shouldSendDiscordMessage(filters, true);
+
+  console.log(`[ingest-ops] mode=weekly status=${status} runner=${filters.runner} records=${result.rows.length} days=${filters.days}`);
+  console.log(`[ingest-ops] attempts=${totals.attempts} ok=${totals.successes} fail=${totals.failures} failureRate=${percent(totals.failures, totals.attempts)}%`);
+  console.log(
+    `[ingest-ops] fetched=${totals.fetched} valid=${totals.valid} missingTitle=${totals.missingTitle} missingSummary=${totals.missingSummary} missingPublished=${totals.missingPublishedAt} missingLink=${totals.missingLink}`
+  );
+  console.log(`[ingest-ops] countries=${byCountry.length} topCountries=${byCountry.slice(0, 5).map((item) => `${item.key}:${item.value.failures}`).join(', ') || 'none'}`);
+  console.log('[ingest-ops] top_failed_sources=');
+  for (const item of topSources.slice(0, 10)) {
+    const f = item.value;
+    console.log(
+      `  - ${item.key} attempts=${f.attempts} fail=${f.failures} success=${f.successes} failureRate=${percent(f.failures, f.attempts)}%`
+    );
+  }
+  if (failureReasons.storage === 'postgres') {
+    console.log('[ingest-ops] top_failure_reasons=');
+    if (failureReasons.rows.length > 0) {
+      for (const row of prioritizedFailureReasons.slice(0, 10)) {
+        console.log(`  - ${row.reason}: ${row.count} (${percent(row.count, totals.failures)}%)`);
+      }
+    } else {
+      console.log('  - none');
+    }
+  } else {
+    console.log('[ingest-ops] top_failure_reasons=storage_disabled');
+  }
+
+  if (writeJson) {
+    writeReportJson('weekly', {
+      generatedAt: new Date().toISOString(),
+      mode,
+      filters: {
+        runner: filters.runner,
+        method: filters.method,
+        countries: filters.countries,
+        outletIds: filters.outletIds,
+        sourceNames: filters.sourceNames,
+        days: filters.days
+      },
+      rows: result.rows,
+      totals,
+      topSources: topSources.slice(0, 20),
+      topFailureReasons: prioritizedFailureReasons.slice(0, 20)
+    });
+  }
+
+  if (shouldNotifyDiscord) {
+    await sendIngestOpsDiscordReport({
+      mode,
+      status,
+      filters,
+      totals,
+      results: result.rows,
+      topSources: topSources.slice(0, 10),
+      failureReasons: prioritizedFailureReasons,
       topFailureReasonCap: 10
     });
   }
@@ -310,7 +428,12 @@ async function sendIngestOpsDiscordReport(params: {
   const totalAttempts = params.totals.attempts;
   const totalFailures = params.totals.failures;
 
-  const header = params.mode === 'hourly' ? `🛰️ WPM Ingest Hourly (${new Date().toISOString()})` : `🛰️ WPM Ingest Daily (${new Date().toISOString()})`;
+  const header =
+    params.mode === 'hourly'
+      ? `🛰️ WPM Ingest Hourly (${new Date().toISOString()})`
+      : params.mode === 'daily'
+        ? `🛰️ WPM Ingest Daily (${new Date().toISOString()})`
+        : `🛰️ WPM Ingest Weekly (${new Date().toISOString()})`;
   const statusLine = params.status === 'healthy'
     ? '✅ Healthy'
     : totalFailures >= 400
@@ -534,8 +657,31 @@ function parseBoolArg(argv: string[], key: string): boolean {
 function resolveMode(argv: string[]): Mode {
   const modeArg = parseArgValue(argv, 'mode');
   if (modeArg === 'daily') return 'daily';
+  if (modeArg === 'weekly') return 'weekly';
   if (argv.includes('--daily')) return 'daily';
+  if (argv.includes('--weekly')) return 'weekly';
   return 'hourly';
+}
+
+function prioritizeFailureReasonsForWeekly(rows: Array<{ reason: string; count: number }>): Array<{ reason: string; count: number }> {
+  const order = new Map<string, number>([
+    ['primary_invalid', 0],
+    ['html_returned', 1],
+  ]);
+
+  return [...rows].sort((a, b) => {
+    const pa = failureReasonPriority(a.reason, order);
+    const pb = failureReasonPriority(b.reason, order);
+    if (pa !== pb) return pa - pb;
+    if (b.count !== a.count) return b.count - a.count;
+    return a.reason.localeCompare(b.reason);
+  });
+}
+
+function failureReasonPriority(reason: string, priorityMap: Map<string, number>): number {
+  if (priorityMap.has(reason)) return priorityMap.get(reason) ?? Number.MAX_SAFE_INTEGER;
+  if (reason.startsWith('network_error')) return 2;
+  return 3;
 }
 
 function percent(numerator: number, denominator: number): string {

@@ -32,6 +32,7 @@
     "ingest:once": "bun scripts/ingest-worker.ts --once",
     "ingest:loop": "bun scripts/ingest-worker.ts",
     "ingest:ops:hourly": "bun scripts/ingest-ops-report.ts --hours=1 --write-json",
+    "ingest:ops:weekly": "bun scripts/ingest-ops-report.ts --mode=weekly --days=7 --write-json",
     "ingest:ops:daily": "bun scripts/ingest-ops-report.ts --mode=daily --days=1 --write-json",
     "ingest:cron:run": "bash scripts/run-ingest-hourly.sh",
     "ingest:cron:setup": "bash scripts/setup-ingest-cron.sh install",
