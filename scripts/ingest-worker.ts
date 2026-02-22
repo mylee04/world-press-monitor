@@ -11,6 +11,7 @@ import {
   persistExternalNewsArticles,
   persistIngestionDiagnostics,
   upsertIngestionFeedWatermarks,
+  type EndpointBackoffRow,
   type IngestionEndpointRun,
 } from '../lib/ingestion-store';
 import type { NewsItem, OutletFeed, OutletTier } from '../lib/types';
@@ -1039,7 +1040,7 @@ async function runOnce(): Promise<void> {
         minFailPct: FAIL_BACKOFF_MIN_FAIL_PCT,
         limit: 5000,
       })
-    : { rows: [] as Array<{ outletId: string; method: 'rss' | 'sitemap' }> };
+    : { rows: [] as EndpointBackoffRow[] };
   const failingKeys = new Set(failingBackoff.rows.map((row) => `${row.outletId}:${row.method}`));
   const disabledSitemapOutletIds = SITEMAP_DISABLE_ENABLED
     ? new Set(
@@ -1057,11 +1058,12 @@ async function runOnce(): Promise<void> {
     sitemapEndpointSkipped: 0
   };
 
-  const results = await runWithConcurrency(dedupedEndpoints, FETCH_CONCURRENCY, async (endpoint) => {
+  const results = await runWithConcurrency<EndpointRun, EndpointResult>(dedupedEndpoints, FETCH_CONCURRENCY, async (endpoint) => {
+    const endpointMethod: 'rss' | 'sitemap' = endpoint.method;
     const endpointKey = `${endpoint.outlet.id}:${endpoint.method}`;
     const sitemapDisabledForOutlet = disabledSitemapOutletIds.has(endpoint.outlet.id);
     if (failingKeys.has(endpointKey)) {
-      if (endpoint.method === 'sitemap') {
+      if (endpointMethod === 'sitemap') {
         fallbackSummary.sitemapEndpointSkipped += 1;
       }
       return {
@@ -1070,7 +1072,7 @@ async function runOnce(): Promise<void> {
           outletId: endpoint.outlet.id,
           source: endpoint.outlet.name,
           country: normalizeCountryName(endpoint.outlet.country),
-          method: endpoint.method,
+          method: endpointMethod,
           attempted: false,
           circuitOpen: true,
           ok: false,
@@ -1089,12 +1091,12 @@ async function runOnce(): Promise<void> {
         fallbackUsed: 'none',
       };
     }
-    if (endpoint.method === 'rss') {
+    if (endpointMethod === 'rss') {
       const result = await fetchRss(endpoint.outlet, { allowSitemapFallback: !sitemapDisabledForOutlet });
       const lastPublicationAt = watermarks.get(endpointKey) || null;
       return { ...result, items: filterItemsByWatermark(result.items, lastPublicationAt) };
     }
-    if (endpoint.method === 'sitemap' && sitemapDisabledForOutlet) {
+    if (endpointMethod === 'sitemap' && sitemapDisabledForOutlet) {
       return {
         items: [],
         run: {
@@ -1142,7 +1144,8 @@ async function runOnce(): Promise<void> {
   const methodStats = diagnostics.reduce(
     (acc, diagnostic) => {
       if (!diagnostic.attempted) return acc;
-      const bucket = acc[diagnostic.method];
+      const method = diagnostic.method as 'rss' | 'sitemap';
+      const bucket = acc[method];
       bucket.attempted += 1;
       if (diagnostic.ok) {
         bucket.ok += 1;
