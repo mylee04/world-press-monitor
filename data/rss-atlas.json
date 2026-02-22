@@ -3398,6 +3398,66 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 31
+        },
+        {
+          "name": "RenewEconomy (호주 신재생/전력망 1위)",
+          "url": "https://reneweconomy.com.au/feed/",
+          "category": "energy",
+          "tier": 1,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 32
+        },
+        {
+          "name": "Australian Mining (광물/리튬)",
+          "url": "https://www.australianmining.com.au/feed/",
+          "category": "energy",
+          "tier": 1,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 33
+        },
+        {
+          "name": "MacroBusiness (매크로/부동산 심층분석)",
+          "url": "https://www.macrobusiness.com.au/feed/",
+          "category": "finance",
+          "tier": 2,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 34
+        },
+        {
+          "name": "SmartCompany (스타트업/비즈니스)",
+          "url": "https://www.smartcompany.com.au/feed/",
+          "category": "business",
+          "tier": 2,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 35
+        },
+        {
+          "name": "Startup Daily (테크)",
+          "url": "https://www.startupdaily.net/feed/",
+          "category": "tech",
+          "tier": 2,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 36
+        },
+        {
+          "name": "The Conversation AU (오피니언/정책)",
+          "url": "https://theconversation.com/au/rss",
+          "category": "politics",
+          "tier": 2,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 37
         }
       ]
     },
@@ -3644,6 +3704,66 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 44
+        },
+        {
+          "name": "El Economista - Portada (스페인 금융 1위)",
+          "url": "https://www.eleconomista.es/rss/rss-portada.php",
+          "category": "economy",
+          "tier": 1,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 45
+        },
+        {
+          "name": "El Economista - Mercados (주식/마켓)",
+          "url": "https://www.eleconomista.es/rss/rss-mercados.php",
+          "category": "finance",
+          "tier": 1,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 46
+        },
+        {
+          "name": "ABC.es - Economía (보수 3대장)",
+          "url": "https://www.abc.es/rss/feeds/abc_economia.xml",
+          "category": "economy",
+          "tier": 1,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 47
+        },
+        {
+          "name": "Vozpópuli (경제/정치 탐사)",
+          "url": "https://www.vozpopuli.com/rss",
+          "category": "politics",
+          "tier": 2,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 48
+        },
+        {
+          "name": "El Periódico de la Energía (에너지/전력망 특화)",
+          "url": "https://elperiodicodelaenergia.com/feed/",
+          "category": "energy",
+          "tier": 1,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 49
+        },
+        {
+          "name": "Xataka (스페인어권 최대 테크 매체)",
+          "url": "https://www.xataka.com/feed",
+          "category": "tech",
+          "tier": 2,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 50
         }
       ]
     },
@@ -3818,6 +3938,86 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 21
+        },
+        {
+          "name": "El Economista - Top Noticias (멕시코 경제 1위)",
+          "url": "https://www.eleconomista.com.mx/rss/top-noticias",
+          "category": "economy",
+          "tier": 1,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 31
+        },
+        {
+          "name": "El Economista - Empresas",
+          "url": "https://www.eleconomista.com.mx/rss/empresas",
+          "category": "business",
+          "tier": 1,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 32
+        },
+        {
+          "name": "El Universal - General (최대 일간지)",
+          "url": "https://www.eluniversal.com.mx/rss.xml",
+          "category": "politics",
+          "tier": 1,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 33
+        },
+        {
+          "name": "El Universal - Cartera (경제/지갑)",
+          "url": "https://www.eluniversal.com.mx/cartera/rss.xml",
+          "category": "economy",
+          "tier": 1,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 34
+        },
+        {
+          "name": "Milenio (전국지)",
+          "url": "https://www.milenio.com/rss",
+          "category": "politics",
+          "tier": 2,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 35
+        },
+        {
+          "name": "Excelsior (보수 유력지)",
+          "url": "https://www.excelsior.com.mx/rss.xml",
+          "category": "politics",
+          "tier": 2,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 36
+        },
+        {
+          "name": "Forbes México",
+          "url": "https://www.forbes.com.mx/feed/",
+          "category": "business",
+          "tier": 1,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 37
+        },
+        {
+          "name": "Energía a Debate (멕시코 에너지 전문)",
+          "url": "https://energiaadebate.com/feed/",
+          "category": "energy",
+          "tier": 1,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 38
         }
       ]
     },
@@ -6722,6 +6922,78 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 29
+        },
+        {
+          "name": "Clarín - Ultimo Momento (속보)",
+          "url": "https://www.clarin.com/rss/lo-ultimo/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 30
+        },
+        {
+          "name": "Clarín - Economía",
+          "url": "https://www.clarin.com/rss/economia/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 31
+        },
+        {
+          "name": "Clarín - Política",
+          "url": "https://www.clarin.com/rss/politica/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 32
+        },
+        {
+          "name": "La Nación - Economía",
+          "url": "https://www.lanacion.com.ar/arc/outboundfeeds/rss/?outputType=xml&rotation=economia",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 33
+        },
+        {
+          "name": "La Nación - Política",
+          "url": "https://www.lanacion.com.ar/arc/outboundfeeds/rss/?outputType=xml&rotation=politica",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 34
+        },
+        {
+          "name": "Infobae - Argentina",
+          "url": "https://www.infobae.com/feeds/rss/argentina/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 35
+        },
+        {
+          "name": "Infobae - Economía",
+          "url": "https://www.infobae.com/feeds/rss/economia/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 36
+        },
+        {
+          "name": "El Cronista - Finanzas",
+          "url": "https://www.cronista.com/files/rss/finanzas_markets.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 37
+        },
+        {
+          "name": "El Cronista - Economía",
+          "url": "https://www.cronista.com/files/rss/economia_politica.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 38
         }
       ]
     },
@@ -6952,6 +7224,62 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 30
+        },
+        {
+          "name": "La Tercera - Home",
+          "url": "https://www.latercera.com/arc/outboundfeeds/rss/?outputType=xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 31
+        },
+        {
+          "name": "Pulso (La Tercera Biz)",
+          "url": "https://www.latercera.com/arc/outboundfeeds/rss/?outputType=xml&rotation=pulso",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 32
+        },
+        {
+          "name": "Emol - Nacional",
+          "url": "https://www.emol.com/rss/rss_nacional.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 33
+        },
+        {
+          "name": "Emol - Economía",
+          "url": "https://www.emol.com/rss/rss_economia.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 34
+        },
+        {
+          "name": "BioBioChile - Home",
+          "url": "https://www.biobiochile.cl/feed",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 35
+        },
+        {
+          "name": "Cooperativa - Economía",
+          "url": "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_5___1.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 36
+        },
+        {
+          "name": "Reporte Minero",
+          "url": "https://www.reporteminero.cl/feed",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 37
         }
       ]
     },
@@ -7126,6 +7454,38 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 30
+        },
+        {
+          "name": "Listín Diario - Portada",
+          "url": "https://listindiario.com/rss/portada.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 31
+        },
+        {
+          "name": "Listín Diario - Economía",
+          "url": "https://listindiario.com/rss/economia.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 32
+        },
+        {
+          "name": "Periódico Hoy",
+          "url": "https://hoy.com.do/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 33
+        },
+        {
+          "name": "El Dinero",
+          "url": "https://eldinero.com.do/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 34
         }
       ]
     },
@@ -7372,6 +7732,46 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 30
+        },
+        {
+          "name": "El País - Portada",
+          "url": "https://www.elpais.com.uy/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 31
+        },
+        {
+          "name": "El País - Economía",
+          "url": "https://www.elpais.com.uy/rss/economia-y-mercado",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 32
+        },
+        {
+          "name": "Montevideo Portal - Negocios",
+          "url": "https://www.montevideo.com.uy/anxml.aspx?728",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 33
+        },
+        {
+          "name": "La Diaria - Política",
+          "url": "https://ladiaria.com.uy/feeds/section/politica/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 34
+        },
+        {
+          "name": "La Diaria - Economía",
+          "url": "https://ladiaria.com.uy/feeds/section/economia/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 35
         }
       ]
     },

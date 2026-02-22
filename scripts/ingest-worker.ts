@@ -79,6 +79,7 @@ const BREAKING_TERMS = ['breaking', 'urgent', 'developing', 'just in', 'ultima h
 type AtlasFeed = {
   name: string;
   url: string | null;
+  sitemapUrl?: string;
   // status/check fields are present in atlas but not required for ingestion.
 };
 
@@ -174,11 +175,17 @@ function loadAtlasOutlets(): OutletFeed[] {
     const outlets = atlas.countries.flatMap((country) => {
       const countryName = country.name || country.code || 'Global';
       return (Array.isArray(country.feeds) ? country.feeds : [])
-        .map((feed) => ({
-          name: feed.name || 'Unknown source',
-          url: typeof feed.url === 'string' ? feed.url.trim() : ''
-        }))
-        .filter((feed): feed is { name: string; url: string } => feed.url.length > 0)
+      .map((feed) => ({
+        name: feed.name || 'Unknown source',
+        url: typeof feed.url === 'string' ? feed.url.trim() : '',
+        explicitSitemapUrl:
+          typeof feed.sitemapUrl === 'string' && feed.sitemapUrl.trim().length > 0
+            ? feed.sitemapUrl.trim()
+            : undefined,
+      }))
+        .filter((feed): feed is { name: string; url: string; explicitSitemapUrl: string | undefined } =>
+          feed.url.length > 0
+        )
         .map((feed) => ({
           id: makeOutletId(countryName, feed.name, feed.url),
           name: feed.name,
@@ -190,7 +197,9 @@ function loadAtlasOutlets(): OutletFeed[] {
           reviewDecision: 'keep_secondary',
           defaultEnabled: true,
           country: countryName,
-          rssUrl: feed.url
+          rssUrl: feed.url,
+          sitemapUrl:
+            feed.explicitSitemapUrl ?? buildSitemapFallbackUrls(feed.url)[0],
         }) satisfies OutletFeed);
     });
     outlets.sort((a, b) => a.country.localeCompare(b.country) || a.name.localeCompare(b.name));
@@ -216,10 +225,348 @@ function parseSitemapIndex(xml: string): string[] {
     .slice(0, SITEMAP_INDEX_CHILDREN_LIMIT);
 }
 
-const FEED_FETCH_HEADERS = {
-  'User-Agent': 'PressLabIngestWorker/1.0 (+https://presslab.local)',
-  Accept: 'application/xml, text/xml, application/rss+xml, application/atom+xml, */*',
+type ParsedSitemapResult = ReturnType<typeof parseSitemapWithStats>;
+
+function parseBoolEnv(raw: string | undefined, fallback: boolean): boolean {
+  if (raw === undefined) return fallback;
+  return /^(1|true|yes|on)$/i.test(raw.trim());
+}
+
+function dedupeUrls(values: string[]): string[] {
+  const seen = new Set<string>();
+  const next: string[] = [];
+  for (const value of values) {
+    const normalized = value.trim();
+    if (!normalized || seen.has(normalized)) continue;
+    seen.add(normalized);
+    next.push(normalized);
+  }
+  return next;
+}
+
+function buildSitemapFallbackUrls(sourceUrl: string, sitemapUrl?: string): string[] {
+  const urls: string[] = [];
+  if (sitemapUrl) {
+    urls.push(sitemapUrl);
+  }
+  try {
+    const parsed = new URL(sourceUrl);
+    const root = `${parsed.protocol}//${parsed.host}`;
+    const basePath = parsed.pathname.endsWith('/') ? parsed.pathname : `${parsed.pathname.replace(/\/[^/]*$/, '')}/`;
+    urls.push(`${root}${basePath}sitemap_news.xml`);
+    urls.push(`${root}${basePath}sitemap-news.xml`);
+    urls.push(`${root}${basePath}sitemap.xml`);
+    urls.push(`${root}${basePath}sitemap_index.xml`);
+    urls.push(`${root}/sitemap_news.xml`);
+    urls.push(`${root}/sitemap-news.xml`);
+    urls.push(`${root}/sitemap.xml`);
+    urls.push(`${root}/sitemap_index.xml`);
+  } catch {
+    return dedupeUrls(urls);
+  }
+  return dedupeUrls(urls);
+}
+
+async function fetchSitemapFallbackFromUrl(sitemapUrl: string): Promise<ParsedSitemapResult | null> {
+  const response = await fetchWithRetryFeed(sitemapUrl);
+  if (!response.ok) return null;
+  const xml = await response.text();
+
+  let parsed = parseSitemapWithStats(xml, SITEMAP_ITEM_LIMIT);
+  if (parsed.items.length === 0) {
+    const children = parseSitemapIndex(xml);
+    if (children.length > 0) {
+      const childResults = await Promise.all(
+        children.map(async (childUrl) => {
+          try {
+            const childResponse = await fetchWithRetryFeed(childUrl);
+            if (!childResponse.ok) return null;
+            const childXml = await childResponse.text();
+            return parseSitemapWithStats(childXml, Math.max(8, Math.floor(SITEMAP_ITEM_LIMIT / children.length)));
+          } catch {
+            return null;
+          }
+        }),
+      );
+      const allChildParsed = childResults.filter(
+        (entry): entry is ParsedSitemapResult => Boolean(entry)
+      );
+      if (allChildParsed.length > 0) {
+        const childStats = allChildParsed.reduce(
+          (acc, batch) => {
+            acc.totalCandidates += batch.stats.totalCandidates;
+            acc.validCount += batch.stats.validCount;
+            acc.missingTitleCount += batch.stats.missingTitleCount;
+            acc.missingSummaryCount += batch.stats.missingSummaryCount;
+            acc.missingPublishedAtCount += batch.stats.missingPublishedAtCount;
+            acc.missingLinkCount += batch.stats.missingLinkCount;
+            return acc;
+          },
+          {
+            totalCandidates: 0,
+            validCount: 0,
+            missingTitleCount: 0,
+            missingSummaryCount: 0,
+            missingPublishedAtCount: 0,
+            missingLinkCount: 0,
+          },
+        );
+        parsed = {
+          items: allChildParsed.flatMap((batch) => batch.items).slice(0, SITEMAP_ITEM_LIMIT),
+          stats: childStats,
+        };
+      }
+    }
+  }
+
+  return parsed.items.length > 0 ? parsed : null;
+}
+
+async function trySitemapFallback(outlet: OutletFeed): Promise<ParsedSitemapResult | null> {
+  const candidates = buildSitemapFallbackUrls(outlet.rssUrl || '', outlet.sitemapUrl);
+  for (const candidate of candidates) {
+    try {
+      const parsed = await fetchSitemapFallbackFromUrl(candidate);
+      if (parsed) {
+        console.log(
+          `[ingest-worker] using rss sitemap fallback: ${normalizeCountryName(outlet.country)} ${outlet.name} -> ${candidate}`
+        );
+        return parsed;
+      }
+    } catch {
+      // continue to next candidate
+    }
+  }
+  return null;
+}
+
+type GoogleNewsHint = {
+  keys: string[];
+  gl: string;
+  hl: string;
+  ceidLang: string;
 };
+
+const GOOGLE_NEWS_FALLBACK_QUERY_DAYS = Math.max(
+  1,
+  Math.min(14, Number.parseInt(process.env.INGEST_GOOGLE_NEWS_DAYS || '1', 10) || 1)
+);
+const ENABLE_GOOGLE_NEWS_FALLBACK = parseBoolEnv(process.env.INGEST_GOOGLE_NEWS_FALLBACK, false);
+const ENABLE_RSS_TO_SITEMAP_FALLBACK = parseBoolEnv(process.env.INGEST_RSS_SITEMAP_FALLBACK, true);
+const GOOGLE_NEWS_LOCALE_HINTS: GoogleNewsHint[] = [
+  { keys: ['united states', 'usa'], gl: 'US', hl: 'en-US', ceidLang: 'en' },
+  { keys: ['united kingdom', 'uk', 'england', 'britain'], gl: 'GB', hl: 'en-GB', ceidLang: 'en' },
+  { keys: ['south korea', 'korea'], gl: 'KR', hl: 'ko', ceidLang: 'ko' },
+  { keys: ['japan'], gl: 'JP', hl: 'ja', ceidLang: 'ja' },
+  { keys: ['germany'], gl: 'DE', hl: 'de', ceidLang: 'de' },
+  { keys: ['france'], gl: 'FR', hl: 'fr', ceidLang: 'fr' },
+  { keys: ['italy'], gl: 'IT', hl: 'it', ceidLang: 'it' },
+  { keys: ['india'], gl: 'IN', hl: 'en-IN', ceidLang: 'en' },
+  { keys: ['canada'], gl: 'CA', hl: 'en-CA', ceidLang: 'en' },
+  { keys: ['brazil'], gl: 'BR', hl: 'pt-BR', ceidLang: 'pt' },
+  { keys: ['argentina'], gl: 'AR', hl: 'es-419', ceidLang: 'es' },
+  { keys: ['chile'], gl: 'CL', hl: 'es-419', ceidLang: 'es' },
+  { keys: ['uruguay'], gl: 'UY', hl: 'es-419', ceidLang: 'es' },
+  { keys: ['dominican', 'dominic'], gl: 'DO', hl: 'es-419', ceidLang: 'es' },
+  { keys: ['spain'], gl: 'ES', hl: 'es', ceidLang: 'es' },
+  { keys: ['mexico'], gl: 'MX', hl: 'es-419', ceidLang: 'es' },
+  { keys: ['sweden'], gl: 'SE', hl: 'sv', ceidLang: 'sv' },
+  { keys: ['norway'], gl: 'NO', hl: 'no', ceidLang: 'no' },
+  { keys: ['netherlands'], gl: 'NL', hl: 'nl', ceidLang: 'nl' },
+  { keys: ['australia'], gl: 'AU', hl: 'en-AU', ceidLang: 'en' },
+  { keys: ['china'], gl: 'CN', hl: 'zh-CN', ceidLang: 'zh' },
+  { keys: ['russia'], gl: 'RU', hl: 'ru', ceidLang: 'ru' },
+  { keys: ['taiwan'], gl: 'TW', hl: 'zh-TW', ceidLang: 'zh' },
+  { keys: ['israel'], gl: 'IL', hl: 'en', ceidLang: 'en' },
+  { keys: ['saudi', 'qatar'], gl: 'SA', hl: 'en', ceidLang: 'en' },
+  { keys: ['saudi arabia'], gl: 'SA', hl: 'en', ceidLang: 'en' }
+];
+
+const FEED_FETCH_HEADERS = {
+  'User-Agent':
+    process.env.INGEST_USER_AGENT || 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
+  Accept: 'application/rss+xml, application/xml, text/xml, application/atom+xml, */*',
+  'Accept-Language': process.env.INGEST_ACCEPT_LANGUAGE || 'en-US,en;q=0.9,es;q=0.8,ja;q=0.7',
+  'Accept-Encoding': 'gzip, deflate, br',
+  Connection: 'keep-alive',
+  'Upgrade-Insecure-Requests': '1'
+};
+
+function resolveGoogleNewsHint(countryName: string): GoogleNewsHint {
+  const candidate = normalizeText(countryName);
+  for (const hint of GOOGLE_NEWS_LOCALE_HINTS) {
+    if (hint.keys.some((key) => candidate.includes(key))) {
+      return hint;
+    }
+  }
+  return { keys: ['default'], gl: 'US', hl: 'en-US', ceidLang: 'en' };
+}
+
+function makeGoogleNewsSearchUrl(sourceUrl: string, countryName: string): string | null {
+  try {
+    const url = new URL(sourceUrl);
+    const host = url.hostname.replace(/^www\./, '');
+    const hint = resolveGoogleNewsHint(countryName);
+    const query = new URLSearchParams({
+      q: `site:${host} when:${GOOGLE_NEWS_FALLBACK_QUERY_DAYS}d`,
+      hl: hint.hl,
+      gl: hint.gl,
+      ceid: `${hint.gl}:${hint.ceidLang}`,
+    });
+    return `https://news.google.com/rss/search?${query.toString()}`;
+  } catch {
+    return null;
+  }
+}
+
+function normalizeResponseContentType(response: Response): string {
+  return (response.headers.get('content-type') || '').toLowerCase();
+}
+
+function isLikelyHtmlResponse(response: Response, body: string): boolean {
+  const contentType = normalizeResponseContentType(response);
+  if (contentType.includes('text/html') || contentType.includes('application/xhtml+xml')) return true;
+  return /<html[\s>]/i.test(body) || /<head[\s>]/i.test(body) || /<!doctype html/i.test(body);
+}
+
+function isFallbackRetryStatus(status: number): boolean {
+  return status === 401 || status === 403 || status === 404 || status === 429 || status === 500 || status === 502 || status === 503 || status === 504;
+}
+
+function describeFeedFailure(response: Response, body: string): string {
+  if (!response.ok) {
+    return `http_${response.status}`;
+  }
+  if (isLikelyHtmlResponse(response, body)) {
+    return 'html_returned';
+  }
+  return '';
+}
+
+function shouldRetryWithGoogleNews(response: Response, body: string, isSearchSource = false): boolean {
+  if (isSearchSource) return false;
+  if (!response.ok) return isFallbackRetryStatus(response.status);
+  return isLikelyHtmlResponse(response, body);
+}
+
+type FeedFetchResult = {
+  requestedUrl: string;
+  finalUrl: string;
+  usedFallback: boolean;
+  response: Response;
+  body: string;
+  failureReason?: string;
+};
+
+type FallbackKind = 'none' | 'sitemap' | 'google_news';
+
+type EndpointResult = {
+  items: NewsItem[];
+  run: IngestionEndpointRun;
+  fallbackUsed: FallbackKind;
+};
+
+function getFallbackKind(feedResult: FeedFetchResult, method: string | undefined): FallbackKind {
+  if (!feedResult.usedFallback) return 'none';
+  if (method && method.includes('news.google.com')) return 'google_news';
+  return 'sitemap';
+}
+
+async function fetchFeedWithFallback(url: string, countryName: string): Promise<FeedFetchResult> {
+  const requestedUrl = url;
+  const fallbackUrl = (!ENABLE_GOOGLE_NEWS_FALLBACK || isSearchAggregatorUrl(requestedUrl))
+    ? null
+    : makeGoogleNewsSearchUrl(requestedUrl, countryName);
+  const tryFallback = async (primaryFailure: string): Promise<FeedFetchResult | null> => {
+    if (!fallbackUrl) {
+      return {
+        requestedUrl,
+        finalUrl: requestedUrl,
+        usedFallback: false,
+        response: new Response('', { status: 0, statusText: 'fallback_unavailable' }),
+        body: '',
+        failureReason: `${primaryFailure || 'primary_invalid'};fallback_unavailable`
+      };
+    }
+    try {
+      const fallback = await fetchWithRetryFeed(fallbackUrl);
+      const fallbackBody = await fallback.text();
+      if (!shouldRetryWithGoogleNews(fallback, fallbackBody, true)) {
+        console.log(`[ingest-worker] using google news fallback: ${requestedUrl} -> ${fallbackUrl}`);
+        return {
+          requestedUrl,
+          finalUrl: fallbackUrl,
+          usedFallback: true,
+          response: fallback,
+          body: fallbackBody,
+        };
+      }
+      return {
+        requestedUrl,
+        finalUrl: fallbackUrl,
+        usedFallback: true,
+        response: fallback,
+        body: fallbackBody,
+        failureReason: `${primaryFailure || 'primary_invalid'};fallback_${describeFeedFailure(fallback, fallbackBody) || 'invalid_feed'}`
+      };
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      return {
+        requestedUrl,
+        finalUrl: requestedUrl,
+        usedFallback: true,
+        response: new Response('', { status: 0, statusText: message }),
+        body: '',
+        failureReason: `${primaryFailure || 'primary_invalid'};fallback_error:${message}`
+      };
+    }
+  };
+
+  try {
+    const primary = await fetchWithRetryFeed(requestedUrl);
+    const primaryBody = await primary.text();
+    const primaryFailure = describeFeedFailure(primary, primaryBody);
+
+    if (!shouldRetryWithGoogleNews(primary, primaryBody, isSearchAggregatorUrl(requestedUrl))) {
+      return {
+        requestedUrl,
+        finalUrl: requestedUrl,
+        usedFallback: false,
+        response: primary,
+        body: primaryBody,
+        failureReason: primaryFailure || undefined,
+      };
+    }
+
+    const fallbackResult = await tryFallback(primaryFailure);
+    if (fallbackResult) {
+      return fallbackResult;
+    }
+
+    return {
+      requestedUrl,
+      finalUrl: requestedUrl,
+      usedFallback: false,
+      response: primary,
+      body: primaryBody,
+      failureReason: primaryFailure || 'primary_invalid'
+    };
+  } catch (error) {
+    const primaryMessage = error instanceof Error ? error.message : String(error);
+    const fallbackResult = await tryFallback(`network_error:${primaryMessage}`);
+    if (fallbackResult) {
+      return fallbackResult;
+    }
+    return {
+      requestedUrl,
+      finalUrl: requestedUrl,
+      usedFallback: false,
+      response: new Response('', { status: 0, statusText: primaryMessage }),
+      body: '',
+      failureReason: `network_error:${primaryMessage}`
+    };
+  }
+}
 
 async function fetchWithRetryFeed(url: string): Promise<Response> {
   return fetchWithRetry(url, {
@@ -273,7 +620,7 @@ async function toNewsItem(
   });
 }
 
-async function fetchRss(outlet: OutletFeed): Promise<{ items: NewsItem[]; run: IngestionEndpointRun }> {
+async function fetchRss(outlet: OutletFeed): Promise<EndpointResult> {
   const country = normalizeCountryName(outlet.country);
   if (!outlet.rssUrl) {
     return {
@@ -297,12 +644,46 @@ async function fetchRss(outlet: OutletFeed): Promise<{ items: NewsItem[]; run: I
         missingPublishedAtCount: 0,
         missingLinkCount: 0,
       },
+      fallbackUsed: 'none',
     };
   }
 
   try {
-    const response = await fetchWithRetryFeed(outlet.rssUrl);
-    if (!response.ok) {
+    const feedResult = await fetchFeedWithFallback(outlet.rssUrl, country);
+    const rssFallbackUsed = getFallbackKind(feedResult, feedResult.finalUrl);
+    if (feedResult.failureReason || !feedResult.response.ok) {
+      let fallbackUsed = getFallbackKind(feedResult, feedResult.finalUrl);
+      if (ENABLE_RSS_TO_SITEMAP_FALLBACK) {
+        const sitemapParsed = await trySitemapFallback(outlet);
+        if (sitemapParsed) {
+          const items = await Promise.all(sitemapParsed.items.map((row) => toNewsItem(outlet, row)));
+          return {
+            items,
+            run: {
+              outletId: outlet.id,
+              source: outlet.name,
+              country,
+              method: 'rss',
+              attempted: true,
+              circuitOpen: false,
+              ok: true,
+              statusCode: 200,
+              parsedCount: sitemapParsed.stats.validCount,
+              fetchedCount: sitemapParsed.stats.totalCandidates,
+              parsedLimit: SITEMAP_ITEM_LIMIT,
+              sampleCapped: sitemapParsed.stats.validCount >= SITEMAP_ITEM_LIMIT,
+              recent24h: sitemapParsed.stats.validCount,
+              missingTitleCount: sitemapParsed.stats.missingTitleCount,
+              missingSummaryCount: sitemapParsed.stats.missingSummaryCount,
+              missingPublishedAtCount: sitemapParsed.stats.missingPublishedAtCount,
+              missingLinkCount: sitemapParsed.stats.missingLinkCount,
+            },
+            fallbackUsed: 'sitemap',
+          };
+        }
+      }
+
+      const normalizedFailure = feedResult.failureReason ?? describeFeedFailure(feedResult.response, feedResult.body) ?? 'unknown_failure';
       return {
         items: [],
         run: {
@@ -313,21 +694,22 @@ async function fetchRss(outlet: OutletFeed): Promise<{ items: NewsItem[]; run: I
           attempted: true,
           circuitOpen: false,
           ok: false,
-          statusCode: response.status,
+          statusCode: feedResult.response.status,
           parsedCount: 0,
           fetchedCount: 0,
-          parsedLimit: RSS_ITEM_LIMIT,
-          sampleCapped: false,
-          recent24h: 0,
-          missingTitleCount: 0,
-          missingSummaryCount: 0,
-          missingPublishedAtCount: 0,
-          missingLinkCount: 0,
-          error: `http_${response.status}`,
+        parsedLimit: RSS_ITEM_LIMIT,
+        sampleCapped: false,
+        recent24h: 0,
+        missingTitleCount: 0,
+        missingSummaryCount: 0,
+        missingPublishedAtCount: 0,
+        missingLinkCount: 0,
+        error: normalizedFailure,
         },
+        fallbackUsed,
       };
     }
-    const xml = await response.text();
+    const xml = feedResult.body;
     const parsed = parseRssOrAtomWithStats(xml, RSS_ITEM_LIMIT);
     const items = await Promise.all(parsed.items.map((row) => toNewsItem(outlet, row)));
     return {
@@ -351,6 +733,7 @@ async function fetchRss(outlet: OutletFeed): Promise<{ items: NewsItem[]; run: I
         missingPublishedAtCount: parsed.stats.missingPublishedAtCount,
         missingLinkCount: parsed.stats.missingLinkCount,
       },
+      fallbackUsed: rssFallbackUsed,
     };
   } catch (error) {
     return {
@@ -375,11 +758,12 @@ async function fetchRss(outlet: OutletFeed): Promise<{ items: NewsItem[]; run: I
         missingLinkCount: 0,
         error: error instanceof Error ? error.message : String(error),
       },
+      fallbackUsed: 'none',
     };
   }
 }
 
-async function fetchSitemap(outlet: OutletFeed): Promise<{ items: NewsItem[]; run: IngestionEndpointRun }> {
+async function fetchSitemap(outlet: OutletFeed): Promise<EndpointResult> {
   const country = normalizeCountryName(outlet.country);
   if (!outlet.sitemapUrl) {
     return {
@@ -403,6 +787,7 @@ async function fetchSitemap(outlet: OutletFeed): Promise<{ items: NewsItem[]; ru
         missingPublishedAtCount: 0,
         missingLinkCount: 0,
       },
+      fallbackUsed: 'none',
     };
   }
 
@@ -431,6 +816,7 @@ async function fetchSitemap(outlet: OutletFeed): Promise<{ items: NewsItem[]; ru
           missingLinkCount: 0,
           error: `http_${response.status}`,
         },
+        fallbackUsed: 'none',
       };
     }
 
@@ -497,16 +883,17 @@ async function fetchSitemap(outlet: OutletFeed): Promise<{ items: NewsItem[]; ru
         circuitOpen: false,
         ok: true,
         statusCode: 200,
-        parsedCount: parsed.stats.validCount,
-        fetchedCount: parsed.stats.totalCandidates,
-        parsedLimit: SITEMAP_ITEM_LIMIT,
-        sampleCapped: parsed.stats.validCount >= SITEMAP_ITEM_LIMIT,
-        recent24h: parsed.stats.validCount,
-        missingTitleCount: parsed.stats.missingTitleCount,
-        missingSummaryCount: parsed.stats.missingSummaryCount,
-        missingPublishedAtCount: parsed.stats.missingPublishedAtCount,
-        missingLinkCount: parsed.stats.missingLinkCount,
+      parsedCount: parsed.stats.validCount,
+      fetchedCount: parsed.stats.totalCandidates,
+      parsedLimit: SITEMAP_ITEM_LIMIT,
+      sampleCapped: parsed.stats.validCount >= SITEMAP_ITEM_LIMIT,
+      recent24h: parsed.stats.validCount,
+      missingTitleCount: parsed.stats.missingTitleCount,
+      missingSummaryCount: parsed.stats.missingSummaryCount,
+      missingPublishedAtCount: parsed.stats.missingPublishedAtCount,
+      missingLinkCount: parsed.stats.missingLinkCount,
       },
+      fallbackUsed: 'none',
     };
   } catch (error) {
     return {
@@ -522,15 +909,16 @@ async function fetchSitemap(outlet: OutletFeed): Promise<{ items: NewsItem[]; ru
         statusCode: null,
         parsedCount: 0,
         fetchedCount: 0,
-        parsedLimit: SITEMAP_ITEM_LIMIT,
-        sampleCapped: false,
-        recent24h: 0,
-        missingTitleCount: 0,
-        missingSummaryCount: 0,
-        missingPublishedAtCount: 0,
-        missingLinkCount: 0,
-        error: error instanceof Error ? error.message : String(error),
+      parsedLimit: SITEMAP_ITEM_LIMIT,
+      sampleCapped: false,
+      recent24h: 0,
+      missingTitleCount: 0,
+      missingSummaryCount: 0,
+      missingPublishedAtCount: 0,
+      missingLinkCount: 0,
+      error: error instanceof Error ? error.message : String(error),
       },
+      fallbackUsed: 'none',
     };
   }
 }
@@ -603,14 +991,21 @@ async function runOnce(): Promise<void> {
 
   const failingBackoff = FAIL_BACKOFF_ENABLED
     ? await readFailingEndpointBackoff({
-      runner: 'worker',
-      windowMinutes: FAIL_BACKOFF_WINDOW_MINUTES,
-      minAttempts: FAIL_BACKOFF_MIN_ATTEMPTS,
-      minFailPct: FAIL_BACKOFF_MIN_FAIL_PCT,
-      limit: 5000
-    })
+        runner: 'worker',
+        windowMinutes: FAIL_BACKOFF_WINDOW_MINUTES,
+        minAttempts: FAIL_BACKOFF_MIN_ATTEMPTS,
+        minFailPct: FAIL_BACKOFF_MIN_FAIL_PCT,
+        limit: 5000,
+      })
     : { rows: [] as Array<{ outletId: string; method: 'rss' | 'sitemap' }> };
   const failingKeys = new Set(failingBackoff.rows.map((row) => `${row.outletId}:${row.method}`));
+
+  const fallbackSummary = {
+    rssSitemapFallbackAttempts: 0,
+    rssSitemapFallbackSuccess: 0,
+    rssGoogleNewsFallbackAttempts: 0,
+    rssGoogleNewsFallbackSuccess: 0,
+  };
 
   const results = await runWithConcurrency(dedupedEndpoints, FETCH_CONCURRENCY, async (endpoint) => {
     const endpointKey = `${endpoint.outlet.id}:${endpoint.method}`;
@@ -635,8 +1030,9 @@ async function runOnce(): Promise<void> {
           missingSummaryCount: 0,
           missingPublishedAtCount: 0,
           missingLinkCount: 0,
-          error: 'cooldown_high_fail'
-        } satisfies IngestionEndpointRun
+          error: 'cooldown_high_fail',
+        },
+        fallbackUsed: 'none',
       };
     }
     if (endpoint.method === 'rss') {
@@ -650,6 +1046,25 @@ async function runOnce(): Promise<void> {
   });
 
   const diagnostics = results.map((r) => r.run);
+  for (const result of results) {
+    if (result.run.method !== 'rss' || result.fallbackUsed === 'none') {
+      continue;
+    }
+    if (result.fallbackUsed === 'sitemap') {
+      fallbackSummary.rssSitemapFallbackAttempts += 1;
+      if (result.run.ok) {
+        fallbackSummary.rssSitemapFallbackSuccess += 1;
+      }
+      continue;
+    }
+    if (result.fallbackUsed === 'google_news') {
+      fallbackSummary.rssGoogleNewsFallbackAttempts += 1;
+      if (result.run.ok) {
+        fallbackSummary.rssGoogleNewsFallbackSuccess += 1;
+      }
+    }
+  }
+
   const endpointMaxPublicationAtMs = new Map<string, number>();
   for (const { run, items } of results) {
     const key = `${run.outletId}:${run.method}`;
@@ -702,13 +1117,14 @@ async function runOnce(): Promise<void> {
       persisted: persistedExternal.persisted,
       externalPersisted: persistedExternal.persisted,
       diagnosticsPersisted: persistedDiag.persisted,
+      fallback: fallbackSummary,
     },
   };
 
   writeFileSync(SUMMARY_FILE, JSON.stringify(summary, null, 2), 'utf8');
   writeState({ offset: nextOffset, updatedAt: summary.generatedAt });
   console.log(
-    `[ingest-worker] outlets=${selected.length}/${allOutlets.length} endpoints=${attempted} ok=${okEndpoints} failed=${failedEndpoints} backoff=${failingKeys.size} unique=${merged.length} persisted=${persistedExternal.persisted} external=${persistedExternal.persisted} elapsedMs=${summary.elapsedMs}`
+    `[ingest-worker] outlets=${selected.length}/${allOutlets.length} endpoints=${attempted} ok=${okEndpoints} failed=${failedEndpoints} backoff=${failingKeys.size} unique=${merged.length} persisted=${persistedExternal.persisted} external=${persistedExternal.persisted} sitemapFallback=${fallbackSummary.rssSitemapFallbackSuccess}/${fallbackSummary.rssSitemapFallbackAttempts} googleNewsFallback=${fallbackSummary.rssGoogleNewsFallbackSuccess}/${fallbackSummary.rssGoogleNewsFallbackAttempts} elapsedMs=${summary.elapsedMs}`
   );
 }
 
