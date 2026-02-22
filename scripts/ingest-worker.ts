@@ -527,13 +527,16 @@ function dedupeAndSort(items: NewsItem[]): NewsItem[] {
 
 async function toNewsItem(
   outlet: OutletFeed,
-  row: { title: string; description?: string; link: string; publishedAt: string }
+  row: { title: string; description?: string; link: string; publishedAt: string },
+  fallbackPublishedAt: string
 ): Promise<NewsItem> {
   const normalizedCountry = normalizeCountryName(outlet.country);
   const geo = inferGeoFromTitle(row.title, normalizedCountry);
   const fallbackSection = outlet.section || 'general';
   const classification = await classifySection({ title: row.title, summary: row.description, fallbackSection });
   const section = classification.section;
+  const isFallbackPublishedAt = !row.publishedAt;
+  const publishedAt = row.publishedAt || fallbackPublishedAt;
   return annotateWorldLatam({
     id: row.link,
     outletId: outlet.id,
@@ -544,7 +547,8 @@ async function toNewsItem(
     language: outlet.language || 'en',
     sourceType: outlet.sourceType || 'global',
     tier: outlet.tier,
-    publishedAt: row.publishedAt,
+    publishedAt,
+    publishedAtIsFallback: isFallbackPublishedAt,
     section,
     confidence: classification.confidence,
     classificationSource: classification.source,
@@ -555,11 +559,17 @@ async function toNewsItem(
   });
 }
 
+function buildMissingPublishedAtFallback(startedMs: number): string {
+  const startedIso = new Date(startedMs).toISOString();
+  return `${startedIso.slice(0, 11)}11:11:11.000Z`;
+}
+
 async function fetchRss(
   outlet: OutletFeed,
   options: {
     allowSitemapFallback: boolean;
-  } = { allowSitemapFallback: true }
+    fallbackPublishedAt: string;
+  }
 ): Promise<EndpointResult> {
   const country = normalizeCountryName(outlet.country);
   if (!outlet.rssUrl) {
@@ -596,7 +606,9 @@ async function fetchRss(
       if (useSitemapFallback) {
         const sitemapParsed = await trySitemapFallback(outlet);
         if (sitemapParsed) {
-          const items = await Promise.all(sitemapParsed.items.map((row) => toNewsItem(outlet, row)));
+          const items = await Promise.all(
+            sitemapParsed.items.map((row) => toNewsItem(outlet, row, options.fallbackPublishedAt))
+          );
           return {
             items,
             run: {
@@ -618,7 +630,7 @@ async function fetchRss(
               missingPublishedAtCount: sitemapParsed.stats.missingPublishedAtCount,
               missingLinkCount: sitemapParsed.stats.missingLinkCount,
             },
-          fallbackUsed: 'sitemap',
+            fallbackUsed: 'sitemap',
           };
         }
       } else if (fallbackUsed === 'sitemap') {
@@ -667,13 +679,13 @@ async function fetchRss(
           parsedCount: 0,
           fetchedCount: 0,
           parsedLimit: RSS_ITEM_LIMIT,
-        sampleCapped: false,
-        recent24h: 0,
-        missingTitleCount: 0,
-        missingSummaryCount: 0,
-        missingPublishedAtCount: 0,
-        missingLinkCount: 0,
-        error: normalizedFailure,
+          sampleCapped: false,
+          recent24h: 0,
+          missingTitleCount: 0,
+          missingSummaryCount: 0,
+          missingPublishedAtCount: 0,
+          missingLinkCount: 0,
+          error: normalizedFailure,
         },
         fallbackUsed,
       };
@@ -715,7 +727,7 @@ async function fetchRss(
       };
     }
 
-    const items = await Promise.all(parsed.items.map((row) => toNewsItem(outlet, row)));
+    const items = await Promise.all(parsed.items.map((row) => toNewsItem(outlet, row, options.fallbackPublishedAt)));
     const rssFallbackUsed: FallbackKind = getFallbackKind(feedResult);
     return {
       items,
@@ -768,7 +780,7 @@ async function fetchRss(
   }
 }
 
-async function fetchSitemap(outlet: OutletFeed): Promise<EndpointResult> {
+async function fetchSitemap(outlet: OutletFeed, fallbackPublishedAt: string): Promise<EndpointResult> {
   const country = normalizeCountryName(outlet.country);
   if (!outlet.sitemapUrl) {
     return {
@@ -873,7 +885,7 @@ async function fetchSitemap(outlet: OutletFeed): Promise<EndpointResult> {
           );
           parsed = {
             items: allChildParsed.flatMap((batch) => batch.items).slice(0, SITEMAP_ITEM_LIMIT),
-            stats: childStats
+            stats: childStats,
           };
         }
       }
@@ -914,7 +926,7 @@ async function fetchSitemap(outlet: OutletFeed): Promise<EndpointResult> {
       };
     }
 
-    const items = await Promise.all(parsed.items.map((row) => toNewsItem(outlet, row)));
+    const items = await Promise.all(parsed.items.map((row) => toNewsItem(outlet, row, fallbackPublishedAt)));
     return {
       items,
       run: {
@@ -926,15 +938,15 @@ async function fetchSitemap(outlet: OutletFeed): Promise<EndpointResult> {
         circuitOpen: false,
         ok: true,
         statusCode: 200,
-      parsedCount: parsed.stats.validCount,
-      fetchedCount: parsed.stats.totalCandidates,
-      parsedLimit: SITEMAP_ITEM_LIMIT,
-      sampleCapped: parsed.stats.validCount >= SITEMAP_ITEM_LIMIT,
-      recent24h: parsed.stats.validCount,
-      missingTitleCount: parsed.stats.missingTitleCount,
-      missingSummaryCount: parsed.stats.missingSummaryCount,
-      missingPublishedAtCount: parsed.stats.missingPublishedAtCount,
-      missingLinkCount: parsed.stats.missingLinkCount,
+        parsedCount: parsed.stats.validCount,
+        fetchedCount: parsed.stats.totalCandidates,
+        parsedLimit: SITEMAP_ITEM_LIMIT,
+        sampleCapped: parsed.stats.validCount >= SITEMAP_ITEM_LIMIT,
+        recent24h: parsed.stats.validCount,
+        missingTitleCount: parsed.stats.missingTitleCount,
+        missingSummaryCount: parsed.stats.missingSummaryCount,
+        missingPublishedAtCount: parsed.stats.missingPublishedAtCount,
+        missingLinkCount: parsed.stats.missingLinkCount,
       },
       fallbackUsed: 'none',
     };
@@ -952,20 +964,19 @@ async function fetchSitemap(outlet: OutletFeed): Promise<EndpointResult> {
         statusCode: null,
         parsedCount: 0,
         fetchedCount: 0,
-      parsedLimit: SITEMAP_ITEM_LIMIT,
-      sampleCapped: false,
-      recent24h: 0,
-      missingTitleCount: 0,
-      missingSummaryCount: 0,
-      missingPublishedAtCount: 0,
-      missingLinkCount: 0,
-      error: error instanceof Error ? error.message : String(error),
+        parsedLimit: SITEMAP_ITEM_LIMIT,
+        sampleCapped: false,
+        recent24h: 0,
+        missingTitleCount: 0,
+        missingSummaryCount: 0,
+        missingPublishedAtCount: 0,
+        missingLinkCount: 0,
+        error: error instanceof Error ? error.message : String(error),
       },
       fallbackUsed: 'none',
     };
   }
 }
-
 function readState(totalOutlets: number): WorkerState {
   try {
     const raw = readFileSync(STATE_FILE, 'utf8');
@@ -1010,6 +1021,7 @@ function filterItemsByWatermark(items: NewsItem[], lastPublicationAt: string | n
 async function runOnce(): Promise<void> {
   const started = Date.now();
   ensureAuditsDir();
+  const fallbackPublishedAt = buildMissingPublishedAtFallback(started);
 
   const allOutlets = loadAtlasOutlets();
   const { selected, nextOffset, offset } = pickOutletChunk(allOutlets, OUTLET_CHUNK_SIZE);
@@ -1105,7 +1117,10 @@ async function runOnce(): Promise<void> {
       };
     }
     if (endpointMethod === 'rss') {
-      const result = await fetchRss(endpoint.outlet, { allowSitemapFallback: !disableSitemapFallbackForOutlet });
+      const result = await fetchRss(endpoint.outlet, {
+        allowSitemapFallback: !disableSitemapFallbackForOutlet,
+        fallbackPublishedAt,
+      });
       const lastPublicationAt = watermarks.get(endpointKey) || null;
       return { ...result, items: filterItemsByWatermark(result.items, lastPublicationAt) };
     }
@@ -1136,7 +1151,7 @@ async function runOnce(): Promise<void> {
         fallbackUsed: 'none',
       };
     }
-    const result = await fetchSitemap(endpoint.outlet);
+    const result = await fetchSitemap(endpoint.outlet, fallbackPublishedAt);
     const lastPublicationAt = watermarks.get(endpointKey) || null;
     return { ...result, items: filterItemsByWatermark(result.items, lastPublicationAt) };
   });

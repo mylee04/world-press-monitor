@@ -55,6 +55,7 @@ export interface NewsItem {
   confidence: number;
   classificationSource: 'keyword' | 'llm';
   classificationReason?: string;
+  publishedAtIsFallback?: boolean;
   locationName?: string;
   country?: string;
   lat?: number;

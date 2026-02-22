@@ -103,7 +103,7 @@ function parsePublishedAt(body: string, fallbackLink = ''): string {
 function summarizeStats(rows: ParsedFeedItemWithMissing[]): ParsedFeedStats {
   return {
     totalCandidates: rows.length,
-    validCount: rows.filter((row) => !row.missingTitle && !row.missingLink && !row.missingPublishedAt).length,
+    validCount: rows.filter((row) => !row.missingTitle && !row.missingLink).length,
     missingTitleCount: rows.filter((row) => row.missingTitle).length,
     missingSummaryCount: rows.filter((row) => row.missingSummary).length,
     missingPublishedAtCount: rows.filter((row) => row.missingPublishedAt).length,
@@ -113,12 +113,12 @@ function summarizeStats(rows: ParsedFeedItemWithMissing[]): ParsedFeedStats {
 
 function toItems(rows: ParsedFeedItemWithMissing[]): ParsedFeedItem[] {
   return rows
-    .filter((row) => !row.missingTitle && !row.missingLink && !row.missingPublishedAt)
+    .filter((row) => !row.missingTitle && !row.missingLink)
     .map((row) => ({
       title: row.title,
       description: row.description,
       link: row.link,
-      publishedAt: row.publishedAt
+      publishedAt: row.publishedAt,
     }));
 }
 
