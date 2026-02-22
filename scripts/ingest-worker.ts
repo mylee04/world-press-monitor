@@ -8,7 +8,7 @@ import { inferGeoFromTitle } from '../lib/geo';
 import {
   readFailingEndpointBackoff,
   readIngestionFeedWatermarks,
-  persistExternalNewsArticles,
+  persistNewsArticles,
   persistIngestionDiagnostics,
   upsertIngestionFeedWatermarks,
   type EndpointBackoffRow,
@@ -1204,7 +1204,7 @@ async function runOnce(): Promise<void> {
   }
 
   const merged = dedupeAndSort(results.flatMap((r) => r.items));
-  const persistedExternal = await persistExternalNewsArticles(merged);
+  const persistedNewsArticles = await persistNewsArticles(merged);
   const persistedDiag = await persistIngestionDiagnostics(diagnostics, { runner: 'worker' });
   const watermarkRows = [...endpointMaxPublicationAtMs.entries()]
     .map(([endpointKey, publicationAtMs]) => {
@@ -1239,8 +1239,8 @@ async function runOnce(): Promise<void> {
       endpointsFailed: failedEndpoints,
       endpointFailureRate: attempted > 0 ? failedEndpoints / attempted : 0,
       uniqueItems: merged.length,
-      persisted: persistedExternal.persisted,
-      externalPersisted: persistedExternal.persisted,
+      persisted: persistedNewsArticles.persisted,
+      newsArticlesPersisted: persistedNewsArticles.persisted,
       diagnosticsPersisted: persistedDiag.persisted,
       fallback: fallbackSummary,
     },
@@ -1254,7 +1254,7 @@ async function runOnce(): Promise<void> {
     `sitemap_policy_disabled=${fallbackSummary.sitemapPolicyDisabled} ` +
     `method_stats= [rss attempted=${methodStats.rss.attempted}, ok=${methodStats.rss.ok}, fail=${methodStats.rss.fail}(${percent(methodStats.rss.fail, methodStats.rss.attempted)}%); ` +
     `[sitemap attempted=${methodStats.sitemap.attempted}, ok=${methodStats.sitemap.ok}, fail=${methodStats.sitemap.fail}(${percent(methodStats.sitemap.fail, methodStats.sitemap.attempted)}%)] ` +
-    `sitemapFallback=${fallbackSummary.rssSitemapFallbackSuccess}/${fallbackSummary.rssSitemapFallbackAttempts} skipped=${fallbackSummary.rssSitemapFallbackSkipped} unique=${merged.length} persisted=${persistedExternal.persisted} external=${persistedExternal.persisted} elapsedMs=${summary.elapsedMs}`
+    `sitemapFallback=${fallbackSummary.rssSitemapFallbackSuccess}/${fallbackSummary.rssSitemapFallbackAttempts} skipped=${fallbackSummary.rssSitemapFallbackSkipped} unique=${merged.length} persisted=${persistedNewsArticles.persisted} newsArticles=${persistedNewsArticles.persisted} elapsedMs=${summary.elapsedMs}`
   );
 }
 

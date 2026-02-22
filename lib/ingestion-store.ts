@@ -456,7 +456,7 @@ function parseNewsSection(value: string | null | undefined): NewsItem['section']
     : 'general';
 }
 
-type ExternalNewsReadRow = {
+type NewsArticleReadRow = {
   link: string;
   outlet_id: string | null;
   title: string;
@@ -817,7 +817,7 @@ export async function readNewsApiFilters(): Promise<NewsApiFiltersResult> {
   };
 }
 
-export async function readExternalNewsArticles(options: {
+export async function readNewsArticles(options: {
   outletIds?: string[];
   sourceNames?: string[];
   limit?: number;
@@ -847,7 +847,7 @@ export async function readExternalNewsArticles(options: {
     sourceColumn: 'e.source'
   });
 
-  const result = await db.query<ExternalNewsReadRow>(
+  const result = await db.query<NewsArticleReadRow>(
     `
     select
       e.url as link,
@@ -906,7 +906,7 @@ export interface IngestionOpsSummary {
     endpointRuns24h: number;
     failedRuns24h: number;
     failureRate24h: number;
-    externalArticles24h: number;
+    newsArticles24h: number;
   };
   topSources24h: IngestionOpsSourceRow[];
 }
@@ -1742,7 +1742,7 @@ async function upsertIngestOpsRollups(db: Pool, runs: IngestionEndpointRun[], de
   }
 }
 
-type ExternalArticlePersistable = {
+type NewsArticlePersistable = {
   externalId: string;
   publicationDatetime: string;
   titleOriginal: string;
@@ -1754,7 +1754,7 @@ type ExternalArticlePersistable = {
   language: string | null;
 };
 
-async function toExternalArticle(item: NewsItem): Promise<ExternalArticlePersistable | null> {
+async function toNewsArticleRow(item: NewsItem): Promise<NewsArticlePersistable | null> {
   const linkNorm = normalizeLinkForId(item.link);
   if (!linkNorm) return null;
   const publicationTs = new Date(item.publishedAt).getTime();
@@ -1779,13 +1779,13 @@ async function toExternalArticle(item: NewsItem): Promise<ExternalArticlePersist
   };
 }
 
-export async function persistExternalNewsArticles(items: NewsItem[]): Promise<{ persisted: number; storage: 'postgres' | 'disabled'; reason?: string }> {
+export async function persistNewsArticles(items: NewsItem[]): Promise<{ persisted: number; storage: 'postgres' | 'disabled'; reason?: string }> {
   const db = getPool();
   if (!db) return { persisted: 0, storage: 'disabled', reason: poolDisabledReason };
   if (!items.length) return { persisted: 0, storage: 'postgres' };
 
   await ensureSchema();
-  const rows = (await Promise.all(items.map(toExternalArticle))).filter((row): row is ExternalArticlePersistable => Boolean(row));
+  const rows = (await Promise.all(items.map(toNewsArticleRow))).filter((row): row is NewsArticlePersistable => Boolean(row));
   if (!rows.length) return { persisted: 0, storage: 'postgres' };
   const dedupedRows = [...rows.reduce((acc, row) => {
     const current = acc.get(row.externalId);
@@ -1793,7 +1793,7 @@ export async function persistExternalNewsArticles(items: NewsItem[]): Promise<{ 
       acc.set(row.externalId, row);
     }
     return acc;
-  }, new Map<string, ExternalArticlePersistable>()).values()];
+  }, new Map<string, NewsArticlePersistable>()).values()];
 
   const groups = chunk(dedupedRows, 250);
   for (const group of groups) {
@@ -1836,7 +1836,7 @@ export async function persistExternalNewsArticles(items: NewsItem[]): Promise<{ 
         updated_at = now()
       `,
       values,
-      'persistExternalNewsArticles.insert'
+      'persistNewsArticles.insert'
     );
   }
 
@@ -1858,7 +1858,7 @@ export async function getIngestionOpsSummary24h(): Promise<IngestionOpsSummary> 
         endpointRuns24h: 0,
         failedRuns24h: 0,
         failureRate24h: 0,
-        externalArticles24h: 0
+        newsArticles24h: 0
       },
       topSources24h: []
     };
@@ -1959,7 +1959,7 @@ export async function getIngestionOpsSummary24h(): Promise<IngestionOpsSummary> 
       endpointRuns24h,
       failedRuns24h,
       failureRate24h: endpointRuns24h > 0 ? (failedRuns24h / endpointRuns24h) * 100 : 0,
-      externalArticles24h: Number(t.unique_items_24h || 0)
+      newsArticles24h: Number(t.unique_items_24h || 0)
     },
     topSources24h: top.rows.map((row) => ({
       source: row.source,
