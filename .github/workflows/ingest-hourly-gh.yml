@@ -26,3 +26,16 @@ jobs:
         run: bun run ingest:once
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+      - name: Run hourly ingest report and post to Discord
+        run: bun run ingest:ops:hourly --hours=1 --write-json --discord
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          WPM_HOURLY_DISCORD_WEBHOOK: ${{ secrets.WPM_HOURLY_DISCORD_WEBHOOK }}
+
+      - name: Send hourly country report to Discord
+        run: bun run news:country:discord
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          WPM_HOURLY_DISCORD_WEBHOOK: ${{ secrets.WPM_HOURLY_DISCORD_WEBHOOK }}
+          NEWS_COUNTRY_REPORT_EXCLUDED_COUNTRIES: "Global Energy & Grid, Egypt, Singapore, Ukraine, Nigeria, South Africa, Qatar"

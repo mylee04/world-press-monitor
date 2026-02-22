@@ -60,14 +60,15 @@ GitHub Actions is also configured:
 
 
 
+
 ## Latest RSS verification snapshot
 
 - Checked endpoints: `1001`
-- Valid: `970`
-- Invalid: `31`
-- Recovered via sitemap: `33`
+- Valid: `969`
+- Invalid: `32`
+- Recovered via sitemap: `34`
 - No-source rows: `0`
-- Sitemap fallback checks: checked `64`, attempted `64`, success `33`, failed `31`, no-candidate `0`, candidates `84`
+- Sitemap fallback checks: checked `66`, attempted `66`, success `34`, failed `32`, no-candidate `0`, candidates `99`
 - Snapshot date: `02/22/2026`
 - Source artifact: `audits/readme_rss_health_latest.json`
 
@@ -78,6 +79,7 @@ GitHub Actions is also configured:
 |HTML_RETURNED|9|
 |HTTP_403|9|
 |NETWORK|1|
+|TIMEOUT|1|
 |HTTP_404|1|
 
 ### Invalid feeds by reason
@@ -128,6 +130,11 @@ GitHub Actions is also configured:
 |---|---|---|---:|
 |Japan|Yomiuri Latest|<https://assets.yomiuri.co.jp/rss/latestnews.rdf>|-|
 
+#### TIMEOUT (1)
+|Country|Outlet|RSS URL|HTTP|
+|---|---|---|---:|
+|Indonesia|ANTARA - Hukum|<https://www.antaranews.com/rss/hukum.xml>|-|
+
 #### HTTP_404 (1)
 |Country|Outlet|RSS URL|HTTP|
 |---|---|---|---:|
@@ -143,6 +150,7 @@ GitHub Actions is also configured:
 |Japan|Sankei Economy|<https://www.sankei.com/rss/news/economy.xml>|<https://www.sankei.com/feeds/sitemap-oriconnews/?outputType=xml&amp;from=0>|
 |Japan|Wired Japan|<https://wired.jp/feed/rss2>|<https://wired.jp/feed/google-latest-news/sitemap-google-news>|
 |Japan|Boundless (TechCrunch Japan Archive)|<https://news.yahoo.co.jp/rss/media/boundless/all.xml>|<https://news.yahoo.co.jp/sitemaps/list.xml>|
+|Canada|Calgary Herald|<https://calgaryherald.com/feed>|<https://calgaryherald.com/sitemap-news.xml>|
 |Australia|The Conversation AU (오피니언/정책)|<https://theconversation.com/au/rss>|<https://theconversation.com/africa/sitemap_news.xml>|
 |Spain|Xataka (스페인어권 최대 테크 매체)|<https://www.xataka.com/feed>|<https://www.xataka.com/sitemap_news.xml>|
 |Mexico|El Universal - General (최대 일간지)|<https://www.eluniversal.com.mx/rss.xml>|<https://www.eluniversal.com.mx/arc/outboundfeeds/sitemap/category/tendencias/?outputType=xml>|
@@ -151,11 +159,10 @@ GitHub Actions is also configured:
 |Mexico|Excelsior (보수 유력지)|<https://www.excelsior.com.mx/rss.xml>|<https://www.excelsior.com.mx/sitemap-google-news.xml>|
 |Mexico|Forbes México|<https://www.forbes.com.mx/feed/>|<https://www.forbes.com.mx/news-sitemap.xml>|
 |Sweden|Radio Sweden - Sweden Today (podcast xml)|<http://sverigesradio.se/Podradio/xml/SRI_en_sweToday.xml>|<https://www.sverigesradio.se/newssitemap>|
-|Belgium|De Standaard (example section)|<https://www.standaard.be/rss/section/1f2838d4-99ea-49f0-9102-138784c7ea7c>|<https://www.standaard.be/sitemaps/mhbe-ds-online-article-2021-07.xml.gz>|
+|Belgium|De Standaard (example section)|<https://www.standaard.be/rss/section/1f2838d4-99ea-49f0-9102-138784c7ea7c>|<https://www.standaard.be/sitemaps/mhbe-ds-online-image-2018-12.xml.gz>|
 |Belgium|Het Nieuwsblad (example section)|<https://www.nieuwsblad.be/rss/section/55178e67-15a8-4ddd-a3d8-bfe5708f8932>|<https://www.nieuwsblad.be/sitemaps/mhbe-nb-online-article-2006-08.xml.gz>|
 |Belgium|Brussels Times|<https://www.brusselstimes.com/rss-feed>|<https://www.brusselstimes.com/google-news-sitemap.xml>|
 |Thailand|Thairath (News)|<http://www.thairath.co.th/rss/news.xml>|<https://www.thairath.co.th/sitemap-news-daily.xml>|
-|Thailand|Thairath (Sport)|<http://www.thairath.co.th/rss/sport.xml>|<https://www.thairath.co.th/sitemap-news-daily.xml>|
 
 ### No-source rows
 - none
@@ -499,7 +506,7 @@ GitHub Actions is also configured:
 4|Toronto Sun|<https://torontosun.com/feed>|200|02/22/2026|valid|
 5|Financial Post|<https://feeds.feedburner.com/FP_TopStories>|200|02/22/2026|valid|
 6|CityNews Toronto|<https://toronto.citynews.ca/feed>|200|02/22/2026|valid|
-7|Calgary Herald|<https://calgaryherald.com/feed>|200|02/22/2026|valid|
+7|Calgary Herald|<https://calgaryherald.com/feed>|Recovered via sitemap|02/22/2026|valid|
 8|Edmonton Journal|<https://edmontonjournal.com/feed>|200|02/22/2026|valid|
 9|Windsor Star|<https://windsorstar.com/feed>|200|02/22/2026|valid|
 10|The Province|<https://theprovince.com/feed>|200|02/22/2026|valid|
@@ -717,7 +724,7 @@ GitHub Actions is also configured:
 7|ANTARA - Terkini|<https://www.antaranews.com/rss/terkini.xml>|200|02/22/2026|valid|
 8|ANTARA - Top News|<https://www.antaranews.com/rss/top-news.xml>|200|02/22/2026|valid|
 9|ANTARA - Politik|<https://www.antaranews.com/rss/politik.xml>|200|02/22/2026|valid|
-10|ANTARA - Hukum|<https://www.antaranews.com/rss/hukum.xml>|200|02/22/2026|valid|
+10|ANTARA - Hukum|<https://www.antaranews.com/rss/hukum.xml>|ERR (TIMEOUT)|02/22/2026|invalid|
 11|ANTARA - Ekonomi|<https://www.antaranews.com/rss/ekonomi.xml>|200|02/22/2026|valid|
 12|ANTARA - Ekonomi (Finansial)|<https://www.antaranews.com/rss/ekonomi-finansial.xml>|200|02/22/2026|valid|
 13|ANTARA - Ekonomi (Bisnis)|<https://www.antaranews.com/rss/ekonomi-bisnis.xml>|200|02/22/2026|valid|

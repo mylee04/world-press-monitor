@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Sun, 22 Feb 2026 06:28:57 GMT</dateCreated>
+    <dateCreated>Sun, 22 Feb 2026 14:52:39 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -328,7 +328,7 @@
       <outline text="Toronto Sun [valid]" title="Toronto Sun [valid]" type="rss" xmlUrl="https://torontosun.com/feed" htmlUrl="https://torontosun.com"/>
       <outline text="Financial Post [valid]" title="Financial Post [valid]" type="rss" xmlUrl="https://feeds.feedburner.com/FP_TopStories" htmlUrl="https://feeds.feedburner.com"/>
       <outline text="CityNews Toronto [valid]" title="CityNews Toronto [valid]" type="rss" xmlUrl="https://toronto.citynews.ca/feed" htmlUrl="https://toronto.citynews.ca"/>
-      <outline text="Calgary Herald [valid]" title="Calgary Herald [valid]" type="rss" xmlUrl="https://calgaryherald.com/feed" htmlUrl="https://calgaryherald.com"/>
+      <outline text="Calgary Herald [invalid (ERR)]" title="Calgary Herald [invalid (ERR)]" type="rss" xmlUrl="https://calgaryherald.com/feed" htmlUrl="https://calgaryherald.com"/>
       <outline text="Edmonton Journal [valid]" title="Edmonton Journal [valid]" type="rss" xmlUrl="https://edmontonjournal.com/feed" htmlUrl="https://edmontonjournal.com"/>
       <outline text="Windsor Star [valid]" title="Windsor Star [valid]" type="rss" xmlUrl="https://windsorstar.com/feed" htmlUrl="https://windsorstar.com"/>
       <outline text="The Province [valid]" title="The Province [valid]" type="rss" xmlUrl="https://theprovince.com/feed" htmlUrl="https://theprovince.com"/>
@@ -532,7 +532,7 @@
       <outline text="ANTARA - Terkini [valid]" title="ANTARA - Terkini [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/terkini.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Top News [valid]" title="ANTARA - Top News [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/top-news.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Politik [valid]" title="ANTARA - Politik [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/politik.xml" htmlUrl="https://www.antaranews.com"/>
-      <outline text="ANTARA - Hukum [valid]" title="ANTARA - Hukum [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/hukum.xml" htmlUrl="https://www.antaranews.com"/>
+      <outline text="ANTARA - Hukum [invalid (ERR)]" title="ANTARA - Hukum [invalid (ERR)]" type="rss" xmlUrl="https://www.antaranews.com/rss/hukum.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Ekonomi [valid]" title="ANTARA - Ekonomi [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/ekonomi.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Ekonomi (Finansial) [valid]" title="ANTARA - Ekonomi (Finansial) [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/ekonomi-finansial.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Ekonomi (Bisnis) [valid]" title="ANTARA - Ekonomi (Bisnis) [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/ekonomi-bisnis.xml" htmlUrl="https://www.antaranews.com"/>

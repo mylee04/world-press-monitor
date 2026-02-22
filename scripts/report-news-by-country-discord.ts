@@ -19,6 +19,11 @@ type AtlasCatalog = {
   countries?: AtlasCountry[];
 };
 
+type AtlasCountryFilter = {
+  values: Set<string>;
+  activeCountryCount: number;
+};
+
 const DEFAULT_WEBHOOK_ENV_VARS = ['WPM_HOURLY_DISCORD_WEBHOOK'];
 const DEFAULT_ATLAS_PATH = resolve(process.cwd(), 'data/rss-atlas.json');
 
@@ -88,7 +93,8 @@ function splitIntoChunks(lines: string[]): string[] {
   return chunks.map((chunk) => chunk.trim()).filter((chunk) => chunk.length > 0);
 }
 
-function normalizeCountryValue(value: string): string {
+function normalizeCountryValue(value: string | undefined): string {
+  if (!value) return '';
   return value.trim().toLowerCase().replace(/\s+/g, ' ');
 }
 
@@ -102,35 +108,50 @@ function parseCountrySetFromEnv(raw: string | undefined): Set<string> {
   );
 }
 
-function loadAtlasCountries(filePath: string): Set<string> {
+function loadAtlasCountries(filePath: string): AtlasCountryFilter {
   try {
     const atlasRaw = readFileSync(filePath, 'utf8');
     const parsed = JSON.parse(atlasRaw) as AtlasCatalog;
-    if (!Array.isArray(parsed.countries)) return new Set();
-
-    const set = new Set<string>();
-    for (const country of parsed.countries) {
-      if (country?.name) set.add(normalizeCountryValue(country.name));
-      if (country?.code) set.add(normalizeCountryValue(country.code));
+    if (!Array.isArray(parsed.countries)) {
+      return { values: new Set(), activeCountryCount: 0 };
     }
-    return set;
+
+    const filterValues = new Set<string>();
+    const countedCountries = new Set<string>();
+
+    for (const country of parsed.countries) {
+      const hasName = typeof country?.name === 'string' && country.name.trim().length > 0;
+      const hasCode = typeof country?.code === 'string' && country.code.trim().length > 0;
+      if (hasName) {
+        filterValues.add(normalizeCountryValue(country.name));
+        countedCountries.add(normalizeCountryValue(country.name));
+      }
+      if (hasCode) {
+        filterValues.add(normalizeCountryValue(country.code));
+        if (!hasName) countedCountries.add(normalizeCountryValue(country.code));
+      }
+    }
+
+    return { values: filterValues, activeCountryCount: countedCountries.size };
   } catch (error) {
     console.warn(
       `${DEFAULT_LOG_PREFIX} failed to read atlas countries (${filePath}): ${error instanceof Error ? error.message : String(error)}`,
     );
-    return new Set();
+    return { values: new Set(), activeCountryCount: 0 };
   }
 }
 
-function buildCountryFilterSet(): Set<string> {
+function buildCountryFilterSet(): AtlasCountryFilter {
   const explicitActive = parseCountrySetFromEnv(process.env.NEWS_COUNTRY_REPORT_ACTIVE_COUNTRIES);
-  if (explicitActive.size > 0) return explicitActive;
+  if (explicitActive.size > 0) {
+    return { values: explicitActive, activeCountryCount: explicitActive.size };
+  }
 
   const atlasPath = process.env.ATLAS_PATH || DEFAULT_ATLAS_PATH;
   const fromAtlas = loadAtlasCountries(atlasPath);
-  if (fromAtlas.size > 0) return fromAtlas;
+  if (fromAtlas.values.size > 0) return fromAtlas;
 
-  return new Set();
+  return { values: new Set(), activeCountryCount: 0 };
 }
 
 async function postToDiscord(webhookUrl: string, content: string): Promise<void> {
@@ -177,18 +198,25 @@ async function main(): Promise<void> {
     const result = await pool.query<CountryRow>(query);
     const rows = result.rows;
     const countryFilter = buildCountryFilterSet();
+    const countryFilterSet = countryFilter.values;
     const excludedCountries = parseCountrySetFromEnv(process.env.NEWS_COUNTRY_REPORT_EXCLUDED_COUNTRIES);
 
     const filteredRows = rows.filter((row) => {
       const normalized = normalizeCountryValue(row.country);
-      if (countryFilter.size > 0 && !countryFilter.has(normalized)) return false;
+      if (countryFilterSet.size > 0 && !countryFilterSet.has(normalized)) return false;
       if (excludedCountries.size > 0 && excludedCountries.has(normalized)) return false;
       return true;
     });
 
-    const unexpectedCountries = rows
-      .filter((row) => countryFilter.size > 0 && !countryFilter.has(normalizeCountryValue(row.country)))
-      .map((row) => row.country);
+    const unexpectedCountries = countryFilterSet.size > 0
+      ? rows
+          .filter(
+            (row) =>
+              !countryFilterSet.has(normalizeCountryValue(row.country)) &&
+              !excludedCountries.has(normalizeCountryValue(row.country))
+          )
+          .map((row) => row.country)
+      : [];
 
     const topCountries = parseTopCountriesLimit();
     const selectedRows = topCountries > 0 ? filteredRows.slice(0, topCountries) : filteredRows;
@@ -199,14 +227,26 @@ async function main(): Promise<void> {
     const lines = selectedRows
       .map((row, index) => `${index + 1}. ${row.country}: 1h ${row.count_last_1h}, 24h ${row.count_last_24h}`);
 
+    const scopeLabel =
+      countryFilter.activeCountryCount > 0
+        ? `Countries in scope: ${filteredRows.length}`
+        : `Countries in scope: ${rows.length}`;
+    const configuredScopeLabel =
+      countryFilter.activeCountryCount > 0 && countryFilter.activeCountryCount !== filteredRows.length
+        ? `Configured scope countries: ${countryFilter.activeCountryCount}`
+        : '';
+
     const header = [
       `📰 Hourly News Data Intake by Country (${new Date().toISOString()})`,
       `Source: news_articles`,
       `Last 1h: ${total1h.toLocaleString()} / Last 24h: ${total24h.toLocaleString()}`,
-      countryFilter.size > 0 ? `Countries in scope: ${countryFilter.size}` : 'Countries in scope: all',
+      scopeLabel,
+      configuredScopeLabel,
       unexpectedCountries.length > 0 ? `Unexpected countries in data: ${unexpectedCountries.join(', ')}` : '',
       lines.length > 0 ? '' : 'No records in news_articles.'
-    ].join('\n');
+    ]
+      .filter((line) => line.length > 0)
+      .join('\n');
 
     const chunks = splitIntoChunks([
       header,

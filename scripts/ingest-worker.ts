@@ -1042,11 +1042,20 @@ async function runOnce(): Promise<void> {
       })
     : { rows: [] as EndpointBackoffRow[] };
   const failingKeys = new Set(failingBackoff.rows.map((row) => `${row.outletId}:${row.method}`));
+  const disableSitemapBackoff = SITEMAP_DISABLE_ENABLED
+    ? await readFailingEndpointBackoff({
+        runner: 'worker',
+        windowMinutes: SITEMAP_DISABLE_WINDOW_MINUTES,
+        minAttempts: SITEMAP_DISABLE_MIN_ATTEMPTS,
+        minFailPct: SITEMAP_DISABLE_MIN_FAIL_PCT,
+        limit: 5000,
+      })
+    : { rows: [] as EndpointBackoffRow[] };
   const disabledSitemapOutletIds = SITEMAP_DISABLE_ENABLED
     ? new Set(
-        failingBackoff.rows
+        disableSitemapBackoff.rows
           .filter((row) => row.method === 'rss')
-          .filter((row) => row.attempted >= SITEMAP_DISABLE_MIN_ATTEMPTS && row.failed * 100 >= row.attempted * SITEMAP_DISABLE_MIN_FAIL_PCT)
+          .filter((row) => row.attempted >= SITEMAP_DISABLE_MIN_ATTEMPTS && row.failPct >= SITEMAP_DISABLE_MIN_FAIL_PCT)
           .map((row) => row.outletId),
       )
     : new Set<string>();
@@ -1055,16 +1064,20 @@ async function runOnce(): Promise<void> {
     rssSitemapFallbackAttempts: 0,
     rssSitemapFallbackSuccess: 0,
     rssSitemapFallbackSkipped: 0,
-    sitemapEndpointSkipped: 0
+    rssBackoffSkipped: 0,
+    sitemapBackoffSkipped: 0,
+    sitemapPolicyDisabled: 0
   };
 
   const results = await runWithConcurrency<EndpointRun, EndpointResult>(dedupedEndpoints, FETCH_CONCURRENCY, async (endpoint) => {
     const endpointMethod: 'rss' | 'sitemap' = endpoint.method;
     const endpointKey = `${endpoint.outlet.id}:${endpoint.method}`;
-    const sitemapDisabledForOutlet = disabledSitemapOutletIds.has(endpoint.outlet.id);
+    const disableSitemapFallbackForOutlet = disabledSitemapOutletIds.has(endpoint.outlet.id);
     if (failingKeys.has(endpointKey)) {
       if (endpointMethod === 'sitemap') {
-        fallbackSummary.sitemapEndpointSkipped += 1;
+        fallbackSummary.sitemapBackoffSkipped += 1;
+      } else {
+        fallbackSummary.rssBackoffSkipped += 1;
       }
       return {
         items: [],
@@ -1092,11 +1105,12 @@ async function runOnce(): Promise<void> {
       };
     }
     if (endpointMethod === 'rss') {
-      const result = await fetchRss(endpoint.outlet, { allowSitemapFallback: !sitemapDisabledForOutlet });
+      const result = await fetchRss(endpoint.outlet, { allowSitemapFallback: !disableSitemapFallbackForOutlet });
       const lastPublicationAt = watermarks.get(endpointKey) || null;
       return { ...result, items: filterItemsByWatermark(result.items, lastPublicationAt) };
     }
-    if (endpointMethod === 'sitemap' && sitemapDisabledForOutlet) {
+    if (endpointMethod === 'sitemap' && disableSitemapFallbackForOutlet) {
+      fallbackSummary.sitemapPolicyDisabled += 1;
       return {
         items: [],
         run: {
@@ -1220,7 +1234,9 @@ async function runOnce(): Promise<void> {
   writeFileSync(SUMMARY_FILE, JSON.stringify(summary, null, 2), 'utf8');
   writeState({ offset: nextOffset, updatedAt: summary.generatedAt });
   console.log(
-    `[ingest-worker] outlets=${selected.length}/${allOutlets.length} endpoints=${attempted} ok=${okEndpoints} failed=${failedEndpoints} backoff=${failingKeys.size}(sitemapDisabled=${fallbackSummary.sitemapEndpointSkipped}) ` +
+    `[ingest-worker] outlets=${selected.length}/${allOutlets.length} endpoints=${attempted} ok=${okEndpoints} failed=${failedEndpoints} ` +
+    `backoff_skipped_total=${failingKeys.size} backoff_skipped=[rss=${fallbackSummary.rssBackoffSkipped}, sitemap=${fallbackSummary.sitemapBackoffSkipped}] ` +
+    `sitemap_policy_disabled=${fallbackSummary.sitemapPolicyDisabled} ` +
     `method_stats= [rss attempted=${methodStats.rss.attempted}, ok=${methodStats.rss.ok}, fail=${methodStats.rss.fail}(${percent(methodStats.rss.fail, methodStats.rss.attempted)}%); ` +
     `[sitemap attempted=${methodStats.sitemap.attempted}, ok=${methodStats.sitemap.ok}, fail=${methodStats.sitemap.fail}(${percent(methodStats.sitemap.fail, methodStats.sitemap.attempted)}%)] ` +
     `sitemapFallback=${fallbackSummary.rssSitemapFallbackSuccess}/${fallbackSummary.rssSitemapFallbackAttempts} skipped=${fallbackSummary.rssSitemapFallbackSkipped} unique=${merged.length} persisted=${persistedExternal.persisted} external=${persistedExternal.persisted} elapsedMs=${summary.elapsedMs}`

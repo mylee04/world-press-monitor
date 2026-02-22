@@ -978,6 +978,11 @@ export interface IngestOpsDailyRow {
   missingLinkCount: number;
 }
 
+export interface IngestFailureReasonRow {
+  reason: string;
+  count: number;
+}
+
 export interface EndpointBackoffRow {
   outletId: string;
   source: string;
@@ -1291,6 +1296,98 @@ export async function readIngestOpsDaily(options: IngestOpsReadBaseOptions & {
       missingPublishedAtCount: Number(row.missing_published_at_count) || 0,
       missingLinkCount: Number(row.missing_link_count) || 0
     }))
+  };
+}
+
+export async function readIngestFailureReasons(options: IngestOpsReadBaseOptions & {
+  hours?: number;
+  days?: number;
+  from?: string | Date;
+  to?: string | Date;
+  limit?: number;
+} = {}): Promise<{ storage: 'postgres' | 'disabled'; reason?: string; rows: IngestFailureReasonRow[]; totalFailures: number }> {
+  const db = getPool();
+  if (!db) return { storage: 'disabled', reason: poolDisabledReason, rows: [], totalFailures: 0 };
+  await ensureSchema();
+
+  const runner = options.runner;
+  const method = options.method;
+  const outletIds = (options.outletIds || []).filter(Boolean);
+  const sourceNames = (options.sourceNames || []).filter(Boolean);
+  const countries = (options.countries || []).filter(Boolean);
+  const from = options.from ? new Date(options.from) : null;
+  const to = options.to ? new Date(options.to) : null;
+  const limit = Math.max(1, Math.min(10000, Math.floor(options.limit || 200)));
+  const hours = Math.max(1, Math.min(24 * 30, Math.floor(options.hours || 24)));
+  const days = Math.max(1, Math.min(365, Math.floor(options.days || 1)));
+
+  const params: unknown[] = [];
+  const whereParts: string[] = [];
+
+  if (runner) {
+    params.push(runner);
+    whereParts.push(`and runner = $${params.length}`);
+  }
+  if (method) {
+    params.push(method);
+    whereParts.push(`and method = $${params.length}`);
+  }
+  if (from && Number.isFinite(from.getTime())) {
+    params.push(from.toISOString());
+    whereParts.push(`and ran_at >= $${params.length}::timestamptz`);
+  } else if (options.days) {
+    params.push(String(days));
+    whereParts.push(`and ran_at > now() - ($${params.length}::text || ' days')::interval`);
+  } else {
+    params.push(String(hours));
+    whereParts.push(`and ran_at > now() - ($${params.length}::text || ' hours')::interval`);
+  }
+  if (to && Number.isFinite(to.getTime())) {
+    params.push(to.toISOString());
+    whereParts.push(`and ran_at <= $${params.length}::timestamptz`);
+  }
+  if (countries.length > 0) {
+    params.push(countries);
+    whereParts.push(`and country = any($${params.length}::text[])`);
+  }
+
+  const filterSql = buildOutletSourceFilterSql(params, {
+    outletIds,
+    sourceNames,
+    outletColumn: 'outlet_id',
+    sourceColumn: 'source'
+  });
+
+  const result = await db.query<{
+    reason: string;
+    count: string;
+  }>(
+    `
+    select
+      coalesce(nullif(trim(error), ''), 'unknown_failure') as reason,
+      count(*)::text as count
+    from rss_health_status
+    where 1=1
+      and attempted
+      and not ok
+      ${whereParts.join('\n      ')}
+      ${filterSql}
+    group by reason
+    order by count desc, reason asc
+    limit $${params.length + 1}
+    `,
+    [...params, limit]
+  );
+
+  const rows = result.rows.map((row) => ({
+    reason: row.reason || 'unknown_failure',
+    count: Number(row.count) || 0
+  }));
+
+  return {
+    storage: 'postgres',
+    rows,
+    totalFailures: rows.reduce((acc, row) => acc + row.count, 0)
   };
 }
 
