@@ -1042,6 +1042,158 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 38
+        },
+        {
+          "name": "Yahoo Japan - Business",
+          "url": "https://news.yahoo.co.jp/rss/topics/business.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 39
+        },
+        {
+          "name": "Yahoo Japan - World",
+          "url": "https://news.yahoo.co.jp/rss/topics/world.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 40
+        },
+        {
+          "name": "Yahoo Japan - IT/Tech",
+          "url": "https://news.yahoo.co.jp/rss/topics/it.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 41
+        },
+        {
+          "name": "Reuters Japan",
+          "url": "https://news.yahoo.co.jp/rss/media/reut/all.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 42
+        },
+        {
+          "name": "Bloomberg Japan",
+          "url": "https://news.yahoo.co.jp/rss/media/bloom_st/all.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 43
+        },
+        {
+          "name": "Forbes Japan",
+          "url": "https://news.yahoo.co.jp/rss/media/fminfo/all.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 44
+        },
+        {
+          "name": "Kyodo News",
+          "url": "https://news.yahoo.co.jp/rss/media/kyodonews/all.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 45
+        },
+        {
+          "name": "Toyo Keizai",
+          "url": "https://toyokeizai.net/list/feed/rss",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 46
+        },
+        {
+          "name": "Diamond Online",
+          "url": "https://diamond.jp/list/feed/rss",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 47
+        },
+        {
+          "name": "Sankei News Flash",
+          "url": "https://www.sankei.com/rss/news/flash.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 48
+        },
+        {
+          "name": "Sankei Economy",
+          "url": "https://www.sankei.com/rss/news/economy.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 49
+        },
+        {
+          "name": "CNET Japan",
+          "url": "https://feeds.japan.cnet.com/rss/cnet/all.rdf",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 50
+        },
+        {
+          "name": "Wired Japan",
+          "url": "https://wired.jp/feed/rss2",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 51
+        },
+        {
+          "name": "Boundless (TechCrunch Japan Archive)",
+          "url": "https://news.yahoo.co.jp/rss/media/boundless/all.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 52
+        },
+        {
+          "name": "Smart Japan",
+          "url": "https://rss.itmedia.co.jp/rss/2.0/smartjapan.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 53
+        },
+        {
+          "name": "Nikkei",
+          "url": "https://assets.nikkei.jp/release/v1/rss/news.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 54
+        },
+        {
+          "name": "Yomiuri Latest",
+          "url": "https://assets.yomiuri.co.jp/rss/latestnews.rdf",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 55
+        },
+        {
+          "name": "Mainichi Flash",
+          "url": "https://mainichi.jp/rss/etc/mainichi-flash.rss",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 56
+        },
+        {
+          "name": "Gizmodo Japan",
+          "url": "https://www.gizmodo.jp/index.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 57
         }
       ]
     },
