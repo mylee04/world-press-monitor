@@ -6,7 +6,7 @@ PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 RUNNER="${PROJECT_ROOT}/scripts/run-ingest-hourly.sh"
 MARKER="## WPM-INGEST-HOURLY"
 CRON_TZ="America/Chicago"
-CRON_MINUTE="${INGEST_CRON_MINUTE:-55}"
+CRON_MINUTE="25"
 
 if [ -n "${INGEST_TZ:-}" ]; then
   CRON_TZ="${INGEST_TZ}"
@@ -23,7 +23,7 @@ Usage:
   scripts/setup-ingest-cron.sh print
 
 Commands:
-  install   Add or refresh hourly ingest cron job (at INGEST_CRON_MINUTE, default 55) using America/Chicago by default.
+  install   Add or refresh hourly ingest cron job (at minute 25) using America/Chicago by default.
   uninstall Remove WPM hourly ingest cron job.
   print     Print crontab entry only.
 USAGE

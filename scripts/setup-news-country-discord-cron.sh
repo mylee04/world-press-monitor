@@ -14,7 +14,7 @@ if [ -f "${ENV_FILE}" ]; then
   set +a
 fi
 
-CRON_MINUTE="${NEWS_COUNTRY_REPORT_CRON_MINUTE:-55}"
+CRON_MINUTE="30"
 RUNNER="${PROJECT_ROOT}/scripts/run-news-country-discord-report.sh"
 
 if [ -n "${NEWS_COUNTRY_REPORT_TZ:-}" ]; then
@@ -31,7 +31,7 @@ Usage:
   scripts/setup-news-country-discord-cron.sh print
 
 Commands:
-  install   Add or refresh hourly country-count discord report cron job (at NEWS_COUNTRY_REPORT_CRON_MINUTE, default 55).
+  install   Add or refresh hourly country-count discord report cron job (at minute 30).
   uninstall Remove WPM news-country-discord cron job.
   print     Print crontab entry only.
 USAGE

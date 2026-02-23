@@ -8,11 +8,14 @@ import { inferGeoFromTitle } from '../lib/geo';
 import {
   readFailingEndpointBackoff,
   readIngestionFeedWatermarks,
+  readSitemapPolicyStates,
   persistNewsArticles,
   persistIngestionDiagnostics,
+  upsertSitemapPolicyStates,
   upsertIngestionFeedWatermarks,
   type EndpointBackoffRow,
   type IngestionEndpointRun,
+  type SitemapPolicyState,
 } from '../lib/ingestion-store';
 import type { NewsItem, OutletFeed, OutletTier } from '../lib/types';
 
@@ -69,6 +72,22 @@ const SITEMAP_DISABLE_MIN_FAIL_PCT = Math.max(
 const SITEMAP_DISABLE_WINDOW_MINUTES = Math.max(
   10,
   Math.min(24 * 60, Number.parseInt(process.env.INGEST_DISABLE_SITEMAP_WINDOW_MINUTES || '120', 10) || 120)
+);
+const SITEMAP_TEMP_DISABLE_DAYS = Math.max(
+  1,
+  Number.parseInt(process.env.INGEST_SITEMAP_TEMP_DISABLE_DAYS || '7', 10) || 7
+);
+const SITEMAP_PERMANENT_RECHECK_DAYS = Math.max(
+  7,
+  Number.parseInt(process.env.INGEST_SITEMAP_PERMANENT_RECHECK_DAYS || '30', 10) || 30
+);
+const SITEMAP_TEMPORARY_DISABLE_THRESHOLD = Math.max(
+  1,
+  Number.parseInt(process.env.INGEST_SITEMAP_TEMP_DISABLE_FAILS || '2', 10) || 2
+);
+const SITEMAP_PERMANENT_404_THRESHOLD = Math.max(
+  2,
+  Number.parseInt(process.env.INGEST_SITEMAP_404_PERMANENT_THRESHOLD || '3', 10) || 3
 );
 const LATAM_COUNTRIES = new Set(['latam', 'argentina', 'chile', 'uruguay']);
 const LATAM_ENTITY_TERMS = [
@@ -240,6 +259,186 @@ function parseSitemapIndex(xml: string): string[] {
 }
 
 type ParsedSitemapResult = ReturnType<typeof parseSitemapWithStats>;
+
+const ONE_DAY_MS = 24 * 60 * 60 * 1000;
+const MAX_CONSECUTIVE_DEFAULT = 0;
+
+type EndpointRunPolicyState = {
+  outletId: string;
+  source: string;
+  country: string;
+  status: SitemapPolicyState['status'];
+  reason: string | null;
+  lastFailureReason: string | null;
+  consecutiveFailures: number;
+  disabledUntil: string | null;
+  lastAttemptedAt: string | null;
+  disabledSince: string | null;
+  lastSuccessAt: string | null;
+  lastCheckedAt: string | null;
+};
+
+type SitemapPolicyFailure = {
+  policyKind: 'permanent' | 'temporary';
+  reason: string;
+};
+
+type SitemapPolicyUpdateInput = {
+  endpoint: EndpointResult;
+  baseState: SitemapPolicyState;
+  nowMs: number;
+  nowIso: string;
+  sourceKey: string;
+  sourceAliveKeys: Set<string>;
+  sourceCounts: Map<string, number>;
+};
+
+function normalizeFailureText(value: string | undefined): string {
+  return (value || '').toLowerCase().trim();
+}
+
+function isSitemapPolicyBlocked(state: SitemapPolicyState | undefined, nowMs: number): boolean {
+  if (!state || state.status === 'active') return false;
+  if (!state.disabledUntil) return false;
+  const disabledUntil = Date.parse(state.disabledUntil);
+  return Number.isFinite(disabledUntil) && disabledUntil > nowMs;
+}
+
+function buildSitemapSourceKey(source: string, country: string): string {
+  return `${source}::${normalizeCountryName(country)}`;
+}
+
+function buildPolicyDateIso(baseMs: number, addDays: number): string {
+  return new Date(baseMs + Math.max(0, addDays) * ONE_DAY_MS).toISOString();
+}
+
+function classifySitemapFailureForPolicy(run: IngestionEndpointRun): SitemapPolicyFailure | null {
+  if (run.method !== 'sitemap' || !run.attempted || run.ok) return null;
+  const status = run.statusCode;
+  const error = normalizeFailureText(run.error);
+
+  if (status === 410) return { policyKind: 'permanent', reason: 'http_410' };
+  if (status === 301 || status === 308 || error.includes('permanent_moved') || error.includes('moved permanently')) {
+    return { policyKind: 'permanent', reason: 'permanent_moved' };
+  }
+
+  if (status === 404 || error === 'http_404') {
+    return { policyKind: 'temporary', reason: 'http_404' };
+  }
+
+  if (status === 403 || status === 500 || status === 502 || status === 503 || status === 504) {
+    return { policyKind: 'temporary', reason: `http_${status}` };
+  }
+
+  if (error.includes('timeout') || error.includes('timed out')) {
+    return { policyKind: 'temporary', reason: 'timeout' };
+  }
+
+  if (error.includes('network_error') || error.includes('operation was aborted') || error.includes('aborted') || error.includes('abort')) {
+    return { policyKind: 'temporary', reason: 'network_error' };
+  }
+
+  return null;
+}
+
+function buildSitemapPolicyStateFromRun(input: SitemapPolicyUpdateInput): EndpointRunPolicyState {
+  const { endpoint, baseState, nowMs, nowIso, sourceKey, sourceAliveKeys, sourceCounts } = input;
+  const run = endpoint.run;
+  const sourceCount = sourceCounts.get(sourceKey) || 0;
+  const currentFailures = Number.isFinite(baseState.consecutiveFailures) ? baseState.consecutiveFailures : MAX_CONSECUTIVE_DEFAULT;
+
+  if (!run.attempted) {
+    return {
+      outletId: run.outletId,
+      source: run.source,
+      country: run.country,
+      status: baseState.status,
+      reason: baseState.status === 'active' ? null : baseState.reason,
+      lastFailureReason: baseState.lastFailureReason,
+      consecutiveFailures: currentFailures,
+      disabledUntil: baseState.disabledUntil,
+      lastAttemptedAt: baseState.lastAttemptedAt,
+      disabledSince: baseState.disabledSince,
+      lastSuccessAt: baseState.lastSuccessAt,
+      lastCheckedAt: nowIso,
+    };
+  }
+
+  if (run.ok) {
+    return {
+      outletId: run.outletId,
+      source: run.source,
+      country: run.country,
+      status: 'active',
+      reason: null,
+      lastFailureReason: null,
+      consecutiveFailures: 0,
+      disabledUntil: null,
+      lastAttemptedAt: nowIso,
+      disabledSince: null,
+      lastSuccessAt: nowIso,
+      lastCheckedAt: nowIso,
+    };
+  }
+
+  const nextConsecutiveFailures = currentFailures + 1;
+  const failure = classifySitemapFailureForPolicy(run);
+  const lastFailureReason = failure ? failure.reason : normalizeFailureText(run.error) || 'unknown_failure';
+  const isHttp404 = failure?.reason === 'http_404';
+  const hasDuplicateAliveSource = sourceCount > 1 && sourceAliveKeys.has(sourceKey);
+
+  let status = baseState.status;
+  let reason = baseState.reason;
+  let disabledUntil = baseState.disabledUntil;
+  let disabledSince = baseState.disabledSince;
+
+  if (failure) {
+    if (failure.policyKind === 'permanent' || (isHttp404 && (hasDuplicateAliveSource || nextConsecutiveFailures >= SITEMAP_PERMANENT_404_THRESHOLD))) {
+      status = 'disabled_permanent';
+      reason = failure.reason;
+      disabledSince = baseState.disabledSince || nowIso;
+      disabledUntil = buildPolicyDateIso(nowMs, SITEMAP_PERMANENT_RECHECK_DAYS);
+    } else if (failure.policyKind === 'temporary') {
+      if (nextConsecutiveFailures >= SITEMAP_TEMPORARY_DISABLE_THRESHOLD) {
+        status = 'disabled_temporary';
+        reason = failure.reason;
+        disabledSince = baseState.disabledSince || nowIso;
+        disabledUntil = buildPolicyDateIso(nowMs, SITEMAP_TEMP_DISABLE_DAYS);
+      } else {
+        status = baseState.status;
+        reason = baseState.status === 'active' ? null : baseState.reason;
+      }
+    }
+  } else if (baseState.status !== 'active') {
+    status = baseState.status;
+    reason = baseState.reason;
+    const baseDisabledUntil = baseState.disabledUntil ? Date.parse(baseState.disabledUntil) : Number.NaN;
+    const needsCooldownRefresh = !baseState.disabledUntil || !Number.isFinite(baseDisabledUntil) || baseDisabledUntil <= nowMs;
+    if (needsCooldownRefresh) {
+      disabledSince = baseState.disabledSince || nowIso;
+      disabledUntil = buildPolicyDateIso(nowMs, baseState.status === 'disabled_temporary' ? SITEMAP_TEMP_DISABLE_DAYS : SITEMAP_PERMANENT_RECHECK_DAYS);
+    }
+  }
+
+  if (!failure && status === 'active') {
+    reason = null;
+  }
+
+  return {
+    outletId: run.outletId,
+    source: run.source,
+    country: run.country,
+    status,
+    reason,
+    lastFailureReason,
+    consecutiveFailures: nextConsecutiveFailures,
+    disabledUntil,
+    lastAttemptedAt: nowIso,
+    disabledSince,
+    lastSuccessAt: baseState.lastSuccessAt,
+    lastCheckedAt: nowIso,
+  };
+}
 
 function parseBoolEnv(raw: string | undefined, fallback: boolean): boolean {
   if (raw === undefined) return fallback;
@@ -1022,6 +1221,8 @@ async function runOnce(): Promise<void> {
   const started = Date.now();
   ensureAuditsDir();
   const fallbackPublishedAt = buildMissingPublishedAtFallback(started);
+  const nowMs = Date.now();
+  const nowIso = new Date(nowMs).toISOString();
 
   const allOutlets = loadAtlasOutlets();
   const { selected, nextOffset, offset } = pickOutletChunk(allOutlets, OUTLET_CHUNK_SIZE);
@@ -1043,6 +1244,23 @@ async function runOnce(): Promise<void> {
       method: endpoint.method
     }))
   );
+
+  const sitemapPolicyStatesByOutlet = await readSitemapPolicyStates(
+    dedupedEndpoints
+      .filter((endpoint) => endpoint.method === 'sitemap')
+      .map((endpoint) => ({
+        outletId: endpoint.outlet.id,
+        source: endpoint.outlet.name,
+        country: normalizeCountryName(endpoint.outlet.country)
+      }))
+  );
+
+  const sitemapSourceCounts = new Map<string, number>();
+  for (const endpoint of dedupedEndpoints) {
+    if (endpoint.method !== 'sitemap') continue;
+    const sourceKey = buildSitemapSourceKey(endpoint.outlet.name, normalizeCountryName(endpoint.outlet.country));
+    sitemapSourceCounts.set(sourceKey, (sitemapSourceCounts.get(sourceKey) || 0) + 1);
+  }
 
   const failingBackoff = FAIL_BACKOFF_ENABLED
     ? await readFailingEndpointBackoff({
@@ -1084,6 +1302,7 @@ async function runOnce(): Promise<void> {
   const results = await runWithConcurrency<EndpointRun, EndpointResult>(dedupedEndpoints, FETCH_CONCURRENCY, async (endpoint) => {
     const endpointMethod: 'rss' | 'sitemap' = endpoint.method;
     const endpointKey = `${endpoint.outlet.id}:${endpoint.method}`;
+    const policyState = endpoint.method === 'sitemap' ? sitemapPolicyStatesByOutlet.get(endpoint.outlet.id) : undefined;
     const disableSitemapFallbackForOutlet = disabledSitemapOutletIds.has(endpoint.outlet.id);
     if (failingKeys.has(endpointKey)) {
       if (endpointMethod === 'sitemap') {
@@ -1112,6 +1331,34 @@ async function runOnce(): Promise<void> {
           missingPublishedAtCount: 0,
           missingLinkCount: 0,
           error: 'cooldown_high_fail',
+        },
+        fallbackUsed: 'none',
+      };
+    }
+    if (endpointMethod === 'sitemap' && isSitemapPolicyBlocked(policyState, nowMs)) {
+      fallbackSummary.sitemapPolicyDisabled += 1;
+      const reason = policyState?.reason || policyState?.status || 'disabled';
+      return {
+        items: [],
+        run: {
+          outletId: endpoint.outlet.id,
+          source: endpoint.outlet.name,
+          country: normalizeCountryName(endpoint.outlet.country),
+          method: 'sitemap',
+          attempted: false,
+          circuitOpen: true,
+          ok: false,
+          statusCode: null,
+          parsedCount: 0,
+          fetchedCount: 0,
+          parsedLimit: SITEMAP_ITEM_LIMIT,
+          sampleCapped: false,
+          recent24h: 0,
+          missingTitleCount: 0,
+          missingSummaryCount: 0,
+          missingPublishedAtCount: 0,
+          missingLinkCount: 0,
+          error: `sitemap_policy_disabled:${reason}`,
         },
         fallbackUsed: 'none',
       };
@@ -1189,6 +1436,60 @@ async function runOnce(): Promise<void> {
     } as Record<'rss' | 'sitemap', { attempted: number; ok: number; fail: number }>,
   );
   const percent = (n: number, d: number): string => (d === 0 ? '0.00' : ((n / d) * 100).toFixed(2));
+  const sitemapResultByOutlet = new Map<string, EndpointResult>();
+  for (const result of results) {
+    if (result.run.method === 'sitemap') {
+      sitemapResultByOutlet.set(result.run.outletId, result);
+    }
+  }
+
+  const sitemapAliveSourceKeys = new Set<string>();
+  for (const result of sitemapResultByOutlet.values()) {
+    if (result.run.attempted && result.run.ok) {
+      sitemapAliveSourceKeys.add(buildSitemapSourceKey(result.run.source, result.run.country));
+    }
+  }
+  const defaultSitemapPolicyState: SitemapPolicyState = {
+    outletId: '',
+    source: '',
+    country: 'Global',
+    status: 'active',
+    reason: null,
+    lastFailureReason: null,
+    consecutiveFailures: 0,
+    disabledUntil: null,
+    lastAttemptedAt: null,
+    disabledSince: null,
+    lastSuccessAt: null,
+    lastCheckedAt: null
+  };
+  const sitemapPolicyRows: EndpointRunPolicyState[] = [];
+  for (const endpoint of dedupedEndpoints) {
+    if (endpoint.method !== 'sitemap') continue;
+    const result = sitemapResultByOutlet.get(endpoint.outlet.id);
+    if (!result) continue;
+    const state = sitemapPolicyStatesByOutlet.get(endpoint.outlet.id) || {
+      ...defaultSitemapPolicyState,
+      outletId: endpoint.outlet.id,
+      source: endpoint.outlet.name,
+      country: normalizeCountryName(endpoint.outlet.country),
+    };
+    const sourceKey = buildSitemapSourceKey(endpoint.outlet.name, normalizeCountryName(endpoint.outlet.country));
+    sitemapPolicyRows.push(
+      buildSitemapPolicyStateFromRun({
+        endpoint: result,
+        baseState: state,
+        nowMs,
+        nowIso,
+        sourceKey,
+        sourceAliveKeys: sitemapAliveSourceKeys,
+        sourceCounts: sitemapSourceCounts
+      }),
+    );
+  }
+  if (sitemapPolicyRows.length > 0) {
+    await upsertSitemapPolicyStates(sitemapPolicyRows);
+  }
 
   const endpointMaxPublicationAtMs = new Map<string, number>();
   for (const { run, items } of results) {

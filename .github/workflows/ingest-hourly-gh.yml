@@ -9,11 +9,18 @@ on:
     # This keeps ingest and notification dispatching separated without a second workflow file.
     - cron: "30 * * * *"
   workflow_dispatch:
+    inputs:
+      mode:
+        description: "Run mode for manual dispatch"
+        required: false
+        type: string
+        default: ingest-only
+        # Accepted values: ingest-only, report-only
 
 jobs:
   ingest:
     name: Ingest
-    if: github.event_name != 'schedule' || github.event.schedule == '25 * * * *'
+    if: (github.event_name == 'schedule' && github.event.schedule == '25 * * * *') || (github.event_name == 'workflow_dispatch' && github.event.inputs.mode == 'ingest-only')
     concurrency:
       group: wpm-hourly-ingest
       cancel-in-progress: true
@@ -37,7 +44,7 @@ jobs:
 
   discord:
     name: Discord Hourly Report
-    if: github.event_name != 'schedule' || github.event.schedule == '30 * * * *'
+    if: (github.event_name == 'schedule' && github.event.schedule == '30 * * * *') || (github.event_name == 'workflow_dispatch' && github.event.inputs.mode == 'report-only')
     concurrency:
       group: wpm-hourly-discord
       cancel-in-progress: true

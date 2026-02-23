@@ -167,6 +167,26 @@ create table if not exists news_articles (
     );
     create index if not exists idx_ingest_feed_watermarks_source on ingest_feed_watermarks(source);
     create index if not exists idx_ingest_feed_watermarks_country on ingest_feed_watermarks(country);
+
+    create table if not exists ingest_sitemap_policy (
+      outlet_id text primary key,
+      source text not null,
+      country text not null default 'Global',
+      status text not null default 'active',
+      reason text,
+      last_failure_reason text,
+      consecutive_failures integer not null default 0,
+      disabled_until timestamptz,
+      last_attempted_at timestamptz,
+      disabled_since timestamptz,
+      last_success_at timestamptz,
+      last_checked_at timestamptz not null default now(),
+      created_at timestamptz not null default now(),
+      updated_at timestamptz not null default now()
+    );
+    create index if not exists idx_ingest_sitemap_policy_status on ingest_sitemap_policy(status);
+    create index if not exists idx_ingest_sitemap_policy_country on ingest_sitemap_policy(country);
+    create index if not exists idx_ingest_sitemap_policy_disabled_until on ingest_sitemap_policy(disabled_until);
     create table if not exists ingest_ops_hourly (
       hour_bucket timestamptz not null,
       runner text not null default 'worker',
@@ -933,6 +953,231 @@ export interface IngestionEndpointRun {
   error?: string;
 }
 
+export type SitemapPolicyStatus = 'active' | 'disabled_temporary' | 'disabled_permanent';
+
+export interface SitemapPolicyState {
+  outletId: string;
+  source: string;
+  country: string;
+  status: SitemapPolicyStatus;
+  reason: string | null;
+  lastFailureReason: string | null;
+  consecutiveFailures: number;
+  disabledUntil: string | null;
+  lastAttemptedAt: string | null;
+  disabledSince: string | null;
+  lastSuccessAt: string | null;
+  lastCheckedAt: string | null;
+}
+
+type ReadSitemapPolicyInput = {
+  outletId: string;
+  source: string;
+  country: string;
+};
+
+function normalizeSitemapPolicyCountry(country: string): string {
+  return (country || 'Global').trim() || 'Global';
+}
+
+function normalizeSitemapPolicyStatus(value: string): SitemapPolicyStatus {
+  if (value === 'disabled_temporary' || value === 'disabled_permanent' || value === 'active') {
+    return value;
+  }
+  return 'active';
+}
+
+function mapSitemapPolicyRow(row: SitemapPolicyDbRow): SitemapPolicyState {
+  return {
+    outletId: row.outlet_id,
+    source: row.source || 'unknown_source',
+    country: normalizeSitemapPolicyCountry(row.country),
+    status: normalizeSitemapPolicyStatus(row.status),
+    reason: row.reason,
+    lastFailureReason: row.last_failure_reason,
+    consecutiveFailures: Number.isFinite(row.consecutive_failures) ? row.consecutive_failures : 0,
+    disabledUntil: row.disabled_until,
+    lastAttemptedAt: row.last_attempted_at,
+    disabledSince: row.disabled_since,
+    lastSuccessAt: row.last_success_at,
+    lastCheckedAt: row.last_checked_at
+  };
+}
+
+export async function readSitemapPolicyStates(rows: ReadSitemapPolicyInput[]): Promise<Map<string, SitemapPolicyState>> {
+  const db = getPool();
+  if (!db) return new Map();
+  if (!rows.length) return new Map();
+  await ensureSchema();
+
+  const deduped = new Map<string, ReadSitemapPolicyInput>();
+  for (const row of rows) {
+    if (!row.outletId) continue;
+    deduped.set(row.outletId, {
+      outletId: row.outletId,
+      source: row.source,
+      country: normalizeSitemapPolicyCountry(row.country)
+    });
+  }
+
+  const requested = [...deduped.values()];
+  if (!requested.length) return new Map();
+
+  const values: string[] = [];
+  const placeholders = requested
+    .map((request, index) => {
+      const base = index * 3;
+      values.push(request.outletId, request.source, normalizeSitemapPolicyCountry(request.country));
+      return `($${base + 1}, $${base + 2}, $${base + 3})`;
+    })
+    .join(', ');
+
+  const result = await db.query<SitemapPolicyDbRow>(
+    `
+    with requested(outlet_id, source, country) as (
+      values ${placeholders}
+    )
+    select
+      requested.outlet_id,
+      coalesce(p.source, requested.source) as source,
+      coalesce(p.country, requested.country) as country,
+      coalesce(p.status, 'active') as status,
+      p.reason,
+      p.last_failure_reason,
+      coalesce(p.consecutive_failures, 0) as consecutive_failures,
+      p.disabled_until,
+      p.last_attempted_at,
+      p.disabled_since,
+      p.last_success_at,
+      p.last_checked_at
+    from requested
+    left join ingest_sitemap_policy p on p.outlet_id = requested.outlet_id
+    `,
+    values
+  );
+
+  const stateByOutlet = new Map<string, SitemapPolicyState>();
+  for (const request of requested) {
+    stateByOutlet.set(request.outletId, {
+      outletId: request.outletId,
+      source: request.source,
+      country: request.country,
+      status: 'active',
+      reason: null,
+      lastFailureReason: null,
+      consecutiveFailures: 0,
+      disabledUntil: null,
+      lastAttemptedAt: null,
+      disabledSince: null,
+      lastSuccessAt: null,
+      lastCheckedAt: null
+    });
+  }
+
+  for (const row of result.rows) {
+    stateByOutlet.set(row.outlet_id, mapSitemapPolicyRow(row));
+  }
+  return stateByOutlet;
+}
+
+export async function upsertSitemapPolicyStates(rows: SitemapPolicyUpsertRow[]): Promise<void> {
+  const db = getPool();
+  if (!db || !rows.length) return;
+  await ensureSchema();
+
+  const deduped = new Map<string, SitemapPolicyUpsertRow>();
+  for (const row of rows) {
+    if (!row.outletId) continue;
+    deduped.set(row.outletId, {
+      ...row,
+      country: normalizeSitemapPolicyCountry(row.country),
+      source: row.source,
+    });
+  }
+  const dedupedRows = [...deduped.values()];
+  if (!dedupedRows.length) return;
+
+  const groups = chunk(dedupedRows, 250);
+  for (const group of groups) {
+    const values: unknown[] = [];
+    const parts: string[] = [];
+    group.forEach((row, index) => {
+      const base = index * 11;
+      parts.push(`
+        ($${base + 1}::text, $${base + 2}::text, $${base + 3}::text, $${base + 4}::text, $${base + 5}::text, $${base + 6}::int,
+         $${base + 7}::timestamptz, $${base + 8}::timestamptz, $${base + 9}::timestamptz, $${base + 10}::timestamptz, $${base + 11}::text, now())
+      `);
+      values.push(
+        row.outletId,
+        row.source,
+        row.country,
+        row.status,
+        row.reason,
+        row.consecutiveFailures,
+        row.lastAttemptedAt,
+        row.disabledUntil,
+        row.disabledSince,
+        row.lastSuccessAt
+      );
+      values.push(row.lastFailureReason);
+    });
+
+    await executeIngestionQuery(
+      db,
+      `
+      insert into ingest_sitemap_policy (
+        outlet_id, source, country, status, reason, consecutive_failures,
+        last_attempted_at, disabled_until, disabled_since, last_success_at, last_failure_reason, last_checked_at
+      ) values ${parts.join(',')}
+      on conflict (outlet_id) do update set
+        source = excluded.source,
+        country = excluded.country,
+        status = excluded.status,
+        reason = excluded.reason,
+        last_failure_reason = excluded.last_failure_reason,
+        consecutive_failures = excluded.consecutive_failures,
+        disabled_until = excluded.disabled_until,
+        last_attempted_at = excluded.last_attempted_at,
+        disabled_since = excluded.disabled_since,
+        last_success_at = excluded.last_success_at,
+        last_checked_at = now(),
+        updated_at = now()
+      `,
+      values,
+      'upsertSitemapPolicyStates'
+    );
+  }
+}
+
+type SitemapPolicyDbRow = {
+  outlet_id: string;
+  source: string;
+  country: string;
+  status: SitemapPolicyStatus;
+  reason: string | null;
+  last_failure_reason: string | null;
+  consecutive_failures: number;
+  disabled_until: string | null;
+  last_attempted_at: string | null;
+  disabled_since: string | null;
+  last_success_at: string | null;
+  last_checked_at: string | null;
+};
+
+type SitemapPolicyUpsertRow = {
+  outletId: string;
+  source: string;
+  country: string;
+  status: SitemapPolicyStatus;
+  reason: string | null;
+  lastFailureReason: string | null;
+  consecutiveFailures: number;
+  disabledUntil: string | null;
+  lastAttemptedAt: string | null;
+  disabledSince: string | null;
+  lastSuccessAt: string | null;
+};
+
 type IngestOpsReadBaseOptions = {
   runner?: 'worker' | 'api_news' | 'warm';
   outletIds?: string[];
@@ -1359,12 +1604,13 @@ export async function readIngestFailureReasons(options: IngestOpsReadBaseOptions
   });
 
   const result = await db.query<{
+    reason_key: string;
     reason: string;
     count: string;
   }>(
     `
     select
-      coalesce(nullif(trim(error), ''), 'unknown_failure') as reason,
+      coalesce(method, 'unknown') || ':' || coalesce(nullif(trim(error), ''), 'unknown_failure') as reason_key,
       count(*)::text as count
     from rss_health_status
     where 1=1
@@ -1372,15 +1618,15 @@ export async function readIngestFailureReasons(options: IngestOpsReadBaseOptions
       and not ok
       ${whereParts.join('\n      ')}
       ${filterSql}
-    group by reason
-    order by count desc, reason asc
+    group by reason_key
+    order by count desc, reason_key asc
     limit $${params.length + 1}
     `,
     [...params, limit]
   );
 
   const rows = result.rows.map((row) => ({
-    reason: row.reason || 'unknown_failure',
+    reason: row.reason_key || 'unknown_failure',
     count: Number(row.count) || 0
   }));
 

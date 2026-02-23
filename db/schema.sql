@@ -73,6 +73,40 @@ drop index if exists idx_ingestion_endpoint_runs_source;
 drop index if exists idx_ingestion_endpoint_runs_outlet_id;
 drop index if exists idx_ingestion_endpoint_runs_runner_ran_at;
 
+create table if not exists ingest_feed_watermarks (
+  outlet_id text not null,
+  source text not null,
+  country text not null default 'Global',
+  method text not null,
+  last_publication_at timestamptz,
+  last_fetched_at timestamptz not null default now(),
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  primary key (outlet_id, method)
+);
+create index if not exists idx_ingest_feed_watermarks_source on ingest_feed_watermarks(source);
+create index if not exists idx_ingest_feed_watermarks_country on ingest_feed_watermarks(country);
+
+create table if not exists ingest_sitemap_policy (
+  outlet_id text primary key,
+  source text not null,
+  country text not null default 'Global',
+  status text not null default 'active',
+  reason text,
+  last_failure_reason text,
+  consecutive_failures integer not null default 0,
+  disabled_until timestamptz,
+  last_attempted_at timestamptz,
+  disabled_since timestamptz,
+  last_success_at timestamptz,
+  last_checked_at timestamptz not null default now(),
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+create index if not exists idx_ingest_sitemap_policy_status on ingest_sitemap_policy(status);
+create index if not exists idx_ingest_sitemap_policy_country on ingest_sitemap_policy(country);
+create index if not exists idx_ingest_sitemap_policy_disabled_until on ingest_sitemap_policy(disabled_until);
+
 create table if not exists ingest_ops_hourly (
   hour_bucket timestamptz not null,
   runner text not null default 'worker',

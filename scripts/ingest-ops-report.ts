@@ -693,9 +693,21 @@ function prioritizeFailureReasonsForWeekly(rows: Array<{ reason: string; count: 
 }
 
 function failureReasonPriority(reason: string, priorityMap: Map<string, number>): number {
-  if (priorityMap.has(reason)) return priorityMap.get(reason) ?? Number.MAX_SAFE_INTEGER;
-  if (reason.startsWith('network_error')) return 2;
+  const normalizedReason = getFailureReasonWithoutMethod(reason);
+  if (priorityMap.has(normalizedReason)) return priorityMap.get(normalizedReason) ?? Number.MAX_SAFE_INTEGER;
+  if (normalizedReason.startsWith('network_error')) return 2;
+  if (normalizedReason.startsWith('sitemap_policy_disabled')) return 4;
   return 3;
+}
+
+function getFailureReasonWithoutMethod(reason: string): string {
+  const firstSeparator = reason.indexOf(':');
+  if (firstSeparator < 0) return reason;
+  const method = reason.slice(0, firstSeparator);
+  if (method === 'rss' || method === 'sitemap') {
+    return reason.slice(firstSeparator + 1);
+  }
+  return reason;
 }
 
 function percent(numerator: number, denominator: number): string {
