@@ -1227,17 +1227,19 @@ async function runOnce(): Promise<void> {
   const allOutlets = loadAtlasOutlets();
   const { selected, nextOffset, offset } = pickOutletChunk(allOutlets, OUTLET_CHUNK_SIZE);
   const endpointLookup = new Map<string, EndpointRun>();
-  const endpoints: EndpointRun[] = selected.flatMap((outlet) => {
+  const allEndpoints: EndpointRun[] = selected.flatMap((outlet) => {
     const runs: EndpointRun[] = [];
     if (outlet.rssUrl) runs.push({ outlet, method: 'rss', url: outlet.rssUrl });
     if (outlet.sitemapUrl) runs.push({ outlet, method: 'sitemap', url: outlet.sitemapUrl });
     return runs;
   });
-  for (const endpoint of endpoints) {
+  for (const endpoint of allEndpoints) {
     const endpointKey = `${endpoint.outlet.id}:${endpoint.method}`;
     endpointLookup.set(endpointKey, endpoint);
   }
   const dedupedEndpoints = [...endpointLookup.values()];
+  const rssEndpoints = dedupedEndpoints.filter((endpoint) => endpoint.method === 'rss');
+  const allSitemapEndpoints = dedupedEndpoints.filter((endpoint) => endpoint.method === 'sitemap');
   const watermarks = await readIngestionFeedWatermarks(
     dedupedEndpoints.map((endpoint) => ({
       outletId: endpoint.outlet.id,
@@ -1246,8 +1248,7 @@ async function runOnce(): Promise<void> {
   );
 
   const sitemapPolicyStatesByOutlet = await readSitemapPolicyStates(
-    dedupedEndpoints
-      .filter((endpoint) => endpoint.method === 'sitemap')
+    allSitemapEndpoints
       .map((endpoint) => ({
         outletId: endpoint.outlet.id,
         source: endpoint.outlet.name,
@@ -1299,31 +1300,24 @@ async function runOnce(): Promise<void> {
     sitemapPolicyDisabled: 0
   };
 
-  const results = await runWithConcurrency<EndpointRun, EndpointResult>(dedupedEndpoints, FETCH_CONCURRENCY, async (endpoint) => {
-    const endpointMethod: 'rss' | 'sitemap' = endpoint.method;
+  const rssResults = await runWithConcurrency<EndpointRun, EndpointResult>(rssEndpoints, FETCH_CONCURRENCY, async (endpoint) => {
     const endpointKey = `${endpoint.outlet.id}:${endpoint.method}`;
-    const policyState = endpoint.method === 'sitemap' ? sitemapPolicyStatesByOutlet.get(endpoint.outlet.id) : undefined;
-    const disableSitemapFallbackForOutlet = disabledSitemapOutletIds.has(endpoint.outlet.id);
     if (failingKeys.has(endpointKey)) {
-      if (endpointMethod === 'sitemap') {
-        fallbackSummary.sitemapBackoffSkipped += 1;
-      } else {
-        fallbackSummary.rssBackoffSkipped += 1;
-      }
+      fallbackSummary.rssBackoffSkipped += 1;
       return {
         items: [],
         run: {
           outletId: endpoint.outlet.id,
           source: endpoint.outlet.name,
           country: normalizeCountryName(endpoint.outlet.country),
-          method: endpointMethod,
+          method: 'rss',
           attempted: false,
           circuitOpen: true,
           ok: false,
           statusCode: null,
           parsedCount: 0,
           fetchedCount: 0,
-          parsedLimit: endpoint.method === 'rss' ? RSS_ITEM_LIMIT : SITEMAP_ITEM_LIMIT,
+          parsedLimit: RSS_ITEM_LIMIT,
           sampleCapped: false,
           recent24h: 0,
           missingTitleCount: 0,
@@ -1335,16 +1329,63 @@ async function runOnce(): Promise<void> {
         fallbackUsed: 'none',
       };
     }
-    if (endpointMethod === 'sitemap' && isSitemapPolicyBlocked(policyState, nowMs)) {
+    const result = await fetchRss(endpoint.outlet, {
+      allowSitemapFallback: false,
+      fallbackPublishedAt,
+    });
+    const lastPublicationAt = watermarks.get(endpointKey) || null;
+    return { ...result, items: filterItemsByWatermark(result.items, lastPublicationAt) };
+  });
+
+  const failedRssResultByOutlet = new Map<string, EndpointResult>();
+  for (const result of rssResults) {
+    if (result.run.method !== 'rss' || !result.run.attempted || result.run.ok) continue;
+    failedRssResultByOutlet.set(result.run.outletId, result);
+  }
+
+  const sitemapEndpoints = allSitemapEndpoints.filter((endpoint) => failedRssResultByOutlet.has(endpoint.outlet.id));
+
+  const sitemapResults = await runWithConcurrency<EndpointRun, EndpointResult>(sitemapEndpoints, FETCH_CONCURRENCY, async (endpoint) => {
+    const endpointKey = `${endpoint.outlet.id}:${endpoint.method}`;
+    if (failingKeys.has(endpointKey)) {
+      fallbackSummary.sitemapBackoffSkipped += 1;
+      return {
+        items: [],
+        run: {
+          method: 'sitemap',
+          outletId: endpoint.outlet.id,
+          source: endpoint.outlet.name,
+          country: normalizeCountryName(endpoint.outlet.country),
+          attempted: false,
+          circuitOpen: true,
+          ok: false,
+          statusCode: null,
+          parsedCount: 0,
+          fetchedCount: 0,
+          parsedLimit: SITEMAP_ITEM_LIMIT,
+          sampleCapped: false,
+          recent24h: 0,
+          missingTitleCount: 0,
+          missingSummaryCount: 0,
+          missingPublishedAtCount: 0,
+          missingLinkCount: 0,
+          error: 'cooldown_high_fail',
+        },
+        fallbackUsed: 'none',
+      };
+    }
+    const policyState = sitemapPolicyStatesByOutlet.get(endpoint.outlet.id);
+    const disableSitemapFallbackForOutlet = disabledSitemapOutletIds.has(endpoint.outlet.id);
+    if (isSitemapPolicyBlocked(policyState, nowMs)) {
       fallbackSummary.sitemapPolicyDisabled += 1;
       const reason = policyState?.reason || policyState?.status || 'disabled';
       return {
         items: [],
         run: {
+          method: 'sitemap',
           outletId: endpoint.outlet.id,
           source: endpoint.outlet.name,
           country: normalizeCountryName(endpoint.outlet.country),
-          method: 'sitemap',
           attempted: false,
           circuitOpen: true,
           ok: false,
@@ -1363,23 +1404,14 @@ async function runOnce(): Promise<void> {
         fallbackUsed: 'none',
       };
     }
-    if (endpointMethod === 'rss') {
-      const result = await fetchRss(endpoint.outlet, {
-        allowSitemapFallback: !disableSitemapFallbackForOutlet,
-        fallbackPublishedAt,
-      });
-      const lastPublicationAt = watermarks.get(endpointKey) || null;
-      return { ...result, items: filterItemsByWatermark(result.items, lastPublicationAt) };
-    }
-    if (endpointMethod === 'sitemap' && disableSitemapFallbackForOutlet) {
-      fallbackSummary.sitemapPolicyDisabled += 1;
+    if (disableSitemapFallbackForOutlet) {
       return {
         items: [],
         run: {
+          method: 'sitemap',
           outletId: endpoint.outlet.id,
           source: endpoint.outlet.name,
           country: normalizeCountryName(endpoint.outlet.country),
-          method: 'sitemap',
           attempted: false,
           circuitOpen: true,
           ok: false,
@@ -1393,29 +1425,34 @@ async function runOnce(): Promise<void> {
           missingSummaryCount: 0,
           missingPublishedAtCount: 0,
           missingLinkCount: 0,
-          error: 'sitemap_disabled_by_policy',
+          error: 'sitemap_fallback_disabled',
         },
         fallbackUsed: 'none',
       };
     }
     const result = await fetchSitemap(endpoint.outlet, fallbackPublishedAt);
     const lastPublicationAt = watermarks.get(endpointKey) || null;
+    if (!result.run.attempted) {
+      return { ...result, items: [] };
+    }
     return { ...result, items: filterItemsByWatermark(result.items, lastPublicationAt) };
   });
 
-  const diagnostics = results.map((r) => r.run);
-  for (const result of results) {
-    if (result.run.method === 'rss') {
-      if (result.fallbackUsed === 'sitemap') {
-        fallbackSummary.rssSitemapFallbackAttempts += 1;
-        if (result.run.ok) {
-          fallbackSummary.rssSitemapFallbackSuccess += 1;
-        }
-      } else if (result.run.error === 'sitemap_fallback_disabled') {
-        fallbackSummary.rssSitemapFallbackSkipped += 1;
-      }
+  const results = [...rssResults, ...sitemapResults];
+
+  for (const result of sitemapResults) {
+    const rssFailed = failedRssResultByOutlet.get(result.run.outletId);
+    if (!rssFailed?.run.attempted || rssFailed.run.ok) continue;
+    fallbackSummary.rssSitemapFallbackAttempts += 1;
+    if (result.run.ok) {
+      fallbackSummary.rssSitemapFallbackSuccess += 1;
+    }
+    if (result.run.error === 'sitemap_fallback_disabled') {
+      fallbackSummary.rssSitemapFallbackSkipped += 1;
     }
   }
+
+  const diagnostics = results.map((r) => r.run);
 
   const methodStats = diagnostics.reduce(
     (acc, diagnostic) => {
