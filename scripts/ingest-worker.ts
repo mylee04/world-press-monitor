@@ -1425,7 +1425,7 @@ async function runOnce(): Promise<void> {
           missingSummaryCount: 0,
           missingPublishedAtCount: 0,
           missingLinkCount: 0,
-          error: 'sitemap_fallback_disabled',
+          error: 'sitemap_disabled_by_policy',
         },
         fallbackUsed: 'none',
       };
@@ -1447,7 +1447,7 @@ async function runOnce(): Promise<void> {
     if (result.run.ok) {
       fallbackSummary.rssSitemapFallbackSuccess += 1;
     }
-    if (result.run.error === 'sitemap_fallback_disabled') {
+    if (result.run.error === 'sitemap_fallback_disabled' || result.run.error === 'sitemap_disabled_by_policy') {
       fallbackSummary.rssSitemapFallbackSkipped += 1;
     }
   }
