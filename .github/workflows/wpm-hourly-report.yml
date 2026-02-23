@@ -1,14 +1,19 @@
 name: WPM Hourly Report
 
 on:
-  schedule:
-    # Every hour at minute 30 (UTC for GitHub Actions).
-    - cron: "30 * * * *"
+  workflow_run:
+    workflows:
+      - WPM Hourly Ingest
+    branches:
+      - develop
+    types:
+      - completed
   workflow_dispatch:
 
 jobs:
   discord:
     name: Discord Hourly Report
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion != 'cancelled'
     concurrency:
       group: wpm-hourly-discord
       cancel-in-progress: true
