@@ -16,18 +16,6 @@
           "url": "https://www.nhk.or.jp/rss/news/cat3.xml"
         },
         {
-          "name": "Mainichi Shimbun (Mainichi Flash)",
-          "url": "https://mainichi.jp/rss/etc/mainichi-flash.rss"
-        },
-        {
-          "name": "Asahi Shimbun (Headlines)",
-          "url": "https://www.asahi.com/rss/asahi/newsheadlines.rdf"
-        },
-        {
-          "name": "Nikkan Kogyo (Industrial Manufacturing News)",
-          "url": "https://www.nikkan.co.jp/rss/news"
-        },
-        {
           "name": "Livedoor News (General Top Stories)",
           "url": "https://news.livedoor.com/topics/rss/top.xml"
         },
@@ -58,10 +46,6 @@
         {
           "name": "Toyo Keizai (Economy/Management)",
           "url": "https://toyokeizai.net/list/feed/rss"
-        },
-        {
-          "name": "Minkabu (Stocks/Investing)",
-          "url": "https://minkabu.jp/news/feed"
         }
       ]
     },
@@ -94,10 +78,6 @@
           "url": "https://www.wprost.pl/rss"
         },
         {
-          "name": "Rzeczpospolita (Economy/Politics)",
-          "url": "https://www.rp.pl/rss/all"
-        },
-        {
           "name": "Gazeta.pl (Top Portal News)",
           "url": "https://rss.gazeta.pl/pub/rss/wiadomosci.xml"
         },
@@ -116,10 +96,6 @@
       "code": "AT",
       "feeds": [
         {
-          "name": "ORF News",
-          "url": "https://rss.orf.at/news.xml"
-        },
-        {
           "name": "ORF Wien (Vienna Local/Business)",
           "url": "https://rss.orf.at/wien.xml"
         },
@@ -132,10 +108,6 @@
           "url": "https://www.derstandard.at/rss/wirtschaft"
         },
         {
-          "name": "Die Presse (Political Headlines)",
-          "url": "https://www.diepresse.com/rss/Home"
-        },
-        {
           "name": "Die Presse (Economy)",
           "url": "https://www.diepresse.com/rss/Wirtschaft"
         },
@@ -146,14 +118,6 @@
         {
           "name": "Kleine Zeitung (Top Regional Daily)",
           "url": "https://www.kleinezeitung.at/rss/home"
-        },
-        {
-          "name": "Finanzen.at (Stocks/Finance)",
-          "url": "https://www.finanzen.at/rss/news"
-        },
-        {
-          "name": "Trend.at (Business Magazine)",
-          "url": "https://www.trend.at/xml/rss"
         }
       ]
     },
@@ -182,24 +146,8 @@
           "url": "https://services.dn.no/api/feed/rss/"
         },
         {
-          "name": "Finansavisen (Finance/Investment)",
-          "url": "https://finansavisen.no/rss"
-        },
-        {
-          "name": "Teknisk Ukeblad (Tech/Energy/Marine)",
-          "url": "https://www.tu.no/feed"
-        },
-        {
-          "name": "Nettavisen (Digital General News)",
-          "url": "https://www.nettavisen.no/service/rich-rss"
-        },
-        {
           "name": "Dagbladet (Major Daily)",
           "url": "https://www.dagbladet.no/?lab_viewport=rss"
-        },
-        {
-          "name": "E24 Energi (Energy/Marine Industry)",
-          "url": "https://e24.no/energi/rss"
         }
       ]
     },
@@ -207,10 +155,6 @@
       "name": "Thailand",
       "code": "TH",
       "feeds": [
-        {
-          "name": "Thairath (Top News)",
-          "url": "https://www.thairath.co.th/rss/news.xml"
-        },
         {
           "name": "Matichon (Leading Political Daily)",
           "url": "https://www.matichon.co.th/feed"
@@ -232,20 +176,8 @@
           "url": "https://rssfeeds.sanook.com/rss/feeds/sanook/news.economic.xml"
         },
         {
-          "name": "Bangkok Biz News (Economy)",
-          "url": "https://www.bangkokbiznews.com/rss/feed"
-        },
-        {
-          "name": "Manager Online (Politics/Society)",
-          "url": "https://mgronline.com/rss"
-        },
-        {
           "name": "Thai PBS (Public Broadcaster)",
           "url": "https://news.thaipbs.or.th/rss/news"
-        },
-        {
-          "name": "The Standard (Top Media)",
-          "url": "https://thestandard.co/feed/"
         }
       ]
     }

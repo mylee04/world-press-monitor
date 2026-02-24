@@ -60,6 +60,7 @@
     "db:cleanup-legacy-tables:all": "bun scripts/purge-legacy-db-tables.ts --all",
     "db:cleanup-legacy-tables:apply": "bun scripts/purge-legacy-db-tables.ts --apply",
     "db:cleanup-legacy-tables:apply:all": "bun scripts/purge-legacy-db-tables.ts --all --apply",
+    "git:check-env-staged": "bun scripts/check-env-staged.ts",
     "security:audit": "bun run scripts/security-audit.ts",
     "security:audit:ci": "bun run scripts/security-audit.ts -- --production --ci",
     "changelog:append": "bun scripts/changelog-append.ts",

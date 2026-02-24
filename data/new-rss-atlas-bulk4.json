@@ -1,0 +1,114 @@
+{
+  "version": 1,
+  "generatedAt": "2026-03-01T00:00:00.000Z",
+  "lastChecked": "03/01/2026",
+  "countries": [
+    {
+      "name": "Switzerland",
+      "code": "CH",
+      "feeds": [
+        { "name": "20 Minutes Schweiz", "url": "https://www.20min.ch/rss/schweiz" },
+        { "name": "Blick", "url": "https://www.blick.ch/rss.xml" },
+        { "name": "SRF News", "url": "https://www.srf.ch/news/bnf/rss/1890" },
+        { "name": "NZZ", "url": "https://www.nzz.ch/recent.rss" },
+        { "name": "Tages-Anzeiger", "url": "https://www.tagesanzeiger.ch/rss.xml" },
+        { "name": "Le Matin", "url": "https://www.lematin.ch/rss.xml" },
+        { "name": "Tribune de Geneve", "url": "https://www.tdg.ch/rss.xml" },
+        { "name": "RTS Info", "url": "https://www.rts.ch/info/rss" },
+        { "name": "Watson.ch", "url": "https://www.watson.ch/api/rss" }
+      ]
+    },
+    {
+      "name": "Uruguay",
+      "code": "UY",
+      "feeds": [
+        { "name": "Montevideo Portal", "url": "https://www.montevideo.com.uy/anxml.aspx?59" },
+        { "name": "El Observador", "url": "https://www.elobservador.com.uy/rss/pages/ultimo-momento.xml" },
+        { "name": "Subrayado", "url": "https://www.subrayado.com.uy/rss/pages/ultimas-noticias.xml" },
+        { "name": "Teledoce", "url": "https://www.teledoce.com/feed/" },
+        { "name": "La Diaria", "url": "https://ladiaria.com.uy/feeds/articles/" },
+        { "name": "La Republica", "url": "https://www.republica.com.uy/feed/" },
+        { "name": "Caras y Caretas", "url": "https://www.carasycaretas.com.uy/feed" },
+        { "name": "El Pais Uruguay", "url": "https://www.elpais.com.uy/rss/ultimas-noticias" }
+      ]
+    },
+    {
+      "name": "Dominican Republic",
+      "code": "DO",
+      "feeds": [
+        { "name": "Listin Diario", "url": "https://listindiario.com/rss/portada.xml" },
+        { "name": "Diario Libre", "url": "https://www.diariolibre.com/rss/portada.xml" },
+        { "name": "El Nacional", "url": "https://elnacional.com.do/feed/" },
+        { "name": "Hoy", "url": "https://hoy.com.do/feed/" },
+        { "name": "El Nuevo Diario", "url": "https://elnuevodiario.com.do/feed/" },
+        { "name": "Al Momento", "url": "https://almomento.net/feed/" },
+        { "name": "Noticias SIN", "url": "https://noticiassin.com/feed/" },
+        { "name": "Acento", "url": "https://acento.com.do/feed/" },
+        { "name": "El Caribe", "url": "https://www.elcaribe.com.do/feed/" }
+      ]
+    },
+    {
+      "name": "Austria",
+      "code": "AT",
+      "feeds": [
+        { "name": "Kronen Zeitung", "url": "https://www.krone.at/rss.xml" },
+        { "name": "Heute", "url": "https://www.heute.at/rss/news" },
+        { "name": "OE24", "url": "https://www.oe24.at/news/rss" },
+        { "name": "ORF News", "url": "https://rss.orf.at/news.xml" },
+        { "name": "Der Standard", "url": "https://www.derstandard.at/rss" },
+        { "name": "Kurier", "url": "https://kurier.at/xml/rss" },
+        { "name": "Kleine Zeitung", "url": "https://www.kleinezeitung.at/rss/home" },
+        { "name": "OR Nachrichten", "url": "https://www.nachrichten.at/news/rss.xml" },
+        { "name": "Vienna Online", "url": "https://www.vienna.at/news/feed" }
+      ]
+    },
+    {
+      "name": "Norway",
+      "code": "NO",
+      "feeds": [
+        { "name": "NRK Siste", "url": "https://www.nrk.no/nyheter/siste.rss" },
+        { "name": "VG", "url": "https://www.vg.no/rss/feed" },
+        { "name": "Dagbladet", "url": "https://www.dagbladet.no/?lab_viewport=rss" },
+        { "name": "Aftenposten", "url": "https://www.aftenposten.no/rss/" },
+        { "name": "TV2 Nyheter", "url": "https://www.tv2.no/rss/nyheter" },
+        { "name": "Nettavisen", "url": "https://www.nettavisen.no/service/rich-rss" },
+        { "name": "E24", "url": "https://e24.no/rss" },
+        { "name": "Dagsavisen", "url": "https://www.dagsavisen.no/rss" },
+        { "name": "Adresseavisen", "url": "https://www.adressa.no/rss/" }
+      ]
+    },
+    {
+      "name": "Japan",
+      "code": "JP",
+      "feeds": [
+        { "name": "Sankei Shimbun Flash", "url": "https://www.sankei.com/rss/news/flash.xml" },
+        { "name": "Sankei Economy", "url": "https://www.sankei.com/rss/news/economy.xml" },
+        { "name": "Tokyo Shimbun", "url": "https://www.tokyo-np.co.jp/rss/news" },
+        { "name": "ASCII.jp Mac News", "url": "https://ascii.jp/mac/rss.xml" },
+        { "name": "Mainichi Shimbun Flash", "url": "https://mainichi.jp/rss/etc/mainichi-flash.rss" },
+        { "name": "Asahi Shimbun Headlines", "url": "https://www.asahi.com/rss/asahi/newsheadlines.rdf" },
+        { "name": "Nikkan Kogyo", "url": "https://www.nikkan.co.jp/rss/news" },
+        { "name": "Livedoor News", "url": "https://news.livedoor.com/topics/rss/top.xml" },
+        { "name": "Livedoor Economy", "url": "https://news.livedoor.com/topics/rss/eco.xml" },
+        { "name": "Hatena Bookmark Economy", "url": "https://b.hatena.ne.jp/hotentry/economics.rss" },
+        { "name": "Hatena Bookmark IT", "url": "https://b.hatena.ne.jp/hotentry/it.rss" },
+        { "name": "Hatena Bookmark Social", "url": "https://b.hatena.ne.jp/hotentry/social.rss" },
+        { "name": "PR TIMES Business", "url": "https://prtimes.jp/business.rdf" },
+        { "name": "PR TIMES Technology", "url": "https://prtimes.jp/technology.rdf" },
+        { "name": "AFP BB News", "url": "https://feeds.afpbb.com/afpbb/news/all" },
+        { "name": "Toyo Keizai Online", "url": "https://toyokeizai.net/list/feed/rss" },
+        { "name": "ITmedia Business", "url": "https://rss.itmedia.co.jp/rss/2.0/business.xml" },
+        { "name": "ITmedia NEWS", "url": "https://rss.itmedia.co.jp/rss/2.0/news_bursts.xml" },
+        { "name": "Impress Watch", "url": "https://www.watch.impress.co.jp/data/rss/1.0/ipw/feed.rdf" },
+        { "name": "GIGAZINE", "url": "https://gigazine.net/news/rss_2.0/" },
+        { "name": "Goo News Politics", "url": "https://news.goo.ne.jp/rss/topstories/politics/index.rdf" },
+        { "name": "Goo News Business", "url": "https://news.goo.ne.jp/rss/topstories/business/index.rdf" },
+        { "name": "Newsweek Japan", "url": "https://www.newsweekjapan.jp/headlines.rss" },
+        { "name": "Zenn", "url": "https://zenn.dev/feed" },
+        { "name": "Cnet Japan", "url": "https://feeds.japan.cnet.com/rss/cnet/all.rdf" },
+        { "name": "JBpress", "url": "https://jbpress.ismedia.jp/list/feed/rss" },
+        { "name": "Business Insider Japan", "url": "https://www.businessinsider.jp/feed/index.xml" }
+      ]
+    }
+  ]
+}

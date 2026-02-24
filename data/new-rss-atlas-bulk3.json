@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "generatedAt": "2026-03-01T00:00:00.000Z",
+  "lastChecked": "03/01/2026",
+  "countries": [
+    {
+      "name": "China",
+      "code": "CN",
+      "feeds": [
+        { "name": "Sina Finance (Top Financial Portal)", "url": "https://rss.sina.com.cn/roll/finance/hot_roll.xml" },
+        { "name": "Sina News (General Breaking News)", "url": "https://rss.sina.com.cn/news/world/focus15.xml" },
+        { "name": "HK01 (Hong Kong Digital Media Top Feed)", "url": "https://www.hk01.com/rss" },
+        { "name": "Ming Pao (Hong Kong Flagship Newspaper)", "url": "https://news.mingpao.com/rss/pns/s00001.xml" },
+        { "name": "HKET (Hong Kong Economic Times)", "url": "https://www.hket.com/rss/hongkong" },
+        { "name": "Tencent Tech (Tencent Technology News)", "url": "https://new.qq.com/ch/tech/" }
+      ]
+    },
+    {
+      "name": "Japan",
+      "code": "JP",
+      "feeds": [
+        { "name": "Sankei Shimbun Flash News", "url": "https://www.sankei.com/rss/news/flash.xml" },
+        { "name": "Sankei Economy", "url": "https://www.sankei.com/rss/news/economy.xml" },
+        { "name": "Tokyo Shimbun General News", "url": "https://www.tokyo-np.co.jp/rss/news" },
+        { "name": "ASCII.jp Mac Tech", "url": "https://ascii.jp/mac/rss.xml" },
+        { "name": "Business Insider Japan", "url": "https://www.businessinsider.jp/feed/index.xml" },
+        { "name": "CNET Japan All", "url": "https://feeds.japan.cnet.com/rss/cnet/all.rdf" }
+      ]
+    },
+    {
+      "name": "Australia",
+      "code": "AU",
+      "feeds": [
+        { "name": "AFR (Financial Review)", "url": "https://www.afr.com/rss" },
+        { "name": "News.com.au National Top News", "url": "https://www.news.com.au/content-feeds/latest-news-national/" },
+        { "name": "News.com.au Finance", "url": "https://www.news.com.au/content-feeds/latest-news-finance/" },
+        { "name": "ABC News Australia", "url": "https://www.abc.net.au/news/feed/51120/rss.xml" },
+        { "name": "Sydney Morning Herald", "url": "https://www.smh.com.au/rss/feed.xml" },
+        { "name": "The Age", "url": "https://www.theage.com.au/rss/feed.xml" }
+      ]
+    },
+    {
+      "name": "Chile",
+      "code": "CL",
+      "feeds": [
+        { "name": "Diario Financiero", "url": "https://www.df.cl/noticias/site/list/port/rss.xml" },
+        { "name": "BioBioChile", "url": "https://www.biobiochile.cl/feed" },
+        { "name": "Cooperativa", "url": "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_5___1.xml" },
+        { "name": "La Tercera Main", "url": "https://www.latercera.com/arc/outboundfeeds/rss/?outputType=xml" },
+        { "name": "La Tercera Business", "url": "https://www.latercera.com/arc/outboundfeeds/rss/?outputType=xml&rotation=pulso" },
+        { "name": "Diario Concepcion", "url": "https://www.diarioconcepcion.cl/feed" }
+      ]
+    },
+    {
+      "name": "Thailand",
+      "code": "TH",
+      "feeds": [
+        { "name": "Thansettakij", "url": "https://www.thansettakij.com/rss/feed" },
+        { "name": "Bangkok Insight", "url": "https://www.thebangkokinsight.com/feed/" },
+        { "name": "Nation TV", "url": "https://www.nationtv.tv/rss/feed" },
+        { "name": "Post Today", "url": "https://www.posttoday.com/rss/feed" },
+        { "name": "MCOT Economy", "url": "https://tna.mcot.net/category/economy/feed" }
+      ]
+    }
+  ]
+}

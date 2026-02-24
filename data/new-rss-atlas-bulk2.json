@@ -1,0 +1,113 @@
+{
+  "version": 1,
+  "generatedAt": "2026-02-25T00:00:00.000Z",
+  "lastChecked": "02/25/2026",
+  "countries": [
+    {
+      "name": "Brazil",
+      "code": "BR",
+      "feeds": [
+        { "name": "G1 Globo (General Top Portal)", "url": "https://g1.globo.com/rss/g1/" },
+        { "name": "G1 Economia (Economy)", "url": "https://g1.globo.com/rss/g1/economia/" },
+        { "name": "G1 Política (Politics)", "url": "https://g1.globo.com/rss/g1/politica/" },
+        { "name": "UOL Notícias (Breaking and Top Stories)", "url": "https://rss.uol.com.br/feed/noticias.xml" },
+        { "name": "UOL Economia (Portal Economy)", "url": "https://rss.uol.com.br/feed/economia.xml" },
+        { "name": "Folha de S.Paulo (Market)", "url": "https://feeds.folha.uol.com.br/mercado/rss091.xml" },
+        { "name": "Folha de S.Paulo (Politics/Power)", "url": "https://feeds.folha.uol.com.br/poder/rss091.xml" },
+        { "name": "Estadão (Mainstream Daily)", "url": "https://www.estadao.com.br/rss/ultimas" },
+        { "name": "InfoMoney (Stocks and Finance)", "url": "https://www.infomoney.com.br/feed/" },
+        { "name": "Exame (Business/Economy Magazine)", "url": "https://exame.com/feed/" },
+        { "name": "Valor Econômico (Financial Daily)", "url": "https://valor.globo.com/rss/valor" },
+        { "name": "CNN Brasil (Business)", "url": "https://www.cnnbrasil.com.br/business/feed/" },
+        { "name": "CartaCapital (Investigative/Analysis)", "url": "https://www.cartacapital.com.br/feed/" },
+        { "name": "Poder360 (Politics/Policy)", "url": "https://www.poder360.com.br/feed/" },
+        { "name": "Correio Braziliense (Political Coverage)", "url": "https://www.correiobraziliense.com.br/rss/noticia/politica/rss.xml" }
+      ]
+    },
+    {
+      "name": "Indonesia",
+      "code": "ID",
+      "feeds": [
+        { "name": "Kompas (Mainstream Daily)", "url": "https://sindikasi.kompas.com/xml/nasional" },
+        { "name": "Kompas Ekonomi (Economy)", "url": "https://sindikasi.kompas.com/xml/ekonomi" },
+        { "name": "Detikcom (Top Breaking Portal)", "url": "https://laporan.detik.com/rss/detiknews.xml" },
+        { "name": "Detik Finance (Finance and Economy)", "url": "https://laporan.detik.com/rss/detikfinance.xml" },
+        { "name": "CNBC Indonesia (Business News)", "url": "https://www.cnbcindonesia.com/news/rss" },
+        { "name": "CNBC Indonesia (Market/Stocks)", "url": "https://www.cnbcindonesia.com/market/rss" },
+        { "name": "Bisnis Indonesia (Business/Industry)", "url": "https://www.bisnis.com/rss" },
+        { "name": "Kontan (Investment/Finance)", "url": "https://www.kontan.co.id/rss" },
+        { "name": "Tempo.co (Politics and Investigations)", "url": "https://tempo.co/rss" },
+        { "name": "Liputan6 (General Portal)", "url": "https://www.liputan6.com/rss" },
+        { "name": "Suara (Independent News)", "url": "https://www.suara.com/rss" },
+        { "name": "Merdeka (Online News)", "url": "https://www.merdeka.com/feed" },
+        { "name": "Viva.co.id (General Breaking)", "url": "https://www.viva.co.id/rss" },
+        { "name": "Antara News Ekonomi (State Feed - Economy)", "url": "https://www.antaranews.com/rss/ekonomi.xml" },
+        { "name": "Republika Ekonomi (Business Economy)", "url": "https://republika.co.id/rss/ekonomi" }
+      ]
+    },
+    {
+      "name": "Turkey",
+      "code": "TR",
+      "feeds": [
+        { "name": "Hürriyet Ekonomi (Major Economy)", "url": "https://www.hurriyet.com.tr/rss/ekonomi" },
+        { "name": "Sabah Ekonomi (Government-aligned Economy)", "url": "https://www.sabah.com.tr/rss/ekonomi.xml" },
+        { "name": "Bloomberg HT (Economy and Finance)", "url": "https://www.bloomberght.com/rss" },
+        { "name": "Dünya (Economy Specialist)", "url": "https://www.dunya.com/rss" },
+        { "name": "NTV (Main Broadcaster)", "url": "https://www.ntv.com.tr/rss" },
+        { "name": "NTV Ekonomi (Economy)", "url": "https://www.ntv.com.tr/ekonomi.rss" },
+        { "name": "Sözcü (National Daily)", "url": "https://www.sozcu.com.tr/rss" },
+        { "name": "Sözcü Ekonomi (Economy)", "url": "https://www.sozcu.com.tr/kategori/ekonomi/rss" },
+        { "name": "Habertürk Ekonomi (Portal Economy)", "url": "https://www.haberturk.com/rss/ekonomi.xml" },
+        { "name": "TRT Haber (Public Broadcaster Breaking)", "url": "https://www.trthaber.com/sondakika.rss" },
+        { "name": "Milliyet (Major Daily)", "url": "https://www.milliyet.com.tr/rss/rssnew/sondakikarss.xml" },
+        { "name": "Karar (Politics and Analysis)", "url": "https://www.karar.com/rss" },
+        { "name": "Yeni Şafak (Conservative Daily)", "url": "https://www.yenisafak.com/rss" },
+        { "name": "Ensonhaber (General Breaking)", "url": "https://www.ensonhaber.com/rss/ensonhaber.xml" },
+        { "name": "T24 (Independent Digital Media)", "url": "https://t24.com.tr/rss" },
+        { "name": "Webtekno (Tech/IT)", "url": "https://www.webtekno.com/rss.xml" }
+      ]
+    },
+    {
+      "name": "Mexico",
+      "code": "MX",
+      "feeds": [
+        { "name": "Milenio (National Breaking)", "url": "https://www.milenio.com/rss" },
+        { "name": "Milenio Negocios (Business)", "url": "https://www.milenio.com/negocios/rss" },
+        { "name": "Excelsior (Mainstream Daily)", "url": "https://www.excelsior.com.mx/rss.xml" },
+        { "name": "Aristegui Noticias (Political Investigation)", "url": "https://aristeguinoticias.com/feed/" },
+        { "name": "Forbes México (Business/Management)", "url": "https://www.forbes.com.mx/feed/" },
+        { "name": "El Universal (General National)", "url": "https://www.eluniversal.com.mx/rss.xml" },
+        { "name": "El Universal Cartera (Economy/Finance)", "url": "https://www.eluniversal.com.mx/cartera/rss.xml" },
+        { "name": "La Jornada (Progressive Daily)", "url": "https://www.jornada.com.mx/rss/edicion.xml" },
+        { "name": "El Sol de México (Domestic Breaking)", "url": "https://www.elsoldemexico.com.mx/rss.xml" },
+        { "name": "Proceso (Politics and Social)", "url": "https://www.proceso.com.mx/rss/feed.html" },
+        { "name": "Expansión Economía (Economy Specialist)", "url": "https://expansion.mx/rss/economia" },
+        { "name": "Expansión Empresas (Corporate News)", "url": "https://expansion.mx/rss/empresas" },
+        { "name": "Sopitas (Millennial Portal)", "url": "https://www.sopitas.com/feed/" },
+        { "name": "Animal Político (Political Deep Coverage)", "url": "https://www.animalpolitico.com/feed" },
+        { "name": "Xataka México (Tech/IT)", "url": "https://www.xataka.com.mx/feed" }
+      ]
+    },
+    {
+      "name": "Sweden",
+      "code": "SE",
+      "feeds": [
+        { "name": "SVT Nyheter (Public Broadcaster General)", "url": "https://www.svt.se/nyheter/rss.xml" },
+        { "name": "SVT Ekonomi (Economy)", "url": "https://www.svt.se/nyheter/ekonomi/rss.xml" },
+        { "name": "Dagens Industri (Economy #1 Daily)", "url": "https://www.di.se/rss" },
+        { "name": "Aftonbladet (National Daily Headlines)", "url": "https://rss.aftonbladet.se/rss2/small/pages/sections/senastenytt/" },
+        { "name": "Expressen (National Daily)", "url": "https://feeds.expressen.se/nyheter/" },
+        { "name": "Expressen Din Ekonomi (Economy)", "url": "https://feeds.expressen.se/din-ekonomi/" },
+        { "name": "Dagens Nyheter (National Daily)", "url": "https://www.dn.se/nyheter/rss/" },
+        { "name": "Dagens Nyheter Ekonomi (Economy)", "url": "https://www.dn.se/ekonomi/rss/" },
+        { "name": "Göteborgs-Posten (Regional Daily)", "url": "https://www.gp.se/rss" },
+        { "name": "Svenska Dagbladet (Major News)", "url": "https://www.svd.se/?service=rss" },
+        { "name": "Svenska Dagbladet Näringsliv (Business)", "url": "https://www.svd.se/naringsliv/?service=rss" },
+        { "name": "Omni (Swedish News Aggregator)", "url": "https://omni.se/rss" },
+        { "name": "Ny Teknik (Tech and Engineering)", "url": "https://www.nyteknik.se/rss.xml" },
+        { "name": "Breakit (Startups and VC)", "url": "https://www.breakit.se/feed/artiklar" },
+        { "name": "Privata Affärer (Personal Finance/Investing)", "url": "https://www.privataaffarer.se/rss.xml" }
+      ]
+    }
+  ]
+}
