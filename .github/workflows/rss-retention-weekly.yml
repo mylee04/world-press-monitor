@@ -1,10 +1,11 @@
-name: RSS Retention Weekly
+name: RSS Retention Every 3 Days
 
 on:
   schedule:
-    # Weekly at Sunday 00:30 America/Chicago equivalent using UTC cron (06:30 UTC in CST and 07:30 UTC in CDT).
+    # Every 3 days at 00:30 America/Chicago equivalent using UTC cron.
     # GitHub Actions cron itself is UTC-based.
-    - cron: "30 6 * * 0"
+    # Note: this is configured as every 3rd day of the month at 06:30 UTC.
+    - cron: "30 6 */3 * *"
   workflow_dispatch:
 
 permissions:
@@ -28,6 +29,7 @@ jobs:
 
       - name: Run weekly retention cleanup
         env:
+          NEWS_ARTICLES_RETENTION_DAYS: 3
           INGEST_RETENTION_TZ: America/Chicago
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
