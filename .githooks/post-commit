@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+set -eu
+
+ROOT_DIR="$(git rev-parse --show-toplevel)"
+cd "$ROOT_DIR"
+
+if command -v bun >/dev/null 2>&1; then
+  if [ "${SKIP_CHANGELOG_HOOK:-}" = "1" ]; then
+    exit 0
+  fi
+  bun run changelog:append
+fi
+
