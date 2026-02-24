@@ -6,6 +6,16 @@
 
 ## Unreleased
 
+### [f68a61b] changelog: add missed entries for healthz/lockfile fixes
+- Commit: f68a61b4a0061a7c9a51308e7842cc1aeaae4829
+- Date: 2026-02-24 09:22:23 -0600
+- Author: Kevinlee49
+  - Changed files:
+    - M	CHANGELOG.md
+  - Git stat:
+  - CHANGELOG.md | 10 ++++++++++
+  -  1 file changed, 10 insertions(+)
+
 ### [9008c48] changelog: record latest lockfile and /healthz fixes
 - Commit: 9008c482703ba970aebc1fcf80eea9fbb9f6f41a
 - Date: 2026-02-24 09:22:08 -0600
