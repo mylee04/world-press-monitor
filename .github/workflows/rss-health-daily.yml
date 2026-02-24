@@ -32,6 +32,18 @@ jobs:
           RSS_HEALTH_DISCORD_TIMEOUT_MS: ${{ secrets.RSS_HEALTH_DISCORD_TIMEOUT_MS }}
         run: bun run rss:health:daily
 
+      - name: Run RSS stability daily
+        run: bun run ingest:rss-stability:daily --auto-delete-zero
+
+      - name: Prune old ingest artifacts
+        env:
+          NEWS_ARTICLES_RETENTION_DAYS: 5
+          INGEST_OPS_HOURLY_RETENTION_DAYS: 14
+          INGEST_OPS_DAILY_RETENTION_DAYS: 365
+          RSS_HEALTH_RETENTION_DAYS: 14
+          INGEST_RETENTION_TZ: America/Chicago
+        run: bun run ingest:retention
+
       - name: Upload health artifacts
         if: always()
         uses: actions/upload-artifact@v4
@@ -40,6 +52,10 @@ jobs:
           path: |
             audits/readme_rss_health_latest.json
             audits/readme_rss_health_*.json
+            audits/rss_feed_stability_latest.json
+            audits/rss_feed_stability_*.json
+            audits/ingest_retention_latest.json
+            audits/ingest_retention_*.json
             data/rss-catalog.csv
             data/rss-catalog.opml
             README.md

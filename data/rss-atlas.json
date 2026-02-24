@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generatedAt": "2026-02-20T05:20:33.829Z",
-  "lastChecked": "02/19/2026",
+  "generatedAt": "2026-02-23T20:08:12.004Z",
+  "lastChecked": "02/23/2026",
   "countries": [
     {
       "name": "United States",
@@ -732,6 +732,38 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 25
+        },
+        {
+          "name": "Zaobao (realtime)",
+          "url": "https://www.zaobao.com.sg/rss/realtime",
+          "status": null,
+          "checkedDate": "02/23/2026",
+          "valid": null,
+          "row": 26
+        },
+        {
+          "name": "RTHK",
+          "url": "https://rthk.hk/rthk/news/rss/c_expressnews_clocal.xml",
+          "status": null,
+          "checkedDate": "02/23/2026",
+          "valid": null,
+          "row": 27
+        },
+        {
+          "name": "FT Chinese",
+          "url": "http://www.ftchinese.com/rss/feed",
+          "status": null,
+          "checkedDate": "02/23/2026",
+          "valid": null,
+          "row": 28
+        },
+        {
+          "name": "Xinhua",
+          "url": "http://www.xinhuanet.com/politics/news_politics.xml",
+          "status": null,
+          "checkedDate": "02/23/2026",
+          "valid": null,
+          "row": 29
         }
       ]
     },
@@ -1194,6 +1226,90 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 57
+        },
+        {
+          "name": "PR TIMES - Business/Economy",
+          "url": "https://prtimes.jp/business.rdf",
+          "category": "business",
+          "tier": 1,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 58
+        },
+        {
+          "name": "PR TIMES - Technology",
+          "url": "https://prtimes.jp/technology.rdf",
+          "category": "tech",
+          "tier": 2,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 59
+        },
+        {
+          "name": "Goo News (Business)",
+          "url": "https://news.goo.ne.jp/rss/topstories/business/index.rdf",
+          "category": "business",
+          "tier": 2,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 60
+        },
+        {
+          "name": "Goo News (Politics)",
+          "url": "https://news.goo.ne.jp/rss/topstories/politics/index.rdf",
+          "category": "politics",
+          "tier": 2,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 61
+        },
+        {
+          "name": "Newsweek Japan",
+          "url": "https://www.newsweekjapan.jp/headlines.rss",
+          "category": "world",
+          "tier": 2,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 62
+        },
+        {
+          "name": "JBpress (Japan Business Press)",
+          "url": "https://jbpress.ismedia.jp/list/feed/rss",
+          "category": "business",
+          "tier": 1,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 63
+        },
+        {
+          "name": "TechCrunch Japan",
+          "url": "https://jp.techcrunch.com/feed/",
+          "status": null,
+          "checkedDate": "02/23/2026",
+          "valid": null,
+          "row": 64
+        },
+        {
+          "name": "President Online (Business)",
+          "url": "https://president.jp/list/feed/rss",
+          "status": null,
+          "checkedDate": "02/23/2026",
+          "valid": null,
+          "row": 65
+        },
+        {
+          "name": "Zenn (Tech)",
+          "url": "https://zenn.dev/feed",
+          "status": null,
+          "checkedDate": "02/23/2026",
+          "valid": null,
+          "row": 66
         }
       ]
     },
@@ -1568,6 +1684,14 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 47
+        },
+        {
+          "name": "Tagesschau",
+          "url": "https://www.tagesschau.de/xml/rss2/",
+          "status": null,
+          "checkedDate": "02/23/2026",
+          "valid": null,
+          "row": 48
         }
       ]
     },
@@ -2654,6 +2778,80 @@
           "checkedDate": null,
           "valid": null,
           "row": 28
+        },
+        {
+          "name": "CTV News - Top Stories",
+          "url": "https://www.ctvnews.ca/rss/ctvnews-ca-top-stories-public-rss-1.822009",
+          "category": "world",
+          "tier": 1,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 51
+        },
+        {
+          "name": "CTV News - Business",
+          "url": "https://www.ctvnews.ca/rss/business/ctvnews-ca-business-public-rss-1.822283",
+          "category": "business",
+          "tier": 1,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 52
+        },
+        {
+          "name": "Global News - Politics",
+          "url": "https://globalnews.ca/politics/feed/",
+          "category": "politics",
+          "tier": 1,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 53
+        },
+        {
+          "name": "Toronto Star - Politics",
+          "url": "https://www.thestar.com/search/?f=rss&t=article&c=politics&l=50&s=start_time&sd=desc",
+          "category": "politics",
+          "tier": 2,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 54
+        },
+        {
+          "name": "BNN Bloomberg (Canada Biz)",
+          "url": "https://www.bnnbloomberg.ca/business/rss",
+          "category": "business",
+          "tier": 1,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 55
+        },
+        {
+          "name": "CBC News - Business",
+          "url": "https://www.cbc.ca/cmlink/rss-business",
+          "status": null,
+          "checkedDate": "02/23/2026",
+          "valid": null,
+          "row": 56
+        },
+        {
+          "name": "CBC News - World",
+          "url": "https://www.cbc.ca/cmlink/rss-world",
+          "status": null,
+          "checkedDate": "02/23/2026",
+          "valid": null,
+          "row": 57
+        },
+        {
+          "name": "Financial Post (Economy)",
+          "url": "https://financialpost.com/feed",
+          "status": null,
+          "checkedDate": "02/23/2026",
+          "valid": null,
+          "row": 58
         }
       ]
     },
@@ -3764,6 +3962,14 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 50
+        },
+        {
+          "name": "ABC.es",
+          "url": "https://www.abc.es/rss/feeds/abc_ultima.xml",
+          "status": null,
+          "checkedDate": "02/23/2026",
+          "valid": null,
+          "row": 51
         }
       ]
     },
@@ -3818,6 +4024,56 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 30
+        },
+        {
+          "name": "ADN40 (TV Azteca - Economy)",
+          "url": "https://www.adn40.mx/economia/rss",
+          "category": "business",
+          "tier": 2,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 61
+        },
+        {
+          "name": "ADN40 (TV Azteca - Mexico)",
+          "url": "https://www.adn40.mx/mexico/rss",
+          "category": "politics",
+          "tier": 2,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 62
+        },
+        {
+          "name": "El Financiero (Economía)",
+          "url": "https://www.elfinanciero.com.mx/rss/economia",
+          "category": "business",
+          "tier": 1,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 63
+        },
+        {
+          "name": "El Financiero (Mercados)",
+          "url": "https://www.elfinanciero.com.mx/rss/mercados",
+          "category": "finance",
+          "tier": 1,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 64
+        },
+        {
+          "name": "La Jornada - Economía",
+          "url": "https://www.jornada.com.mx/rss/economia.xml",
+          "category": "business",
+          "tier": 2,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 65
         },
         {
           "name": "Aristegui (Main)",
@@ -4614,6 +4870,50 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 51
+        },
+        {
+          "name": "BNR Nieuwsradio (Economie)",
+          "url": "https://www.bnr.nl/rss/economie",
+          "category": "business",
+          "tier": 1,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 52
+        },
+        {
+          "name": "Telegraaf (Financieel)",
+          "url": "https://www.telegraaf.nl/rss/financieel",
+          "category": "finance",
+          "tier": 1,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 53
+        },
+        {
+          "name": "RTL Z (Business)",
+          "url": "https://www.rtlnieuws.nl/economie/rss.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 54
+        },
+        {
+          "name": "Nu.nl",
+          "url": "https://www.nu.nl/rss/Algemeen",
+          "status": null,
+          "checkedDate": "02/23/2026",
+          "valid": null,
+          "row": 55
+        },
+        {
+          "name": "Tweakers",
+          "url": "https://tweakers.net/feeds/nieuws.xml",
+          "status": null,
+          "checkedDate": "02/23/2026",
+          "valid": null,
+          "row": 56
         }
       ]
     },
@@ -4828,6 +5128,46 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 26
+        },
+        {
+          "name": "Swissinfo (Business - EN)",
+          "url": "https://www.swissinfo.ch/eng/business/feed",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 29
+        },
+        {
+          "name": "Finews.ch (Swiss Finance)",
+          "url": "https://www.finews.ch/news/finanzplatz?format=feed&type=rss",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 30
+        },
+        {
+          "name": "20 Minuten (Wirtschaft)",
+          "url": "https://www.20min.ch/rss/wirtschaft",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 31
+        },
+        {
+          "name": "Le Temps",
+          "url": "https://www.letemps.ch/rss",
+          "status": null,
+          "checkedDate": "02/23/2026",
+          "valid": null,
+          "row": 32
+        },
+        {
+          "name": "Finanz und Wirtschaft",
+          "url": "https://www.fuw.ch/feed",
+          "status": null,
+          "checkedDate": "02/23/2026",
+          "valid": null,
+          "row": 33
         }
       ]
     },
@@ -5192,6 +5532,104 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 13
+        },
+        {
+          "name": "Al Arabiya (EN - Business)",
+          "url": "https://english.alarabiya.net/feed/business",
+          "category": "business",
+          "tier": 1,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 14
+        },
+        {
+          "name": "Al Arabiya (EN - Middle East)",
+          "url": "https://english.alarabiya.net/feed/middle-east",
+          "category": "world",
+          "tier": 1,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 15
+        },
+        {
+          "name": "Asharq Business (Bloomberg Arabic)",
+          "url": "https://asharqbusiness.com/feed",
+          "category": "finance",
+          "tier": 1,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 16
+        },
+        {
+          "name": "Gulf Business (Saudi Section)",
+          "url": "https://gulfbusiness.com/region/saudi-arabia/feed/",
+          "category": "business",
+          "tier": 2,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 17
+        },
+        {
+          "name": "Saudi Gazette (Business)",
+          "url": "https://saudigazette.com.sa/rss/3",
+          "category": "business",
+          "tier": 1,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 18
+        },
+        {
+          "name": "Zawya (Middle East Business 1위 - EN)",
+          "url": "https://www.zawya.com/en/rss",
+          "status": null,
+          "checkedDate": "02/23/2026",
+          "valid": null,
+          "row": 22
+        },
+        {
+          "name": "Arab News",
+          "url": "https://www.arabnews.com/rss.xml",
+          "status": null,
+          "checkedDate": "02/23/2026",
+          "valid": null,
+          "row": 23
+        },
+        {
+          "name": "Al Eqtisadiah (Economy - Arabic)",
+          "url": "https://www.aleqt.com/feed",
+          "status": null,
+          "checkedDate": "02/23/2026",
+          "valid": null,
+          "row": 24
+        },
+        {
+          "name": "Saudi Press Agency (Arabic)",
+          "url": "https://www.spa.gov.sa/rss",
+          "status": null,
+          "checkedDate": "02/23/2026",
+          "valid": null,
+          "row": 25
+        },
+        {
+          "name": "Al Riyadh (Main - Arabic)",
+          "url": "https://www.alriyadh.com/rss",
+          "status": null,
+          "checkedDate": "02/23/2026",
+          "valid": null,
+          "row": 26
+        },
+        {
+          "name": "Al Arabiya (Business - Arabic)",
+          "url": "https://www.alarabiya.net/feed/business",
+          "status": null,
+          "checkedDate": "02/23/2026",
+          "valid": null,
+          "row": 27
         }
       ]
     },
@@ -6994,6 +7432,14 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 38
+        },
+        {
+          "name": "Rosario3 - Home",
+          "url": "https://www.rosario3.com/rss/feed.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 39
         }
       ]
     },
@@ -7154,12 +7600,196 @@
           "row": 36
         },
         {
+          "name": "Cooperativa - País",
+          "url": "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_3___1.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 37
+        },
+        {
+          "name": "Cooperativa - País (모바일)",
+          "url": "https://m.cooperativa.cl/noticias/site/tax/port/all/rss_3___1.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 38
+        },
+        {
+          "name": "Cooperativa - Deportes",
+          "url": "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_1___24.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 39
+        },
+        {
+          "name": "Cooperativa - Deportes (모바일)",
+          "url": "https://m.cooperativa.cl/noticias/site/tax/port/all/rss_1___24.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 40
+        },
+        {
+          "name": "Cooperativa - Cine",
+          "url": "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_4_4__1.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 41
+        },
+        {
+          "name": "Cooperativa - Música",
+          "url": "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_4_11__1.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 42
+        },
+        {
+          "name": "Cooperativa - Banco Central (경제)",
+          "url": "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_6_82__1.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 43
+        },
+        {
+          "name": "Cooperativa - Banco Central (모바일)",
+          "url": "https://m.cooperativa.cl/noticias/site/tax/port/all/rss_6_82__1.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 44
+        },
+        {
+          "name": "Cooperativa - Banco Central (모바일 fid_noticia)",
+          "url": "https://m.cooperativa.cl/noticias/site/tax/port/fid_noticia/rss_6_82__1.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 45
+        },
+        {
+          "name": "Cooperativa - Banco Central (오디오)",
+          "url": "https://www.cooperativa.cl/noticias/site/tax/port/fid_audio/rss_6_82__1.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 46
+        },
+        {
+          "name": "Cooperativa - Fútbol",
+          "url": "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_1_30__1.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 47
+        },
+        {
+          "name": "Cooperativa - Universidad de Chile",
+          "url": "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_1_30_332_1.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 48
+        },
+        {
+          "name": "Cooperativa - Copa Davis",
+          "url": "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_1_58_534_1.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 49
+        },
+        {
+          "name": "Cooperativa - Sociedad",
+          "url": "https://www.cooperativa.cl/noticias/site/tax/port/fid_audio/rss_7_136__1.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 50
+        },
+        {
+          "name": "Cooperativa - Genética (Sociedad)",
+          "url": "https://www.cooperativa.cl/noticias/site/tax/port/fid_audio/rss_7_221_1735_1.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 51
+        },
+        {
+          "name": "Cooperativa - Genética (88frases)",
+          "url": "https://88frases.cooperativa.cl/noticias/site/tax/port/fid_audio/rss_7_221_1735_1.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 60
+        },
+        {
+          "name": "Cooperativa - Oftalmología (Sociedad)",
+          "url": "https://88frases.cooperativa.cl/noticias/site/tax/port/fid_audio/rss_7_120_1804_1.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 52
+        },
+        {
+          "name": "Cooperativa - Donald Trump",
+          "url": "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_2_76_2384_1.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 53
+        },
+        {
+          "name": "Cooperativa - Argentina",
+          "url": "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_2_70__1.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 54
+        },
+        {
+          "name": "Cooperativa - Música Chilena",
+          "url": "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_4_11_779_1.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 55
+        },
+        {
+          "name": "Cooperativa - Cine (오디오)",
+          "url": "https://www.cooperativa.cl/noticias/site/tax/port/fid_audio/rss_4_4__1.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 56
+        },
+        {
+          "name": "Cooperativa - Música (오디오)",
+          "url": "https://www.cooperativa.cl/noticias/site/tax/port/fid_audio/rss_4_11__1.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 57
+        },
+        {
+          "name": "Cooperativa - Venezuela (오디오)",
+          "url": "https://www.cooperativa.cl/noticias/site/tax/port/fid_audio/rss_3_81_1474_1.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 58
+        },
+        {
           "name": "Reporte Minero",
           "url": "https://www.reporteminero.cl/feed",
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 37
+          "row": 59
         }
       ]
     },
@@ -7366,6 +7996,30 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 34
+        },
+        {
+          "name": "Acento",
+          "url": "https://acento.com.do/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 35
+        },
+        {
+          "name": "Acento - Author Feed",
+          "url": "https://acento.com.do/author/jcastillo/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 36
+        },
+        {
+          "name": "Noticias SIN",
+          "url": "https://feeds.feedburner.com/noticiassin1",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 37
         }
       ]
     },
@@ -7652,6 +8306,86 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 35
+        },
+        {
+          "name": "Subrayado - Home",
+          "url": "https://www.subrayado.com.uy/rss/pages/home.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 36
+        },
+        {
+          "name": "Subrayado - Sociedad",
+          "url": "https://www.subrayado.com.uy/rss/pages/sociedad.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 37
+        },
+        {
+          "name": "Subrayado - Nacional",
+          "url": "https://www.subrayado.com.uy/rss/pages/nacional.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 38
+        },
+        {
+          "name": "Subrayado - Política",
+          "url": "https://www.subrayado.com.uy/rss/pages/politica.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 39
+        },
+        {
+          "name": "Subrayado - Policiales",
+          "url": "https://www.subrayado.com.uy/rss/pages/policiales.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 40
+        },
+        {
+          "name": "Subrayado - Internacionales",
+          "url": "https://www.subrayado.com.uy/rss/pages/internacionales.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 41
+        },
+        {
+          "name": "Subrayado - Opinión",
+          "url": "https://www.subrayado.com.uy/rss/pages/opinion.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 42
+        },
+        {
+          "name": "Subrayado - Tecnología e Internet",
+          "url": "https://www.subrayado.com.uy/rss/pages/tecnologia-internet.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 43
+        },
+        {
+          "name": "Subrayado - Deportes",
+          "url": "https://www.subrayado.com.uy/rss/pages/deportes.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 44
+        },
+        {
+          "name": "Subrayado - Economía",
+          "url": "https://www.subrayado.com.uy/rss/pages/economia.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 45
         }
       ]
     },

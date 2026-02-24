@@ -113,6 +113,7 @@ type AtlasFeed = {
   name: string;
   url: string | null;
   sitemapUrl?: string;
+  enabled?: boolean;
   // status/check fields are present in atlas but not required for ingestion.
 };
 
@@ -216,8 +217,8 @@ function loadAtlasOutlets(): OutletFeed[] {
             ? feed.sitemapUrl.trim()
             : undefined,
       }))
-        .filter((feed): feed is { name: string; url: string; explicitSitemapUrl: string | undefined } =>
-          feed.url.length > 0
+      .filter((feed): feed is { name: string; url: string; explicitSitemapUrl: string | undefined } =>
+          feed.url.length > 0 && feed.enabled !== false
         )
         .map((feed) => ({
           id: makeOutletId(countryName, feed.name, feed.url),
@@ -261,6 +262,8 @@ function parseSitemapIndex(xml: string): string[] {
 type ParsedSitemapResult = ReturnType<typeof parseSitemapWithStats>;
 
 const ONE_DAY_MS = 24 * 60 * 60 * 1000;
+const INGEST_MAX_ARTICLE_AGE_DAYS = Math.max(1, Math.min(3650, Number.parseInt(process.env.INGEST_MAX_ARTICLE_AGE_DAYS || '365', 10) || 365));
+const INGEST_MAX_ARTICLE_AGE_MS = INGEST_MAX_ARTICLE_AGE_DAYS * ONE_DAY_MS;
 const MAX_CONSECUTIVE_DEFAULT = 0;
 
 type EndpointRunPolicyState = {
@@ -621,6 +624,61 @@ function describeFeedFailure(response: Response, body: string): string {
   return '';
 }
 
+function inferResponseSniffType(response: Response | null, body: string): string {
+  if (!response) return 'fetch_failed';
+  const contentType = normalizeResponseContentType(response);
+  if (contentType.includes('text/html') || contentType.includes('application/xhtml+xml')) {
+    return 'html';
+  }
+  if (contentType.includes('application/json')) {
+    return 'json';
+  }
+  if (
+    contentType.includes('application/rss+xml') ||
+    contentType.includes('application/atom+xml') ||
+    contentType.includes('application/xml') ||
+    contentType.includes('text/xml')
+  ) {
+    return isLikelyXmlPayload(body) ? 'xml' : 'xml_like_non_payload';
+  }
+  if (!body.trim()) return 'empty';
+  if (isLikelyHtmlResponse(response, body)) return 'html';
+  if (isLikelyXmlPayload(body)) return 'xml_like';
+  return 'text';
+}
+
+function inferFailureStage(failureReason: string | undefined): string | undefined {
+  if (!failureReason) return undefined;
+  const reason = failureReason.toLowerCase();
+  if (reason.includes('network_error') || reason.includes('timeout') || reason.includes('aborted') || reason.includes('operation was aborted')) {
+    return 'fetch';
+  }
+  if (reason.startsWith('http_')) {
+    return 'http';
+  }
+  if (reason === 'decode_failed' || reason === 'xml_parse_failed' || reason === 'no_items' || reason === 'empty_body_200' || reason === 'html_returned') {
+    return 'parse';
+  }
+  if (reason === 'sitemap_fallback_disabled' || reason === 'sitemap_disabled_by_policy') {
+    return 'sitemap_policy';
+  }
+  return 'parse';
+}
+
+function latestItemPublishedAt(items: NewsItem[]): string | null {
+  return items.length > 0 ? items[0].publishedAt : null;
+}
+
+function feedResultRunMeta(feedResult: FeedFetchResult) {
+  return {
+    requestedUrl: feedResult.requestedUrl,
+    finalUrl: feedResult.finalUrl,
+    contentType: feedResult.contentType,
+    responseMs: feedResult.responseMs,
+    sniffedType: feedResult.sniffedType,
+  };
+}
+
 function shouldRetryWithSitemap(response: Response, body: string): boolean {
   if (!response.ok) return isFallbackRetryStatus(response.status);
   return isLikelyHtmlResponse(response, body);
@@ -645,6 +703,9 @@ function classifyParsedFeedFailure(params: {
 type FeedFetchResult = {
   requestedUrl: string;
   finalUrl: string;
+  contentType: string;
+  responseMs: number;
+  sniffedType: string;
   shouldUseSitemapFallback: boolean;
   response: Response | null;
   body: string;
@@ -668,38 +729,46 @@ function getFallbackKind(feedResult: FeedFetchResult): FallbackKind {
 
 async function fetchFeedWithFallback(url: string): Promise<FeedFetchResult> {
   const requestedUrl = url;
+  const startMs = Date.now();
 
   try {
-      const primary = await fetchWithRetryFeed(requestedUrl);
-      const primaryBody = await readResponseBody(primary);
-      const primaryFailure = describeFeedFailure(primary, primaryBody.body);
-      const shouldUseSitemapFallback = shouldRetryWithSitemap(primary, primaryBody.body);
+    const primary = await fetchWithRetryFeed(requestedUrl);
+    const primaryBody = await readResponseBody(primary);
+    const primaryFailure = describeFeedFailure(primary, primaryBody.body);
+    const shouldUseSitemapFallback = shouldRetryWithSitemap(primary, primaryBody.body);
+    const responseMs = Date.now() - startMs;
 
-      return {
-        requestedUrl,
-        finalUrl: requestedUrl,
-        shouldUseSitemapFallback,
-        response: primary,
-        body: primaryBody.body,
-        bodyLength: primaryBody.bodyLength,
-        decodeFailed: primaryBody.decodeFailed,
-        failureReason: primaryFailure || undefined,
-        statusCode: primary.status
-      };
-    } catch (error) {
-      const primaryMessage = error instanceof Error ? error.message : String(error);
-      return {
-        requestedUrl,
-        finalUrl: requestedUrl,
-        shouldUseSitemapFallback: true,
-        response: null,
-        body: '',
-        bodyLength: 0,
-        decodeFailed: false,
-        failureReason: `network_error:${primaryMessage}`,
-        statusCode: null
-      };
-    }
+    return {
+      requestedUrl,
+      finalUrl: primary.url || requestedUrl,
+      contentType: normalizeResponseContentType(primary),
+      responseMs,
+      sniffedType: inferResponseSniffType(primary, primaryBody.body),
+      shouldUseSitemapFallback,
+      response: primary,
+      body: primaryBody.body,
+      bodyLength: primaryBody.bodyLength,
+      decodeFailed: primaryBody.decodeFailed,
+      failureReason: primaryFailure || undefined,
+      statusCode: primary.status
+    };
+  } catch (error) {
+    const primaryMessage = error instanceof Error ? error.message : String(error);
+    return {
+      requestedUrl,
+      finalUrl: requestedUrl,
+      contentType: 'fetch_error',
+      responseMs: Date.now() - startMs,
+      sniffedType: 'fetch_failed',
+      shouldUseSitemapFallback: true,
+      response: null,
+      body: '',
+      bodyLength: 0,
+      decodeFailed: false,
+      failureReason: `network_error:${primaryMessage}`,
+      statusCode: null
+    };
+  }
 }
 
 async function fetchWithRetryFeed(url: string): Promise<Response> {
@@ -799,6 +868,7 @@ async function fetchRss(
 
   try {
     const feedResult = await fetchFeedWithFallback(outlet.rssUrl);
+    const feedDiagnosticRunFields = feedResultRunMeta(feedResult);
     if (!feedResult.response || feedResult.failureReason || !feedResult.response.ok) {
       const fallbackUsed: FallbackKind = getFallbackKind(feedResult);
       const useSitemapFallback = options.allowSitemapFallback && ENABLE_RSS_TO_SITEMAP_FALLBACK && feedResult.shouldUseSitemapFallback;
@@ -808,6 +878,7 @@ async function fetchRss(
           const items = await Promise.all(
             sitemapParsed.items.map((row) => toNewsItem(outlet, row, options.fallbackPublishedAt))
           );
+          const newestItem = latestItemPublishedAt(items);
           return {
             items,
             run: {
@@ -828,6 +899,11 @@ async function fetchRss(
               missingSummaryCount: sitemapParsed.stats.missingSummaryCount,
               missingPublishedAtCount: sitemapParsed.stats.missingPublishedAtCount,
               missingLinkCount: sitemapParsed.stats.missingLinkCount,
+              ...feedDiagnosticRunFields,
+              parsedOk: true,
+              failureStage: undefined,
+              healthClassification: 'sitemap_fallback_success',
+              newestItemPublishedAt: newestItem,
             },
             fallbackUsed: 'sitemap',
           };
@@ -854,6 +930,10 @@ async function fetchRss(
             missingSummaryCount: 0,
             missingPublishedAtCount: 0,
             missingLinkCount: 0,
+            ...feedDiagnosticRunFields,
+            parsedOk: false,
+            failureStage: inferFailureStage(normalizedFailure),
+            healthClassification: normalizedFailure,
             error: normalizedFailure,
           },
           fallbackUsed: 'none',
@@ -884,6 +964,10 @@ async function fetchRss(
           missingSummaryCount: 0,
           missingPublishedAtCount: 0,
           missingLinkCount: 0,
+          ...feedDiagnosticRunFields,
+          parsedOk: false,
+          failureStage: inferFailureStage(normalizedFailure),
+          healthClassification: normalizedFailure,
           error: normalizedFailure,
         },
         fallbackUsed,
@@ -920,6 +1004,10 @@ async function fetchRss(
           missingSummaryCount: parsed.stats.missingSummaryCount,
           missingPublishedAtCount: parsed.stats.missingPublishedAtCount,
           missingLinkCount: parsed.stats.missingLinkCount,
+          ...feedDiagnosticRunFields,
+          parsedOk: false,
+          failureStage: inferFailureStage(parsedFailure),
+          healthClassification: parsedFailure,
           error: parsedFailure,
         },
         fallbackUsed: 'none',
@@ -928,6 +1016,7 @@ async function fetchRss(
 
     const items = await Promise.all(parsed.items.map((row) => toNewsItem(outlet, row, options.fallbackPublishedAt)));
     const rssFallbackUsed: FallbackKind = getFallbackKind(feedResult);
+    const newestItem = latestItemPublishedAt(items);
     return {
       items,
       run: {
@@ -948,13 +1037,19 @@ async function fetchRss(
         missingSummaryCount: parsed.stats.missingSummaryCount,
         missingPublishedAtCount: parsed.stats.missingPublishedAtCount,
         missingLinkCount: parsed.stats.missingLinkCount,
+        ...feedDiagnosticRunFields,
+        parsedOk: true,
+        failureStage: undefined,
+        healthClassification: 'success',
+        newestItemPublishedAt: newestItem,
       },
       fallbackUsed: rssFallbackUsed,
     };
   } catch (error) {
-    return {
-      items: [],
-      run: {
+      const normalizedFailure = error instanceof Error ? error.message : String(error);
+      return {
+        items: [],
+        run: {
         outletId: outlet.id,
         source: outlet.name,
         country,
@@ -972,7 +1067,10 @@ async function fetchRss(
         missingSummaryCount: 0,
         missingPublishedAtCount: 0,
         missingLinkCount: 0,
-        error: error instanceof Error ? error.message : String(error),
+        parsedOk: false,
+        failureStage: inferFailureStage(normalizedFailure),
+        healthClassification: normalizedFailure,
+        error: normalizedFailure,
       },
       fallbackUsed: 'none',
     };
@@ -1008,7 +1106,12 @@ async function fetchSitemap(outlet: OutletFeed, fallbackPublishedAt: string): Pr
   }
 
   try {
+    const responseStartMs = Date.now();
     const response = await fetchWithRetryFeed(outlet.sitemapUrl);
+    const responseMs = Date.now() - responseStartMs;
+    const responseBody = await readResponseBody(response);
+    const responseContentType = normalizeResponseContentType(response);
+    const sniffedType = inferResponseSniffType(response, responseBody.body);
     if (!response.ok) {
       return {
         items: [],
@@ -1030,14 +1133,21 @@ async function fetchSitemap(outlet: OutletFeed, fallbackPublishedAt: string): Pr
           missingSummaryCount: 0,
           missingPublishedAtCount: 0,
           missingLinkCount: 0,
+          requestedUrl: outlet.sitemapUrl,
+          finalUrl: response.url || outlet.sitemapUrl,
+          contentType: responseContentType,
+          responseMs,
+          sniffedType,
+          parsedOk: false,
+          failureStage: inferFailureStage(`http_${response.status}`),
+          healthClassification: `http_${response.status}`,
           error: `http_${response.status}`,
         },
         fallbackUsed: 'none',
       };
     }
 
-    const bodyResult = await readResponseBody(response);
-    const xml = bodyResult.body;
+    const xml = responseBody.body;
     let parsed = parseSitemapWithStats(xml, SITEMAP_ITEM_LIMIT);
 
     if (parsed.items.length === 0) {
@@ -1094,8 +1204,8 @@ async function fetchSitemap(outlet: OutletFeed, fallbackPublishedAt: string): Pr
       const parsedFailure = classifyParsedFeedFailure({
         response,
         body: xml,
-        bodyLength: bodyResult.bodyLength,
-        decodeFailed: bodyResult.decodeFailed,
+        bodyLength: responseBody.bodyLength,
+        decodeFailed: responseBody.decodeFailed,
         totalCandidates: parsed.stats.totalCandidates,
         validCount: parsed.stats.validCount,
       });
@@ -1119,6 +1229,14 @@ async function fetchSitemap(outlet: OutletFeed, fallbackPublishedAt: string): Pr
           missingSummaryCount: parsed.stats.missingSummaryCount,
           missingPublishedAtCount: parsed.stats.missingPublishedAtCount,
           missingLinkCount: parsed.stats.missingLinkCount,
+          requestedUrl: outlet.sitemapUrl,
+          finalUrl: response.url || outlet.sitemapUrl,
+          contentType: responseContentType,
+          responseMs,
+          sniffedType,
+          parsedOk: false,
+          failureStage: inferFailureStage(parsedFailure),
+          healthClassification: parsedFailure,
           error: parsedFailure,
         },
         fallbackUsed: 'none',
@@ -1126,6 +1244,7 @@ async function fetchSitemap(outlet: OutletFeed, fallbackPublishedAt: string): Pr
     }
 
     const items = await Promise.all(parsed.items.map((row) => toNewsItem(outlet, row, fallbackPublishedAt)));
+    const newestItem = latestItemPublishedAt(items);
     return {
       items,
       run: {
@@ -1146,10 +1265,20 @@ async function fetchSitemap(outlet: OutletFeed, fallbackPublishedAt: string): Pr
         missingSummaryCount: parsed.stats.missingSummaryCount,
         missingPublishedAtCount: parsed.stats.missingPublishedAtCount,
         missingLinkCount: parsed.stats.missingLinkCount,
+        requestedUrl: outlet.sitemapUrl,
+        finalUrl: response.url || outlet.sitemapUrl,
+        contentType: responseContentType,
+        responseMs,
+        sniffedType,
+        parsedOk: true,
+        failureStage: undefined,
+        healthClassification: 'success',
+        newestItemPublishedAt: newestItem,
       },
       fallbackUsed: 'none',
     };
   } catch (error) {
+    const normalizedFailure = error instanceof Error ? error.message : String(error);
     return {
       items: [],
       run: {
@@ -1168,10 +1297,18 @@ async function fetchSitemap(outlet: OutletFeed, fallbackPublishedAt: string): Pr
         recent24h: 0,
         missingTitleCount: 0,
         missingSummaryCount: 0,
-        missingPublishedAtCount: 0,
-        missingLinkCount: 0,
-        error: error instanceof Error ? error.message : String(error),
-      },
+          missingPublishedAtCount: 0,
+          missingLinkCount: 0,
+          requestedUrl: outlet.sitemapUrl,
+          finalUrl: outlet.sitemapUrl,
+          contentType: 'fetch_error',
+          responseMs: null,
+          sniffedType: 'fetch_failed',
+          parsedOk: false,
+          failureStage: inferFailureStage(normalizedFailure),
+          healthClassification: normalizedFailure,
+          error: normalizedFailure,
+        },
       fallbackUsed: 'none',
     };
   }
@@ -1207,13 +1344,19 @@ function pickOutletChunk(all: OutletFeed[], chunkSize: number): { selected: Outl
   return { selected, nextOffset, offset };
 }
 
-function filterItemsByWatermark(items: NewsItem[], lastPublicationAt: string | null): NewsItem[] {
-  if (!lastPublicationAt) return items;
-  const cutoff = parsePublishedAtMs(lastPublicationAt);
-  if (!cutoff) return items;
+function filterItemsByWatermark(
+  items: NewsItem[],
+  lastPublicationAt: string | null,
+  nowMs: number
+): NewsItem[] {
+  const parsedLastPublicationAt = parsePublishedAtMs(lastPublicationAt || '');
+  const watermarkCutoff = parsedLastPublicationAt == null ? null : parsedLastPublicationAt;
+  const ageCutoff = nowMs - INGEST_MAX_ARTICLE_AGE_MS;
+  const finalCutoff = watermarkCutoff === null ? ageCutoff : Math.max(watermarkCutoff, ageCutoff);
   return items.filter((item) => {
     const publishedAt = parsePublishedAtMs(item.publishedAt);
-    return publishedAt === null || publishedAt > cutoff;
+    if (publishedAt === null) return true;
+    return publishedAt > finalCutoff;
   });
 }
 
@@ -1334,7 +1477,7 @@ async function runOnce(): Promise<void> {
       fallbackPublishedAt,
     });
     const lastPublicationAt = watermarks.get(endpointKey) || null;
-    return { ...result, items: filterItemsByWatermark(result.items, lastPublicationAt) };
+    return { ...result, items: filterItemsByWatermark(result.items, lastPublicationAt, nowMs) };
   });
 
   const failedRssResultByOutlet = new Map<string, EndpointResult>();
@@ -1435,7 +1578,7 @@ async function runOnce(): Promise<void> {
     if (!result.run.attempted) {
       return { ...result, items: [] };
     }
-    return { ...result, items: filterItemsByWatermark(result.items, lastPublicationAt) };
+    return { ...result, items: filterItemsByWatermark(result.items, lastPublicationAt, nowMs) };
   });
 
   const results = [...rssResults, ...sitemapResults];

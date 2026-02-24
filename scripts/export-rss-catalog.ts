@@ -8,6 +8,7 @@ type AtlasFeed = {
   checkedDate: string | null;
   valid: string | null;
   row: number;
+  enabled?: boolean;
 };
 
 type AtlasCountry = {
@@ -109,6 +110,7 @@ function buildCsvRows(atlas: Atlas, auditMap: Map<string, AuditResult>): string 
 
   for (const country of atlas.countries) {
     for (const feed of country.feeds) {
+      if (feed.enabled === false) continue;
       if (!feed.url) continue;
 
       const audit = auditMap.get(makeKey(country.code, feed.name, feed.url));

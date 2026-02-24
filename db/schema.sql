@@ -53,6 +53,15 @@ create table if not exists rss_health_status (
   missing_summary_count integer not null default 0,
   missing_published_at_count integer not null default 0,
   missing_link_count integer not null default 0,
+  requested_url text,
+  final_url text,
+  content_type text,
+  response_ms integer,
+  sniffed_type text,
+  parsed_ok boolean,
+  failure_stage text,
+  health_classification text,
+  newest_item_published_at timestamptz,
   error text null
 );
 
@@ -63,6 +72,15 @@ alter table rss_health_status add column if not exists missing_title_count integ
 alter table rss_health_status add column if not exists missing_summary_count integer not null default 0;
 alter table rss_health_status add column if not exists missing_published_at_count integer not null default 0;
 alter table rss_health_status add column if not exists missing_link_count integer not null default 0;
+alter table rss_health_status add column if not exists requested_url text;
+alter table rss_health_status add column if not exists final_url text;
+alter table rss_health_status add column if not exists content_type text;
+alter table rss_health_status add column if not exists response_ms integer;
+alter table rss_health_status add column if not exists sniffed_type text;
+alter table rss_health_status add column if not exists parsed_ok boolean;
+alter table rss_health_status add column if not exists failure_stage text;
+alter table rss_health_status add column if not exists health_classification text;
+alter table rss_health_status add column if not exists newest_item_published_at timestamptz;
 create index if not exists idx_rss_health_status_ran_at on rss_health_status(ran_at desc);
 create index if not exists idx_rss_health_status_source on rss_health_status(source);
 create index if not exists idx_rss_health_status_outlet_id on rss_health_status(outlet_id);

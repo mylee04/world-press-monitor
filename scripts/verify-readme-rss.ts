@@ -4,6 +4,7 @@ import { spawnSync } from 'node:child_process';
 import { lookup } from 'node:dns/promises';
 import { resolve } from 'node:path';
 import { gunzipSync } from 'node:zlib';
+import { readIngestOpsDaily, readNewsArticlesEarliestCreatedAt } from '../lib/ingestion-store';
 
 type AtlasFeed = {
   name: string;
@@ -12,6 +13,7 @@ type AtlasFeed = {
   checkedDate: string | null;
   valid: string | null;
   row: number;
+  enabled?: boolean;
 };
 
 type AtlasCountry = {
@@ -97,6 +99,9 @@ const PRECHECK_TIMEOUT_MS = clampInt(process.env.RSS_PRECHECK_TIMEOUT_MS, 1000, 
 const SHOULD_PRECHECK = process.argv.includes('--precheck') || process.argv.includes('--preflight');
 const PRECHECK_URL = process.env.RSS_PRECHECK_URL || '';
 const ONLY_VALID_IN_README = process.argv.includes('--valid-only');
+const FEED_INGEST_BASELINE_DATE = parseBaselineDate(process.env.RSS_FEED_BASELINE_DATE || '');
+let resolvedFeedBaselineDate: string | null = FEED_INGEST_BASELINE_DATE;
+const FEED_INGEST_DAILY_WINDOW_DAYS = clampInt(process.env.RSS_FEED_DAILY_WINDOW_DAYS || '1', 1, 365, 1);
 
 const COUNTRY_SECTION_HEADER = /^###\s+(.+?)\s+\(([^)]+)\)$/;
 const XML_MARKERS = ['<rss', '<feed', '<urlset', '<sitemapindex', '<?xml'];
@@ -125,6 +130,7 @@ async function main(): Promise<void> {
     sitemapFallback.recoveredFeeds.map((item) => makeResultKey(item.countryCode, item.outlet, item.rssUrl))
   );
   const resultMap = buildResultMap(results);
+  const feedIngestionSummary = await loadFeedIngestionSummary(atlas);
   const effectiveValidCount = results.filter(
     (result) => result.valid || recoveredFeedKeys.has(makeResultKey(result.countryCode, result.outlet, result.url))
   ).length;
@@ -169,8 +175,14 @@ async function main(): Promise<void> {
     return;
   }
 
-  const preface = getReadmePreface(sourceLines, summaryCounts, results, atlas, recoveredFeedKeys);
-  const updatedSections = renderCountrySections(atlas, resultMap, recoveredFeedKeys, ONLY_VALID_IN_README);
+  const preface = getReadmePreface(sourceLines, summaryCounts, results, atlas, recoveredFeedKeys, feedIngestionSummary);
+  const updatedSections = renderCountrySections(
+    atlas,
+    resultMap,
+    recoveredFeedKeys,
+    ONLY_VALID_IN_README,
+    feedIngestionSummary
+  );
   const updatedReadme = `${updateHeaderCheckedDate(preface)}\n${updatedSections.join('\n')}\n`;
   writeFileSync(README_PATH, updatedReadme, 'utf8');
 
@@ -223,6 +235,7 @@ function buildCheckTasks(atlas: Atlas): CheckTask[] {
   const tasks: CheckTask[] = [];
   for (const country of atlas.countries) {
     for (const feed of country.feeds) {
+      if (feed.enabled === false) continue;
       if (!feed.url) continue;
       tasks.push({
         countryCode: country.code,
@@ -234,6 +247,68 @@ function buildCheckTasks(atlas: Atlas): CheckTask[] {
     }
   }
   return tasks;
+}
+
+async function loadFeedIngestionSummary(atlas: Atlas): Promise<FeedIngestionSummary> {
+  const baselineDate = await resolveFeedBaselineDate();
+  const summary: FeedIngestionSummary = {
+    enabled: true,
+    baselineDate,
+    dailyWindowDays: FEED_INGEST_DAILY_WINDOW_DAYS,
+    countsByOutlet: new Map<string, FeedIngestionCount>()
+  };
+
+  if (atlas.countries.length === 0) {
+    return summary;
+  }
+
+  const dailyResult = await readIngestOpsDaily({
+    runner: 'worker',
+    days: FEED_INGEST_DAILY_WINDOW_DAYS,
+    limit: 1000000
+  });
+  const cumulativeResult = await readIngestOpsDaily({
+    runner: 'worker',
+    from: baselineDate,
+    limit: 1000000
+  });
+
+  if (dailyResult.storage !== 'postgres' || cumulativeResult.storage !== 'postgres') {
+    return {
+      ...summary,
+      enabled: false
+    };
+  }
+
+  for (const row of dailyResult.rows) {
+    const current = summary.countsByOutlet.get(row.outletId) || { daily: 0, cumulative: 0 };
+    current.daily += Number(row.validCount) || 0;
+    summary.countsByOutlet.set(row.outletId, current);
+  }
+  for (const row of cumulativeResult.rows) {
+    const current = summary.countsByOutlet.get(row.outletId) || { daily: 0, cumulative: 0 };
+    current.cumulative += Number(row.validCount) || 0;
+    summary.countsByOutlet.set(row.outletId, current);
+  }
+
+  return summary;
+}
+
+async function resolveFeedBaselineDate(): Promise<string> {
+  if (resolvedFeedBaselineDate) return resolvedFeedBaselineDate;
+
+  const earliest = await readNewsArticlesEarliestCreatedAt();
+  if (earliest.storage === 'postgres' && earliest.earliestCreatedAt) {
+    const date = parseBaselineDate(earliest.earliestCreatedAt);
+    if (date) {
+      resolvedFeedBaselineDate = date;
+      return date;
+    }
+  }
+
+  const fallback = toIsoDate(new Date(NOW.getTime() - 365 * 24 * 60 * 60 * 1000));
+  resolvedFeedBaselineDate = fallback;
+  return fallback;
 }
 
 async function runNetworkPrecheck(atlas: Atlas): Promise<boolean> {
@@ -705,18 +780,31 @@ type InvalidItem = {
   httpCode: number | null;
 };
 
+type FeedIngestionCount = {
+  daily: number;
+  cumulative: number;
+};
+
+type FeedIngestionSummary = {
+  enabled: boolean;
+  baselineDate: string;
+  dailyWindowDays: number;
+  countsByOutlet: Map<string, FeedIngestionCount>;
+};
+
 function getReadmePreface(
   sourceLines: string[],
   summary: SummaryCounts,
   results: EndpointResult[],
   atlas: Atlas,
-  recoveredFeedKeys: Set<string>
+  recoveredFeedKeys: Set<string>,
+  feedIngestionSummary: FeedIngestionSummary
 ): string {
   const firstSection = sourceLines.findIndex((line) => COUNTRY_SECTION_HEADER.test(line));
   const cut = firstSection >= 0 ? sourceLines.slice(0, firstSection) : sourceLines;
   const snapshotStart = cut.findIndex((line) => line.trim() === SNAPSHOT_HEADING);
   const trimmed = snapshotStart >= 0 ? removeExistingSnapshot(cut, snapshotStart) : cut;
-  const snapshotSection = renderVerificationSnapshot(summary, results, atlas, recoveredFeedKeys);
+  const snapshotSection = renderVerificationSnapshot(summary, results, atlas, recoveredFeedKeys, feedIngestionSummary);
   const updated = [...trimmed, '', snapshotSection].filter((line, index, arr) => {
     const prev = arr[index - 1];
     if (!prev || !line) return true;
@@ -740,7 +828,8 @@ function renderVerificationSnapshot(
   summary: SummaryCounts,
   results: EndpointResult[],
   atlas: Atlas,
-  recoveredFeedKeys: Set<string>
+  recoveredFeedKeys: Set<string>,
+  feedIngestionSummary: FeedIngestionSummary
 ): string {
   const lines: string[] = [];
   const invalidItems: InvalidItem[] = results
@@ -787,6 +876,8 @@ function renderVerificationSnapshot(
     );
   }
   lines.push(`- Snapshot date: \`${CHECKED_DATE}\``);
+  lines.push(`- RSS ingest baseline: \`${feedIngestionSummary.baselineDate}\``);
+  lines.push(`- RSS daily window: \`${feedIngestionSummary.dailyWindowDays}d\` (runner: worker)`);
   lines.push(`- Source artifact: \`audits/readme_rss_health_latest.json\``);
   lines.push('');
   lines.push('### Failure reasons');
@@ -844,14 +935,15 @@ function renderCountrySections(
   atlas: Atlas,
   resultMap: Map<string, EndpointResult>,
   recoveredFeedKeys: Set<string>,
-  onlyValid: boolean
+  onlyValid: boolean,
+  feedIngestionSummary: FeedIngestionSummary
 ): string[] {
   const lines: string[] = [];
 
   for (const country of atlas.countries) {
     lines.push(`### ${country.name} (${country.code})`);
-    lines.push('|No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|');
-    lines.push('|---|---|---|---|---|---|');
+    lines.push('|No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|Daily|Since baseline|');
+    lines.push('|---|---|---|---|---|---|---:|---:|');
 
     if (!country.feeds.length) {
       if (onlyValid) {
@@ -865,6 +957,8 @@ function renderCountrySections(
             status: '❌ NO_SOURCE',
             checkedDate: CHECKED_DATE,
             validLabel: 'needs verification',
+            daily: null,
+            cumulative: null,
           })
         );
       }
@@ -885,6 +979,8 @@ function renderCountrySections(
             status: '❌ NO_SOURCE',
             checkedDate: CHECKED_DATE,
             validLabel: 'needs verification',
+            daily: null,
+            cumulative: null,
           })
         );
         continue;
@@ -893,6 +989,10 @@ function renderCountrySections(
       const key = makeResultKey(country.code, feed.name, feed.url);
       const result = resultMap.get(key);
       const recovered = result !== undefined && recoveredFeedKeys.has(key);
+      const outletId = makeOutletId(country.name, feed.name, feed.url);
+      const feedCounts = feedIngestionSummary.countsByOutlet.get(outletId) || null;
+      const daily = feedIngestionSummary.enabled ? (feedCounts ? feedCounts.daily : 0) : null;
+      const cumulative = feedIngestionSummary.enabled ? (feedCounts ? feedCounts.cumulative : 0) : null;
       if (onlyValid && (!result || (!result.valid && !recovered))) {
         continue;
       }
@@ -908,6 +1008,8 @@ function renderCountrySections(
             status: 'needs check',
             checkedDate: CHECKED_DATE,
             validLabel: 'needs verification',
+            daily,
+            cumulative,
           })
         );
         continue;
@@ -921,6 +1023,8 @@ function renderCountrySections(
           status: recovered ? 'Recovered via sitemap' : formatStatus(result),
           checkedDate: CHECKED_DATE,
           validLabel: result && (result.valid || recovered) ? 'valid' : 'invalid',
+          daily,
+          cumulative,
         })
       );
     }
@@ -1316,9 +1420,13 @@ function formatRow(params: {
   status: string;
   checkedDate: string;
   validLabel: string;
+  daily: number | null;
+  cumulative: number | null;
 }): string {
   const urlDisplay = params.url === 'N/A' ? 'N/A' : `<${params.url}>`;
-  return `${params.row}|${params.outlet}|${urlDisplay}|${params.status}|${params.checkedDate}|${params.validLabel}|`;
+  const daily = params.daily === null ? '-' : `${params.daily}`;
+  const cumulative = params.cumulative === null ? '-' : `${params.cumulative}`;
+  return `${params.row}|${params.outlet}|${urlDisplay}|${params.status}|${params.checkedDate}|${params.validLabel}|${daily}|${cumulative}|`;
 }
 
 function formatStatus(result: EndpointResult): string {
@@ -1371,6 +1479,43 @@ function summarizeFailureReasons(results: EndpointResult[]): Record<string, numb
     counters[result.failureReason] = (counters[result.failureReason] || 0) + 1;
   }
   return counters;
+}
+
+function normalizeText(value: string): string {
+  return value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase();
+}
+
+function makeOutletId(countryName: string, sourceName: string, feedUrl: string): string {
+  const safe = normalizeText(`${countryName} ${sourceName}`)
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .replace(/-+/g, '-')
+    .slice(0, 120);
+  let hash = 2166136261;
+  for (let i = 0; i < feedUrl.length; i += 1) {
+    hash ^= feedUrl.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
+  }
+  return `${safe || 'source'}-${(hash >>> 0).toString(36)}`;
+}
+
+function parseBaselineDate(value: string): string | null {
+  const trimmed = (value || '').trim();
+  if (!trimmed) return null;
+
+  const parsed = new Date(trimmed);
+  if (!Number.isFinite(parsed.getTime())) return null;
+
+  const maxDate = NOW;
+  if (parsed.getTime() > maxDate.getTime()) return toIsoDate(maxDate);
+  return toIsoDate(parsed);
+}
+
+function toIsoDate(date: Date): string {
+  return date.toISOString().slice(0, 10);
 }
 
 function isLikelyRuntimeNetworkFailure(results: EndpointResult[], summary: SummaryCounts): boolean {

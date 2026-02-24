@@ -116,6 +116,15 @@ async function ensureSchema(): Promise<void> {
       missing_summary_count integer not null default 0,
       missing_published_at_count integer not null default 0,
       missing_link_count integer not null default 0,
+      requested_url text,
+      final_url text,
+      content_type text,
+      response_ms integer,
+      sniffed_type text,
+      parsed_ok boolean,
+      failure_stage text,
+      health_classification text,
+      newest_item_published_at timestamptz,
       error text null
     );
     alter table rss_health_status add column if not exists runner text not null default 'api_news';
@@ -125,6 +134,15 @@ async function ensureSchema(): Promise<void> {
     alter table rss_health_status add column if not exists missing_summary_count integer not null default 0;
     alter table rss_health_status add column if not exists missing_published_at_count integer not null default 0;
     alter table rss_health_status add column if not exists missing_link_count integer not null default 0;
+    alter table rss_health_status add column if not exists requested_url text;
+    alter table rss_health_status add column if not exists final_url text;
+    alter table rss_health_status add column if not exists content_type text;
+    alter table rss_health_status add column if not exists response_ms integer;
+    alter table rss_health_status add column if not exists sniffed_type text;
+    alter table rss_health_status add column if not exists parsed_ok boolean;
+    alter table rss_health_status add column if not exists failure_stage text;
+    alter table rss_health_status add column if not exists health_classification text;
+    alter table rss_health_status add column if not exists newest_item_published_at timestamptz;
     create index if not exists idx_rss_health_status_ran_at on rss_health_status(ran_at desc);
     create index if not exists idx_rss_health_status_country on rss_health_status(country);
     create index if not exists idx_rss_health_status_source on rss_health_status(source);
@@ -950,6 +968,15 @@ export interface IngestionEndpointRun {
   missingSummaryCount: number;
   missingPublishedAtCount: number;
   missingLinkCount: number;
+  requestedUrl?: string | null;
+  finalUrl?: string | null;
+  contentType?: string | null;
+  responseMs?: number | null;
+  sniffedType?: string | null;
+  parsedOk?: boolean | null;
+  failureStage?: string | null;
+  healthClassification?: string | null;
+  newestItemPublishedAt?: string | null;
   error?: string;
 }
 
@@ -1187,6 +1214,52 @@ type IngestOpsReadBaseOptions = {
   limit?: number;
 };
 
+type IngestionDataRetentionOptions = {
+  newsArticlesRetentionDays?: number;
+  ingestOpsHourlyRetentionDays?: number;
+  ingestOpsDailyRetentionDays?: number;
+  rssHealthRetentionDays?: number;
+  dryRun?: boolean;
+};
+
+export type IngestionDataRetentionResult = {
+  storage: 'postgres' | 'disabled';
+  reason?: string;
+  dryRun: boolean;
+  deleted: {
+    newsArticles: number;
+    ingestOpsHourly: number;
+    ingestOpsDaily: number;
+    rssHealthStatus: number;
+  };
+};
+
+function parseRetentionDays(value: number | undefined, envKey: string, fallback: number): number {
+  const parsed = value ?? Number.parseInt(process.env[envKey] || '', 10);
+  if (!Number.isFinite(parsed)) {
+    return fallback;
+  }
+  return parsed < 0 ? 0 : parsed;
+}
+
+async function countRowsForRetention(db: Pool, table: string, dateColumn: string, retentionDays: number): Promise<number> {
+  if (retentionDays <= 0) return 0;
+  const result = await db.query<{ count: string }>(
+    `select count(*)::text as count from ${table} where ${dateColumn} < now() - ($1::text || ' days')::interval`,
+    [String(retentionDays)]
+  );
+  return Number(result.rows[0]?.count || 0);
+}
+
+async function pruneRowsForRetention(db: Pool, table: string, dateColumn: string, retentionDays: number): Promise<number> {
+  if (retentionDays <= 0) return 0;
+  const result = await db.query(
+    `delete from ${table} where ${dateColumn} < now() - ($1::text || ' days')::interval`,
+    [String(retentionDays)]
+  );
+  return result.rowCount || 0;
+}
+
 export interface IngestOpsHourlyRow {
   bucket: string;
   runner: 'worker' | 'api_news' | 'warm';
@@ -1325,9 +1398,9 @@ export async function readIngestOpsHourly(options: IngestOpsReadBaseOptions & {
   const countries = (options.countries || []).filter(Boolean);
   const from = options.from ? new Date(options.from) : null;
   const to = options.to ? new Date(options.to) : null;
-  const limit = Math.max(1, Math.min(5000, Math.floor(options.limit || 1000)));
+  const limit = Math.max(1, Math.min(1000000, Math.floor(options.limit || 1000)));
 
-  const params: unknown[] = [String(hours)];
+  const params: unknown[] = [];
   const whereParts: string[] = [];
 
   if (runner) {
@@ -1342,7 +1415,8 @@ export async function readIngestOpsHourly(options: IngestOpsReadBaseOptions & {
     params.push(from.toISOString());
     whereParts.push(`and hour_bucket >= $${params.length}::timestamptz`);
   } else {
-    whereParts.push(`and hour_bucket > now() - ($1::text || ' hours')::interval`);
+    params.push(String(hours));
+    whereParts.push(`and hour_bucket > now() - ($${params.length}::text || ' hours')::interval`);
   }
   if (to && Number.isFinite(to.getTime())) {
     params.push(to.toISOString());
@@ -1443,9 +1517,9 @@ export async function readIngestOpsDaily(options: IngestOpsReadBaseOptions & {
   const countries = (options.countries || []).filter(Boolean);
   const from = options.from ? new Date(options.from) : null;
   const to = options.to ? new Date(options.to) : null;
-  const limit = Math.max(1, Math.min(5000, Math.floor(options.limit || 1000)));
+  const limit = Math.max(1, Math.min(1000000, Math.floor(options.limit || 1000)));
 
-  const params: unknown[] = [String(days)];
+  const params: unknown[] = [];
   const whereParts: string[] = [];
 
   if (runner) {
@@ -1460,7 +1534,8 @@ export async function readIngestOpsDaily(options: IngestOpsReadBaseOptions & {
     params.push(from.toISOString().slice(0, 10));
     whereParts.push(`and day_bucket >= $${params.length}::date`);
   } else {
-    whereParts.push(`and day_bucket > (now() - ($1::text || ' days')::interval)::date`);
+    params.push(String(days));
+    whereParts.push(`and day_bucket > (now() - ($${params.length}::text || ' days')::interval)::date`);
   }
   if (to && Number.isFinite(to.getTime())) {
     params.push(to.toISOString().slice(0, 10));
@@ -1542,6 +1617,86 @@ export async function readIngestOpsDaily(options: IngestOpsReadBaseOptions & {
       missingLinkCount: Number(row.missing_link_count) || 0
     }))
   };
+}
+
+export async function readNewsArticlesEarliestCreatedAt(): Promise<{
+  storage: 'postgres' | 'disabled';
+  reason?: string;
+  earliestCreatedAt: string | null;
+}> {
+  const db = getPool();
+  if (!db) return { storage: 'disabled', reason: poolDisabledReason, earliestCreatedAt: null };
+  await ensureSchema();
+
+  const result = await db.query<{ earliest_created_at: string | null }>(`
+    select min(created_at)::timestamptz as earliest_created_at
+    from news_articles
+  `);
+
+  const raw = result.rows[0]?.earliest_created_at;
+  if (!raw) return { storage: 'postgres', earliestCreatedAt: null };
+
+  const parsed = new Date(raw);
+  if (!Number.isFinite(parsed.getTime())) return { storage: 'postgres', earliestCreatedAt: null };
+
+  return {
+    storage: 'postgres',
+    earliestCreatedAt: parsed.toISOString().slice(0, 10)
+  };
+}
+
+export async function pruneExpiredIngestionData(
+  options: IngestionDataRetentionOptions = {}
+): Promise<IngestionDataRetentionResult> {
+  const db = getPool();
+  if (!db) {
+    return {
+      storage: 'disabled',
+      reason: poolDisabledReason,
+      dryRun: options.dryRun || false,
+      deleted: {
+        newsArticles: 0,
+        ingestOpsHourly: 0,
+        ingestOpsDaily: 0,
+        rssHealthStatus: 0
+      }
+    };
+  }
+
+  await ensureSchema();
+  const dryRun = options.dryRun || false;
+  const retentionConfig = {
+    newsArticles: parseRetentionDays(options.newsArticlesRetentionDays, 'NEWS_ARTICLES_RETENTION_DAYS', 3),
+    ingestOpsHourly: parseRetentionDays(options.ingestOpsHourlyRetentionDays, 'INGEST_OPS_HOURLY_RETENTION_DAYS', 14),
+    ingestOpsDaily: parseRetentionDays(options.ingestOpsDailyRetentionDays, 'INGEST_OPS_DAILY_RETENTION_DAYS', 365),
+    rssHealthStatus: parseRetentionDays(options.rssHealthRetentionDays, 'RSS_HEALTH_RETENTION_DAYS', 14)
+  };
+
+  const result: IngestionDataRetentionResult = {
+    storage: 'postgres',
+    dryRun,
+    deleted: {
+      newsArticles: 0,
+      ingestOpsHourly: 0,
+      ingestOpsDaily: 0,
+      rssHealthStatus: 0
+    }
+  };
+
+  if (dryRun) {
+    result.deleted.newsArticles = await countRowsForRetention(db, 'news_articles', 'created_at', retentionConfig.newsArticles);
+    result.deleted.ingestOpsHourly = await countRowsForRetention(db, 'ingest_ops_hourly', 'hour_bucket', retentionConfig.ingestOpsHourly);
+    result.deleted.ingestOpsDaily = await countRowsForRetention(db, 'ingest_ops_daily', 'day_bucket', retentionConfig.ingestOpsDaily);
+    result.deleted.rssHealthStatus = await countRowsForRetention(db, 'rss_health_status', 'ran_at', retentionConfig.rssHealthStatus);
+    return result;
+  }
+
+  result.deleted.newsArticles = await pruneRowsForRetention(db, 'news_articles', 'created_at', retentionConfig.newsArticles);
+  result.deleted.ingestOpsHourly = await pruneRowsForRetention(db, 'ingest_ops_hourly', 'hour_bucket', retentionConfig.ingestOpsHourly);
+  result.deleted.ingestOpsDaily = await pruneRowsForRetention(db, 'ingest_ops_daily', 'day_bucket', retentionConfig.ingestOpsDaily);
+  result.deleted.rssHealthStatus = await pruneRowsForRetention(db, 'rss_health_status', 'ran_at', retentionConfig.rssHealthStatus);
+
+  return result;
 }
 
 export async function readIngestFailureReasons(options: IngestOpsReadBaseOptions & {
@@ -1688,6 +1843,15 @@ export async function readLatestIngestionDiagnostics(options: {
     missing_summary_count: number;
     missing_published_at_count: number;
     missing_link_count: number;
+    requested_url: string | null;
+    final_url: string | null;
+    content_type: string | null;
+    response_ms: number | null;
+    sniffed_type: string | null;
+    parsed_ok: boolean | null;
+    failure_stage: string | null;
+    health_classification: string | null;
+    newest_item_published_at: string | null;
     error: string | null;
   }>(
     `
@@ -1709,6 +1873,15 @@ export async function readLatestIngestionDiagnostics(options: {
       missing_summary_count,
       missing_published_at_count,
       missing_link_count,
+      requested_url,
+      final_url,
+      content_type,
+      response_ms,
+      sniffed_type,
+      parsed_ok,
+      failure_stage,
+      health_classification,
+      newest_item_published_at,
       error
     from rss_health_status
     where ran_at > now() - ($1::text || ' minutes')::interval
@@ -1739,6 +1912,15 @@ export async function readLatestIngestionDiagnostics(options: {
       missingSummaryCount: row.missing_summary_count || 0,
       missingPublishedAtCount: row.missing_published_at_count || 0,
       missingLinkCount: row.missing_link_count || 0,
+      requestedUrl: row.requested_url,
+      finalUrl: row.final_url,
+      contentType: row.content_type,
+      responseMs: row.response_ms,
+      sniffedType: row.sniffed_type,
+      parsedOk: row.parsed_ok,
+      failureStage: row.failure_stage,
+      healthClassification: row.health_classification,
+      newestItemPublishedAt: row.newest_item_published_at,
       error: row.error || undefined
     }))
   };
@@ -1759,9 +1941,13 @@ export async function persistIngestionDiagnostics(
     const values: unknown[] = [];
     const parts: string[] = [];
     rows.forEach((row, i) => {
-      const base = i * 19;
+      const base = i * 28;
+      const normalizedResponseMs =
+        typeof row.responseMs === 'number' && Number.isFinite(row.responseMs)
+          ? Math.max(0, Math.round(row.responseMs))
+          : null;
       parts.push(
-        `($${base + 1}::text,$${base + 2}::text,$${base + 3}::text,$${base + 4}::text,$${base + 5}::text,$${base + 6}::boolean,$${base + 7}::boolean,$${base + 8}::boolean,$${base + 9}::int,$${base + 10}::int,$${base + 11}::int,$${base + 12}::int,$${base + 13}::boolean,$${base + 14}::int,$${base + 15}::int,$${base + 16}::int,$${base + 17}::int,$${base + 18}::int,$${base + 19}::text)`
+        `($${base + 1}::text,$${base + 2}::text,$${base + 3}::text,$${base + 4}::text,$${base + 5}::text,$${base + 6}::boolean,$${base + 7}::boolean,$${base + 8}::boolean,$${base + 9}::int,$${base + 10}::int,$${base + 11}::int,$${base + 12}::int,$${base + 13}::boolean,$${base + 14}::int,$${base + 15}::int,$${base + 16}::int,$${base + 17}::int,$${base + 18}::int,$${base + 19}::text,$${base + 20}::text,$${base + 21}::text,$${base + 22}::int,$${base + 23}::text,$${base + 24}::boolean,$${base + 25}::text,$${base + 26}::text,$${base + 27}::timestamptz,$${base + 28}::text)`
       );
       values.push(
         row.runner || defaultRunner,
@@ -1782,6 +1968,15 @@ export async function persistIngestionDiagnostics(
         row.missingSummaryCount ?? 0,
         row.missingPublishedAtCount ?? 0,
         row.missingLinkCount ?? 0,
+        row.requestedUrl ?? null,
+        row.finalUrl ?? null,
+        row.contentType ?? null,
+        normalizedResponseMs,
+        row.sniffedType ?? null,
+        row.parsedOk ?? null,
+        row.failureStage ?? null,
+        row.healthClassification ?? null,
+        row.newestItemPublishedAt ?? null,
         row.error ?? null
       );
     });
@@ -1791,7 +1986,8 @@ export async function persistIngestionDiagnostics(
       insert into rss_health_status (
         runner, outlet_id, source, country, method, attempted, circuit_open, ok, status_code, parsed_count,
         fetched_count, parsed_limit, sample_capped, recent24h,
-        missing_title_count, missing_summary_count, missing_published_at_count, missing_link_count, error
+        missing_title_count, missing_summary_count, missing_published_at_count, missing_link_count,
+        requested_url, final_url, content_type, response_ms, sniffed_type, parsed_ok, failure_stage, health_classification, newest_item_published_at, error
       ) values ${parts.join(',')}
       `,
       values,
