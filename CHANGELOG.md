@@ -6,6 +6,16 @@
 
 ## Unreleased
 
+### [9008c48] changelog: record latest lockfile and /healthz fixes
+- Commit: 9008c482703ba970aebc1fcf80eea9fbb9f6f41a
+- Date: 2026-02-24 09:22:08 -0600
+- Author: Kevinlee49
+  - Changed files:
+    - M	CHANGELOG.md
+  - Git stat:
+  - CHANGELOG.md | 23 ++++++++++++++++++++++-
+  -  1 file changed, 22 insertions(+), 1 deletion(-)
+
 ### [14eed07] fix: unblock /healthz for render checks and refresh bun lockfile
 - Commit: 14eed0709915fb985266d0d1f1624b3cede13807
 - Date: 2026-02-24 09:17:21 -0600
