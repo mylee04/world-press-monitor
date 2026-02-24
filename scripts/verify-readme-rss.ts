@@ -875,7 +875,7 @@ function renderVerificationSnapshot(
   const noSourceItems = atlas.countries.flatMap((country) =>
     country.feeds
       .filter((feed) => !feed.url)
-      .map((feed) => ({ country: country.name, outlet: feed.name }))
+      .map((feed) => ({ country: country.name, outlet: sanitizeOutletLabel(feed.name, feed.url ?? undefined) }))
   );
 
   const grouped = new Map<string, InvalidItem[]>();
@@ -924,7 +924,11 @@ function renderVerificationSnapshot(
     lines.push('|Country|Outlet|RSS URL|HTTP|');
     lines.push('|---|---|---|---:|');
     for (const item of sorted) {
-      lines.push(`|${item.country}|${item.outlet}|<${item.url}>|${item.httpCode === null ? '-' : item.httpCode}|`);
+      lines.push(
+        `|${item.country}|${sanitizeOutletLabel(item.outlet, item.url)}|<${item.url}>|${
+          item.httpCode === null ? '-' : item.httpCode
+        }|`
+      );
     }
   }
 
@@ -999,7 +1003,7 @@ function renderCountrySections(
         lines.push(
           formatRow({
             row,
-            outlet: feed.name,
+            outlet: sanitizeOutletLabel(feed.name, 'N/A'),
             url: 'N/A',
             status: '❌ NO_SOURCE',
             checkedDate: CHECKED_DATE,
@@ -1028,7 +1032,7 @@ function renderCountrySections(
         lines.push(
           formatRow({
             row,
-            outlet: feed.name,
+            outlet: sanitizeOutletLabel(feed.name, feed.url),
             url: feed.url,
             status: 'needs check',
             checkedDate: CHECKED_DATE,
@@ -1043,7 +1047,7 @@ function renderCountrySections(
       lines.push(
         formatRow({
           row,
-          outlet: feed.name,
+          outlet: sanitizeOutletLabel(feed.name, feed.url),
           url: feed.url,
           status: recovered ? 'Recovered via sitemap' : formatStatus(result),
           checkedDate: CHECKED_DATE,
@@ -1070,6 +1074,51 @@ function buildResultMap(results: EndpointResult[]): Map<string, EndpointResult> 
     map.set(makeResultKey(result.countryCode, result.outlet, result.url), result);
   }
   return map;
+}
+
+function sanitizeOutletLabel(rawOutlet: string, url?: string): string {
+  const outlet = (rawOutlet || '').trim();
+  if (!outlet) {
+    return fallbackOutletFromUrl(url);
+  }
+
+  if (!/[가-힣ㄱ-ㅎㅏ-ㅣ]/.test(outlet) && !/[^\u0000-\u007f]/.test(outlet)) {
+    return outlet;
+  }
+
+  const asciiNormalized = outlet
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^\u0000-\u007f]/g, '');
+  if (!/[가-힣ㄱ-ㅎㅏ-ㅣ]/.test(outlet) && asciiNormalized && /[A-Za-z]/.test(asciiNormalized)) {
+    return asciiNormalized;
+  }
+
+  let normalized = outlet
+    .replace(/\([^)]*[가-힣ㄱ-ㅎㅏ-ㅣ][^)]*\)/g, '')
+    .replace(/[\uAC00-\uD7A3]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+  normalized = normalized
+    .replace(/-\s*\/\s*$/, '')
+    .replace(/^\s*[-–—:|]+\s*/, '')
+    .replace(/\s*[-–—:|]+\s*$/, '')
+    .trim();
+
+  if (!normalized || !/[A-Za-z]/.test(normalized)) {
+    return fallbackOutletFromUrl(url);
+  }
+
+  return normalized;
+}
+
+function fallbackOutletFromUrl(url?: string): string {
+  if (!url) return 'Media outlet';
+  try {
+    return new URL(url).hostname.replace(/^www\./, '');
+  } catch {
+    return 'Media outlet';
+  }
 }
 
 function makeResultKey(countryCode: string, outlet: string, url: string): string {
