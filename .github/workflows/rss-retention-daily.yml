@@ -1,11 +1,11 @@
-name: RSS Retention Every 3 Days
+name: RSS Retention Daily
 
 on:
   schedule:
-    # Every 3 days at 00:30 America/Chicago equivalent using UTC cron.
+    # Daily at 00:30 America/Chicago equivalent using UTC cron.
     # GitHub Actions cron itself is UTC-based.
-    # Note: this is configured as every 3rd day of the month at 06:30 UTC.
-    - cron: "30 6 */3 * *"
+    # (06:30 UTC is 00:30 during CST, 01:30 during CDT.)
+    - cron: "30 6 * * *"
   workflow_dispatch:
 
 permissions:
