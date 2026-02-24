@@ -45,18 +45,6 @@ jobs:
           fi
           bun run ingest:rss-stability:daily
 
-      - name: Prune old ingest artifacts
-        env:
-          NEWS_ARTICLES_RETENTION_DAYS: 3
-          INGEST_RETENTION_TZ: America/Chicago
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        run: |
-          if [ -z "$DATABASE_URL" ]; then
-            echo "[ingest-retention] DATABASE_URL is not set; skipping retention."
-            exit 0
-          fi
-          bun run ingest:retention
-
       - name: Upload health artifacts
         if: always()
         uses: actions/upload-artifact@v4
@@ -67,8 +55,6 @@ jobs:
             audits/readme_rss_health_*.json
             audits/rss_feed_stability_latest.json
             audits/rss_feed_stability_*.json
-            audits/ingest_retention_latest.json
-            audits/ingest_retention_*.json
             data/rss-catalog.csv
             data/rss-catalog.opml
             README.md
