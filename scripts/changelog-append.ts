@@ -1,12 +1,16 @@
 #!/usr/bin/env bun
-import { execSync } from 'node:child_process';
+import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 
-const commitRef = process.argv[2] ?? 'HEAD';
+const commitRefInput = process.argv[2] ?? 'HEAD';
 const changelogPath = 'CHANGELOG.md';
 
-function run(cmd: string): string {
-  return execSync(cmd, { encoding: 'utf8' }).trim();
+if (!/^(?:[a-fA-F0-9]{7,40}|HEAD|[\w./~^-]+)$/.test(commitRefInput)) {
+  throw new Error(`Invalid commit reference: ${commitRefInput}`);
+}
+
+function runGit(args: string[]): string {
+  return execFileSync('git', args, { encoding: 'utf8' }).trim();
 }
 
 function safeFile(content: string): string {
@@ -17,9 +21,14 @@ function safeFile(content: string): string {
     .trimEnd();
 }
 
-const short = run(`git rev-parse --short ${commitRef}`);
-const full = run(`git rev-parse ${commitRef}`);
-const show = run(`git show -s --format=%H%n%h%n%s%n%b%n%an%n%ad --date=format:'%Y-%m-%d %H:%M:%S %z' ${commitRef}`);
+const commitRef = commitRefInput;
+const show = runGit([
+  'show',
+  '-s',
+  '--format=%H%n%h%n%s%n%b%n%an%n%ad',
+  '--date=format:%Y-%m-%d %H:%M:%S %z',
+  commitRef
+]);
 const lines = show.split('\n');
 const commitFull = lines[0];
 const commitShort = lines[1];
@@ -28,7 +37,7 @@ const bodyRaw = lines.slice(3, -2).join('\n').trim();
 const author = lines[lines.length - 2] ?? 'unknown';
 const dateRaw = lines[lines.length - 1] ?? '';
 
-const fileChanges = run(`git diff-tree --no-commit-id --name-status -r ${commitRef} --`);
+const fileChanges = runGit(['diff-tree', '--no-commit-id', '--name-status', '-r', commitRef, '--']);
 const fileList = fileChanges
   .split('\n')
   .filter((line) => line.trim().length > 0)
@@ -37,7 +46,7 @@ const fileList = fileChanges
     return `${status}\t${file}`;
   });
 
-const stats = run(`git show --stat --oneline --pretty=format: ${commitRef} --`);
+const stats = runGit(['show', '--stat', '--oneline', '--pretty=format:', commitRef, '--']);
 const escapedDate = dateRaw.trim();
 
 if (!existsSync(changelogPath)) {

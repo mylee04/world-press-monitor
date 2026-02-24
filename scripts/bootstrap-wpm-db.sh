@@ -63,8 +63,25 @@ fi
 
 ADMIN_DATABASE_URL="${DATABASE_URL%/*}/postgres"
 
-echo "[bootstrap] DATABASE_URL=${DATABASE_URL}"
-echo "[bootstrap] ADMIN_DATABASE_URL=${ADMIN_DATABASE_URL}"
+mask_db_url() {
+  local input=$1
+  if [[ "$input" == *"@"* ]]; then
+    local proto="${input%%://*}"
+    local rest="${input#*://}"
+    local userpass="${rest%%@*}"
+    local hostpart="${rest#*@}"
+    local user="${userpass%%:*}"
+    echo "${proto}://$user:***@${hostpart}"
+  else
+    echo "$input"
+  fi
+}
+
+MASKED_DATABASE_URL="$(mask_db_url "$DATABASE_URL")"
+MASKED_ADMIN_DATABASE_URL="$(mask_db_url "$ADMIN_DATABASE_URL")"
+
+echo "[bootstrap] DATABASE_URL=${MASKED_DATABASE_URL}"
+echo "[bootstrap] ADMIN_DATABASE_URL=${MASKED_ADMIN_DATABASE_URL}"
 
 if [ "$FRESH" -eq 1 ]; then
   echo "[bootstrap] Recreating PostgreSQL service and data volume (--fresh)"
@@ -103,7 +120,7 @@ if [ "$MIGRATE_FROM_PRESSLAB" -eq 1 ]; then
   fi
 fi
 
-echo "[bootstrap] Applying schema (db/schema.sql) to ${DATABASE_URL}"
+echo "[bootstrap] Applying schema (db/schema.sql) to ${MASKED_DATABASE_URL}"
 psql "$DATABASE_URL" -f db/schema.sql
 
 if [ "$RUN_SCHEMA_SYNC" -eq 1 ]; then

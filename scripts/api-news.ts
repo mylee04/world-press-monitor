@@ -3,6 +3,7 @@ import {
   readNewsApiFilters,
   type NewsApiItem
 } from '@/lib/ingestion-store';
+import { timingSafeEqual } from 'node:crypto';
 import { createServer, type IncomingMessage, type ServerResponse } from 'node:http';
 
 type NewsApiResponse = {
@@ -84,30 +85,37 @@ function getQueryList(searchParams: URLSearchParams, key: string): string[] {
   return [...new Set(values.flatMap((value) => parseListParam(value)))];
 }
 
-function corsHeaders(origin: string | null): Record<string, string> {
-  const configured = process.env.NEWS_API_CORS_ORIGINS || '';
-  if (!configured) return {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET,OPTIONS',
-    'Access-Control-Allow-Headers': 'authorization,content-type'
-  };
+const configuredOrigins = (process.env.NEWS_API_CORS_ORIGINS || '')
+  .split(',')
+  .map((entry) => entry.trim())
+  .filter(Boolean);
 
-  const allowed = configured.split(',').map((candidate) => candidate.trim()).filter(Boolean);
-  const allowAny = allowed.includes('*');
-  const normalizedOrigin = origin?.trim();
-  if (allowAny || (normalizedOrigin && allowed.includes(normalizedOrigin))) {
+const allowAnyOrigin = configuredOrigins.includes('*');
+
+function isAllowedOrigin(origin: string | null, requestHost: string | null): boolean {
+  if (!origin) return false;
+  if (!requestHost) return false;
+  if (allowAnyOrigin) return true;
+  if (configuredOrigins.length === 0) {
+    try {
+      const parsed = new URL(origin);
+      return parsed.host === requestHost || parsed.hostname === requestHost.split(':')[0];
+    } catch {
+      return false;
+    }
+  }
+  return configuredOrigins.includes(origin);
+}
+
+function corsHeaders(origin: string | null, requestHost: string | null): Record<string, string> {
+  if (isAllowedOrigin(origin, requestHost)) {
     return {
-      'Access-Control-Allow-Origin': normalizedOrigin || '*',
+      'Access-Control-Allow-Origin': origin || '*',
       'Access-Control-Allow-Methods': 'GET,OPTIONS',
       'Access-Control-Allow-Headers': 'authorization,content-type'
     };
   }
-
-  return {
-    'Access-Control-Allow-Origin': 'null',
-    'Access-Control-Allow-Methods': 'GET,OPTIONS',
-    'Access-Control-Allow-Headers': 'authorization,content-type'
-  };
+  return {};
 }
 
 type JsonResponse = {
@@ -874,8 +882,7 @@ const playgroundHtml = `
 const docsResponse = {
   status: 200,
   headers: {
-    'content-type': 'text/html; charset=utf-8',
-    ...corsHeaders(null)
+    'content-type': 'text/html; charset=utf-8'
   },
   body: docsHtml
 };
@@ -883,15 +890,13 @@ const docsResponse = {
 const playgroundResponse = {
   status: 200,
   headers: {
-    'content-type': 'text/html; charset=utf-8',
-    ...corsHeaders(null)
+    'content-type': 'text/html; charset=utf-8'
   },
   body: playgroundHtml
 };
 
-function jsonResponse(payload: unknown, status = 200, origin: string | null = null): JsonResponse {
+function jsonResponse(payload: unknown, status = 200): JsonResponse {
   const headers = {
-    ...corsHeaders(origin),
     'content-type': 'application/json; charset=utf-8',
     'cache-control': 'no-store'
   };
@@ -902,15 +907,11 @@ function jsonResponse(payload: unknown, status = 200, origin: string | null = nu
   };
 }
 
-function unauthorizedResponse(origin: string | null): JsonResponse {
-  return jsonResponse(
-    {
-      error: 'unauthorized',
-      message: 'Missing or invalid NEWS_API_TOKEN'
-    },
-    401,
-    origin
-  );
+function unauthorizedResponse(): JsonResponse {
+  return jsonResponse({
+    error: 'unauthorized',
+    message: 'Missing or invalid NEWS_API_TOKEN'
+  }, 401);
 }
 
 function getHeaderValue(headers: IncomingMessage['headers'], key: string): string {
@@ -921,24 +922,104 @@ function getHeaderValue(headers: IncomingMessage['headers'], key: string): strin
   return value || '';
 }
 
+function parseAuthorizedTokens(): string[] {
+  const tokens = [process.env.NEWS_API_TOKEN, process.env.NEWS_API_TOKENS]
+    .flatMap((entry) => (entry ? entry.split(',') : []))
+    .map((entry) => entry.trim())
+    .filter(Boolean);
+  const unique = new Set<string>();
+  for (const token of tokens) {
+    unique.add(token);
+  }
+  return [...unique];
+}
+
+const authorizedTokens = parseAuthorizedTokens();
+
+const apiRequestRateLimitPerMinute = Math.max(
+  1,
+  Math.min(10000, Number.parseInt(process.env.NEWS_API_RATE_LIMIT_PER_MINUTE || '120', 10) || 120)
+);
+
+type RateWindow = {
+  count: number;
+  windowStart: number;
+};
+
+const apiRateCounters = new Map<string, RateWindow>();
+const RATE_LIMIT_WINDOW_MS = 60_000;
+
+function getAuthToken(req: IncomingMessage): string {
+  const header = getHeaderValue(req.headers, 'authorization');
+  const trimmed = header.trim();
+  if (!trimmed) return '';
+  const match = trimmed.match(/^Bearer\s+(.+)$/i);
+  return (match ? match[1] : trimmed).trim();
+}
+
+function secureTokenEquals(left: string, right: string): boolean {
+  if (left.length !== right.length) return false;
+  return timingSafeEqual(Buffer.from(left), Buffer.from(right));
+}
+
 function isAuthorized(req: IncomingMessage): boolean {
-  const token = process.env.NEWS_API_TOKEN?.trim() || '';
-  const authHeader = getHeaderValue(req.headers, 'authorization').trim();
-  return authHeader === `Bearer ${token}` || authHeader === token;
+  const token = getAuthToken(req);
+  if (!token || authorizedTokens.length === 0) return false;
+  return authorizedTokens.some((configuredToken) => secureTokenEquals(token, configuredToken));
+}
+
+function getClientRateKey(req: IncomingMessage, token: string): string {
+  if (token) return `token:${token}`;
+  return `ip:${req.socket?.remoteAddress || 'unknown'}`;
+}
+
+function isRateLimited(req: IncomingMessage, token: string): boolean {
+  const key = getClientRateKey(req, token);
+  const now = Date.now();
+  const existing = apiRateCounters.get(key);
+  if (!existing || now - existing.windowStart >= RATE_LIMIT_WINDOW_MS) {
+    apiRateCounters.set(key, { count: 1, windowStart: now });
+    return false;
+  }
+  existing.count += 1;
+  if (existing.count <= apiRequestRateLimitPerMinute) {
+    apiRateCounters.set(key, existing);
+    return false;
+  }
+  return true;
 }
 
 const port = Number(process.env.NEWS_API_PORT || '4100');
 const host = process.env.NEWS_API_HOST || '0.0.0.0';
-const requiredApiToken = process.env.NEWS_API_TOKEN?.trim() || '';
 
-if (!requiredApiToken) {
-  console.error('[api-news] NEWS_API_TOKEN is required. Set NEWS_API_TOKEN in environment before starting.');
+if (!authorizedTokens.length) {
+  console.error('[api-news] NEWS_API_TOKEN or NEWS_API_TOKENS is required. Set it before starting.');
   process.exit(1);
 }
 
-function sendJsonResponse(res: ServerResponse, response: JsonResponse): void {
+function sendJsonResponse(req: IncomingMessage, res: ServerResponse, response: JsonResponse): void {
+  const origin = getHeaderValue(req.headers, 'origin');
+  const requestHost = req.headers.host || `${host}:${port}`;
+  const cors = corsHeaders(origin, requestHost);
+
   res.statusCode = response.status;
-  for (const [key, value] of Object.entries(response.headers)) {
+  const headers = {
+    ...response.headers,
+    ...cors,
+  };
+  for (const [key, value] of Object.entries(headers)) {
+    res.setHeader(key, value);
+  }
+  res.end(response.body);
+}
+
+function sendHtmlResponse(req: IncomingMessage, res: ServerResponse, response: { status: number; headers: Record<string, string>; body: string }): void {
+  const origin = getHeaderValue(req.headers, 'origin');
+  const requestHost = req.headers.host || `${host}:${port}`;
+  const cors = corsHeaders(origin, requestHost);
+
+  res.statusCode = response.status;
+  for (const [key, value] of Object.entries({ ...response.headers, ...cors })) {
     res.setHeader(key, value);
   }
   res.end(response.body);
@@ -946,29 +1027,82 @@ function sendJsonResponse(res: ServerResponse, response: JsonResponse): void {
 
 const server = createServer(async (req: IncomingMessage, res: ServerResponse) => {
   if (!req.url) {
-    sendJsonResponse(res, jsonResponse({ error: 'bad_request', message: 'Missing request URL.' }, 400, null));
+    sendJsonResponse(req, res, jsonResponse({ error: 'bad_request', message: 'Missing request URL.' }, 400));
     return;
   }
 
   const url = new URL(req.url, `http://${host}:${port}`);
   const path = url.pathname.replace(/\/+$/, '') || '/';
   const origin = getHeaderValue(req.headers, 'origin');
+  const requestHost = req.headers.host || `${host}:${port}`;
 
   if (req.method === 'OPTIONS') {
-    sendJsonResponse(res, jsonResponse({}, 204, origin));
+    if (origin && !isAllowedOrigin(origin, requestHost)) {
+      sendJsonResponse(
+        req,
+        res,
+        jsonResponse(
+          {
+            error: 'forbidden_origin',
+            message: 'CORS denied for this origin.'
+          },
+          403
+        )
+      );
+      return;
+    }
+    sendJsonResponse(req, res, jsonResponse({}, 204));
     return;
+  }
+
+  if (path !== '/health' && path !== '/openapi.json' && !isAuthorized(req)) {
+    sendJsonResponse(req, res, unauthorizedResponse());
+    return;
+  }
+
+  if (path !== '/health' && !isAllowedOrigin(origin, requestHost) && origin) {
+    sendJsonResponse(
+      req,
+      res,
+      jsonResponse(
+        {
+          error: 'forbidden_origin',
+          message: 'CORS denied for this origin.'
+        },
+        403
+      )
+    );
+    return;
+  }
+
+  if (path !== '/health' && isAuthorized(req)) {
+    const token = getAuthToken(req);
+    if (isRateLimited(req, token)) {
+      sendJsonResponse(
+        req,
+        res,
+        jsonResponse(
+          {
+            error: 'rate_limited',
+            message: 'Too many requests. Please retry after a short wait.'
+          },
+          429
+        )
+      );
+      return;
+    }
   }
 
   if (req.method !== 'GET') {
     sendJsonResponse(
+      req,
       res,
       jsonResponse(
         {
           error: 'method_not_allowed',
           message: 'Only GET is supported.'
         },
-        405,
-        origin
+        405
       )
     );
     return;
@@ -982,58 +1116,31 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
       storage: health.storage,
       reason: health.reason
     };
-    sendJsonResponse(res, jsonResponse(response, 200, origin));
+    sendJsonResponse(req, res, jsonResponse(response, 200));
     return;
   }
 
   if (path === '/openapi.json') {
     const spec = openApiSpec as Record<string, unknown>;
-    sendJsonResponse(res, jsonResponse(spec, 200, origin));
+    sendJsonResponse(req, res, jsonResponse(spec, 200));
     return;
   }
 
   if (path === '/docs') {
-    res.statusCode = docsResponse.status;
-    for (const [key, value] of Object.entries(docsResponse.headers)) {
-      res.setHeader(key, value);
-    }
-    if (origin) {
-      res.setHeader('Access-Control-Allow-Origin', origin);
-    } else {
-      res.setHeader('Access-Control-Allow-Origin', '*');
-    }
-    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'authorization,content-type');
-    res.end(docsResponse.body);
+    sendHtmlResponse(req, res, docsResponse);
     return;
   }
 
   if (path === '/playground' || path === '/ui') {
-    res.statusCode = playgroundResponse.status;
-    for (const [key, value] of Object.entries(playgroundResponse.headers)) {
-      res.setHeader(key, value);
-    }
-    if (origin) {
-      res.setHeader('Access-Control-Allow-Origin', origin);
-    } else {
-      res.setHeader('Access-Control-Allow-Origin', '*');
-    }
-    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'authorization,content-type');
-    res.end(playgroundResponse.body);
+    sendHtmlResponse(req, res, playgroundResponse);
     return;
   }
 
   if (path === '/api/filters') {
-    if (!isAuthorized(req)) {
-      sendJsonResponse(res, unauthorizedResponse(origin));
-      return;
-    }
-
     try {
       const now = Date.now();
       if (filtersCache && now - filtersCache.timestamp < filtersCacheTtlMs) {
-        sendJsonResponse(res, jsonResponse(filtersCache.payload, 200, origin));
+        sendJsonResponse(req, res, jsonResponse(filtersCache.payload, 200));
         return;
       }
 
@@ -1049,7 +1156,7 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
             sections: []
           }
         };
-        sendJsonResponse(res, jsonResponse(payload, 503, origin));
+        sendJsonResponse(req, res, jsonResponse(payload, 503));
         return;
       }
 
@@ -1062,18 +1169,18 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
         payload: response,
         timestamp: now
       };
-      sendJsonResponse(res, jsonResponse(response, 200, origin));
+      sendJsonResponse(req, res, jsonResponse(response, 200));
     } catch (error) {
       console.error('[api-news] filters request failed', error);
       sendJsonResponse(
+        req,
         res,
         jsonResponse(
           {
             error: 'internal_error',
             message: 'Failed to read filter options.'
           } satisfies ApiError,
-          500,
-          origin
+          500
         )
       );
     }
@@ -1081,11 +1188,6 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
   }
 
   if (path === '/api/news') {
-    if (!isAuthorized(req)) {
-      sendJsonResponse(res, unauthorizedResponse(origin));
-      return;
-    }
-
     try {
       const sourceNames = getQueryList(url.searchParams, 'source');
       const countries = getQueryList(url.searchParams, 'country');
@@ -1113,14 +1215,14 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
 
       if (minCreatedAt && maxCreatedAt && new Date(minCreatedAt).getTime() > new Date(maxCreatedAt).getTime()) {
         sendJsonResponse(
+          req,
           res,
           jsonResponse(
             {
               error: 'invalid_range',
               message: '`min_createdAt` must be <= `max_createdAt`.'
             },
-            400,
-            origin
+            400
           )
         );
         return;
@@ -1128,14 +1230,14 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
 
       if (minUpdatedAt && maxUpdatedAt && new Date(minUpdatedAt).getTime() > new Date(maxUpdatedAt).getTime()) {
         sendJsonResponse(
+          req,
           res,
           jsonResponse(
             {
               error: 'invalid_range',
               message: '`min_updatedAt` must be <= `max_updatedAt`.'
             },
-            400,
-            origin
+            400
           )
         );
         return;
@@ -1143,14 +1245,14 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
 
       if (from && to && new Date(from).getTime() > new Date(to).getTime()) {
         sendJsonResponse(
+          req,
           res,
           jsonResponse(
             {
               error: 'invalid_range',
               message: '`from` must be <= `to`.'
             },
-            400,
-            origin
+            400
           )
         );
         return;
@@ -1177,7 +1279,7 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
           error: 'storage_unavailable',
           message: news.reason || 'News storage is not available.'
         };
-        sendJsonResponse(res, jsonResponse(errorPayload, 503, origin));
+        sendJsonResponse(req, res, jsonResponse(errorPayload, 503));
         return;
       }
 
@@ -1204,10 +1306,11 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
         },
         items: news.items
       };
-      sendJsonResponse(res, jsonResponse(response, 200, origin));
+      sendJsonResponse(req, res, jsonResponse(response, 200));
     } catch (error) {
       if (error instanceof Error && error.message === 'invalid-date') {
         sendJsonResponse(
+          req,
           res,
           jsonResponse(
             {
@@ -1215,8 +1318,7 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
               message:
                 '`from`/`to`, `publication_from`/`publication_to`, `created_from`/`created_to`, `updated_from`/`updated_to` must be valid ISO date strings.'
             },
-            400,
-            origin
+            400
           )
         );
         return;
@@ -1224,14 +1326,14 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
 
       console.error('[api-news] request failed', error);
       sendJsonResponse(
+        req,
         res,
         jsonResponse(
           {
             error: 'internal_error',
             message: 'Failed to read news articles.'
           },
-          500,
-          origin
+          500
         )
       );
     }
@@ -1239,14 +1341,14 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
   }
 
   sendJsonResponse(
+    req,
     res,
     jsonResponse(
       {
         error: 'not_found',
         message: 'Endpoint not found.'
       },
-      404,
-      origin
+      404
     )
   );
 });

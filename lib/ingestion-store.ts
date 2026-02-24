@@ -1242,10 +1242,37 @@ function parseRetentionDays(value: number | undefined, envKey: string, fallback:
   return parsed < 0 ? 0 : parsed;
 }
 
+const retentionTargetMap = {
+  news_articles: 'created_at',
+  ingest_ops_hourly: 'hour_bucket',
+  ingest_ops_daily: 'day_bucket',
+  rss_health_status: 'ran_at'
+} as const satisfies Record<string, string>;
+
+type RetentionTable = keyof typeof retentionTargetMap;
+
+function ensureValidRetentionTarget(
+  table: string,
+  dateColumn: string
+): { table: RetentionTable; dateColumn: (typeof retentionTargetMap)[RetentionTable] } {
+  if (!(table in retentionTargetMap)) {
+    throw new Error(`Unsupported retention table: ${table}`);
+  }
+
+  const typedTable = table as RetentionTable;
+  const expectedDateColumn = retentionTargetMap[typedTable];
+  if (expectedDateColumn !== dateColumn) {
+    throw new Error(`Unexpected retention date column for table ${table}: ${dateColumn}`);
+  }
+
+  return { table: typedTable, dateColumn: expectedDateColumn };
+}
+
 async function countRowsForRetention(db: Pool, table: string, dateColumn: string, retentionDays: number): Promise<number> {
   if (retentionDays <= 0) return 0;
+  const target = ensureValidRetentionTarget(table, dateColumn);
   const result = await db.query<{ count: string }>(
-    `select count(*)::text as count from ${table} where ${dateColumn} < now() - ($1::text || ' days')::interval`,
+    `select count(*)::text as count from ${target.table} where ${target.dateColumn} < now() - ($1::text || ' days')::interval`,
     [String(retentionDays)]
   );
   return Number(result.rows[0]?.count || 0);
@@ -1253,8 +1280,9 @@ async function countRowsForRetention(db: Pool, table: string, dateColumn: string
 
 async function pruneRowsForRetention(db: Pool, table: string, dateColumn: string, retentionDays: number): Promise<number> {
   if (retentionDays <= 0) return 0;
+  const target = ensureValidRetentionTarget(table, dateColumn);
   const result = await db.query(
-    `delete from ${table} where ${dateColumn} < now() - ($1::text || ' days')::interval`,
+    `delete from ${target.table} where ${target.dateColumn} < now() - ($1::text || ' days')::interval`,
     [String(retentionDays)]
   );
   return result.rowCount || 0;

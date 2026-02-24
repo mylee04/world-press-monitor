@@ -108,6 +108,8 @@ const XML_MARKERS = ['<rss', '<feed', '<urlset', '<sitemapindex', '<?xml'];
 const USER_AGENT = 'PressLab-RSSReadmeVerifier/1.0 (+https://github.com/mylee04/world-press-monitor)';
 const GETENT_TIMEOUT_MS = clampInt(process.env.RSS_PRECHECK_GETENT_TIMEOUT_MS, 500, 10000, 3000);
 const SNAPSHOT_HEADING = '## Latest RSS verification snapshot';
+const COMMAND_OUTPUT_MAX_CHARS = 12000;
+const AUDIT_FILE_MODE = 0o600;
 
 async function main(): Promise<void> {
   const atlas = loadAtlas();
@@ -166,9 +168,8 @@ async function main(): Promise<void> {
       results,
     };
 
-    mkdirSync(OUTPUT_DIR, { recursive: true });
-    writeFileSync(outputPath, `${JSON.stringify(payload, null, 2)}\n`, 'utf8');
-    writeFileSync(latestPath, `${JSON.stringify(payload, null, 2)}\n`, 'utf8');
+    writeAuditJson(outputPath, payload);
+    writeAuditJson(latestPath, payload);
 
     console.log('Validation appears to be blocked in this runtime: all checked feeds failed with NETWORK.');
     console.log('Skipping README snapshot overwrite to avoid false invalid marking from environment-level failures.');
@@ -187,7 +188,6 @@ async function main(): Promise<void> {
   writeFileSync(README_PATH, updatedReadme, 'utf8');
 
   const stamp = NOW.toISOString().slice(0, 10);
-  mkdirSync(OUTPUT_DIR, { recursive: true });
   const reportPath = resolve(OUTPUT_DIR, `readme_rss_health_${stamp}.json`);
   const latestPath = resolve(OUTPUT_DIR, 'readme_rss_health_latest.json');
   const payload = {
@@ -199,8 +199,8 @@ async function main(): Promise<void> {
     results,
   };
 
-  writeFileSync(reportPath, `${JSON.stringify(payload, null, 2)}\n`, 'utf8');
-  writeFileSync(latestPath, `${JSON.stringify(payload, null, 2)}\n`, 'utf8');
+  writeAuditJson(reportPath, payload);
+  writeAuditJson(latestPath, payload);
 
   console.log(`Checked ${summaryCounts.checkedFeeds} RSS endpoints`);
   console.log(`Valid: ${summaryCounts.valid}`);
@@ -447,7 +447,7 @@ async function runNetworkPrecheck(atlas: Atlas): Promise<boolean> {
 
   const precheckPath = resolve(OUTPUT_DIR, 'readme_network_precheck_latest.json');
   mkdirSync(OUTPUT_DIR, { recursive: true });
-  writeFileSync(precheckPath, `${JSON.stringify(reportPayload, null, 2)}\n`, 'utf8');
+  writeAuditJson(precheckPath, reportPayload);
   console.log('Precheck report:');
   for (const line of recommendations.slice(0, 6)) {
     console.log(`  - ${line}`);
@@ -600,24 +600,49 @@ function runCommand(command: string, args: string[], timeoutMs: number): Command
     const stderr = (result.stderr || '').trim();
     const commandError = result.error ? String(result.error) : '';
     const exitText = result.status === null ? 'null' : `${result.status}`;
+    const safeCommand = `${command} ${args.join(' ')}`;
     return {
       ok: result.status === 0 && !result.error,
-      command: `${command} ${args.join(' ')}`,
+      command: redactSensitiveCommandText(safeCommand),
       code: result.status,
-      stdout,
-      stderr,
+      stdout: sanitizeCommandOutput(stdout),
+      stderr: sanitizeCommandOutput(stderr),
       error: commandError || (result.status === 0 ? '' : `exit ${exitText}`),
     };
   } catch (error) {
     return {
       ok: false,
-      command: `${command} ${args.join(' ')}`,
+      command: redactSensitiveCommandText(`${command} ${args.join(' ')}`),
       code: null,
       stdout: '',
       stderr: '',
       error: String(error),
     };
   }
+}
+
+function writeAuditJson(path: string, payload: unknown): void {
+  mkdirSync(OUTPUT_DIR, { recursive: true });
+  const raw = `${JSON.stringify(payload, null, 2)}\n`;
+  writeFileSync(path, raw, { encoding: 'utf8', mode: AUDIT_FILE_MODE });
+}
+
+function redactSensitiveText(input: string): string {
+  let output = input.replace(/(https?:\/\/)([^:\/\s@]+):([^@\/\s]+)@/g, '$1$2:***@');
+  output = output.replace(/(Authorization:\s*)\S+/gi, '$1***REDACTED***');
+  output = output.replace(/(token=)[^&\s#]+/gi, '$1***REDACTED***');
+  output = output.replace(/(Bearer\s+)[A-Za-z0-9._-]+/gi, '$1***REDACTED***');
+  return output.length <= COMMAND_OUTPUT_MAX_CHARS
+    ? output
+    : `${output.slice(0, COMMAND_OUTPUT_MAX_CHARS)}\n...[truncated ${output.length - COMMAND_OUTPUT_MAX_CHARS} chars]`;
+}
+
+function sanitizeCommandOutput(value: string): string {
+  return redactSensitiveText(value || '');
+}
+
+function redactSensitiveCommandText(value: string): string {
+  return redactSensitiveText(value);
 }
 
 function inferPrecheckRecommendations(input: {

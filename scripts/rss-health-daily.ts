@@ -77,6 +77,7 @@ const discordUsername = process.env.RSS_HEALTH_DISCORD_USERNAME || 'RSS Health';
 const discordMention = process.env.RSS_HEALTH_DISCORD_MENTION || '';
 const discordTimeoutMs = clampInt(process.env.RSS_HEALTH_DISCORD_TIMEOUT_MS, 1000, 20000, 5000);
 const VERIFY_ARGS_BASE = ['run', 'verify:readme-rss'];
+const COMMAND_OUTPUT_MAX_CHARS = 8000;
 
 function clampInt(raw: string | undefined, min: number, max: number, fallback: number): number {
   const parsed = Number.parseInt(raw ?? '', 10);
@@ -87,13 +88,33 @@ function clampInt(raw: string | undefined, min: number, max: number, fallback: n
 }
 
 function runCommand(label: string, command: string, args: string[]): void {
-  const proc = spawnSync(command, args, { stdio: 'inherit' });
+  const renderedCommand = `${command} ${args.join(' ')}`;
+  const proc = spawnSync(command, args, {
+    encoding: 'utf8',
+    stdio: ['ignore', 'inherit', 'pipe'],
+  });
   if (proc.error) {
-    throw new Error(`${label} failed: ${String(proc.error)}`);
+    throw new Error(`${label} failed: ${sanitizeCommandText(String(proc.error), renderedCommand)}`);
   }
   if (proc.status !== 0) {
-    throw new Error(`${label} failed with exit code ${proc.status}`);
+    const stderr = sanitizeCommandText((proc.stderr || '').trim(), renderedCommand);
+    const details = [stderr].filter(Boolean).join('\n');
+    throw new Error(
+      `${label} failed with exit code ${proc.status}${details ? `: ${details}` : ''}`
+    );
   }
+}
+
+function sanitizeCommandText(value: string, command: string): string {
+  let output = `${value}`;
+  output = output.replace(/(https?:\/\/)([^:\/\s@]+):([^@\/\s]+)@/g, '$1$2:***@');
+  output = output.replace(/(token=)[^&\s#]+/gi, '$1***REDACTED***');
+  output = output.replace(/(Bearer\s+)[A-Za-z0-9._-]+/gi, '$1***REDACTED***');
+  output = output.replace(new RegExp(command.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), '[redacted-command]');
+  if (output.length <= COMMAND_OUTPUT_MAX_CHARS) {
+    return output;
+  }
+  return `${output.slice(0, COMMAND_OUTPUT_MAX_CHARS)}\n...[truncated ${output.length - COMMAND_OUTPUT_MAX_CHARS} chars]`;
 }
 
 function makeKey(countryCode: string, outlet: string, url: string): string {

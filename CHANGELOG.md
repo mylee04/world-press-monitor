@@ -6,6 +6,84 @@
 
 ## Unreleased
 
+### [49456d6] security: harden diagnostics output and shell input handling
+- Commit: 49456d6b79f636acf0a503f23ccdcda9fc0893dc
+- Date: 2026-02-23 23:14:59 -0600
+- Author: Kevinlee49
+  - Changed files:
+    - M	CHANGELOG.md
+    - M	lib/ingestion-store.ts
+    - M	scripts/api-news.ts
+    - M	scripts/bootstrap-wpm-db.sh
+    - M	scripts/changelog-append.ts
+    - M	scripts/fetch-news-api.sh
+    - M	scripts/ingest-worker.ts
+    - M	scripts/rss-health-daily.ts
+    - M	scripts/verify-readme-rss.ts
+
+  - Message:
+  - - add DB URL redaction in bootstrap logs
+  - 
+  - - enforce safe BASE_URL validation and URL-encode query params in fetch-news-api helper
+  - 
+  - - sanitize command output and truncate audit/report logs to reduce secret leakage
+  - 
+  - - write audit JSON artifacts with strict 0600 permissions
+  - 
+  - - apply redaction to RSS health pipeline error outputs
+  - 
+  - - commit includes security-focused hardening for items 6 and 7 in the recent review
+
+  - Git stat:
+  - CHANGELOG.md                 |  38 ++++++
+  -  lib/ingestion-store.ts       |  32 ++++-
+  -  scripts/api-news.ts          | 302 +++++++++++++++++++++++++++++--------------
+  -  scripts/bootstrap-wpm-db.sh  |  23 +++-
+  -  scripts/changelog-append.ts  |  27 ++--
+  -  scripts/fetch-news-api.sh    |  62 ++++++---
+  -  scripts/ingest-worker.ts     | 166 ++++++++++++++++++++++--
+  -  scripts/rss-health-daily.ts  |  27 +++-
+  -  scripts/verify-readme-rss.ts |  47 +++++--
+  -  9 files changed, 573 insertions(+), 151 deletions(-)
+
+### [ecaaf08] security: harden diagnostics output and shell input handling
+- Commit: ecaaf085e9d62a59fc9479dd551f473757af2de1
+- Date: 2026-02-23 23:14:59 -0600
+- Author: Kevinlee49
+  - Changed files:
+    - M	lib/ingestion-store.ts
+    - M	scripts/api-news.ts
+    - M	scripts/bootstrap-wpm-db.sh
+    - M	scripts/changelog-append.ts
+    - M	scripts/fetch-news-api.sh
+    - M	scripts/ingest-worker.ts
+    - M	scripts/rss-health-daily.ts
+    - M	scripts/verify-readme-rss.ts
+
+  - Message:
+  - - add DB URL redaction in bootstrap logs
+  - 
+  - - enforce safe BASE_URL validation and URL-encode query params in fetch-news-api helper
+  - 
+  - - sanitize command output and truncate audit/report logs to reduce secret leakage
+  - 
+  - - write audit JSON artifacts with strict 0600 permissions
+  - 
+  - - apply redaction to RSS health pipeline error outputs
+  - 
+  - - commit includes security-focused hardening for items 6 and 7 in the recent review
+
+  - Git stat:
+  - lib/ingestion-store.ts       |  32 ++++-
+  -  scripts/api-news.ts          | 302 +++++++++++++++++++++++++++++--------------
+  -  scripts/bootstrap-wpm-db.sh  |  23 +++-
+  -  scripts/changelog-append.ts  |  27 ++--
+  -  scripts/fetch-news-api.sh    |  62 ++++++---
+  -  scripts/ingest-worker.ts     | 166 ++++++++++++++++++++++--
+  -  scripts/rss-health-daily.ts  |  27 +++-
+  -  scripts/verify-readme-rss.ts |  47 +++++--
+  -  8 files changed, 535 insertions(+), 151 deletions(-)
+
 ### [9c275af] chore: add changelog tracking scaffolding and auto-append helper
 - Commit: 9c275af5bdf15bba69f1119d6138fae2a4665ecb
 - Date: 2026-02-23 22:09:58 -0600

@@ -1,4 +1,6 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { lookup } from 'node:dns/promises';
+import { isIP } from 'node:net';
 import { resolve } from 'node:path';
 import { parseRssOrAtomWithStats, parseSitemapWithStats } from '../lib/parsers';
 import { runWithConcurrency } from '../lib/concurrency';
@@ -81,6 +83,8 @@ const SITEMAP_PERMANENT_RECHECK_DAYS = Math.max(
   7,
   Number.parseInt(process.env.INGEST_SITEMAP_PERMANENT_RECHECK_DAYS || '30', 10) || 30
 );
+const FEED_HOST_ALLOWLIST = process.env.INGEST_FEED_HOST_ALLOWLIST || '';
+const FEED_MAX_REDIRECTS = Math.max(0, Math.min(20, Number.parseInt(process.env.INGEST_FEED_MAX_REDIRECTS || '8', 10) || 8));
 const SITEMAP_TEMPORARY_DISABLE_THRESHOLD = Math.max(
   1,
   Number.parseInt(process.env.INGEST_SITEMAP_TEMP_DISABLE_FAILS || '2', 10) || 2
@@ -448,6 +452,126 @@ function parseBoolEnv(raw: string | undefined, fallback: boolean): boolean {
   return /^(1|true|yes|on)$/i.test(raw.trim());
 }
 
+function normalizeFeedHost(host: string): string {
+  return host.trim().toLowerCase().replace(/\.+$/, '');
+}
+
+const feedHostAllowlist = (() => {
+  const normalized = FEED_HOST_ALLOWLIST.split(',')
+    .map((entry) => normalizeFeedHost(entry))
+    .filter((entry) => entry.length > 0);
+  return new Set(normalized);
+})();
+
+function isIpPrivateOrLoopback(hostname: string): boolean {
+  if (!hostname) {
+    return true;
+  }
+  const ipVersion = isIP(hostname);
+  if (ipVersion === 0) return false;
+  if (ipVersion === 4) {
+    const octets = hostname.split('.').map((value) => Number.parseInt(value, 10));
+    if (octets.some((value) => Number.isNaN(value))) return true;
+    if (hostname.startsWith('127.')) return true;
+    if (hostname.startsWith('10.')) return true;
+    if (hostname.startsWith('172.') && Number.isInteger(octets[1]) && octets[1] >= 16 && octets[1] <= 31) return true;
+    if (hostname.startsWith('192.168.')) return true;
+    if (hostname.startsWith('169.254.')) return true;
+    return false;
+  }
+
+  const normalized = hostname.toLowerCase();
+  return normalized.startsWith('fe80') || normalized.startsWith('fc') || normalized.startsWith('fd') || normalized === '::1' || normalized === '::';
+}
+
+function isDisallowedHostname(hostname: string): boolean {
+  const normalized = normalizeFeedHost(hostname);
+  if (!normalized) return true;
+  if (normalized === 'localhost' || normalized.endsWith('.local') || normalized === '.internal') return true;
+  if (normalized.endsWith('.localhost') || normalized === 'ip6-localhost') return true;
+  if (normalized.includes('://')) return true;
+  if (normalized.startsWith('[') && normalized.endsWith(']')) return true;
+  if (/^localhost\./.test(normalized)) return true;
+  return false;
+}
+
+const dnsIpValidationCache = new Map<string, { disallowed: boolean; checkedAt: number }>();
+const DNS_IP_CACHE_TTL_MS = 5 * 60 * 1000;
+
+async function isHostResolvedToDisallowedIp(hostname: string): Promise<boolean> {
+  const cached = dnsIpValidationCache.get(hostname);
+  if (cached && Date.now() - cached.checkedAt < DNS_IP_CACHE_TTL_MS) {
+    return cached.disallowed;
+  }
+
+  try {
+    const entries = await lookup(hostname, { all: true });
+    const disallowed = entries.some((entry) => isIpPrivateOrLoopback(entry.address));
+    dnsIpValidationCache.set(hostname, { disallowed, checkedAt: Date.now() });
+    return disallowed;
+  } catch {
+    return false;
+  }
+}
+
+function isAllowlistedHost(hostname: string): boolean {
+  if (feedHostAllowlist.size === 0) return true;
+  const normalized = normalizeFeedHost(hostname);
+  if (feedHostAllowlist.has(normalized)) return true;
+  for (const allowed of feedHostAllowlist) {
+    if (allowed.startsWith('*.') && normalized.endsWith(allowed.slice(2))) return true;
+    if (normalized.endsWith(`.${allowed}`)) return true;
+  }
+  return false;
+}
+
+function assertFeedUrlBlockedError(url: string, reason: string): never {
+  throw new Error(`blocked_feed_url:${reason}:${url}`);
+}
+
+async function validateFeedUrl(inputUrl: string): Promise<void> {
+  let parsed: URL;
+  try {
+    parsed = new URL(inputUrl);
+  } catch {
+    throw new Error(`blocked_feed_url:invalid_url:${inputUrl}`);
+  }
+
+  if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+    throw new Error(`blocked_feed_url:invalid_protocol:${parsed.protocol}`);
+  }
+
+  const host = normalizeFeedHost(parsed.hostname);
+  if (!host) {
+    throw new Error(`blocked_feed_url:no_host:${inputUrl}`);
+  }
+
+  if (isDisallowedHostname(host)) {
+    throw new Error(`blocked_feed_url:disallowed_hostname:${host}`);
+  }
+  if (!isAllowlistedHost(host)) {
+    throw new Error(`blocked_feed_url:host_not_allowlisted:${host}`);
+  }
+  if (isIpPrivateOrLoopback(host)) {
+    throw new Error(`blocked_feed_url:private_or_loopback_host:${host}`);
+  }
+  const hasPrivateDns = await isHostResolvedToDisallowedIp(host);
+  if (hasPrivateDns) {
+    throw new Error(`blocked_feed_url:dns_private_ip:${host}`);
+  }
+}
+
+async function resolveRedirectUrl(baseUrl: string, location: string | null): Promise<string> {
+  if (!location) {
+    throw new Error('blocked_feed_url:empty_redirect_location');
+  }
+  try {
+    return new URL(location, baseUrl).toString();
+  } catch {
+    throw new Error(`blocked_feed_url:invalid_redirect:${location}`);
+  }
+}
+
 function dedupeUrls(values: string[]): string[] {
   const seen = new Set<string>();
   const next: string[] = [];
@@ -772,14 +896,40 @@ async function fetchFeedWithFallback(url: string): Promise<FeedFetchResult> {
 }
 
 async function fetchWithRetryFeed(url: string): Promise<Response> {
-  return fetchWithRetry(url, {
-    timeoutMs: FETCH_TIMEOUT_MS,
-    fetchOptions: {
-      headers: FEED_FETCH_HEADERS
-    },
-    attempts: 1,
-    backoffMs: (attempt) => 200 + attempt * 300 + Math.floor(Math.random() * 200),
-  });
+  await validateFeedUrl(url);
+
+  let currentUrl = url;
+  let redirects = 0;
+
+  while (true) {
+    const response = await fetchWithRetry(currentUrl, {
+      timeoutMs: FETCH_TIMEOUT_MS,
+      fetchOptions: {
+        headers: FEED_FETCH_HEADERS,
+        redirect: 'manual'
+      },
+      attempts: 1,
+      backoffMs: (attempt) => 200 + attempt * 300 + Math.floor(Math.random() * 200),
+    });
+
+    if (response.status >= 300 && response.status < 400) {
+      const location = response.headers.get('location');
+      if (!location) {
+        return response;
+      }
+
+      const nextUrl = await resolveRedirectUrl(currentUrl, location);
+      await validateFeedUrl(nextUrl);
+      redirects += 1;
+      if (redirects > FEED_MAX_REDIRECTS) {
+        throw new Error(`blocked_feed_url:too_many_redirects:${redirects}`);
+      }
+      currentUrl = nextUrl;
+      continue;
+    }
+
+    return response;
+  }
 }
 
 function dedupeAndSort(items: NewsItem[]): NewsItem[] {
