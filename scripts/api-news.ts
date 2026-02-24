@@ -1,6 +1,7 @@
 import {
   readNewsArticlesForApi,
   readNewsApiFilters,
+  checkNewsDatabaseHealth,
   type NewsApiItem
 } from '@/lib/ingestion-store';
 import { createHash, timingSafeEqual } from 'node:crypto';
@@ -49,6 +50,14 @@ type HealthResponse = {
   checkedAt: string;
   storage: 'postgres' | 'disabled';
   reason?: string;
+  latencyMs?: number;
+  timeoutMs?: number;
+};
+
+type HealthzResponse = {
+  status: 'ok';
+  checkedAt: string;
+  service: 'api-news';
 };
 
 type ApiError = {
@@ -109,6 +118,14 @@ const SECURITY_HEADERS = {
 };
 
 const AUDIT_TTL_MS = 5 * 60 * 1000;
+const NEWS_API_HEALTH_DB_TIMEOUT_MS = (() => {
+  const raw = process.env.NEWS_API_HEALTH_DB_TIMEOUT_MS;
+  const parsed = raw ? Number.parseInt(raw, 10) : NaN;
+  if (Number.isFinite(parsed) && parsed > 0) {
+    return Math.max(200, Math.min(15_000, parsed));
+  }
+  return 2_000;
+})();
 const apiAuditEntries = new Map<string, { expiresAt: number; remaining: number }>();
 
 function getApiAuditKey(req: IncomingMessage): string {
@@ -466,6 +483,16 @@ const openApiSpec = {
         responses: {
           200: {
             description: 'Service health'
+          }
+        }
+      }
+    },
+    '/healthz': {
+      get: {
+        summary: 'Liveness probe endpoint',
+        responses: {
+          200: {
+            description: 'Service is running'
           }
         }
       }
@@ -1320,7 +1347,8 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
   const method = (req.method || 'GET').toUpperCase();
   const context = getAuthContext(req);
   const isDocPath = apiDocPaths.has(path);
-  const requiresAuth = path !== '/health' && !(allowPublicDocs && isDocPath);
+  const isHealthPath = path === '/health' || path === '/healthz';
+  const requiresAuth = !isHealthPath && !(allowPublicDocs && isDocPath);
   const policy = context?.policy;
   const isAdminEndpoint = isDocPath;
   const requiredRole: ApiPolicyRole = isAdminEndpoint ? 'admin' : 'read';
@@ -1448,15 +1476,27 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
     return;
   }
 
-  if (path === '/health') {
-    const health = await readNewsArticlesForApi({ limit: 1 });
-    const response: HealthResponse = {
-      status: health.storage === 'postgres' ? 'ok' : 'degraded',
+  if (path === '/healthz') {
+    const response: HealthzResponse = {
+      status: 'ok',
       checkedAt: new Date().toISOString(),
-      storage: health.storage,
-      reason: health.reason
+      service: 'api-news'
     };
     sendJsonResponse(req, res, jsonResponse(response, 200), rateLimitDecision);
+    return;
+  }
+
+  if (path === '/health') {
+    const health = await checkNewsDatabaseHealth(NEWS_API_HEALTH_DB_TIMEOUT_MS);
+    const response: HealthResponse = {
+      status: health.ok ? 'ok' : 'degraded',
+      checkedAt: new Date().toISOString(),
+      storage: health.ok ? 'postgres' : 'disabled',
+      reason: health.reason,
+      latencyMs: health.latencyMs,
+      timeoutMs: NEWS_API_HEALTH_DB_TIMEOUT_MS
+    };
+    sendJsonResponse(req, res, jsonResponse(response, health.ok ? 200 : 503), rateLimitDecision);
     return;
   }
 

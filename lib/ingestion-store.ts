@@ -17,6 +17,14 @@ const publicationMaxAgeDays = (() => {
 })();
 const publicationMaxAgeMs = publicationMaxAgeDays === 0 ? 0 : publicationMaxAgeDays * 24 * 60 * 60 * 1000;
 
+type NewsDbHealthResult = {
+  ok: boolean;
+  reason?: string;
+  latencyMs: number;
+};
+
+const DEFAULT_NEWS_DB_HEALTH_TIMEOUT_MS = 2000;
+
 function getPool(): Pool | null {
   if (pool) return pool;
   if (poolFailed) {
@@ -37,6 +45,59 @@ function getPool(): Pool | null {
     poolDisabledReason = 'pool_constructor_error';
     return null;
   }
+}
+
+export async function checkNewsDatabaseHealth(timeoutMs: number = DEFAULT_NEWS_DB_HEALTH_TIMEOUT_MS): Promise<NewsDbHealthResult> {
+  const db = getPool();
+  if (!db) {
+    return {
+      ok: false,
+      reason: poolDisabledReason,
+      latencyMs: 0
+    };
+  }
+
+  const parsedTimeoutMs = Number(timeoutMs);
+  const normalizedTimeoutMs = Math.max(
+    200,
+    Math.min(
+      15_000,
+      Number.isFinite(parsedTimeoutMs) && parsedTimeoutMs > 0 ? Math.floor(parsedTimeoutMs) : DEFAULT_NEWS_DB_HEALTH_TIMEOUT_MS
+    )
+  );
+  const startedAt = Date.now();
+  let timeoutHandle: ReturnType<typeof setTimeout>;
+
+  const timeoutResult = new Promise<NewsDbHealthResult>((resolve) => {
+    timeoutHandle = setTimeout(() => {
+      resolve({
+        ok: false,
+        reason: 'timeout',
+        latencyMs: Math.max(1, Date.now() - startedAt)
+      });
+    }, normalizedTimeoutMs);
+  });
+
+  const dbProbeResult = db
+    .query('select 1')
+    .then(() => ({
+      ok: true,
+      latencyMs: 0
+    }))
+    .catch((error: unknown) => ({
+      ok: false,
+      reason: error instanceof Error ? error.message : 'query_failed',
+      latencyMs: 0
+    }));
+
+  const result = await Promise.race([dbProbeResult, timeoutResult]);
+  clearTimeout(timeoutHandle!);
+
+  return {
+    ok: result.ok,
+    reason: result.ok ? undefined : result.reason,
+    latencyMs: Date.now() - startedAt
+  };
 }
 
 function buildOutletSourceFilterSql(params: unknown[], options: {
