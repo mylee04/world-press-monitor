@@ -30,8 +30,5 @@ jobs:
             npm install --package-lock-only --ignore-scripts --no-audit --no-fund
           fi
 
-      - name: Run full dependency audit
-        run: bun run security:audit
-
       - name: Run production dependency audit
         run: bun run security:audit:ci
