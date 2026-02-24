@@ -82,6 +82,7 @@ export async function checkNewsDatabaseHealth(timeoutMs: number = DEFAULT_NEWS_D
     .query('select 1')
     .then(() => ({
       ok: true,
+      reason: undefined,
       latencyMs: 0
     }))
     .catch((error: unknown) => ({
