@@ -6,6 +6,54 @@
 
 ## Unreleased
 
+### [0dc35e7] chore: tighten retention policy, security hardening, and workflow cleanup
+- Commit: 0dc35e7299e36708023641c7b006aa9f7368cdb7
+- Date: 2026-02-24 00:16:43 -0600
+- Author: Kevinlee49
+  - Changed files:
+    - M	.github/workflows/ingest-weekly-gh.yml
+    - M	.github/workflows/rss-health-daily.yml
+    - M	.github/workflows/security-audit.yml
+    - M	.github/workflows/wpm-hourly-ingest.yml
+    - M	.github/workflows/wpm-hourly-report.yml
+    - M	CHANGELOG.md
+    - M	README.md
+    - M	audits/readme_network_precheck_latest.json
+    - M	audits/readme_rss_health_latest.json
+    - A	data/new-rss-atlas-only-added.json
+    - A	data/new-rss-atlas-second-wave-only.json
+    - M	data/rss-catalog.csv
+    - M	data/rss-catalog.opml
+    - M	lib/ingestion-store.ts
+    - M	scripts/api-news.ts
+    - M	scripts/fetch-news-api.sh
+    - M	scripts/ingest-retention.ts
+    - M	scripts/ingest-worker.ts
+    - M	scripts/rss-health-daily.ts
+    - M	scripts/run-ingest-hourly.sh
+  - Git stat:
+  - .github/workflows/ingest-weekly-gh.yml     |     3 +
+  -  .github/workflows/rss-health-daily.yml     |     8 +-
+  -  .github/workflows/security-audit.yml       |     2 +-
+  -  .github/workflows/wpm-hourly-ingest.yml    |     3 +
+  -  .github/workflows/wpm-hourly-report.yml    |     3 +
+  -  CHANGELOG.md                               |    14 +
+  -  README.md                                  |  1394 +--
+  -  audits/readme_network_precheck_latest.json |    40 +-
+  -  audits/readme_rss_health_latest.json       | 13668 +--------------------------
+  -  data/new-rss-atlas-only-added.json         |   221 +
+  -  data/new-rss-atlas-second-wave-only.json   |   253 +
+  -  data/rss-catalog.csv                       |  2174 ++---
+  -  data/rss-catalog.opml                      |  2176 ++---
+  -  lib/ingestion-store.ts                     |    32 +-
+  -  scripts/api-news.ts                        |   637 +-
+  -  scripts/fetch-news-api.sh                  |    71 +-
+  -  scripts/ingest-retention.ts                |    18 +-
+  -  scripts/ingest-worker.ts                   |     4 +-
+  -  scripts/rss-health-daily.ts                |     5 +-
+  -  scripts/run-ingest-hourly.sh               |    16 +-
+  -  20 files changed, 3844 insertions(+), 16898 deletions(-)
+
 ### [bf15a17] chore(security): add dependency audit pipeline with secure lockfile fallback
 - Commit: bf15a1786d14093b513120ab6d9e0b63e5eac423
 - Date: 2026-02-23 23:38:10 -0600
