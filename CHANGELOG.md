@@ -6,6 +6,40 @@
 
 ## Unreleased
 
+### [37901c1] fix: bump next and pin esbuild override for security audit
+- Commit: 37901c1124794ae8c7d46771b6e564e28eced1c4
+- Date: 2026-02-24 08:21:15 -0600
+- Author: Kevinlee49
+  - Changed files:
+    - M	bun.lock
+    - M	package.json
+  - Git stat:
+  - bun.lock     | 95 +++++++++++++++++++++++++++++-------------------------------
+  -  package.json |  5 +++-
+  -  2 files changed, 50 insertions(+), 50 deletions(-)
+
+### [55702c4] Fix health check type union issue
+- Commit: 55702c47edec47391fe0d9ebea5842e99136bb1f
+- Date: 2026-02-24 08:13:30 -0600
+- Author: Kevinlee49
+  - Changed files:
+    - M	lib/ingestion-store.ts
+  - Git stat:
+  - lib/ingestion-store.ts | 1 +
+  -  1 file changed, 1 insertion(+)
+
+### [8770584] Add lightweight health probe and bounded DB health check
+- Commit: 877058404c79700a0f2bca6bff6fc5dde3cfaa02
+- Date: 2026-02-24 08:13:07 -0600
+- Author: Kevinlee49
+  - Changed files:
+    - M	lib/ingestion-store.ts
+    - M	scripts/api-news.ts
+  - Git stat:
+  - lib/ingestion-store.ts | 61 ++++++++++++++++++++++++++++++++++++++++++++++++++
+  -  scripts/api-news.ts    | 52 +++++++++++++++++++++++++++++++++++++-----
+  -  2 files changed, 107 insertions(+), 6 deletions(-)
+
 ### [0dc35e7] chore: tighten retention policy, security hardening, and workflow cleanup
 - Commit: 0dc35e7299e36708023641c7b006aa9f7368cdb7
 - Date: 2026-02-24 00:16:43 -0600
