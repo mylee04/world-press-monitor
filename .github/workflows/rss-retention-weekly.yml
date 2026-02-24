@@ -27,7 +27,7 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
-      - name: Run weekly retention cleanup
+      - name: Run retention cleanup
         env:
           NEWS_ARTICLES_RETENTION_DAYS: 3
           INGEST_RETENTION_TZ: America/Chicago
