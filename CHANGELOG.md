@@ -6,6 +6,28 @@
 
 ## Unreleased
 
+### [14eed07] fix: unblock /healthz for render checks and refresh bun lockfile
+- Commit: 14eed0709915fb985266d0d1f1624b3cede13807
+- Date: 2026-02-24 09:17:21 -0600
+- Author: Kevinlee49
+  - Changed files:
+    - M	bun.lock
+    - M	scripts/api-news.ts
+  - Git stat:
+  - bun.lock            | 48 +-----------------------------------------------
+  - scripts/api-news.ts | 20 ++++++++++----------
+  - 2 files changed, 11 insertions(+), 57 deletions(-)
+
+### [59c796d] ci: relax security audit install lockfile mode
+- Commit: 59c796d9f510138092a584202c43d28314cbe5a2
+- Date: 2026-02-24 08:33:29 -0600
+- Author: Kevinlee49
+  - Changed files:
+    - M	.github/workflows/security-audit.yml
+  - Git stat:
+  - .github/workflows/security-audit.yml | 2 +-
+  -  1 file changed, 1 insertion(+), 1 deletion(-)
+
 ### [37901c1] fix: bump next and pin esbuild override for security audit
 - Commit: 37901c1124794ae8c7d46771b6e564e28eced1c4
 - Date: 2026-02-24 08:21:15 -0600
@@ -241,4 +263,3 @@
   -  17 files changed, 6750 insertions(+), 3434 deletions(-)
 
 - Changelog tracking initialized.
-
