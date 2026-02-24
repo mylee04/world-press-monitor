@@ -2,10 +2,10 @@ name: RSS Retention Daily
 
 on:
   schedule:
-    # Daily at 00:30 America/Chicago equivalent using UTC cron.
-    # GitHub Actions cron itself is UTC-based.
-    # (06:30 UTC is 00:30 during CST, 01:30 during CDT.)
-    - cron: "30 6 * * *"
+    # Run every day around 10:00 America/Chicago.
+    # GitHub Actions cron itself is UTC-based, so run both potential UTC offsets.
+    - cron: "0 15 * * *"
+    - cron: "0 16 * * *"
   workflow_dispatch:
 
 permissions:
@@ -33,6 +33,11 @@ jobs:
           INGEST_RETENTION_TZ: America/Chicago
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
+          local_hour="$(TZ=America/Chicago date +'%H')"
+          if [ "$local_hour" != "10" ]; then
+            echo "[ingest-retention] Not 10:00 America/Chicago local time (current local_hour=$local_hour). Skipping."
+            exit 0
+          fi
           if [ -z "$DATABASE_URL" ]; then
             echo "[ingest-retention] DATABASE_URL is not set; skipping retention."
             exit 0
