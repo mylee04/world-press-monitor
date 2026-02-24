@@ -6,6 +6,24 @@
 
 ## Unreleased
 
+### [9c275af] chore: add changelog tracking scaffolding and auto-append helper
+- Commit: 9c275af5bdf15bba69f1119d6138fae2a4665ecb
+- Date: 2026-02-23 22:09:58 -0600
+- Author: Kevinlee49
+  - Changed files:
+    - A	.githooks/post-commit
+    - A	CHANGELOG.md
+    - M	package.json
+    - A	scripts/changelog-append.ts
+    - A	scripts/setup-changelog-hook.sh
+  - Git stat:
+  - .githooks/post-commit           | 13 ++++++
+  -  CHANGELOG.md                    | 52 ++++++++++++++++++++++
+  -  package.json                    |  1 +
+  -  scripts/changelog-append.ts     | 99 +++++++++++++++++++++++++++++++++++++++++
+  -  scripts/setup-changelog-hook.sh |  7 +++
+  -  5 files changed, 172 insertions(+)
+
 ### [13a8972] feat: add RSS health telemetry, stability scoring, and retention controls for ingest reliability
 - Commit: 13a8972523a9c97af47bd40d44b6e737fd812237
 - Date: 2026-02-23 22:01:00 -0600
