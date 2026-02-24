@@ -6,6 +6,20 @@
 
 ## Unreleased
 
+### [bf15a17] chore(security): add dependency audit pipeline with secure lockfile fallback
+- Commit: bf15a1786d14093b513120ab6d9e0b63e5eac423
+- Date: 2026-02-23 23:38:10 -0600
+- Author: Kevinlee49
+  - Changed files:
+    - A	.github/workflows/security-audit.yml
+    - M	package.json
+    - A	scripts/security-audit.ts
+  - Git stat:
+  - .github/workflows/security-audit.yml |  37 ++++++++
+  -  package.json                         |   2 +
+  -  scripts/security-audit.ts            | 167 +++++++++++++++++++++++++++++++++++
+  -  3 files changed, 206 insertions(+)
+
 ### [49456d6] security: harden diagnostics output and shell input handling
 - Commit: 49456d6b79f636acf0a503f23ccdcda9fc0893dc
 - Date: 2026-02-23 23:14:59 -0600

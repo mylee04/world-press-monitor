@@ -1,0 +1,253 @@
+{
+  "version": 1,
+  "generatedAt": "2026-02-24T06:12:03.676Z",
+  "lastChecked": "02/24/2026",
+  "countries": [
+    {
+      "name": "Japan",
+      "code": "JP",
+      "feeds": [
+        {
+          "name": "NHK News (Politics - Category 1)",
+          "url": "https://www.nhk.or.jp/rss/news/cat1.xml"
+        },
+        {
+          "name": "NHK News (Economy/Business - Category 3)",
+          "url": "https://www.nhk.or.jp/rss/news/cat3.xml"
+        },
+        {
+          "name": "Mainichi Shimbun (Mainichi Flash)",
+          "url": "https://mainichi.jp/rss/etc/mainichi-flash.rss"
+        },
+        {
+          "name": "Asahi Shimbun (Headlines)",
+          "url": "https://www.asahi.com/rss/asahi/newsheadlines.rdf"
+        },
+        {
+          "name": "Nikkan Kogyo (Industrial Manufacturing News)",
+          "url": "https://www.nikkan.co.jp/rss/news"
+        },
+        {
+          "name": "Livedoor News (General Top Stories)",
+          "url": "https://news.livedoor.com/topics/rss/top.xml"
+        },
+        {
+          "name": "Livedoor News (Economy)",
+          "url": "https://news.livedoor.com/topics/rss/eco.xml"
+        },
+        {
+          "name": "GIGAZINE (Tech)",
+          "url": "https://gigazine.net/news/rss_2.0/"
+        },
+        {
+          "name": "Zenn (Developer/Tech Community)",
+          "url": "https://zenn.dev/feed"
+        },
+        {
+          "name": "Qiita (Japanese IT Trends)",
+          "url": "https://qiita.com/popular-items/feed"
+        },
+        {
+          "name": "ITmedia Business Online (Business)",
+          "url": "https://rss.itmedia.co.jp/rss/2.0/business.xml"
+        },
+        {
+          "name": "ITmedia NEWS (Tech Breaking)",
+          "url": "https://rss.itmedia.co.jp/rss/2.0/news_bursts.xml"
+        },
+        {
+          "name": "Toyo Keizai (Economy/Management)",
+          "url": "https://toyokeizai.net/list/feed/rss"
+        },
+        {
+          "name": "Minkabu (Stocks/Investing)",
+          "url": "https://minkabu.jp/news/feed"
+        }
+      ]
+    },
+    {
+      "name": "Poland",
+      "code": "PL",
+      "feeds": [
+        {
+          "name": "Onet Wiadomości (Top Portal News)",
+          "url": "https://wiadomosci.onet.pl/.feed"
+        },
+        {
+          "name": "TVN24 Najnowsze (TVN24 News)",
+          "url": "https://tvn24.pl/najnowsze.xml"
+        },
+        {
+          "name": "TVN24 Biznes (TVN24 Business)",
+          "url": "https://tvn24.pl/biznes.xml"
+        },
+        {
+          "name": "Money.pl (Polish Economy Portal #1)",
+          "url": "https://www.money.pl/rss/"
+        },
+        {
+          "name": "Bankier.pl (Finance/Investing)",
+          "url": "https://www.bankier.pl/rss/wiadomosci.xml"
+        },
+        {
+          "name": "Wprost (Politics/Current Affairs)",
+          "url": "https://www.wprost.pl/rss"
+        },
+        {
+          "name": "Rzeczpospolita (Economy/Politics)",
+          "url": "https://www.rp.pl/rss/all"
+        },
+        {
+          "name": "Gazeta.pl (Top Portal News)",
+          "url": "https://rss.gazeta.pl/pub/rss/wiadomosci.xml"
+        },
+        {
+          "name": "Wiadomosci WP (Wirtualna Polska News)",
+          "url": "https://wiadomosci.wp.pl/rss.xml"
+        },
+        {
+          "name": "Dziennik Gazeta Prawna (Business/Legal)",
+          "url": "https://www.gazetaprawna.pl/rss.xml"
+        }
+      ]
+    },
+    {
+      "name": "Austria",
+      "code": "AT",
+      "feeds": [
+        {
+          "name": "ORF News",
+          "url": "https://rss.orf.at/news.xml"
+        },
+        {
+          "name": "ORF Wien (Vienna Local/Business)",
+          "url": "https://rss.orf.at/wien.xml"
+        },
+        {
+          "name": "Der Standard (Political Headlines)",
+          "url": "https://www.derstandard.at/rss"
+        },
+        {
+          "name": "Der Standard (Economy)",
+          "url": "https://www.derstandard.at/rss/wirtschaft"
+        },
+        {
+          "name": "Die Presse (Political Headlines)",
+          "url": "https://www.diepresse.com/rss/Home"
+        },
+        {
+          "name": "Die Presse (Economy)",
+          "url": "https://www.diepresse.com/rss/Wirtschaft"
+        },
+        {
+          "name": "Kurier (Top Daily)",
+          "url": "https://kurier.at/xml/rss"
+        },
+        {
+          "name": "Kleine Zeitung (Top Regional Daily)",
+          "url": "https://www.kleinezeitung.at/rss/home"
+        },
+        {
+          "name": "Finanzen.at (Stocks/Finance)",
+          "url": "https://www.finanzen.at/rss/news"
+        },
+        {
+          "name": "Trend.at (Business Magazine)",
+          "url": "https://www.trend.at/xml/rss"
+        }
+      ]
+    },
+    {
+      "name": "Norway",
+      "code": "NO",
+      "feeds": [
+        {
+          "name": "NRK Nyheter (Top Broadcaster)",
+          "url": "https://www.nrk.no/nyheter/siste.rss"
+        },
+        {
+          "name": "VG (Verdens Gang)",
+          "url": "https://www.vg.no/rss/feed"
+        },
+        {
+          "name": "E24 (Top Economics Portal)",
+          "url": "https://e24.no/rss"
+        },
+        {
+          "name": "Aftenposten (Major Daily)",
+          "url": "https://www.aftenposten.no/rss/"
+        },
+        {
+          "name": "Dagens Næringsliv (DN Economics)",
+          "url": "https://services.dn.no/api/feed/rss/"
+        },
+        {
+          "name": "Finansavisen (Finance/Investment)",
+          "url": "https://finansavisen.no/rss"
+        },
+        {
+          "name": "Teknisk Ukeblad (Tech/Energy/Marine)",
+          "url": "https://www.tu.no/feed"
+        },
+        {
+          "name": "Nettavisen (Digital General News)",
+          "url": "https://www.nettavisen.no/service/rich-rss"
+        },
+        {
+          "name": "Dagbladet (Major Daily)",
+          "url": "https://www.dagbladet.no/?lab_viewport=rss"
+        },
+        {
+          "name": "E24 Energi (Energy/Marine Industry)",
+          "url": "https://e24.no/energi/rss"
+        }
+      ]
+    },
+    {
+      "name": "Thailand",
+      "code": "TH",
+      "feeds": [
+        {
+          "name": "Thairath (Top News)",
+          "url": "https://www.thairath.co.th/rss/news.xml"
+        },
+        {
+          "name": "Matichon (Leading Political Daily)",
+          "url": "https://www.matichon.co.th/feed"
+        },
+        {
+          "name": "Prachachat (Business/Economy #1)",
+          "url": "https://www.prachachat.net/feed"
+        },
+        {
+          "name": "Khaosod (Popular General News)",
+          "url": "https://www.khaosod.co.th/feed"
+        },
+        {
+          "name": "Sanook News (Top Portal)",
+          "url": "https://rssfeeds.sanook.com/rss/feeds/sanook/news.index.xml"
+        },
+        {
+          "name": "Sanook Economy (Portal Economy)",
+          "url": "https://rssfeeds.sanook.com/rss/feeds/sanook/news.economic.xml"
+        },
+        {
+          "name": "Bangkok Biz News (Economy)",
+          "url": "https://www.bangkokbiznews.com/rss/feed"
+        },
+        {
+          "name": "Manager Online (Politics/Society)",
+          "url": "https://mgronline.com/rss"
+        },
+        {
+          "name": "Thai PBS (Public Broadcaster)",
+          "url": "https://news.thaipbs.or.th/rss/news"
+        },
+        {
+          "name": "The Standard (Top Media)",
+          "url": "https://thestandard.co/feed/"
+        }
+      ]
+    }
+  ]
+}

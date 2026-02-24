@@ -1216,9 +1216,6 @@ type IngestOpsReadBaseOptions = {
 
 type IngestionDataRetentionOptions = {
   newsArticlesRetentionDays?: number;
-  ingestOpsHourlyRetentionDays?: number;
-  ingestOpsDailyRetentionDays?: number;
-  rssHealthRetentionDays?: number;
   dryRun?: boolean;
 };
 
@@ -1228,9 +1225,6 @@ export type IngestionDataRetentionResult = {
   dryRun: boolean;
   deleted: {
     newsArticles: number;
-    ingestOpsHourly: number;
-    ingestOpsDaily: number;
-    rssHealthStatus: number;
   };
 };
 
@@ -1243,10 +1237,7 @@ function parseRetentionDays(value: number | undefined, envKey: string, fallback:
 }
 
 const retentionTargetMap = {
-  news_articles: 'created_at',
-  ingest_ops_hourly: 'hour_bucket',
-  ingest_ops_daily: 'day_bucket',
-  rss_health_status: 'ran_at'
+  news_articles: 'created_at'
 } as const satisfies Record<string, string>;
 
 type RetentionTable = keyof typeof retentionTargetMap;
@@ -1683,10 +1674,7 @@ export async function pruneExpiredIngestionData(
       reason: poolDisabledReason,
       dryRun: options.dryRun || false,
       deleted: {
-        newsArticles: 0,
-        ingestOpsHourly: 0,
-        ingestOpsDaily: 0,
-        rssHealthStatus: 0
+        newsArticles: 0
       }
     };
   }
@@ -1694,35 +1682,23 @@ export async function pruneExpiredIngestionData(
   await ensureSchema();
   const dryRun = options.dryRun || false;
   const retentionConfig = {
-    newsArticles: parseRetentionDays(options.newsArticlesRetentionDays, 'NEWS_ARTICLES_RETENTION_DAYS', 3),
-    ingestOpsHourly: parseRetentionDays(options.ingestOpsHourlyRetentionDays, 'INGEST_OPS_HOURLY_RETENTION_DAYS', 14),
-    ingestOpsDaily: parseRetentionDays(options.ingestOpsDailyRetentionDays, 'INGEST_OPS_DAILY_RETENTION_DAYS', 365),
-    rssHealthStatus: parseRetentionDays(options.rssHealthRetentionDays, 'RSS_HEALTH_RETENTION_DAYS', 14)
+    newsArticles: parseRetentionDays(options.newsArticlesRetentionDays, 'NEWS_ARTICLES_RETENTION_DAYS', 3)
   };
 
   const result: IngestionDataRetentionResult = {
     storage: 'postgres',
     dryRun,
     deleted: {
-      newsArticles: 0,
-      ingestOpsHourly: 0,
-      ingestOpsDaily: 0,
-      rssHealthStatus: 0
+      newsArticles: 0
     }
   };
 
   if (dryRun) {
     result.deleted.newsArticles = await countRowsForRetention(db, 'news_articles', 'created_at', retentionConfig.newsArticles);
-    result.deleted.ingestOpsHourly = await countRowsForRetention(db, 'ingest_ops_hourly', 'hour_bucket', retentionConfig.ingestOpsHourly);
-    result.deleted.ingestOpsDaily = await countRowsForRetention(db, 'ingest_ops_daily', 'day_bucket', retentionConfig.ingestOpsDaily);
-    result.deleted.rssHealthStatus = await countRowsForRetention(db, 'rss_health_status', 'ran_at', retentionConfig.rssHealthStatus);
     return result;
   }
 
   result.deleted.newsArticles = await pruneRowsForRetention(db, 'news_articles', 'created_at', retentionConfig.newsArticles);
-  result.deleted.ingestOpsHourly = await pruneRowsForRetention(db, 'ingest_ops_hourly', 'hour_bucket', retentionConfig.ingestOpsHourly);
-  result.deleted.ingestOpsDaily = await pruneRowsForRetention(db, 'ingest_ops_daily', 'day_bucket', retentionConfig.ingestOpsDaily);
-  result.deleted.rssHealthStatus = await pruneRowsForRetention(db, 'rss_health_status', 'ran_at', retentionConfig.rssHealthStatus);
 
   return result;
 }

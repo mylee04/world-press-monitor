@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-02-24T02:34:55.870Z",
-  "sampleUrl": "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml",
-  "sampleHost": "rss.nytimes.com",
+  "generatedAt": "2026-02-24T06:14:18.636Z",
+  "sampleUrl": "https://www.nhk.or.jp/rss/news/cat1.xml",
+  "sampleHost": "www.nhk.or.jp",
   "checks": {
     "sampleDnsGetent": {
       "ok": false,
-      "host": "rss.nytimes.com",
+      "host": "www.nhk.or.jp",
       "ips": [],
       "raw": "",
       "error": "SKIPPED_DARWIN",
@@ -13,11 +13,11 @@
     },
     "sampleDnsNode": {
       "ok": true,
-      "host": "rss.nytimes.com",
+      "host": "www.nhk.or.jp",
       "ips": [
-        "151.101.193.164"
+        "23.213.44.187"
       ],
-      "raw": "151.101.193.164",
+      "raw": "23.213.44.187",
       "error": "",
       "skipped": false
     },
@@ -33,29 +33,29 @@
       "ok": true,
       "host": "www.google.com",
       "ips": [
-        "142.251.116.104"
+        "142.251.186.147"
       ],
-      "raw": "142.251.116.104",
+      "raw": "142.251.186.147",
       "error": "",
       "skipped": false
     },
     "httpSample": {
-      "ok": true,
-      "status": 200,
-      "note": "xml-like response"
+      "ok": false,
+      "status": 301,
+      "note": "INVALID_FEED_FORMAT"
     },
     "curlResolve": {
-      "ok": true,
-      "host": "rss.nytimes.com",
-      "ip": "151.101.193.164",
-      "status": 200,
-      "outputLine": "HTTP/2 200",
-      "reason": ""
+      "ok": false,
+      "host": "www.nhk.or.jp",
+      "ip": "23.213.44.187",
+      "status": 301,
+      "outputLine": "HTTP/2 301",
+      "reason": "HTTP_301"
     },
     "googleCurlResolve": {
       "ok": true,
       "host": "www.google.com",
-      "ip": "142.251.116.104",
+      "ip": "142.251.186.147",
       "status": 200,
       "outputLine": "HTTP/2 200",
       "reason": ""
@@ -71,6 +71,6 @@
     }
   },
   "recommendations": [
-    "Running on macOS: getent/nsswitch checks are intentionally skipped; this is informational only."
+    "Downstream endpoint access is blocked from this runtime. Run the same command on another host that can reach the internet."
   ]
 }

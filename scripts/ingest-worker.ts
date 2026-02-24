@@ -213,6 +213,7 @@ function loadAtlasOutlets(): OutletFeed[] {
     const outlets = atlas.countries.flatMap((country) => {
       const countryName = country.name || country.code || 'Global';
       return (Array.isArray(country.feeds) ? country.feeds : [])
+      .filter((feed): feed is AtlasFeed => feed.url !== null && typeof feed.url === 'string' && feed.url.trim().length > 0 && feed.enabled !== false)
       .map((feed) => ({
         name: feed.name || 'Unknown source',
         url: typeof feed.url === 'string' ? feed.url.trim() : '',
@@ -221,9 +222,6 @@ function loadAtlasOutlets(): OutletFeed[] {
             ? feed.sitemapUrl.trim()
             : undefined,
       }))
-      .filter((feed): feed is { name: string; url: string; explicitSitemapUrl: string | undefined } =>
-          feed.url.length > 0 && feed.enabled !== false
-        )
         .map((feed) => ({
           id: makeOutletId(countryName, feed.name, feed.url),
           name: feed.name,

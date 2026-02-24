@@ -10,6 +10,9 @@ on:
       - completed
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   discord:
     name: Discord Hourly Report

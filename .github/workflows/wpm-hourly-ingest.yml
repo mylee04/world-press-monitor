@@ -6,6 +6,9 @@ on:
     - cron: "25 * * * *"
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   ingest:
     name: Ingest

@@ -1,0 +1,221 @@
+{
+  "version": 1,
+  "generatedAt": "2026-02-24T23:59:59.000Z",
+  "lastChecked": "02/24/2026",
+  "countries": [
+    {
+      "name": "France",
+      "code": "FR",
+      "feeds": [
+        { "name": "Les Echos (Finance/Markets)", "url": "https://services.lesechos.fr/api/rss/univers/finance-marches" },
+        { "name": "Les Echos (Tech/Media)", "url": "https://services.lesechos.fr/api/rss/univers/tech-medias" },
+        { "name": "Le Monde (Economy)", "url": "https://www.lemonde.fr/economie/rss_full.xml" },
+        { "name": "Le Monde (Politics)", "url": "https://www.lemonde.fr/politique/rss_full.xml" },
+        { "name": "Le Figaro (Top Stories)", "url": "https://www.lefigaro.fr/rss/figaro_actualites.xml" },
+        { "name": "Le Figaro (Economy)", "url": "https://www.lefigaro.fr/rss/figaro_economie.xml" },
+        { "name": "La Tribune (Economy)", "url": "https://www.latribune.fr/feed.xml" },
+        { "name": "Libération (Society/Politics)", "url": "https://www.liberation.fr/rss/" },
+        { "name": "L'Express (Current Affairs Magazine)", "url": "https://www.lexpress.fr/arc/outboundfeeds/rss/" },
+        { "name": "Le Point (Current Affairs/Economy)", "url": "https://www.lepoint.fr/rss.xml" },
+        { "name": "Mediapart (Investigations)", "url": "https://www.mediapart.fr/articles/feed" },
+        { "name": "France Info (Economy)", "url": "https://www.francetvinfo.fr/economie.rss" },
+        { "name": "France Info (Politics)", "url": "https://www.francetvinfo.fr/politique.rss" },
+        { "name": "BFM TV (Economy/Business)", "url": "https://www.bfmtv.com/rss/economie/" },
+        { "name": "Capital.fr (Economy/Capital)", "url": "https://www.capital.fr/rss.xml" },
+        { "name": "Challenges.fr (Business)", "url": "https://www.challenges.fr/rss.xml" },
+        { "name": "Ouest-France (Regional News/Society)", "url": "https://www.ouest-france.fr/rss-en-continu.xml" },
+        { "name": "20 Minutes (Economy Breaking)", "url": "https://www.20minutes.fr/feeds/rss-economie.xml" },
+        { "name": "L'Obs (General Current Affairs)", "url": "https://www.nouvelobs.com/rss.xml" },
+        { "name": "Usine Nouvelle (Industry/Energy/Manufacturing)", "url": "https://www.usinenouvelle.com/rss/" }
+      ]
+    },
+    {
+      "name": "Switzerland",
+      "code": "CH",
+      "feeds": [
+        { "name": "SRF News (Politics/Society - German)", "url": "https://www.srf.ch/news/bnf/rss/1890" },
+        { "name": "SRF Economy (Economy - German)", "url": "https://www.srf.ch/news/bnf/rss/1926" },
+        { "name": "NZZ (Latest Zurich headlines - German)", "url": "https://www.nzz.ch/recent.rss" },
+        { "name": "NZZ Wirtschaft (Economy - German)", "url": "https://www.nzz.ch/wirtschaft.rss" },
+        { "name": "Tages-Anzeiger (Zurich Headlines - German)", "url": "https://www.tagesanzeiger.ch/rss.xml" },
+        { "name": "Blick (Swiss #1 Popular Daily - German)", "url": "https://www.blick.ch/rss.xml" },
+        { "name": "Blick Wirtschaft (Economy - German)", "url": "https://www.blick.ch/wirtschaft/rss.xml" },
+        { "name": "Handelszeitung (Economy Weekly - German)", "url": "https://www.handelszeitung.ch/rss.xml" },
+        { "name": "Finanz und Wirtschaft (Finance - German)", "url": "https://www.fuw.ch/feed" },
+        { "name": "Cash.ch (Finance/Investment - German)", "url": "https://www.cash.ch/rss" },
+        { "name": "RTS Info (French-speaking public broadcaster Breaking - French)", "url": "https://www.rts.ch/info/rss" },
+        { "name": "Le Temps Economie (Economy - French)", "url": "https://www.letemps.ch/economie.rss" },
+        { "name": "Le Temps Suisse (Domestic - French)", "url": "https://www.letemps.ch/suisse.rss" },
+        { "name": "Bilan.ch (Economy - French)", "url": "https://www.bilan.ch/rss.xml" },
+        { "name": "20 Minuten Wirtschaft (Economy - German)", "url": "https://www.20min.ch/rss/wirtschaft" },
+        { "name": "20 Minuten Schweiz (Domestic - German)", "url": "https://www.20min.ch/rss/schweiz" },
+        { "name": "Watson.ch (News Portal - German)", "url": "https://www.watson.ch/api/rss" },
+        { "name": "Aargauer Zeitung (Regional Major Daily - German)", "url": "https://www.aargauerzeitung.ch/rss" },
+        { "name": "Berner Zeitung (Bern Major Daily - German)", "url": "https://www.bernerzeitung.ch/rss.xml" },
+        { "name": "Basler Zeitung (Basel Major Daily - German)", "url": "https://www.bazonline.ch/rss.xml" }
+      ]
+    },
+    {
+      "name": "Netherlands",
+      "code": "NL",
+      "feeds": [
+        { "name": "NOS Algemeen (Public Broadcaster General)", "url": "https://feeds.nos.nl/nosnieuwsalgemeen" },
+        { "name": "NOS Economie (Public Broadcaster Economy)", "url": "https://feeds.nos.nl/nosnieuwseconomie" },
+        { "name": "NOS Politiek (Public Broadcaster Politics)", "url": "https://feeds.nos.nl/nosnieuwspolitiek" },
+        { "name": "NU.nl Algemeen (Top Portal - General)", "url": "https://www.nu.nl/rss/Algemeen" },
+        { "name": "NU.nl Economie (Portal Economy)", "url": "https://www.nu.nl/rss/Economie" },
+        { "name": "RTL Nieuws (General Breaking)", "url": "https://www.rtlnieuws.nl/rss.xml" },
+        { "name": "RTL Z (Economy/Business Breaking)", "url": "https://www.rtlnieuws.nl/economie/rss.xml" },
+        { "name": "AD.nl (Top National Outlet - Highest Circulation)", "url": "https://www.ad.nl/rss.xml" },
+        { "name": "De Volkskrant (Progressive Major Daily)", "url": "https://www.volkskrant.nl/voorpagina/rss.xml" },
+        { "name": "Trouw (Traditional Major Daily)", "url": "https://www.trouw.nl/voorpagina/rss.xml" },
+        { "name": "Het Parool (Amsterdam Major Daily)", "url": "https://www.parool.nl/voorpagina/rss.xml" },
+        { "name": "FD (Netherlands Financial Times)", "url": "https://fd.nl/?rss" },
+        { "name": "BNR Nieuwsradio (Economy Radio)", "url": "https://www.bnr.nl/rss/economie" },
+        { "name": "NRC (Traditional Daily)", "url": "https://www.nrc.nl/rss/" },
+        { "name": "Telegraaf Financieel (Conservative Economy)", "url": "https://www.telegraaf.nl/rss/financieel" },
+        { "name": "Tweakers (Tech/Semiconductor #1)", "url": "https://tweakers.net/feeds/nieuws.xml" },
+        { "name": "FOK! (News/Community)", "url": "https://frontpage.fok.nl/xml/rss" },
+        { "name": "IEX.nl (Stocks/Investments)", "url": "https://www.iex.nl/rss/nieuws.xml" },
+        { "name": "De Correspondent (In-Depth Analysis)", "url": "https://decorrespondent.nl/feed" },
+        { "name": "AG Connect (IT/Industry Trends)", "url": "https://www.agconnect.nl/rss" }
+      ]
+    },
+    {
+      "name": "Saudi Arabia",
+      "code": "SA",
+      "feeds": [
+        { "name": "SPA (Saudi State Broadcaster)", "url": "https://www.spa.gov.sa/rss" },
+        { "name": "Al Eqtisadiah (Saudi Economy #1)", "url": "https://www.aleqt.com/feed" },
+        { "name": "Al Riyadh (Saudi Mainstream)", "url": "https://www.alriyadh.com/rss" },
+        { "name": "Argaam (Arabic Economy/Stocks #1)", "url": "https://www.argaam.com/ar/rss/news/type/1" },
+        { "name": "Mubasher Saudi (Finance/Markets)", "url": "https://www.mubasher.info/countries/sa/rss" },
+        { "name": "Al Arabiya Business (Arabic Economy)", "url": "https://www.alarabiya.net/feed/business" },
+        { "name": "Al Arabiya Saudi (Saudi Domestic)", "url": "https://www.alarabiya.net/feed/saudi-today" },
+        { "name": "Sabq (Saudi Top Online Outlet)", "url": "https://sabq.org/feed" },
+        { "name": "Okaz (Conservative Major Daily)", "url": "https://www.okaz.com.sa/rss/news" },
+        { "name": "Al Madina (General Daily)", "url": "https://www.al-madina.com/rssFeed/193" },
+        { "name": "Maaal (Saudi Business)", "url": "https://www.maaal.com/feed" },
+        { "name": "Al Watan (Saudi Domestic Breaking)", "url": "https://www.alwatan.com.sa/rss" },
+        { "name": "Al Jazirah (Daily)", "url": "https://www.al-jazirah.com/rss/ln.xml" },
+        { "name": "Asharq Business (Bloomberg Arabic)", "url": "https://asharqbusiness.com/feed" },
+        { "name": "Sky News Arabia (Arabic Business)", "url": "https://www.skynewsarabia.com/rss.xml" },
+        { "name": "CNBC Arabia (Middle East Economy)", "url": "https://www.cnbcarabia.com/RSS/117" },
+        { "name": "Independent Arabia (Independent Arabic)", "url": "https://www.independentarabia.com/rss.xml" },
+        { "name": "Akhbaar24 (General Portal)", "url": "https://akhbaar24.argaam.com/rss" },
+        { "name": "Al Yaum (Domestic Trends)", "url": "https://www.alyaum.com/rss" },
+        { "name": "Zawya Arabic (Middle East Business)", "url": "https://www.zawya.com/ar/rss" }
+      ]
+    },
+    {
+      "name": "Russia",
+      "code": "RU",
+      "feeds": [
+        { "name": "RIA Novosti (Russian State Broadcaster)", "url": "https://ria.ru/export/rss2/archive/index.xml" },
+        { "name": "TASS (TASS Russian Main)", "url": "https://tass.ru/rss/v2.xml" },
+        { "name": "RBC (Russian Finance/Economy #1)", "url": "https://rssexport.rbc.ru/rbcnews/news/30/full.rss" },
+        { "name": "Kommersant (Economy/Business Major Daily)", "url": "https://www.kommersant.ru/RSS/news.xml" },
+        { "name": "Vedomosti (Economy Major Daily)", "url": "https://www.vedomosti.ru/rss/news" },
+        { "name": "Interfax (Interfax Russian)", "url": "https://www.interfax.ru/rss.asp" },
+        { "name": "Lenta.ru (Russia's Top News Portal)", "url": "https://lenta.ru/rss/news" },
+        { "name": "Gazeta.ru (General News)", "url": "https://www.gazeta.ru/export/rss/lenta.xml" },
+        { "name": "Izvestia (Traditional Daily)", "url": "https://iz.ru/xml/rss/all.xml" },
+        { "name": "RT Russian (RT Russian Main)", "url": "https://russian.rt.com/rss" },
+        { "name": "Rossiyskaya Gazeta (Official Gazette)", "url": "https://rg.ru/xml/index.xml" },
+        { "name": "Forbes Russia (Forbes Russia Edition)", "url": "https://www.forbes.ru/newrss.xml" },
+        { "name": "BFM.ru (Business Radio)", "url": "https://www.bfm.ru/news.rss" },
+        { "name": "Expert.ru (Economy Magazine)", "url": "https://www.expert.ru/rss/" },
+        { "name": "Finmarket.ru (Finance/Investment)", "url": "http://www.finmarket.ru/rss/mainnews.asp" },
+        { "name": "NTV (major broadcaster)", "url": "https://www.ntv.ru/exp/news_rss.jsp" },
+        { "name": "Komsomolskaya Pravda (Mass outlet #1)", "url": "https://www.kp.ru/rss/all.xml" },
+        { "name": "Moskovsky Komsomolets (Mass outlet #2)", "url": "https://www.mk.ru/rss/news/index.xml" },
+        { "name": "Rambler News (Portal News)", "url": "https://news.rambler.ru/rss/" },
+        { "name": "Habr (Russia IT/Tech #1 Community)", "url": "https://habr.com/ru/rss/all/all/?fl=ru" }
+      ]
+    },
+    {
+      "name": "Japan",
+      "code": "JP",
+      "feeds": [
+        { "name": "NHK News (Politics - Category 1)", "url": "https://www.nhk.or.jp/rss/news/cat1.xml" },
+        { "name": "NHK News (Economy/Business - Category 3)", "url": "https://www.nhk.or.jp/rss/news/cat3.xml" },
+        { "name": "Mainichi Shimbun (Mainichi Flash)", "url": "https://mainichi.jp/rss/etc/mainichi-flash.rss" },
+        { "name": "Asahi Shimbun (Headlines)", "url": "https://www.asahi.com/rss/asahi/newsheadlines.rdf" },
+        { "name": "Nikkan Kogyo (Industrial Manufacturing News)", "url": "https://www.nikkan.co.jp/rss/news" },
+        { "name": "Livedoor News (General Top Stories)", "url": "https://news.livedoor.com/topics/rss/top.xml" },
+        { "name": "Livedoor News (Economy)", "url": "https://news.livedoor.com/topics/rss/eco.xml" },
+        { "name": "GIGAZINE (Tech)", "url": "https://gigazine.net/news/rss_2.0/" },
+        { "name": "Zenn (Developer/Tech Community)", "url": "https://zenn.dev/feed" },
+        { "name": "Qiita (Japanese IT Trends)", "url": "https://qiita.com/popular-items/feed" },
+        { "name": "ITmedia Business Online (Business)", "url": "https://rss.itmedia.co.jp/rss/2.0/business.xml" },
+        { "name": "ITmedia NEWS (Tech Breaking)", "url": "https://rss.itmedia.co.jp/rss/2.0/news_bursts.xml" },
+        { "name": "Toyo Keizai (Economy/Management)", "url": "https://toyokeizai.net/list/feed/rss" },
+        { "name": "Minkabu (Stocks/Investing)", "url": "https://minkabu.jp/news/feed" }
+      ]
+    },
+    {
+      "name": "Poland",
+      "code": "PL",
+      "feeds": [
+        { "name": "Onet Wiadomości (Top Portal News)", "url": "https://wiadomosci.onet.pl/.feed" },
+        { "name": "TVN24 Najnowsze (TVN24 News)", "url": "https://tvn24.pl/najnowsze.xml" },
+        { "name": "TVN24 Biznes (TVN24 Business)", "url": "https://tvn24.pl/biznes.xml" },
+        { "name": "Money.pl (Polish Economy Portal #1)", "url": "https://www.money.pl/rss/" },
+        { "name": "Bankier.pl (Finance/Investing)", "url": "https://www.bankier.pl/rss/wiadomosci.xml" },
+        { "name": "Wprost (Politics/Current Affairs)", "url": "https://www.wprost.pl/rss" },
+        { "name": "Rzeczpospolita (Economy/Politics)", "url": "https://www.rp.pl/rss/all" },
+        { "name": "Gazeta.pl (Top Portal News)", "url": "https://rss.gazeta.pl/pub/rss/wiadomosci.xml" },
+        { "name": "Wiadomosci WP (Wirtualna Polska News)", "url": "https://wiadomosci.wp.pl/rss.xml" },
+        { "name": "Dziennik Gazeta Prawna (Business/Legal)", "url": "https://www.gazetaprawna.pl/rss.xml" }
+      ]
+    },
+    {
+      "name": "Austria",
+      "code": "AT",
+      "feeds": [
+        { "name": "ORF News", "url": "https://rss.orf.at/news.xml" },
+        { "name": "ORF Wien (Vienna Local/Business)", "url": "https://rss.orf.at/wien.xml" },
+        { "name": "Der Standard (Political Headlines)", "url": "https://www.derstandard.at/rss" },
+        { "name": "Der Standard (Economy)", "url": "https://www.derstandard.at/rss/wirtschaft" },
+        { "name": "Die Presse (Political Headlines)", "url": "https://www.diepresse.com/rss/Home" },
+        { "name": "Die Presse (Economy)", "url": "https://www.diepresse.com/rss/Wirtschaft" },
+        { "name": "Kurier (Top Daily)", "url": "https://kurier.at/xml/rss" },
+        { "name": "Kleine Zeitung (Top Regional Daily)", "url": "https://www.kleinezeitung.at/rss/home" },
+        { "name": "Finanzen.at (Stocks/Finance)", "url": "https://www.finanzen.at/rss/news" },
+        { "name": "Trend.at (Business Magazine)", "url": "https://www.trend.at/xml/rss" }
+      ]
+    },
+    {
+      "name": "Norway",
+      "code": "NO",
+      "feeds": [
+        { "name": "NRK Nyheter (Top Broadcaster)", "url": "https://www.nrk.no/nyheter/siste.rss" },
+        { "name": "VG (Verdens Gang)", "url": "https://www.vg.no/rss/feed" },
+        { "name": "E24 (Top Economics Portal)", "url": "https://e24.no/rss" },
+        { "name": "Aftenposten (Major Daily)", "url": "https://www.aftenposten.no/rss/" },
+        { "name": "Dagens Næringsliv (DN Economics)", "url": "https://services.dn.no/api/feed/rss/" },
+        { "name": "Finansavisen (Finance/Investment)", "url": "https://finansavisen.no/rss" },
+        { "name": "Teknisk Ukeblad (Tech/Energy/Marine)", "url": "https://www.tu.no/feed" },
+        { "name": "Nettavisen (Digital General News)", "url": "https://www.nettavisen.no/service/rich-rss" },
+        { "name": "Dagbladet (Major Daily)", "url": "https://www.dagbladet.no/?lab_viewport=rss" },
+        { "name": "E24 Energi (Energy/Marine Industry)", "url": "https://e24.no/energi/rss" }
+      ]
+    },
+    {
+      "name": "Thailand",
+      "code": "TH",
+      "feeds": [
+        { "name": "Thairath (Top News)", "url": "https://www.thairath.co.th/rss/news.xml" },
+        { "name": "Matichon (Leading Political Daily)", "url": "https://www.matichon.co.th/feed" },
+        { "name": "Prachachat (Business/Economy #1)", "url": "https://www.prachachat.net/feed" },
+        { "name": "Khaosod (Popular General News)", "url": "https://www.khaosod.co.th/feed" },
+        { "name": "Sanook News (Top Portal)", "url": "https://rssfeeds.sanook.com/rss/feeds/sanook/news.index.xml" },
+        { "name": "Sanook Economy (Portal Economy)", "url": "https://rssfeeds.sanook.com/rss/feeds/sanook/news.economic.xml" },
+        { "name": "Bangkok Biz News (Economy)", "url": "https://www.bangkokbiznews.com/rss/feed" },
+        { "name": "Manager Online (Politics/Society)", "url": "https://mgronline.com/rss" },
+        { "name": "Thai PBS (Public Broadcaster)", "url": "https://news.thaipbs.or.th/rss/news" },
+        { "name": "The Standard (Top Media)", "url": "https://thestandard.co/feed/" }
+      ]
+    }
+  ]
+}

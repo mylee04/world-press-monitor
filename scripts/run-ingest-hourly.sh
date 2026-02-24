@@ -42,6 +42,18 @@ if [ "${DB_HOST}" = "localhost" ] || [ "${DB_HOST}" = "127.0.0.1" ] || [ "${DB_H
   exit 1
 fi
 
+extract_db_user() {
+  local input=$1
+  if [[ "$input" != *"@"* ]]; then
+    echo 'postgres'
+    return
+  fi
+  local creds
+  creds="${input#*://}"
+  creds="${creds%%@*}"
+  echo "${creds%%:*}"
+}
+
 DB_CHECK_RESULT="ok"
 DNS_CHECK_OUTPUT=""
 
@@ -63,9 +75,9 @@ fi
 
 {
   printf '\n[%s] DB target: %s:%s\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')" "${DB_HOST}" "${DB_PORT}"
-  printf 'DATABASE_URL masked: postgresql://%s:***@%s\n' "$(printf '%s' "${DATABASE_URL#*//}" | awk -F@ '{print $1}')" "${DB_HOST_PORT}"
+  printf 'DATABASE_URL masked: postgresql://%s:***@%s\n' "$(extract_db_user "${DATABASE_URL}")" "${DB_HOST_PORT}"
   printf 'DNS precheck: %s\n' "${DB_CHECK_RESULT}"
-  if [ "${DB_CHECK_RESULT}" != "ok" ]; then
+if [ "${DB_CHECK_RESULT}" != "ok" ]; then
     printf 'DNS check output:\n'
     printf '%s\n' "${DNS_CHECK_OUTPUT}" | sed 's/^/  /'
   fi

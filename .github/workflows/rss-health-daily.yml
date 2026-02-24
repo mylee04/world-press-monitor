@@ -8,6 +8,9 @@ on:
     - cron: "30 6 * * *"
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   health:
     runs-on: ubuntu-latest
@@ -37,10 +40,7 @@ jobs:
 
       - name: Prune old ingest artifacts
         env:
-          NEWS_ARTICLES_RETENTION_DAYS: 5
-          INGEST_OPS_HOURLY_RETENTION_DAYS: 14
-          INGEST_OPS_DAILY_RETENTION_DAYS: 365
-          RSS_HEALTH_RETENTION_DAYS: 14
+          NEWS_ARTICLES_RETENTION_DAYS: 3
           INGEST_RETENTION_TZ: America/Chicago
         run: bun run ingest:retention
 

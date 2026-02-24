@@ -8,27 +8,18 @@ type CliOptions = {
   dryRun: boolean;
   writeJson: boolean;
   newsArticlesRetentionDays?: number;
-  ingestOpsHourlyRetentionDays?: number;
-  ingestOpsDailyRetentionDays?: number;
-  rssHealthRetentionDays?: number;
 };
 
 const argv = process.argv.slice(2);
 const options: CliOptions = {
   dryRun: argv.includes('--dry-run'),
   writeJson: parseBoolArg(argv, 'write-json'),
-  newsArticlesRetentionDays: parseIntArg(argv, 'news-retention-days'),
-  ingestOpsHourlyRetentionDays: parseIntArg(argv, 'ops-hourly-retention-days'),
-  ingestOpsDailyRetentionDays: parseIntArg(argv, 'ops-daily-retention-days'),
-  rssHealthRetentionDays: parseIntArg(argv, 'rss-health-retention-days')
+  newsArticlesRetentionDays: parseIntArg(argv, 'news-retention-days')
 };
 
 const result = await pruneExpiredIngestionData({
   dryRun: options.dryRun,
-  newsArticlesRetentionDays: options.newsArticlesRetentionDays,
-  ingestOpsHourlyRetentionDays: options.ingestOpsHourlyRetentionDays,
-  ingestOpsDailyRetentionDays: options.ingestOpsDailyRetentionDays,
-  rssHealthRetentionDays: options.rssHealthRetentionDays
+  newsArticlesRetentionDays: options.newsArticlesRetentionDays
 });
 
 if (result.storage !== 'postgres') {
@@ -36,13 +27,10 @@ if (result.storage !== 'postgres') {
   process.exitCode = 1;
 } else {
   const runMode = options.dryRun ? 'dry-run' : 'delete';
-  const total = result.deleted.newsArticles + result.deleted.ingestOpsHourly + result.deleted.ingestOpsDaily + result.deleted.rssHealthStatus;
+  const total = result.deleted.newsArticles;
 
   console.log(`[ingest-retention] mode=${runMode}`);
   console.log(`[ingest-retention] news_articles deleted=${result.deleted.newsArticles}`);
-  console.log(`[ingest-retention] ingest_ops_hourly deleted=${result.deleted.ingestOpsHourly}`);
-  console.log(`[ingest-retention] ingest_ops_daily deleted=${result.deleted.ingestOpsDaily}`);
-  console.log(`[ingest-retention] rss_health_status deleted=${result.deleted.rssHealthStatus}`);
   console.log(`[ingest-retention] total=${total}`);
 
   if (options.writeJson) {

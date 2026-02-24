@@ -3,7 +3,9 @@ import {
   readNewsApiFilters,
   type NewsApiItem
 } from '@/lib/ingestion-store';
-import { timingSafeEqual } from 'node:crypto';
+import { createHash, timingSafeEqual } from 'node:crypto';
+import { appendFileSync, existsSync, mkdirSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { createServer, type IncomingMessage, type ServerResponse } from 'node:http';
 
 type NewsApiResponse = {
@@ -54,6 +56,325 @@ type ApiError = {
   message: string;
 };
 
+type ApiRateLimitState = {
+  requestCount: number;
+  windowStart: number;
+  blockedUntil: number;
+};
+
+type ApiRateLimitDecision = {
+  limited: boolean;
+  reason?: string;
+  retryAfterSeconds?: number;
+  remaining: number;
+  limit: number;
+};
+
+type ApiPolicyRole = 'read' | 'admin';
+
+type ApiAuthPolicy = {
+  token: string;
+  tokenHash: string;
+  tenant: string | null;
+  roles: Set<'read' | 'admin'>;
+  allowedCountries?: string[];
+  allowedSources?: string[];
+  allowedSections?: string[];
+  allowedLanguages?: string[];
+  maxLimit: number;
+};
+
+type ApiAuthContext = {
+  tokenHash: string;
+  policy: ApiAuthPolicy;
+};
+
+const MAX_LIST_FILTER_VALUES = 50;
+const MAX_FILTER_VALUE_LEN = 160;
+const MAX_TOKEN_POLICY_VALUES = 500;
+const MAX_TOKEN_VALUE_LEN = 800;
+const REQUEST_AUDIT_PATH = resolve(process.cwd(), 'audits/api-news-audit.jsonl');
+const SECURITY_HEADERS = {
+  'X-Content-Type-Options': 'nosniff',
+  'X-Frame-Options': 'DENY',
+  'Referrer-Policy': 'no-referrer',
+  'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=()',
+  'Cross-Origin-Resource-Policy': 'same-site',
+  'Cross-Origin-Opener-Policy': 'same-origin',
+  'Cross-Origin-Embedder-Policy': 'require-corp',
+  'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
+  'X-Permitted-Cross-Domain-Policies': 'none',
+  'Content-Security-Policy':
+    "default-src 'none'; base-uri 'none'; script-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' data:;"
+};
+
+const AUDIT_TTL_MS = 5 * 60 * 1000;
+const apiAuditEntries = new Map<string, { expiresAt: number; remaining: number }>();
+
+function getApiAuditKey(req: IncomingMessage): string {
+  const ip = req.socket?.remoteAddress || 'unknown';
+  const userAgent = getHeaderValue(req.headers, 'user-agent') || '';
+  return `${ip}|${userAgent.slice(0, 24)}`;
+}
+
+function writeAuditLog(entry: {
+  startMs: number;
+  req: IncomingMessage;
+  status: number;
+  tokenHash?: string;
+  path: string;
+  reason?: string;
+}): void {
+  const key = getApiAuditKey(entry.req);
+  const cached = apiAuditEntries.get(key);
+  const now = Date.now();
+  const remaining = cached && cached.expiresAt > now ? cached.remaining : 0;
+  const remainingAfterUpdate = Math.max(0, remaining - 1);
+  apiAuditEntries.set(key, { expiresAt: now + AUDIT_TTL_MS, remaining: remainingAfterUpdate });
+
+  try {
+    mkdirSync(resolve(process.cwd(), 'audits'), { recursive: true });
+    const safeIp = entry.req.socket?.remoteAddress || 'unknown';
+    const logPayload = {
+      at: new Date(entry.startMs).toISOString(),
+      status: entry.status,
+      method: entry.req.method || 'GET',
+      path: entry.path,
+      tokenHash: entry.tokenHash || null,
+      ip: safeIp,
+      userAgent: getHeaderValue(entry.req.headers, 'user-agent'),
+      reason: entry.reason || null,
+      durationMs: Date.now() - entry.startMs
+    };
+    appendFileSync(REQUEST_AUDIT_PATH, `${JSON.stringify(logPayload)}\n`, 'utf8');
+  } catch {
+    // Ignore audit log failures intentionally to avoid breaking API traffic.
+  }
+}
+
+function parsePolicyList(raw: unknown): string[] {
+  if (!raw) return [];
+  if (Array.isArray(raw)) {
+    return [...new Set(
+      raw
+        .map((entry) => (typeof entry === 'string' ? entry.trim() : ''))
+        .filter((value) => value.length > 0)
+        .slice(0, MAX_TOKEN_POLICY_VALUES)
+    )];
+  }
+  return [...new Set(String(raw).split(',').map((entry) => entry.trim()).filter(Boolean))];
+}
+
+function normalizePolicyList(raw: unknown): string[] {
+  return parsePolicyList(raw)
+    .map((value) => value.toLowerCase())
+    .filter(Boolean);
+}
+
+function isSafeAuthToken(raw: string): boolean {
+  if (!raw) return false;
+  if (raw.length > MAX_TOKEN_VALUE_LEN) return false;
+  if (/[\r\n\0]/.test(raw)) return false;
+  return true;
+}
+
+function normalizePolicyFilterValue(raw: unknown): string[] {
+  return parsePolicyList(raw)
+    .map((value) => value.toLowerCase())
+    .filter(Boolean);
+}
+
+function parseTokenPolicies(): ApiAuthPolicy[] {
+  const rawBaseTokens = parsePolicyList(process.env.NEWS_API_TOKEN || process.env.NEWS_API_TOKENS);
+  const baseTokens: ApiAuthPolicy[] = [];
+  for (const token of rawBaseTokens) {
+    if (!isSafeAuthToken(token)) continue;
+    baseTokens.push({
+      token,
+      tokenHash: createHash('sha256').update(token).digest('hex'),
+      tenant: null,
+      roles: new Set<'read' | 'admin'>(['read']),
+      maxLimit: 200
+    });
+  }
+
+  const configuredPolicies = process.env.NEWS_API_TOKEN_POLICIES || '';
+  if (!configuredPolicies) return baseTokens;
+
+  try {
+    const parsed = JSON.parse(configuredPolicies) as unknown;
+    if (Array.isArray(parsed)) {
+      for (const item of parsed) {
+        if (!item || typeof item !== 'object') continue;
+        const token = (item as { token?: string }).token?.trim();
+        if (!token) continue;
+        if (!isSafeAuthToken(token)) continue;
+        const maxLimitRaw = Number((item as { maxLimit?: string | number }).maxLimit);
+        const maxLimit = Number.isFinite(maxLimitRaw) ? Math.max(1, Math.min(5000, Math.floor(maxLimitRaw))) : 200;
+        const rawRoles = parsePolicyList((item as { roles?: unknown }).roles);
+        const roles = rawRoles.length > 0
+          ? new Set(rawRoles.filter((role): role is 'read' | 'admin' => role === 'read' || role === 'admin'))
+          : new Set<'read' | 'admin'>(['read']);
+
+        baseTokens.push({
+          token,
+          tokenHash: createHash('sha256').update(token).digest('hex'),
+          tenant: String(((item as { tenant?: unknown }).tenant ?? '').toString().trim()) || null,
+          roles,
+          allowedCountries: normalizePolicyFilterValue((item as { allowedCountries?: unknown }).allowedCountries),
+          allowedSources: normalizePolicyFilterValue((item as { allowedSources?: unknown }).allowedSources),
+          allowedSections: normalizePolicyFilterValue((item as { allowedSections?: unknown }).allowedSections),
+          allowedLanguages: normalizePolicyFilterValue((item as { allowedLanguages?: unknown }).allowedLanguages),
+          maxLimit: roles.has('admin') ? 5000 : maxLimit
+        });
+      }
+    }
+  } catch {
+    console.error('[api-news] invalid NEWS_API_TOKEN_POLICIES JSON, ignoring structured policy entries.');
+  }
+  const deduped = new Map<string, ApiAuthPolicy>();
+  for (const policy of baseTokens) {
+    deduped.set(policy.tokenHash, policy);
+  }
+  return [...deduped.values()];
+}
+
+const tokenPolicies = parseTokenPolicies();
+
+if (!tokenPolicies.length) {
+  console.error('[api-news] NEWS_API_TOKEN or NEWS_API_TOKENS is required. Set it before starting.');
+  process.exit(1);
+}
+
+const rateLimitPerMinute = Math.max(
+  1,
+  Math.min(10000, Number.parseInt(process.env.NEWS_API_RATE_LIMIT_PER_MINUTE || '120', 10) || 120)
+);
+const rateLimitBlockSeconds = Math.max(
+  1,
+  Math.min(600, Number.parseInt(process.env.NEWS_API_RATE_LIMIT_BLOCK_SECONDS || '30', 10) || 30)
+);
+const rateLimitWindowMs = 60_000;
+const apiRateCounters = new Map<string, ApiRateLimitState>();
+const allowPublicDocs = /^1|true|yes$/i.test(process.env.NEWS_API_ALLOW_PUBLIC_DOCS || 'false');
+
+const maxOffset = Math.max(1, Math.min(100000, Number.parseInt(process.env.NEWS_API_MAX_OFFSET || '100000', 10) || 100000));
+
+function getAuthToken(req: IncomingMessage): string {
+  const header = getHeaderValue(req.headers, 'authorization');
+  const trimmed = header.trim();
+  if (!trimmed) return '';
+  const match = trimmed.match(/^Bearer\s+(.+)$/i);
+  return (match ? match[1] : trimmed).trim();
+}
+
+function secureTokenEquals(left: string, right: string): boolean {
+  if (left.length !== right.length) return false;
+  return timingSafeEqual(Buffer.from(left), Buffer.from(right));
+}
+
+function getMatchingAuthPolicy(authHeader: string): ApiAuthPolicy | undefined {
+  for (const policy of tokenPolicies) {
+    if (secureTokenEquals(authHeader, policy.token)) {
+      return policy;
+    }
+  }
+  return undefined;
+}
+
+function getAuthContext(req: IncomingMessage): ApiAuthContext | null {
+  const token = getAuthToken(req);
+  if (!token || !isSafeAuthToken(token)) return null;
+  const policy = getMatchingAuthPolicy(token);
+  if (!policy) return null;
+  return { tokenHash: policy.tokenHash, policy };
+}
+
+function isTenantAllowed(policy: ApiAuthPolicy, req: IncomingMessage): boolean {
+  if (!policy.tenant) return true;
+  const tenantHeader = getHeaderValue(req.headers, 'x-tenant-id').trim().toLowerCase();
+  if (!tenantHeader) return true;
+  return tenantHeader === policy.tenant.toLowerCase();
+}
+
+function hasScopeOrError(values: string[], allowed: string[] | undefined): { values: string[]; denied: boolean } {
+  if (!allowed || allowed.length === 0) {
+    return { values, denied: false };
+  }
+  if (values.length === 0) {
+    return { values: [...allowed], denied: false };
+  }
+  const lower = new Set(allowed.map((item) => item.toLowerCase()));
+  const filtered = values.filter((value) => lower.has(value.toLowerCase()));
+  return { values: filtered, denied: filtered.length === 0 };
+}
+
+function enforceRolePolicy(policy: ApiAuthPolicy, requiredRole: ApiPolicyRole): boolean {
+  return policy.roles.has(requiredRole);
+}
+
+function getApiRateLimitKey(req: IncomingMessage, tokenHash: string): string {
+  return `token:${tokenHash}`;
+}
+
+function checkRateLimit(key: string, limit: number): ApiRateLimitDecision {
+  const now = Date.now();
+  const current = apiRateCounters.get(key);
+  if (!current) {
+    apiRateCounters.set(key, { requestCount: 1, windowStart: now, blockedUntil: 0 });
+    return { limited: false, remaining: limit - 1, limit };
+  }
+
+  if (current.blockedUntil && current.blockedUntil > now) {
+    const retryAfterSeconds = Math.max(1, Math.ceil((current.blockedUntil - now) / 1000));
+    return {
+      limited: true,
+      reason: 'blocked',
+      retryAfterSeconds,
+      remaining: 0,
+      limit
+    };
+  }
+
+  if (now - current.windowStart >= rateLimitWindowMs) {
+    current.requestCount = 1;
+    current.windowStart = now;
+    current.blockedUntil = 0;
+    apiRateCounters.set(key, current);
+    return { limited: false, remaining: limit - 1, limit };
+  }
+
+  current.requestCount += 1;
+  if (current.requestCount <= limit) {
+    apiRateCounters.set(key, current);
+    return { limited: false, remaining: Math.max(0, limit - current.requestCount), limit };
+  }
+
+  current.blockedUntil = now + rateLimitBlockSeconds * 1000;
+  apiRateCounters.set(key, current);
+  return {
+    limited: true,
+    reason: 'rate_limit_exceeded',
+    retryAfterSeconds: rateLimitBlockSeconds,
+    remaining: 0,
+    limit
+  };
+}
+
+function isAllowedFilterValue(value: string): boolean {
+  if (!value) return false;
+  if (value.length > MAX_FILTER_VALUE_LEN) return false;
+  return !/[\u0000-\u001F<>`'"]/.test(value);
+}
+
+function normalizeFilterValues(values: string[]): string[] {
+  return [...new Set(
+    values
+      .map((value) => value.trim().toLowerCase())
+      .filter((value) => isAllowedFilterValue(value) && value.length > 0)
+  )].slice(0, MAX_LIST_FILTER_VALUES);
+}
+
 function parseIntParam(value: string | null, fallback: number, min: number, max: number): number {
   if (!value) return fallback;
   const parsed = Number(value);
@@ -72,12 +393,14 @@ function parseDateParam(value: string | null): string | null {
 
 function parseListParam(value: string | null): string[] {
   if (!value) return [];
-  return [...new Set(
+  const values = [...new Set(
     value
       .split(',')
       .map((entry) => entry.trim())
       .filter((entry) => entry.length > 0)
+      .filter((entry) => entry.length <= MAX_FILTER_VALUE_LEN)
   )];
+  return values.slice(0, MAX_LIST_FILTER_VALUES);
 }
 
 function getQueryList(searchParams: URLSearchParams, key: string): string[] {
@@ -922,91 +1245,42 @@ function getHeaderValue(headers: IncomingMessage['headers'], key: string): strin
   return value || '';
 }
 
-function parseAuthorizedTokens(): string[] {
-  const tokens = [process.env.NEWS_API_TOKEN, process.env.NEWS_API_TOKENS]
-    .flatMap((entry) => (entry ? entry.split(',') : []))
-    .map((entry) => entry.trim())
-    .filter(Boolean);
-  const unique = new Set<string>();
-  for (const token of tokens) {
-    unique.add(token);
+function applyFilterValues(values: string[], allowed: string[] | undefined): string[] {
+  if (!allowed || allowed.length === 0) return values;
+  const allowedSet = new Set(allowed.map((value) => value.toLowerCase()));
+  return values.filter((value) => allowedSet.has(value.toLowerCase()));
+}
+
+function formatRateLimitHeaders(decision: ApiRateLimitDecision): Record<string, string> {
+  const headers: Record<string, string> = {
+    'X-RateLimit-Limit': String(decision.limit),
+    'X-RateLimit-Remaining': String(decision.remaining),
+  };
+  if (decision.retryAfterSeconds && decision.retryAfterSeconds > 0) {
+    headers['Retry-After'] = String(decision.retryAfterSeconds);
   }
-  return [...unique];
+  return headers;
 }
 
-const authorizedTokens = parseAuthorizedTokens();
-
-const apiRequestRateLimitPerMinute = Math.max(
-  1,
-  Math.min(10000, Number.parseInt(process.env.NEWS_API_RATE_LIMIT_PER_MINUTE || '120', 10) || 120)
-);
-
-type RateWindow = {
-  count: number;
-  windowStart: number;
-};
-
-const apiRateCounters = new Map<string, RateWindow>();
-const RATE_LIMIT_WINDOW_MS = 60_000;
-
-function getAuthToken(req: IncomingMessage): string {
-  const header = getHeaderValue(req.headers, 'authorization');
-  const trimmed = header.trim();
-  if (!trimmed) return '';
-  const match = trimmed.match(/^Bearer\s+(.+)$/i);
-  return (match ? match[1] : trimmed).trim();
-}
-
-function secureTokenEquals(left: string, right: string): boolean {
-  if (left.length !== right.length) return false;
-  return timingSafeEqual(Buffer.from(left), Buffer.from(right));
-}
-
-function isAuthorized(req: IncomingMessage): boolean {
-  const token = getAuthToken(req);
-  if (!token || authorizedTokens.length === 0) return false;
-  return authorizedTokens.some((configuredToken) => secureTokenEquals(token, configuredToken));
-}
-
-function getClientRateKey(req: IncomingMessage, token: string): string {
-  if (token) return `token:${token}`;
-  return `ip:${req.socket?.remoteAddress || 'unknown'}`;
-}
-
-function isRateLimited(req: IncomingMessage, token: string): boolean {
-  const key = getClientRateKey(req, token);
-  const now = Date.now();
-  const existing = apiRateCounters.get(key);
-  if (!existing || now - existing.windowStart >= RATE_LIMIT_WINDOW_MS) {
-    apiRateCounters.set(key, { count: 1, windowStart: now });
-    return false;
-  }
-  existing.count += 1;
-  if (existing.count <= apiRequestRateLimitPerMinute) {
-    apiRateCounters.set(key, existing);
-    return false;
-  }
-  return true;
-}
-
-const port = Number(process.env.NEWS_API_PORT || '4100');
-const host = process.env.NEWS_API_HOST || '0.0.0.0';
-
-if (!authorizedTokens.length) {
-  console.error('[api-news] NEWS_API_TOKEN or NEWS_API_TOKENS is required. Set it before starting.');
-  process.exit(1);
-}
-
-function sendJsonResponse(req: IncomingMessage, res: ServerResponse, response: JsonResponse): void {
+function sendJsonResponse(
+  req: IncomingMessage,
+  res: ServerResponse,
+  response: JsonResponse,
+  rateLimitDecision?: ApiRateLimitDecision
+): void {
   const origin = getHeaderValue(req.headers, 'origin');
   const requestHost = req.headers.host || `${host}:${port}`;
   const cors = corsHeaders(origin, requestHost);
 
   res.statusCode = response.status;
   const headers = {
+    ...SECURITY_HEADERS,
     ...response.headers,
     ...cors,
+    ...(rateLimitDecision ? formatRateLimitHeaders(rateLimitDecision) : {}),
+    Vary: origin ? 'Origin' : 'Origin'
   };
+
   for (const [key, value] of Object.entries(headers)) {
     res.setHeader(key, value);
   }
@@ -1014,18 +1288,26 @@ function sendJsonResponse(req: IncomingMessage, res: ServerResponse, response: J
 }
 
 function sendHtmlResponse(req: IncomingMessage, res: ServerResponse, response: { status: number; headers: Record<string, string>; body: string }): void {
-  const origin = getHeaderValue(req.headers, 'origin');
-  const requestHost = req.headers.host || `${host}:${port}`;
-  const cors = corsHeaders(origin, requestHost);
-
-  res.statusCode = response.status;
-  for (const [key, value] of Object.entries({ ...response.headers, ...cors })) {
-    res.setHeader(key, value);
-  }
-  res.end(response.body);
+  sendJsonResponse(
+    req,
+    res,
+    {
+      status: response.status,
+      headers: {
+        'content-type': response.headers['content-type'],
+        'cache-control': response.headers['cache-control'] || 'no-store'
+      },
+      body: response.body
+    }
+  );
 }
 
+const port = Number(process.env.NEWS_API_PORT || '4100');
+const host = process.env.NEWS_API_HOST || '0.0.0.0';
+const apiDocPaths = new Set(['/openapi.json', '/docs', '/playground', '/ui']);
+
 const server = createServer(async (req: IncomingMessage, res: ServerResponse) => {
+  const requestStart = Date.now();
   if (!req.url) {
     sendJsonResponse(req, res, jsonResponse({ error: 'bad_request', message: 'Missing request URL.' }, 400));
     return;
@@ -1035,8 +1317,22 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
   const path = url.pathname.replace(/\/+$/, '') || '/';
   const origin = getHeaderValue(req.headers, 'origin');
   const requestHost = req.headers.host || `${host}:${port}`;
+  const method = (req.method || 'GET').toUpperCase();
+  const context = getAuthContext(req);
+  const isDocPath = apiDocPaths.has(path);
+  const requiresAuth = path !== '/health' && !(allowPublicDocs && isDocPath);
+  const policy = context?.policy;
+  const isAdminEndpoint = isDocPath;
+  const requiredRole: ApiPolicyRole = isAdminEndpoint ? 'admin' : 'read';
 
-  if (req.method === 'OPTIONS') {
+  const rateLimitDecision = context
+    ? checkRateLimit(
+      getApiRateLimitKey(req, context.tokenHash),
+      Math.max(1, Math.min(5000, policy?.maxLimit ?? rateLimitPerMinute))
+    )
+    : undefined;
+
+  if (method === 'OPTIONS') {
     if (origin && !isAllowedOrigin(origin, requestHost)) {
       sendJsonResponse(
         req,
@@ -1051,16 +1347,76 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
       );
       return;
     }
-    sendJsonResponse(req, res, jsonResponse({}, 204));
+    sendJsonResponse(req, res, jsonResponse({}, 204), rateLimitDecision);
     return;
   }
 
-  if (path !== '/health' && path !== '/openapi.json' && !isAuthorized(req)) {
+  if (rateLimitDecision?.limited) {
+    sendJsonResponse(
+      req,
+      res,
+      jsonResponse(
+        {
+          error: 'rate_limited',
+          message: 'Too many requests. Please retry after a short wait.'
+        },
+        429
+      ),
+      rateLimitDecision
+    );
+    return;
+  }
+
+  if (requiresAuth) {
+    if (!context || !enforceRolePolicy(context.policy, requiredRole)) {
+      sendJsonResponse(
+        req,
+        res,
+        unauthorizedResponse(),
+        rateLimitDecision
+      );
+      return;
+    }
+
+    if (!isTenantAllowed(context.policy, req)) {
+      writeAuditLog({
+        startMs: requestStart,
+        req,
+        status: 403,
+        tokenHash: context.tokenHash,
+        path,
+        reason: 'tenant_not_allowed'
+      });
+      sendJsonResponse(
+        req,
+        res,
+        jsonResponse({ error: 'forbidden', message: 'Tenant is not allowed.' }, 403),
+        rateLimitDecision
+      );
+      return;
+    }
+
+    if (origin && !isAllowedOrigin(origin, requestHost)) {
+      sendJsonResponse(
+        req,
+        res,
+        jsonResponse(
+          {
+            error: 'forbidden_origin',
+            message: 'CORS denied for this origin.'
+          },
+          403
+        ),
+        rateLimitDecision
+      );
+      return;
+    }
+  } else if (!allowPublicDocs) {
     sendJsonResponse(req, res, unauthorizedResponse());
     return;
   }
 
-  if (path !== '/health' && !isAllowedOrigin(origin, requestHost) && origin) {
+  if (requiresAuth && origin && !isAllowedOrigin(origin, requestHost)) {
     sendJsonResponse(
       req,
       res,
@@ -1070,30 +1426,13 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
           message: 'CORS denied for this origin.'
         },
         403
-      )
+      ),
+      rateLimitDecision
     );
     return;
   }
 
-  if (path !== '/health' && isAuthorized(req)) {
-    const token = getAuthToken(req);
-    if (isRateLimited(req, token)) {
-      sendJsonResponse(
-        req,
-        res,
-        jsonResponse(
-          {
-            error: 'rate_limited',
-            message: 'Too many requests. Please retry after a short wait.'
-          },
-          429
-        )
-      );
-      return;
-    }
-  }
-
-  if (req.method !== 'GET') {
+  if (method !== 'GET') {
     sendJsonResponse(
       req,
       res,
@@ -1103,7 +1442,8 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
           message: 'Only GET is supported.'
         },
         405
-      )
+      ),
+      rateLimitDecision
     );
     return;
   }
@@ -1116,13 +1456,13 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
       storage: health.storage,
       reason: health.reason
     };
-    sendJsonResponse(req, res, jsonResponse(response, 200));
+    sendJsonResponse(req, res, jsonResponse(response, 200), rateLimitDecision);
     return;
   }
 
   if (path === '/openapi.json') {
     const spec = openApiSpec as Record<string, unknown>;
-    sendJsonResponse(req, res, jsonResponse(spec, 200));
+    sendJsonResponse(req, res, jsonResponse(spec, 200), rateLimitDecision);
     return;
   }
 
@@ -1136,11 +1476,26 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
     return;
   }
 
+  if (!context || !policy) {
+    sendJsonResponse(req, res, unauthorizedResponse(), rateLimitDecision);
+    return;
+  }
+
   if (path === '/api/filters') {
     try {
       const now = Date.now();
       if (filtersCache && now - filtersCache.timestamp < filtersCacheTtlMs) {
-        sendJsonResponse(req, res, jsonResponse(filtersCache.payload, 200));
+        const cached: NewsFiltersResponse = filtersCache.payload;
+        const filteredPayload: NewsFiltersResponse = {
+          ...cached,
+          filters: {
+            countries: applyFilterValues(cached.filters.countries, policy.allowedCountries),
+            languages: applyFilterValues(cached.filters.languages, policy.allowedLanguages),
+            sources: applyFilterValues(cached.filters.sources, policy.allowedSources),
+            sections: applyFilterValues(cached.filters.sections, policy.allowedSections)
+          }
+        };
+        sendJsonResponse(req, res, jsonResponse(filteredPayload, 200), rateLimitDecision);
         return;
       }
 
@@ -1156,20 +1511,25 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
             sections: []
           }
         };
-        sendJsonResponse(req, res, jsonResponse(payload, 503));
+        sendJsonResponse(req, res, jsonResponse(payload, 503), rateLimitDecision);
         return;
       }
 
       const response: NewsFiltersResponse = {
         storage: 'postgres',
         reason: undefined,
-        filters: filters.filters
+        filters: {
+          countries: applyFilterValues(filters.filters.countries, policy.allowedCountries),
+          languages: applyFilterValues(filters.filters.languages, policy.allowedLanguages),
+          sources: applyFilterValues(filters.filters.sources, policy.allowedSources),
+          sections: applyFilterValues(filters.filters.sections, policy.allowedSections)
+        }
       };
       filtersCache = {
         payload: response,
         timestamp: now
       };
-      sendJsonResponse(req, res, jsonResponse(response, 200));
+      sendJsonResponse(req, res, jsonResponse(response, 200), rateLimitDecision);
     } catch (error) {
       console.error('[api-news] filters request failed', error);
       sendJsonResponse(
@@ -1181,7 +1541,8 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
             message: 'Failed to read filter options.'
           } satisfies ApiError,
           500
-        )
+        ),
+        rateLimitDecision
       );
     }
     return;
@@ -1189,12 +1550,34 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
 
   if (path === '/api/news') {
     try {
-      const sourceNames = getQueryList(url.searchParams, 'source');
-      const countries = getQueryList(url.searchParams, 'country');
-      const sections = getQueryList(url.searchParams, 'section');
-      const languages = getQueryList(url.searchParams, 'language');
-      const limit = parseIntParam(url.searchParams.get('limit'), 100, 1, 200);
-      const offset = parseIntParam(url.searchParams.get('offset'), 0, 0, 100000);
+      const sourceScope = hasScopeOrError(getQueryList(url.searchParams, 'source'), policy.allowedSources);
+      const countryScope = hasScopeOrError(getQueryList(url.searchParams, 'country'), policy.allowedCountries);
+      const sectionScope = hasScopeOrError(getQueryList(url.searchParams, 'section'), policy.allowedSections);
+      const languageScope = hasScopeOrError(getQueryList(url.searchParams, 'language'), policy.allowedLanguages);
+
+      if (sourceScope.denied || countryScope.denied || sectionScope.denied || languageScope.denied) {
+        sendJsonResponse(
+          req,
+          res,
+          jsonResponse(
+            {
+              error: 'forbidden_filter',
+              message: 'Requested filters are not allowed for this token.'
+            },
+            403
+          ),
+          rateLimitDecision
+        );
+        return;
+      }
+
+      const sourceNames = sourceScope.values;
+      const countries = countryScope.values;
+      const sections = sectionScope.values;
+      const languages = languageScope.values;
+      const maxLimit = Math.max(1, Math.min(5000, policy.maxLimit));
+      const limit = parseIntParam(url.searchParams.get('limit'), 100, 1, maxLimit);
+      const offset = parseIntParam(url.searchParams.get('offset'), 0, 0, maxOffset);
       const legacyFrom = parseDateParam(url.searchParams.get('from'));
       const legacyTo = parseDateParam(url.searchParams.get('to'));
       const from = parseDateParam(url.searchParams.get('publication_from')) || legacyFrom;
@@ -1223,7 +1606,8 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
               message: '`min_createdAt` must be <= `max_createdAt`.'
             },
             400
-          )
+          ),
+          rateLimitDecision
         );
         return;
       }
@@ -1238,7 +1622,8 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
               message: '`min_updatedAt` must be <= `max_updatedAt`.'
             },
             400
-          )
+          ),
+          rateLimitDecision
         );
         return;
       }
@@ -1253,7 +1638,8 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
               message: '`from` must be <= `to`.'
             },
             400
-          )
+          ),
+          rateLimitDecision
         );
         return;
       }
@@ -1279,7 +1665,7 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
           error: 'storage_unavailable',
           message: news.reason || 'News storage is not available.'
         };
-        sendJsonResponse(req, res, jsonResponse(errorPayload, 503));
+        sendJsonResponse(req, res, jsonResponse(errorPayload, 503), rateLimitDecision);
         return;
       }
 
@@ -1306,7 +1692,7 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
         },
         items: news.items
       };
-      sendJsonResponse(req, res, jsonResponse(response, 200));
+      sendJsonResponse(req, res, jsonResponse(response, 200), rateLimitDecision);
     } catch (error) {
       if (error instanceof Error && error.message === 'invalid-date') {
         sendJsonResponse(
@@ -1319,7 +1705,8 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
                 '`from`/`to`, `publication_from`/`publication_to`, `created_from`/`created_to`, `updated_from`/`updated_to` must be valid ISO date strings.'
             },
             400
-          )
+          ),
+          rateLimitDecision
         );
         return;
       }
@@ -1334,7 +1721,8 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
             message: 'Failed to read news articles.'
           },
           500
-        )
+        ),
+        rateLimitDecision
       );
     }
     return;
@@ -1349,7 +1737,8 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
         message: 'Endpoint not found.'
       },
       404
-    )
+    ),
+    rateLimitDecision
   );
 });
 

@@ -110,7 +110,10 @@ function sanitizeCommandText(value: string, command: string): string {
   output = output.replace(/(https?:\/\/)([^:\/\s@]+):([^@\/\s]+)@/g, '$1$2:***@');
   output = output.replace(/(token=)[^&\s#]+/gi, '$1***REDACTED***');
   output = output.replace(/(Bearer\s+)[A-Za-z0-9._-]+/gi, '$1***REDACTED***');
-  output = output.replace(new RegExp(command.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), '[redacted-command]');
+  output = output.replace(
+    new RegExp(command.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')),
+    '[redacted-command]'
+  );
   if (output.length <= COMMAND_OUTPUT_MAX_CHARS) {
     return output;
   }
