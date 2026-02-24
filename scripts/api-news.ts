@@ -1395,6 +1395,16 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
     return;
   }
 
+  if (path === '/healthz') {
+    const response: HealthzResponse = {
+      status: 'ok',
+      checkedAt: new Date().toISOString(),
+      service: 'api-news'
+    };
+    sendJsonResponse(req, res, jsonResponse(response, 200), rateLimitDecision);
+    return;
+  }
+
   if (requiresAuth) {
     if (!context || !enforceRolePolicy(context.policy, requiredRole)) {
       sendJsonResponse(
@@ -1473,16 +1483,6 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
       ),
       rateLimitDecision
     );
-    return;
-  }
-
-  if (path === '/healthz') {
-    const response: HealthzResponse = {
-      status: 'ok',
-      checkedAt: new Date().toISOString(),
-      service: 'api-news'
-    };
-    sendJsonResponse(req, res, jsonResponse(response, 200), rateLimitDecision);
     return;
   }
 
