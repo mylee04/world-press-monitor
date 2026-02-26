@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-02-26T16:13:34.646Z",
+  "generatedAt": "2026-02-26T17:33:45.778Z",
   "lastChecked": "2026-02-24T06:58:53.314Z",
   "countries": [
     {
@@ -740,7 +740,8 @@
           "status": null,
           "checkedDate": "02/23/2026",
           "valid": null,
-          "row": 26
+          "row": 26,
+          "enabled": false
         },
         {
           "name": "RTHK",
@@ -1338,7 +1339,8 @@
           "status": null,
           "checkedDate": "02/23/2026",
           "valid": null,
-          "row": 64
+          "row": 64,
+          "enabled": false
         },
         {
           "name": "President Online (Business)",
@@ -1346,7 +1348,8 @@
           "status": null,
           "checkedDate": "02/23/2026",
           "valid": null,
-          "row": 65
+          "row": 65,
+          "enabled": false
         },
         {
           "name": "Zenn (Tech)",
@@ -5349,7 +5352,8 @@
           "status": null,
           "checkedDate": "02/23/2026",
           "valid": null,
-          "row": 56
+          "row": 56,
+          "enabled": false
         },
         {
           "name": "NU.nl Economie (Portal Economy)",
@@ -5595,7 +5599,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 29
+          "row": 29,
+          "enabled": false
         },
         {
           "name": "Finews.ch (Swiss Finance)",
@@ -5620,7 +5625,8 @@
           "status": null,
           "checkedDate": "02/23/2026",
           "valid": null,
-          "row": 32
+          "row": 32,
+          "enabled": false
         },
         {
           "name": "Finanz und Wirtschaft",
@@ -6184,7 +6190,8 @@
           "status": null,
           "checkedDate": "02/23/2026",
           "valid": null,
-          "row": 22
+          "row": 22,
+          "enabled": false
         },
         {
           "name": "Arab News",
@@ -6192,7 +6199,8 @@
           "status": null,
           "checkedDate": "02/23/2026",
           "valid": null,
-          "row": 23
+          "row": 23,
+          "enabled": false
         },
         {
           "name": "Al Eqtisadiah (Economy - Arabic)",
@@ -6200,7 +6208,8 @@
           "status": null,
           "checkedDate": "02/23/2026",
           "valid": null,
-          "row": 24
+          "row": 24,
+          "enabled": false
         },
         {
           "name": "Saudi Press Agency (Arabic)",
@@ -6216,7 +6225,8 @@
           "status": null,
           "checkedDate": "02/23/2026",
           "valid": null,
-          "row": 26
+          "row": 26,
+          "enabled": false
         },
         {
           "name": "Al Arabiya (Business - Arabic)",
@@ -6224,7 +6234,8 @@
           "status": null,
           "checkedDate": "02/23/2026",
           "valid": null,
-          "row": 27
+          "row": 27,
+          "enabled": false
         },
         {
           "name": "Argaam (Arabic Economy/Stocks #1)",
