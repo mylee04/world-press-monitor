@@ -545,15 +545,21 @@ function chunk<T>(items: T[], size: number): T[][] {
 }
 
 function parseNewsSection(value: string | null | undefined): NewsItem['section'] {
-  const candidate = (value || 'general').toLowerCase();
+  const candidate = (value || 'others').toLowerCase();
+  if (candidate === 'security') return 'tech';
+  if (candidate === 'general') return 'others';
   return candidate === 'politics'
     || candidate === 'business'
     || candidate === 'tech'
-    || candidate === 'security'
+    || candidate === 'sports'
+    || candidate === 'health'
+    || candidate === 'arts'
+    || candidate === 'science'
     || candidate === 'climate'
     || candidate === 'world'
+    || candidate === 'others'
     ? (candidate as NewsItem['section'])
-    : 'general';
+    : 'others';
 }
 
 type NewsArticleReadRow = {
@@ -960,7 +966,7 @@ export async function readNewsArticles(options: {
       e.language,
       null::text as source_type,
       null::int as tier,
-      coalesce(e.section, 'general') as section,
+      coalesce(e.section, 'others') as section,
       null::text as classification_source,
       null::text as classification_reason,
       null::real as confidence,

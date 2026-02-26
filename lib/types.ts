@@ -1,11 +1,24 @@
-export type NewsSection = 'politics' | 'business' | 'tech' | 'security' | 'climate' | 'world' | 'general';
+export type NewsSection =
+  | 'politics'
+  | 'business'
+  | 'tech'
+  | 'sports'
+  | 'health'
+  | 'arts'
+  | 'science'
+  | 'climate'
+  | 'world'
+  | 'others';
 export type SourceCategory =
   | 'global'
   | 'politics'
   | 'business'
   | 'tech'
-  | 'world'
-  | 'security';
+  | 'sports'
+  | 'health'
+  | 'arts'
+  | 'science'
+  | 'world';
 
 export type OutletTier = 1 | 2 | 3;
 

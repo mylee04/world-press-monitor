@@ -1,0 +1,53 @@
+import type { LocaleKeywordMap } from './types';
+
+export const PT_HIGH: LocaleKeywordMap = {
+  política: 'politics',
+  politica: 'politics',
+  eleições: 'politics',
+  eleicoes: 'politics',
+  congresso: 'politics',
+  presidente: 'politics',
+  economia: 'business',
+  finanças: 'business',
+  financas: 'business',
+  bolsa: 'business',
+  inflação: 'business',
+  inflacao: 'business',
+  tecnologia: 'tech',
+  cibersegurança: 'tech',
+  ciberseguranca: 'tech',
+  esporte: 'sports',
+  esportes: 'sports',
+  futebol: 'sports',
+  basquete: 'sports',
+  olimpíadas: 'sports',
+  olimpiadas: 'sports',
+  saúde: 'health',
+  saude: 'health',
+  hospital: 'health',
+  vacina: 'health',
+  arte: 'arts',
+  cultura: 'arts',
+  cinema: 'arts',
+  música: 'arts',
+  musica: 'arts',
+  ciência: 'science',
+  ciencia: 'science',
+  pesquisa: 'science',
+  astronomia: 'science',
+  clima: 'climate',
+  enchente: 'climate',
+  seca: 'climate',
+  incêndio: 'climate',
+  incendio: 'climate'
+};
+
+export const PT_MEDIUM: LocaleKeywordMap = {
+  investimento: 'business',
+  campeonato: 'sports',
+  epidemia: 'health',
+  exposição: 'arts',
+  exposicao: 'arts',
+  laboratório: 'science',
+  laboratorio: 'science'
+};

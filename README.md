@@ -65,6 +65,28 @@ Data retention policy used by the daily job:
 Retention values can be changed at runtime by setting:
 - `NEWS_ARTICLES_RETENTION_DAYS`
 
+## Beat Classification Strategy
+
+Classification uses a hybrid order for better multilingual accuracy and cost control:
+
+1. RSS category metadata first (`category`, `dc:subject`, atom `category term`) when available
+2. Locale keyword rules as fallback/augmentation
+3. LLM fallback only for low-confidence cases
+
+Locale keyword dictionaries are split by language under:
+
+- `lib/classifier/locales/en.ts`
+- `lib/classifier/locales/es.ts`
+- `lib/classifier/locales/ko.ts`
+- `lib/classifier/locales/ja.ts`
+- `lib/classifier/locales/fr.ts`
+- `lib/classifier/locales/ru.ts`
+- `lib/classifier/locales/it.ts`
+- `lib/classifier/locales/pt.ts`
+- `lib/classifier/locales/zh.ts`
+- `lib/classifier/locales/vi.ts`
+- `lib/classifier/locales/nl.ts`
+
 
 
 
@@ -1664,4 +1686,3 @@ Retention values can be changed at runtime by setting:
 9|Energy Post|<https://energypost.eu/feed/>|200|02/24/2026|valid|0|0|
 10|Energy Storage News|<https://www.energy-storage.news/rss>|200|02/24/2026|valid|250|3400|
 11|Energy Storage News|<https://www.energy-storage.news/feed>|200|02/24/2026|valid|250|3400|
-

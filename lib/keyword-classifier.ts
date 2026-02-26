@@ -1,4 +1,5 @@
 import type { NewsSection, SectionClassification } from '@/lib/types';
+import { HIGH_PRIORITY_KEYWORDS, MEDIUM_PRIORITY_KEYWORDS } from '@/lib/classifier/locales';
 
 const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 const DEFAULT_GROQ_MODEL = 'llama-3.1-8b-instant';
@@ -11,6 +12,7 @@ type ClassifyParams = {
   title: string;
   fallbackSection?: NewsSection;
   summary?: string;
+  feedCategories?: string[];
 };
 
 type CachedSectionClassification = {
@@ -20,116 +22,44 @@ type CachedSectionClassification = {
 
 const AI_CLASSIFIER_CACHE = new Map<string, CachedSectionClassification>();
 
-const SHOULD_USE_AI_CLASSIFIER = (process.env.BEAT_CLASSIFIER_ENABLED || 'true').toLowerCase() !== 'false';
-const AI_TRIGGER_CONFIDENCE = clampEnvFloat('BEAT_CLASSIFIER_TRIGGER_CONFIDENCE', DEFAULT_TRIGGER_CONFIDENCE, 0.0, 0.99);
-const AI_MIN_CONFIDENCE = clampEnvFloat('BEAT_CLASSIFIER_MIN_AI_CONFIDENCE', DEFAULT_AI_MIN_CONFIDENCE, 0.01, 1.0);
-const AI_CACHE_TTL_MS = envInt('BEAT_CLASSIFIER_CACHE_TTL_MS', 6 * 60 * 60 * 1000, 60 * 60 * 1000);
-const AI_TIMEOUT_MS = envInt('BEAT_CLASSIFIER_AI_TIMEOUT_MS', 3500, 500);
-const AI_CONCURRENCY = Math.max(1, Math.min(64, envInt('BEAT_CLASSIFIER_AI_CONCURRENCY', 8, 1, 64)));
+const SHOULD_USE_AI_CLASSIFIER = (process.env.CATEGORY_CLASSIFIER_ENABLED || 'false').toLowerCase() !== 'false';
+const AI_TRIGGER_CONFIDENCE = clampEnvFloat('CATEGORY_CLASSIFIER_TRIGGER_CONFIDENCE', DEFAULT_TRIGGER_CONFIDENCE, 0.0, 0.99);
+const AI_MIN_CONFIDENCE = clampEnvFloat('CATEGORY_CLASSIFIER_MIN_AI_CONFIDENCE', DEFAULT_AI_MIN_CONFIDENCE, 0.01, 1.0);
+const AI_CACHE_TTL_MS = envInt('CATEGORY_CLASSIFIER_CACHE_TTL_MS', 6 * 60 * 60 * 1000, 60 * 60 * 1000);
+const AI_TIMEOUT_MS = envInt('CATEGORY_CLASSIFIER_AI_TIMEOUT_MS', 3500, 500);
+const AI_CONCURRENCY = Math.max(1, Math.min(64, envInt('CATEGORY_CLASSIFIER_AI_CONCURRENCY', 8, 1, 64)));
 
 let aiConcurrentCalls = 0;
 const aiCallQueue: Array<() => void> = [];
 
 type KeywordMap = Record<string, NewsSection>;
 
-const HIGH_PRIORITY: KeywordMap = {
-  election: 'politics',
-  elections: 'politics',
-  vote: 'politics',
-  voting: 'politics',
-  parliament: 'politics',
-  senate: 'politics',
-  congress: 'politics',
-  governor: 'politics',
-  mayor: 'politics',
-  minister: 'politics',
-  president: 'politics',
-  ministry: 'politics',
+const HIGH_PRIORITY: KeywordMap = HIGH_PRIORITY_KEYWORDS;
+const MEDIUM_PRIORITY: KeywordMap = MEDIUM_PRIORITY_KEYWORDS;
+const FEED_CATEGORY_MAP: Record<string, NewsSection> = {
+  politics: 'politics',
+  political: 'politics',
   policy: 'politics',
-  sanctions: 'politics',
-  ceasefire: 'politics',
-  tariff: 'business',
-  inflation: 'business',
-  cpi: 'business',
-  recession: 'business',
-  gdp: 'business',
-  rates: 'business',
-  jobs: 'business',
-  employment: 'business',
-  layoffs: 'business',
-  earnings: 'business',
-  stocks: 'business',
+  business: 'business',
+  economy: 'business',
+  economics: 'business',
+  finance: 'business',
   market: 'business',
   markets: 'business',
-  oil: 'business',
-  gas: 'business',
-  bitcoin: 'business',
-  ai: 'tech',
-  llm: 'tech',
-  chip: 'tech',
-  chips: 'tech',
-  startup: 'tech',
-  startups: 'tech',
-  software: 'tech',
-  cloud: 'tech',
-  semiconductors: 'tech',
-  datacenter: 'tech',
-  datacenters: 'tech',
-  cybersecurity: 'security',
-  ransomware: 'security',
-  malware: 'security',
-  war: 'security',
-  strike: 'security',
+  tech: 'tech',
+  technology: 'tech',
+  science: 'science',
+  sports: 'sports',
+  sport: 'sports',
+  health: 'health',
+  arts: 'arts',
+  art: 'arts',
+  culture: 'arts',
   climate: 'climate',
-  wildfire: 'climate',
-  flood: 'climate',
-  hurricane: 'climate',
-  eleccion: 'politics',
-  elecciones: 'politics',
-  congreso: 'politics',
-  senado: 'politics',
-  presidente: 'politics',
-  gobierno: 'politics',
-  ministerio: 'politics',
-  economia: 'business',
-  inflación: 'business',
-  inflacion: 'business',
-  mercado: 'business',
-  mercados: 'business',
-  finanzas: 'business',
-  negocio: 'business',
-  negocios: 'business',
-  bolsa: 'business',
-  tecnología: 'tech',
-  tecnologia: 'tech',
-  ciberseguridad: 'security'
-};
-
-const MEDIUM_PRIORITY: KeywordMap = {
-  regulation: 'politics',
-  campaign: 'politics',
-  diplomacy: 'politics',
-  treaty: 'politics',
-  budget: 'business',
-  investment: 'business',
-  revenue: 'business',
-  merger: 'business',
-  acquisition: 'business',
-  'open source': 'tech',
-  smartphone: 'tech',
-  telecom: 'tech',
-  breach: 'security',
-  military: 'security',
-  emissions: 'climate',
-  drought: 'climate',
-  presupuesto: 'business',
-  inversión: 'business',
-  inversion: 'business',
-  campaña: 'politics',
-  regulacion: 'politics',
-  regulación: 'politics',
-  nube: 'tech',
-  militar: 'security'
+  world: 'world',
+  general: 'others',
+  others: 'others',
+  security: 'tech',
 };
 
 const SHORT_KEYWORDS = new Set(['ai', 'war', 'gdp']);
@@ -154,7 +84,55 @@ function matchMap(title: string, map: KeywordMap): { section: NewsSection; keywo
   return null;
 }
 
-export function classifySectionByKeyword(title: string, fallbackSection: NewsSection = 'general'): SectionClassification {
+export function classifySectionByFeedCategories(categories: string[] = [], fallbackSection: NewsSection = 'others'): SectionClassification | null {
+  const normalized = categories
+    .map((category) => normalizeText(category))
+    .map((value) => value.slice(0, 120))
+    .filter(Boolean);
+
+  for (const category of normalized) {
+    const direct = FEED_CATEGORY_MAP[category];
+    if (direct) {
+      return {
+        section: direct,
+        confidence: 0.9,
+        source: 'keyword',
+        reason: `Mapped feed category: ${category}`
+      };
+    }
+
+    const high = matchMap(category, HIGH_PRIORITY);
+    if (high) {
+      return {
+        section: high.section,
+        confidence: 0.86,
+        source: 'keyword',
+        reason: `Matched feed category keyword: ${high.keyword}`
+      };
+    }
+
+    const medium = matchMap(category, MEDIUM_PRIORITY);
+    if (medium) {
+      return {
+        section: medium.section,
+        confidence: 0.75,
+        source: 'keyword',
+        reason: `Matched feed category keyword: ${medium.keyword}`
+      };
+    }
+  }
+
+  return normalized.length > 0
+    ? {
+        section: fallbackSection,
+        confidence: 0.55,
+        source: 'keyword',
+        reason: 'Feed categories present but not mappable; used fallback section'
+      }
+    : null;
+}
+
+export function classifySectionByKeyword(title: string, fallbackSection: NewsSection = 'others'): SectionClassification {
   const high = matchMap(title, HIGH_PRIORITY);
   if (high) {
     return {
@@ -181,21 +159,26 @@ export function classifySectionByKeyword(title: string, fallbackSection: NewsSec
 export async function classifySection(params: ClassifyParams): Promise<SectionClassification> {
   const title = (params.title || '').trim();
   const summary = (params.summary || '').trim();
-  const fallbackSection = params.fallbackSection || 'general';
+  const fallbackSection = params.fallbackSection || 'others';
+  const feedCategories = params.feedCategories || [];
 
+  // Hybrid order: feed categories -> keyword -> LLM fallback for low-confidence cases.
+  const categoryResult = classifySectionByFeedCategories(feedCategories, fallbackSection);
   const keywordResult = classifySectionByKeyword(title, fallbackSection);
-  if (!SHOULD_USE_AI_CLASSIFIER || !title) return keywordResult;
-  if (keywordResult.confidence >= AI_TRIGGER_CONFIDENCE) return keywordResult;
+  const baseResult = categoryResult && categoryResult.confidence >= keywordResult.confidence ? categoryResult : keywordResult;
+
+  if (!SHOULD_USE_AI_CLASSIFIER || !title) return baseResult;
+  if (baseResult.confidence >= AI_TRIGGER_CONFIDENCE) return baseResult;
 
   const groqKey = process.env.GROQ_API_KEY?.trim();
-  if (!groqKey) return keywordResult;
+  if (!groqKey) return baseResult;
 
-  const cacheKey = buildCacheKey(title, summary, fallbackSection);
+  const cacheKey = buildCacheKey(title, summary, fallbackSection, feedCategories);
   const cached = readCache(cacheKey);
   if (cached) return cached;
 
   const aiResult = await withAiConcurrency(() => callGroqClassifier(groqKey, title, summary, fallbackSection));
-  const finalResult = aiResult && aiResult.confidence > keywordResult.confidence ? aiResult : keywordResult;
+  const finalResult = aiResult && aiResult.confidence > baseResult.confidence ? aiResult : baseResult;
   writeCache(cacheKey, finalResult);
   return finalResult;
 }
@@ -253,14 +236,27 @@ function normalizeText(value: string): string {
 }
 
 function parseSection(value: string): NewsSection {
-  if (value === 'politics' || value === 'business' || value === 'tech' || value === 'security' || value === 'climate' || value === 'world' || value === 'general') {
+  if (value === 'security') return 'tech';
+  if (value === 'general') return 'others';
+  if (
+    value === 'politics'
+    || value === 'business'
+    || value === 'tech'
+    || value === 'sports'
+    || value === 'health'
+    || value === 'arts'
+    || value === 'science'
+    || value === 'climate'
+    || value === 'world'
+    || value === 'others'
+  ) {
     return value;
   }
-  return 'general';
+  return 'others';
 }
 
-function buildCacheKey(title: string, summary: string, fallbackSection: NewsSection): string {
-  const source = `${fallbackSection}|${normalizeText(title)}|${normalizeText(summary).slice(0, CLASSIFY_MAX_SUMMARY_CHARS)}`;
+function buildCacheKey(title: string, summary: string, fallbackSection: NewsSection, feedCategories: string[]): string {
+  const source = `${fallbackSection}|${normalizeText(title)}|${normalizeText(summary).slice(0, CLASSIFY_MAX_SUMMARY_CHARS)}|${normalizeText(feedCategories.join(','))}`;
   return source;
 }
 
@@ -287,7 +283,7 @@ function writeCache(key: string, result: SectionClassification): void {
 
 async function callGroqClassifier(apiKey: string, title: string, summary: string, fallbackSection: NewsSection): Promise<SectionClassification | null> {
   const payload = {
-    model: process.env.BEAT_CLASSIFIER_GROQ_MODEL || DEFAULT_GROQ_MODEL,
+    model: process.env.CATEGORY_CLASSIFIER_GROQ_MODEL || DEFAULT_GROQ_MODEL,
     temperature: 0,
     max_tokens: 180,
     response_format: { type: 'json_object' },
@@ -296,7 +292,7 @@ async function callGroqClassifier(apiKey: string, title: string, summary: string
         role: 'system',
         content: [
           'Classify newsroom headlines into one section.',
-          'Allowed sections: politics, business, tech, security, climate, world, general.',
+          'Allowed sections: politics, business, tech, sports, health, arts, science, climate, world, others.',
           'Use the headline first, then short summary as context.',
           'Return strict JSON object only.',
           'Schema: {"section":"...","confidence":0.0,"reason":"..."}.'

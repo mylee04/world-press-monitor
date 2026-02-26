@@ -226,7 +226,7 @@ function loadAtlasOutlets(): OutletFeed[] {
           id: makeOutletId(countryName, feed.name, feed.url),
           name: feed.name,
           tier: 1 as OutletTier,
-          section: 'general',
+          section: 'others',
           categories: ['global'],
           language: 'en',
           sourceType: 'global',
@@ -943,13 +943,18 @@ function dedupeAndSort(items: NewsItem[]): NewsItem[] {
 
 async function toNewsItem(
   outlet: OutletFeed,
-  row: { title: string; description?: string; link: string; publishedAt: string },
+  row: { title: string; description?: string; link: string; publishedAt: string; categories?: string[] },
   fallbackPublishedAt: string
 ): Promise<NewsItem> {
   const normalizedCountry = normalizeCountryName(outlet.country);
   const geo = inferGeoFromTitle(row.title, normalizedCountry);
-  const fallbackSection = outlet.section || 'general';
-  const classification = await classifySection({ title: row.title, summary: row.description, fallbackSection });
+  const fallbackSection = outlet.section || 'others';
+  const classification = await classifySection({
+    title: row.title,
+    summary: row.description,
+    fallbackSection,
+    feedCategories: row.categories || []
+  });
   const section = classification.section;
   const isFallbackPublishedAt = !row.publishedAt;
   const publishedAt = row.publishedAt || fallbackPublishedAt;

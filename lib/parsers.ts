@@ -3,6 +3,7 @@ export interface ParsedFeedItem {
   description?: string;
   link: string;
   publishedAt: string;
+  categories?: string[];
 }
 
 export interface ParsedFeedStats {
@@ -24,6 +25,7 @@ interface ParsedFeedItemWithMissing {
   description: string;
   link: string;
   publishedAt: string;
+  categories: string[];
   missingTitle: boolean;
   missingSummary: boolean;
   missingLink: boolean;
@@ -37,6 +39,29 @@ function clean(text: string): string {
 function parseTag(body: string, tag: string): string {
   const match = body.match(new RegExp(`<${tag}[^>]*>([\\s\\S]*?)<\\/${tag}>`, 'i'));
   return match ? clean(match[1] || '') : '';
+}
+
+function parseTags(body: string, tag: string): string[] {
+  return [...body.matchAll(new RegExp(`<${tag}[^>]*>([\\s\\S]*?)<\\/${tag}>`, 'gi'))]
+    .map((match) => clean(match[1] || ''))
+    .filter(Boolean);
+}
+
+function parseAtomCategoryTerms(body: string): string[] {
+  return [...body.matchAll(/<category[^>]*\bterm=["']([^"']+)["'][^>]*>/gi)]
+    .map((match) => clean(match[1] || ''))
+    .filter(Boolean);
+}
+
+function parseCategories(body: string, atomMode = false): string[] {
+  const raw = atomMode
+    ? [...parseAtomCategoryTerms(body), ...parseTags(body, 'category')]
+    : [...parseTags(body, 'category'), ...parseTags(body, 'dc:subject')];
+  const normalized = raw
+    .map((value) => stripHtml(value).slice(0, 140))
+    .map((value) => value.trim())
+    .filter(Boolean);
+  return [...new Set(normalized)].slice(0, 10);
 }
 
 function stripHtml(value: string): string {
@@ -119,6 +144,7 @@ function toItems(rows: ParsedFeedItemWithMissing[]): ParsedFeedItem[] {
       description: row.description,
       link: row.link,
       publishedAt: row.publishedAt,
+      categories: row.categories,
     }));
 }
 
@@ -135,11 +161,13 @@ export function parseRssOrAtomWithStats(xml: string, limit = 10): ParsedFeedBatc
       const link = parseTag(body, 'link');
       const description = parseDescription(body);
       const publishedAt = parsePublishedAt(body, link);
+      const categories = parseCategories(body);
       return {
         title,
         description,
         link,
         publishedAt,
+        categories,
         missingTitle: !title,
         missingLink: !link,
         missingSummary: !description,
@@ -162,11 +190,13 @@ export function parseRssOrAtomWithStats(xml: string, limit = 10): ParsedFeedBatc
       const title = parseTag(body, 'title');
       const description = parseDescription(body);
       const publishedAt = parsePublishedAt(body, linkHref);
+      const categories = parseCategories(body, true);
       return {
         title,
         description,
         link: linkHref,
         publishedAt,
+        categories,
         missingTitle: !title,
         missingLink: !linkHref,
         missingSummary: !description,
@@ -197,6 +227,7 @@ export function parseSitemapWithStats(xml: string, limit = 12): ParsedFeedBatch 
         description: '',
         link,
         publishedAt,
+        categories: [],
         missingTitle: !title,
         missingLink: !link,
         missingSummary: true,
