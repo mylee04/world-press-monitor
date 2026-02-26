@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-02-26T15:11:40.759Z",
+  "generatedAt": "2026-02-26T16:13:34.646Z",
   "lastChecked": "2026-02-24T06:58:53.314Z",
   "countries": [
     {
@@ -667,7 +667,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 17
+          "row": 17,
+          "enabled": false
         },
         {
           "name": "China Daily - EU Weekly",
@@ -809,7 +810,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/19/2026",
           "valid": "needs verification",
-          "row": 2
+          "row": 2,
+          "enabled": false
         },
         {
           "name": "Asahi Shimbun",
@@ -817,7 +819,8 @@
           "status": "ERR",
           "checkedDate": "02/18/2026",
           "valid": "invalid",
-          "row": 3
+          "row": 3,
+          "enabled": false
         },
         {
           "name": "The Japan Times",
@@ -1065,7 +1068,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 34
+          "row": 34,
+          "enabled": false
         },
         {
           "name": "INTERNET Watch (Impress)",
@@ -1073,7 +1077,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 35
+          "row": 35,
+          "enabled": false
         },
         {
           "name": "Impress Watch (総合)",
@@ -1098,7 +1103,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 38
+          "row": 38,
+          "enabled": false
         },
         {
           "name": "Yahoo Japan - Business",
@@ -1130,7 +1136,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 42
+          "row": 42,
+          "enabled": false
         },
         {
           "name": "Bloomberg Japan",
@@ -1138,7 +1145,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 43
+          "row": 43,
+          "enabled": false
         },
         {
           "name": "Forbes Japan",
@@ -1146,7 +1154,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 44
+          "row": 44,
+          "enabled": false
         },
         {
           "name": "Kyodo News",
@@ -1178,7 +1187,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 48
+          "row": 48,
+          "enabled": false
         },
         {
           "name": "Sankei Economy",
@@ -1204,7 +1214,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 51
+          "row": 51,
+          "enabled": false
         },
         {
           "name": "Boundless (TechCrunch Japan Archive)",
@@ -1212,7 +1223,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 52
+          "row": 52,
+          "enabled": false
         },
         {
           "name": "Smart Japan",
@@ -1228,7 +1240,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 54
+          "row": 54,
+          "enabled": false
         },
         {
           "name": "Yomiuri Latest",
@@ -1236,7 +1249,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 55
+          "row": 55,
+          "enabled": false
         },
         {
           "name": "Mainichi Flash",
@@ -1244,7 +1258,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 56
+          "row": 56,
+          "enabled": false
         },
         {
           "name": "Gizmodo Japan",
@@ -1262,7 +1277,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 58
+          "row": 58,
+          "enabled": false
         },
         {
           "name": "PR TIMES - Technology",
@@ -1772,7 +1788,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 47
+          "row": 47,
+          "enabled": false
         },
         {
           "name": "Tagesschau",
@@ -2136,7 +2153,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 22
+          "row": 22,
+          "enabled": false
         },
         {
           "name": "The Guardian UK",
@@ -2238,7 +2256,8 @@
           "status": null,
           "checkedDate": null,
           "valid": null,
-          "row": 6
+          "row": 6,
+          "enabled": false
         },
         {
           "name": "Sud Ouest",
@@ -2310,7 +2329,8 @@
           "status": null,
           "checkedDate": null,
           "valid": null,
-          "row": 18
+          "row": 18,
+          "enabled": false
         },
         {
           "name": "France Today",
@@ -2600,7 +2620,8 @@
           "status": null,
           "checkedDate": null,
           "valid": null,
-          "row": 14
+          "row": 14,
+          "enabled": false
         },
         {
           "name": "Corriere della Sera (feed-hp Homepage)",
@@ -2680,7 +2701,8 @@
           "status": null,
           "checkedDate": null,
           "valid": null,
-          "row": 24
+          "row": 24,
+          "enabled": false
         },
         {
           "name": "Wanted in Rome",
@@ -2952,7 +2974,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 51
+          "row": 51,
+          "enabled": false
         },
         {
           "name": "CTV News - Business",
@@ -2992,7 +3015,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 55
+          "row": 55,
+          "enabled": false
         },
         {
           "name": "CBC News - Business",
@@ -3248,7 +3272,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 6
+          "row": 6,
+          "enabled": false
         },
         {
           "name": "Daily NK (EN)",
@@ -3280,7 +3305,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 10
+          "row": 10,
+          "enabled": false
         },
         {
           "name": "한국경제 - 전체뉴스",
@@ -3496,7 +3522,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 41
+          "row": 41,
+          "enabled": false
         },
         {
           "name": "조선닷컴 (전체)",
@@ -3582,7 +3609,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 10
+          "row": 10,
+          "enabled": false
         },
         {
           "name": "Veja",
@@ -3768,7 +3796,8 @@
           "status": "ERR",
           "checkedDate": "02/18/2026",
           "valid": "invalid",
-          "row": 7
+          "row": 7,
+          "enabled": false
         },
         {
           "name": "The Guardian Australia",
@@ -3864,7 +3893,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 29
+          "row": 29,
+          "enabled": false
         },
         {
           "name": "7news",
@@ -3932,7 +3962,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 37
+          "row": 37,
+          "enabled": false
         },
         {
           "name": "AFR (Financial Review)",
@@ -4002,7 +4033,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/19/2026",
           "valid": "needs verification",
-          "row": 11
+          "row": 11,
+          "enabled": false
         },
         {
           "name": "20 Minutos",
@@ -4034,7 +4066,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 19
+          "row": 19,
+          "enabled": false
         },
         {
           "name": "El Pais",
@@ -4204,7 +4237,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 45
+          "row": 45,
+          "enabled": false
         },
         {
           "name": "El Economista - Mercados (주식/마켓)",
@@ -4254,7 +4288,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 50
+          "row": 50,
+          "enabled": false
         },
         {
           "name": "ABC.es",
@@ -4326,7 +4361,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 61
+          "row": 61,
+          "enabled": false
         },
         {
           "name": "ADN40 (TV Azteca - Mexico)",
@@ -4336,7 +4372,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 62
+          "row": 62,
+          "enabled": false
         },
         {
           "name": "El Financiero (Economía)",
@@ -4422,7 +4459,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 13
+          "row": 13,
+          "enabled": false
         },
         {
           "name": "Aristegui En Vivo - Mesa política",
@@ -4496,7 +4534,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 31
+          "row": 31,
+          "enabled": false
         },
         {
           "name": "El Economista - Empresas",
@@ -4506,7 +4545,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 32
+          "row": 32,
+          "enabled": false
         },
         {
           "name": "El Universal - General (최대 일간지)",
@@ -4516,7 +4556,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 33
+          "row": 33,
+          "enabled": false
         },
         {
           "name": "El Universal - Cartera (경제/지갑)",
@@ -4526,7 +4567,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 34
+          "row": 34,
+          "enabled": false
         },
         {
           "name": "Milenio (전국지)",
@@ -4536,7 +4578,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 35
+          "row": 35,
+          "enabled": false
         },
         {
           "name": "Excelsior (보수 유력지)",
@@ -4546,7 +4589,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 36
+          "row": 36,
+          "enabled": false
         },
         {
           "name": "Forbes México",
@@ -4656,7 +4700,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 24
+          "row": 24,
+          "enabled": false
         },
         {
           "name": "ANTARA - Terkini",
@@ -4912,7 +4957,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 56
+          "row": 56,
+          "enabled": false
         },
         {
           "name": "RM.ID - Internasional",
@@ -4936,7 +4982,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 59
+          "row": 59,
+          "enabled": false
         },
         {
           "name": "RM.ID - Indonesianomics",
@@ -4944,7 +4991,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 60
+          "row": 60,
+          "enabled": false
         },
         {
           "name": "Kompas (Mainstream Daily)",
@@ -5214,7 +5262,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 46
+          "row": 46,
+          "enabled": false
         },
         {
           "name": "de Volkskrant",
@@ -5264,7 +5313,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 52
+          "row": 52,
+          "enabled": false
         },
         {
           "name": "Telegraaf (Financieel)",
@@ -5561,7 +5611,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 31
+          "row": 31,
+          "enabled": false
         },
         {
           "name": "Le Temps",
@@ -5577,7 +5628,8 @@
           "status": null,
           "checkedDate": "02/23/2026",
           "valid": null,
-          "row": 33
+          "row": 33,
+          "enabled": false
         },
         {
           "name": "NZZ Wirtschaft (Economy - German)",
@@ -5651,7 +5703,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 2
+          "row": 2,
+          "enabled": false
         },
         {
           "name": "Sabah",
@@ -5691,7 +5744,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 19
+          "row": 19,
+          "enabled": false
         },
         {
           "name": "Cumhuriyet",
@@ -5707,7 +5761,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 27
+          "row": 27,
+          "enabled": false
         },
         {
           "name": "Haber Turk",
@@ -5843,7 +5898,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 46
+          "row": 46,
+          "enabled": false
         },
         {
           "name": "Sabah (Turizm)",
@@ -5851,7 +5907,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 47
+          "row": 47,
+          "enabled": false
         },
         {
           "name": "Sabah (Otomobil)",
@@ -5859,7 +5916,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 48
+          "row": 48,
+          "enabled": false
         },
         {
           "name": "CNN Türk (All / News)",
@@ -5899,7 +5957,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 53
+          "row": 53,
+          "enabled": false
         },
         {
           "name": "CNN Türk (Spor / News)",
@@ -5951,7 +6010,8 @@
         },
         {
           "name": "Hürriyet Ekonomi (Major Economy)",
-          "url": "https://www.hurriyet.com.tr/rss/ekonomi"
+          "url": "https://www.hurriyet.com.tr/rss/ekonomi",
+          "enabled": false
         },
         {
           "name": "Bloomberg HT (Economy and Finance)",
@@ -6072,7 +6132,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 14
+          "row": 14,
+          "enabled": false
         },
         {
           "name": "Al Arabiya (EN - Middle East)",
@@ -6082,7 +6143,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 15
+          "row": 15,
+          "enabled": false
         },
         {
           "name": "Asharq Business (Bloomberg Arabic)",
@@ -6113,7 +6175,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 18
+          "row": 18,
+          "enabled": false
         },
         {
           "name": "Zawya (Middle East Business 1위 - EN)",
@@ -6439,7 +6502,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 29
+          "row": 29,
+          "enabled": false
         },
         {
           "name": "The Reporter",
@@ -7137,7 +7201,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 16
+          "row": 16,
+          "enabled": false
         },
         {
           "name": "La Libre Belgique",
@@ -7193,7 +7258,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 32
+          "row": 32,
+          "enabled": false
         },
         {
           "name": "Het Nieuwsblad (example section)",
@@ -7201,7 +7267,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 33
+          "row": 33,
+          "enabled": false
         },
         {
           "name": "Le Soir (main)",
@@ -7209,7 +7276,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 34
+          "row": 34,
+          "enabled": false
         },
         {
           "name": "Brussels Times",
@@ -7217,7 +7285,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 35
+          "row": 35,
+          "enabled": false
         },
         {
           "name": "City of Brussels (official)",
@@ -7407,7 +7476,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 42
+          "row": 42,
+          "enabled": false
         },
         {
           "name": "PressDisplay - Krungthep Turakij",
@@ -7415,7 +7485,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 43
+          "row": 43,
+          "enabled": false
         },
         {
           "name": "PressDisplay - The Phuket News",
@@ -7439,7 +7510,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 46
+          "row": 46,
+          "enabled": false
         },
         {
           "name": "PressDisplay - Where to Eat in Phuket",
@@ -7447,7 +7519,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 47
+          "row": 47,
+          "enabled": false
         },
         {
           "name": "PressDisplay - Prestige (Thailand)",
@@ -7475,7 +7548,8 @@
         },
         {
           "name": "Thairath (Top News)",
-          "url": "https://www.thairath.co.th/rss/news.xml"
+          "url": "https://www.thairath.co.th/rss/news.xml",
+          "enabled": false
         },
         {
           "name": "Matichon (Leading Political Daily)",
@@ -7597,7 +7671,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 26
+          "row": 26,
+          "enabled": false
         },
         {
           "name": "Tehran Times - Homepage",
@@ -7605,7 +7680,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 27
+          "row": 27,
+          "enabled": false
         },
         {
           "name": "Tehran Times - Breaking",
@@ -7613,7 +7689,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 28
+          "row": 28,
+          "enabled": false
         },
         {
           "name": "Tehran Times - Society",
@@ -7621,7 +7698,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 29
+          "row": 29,
+          "enabled": false
         },
         {
           "name": "Tehran Times - Economy",
@@ -7629,7 +7707,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 30
+          "row": 30,
+          "enabled": false
         },
         {
           "name": "Tehran Times - Politics",
@@ -7637,7 +7716,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 31
+          "row": 31,
+          "enabled": false
         },
         {
           "name": "Tehran Times - Sports",
@@ -7645,7 +7725,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 32
+          "row": 32,
+          "enabled": false
         },
         {
           "name": "Tehran Times - Culture",
@@ -7653,7 +7734,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 33
+          "row": 33,
+          "enabled": false
         },
         {
           "name": "Tehran Times - International",
@@ -7661,7 +7743,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 34
+          "row": 34,
+          "enabled": false
         },
         {
           "name": "Tehran Times - Multimedia",
@@ -7669,7 +7752,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 35
+          "row": 35,
+          "enabled": false
         },
         {
           "name": "Tehran Times - Tourism",
@@ -7677,7 +7761,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 36
+          "row": 36,
+          "enabled": false
         },
         {
           "name": "MehrNews (EN) - Latest",
@@ -7709,7 +7794,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 40
+          "row": 40,
+          "enabled": false
         },
         {
           "name": "MehrNews (EN) - Nature",
@@ -7725,7 +7811,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 42
+          "row": 42,
+          "enabled": false
         },
         {
           "name": "MehrNews (EN) - Souvenirs",
@@ -7733,7 +7820,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 43
+          "row": 43,
+          "enabled": false
         },
         {
           "name": "MehrNews (EN) - Persian Cuisine",
@@ -7749,7 +7837,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 45
+          "row": 45,
+          "enabled": false
         },
         {
           "name": "ISNA (EN) - Economy",
@@ -7757,7 +7846,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 46
+          "row": 46,
+          "enabled": false
         },
         {
           "name": "ISNA (EN) - Politics",
@@ -7765,7 +7855,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 47
+          "row": 47,
+          "enabled": false
         },
         {
           "name": "ISNA (EN) - Culture & Art",
@@ -7773,7 +7864,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 48
+          "row": 48,
+          "enabled": false
         },
         {
           "name": "ISNA (EN) - Sports",
@@ -7781,7 +7873,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 49
+          "row": 49,
+          "enabled": false
         },
         {
           "name": "ISNA (EN) - Photos",
@@ -7789,7 +7882,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 50
+          "row": 50,
+          "enabled": false
         },
         {
           "name": "Tasnim (EN) - Top Stories",
@@ -8019,7 +8113,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 23
+          "row": 23,
+          "enabled": false
         },
         {
           "name": "Página/12 - Cash",
@@ -8051,7 +8146,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 27
+          "row": 27,
+          "enabled": false
         },
         {
           "name": "LA NACION - General",
@@ -8115,7 +8211,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 35
+          "row": 35,
+          "enabled": false
         },
         {
           "name": "Infobae - Economía",
@@ -8123,7 +8220,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 36
+          "row": 36,
+          "enabled": false
         },
         {
           "name": "El Cronista - Finanzas",
@@ -8131,7 +8229,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 37
+          "row": 37,
+          "enabled": false
         },
         {
           "name": "El Cronista - Economía",
@@ -8139,7 +8238,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 38
+          "row": 38,
+          "enabled": false
         },
         {
           "name": "Rosario3 - Home",
@@ -8225,7 +8325,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 9
+          "row": 9,
+          "enabled": false
         },
         {
           "name": "El Desconcierto",
@@ -8297,7 +8398,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 35
+          "row": 35,
+          "enabled": false
         },
         {
           "name": "Cooperativa - Economía",
@@ -8497,7 +8599,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 59
+          "row": 59,
+          "enabled": false
         },
         {
           "name": "Diario Concepcion",
@@ -8619,7 +8722,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 16
+          "row": 16,
+          "enabled": false
         },
         {
           "name": "AlMomento - Internacionales",
@@ -8683,7 +8787,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 31
+          "row": 31,
+          "enabled": false
         },
         {
           "name": "Listín Diario - Economía",
@@ -8699,7 +8804,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 33
+          "row": 33,
+          "enabled": false
         },
         {
           "name": "El Dinero",
@@ -9018,7 +9124,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 34
+          "row": 34,
+          "enabled": false
         },
         {
           "name": "La Diaria - Economía",
@@ -9026,7 +9133,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 35
+          "row": 35,
+          "enabled": false
         },
         {
           "name": "Subrayado - Home",
@@ -9152,7 +9260,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 2
+          "row": 2,
+          "enabled": false
         },
         {
           "name": "Die Presse",
@@ -9176,7 +9285,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 5
+          "row": 5,
+          "enabled": false
         },
         {
           "name": "Kurier (Top News)",
@@ -9442,7 +9552,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 10
+          "row": 10,
+          "enabled": false
         },
         {
           "name": "E24",
@@ -9482,7 +9593,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 27
+          "row": 27,
+          "enabled": false
         },
         {
           "name": "E24",
@@ -9498,7 +9610,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 31
+          "row": 31,
+          "enabled": false
         },
         {
           "name": "VG - Innenriks",
@@ -9546,7 +9659,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 37
+          "row": 37,
+          "enabled": false
         },
         {
           "name": "NRK - Innenriks",
@@ -9602,7 +9716,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 44
+          "row": 44,
+          "enabled": false
         },
         {
           "name": "Nettavisen - Nyheter",
@@ -9610,7 +9725,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 45
+          "row": 45,
+          "enabled": false
         },
         {
           "name": "Nettavisen - Sport",
@@ -9618,7 +9734,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 46
+          "row": 46,
+          "enabled": false
         },
         {
           "name": "Dagbladet",
@@ -9650,7 +9767,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 50
+          "row": 50,
+          "enabled": false
         },
         {
           "name": "DN - Alle nyheter",
@@ -9772,7 +9890,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 17
+          "row": 17,
+          "enabled": false
         },
         {
           "name": "Energy Storage News",
