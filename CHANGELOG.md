@@ -6,6 +6,24 @@
 
 ## Unreleased
 
+### [868e4e3] feat: add sustained RSS failure watchlist and auto-disable workflow
+- Commit: 868e4e32c272ad69f16e29cfafe8c655afdd64fb
+- Date: 2026-02-26 10:10:26 +0300
+- Author: Myungeun Lee
+  - Changed files:
+    - M	.github/workflows/rss-health-daily.yml
+    - M	.github/workflows/wpm-hourly-report.yml
+    - M	README.md
+    - M	package.json
+    - A	scripts/rss-failure-watchlist.ts
+  - Git stat:
+  - .github/workflows/rss-health-daily.yml  |  12 +
+  -  .github/workflows/wpm-hourly-report.yml |  34 ++-
+  -  README.md                               |  14 +-
+  -  package.json                            |   6 +
+  -  scripts/rss-failure-watchlist.ts        | 429 ++++++++++++++++++++++++++++++++
+  -  5 files changed, 490 insertions(+), 5 deletions(-)
+
 ### [f68a61b] changelog: add missed entries for healthz/lockfile fixes
 - Commit: f68a61b4a0061a7c9a51308e7842cc1aeaae4829
 - Date: 2026-02-24 09:22:23 -0600
