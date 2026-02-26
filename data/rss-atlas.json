@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-02-24T06:58:53.313Z",
+  "generatedAt": "2026-02-26T13:48:14.249Z",
   "lastChecked": "2026-02-24T06:58:53.314Z",
   "countries": [
     {
@@ -1081,7 +1081,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 36
+          "row": 36,
+          "enabled": false
         },
         {
           "name": "GIGAZINE (Atom)",
@@ -1185,7 +1186,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 49
+          "row": 49,
+          "enabled": false
         },
         {
           "name": "CNET Japan",
@@ -1193,7 +1195,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 50
+          "row": 50,
+          "enabled": false
         },
         {
           "name": "Wired Japan",
@@ -1269,7 +1272,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 59
+          "row": 59,
+          "enabled": false
         },
         {
           "name": "Goo News (Business)",
@@ -1299,7 +1303,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 62
+          "row": 62,
+          "enabled": false
         },
         {
           "name": "JBpress (Japan Business Press)",
@@ -6085,7 +6090,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 16
+          "row": 16,
+          "enabled": false
         },
         {
           "name": "Gulf Business (Saudi Section)",
@@ -8707,7 +8713,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 35
+          "row": 35,
+          "enabled": false
         },
         {
           "name": "Acento - Author Feed",
