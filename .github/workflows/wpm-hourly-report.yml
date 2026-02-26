@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   discord:
@@ -32,6 +32,38 @@ jobs:
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
+
+      - name: Build 3-day RSS failure report
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "[rss-failure-3d] DATABASE_URL is not set; skipping 3-day report."
+            exit 0
+          fi
+          bun run rss:failure:3d:report
+
+      - name: Apply 3-day RSS failure disable policy
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "[rss-failure-3d] DATABASE_URL is not set; skipping 3-day apply."
+            exit 0
+          fi
+          bun run rss:failure:3d:apply
+
+      - name: Commit atlas updates (if changed)
+        run: |
+          if git diff --quiet -- data/rss-atlas.json; then
+            echo "[rss-failure-3d] No atlas changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/rss-atlas.json
+          git commit -m "chore: auto-disable sustained failing RSS feeds (3d policy)"
+          git push origin HEAD:develop
 
       - name: Run hourly ingest report and post to Discord
         run: bun run ingest:ops:hourly --hours=1 --write-json --discord

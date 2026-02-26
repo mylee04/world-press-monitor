@@ -43,11 +43,21 @@ Source of truth:
 
 Run health check (daily) locally:
 - `bun run rss:health:daily`
+- `bun run rss:failure:watchlist` (Generate a DB-backed watch/disable-candidate report for persistently failing endpoints)
+- `bun run rss:failure:watchlist:apply` (Apply `DISABLE_CANDIDATE` rows to `data/rss-atlas.json` by setting `enabled:false`)
+- `bun run rss:failure:3d:report` (Recommended policy: evaluate sustained failures over 3 days)
+- `bun run rss:failure:3d:apply` (Recommended policy: disable sustained failures over 3 days)
+- `bun run rss:failure:24h:report` (Strict policy: report endpoints with 24h full failure)
+- `bun run rss:failure:24h:apply` (Strict policy: disable endpoints with 24h full failure)
 
 GitHub Actions is also configured:
 - Workflow: `.github/workflows/rss-health-daily.yml`
 - Schedule: 00:30 AM America/Chicago (cron is UTC in Actions; currently set at 06:30 UTC, so it runs at 01:30 during CDT and 00:30 during CST)
 - Manual run: Actions tab → `RSS Health Daily` → `Run workflow`
+
+Note about "Last checked" date in README:
+- This workflow is `contents: read` and uploads artifacts only, so a successful run does not automatically commit README/date changes.
+- To reflect latest run date in git-tracked files, run the export/update flow locally (or add a separate write-enabled workflow/PR automation).
 
 Data retention policy used by the daily job:
 - `news_articles`: keep last **3 days**
@@ -1654,8 +1664,4 @@ Retention values can be changed at runtime by setting:
 9|Energy Post|<https://energypost.eu/feed/>|200|02/24/2026|valid|0|0|
 10|Energy Storage News|<https://www.energy-storage.news/rss>|200|02/24/2026|valid|250|3400|
 11|Energy Storage News|<https://www.energy-storage.news/feed>|200|02/24/2026|valid|250|3400|
-
-
-
-
 

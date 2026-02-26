@@ -45,6 +45,16 @@ jobs:
           fi
           bun run ingest:rss-stability:daily
 
+      - name: Build RSS failure watchlist
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "[rss-failure-watchlist] DATABASE_URL is not set; skipping watchlist."
+            exit 0
+          fi
+          bun run rss:failure:watchlist
+
       - name: Upload health artifacts
         if: always()
         uses: actions/upload-artifact@v4
@@ -55,6 +65,8 @@ jobs:
             audits/readme_rss_health_*.json
             audits/rss_feed_stability_latest.json
             audits/rss_feed_stability_*.json
+            audits/rss_failure_watchlist_latest.json
+            audits/rss_failure_watchlist_latest.md
             data/rss-catalog.csv
             data/rss-catalog.opml
             README.md
