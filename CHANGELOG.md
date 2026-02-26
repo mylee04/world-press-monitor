@@ -6,6 +6,52 @@
 
 ## Unreleased
 
+### [8135e9b] feat: add multilingual category pipeline with locale dictionaries
+- Commit: 8135e9b629e410970002c6053d9108eafe42a802
+- Date: 2026-02-26 10:44:16 +0300
+- Author: Myungeun Lee
+  - Changed files:
+    - M	README.md
+    - A	lib/classifier/locales/en.ts
+    - A	lib/classifier/locales/es.ts
+    - A	lib/classifier/locales/fr.ts
+    - A	lib/classifier/locales/index.ts
+    - A	lib/classifier/locales/it.ts
+    - A	lib/classifier/locales/ja.ts
+    - A	lib/classifier/locales/ko.ts
+    - A	lib/classifier/locales/nl.ts
+    - A	lib/classifier/locales/pt.ts
+    - A	lib/classifier/locales/ru.ts
+    - A	lib/classifier/locales/types.ts
+    - A	lib/classifier/locales/vi.ts
+    - A	lib/classifier/locales/zh.ts
+    - M	lib/ingestion-store.ts
+    - M	lib/keyword-classifier.ts
+    - M	lib/parsers.ts
+    - M	lib/types.ts
+    - M	scripts/ingest-worker.ts
+  - Git stat:
+  - README.md                       |  23 ++++-
+  -  lib/classifier/locales/en.ts    |  78 ++++++++++++++
+  -  lib/classifier/locales/es.ts    |  56 ++++++++++
+  -  lib/classifier/locales/fr.ts    |  42 ++++++++
+  -  lib/classifier/locales/index.ts |  44 ++++++++
+  -  lib/classifier/locales/it.ts    |  41 ++++++++
+  -  lib/classifier/locales/ja.ts    |  42 ++++++++
+  -  lib/classifier/locales/ko.ts    |  44 ++++++++
+  -  lib/classifier/locales/nl.ts    |  42 ++++++++
+  -  lib/classifier/locales/pt.ts    |  53 ++++++++++
+  -  lib/classifier/locales/ru.ts    |  42 ++++++++
+  -  lib/classifier/locales/types.ts |   3 +
+  -  lib/classifier/locales/vi.ts    |  41 ++++++++
+  -  lib/classifier/locales/zh.ts    |  64 ++++++++++++
+  -  lib/ingestion-store.ts          |  14 ++-
+  -  lib/keyword-classifier.ts       | 222 ++++++++++++++++++++--------------------
+  -  lib/parsers.ts                  |  31 ++++++
+  -  lib/types.ts                    |  19 +++-
+  -  scripts/ingest-worker.ts        |  13 ++-
+  -  19 files changed, 789 insertions(+), 125 deletions(-)
+
 ### [868e4e3] feat: add sustained RSS failure watchlist and auto-disable workflow
 - Commit: 868e4e32c272ad69f16e29cfafe8c655afdd64fb
 - Date: 2026-02-26 10:10:26 +0300
