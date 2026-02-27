@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-02-26T21:01:35.104Z",
+  "generatedAt": "2026-02-27T03:13:27.453Z",
   "lastChecked": "2026-02-24T06:58:53.314Z",
   "countries": [
     {
@@ -1370,7 +1370,8 @@
         },
         {
           "name": "Nikkan Kogyo (Industrial Manufacturing News)",
-          "url": "https://www.nikkan.co.jp/rss/news"
+          "url": "https://www.nikkan.co.jp/rss/news",
+          "enabled": false
         },
         {
           "name": "Livedoor News (General Top Stories)",
@@ -1390,7 +1391,8 @@
         },
         {
           "name": "Minkabu (Stocks/Investing)",
-          "url": "https://minkabu.jp/news/feed"
+          "url": "https://minkabu.jp/news/feed",
+          "enabled": false
         },
         {
           "name": "Tokyo Shimbun General News",
@@ -1406,19 +1408,23 @@
         },
         {
           "name": "Hatena Bookmark Economy",
-          "url": "https://b.hatena.ne.jp/hotentry/economics.rss"
+          "url": "https://b.hatena.ne.jp/hotentry/economics.rss",
+          "enabled": false
         },
         {
           "name": "Hatena Bookmark IT",
-          "url": "https://b.hatena.ne.jp/hotentry/it.rss"
+          "url": "https://b.hatena.ne.jp/hotentry/it.rss",
+          "enabled": false
         },
         {
           "name": "Hatena Bookmark Social",
-          "url": "https://b.hatena.ne.jp/hotentry/social.rss"
+          "url": "https://b.hatena.ne.jp/hotentry/social.rss",
+          "enabled": false
         },
         {
           "name": "AFP BB News",
-          "url": "https://feeds.afpbb.com/afpbb/news/all"
+          "url": "https://feeds.afpbb.com/afpbb/news/all",
+          "enabled": false
         }
       ]
     },
@@ -2437,11 +2443,13 @@
         },
         {
           "name": "Les Echos (Finance/Markets)",
-          "url": "https://services.lesechos.fr/api/rss/univers/finance-marches"
+          "url": "https://services.lesechos.fr/api/rss/univers/finance-marches",
+          "enabled": false
         },
         {
           "name": "Les Echos (Tech/Media)",
-          "url": "https://services.lesechos.fr/api/rss/univers/tech-medias"
+          "url": "https://services.lesechos.fr/api/rss/univers/tech-medias",
+          "enabled": false
         },
         {
           "name": "Le Monde (Economy)",
@@ -2465,15 +2473,18 @@
         },
         {
           "name": "Libération (Society/Politics)",
-          "url": "https://www.liberation.fr/rss/"
+          "url": "https://www.liberation.fr/rss/",
+          "enabled": false
         },
         {
           "name": "L'Express (Current Affairs Magazine)",
-          "url": "https://www.lexpress.fr/arc/outboundfeeds/rss/"
+          "url": "https://www.lexpress.fr/arc/outboundfeeds/rss/",
+          "enabled": false
         },
         {
           "name": "Le Point (Current Affairs/Economy)",
-          "url": "https://www.lepoint.fr/rss.xml"
+          "url": "https://www.lepoint.fr/rss.xml",
+          "enabled": false
         },
         {
           "name": "France Info (Economy)",
@@ -2489,7 +2500,8 @@
         },
         {
           "name": "Capital.fr (Economy/Capital)",
-          "url": "https://www.capital.fr/rss.xml"
+          "url": "https://www.capital.fr/rss.xml",
+          "enabled": false
         },
         {
           "name": "Challenges.fr (Business)",
@@ -2509,7 +2521,8 @@
         },
         {
           "name": "Usine Nouvelle (Industry/Energy/Manufacturing)",
-          "url": "https://www.usinenouvelle.com/rss/"
+          "url": "https://www.usinenouvelle.com/rss/",
+          "enabled": false
         }
       ]
     },
@@ -3181,7 +3194,8 @@
         },
         {
           "name": "Gazeta.ru (General News)",
-          "url": "https://www.gazeta.ru/export/rss/lenta.xml"
+          "url": "https://www.gazeta.ru/export/rss/lenta.xml",
+          "enabled": false
         },
         {
           "name": "Izvestia (Traditional Daily)",
@@ -3213,19 +3227,23 @@
         },
         {
           "name": "NTV (major broadcaster)",
-          "url": "https://www.ntv.ru/exp/news_rss.jsp"
+          "url": "https://www.ntv.ru/exp/news_rss.jsp",
+          "enabled": false
         },
         {
           "name": "Komsomolskaya Pravda (Mass outlet #1)",
-          "url": "https://www.kp.ru/rss/all.xml"
+          "url": "https://www.kp.ru/rss/all.xml",
+          "enabled": false
         },
         {
           "name": "Moskovsky Komsomolets (Mass outlet #2)",
-          "url": "https://www.mk.ru/rss/news/index.xml"
+          "url": "https://www.mk.ru/rss/news/index.xml",
+          "enabled": false
         },
         {
           "name": "Rambler News (Portal News)",
-          "url": "https://news.rambler.ru/rss/"
+          "url": "https://news.rambler.ru/rss/",
+          "enabled": false
         }
       ]
     },
@@ -5371,19 +5389,23 @@
         },
         {
           "name": "FOK! (News/Community)",
-          "url": "https://frontpage.fok.nl/xml/rss"
+          "url": "https://frontpage.fok.nl/xml/rss",
+          "enabled": false
         },
         {
           "name": "IEX.nl (Stocks/Investments)",
-          "url": "https://www.iex.nl/rss/nieuws.xml"
+          "url": "https://www.iex.nl/rss/nieuws.xml",
+          "enabled": false
         },
         {
           "name": "De Correspondent (In-Depth Analysis)",
-          "url": "https://decorrespondent.nl/feed"
+          "url": "https://decorrespondent.nl/feed",
+          "enabled": false
         },
         {
           "name": "AG Connect (IT/Industry Trends)",
-          "url": "https://www.agconnect.nl/rss"
+          "url": "https://www.agconnect.nl/rss",
+          "enabled": false
         }
       ]
     },
@@ -5649,7 +5671,8 @@
         },
         {
           "name": "Tages-Anzeiger (Zurich Headlines - German)",
-          "url": "https://www.tagesanzeiger.ch/rss.xml"
+          "url": "https://www.tagesanzeiger.ch/rss.xml",
+          "enabled": false
         },
         {
           "name": "Blick (Swiss #1 Popular Daily - German)",
@@ -5657,15 +5680,18 @@
         },
         {
           "name": "Handelszeitung (Economy Weekly - German)",
-          "url": "https://www.handelszeitung.ch/rss.xml"
+          "url": "https://www.handelszeitung.ch/rss.xml",
+          "enabled": false
         },
         {
           "name": "Cash.ch (Finance/Investment - German)",
-          "url": "https://www.cash.ch/rss"
+          "url": "https://www.cash.ch/rss",
+          "enabled": false
         },
         {
           "name": "RTS Info (French-speaking public broadcaster Breaking - French)",
-          "url": "https://www.rts.ch/info/rss"
+          "url": "https://www.rts.ch/info/rss",
+          "enabled": false
         },
         {
           "name": "Le Temps Suisse (Domestic - French)",
@@ -5673,35 +5699,43 @@
         },
         {
           "name": "Bilan.ch (Economy - French)",
-          "url": "https://www.bilan.ch/rss.xml"
+          "url": "https://www.bilan.ch/rss.xml",
+          "enabled": false
         },
         {
           "name": "20 Minuten Schweiz (Domestic - German)",
-          "url": "https://www.20min.ch/rss/schweiz"
+          "url": "https://www.20min.ch/rss/schweiz",
+          "enabled": false
         },
         {
           "name": "Watson.ch (News Portal - German)",
-          "url": "https://www.watson.ch/api/rss"
+          "url": "https://www.watson.ch/api/rss",
+          "enabled": false
         },
         {
           "name": "Aargauer Zeitung (Regional Major Daily - German)",
-          "url": "https://www.aargauerzeitung.ch/rss"
+          "url": "https://www.aargauerzeitung.ch/rss",
+          "enabled": false
         },
         {
           "name": "Berner Zeitung (Bern Major Daily - German)",
-          "url": "https://www.bernerzeitung.ch/rss.xml"
+          "url": "https://www.bernerzeitung.ch/rss.xml",
+          "enabled": false
         },
         {
           "name": "Basler Zeitung (Basel Major Daily - German)",
-          "url": "https://www.bazonline.ch/rss.xml"
+          "url": "https://www.bazonline.ch/rss.xml",
+          "enabled": false
         },
         {
           "name": "Le Matin",
-          "url": "https://www.lematin.ch/rss.xml"
+          "url": "https://www.lematin.ch/rss.xml",
+          "enabled": false
         },
         {
           "name": "Tribune de Geneve",
-          "url": "https://www.tdg.ch/rss.xml"
+          "url": "https://www.tdg.ch/rss.xml",
+          "enabled": false
         }
       ]
     },
@@ -6246,27 +6280,33 @@
         },
         {
           "name": "Argaam (Arabic Economy/Stocks #1)",
-          "url": "https://www.argaam.com/ar/rss/news/type/1"
+          "url": "https://www.argaam.com/ar/rss/news/type/1",
+          "enabled": false
         },
         {
           "name": "Mubasher Saudi (Finance/Markets)",
-          "url": "https://www.mubasher.info/countries/sa/rss"
+          "url": "https://www.mubasher.info/countries/sa/rss",
+          "enabled": false
         },
         {
           "name": "Al Arabiya Saudi (Saudi Domestic)",
-          "url": "https://www.alarabiya.net/feed/saudi-today"
+          "url": "https://www.alarabiya.net/feed/saudi-today",
+          "enabled": false
         },
         {
           "name": "Sabq (Saudi Top Online Outlet)",
-          "url": "https://sabq.org/feed"
+          "url": "https://sabq.org/feed",
+          "enabled": false
         },
         {
           "name": "Maaal (Saudi Business)",
-          "url": "https://www.maaal.com/feed"
+          "url": "https://www.maaal.com/feed",
+          "enabled": false
         },
         {
           "name": "Al Watan (Saudi Domestic Breaking)",
-          "url": "https://www.alwatan.com.sa/rss"
+          "url": "https://www.alwatan.com.sa/rss",
+          "enabled": false
         },
         {
           "name": "Sky News Arabia (Arabic Business)",
@@ -6274,7 +6314,8 @@
         },
         {
           "name": "CNBC Arabia (Middle East Economy)",
-          "url": "https://www.cnbcarabia.com/RSS/117"
+          "url": "https://www.cnbcarabia.com/RSS/117",
+          "enabled": false
         },
         {
           "name": "Independent Arabia (Independent Arabic)",
@@ -6286,11 +6327,13 @@
         },
         {
           "name": "Al Yaum (Domestic Trends)",
-          "url": "https://www.alyaum.com/rss"
+          "url": "https://www.alyaum.com/rss",
+          "enabled": false
         },
         {
           "name": "Zawya Arabic (Middle East Business)",
-          "url": "https://www.zawya.com/ar/rss"
+          "url": "https://www.zawya.com/ar/rss",
+          "enabled": false
         }
       ]
     },
@@ -6859,7 +6902,8 @@
         },
         {
           "name": "Rzeczpospolita (Economy/Politics)",
-          "url": "https://www.rp.pl/rss/all"
+          "url": "https://www.rp.pl/rss/all",
+          "enabled": false
         },
         {
           "name": "Gazeta.pl (Top Portal News)",
@@ -7595,7 +7639,8 @@
         },
         {
           "name": "Manager Online (Politics/Society)",
-          "url": "https://mgronline.com/rss"
+          "url": "https://mgronline.com/rss",
+          "enabled": false
         },
         {
           "name": "The Standard (Top Media)",
@@ -8861,7 +8906,8 @@
         },
         {
           "name": "Noticias SIN",
-          "url": "https://noticiassin.com/feed/"
+          "url": "https://noticiassin.com/feed/",
+          "enabled": false
         },
         {
           "name": "El Caribe",
@@ -9237,7 +9283,8 @@
         },
         {
           "name": "Subrayado",
-          "url": "https://www.subrayado.com.uy/rss/pages/ultimas-noticias.xml"
+          "url": "https://www.subrayado.com.uy/rss/pages/ultimas-noticias.xml",
+          "enabled": false
         },
         {
           "name": "Teledoce",
@@ -9245,19 +9292,23 @@
         },
         {
           "name": "La Diaria",
-          "url": "https://ladiaria.com.uy/feeds/articles/"
+          "url": "https://ladiaria.com.uy/feeds/articles/",
+          "enabled": false
         },
         {
           "name": "La Republica",
-          "url": "https://www.republica.com.uy/feed/"
+          "url": "https://www.republica.com.uy/feed/",
+          "enabled": false
         },
         {
           "name": "Caras y Caretas",
-          "url": "https://www.carasycaretas.com.uy/feed"
+          "url": "https://www.carasycaretas.com.uy/feed",
+          "enabled": false
         },
         {
           "name": "El Pais Uruguay",
-          "url": "https://www.elpais.com.uy/rss/ultimas-noticias"
+          "url": "https://www.elpais.com.uy/rss/ultimas-noticias",
+          "enabled": false
         }
       ]
     },
@@ -9505,7 +9556,8 @@
         },
         {
           "name": "Die Presse (Political Headlines)",
-          "url": "https://www.diepresse.com/rss/Home"
+          "url": "https://www.diepresse.com/rss/Home",
+          "enabled": false
         },
         {
           "name": "Die Presse (Economy)",
@@ -9521,27 +9573,33 @@
         },
         {
           "name": "Trend.at (Business Magazine)",
-          "url": "https://www.trend.at/xml/rss"
+          "url": "https://www.trend.at/xml/rss",
+          "enabled": false
         },
         {
           "name": "Kronen Zeitung",
-          "url": "https://www.krone.at/rss.xml"
+          "url": "https://www.krone.at/rss.xml",
+          "enabled": false
         },
         {
           "name": "Heute",
-          "url": "https://www.heute.at/rss/news"
+          "url": "https://www.heute.at/rss/news",
+          "enabled": false
         },
         {
           "name": "OE24",
-          "url": "https://www.oe24.at/news/rss"
+          "url": "https://www.oe24.at/news/rss",
+          "enabled": false
         },
         {
           "name": "OR Nachrichten",
-          "url": "https://www.nachrichten.at/news/rss.xml"
+          "url": "https://www.nachrichten.at/news/rss.xml",
+          "enabled": false
         },
         {
           "name": "Vienna Online",
-          "url": "https://www.vienna.at/news/feed"
+          "url": "https://www.vienna.at/news/feed",
+          "enabled": false
         }
       ]
     },
@@ -9819,15 +9877,18 @@
         },
         {
           "name": "Finansavisen (Finance/Investment)",
-          "url": "https://finansavisen.no/rss"
+          "url": "https://finansavisen.no/rss",
+          "enabled": false
         },
         {
           "name": "Teknisk Ukeblad (Tech/Energy/Marine)",
-          "url": "https://www.tu.no/feed"
+          "url": "https://www.tu.no/feed",
+          "enabled": false
         },
         {
           "name": "E24 Energi (Energy/Marine Industry)",
-          "url": "https://e24.no/energi/rss"
+          "url": "https://e24.no/energi/rss",
+          "enabled": false
         },
         {
           "name": "Adresseavisen",
