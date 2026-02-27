@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-02-27T03:13:27.453Z",
+  "generatedAt": "2026-02-27T05:00:14.755Z",
   "lastChecked": "2026-02-24T06:58:53.314Z",
   "countries": [
     {
@@ -769,7 +769,8 @@
         },
         {
           "name": "Sina Finance (Top Financial Portal)",
-          "url": "https://rss.sina.com.cn/roll/finance/hot_roll.xml"
+          "url": "https://rss.sina.com.cn/roll/finance/hot_roll.xml",
+          "enabled": false
         },
         {
           "name": "Sina News (General Breaking News)",
@@ -777,7 +778,8 @@
         },
         {
           "name": "HK01 (Hong Kong Digital Media Top Feed)",
-          "url": "https://www.hk01.com/rss"
+          "url": "https://www.hk01.com/rss",
+          "enabled": false
         },
         {
           "name": "Ming Pao (Hong Kong Flagship Newspaper)",
@@ -1396,7 +1398,8 @@
         },
         {
           "name": "Tokyo Shimbun General News",
-          "url": "https://www.tokyo-np.co.jp/rss/news"
+          "url": "https://www.tokyo-np.co.jp/rss/news",
+          "enabled": false
         },
         {
           "name": "ASCII.jp Mac Tech",
@@ -3745,7 +3748,8 @@
         },
         {
           "name": "Estadão (Mainstream Daily)",
-          "url": "https://www.estadao.com.br/rss/ultimas"
+          "url": "https://www.estadao.com.br/rss/ultimas",
+          "enabled": false
         },
         {
           "name": "Exame (Business/Economy Magazine)",
@@ -3994,7 +3998,8 @@
         },
         {
           "name": "AFR (Financial Review)",
-          "url": "https://www.afr.com/rss"
+          "url": "https://www.afr.com/rss",
+          "enabled": false
         },
         {
           "name": "News.com.au National Top News",
@@ -4641,11 +4646,13 @@
         },
         {
           "name": "Milenio Negocios (Business)",
-          "url": "https://www.milenio.com/negocios/rss"
+          "url": "https://www.milenio.com/negocios/rss",
+          "enabled": false
         },
         {
           "name": "Aristegui Noticias (Political Investigation)",
-          "url": "https://aristeguinoticias.com/feed/"
+          "url": "https://aristeguinoticias.com/feed/",
+          "enabled": false
         },
         {
           "name": "La Jornada (Progressive Daily)",
@@ -4653,7 +4660,8 @@
         },
         {
           "name": "El Sol de México (Domestic Breaking)",
-          "url": "https://www.elsoldemexico.com.mx/rss.xml"
+          "url": "https://www.elsoldemexico.com.mx/rss.xml",
+          "enabled": false
         },
         {
           "name": "Expansión Economía (Economy Specialist)",
@@ -4669,11 +4677,13 @@
         },
         {
           "name": "Animal Político (Political Deep Coverage)",
-          "url": "https://www.animalpolitico.com/feed"
+          "url": "https://www.animalpolitico.com/feed",
+          "enabled": false
         },
         {
           "name": "Xataka México (Tech/IT)",
-          "url": "https://www.xataka.com.mx/feed"
+          "url": "https://www.xataka.com.mx/feed",
+          "enabled": false
         }
       ]
     },
@@ -5023,19 +5033,23 @@
         },
         {
           "name": "Kompas (Mainstream Daily)",
-          "url": "https://sindikasi.kompas.com/xml/nasional"
+          "url": "https://sindikasi.kompas.com/xml/nasional",
+          "enabled": false
         },
         {
           "name": "Kompas Ekonomi (Economy)",
-          "url": "https://sindikasi.kompas.com/xml/ekonomi"
+          "url": "https://sindikasi.kompas.com/xml/ekonomi",
+          "enabled": false
         },
         {
           "name": "Detikcom (Top Breaking Portal)",
-          "url": "https://laporan.detik.com/rss/detiknews.xml"
+          "url": "https://laporan.detik.com/rss/detiknews.xml",
+          "enabled": false
         },
         {
           "name": "Detik Finance (Finance and Economy)",
-          "url": "https://laporan.detik.com/rss/detikfinance.xml"
+          "url": "https://laporan.detik.com/rss/detikfinance.xml",
+          "enabled": false
         },
         {
           "name": "CNBC Indonesia (Business News)",
@@ -5047,11 +5061,13 @@
         },
         {
           "name": "Bisnis Indonesia (Business/Industry)",
-          "url": "https://www.bisnis.com/rss"
+          "url": "https://www.bisnis.com/rss",
+          "enabled": false
         },
         {
           "name": "Kontan (Investment/Finance)",
-          "url": "https://www.kontan.co.id/rss"
+          "url": "https://www.kontan.co.id/rss",
+          "enabled": false
         },
         {
           "name": "Tempo.co (Politics and Investigations)",
@@ -5059,7 +5075,8 @@
         },
         {
           "name": "Liputan6 (General Portal)",
-          "url": "https://www.liputan6.com/rss"
+          "url": "https://www.liputan6.com/rss",
+          "enabled": false
         },
         {
           "name": "Suara (Independent News)",
@@ -5067,11 +5084,13 @@
         },
         {
           "name": "Merdeka (Online News)",
-          "url": "https://www.merdeka.com/feed"
+          "url": "https://www.merdeka.com/feed",
+          "enabled": false
         },
         {
           "name": "Viva.co.id (General Breaking)",
-          "url": "https://www.viva.co.id/rss"
+          "url": "https://www.viva.co.id/rss",
+          "enabled": false
         },
         {
           "name": "Republika Ekonomi (Business Economy)",
@@ -6069,7 +6088,8 @@
         },
         {
           "name": "NTV (Main Broadcaster)",
-          "url": "https://www.ntv.com.tr/rss"
+          "url": "https://www.ntv.com.tr/rss",
+          "enabled": false
         },
         {
           "name": "NTV Ekonomi (Economy)",
@@ -6077,11 +6097,13 @@
         },
         {
           "name": "Sözcü (National Daily)",
-          "url": "https://www.sozcu.com.tr/rss"
+          "url": "https://www.sozcu.com.tr/rss",
+          "enabled": false
         },
         {
           "name": "Sözcü Ekonomi (Economy)",
-          "url": "https://www.sozcu.com.tr/kategori/ekonomi/rss"
+          "url": "https://www.sozcu.com.tr/kategori/ekonomi/rss",
+          "enabled": false
         },
         {
           "name": "Habertürk Ekonomi (Portal Economy)",
@@ -6093,7 +6115,8 @@
         },
         {
           "name": "Milliyet (Major Daily)",
-          "url": "https://www.milliyet.com.tr/rss/rssnew/sondakikarss.xml"
+          "url": "https://www.milliyet.com.tr/rss/rssnew/sondakikarss.xml",
+          "enabled": false
         },
         {
           "name": "Karar (Politics and Analysis)",
@@ -7169,7 +7192,8 @@
         },
         {
           "name": "Expressen Din Ekonomi (Economy)",
-          "url": "https://feeds.expressen.se/din-ekonomi/"
+          "url": "https://feeds.expressen.se/din-ekonomi/",
+          "enabled": false
         },
         {
           "name": "Dagens Nyheter Ekonomi (Economy)",
@@ -7181,11 +7205,13 @@
         },
         {
           "name": "Omni (Swedish News Aggregator)",
-          "url": "https://omni.se/rss"
+          "url": "https://omni.se/rss",
+          "enabled": false
         },
         {
           "name": "Ny Teknik (Tech and Engineering)",
-          "url": "https://www.nyteknik.se/rss.xml"
+          "url": "https://www.nyteknik.se/rss.xml",
+          "enabled": false
         },
         {
           "name": "Breakit (Startups and VC)",
@@ -7664,7 +7690,8 @@
         },
         {
           "name": "MCOT Economy",
-          "url": "https://tna.mcot.net/category/economy/feed"
+          "url": "https://tna.mcot.net/category/economy/feed",
+          "enabled": false
         }
       ]
     },
@@ -8668,7 +8695,8 @@
         },
         {
           "name": "Diario Concepcion",
-          "url": "https://www.diarioconcepcion.cl/feed"
+          "url": "https://www.diarioconcepcion.cl/feed",
+          "enabled": false
         }
       ]
     },
