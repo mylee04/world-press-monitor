@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-02-27T07:16:56.175Z",
+  "generatedAt": "2026-02-28T16:47:09.273Z",
   "lastChecked": "2026-02-24T06:58:53.314Z",
   "countries": [
     {
@@ -8008,7 +8008,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 54
+          "row": 54,
+          "enabled": false
         },
         {
           "name": "Tasnim (EN) - World",
