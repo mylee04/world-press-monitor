@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-02-28T16:47:09.273Z",
+  "generatedAt": "2026-03-01T08:52:45.583Z",
   "lastChecked": "2026-02-24T06:58:53.314Z",
   "countries": [
     {
@@ -9372,7 +9372,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 3
+          "row": 3,
+          "enabled": false
         },
         {
           "name": "Tiroler Tageszeitung",
@@ -9594,7 +9595,8 @@
         },
         {
           "name": "Die Presse (Economy)",
-          "url": "https://www.diepresse.com/rss/Wirtschaft"
+          "url": "https://www.diepresse.com/rss/Wirtschaft",
+          "enabled": false
         },
         {
           "name": "Kurier (Top Daily)",
