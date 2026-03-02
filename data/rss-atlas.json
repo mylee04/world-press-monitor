@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-03-01T08:52:45.583Z",
+  "generatedAt": "2026-03-02T17:10:51.602Z",
   "lastChecked": "2026-02-24T06:58:53.314Z",
   "countries": [
     {
@@ -7724,7 +7724,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 8
+          "row": 8,
+          "enabled": false
         },
         {
           "name": "Khabar Online",
@@ -7756,7 +7757,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 25
+          "row": 25,
+          "enabled": false
         },
         {
           "name": "Tehran Times - Latest",
