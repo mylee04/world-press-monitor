@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-03-03T13:37:24.691Z",
+  "generatedAt": "2026-03-03T21:54:00.517Z",
   "lastChecked": "2026-02-24T06:58:53.314Z",
   "countries": [
     {
@@ -7709,7 +7709,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 2
+          "row": 2,
+          "enabled": false
         },
         {
           "name": "Mehr News",
