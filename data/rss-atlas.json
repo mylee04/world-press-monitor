@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-03-02T17:10:51.602Z",
+  "generatedAt": "2026-03-03T13:37:24.691Z",
   "lastChecked": "2026-02-24T06:58:53.314Z",
   "countries": [
     {
@@ -5617,7 +5617,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 23
+          "row": 23,
+          "enabled": false
         },
         {
           "name": "Le News (EN)",
