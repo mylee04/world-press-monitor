@@ -234,6 +234,28 @@ create table if not exists news_articles (
     create index if not exists idx_news_articles_url on news_articles(url);
     create index if not exists idx_news_articles_section on news_articles(section);
     create index if not exists idx_news_articles_country on news_articles(country);
+    create table if not exists ingest_missing_published_at (
+      candidate_id text primary key,
+      outlet_id text not null,
+      source text not null,
+      country text not null default 'Global',
+      method text not null,
+      url text not null,
+      title_original text not null,
+      snippet_original text,
+      language text,
+      section text,
+      feed_categories text[] not null default '{}',
+      first_seen_at timestamptz not null default now(),
+      last_seen_at timestamptz not null default now(),
+      seen_count integer not null default 1,
+      created_at timestamptz not null default now(),
+      updated_at timestamptz not null default now()
+    );
+    create index if not exists idx_ingest_missing_published_at_last_seen on ingest_missing_published_at(last_seen_at desc);
+    create index if not exists idx_ingest_missing_published_at_source on ingest_missing_published_at(source);
+    create index if not exists idx_ingest_missing_published_at_country on ingest_missing_published_at(country);
+    create index if not exists idx_ingest_missing_published_at_method on ingest_missing_published_at(method);
     create table if not exists ingest_feed_watermarks (
       outlet_id text not null,
       source text not null,
@@ -2268,6 +2290,33 @@ type NewsArticlePersistable = {
   language: string | null;
 };
 
+export type MissingPublishedAtCandidate = {
+  outletId: string;
+  source: string;
+  country: string;
+  method: 'rss' | 'sitemap';
+  link: string;
+  title: string;
+  description: string | null;
+  language: string;
+  section: string;
+  categories: string[];
+};
+
+type MissingPublishedAtPersistable = {
+  candidateId: string;
+  outletId: string;
+  source: string;
+  country: string;
+  method: 'rss' | 'sitemap';
+  url: string;
+  titleOriginal: string;
+  snippetOriginal: string | null;
+  language: string | null;
+  section: string | null;
+  feedCategories: string[];
+};
+
 async function toNewsArticleRow(item: NewsItem): Promise<NewsArticlePersistable | null> {
   const linkNorm = normalizeLinkForId(item.link);
   if (!linkNorm) return null;
@@ -2290,6 +2339,30 @@ async function toNewsArticleRow(item: NewsItem): Promise<NewsArticlePersistable 
     url: item.link,
     source: item.source,
     language
+  };
+}
+
+async function toMissingPublishedAtRow(item: MissingPublishedAtCandidate): Promise<MissingPublishedAtPersistable | null> {
+  const linkNorm = normalizeLinkForId(item.link);
+  if (!linkNorm) return null;
+  const titleOriginal = (item.title || '').trim();
+  if (!titleOriginal) return null;
+  const snippetOriginal = (item.description || '').trim() || null;
+  const categories = [...new Set((item.categories || []).map((entry) => entry.trim()).filter(Boolean))];
+  const idSource = `${item.outletId}|${item.method}|${linkNorm}`;
+
+  return {
+    candidateId: await sha256Hex(idSource),
+    outletId: item.outletId,
+    source: item.source,
+    country: item.country || 'Global',
+    method: item.method,
+    url: item.link,
+    titleOriginal,
+    snippetOriginal,
+    language: item.language || null,
+    section: item.section || null,
+    feedCategories: categories,
   };
 }
 
@@ -2351,6 +2424,97 @@ export async function persistNewsArticles(items: NewsItem[]): Promise<{ persiste
       `,
       values,
       'persistNewsArticles.insert'
+    );
+  }
+
+  return { persisted: dedupedRows.length, storage: 'postgres' };
+}
+
+export async function persistMissingPublishedAtCandidates(
+  items: MissingPublishedAtCandidate[]
+): Promise<{ persisted: number; storage: 'postgres' | 'disabled'; reason?: string }> {
+  const db = getPool();
+  if (!db) return { persisted: 0, storage: 'disabled', reason: poolDisabledReason };
+  if (!items.length) return { persisted: 0, storage: 'postgres' };
+
+  await ensureSchema();
+  const rows = (await Promise.all(items.map(toMissingPublishedAtRow))).filter(
+    (row): row is MissingPublishedAtPersistable => Boolean(row)
+  );
+  if (!rows.length) return { persisted: 0, storage: 'postgres' };
+
+  const dedupedRows = [...rows.reduce((acc, row) => {
+    const current = acc.get(row.candidateId);
+    if (!current) {
+      acc.set(row.candidateId, row);
+      return acc;
+    }
+    if ((row.snippetOriginal || '').length > (current.snippetOriginal || '').length) {
+      acc.set(row.candidateId, row);
+      return acc;
+    }
+    acc.set(row.candidateId, {
+      ...current,
+      feedCategories: [...new Set([...current.feedCategories, ...row.feedCategories])],
+    });
+    return acc;
+  }, new Map<string, MissingPublishedAtPersistable>()).values()];
+
+  const groups = chunk(dedupedRows, 250);
+  for (const group of groups) {
+    const values: unknown[] = [];
+    const parts: string[] = [];
+    group.forEach((row, i) => {
+      const base = i * 11;
+      parts.push(
+        `($${base + 1}::text,$${base + 2}::text,$${base + 3}::text,$${base + 4}::text,$${base + 5}::text,$${base + 6}::text,$${base + 7}::text,$${base + 8}::text,$${base + 9}::text,$${base + 10}::text,$${base + 11}::text[],now(),now(),now(),now())`
+      );
+      values.push(
+        row.candidateId,
+        row.outletId,
+        row.source,
+        row.country,
+        row.method,
+        row.url,
+        row.titleOriginal,
+        row.snippetOriginal,
+        row.language,
+        row.section,
+        row.feedCategories
+      );
+    });
+
+    await executeIngestionQuery(
+      db,
+      `
+      insert into ingest_missing_published_at (
+        candidate_id, outlet_id, source, country, method, url, title_original, snippet_original,
+        language, section, feed_categories, first_seen_at, last_seen_at, created_at, updated_at
+      ) values ${parts.join(',')}
+      on conflict (candidate_id) do update set
+        outlet_id = excluded.outlet_id,
+        source = excluded.source,
+        country = excluded.country,
+        method = excluded.method,
+        url = excluded.url,
+        title_original = excluded.title_original,
+        snippet_original = coalesce(nullif(excluded.snippet_original, ''), ingest_missing_published_at.snippet_original),
+        language = excluded.language,
+        section = excluded.section,
+        feed_categories = (
+          select array(
+            select distinct unnest(
+              coalesce(ingest_missing_published_at.feed_categories, '{}'::text[]) ||
+              coalesce(excluded.feed_categories, '{}'::text[])
+            )
+          )
+        ),
+        last_seen_at = now(),
+        seen_count = ingest_missing_published_at.seen_count + 1,
+        updated_at = now()
+      `,
+      values,
+      'persistMissingPublishedAtCandidates.insert'
     );
   }
 

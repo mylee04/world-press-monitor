@@ -12,11 +12,13 @@ import {
   readIngestionFeedWatermarks,
   readSitemapPolicyStates,
   persistNewsArticles,
+  persistMissingPublishedAtCandidates,
   persistIngestionDiagnostics,
   upsertSitemapPolicyStates,
   upsertIngestionFeedWatermarks,
   type EndpointBackoffRow,
   type IngestionEndpointRun,
+  type MissingPublishedAtCandidate,
   type SitemapPolicyState,
 } from '../lib/ingestion-store';
 import type { NewsItem, OutletFeed, OutletTier } from '../lib/types';
@@ -93,6 +95,7 @@ const SITEMAP_PERMANENT_404_THRESHOLD = Math.max(
   2,
   Number.parseInt(process.env.INGEST_SITEMAP_404_PERMANENT_THRESHOLD || '3', 10) || 3
 );
+const DROP_ITEMS_WITHOUT_PUBLISHED_AT = parseBoolEnv(process.env.INGEST_DROP_ITEMS_WITHOUT_PUBLISHED_AT, true);
 const LATAM_COUNTRIES = new Set(['latam', 'argentina', 'chile', 'uruguay']);
 const LATAM_ENTITY_TERMS = [
   'argentina',
@@ -845,6 +848,8 @@ type EndpointResult = {
   fallbackUsed: FallbackKind;
 };
 
+type MissingPublishedAtCollector = (candidate: MissingPublishedAtCandidate) => void;
+
 function getFallbackKind(feedResult: FeedFetchResult): FallbackKind {
   return feedResult.shouldUseSitemapFallback ? 'sitemap' : 'none';
 }
@@ -943,9 +948,27 @@ function dedupeAndSort(items: NewsItem[]): NewsItem[] {
 
 async function toNewsItem(
   outlet: OutletFeed,
-  row: { title: string; description?: string; link: string; publishedAt: string; categories?: string[] },
-  fallbackPublishedAt: string
-): Promise<NewsItem> {
+  row: { title: string; description?: string; link: string; publishedAt?: string; categories?: string[] },
+  fallbackPublishedAt: string,
+  method: 'rss' | 'sitemap',
+  onMissingPublishedAtCandidate?: MissingPublishedAtCollector
+): Promise<NewsItem | null> {
+  const rawPublishedAt = (row.publishedAt || '').trim();
+  if (!rawPublishedAt && DROP_ITEMS_WITHOUT_PUBLISHED_AT) {
+    onMissingPublishedAtCandidate?.({
+      outletId: outlet.id,
+      source: outlet.name,
+      country: normalizeCountryName(outlet.country),
+      method,
+      link: row.link,
+      title: row.title,
+      description: row.description || null,
+      language: outlet.language || 'en',
+      section: outlet.section || 'others',
+      categories: row.categories || [],
+    });
+    return null;
+  }
   const normalizedCountry = normalizeCountryName(outlet.country);
   const geo = inferGeoFromTitle(row.title, normalizedCountry);
   const fallbackSection = outlet.section || 'others';
@@ -956,8 +979,11 @@ async function toNewsItem(
     feedCategories: row.categories || []
   });
   const section = classification.section;
-  const isFallbackPublishedAt = !row.publishedAt;
-  const publishedAt = row.publishedAt || fallbackPublishedAt;
+  const isFallbackPublishedAt = !rawPublishedAt;
+  const publishedAt = rawPublishedAt || fallbackPublishedAt;
+  if (parsePublishedAtMs(publishedAt) === null) {
+    return null;
+  }
   return annotateWorldLatam({
     id: row.link,
     outletId: outlet.id,
@@ -990,6 +1016,7 @@ async function fetchRss(
   options: {
     allowSitemapFallback: boolean;
     fallbackPublishedAt: string;
+    onMissingPublishedAtCandidate?: MissingPublishedAtCollector;
   }
 ): Promise<EndpointResult> {
   const country = normalizeCountryName(outlet.country);
@@ -1028,9 +1055,12 @@ async function fetchRss(
       if (useSitemapFallback) {
         const sitemapParsed = await trySitemapFallback(outlet);
         if (sitemapParsed) {
-          const items = await Promise.all(
-            sitemapParsed.items.map((row) => toNewsItem(outlet, row, options.fallbackPublishedAt))
+          const mappedItems = await Promise.all(
+            sitemapParsed.items.map((row) =>
+              toNewsItem(outlet, row, options.fallbackPublishedAt, 'sitemap', options.onMissingPublishedAtCandidate)
+            )
           );
+          const items = mappedItems.filter((item): item is NewsItem => item !== null);
           const newestItem = latestItemPublishedAt(items);
           return {
             items,
@@ -1043,11 +1073,11 @@ async function fetchRss(
               circuitOpen: false,
               ok: true,
               statusCode: 200,
-              parsedCount: sitemapParsed.stats.validCount,
+              parsedCount: items.length,
               fetchedCount: sitemapParsed.stats.totalCandidates,
               parsedLimit: SITEMAP_ITEM_LIMIT,
-              sampleCapped: sitemapParsed.stats.validCount >= SITEMAP_ITEM_LIMIT,
-              recent24h: sitemapParsed.stats.validCount,
+              sampleCapped: items.length >= SITEMAP_ITEM_LIMIT,
+              recent24h: items.length,
               missingTitleCount: sitemapParsed.stats.missingTitleCount,
               missingSummaryCount: sitemapParsed.stats.missingSummaryCount,
               missingPublishedAtCount: sitemapParsed.stats.missingPublishedAtCount,
@@ -1167,7 +1197,10 @@ async function fetchRss(
       };
     }
 
-    const items = await Promise.all(parsed.items.map((row) => toNewsItem(outlet, row, options.fallbackPublishedAt)));
+    const mappedItems = await Promise.all(
+      parsed.items.map((row) => toNewsItem(outlet, row, options.fallbackPublishedAt, 'rss', options.onMissingPublishedAtCandidate))
+    );
+    const items = mappedItems.filter((item): item is NewsItem => item !== null);
     const rssFallbackUsed: FallbackKind = getFallbackKind(feedResult);
     const newestItem = latestItemPublishedAt(items);
     return {
@@ -1181,11 +1214,11 @@ async function fetchRss(
         circuitOpen: false,
         ok: true,
         statusCode: feedResult.statusCode ?? 200,
-        parsedCount: parsed.stats.validCount,
+        parsedCount: items.length,
         fetchedCount: parsed.stats.totalCandidates,
         parsedLimit: RSS_ITEM_LIMIT,
-        sampleCapped: parsed.stats.validCount >= RSS_ITEM_LIMIT,
-        recent24h: parsed.stats.validCount,
+        sampleCapped: items.length >= RSS_ITEM_LIMIT,
+        recent24h: items.length,
         missingTitleCount: parsed.stats.missingTitleCount,
         missingSummaryCount: parsed.stats.missingSummaryCount,
         missingPublishedAtCount: parsed.stats.missingPublishedAtCount,
@@ -1230,7 +1263,11 @@ async function fetchRss(
   }
 }
 
-async function fetchSitemap(outlet: OutletFeed, fallbackPublishedAt: string): Promise<EndpointResult> {
+async function fetchSitemap(
+  outlet: OutletFeed,
+  fallbackPublishedAt: string,
+  onMissingPublishedAtCandidate?: MissingPublishedAtCollector
+): Promise<EndpointResult> {
   const country = normalizeCountryName(outlet.country);
   if (!outlet.sitemapUrl) {
     return {
@@ -1396,7 +1433,10 @@ async function fetchSitemap(outlet: OutletFeed, fallbackPublishedAt: string): Pr
       };
     }
 
-    const items = await Promise.all(parsed.items.map((row) => toNewsItem(outlet, row, fallbackPublishedAt)));
+    const mappedItems = await Promise.all(
+      parsed.items.map((row) => toNewsItem(outlet, row, fallbackPublishedAt, 'sitemap', onMissingPublishedAtCandidate))
+    );
+    const items = mappedItems.filter((item): item is NewsItem => item !== null);
     const newestItem = latestItemPublishedAt(items);
     return {
       items,
@@ -1409,11 +1449,11 @@ async function fetchSitemap(outlet: OutletFeed, fallbackPublishedAt: string): Pr
         circuitOpen: false,
         ok: true,
         statusCode: 200,
-        parsedCount: parsed.stats.validCount,
+        parsedCount: items.length,
         fetchedCount: parsed.stats.totalCandidates,
         parsedLimit: SITEMAP_ITEM_LIMIT,
-        sampleCapped: parsed.stats.validCount >= SITEMAP_ITEM_LIMIT,
-        recent24h: parsed.stats.validCount,
+        sampleCapped: items.length >= SITEMAP_ITEM_LIMIT,
+        recent24h: items.length,
         missingTitleCount: parsed.stats.missingTitleCount,
         missingSummaryCount: parsed.stats.missingSummaryCount,
         missingPublishedAtCount: parsed.stats.missingPublishedAtCount,
@@ -1595,6 +1635,7 @@ async function runOnce(): Promise<void> {
     sitemapBackoffSkipped: 0,
     sitemapPolicyDisabled: 0
   };
+  const missingPublishedAtCandidates: MissingPublishedAtCandidate[] = [];
 
   const rssResults = await runWithConcurrency<EndpointRun, EndpointResult>(rssEndpoints, FETCH_CONCURRENCY, async (endpoint) => {
     const endpointKey = `${endpoint.outlet.id}:${endpoint.method}`;
@@ -1628,6 +1669,9 @@ async function runOnce(): Promise<void> {
     const result = await fetchRss(endpoint.outlet, {
       allowSitemapFallback: false,
       fallbackPublishedAt,
+      onMissingPublishedAtCandidate: (candidate) => {
+        missingPublishedAtCandidates.push(candidate);
+      },
     });
     const lastPublicationAt = watermarks.get(endpointKey) || null;
     return { ...result, items: filterItemsByWatermark(result.items, lastPublicationAt, nowMs) };
@@ -1726,7 +1770,9 @@ async function runOnce(): Promise<void> {
         fallbackUsed: 'none',
       };
     }
-    const result = await fetchSitemap(endpoint.outlet, fallbackPublishedAt);
+    const result = await fetchSitemap(endpoint.outlet, fallbackPublishedAt, (candidate) => {
+      missingPublishedAtCandidates.push(candidate);
+    });
     const lastPublicationAt = watermarks.get(endpointKey) || null;
     if (!result.run.attempted) {
       return { ...result, items: [] };
@@ -1839,6 +1885,7 @@ async function runOnce(): Promise<void> {
 
   const merged = dedupeAndSort(results.flatMap((r) => r.items));
   const persistedNewsArticles = await persistNewsArticles(merged);
+  const persistedMissingPublishedAt = await persistMissingPublishedAtCandidates(missingPublishedAtCandidates);
   const persistedDiag = await persistIngestionDiagnostics(diagnostics, { runner: 'worker' });
   const watermarkRows = [...endpointMaxPublicationAtMs.entries()]
     .map(([endpointKey, publicationAtMs]) => {
@@ -1875,6 +1922,7 @@ async function runOnce(): Promise<void> {
       uniqueItems: merged.length,
       persisted: persistedNewsArticles.persisted,
       newsArticlesPersisted: persistedNewsArticles.persisted,
+      missingPublishedAtPersisted: persistedMissingPublishedAt.persisted,
       diagnosticsPersisted: persistedDiag.persisted,
       fallback: fallbackSummary,
     },
@@ -1889,6 +1937,7 @@ async function runOnce(): Promise<void> {
     `method_stats= [rss attempted=${methodStats.rss.attempted}, ok=${methodStats.rss.ok}, fail=${methodStats.rss.fail}(${percent(methodStats.rss.fail, methodStats.rss.attempted)}%); ` +
     `[sitemap attempted=${methodStats.sitemap.attempted}, ok=${methodStats.sitemap.ok}, fail=${methodStats.sitemap.fail}(${percent(methodStats.sitemap.fail, methodStats.sitemap.attempted)}%)] ` +
     `sitemapFallback=${fallbackSummary.rssSitemapFallbackSuccess}/${fallbackSummary.rssSitemapFallbackAttempts} skipped=${fallbackSummary.rssSitemapFallbackSkipped} unique=${merged.length} persisted=${persistedNewsArticles.persisted} newsArticles=${persistedNewsArticles.persisted} elapsedMs=${summary.elapsedMs}`
+    + ` missingPublishedAtPersisted=${persistedMissingPublishedAt.persisted}`
   );
 }
 
