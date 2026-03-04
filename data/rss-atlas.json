@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-03-03T21:54:00.517Z",
+  "generatedAt": "2026-03-04T10:02:07.472Z",
   "lastChecked": "2026-02-24T06:58:53.314Z",
   "countries": [
     {
@@ -7751,7 +7751,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 15
+          "row": 15,
+          "enabled": false
         },
         {
           "name": "Tejarat News",
