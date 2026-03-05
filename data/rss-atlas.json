@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-03-04T10:02:07.472Z",
+  "generatedAt": "2026-03-05T11:53:19.755Z",
   "lastChecked": "2026-02-24T06:58:53.314Z",
   "countries": [
     {
@@ -6942,7 +6942,8 @@
         },
         {
           "name": "Dziennik Gazeta Prawna (Business/Legal)",
-          "url": "https://www.gazetaprawna.pl/rss.xml"
+          "url": "https://www.gazetaprawna.pl/rss.xml",
+          "enabled": false
         }
       ]
     },
