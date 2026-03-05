@@ -28,6 +28,7 @@ jobs:
 
       - name: Run RSS health pipeline
         env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
           RSS_HEALTH_TZ: America/Chicago
           RSS_HEALTH_DISCORD_WEBHOOK_URL: ${{ secrets.RSS_HEALTH_DISCORD_WEBHOOK_URL }}
           RSS_HEALTH_DISCORD_MENTION: ${{ secrets.RSS_HEALTH_DISCORD_MENTION }}

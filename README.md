@@ -58,6 +58,7 @@ GitHub Actions is also configured:
 Note about "Last checked" date in README:
 - This workflow runs with `contents: write` and auto-commits RSS health snapshot changes when `README.md`/catalog outputs change.
 - If no commit appears for a given day, the generated snapshot was identical (no diff), so there was nothing to push.
+- `Daily` / `Since baseline` columns are filled from Postgres ingest aggregates. If `DATABASE_URL` is missing or DB has no ingest rows for an outlet yet, they appear as `-` (DB unavailable) or `0` (available but no rows).
 
 Data retention policy used by the daily job:
 - `news_articles`: keep last **3 days**
