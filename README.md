@@ -56,8 +56,8 @@ GitHub Actions is also configured:
 - Manual run: Actions tab → `RSS Health Daily` → `Run workflow`
 
 Note about "Last checked" date in README:
-- This workflow is `contents: read` and uploads artifacts only, so a successful run does not automatically commit README/date changes.
-- To reflect latest run date in git-tracked files, run the export/update flow locally (or add a separate write-enabled workflow/PR automation).
+- This workflow runs with `contents: write` and auto-commits RSS health snapshot changes when `README.md`/catalog outputs change.
+- If no commit appears for a given day, the generated snapshot was identical (no diff), so there was nothing to push.
 
 Data retention policy used by the daily job:
 - `news_articles`: keep last **3 days**

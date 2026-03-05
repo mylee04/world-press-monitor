@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   health:
@@ -54,6 +54,18 @@ jobs:
             exit 0
           fi
           bun run rss:failure:watchlist
+
+      - name: Commit README health snapshot (if changed)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md audits/readme_rss_health_latest.json data/rss-catalog.csv data/rss-catalog.opml
+          if git diff --cached --quiet; then
+            echo "[rss-health] No README/catalog changes to commit."
+            exit 0
+          fi
+          git commit -m "chore: update RSS health snapshot"
+          git push origin HEAD:${{ github.ref_name }}
 
       - name: Upload health artifacts
         if: always()
