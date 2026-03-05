@@ -16,6 +16,32 @@ const publicationMaxAgeDays = (() => {
   return parsed;
 })();
 const publicationMaxAgeMs = publicationMaxAgeDays === 0 ? 0 : publicationMaxAgeDays * 24 * 60 * 60 * 1000;
+const storedTitleMaxChars = (() => {
+  const rawValue = process.env.NEWS_TITLE_MAX_CHARS;
+  if (!rawValue) return 300;
+  const parsed = Number.parseInt(rawValue, 10);
+  if (!Number.isFinite(parsed) || parsed < 60 || parsed > 2000) return 300;
+  return parsed;
+})();
+const storedSnippetMaxChars = (() => {
+  const rawValue = process.env.NEWS_SNIPPET_MAX_CHARS;
+  if (!rawValue) return 600;
+  const parsed = Number.parseInt(rawValue, 10);
+  if (!Number.isFinite(parsed) || parsed < 100 || parsed > 8000) return 600;
+  return parsed;
+})();
+const apiSnippetMaxChars = (() => {
+  const rawValue = process.env.NEWS_API_SNIPPET_MAX_CHARS;
+  if (!rawValue) return 400;
+  const parsed = Number.parseInt(rawValue, 10);
+  if (!Number.isFinite(parsed) || parsed < 80 || parsed > 8000) return 400;
+  return parsed;
+})();
+
+function truncateText(value: string, maxChars: number): string {
+  if (value.length <= maxChars) return value;
+  return value.slice(0, maxChars).trim();
+}
 
 type NewsDbHealthResult = {
   ok: boolean;
@@ -839,7 +865,7 @@ export async function readNewsArticlesForApi(options: {
       e.external_id as id,
       e.source,
       e.title_original as title,
-      e.snippet_original,
+      left(e.snippet_original, ${apiSnippetMaxChars}) as snippet_original,
       e.url,
       e.country,
       e.language,
@@ -981,7 +1007,7 @@ export async function readNewsArticles(options: {
       e.url as link,
       null::text as outlet_id,
       e.title_original as title,
-      e.snippet_original as description,
+      left(e.snippet_original, ${apiSnippetMaxChars}) as description,
       e.source,
       e.publication_datetime as published_at,
       e.country,
@@ -2325,9 +2351,10 @@ async function toNewsArticleRow(item: NewsItem): Promise<NewsArticlePersistable 
   if (publicationMaxAgeMs > 0 && publicationTs < Date.now() - publicationMaxAgeMs) return null;
 
   const language = item.language || null;
-  const titleOriginal = item.title || '';
+  const titleOriginal = truncateText(item.title || '', storedTitleMaxChars);
   if (!titleOriginal) return null;
-  const snippetOriginal = (item.description || '').trim() || null;
+  const rawSnippet = (item.description || '').trim();
+  const snippetOriginal = rawSnippet ? truncateText(rawSnippet, storedSnippetMaxChars) : null;
 
   return {
     externalId: await sha256Hex(linkNorm),
@@ -2345,9 +2372,10 @@ async function toNewsArticleRow(item: NewsItem): Promise<NewsArticlePersistable 
 async function toMissingPublishedAtRow(item: MissingPublishedAtCandidate): Promise<MissingPublishedAtPersistable | null> {
   const linkNorm = normalizeLinkForId(item.link);
   if (!linkNorm) return null;
-  const titleOriginal = (item.title || '').trim();
+  const titleOriginal = truncateText((item.title || '').trim(), storedTitleMaxChars);
   if (!titleOriginal) return null;
-  const snippetOriginal = (item.description || '').trim() || null;
+  const rawSnippet = (item.description || '').trim();
+  const snippetOriginal = rawSnippet ? truncateText(rawSnippet, storedSnippetMaxChars) : null;
   const categories = [...new Set((item.categories || []).map((entry) => entry.trim()).filter(Boolean))];
   const idSource = `${item.outletId}|${item.method}|${linkNorm}`;
 
