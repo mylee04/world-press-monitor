@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Thu, 05 Mar 2026 09:43:34 GMT</dateCreated>
+    <dateCreated>Thu, 05 Mar 2026 10:19:38 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -46,7 +46,7 @@
       <outline text="Boston Globe [valid]" title="Boston Globe [valid]" type="rss" xmlUrl="https://www.bostonglobe.com/arc/outboundfeeds/rss?outputType=xml" htmlUrl="https://www.bostonglobe.com"/>
       <outline text="New York Post [valid]" title="New York Post [valid]" type="rss" xmlUrl="https://nypost.com/feed" htmlUrl="https://nypost.com"/>
       <outline text="Chicago Tribune [valid]" title="Chicago Tribune [valid]" type="rss" xmlUrl="https://chicagotribune.com/feed" htmlUrl="https://chicagotribune.com"/>
-      <outline text="Seattle Times [valid]" title="Seattle Times [valid]" type="rss" xmlUrl="https://seattletimes.com/feed" htmlUrl="https://seattletimes.com"/>
+      <outline text="Seattle Times [invalid]" title="Seattle Times [invalid]" type="rss" xmlUrl="https://seattletimes.com/feed" htmlUrl="https://seattletimes.com"/>
       <outline text="Denver Post [invalid]" title="Denver Post [invalid]" type="rss" xmlUrl="https://denverpost.com/feed" htmlUrl="https://denverpost.com"/>
       <outline text="San Jose Mercury News [valid]" title="San Jose Mercury News [valid]" type="rss" xmlUrl="https://mercurynews.com/feed" htmlUrl="https://mercurynews.com"/>
       <outline text="Las Vegas Review-Journal [valid]" title="Las Vegas Review-Journal [valid]" type="rss" xmlUrl="https://reviewjournal.com/feed" htmlUrl="https://reviewjournal.com"/>
@@ -366,7 +366,7 @@
       <outline text="La Gazzetta dello Sport [valid]" title="La Gazzetta dello Sport [valid]" type="rss" xmlUrl="https://www.gazzetta.it/rss/home.xml" htmlUrl="https://www.gazzetta.it"/>
       <outline text="IL Tempo [valid]" title="IL Tempo [valid]" type="rss" xmlUrl="https://www.iltempo.it/rss.xml" htmlUrl="https://www.iltempo.it"/>
       <outline text="Libero Quotidiano [valid]" title="Libero Quotidiano [valid]" type="rss" xmlUrl="https://www.liberoquotidiano.it/rss.xml" htmlUrl="https://www.liberoquotidiano.it"/>
-      <outline text="MilanoToday [valid]" title="MilanoToday [valid]" type="rss" xmlUrl="https://www.milanotoday.it/rss" htmlUrl="https://www.milanotoday.it"/>
+      <outline text="MilanoToday [invalid]" title="MilanoToday [invalid]" type="rss" xmlUrl="https://www.milanotoday.it/rss" htmlUrl="https://www.milanotoday.it"/>
       <outline text="The Florentine [needs verification]" title="The Florentine [needs verification]" type="rss" xmlUrl="https://www.theflorentine.net/feed" htmlUrl="https://www.theflorentine.net"/>
       <outline text="Wanted in Rome [valid]" title="Wanted in Rome [valid]" type="rss" xmlUrl="https://www.wantedinrome.com/news?format=rss" htmlUrl="https://www.wantedinrome.com"/>
       <outline text="Florence Daily News [valid]" title="Florence Daily News [valid]" type="rss" xmlUrl="https://florencedailynews.com/feed" htmlUrl="https://florencedailynews.com"/>
@@ -405,7 +405,7 @@
       <outline text="CTV News - Top Stories [needs verification]" title="CTV News - Top Stories [needs verification]" type="rss" xmlUrl="https://www.ctvnews.ca/rss/ctvnews-ca-top-stories-public-rss-1.822009" htmlUrl="https://www.ctvnews.ca"/>
       <outline text="CTV News - Business [invalid]" title="CTV News - Business [invalid]" type="rss" xmlUrl="https://www.ctvnews.ca/rss/business/ctvnews-ca-business-public-rss-1.822283" htmlUrl="https://www.ctvnews.ca"/>
       <outline text="Global News - Politics [valid]" title="Global News - Politics [valid]" type="rss" xmlUrl="https://globalnews.ca/politics/feed/" htmlUrl="https://globalnews.ca"/>
-      <outline text="Toronto Star - Politics [valid]" title="Toronto Star - Politics [valid]" type="rss" xmlUrl="https://www.thestar.com/search/?f=rss&amp;t=article&amp;c=politics&amp;l=50&amp;s=start_time&amp;sd=desc" htmlUrl="https://www.thestar.com"/>
+      <outline text="Toronto Star - Politics [invalid]" title="Toronto Star - Politics [invalid]" type="rss" xmlUrl="https://www.thestar.com/search/?f=rss&amp;t=article&amp;c=politics&amp;l=50&amp;s=start_time&amp;sd=desc" htmlUrl="https://www.thestar.com"/>
       <outline text="BNN Bloomberg (Canada Biz) [needs verification]" title="BNN Bloomberg (Canada Biz) [needs verification]" type="rss" xmlUrl="https://www.bnnbloomberg.ca/business/rss" htmlUrl="https://www.bnnbloomberg.ca"/>
       <outline text="CBC News - Business [invalid (ERR)]" title="CBC News - Business [invalid (ERR)]" type="rss" xmlUrl="https://www.cbc.ca/cmlink/rss-business" htmlUrl="https://www.cbc.ca"/>
       <outline text="CBC News - World [invalid (ERR)]" title="CBC News - World [invalid (ERR)]" type="rss" xmlUrl="https://www.cbc.ca/cmlink/rss-world" htmlUrl="https://www.cbc.ca"/>
@@ -431,7 +431,7 @@
       <outline text="Kommersant (Economy/Business Major Daily) [valid]" title="Kommersant (Economy/Business Major Daily) [valid]" type="rss" xmlUrl="https://www.kommersant.ru/RSS/news.xml" htmlUrl="https://www.kommersant.ru"/>
       <outline text="Vedomosti (Economy Major Daily) [valid]" title="Vedomosti (Economy Major Daily) [valid]" type="rss" xmlUrl="https://www.vedomosti.ru/rss/news" htmlUrl="https://www.vedomosti.ru"/>
       <outline text="Gazeta.ru (General News) [needs verification]" title="Gazeta.ru (General News) [needs verification]" type="rss" xmlUrl="https://www.gazeta.ru/export/rss/lenta.xml" htmlUrl="https://www.gazeta.ru"/>
-      <outline text="Izvestia (Traditional Daily) [invalid]" title="Izvestia (Traditional Daily) [invalid]" type="rss" xmlUrl="https://iz.ru/xml/rss/all.xml" htmlUrl="https://iz.ru"/>
+      <outline text="Izvestia (Traditional Daily) [valid]" title="Izvestia (Traditional Daily) [valid]" type="rss" xmlUrl="https://iz.ru/xml/rss/all.xml" htmlUrl="https://iz.ru"/>
       <outline text="RT Russian (RT Russian Main) [valid]" title="RT Russian (RT Russian Main) [valid]" type="rss" xmlUrl="https://russian.rt.com/rss" htmlUrl="https://russian.rt.com"/>
       <outline text="Rossiyskaya Gazeta (Official Gazette) [valid]" title="Rossiyskaya Gazeta (Official Gazette) [valid]" type="rss" xmlUrl="https://rg.ru/xml/index.xml" htmlUrl="https://rg.ru"/>
       <outline text="Forbes Russia (Forbes Russia Edition) [valid]" title="Forbes Russia (Forbes Russia Edition) [valid]" type="rss" xmlUrl="https://www.forbes.ru/newrss.xml" htmlUrl="https://www.forbes.ru"/>
