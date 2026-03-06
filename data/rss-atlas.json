@@ -2526,6 +2526,90 @@
           "name": "Usine Nouvelle (Industry/Energy/Manufacturing)",
           "url": "https://www.usinenouvelle.com/rss/",
           "enabled": false
+        },
+        {
+          "name": "Midi Libre",
+          "url": "https://www.midilibre.fr/rss.xml"
+        },
+        {
+          "name": "Nice-Matin",
+          "url": "https://www.nicematin.com/rss"
+        },
+        {
+          "name": "CNEWS",
+          "url": "https://www.cnews.fr/rss.xml"
+        },
+        {
+          "name": "RFI (FR)",
+          "url": "https://www.rfi.fr/fr/rss"
+        },
+        {
+          "name": "France 24 (FR)",
+          "url": "https://www.france24.com/fr/rss"
+        },
+        {
+          "name": "Euronews FR",
+          "url": "https://fr.euronews.com/rss"
+        },
+        {
+          "name": "Numerama",
+          "url": "https://www.numerama.com/feed/"
+        },
+        {
+          "name": "Clubic",
+          "url": "https://www.clubic.com/feed/news.rss"
+        },
+        {
+          "name": "01Net",
+          "url": "https://www.01net.com/rss/actualites/"
+        },
+        {
+          "name": "Presse Citron",
+          "url": "https://www.presse-citron.net/feed/"
+        },
+        {
+          "name": "Journal du Geek",
+          "url": "https://www.journaldugeek.com/feed/"
+        },
+        {
+          "name": "Le Progrès",
+          "url": "https://www.leprogres.fr/rss"
+        },
+        {
+          "name": "BFM TV",
+          "url": "https://www.bfmtv.com/rss/news-24-7/"
+        },
+        {
+          "name": "France Info",
+          "url": "https://www.francetvinfo.fr/titres.rss"
+        },
+        {
+          "name": "Le Télégramme",
+          "url": "https://www.letelegramme.fr/rss.xml"
+        },
+        {
+          "name": "Siècle Digital",
+          "url": "https://siecledigital.fr/feed/"
+        },
+        {
+          "name": "Le Monde",
+          "url": "https://www.lemonde.fr/rss/une.xml"
+        },
+        {
+          "name": "Le Dauphiné Libéré",
+          "url": "https://www.ledauphine.com/rss"
+        },
+        {
+          "name": "Mediacités",
+          "url": "https://www.mediacites.fr/feed/"
+        },
+        {
+          "name": "StreetPress",
+          "url": "https://www.streetpress.com/rss.xml"
+        },
+        {
+          "name": "Disclose",
+          "url": "https://disclose.ngo/feed/"
         }
       ]
     },
