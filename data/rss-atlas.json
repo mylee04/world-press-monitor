@@ -2246,7 +2246,8 @@
           "status": null,
           "checkedDate": null,
           "valid": null,
-          "row": 3
+          "row": 3,
+          "enabled": false
         },
         {
           "name": "RFI (All / EN)",
@@ -2386,7 +2387,8 @@
           "status": null,
           "checkedDate": null,
           "valid": null,
-          "row": 23
+          "row": 23,
+          "enabled": false
         },
         {
           "name": "Le Monde (EN – Europe)",
@@ -2394,7 +2396,8 @@
           "status": null,
           "checkedDate": null,
           "valid": null,
-          "row": 24
+          "row": 24,
+          "enabled": false
         },
         {
           "name": "Le Monde (EN – United States)",
@@ -2402,7 +2405,8 @@
           "status": null,
           "checkedDate": null,
           "valid": null,
-          "row": 25
+          "row": 25,
+          "enabled": false
         },
         {
           "name": "Le Monde (EN – Economy)",
@@ -2410,7 +2414,8 @@
           "status": null,
           "checkedDate": null,
           "valid": null,
-          "row": 26
+          "row": 26,
+          "enabled": false
         },
         {
           "name": "Le Monde (EN – Culture)",
@@ -2418,7 +2423,8 @@
           "status": null,
           "checkedDate": null,
           "valid": null,
-          "row": 27
+          "row": 27,
+          "enabled": false
         },
         {
           "name": "Le Monde (EN – Sports)",
@@ -2426,7 +2432,8 @@
           "status": null,
           "checkedDate": null,
           "valid": null,
-          "row": 28
+          "row": 28,
+          "enabled": false
         },
         {
           "name": "Le Monde (EN – Environment)",
@@ -2442,7 +2449,8 @@
           "status": null,
           "checkedDate": null,
           "valid": null,
-          "row": 30
+          "row": 30,
+          "enabled": false
         },
         {
           "name": "Les Echos (Finance/Markets)",
@@ -2472,7 +2480,8 @@
         },
         {
           "name": "La Tribune (Economy)",
-          "url": "https://www.latribune.fr/feed.xml"
+          "url": "https://www.latribune.fr/feed.xml",
+          "enabled": false
         },
         {
           "name": "Libération (Society/Politics)",
@@ -8341,7 +8350,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 28
+          "row": 28,
+          "sitemapUrl": "https://www.lanacion.com.ar/sitemap_news.xml"
         },
         {
           "name": "El Cronista - Noticias",
@@ -8357,7 +8367,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 30
+          "row": 30,
+          "sitemapUrl": "https://www.clarin.com/sitemap_news.xml"
         },
         {
           "name": "Clarín - Economía",
@@ -8434,6 +8445,295 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 39
+        },
+        {
+          "name": "TN",
+          "url": "https://tn.com.ar/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 40
+        },
+        {
+          "name": "La Nación",
+          "url": "https://www.lanacion.com.ar/arc/outboundfeeds/rss/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 41,
+          "sitemapUrl": "https://www.lanacion.com.ar/sitemap_news.xml"
+        },
+        {
+          "name": "Crónica",
+          "url": "https://www.cronica.com.ar/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 42
+        },
+        {
+          "name": "El Economista",
+          "url": "https://eleconomista.com.ar/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 43
+        },
+        {
+          "name": "BAE Negocios",
+          "url": "https://www.baenegocios.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 44
+        },
+        {
+          "name": "Perfil",
+          "url": "https://www.perfil.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 45
+        },
+        {
+          "name": "Buenos Aires Times",
+          "url": "https://www.batimes.com.ar/feed",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 46
+        },
+        {
+          "name": "El Tribuno",
+          "url": "https://www.eltribuno.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 47
+        },
+        {
+          "name": "Diario Registrado",
+          "url": "https://www.diarioregistrado.com/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 48
+        },
+        {
+          "name": "Río Negro",
+          "url": "https://www.rionegro.com.ar/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 49
+        },
+        {
+          "name": "Econojournal",
+          "url": "https://econojournal.com.ar/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 50
+        },
+        {
+          "name": "TecnoGeek",
+          "url": "https://tecnogeek.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 51
+        },
+        {
+          "name": "La Gaceta Tucumán",
+          "url": "https://www.lagaceta.com.ar/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 52
+        },
+        {
+          "name": "MercoPress",
+          "url": "https://en.mercopress.com/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 53
+        },
+        {
+          "name": "Chequeado",
+          "url": "https://chequeado.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 54
+        },
+        {
+          "name": "Olé",
+          "url": "https://www.ole.com.ar/rss/ultimas-noticias/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 55
+        },
+        {
+          "name": "Border Periodismo",
+          "url": "https://borderperiodismo.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 56
+        },
+        {
+          "name": "Data Diario",
+          "url": "https://datadiario.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 57
+        },
+        {
+          "name": "Primera Edición",
+          "url": "https://www.primeraedicion.com.ar/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 58
+        },
+        {
+          "name": "Surtidores",
+          "url": "https://surtidores.com.ar/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 59
+        },
+        {
+          "name": "Jujuy al Día",
+          "url": "https://www.jujuyaldia.com.ar/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 60
+        },
+        {
+          "name": "El Diario Paraná",
+          "url": "https://www.eldiario.com.ar/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 61
+        },
+        {
+          "name": "El Inversor Energético",
+          "url": "https://elinversorenergetico.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 62
+        },
+        {
+          "name": "Misiones Online",
+          "url": "https://misionesonline.net/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 63
+        },
+        {
+          "name": "Clarín - Mundo",
+          "url": "https://www.clarin.com/rss/mundo/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 64
+        },
+        {
+          "name": "Página/12 - Cultura",
+          "url": "https://www.pagina12.com.ar/arc/outboundfeeds/rss/secciones/cultura-y-espectaculos/notas",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 65
+        },
+        {
+          "name": "MDZ Online - Últimas noticias",
+          "url": "https://www.mdzol.com/rss/pages/noticias.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 66
+        },
+        {
+          "name": "MDZ Online - Últimas noticias Argentina",
+          "url": "https://www.mdzol.com/rss/pages/ultimas-noticias-argentina.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 67
+        },
+        {
+          "name": "MDZ Online - Últimas noticias Mendoza",
+          "url": "https://www.mdzol.com/rss/pages/ultimas-noticias-mendoza.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 68
+        },
+        {
+          "name": "MDZ Online - Deportes",
+          "url": "https://www.mdzol.com/rss/pages/deportes.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 69
+        },
+        {
+          "name": "MDZ Online - Economía",
+          "url": "https://www.mdzol.com/rss/pages/dinero.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 70
+        },
+        {
+          "name": "MDZ Online - Mundo",
+          "url": "https://www.mdzol.com/rss/pages/mundo.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 71
+        },
+        {
+          "name": "MDZ Online - Policiales",
+          "url": "https://www.mdzol.com/rss/pages/policiales.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 72
+        },
+        {
+          "name": "MDZ Online - Política",
+          "url": "https://www.mdzol.com/rss/pages/politica.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 73
+        },
+        {
+          "name": "MDZ Online - Sociedad",
+          "url": "https://www.mdzol.com/rss/pages/sociedad.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 74
+        },
+        {
+          "name": "MDZ Online - Tecnología",
+          "url": "https://www.mdzol.com/rss/pages/tecnologia.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 75
         }
       ]
     },
@@ -8516,12 +8816,11 @@
         },
         {
           "name": "El Desconcierto",
-          "url": "https://www.eldesconcierto.cl/feed/",
+          "url": "https://eldesconcierto.cl/feeds/rss.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 11,
-          "enabled": false
+          "row": 11
         },
         {
           "name": "La Prensa Austral",
@@ -8793,6 +9092,102 @@
           "name": "Diario Concepcion",
           "url": "https://www.diarioconcepcion.cl/feed",
           "enabled": false
+        },
+        {
+          "name": "Pauta",
+          "url": "https://www.pauta.cl/feed",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 61
+        },
+        {
+          "name": "El Pingüino",
+          "url": "https://elpinguino.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 62
+        },
+        {
+          "name": "Fast Check CL",
+          "url": "https://www.fastcheck.cl/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 63
+        },
+        {
+          "name": "Diario El Centro",
+          "url": "https://www.diarioelcentro.cl/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 64
+        },
+        {
+          "name": "Ex-Ante",
+          "url": "https://www.ex-ante.cl/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 65
+        },
+        {
+          "name": "El Ciudadano",
+          "url": "https://www.elciudadano.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 66
+        },
+        {
+          "name": "El Insular",
+          "url": "https://www.elinsular.cl/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 67
+        },
+        {
+          "name": "Interferencia",
+          "url": "https://interferencia.cl/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 68
+        },
+        {
+          "name": "Diario Constitucional",
+          "url": "https://www.diarioconstitucional.cl/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 69
+        },
+        {
+          "name": "Concierto",
+          "url": "https://www.concierto.cl/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 70
+        },
+        {
+          "name": "Futuro",
+          "url": "https://www.futuro.cl/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 71
+        },
+        {
+          "name": "Rock&Pop",
+          "url": "https://www.rockandpop.cl/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 72
         }
       ]
     },
