@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Fri, 06 Mar 2026 07:15:33 GMT</dateCreated>
+    <dateCreated>Sat, 07 Mar 2026 07:05:43 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -69,7 +69,7 @@
       <outline text="Jacobin [valid]" title="Jacobin [valid]" type="rss" xmlUrl="https://jacobin.com/feed" htmlUrl="https://jacobin.com"/>
       <outline text="Quartz [valid]" title="Quartz [valid]" type="rss" xmlUrl="https://qz.com/feed" htmlUrl="https://qz.com"/>
       <outline text="The Intercept [valid]" title="The Intercept [valid]" type="rss" xmlUrl="https://theintercept.com/feed" htmlUrl="https://theintercept.com"/>
-      <outline text="Newsweek [invalid]" title="Newsweek [invalid]" type="rss" xmlUrl="https://www.newsweek.com/rss" htmlUrl="https://www.newsweek.com"/>
+      <outline text="Newsweek [valid]" title="Newsweek [valid]" type="rss" xmlUrl="https://www.newsweek.com/rss" htmlUrl="https://www.newsweek.com"/>
       <outline text="Time [valid]" title="Time [valid]" type="rss" xmlUrl="https://time.com/feed" htmlUrl="https://time.com"/>
       <outline text="PBS NewsHour [valid]" title="PBS NewsHour [valid]" type="rss" xmlUrl="https://www.pbs.org/newshour/feeds/rss/headlines" htmlUrl="https://www.pbs.org"/>
     </outline>
@@ -262,7 +262,7 @@
       <outline text="Telangana Today [valid]" title="Telangana Today [valid]" type="rss" xmlUrl="https://telanganatoday.com/feed" htmlUrl="https://telanganatoday.com"/>
       <outline text="News Today (TN) [valid]" title="News Today (TN) [valid]" type="rss" xmlUrl="https://newstodaynet.com/feed" htmlUrl="https://newstodaynet.com"/>
       <outline text="IndiaVision [valid]" title="IndiaVision [valid]" type="rss" xmlUrl="https://www.indiavision.com/feed" htmlUrl="https://www.indiavision.com"/>
-      <outline text="OpIndia [invalid (ERR)]" title="OpIndia [invalid (ERR)]" type="rss" xmlUrl="https://www.opindia.com/feed" htmlUrl="https://www.opindia.com"/>
+      <outline text="OpIndia [valid]" title="OpIndia [valid]" type="rss" xmlUrl="https://www.opindia.com/feed" htmlUrl="https://www.opindia.com"/>
       <outline text="OrissaPOST [valid]" title="OrissaPOST [valid]" type="rss" xmlUrl="https://www.orissapost.com/feed" htmlUrl="https://www.orissapost.com"/>
       <outline text="India&apos;s News.Net [valid]" title="India&apos;s News.Net [valid]" type="rss" xmlUrl="https://feeds.indiasnews.net/rss/701ee96610c884a6" htmlUrl="https://feeds.indiasnews.net"/>
       <outline text="TechGenYZ [valid]" title="TechGenYZ [valid]" type="rss" xmlUrl="https://techgenyz.com/feed" htmlUrl="https://techgenyz.com"/>
@@ -426,7 +426,7 @@
       <outline text="CTV News - Top Stories [needs verification]" title="CTV News - Top Stories [needs verification]" type="rss" xmlUrl="https://www.ctvnews.ca/rss/ctvnews-ca-top-stories-public-rss-1.822009" htmlUrl="https://www.ctvnews.ca"/>
       <outline text="CTV News - Business [invalid]" title="CTV News - Business [invalid]" type="rss" xmlUrl="https://www.ctvnews.ca/rss/business/ctvnews-ca-business-public-rss-1.822283" htmlUrl="https://www.ctvnews.ca"/>
       <outline text="Global News - Politics [valid]" title="Global News - Politics [valid]" type="rss" xmlUrl="https://globalnews.ca/politics/feed/" htmlUrl="https://globalnews.ca"/>
-      <outline text="Toronto Star - Politics [invalid]" title="Toronto Star - Politics [invalid]" type="rss" xmlUrl="https://www.thestar.com/search/?f=rss&amp;t=article&amp;c=politics&amp;l=50&amp;s=start_time&amp;sd=desc" htmlUrl="https://www.thestar.com"/>
+      <outline text="Toronto Star - Politics [valid]" title="Toronto Star - Politics [valid]" type="rss" xmlUrl="https://www.thestar.com/search/?f=rss&amp;t=article&amp;c=politics&amp;l=50&amp;s=start_time&amp;sd=desc" htmlUrl="https://www.thestar.com"/>
       <outline text="BNN Bloomberg (Canada Biz) [needs verification]" title="BNN Bloomberg (Canada Biz) [needs verification]" type="rss" xmlUrl="https://www.bnnbloomberg.ca/business/rss" htmlUrl="https://www.bnnbloomberg.ca"/>
       <outline text="CBC News - Business [invalid (ERR)]" title="CBC News - Business [invalid (ERR)]" type="rss" xmlUrl="https://www.cbc.ca/cmlink/rss-business" htmlUrl="https://www.cbc.ca"/>
       <outline text="CBC News - World [invalid (ERR)]" title="CBC News - World [invalid (ERR)]" type="rss" xmlUrl="https://www.cbc.ca/cmlink/rss-world" htmlUrl="https://www.cbc.ca"/>
@@ -924,7 +924,7 @@
     </outline>
     <outline text="Poland (PL)" title="Poland (PL)">
       <outline text="Onet [valid]" title="Onet [valid]" type="rss" xmlUrl="https://wiadomosci.onet.pl/rss" htmlUrl="https://wiadomosci.onet.pl"/>
-      <outline text="TVN24 [invalid]" title="TVN24 [invalid]" type="rss" xmlUrl="https://tvn24.pl/tvnmeteo.xml" htmlUrl="https://tvn24.pl"/>
+      <outline text="TVN24 [needs verification]" title="TVN24 [needs verification]" type="rss" xmlUrl="https://tvn24.pl/tvnmeteo.xml" htmlUrl="https://tvn24.pl"/>
       <outline text="Fakt [valid]" title="Fakt [valid]" type="rss" xmlUrl="https://www.fakt.pl/rss/" htmlUrl="https://www.fakt.pl"/>
       <outline text="Wprost [valid]" title="Wprost [valid]" type="rss" xmlUrl="https://www.wprost.pl/rss/" htmlUrl="https://www.wprost.pl"/>
       <outline text="RMF24 (Main) [valid]" title="RMF24 (Main) [valid]" type="rss" xmlUrl="https://www.rmf24.pl/feed" htmlUrl="https://www.rmf24.pl"/>
@@ -958,8 +958,8 @@
       <outline text="PAP MediaRoom (Nauka i technologie) [valid]" title="PAP MediaRoom (Nauka i technologie) [valid]" type="rss" xmlUrl="https://pap-mediaroom.pl/kategoria/nauka-i-technologie/rss.xml" htmlUrl="https://pap-mediaroom.pl"/>
       <outline text="PAP MediaRoom (Kalendarium) [valid]" title="PAP MediaRoom (Kalendarium) [valid]" type="rss" xmlUrl="https://pap-mediaroom.pl/kalendarium/rss.xml" htmlUrl="https://pap-mediaroom.pl"/>
       <outline text="Onet Wiadomości (Top Portal News) [valid]" title="Onet Wiadomości (Top Portal News) [valid]" type="rss" xmlUrl="https://wiadomosci.onet.pl/.feed" htmlUrl="https://wiadomosci.onet.pl"/>
-      <outline text="TVN24 Najnowsze (TVN24 News) [valid]" title="TVN24 Najnowsze (TVN24 News) [valid]" type="rss" xmlUrl="https://tvn24.pl/najnowsze.xml" htmlUrl="https://tvn24.pl"/>
-      <outline text="TVN24 Biznes (TVN24 Business) [invalid]" title="TVN24 Biznes (TVN24 Business) [invalid]" type="rss" xmlUrl="https://tvn24.pl/biznes.xml" htmlUrl="https://tvn24.pl"/>
+      <outline text="TVN24 Najnowsze (TVN24 News) [invalid]" title="TVN24 Najnowsze (TVN24 News) [invalid]" type="rss" xmlUrl="https://tvn24.pl/najnowsze.xml" htmlUrl="https://tvn24.pl"/>
+      <outline text="TVN24 Biznes (TVN24 Business) [needs verification]" title="TVN24 Biznes (TVN24 Business) [needs verification]" type="rss" xmlUrl="https://tvn24.pl/biznes.xml" htmlUrl="https://tvn24.pl"/>
       <outline text="Money.pl (Polish Economy Portal #1) [valid]" title="Money.pl (Polish Economy Portal #1) [valid]" type="rss" xmlUrl="https://www.money.pl/rss/" htmlUrl="https://www.money.pl"/>
       <outline text="Bankier.pl (Finance/Investing) [valid]" title="Bankier.pl (Finance/Investing) [valid]" type="rss" xmlUrl="https://www.bankier.pl/rss/wiadomosci.xml" htmlUrl="https://www.bankier.pl"/>
       <outline text="Wprost (Politics/Current Affairs) [valid]" title="Wprost (Politics/Current Affairs) [valid]" type="rss" xmlUrl="https://www.wprost.pl/rss" htmlUrl="https://www.wprost.pl"/>
