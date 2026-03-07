@@ -1,0 +1,163 @@
+{
+  "version": 1,
+  "generatedAt": "2026-03-06T09:43:58.348Z",
+  "lastChecked": "2026-03-06",
+  "countries": [
+    {
+      "name": "Chile",
+      "code": "CL",
+      "feeds": [
+        {
+          "name": "CLNEW 001 - El Mostrador",
+          "url": "https://www.elmostrador.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW 002 - Ex-Ante",
+          "url": "https://www.ex-ante.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW 003 - Fast Check CL",
+          "url": "https://www.fastcheck.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW 004 - Interferencia",
+          "url": "https://interferencia.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW 005 - El Ciudadano",
+          "url": "https://www.elciudadano.com/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW 006 - El Dínamo",
+          "url": "https://www.eldinamo.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW 007 - Pauta",
+          "url": "https://www.pauta.cl/feed",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW 008 - La Cuarta",
+          "url": "https://www.lacuarta.com/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW 009 - Publimetro Chile",
+          "url": "https://www.publimetro.cl/cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW 010 - 24Horas",
+          "url": "https://www.24horas.cl/rss",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW 011 - TVN Noticias",
+          "url": "https://www.tvn.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW 012 - CNN Chile",
+          "url": "https://www.cnnchile.com/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW 013 - T13",
+          "url": "https://www.t13.cl/rss",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW 014 - Chilevisión Noticias",
+          "url": "https://www.chvnoticias.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW 015 - Mega Noticias",
+          "url": "https://www.meganoticias.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW 016 - SoyChile",
+          "url": "https://www.soychile.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW 017 - El Sur",
+          "url": "https://www.elsur.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW 018 - La Estrella de Valparaiso",
+          "url": "https://www.estrellavalpo.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW 019 - La Estrella de Iquique",
+          "url": "https://www.estrellaiquique.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW 020 - La Estrella de Antofagasta",
+          "url": "https://www.estrellaantofagasta.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW 021 - La Estrella de Arica",
+          "url": "https://www.estrellaarica.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW 022 - La Estrella de Tocopilla",
+          "url": "https://www.estrellatocopilla.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW 023 - Diario Talca",
+          "url": "https://www.diariotalca.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW 024 - Diario El Centro",
+          "url": "https://www.diarioelcentro.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW 025 - El Pingüino",
+          "url": "https://elpinguino.com/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW 026 - El Tipografo",
+          "url": "https://eltipografo.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW 027 - El Observador",
+          "url": "https://www.elobservador.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW 028 - El Trabajo",
+          "url": "https://www.eltrabajo.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW 029 - El Labrador",
+          "url": "https://www.ellabrador.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW 030 - El Martutino",
+          "url": "https://www.elmartutino.cl/feed/",
+          "enabled": true
+        }
+      ]
+    }
+  ]
+}

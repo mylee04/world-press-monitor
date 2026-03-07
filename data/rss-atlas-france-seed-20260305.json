@@ -1,0 +1,333 @@
+{
+  "version": 1,
+  "generatedAt": "2026-03-05T15:00:41.807Z",
+  "lastChecked": "2026-03-05T15:00:41.807Z",
+  "countries": [
+    {
+      "name": "France",
+      "code": "FR",
+      "feeds": [
+        {
+          "name": "FR Seed 001 - France 24",
+          "url": "https://www.france24.com/en/rss"
+        },
+        {
+          "name": "FR Seed 002 - RFI",
+          "url": "https://www.rfi.fr/en/france/rss"
+        },
+        {
+          "name": "FR Seed 003 - The Local (France)",
+          "url": "https://feeds.thelocal.com/rss/fr"
+        },
+        {
+          "name": "FR Seed 004 - Franceinfo",
+          "url": "https://www.francetvinfo.fr/titres.rss"
+        },
+        {
+          "name": "FR Seed 005 - BFM TV",
+          "url": "https://www.bfmtv.com/rss/news-24-7/"
+        },
+        {
+          "name": "FR Seed 006 - Le Monde",
+          "url": "https://www.lemonde.fr/rss/une.xml"
+        },
+        {
+          "name": "FR Seed 007 - Le Figaro",
+          "url": "https://www.lefigaro.fr/rss/figaro_actualites.xml"
+        },
+        {
+          "name": "FR Seed 008 - Le Parisien",
+          "url": "https://feeds.leparisien.fr/leparisien/rss"
+        },
+        {
+          "name": "FR Seed 009 - Courrier international",
+          "url": "https://www.courrierinternational.com/feed/all/rss.xml"
+        },
+        {
+          "name": "FR Seed 010 - La Croix",
+          "url": "https://www.la-croix.com/feeds/rss/site.xml"
+        },
+        {
+          "name": "FR Seed 011 - Libération",
+          "url": "https://www.liberation.fr/rss/"
+        },
+        {
+          "name": "FR Seed 012 - L'Express",
+          "url": "https://www.lexpress.fr/arc/outboundfeeds/rss/"
+        },
+        {
+          "name": "FR Seed 013 - Le Point",
+          "url": "https://www.lepoint.fr/24h-infos/rss.xml"
+        },
+        {
+          "name": "FR Seed 014 - L'Obs",
+          "url": "https://www.nouvelobs.com/rss.xml"
+        },
+        {
+          "name": "FR Seed 015 - Mediapart",
+          "url": "https://www.mediapart.fr/articles/feed"
+        },
+        {
+          "name": "FR Seed 016 - Le Monde diplomatique",
+          "url": "https://mondediplo.com/backend"
+        },
+        {
+          "name": "FR Seed 017 - France Soir",
+          "url": "https://www.francesoir.fr/rss.xml"
+        },
+        {
+          "name": "FR Seed 018 - L'Humanité",
+          "url": "https://www.humanite.fr/rss.xml"
+        },
+        {
+          "name": "FR Seed 019 - 20 Minutes",
+          "url": "https://www.20minutes.fr/feeds/rss-une.xml"
+        },
+        {
+          "name": "FR Seed 020 - Yahoo Actualités",
+          "url": "https://fr.news.yahoo.com/rss"
+        },
+        {
+          "name": "FR Seed 021 - InfoMigrants",
+          "url": "https://www.infomigrants.net/en/rss/all.xml"
+        },
+        {
+          "name": "FR Seed 022 - La Tribune",
+          "url": "https://www.latribune.fr/feed.xml"
+        },
+        {
+          "name": "FR Seed 023 - Challenges",
+          "url": "https://www.challenges.fr/rss.xml"
+        },
+        {
+          "name": "FR Seed 024 - Capital",
+          "url": "https://www.capital.fr/rss.xml"
+        },
+        {
+          "name": "FR Seed 025 - Les Échos",
+          "url": "https://services.lesechos.fr/api/rss/univers/finance-marches"
+        },
+        {
+          "name": "FR Seed 026 - Usine Nouvelle",
+          "url": "https://www.usinenouvelle.com/rss/"
+        },
+        {
+          "name": "FR Seed 027 - Marianne",
+          "url": "https://www.marianne.net/feed"
+        },
+        {
+          "name": "FR Seed 028 - Actu.fr",
+          "url": "https://actu.fr/feeds/feed.rss"
+        },
+        {
+          "name": "FR Seed 029 - France Today",
+          "url": "https://www.francetoday.com/feed"
+        },
+        {
+          "name": "FR Seed 030 - FrenchDailyNews",
+          "url": "https://frenchdailynews.com/feed"
+        },
+        {
+          "name": "FR Seed 031 - Numerama",
+          "url": "https://www.numerama.com/feed/"
+        },
+        {
+          "name": "FR Seed 032 - Frandroid",
+          "url": "https://www.frandroid.com/feed"
+        },
+        {
+          "name": "FR Seed 033 - Clubic",
+          "url": "https://www.clubic.com/feed/news.rss"
+        },
+        {
+          "name": "FR Seed 034 - 01net",
+          "url": "https://www.01net.com/actualites/feed/"
+        },
+        {
+          "name": "FR Seed 035 - Les Numériques",
+          "url": "https://www.lesnumeriques.com/rss.xml"
+        },
+        {
+          "name": "FR Seed 036 - Slate.fr",
+          "url": "https://www.slate.fr/rss.xml"
+        },
+        {
+          "name": "FR Seed 037 - HuffPost France",
+          "url": "https://www.huffingtonpost.fr/feeds/index.xml"
+        },
+        {
+          "name": "FR Seed 038 - Basta!",
+          "url": "https://basta.media/spip.php?page=backend"
+        },
+        {
+          "name": "FR Seed 039 - Reporterre",
+          "url": "https://reporterre.net/spip.php?page=backend-simple"
+        },
+        {
+          "name": "FR Seed 040 - Les Inrockuptibles",
+          "url": "https://www.lesinrocks.com/feeds/feed-a-la-une/"
+        },
+        {
+          "name": "FR Seed 041 - Presse-citron",
+          "url": "https://www.presse-citron.net/feed/"
+        },
+        {
+          "name": "FR Seed 042 - Journal du Geek",
+          "url": "https://www.journaldugeek.com/feed/"
+        },
+        {
+          "name": "FR Seed 043 - ZDNet France",
+          "url": "https://www.zdnet.fr/feeds/rss/actualites/"
+        },
+        {
+          "name": "FR Seed 044 - Next.ink",
+          "url": "https://next.ink/feed/"
+        },
+        {
+          "name": "FR Seed 045 - FrenchWeb",
+          "url": "https://www.frenchweb.fr/feed/"
+        },
+        {
+          "name": "FR Seed 046 - Blog du Modérateur",
+          "url": "https://www.blogdumoderateur.com/feed/"
+        },
+        {
+          "name": "FR Seed 047 - Ouest-France",
+          "url": "https://www.ouest-france.fr/rss-en-continu.xml"
+        },
+        {
+          "name": "FR Seed 048 - Sud Ouest",
+          "url": "https://www.sudouest.fr/essentiel/rss.xml"
+        },
+        {
+          "name": "FR Seed 049 - La Dépêche du Midi",
+          "url": "https://www.ladepeche.fr/rss.xml"
+        },
+        {
+          "name": "FR Seed 050 - Midi Libre",
+          "url": "https://www.midilibre.fr/rss.xml"
+        },
+        {
+          "name": "FR Seed 051 - L'Indépendant",
+          "url": "https://www.lindependant.fr/rss.xml"
+        },
+        {
+          "name": "FR Seed 052 - Centre Presse Aveyron",
+          "url": "https://www.centrepresseaveyron.fr/rss.xml"
+        },
+        {
+          "name": "FR Seed 053 - La Nouvelle République des Pyrénées",
+          "url": "https://www.nrpyrenees.fr/rss.xml"
+        },
+        {
+          "name": "FR Seed 054 - La Nouvelle République",
+          "url": "https://www.lanouvellerepublique.fr/rss.xml"
+        },
+        {
+          "name": "FR Seed 055 - Centre Presse Poitiers",
+          "url": "https://www.centre-presse.fr/rss.xml"
+        },
+        {
+          "name": "FR Seed 056 - La Montagne",
+          "url": "https://www.lamontagne.fr/rss.xml"
+        },
+        {
+          "name": "FR Seed 057 - La République du Centre",
+          "url": "https://www.larep.fr/rss.xml"
+        },
+        {
+          "name": "FR Seed 058 - Le Berry Républicain",
+          "url": "https://www.leberry.fr/rss.xml"
+        },
+        {
+          "name": "FR Seed 059 - Le Journal du Centre",
+          "url": "https://www.lejdc.fr/rss.xml"
+        },
+        {
+          "name": "FR Seed 060 - L'Yonne Républicaine",
+          "url": "https://www.lyonne.fr/rss.xml"
+        },
+        {
+          "name": "FR Seed 061 - Le Populaire du Centre",
+          "url": "https://www.lepopulaire.fr/rss.xml"
+        },
+        {
+          "name": "FR Seed 062 - L'Écho Républicain",
+          "url": "https://www.lechorepublicain.fr/rss.xml"
+        },
+        {
+          "name": "FR Seed 063 - Le Maine Libre",
+          "url": "https://www.lemainelibre.fr/rss.xml"
+        },
+        {
+          "name": "FR Seed 064 - Presse Océan",
+          "url": "https://www.presseocean.fr/rss.xml"
+        },
+        {
+          "name": "FR Seed 065 - Le Courrier de l'Ouest",
+          "url": "https://www.courrierdelouest.fr/rss.xml"
+        },
+        {
+          "name": "FR Seed 066 - Paris Normandie",
+          "url": "https://www.paris-normandie.fr/rss.xml"
+        },
+        {
+          "name": "FR Seed 067 - Le Télégramme",
+          "url": "https://www.letelegramme.fr/rss.xml"
+        },
+        {
+          "name": "FR Seed 068 - La Provence",
+          "url": "https://www.laprovence.com/rss.xml"
+        },
+        {
+          "name": "FR Seed 069 - Nice-Matin",
+          "url": "https://www.nicematin.com/rss.xml"
+        },
+        {
+          "name": "FR Seed 070 - Var-Matin",
+          "url": "https://www.varmatin.com/rss.xml"
+        },
+        {
+          "name": "FR Seed 071 - Corse Matin",
+          "url": "https://www.corsematin.com/rss.xml"
+        },
+        {
+          "name": "FR Seed 072 - Le Républicain Lorrain",
+          "url": "https://www.republicain-lorrain.fr/rss"
+        },
+        {
+          "name": "FR Seed 073 - L'Est Républicain",
+          "url": "https://www.estrepublicain.fr/rss"
+        },
+        {
+          "name": "FR Seed 074 - Vosges Matin",
+          "url": "https://www.vosgesmatin.fr/rss"
+        },
+        {
+          "name": "FR Seed 075 - L'Alsace",
+          "url": "https://www.lalsace.fr/rss"
+        },
+        {
+          "name": "FR Seed 076 - Dernières Nouvelles d'Alsace (DNA)",
+          "url": "https://www.dna.fr/rss"
+        },
+        {
+          "name": "FR Seed 077 - Le Progrès",
+          "url": "https://www.leprogres.fr/rss"
+        },
+        {
+          "name": "FR Seed 078 - Le Dauphiné Libéré",
+          "url": "https://www.ledauphine.com/rss"
+        },
+        {
+          "name": "FR Seed 079 - Le Bien Public",
+          "url": "https://www.bienpublic.com/rss"
+        },
+        {
+          "name": "FR Seed 080 - Le Journal de Saône-et-Loire",
+          "url": "https://www.lejsl.com/rss"
+        }
+      ]
+    }
+  ]
+}

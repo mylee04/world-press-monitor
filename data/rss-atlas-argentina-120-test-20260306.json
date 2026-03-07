@@ -1,0 +1,613 @@
+{
+  "version": 1,
+  "generatedAt": "2026-03-06T07:53:12.806Z",
+  "lastChecked": "2026-03-06",
+  "countries": [
+    {
+      "name": "Argentina",
+      "code": "AR",
+      "feeds": [
+        {
+          "name": "AR120 001 - Clarin [ar-clarin-main]",
+          "url": "https://www.clarin.com/rss/lo-ultimo/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 002 - Clarin [ar-clarin-feed]",
+          "url": "https://www.clarin.com/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 003 - Clarin [ar-clarin-rssxml]",
+          "url": "https://www.clarin.com/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 004 - La Nación [ar-la-nacion-main]",
+          "url": "https://www.lanacion.com.ar/arc/outboundfeeds/rss/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 005 - La Nación [ar-la-nacion-feed]",
+          "url": "https://www.lanacion.com.ar/arc/outboundfeeds/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 006 - La Nación [ar-la-nacion-rssxml]",
+          "url": "https://www.lanacion.com.ar/arc/outboundfeeds/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 007 - Página/12 [ar-pagina/12-main]",
+          "url": "https://www.pagina12.com.ar/rss",
+          "enabled": true
+        },
+        {
+          "name": "AR120 008 - Página/12 [ar-pagina/12-feed]",
+          "url": "https://www.pagina12.com.ar/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 009 - Página/12 [ar-pagina/12-rssxml]",
+          "url": "https://www.pagina12.com.ar/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 010 - Infobae [ar-infobae-main]",
+          "url": "https://www.infobae.com/feeds/rss/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 011 - Infobae [ar-infobae-feed]",
+          "url": "https://www.infobae.com/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 012 - Infobae [ar-infobae-rssxml]",
+          "url": "https://www.infobae.com/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 013 - Ámbito [ar-ambito-main]",
+          "url": "https://www.ambito.com/rss/pages/home.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 014 - Ámbito [ar-ambito-feed]",
+          "url": "https://www.ambito.com/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 015 - Ámbito [ar-ambito-rssxml]",
+          "url": "https://www.ambito.com/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 016 - Perfil [ar-perfil-main]",
+          "url": "https://www.perfil.com/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 017 - Perfil [ar-perfil-feed]",
+          "url": "https://www.perfil.com/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 018 - Perfil [ar-perfil-rssxml]",
+          "url": "https://www.perfil.com/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 019 - Tiempo Argentino [ar-tiempo-argentino-main]",
+          "url": "https://www.tiempoar.com.ar/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 020 - Tiempo Argentino [ar-tiempo-argentino-feed]",
+          "url": "https://www.tiempoar.com.ar/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 021 - Tiempo Argentino [ar-tiempo-argentino-rssxml]",
+          "url": "https://www.tiempoar.com.ar/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 022 - El Cronista [ar-el-cronista-main]",
+          "url": "https://www.cronista.com/files/rss/news.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 023 - El Cronista [ar-el-cronista-feed]",
+          "url": "https://www.cronista.com/files/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 024 - El Cronista [ar-el-cronista-rssxml]",
+          "url": "https://www.cronista.com/files/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 025 - BAE Negocios [ar-bae-negocios-main]",
+          "url": "https://www.baenegocios.com/rss/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 026 - BAE Negocios [ar-bae-negocios-feed]",
+          "url": "https://www.baenegocios.com/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 027 - BAE Negocios [ar-bae-negocios-rssxml]",
+          "url": "https://www.baenegocios.com/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 028 - Diario Popular [ar-diario-popular-main]",
+          "url": "https://www.diariopopular.com.ar/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 029 - Diario Popular [ar-diario-popular-feed]",
+          "url": "https://www.diariopopular.com.ar/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 030 - Diario Popular [ar-diario-popular-rssxml]",
+          "url": "https://www.diariopopular.com.ar/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 031 - La Voz del Interior [ar-la-voz-del-interior-main]",
+          "url": "https://www.lavoz.com.ar/rss/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 032 - La Voz del Interior [ar-la-voz-del-interior-feed]",
+          "url": "https://www.lavoz.com.ar/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 033 - La Voz del Interior [ar-la-voz-del-interior-rssxml]",
+          "url": "https://www.lavoz.com.ar/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 034 - Los Andes [ar-los-andes-main]",
+          "url": "https://www.losandes.com.ar/rss/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 035 - Los Andes [ar-los-andes-feed]",
+          "url": "https://www.losandes.com.ar/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 036 - Los Andes [ar-los-andes-rssxml]",
+          "url": "https://www.losandes.com.ar/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 037 - El Tribuno [ar-el-tribuno-main]",
+          "url": "https://www.eltribuno.com/rss",
+          "enabled": true
+        },
+        {
+          "name": "AR120 038 - El Tribuno [ar-el-tribuno-feed]",
+          "url": "https://www.eltribuno.com/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 039 - El Tribuno [ar-el-tribuno-rssxml]",
+          "url": "https://www.eltribuno.com/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 040 - Río Negro [ar-rio-negro-main]",
+          "url": "https://www.rionegro.com.ar/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 041 - Río Negro [ar-rio-negro-feed]",
+          "url": "https://www.rionegro.com.ar/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 042 - Río Negro [ar-rio-negro-rssxml]",
+          "url": "https://www.rionegro.com.ar/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 043 - La Capital Rosario [ar-la-capital-rosario-main]",
+          "url": "https://www.lacapital.com.ar/rss",
+          "enabled": true
+        },
+        {
+          "name": "AR120 044 - La Capital Rosario [ar-la-capital-rosario-feed]",
+          "url": "https://www.lacapital.com.ar/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 045 - La Capital Rosario [ar-la-capital-rosario-rssxml]",
+          "url": "https://www.lacapital.com.ar/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 046 - El Litoral [ar-el-litoral-main]",
+          "url": "https://www.ellitoral.com/index.php/rss",
+          "enabled": true
+        },
+        {
+          "name": "AR120 047 - El Litoral [ar-el-litoral-feed]",
+          "url": "https://www.ellitoral.com/index.php/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 048 - El Litoral [ar-el-litoral-rssxml]",
+          "url": "https://www.ellitoral.com/index.php/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 049 - Diario Uno Mendoza [ar-diario-uno-mendoza-main]",
+          "url": "https://www.diariouno.com.ar/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 050 - Diario Uno Mendoza [ar-diario-uno-mendoza-feed]",
+          "url": "https://www.diariouno.com.ar/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 051 - Diario Uno Mendoza [ar-diario-uno-mendoza-rssxml]",
+          "url": "https://www.diariouno.com.ar/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 052 - El Patagónico [ar-el-patagonico-main]",
+          "url": "https://www.elpatagonico.com/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 053 - El Patagónico [ar-el-patagonico-feed]",
+          "url": "https://www.elpatagonico.com/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 054 - El Patagónico [ar-el-patagonico-rssxml]",
+          "url": "https://www.elpatagonico.com/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 055 - La Gaceta Tucumán [ar-la-gaceta-tucuman-main]",
+          "url": "https://www.lagaceta.com.ar/rss",
+          "enabled": true
+        },
+        {
+          "name": "AR120 056 - La Gaceta Tucumán [ar-la-gaceta-tucuman-feed]",
+          "url": "https://www.lagaceta.com.ar/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 057 - La Gaceta Tucumán [ar-la-gaceta-tucuman-rssxml]",
+          "url": "https://www.lagaceta.com.ar/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 058 - El Día La Plata [ar-el-dia-la-plata-main]",
+          "url": "https://www.eldia.com/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 059 - El Día La Plata [ar-el-dia-la-plata-feed]",
+          "url": "https://www.eldia.com/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 060 - El Día La Plata [ar-el-dia-la-plata-rssxml]",
+          "url": "https://www.eldia.com/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 061 - Minuto Uno [ar-minuto-uno-main]",
+          "url": "https://www.minutouno.com/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 062 - Minuto Uno [ar-minuto-uno-feed]",
+          "url": "https://www.minutouno.com/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 063 - Minuto Uno [ar-minuto-uno-rssxml]",
+          "url": "https://www.minutouno.com/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 064 - Urgente24 [ar-urgente24-main]",
+          "url": "https://urgente24.com/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 065 - Urgente24 [ar-urgente24-feed]",
+          "url": "https://urgente24.com/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 066 - Urgente24 [ar-urgente24-rssxml]",
+          "url": "https://urgente24.com/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 067 - El Destape [ar-el-destape-main]",
+          "url": "https://www.eldestapeweb.com/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 068 - El Destape [ar-el-destape-feed]",
+          "url": "https://www.eldestapeweb.com/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 069 - El Destape [ar-el-destape-rssxml]",
+          "url": "https://www.eldestapeweb.com/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 070 - Diario Registrado [ar-diario-registrado-main]",
+          "url": "https://www.diarioregistrado.com/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 071 - Diario Registrado [ar-diario-registrado-feed]",
+          "url": "https://www.diarioregistrado.com/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 072 - Diario Registrado [ar-diario-registrado-rssxml]",
+          "url": "https://www.diarioregistrado.com/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 073 - Letra P [ar-letra-p-main]",
+          "url": "https://www.letrap.com.ar/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 074 - Letra P [ar-letra-p-feed]",
+          "url": "https://www.letrap.com.ar/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 075 - Letra P [ar-letra-p-rssxml]",
+          "url": "https://www.letrap.com.ar/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 076 - IP Noticias [ar-ip-noticias-main]",
+          "url": "https://ipnoticias.ar/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 077 - IP Noticias [ar-ip-noticias-feed]",
+          "url": "https://ipnoticias.ar/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 078 - IP Noticias [ar-ip-noticias-rssxml]",
+          "url": "https://ipnoticias.ar/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 079 - Chequeado [ar-chequeado-main]",
+          "url": "https://chequeado.com/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 080 - Chequeado [ar-chequeado-feed]",
+          "url": "https://chequeado.com/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 081 - Chequeado [ar-chequeado-rssxml]",
+          "url": "https://chequeado.com/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 082 - iProfesional [ar-iprofesional-main]",
+          "url": "https://www.iprofesional.com/rss",
+          "enabled": true
+        },
+        {
+          "name": "AR120 083 - iProfesional [ar-iprofesional-feed]",
+          "url": "https://www.iprofesional.com/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 084 - iProfesional [ar-iprofesional-rssxml]",
+          "url": "https://www.iprofesional.com/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 085 - El Economista [ar-el-economista-main]",
+          "url": "https://eleconomista.com.ar/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 086 - El Economista [ar-el-economista-feed]",
+          "url": "https://eleconomista.com.ar/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 087 - El Economista [ar-el-economista-rssxml]",
+          "url": "https://eleconomista.com.ar/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 088 - Econojournal [ar-econojournal-main]",
+          "url": "https://econojournal.com.ar/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 089 - Econojournal [ar-econojournal-feed]",
+          "url": "https://econojournal.com.ar/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 090 - Econojournal [ar-econojournal-rssxml]",
+          "url": "https://econojournal.com.ar/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 091 - RedUSERS [ar-redusers-main]",
+          "url": "https://www.redusers.com/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 092 - RedUSERS [ar-redusers-feed]",
+          "url": "https://www.redusers.com/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 093 - RedUSERS [ar-redusers-rssxml]",
+          "url": "https://www.redusers.com/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 094 - TecnoGeek [ar-tecnogeek-main]",
+          "url": "https://tecnogeek.com/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 095 - TecnoGeek [ar-tecnogeek-feed]",
+          "url": "https://tecnogeek.com/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 096 - TecnoGeek [ar-tecnogeek-rssxml]",
+          "url": "https://tecnogeek.com/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 097 - InfoTechnology [ar-infotechnology-main]",
+          "url": "https://www.infotechnology.com/rss/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 098 - InfoTechnology [ar-infotechnology-feed]",
+          "url": "https://www.infotechnology.com/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 099 - InfoTechnology [ar-infotechnology-rssxml]",
+          "url": "https://www.infotechnology.com/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 100 - TN [ar-tn-main]",
+          "url": "https://tn.com.ar/rss/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 101 - TN [ar-tn-feed]",
+          "url": "https://tn.com.ar/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 102 - TN [ar-tn-rssxml]",
+          "url": "https://tn.com.ar/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 103 - C5N [ar-c5n-main]",
+          "url": "https://www.c5n.com/rss",
+          "enabled": true
+        },
+        {
+          "name": "AR120 104 - C5N [ar-c5n-feed]",
+          "url": "https://www.c5n.com/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 105 - C5N [ar-c5n-rssxml]",
+          "url": "https://www.c5n.com/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 106 - A24 [ar-a24-main]",
+          "url": "https://www.a24.com/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 107 - A24 [ar-a24-feed]",
+          "url": "https://www.a24.com/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 108 - A24 [ar-a24-rssxml]",
+          "url": "https://www.a24.com/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 109 - Crónica [ar-cronica-main]",
+          "url": "https://www.cronica.com.ar/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 110 - Crónica [ar-cronica-feed]",
+          "url": "https://www.cronica.com.ar/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 111 - Crónica [ar-cronica-rssxml]",
+          "url": "https://www.cronica.com.ar/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 112 - Canal 26 [ar-canal-26-main]",
+          "url": "https://www.canal26.com/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 113 - Canal 26 [ar-canal-26-feed]",
+          "url": "https://www.canal26.com/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 114 - Canal 26 [ar-canal-26-rssxml]",
+          "url": "https://www.canal26.com/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 115 - Buenos Aires Times [ar-buenos-aires-times-main]",
+          "url": "https://www.batimes.com.ar/feed",
+          "enabled": true
+        },
+        {
+          "name": "AR120 116 - Buenos Aires Times [ar-buenos-aires-times-feed]",
+          "url": "https://www.batimes.com.ar/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 117 - Buenos Aires Times [ar-buenos-aires-times-rssxml]",
+          "url": "https://www.batimes.com.ar/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR120 118 - MercoPress [ar-mercopress-main]",
+          "url": "https://en.mercopress.com/rss",
+          "enabled": true
+        },
+        {
+          "name": "AR120 119 - MercoPress [ar-mercopress-feed]",
+          "url": "https://en.mercopress.com/feed/",
+          "enabled": true
+        },
+        {
+          "name": "AR120 120 - MercoPress [ar-mercopress-rssxml]",
+          "url": "https://en.mercopress.com/rss.xml",
+          "enabled": true
+        }
+      ]
+    }
+  ]
+}

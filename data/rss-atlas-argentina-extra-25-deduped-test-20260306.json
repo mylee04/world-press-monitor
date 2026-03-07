@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "generatedAt": "2026-03-06T08:37:56.616Z",
+  "lastChecked": "2026-03-06",
+  "countries": [
+    {
+      "name": "Argentina",
+      "code": "AR",
+      "feeds": [
+        {
+          "name": "AR25X 001 - Página/12 - Cultura [ar-pagina12-cultura]",
+          "url": "https://www.pagina12.com.ar/arc/outboundfeeds/rss/secciones/cultura-y-espectaculos/notas",
+          "enabled": true
+        },
+        {
+          "name": "AR25X 002 - Página/12 - Universidad [ar-pagina12-universidad]",
+          "url": "https://www.pagina12.com.ar/arc/outboundfeeds/rss/secciones/universidad/notas",
+          "enabled": true
+        },
+        {
+          "name": "AR25X 003 - MDZ Online - Últimas noticias [ar-mdz-noticias]",
+          "url": "https://www.mdzol.com/rss/pages/noticias.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR25X 004 - MDZ Online - Últimas noticias Argentina [ar-mdz-argentina]",
+          "url": "https://www.mdzol.com/rss/pages/ultimas-noticias-argentina.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR25X 005 - MDZ Online - Últimas noticias Mendoza [ar-mdz-mendoza]",
+          "url": "https://www.mdzol.com/rss/pages/ultimas-noticias-mendoza.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR25X 006 - MDZ Online - Deportes [ar-mdz-deportes]",
+          "url": "https://www.mdzol.com/rss/pages/deportes.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR25X 007 - MDZ Online - Economía [ar-mdz-dinero]",
+          "url": "https://www.mdzol.com/rss/pages/dinero.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR25X 008 - MDZ Online - Mundo [ar-mdz-mundo]",
+          "url": "https://www.mdzol.com/rss/pages/mundo.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR25X 009 - MDZ Online - Policiales [ar-mdz-policiales]",
+          "url": "https://www.mdzol.com/rss/pages/policiales.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR25X 010 - MDZ Online - Política [ar-mdz-politica]",
+          "url": "https://www.mdzol.com/rss/pages/politica.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR25X 011 - MDZ Online - Sociedad [ar-mdz-sociedad]",
+          "url": "https://www.mdzol.com/rss/pages/sociedad.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR25X 012 - MDZ Online - Tecnología [ar-mdz-tecnologia]",
+          "url": "https://www.mdzol.com/rss/pages/tecnologia.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR25X 013 - Cadena 3 - Política y Economía [ar-cadena3-politica-economia]",
+          "url": "http://cadena3.com/rss/PoliticayEconomia.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR25X 014 - Cadena 3 - Mundo [ar-cadena3-mundo]",
+          "url": "http://cadena3.com/rss/Mundo.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR25X 015 - Cadena 3 - Deportes [ar-cadena3-deportes]",
+          "url": "http://cadena3.com/rss/Deportes.xml",
+          "enabled": true
+        },
+        {
+          "name": "AR25X 016 - Cadena 3 - Cultura [ar-cadena3-cultura]",
+          "url": "http://cadena3.com/rss/Cultura.xml",
+          "enabled": true
+        }
+      ]
+    }
+  ]
+}

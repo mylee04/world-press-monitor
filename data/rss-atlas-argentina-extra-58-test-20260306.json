@@ -1,0 +1,303 @@
+{
+  "version": 1,
+  "generatedAt": "2026-03-06T08:12:04.556Z",
+  "lastChecked": "2026-03-06",
+  "countries": [
+    {
+      "name": "Argentina",
+      "code": "AR",
+      "feeds": [
+        {
+          "name": "ARNEW 001 - Infobae",
+          "url": "https://www.infobae.com/feeds/rss/",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 002 - Infobae America",
+          "url": "https://www.infobae.com/america/feeds/rss/",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 003 - Infobae Deportes",
+          "url": "https://www.infobae.com/deportes/feeds/rss/",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 004 - Clarin Mundo",
+          "url": "https://www.clarin.com/rss/mundo/",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 005 - La Nación Política",
+          "url": "https://www.lanacion.com.ar/politica/rss/",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 006 - La Nación Economía",
+          "url": "https://www.lanacion.com.ar/economia/rss/",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 007 - Página12",
+          "url": "https://www.pagina12.com.ar/rss",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 008 - Tiempo Argentino",
+          "url": "https://www.tiempoar.com.ar/feed/",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 009 - MinutoUno",
+          "url": "https://www.minutouno.com/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 010 - Urgente24",
+          "url": "https://urgente24.com/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 011 - El Destape",
+          "url": "https://www.eldestapeweb.com/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 012 - LetraP",
+          "url": "https://www.letrap.com.ar/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 013 - IP Noticias",
+          "url": "https://ipnoticias.ar/feed/",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 014 - C5N",
+          "url": "https://www.c5n.com/rss",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 015 - A24",
+          "url": "https://www.a24.com/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 016 - Canal26",
+          "url": "https://www.canal26.com/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 017 - La Voz del Interior",
+          "url": "https://www.lavoz.com.ar/rss/",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 018 - Los Andes",
+          "url": "https://www.losandes.com.ar/rss/",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 019 - La Capital Rosario",
+          "url": "https://www.lacapital.com.ar/rss",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 020 - El Litoral",
+          "url": "https://www.ellitoral.com/index.php/rss",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 021 - El Día La Plata",
+          "url": "https://www.eldia.com/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 022 - Diario Uno Mendoza",
+          "url": "https://www.diariouno.com.ar/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 023 - El Patagónico",
+          "url": "https://www.elpatagonico.com/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 024 - La Nueva",
+          "url": "https://www.lanueva.com/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 025 - El Liberal",
+          "url": "https://www.elliberal.com.ar/rss",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 026 - Diario Norte",
+          "url": "https://www.diarionorte.com/rss",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 027 - La Arena",
+          "url": "https://www.laarena.com.ar/rss",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 028 - El Comercial",
+          "url": "https://www.elcomercial.com.ar/rss",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 029 - Diario de Cuyo",
+          "url": "https://www.diariodecuyo.com.ar/rss",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 030 - El Diario Paraná",
+          "url": "https://www.eldiario.com.ar/rss",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 031 - La Opinión Rafaela",
+          "url": "https://www.laopinion.com.ar/rss",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 032 - La Mañana Neuquén",
+          "url": "https://www.lmneuquen.com/rss",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 033 - Bariloche2000",
+          "url": "https://www.bariloche2000.com/feed/",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 034 - ADN Sur",
+          "url": "https://www.adnsur.com/feed/",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 035 - La Política Online",
+          "url": "https://www.lapoliticaonline.com/feed/",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 036 - El Canciller",
+          "url": "https://elcanciller.com/feed/",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 037 - Data Diario",
+          "url": "https://datadiario.com/feed/",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 038 - Border Periodismo",
+          "url": "https://borderperiodismo.com/feed/",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 039 - Noticias Argentinas",
+          "url": "https://noticiasargentinas.com/feed/",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 040 - Agencia Télam",
+          "url": "https://www.telam.com.ar/rss2/ultimasnoticias.xml",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 041 - TyC Sports",
+          "url": "https://www.tycsports.com/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 042 - RedUSERS",
+          "url": "https://www.redusers.com/feed/",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 043 - InfoTechnology",
+          "url": "https://www.infotechnology.com/rss/",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 044 - Surtidores",
+          "url": "https://surtidores.com.ar/feed/",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 045 - iProfesional",
+          "url": "https://www.iprofesional.com/rss",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 046 - El Inversor Energético",
+          "url": "https://elinversorenergetico.com/feed/",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 047 - Agencia Paco Urondo",
+          "url": "https://www.agenciapacourondo.com.ar/rss.xml",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 048 - Nueva Rioja",
+          "url": "https://www.nuevarioja.com.ar/rss",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 049 - El Ancasti",
+          "url": "https://www.elancasti.com.ar/rss",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 050 - El Diario del Fin del Mundo",
+          "url": "https://www.eldiariodelfindelmundo.com/rss",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 051 - NoticiasNet",
+          "url": "https://www.noticiasnet.com.ar/rss",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 052 - El Cordillerano",
+          "url": "https://www.elcordillerano.com.ar/rss",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 053 - La Opinión Austral",
+          "url": "https://laopinionaustral.com.ar/rss",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 054 - Tiempo Sur",
+          "url": "https://www.tiemposur.com.ar/rss",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 055 - Jujuy al Día",
+          "url": "https://www.jujuyaldia.com.ar/feed/",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 056 - Misiones Online",
+          "url": "https://misionesonline.net/feed/",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 057 - Primera Edición",
+          "url": "https://www.primeraedicion.com.ar/feed/",
+          "enabled": true
+        },
+        {
+          "name": "ARNEW 058 - Diario El Zonda",
+          "url": "https://www.diarioelzonda.com.ar/rss",
+          "enabled": true
+        }
+      ]
+    }
+  ]
+}

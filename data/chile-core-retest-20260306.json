@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "generatedAt": "2026-03-06T00:00:00.000Z",
+  "lastChecked": "2026-03-06",
+  "countries": [
+    {
+      "name": "Chile",
+      "code": "CL",
+      "feeds": [
+        {
+          "name": "CLCORE 001 - BioBioChile - Home",
+          "url": "https://www.biobiochile.cl/feed/"
+        },
+        {
+          "name": "CLCORE 002 - Emol - Nacional",
+          "url": "https://www.emol.com/rss/rss_nacional.xml"
+        },
+        {
+          "name": "CLCORE 003 - Emol - Economía",
+          "url": "https://www.emol.com/rss/rss_economia.xml"
+        },
+        {
+          "name": "CLCORE 004 - Emol - Internacional",
+          "url": "https://www.emol.com/rss/rss_internacional.xml"
+        },
+        {
+          "name": "CLCORE 005 - La Tercera - Home",
+          "url": "https://www.latercera.com/arc/outboundfeeds/rss/?outputType=xml"
+        },
+        {
+          "name": "CLCORE 006 - Pulso (La Tercera Biz)",
+          "url": "https://www.latercera.com/arc/outboundfeeds/rss/?outputType=xml&rotation=pulso"
+        }
+      ]
+    }
+  ]
+}

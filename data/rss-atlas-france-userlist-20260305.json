@@ -1,0 +1,617 @@
+{
+  "version": 1,
+  "generatedAt": "2026-03-05T14:46:57.194Z",
+  "lastChecked": "2026-03-05T14:46:57.194Z",
+  "countries": [
+    {
+      "name": "France",
+      "code": "FR",
+      "feeds": [
+        {
+          "name": "FR Feed 001 - feeds leparisien fr leparisien rss",
+          "url": "https://feeds.leparisien.fr/leparisien/rss"
+        },
+        {
+          "name": "FR Feed 002 - feeds leparisien fr leparisien rss culture loisirs",
+          "url": "https://feeds.leparisien.fr/leparisien/rss/culture-loisirs"
+        },
+        {
+          "name": "FR Feed 003 - feeds leparisien fr leparisien rss economie",
+          "url": "https://feeds.leparisien.fr/leparisien/rss/economie"
+        },
+        {
+          "name": "FR Feed 004 - feeds leparisien fr leparisien rss environnement",
+          "url": "https://feeds.leparisien.fr/leparisien/rss/environnement"
+        },
+        {
+          "name": "FR Feed 005 - feeds leparisien fr leparisien rss etudiant",
+          "url": "https://feeds.leparisien.fr/leparisien/rss/etudiant"
+        },
+        {
+          "name": "FR Feed 006 - feeds leparisien fr leparisien rss etudiant examens",
+          "url": "https://feeds.leparisien.fr/leparisien/rss/etudiant/examens"
+        },
+        {
+          "name": "FR Feed 007 - feeds leparisien fr leparisien rss etudiant jobs stages",
+          "url": "https://feeds.leparisien.fr/leparisien/rss/etudiant/jobs-stages"
+        },
+        {
+          "name": "FR Feed 008 - feeds leparisien fr leparisien rss etudiant orientation",
+          "url": "https://feeds.leparisien.fr/leparisien/rss/etudiant/orientation"
+        },
+        {
+          "name": "FR Feed 009 - feeds leparisien fr leparisien rss etudiant vie etudiante",
+          "url": "https://feeds.leparisien.fr/leparisien/rss/etudiant/vie-etudiante"
+        },
+        {
+          "name": "FR Feed 010 - feeds leparisien fr leparisien rss faits divers",
+          "url": "https://feeds.leparisien.fr/leparisien/rss/faits-divers"
+        },
+        {
+          "name": "FR Feed 011 - feeds leparisien fr leparisien rss futurs",
+          "url": "https://feeds.leparisien.fr/leparisien/rss/futurs"
+        },
+        {
+          "name": "FR Feed 012 - feeds leparisien fr leparisien rss guide shopping",
+          "url": "https://feeds.leparisien.fr/leparisien/rss/guide-shopping"
+        },
+        {
+          "name": "FR Feed 013 - feeds leparisien fr leparisien rss immobilier",
+          "url": "https://feeds.leparisien.fr/leparisien/rss/immobilier"
+        },
+        {
+          "name": "FR Feed 014 - feeds leparisien fr leparisien rss international",
+          "url": "https://feeds.leparisien.fr/leparisien/rss/international"
+        },
+        {
+          "name": "FR Feed 015 - feeds leparisien fr leparisien rss jardin",
+          "url": "https://feeds.leparisien.fr/leparisien/rss/jardin"
+        },
+        {
+          "name": "FR Feed 016 - feeds leparisien fr leparisien rss jo paris 2024",
+          "url": "https://feeds.leparisien.fr/leparisien/rss/jo-paris-2024"
+        },
+        {
+          "name": "FR Feed 017 - feeds leparisien fr leparisien rss podcasts",
+          "url": "https://feeds.leparisien.fr/leparisien/rss/podcasts"
+        },
+        {
+          "name": "FR Feed 018 - feeds leparisien fr leparisien rss politique",
+          "url": "https://feeds.leparisien.fr/leparisien/rss/politique"
+        },
+        {
+          "name": "FR Feed 019 - feeds leparisien fr leparisien rss societe",
+          "url": "https://feeds.leparisien.fr/leparisien/rss/societe"
+        },
+        {
+          "name": "FR Feed 020 - feeds leparisien fr leparisien rss sports",
+          "url": "https://feeds.leparisien.fr/leparisien/rss/sports"
+        },
+        {
+          "name": "FR Feed 021 - www courrierinternational com feed all rss xml",
+          "url": "https://www.courrierinternational.com/feed/all/rss.xml"
+        },
+        {
+          "name": "FR Feed 022 - www courrierinternational com feed rubrique culture rss xml",
+          "url": "https://www.courrierinternational.com/feed/rubrique/culture/rss.xml"
+        },
+        {
+          "name": "FR Feed 023 - www courrierinternational com feed rubrique economie rss xml",
+          "url": "https://www.courrierinternational.com/feed/rubrique/economie/rss.xml"
+        },
+        {
+          "name": "FR Feed 024 - www courrierinternational com feed rubrique expat rss xml",
+          "url": "https://www.courrierinternational.com/feed/rubrique/expat/rss.xml"
+        },
+        {
+          "name": "FR Feed 025 - www courrierinternational com feed rubrique france rss xml",
+          "url": "https://www.courrierinternational.com/feed/rubrique/france/rss.xml"
+        },
+        {
+          "name": "FR Feed 026 - www courrierinternational com feed rubrique geopolitique rss xml",
+          "url": "https://www.courrierinternational.com/feed/rubrique/geopolitique/rss.xml"
+        },
+        {
+          "name": "FR Feed 027 - www courrierinternational com feed rubrique politique rss xml",
+          "url": "https://www.courrierinternational.com/feed/rubrique/politique/rss.xml"
+        },
+        {
+          "name": "FR Feed 028 - www courrierinternational com feed rubrique science environnement rss xml",
+          "url": "https://www.courrierinternational.com/feed/rubrique/science-environnement/rss.xml"
+        },
+        {
+          "name": "FR Feed 029 - www courrierinternational com feed rubrique societe rss xml",
+          "url": "https://www.courrierinternational.com/feed/rubrique/societe/rss.xml"
+        },
+        {
+          "name": "FR Feed Manual - www.ledauphine.com/ain/rss",
+          "url": "https://www.ledauphine.com/ain/rss"
+        },
+        {
+          "name": "FR Feed Manual - www.ledauphine.com/ardeche/rss",
+          "url": "https://www.ledauphine.com/ardeche/rss"
+        },
+        {
+          "name": "FR Feed Manual - www.ledauphine.com/drome/rss",
+          "url": "https://www.ledauphine.com/drome/rss"
+        },
+        {
+          "name": "FR Feed Manual - www.ledauphine.com/economie/rss",
+          "url": "https://www.ledauphine.com/economie/rss"
+        },
+        {
+          "name": "FR Feed Manual - www.ledauphine.com/Faits-divers-Justice/rss",
+          "url": "https://www.ledauphine.com/Faits-divers-Justice/rss"
+        },
+        {
+          "name": "FR Feed Manual - www.ledauphine.com/france-monde/rss",
+          "url": "https://www.ledauphine.com/france-monde/rss"
+        },
+        {
+          "name": "FR Feed Manual - www.ledauphine.com/haute-provence/rss",
+          "url": "https://www.ledauphine.com/haute-provence/rss"
+        },
+        {
+          "name": "FR Feed Manual - www.ledauphine.com/haute-savoie/rss",
+          "url": "https://www.ledauphine.com/haute-savoie/rss"
+        },
+        {
+          "name": "FR Feed Manual - www.ledauphine.com/hautes-alpes/rss",
+          "url": "https://www.ledauphine.com/hautes-alpes/rss"
+        },
+        {
+          "name": "FR Feed Manual - www.ledauphine.com/isere-nord/rss",
+          "url": "https://www.ledauphine.com/isere-nord/rss"
+        },
+        {
+          "name": "FR Feed Manual - www.ledauphine.com/isere-sud/rss",
+          "url": "https://www.ledauphine.com/isere-sud/rss"
+        },
+        {
+          "name": "FR Feed Manual - www.ledauphine.com/politique/rss",
+          "url": "https://www.ledauphine.com/politique/rss"
+        },
+        {
+          "name": "FR Feed Manual - www.ledauphine.com/rss",
+          "url": "https://www.ledauphine.com/rss"
+        },
+        {
+          "name": "FR Feed Manual - www.ledauphine.com/savoie/rss",
+          "url": "https://www.ledauphine.com/savoie/rss"
+        },
+        {
+          "name": "FR Feed Manual - www.ledauphine.com/sport/rss",
+          "url": "https://www.ledauphine.com/sport/rss"
+        },
+        {
+          "name": "FR Feed Manual - www.ledauphine.com/vaucluse/rss",
+          "url": "https://www.ledauphine.com/vaucluse/rss"
+        },
+        {
+          "name": "FR Feed 030 - www lemonde fr actualite medias rss full xml",
+          "url": "https://www.lemonde.fr/actualite-medias/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 031 - www lemonde fr afrique climat et environnement rss full xml",
+          "url": "https://www.lemonde.fr/afrique-climat-et-environnement/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 032 - www lemonde fr afrique rss full xml",
+          "url": "https://www.lemonde.fr/afrique/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 033 - www lemonde fr agriculture rss full xml",
+          "url": "https://www.lemonde.fr/agriculture/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 034 - www lemonde fr ameriques rss full xml",
+          "url": "https://www.lemonde.fr/ameriques/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 035 - www lemonde fr argent rss full xml",
+          "url": "https://www.lemonde.fr/argent/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 036 - www lemonde fr arts rss full xml",
+          "url": "https://www.lemonde.fr/arts/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 037 - www lemonde fr asie pacifique rss full xml",
+          "url": "https://www.lemonde.fr/asie-pacifique/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 038 - www lemonde fr basket rss full xml",
+          "url": "https://www.lemonde.fr/basket/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 039 - www lemonde fr biologie rss full xml",
+          "url": "https://www.lemonde.fr/biologie/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 040 - www lemonde fr bresil rss full xml",
+          "url": "https://www.lemonde.fr/bresil/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 041 - www lemonde fr campus rss full xml",
+          "url": "https://www.lemonde.fr/campus/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 042 - www lemonde fr chroniques rss full xml",
+          "url": "https://www.lemonde.fr/chroniques/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 043 - www lemonde fr cinema rss full xml",
+          "url": "https://www.lemonde.fr/cinema/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 044 - www lemonde fr climat rss full xml",
+          "url": "https://www.lemonde.fr/climat/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 045 - www lemonde fr culture rss full xml",
+          "url": "https://www.lemonde.fr/culture/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 046 - www lemonde fr cultures web rss full xml",
+          "url": "https://www.lemonde.fr/cultures-web/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 047 - www lemonde fr cyclisme rss full xml",
+          "url": "https://www.lemonde.fr/cyclisme/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 048 - www lemonde fr economie francaise rss full xml",
+          "url": "https://www.lemonde.fr/economie-francaise/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 049 - www lemonde fr economie rss full xml",
+          "url": "https://www.lemonde.fr/economie/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 050 - www lemonde fr editoriaux rss full xml",
+          "url": "https://www.lemonde.fr/editoriaux/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 051 - www lemonde fr education rss full xml",
+          "url": "https://www.lemonde.fr/education/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 052 - www lemonde fr emploi rss full xml",
+          "url": "https://www.lemonde.fr/emploi/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 053 - www lemonde fr entreprises rss full xml",
+          "url": "https://www.lemonde.fr/entreprises/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 054 - www lemonde fr espace rss full xml",
+          "url": "https://www.lemonde.fr/espace/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 055 - www lemonde fr etats unis rss full xml",
+          "url": "https://www.lemonde.fr/etats-unis/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 056 - www lemonde fr europe rss full xml",
+          "url": "https://www.lemonde.fr/europe/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 057 - www lemonde fr football rss full xml",
+          "url": "https://www.lemonde.fr/football/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 058 - www lemonde fr gastronomie rss full xml",
+          "url": "https://www.lemonde.fr/gastronomie/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 059 - www lemonde fr guides d achat rss full xml",
+          "url": "https://www.lemonde.fr/guides-d-achat/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 060 - www lemonde fr idees rss full xml",
+          "url": "https://www.lemonde.fr/idees/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 061 - www lemonde fr immobilier rss full xml",
+          "url": "https://www.lemonde.fr/immobilier/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 062 - www lemonde fr industrie rss full xml",
+          "url": "https://www.lemonde.fr/industrie/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 063 - www lemonde fr international rss full xml",
+          "url": "https://www.lemonde.fr/international/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 064 - www lemonde fr jeux video rss full xml",
+          "url": "https://www.lemonde.fr/jeux-video/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 065 - www lemonde fr justice rss full xml",
+          "url": "https://www.lemonde.fr/justice/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 066 - www lemonde fr le monde et vous rss full xml",
+          "url": "https://www.lemonde.fr/le-monde-et-vous/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 067 - www lemonde fr les decodeurs rss full xml",
+          "url": "https://www.lemonde.fr/les-decodeurs/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 068 - www lemonde fr les recettes du monde rss full xml",
+          "url": "https://www.lemonde.fr/les-recettes-du-monde/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 069 - www lemonde fr livres rss full xml",
+          "url": "https://www.lemonde.fr/livres/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 070 - www lemonde fr m le mag rss full xml",
+          "url": "https://www.lemonde.fr/m-le-mag/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 071 - www lemonde fr m perso rss full xml",
+          "url": "https://www.lemonde.fr/m-perso/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 072 - www lemonde fr m styles rss full xml",
+          "url": "https://www.lemonde.fr/m-styles/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 073 - www lemonde fr medecine rss full xml",
+          "url": "https://www.lemonde.fr/medecine/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 074 - www lemonde fr musiques rss full xml",
+          "url": "https://www.lemonde.fr/musiques/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 075 - www lemonde fr photo rss full xml",
+          "url": "https://www.lemonde.fr/photo/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 076 - www lemonde fr physique rss full xml",
+          "url": "https://www.lemonde.fr/physique/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 077 - www lemonde fr pixels rss full xml",
+          "url": "https://www.lemonde.fr/pixels/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 078 - www lemonde fr planete rss full xml",
+          "url": "https://www.lemonde.fr/planete/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 079 - www lemonde fr police rss full xml",
+          "url": "https://www.lemonde.fr/police/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 080 - www lemonde fr politique rss full xml",
+          "url": "https://www.lemonde.fr/politique/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 081 - www lemonde fr proche orient rss full xml",
+          "url": "https://www.lemonde.fr/proche-orient/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 082 - www lemonde fr royaume uni rss full xml",
+          "url": "https://www.lemonde.fr/royaume-uni/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 083 - www lemonde fr rss en continu xml",
+          "url": "https://www.lemonde.fr/rss/en_continu.xml"
+        },
+        {
+          "name": "FR Feed 084 - www lemonde fr rss plus lus xml",
+          "url": "https://www.lemonde.fr/rss/plus-lus.xml"
+        },
+        {
+          "name": "FR Feed 085 - www lemonde fr rss plus partages xml",
+          "url": "https://www.lemonde.fr/rss/plus-partages.xml"
+        },
+        {
+          "name": "FR Feed 086 - www lemonde fr rss une xml",
+          "url": "https://www.lemonde.fr/rss/une.xml"
+        },
+        {
+          "name": "FR Feed 087 - www lemonde fr rugby rss full xml",
+          "url": "https://www.lemonde.fr/rugby/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 088 - www lemonde fr sante rss full xml",
+          "url": "https://www.lemonde.fr/sante/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 089 - www lemonde fr scenes rss full xml",
+          "url": "https://www.lemonde.fr/scenes/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 090 - www lemonde fr sciences rss full xml",
+          "url": "https://www.lemonde.fr/sciences/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 091 - www lemonde fr sexo rss full xml",
+          "url": "https://www.lemonde.fr/sexo/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 092 - www lemonde fr societe rss full xml",
+          "url": "https://www.lemonde.fr/societe/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 093 - www lemonde fr sport rss full xml",
+          "url": "https://www.lemonde.fr/sport/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 094 - www lemonde fr televisions radio rss full xml",
+          "url": "https://www.lemonde.fr/televisions-radio/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 095 - www lemonde fr tennis rss full xml",
+          "url": "https://www.lemonde.fr/tennis/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 096 - www lemonde fr tribunes rss full xml",
+          "url": "https://www.lemonde.fr/tribunes/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 097 - www lemonde fr videos rss full xml",
+          "url": "https://www.lemonde.fr/videos/rss_full.xml"
+        },
+        {
+          "name": "FR Feed 098 - www leprogres fr actualite dernieres minutes rss",
+          "url": "https://www.leprogres.fr/actualite/dernieres-minutes/rss"
+        },
+        {
+          "name": "FR Feed 099 - www leprogres fr ain rss",
+          "url": "https://www.leprogres.fr/ain/rss"
+        },
+        {
+          "name": "FR Feed 100 - www leprogres fr culture loisirs rss",
+          "url": "https://www.leprogres.fr/culture-loisirs/rss"
+        },
+        {
+          "name": "FR Feed 101 - www leprogres fr economie rss",
+          "url": "https://www.leprogres.fr/economie/rss"
+        },
+        {
+          "name": "FR Feed 102 - www leprogres fr edition ain est rss",
+          "url": "https://www.leprogres.fr/edition-ain-est/rss"
+        },
+        {
+          "name": "FR Feed 103 - www leprogres fr edition ain ouest rss",
+          "url": "https://www.leprogres.fr/edition-ain-ouest/rss"
+        },
+        {
+          "name": "FR Feed 104 - www leprogres fr edition est lyonnais rss",
+          "url": "https://www.leprogres.fr/edition-est-lyonnais/rss"
+        },
+        {
+          "name": "FR Feed 105 - www leprogres fr edition haute loire rss",
+          "url": "https://www.leprogres.fr/edition-haute-loire/rss"
+        },
+        {
+          "name": "FR Feed 106 - www leprogres fr edition jura nord rss",
+          "url": "https://www.leprogres.fr/edition-jura-nord/rss"
+        },
+        {
+          "name": "FR Feed 107 - www leprogres fr edition jura sud rss",
+          "url": "https://www.leprogres.fr/edition-jura-sud/rss"
+        },
+        {
+          "name": "FR Feed 108 - www leprogres fr edition loire centre rss",
+          "url": "https://www.leprogres.fr/edition-loire-centre/rss"
+        },
+        {
+          "name": "FR Feed 109 - www leprogres fr edition loire nord rss",
+          "url": "https://www.leprogres.fr/edition-loire-nord/rss"
+        },
+        {
+          "name": "FR Feed 110 - www leprogres fr edition loire sud rss",
+          "url": "https://www.leprogres.fr/edition-loire-sud/rss"
+        },
+        {
+          "name": "FR Feed 111 - www leprogres fr edition lyon villeurbanne rss",
+          "url": "https://www.leprogres.fr/edition-lyon-villeurbanne/rss"
+        },
+        {
+          "name": "FR Feed 112 - www leprogres fr edition ouest lyonnais rss",
+          "url": "https://www.leprogres.fr/edition-ouest-lyonnais/rss"
+        },
+        {
+          "name": "FR Feed 113 - www leprogres fr edition sud lyonnais rss",
+          "url": "https://www.leprogres.fr/edition-sud-lyonnais/rss"
+        },
+        {
+          "name": "FR Feed 114 - www leprogres fr edition tarare rss",
+          "url": "https://www.leprogres.fr/edition-tarare/rss"
+        },
+        {
+          "name": "FR Feed 115 - www leprogres fr edition villefranche rss",
+          "url": "https://www.leprogres.fr/edition-villefranche/rss"
+        },
+        {
+          "name": "FR Feed 116 - www leprogres fr environnement rss",
+          "url": "https://www.leprogres.fr/environnement/rss"
+        },
+        {
+          "name": "FR Feed 117 - www leprogres fr faits divers justice rss",
+          "url": "https://www.leprogres.fr/faits-divers-justice/rss"
+        },
+        {
+          "name": "FR Feed 118 - www leprogres fr france monde rss",
+          "url": "https://www.leprogres.fr/france-monde/rss"
+        },
+        {
+          "name": "FR Feed 119 - www leprogres fr haute loire rss",
+          "url": "https://www.leprogres.fr/haute-loire/rss"
+        },
+        {
+          "name": "FR Feed 120 - www leprogres fr jura rss",
+          "url": "https://www.leprogres.fr/jura/rss"
+        },
+        {
+          "name": "FR Feed 121 - www leprogres fr loire rss",
+          "url": "https://www.leprogres.fr/loire/rss"
+        },
+        {
+          "name": "FR Feed 122 - www leprogres fr magazine automobile rss",
+          "url": "https://www.leprogres.fr/magazine-automobile/rss"
+        },
+        {
+          "name": "FR Feed 123 - www leprogres fr magazine gastronomie et vins rss",
+          "url": "https://www.leprogres.fr/magazine-gastronomie-et-vins/rss"
+        },
+        {
+          "name": "FR Feed 124 - www leprogres fr magazine immobilier rss",
+          "url": "https://www.leprogres.fr/magazine-immobilier/rss"
+        },
+        {
+          "name": "FR Feed 125 - www leprogres fr magazine lifestyle rss",
+          "url": "https://www.leprogres.fr/magazine-lifestyle/rss"
+        },
+        {
+          "name": "FR Feed 126 - www leprogres fr magazine sante rss",
+          "url": "https://www.leprogres.fr/magazine-sante/rss"
+        },
+        {
+          "name": "FR Feed 127 - www leprogres fr politique rss",
+          "url": "https://www.leprogres.fr/politique/rss"
+        },
+        {
+          "name": "FR Feed 128 - www leprogres fr rhone rss",
+          "url": "https://www.leprogres.fr/rhone/rss"
+        },
+        {
+          "name": "FR Feed 129 - www leprogres fr rss",
+          "url": "https://www.leprogres.fr/rss"
+        },
+        {
+          "name": "FR Feed 130 - www leprogres fr sport asse as saint etienne football rss",
+          "url": "https://www.leprogres.fr/sport/asse-as-saint-etienne-football/rss"
+        },
+        {
+          "name": "FR Feed 131 - www leprogres fr sport basket rss",
+          "url": "https://www.leprogres.fr/sport/basket/rss"
+        },
+        {
+          "name": "FR Feed 132 - www leprogres fr sport football rss",
+          "url": "https://www.leprogres.fr/sport/football/rss"
+        },
+        {
+          "name": "FR Feed 133 - www leprogres fr sport ol olympique lyonnais football rss",
+          "url": "https://www.leprogres.fr/sport/ol-olympique-lyonnais-football/rss"
+        },
+        {
+          "name": "FR Feed 134 - www leprogres fr sport rss",
+          "url": "https://www.leprogres.fr/sport/rss"
+        },
+        {
+          "name": "FR Feed 135 - www leprogres fr sport rugby rss",
+          "url": "https://www.leprogres.fr/sport/rugby/rss"
+        }
+      ]
+    }
+  ]
+}

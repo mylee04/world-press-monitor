@@ -1,0 +1,136 @@
+{
+  "version": 1,
+  "generatedAt": "2026-03-06T00:00:00.000Z",
+  "lastChecked": "2026-03-06",
+  "countries": [
+    {
+      "name": "Argentina",
+      "code": "AR",
+      "feeds": [
+        {
+          "name": "AR30S 001 - Clarin [ar-clarin]",
+          "url": "https://www.clarin.com/rss/lo-ultimo/",
+          "sitemapUrl": "https://www.clarin.com/sitemap_news.xml"
+        },
+        {
+          "name": "AR30S 002 - La Nación [ar-lanacion]",
+          "url": "https://www.lanacion.com.ar/arc/outboundfeeds/rss/",
+          "sitemapUrl": "https://www.lanacion.com.ar/sitemap_news.xml"
+        },
+        {
+          "name": "AR30S 003 - Infobae [ar-infobae]",
+          "url": "https://www.infobae.com/feeds/rss/",
+          "sitemapUrl": "https://www.infobae.com/sitemap.xml"
+        },
+        {
+          "name": "AR30S 004 - El Cronista [ar-cronista]",
+          "url": "https://www.cronista.com/files/rss/news.xml"
+        },
+        {
+          "name": "AR30S 005 - Perfil [ar-perfil]",
+          "url": "https://www.perfil.com/feed/"
+        },
+        {
+          "name": "AR30S 006 - Ámbito [ar-ambito]",
+          "url": "https://www.ambito.com/rss/pages/home.xml"
+        },
+        {
+          "name": "AR30S 007 - BAE Negocios [ar-bae-negocios]",
+          "url": "https://www.baenegocios.com/feed/"
+        },
+        {
+          "name": "AR30S 008 - Crónica [ar-cronica]",
+          "url": "https://www.cronica.com.ar/feed/"
+        },
+        {
+          "name": "AR30S 009 - Río Negro [ar-rionegro]",
+          "url": "https://www.rionegro.com.ar/feed/"
+        },
+        {
+          "name": "AR30S 010 - El Tribuno [ar-el-tribuno]",
+          "url": "https://www.eltribuno.com/feed/"
+        },
+        {
+          "name": "AR30S 011 - La Voz del Interior [ar-lavoz]",
+          "url": "https://www.lavoz.com.ar/rss/"
+        },
+        {
+          "name": "AR30S 012 - Los Andes [ar-losandes]",
+          "url": "https://www.losandes.com.ar/rss/"
+        },
+        {
+          "name": "AR30S 013 - La Capital Rosario [ar-lacapital]",
+          "url": "https://www.lacapital.com.ar/rss"
+        },
+        {
+          "name": "AR30S 014 - El Día La Plata [ar-eldia]",
+          "url": "https://www.eldia.com/rss.xml"
+        },
+        {
+          "name": "AR30S 015 - La Gaceta Tucumán [ar-lagaceta]",
+          "url": "https://www.lagaceta.com.ar/rss"
+        },
+        {
+          "name": "AR30S 016 - TN [ar-tn]",
+          "url": "https://tn.com.ar/rss.xml"
+        },
+        {
+          "name": "AR30S 017 - C5N [ar-c5n]",
+          "url": "https://www.c5n.com/rss"
+        },
+        {
+          "name": "AR30S 018 - A24 [ar-a24]",
+          "url": "https://www.a24.com/rss.xml"
+        },
+        {
+          "name": "AR30S 019 - Canal 26 [ar-canal26]",
+          "url": "https://www.canal26.com/rss.xml"
+        },
+        {
+          "name": "AR30S 020 - iProfesional [ar-iprofesional]",
+          "url": "https://www.iprofesional.com/rss"
+        },
+        {
+          "name": "AR30S 021 - El Economista [ar-eleconomista]",
+          "url": "https://eleconomista.com.ar/feed/"
+        },
+        {
+          "name": "AR30S 022 - Econojournal [ar-econojournal]",
+          "url": "https://econojournal.com.ar/feed/"
+        },
+        {
+          "name": "AR30S 023 - Chequeado [ar-chequeado]",
+          "url": "https://chequeado.com/feed/"
+        },
+        {
+          "name": "AR30S 024 - Diario Registrado [ar-diario-registrado]",
+          "url": "https://www.diarioregistrado.com/rss.xml"
+        },
+        {
+          "name": "AR30S 025 - TecnoGeek [ar-tecnogeek]",
+          "url": "https://tecnogeek.com/feed/"
+        },
+        {
+          "name": "AR30S 026 - RedUSERS [ar-redusers]",
+          "url": "https://www.redusers.com/feed/"
+        },
+        {
+          "name": "AR30S 027 - InfoTechnology [ar-infotechnology]",
+          "url": "https://www.infotechnology.com/rss/"
+        },
+        {
+          "name": "AR30S 028 - Buenos Aires Times [ar-batimes]",
+          "url": "https://www.batimes.com.ar/feed"
+        },
+        {
+          "name": "AR30S 029 - MercoPress [ar-mercopress]",
+          "url": "https://en.mercopress.com/rss"
+        },
+        {
+          "name": "AR30S 030 - Olé [ar-ole]",
+          "url": "https://www.ole.com.ar/rss/ultimas-noticias/"
+        }
+      ]
+    }
+  ]
+}

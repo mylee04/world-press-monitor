@@ -453,6 +453,63 @@ function parseBoolEnv(raw: string | undefined, fallback: boolean): boolean {
   return /^(1|true|yes|on)$/i.test(raw.trim());
 }
 
+type CountryFilter = {
+  display: string[];
+  normalized: Set<string>;
+};
+
+function parseCountryFilter(argv: string[], envValue: string | undefined): CountryFilter | null {
+  const values: string[] = [];
+
+  const pushCsv = (raw: string | undefined): void => {
+    if (!raw) return;
+    raw
+      .split(',')
+      .map((part) => part.trim())
+      .filter((part) => part.length > 0)
+      .forEach((part) => values.push(part));
+  };
+
+  pushCsv(envValue);
+  for (let i = 0; i < argv.length; i += 1) {
+    const token = argv[i];
+    if (token.startsWith('--countries=')) {
+      pushCsv(token.slice('--countries='.length));
+      continue;
+    }
+    if (token === '--countries') {
+      pushCsv(argv[i + 1]);
+      i += 1;
+      continue;
+    }
+    if (token.startsWith('--country=')) {
+      pushCsv(token.slice('--country='.length));
+      continue;
+    }
+    if (token === '--country') {
+      pushCsv(argv[i + 1]);
+      i += 1;
+      continue;
+    }
+  }
+
+  if (values.length === 0) return null;
+  const dedupedDisplay = [...new Set(values.map((value) => value.trim()).filter((value) => value.length > 0))];
+  if (dedupedDisplay.length === 0) return null;
+  return {
+    display: dedupedDisplay,
+    normalized: new Set(dedupedDisplay.map((value) => normalizeText(value))),
+  };
+}
+
+function countryMatchesFilter(country: string | undefined, filter: CountryFilter | null): boolean {
+  if (!filter) return true;
+  const normalizedCountry = normalizeText(normalizeCountryName(country || ''));
+  return filter.normalized.has(normalizedCountry);
+}
+
+const COUNTRY_FILTER = parseCountryFilter(process.argv.slice(2), process.env.INGEST_COUNTRIES);
+
 function normalizeFeedHost(host: string): string {
   return host.trim().toLowerCase().replace(/\.+$/, '');
 }
@@ -1561,7 +1618,8 @@ async function runOnce(): Promise<void> {
   const nowIso = new Date(nowMs).toISOString();
 
   const allOutlets = loadAtlasOutlets();
-  const { selected, nextOffset, offset } = pickOutletChunk(allOutlets, OUTLET_CHUNK_SIZE);
+  const countryFilteredOutlets = allOutlets.filter((outlet) => countryMatchesFilter(outlet.country, COUNTRY_FILTER));
+  const { selected, nextOffset, offset } = pickOutletChunk(countryFilteredOutlets, OUTLET_CHUNK_SIZE);
   const endpointLookup = new Map<string, EndpointRun>();
   const allEndpoints: EndpointRun[] = selected.flatMap((outlet) => {
     const runs: EndpointRun[] = [];
@@ -1912,9 +1970,11 @@ async function runOnce(): Promise<void> {
     elapsedMs: Date.now() - started,
     worker: {
       outletsTotal: allOutlets.length,
+      outletsAfterCountryFilter: countryFilteredOutlets.length,
       outletsSelected: selected.length,
       outletOffset: offset,
       nextOutletOffset: nextOffset,
+      countryFilter: COUNTRY_FILTER?.display || null,
       endpointsAttempted: attempted,
       endpointsOk: okEndpoints,
       endpointsFailed: failedEndpoints,
@@ -1931,7 +1991,8 @@ async function runOnce(): Promise<void> {
   writeFileSync(SUMMARY_FILE, JSON.stringify(summary, null, 2), 'utf8');
   writeState({ offset: nextOffset, updatedAt: summary.generatedAt });
   console.log(
-    `[ingest-worker] outlets=${selected.length}/${allOutlets.length} endpoints=${attempted} ok=${okEndpoints} failed=${failedEndpoints} ` +
+    `[ingest-worker] outlets=${selected.length}/${countryFilteredOutlets.length}/${allOutlets.length} endpoints=${attempted} ok=${okEndpoints} failed=${failedEndpoints} ` +
+    `country_filter=${COUNTRY_FILTER ? COUNTRY_FILTER.display.join('|') : 'ALL'} ` +
     `backoff_skipped_total=${failingKeys.size} backoff_skipped=[rss=${fallbackSummary.rssBackoffSkipped}, sitemap=${fallbackSummary.sitemapBackoffSkipped}] ` +
     `sitemap_policy_disabled=${fallbackSummary.sitemapPolicyDisabled} ` +
     `method_stats= [rss attempted=${methodStats.rss.attempted}, ok=${methodStats.rss.ok}, fail=${methodStats.rss.fail}(${percent(methodStats.rss.fail, methodStats.rss.attempted)}%); ` +
@@ -1943,6 +2004,9 @@ async function runOnce(): Promise<void> {
 
 async function main(): Promise<void> {
   const once = process.argv.includes('--once');
+  if (COUNTRY_FILTER) {
+    console.log(`[ingest-worker] country filter enabled: ${COUNTRY_FILTER.display.join(', ')}`);
+  }
   if (once) {
     await runOnce();
     return;

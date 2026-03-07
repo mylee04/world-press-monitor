@@ -1,0 +1,965 @@
+{
+  "version": 1,
+  "generatedAt": "2026-03-05T17:03:21.569Z",
+  "lastChecked": "2026-03-05T17:03:21.569Z",
+  "countries": [
+    {
+      "name": "France",
+      "code": "FR",
+      "feeds": [
+        {
+          "name": "FR240-A001 - Le Parisien",
+          "url": "https://feeds.leparisien.fr/leparisien/rss"
+        },
+        {
+          "name": "FR240-A002 - Libération",
+          "url": "https://www.liberation.fr/rss/"
+        },
+        {
+          "name": "FR240-A003 - L’Humanité",
+          "url": "https://www.humanite.fr/rss.xml"
+        },
+        {
+          "name": "FR240-A004 - Le Monde",
+          "url": "https://www.lemonde.fr/rss/une.xml"
+        },
+        {
+          "name": "FR240-A005 - Le Figaro",
+          "url": "https://www.lefigaro.fr/rss/figaro_actualites.xml"
+        },
+        {
+          "name": "FR240-A006 - La Croix",
+          "url": "https://www.la-croix.com/feeds/rss/site.xml"
+        },
+        {
+          "name": "FR240-A007 - Ouest-France",
+          "url": "https://www.ouest-france.fr/rss-en-continu.xml"
+        },
+        {
+          "name": "FR240-A008 - La Dépêche",
+          "url": "https://www.ladepeche.fr/rss.xml"
+        },
+        {
+          "name": "FR240-A009 - 20 Minutes",
+          "url": "https://www.20minutes.fr/feeds/rss-une.xml"
+        },
+        {
+          "name": "FR240-A010 - Sud Ouest",
+          "url": "https://www.sudouest.fr/essentiel/rss.xml"
+        },
+        {
+          "name": "FR240-A011 - Dernières Nouvelles d'Alsace",
+          "url": "https://www.dna.fr/rss"
+        },
+        {
+          "name": "FR240-A012 - L'Est Républicain",
+          "url": "https://www.estrepublicain.fr/rss"
+        },
+        {
+          "name": "FR240-A013 - Midi Libre",
+          "url": "https://www.midilibre.fr/rss.xml"
+        },
+        {
+          "name": "FR240-A014 - Nice-Matin",
+          "url": "https://www.nicematin.com/rss"
+        },
+        {
+          "name": "FR240-A015 - La Provence",
+          "url": "https://www.laprovence.com/rss.xml"
+        },
+        {
+          "name": "FR240-A016 - Le Progrès",
+          "url": "https://www.leprogres.fr/rss"
+        },
+        {
+          "name": "FR240-A017 - Le Dauphiné Libéré",
+          "url": "https://www.ledauphine.com/rss"
+        },
+        {
+          "name": "FR240-A018 - Le Télégramme",
+          "url": "https://www.letelegramme.fr/rss.xml"
+        },
+        {
+          "name": "FR240-A019 - BFM TV",
+          "url": "https://www.bfmtv.com/rss/news-24-7/"
+        },
+        {
+          "name": "FR240-A020 - France Info",
+          "url": "https://www.francetvinfo.fr/titres.rss"
+        },
+        {
+          "name": "FR240-A021 - CNEWS",
+          "url": "https://www.cnews.fr/rss.xml"
+        },
+        {
+          "name": "FR240-A022 - LCI",
+          "url": "https://www.tf1info.fr/rss.xml"
+        },
+        {
+          "name": "FR240-A023 - RFI",
+          "url": "https://www.rfi.fr/fr/rss"
+        },
+        {
+          "name": "FR240-A024 - France 24",
+          "url": "https://www.france24.com/fr/rss"
+        },
+        {
+          "name": "FR240-A025 - Arte Info",
+          "url": "https://www.arte.tv/rss/news"
+        },
+        {
+          "name": "FR240-A026 - Euronews FR",
+          "url": "https://fr.euronews.com/rss"
+        },
+        {
+          "name": "FR240-A027 - Numerama",
+          "url": "https://www.numerama.com/feed/"
+        },
+        {
+          "name": "FR240-A028 - Clubic",
+          "url": "https://www.clubic.com/feed/news.rss"
+        },
+        {
+          "name": "FR240-A029 - 01Net",
+          "url": "https://www.01net.com/rss/actualites/"
+        },
+        {
+          "name": "FR240-A030 - Les Numeriques",
+          "url": "https://www.lesnumeriques.com/rss/news.xml"
+        },
+        {
+          "name": "FR240-A031 - Journal du Geek",
+          "url": "https://www.journaldugeek.com/feed/"
+        },
+        {
+          "name": "FR240-A032 - Presse Citron",
+          "url": "https://www.presse-citron.net/feed/"
+        },
+        {
+          "name": "FR240-A033 - Siècle Digital",
+          "url": "https://siecledigital.fr/feed/"
+        },
+        {
+          "name": "FR240-A034 - Reporterre",
+          "url": "https://reporterre.net/spip.php?page=backend"
+        },
+        {
+          "name": "FR240-A035 - Basta!",
+          "url": "https://basta.media/spip.php?page=backend"
+        },
+        {
+          "name": "FR240-A036 - StreetPress",
+          "url": "https://www.streetpress.com/rss.xml"
+        },
+        {
+          "name": "FR240-A037 - Disclose",
+          "url": "https://disclose.ngo/feed/"
+        },
+        {
+          "name": "FR240-A038 - Mediacités",
+          "url": "https://www.mediacites.fr/feed/"
+        },
+        {
+          "name": "FR240-B001 - Le Monde",
+          "url": "https://www.lemonde.fr/rss/headlines.xml"
+        },
+        {
+          "name": "FR240-B002 - Le Monde",
+          "url": "https://www.lemonde.fr/rss/politics.xml"
+        },
+        {
+          "name": "FR240-B003 - Le Monde",
+          "url": "https://www.lemonde.fr/rss/economy.xml"
+        },
+        {
+          "name": "FR240-B004 - Le Monde",
+          "url": "https://www.lemonde.fr/rss/world.xml"
+        },
+        {
+          "name": "FR240-B005 - Le Monde",
+          "url": "https://www.lemonde.fr/rss/tech.xml"
+        },
+        {
+          "name": "FR240-B006 - Le Monde",
+          "url": "https://www.lemonde.fr/rss/society.xml"
+        },
+        {
+          "name": "FR240-B007 - Le Monde",
+          "url": "https://www.lemonde.fr/rss/culture.xml"
+        },
+        {
+          "name": "FR240-B008 - Le Monde",
+          "url": "https://www.lemonde.fr/rss/sport.xml"
+        },
+        {
+          "name": "FR240-B009 - Le Monde",
+          "url": "https://www.lemonde.fr/rss/science.xml"
+        },
+        {
+          "name": "FR240-B010 - Le Monde",
+          "url": "https://www.lemonde.fr/rss/environment.xml"
+        },
+        {
+          "name": "FR240-B011 - Le Figaro",
+          "url": "https://www.lefigaro.fr/rss/headlines.xml"
+        },
+        {
+          "name": "FR240-B012 - Le Figaro",
+          "url": "https://www.lefigaro.fr/rss/politics.xml"
+        },
+        {
+          "name": "FR240-B013 - Le Figaro",
+          "url": "https://www.lefigaro.fr/rss/economy.xml"
+        },
+        {
+          "name": "FR240-B014 - Le Figaro",
+          "url": "https://www.lefigaro.fr/rss/world.xml"
+        },
+        {
+          "name": "FR240-B015 - Le Figaro",
+          "url": "https://www.lefigaro.fr/rss/tech.xml"
+        },
+        {
+          "name": "FR240-B016 - Le Figaro",
+          "url": "https://www.lefigaro.fr/rss/society.xml"
+        },
+        {
+          "name": "FR240-B017 - Le Figaro",
+          "url": "https://www.lefigaro.fr/rss/culture.xml"
+        },
+        {
+          "name": "FR240-B018 - Le Figaro",
+          "url": "https://www.lefigaro.fr/rss/sport.xml"
+        },
+        {
+          "name": "FR240-B019 - Le Figaro",
+          "url": "https://www.lefigaro.fr/rss/science.xml"
+        },
+        {
+          "name": "FR240-B020 - Le Figaro",
+          "url": "https://www.lefigaro.fr/rss/environment.xml"
+        },
+        {
+          "name": "FR240-B021 - Libération",
+          "url": "https://www.liberation.fr/rss/headlines.xml"
+        },
+        {
+          "name": "FR240-B022 - Libération",
+          "url": "https://www.liberation.fr/rss/politics.xml"
+        },
+        {
+          "name": "FR240-B023 - Libération",
+          "url": "https://www.liberation.fr/rss/economy.xml"
+        },
+        {
+          "name": "FR240-B024 - Libération",
+          "url": "https://www.liberation.fr/rss/world.xml"
+        },
+        {
+          "name": "FR240-B025 - Libération",
+          "url": "https://www.liberation.fr/rss/tech.xml"
+        },
+        {
+          "name": "FR240-B026 - Libération",
+          "url": "https://www.liberation.fr/rss/society.xml"
+        },
+        {
+          "name": "FR240-B027 - Libération",
+          "url": "https://www.liberation.fr/rss/culture.xml"
+        },
+        {
+          "name": "FR240-B028 - Libération",
+          "url": "https://www.liberation.fr/rss/sport.xml"
+        },
+        {
+          "name": "FR240-B029 - Libération",
+          "url": "https://www.liberation.fr/rss/science.xml"
+        },
+        {
+          "name": "FR240-B030 - Libération",
+          "url": "https://www.liberation.fr/rss/environment.xml"
+        },
+        {
+          "name": "FR240-B031 - 20 Minutes",
+          "url": "https://www.20minutes.fr/rss/headlines.xml"
+        },
+        {
+          "name": "FR240-B032 - 20 Minutes",
+          "url": "https://www.20minutes.fr/rss/politics.xml"
+        },
+        {
+          "name": "FR240-B033 - 20 Minutes",
+          "url": "https://www.20minutes.fr/rss/economy.xml"
+        },
+        {
+          "name": "FR240-B034 - 20 Minutes",
+          "url": "https://www.20minutes.fr/rss/world.xml"
+        },
+        {
+          "name": "FR240-B035 - 20 Minutes",
+          "url": "https://www.20minutes.fr/rss/tech.xml"
+        },
+        {
+          "name": "FR240-B036 - 20 Minutes",
+          "url": "https://www.20minutes.fr/rss/society.xml"
+        },
+        {
+          "name": "FR240-B037 - 20 Minutes",
+          "url": "https://www.20minutes.fr/rss/culture.xml"
+        },
+        {
+          "name": "FR240-B038 - 20 Minutes",
+          "url": "https://www.20minutes.fr/rss/sport.xml"
+        },
+        {
+          "name": "FR240-B039 - 20 Minutes",
+          "url": "https://www.20minutes.fr/rss/science.xml"
+        },
+        {
+          "name": "FR240-B040 - 20 Minutes",
+          "url": "https://www.20minutes.fr/rss/environment.xml"
+        },
+        {
+          "name": "FR240-B041 - FranceInfo",
+          "url": "https://www.francetvinfo.fr/rss/headlines.xml"
+        },
+        {
+          "name": "FR240-B042 - FranceInfo",
+          "url": "https://www.francetvinfo.fr/rss/politics.xml"
+        },
+        {
+          "name": "FR240-B043 - FranceInfo",
+          "url": "https://www.francetvinfo.fr/rss/economy.xml"
+        },
+        {
+          "name": "FR240-B044 - FranceInfo",
+          "url": "https://www.francetvinfo.fr/rss/world.xml"
+        },
+        {
+          "name": "FR240-B045 - FranceInfo",
+          "url": "https://www.francetvinfo.fr/rss/tech.xml"
+        },
+        {
+          "name": "FR240-B046 - FranceInfo",
+          "url": "https://www.francetvinfo.fr/rss/society.xml"
+        },
+        {
+          "name": "FR240-B047 - FranceInfo",
+          "url": "https://www.francetvinfo.fr/rss/culture.xml"
+        },
+        {
+          "name": "FR240-B048 - FranceInfo",
+          "url": "https://www.francetvinfo.fr/rss/sport.xml"
+        },
+        {
+          "name": "FR240-B049 - FranceInfo",
+          "url": "https://www.francetvinfo.fr/rss/science.xml"
+        },
+        {
+          "name": "FR240-B050 - FranceInfo",
+          "url": "https://www.francetvinfo.fr/rss/environment.xml"
+        },
+        {
+          "name": "FR240-B051 - BFMTV",
+          "url": "https://www.bfmtv.com/rss/headlines.xml"
+        },
+        {
+          "name": "FR240-B052 - BFMTV",
+          "url": "https://www.bfmtv.com/rss/politics.xml"
+        },
+        {
+          "name": "FR240-B053 - BFMTV",
+          "url": "https://www.bfmtv.com/rss/economy.xml"
+        },
+        {
+          "name": "FR240-B054 - BFMTV",
+          "url": "https://www.bfmtv.com/rss/world.xml"
+        },
+        {
+          "name": "FR240-B055 - BFMTV",
+          "url": "https://www.bfmtv.com/rss/tech.xml"
+        },
+        {
+          "name": "FR240-B056 - BFMTV",
+          "url": "https://www.bfmtv.com/rss/society.xml"
+        },
+        {
+          "name": "FR240-B057 - BFMTV",
+          "url": "https://www.bfmtv.com/rss/culture.xml"
+        },
+        {
+          "name": "FR240-B058 - BFMTV",
+          "url": "https://www.bfmtv.com/rss/sport.xml"
+        },
+        {
+          "name": "FR240-B059 - BFMTV",
+          "url": "https://www.bfmtv.com/rss/science.xml"
+        },
+        {
+          "name": "FR240-B060 - BFMTV",
+          "url": "https://www.bfmtv.com/rss/environment.xml"
+        },
+        {
+          "name": "FR240-B061 - Ouest-France",
+          "url": "https://www.ouest-france.fr/rss/headlines.xml"
+        },
+        {
+          "name": "FR240-B062 - Ouest-France",
+          "url": "https://www.ouest-france.fr/rss/politics.xml"
+        },
+        {
+          "name": "FR240-B063 - Ouest-France",
+          "url": "https://www.ouest-france.fr/rss/economy.xml"
+        },
+        {
+          "name": "FR240-B064 - Ouest-France",
+          "url": "https://www.ouest-france.fr/rss/world.xml"
+        },
+        {
+          "name": "FR240-B065 - Ouest-France",
+          "url": "https://www.ouest-france.fr/rss/tech.xml"
+        },
+        {
+          "name": "FR240-B066 - Ouest-France",
+          "url": "https://www.ouest-france.fr/rss/society.xml"
+        },
+        {
+          "name": "FR240-B067 - Ouest-France",
+          "url": "https://www.ouest-france.fr/rss/culture.xml"
+        },
+        {
+          "name": "FR240-B068 - Ouest-France",
+          "url": "https://www.ouest-france.fr/rss/sport.xml"
+        },
+        {
+          "name": "FR240-B069 - Ouest-France",
+          "url": "https://www.ouest-france.fr/rss/science.xml"
+        },
+        {
+          "name": "FR240-B070 - Ouest-France",
+          "url": "https://www.ouest-france.fr/rss/environment.xml"
+        },
+        {
+          "name": "FR240-B071 - La Dépêche",
+          "url": "https://www.ladepeche.fr/rss/headlines.xml"
+        },
+        {
+          "name": "FR240-B072 - La Dépêche",
+          "url": "https://www.ladepeche.fr/rss/politics.xml"
+        },
+        {
+          "name": "FR240-B073 - La Dépêche",
+          "url": "https://www.ladepeche.fr/rss/economy.xml"
+        },
+        {
+          "name": "FR240-B074 - La Dépêche",
+          "url": "https://www.ladepeche.fr/rss/world.xml"
+        },
+        {
+          "name": "FR240-B075 - La Dépêche",
+          "url": "https://www.ladepeche.fr/rss/tech.xml"
+        },
+        {
+          "name": "FR240-B076 - La Dépêche",
+          "url": "https://www.ladepeche.fr/rss/society.xml"
+        },
+        {
+          "name": "FR240-B077 - La Dépêche",
+          "url": "https://www.ladepeche.fr/rss/culture.xml"
+        },
+        {
+          "name": "FR240-B078 - La Dépêche",
+          "url": "https://www.ladepeche.fr/rss/sport.xml"
+        },
+        {
+          "name": "FR240-B079 - La Dépêche",
+          "url": "https://www.ladepeche.fr/rss/science.xml"
+        },
+        {
+          "name": "FR240-B080 - La Dépêche",
+          "url": "https://www.ladepeche.fr/rss/environment.xml"
+        },
+        {
+          "name": "FR240-B081 - Sud Ouest",
+          "url": "https://www.sudouest.fr/rss/headlines.xml"
+        },
+        {
+          "name": "FR240-B082 - Sud Ouest",
+          "url": "https://www.sudouest.fr/rss/politics.xml"
+        },
+        {
+          "name": "FR240-B083 - Sud Ouest",
+          "url": "https://www.sudouest.fr/rss/economy.xml"
+        },
+        {
+          "name": "FR240-B084 - Sud Ouest",
+          "url": "https://www.sudouest.fr/rss/world.xml"
+        },
+        {
+          "name": "FR240-B085 - Sud Ouest",
+          "url": "https://www.sudouest.fr/rss/tech.xml"
+        },
+        {
+          "name": "FR240-B086 - Sud Ouest",
+          "url": "https://www.sudouest.fr/rss/society.xml"
+        },
+        {
+          "name": "FR240-B087 - Sud Ouest",
+          "url": "https://www.sudouest.fr/rss/culture.xml"
+        },
+        {
+          "name": "FR240-B088 - Sud Ouest",
+          "url": "https://www.sudouest.fr/rss/sport.xml"
+        },
+        {
+          "name": "FR240-B089 - Sud Ouest",
+          "url": "https://www.sudouest.fr/rss/science.xml"
+        },
+        {
+          "name": "FR240-B090 - Sud Ouest",
+          "url": "https://www.sudouest.fr/rss/environment.xml"
+        },
+        {
+          "name": "FR240-B091 - Le Parisien",
+          "url": "https://www.leparisien.fr/rss/headlines.xml"
+        },
+        {
+          "name": "FR240-B092 - Le Parisien",
+          "url": "https://www.leparisien.fr/rss/politics.xml"
+        },
+        {
+          "name": "FR240-B093 - Le Parisien",
+          "url": "https://www.leparisien.fr/rss/economy.xml"
+        },
+        {
+          "name": "FR240-B094 - Le Parisien",
+          "url": "https://www.leparisien.fr/rss/world.xml"
+        },
+        {
+          "name": "FR240-B095 - Le Parisien",
+          "url": "https://www.leparisien.fr/rss/tech.xml"
+        },
+        {
+          "name": "FR240-B096 - Le Parisien",
+          "url": "https://www.leparisien.fr/rss/society.xml"
+        },
+        {
+          "name": "FR240-B097 - Le Parisien",
+          "url": "https://www.leparisien.fr/rss/culture.xml"
+        },
+        {
+          "name": "FR240-B098 - Le Parisien",
+          "url": "https://www.leparisien.fr/rss/sport.xml"
+        },
+        {
+          "name": "FR240-B099 - Le Parisien",
+          "url": "https://www.leparisien.fr/rss/science.xml"
+        },
+        {
+          "name": "FR240-B100 - Le Parisien",
+          "url": "https://www.leparisien.fr/rss/environment.xml"
+        },
+        {
+          "name": "FR240-B101 - La Croix",
+          "url": "https://www.la-croix.com/rss/headlines.xml"
+        },
+        {
+          "name": "FR240-B102 - La Croix",
+          "url": "https://www.la-croix.com/rss/politics.xml"
+        },
+        {
+          "name": "FR240-B103 - La Croix",
+          "url": "https://www.la-croix.com/rss/economy.xml"
+        },
+        {
+          "name": "FR240-B104 - La Croix",
+          "url": "https://www.la-croix.com/rss/world.xml"
+        },
+        {
+          "name": "FR240-B105 - La Croix",
+          "url": "https://www.la-croix.com/rss/tech.xml"
+        },
+        {
+          "name": "FR240-B106 - La Croix",
+          "url": "https://www.la-croix.com/rss/society.xml"
+        },
+        {
+          "name": "FR240-B107 - La Croix",
+          "url": "https://www.la-croix.com/rss/culture.xml"
+        },
+        {
+          "name": "FR240-B108 - La Croix",
+          "url": "https://www.la-croix.com/rss/sport.xml"
+        },
+        {
+          "name": "FR240-B109 - La Croix",
+          "url": "https://www.la-croix.com/rss/science.xml"
+        },
+        {
+          "name": "FR240-B110 - La Croix",
+          "url": "https://www.la-croix.com/rss/environment.xml"
+        },
+        {
+          "name": "FR240-B111 - L’Humanité",
+          "url": "https://www.humanite.fr/rss/headlines.xml"
+        },
+        {
+          "name": "FR240-B112 - L’Humanité",
+          "url": "https://www.humanite.fr/rss/politics.xml"
+        },
+        {
+          "name": "FR240-B113 - L’Humanité",
+          "url": "https://www.humanite.fr/rss/economy.xml"
+        },
+        {
+          "name": "FR240-B114 - L’Humanité",
+          "url": "https://www.humanite.fr/rss/world.xml"
+        },
+        {
+          "name": "FR240-B115 - L’Humanité",
+          "url": "https://www.humanite.fr/rss/tech.xml"
+        },
+        {
+          "name": "FR240-B116 - L’Humanité",
+          "url": "https://www.humanite.fr/rss/society.xml"
+        },
+        {
+          "name": "FR240-B117 - L’Humanité",
+          "url": "https://www.humanite.fr/rss/culture.xml"
+        },
+        {
+          "name": "FR240-B118 - L’Humanité",
+          "url": "https://www.humanite.fr/rss/sport.xml"
+        },
+        {
+          "name": "FR240-B119 - L’Humanité",
+          "url": "https://www.humanite.fr/rss/science.xml"
+        },
+        {
+          "name": "FR240-B120 - L’Humanité",
+          "url": "https://www.humanite.fr/rss/environment.xml"
+        },
+        {
+          "name": "FR240-B121 - Nice-Matin",
+          "url": "https://www.nicematin.com/rss/headlines.xml"
+        },
+        {
+          "name": "FR240-B122 - Nice-Matin",
+          "url": "https://www.nicematin.com/rss/politics.xml"
+        },
+        {
+          "name": "FR240-B123 - Nice-Matin",
+          "url": "https://www.nicematin.com/rss/economy.xml"
+        },
+        {
+          "name": "FR240-B124 - Nice-Matin",
+          "url": "https://www.nicematin.com/rss/world.xml"
+        },
+        {
+          "name": "FR240-B125 - Nice-Matin",
+          "url": "https://www.nicematin.com/rss/tech.xml"
+        },
+        {
+          "name": "FR240-B126 - Nice-Matin",
+          "url": "https://www.nicematin.com/rss/society.xml"
+        },
+        {
+          "name": "FR240-B127 - Nice-Matin",
+          "url": "https://www.nicematin.com/rss/culture.xml"
+        },
+        {
+          "name": "FR240-B128 - Nice-Matin",
+          "url": "https://www.nicematin.com/rss/sport.xml"
+        },
+        {
+          "name": "FR240-B129 - Nice-Matin",
+          "url": "https://www.nicematin.com/rss/science.xml"
+        },
+        {
+          "name": "FR240-B130 - Nice-Matin",
+          "url": "https://www.nicematin.com/rss/environment.xml"
+        },
+        {
+          "name": "FR240-B131 - Midi Libre",
+          "url": "https://www.midilibre.fr/rss/headlines.xml"
+        },
+        {
+          "name": "FR240-B132 - Midi Libre",
+          "url": "https://www.midilibre.fr/rss/politics.xml"
+        },
+        {
+          "name": "FR240-B133 - Midi Libre",
+          "url": "https://www.midilibre.fr/rss/economy.xml"
+        },
+        {
+          "name": "FR240-B134 - Midi Libre",
+          "url": "https://www.midilibre.fr/rss/world.xml"
+        },
+        {
+          "name": "FR240-B135 - Midi Libre",
+          "url": "https://www.midilibre.fr/rss/tech.xml"
+        },
+        {
+          "name": "FR240-B136 - Midi Libre",
+          "url": "https://www.midilibre.fr/rss/society.xml"
+        },
+        {
+          "name": "FR240-B137 - Midi Libre",
+          "url": "https://www.midilibre.fr/rss/culture.xml"
+        },
+        {
+          "name": "FR240-B138 - Midi Libre",
+          "url": "https://www.midilibre.fr/rss/sport.xml"
+        },
+        {
+          "name": "FR240-B139 - Midi Libre",
+          "url": "https://www.midilibre.fr/rss/science.xml"
+        },
+        {
+          "name": "FR240-B140 - Midi Libre",
+          "url": "https://www.midilibre.fr/rss/environment.xml"
+        },
+        {
+          "name": "FR240-B141 - Le Progrès",
+          "url": "https://www.leprogres.fr/rss/headlines.xml"
+        },
+        {
+          "name": "FR240-B142 - Le Progrès",
+          "url": "https://www.leprogres.fr/rss/politics.xml"
+        },
+        {
+          "name": "FR240-B143 - Le Progrès",
+          "url": "https://www.leprogres.fr/rss/economy.xml"
+        },
+        {
+          "name": "FR240-B144 - Le Progrès",
+          "url": "https://www.leprogres.fr/rss/world.xml"
+        },
+        {
+          "name": "FR240-B145 - Le Progrès",
+          "url": "https://www.leprogres.fr/rss/tech.xml"
+        },
+        {
+          "name": "FR240-B146 - Le Progrès",
+          "url": "https://www.leprogres.fr/rss/society.xml"
+        },
+        {
+          "name": "FR240-B147 - Le Progrès",
+          "url": "https://www.leprogres.fr/rss/culture.xml"
+        },
+        {
+          "name": "FR240-B148 - Le Progrès",
+          "url": "https://www.leprogres.fr/rss/sport.xml"
+        },
+        {
+          "name": "FR240-B149 - Le Progrès",
+          "url": "https://www.leprogres.fr/rss/science.xml"
+        },
+        {
+          "name": "FR240-B150 - Le Progrès",
+          "url": "https://www.leprogres.fr/rss/environment.xml"
+        },
+        {
+          "name": "FR240-B151 - Le Dauphiné Libéré",
+          "url": "https://www.ledauphine.com/rss/headlines.xml"
+        },
+        {
+          "name": "FR240-B152 - Le Dauphiné Libéré",
+          "url": "https://www.ledauphine.com/rss/politics.xml"
+        },
+        {
+          "name": "FR240-B153 - Le Dauphiné Libéré",
+          "url": "https://www.ledauphine.com/rss/economy.xml"
+        },
+        {
+          "name": "FR240-B154 - Le Dauphiné Libéré",
+          "url": "https://www.ledauphine.com/rss/world.xml"
+        },
+        {
+          "name": "FR240-B155 - Le Dauphiné Libéré",
+          "url": "https://www.ledauphine.com/rss/tech.xml"
+        },
+        {
+          "name": "FR240-B156 - Le Dauphiné Libéré",
+          "url": "https://www.ledauphine.com/rss/society.xml"
+        },
+        {
+          "name": "FR240-B157 - Le Dauphiné Libéré",
+          "url": "https://www.ledauphine.com/rss/culture.xml"
+        },
+        {
+          "name": "FR240-B158 - Le Dauphiné Libéré",
+          "url": "https://www.ledauphine.com/rss/sport.xml"
+        },
+        {
+          "name": "FR240-B159 - Le Dauphiné Libéré",
+          "url": "https://www.ledauphine.com/rss/science.xml"
+        },
+        {
+          "name": "FR240-B160 - Le Dauphiné Libéré",
+          "url": "https://www.ledauphine.com/rss/environment.xml"
+        },
+        {
+          "name": "FR240-B161 - Le Télégramme",
+          "url": "https://www.letelegramme.fr/rss/headlines.xml"
+        },
+        {
+          "name": "FR240-B162 - Le Télégramme",
+          "url": "https://www.letelegramme.fr/rss/politics.xml"
+        },
+        {
+          "name": "FR240-B163 - Le Télégramme",
+          "url": "https://www.letelegramme.fr/rss/economy.xml"
+        },
+        {
+          "name": "FR240-B164 - Le Télégramme",
+          "url": "https://www.letelegramme.fr/rss/world.xml"
+        },
+        {
+          "name": "FR240-B165 - Le Télégramme",
+          "url": "https://www.letelegramme.fr/rss/tech.xml"
+        },
+        {
+          "name": "FR240-B166 - Le Télégramme",
+          "url": "https://www.letelegramme.fr/rss/society.xml"
+        },
+        {
+          "name": "FR240-B167 - Le Télégramme",
+          "url": "https://www.letelegramme.fr/rss/culture.xml"
+        },
+        {
+          "name": "FR240-B168 - Le Télégramme",
+          "url": "https://www.letelegramme.fr/rss/sport.xml"
+        },
+        {
+          "name": "FR240-B169 - Le Télégramme",
+          "url": "https://www.letelegramme.fr/rss/science.xml"
+        },
+        {
+          "name": "FR240-B170 - Le Télégramme",
+          "url": "https://www.letelegramme.fr/rss/environment.xml"
+        },
+        {
+          "name": "FR240-B171 - Numerama",
+          "url": "https://www.numerama.com/rss/headlines.xml"
+        },
+        {
+          "name": "FR240-B172 - Numerama",
+          "url": "https://www.numerama.com/rss/politics.xml"
+        },
+        {
+          "name": "FR240-B173 - Numerama",
+          "url": "https://www.numerama.com/rss/economy.xml"
+        },
+        {
+          "name": "FR240-B174 - Numerama",
+          "url": "https://www.numerama.com/rss/world.xml"
+        },
+        {
+          "name": "FR240-B175 - Numerama",
+          "url": "https://www.numerama.com/rss/tech.xml"
+        },
+        {
+          "name": "FR240-B176 - Numerama",
+          "url": "https://www.numerama.com/rss/society.xml"
+        },
+        {
+          "name": "FR240-B177 - Numerama",
+          "url": "https://www.numerama.com/rss/culture.xml"
+        },
+        {
+          "name": "FR240-B178 - Numerama",
+          "url": "https://www.numerama.com/rss/sport.xml"
+        },
+        {
+          "name": "FR240-B179 - Numerama",
+          "url": "https://www.numerama.com/rss/science.xml"
+        },
+        {
+          "name": "FR240-B180 - Numerama",
+          "url": "https://www.numerama.com/rss/environment.xml"
+        },
+        {
+          "name": "FR240-B181 - Clubic",
+          "url": "https://www.clubic.com/rss/headlines.xml"
+        },
+        {
+          "name": "FR240-B182 - Clubic",
+          "url": "https://www.clubic.com/rss/politics.xml"
+        },
+        {
+          "name": "FR240-B183 - Clubic",
+          "url": "https://www.clubic.com/rss/economy.xml"
+        },
+        {
+          "name": "FR240-B184 - Clubic",
+          "url": "https://www.clubic.com/rss/world.xml"
+        },
+        {
+          "name": "FR240-B185 - Clubic",
+          "url": "https://www.clubic.com/rss/tech.xml"
+        },
+        {
+          "name": "FR240-B186 - Clubic",
+          "url": "https://www.clubic.com/rss/society.xml"
+        },
+        {
+          "name": "FR240-B187 - Clubic",
+          "url": "https://www.clubic.com/rss/culture.xml"
+        },
+        {
+          "name": "FR240-B188 - Clubic",
+          "url": "https://www.clubic.com/rss/sport.xml"
+        },
+        {
+          "name": "FR240-B189 - Clubic",
+          "url": "https://www.clubic.com/rss/science.xml"
+        },
+        {
+          "name": "FR240-B190 - Clubic",
+          "url": "https://www.clubic.com/rss/environment.xml"
+        },
+        {
+          "name": "FR240-B191 - Les Numériques",
+          "url": "https://www.lesnumeriques.com/rss/headlines.xml"
+        },
+        {
+          "name": "FR240-B192 - Les Numériques",
+          "url": "https://www.lesnumeriques.com/rss/politics.xml"
+        },
+        {
+          "name": "FR240-B193 - Les Numériques",
+          "url": "https://www.lesnumeriques.com/rss/economy.xml"
+        },
+        {
+          "name": "FR240-B194 - Les Numériques",
+          "url": "https://www.lesnumeriques.com/rss/world.xml"
+        },
+        {
+          "name": "FR240-B195 - Les Numériques",
+          "url": "https://www.lesnumeriques.com/rss/tech.xml"
+        },
+        {
+          "name": "FR240-B196 - Les Numériques",
+          "url": "https://www.lesnumeriques.com/rss/society.xml"
+        },
+        {
+          "name": "FR240-B197 - Les Numériques",
+          "url": "https://www.lesnumeriques.com/rss/culture.xml"
+        },
+        {
+          "name": "FR240-B198 - Les Numériques",
+          "url": "https://www.lesnumeriques.com/rss/sport.xml"
+        },
+        {
+          "name": "FR240-B199 - Les Numériques",
+          "url": "https://www.lesnumeriques.com/rss/science.xml"
+        },
+        {
+          "name": "FR240-B200 - Les Numériques",
+          "url": "https://www.lesnumeriques.com/rss/environment.xml"
+        }
+      ]
+    }
+  ]
+}

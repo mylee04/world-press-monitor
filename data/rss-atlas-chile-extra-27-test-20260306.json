@@ -1,0 +1,148 @@
+{
+  "version": 1,
+  "generatedAt": "2026-03-06T09:51:23.652Z",
+  "lastChecked": "2026-03-06",
+  "countries": [
+    {
+      "name": "Chile",
+      "code": "CL",
+      "feeds": [
+        {
+          "name": "CLNEW2 001 - Diario El Tipógrafo",
+          "url": "https://eltipografo.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW2 002 - El Observatodo",
+          "url": "https://www.elobservatodo.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW2 003 - El Día",
+          "url": "https://www.diarioeldia.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW2 004 - El Vacanudo",
+          "url": "https://www.elvacanudo.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW2 005 - El Morrocotudo",
+          "url": "https://www.elmorrocotudo.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW2 006 - El Naveghable",
+          "url": "https://www.elnaveghable.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW2 007 - El Martutino",
+          "url": "https://www.elmartutino.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW2 008 - El Repuertero",
+          "url": "https://www.elrepuertero.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW2 009 - El Boyaldia",
+          "url": "https://www.elboyaldia.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW2 010 - El Quehaydecierto",
+          "url": "https://www.elquehaydecierto.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW2 011 - El Nortero",
+          "url": "https://www.elnortero.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW2 012 - El Ariqueño",
+          "url": "https://www.elariqueno.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW2 013 - El Andino",
+          "url": "https://www.diarioelandino.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW2 014 - El Trabajo",
+          "url": "https://www.eltrabajo.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW2 015 - El Labrador",
+          "url": "https://www.ellabrador.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW2 016 - El Insular",
+          "url": "https://www.elinsular.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW2 017 - El Divisadero",
+          "url": "https://www.eldivisadero.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW2 018 - El Austral de Temuco",
+          "url": "https://www.australtemuco.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW2 019 - El Austral de Osorno",
+          "url": "https://www.australosorno.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW2 020 - El Austral de Valdivia",
+          "url": "https://www.australvaldivia.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW2 021 - La Estrella de Arica",
+          "url": "https://www.estrellaarica.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW2 022 - La Estrella de Iquique",
+          "url": "https://www.estrellaiquique.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW2 023 - La Estrella de Antofagasta",
+          "url": "https://www.estrellantofagasta.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW2 024 - La Estrella de Valparaíso",
+          "url": "https://www.estrellavalpo.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW2 025 - La Estrella de Chiloé",
+          "url": "https://www.estrellachiloe.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW2 026 - La Prensa de Curicó",
+          "url": "https://www.laprensacurico.cl/feed/",
+          "enabled": true
+        },
+        {
+          "name": "CLNEW2 027 - El Sur Concepción",
+          "url": "https://www.elsur.cl/feed/",
+          "enabled": true
+        }
+      ]
+    }
+  ]
+}
