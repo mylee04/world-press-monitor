@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Sun, 08 Mar 2026 07:08:53 GMT</dateCreated>
+    <dateCreated>Sun, 08 Mar 2026 08:54:01 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -47,7 +47,7 @@
       <outline text="New York Post [valid]" title="New York Post [valid]" type="rss" xmlUrl="https://nypost.com/feed" htmlUrl="https://nypost.com"/>
       <outline text="Chicago Tribune [valid]" title="Chicago Tribune [valid]" type="rss" xmlUrl="https://chicagotribune.com/feed" htmlUrl="https://chicagotribune.com"/>
       <outline text="Seattle Times [invalid]" title="Seattle Times [invalid]" type="rss" xmlUrl="https://seattletimes.com/feed" htmlUrl="https://seattletimes.com"/>
-      <outline text="Denver Post [valid]" title="Denver Post [valid]" type="rss" xmlUrl="https://denverpost.com/feed" htmlUrl="https://denverpost.com"/>
+      <outline text="Denver Post [invalid]" title="Denver Post [invalid]" type="rss" xmlUrl="https://denverpost.com/feed" htmlUrl="https://denverpost.com"/>
       <outline text="San Jose Mercury News [valid]" title="San Jose Mercury News [valid]" type="rss" xmlUrl="https://mercurynews.com/feed" htmlUrl="https://mercurynews.com"/>
       <outline text="Las Vegas Review-Journal [valid]" title="Las Vegas Review-Journal [valid]" type="rss" xmlUrl="https://reviewjournal.com/feed" htmlUrl="https://reviewjournal.com"/>
       <outline text="San Diego Union-Tribune [valid]" title="San Diego Union-Tribune [valid]" type="rss" xmlUrl="https://sandiegouniontribune.com/feed" htmlUrl="https://sandiegouniontribune.com"/>
@@ -958,7 +958,7 @@
       <outline text="PAP MediaRoom (Nauka i technologie) [valid]" title="PAP MediaRoom (Nauka i technologie) [valid]" type="rss" xmlUrl="https://pap-mediaroom.pl/kategoria/nauka-i-technologie/rss.xml" htmlUrl="https://pap-mediaroom.pl"/>
       <outline text="PAP MediaRoom (Kalendarium) [valid]" title="PAP MediaRoom (Kalendarium) [valid]" type="rss" xmlUrl="https://pap-mediaroom.pl/kalendarium/rss.xml" htmlUrl="https://pap-mediaroom.pl"/>
       <outline text="Onet Wiadomości (Top Portal News) [valid]" title="Onet Wiadomości (Top Portal News) [valid]" type="rss" xmlUrl="https://wiadomosci.onet.pl/.feed" htmlUrl="https://wiadomosci.onet.pl"/>
-      <outline text="TVN24 Najnowsze (TVN24 News) [invalid]" title="TVN24 Najnowsze (TVN24 News) [invalid]" type="rss" xmlUrl="https://tvn24.pl/najnowsze.xml" htmlUrl="https://tvn24.pl"/>
+      <outline text="TVN24 Najnowsze (TVN24 News) [valid]" title="TVN24 Najnowsze (TVN24 News) [valid]" type="rss" xmlUrl="https://tvn24.pl/najnowsze.xml" htmlUrl="https://tvn24.pl"/>
       <outline text="TVN24 Biznes (TVN24 Business) [needs verification]" title="TVN24 Biznes (TVN24 Business) [needs verification]" type="rss" xmlUrl="https://tvn24.pl/biznes.xml" htmlUrl="https://tvn24.pl"/>
       <outline text="Money.pl (Polish Economy Portal #1) [valid]" title="Money.pl (Polish Economy Portal #1) [valid]" type="rss" xmlUrl="https://www.money.pl/rss/" htmlUrl="https://www.money.pl"/>
       <outline text="Bankier.pl (Finance/Investing) [valid]" title="Bankier.pl (Finance/Investing) [valid]" type="rss" xmlUrl="https://www.bankier.pl/rss/wiadomosci.xml" htmlUrl="https://www.bankier.pl"/>
