@@ -1780,6 +1780,68 @@ export async function readNewsArticlesEarliestCreatedAt(): Promise<{
   };
 }
 
+export interface NewsArticlesRecentCountRow {
+  source: string;
+  country: string;
+  articleCount: number;
+}
+
+export async function readNewsArticlesRecentCounts(options: {
+  hours?: number;
+  countries?: string[];
+  limit?: number;
+} = {}): Promise<{
+  storage: 'postgres' | 'disabled';
+  reason?: string;
+  rows: NewsArticlesRecentCountRow[];
+}> {
+  const db = getPool();
+  if (!db) return { storage: 'disabled', reason: poolDisabledReason, rows: [] };
+  await ensureSchema();
+
+  const hours = Math.max(1, Math.min(24 * 30, Math.floor(options.hours || 24)));
+  const countries = (options.countries || []).filter(Boolean);
+  const limit = Math.max(1, Math.min(1000000, Math.floor(options.limit || 100000)));
+
+  const params: unknown[] = [hours];
+  const whereParts = [`created_at > now() - ($1::int * interval '1 hour')`];
+
+  if (countries.length > 0) {
+    params.push(countries);
+    whereParts.push(`country = any($${params.length}::text[])`);
+  }
+
+  params.push(limit);
+
+  const result = await db.query<{
+    source: string;
+    country: string | null;
+    article_count: string;
+  }>(
+    `
+    select
+      source,
+      country,
+      count(*)::text as article_count
+    from news_articles
+    where ${whereParts.join('\n      and ')}
+    group by source, country
+    order by count(*) desc, source asc
+    limit $${params.length}
+    `,
+    params
+  );
+
+  return {
+    storage: 'postgres',
+    rows: result.rows.map((row) => ({
+      source: row.source,
+      country: row.country || 'Global',
+      articleCount: Number(row.article_count) || 0
+    }))
+  };
+}
+
 export async function pruneExpiredIngestionData(
   options: IngestionDataRetentionOptions = {}
 ): Promise<IngestionDataRetentionResult> {

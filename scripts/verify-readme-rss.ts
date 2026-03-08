@@ -4,7 +4,7 @@ import { spawnSync } from 'node:child_process';
 import { lookup } from 'node:dns/promises';
 import { resolve } from 'node:path';
 import { gunzipSync } from 'node:zlib';
-import { readIngestOpsDaily, readNewsArticlesEarliestCreatedAt } from '../lib/ingestion-store';
+import { readNewsArticlesRecentCounts } from '../lib/ingestion-store';
 
 type AtlasFeed = {
   name: string;
@@ -99,9 +99,7 @@ const PRECHECK_TIMEOUT_MS = clampInt(process.env.RSS_PRECHECK_TIMEOUT_MS, 1000, 
 const SHOULD_PRECHECK = process.argv.includes('--precheck') || process.argv.includes('--preflight');
 const PRECHECK_URL = process.env.RSS_PRECHECK_URL || '';
 const ONLY_VALID_IN_README = process.argv.includes('--valid-only');
-const FEED_INGEST_BASELINE_DATE = parseBaselineDate(process.env.RSS_FEED_BASELINE_DATE || '');
-let resolvedFeedBaselineDate: string | null = FEED_INGEST_BASELINE_DATE;
-const FEED_INGEST_DAILY_WINDOW_DAYS = clampInt(process.env.RSS_FEED_DAILY_WINDOW_DAYS || '1', 1, 365, 1);
+const ARTICLE_VOLUME_WINDOW_HOURS = clampInt(process.env.RSS_ARTICLE_WINDOW_HOURS || '24', 1, 24 * 30, 24);
 
 const COUNTRY_SECTION_HEADER = /^###\s+(.+?)\s+\(([^)]+)\)$/;
 const XML_MARKERS = ['<rss', '<feed', '<urlset', '<sitemapindex', '<?xml'];
@@ -250,65 +248,36 @@ function buildCheckTasks(atlas: Atlas): CheckTask[] {
 }
 
 async function loadFeedIngestionSummary(atlas: Atlas): Promise<FeedIngestionSummary> {
-  const baselineDate = await resolveFeedBaselineDate();
   const summary: FeedIngestionSummary = {
     enabled: true,
-    baselineDate,
-    dailyWindowDays: FEED_INGEST_DAILY_WINDOW_DAYS,
-    countsByOutlet: new Map<string, FeedIngestionCount>()
+    windowHours: ARTICLE_VOLUME_WINDOW_HOURS,
+    countsByFeed: new Map<string, FeedIngestionCount>()
   };
 
   if (atlas.countries.length === 0) {
     return summary;
   }
 
-  const dailyResult = await readIngestOpsDaily({
-    runner: 'worker',
-    days: FEED_INGEST_DAILY_WINDOW_DAYS,
-    limit: 1000000
-  });
-  const cumulativeResult = await readIngestOpsDaily({
-    runner: 'worker',
-    from: baselineDate,
+  const recentCounts = await readNewsArticlesRecentCounts({
+    hours: ARTICLE_VOLUME_WINDOW_HOURS,
     limit: 1000000
   });
 
-  if (dailyResult.storage !== 'postgres' || cumulativeResult.storage !== 'postgres') {
+  if (recentCounts.storage !== 'postgres') {
     return {
       ...summary,
       enabled: false
     };
   }
 
-  for (const row of dailyResult.rows) {
-    const current = summary.countsByOutlet.get(row.outletId) || { daily: 0, cumulative: 0 };
-    current.daily += Number(row.validCount) || 0;
-    summary.countsByOutlet.set(row.outletId, current);
-  }
-  for (const row of cumulativeResult.rows) {
-    const current = summary.countsByOutlet.get(row.outletId) || { daily: 0, cumulative: 0 };
-    current.cumulative += Number(row.validCount) || 0;
-    summary.countsByOutlet.set(row.outletId, current);
+  for (const row of recentCounts.rows) {
+    const key = makeFeedVolumeKey(row.country, row.source);
+    const current = summary.countsByFeed.get(key) || { recentUnique: 0 };
+    current.recentUnique += Number(row.articleCount) || 0;
+    summary.countsByFeed.set(key, current);
   }
 
   return summary;
-}
-
-async function resolveFeedBaselineDate(): Promise<string> {
-  if (resolvedFeedBaselineDate) return resolvedFeedBaselineDate;
-
-  const earliest = await readNewsArticlesEarliestCreatedAt();
-  if (earliest.storage === 'postgres' && earliest.earliestCreatedAt) {
-    const date = parseBaselineDate(earliest.earliestCreatedAt);
-    if (date) {
-      resolvedFeedBaselineDate = date;
-      return date;
-    }
-  }
-
-  const fallback = toIsoDate(new Date(NOW.getTime() - 365 * 24 * 60 * 60 * 1000));
-  resolvedFeedBaselineDate = fallback;
-  return fallback;
 }
 
 async function runNetworkPrecheck(atlas: Atlas): Promise<boolean> {
@@ -806,15 +775,13 @@ type InvalidItem = {
 };
 
 type FeedIngestionCount = {
-  daily: number;
-  cumulative: number;
+  recentUnique: number;
 };
 
 type FeedIngestionSummary = {
   enabled: boolean;
-  baselineDate: string;
-  dailyWindowDays: number;
-  countsByOutlet: Map<string, FeedIngestionCount>;
+  windowHours: number;
+  countsByFeed: Map<string, FeedIngestionCount>;
 };
 
 function getReadmePreface(
@@ -901,8 +868,9 @@ function renderVerificationSnapshot(
     );
   }
   lines.push(`- Snapshot date: \`${CHECKED_DATE}\``);
-  lines.push(`- RSS ingest baseline: \`${feedIngestionSummary.baselineDate}\``);
-  lines.push(`- RSS daily window: \`${feedIngestionSummary.dailyWindowDays}d\` (runner: worker)`);
+  lines.push(
+    `- README volume column: \`Ingested ${feedIngestionSummary.windowHours}h\` (unique rows in \`news_articles.created_at\`)`
+  );
   lines.push(`- Source artifact: \`audits/readme_rss_health_latest.json\``);
   lines.push('');
   lines.push('### Failure reasons');
@@ -971,8 +939,8 @@ function renderCountrySections(
 
   for (const country of atlas.countries) {
     lines.push(`### ${country.name} (${country.code})`);
-    lines.push('|No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|Daily|Since baseline|');
-    lines.push('|---|---|---|---|---|---|---:|---:|');
+    lines.push(`|No.|Outlet|RSS URL|HTTP Status|Checked Date|Valid?|Ingested ${feedIngestionSummary.windowHours}h|`);
+    lines.push('|---|---|---|---|---|---|---:|');
 
     if (!country.feeds.length) {
       if (onlyValid) {
@@ -987,7 +955,6 @@ function renderCountrySections(
             checkedDate: CHECKED_DATE,
             validLabel: 'needs verification',
             daily: null,
-            cumulative: null,
           })
         );
       }
@@ -1009,7 +976,6 @@ function renderCountrySections(
             checkedDate: CHECKED_DATE,
             validLabel: 'needs verification',
             daily: null,
-            cumulative: null,
           })
         );
         continue;
@@ -1018,10 +984,9 @@ function renderCountrySections(
       const key = makeResultKey(country.code, feed.name, feed.url);
       const result = resultMap.get(key);
       const recovered = result !== undefined && recoveredFeedKeys.has(key);
-      const outletId = makeOutletId(country.name, feed.name, feed.url);
-      const feedCounts = feedIngestionSummary.countsByOutlet.get(outletId) || null;
-      const daily = feedIngestionSummary.enabled ? (feedCounts ? feedCounts.daily : 0) : null;
-      const cumulative = feedIngestionSummary.enabled ? (feedCounts ? feedCounts.cumulative : 0) : null;
+      const feedKey = makeFeedVolumeKey(country.name, feed.name);
+      const feedCounts = feedIngestionSummary.countsByFeed.get(feedKey) || null;
+      const daily = feedIngestionSummary.enabled ? (feedCounts ? feedCounts.recentUnique : 0) : null;
       if (onlyValid && (!result || (!result.valid && !recovered))) {
         continue;
       }
@@ -1038,7 +1003,6 @@ function renderCountrySections(
             checkedDate: CHECKED_DATE,
             validLabel: 'needs verification',
             daily,
-            cumulative,
           })
         );
         continue;
@@ -1053,7 +1017,6 @@ function renderCountrySections(
           checkedDate: CHECKED_DATE,
           validLabel: result && (result.valid || recovered) ? 'valid' : 'invalid',
           daily,
-          cumulative,
         })
       );
     }
@@ -1495,12 +1458,10 @@ function formatRow(params: {
   checkedDate: string;
   validLabel: string;
   daily: number | null;
-  cumulative: number | null;
 }): string {
   const urlDisplay = params.url === 'N/A' ? 'N/A' : `<${params.url}>`;
   const daily = params.daily === null ? '-' : `${params.daily}`;
-  const cumulative = params.cumulative === null ? '-' : `${params.cumulative}`;
-  return `${params.row}|${params.outlet}|${urlDisplay}|${params.status}|${params.checkedDate}|${params.validLabel}|${daily}|${cumulative}|`;
+  return `${params.row}|${params.outlet}|${urlDisplay}|${params.status}|${params.checkedDate}|${params.validLabel}|${daily}|`;
 }
 
 function formatStatus(result: EndpointResult): string {
@@ -1562,34 +1523,8 @@ function normalizeText(value: string): string {
     .toLowerCase();
 }
 
-function makeOutletId(countryName: string, sourceName: string, feedUrl: string): string {
-  const safe = normalizeText(`${countryName} ${sourceName}`)
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-    .replace(/-+/g, '-')
-    .slice(0, 120);
-  let hash = 2166136261;
-  for (let i = 0; i < feedUrl.length; i += 1) {
-    hash ^= feedUrl.charCodeAt(i);
-    hash = Math.imul(hash, 16777619);
-  }
-  return `${safe || 'source'}-${(hash >>> 0).toString(36)}`;
-}
-
-function parseBaselineDate(value: string): string | null {
-  const trimmed = (value || '').trim();
-  if (!trimmed) return null;
-
-  const parsed = new Date(trimmed);
-  if (!Number.isFinite(parsed.getTime())) return null;
-
-  const maxDate = NOW;
-  if (parsed.getTime() > maxDate.getTime()) return toIsoDate(maxDate);
-  return toIsoDate(parsed);
-}
-
-function toIsoDate(date: Date): string {
-  return date.toISOString().slice(0, 10);
+function makeFeedVolumeKey(countryName: string, sourceName: string): string {
+  return `${normalizeText(countryName)}|${normalizeText(sourceName)}`;
 }
 
 function isLikelyRuntimeNetworkFailure(results: EndpointResult[], summary: SummaryCounts): boolean {
