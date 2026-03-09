@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Sun, 08 Mar 2026 08:54:01 GMT</dateCreated>
+    <dateCreated>Mon, 09 Mar 2026 07:35:46 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -46,8 +46,8 @@
       <outline text="Boston Globe [valid]" title="Boston Globe [valid]" type="rss" xmlUrl="https://www.bostonglobe.com/arc/outboundfeeds/rss?outputType=xml" htmlUrl="https://www.bostonglobe.com"/>
       <outline text="New York Post [valid]" title="New York Post [valid]" type="rss" xmlUrl="https://nypost.com/feed" htmlUrl="https://nypost.com"/>
       <outline text="Chicago Tribune [valid]" title="Chicago Tribune [valid]" type="rss" xmlUrl="https://chicagotribune.com/feed" htmlUrl="https://chicagotribune.com"/>
-      <outline text="Seattle Times [invalid]" title="Seattle Times [invalid]" type="rss" xmlUrl="https://seattletimes.com/feed" htmlUrl="https://seattletimes.com"/>
-      <outline text="Denver Post [invalid]" title="Denver Post [invalid]" type="rss" xmlUrl="https://denverpost.com/feed" htmlUrl="https://denverpost.com"/>
+      <outline text="Seattle Times [valid]" title="Seattle Times [valid]" type="rss" xmlUrl="https://seattletimes.com/feed" htmlUrl="https://seattletimes.com"/>
+      <outline text="Denver Post [valid]" title="Denver Post [valid]" type="rss" xmlUrl="https://denverpost.com/feed" htmlUrl="https://denverpost.com"/>
       <outline text="San Jose Mercury News [valid]" title="San Jose Mercury News [valid]" type="rss" xmlUrl="https://mercurynews.com/feed" htmlUrl="https://mercurynews.com"/>
       <outline text="Las Vegas Review-Journal [valid]" title="Las Vegas Review-Journal [valid]" type="rss" xmlUrl="https://reviewjournal.com/feed" htmlUrl="https://reviewjournal.com"/>
       <outline text="San Diego Union-Tribune [valid]" title="San Diego Union-Tribune [valid]" type="rss" xmlUrl="https://sandiegouniontribune.com/feed" htmlUrl="https://sandiegouniontribune.com"/>
@@ -69,7 +69,7 @@
       <outline text="Jacobin [valid]" title="Jacobin [valid]" type="rss" xmlUrl="https://jacobin.com/feed" htmlUrl="https://jacobin.com"/>
       <outline text="Quartz [valid]" title="Quartz [valid]" type="rss" xmlUrl="https://qz.com/feed" htmlUrl="https://qz.com"/>
       <outline text="The Intercept [valid]" title="The Intercept [valid]" type="rss" xmlUrl="https://theintercept.com/feed" htmlUrl="https://theintercept.com"/>
-      <outline text="Newsweek [invalid]" title="Newsweek [invalid]" type="rss" xmlUrl="https://www.newsweek.com/rss" htmlUrl="https://www.newsweek.com"/>
+      <outline text="Newsweek [valid]" title="Newsweek [valid]" type="rss" xmlUrl="https://www.newsweek.com/rss" htmlUrl="https://www.newsweek.com"/>
       <outline text="Time [valid]" title="Time [valid]" type="rss" xmlUrl="https://time.com/feed" htmlUrl="https://time.com"/>
       <outline text="PBS NewsHour [valid]" title="PBS NewsHour [valid]" type="rss" xmlUrl="https://www.pbs.org/newshour/feeds/rss/headlines" htmlUrl="https://www.pbs.org"/>
     </outline>
@@ -250,9 +250,9 @@
       <outline text="The Hindu (National) [valid]" title="The Hindu (National) [valid]" type="rss" xmlUrl="https://www.thehindu.com/news/national/?service=rss" htmlUrl="https://www.thehindu.com"/>
       <outline text="Firstpost [valid]" title="Firstpost [valid]" type="rss" xmlUrl="https://www.firstpost.com/commonfeeds/v1/mfp/rss/web-stories.xml" htmlUrl="https://www.firstpost.com"/>
       <outline text="DNA India (India) [valid]" title="DNA India (India) [valid]" type="rss" xmlUrl="https://www.dnaindia.com/feeds/india.xml" htmlUrl="https://www.dnaindia.com"/>
-      <outline text="Storify News [valid]" title="Storify News [valid]" type="rss" xmlUrl="https://www.storifynews.com/feed" htmlUrl="https://www.storifynews.com"/>
+      <outline text="Storify News [invalid (ERR)]" title="Storify News [invalid (ERR)]" type="rss" xmlUrl="https://www.storifynews.com/feed" htmlUrl="https://www.storifynews.com"/>
       <outline text="Amar Ujala (Breaking) [valid]" title="Amar Ujala (Breaking) [valid]" type="rss" xmlUrl="https://www.amarujala.com/rss/breaking-news.xml" htmlUrl="https://www.amarujala.com"/>
-      <outline text="Odishabarta [invalid]" title="Odishabarta [invalid]" type="rss" xmlUrl="https://odishabarta.com/feed" htmlUrl="https://odishabarta.com"/>
+      <outline text="Odishabarta [valid]" title="Odishabarta [valid]" type="rss" xmlUrl="https://odishabarta.com/feed" htmlUrl="https://odishabarta.com"/>
       <outline text="The Times of Bengal [valid]" title="The Times of Bengal [valid]" type="rss" xmlUrl="https://thetimesofbengal.com/feed" htmlUrl="https://thetimesofbengal.com"/>
       <outline text="Scroll.in [valid]" title="Scroll.in [valid]" type="rss" xmlUrl="https://feeds.feedburner.com/ScrollinArticles.rss" htmlUrl="https://feeds.feedburner.com"/>
       <outline text="Northlines [needs verification]" title="Northlines [needs verification]" type="rss" xmlUrl="https://thenorthlines.com/feed" htmlUrl="https://thenorthlines.com"/>
@@ -269,7 +269,7 @@
       <outline text="WYM News (Blogspot) [valid]" title="WYM News (Blogspot) [valid]" type="rss" xmlUrl="https://latestnewsupdate4you.blogspot.com/feeds/posts/default" htmlUrl="https://latestnewsupdate4you.blogspot.com"/>
       <outline text="Star of Mysore [valid]" title="Star of Mysore [valid]" type="rss" xmlUrl="https://starofmysore.com/feed" htmlUrl="https://starofmysore.com"/>
       <outline text="ABP News [valid]" title="ABP News [valid]" type="rss" xmlUrl="https://news.abplive.com/home/feed" htmlUrl="https://news.abplive.com"/>
-      <outline text="The India Bizz [valid]" title="The India Bizz [valid]" type="rss" xmlUrl="https://theindiabizz.com/feed" htmlUrl="https://theindiabizz.com"/>
+      <outline text="The India Bizz [invalid (ERR)]" title="The India Bizz [invalid (ERR)]" type="rss" xmlUrl="https://theindiabizz.com/feed" htmlUrl="https://theindiabizz.com"/>
     </outline>
     <outline text="United Kingdom (GB)" title="United Kingdom (GB)">
       <outline text="Financial Times - World [valid]" title="Financial Times - World [valid]" type="rss" xmlUrl="https://www.ft.com/rss/world" htmlUrl="https://www.ft.com"/>
@@ -452,7 +452,7 @@
       <outline text="Kommersant (Economy/Business Major Daily) [valid]" title="Kommersant (Economy/Business Major Daily) [valid]" type="rss" xmlUrl="https://www.kommersant.ru/RSS/news.xml" htmlUrl="https://www.kommersant.ru"/>
       <outline text="Vedomosti (Economy Major Daily) [valid]" title="Vedomosti (Economy Major Daily) [valid]" type="rss" xmlUrl="https://www.vedomosti.ru/rss/news" htmlUrl="https://www.vedomosti.ru"/>
       <outline text="Gazeta.ru (General News) [needs verification]" title="Gazeta.ru (General News) [needs verification]" type="rss" xmlUrl="https://www.gazeta.ru/export/rss/lenta.xml" htmlUrl="https://www.gazeta.ru"/>
-      <outline text="Izvestia (Traditional Daily) [valid]" title="Izvestia (Traditional Daily) [valid]" type="rss" xmlUrl="https://iz.ru/xml/rss/all.xml" htmlUrl="https://iz.ru"/>
+      <outline text="Izvestia (Traditional Daily) [invalid]" title="Izvestia (Traditional Daily) [invalid]" type="rss" xmlUrl="https://iz.ru/xml/rss/all.xml" htmlUrl="https://iz.ru"/>
       <outline text="RT Russian (RT Russian Main) [valid]" title="RT Russian (RT Russian Main) [valid]" type="rss" xmlUrl="https://russian.rt.com/rss" htmlUrl="https://russian.rt.com"/>
       <outline text="Rossiyskaya Gazeta (Official Gazette) [valid]" title="Rossiyskaya Gazeta (Official Gazette) [valid]" type="rss" xmlUrl="https://rg.ru/xml/index.xml" htmlUrl="https://rg.ru"/>
       <outline text="Forbes Russia (Forbes Russia Edition) [valid]" title="Forbes Russia (Forbes Russia Edition) [valid]" type="rss" xmlUrl="https://www.forbes.ru/newrss.xml" htmlUrl="https://www.forbes.ru"/>
@@ -521,7 +521,7 @@
       <outline text="Folha - Esporte [valid]" title="Folha - Esporte [valid]" type="rss" xmlUrl="https://feeds.folha.uol.com.br/esporte/rss091.xml" htmlUrl="https://feeds.folha.uol.com.br"/>
       <outline text="Folha - Ilustrada (문화) [valid]" title="Folha - Ilustrada (문화) [valid]" type="rss" xmlUrl="https://feeds.folha.uol.com.br/ilustrada/rss091.xml" htmlUrl="https://feeds.folha.uol.com.br"/>
       <outline text="Agência Pública [valid]" title="Agência Pública [valid]" type="rss" xmlUrl="https://apublica.org/feed/" htmlUrl="https://apublica.org"/>
-      <outline text="Nexo Jornal [valid]" title="Nexo Jornal [valid]" type="rss" xmlUrl="https://www.nexojornal.com.br/rss.xml" htmlUrl="https://www.nexojornal.com.br"/>
+      <outline text="Nexo Jornal [invalid (ERR)]" title="Nexo Jornal [invalid (ERR)]" type="rss" xmlUrl="https://www.nexojornal.com.br/rss.xml" htmlUrl="https://www.nexojornal.com.br"/>
       <outline text="Jornal GGN [needs verification]" title="Jornal GGN [needs verification]" type="rss" xmlUrl="https://jornalggn.com.br/feed/" htmlUrl="https://jornalggn.com.br"/>
       <outline text="Jacobin Brasil [needs verification]" title="Jacobin Brasil [needs verification]" type="rss" xmlUrl="https://jacobin.com.br/feed" htmlUrl="https://jacobin.com.br"/>
       <outline text="CartaCapital [valid]" title="CartaCapital [valid]" type="rss" xmlUrl="https://www.cartacapital.com.br/feed" htmlUrl="https://www.cartacapital.com.br"/>
@@ -655,7 +655,7 @@
     <outline text="Indonesia (ID)" title="Indonesia (ID)">
       <outline text="Republika [valid]" title="Republika [valid]" type="rss" xmlUrl="https://www.republika.co.id/rss" htmlUrl="https://www.republika.co.id"/>
       <outline text="Sindo News [valid]" title="Sindo News [valid]" type="rss" xmlUrl="https://www.sindonews.com/rss/home/" htmlUrl="https://www.sindonews.com"/>
-      <outline text="Kapanlagi [valid]" title="Kapanlagi [valid]" type="rss" xmlUrl="https://www.kapanlagi.com/feed/" htmlUrl="https://www.kapanlagi.com"/>
+      <outline text="Kapanlagi [invalid (ERR)]" title="Kapanlagi [invalid (ERR)]" type="rss" xmlUrl="https://www.kapanlagi.com/feed/" htmlUrl="https://www.kapanlagi.com"/>
       <outline text="Antara TV [valid]" title="Antara TV [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/terkini" htmlUrl="https://www.antaranews.com"/>
       <outline text="Sindonews [valid]" title="Sindonews [valid]" type="rss" xmlUrl="https://www.sindonews.com/rss/" htmlUrl="https://www.sindonews.com"/>
       <outline text="Republika [needs verification]" title="Republika [needs verification]" type="rss" xmlUrl="https://www.republika.co.id/rss/terkini" htmlUrl="https://www.republika.co.id"/>
@@ -748,7 +748,7 @@
       <outline text="Nu.nl [valid]" title="Nu.nl [valid]" type="rss" xmlUrl="https://www.nu.nl/rss/Algemeen" htmlUrl="https://www.nu.nl"/>
       <outline text="Tweakers [needs verification]" title="Tweakers [needs verification]" type="rss" xmlUrl="https://tweakers.net/feeds/nieuws.xml" htmlUrl="https://tweakers.net"/>
       <outline text="NU.nl Economie (Portal Economy) [valid]" title="NU.nl Economie (Portal Economy) [valid]" type="rss" xmlUrl="https://www.nu.nl/rss/Economie" htmlUrl="https://www.nu.nl"/>
-      <outline text="RTL Nieuws (General Breaking) [valid]" title="RTL Nieuws (General Breaking) [valid]" type="rss" xmlUrl="https://www.rtlnieuws.nl/rss.xml" htmlUrl="https://www.rtlnieuws.nl"/>
+      <outline text="RTL Nieuws (General Breaking) [invalid]" title="RTL Nieuws (General Breaking) [invalid]" type="rss" xmlUrl="https://www.rtlnieuws.nl/rss.xml" htmlUrl="https://www.rtlnieuws.nl"/>
       <outline text="FOK! (News/Community) [needs verification]" title="FOK! (News/Community) [needs verification]" type="rss" xmlUrl="https://frontpage.fok.nl/xml/rss" htmlUrl="https://frontpage.fok.nl"/>
       <outline text="IEX.nl (Stocks/Investments) [needs verification]" title="IEX.nl (Stocks/Investments) [needs verification]" type="rss" xmlUrl="https://www.iex.nl/rss/nieuws.xml" htmlUrl="https://www.iex.nl"/>
       <outline text="De Correspondent (In-Depth Analysis) [needs verification]" title="De Correspondent (In-Depth Analysis) [needs verification]" type="rss" xmlUrl="https://decorrespondent.nl/feed" htmlUrl="https://decorrespondent.nl"/>
@@ -1306,15 +1306,15 @@
       <outline text="El Observador - Fútbol internacional [valid]" title="El Observador - Fútbol internacional [valid]" type="rss" xmlUrl="https://www.elobservador.com.uy/rss/pages/futbol-internacional.xml" htmlUrl="https://www.elobservador.com.uy"/>
       <outline text="El Observador - Fútbol [valid]" title="El Observador - Fútbol [valid]" type="rss" xmlUrl="https://www.elobservador.com.uy/rss/pages/futbol.xml" htmlUrl="https://www.elobservador.com.uy"/>
       <outline text="El Observador - Copa Libertadores [valid]" title="El Observador - Copa Libertadores [valid]" type="rss" xmlUrl="https://www.elobservador.com.uy/rss/pages/copa-libertadores.xml" htmlUrl="https://www.elobservador.com.uy"/>
-      <outline text="Montevideo Portal - Información destacada [valid]" title="Montevideo Portal - Información destacada [valid]" type="rss" xmlUrl="https://www.montevideo.com.uy/anxml.aspx?58" htmlUrl="https://www.montevideo.com.uy"/>
-      <outline text="Montevideo Portal - Noticias [valid]" title="Montevideo Portal - Noticias [valid]" type="rss" xmlUrl="https://www.montevideo.com.uy/anxml.aspx?59" htmlUrl="https://www.montevideo.com.uy"/>
-      <outline text="Montevideo Portal - Tiempo Libre [valid]" title="Montevideo Portal - Tiempo Libre [valid]" type="rss" xmlUrl="https://www.montevideo.com.uy/anxml.aspx?60" htmlUrl="https://www.montevideo.com.uy"/>
-      <outline text="Montevideo Portal - Tecnología [valid]" title="Montevideo Portal - Tecnología [valid]" type="rss" xmlUrl="https://www.montevideo.com.uy/anxml.aspx?133" htmlUrl="https://www.montevideo.com.uy"/>
-      <outline text="Montevideo Portal - Negocios &amp; Tendencias [valid]" title="Montevideo Portal - Negocios &amp; Tendencias [valid]" type="rss" xmlUrl="https://www.montevideo.com.uy/anxml.aspx?728" htmlUrl="https://www.montevideo.com.uy"/>
-      <outline text="Montevideo Portal - Deportes [valid]" title="Montevideo Portal - Deportes [valid]" type="rss" xmlUrl="https://www.montevideo.com.uy/anxml.aspx?1727" htmlUrl="https://www.montevideo.com.uy"/>
+      <outline text="Montevideo Portal - Información destacada [invalid (ERR)]" title="Montevideo Portal - Información destacada [invalid (ERR)]" type="rss" xmlUrl="https://www.montevideo.com.uy/anxml.aspx?58" htmlUrl="https://www.montevideo.com.uy"/>
+      <outline text="Montevideo Portal - Noticias [invalid (ERR)]" title="Montevideo Portal - Noticias [invalid (ERR)]" type="rss" xmlUrl="https://www.montevideo.com.uy/anxml.aspx?59" htmlUrl="https://www.montevideo.com.uy"/>
+      <outline text="Montevideo Portal - Tiempo Libre [invalid (ERR)]" title="Montevideo Portal - Tiempo Libre [invalid (ERR)]" type="rss" xmlUrl="https://www.montevideo.com.uy/anxml.aspx?60" htmlUrl="https://www.montevideo.com.uy"/>
+      <outline text="Montevideo Portal - Tecnología [invalid (ERR)]" title="Montevideo Portal - Tecnología [invalid (ERR)]" type="rss" xmlUrl="https://www.montevideo.com.uy/anxml.aspx?133" htmlUrl="https://www.montevideo.com.uy"/>
+      <outline text="Montevideo Portal - Negocios &amp; Tendencias [invalid (ERR)]" title="Montevideo Portal - Negocios &amp; Tendencias [invalid (ERR)]" type="rss" xmlUrl="https://www.montevideo.com.uy/anxml.aspx?728" htmlUrl="https://www.montevideo.com.uy"/>
+      <outline text="Montevideo Portal - Deportes [invalid (ERR)]" title="Montevideo Portal - Deportes [invalid (ERR)]" type="rss" xmlUrl="https://www.montevideo.com.uy/anxml.aspx?1727" htmlUrl="https://www.montevideo.com.uy"/>
       <outline text="El País - Portada [invalid]" title="El País - Portada [invalid]" type="rss" xmlUrl="https://www.elpais.com.uy/rss" htmlUrl="https://www.elpais.com.uy"/>
       <outline text="El País - Economía [invalid]" title="El País - Economía [invalid]" type="rss" xmlUrl="https://www.elpais.com.uy/rss/economia-y-mercado" htmlUrl="https://www.elpais.com.uy"/>
-      <outline text="Montevideo Portal - Negocios [valid]" title="Montevideo Portal - Negocios [valid]" type="rss" xmlUrl="https://www.montevideo.com.uy/anxml.aspx?728" htmlUrl="https://www.montevideo.com.uy"/>
+      <outline text="Montevideo Portal - Negocios [invalid (ERR)]" title="Montevideo Portal - Negocios [invalid (ERR)]" type="rss" xmlUrl="https://www.montevideo.com.uy/anxml.aspx?728" htmlUrl="https://www.montevideo.com.uy"/>
       <outline text="La Diaria - Política [needs verification]" title="La Diaria - Política [needs verification]" type="rss" xmlUrl="https://ladiaria.com.uy/feeds/section/politica/" htmlUrl="https://ladiaria.com.uy"/>
       <outline text="La Diaria - Economía [needs verification]" title="La Diaria - Economía [needs verification]" type="rss" xmlUrl="https://ladiaria.com.uy/feeds/section/economia/" htmlUrl="https://ladiaria.com.uy"/>
       <outline text="Subrayado - Home [valid]" title="Subrayado - Home [valid]" type="rss" xmlUrl="https://www.subrayado.com.uy/rss/pages/home.xml" htmlUrl="https://www.subrayado.com.uy"/>
