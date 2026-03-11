@@ -13,6 +13,7 @@ permissions:
 
 jobs:
   health:
+    if: github.event_name == 'workflow_dispatch' || vars.WPM_DB_JOBS_ENABLED == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

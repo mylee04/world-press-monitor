@@ -16,7 +16,7 @@ permissions:
 jobs:
   discord:
     name: Discord Hourly Report
-    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion != 'cancelled'
+    if: github.event_name == 'workflow_dispatch' || (vars.WPM_DB_JOBS_ENABLED == 'true' && github.event.workflow_run.conclusion != 'cancelled')
     concurrency:
       group: wpm-hourly-discord
       cancel-in-progress: true
