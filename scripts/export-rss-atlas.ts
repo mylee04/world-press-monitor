@@ -5,9 +5,9 @@ const README_PATH = resolve(process.cwd(), 'README.md');
 const OUTPUT_PATH = resolve(process.cwd(), 'data/rss-atlas.json');
 
 const SECTION_HEADER = /^###\s+(.+?)\s+\(([^)]+)\)$/;
-const TABLE_HEADER = /^\|No\.\|Outlet\|RSS URL\|HTTP Status\|Checked Date\|Valid\?\|$/;
-const TABLE_SEPARATOR = /^\|---\|---\|---\|---\|---\|---\|$/;
-const TABLE_ROW = /^(\d+)\|([^|]+)\|([^|]+)\|([^|]*)\|([^|]*)\|([^|]*)\|?$/;
+const TABLE_HEADER = /^\|No\.\|Outlet\|RSS URL\|HTTP Status\|Checked Date\|Valid\?\|Ingested 24h\|$/;
+const TABLE_SEPARATOR = /^\|---\|---\|---\|---\|---\|---\|---:?\|$/;
+const TABLE_ROW = /^(\d+)\|([^|]+)\|([^|]+)\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|?$/;
 const CHECKED_DATE_LINE = /^- Last checked:\s*(\d{2}\/\d{2}\/\d{4})/;
 
 type AtlasFeed = {

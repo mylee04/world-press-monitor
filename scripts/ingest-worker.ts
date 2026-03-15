@@ -4,7 +4,7 @@ import { isIP } from 'node:net';
 import { resolve } from 'node:path';
 import { parseRssOrAtomWithStats, parseSitemapWithStats } from '../lib/parsers';
 import { runWithConcurrency } from '../lib/concurrency';
-import { fetchWithRetry } from '../lib/fetch-utils';
+import { fetchWithRetry, readResponseText } from '../lib/fetch-utils';
 import { classifySection } from '../lib/keyword-classifier';
 import { inferGeoFromTitle } from '../lib/geo';
 import {
@@ -27,14 +27,22 @@ const FETCH_TIMEOUT_MS = Math.max(
   3000,
   Math.min(30000, Number.parseInt(process.env.INGEST_FETCH_TIMEOUT_MS || '12000', 10) || 12000)
 );
-const RSS_ITEM_LIMIT = Math.max(10, Math.min(1000, Number.parseInt(process.env.INGEST_RSS_LIMIT || '1000', 10) || 1000));
+const RSS_ITEM_LIMIT = Math.max(10, Math.min(5000, Number.parseInt(process.env.INGEST_RSS_LIMIT || '2000', 10) || 2000));
 const SITEMAP_ITEM_LIMIT = Math.max(
   10,
-  Math.min(1000, Number.parseInt(process.env.INGEST_SITEMAP_LIMIT || '1000', 10) || 1000)
+  Math.min(5000, Number.parseInt(process.env.INGEST_SITEMAP_LIMIT || '5000', 10) || 5000)
 );
 const SITEMAP_INDEX_CHILDREN_LIMIT = Math.max(
   1,
-  Math.min(48, Number.parseInt(process.env.INGEST_SITEMAP_INDEX_CHILDREN || '24', 10) || 24)
+  Math.min(96, Number.parseInt(process.env.INGEST_SITEMAP_INDEX_CHILDREN || '48', 10) || 48)
+);
+const SITEMAP_INDEX_MAX_DEPTH = Math.max(
+  1,
+  Math.min(5, Number.parseInt(process.env.INGEST_SITEMAP_INDEX_MAX_DEPTH || '4', 10) || 4)
+);
+const SITEMAP_CANDIDATE_LIMIT = Math.max(
+  4,
+  Math.min(24, Number.parseInt(process.env.INGEST_SITEMAP_CANDIDATE_LIMIT || '12', 10) || 12)
 );
 const FETCH_CONCURRENCY = Math.max(
   4,
@@ -534,6 +542,13 @@ type CountryFilter = {
   normalized: Set<string>;
 };
 
+type BackfillWindow = {
+  from: string;
+  to: string;
+  fromMs: number;
+  toExclusiveMs: number;
+};
+
 function parseCountryFilter(argv: string[], envValue: string | undefined): CountryFilter | null {
   const values: string[] = [];
 
@@ -586,6 +601,67 @@ function countryMatchesFilter(country: string | undefined, filter: CountryFilter
 
 const COUNTRY_FILTER = parseCountryFilter(process.argv.slice(2), process.env.INGEST_COUNTRIES);
 
+function parseDateOnlyUtc(raw: string | undefined): number | null {
+  if (!raw) return null;
+  const trimmed = raw.trim();
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) return null;
+  const parsed = new Date(`${trimmed}T00:00:00.000Z`).getTime();
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
+function parseBackfillWindow(argv: string[], envFrom: string | undefined, envTo: string | undefined): BackfillWindow | null {
+  let from = envFrom?.trim() || '';
+  let to = envTo?.trim() || '';
+
+  for (let i = 0; i < argv.length; i += 1) {
+    const token = argv[i];
+    if (token.startsWith('--backfill-from=')) {
+      from = token.slice('--backfill-from='.length).trim();
+      continue;
+    }
+    if (token === '--backfill-from') {
+      from = (argv[i + 1] || '').trim();
+      i += 1;
+      continue;
+    }
+    if (token.startsWith('--backfill-to=')) {
+      to = token.slice('--backfill-to='.length).trim();
+      continue;
+    }
+    if (token === '--backfill-to') {
+      to = (argv[i + 1] || '').trim();
+      i += 1;
+      continue;
+    }
+  }
+
+  if (!from || !to) return null;
+  const fromMs = parseDateOnlyUtc(from);
+  const toMs = parseDateOnlyUtc(to);
+  if (fromMs === null || toMs === null || toMs < fromMs) {
+    throw new Error(`Invalid backfill window: from=${from || '-'} to=${to || '-'}`);
+  }
+
+  return {
+    from,
+    to,
+    fromMs,
+    toExclusiveMs: toMs + ONE_DAY_MS,
+  };
+}
+
+const BACKFILL_WINDOW = parseBackfillWindow(
+  process.argv.slice(2),
+  process.env.INGEST_BACKFILL_FROM,
+  process.env.INGEST_BACKFILL_TO
+);
+const BACKFILL_IGNORE_WATERMARK = BACKFILL_WINDOW
+  ? parseBoolEnv(process.env.INGEST_BACKFILL_IGNORE_WATERMARK, true)
+  : false;
+const BACKFILL_IGNORE_BACKOFF = BACKFILL_WINDOW
+  ? parseBoolEnv(process.env.INGEST_BACKFILL_IGNORE_BACKOFF, true)
+  : false;
+
 function normalizeFeedHost(host: string): string {
   return host.trim().toLowerCase().replace(/\.+$/, '');
 }
@@ -631,6 +707,7 @@ function isDisallowedHostname(hostname: string): boolean {
 
 const dnsIpValidationCache = new Map<string, { disallowed: boolean; checkedAt: number }>();
 const DNS_IP_CACHE_TTL_MS = 5 * 60 * 1000;
+const robotsSitemapCache = new Map<string, string[]>();
 
 async function isHostResolvedToDisallowedIp(hostname: string): Promise<boolean> {
   const cached = dnsIpValidationCache.get(hostname);
@@ -729,75 +806,208 @@ function buildSitemapFallbackUrls(sourceUrl: string, sitemapUrl?: string): strin
     const basePath = parsed.pathname.endsWith('/') ? parsed.pathname : `${parsed.pathname.replace(/\/[^/]*$/, '')}/`;
     urls.push(`${root}${basePath}sitemap_news.xml`);
     urls.push(`${root}${basePath}sitemap-news.xml`);
+    urls.push(`${root}${basePath}news-sitemap.xml`);
+    urls.push(`${root}${basePath}news-sitemap-index.xml`);
+    urls.push(`${root}${basePath}sitemap_news_index.xml`);
     urls.push(`${root}${basePath}sitemap.xml`);
+    urls.push(`${root}${basePath}sitemaps.xml`);
     urls.push(`${root}${basePath}sitemap_index.xml`);
+    urls.push(`${root}${basePath}google-news-sitemap.xml`);
+    urls.push(`${root}${basePath}sitemaps/googlenews`);
+    urls.push(`${root}${basePath}googlenews.xml`);
+    urls.push(`${root}${basePath}sitemap_google_news.xml`);
+    urls.push(`${root}${basePath}news.xml`);
+    urls.push(`${root}${basePath}map_news.xml`);
     urls.push(`${root}/sitemap_news.xml`);
     urls.push(`${root}/sitemap-news.xml`);
+    urls.push(`${root}/news-sitemap.xml`);
+    urls.push(`${root}/news-sitemap-index.xml`);
+    urls.push(`${root}/sitemap_news_index.xml`);
     urls.push(`${root}/sitemap.xml`);
+    urls.push(`${root}/sitemaps.xml`);
     urls.push(`${root}/sitemap_index.xml`);
+    urls.push(`${root}/sitemaps/news.xml`);
+    urls.push(`${root}/sitemaps/googlenews`);
+    urls.push(`${root}/sitemaps/index.xml`);
+    urls.push(`${root}/google-news-sitemap.xml`);
+    urls.push(`${root}/googlenews.xml`);
+    urls.push(`${root}/sitemap_google_news.xml`);
+    urls.push(`${root}/news.xml`);
+    urls.push(`${root}/map_news.xml`);
+    urls.push(`${root}/sitemaps/files/articles-48hrs.xml`);
   } catch {
     return dedupeUrls(urls);
   }
   return dedupeUrls(urls);
 }
 
+async function extractSitemapUrlsFromRobots(sourceUrl: string): Promise<string[]> {
+  try {
+    const parsed = new URL(sourceUrl);
+    const cached = robotsSitemapCache.get(parsed.origin);
+    if (cached) {
+      return cached;
+    }
+    const response = await fetchWithRetryFeed(`${parsed.origin}/robots.txt`);
+    if (!response.ok) {
+      robotsSitemapCache.set(parsed.origin, []);
+      return [];
+    }
+    const body = await readResponseBody(response);
+    const urls = body.body
+      .split(/\r?\n/)
+      .map((line) => /^sitemap:\s*(.+)$/i.exec(line.trim())?.[1]?.trim() || '')
+      .filter(Boolean)
+      .flatMap((raw) => {
+        try {
+          return [new URL(raw, parsed.origin).toString()];
+        } catch {
+          return [];
+        }
+      });
+    const deduped = dedupeUrls(urls);
+    robotsSitemapCache.set(parsed.origin, deduped);
+    return deduped;
+  } catch {
+    return [];
+  }
+}
+
+function scoreSitemapCandidate(url: string): number {
+  const lower = url.toLowerCase();
+  const looksLikeNewsXml =
+    lower.includes('googlenews') ||
+    lower.includes('map_news') ||
+    /(?:^|[/?._-])news\.xml(?:$|[?#])/.test(lower);
+  if (!lower.includes('sitemap') && !looksLikeNewsXml) return 0;
+  let score = lower.includes('sitemap') ? 20 : 15;
+  if (lower.includes('news')) score += 100;
+  if (lower.includes('google-news')) score += 80;
+  if (lower.includes('google_news')) score += 80;
+  if (lower.includes('googlenews')) score += 80;
+  if (lower.includes('sitemap-news')) score += 60;
+  if (lower.includes('sitemap_news')) score += 60;
+  if (lower.includes('news-sitemap')) score += 60;
+  if (lower.includes('map_news')) score += 80;
+  if (/(?:^|[/?._-])news\.xml(?:$|[?#])/.test(lower)) score += 70;
+  if (lower.includes('48hrs')) score += 70;
+  if (lower.includes('48-hours')) score += 70;
+  if (lower.includes('article')) score += 20;
+  if (lower.includes('today')) score += 40;
+  if (lower.includes('breaking')) score += 30;
+  if (lower.includes('daily-news')) score += 40;
+  if (lower.includes('sitemap_index')) score += 20;
+  if (lower.includes('sitemapindex')) score += 10;
+  if (lower.includes('/sitemaps/')) score += 10;
+  if (lower.includes('tag') || lower.includes('author') || lower.includes('topic') || lower.includes('section')) score -= 15;
+  if (lower.includes('image') || lower.includes('photo') || lower.includes('video')) score -= 20;
+  return score;
+}
+
+function prioritizeSitemapCandidateUrls(urls: string[]): string[] {
+  return dedupeUrls(urls).sort((a, b) => scoreSitemapCandidate(b) - scoreSitemapCandidate(a));
+}
+
+async function buildSitemapCandidateUrls(outlet: OutletFeed): Promise<string[]> {
+  if (!outlet.rssUrl && !outlet.sitemapUrl) {
+    return [];
+  }
+  const candidates = buildSitemapFallbackUrls(
+    outlet.rssUrl || '',
+    outlet.hasExplicitSitemapUrl ? outlet.sitemapUrl : undefined
+  );
+  const robotsSourceUrl = outlet.rssUrl || outlet.sitemapUrl;
+  if (robotsSourceUrl) {
+    candidates.push(...await extractSitemapUrlsFromRobots(robotsSourceUrl));
+  }
+  const prioritized = prioritizeSitemapCandidateUrls(candidates).slice(0, SITEMAP_CANDIDATE_LIMIT);
+  if (outlet.hasExplicitSitemapUrl && outlet.sitemapUrl) {
+    return [outlet.sitemapUrl, ...prioritized.filter((candidate) => candidate !== outlet.sitemapUrl)];
+  }
+  return prioritized;
+}
+
+function mergeParsedSitemapResults(results: ParsedSitemapResult[]): ParsedSitemapResult | null {
+  const validResults = results.filter((result) => result.items.length > 0 || result.stats.totalCandidates > 0);
+  if (validResults.length === 0) return null;
+  return {
+    items: validResults.flatMap((result) => result.items).slice(0, SITEMAP_ITEM_LIMIT),
+    stats: validResults.reduce(
+      (acc, result) => {
+        acc.totalCandidates += result.stats.totalCandidates;
+        acc.validCount += result.stats.validCount;
+        acc.missingTitleCount += result.stats.missingTitleCount;
+        acc.missingSummaryCount += result.stats.missingSummaryCount;
+        acc.missingPublishedAtCount += result.stats.missingPublishedAtCount;
+        acc.missingLinkCount += result.stats.missingLinkCount;
+        return acc;
+      },
+      {
+        totalCandidates: 0,
+        validCount: 0,
+        missingTitleCount: 0,
+        missingSummaryCount: 0,
+        missingPublishedAtCount: 0,
+        missingLinkCount: 0,
+      }
+    ),
+  };
+}
+
+function parseSitemapOrFeedXml(xml: string): ParsedSitemapResult {
+  const sitemap = parseSitemapWithStats(xml, SITEMAP_ITEM_LIMIT);
+  if (sitemap.items.length > 0 || sitemap.stats.totalCandidates > 0) {
+    return sitemap;
+  }
+  return parseRssOrAtomWithStats(xml, RSS_ITEM_LIMIT);
+}
+
+async function parseSitemapXmlRecursively(
+  sitemapUrl: string,
+  xml: string,
+  depth = 0,
+  seen = new Set<string>()
+): Promise<ParsedSitemapResult | null> {
+  const parsed = parseSitemapOrFeedXml(xml);
+  if (parsed.items.length > 0) {
+    return parsed;
+  }
+  if (depth >= SITEMAP_INDEX_MAX_DEPTH) {
+    return parsed.stats.totalCandidates > 0 ? parsed : null;
+  }
+
+  const children = parseSitemapIndex(xml).filter((childUrl) => !seen.has(childUrl));
+  if (children.length === 0) {
+    return parsed.stats.totalCandidates > 0 ? parsed : null;
+  }
+
+  const nextSeen = new Set(seen);
+  nextSeen.add(sitemapUrl);
+  const childResults = await runWithConcurrency(children, Math.min(4, children.length), async (childUrl) => {
+    if (nextSeen.has(childUrl)) return null;
+    try {
+      nextSeen.add(childUrl);
+      const childResponse = await fetchWithRetryFeed(childUrl);
+      if (!childResponse.ok) return null;
+      const childXml = await childResponse.text();
+      return await parseSitemapXmlRecursively(childUrl, childXml, depth + 1, nextSeen);
+    } catch {
+      return null;
+    }
+  });
+
+  return mergeParsedSitemapResults(childResults.filter((result): result is ParsedSitemapResult => Boolean(result)));
+}
+
 async function fetchSitemapFallbackFromUrl(sitemapUrl: string): Promise<ParsedSitemapResult | null> {
   const response = await fetchWithRetryFeed(sitemapUrl);
   if (!response.ok) return null;
   const xml = await response.text();
-
-  let parsed = parseSitemapWithStats(xml, SITEMAP_ITEM_LIMIT);
-  if (parsed.items.length === 0) {
-    const children = parseSitemapIndex(xml);
-    if (children.length > 0) {
-      const childResults = await Promise.all(
-        children.map(async (childUrl) => {
-          try {
-            const childResponse = await fetchWithRetryFeed(childUrl);
-            if (!childResponse.ok) return null;
-            const childXml = await childResponse.text();
-            return parseSitemapWithStats(childXml, Math.max(8, Math.floor(SITEMAP_ITEM_LIMIT / children.length)));
-          } catch {
-            return null;
-          }
-        }),
-      );
-      const allChildParsed = childResults.filter(
-        (entry): entry is ParsedSitemapResult => Boolean(entry)
-      );
-      if (allChildParsed.length > 0) {
-        const childStats = allChildParsed.reduce(
-          (acc, batch) => {
-            acc.totalCandidates += batch.stats.totalCandidates;
-            acc.validCount += batch.stats.validCount;
-            acc.missingTitleCount += batch.stats.missingTitleCount;
-            acc.missingSummaryCount += batch.stats.missingSummaryCount;
-            acc.missingPublishedAtCount += batch.stats.missingPublishedAtCount;
-            acc.missingLinkCount += batch.stats.missingLinkCount;
-            return acc;
-          },
-          {
-            totalCandidates: 0,
-            validCount: 0,
-            missingTitleCount: 0,
-            missingSummaryCount: 0,
-            missingPublishedAtCount: 0,
-            missingLinkCount: 0,
-          },
-        );
-        parsed = {
-          items: allChildParsed.flatMap((batch) => batch.items).slice(0, SITEMAP_ITEM_LIMIT),
-          stats: childStats,
-        };
-      }
-    }
-  }
-
-  return parsed.items.length > 0 ? parsed : null;
+  return await parseSitemapXmlRecursively(sitemapUrl, xml);
 }
 
 async function trySitemapFallback(outlet: OutletFeed): Promise<ParsedSitemapResult | null> {
-  const candidates = buildSitemapFallbackUrls(outlet.rssUrl || '', outlet.sitemapUrl);
+  const candidates = await buildSitemapCandidateUrls(outlet);
   for (const candidate of candidates) {
     try {
       const parsed = await fetchSitemapFallbackFromUrl(candidate);
@@ -838,18 +1048,12 @@ type ReadResponseBodyResult = {
 };
 
 async function readResponseBody(response: Response): Promise<ReadResponseBodyResult> {
-  const buffer = await response.arrayBuffer();
-  const bodyLength = buffer.byteLength;
-  try {
-    const body = new TextDecoder('utf-8', { fatal: true }).decode(buffer);
-    return { body, bodyLength, decodeFailed: false };
-  } catch {
-    return {
-      body: new TextDecoder('utf-8').decode(buffer),
-      bodyLength,
-      decodeFailed: true,
-    };
-  }
+  const decoded = await readResponseText(response);
+  return {
+    body: decoded.text,
+    bodyLength: decoded.byteLength,
+    decodeFailed: decoded.decodeFailed,
+  };
 }
 
 function isLikelyHtmlResponse(response: Response, body: string): boolean {
@@ -1403,7 +1607,8 @@ async function fetchSitemap(
   onMissingPublishedAtCandidate?: MissingPublishedAtCollector
 ): Promise<EndpointResult> {
   const country = normalizeCountryName(outlet.country);
-  if (!outlet.sitemapUrl) {
+  const candidates = await buildSitemapCandidateUrls(outlet);
+  if (candidates.length === 0) {
     return {
       items: [],
       run: {
@@ -1429,9 +1634,53 @@ async function fetchSitemap(
     };
   }
 
+  let lastFailure: EndpointResult | null = null;
+  for (const candidate of candidates) {
+    const attempt = await fetchSitemapCandidate(outlet, candidate, fallbackPublishedAt, onMissingPublishedAtCandidate);
+    if (attempt.run.ok) {
+      return attempt;
+    }
+    lastFailure = attempt;
+  }
+
+  return (
+    lastFailure || {
+      items: [],
+      run: {
+        outletId: outlet.id,
+        source: outlet.name,
+        country,
+        method: 'sitemap',
+        attempted: false,
+        circuitOpen: false,
+        ok: false,
+        statusCode: null,
+        parsedCount: 0,
+        fetchedCount: 0,
+        parsedLimit: SITEMAP_ITEM_LIMIT,
+        sampleCapped: false,
+        recent24h: 0,
+        missingTitleCount: 0,
+        missingSummaryCount: 0,
+        missingPublishedAtCount: 0,
+        missingLinkCount: 0,
+        error: 'no_sitemap_candidates',
+      },
+      fallbackUsed: 'none',
+    }
+  );
+}
+
+async function fetchSitemapCandidate(
+  outlet: OutletFeed,
+  sitemapUrl: string,
+  fallbackPublishedAt: string,
+  onMissingPublishedAtCandidate?: MissingPublishedAtCollector
+): Promise<EndpointResult> {
+  const country = normalizeCountryName(outlet.country);
   try {
     const responseStartMs = Date.now();
-    const response = await fetchWithRetryFeed(outlet.sitemapUrl);
+    const response = await fetchWithRetryFeed(sitemapUrl);
     const responseMs = Date.now() - responseStartMs;
     const responseBody = await readResponseBody(response);
     const responseContentType = normalizeResponseContentType(response);
@@ -1457,8 +1706,8 @@ async function fetchSitemap(
           missingSummaryCount: 0,
           missingPublishedAtCount: 0,
           missingLinkCount: 0,
-          requestedUrl: outlet.sitemapUrl,
-          finalUrl: response.url || outlet.sitemapUrl,
+          requestedUrl: sitemapUrl,
+          finalUrl: response.url || sitemapUrl,
           contentType: responseContentType,
           responseMs,
           sniffedType,
@@ -1472,66 +1721,16 @@ async function fetchSitemap(
     }
 
     const xml = responseBody.body;
-    let parsed = parseSitemapWithStats(xml, SITEMAP_ITEM_LIMIT);
+    const parsed = await parseSitemapXmlRecursively(sitemapUrl, xml);
 
-    if (parsed.items.length === 0) {
-      const children = parseSitemapIndex(xml);
-      if (children.length > 0) {
-        const childResults = await Promise.all(
-          children.map(async (childUrl) => {
-            try {
-              const childResponse = await fetchWithRetryFeed(childUrl);
-              if (!childResponse.ok) return null;
-              const childBody = await readResponseBody(childResponse);
-              const childXml = childBody.body;
-              return parseSitemapWithStats(
-                childXml,
-                Math.max(8, Math.floor(SITEMAP_ITEM_LIMIT / children.length))
-              );
-            } catch {
-              return null;
-            }
-          })
-        );
-        const allChildParsed = childResults.filter(
-          (entry): entry is ReturnType<typeof parseSitemapWithStats> => Boolean(entry)
-        );
-        if (allChildParsed.length > 0) {
-          const childStats = allChildParsed.reduce(
-            (acc, batch) => {
-              acc.totalCandidates += batch.stats.totalCandidates;
-              acc.validCount += batch.stats.validCount;
-              acc.missingTitleCount += batch.stats.missingTitleCount;
-              acc.missingSummaryCount += batch.stats.missingSummaryCount;
-              acc.missingPublishedAtCount += batch.stats.missingPublishedAtCount;
-              acc.missingLinkCount += batch.stats.missingLinkCount;
-              return acc;
-            },
-            {
-              totalCandidates: 0,
-              validCount: 0,
-              missingTitleCount: 0,
-              missingSummaryCount: 0,
-              missingPublishedAtCount: 0,
-              missingLinkCount: 0,
-            }
-          );
-          parsed = {
-            items: allChildParsed.flatMap((batch) => batch.items).slice(0, SITEMAP_ITEM_LIMIT),
-            stats: childStats,
-          };
-        }
-      }
-    }
-
-    if (parsed.stats.validCount === 0) {
+    if (!parsed || parsed.stats.validCount === 0) {
       const parsedFailure = classifyParsedFeedFailure({
         response,
         body: xml,
         bodyLength: responseBody.bodyLength,
         decodeFailed: responseBody.decodeFailed,
-        totalCandidates: parsed.stats.totalCandidates,
-        validCount: parsed.stats.validCount,
+        totalCandidates: parsed?.stats.totalCandidates || 0,
+        validCount: parsed?.stats.validCount || 0,
       });
       return {
         items: [],
@@ -1545,16 +1744,16 @@ async function fetchSitemap(
           ok: false,
           statusCode: response.status,
           parsedCount: 0,
-          fetchedCount: parsed.stats.totalCandidates,
+          fetchedCount: parsed?.stats.totalCandidates || 0,
           parsedLimit: SITEMAP_ITEM_LIMIT,
           sampleCapped: false,
           recent24h: 0,
-          missingTitleCount: parsed.stats.missingTitleCount,
-          missingSummaryCount: parsed.stats.missingSummaryCount,
-          missingPublishedAtCount: parsed.stats.missingPublishedAtCount,
-          missingLinkCount: parsed.stats.missingLinkCount,
-          requestedUrl: outlet.sitemapUrl,
-          finalUrl: response.url || outlet.sitemapUrl,
+          missingTitleCount: parsed?.stats.missingTitleCount || 0,
+          missingSummaryCount: parsed?.stats.missingSummaryCount || 0,
+          missingPublishedAtCount: parsed?.stats.missingPublishedAtCount || 0,
+          missingLinkCount: parsed?.stats.missingLinkCount || 0,
+          requestedUrl: sitemapUrl,
+          finalUrl: response.url || sitemapUrl,
           contentType: responseContentType,
           responseMs,
           sniffedType,
@@ -1592,8 +1791,8 @@ async function fetchSitemap(
         missingSummaryCount: parsed.stats.missingSummaryCount,
         missingPublishedAtCount: parsed.stats.missingPublishedAtCount,
         missingLinkCount: parsed.stats.missingLinkCount,
-        requestedUrl: outlet.sitemapUrl,
-        finalUrl: response.url || outlet.sitemapUrl,
+        requestedUrl: sitemapUrl,
+        finalUrl: response.url || sitemapUrl,
         contentType: responseContentType,
         responseMs,
         sniffedType,
@@ -1624,18 +1823,18 @@ async function fetchSitemap(
         recent24h: 0,
         missingTitleCount: 0,
         missingSummaryCount: 0,
-          missingPublishedAtCount: 0,
-          missingLinkCount: 0,
-          requestedUrl: outlet.sitemapUrl,
-          finalUrl: outlet.sitemapUrl,
-          contentType: 'fetch_error',
-          responseMs: null,
-          sniffedType: 'fetch_failed',
-          parsedOk: false,
-          failureStage: inferFailureStage(normalizedFailure),
-          healthClassification: normalizedFailure,
-          error: normalizedFailure,
-        },
+        missingPublishedAtCount: 0,
+        missingLinkCount: 0,
+        requestedUrl: sitemapUrl,
+        finalUrl: sitemapUrl,
+        contentType: 'fetch_error',
+        responseMs: null,
+        sniffedType: 'fetch_failed',
+        parsedOk: false,
+        failureStage: inferFailureStage(normalizedFailure),
+        healthClassification: normalizedFailure,
+        error: normalizedFailure,
+      },
       fallbackUsed: 'none',
     };
   }
@@ -1685,6 +1884,26 @@ function filterItemsByWatermark(
     if (publishedAt === null) return true;
     return publishedAt > finalCutoff;
   });
+}
+
+function filterItemsByBackfillWindow(items: NewsItem[], window: BackfillWindow | null): NewsItem[] {
+  if (!window) return items;
+  return items.filter((item) => {
+    const publishedAt = parsePublishedAtMs(item.publishedAt);
+    if (publishedAt === null) return false;
+    return publishedAt >= window.fromMs && publishedAt < window.toExclusiveMs;
+  });
+}
+
+function filterItemsForPersistence(
+  items: NewsItem[],
+  lastPublicationAt: string | null,
+  nowMs: number
+): NewsItem[] {
+  const watermarkFiltered = BACKFILL_IGNORE_WATERMARK
+    ? items
+    : filterItemsByWatermark(items, lastPublicationAt, nowMs);
+  return filterItemsByBackfillWindow(watermarkFiltered, BACKFILL_WINDOW);
 }
 
 async function runOnce(): Promise<void> {
@@ -1743,7 +1962,9 @@ async function runOnce(): Promise<void> {
         limit: 5000,
       })
     : { rows: [] as EndpointBackoffRow[] };
-  const failingKeys = new Set(failingBackoff.rows.map((row) => `${row.outletId}:${row.method}`));
+  const failingKeys = BACKFILL_IGNORE_BACKOFF
+    ? new Set<string>()
+    : new Set(failingBackoff.rows.map((row) => `${row.outletId}:${row.method}`));
   const disableSitemapBackoff = SITEMAP_DISABLE_ENABLED
     ? await readFailingEndpointBackoff({
         runner: 'worker',
@@ -1753,7 +1974,7 @@ async function runOnce(): Promise<void> {
         limit: 5000,
       })
     : { rows: [] as EndpointBackoffRow[] };
-  const disabledSitemapOutletIds = SITEMAP_DISABLE_ENABLED
+  const disabledSitemapOutletIds = SITEMAP_DISABLE_ENABLED && !BACKFILL_IGNORE_BACKOFF
     ? new Set(
         disableSitemapBackoff.rows
           .filter((row) => row.method === 'rss')
@@ -1809,7 +2030,7 @@ async function runOnce(): Promise<void> {
       },
     });
     const lastPublicationAt = watermarks.get(endpointKey) || null;
-    return { ...result, items: filterItemsByWatermark(result.items, lastPublicationAt, nowMs) };
+    return { ...result, items: filterItemsForPersistence(result.items, lastPublicationAt, nowMs) };
   });
 
   const failedRssResultByOutlet = new Map<string, EndpointResult>();
@@ -1860,7 +2081,7 @@ async function runOnce(): Promise<void> {
     }
     const policyState = sitemapPolicyStatesByOutlet.get(endpoint.outlet.id);
     const disableSitemapFallbackForOutlet = disabledSitemapOutletIds.has(endpoint.outlet.id);
-    if (isSitemapPolicyBlocked(policyState, nowMs)) {
+    if (!BACKFILL_IGNORE_BACKOFF && isSitemapPolicyBlocked(policyState, nowMs)) {
       fallbackSummary.sitemapPolicyDisabled += 1;
       const reason = policyState?.reason || policyState?.status || 'disabled';
       return {
@@ -1921,7 +2142,7 @@ async function runOnce(): Promise<void> {
     if (!result.run.attempted) {
       return { ...result, items: [] };
     }
-    return { ...result, items: filterItemsByWatermark(result.items, lastPublicationAt, nowMs) };
+    return { ...result, items: filterItemsForPersistence(result.items, lastPublicationAt, nowMs) };
   });
 
   const results = [...rssResults, ...sitemapResults];
@@ -2075,10 +2296,13 @@ async function runOnce(): Promise<void> {
   };
 
   writeFileSync(SUMMARY_FILE, JSON.stringify(summary, null, 2), 'utf8');
-  writeState({ offset: nextOffset, updatedAt: summary.generatedAt });
+  if (!BACKFILL_WINDOW) {
+    writeState({ offset: nextOffset, updatedAt: summary.generatedAt });
+  }
   console.log(
     `[ingest-worker] outlets=${selected.length}/${countryFilteredOutlets.length}/${allOutlets.length} endpoints=${attempted} ok=${okEndpoints} failed=${failedEndpoints} ` +
     `country_filter=${COUNTRY_FILTER ? COUNTRY_FILTER.display.join('|') : 'ALL'} ` +
+    `backfill=${BACKFILL_WINDOW ? `${BACKFILL_WINDOW.from}..${BACKFILL_WINDOW.to}` : 'off'} ` +
     `explicit_sitemap_parallel=${ENABLE_EXPLICIT_SITEMAP_PARALLEL ? 'on' : 'off'} ` +
     `backoff_skipped_total=${failingKeys.size} backoff_skipped=[rss=${fallbackSummary.rssBackoffSkipped}, sitemap=${fallbackSummary.sitemapBackoffSkipped}] ` +
     `sitemap_policy_disabled=${fallbackSummary.sitemapPolicyDisabled} ` +

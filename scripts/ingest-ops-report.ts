@@ -13,7 +13,13 @@ import {
 type Mode = 'hourly' | 'daily' | 'weekly';
 
 const DEFAULT_LOG_PREFIX = '[ingest-ops]';
-const DISCORD_WEBHOOK_ENV_KEYS = ['WPM_HOURLY_DISCORD_WEBHOOK', 'INGEST_OPS_DISCORD_WEBHOOK', 'RSS_HEALTH_DISCORD_WEBHOOK', 'DISCORD_WEBHOOK_URL'];
+const DISCORD_WEBHOOK_ENV_KEYS = [
+  'WPM_HOURLY_DISCORD_WEBHOOK',
+  'INGEST_OPS_DISCORD_WEBHOOK',
+  'RSS_HEALTH_DISCORD_WEBHOOK_URL',
+  'RSS_HEALTH_DISCORD_WEBHOOK',
+  'DISCORD_WEBHOOK_URL'
+];
 const DISCORD_MAX_CHARS = 1900;
 
 type Aggregates = {
@@ -465,7 +471,7 @@ async function sendIngestOpsDiscordReport(params: {
     `OK: ${params.totals.successes}`,
     `Fail: ${totalFailures} (${percent(totalFailures, totalAttempts)}%)`,
     `Fetched: ${params.totals.fetched}`,
-    `Valid: ${params.totals.valid}`,
+    `Valid parsed items: ${params.totals.valid}`,
   ];
 
   if (params.filters.hours) {

@@ -552,6 +552,7 @@
         {
           "name": "South China Morning Post",
           "url": "https://www.scmp.com/rss/91/feed",
+          "sitemapUrl": "https://www.scmp.com/sitemap/articles.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/19/2026",
           "valid": "needs verification",
@@ -819,12 +820,12 @@
         },
         {
           "name": "Asahi Shimbun",
-          "url": "https://www.asahi.com/rss/asahi/newsheadlines.rdf",
-          "status": "ERR",
-          "checkedDate": "02/18/2026",
-          "valid": "invalid",
+          "sitemapUrl": "https://www.asahi.com/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
           "row": 3,
-          "enabled": false
+          "enabled": true
         },
         {
           "name": "The Japan Times",
@@ -1250,12 +1251,12 @@
         },
         {
           "name": "Yomiuri Latest",
-          "url": "https://assets.yomiuri.co.jp/rss/latestnews.rdf",
+          "sitemapUrl": "https://www.yomiuri.co.jp/sitemap-news-latest.xml",
           "status": null,
-          "checkedDate": null,
+          "checkedDate": "03/15/2026",
           "valid": "needs verification",
           "row": 55,
-          "enabled": false
+          "enabled": true
         },
         {
           "name": "Mainichi Flash",
@@ -1531,6 +1532,70 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 12
+        },
+        {
+          "name": "WELT - Latest",
+          "url": "https://www.welt.de/feeds/latest.rss"
+        },
+        {
+          "name": "WELT - Politik",
+          "url": "https://www.welt.de/feeds/section/politik.rss"
+        },
+        {
+          "name": "WELT - Wirtschaft",
+          "url": "https://www.welt.de/feeds/section/wirtschaft.rss"
+        },
+        {
+          "name": "WELT - Sport",
+          "url": "https://www.welt.de/feeds/section/sport.rss"
+        },
+        {
+          "name": "WELT - Regionales",
+          "url": "https://www.welt.de/feeds/section/regionales.rss"
+        },
+        {
+          "name": "WELT - Wissenschaft",
+          "url": "https://www.welt.de/feeds/section/wissenschaft.rss"
+        },
+        {
+          "name": "WELT - Vermischtes",
+          "url": "https://www.welt.de/feeds/section/vermischtes.rss"
+        },
+        {
+          "name": "WELT - News Sitemap",
+          "sitemapUrl": "https://www.welt.de/sitemaps/newssitemap/newssitemap.xml"
+        },
+        {
+          "name": "BILD - Alles",
+          "url": "https://www.bild.de/feed/alles.xml"
+        },
+        {
+          "name": "BILD - News",
+          "url": "https://www.bild.de/feed/news.xml"
+        },
+        {
+          "name": "BILD - Politik",
+          "url": "https://www.bild.de/feed/politik.xml"
+        },
+        {
+          "name": "BILD - Digital",
+          "url": "https://www.bild.de/feed/digital.xml"
+        },
+        {
+          "name": "BILD - Sport",
+          "url": "https://www.bild.de/feed/sport.xml"
+        },
+        {
+          "name": "BILD - Unterhaltung",
+          "url": "https://www.bild.de/feed/unterhaltung.xml"
+        },
+        {
+          "name": "BILD - Regional Chemnitz",
+          "url": "https://www.bild.de/feed/regional-chemnitz.xml"
+        },
+        {
+          "name": "BILD - News Sitemap",
+          "sitemapUrl": "https://www.bild.de/sitemap-news.xml"
         },
         {
           "name": "Focus",
@@ -1812,6 +1877,42 @@
           "checkedDate": "02/23/2026",
           "valid": null,
           "row": 48
+        },
+        {
+          "name": "Der Spiegel - News Sitemap",
+          "sitemapUrl": "https://www.spiegel.de/sitemaps/news-de.xml"
+        },
+        {
+          "name": "Die Zeit - Sitemap Index",
+          "sitemapUrl": "https://www.zeit.de/gsitemaps/index.xml"
+        },
+        {
+          "name": "n-tv - News Sitemap",
+          "sitemapUrl": "https://www.n-tv.de/news.xml"
+        },
+        {
+          "name": "Handelsblatt - News Sitemap",
+          "sitemapUrl": "https://www.handelsblatt.com/sitemapExternal/news.xml"
+        },
+        {
+          "name": "Handelsblatt - Premium News Sitemap",
+          "sitemapUrl": "https://www.handelsblatt.com/sitemapExternal/premium-news.xml"
+        },
+        {
+          "name": "Handelsblatt - Agentur News Sitemap",
+          "sitemapUrl": "https://www.handelsblatt.com/sitemapExternal/agentur-news.xml"
+        },
+        {
+          "name": "Tagesspiegel - News Sitemap",
+          "sitemapUrl": "https://www.tagesspiegel.de/news.xml"
+        },
+        {
+          "name": "Merkur - News Sitemap",
+          "sitemapUrl": "https://www.merkur.de/news.xml"
+        },
+        {
+          "name": "Augsburger Allgemeine - News Sitemap",
+          "sitemapUrl": "https://www.augsburger-allgemeine.de/news.xml"
         }
       ]
     },
@@ -1822,6 +1923,7 @@
         {
           "name": "The Times of India (Top Stories)",
           "url": "https://timesofindia.indiatimes.com/rssfeedstopstories.cms",
+          "sitemapUrl": "https://timesofindia.indiatimes.com/sitemap/today",
           "status": null,
           "checkedDate": null,
           "valid": null,
@@ -1838,6 +1940,7 @@
         {
           "name": "India Today (India)",
           "url": "https://www.indiatoday.in/rss/1206578",
+          "sitemapUrl": "https://www.indiatoday.in/news-it-sitemap.xml",
           "status": null,
           "checkedDate": null,
           "valid": null,
@@ -1846,6 +1949,7 @@
         {
           "name": "The Indian Express",
           "url": "https://indianexpress.com/feed",
+          "sitemapUrl": "https://indianexpress.com/news-sitemap.xml",
           "status": null,
           "checkedDate": null,
           "valid": null,
@@ -1854,6 +1958,7 @@
         {
           "name": "The Hindu (National)",
           "url": "https://www.thehindu.com/news/national/?service=rss",
+          "sitemapUrl": "https://www.thehindu.com/sitemap/googlenews/all/all.xml",
           "status": null,
           "checkedDate": null,
           "valid": null,
@@ -2023,6 +2128,7 @@
         {
           "name": "ABP News",
           "url": "https://news.abplive.com/home/feed",
+          "sitemapUrl": "https://news.abplive.com/google-news-sitemap.xml",
           "status": null,
           "checkedDate": null,
           "valid": null,
@@ -2048,7 +2154,8 @@
           "status": "ERR",
           "checkedDate": "02/18/2026",
           "valid": "invalid",
-          "row": 1
+          "row": 1,
+          "sitemapUrl": "https://www.ft.com/sitemaps/news.xml"
         },
         {
           "name": "Financial Times - Energy",
@@ -2056,7 +2163,8 @@
           "status": "ERR",
           "checkedDate": "02/18/2026",
           "valid": "invalid",
-          "row": 2
+          "row": 2,
+          "sitemapUrl": "https://www.ft.com/sitemaps/news.xml"
         },
         {
           "name": "BBC News - Business",
@@ -2128,7 +2236,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 13
+          "row": 13,
+          "sitemapUrl": "https://www.independent.co.uk/sitemaps/googlenews"
         },
         {
           "name": "Financial Times UK",
@@ -2136,7 +2245,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 14
+          "row": 14,
+          "sitemapUrl": "https://www.ft.com/sitemaps/news.xml"
         },
         {
           "name": "The Telegraph UK",
@@ -2144,7 +2254,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 17
+          "row": 17,
+          "sitemapUrl": "https://www.telegraph.co.uk/custom/daily-news/sitemap.xml"
         },
         {
           "name": "Daily Mail",
@@ -2152,7 +2263,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 19
+          "row": 19,
+          "sitemapUrl": "https://www.dailymail.co.uk/google-news-sitemap.xml"
         },
         {
           "name": "Metro UK",
@@ -2160,7 +2272,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 21
+          "row": 21,
+          "sitemapUrl": "https://metro.co.uk/news-sitemap.xml"
         },
         {
           "name": "The Sun",
@@ -2168,8 +2281,11 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 22,
-          "enabled": false
+          "row": 22
+        },
+        {
+          "name": "The Sun - News Sitemap",
+          "sitemapUrl": "https://www.thesun.co.uk/news-sitemap.xml"
         },
         {
           "name": "The Guardian UK",
@@ -2193,7 +2309,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 25
+          "row": 25,
+          "sitemapUrl": "https://www.ft.com/sitemaps/news.xml"
         },
         {
           "name": "iNews",
@@ -2212,12 +2329,97 @@
           "row": 28
         },
         {
+          "name": "BBC News - UK",
+          "url": "https://feeds.bbci.co.uk/news/uk/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 30
+        },
+        {
+          "name": "BBC News - Politics",
+          "url": "https://feeds.bbci.co.uk/news/politics/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 31
+        },
+        {
+          "name": "BBC News - Technology",
+          "url": "https://feeds.bbci.co.uk/news/technology/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 32
+        },
+        {
+          "name": "The Guardian - Politics",
+          "url": "https://www.theguardian.com/politics/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 33
+        },
+        {
+          "name": "The Guardian - Technology",
+          "url": "https://www.theguardian.com/uk/technology/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 34
+        },
+        {
           "name": "The Evening Standard",
           "url": "https://www.standard.co.uk/rss",
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 29
+          "row": 29,
+          "sitemapUrl": "https://www.standard.co.uk/sitemaps/googlenews"
+        },
+        {
+          "name": "BBC News - Sitemap Index",
+          "sitemapUrl": "https://www.bbc.com/sitemaps/https-index-com-news.xml"
+        },
+        {
+          "name": "Mirror - News Sitemap",
+          "sitemapUrl": "https://www.mirror.co.uk/map_news.xml"
+        },
+        {
+          "name": "Daily Express - Google News Sitemap",
+          "sitemapUrl": "https://www.express.co.uk/googlenews.xml"
+        },
+        {
+          "name": "Daily Record - News Sitemap",
+          "sitemapUrl": "https://www.dailyrecord.co.uk/map_news.xml"
+        },
+        {
+          "name": "Manchester Evening News - News Sitemap",
+          "sitemapUrl": "https://www.manchestereveningnews.co.uk/map_news.xml"
+        },
+        {
+          "name": "Liverpool Echo - News Sitemap",
+          "sitemapUrl": "https://www.liverpoolecho.co.uk/map_news.xml"
+        },
+        {
+          "name": "Birmingham Live - News Sitemap",
+          "sitemapUrl": "https://www.birminghammail.co.uk/map_news.xml"
+        },
+        {
+          "name": "WalesOnline - News Sitemap",
+          "sitemapUrl": "https://www.walesonline.co.uk/map_news.xml"
+        },
+        {
+          "name": "MyLondon - News Sitemap",
+          "sitemapUrl": "https://www.mylondon.news/map_news.xml"
+        },
+        {
+          "name": "ExaminerLive - News Sitemap",
+          "sitemapUrl": "https://www.examinerlive.co.uk/map_news.xml"
+        },
+        {
+          "name": "ChronicleLive - News Sitemap",
+          "sitemapUrl": "https://www.chroniclelive.co.uk/map_news.xml"
         }
       ]
     },
@@ -2355,8 +2557,7 @@
           "status": null,
           "checkedDate": null,
           "valid": null,
-          "row": 19,
-          "enabled": false
+          "row": 19
         },
         {
           "name": "FrenchDailyNews",
@@ -2388,8 +2589,7 @@
           "status": null,
           "checkedDate": null,
           "valid": null,
-          "row": 23,
-          "enabled": false
+          "row": 23
         },
         {
           "name": "Le Monde (EN – Europe)",
@@ -2397,8 +2597,7 @@
           "status": null,
           "checkedDate": null,
           "valid": null,
-          "row": 24,
-          "enabled": false
+          "row": 24
         },
         {
           "name": "Le Monde (EN – United States)",
@@ -2406,8 +2605,7 @@
           "status": null,
           "checkedDate": null,
           "valid": null,
-          "row": 25,
-          "enabled": false
+          "row": 25
         },
         {
           "name": "Le Monde (EN – Economy)",
@@ -2415,8 +2613,7 @@
           "status": null,
           "checkedDate": null,
           "valid": null,
-          "row": 26,
-          "enabled": false
+          "row": 26
         },
         {
           "name": "Le Monde (EN – Culture)",
@@ -2424,8 +2621,7 @@
           "status": null,
           "checkedDate": null,
           "valid": null,
-          "row": 27,
-          "enabled": false
+          "row": 27
         },
         {
           "name": "Le Monde (EN – Sports)",
@@ -2433,8 +2629,7 @@
           "status": null,
           "checkedDate": null,
           "valid": null,
-          "row": 28,
-          "enabled": false
+          "row": 28
         },
         {
           "name": "Le Monde (EN – Environment)",
@@ -2478,6 +2673,42 @@
         {
           "name": "Le Figaro (Economy)",
           "url": "https://www.lefigaro.fr/rss/figaro_economie.xml"
+        },
+        {
+          "name": "Le Figaro - News Sitemap",
+          "sitemapUrl": "https://www.lefigaro.fr/sitemap_news.xml"
+        },
+        {
+          "name": "Le Figaro (Flash Actu)",
+          "url": "https://www.lefigaro.fr/rss/figaro_flash-actu.xml"
+        },
+        {
+          "name": "Le Figaro (France)",
+          "url": "https://www.lefigaro.fr/rss/figaro_actualite-france.xml"
+        },
+        {
+          "name": "Le Figaro (International)",
+          "url": "https://www.lefigaro.fr/rss/figaro_international.xml"
+        },
+        {
+          "name": "Le Figaro (Politics)",
+          "url": "https://www.lefigaro.fr/rss/figaro_politique.xml"
+        },
+        {
+          "name": "Le Figaro (Flash Eco)",
+          "url": "https://www.lefigaro.fr/rss/figaro_flash-eco.xml"
+        },
+        {
+          "name": "Le Figaro (Society)",
+          "url": "https://www.lefigaro.fr/rss/figaro_societes.xml"
+        },
+        {
+          "name": "Le Figaro (Sport)",
+          "url": "https://www.lefigaro.fr/rss/figaro_sport.xml"
+        },
+        {
+          "name": "Le Figaro (Science)",
+          "url": "https://www.lefigaro.fr/rss/figaro_sciences.xml"
         },
         {
           "name": "La Tribune (Economy)",
@@ -2620,6 +2851,42 @@
         {
           "name": "Disclose",
           "url": "https://disclose.ngo/feed/"
+        },
+        {
+          "name": "Le Monde - News Sitemap",
+          "sitemapUrl": "https://www.lemonde.fr/sitemap_news.xml"
+        },
+        {
+          "name": "Libération - News Sitemap",
+          "sitemapUrl": "https://www.liberation.fr/arc/outboundfeeds/sitemap_news.xml?outputType=xml"
+        },
+        {
+          "name": "Le Point - News Sitemap",
+          "sitemapUrl": "https://www.lepoint.fr/arc/outboundfeeds/sitemap-news.xml"
+        },
+        {
+          "name": "BFM TV - News Sitemap",
+          "sitemapUrl": "https://www.bfmtv.com/sitemap_news.xml"
+        },
+        {
+          "name": "France Info - News Sitemap",
+          "sitemapUrl": "https://www.franceinfo.fr/sitemap_news.xml"
+        },
+        {
+          "name": "TF1 Info - News Sitemap",
+          "sitemapUrl": "https://www.tf1info.fr/sitemap-n.xml"
+        },
+        {
+          "name": "20 Minutes - News Sitemap",
+          "sitemapUrl": "https://www.20minutes.fr/sitemap-news.xml"
+        },
+        {
+          "name": "CNEWS - Google News Sitemap",
+          "sitemapUrl": "https://www.cnews.fr/googlenews.xml"
+        },
+        {
+          "name": "Le Télégramme - News Sitemap",
+          "sitemapUrl": "https://www.letelegramme.fr/sitemaps/sitemap-news.xml"
         }
       ]
     },
@@ -2868,6 +3135,62 @@
           "checkedDate": null,
           "valid": null,
           "row": 30
+        },
+        {
+          "name": "la Repubblica - News Sitemap",
+          "sitemapUrl": "https://www.repubblica.it/sitemap-n.xml"
+        },
+        {
+          "name": "La Stampa - News Sitemap",
+          "sitemapUrl": "https://www.lastampa.it/sitemap-n.xml"
+        },
+        {
+          "name": "Il Messaggero - News Sitemap",
+          "sitemapUrl": "https://www.ilmessaggero.it/?sez=XML&p=MapNews"
+        },
+        {
+          "name": "Il Sole 24 Ore - News Sitemap",
+          "sitemapUrl": "https://www.ilsole24ore.com/sitemap/sitemap-news.xml"
+        },
+        {
+          "name": "ANSA - Sitemap Index",
+          "sitemapUrl": "https://www.ansa.it/sito/sitemaps/sito_sitemap_index.xml"
+        },
+        {
+          "name": "Corriere della Sera - Interni Sitemap",
+          "sitemapUrl": "https://www.corriere.it/dynamic-sitemap/sitemap-last-100/Interni.xml"
+        },
+        {
+          "name": "Corriere della Sera - Esteri Sitemap",
+          "sitemapUrl": "https://www.corriere.it/dynamic-sitemap/sitemap-last-100/Esteri.xml"
+        },
+        {
+          "name": "Corriere della Sera - Politica Sitemap",
+          "sitemapUrl": "https://www.corriere.it/dynamic-sitemap/sitemap-last-100/Politica.xml"
+        },
+        {
+          "name": "Corriere della Sera - Economia Sitemap",
+          "sitemapUrl": "https://www.corriere.it/dynamic-sitemap/sitemap-last-100/Economia.xml"
+        },
+        {
+          "name": "RaiNews - Sitemap Index",
+          "sitemapUrl": "https://www.rainews.it/sitemap.xml"
+        },
+        {
+          "name": "TgCom24 - News Sitemap",
+          "sitemapUrl": "https://www.tgcom24.mediaset.it/sitemap/sitemap_news.xml"
+        },
+        {
+          "name": "Adnkronos - Sitemap Index",
+          "sitemapUrl": "https://www.adnkronos.com/sitemap.xml"
+        },
+        {
+          "name": "AGI - News Sitemap",
+          "sitemapUrl": "https://www.agi.it/sitemap_news.xml"
+        },
+        {
+          "name": "Quotidiano.net - Day Sitemap",
+          "sitemapUrl": "https://www.quotidiano.net/feedservice/sitemap/generic/qn/2026/day/sitemap.xml"
         }
       ]
     },
@@ -3351,6 +3674,7 @@
         {
           "name": "Yonhap (EN)",
           "url": "https://en.yna.co.kr/RSS/news.xml",
+          "sitemapUrl": "https://www.yna.co.kr/news-sitemap6.xml",
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
@@ -3433,6 +3757,7 @@
         {
           "name": "한국경제 - 전체뉴스",
           "url": "https://www.hankyung.com/feed/all-news",
+          "sitemapUrl": "https://www.hankyung.com/sitemap/latest-article.xml",
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
@@ -3497,6 +3822,7 @@
         {
           "name": "매일경제 - 뉴스 전체뉴스",
           "url": "https://www.mk.co.kr/rss/40300001/",
+          "sitemapUrl": "https://www.mk.co.kr/sitemap/latest-articles/",
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
@@ -3633,6 +3959,7 @@
         {
           "name": "경향신문 - 전체",
           "url": "https://www.khan.co.kr/rss/rssdata/total_news.xml",
+          "sitemapUrl": "https://www.khan.co.kr/sitemap/latest-articles.xml",
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
@@ -3650,6 +3977,7 @@
         {
           "name": "조선닷컴 (전체)",
           "url": "https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
+          "sitemapUrl": "https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml",
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
@@ -4425,6 +4753,42 @@
           "checkedDate": "02/23/2026",
           "valid": null,
           "row": 51
+        },
+        {
+          "name": "RTVE - News Sitemap",
+          "sitemapUrl": "https://www.rtve.es/sitemaps/sitemaps-news.xml"
+        },
+        {
+          "name": "El País - News Sitemap",
+          "sitemapUrl": "https://elpais.com/sitemaps/news.xml"
+        },
+        {
+          "name": "La Vanguardia - News Sitemap",
+          "sitemapUrl": "https://www.lavanguardia.com/sitemap-news.xml"
+        },
+        {
+          "name": "El Español - Google News Sitemap",
+          "sitemapUrl": "https://www.elespanol.com/sitemap_google_news.xml"
+        },
+        {
+          "name": "ABC.es - Sitemap",
+          "sitemapUrl": "https://www.abc.es/sitemap.xml"
+        },
+        {
+          "name": "OKdiario - Google News Sitemap",
+          "sitemapUrl": "https://okdiario.com/sitemaps/okd-sitemap-google-news.xml"
+        },
+        {
+          "name": "El Correo - Incremental Sitemap",
+          "sitemapUrl": "https://www.elcorreo.com/sitemap.incremental.xml"
+        },
+        {
+          "name": "El Periódico - News Sitemap",
+          "sitemapUrl": "https://www.elperiodico.com/es/sitemapNews.xml"
+        },
+        {
+          "name": "eldiario.es - Google News Sitemap",
+          "sitemapUrl": "https://www.eldiario.es/sitemap_google_news_25b87.xml"
         }
       ]
     },
@@ -5476,7 +5840,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 54
+          "row": 54,
+          "sitemapUrl": "https://www.rtl.nl/sitemap-news.xml"
         },
         {
           "name": "Nu.nl",
@@ -5501,7 +5866,8 @@
         },
         {
           "name": "RTL Nieuws (General Breaking)",
-          "url": "https://www.rtlnieuws.nl/rss.xml"
+          "url": "https://www.rtlnieuws.nl/rss.xml",
+          "sitemapUrl": "https://www.rtl.nl/sitemap-news.xml"
         },
         {
           "name": "FOK! (News/Community)",
@@ -5522,6 +5888,22 @@
           "name": "AG Connect (IT/Industry Trends)",
           "url": "https://www.agconnect.nl/rss",
           "enabled": false
+        },
+        {
+          "name": "NU.nl - News Sitemap",
+          "sitemapUrl": "https://www.nu.nl/sitemap_news.xml"
+        },
+        {
+          "name": "NOS - News Sitemap",
+          "sitemapUrl": "https://nos.nl/sitemap/news.xml"
+        },
+        {
+          "name": "AD - News Sitemap",
+          "sitemapUrl": "https://www.ad.nl/sitemap-news.xml"
+        },
+        {
+          "name": "NRC - Sitemap Index",
+          "sitemapUrl": "https://www.nrc.nl/sitemap/index.xml"
         }
       ]
     },
@@ -5539,7 +5921,7 @@
         },
         {
           "name": "NZZ",
-          "url": "https://www.nzz.ch/reisen.rss",
+          "url": "https://www.nzz.ch/startseite.rss",
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
@@ -5551,7 +5933,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 28
+          "row": 28,
+          "enabled": false
         },
         {
           "name": "SRF News (Latest)",
@@ -5739,6 +6122,11 @@
           "row": 26
         },
         {
+          "name": "Tages-Anzeiger",
+          "url": "https://partner-feeds.publishing.tamedia.ch/rss/tagesanzeiger/",
+          "sitemapUrl": "https://www.tagesanzeiger.ch/sitemaps/news.xml"
+        },
+        {
           "name": "Swissinfo (Business - EN)",
           "url": "https://www.swissinfo.ch/eng/business/feed",
           "status": null,
@@ -5850,9 +6238,181 @@
           "enabled": false
         },
         {
+          "name": "Nau.ch - News Sitemap",
+          "sitemapUrl": "https://www.nau.ch/sitemap"
+        },
+        {
+          "name": "Blue News (German)",
+          "url": "https://www.bluewin.ch/de/feed.xml"
+        },
+        {
+          "name": "Blue News (French)",
+          "url": "https://www.bluewin.ch/fr/feed.xml"
+        },
+        {
+          "name": "Blue News (Italian)",
+          "url": "https://www.bluewin.ch/it/feed.xml"
+        },
+        {
+          "name": "Blue News (English)",
+          "url": "https://www.bluewin.ch/en/feed.xml"
+        },
+        {
+          "name": "20 Minuten - Articles Sitemap (German)",
+          "sitemapUrl": "https://www.20min.ch/sitemaps/de/articles.xml"
+        },
+        {
+          "name": "20 Minutes - Articles Sitemap (French)",
+          "sitemapUrl": "https://www.20min.ch/sitemaps/fr/articles.xml"
+        },
+        {
+          "name": "Le Matin - Articles Sitemap",
+          "sitemapUrl": "https://www.lematin.ch/sitemaps/fr/articles.xml"
+        },
+        {
+          "name": "RSI - Sitemap",
+          "sitemapUrl": "https://sitemap.lrc.swisstxt.ch/sitemap.xml"
+        },
+        {
+          "name": "Corriere del Ticino - Sitemap",
+          "sitemapUrl": "https://naxos-cdn01.gruppocdt.ch/cdt/sitemaps/sitemap.xml"
+        },
+        {
+          "name": "Ticinonline - Sitemap",
+          "sitemapUrl": "https://www.tio.ch/sitemap.xml"
+        },
+        {
+          "name": "laRegione - News Sitemap",
+          "sitemapUrl": "https://www.laregione.ch/news-sitemap.xml"
+        },
+        {
+          "name": "zentralplus - News Sitemap",
+          "sitemapUrl": "https://www.zentralplus.ch/news-sitemap.xml"
+        },
+        {
+          "name": "Bote der Urschweiz - Articles Sitemap",
+          "sitemapUrl": "https://www.bote.ch/portal-artikel.sitemap.xml"
+        },
+        {
+          "name": "Cash.ch - Articles Sitemap",
+          "sitemapUrl": "https://www.cash.ch/sitemap-articles-time-limited-index.xml"
+        },
+        {
+          "name": "Handelszeitung - Articles Sitemap",
+          "sitemapUrl": "https://www.handelszeitung.ch/sitemap-articles-time-limited-index.xml"
+        },
+        {
+          "name": "Bilanz",
+          "url": "https://www.bilanz.ch/rss.xml"
+        },
+        {
+          "name": "Inside Paradeplatz",
+          "url": "https://insideparadeplatz.ch/feed/"
+        },
+        {
+          "name": "Moneycab",
+          "url": "https://www.moneycab.com/feed/"
+        },
+        {
+          "name": "persoenlich.com",
+          "url": "https://www.persoenlich.com/rss/news.xml"
+        },
+        {
+          "name": "LFM la radio",
+          "url": "https://www.lfm.ch/feed/"
+        },
+        {
+          "name": "Radio Lac",
+          "url": "https://www.radiolac.ch/feed/"
+        },
+        {
+          "name": "Frapp - French Articles Sitemap",
+          "sitemapUrl": "https://frapp.ch/sitemaps/fr/articles.xml"
+        },
+        {
+          "name": "TeleZuri - Sitemap",
+          "sitemapUrl": "https://www.telezueri.ch/sitemap.xml"
+        },
+        {
+          "name": "TeleBärn - Sitemap",
+          "sitemapUrl": "https://www.telebaern.tv/sitemap.xml"
+        },
+        {
+          "name": "TeleM1 - Sitemap",
+          "sitemapUrl": "https://www.telem1.ch/sitemap.xml"
+        },
+        {
+          "name": "Tele1 - Sitemap",
+          "sitemapUrl": "https://www.tele1.ch/sitemap.xml"
+        },
+        {
+          "name": "NZZ Sport",
+          "url": "https://www.nzz.ch/sport.rss"
+        },
+        {
+          "name": "NZZ Wissenschaft",
+          "url": "https://www.nzz.ch/wissenschaft.rss"
+        },
+        {
+          "name": "NZZ Feuilleton",
+          "url": "https://www.nzz.ch/feuilleton.rss"
+        },
+        {
+          "name": "Le Temps Articles",
+          "url": "https://www.letemps.ch/articles.rss"
+        },
+        {
+          "name": "Le Temps Monde",
+          "url": "https://www.letemps.ch/monde.rss"
+        },
+        {
+          "name": "Le Temps Société",
+          "url": "https://www.letemps.ch/societe.rss"
+        },
+        {
+          "name": "Le Temps Sport",
+          "url": "https://www.letemps.ch/sport.rss"
+        },
+        {
+          "name": "Le Temps Culture",
+          "url": "https://www.letemps.ch/culture.rss"
+        },
+        {
+          "name": "Le Temps Sciences",
+          "url": "https://www.letemps.ch/sciences.rss"
+        },
+        {
+          "name": "Le Temps Opinions",
+          "url": "https://www.letemps.ch/opinions.rss"
+        },
+        {
           "name": "Tribune de Geneve",
           "url": "https://www.tdg.ch/rss.xml",
           "enabled": false
+        },
+        {
+          "name": "SRF - News Sitemap",
+          "sitemapUrl": "https://www.srf.ch/new-news-sitemap"
+        },
+        {
+          "name": "Watson - Google News Sitemap",
+          "sitemapUrl": "https://www.watson.ch/api/2.0/feed/googlesitemap.xml"
+        },
+        {
+          "name": "24 heures - News Sitemap",
+          "sitemapUrl": "https://www.24heures.ch/sitemaps/news.xml"
+        },
+        {
+          "name": "Berner Zeitung - News Sitemap",
+          "sitemapUrl": "https://www.bernerzeitung.ch/sitemaps/news.xml"
+        },
+        {
+          "name": "Basler Zeitung - News Sitemap",
+          "sitemapUrl": "https://www.bazonline.ch/sitemaps/news.xml"
+        },
+        {
+          "name": "Tribune de Geneve - News Sitemap",
+          "sitemapUrl": "https://www.tdg.ch/sitemaps/news.xml"
         }
       ]
     },
@@ -6481,9 +7041,10 @@
         {
           "name": "CNA (Central News Agency)",
           "url": "https://feeds.feedburner.com/cnaFirstNews",
-          "status": "ERR",
-          "checkedDate": "02/18/2026",
-          "valid": "invalid",
+          "sitemapUrl": "https://www.cna.com.tw/GoogleNewsSitemap_fromRemote_cfp.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
           "row": 6
         },
         {
@@ -6585,6 +7146,7 @@
         {
           "name": "Liberty Times 即時",
           "url": "https://news.ltn.com.tw/rss/all.xml",
+          "sitemapUrl": "https://news.ltn.com.tw/sitemap.xml",
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
@@ -7040,6 +7602,10 @@
           "name": "Dziennik Gazeta Prawna (Business/Legal)",
           "url": "https://www.gazetaprawna.pl/rss.xml",
           "enabled": false
+        },
+        {
+          "name": "Rzeczpospolita - News Sitemap",
+          "sitemapUrl": "https://www.rp.pl/sitemaps/news-sitemap.xml"
         }
       ]
     },
@@ -7061,7 +7627,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 7
+          "row": 7,
+          "sitemapUrl": "https://www.di.se/sitemap-news.xml"
         },
         {
           "name": "SVT Nyheter",
@@ -7125,7 +7692,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 29
+          "row": 29,
+          "sitemapUrl": "https://www.aftonbladet.se/sitemap.xml"
         },
         {
           "name": "Aftonbladet - Sportbladet",
@@ -7173,7 +7741,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 35
+          "row": 35,
+          "sitemapUrl": "https://www.expressen.se/sitemap.xml"
         },
         {
           "name": "GT - Nyheter",
@@ -7189,7 +7758,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 37
+          "row": 37,
+          "sitemapUrl": "https://www.svd.se/sitemap.xml"
         },
         {
           "name": "The Local Sweden (EN)",
@@ -7229,7 +7799,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 42
+          "row": 42,
+          "sitemapUrl": "https://www.sverigesradio.se/newssitemap"
         },
         {
           "name": "Proletären",
@@ -7475,7 +8046,7 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 35,
-          "enabled": false
+          "sitemapUrl": "https://www.brusselstimes.com/google-news-sitemap.xml"
         },
         {
           "name": "City of Brussels (official)",
@@ -7484,6 +8055,26 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 36
+        },
+        {
+          "name": "Le Soir - News Sitemap",
+          "sitemapUrl": "https://www.lesoir.be/sites/default/files/sitemaps/plus_lesoir_be/sitemapnews-0.xml"
+        },
+        {
+          "name": "VRT News - News Sitemap",
+          "sitemapUrl": "https://www.vrt.be/vrtnws/nl.news-sitemap.xml"
+        },
+        {
+          "name": "Sudinfo - News Sitemap",
+          "sitemapUrl": "https://www.sudinfo.be/sites/default/files/sitemaps/sitemapnews-0.xml"
+        },
+        {
+          "name": "La Libre - News Sitemap",
+          "sitemapUrl": "https://www.lalibre.be/arc/outboundfeeds/sitemap-index/news/?outputType=xml"
+        },
+        {
+          "name": "DHnet - News Sitemap",
+          "sitemapUrl": "https://www.dhnet.be/arc/outboundfeeds/sitemap-index/news/?outputType=xml"
         }
       ]
     },
@@ -10243,8 +10834,7 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 2,
-          "enabled": false
+          "row": 2
         },
         {
           "name": "Die Presse",
@@ -10252,8 +10842,7 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 3,
-          "enabled": false
+          "row": 3
         },
         {
           "name": "Tiroler Tageszeitung",
@@ -10261,7 +10850,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/19/2026",
           "valid": "needs verification",
-          "row": 4
+          "row": 4,
+          "sitemapUrl": "https://www.tt.com/news-sitemap.xml"
         },
         {
           "name": "ORF Aktuell",
@@ -10278,7 +10868,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/19/2026",
           "valid": "needs verification",
-          "row": 6
+          "row": 6,
+          "sitemapUrl": "https://kurier.at/sitemaps_google_news.xml"
         },
         {
           "name": "Neue Donau",
@@ -10294,7 +10885,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 8
+          "row": 8,
+          "sitemapUrl": "https://www.derstandard.at/sitemaps/news.xml"
         },
         {
           "name": "Kleine Zeitung",
@@ -10302,7 +10894,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 9
+          "row": 9,
+          "sitemapUrl": "https://www.kleinezeitung.at/news-sitemap"
         },
         {
           "name": "Der Standard",
@@ -10475,8 +11068,11 @@
         },
         {
           "name": "Die Presse (Economy)",
-          "url": "https://www.diepresse.com/rss/Wirtschaft",
-          "enabled": false
+          "url": "https://www.diepresse.com/rss/Wirtschaft"
+        },
+        {
+          "name": "Die Presse - News Sitemap",
+          "sitemapUrl": "https://www.diepresse.com/news-sitemap"
         },
         {
           "name": "Kurier (Top Daily)",
@@ -10494,7 +11090,7 @@
         {
           "name": "Kronen Zeitung",
           "url": "https://www.krone.at/rss.xml",
-          "enabled": false
+          "sitemapUrl": "https://www.krone.at/google-news-sitemap.xml"
         },
         {
           "name": "Heute",
@@ -10504,17 +11100,21 @@
         {
           "name": "OE24",
           "url": "https://www.oe24.at/news/rss",
-          "enabled": false
+          "sitemapUrl": "https://www.oe24.at/sitemap-news.xml"
         },
         {
           "name": "OR Nachrichten",
           "url": "https://www.nachrichten.at/news/rss.xml",
-          "enabled": false
+          "sitemapUrl": "https://www.nachrichten.at/google-news.sitemap.xml"
         },
         {
           "name": "Vienna Online",
           "url": "https://www.vienna.at/news/feed",
-          "enabled": false
+          "sitemapUrl": "https://www.vienna.at/sitemap-news.xml"
+        },
+        {
+          "name": "Salzburger Nachrichten - News Sitemap",
+          "sitemapUrl": "https://www.sn.at/news-artikel.sitemap.xml"
         }
       ]
     },
@@ -10603,7 +11203,7 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 31,
-          "enabled": false
+          "sitemapUrl": "https://www.vg.no/sitemaps/files/articles-48hrs.xml"
         },
         {
           "name": "VG - Innenriks",
@@ -10668,7 +11268,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 39
+          "row": 39,
+          "sitemapUrl": "https://www.tv2.no/sitemap/news/sitemap.xml"
         },
         {
           "name": "TV2 - Innenriks",
@@ -10708,8 +11309,7 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 44,
-          "enabled": false
+          "row": 44
         },
         {
           "name": "Nettavisen - Nyheter",
@@ -10717,8 +11317,7 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 45,
-          "enabled": false
+          "row": 45
         },
         {
           "name": "Nettavisen - Sport",
@@ -10726,8 +11325,7 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 46,
-          "enabled": false
+          "row": 46
         },
         {
           "name": "Dagbladet",
@@ -10743,7 +11341,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 48
+          "row": 48,
+          "sitemapUrl": "https://www.aftenposten.no/sitemaps/files/articles-48hrs.xml"
         },
         {
           "name": "Dagsavisen",
@@ -10798,7 +11397,7 @@
         {
           "name": "Teknisk Ukeblad (Tech/Energy/Marine)",
           "url": "https://www.tu.no/feed",
-          "enabled": false
+          "sitemapUrl": "https://www.tu.no/sitemap.xml"
         },
         {
           "name": "E24 Energi (Energy/Marine Industry)",
@@ -10807,7 +11406,460 @@
         },
         {
           "name": "Adresseavisen",
-          "url": "https://www.adressa.no/rss/"
+          "url": "https://www.adressa.no/rss/",
+          "sitemapUrl": "https://www.adressa.no/sitemaps/adresseavisen-news-sitemap.xml"
+        }
+      ]
+    },
+    {
+      "name": "Ireland",
+      "code": "IE",
+      "feeds": [
+        {
+          "name": "RTÉ News",
+          "url": "https://www.rte.ie/feeds/rss/?index=/news/"
+        },
+        {
+          "name": "TheJournal.ie",
+          "url": "https://www.thejournal.ie/feed/",
+          "sitemapUrl": "https://www.thejournal.ie/sitemaps/sitemap.xml"
+        },
+        {
+          "name": "Independent.ie",
+          "url": "https://www.independent.ie/rss/section/ada62966-6b00-4ead-a0ba-2c179a0730b0",
+          "sitemapUrl": "https://www.independent.ie/sitemap/sitemap_googlenews.xml"
+        },
+        {
+          "name": "Irish Times",
+          "url": "https://www.irishtimes.com/arc/outboundfeeds/rss/",
+          "sitemapUrl": "https://www.irishtimes.com/arc/outboundfeeds/sitemap-news-index/"
+        },
+        {
+          "name": "Irish Examiner",
+          "sitemapUrl": "https://www.irishexaminer.com/sitemap-index/41-google_news.xml"
+        }
+      ]
+    },
+    {
+      "name": "Portugal",
+      "code": "PT",
+      "feeds": [
+        {
+          "name": "Observador",
+          "url": "https://observador.pt/feed/",
+          "sitemapUrl": "https://observador.pt/wp-sitemap.xml"
+        },
+        {
+          "name": "ECO",
+          "url": "https://eco.sapo.pt/feed/",
+          "sitemapUrl": "https://eco.sapo.pt/sitemap-news.xml"
+        },
+        {
+          "name": "Público",
+          "sitemapUrl": "https://www.publico.pt/sitemaps/news.xml"
+        },
+        {
+          "name": "Diário de Notícias",
+          "sitemapUrl": "https://www.dn.pt/news_sitemap.xml"
+        },
+        {
+          "name": "SIC Notícias",
+          "sitemapUrl": "https://sicnoticias.pt/sitemap/news.xml"
+        },
+        {
+          "name": "Expresso",
+          "sitemapUrl": "https://expresso.pt/sitemap/news.xml"
+        },
+        {
+          "name": "RTP Notícias",
+          "sitemapUrl": "http://www.rtp.pt/noticias/sitemap"
+        }
+      ]
+    },
+    {
+      "name": "Denmark",
+      "code": "DK",
+      "feeds": [
+        {
+          "name": "DR Nyheder",
+          "url": "https://www.dr.dk/nyheder/service/feeds/allenyheder"
+        },
+        {
+          "name": "Politiken",
+          "url": "https://politiken.dk/rss/senestenyt.rss"
+        },
+        {
+          "name": "Ekstra Bladet",
+          "url": "https://ekstrabladet.dk/rssfeed/nyheder/",
+          "sitemapUrl": "https://ekstrabladet.dk/svc/sitemap/"
+        },
+        {
+          "name": "Berlingske",
+          "sitemapUrl": "https://www.berlingske.dk/news-sitemap.xml"
+        },
+        {
+          "name": "BT",
+          "sitemapUrl": "https://www.bt.dk/news-sitemap.xml"
+        },
+        {
+          "name": "Jyllands-Posten",
+          "sitemapUrl": "https://jyllands-posten.dk/sitemapindex.xml"
+        }
+      ]
+    },
+    {
+      "name": "Finland",
+      "code": "FI",
+      "feeds": [
+        {
+          "name": "Yle Uutiset",
+          "url": "https://feeds.yle.fi/uutiset/v1/majorHeadlines/YLE_UUTISET.rss?publisherIds=YLE_UUTISET"
+        },
+        {
+          "name": "Helsingin Sanomat",
+          "url": "https://www.hs.fi/rss/tuoreimmat.xml",
+          "sitemapUrl": "https://www.hs.fi/rss/custom/news-sitemap.xml"
+        },
+        {
+          "name": "Ilta-Sanomat",
+          "url": "https://www.is.fi/rss/tuoreimmat.xml",
+          "sitemapUrl": "https://www.is.fi/rss/custom/news-sitemap.xml"
+        },
+        {
+          "name": "Iltalehti",
+          "url": "https://www.iltalehti.fi/rss.xml"
+        },
+        {
+          "name": "MTV Uutiset",
+          "sitemapUrl": "https://www.mtvuutiset.fi/newssitemap"
+        },
+        {
+          "name": "Kauppalehti",
+          "sitemapUrl": "https://www.kauppalehti.fi/sitemaps/sitemap_latest.xml.gz"
+        }
+      ]
+    },
+    {
+      "name": "Czech Republic",
+      "code": "CZ",
+      "feeds": [
+        {
+          "name": "ČT24",
+          "url": "https://ct24.ceskatelevize.cz/rss/tema/vyber-redakce-84313",
+          "sitemapUrl": "https://ct24.ceskatelevize.cz/sitemaps/sitemap_news.xml"
+        },
+        {
+          "name": "Aktuálně.cz",
+          "url": "https://zpravy.aktualne.cz/rss/",
+          "sitemapUrl": "https://www.aktualne.cz/sitemapnews/"
+        },
+        {
+          "name": "Novinky.cz",
+          "url": "https://www.novinky.cz/rss",
+          "sitemapUrl": "https://www.novinky.cz/sitemaps/sitemap_news.xml"
+        },
+        {
+          "name": "Seznam Zprávy",
+          "url": "https://www.seznamzpravy.cz/rss",
+          "sitemapUrl": "https://www.seznamzpravy.cz/sitemaps/sitemap_news.xml"
+        },
+        {
+          "name": "Deník",
+          "url": "https://www.denik.cz/rss/zpravy.html",
+          "sitemapUrl": "https://www.denik.cz/sitemap.xml"
+        },
+        {
+          "name": "iDNES.cz",
+          "sitemapUrl": "https://www.idnes.cz/sitemap.xml"
+        }
+      ]
+    },
+    {
+      "name": "Greece",
+      "code": "GR",
+      "feeds": [
+        {
+          "name": "eKathimerini",
+          "url": "https://www.ekathimerini.com/infeeds/rss/nx-rss-feed.xml",
+          "sitemapUrl": "https://www.ekathimerini.com/infeeds/googlenews/nx-googlenews-feed.xml"
+        },
+        {
+          "name": "Kathimerini",
+          "url": "https://www.kathimerini.gr/infeeds/rss/nx-rss-feed.xml",
+          "sitemapUrl": "https://www.kathimerini.gr/infeeds/googlenews/nx-googlenews-feed.xml"
+        },
+        {
+          "name": "Naftemporiki",
+          "url": "https://www.naftemporiki.gr/feed/",
+          "sitemapUrl": "https://www.naftemporiki.gr/sitemap_index.xml"
+        },
+        {
+          "name": "Proto Thema",
+          "url": "https://www.protothema.gr/rss/",
+          "sitemapUrl": "https://www.protothema.gr/sitemap/NewsArticles/sitemap_index.xml"
+        },
+        {
+          "name": "In.gr",
+          "url": "https://www.in.gr/feed/",
+          "sitemapUrl": "https://www.in.gr/wp-content/uploads/json/sitemap-news.xml"
+        }
+      ]
+    },
+    {
+      "name": "Romania",
+      "code": "RO",
+      "feeds": [
+        {
+          "name": "Digi24",
+          "url": "https://www.digi24.ro/rss",
+          "sitemapUrl": "https://www.digi24.ro/rss_files/google_news.xml"
+        },
+        {
+          "name": "HotNews",
+          "url": "https://hotnews.ro/feed",
+          "sitemapUrl": "https://hotnews.ro/sitemap-news.xml"
+        },
+        {
+          "name": "Adevărul",
+          "url": "https://adevarul.ro/rss/index",
+          "sitemapUrl": "https://adevarul.ro/_r/google_news_sitemap.xml"
+        },
+        {
+          "name": "G4Media",
+          "url": "https://www.g4media.ro/feed"
+        },
+        {
+          "name": "Mediafax",
+          "sitemapUrl": "https://www.mediafax.ro/sitemaps/news/index.xml"
+        },
+        {
+          "name": "Economedia",
+          "sitemapUrl": "https://economedia.ro/sitemap_index.xml"
+        }
+      ]
+    },
+    {
+      "name": "Ukraine",
+      "code": "UA",
+      "feeds": [
+        {
+          "name": "Kyiv Independent",
+          "sitemapUrl": "https://kyivindependent.com/news-sitemap.xml"
+        },
+        {
+          "name": "Kyiv Post",
+          "url": "https://www.kyivpost.com/feed",
+          "sitemapUrl": "https://www.kyivpost.com/sitemap.xml"
+        },
+        {
+          "name": "European Pravda",
+          "url": "https://www.eurointegration.com.ua/rss/",
+          "sitemapUrl": "https://www.eurointegration.com.ua/sitemap/sitemap.xml"
+        },
+        {
+          "name": "NV",
+          "url": "https://nv.ua/rss/all.xml",
+          "sitemapUrl": "https://nv.ua/sitemap_v2/news-sitemap.xml"
+        },
+        {
+          "name": "Ukrainska Pravda",
+          "url": "https://www.pravda.com.ua/rss/",
+          "sitemapUrl": "https://www.pravda.com.ua/sitemap/sitemap.xml"
+        },
+        {
+          "name": "Interfax-Ukraine",
+          "sitemapUrl": "https://interfax.com.ua/google-news-sitemap.xml"
+        }
+      ]
+    },
+    {
+      "name": "Luxembourg",
+      "code": "LU",
+      "feeds": [
+        {
+          "name": "Luxembourg Times",
+          "sitemapUrl": "https://www.luxtimes.lu/sitemap-news.xml"
+        },
+        {
+          "name": "Luxemburger Wort",
+          "sitemapUrl": "https://www.wort.lu/sitemap-news.xml"
+        }
+      ]
+    },
+    {
+      "name": "Slovakia",
+      "code": "SK",
+      "feeds": [
+        {
+          "name": "Aktuality.sk",
+          "sitemapUrl": "https://www.aktuality.sk/sitemap-articles-24h.xml"
+        },
+        {
+          "name": "Dennik N",
+          "sitemapUrl": "https://dennikn.sk/api/sitemap/root"
+        },
+        {
+          "name": "SME",
+          "url": "https://www.sme.sk/rss"
+        },
+        {
+          "name": "Pravda",
+          "url": "https://spravy.pravda.sk/rss/xml/"
+        },
+        {
+          "name": "HNonline",
+          "url": "https://hnonline.sk/feed"
+        }
+      ]
+    },
+    {
+      "name": "Hungary",
+      "code": "HU",
+      "feeds": [
+        {
+          "name": "Index.hu",
+          "sitemapUrl": "http://index.hu/sitemap/sitemapindex.xml"
+        },
+        {
+          "name": "Portfolio",
+          "sitemapUrl": "https://www.portfolio.hu/sitemap/sitemapnews.xml"
+        }
+      ]
+    },
+    {
+      "name": "Bulgaria",
+      "code": "BG",
+      "feeds": [
+        {
+          "name": "BNT News",
+          "sitemapUrl": "https://bntnews.bg/sitemap.xml"
+        },
+        {
+          "name": "24 Chasa",
+          "sitemapUrl": "https://www.24chasa.bg/sitemap.xml"
+        }
+      ]
+    },
+    {
+      "name": "Croatia",
+      "code": "HR",
+      "feeds": [
+        {
+          "name": "Dnevnik.hr",
+          "sitemapUrl": "https://dnevnik.hr/services/sitemaps/news"
+        },
+        {
+          "name": "Index.hr",
+          "url": "https://www.index.hr/rss"
+        },
+        {
+          "name": "Vecernji list",
+          "url": "https://www.vecernji.hr/feeds/latest"
+        }
+      ]
+    },
+    {
+      "name": "Slovenia",
+      "code": "SI",
+      "feeds": [
+        {
+          "name": "24ur",
+          "sitemapUrl": "https://www.24ur.com/sitemaps/sites/1",
+          "enabled": false
+        },
+        {
+          "name": "Delo",
+          "url": "https://www.delo.si/rss"
+        }
+      ]
+    },
+    {
+      "name": "Serbia",
+      "code": "RS",
+      "feeds": [
+        {
+          "name": "N1 Serbia",
+          "sitemapUrl": "https://n1info.rs/sitemap/sitemap_news_1.xml"
+        },
+        {
+          "name": "Telegraf",
+          "sitemapUrl": "https://www.telegraf.rs/xml/news"
+        },
+        {
+          "name": "Novosti",
+          "sitemapUrl": "https://www.novosti.rs/sitemaps/xml/news"
+        },
+        {
+          "name": "Blic - Latest Sitemap",
+          "sitemapUrl": "https://www.blic.rs/sitemap-stories-latest-index.xml.gz"
+        }
+      ]
+    },
+    {
+      "name": "Lithuania",
+      "code": "LT",
+      "feeds": [
+        {
+          "name": "Delfi Lithuania",
+          "sitemapUrl": "https://www.delfi.lt/news/sitemap/latest.xml"
+        },
+        {
+          "name": "15min",
+          "sitemapUrl": "https://www.15min.lt/static/sitemaps/articles_live_index.xml"
+        }
+      ]
+    },
+    {
+      "name": "Latvia",
+      "code": "LV",
+      "feeds": [
+        {
+          "name": "TVNET",
+          "sitemapUrl": "https://www.tvnet.lv/sitemap"
+        },
+        {
+          "name": "Apollo",
+          "sitemapUrl": "https://www.apollo.lv/sitemap"
+        },
+        {
+          "name": "Delfi Latvia",
+          "sitemapUrl": "https://www.delfi.lv/sitemap/index.xml"
+        }
+      ]
+    },
+    {
+      "name": "Estonia",
+      "code": "EE",
+      "feeds": [
+        {
+          "name": "Postimees",
+          "sitemapUrl": "https://www.postimees.ee/sitemap"
+        },
+        {
+          "name": "Ohtuleht",
+          "sitemapUrl": "https://www.ohtuleht.ee/sitemaps/news.xml"
+        },
+        {
+          "name": "ERR",
+          "sitemapUrl": "https://news.err.ee/sitemap"
+        },
+        {
+          "name": "Delfi Estonia",
+          "sitemapUrl": "https://www.delfi.ee/sitemap/index.xml"
+        }
+      ]
+    },
+    {
+      "name": "Iceland",
+      "code": "IS",
+      "feeds": [
+        {
+          "name": "Visir",
+          "sitemapUrl": "https://visir.is/sitemap_index.xml"
+        },
+        {
+          "name": "RUV",
+          "url": "https://www.ruv.is/rss/frettir"
         }
       ]
     },

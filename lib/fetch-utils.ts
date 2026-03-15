@@ -1,3 +1,5 @@
+import { gunzipSync } from 'node:zlib';
+
 type RetryStatusCheck = (status: number) => boolean;
 
 export type RetryFetchOptions = {
@@ -10,6 +12,12 @@ export type RetryFetchOptions = {
 
 const DEFAULT_TIMEOUT_MS = 12000;
 const DEFAULT_ATTEMPTS = 1;
+
+export type DecodedResponseBody = {
+  text: string;
+  byteLength: number;
+  decodeFailed: boolean;
+};
 
 export function isRetryableStatus(status: number): boolean {
   return status === 429 || status === 503 || status === 504;
@@ -50,4 +58,45 @@ export async function fetchWithRetry(url: string, options: RetryFetchOptions = {
 
   // Defensive fallback; loop should return/throw before this point.
   throw new Error('fetch_with_retry_exhausted');
+}
+
+function isLikelyGzipPayload(response: Response, bytes: Uint8Array, url = response.url || ''): boolean {
+  const contentType = (response.headers.get('content-type') || '').toLowerCase();
+  const contentEncoding = (response.headers.get('content-encoding') || '').toLowerCase();
+  return (
+    url.toLowerCase().endsWith('.gz') ||
+    contentType.includes('gzip') ||
+    contentEncoding.includes('gzip') ||
+    (bytes.length >= 2 && bytes[0] === 0x1f && bytes[1] === 0x8b)
+  );
+}
+
+function decodeUtf8(bytes: Uint8Array): DecodedResponseBody {
+  const byteLength = bytes.byteLength;
+  try {
+    return {
+      text: new TextDecoder('utf-8', { fatal: true }).decode(bytes),
+      byteLength,
+      decodeFailed: false,
+    };
+  } catch {
+    return {
+      text: new TextDecoder('utf-8').decode(bytes),
+      byteLength,
+      decodeFailed: true,
+    };
+  }
+}
+
+export async function readResponseText(response: Response, url = response.url || ''): Promise<DecodedResponseBody> {
+  const bytes = new Uint8Array(await response.arrayBuffer());
+  if (!isLikelyGzipPayload(response, bytes, url)) {
+    return decodeUtf8(bytes);
+  }
+
+  try {
+    return decodeUtf8(new Uint8Array(gunzipSync(Buffer.from(bytes))));
+  } catch {
+    return decodeUtf8(bytes);
+  }
 }

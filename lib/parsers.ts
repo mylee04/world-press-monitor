@@ -36,13 +36,42 @@ function clean(text: string): string {
   return text.replace(/<!\[CDATA\[(.*?)\]\]>/gs, '$1').trim();
 }
 
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+const DATE_TIMEZONE_OFFSETS: Record<string, string> = {
+  BST: '+0100',
+  CET: '+0100',
+  CEST: '+0200',
+  EET: '+0200',
+  EEST: '+0300',
+  MSD: '+0400',
+  MSK: '+0300',
+  WEST: '+0100',
+  WET: '+0000',
+};
+
 function parseTag(body: string, tag: string): string {
   const match = body.match(new RegExp(`<${tag}[^>]*>([\\s\\S]*?)<\\/${tag}>`, 'i'));
   return match ? clean(match[1] || '') : '';
 }
 
+function parseTagByLocalName(body: string, localName: string): string {
+  const tag = escapeRegExp(localName);
+  const match = body.match(new RegExp(`<(?:[\\w.-]+:)?${tag}[^>]*>([\\s\\S]*?)<\\/(?:[\\w.-]+:)?${tag}>`, 'i'));
+  return match ? clean(match[1] || '') : '';
+}
+
 function parseTags(body: string, tag: string): string[] {
   return [...body.matchAll(new RegExp(`<${tag}[^>]*>([\\s\\S]*?)<\\/${tag}>`, 'gi'))]
+    .map((match) => clean(match[1] || ''))
+    .filter(Boolean);
+}
+
+function parseTagsByLocalName(body: string, localName: string): string[] {
+  const tag = escapeRegExp(localName);
+  return [...body.matchAll(new RegExp(`<(?:[\\w.-]+:)?${tag}[^>]*>([\\s\\S]*?)<\\/(?:[\\w.-]+:)?${tag}>`, 'gi'))]
     .map((match) => clean(match[1] || ''))
     .filter(Boolean);
 }
@@ -55,8 +84,8 @@ function parseAtomCategoryTerms(body: string): string[] {
 
 function parseCategories(body: string, atomMode = false): string[] {
   const raw = atomMode
-    ? [...parseAtomCategoryTerms(body), ...parseTags(body, 'category')]
-    : [...parseTags(body, 'category'), ...parseTags(body, 'dc:subject')];
+    ? [...parseAtomCategoryTerms(body), ...parseTagsByLocalName(body, 'category')]
+    : [...parseTagsByLocalName(body, 'category'), ...parseTagsByLocalName(body, 'subject')];
   const normalized = raw
     .map((value) => stripHtml(value).slice(0, 140))
     .map((value) => value.trim())
@@ -75,10 +104,11 @@ function stripHtml(value: string): string {
 
 function parseDescription(body: string): string {
   const candidates = [
-    parseTag(body, 'description'),
-    parseTag(body, 'summary'),
+    parseTagByLocalName(body, 'description'),
+    parseTagByLocalName(body, 'summary'),
     parseTag(body, 'content:encoded'),
-    parseTag(body, 'content')
+    parseTagByLocalName(body, 'encoded'),
+    parseTagByLocalName(body, 'content')
   ];
   for (const candidate of candidates) {
     const stripped = stripHtml(candidate);
@@ -90,9 +120,22 @@ function parseDescription(body: string): string {
 function normalizePublishedAt(value: string): string {
   const raw = (value || '').trim();
   if (!raw) return '';
-  const ts = new Date(raw).getTime();
-  if (!Number.isFinite(ts)) return '';
-  return new Date(ts).toISOString();
+  if (/^\d{4}-\d{2}-\d{2}$/.test(raw)) {
+    return new Date(`${raw}T12:00:00Z`).toISOString();
+  }
+  const directTs = new Date(raw).getTime();
+  if (Number.isFinite(directTs)) return new Date(directTs).toISOString();
+
+  const timezoneMatch = raw.match(/^(.*\s)([A-Z]{2,5})$/);
+  if (timezoneMatch) {
+    const normalizedTz = DATE_TIMEZONE_OFFSETS[timezoneMatch[2]];
+    if (normalizedTz) {
+      const tzTs = new Date(`${timezoneMatch[1]}${normalizedTz}`).getTime();
+      if (Number.isFinite(tzTs)) return new Date(tzTs).toISOString();
+    }
+  }
+
+  return '';
 }
 
 function inferPublishedAtFromLink(link: string): string {
@@ -112,10 +155,10 @@ function inferPublishedAtFromLink(link: string): string {
 function parsePublishedAt(body: string, fallbackLink = ''): string {
   const candidates = [
     parseTag(body, 'pubDate'),
-    parseTag(body, 'published'),
+    parseTagByLocalName(body, 'published'),
     parseTag(body, 'dc:published'),
-    parseTag(body, 'date'),
-    parseTag(body, 'updated'),
+    parseTagByLocalName(body, 'date'),
+    parseTagByLocalName(body, 'updated'),
     parseTag(body, 'dc:date'),
   ];
   for (const candidate of candidates) {
@@ -153,7 +196,7 @@ export function parseRssOrAtom(xml: string, limit = 10): ParsedFeedItem[] {
 }
 
 export function parseRssOrAtomWithStats(xml: string, limit = 10): ParsedFeedBatch {
-  const rows = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/gi)]
+  const rows = [...xml.matchAll(/<(?:[\w.-]+:)?item\b[^>]*>([\s\S]*?)<\/(?:[\w.-]+:)?item>/gi)]
     .map((match) => match[1])
     .slice(0, limit)
     .map((body) => {
@@ -182,7 +225,7 @@ export function parseRssOrAtomWithStats(xml: string, limit = 10): ParsedFeedBatc
     };
   }
 
-  const entryRows = [...xml.matchAll(/<entry>([\s\S]*?)<\/entry>/gi)]
+  const entryRows = [...xml.matchAll(/<(?:[\w.-]+:)?entry\b[^>]*>([\s\S]*?)<\/(?:[\w.-]+:)?entry>/gi)]
     .map((match) => match[1])
     .slice(0, limit)
     .map((body) => {
@@ -215,18 +258,18 @@ export function parseSitemap(xml: string, limit = 12): ParsedFeedItem[] {
 }
 
 export function parseSitemapWithStats(xml: string, limit = 12): ParsedFeedBatch {
-  const rows = [...xml.matchAll(/<url>([\s\S]*?)<\/url>/gi)]
+  const rows = [...xml.matchAll(/<(?:[\w.-]+:)?url\b[^>]*>([\s\S]*?)<\/(?:[\w.-]+:)?url>/gi)]
     .map((match) => match[1])
     .slice(0, limit)
     .map((body) => {
-      const link = parseTag(body, 'loc');
+      const link = parseTagByLocalName(body, 'loc');
       const title =
-        parseTag(body, 'news:title')
+        parseTagByLocalName(body, 'title')
         || link.split('/').pop()?.replace(/[-_]/g, ' ')
         || link;
       const publishedAt =
-        normalizePublishedAt(parseTag(body, 'news:publication_date'))
-        || normalizePublishedAt(parseTag(body, 'lastmod'))
+        normalizePublishedAt(parseTagByLocalName(body, 'publication_date'))
+        || normalizePublishedAt(parseTagByLocalName(body, 'lastmod'))
         || inferPublishedAtFromLink(link);
       return {
         title,

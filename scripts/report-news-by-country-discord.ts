@@ -6,8 +6,10 @@ import { resolve } from 'node:path';
 
 type CountryRow = {
   country: string;
-  count_last_1h: string;
-  count_last_24h: string;
+  inserted_last_1h: string;
+  inserted_last_24h: string;
+  published_last_24h: string;
+  late_last_24h: string;
 };
 
 type AtlasCountry = {
@@ -174,7 +176,7 @@ async function postToDiscord(webhookUrl: string, content: string): Promise<void>
 async function main(): Promise<void> {
   const databaseUrl = process.env.DATABASE_URL?.trim();
   if (!databaseUrl) {
-    throw new Error('DATABASE_URL is not configured. Set DATABASE_URL in .env.local.');
+    throw new Error('DATABASE_URL is not configured. Set DATABASE_URL in .env.macmini.local, .env.local, or the shell environment.');
   }
 
   const webhookUrl = pickWebhookUrl();
@@ -188,11 +190,16 @@ async function main(): Promise<void> {
     const query = `
       SELECT
         COALESCE(country, '(unknown)') AS country,
-        COUNT(*) FILTER (WHERE created_at >= NOW() - INTERVAL '1 hour')::bigint::text AS count_last_1h,
-        COUNT(*) FILTER (WHERE created_at >= NOW() - INTERVAL '24 hours')::bigint::text AS count_last_24h
+        COUNT(*) FILTER (WHERE created_at >= NOW() - INTERVAL '1 hour')::bigint::text AS inserted_last_1h,
+        COUNT(*) FILTER (WHERE created_at >= NOW() - INTERVAL '24 hours')::bigint::text AS inserted_last_24h,
+        COUNT(*) FILTER (WHERE publication_datetime >= NOW() - INTERVAL '24 hours')::bigint::text AS published_last_24h,
+        COUNT(*) FILTER (
+          WHERE created_at >= NOW() - INTERVAL '24 hours'
+            AND publication_datetime < NOW() - INTERVAL '24 hours'
+        )::bigint::text AS late_last_24h
       FROM news_articles
       GROUP BY COALESCE(country, '(unknown)')
-      ORDER BY COUNT(*) FILTER (WHERE created_at >= NOW() - INTERVAL '1 hour') DESC, country ASC
+      ORDER BY COUNT(*) FILTER (WHERE publication_datetime >= NOW() - INTERVAL '24 hours') DESC, country ASC
     `;
 
     const result = await pool.query<CountryRow>(query);
@@ -221,11 +228,16 @@ async function main(): Promise<void> {
     const topCountries = parseTopCountriesLimit();
     const selectedRows = topCountries > 0 ? filteredRows.slice(0, topCountries) : filteredRows;
 
-    const total1h = filteredRows.reduce((acc, row) => acc + Number(row.count_last_1h), 0);
-    const total24h = filteredRows.reduce((acc, row) => acc + Number(row.count_last_24h), 0);
+    const totalInserted1h = filteredRows.reduce((acc, row) => acc + Number(row.inserted_last_1h), 0);
+    const totalInserted24h = filteredRows.reduce((acc, row) => acc + Number(row.inserted_last_24h), 0);
+    const totalPublished24h = filteredRows.reduce((acc, row) => acc + Number(row.published_last_24h), 0);
+    const totalLate24h = filteredRows.reduce((acc, row) => acc + Number(row.late_last_24h), 0);
 
     const lines = selectedRows
-      .map((row, index) => `${index + 1}. ${row.country}: 1h ${row.count_last_1h}, 24h ${row.count_last_24h}`);
+      .map(
+        (row, index) =>
+          `${index + 1}. ${row.country}: pub24h ${row.published_last_24h}, ins24h ${row.inserted_last_24h}, late24h ${row.late_last_24h}, ins1h ${row.inserted_last_1h}`
+      );
 
     const scopeLabel =
       countryFilter.activeCountryCount > 0
@@ -237,9 +249,12 @@ async function main(): Promise<void> {
         : '';
 
     const header = [
-      `📰 Hourly News Data Intake by Country (${new Date().toISOString()})`,
+      `📰 News Volume by Country (${new Date().toISOString()})`,
       `Source: news_articles`,
-      `Last 1h: ${total1h.toLocaleString()} / Last 24h: ${total24h.toLocaleString()}`,
+      `Published 24h: ${totalPublished24h.toLocaleString()} / Inserted 24h: ${totalInserted24h.toLocaleString()} / Inserted 1h: ${totalInserted1h.toLocaleString()}`,
+      `Late-or-backfill in inserted 24h: ${totalLate24h.toLocaleString()}`,
+      `Fields: pub24h=publication_datetime, ins24h/ins1h=created_at, late24h=inserted now but published >24h old`,
+      `Country semantics: inferred story geography from title, fallback to outlet country`,
       scopeLabel,
       configuredScopeLabel,
       unexpectedCountries.length > 0 ? `Unexpected countries in data: ${unexpectedCountries.join(', ')}` : '',
