@@ -7,15 +7,12 @@ LOG_DIR="${PROJECT_ROOT}/logs"
 LOG_FILE="${LOG_DIR}/rss-feed-stability.log"
 RUNNER_COMMAND="bun run ingest:rss-stability:daily --days=1 --write-json --auto-delete-zero"
 
-ENV_FILE="${PROJECT_ROOT}/.env.local"
-if [ -f "${ENV_FILE}" ]; then
-  set -a
-  # shellcheck disable=SC1090
-  source "${ENV_FILE}"
-  set +a
-fi
+# shellcheck disable=SC1091
+source "${SCRIPT_DIR}/load-local-env.sh"
+load_local_env
 
 TIMEZONE="${RSS_STABILITY_TZ:-America/Chicago}"
+: "${DATABASE_URL:=postgresql://postgres:postgres@127.0.0.1:${WPM_PG_PORT:-5432}/wpm}"
 
 mkdir -p "${LOG_DIR}"
 cd "${PROJECT_ROOT}"
@@ -25,6 +22,7 @@ export PATH="${PATH}:/opt/homebrew/bin:/usr/local/bin"
 {
   printf '\n[%s] Start RSS feed stability daily\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
   printf 'Project: %s\n' "${PROJECT_ROOT}"
+  printf 'Env file: %s\n' "${WPM_ENV_FILE_SOURCE:-inline-defaults}"
   printf 'Command: %s\n' "${RUNNER_COMMAND}"
   ${RUNNER_COMMAND}
 } >>"${LOG_FILE}" 2>&1

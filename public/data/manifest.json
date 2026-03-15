@@ -1,0 +1,378 @@
+{
+  "generatedAt": "2026-03-15T12:01:59.107Z",
+  "schemaVersion": 2,
+  "cadence": {
+    "frequency": "hourly",
+    "scheduledMinute": 40,
+    "timezone": "America/Chicago"
+  },
+  "latestDate": "2026-03-15",
+  "countries": [
+    "AR",
+    "AT",
+    "AU",
+    "BE",
+    "BG",
+    "BR",
+    "CA",
+    "CH",
+    "CL",
+    "CN",
+    "CZ",
+    "DE",
+    "DK",
+    "DO",
+    "EE",
+    "ES",
+    "FI",
+    "FR",
+    "GB",
+    "GLOBAL",
+    "GR",
+    "HR",
+    "HU",
+    "ID",
+    "IE",
+    "IN",
+    "IR",
+    "IS",
+    "IT",
+    "JP",
+    "KR",
+    "LT",
+    "LU",
+    "LV",
+    "MX",
+    "NL",
+    "NO",
+    "PL",
+    "PT",
+    "RO",
+    "RS",
+    "RU",
+    "SA",
+    "SE",
+    "SI",
+    "SK",
+    "TH",
+    "TR",
+    "TW",
+    "UA",
+    "US",
+    "UY"
+  ],
+  "countryNames": {
+    "AR": "Argentina",
+    "AT": "Austria",
+    "AU": "Australia",
+    "BE": "Belgium",
+    "BG": "Bulgaria",
+    "BR": "Brazil",
+    "CA": "Canada",
+    "CH": "Switzerland",
+    "CL": "Chile",
+    "CN": "China",
+    "CZ": "Czech Republic",
+    "DE": "Germany",
+    "DK": "Denmark",
+    "DO": "Dominican Republic",
+    "EE": "Estonia",
+    "ES": "Spain",
+    "FI": "Finland",
+    "FR": "France",
+    "GB": "United Kingdom",
+    "GLOBAL": "Global Energy & Grid",
+    "GR": "Greece",
+    "HR": "Croatia",
+    "HU": "Hungary",
+    "ID": "Indonesia",
+    "IE": "Ireland",
+    "IN": "India",
+    "IR": "Iran",
+    "IS": "Iceland",
+    "IT": "Italy",
+    "JP": "Japan",
+    "KR": "South Korea",
+    "LT": "Lithuania",
+    "LU": "Luxembourg",
+    "LV": "Latvia",
+    "MX": "Mexico",
+    "NL": "Netherlands",
+    "NO": "Norway",
+    "PL": "Poland",
+    "PT": "Portugal",
+    "RO": "Romania",
+    "RS": "Serbia",
+    "RU": "Russia",
+    "SA": "Saudi Arabia",
+    "SE": "Sweden",
+    "SI": "Slovenia",
+    "SK": "Slovakia",
+    "TH": "Thailand",
+    "TR": "Turkey",
+    "TW": "Taiwan",
+    "UA": "Ukraine",
+    "US": "United States",
+    "UY": "Uruguay"
+  },
+  "countryMonths": {
+    "UY": [
+      "2026-03"
+    ],
+    "US": [
+      "2026-03"
+    ],
+    "UA": [
+      "2026-03"
+    ],
+    "TW": [
+      "2026-03"
+    ],
+    "TR": [
+      "2026-03"
+    ],
+    "TH": [
+      "2026-03"
+    ],
+    "SK": [
+      "2026-03"
+    ],
+    "SE": [
+      "2026-03"
+    ],
+    "SA": [
+      "2026-03"
+    ],
+    "RU": [
+      "2026-03"
+    ],
+    "RS": [
+      "2026-03"
+    ],
+    "RO": [
+      "2026-03"
+    ],
+    "PT": [
+      "2026-03"
+    ],
+    "PL": [
+      "2026-03"
+    ],
+    "NO": [
+      "2026-03"
+    ],
+    "NL": [
+      "2026-03"
+    ],
+    "MX": [
+      "2026-03"
+    ],
+    "LV": [
+      "2026-03"
+    ],
+    "LT": [
+      "2026-03"
+    ],
+    "KR": [
+      "2026-03"
+    ],
+    "JP": [
+      "2026-03"
+    ],
+    "IT": [
+      "2026-03"
+    ],
+    "IS": [
+      "2026-03"
+    ],
+    "IR": [
+      "2026-03"
+    ],
+    "IN": [
+      "2026-03"
+    ],
+    "IE": [
+      "2026-03"
+    ],
+    "ID": [
+      "2026-03"
+    ],
+    "HU": [
+      "2026-03"
+    ],
+    "HR": [
+      "2026-03"
+    ],
+    "GR": [
+      "2026-03"
+    ],
+    "GLOBAL": [
+      "2026-03"
+    ],
+    "GB": [
+      "2026-03"
+    ],
+    "FR": [
+      "2026-03"
+    ],
+    "FI": [
+      "2026-03"
+    ],
+    "ES": [
+      "2026-03"
+    ],
+    "EE": [
+      "2026-03"
+    ],
+    "DO": [
+      "2026-03"
+    ],
+    "DK": [
+      "2026-03"
+    ],
+    "DE": [
+      "2026-03"
+    ],
+    "CZ": [
+      "2026-03"
+    ],
+    "CN": [
+      "2026-03"
+    ],
+    "CL": [
+      "2026-03"
+    ],
+    "CH": [
+      "2026-03"
+    ],
+    "CA": [
+      "2026-03"
+    ],
+    "BR": [
+      "2026-03"
+    ],
+    "BG": [
+      "2026-03"
+    ],
+    "BE": [
+      "2026-03"
+    ],
+    "AU": [
+      "2026-03"
+    ],
+    "AT": [
+      "2026-03"
+    ],
+    "AR": [
+      "2026-03"
+    ]
+  },
+  "sections": [
+    "world",
+    "politics",
+    "business",
+    "tech",
+    "sports",
+    "health",
+    "arts",
+    "science",
+    "climate",
+    "others"
+  ],
+  "availableDates": [
+    "2026-03-15",
+    "2026-03-14",
+    "2026-03-13",
+    "2026-03-12",
+    "2026-03-11",
+    "2026-03-10",
+    "2026-03-09",
+    "2026-03-08"
+  ],
+  "downloads": {
+    "latest24h": "/data/downloads/latest-24h.csv",
+    "byDate": [
+      "/data/downloads/by-date/2026-03-15.csv",
+      "/data/downloads/by-date/2026-03-14.csv",
+      "/data/downloads/by-date/2026-03-13.csv",
+      "/data/downloads/by-date/2026-03-12.csv",
+      "/data/downloads/by-date/2026-03-11.csv",
+      "/data/downloads/by-date/2026-03-10.csv",
+      "/data/downloads/by-date/2026-03-09.csv",
+      "/data/downloads/by-date/2026-03-08.csv"
+    ],
+    "byCountryMonth": [
+      "/data/downloads/by-country/UY/2026-03.csv",
+      "/data/downloads/by-country/US/2026-03.csv",
+      "/data/downloads/by-country/UA/2026-03.csv",
+      "/data/downloads/by-country/TW/2026-03.csv",
+      "/data/downloads/by-country/TR/2026-03.csv",
+      "/data/downloads/by-country/TH/2026-03.csv",
+      "/data/downloads/by-country/SK/2026-03.csv",
+      "/data/downloads/by-country/SE/2026-03.csv",
+      "/data/downloads/by-country/SA/2026-03.csv",
+      "/data/downloads/by-country/RU/2026-03.csv",
+      "/data/downloads/by-country/RS/2026-03.csv",
+      "/data/downloads/by-country/RO/2026-03.csv",
+      "/data/downloads/by-country/PT/2026-03.csv",
+      "/data/downloads/by-country/PL/2026-03.csv",
+      "/data/downloads/by-country/NO/2026-03.csv",
+      "/data/downloads/by-country/NL/2026-03.csv",
+      "/data/downloads/by-country/MX/2026-03.csv",
+      "/data/downloads/by-country/LV/2026-03.csv",
+      "/data/downloads/by-country/LT/2026-03.csv",
+      "/data/downloads/by-country/KR/2026-03.csv",
+      "/data/downloads/by-country/JP/2026-03.csv",
+      "/data/downloads/by-country/IT/2026-03.csv",
+      "/data/downloads/by-country/IS/2026-03.csv",
+      "/data/downloads/by-country/IR/2026-03.csv",
+      "/data/downloads/by-country/IN/2026-03.csv",
+      "/data/downloads/by-country/IE/2026-03.csv",
+      "/data/downloads/by-country/ID/2026-03.csv",
+      "/data/downloads/by-country/HU/2026-03.csv",
+      "/data/downloads/by-country/HR/2026-03.csv",
+      "/data/downloads/by-country/GR/2026-03.csv",
+      "/data/downloads/by-country/GLOBAL/2026-03.csv",
+      "/data/downloads/by-country/GB/2026-03.csv",
+      "/data/downloads/by-country/FR/2026-03.csv",
+      "/data/downloads/by-country/FI/2026-03.csv",
+      "/data/downloads/by-country/ES/2026-03.csv",
+      "/data/downloads/by-country/EE/2026-03.csv",
+      "/data/downloads/by-country/DO/2026-03.csv",
+      "/data/downloads/by-country/DK/2026-03.csv",
+      "/data/downloads/by-country/DE/2026-03.csv",
+      "/data/downloads/by-country/CZ/2026-03.csv",
+      "/data/downloads/by-country/CN/2026-03.csv",
+      "/data/downloads/by-country/CL/2026-03.csv",
+      "/data/downloads/by-country/CH/2026-03.csv",
+      "/data/downloads/by-country/CA/2026-03.csv",
+      "/data/downloads/by-country/BR/2026-03.csv",
+      "/data/downloads/by-country/BG/2026-03.csv",
+      "/data/downloads/by-country/BE/2026-03.csv",
+      "/data/downloads/by-country/AU/2026-03.csv",
+      "/data/downloads/by-country/AT/2026-03.csv",
+      "/data/downloads/by-country/AR/2026-03.csv"
+    ]
+  },
+  "shards": {
+    "byDate": "/data/by-date/2026-03-15.json",
+    "byCountryMonth": "/data/by-country/UY/2026-03.json"
+  },
+  "totals": {
+    "articles": 99393,
+    "latest24h": 99393,
+    "sources": 1596
+  },
+  "sectionTotals": {
+    "world": 7057,
+    "politics": 5816,
+    "business": 2451,
+    "tech": 7688,
+    "sports": 3810,
+    "health": 2099,
+    "arts": 11027,
+    "science": 756,
+    "climate": 1447,
+    "others": 57242
+  }
+}

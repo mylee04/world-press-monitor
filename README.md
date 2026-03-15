@@ -7,6 +7,45 @@
 
 Maintenance-focused project for RSS source cataloging, feed validation, and periodic collection checks.
 
+## Mac mini local operation
+
+The primary runtime now assumes:
+
+- local Docker Postgres on the Mac mini
+- hourly ingest and daily health jobs against `127.0.0.1`
+- Discord reports can also run against the same local Postgres via `DATABASE_URL`
+- public delivery through static JSON/CSV exports and a static Next.js app
+
+Key files:
+
+- `docker-compose.yml`
+- `.env.macmini.local`
+- `scripts/run-ingest-hourly-local.sh`
+- `scripts/run-rss-health-daily-local.sh`
+- `scripts/run-static-export-local.sh`
+- `scripts/run-static-deploy-local.sh`
+- `scripts/export-public-news-data.ts`
+- `ops/launchd/*.plist`
+- `docs/macmini-static-ops.md`
+
+Useful commands:
+
+```bash
+docker compose up -d postgres
+bash scripts/bootstrap-wpm-db.sh
+bun run ingest:local:run
+bun run rss:health:local:run
+bun run export:public:local
+bun run deploy:static:local
+```
+
+Vercel static delivery:
+
+- run `vercel login`
+- run `vercel link --project world-press-monitor` once on the Mac mini
+- keep `.env.macmini.local` populated with `PUBLIC_EXPORT_TIMEZONE=America/Chicago` and `PUBLIC_EXPORT_SCHEDULE_MINUTE=40`
+- `bun run deploy:static:local` will export JSON/CSV, build the static app, sync `web-dist/`, then run `vercel build --prod` and `vercel deploy --prebuilt --prod` against the linked `world-press-monitor` project by default
+
 Open-source project goals:
 
 - Maintain a clean global RSS source catalog with a clear signal of healthy vs broken feeds.
@@ -1721,4 +1760,3 @@ Locale keyword dictionaries are split by language under:
 9|Energy Post|<https://energypost.eu/feed/>|needs check|03/14/2026|needs verification|-|
 10|Energy Storage News|<https://www.energy-storage.news/rss>|200|03/14/2026|valid|-|
 11|Energy Storage News|<https://www.energy-storage.news/feed>|200|03/14/2026|valid|-|
-

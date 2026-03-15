@@ -66,18 +66,20 @@ const SHORT_KEYWORDS = new Set(['ai', 'war', 'gdp']);
 const regexCache = new Map<string, RegExp>();
 
 function getKeywordRegex(keyword: string): RegExp {
+  const normalizedKeyword = normalizeText(keyword);
   let regex = regexCache.get(keyword);
   if (!regex) {
-    const escaped = keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    regex = SHORT_KEYWORDS.has(keyword) ? new RegExp(`\\b${escaped}\\b`, 'i') : new RegExp(escaped, 'i');
+    const escaped = normalizedKeyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    regex = SHORT_KEYWORDS.has(normalizedKeyword) ? new RegExp(`\\b${escaped}\\b`, 'i') : new RegExp(escaped, 'i');
     regexCache.set(keyword, regex);
   }
   return regex;
 }
 
 function matchMap(title: string, map: KeywordMap): { section: NewsSection; keyword: string } | null {
+  const normalizedTitle = normalizeText(title);
   for (const [keyword, section] of Object.entries(map)) {
-    if (getKeywordRegex(keyword).test(title)) {
+    if (getKeywordRegex(keyword).test(normalizedTitle)) {
       return { section, keyword };
     }
   }
@@ -229,6 +231,8 @@ function clampEnvFloat(name: string, fallback: number, min = 0, max = 1): number
 
 function normalizeText(value: string): string {
   return value
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
     .replace(/\s+/g, ' ')
     .trim()
     .toLowerCase()

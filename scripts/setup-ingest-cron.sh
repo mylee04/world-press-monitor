@@ -3,6 +3,10 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+# shellcheck disable=SC1091
+source "${SCRIPT_DIR}/load-local-env.sh"
+load_local_env
+
 RUNNER="${PROJECT_ROOT}/scripts/run-ingest-hourly.sh"
 MARKER="## WPM-INGEST-HOURLY"
 CRON_TZ="America/Chicago"

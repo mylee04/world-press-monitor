@@ -1,8 +1,14 @@
 node_modules
 .next
 .next.bak-*
+out
+exports
+web-dist
+postgres
+backups
 .env
 .env.local
+.env.macmini.local
 env.local
 tsconfig.tsbuildinfo
 .warm-daemon.pid
@@ -11,6 +17,10 @@ audits/*.md
 logs/*.log
 !audits/README.md
 !audits/latest.md
+public/data/by-date/*.json
+public/data/by-country/**/*.json
+public/data/downloads/**/*.csv
+public/data/downloads/**/*.json
 
 # Keep only intentionally tracked audit artifacts.
 audits/*.json
@@ -23,3 +33,4 @@ audits/*.csv
 
 # Local-only large directory (kept out of git and most tooling scans).
 listening_dashboard_shallow/
+.vercel

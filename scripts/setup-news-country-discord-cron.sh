@@ -6,13 +6,9 @@ PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 MARKER="## WPM-NEWS-COUNTRY-DISCORD"
 CRON_TZ="America/Chicago"
 
-ENV_FILE="${PROJECT_ROOT}/.env.local"
-if [ -f "${ENV_FILE}" ]; then
-  set -a
-  # shellcheck disable=SC1090
-  source "${ENV_FILE}"
-  set +a
-fi
+# shellcheck disable=SC1091
+source "${SCRIPT_DIR}/load-local-env.sh"
+load_local_env
 
 CRON_MINUTE="30"
 RUNNER="${PROJECT_ROOT}/scripts/run-news-country-discord-report.sh"

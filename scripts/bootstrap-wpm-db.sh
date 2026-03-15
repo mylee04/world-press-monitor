@@ -5,6 +5,10 @@ set -o pipefail
 ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT_DIR"
 
+# shellcheck disable=SC1091
+source "${ROOT_DIR}/scripts/load-local-env.sh"
+load_local_env
+
 if ! command -v psql >/dev/null 2>&1; then
   echo "[bootstrap] ERROR: psql command not found. Install PostgreSQL client first."
   exit 1
@@ -51,13 +55,6 @@ while (($# > 0)); do
       ;;
   esac
 done
-
-if [ -f .env.local ]; then
-  set -a
-  # shellcheck source=/dev/null
-  source .env.local
-  set +a
-fi
 
 : "${DATABASE_URL:=postgresql://postgres:postgres@127.0.0.1:${WPM_PG_PORT:-5432}/wpm}"
 

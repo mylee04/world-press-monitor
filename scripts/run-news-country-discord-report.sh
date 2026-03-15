@@ -8,15 +8,12 @@ LOG_FILE="${LOG_DIR}/news-country-discord-hourly.log"
 RUNNER_COMMAND="bun run news:country:discord"
 LOCK_DIR="${PROJECT_ROOT}/.wpm-news-country-discord-report-lock"
 
-ENV_FILE="${PROJECT_ROOT}/.env.local"
-if [ -f "${ENV_FILE}" ]; then
-  set -a
-  # shellcheck disable=SC1090
-  source "${ENV_FILE}"
-  set +a
-fi
+# shellcheck disable=SC1091
+source "${SCRIPT_DIR}/load-local-env.sh"
+load_local_env
 
 TIMEZONE="${NEWS_COUNTRY_REPORT_TZ:-America/Chicago}"
+: "${DATABASE_URL:=postgresql://postgres:postgres@127.0.0.1:${WPM_PG_PORT:-5432}/wpm}"
 
 mkdir -p "${LOG_DIR}"
 if ! mkdir "${LOCK_DIR}" 2>/dev/null; then
@@ -32,6 +29,7 @@ export PATH="${PATH}:/opt/homebrew/bin:/usr/local/bin"
 {
   printf '\n[%s] Start news country discord report\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
   printf 'Project: %s\n' "${PROJECT_ROOT}"
+  printf 'Env file: %s\n' "${WPM_ENV_FILE_SOURCE:-inline-defaults}"
   printf 'Command: %s\n' "${RUNNER_COMMAND}"
   ${RUNNER_COMMAND}
 } >>"${LOG_FILE}" 2>&1
