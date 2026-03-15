@@ -794,6 +794,91 @@
         {
           "name": "Tencent Tech (Tencent Technology News)",
           "url": "https://new.qq.com/ch/tech/"
+        },
+        {
+          "name": "China News Service - Scroll News",
+          "url": "https://www.chinanews.com.cn/rss/scroll-news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 30
+        },
+        {
+          "name": "China News Service - China",
+          "url": "https://www.chinanews.com.cn/rss/china.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 31
+        },
+        {
+          "name": "China News Service - World",
+          "url": "https://www.chinanews.com.cn/rss/world.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 32
+        },
+        {
+          "name": "China News Service - Finance",
+          "url": "https://www.chinanews.com.cn/rss/finance.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 33
+        },
+        {
+          "name": "People.cn - News Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.people.cn/sitemap_index.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 34
+        },
+        {
+          "name": "CGTN - Latest News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.cgtn.com/sitemap_latestnews.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 35
+        },
+        {
+          "name": "HK01 - News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.hk01.com/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 36
+        },
+        {
+          "name": "The Standard - News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.thestandard.com.hk/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 37
+        },
+        {
+          "name": "Hong Kong Free Press",
+          "url": "https://hongkongfp.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 38
+        },
+        {
+          "name": "Shine - News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.shine.cn/sitemap-news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 39
         }
       ]
     },
@@ -1250,6 +1335,15 @@
           "enabled": false
         },
         {
+          "name": "Nikkei - News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.nikkei.com/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 54
+        },
+        {
           "name": "Yomiuri Latest",
           "sitemapUrl": "https://www.yomiuri.co.jp/sitemap-news-latest.xml",
           "status": null,
@@ -1259,13 +1353,112 @@
           "enabled": true
         },
         {
+          "name": "Yomiuri - Full Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.yomiuri.co.jp/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 55
+        },
+        {
           "name": "Mainichi Flash",
           "url": "https://mainichi.jp/rss/etc/mainichi-flash.rss",
           "status": null,
-          "checkedDate": null,
+          "checkedDate": "03/15/2026",
           "valid": "needs verification",
           "row": 56,
-          "enabled": false
+          "enabled": true
+        },
+        {
+          "name": "Sankei - Google Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.sankei.com/feeds/google-sitemapindex/?outputType=xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 56
+        },
+        {
+          "name": "FNN Prime - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.fnn.jp/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 56
+        },
+        {
+          "name": "Jiji Press - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.jiji.com/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 56
+        },
+        {
+          "name": "NTV - News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://news.ntv.co.jp/news-sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 56
+        },
+        {
+          "name": "Abema Times - Latest Sitemap",
+          "url": null,
+          "sitemapUrl": "https://times.abema.tv/common/files/sitemap-latest.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 56
+        },
+        {
+          "name": "Oricon - News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.oricon.co.jp/sitemap/sitemap_news_1.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 56
+        },
+        {
+          "name": "Sponichi - Recent Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.sponichi.co.jp/sitemap_recent.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 56
+        },
+        {
+          "name": "Chunichi - News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.chunichi.co.jp/sitemap_news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 56
+        },
+        {
+          "name": "TBS News DIG - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://newsdig.tbs.co.jp/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 56
+        },
+        {
+          "name": "Tokyo Sports - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.tokyo-sports.co.jp/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 56
         },
         {
           "name": "Gizmodo Japan",
@@ -7244,10 +7437,10 @@
           "name": "Taipei Times (EN)",
           "url": "https://www.taipeitimes.com/xml/index.rss",
           "status": null,
-          "checkedDate": null,
+          "checkedDate": "03/15/2026",
           "valid": "needs verification",
           "row": 29,
-          "enabled": false
+          "enabled": true
         },
         {
           "name": "The Reporter",
@@ -7280,6 +7473,157 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 33
+        },
+        {
+          "name": "UDN - News Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://udn.com/sitemapxml/news/mapindex.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 34
+        },
+        {
+          "name": "ETtoday - News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.ettoday.net/news-sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 35
+        },
+        {
+          "name": "Storm Media - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.storm.mg/sitemaps/1/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 36
+        },
+        {
+          "name": "Nownews - Daily News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.nownews.com/newsSitemap-daily.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 37
+        },
+        {
+          "name": "SETN - Google News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.setn.com/sitemapGoogleNews.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 38
+        },
+        {
+          "name": "TVBS - Latest Sitemap",
+          "url": null,
+          "sitemapUrl": "https://news.tvbs.com.tw/crontab/sitemap/latest",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 39
+        },
+        {
+          "name": "CTWant - News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://static.ctwant.com/sitemaps/news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 40
+        },
+        {
+          "name": "Business Today - News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.businesstoday.com.tw/news-sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 41
+        },
+        {
+          "name": "EBC News - Realtime Sitemap",
+          "url": null,
+          "sitemapUrl": "https://news.ebc.net.tw/sitemap/realtime.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 42
+        },
+        {
+          "name": "Yahoo Taiwan - News Sitemap p0",
+          "url": null,
+          "sitemapUrl": "https://tw.news.yahoo.com/news-sitemap-p0.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 43
+        },
+        {
+          "name": "Yahoo Taiwan - News Sitemap p1",
+          "url": null,
+          "sitemapUrl": "https://tw.news.yahoo.com/news-sitemap-p1.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 44
+        },
+        {
+          "name": "Yahoo Taiwan - News Sitemap p2",
+          "url": null,
+          "sitemapUrl": "https://tw.news.yahoo.com/news-sitemap-p2.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 45
+        },
+        {
+          "name": "Mirror Media - Posts News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.mirrormedia.mg/rss/posts-news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 46
+        },
+        {
+          "name": "Mirror Media - Externals News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.mirrormedia.mg/rss/externals-news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 47
+        },
+        {
+          "name": "PTS News",
+          "url": "https://news.pts.org.tw/xml/newsfeed.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 48
+        },
+        {
+          "name": "CTS News - Google Sitemap",
+          "url": null,
+          "sitemapUrl": "https://news.cts.com.tw/sitemap_cts_google.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 49
+        },
+        {
+          "name": "People News Taiwan",
+          "url": "https://www.peoplenews.tw/feed",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/15/2026",
+          "valid": "needs verification",
+          "row": 50
         }
       ]
     },

@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Sun, 15 Mar 2026 12:02:46 GMT</dateCreated>
+    <dateCreated>Sun, 15 Mar 2026 18:41:17 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -109,6 +109,11 @@
       <outline text="Ming Pao (Hong Kong Flagship Newspaper) [valid]" title="Ming Pao (Hong Kong Flagship Newspaper) [valid]" type="rss" xmlUrl="https://news.mingpao.com/rss/pns/s00001.xml" htmlUrl="https://news.mingpao.com"/>
       <outline text="HKET (Hong Kong Economic Times) [valid]" title="HKET (Hong Kong Economic Times) [valid]" type="rss" xmlUrl="https://www.hket.com/rss/hongkong" htmlUrl="https://www.hket.com"/>
       <outline text="Tencent Tech (Tencent Technology News) [invalid]" title="Tencent Tech (Tencent Technology News) [invalid]" type="rss" xmlUrl="https://new.qq.com/ch/tech/" htmlUrl="https://new.qq.com"/>
+      <outline text="China News Service - Scroll News [needs verification]" title="China News Service - Scroll News [needs verification]" type="rss" xmlUrl="https://www.chinanews.com.cn/rss/scroll-news.xml" htmlUrl="https://www.chinanews.com.cn"/>
+      <outline text="China News Service - China [needs verification]" title="China News Service - China [needs verification]" type="rss" xmlUrl="https://www.chinanews.com.cn/rss/china.xml" htmlUrl="https://www.chinanews.com.cn"/>
+      <outline text="China News Service - World [needs verification]" title="China News Service - World [needs verification]" type="rss" xmlUrl="https://www.chinanews.com.cn/rss/world.xml" htmlUrl="https://www.chinanews.com.cn"/>
+      <outline text="China News Service - Finance [needs verification]" title="China News Service - Finance [needs verification]" type="rss" xmlUrl="https://www.chinanews.com.cn/rss/finance.xml" htmlUrl="https://www.chinanews.com.cn"/>
+      <outline text="Hong Kong Free Press [needs verification]" title="Hong Kong Free Press [needs verification]" type="rss" xmlUrl="https://hongkongfp.com/feed/" htmlUrl="https://hongkongfp.com"/>
     </outline>
     <outline text="Japan (JP)" title="Japan (JP)">
       <outline text="NHK World (EN) [valid]" title="NHK World (EN) [valid]" type="rss" xmlUrl="https://www3.nhk.or.jp/rss/news/cat0.xml" htmlUrl="https://www3.nhk.or.jp"/>
@@ -967,6 +972,8 @@
       <outline text="Newtalk 全部 [valid]" title="Newtalk 全部 [valid]" type="rss" xmlUrl="https://newtalk.tw/rss/all/" htmlUrl="https://newtalk.tw"/>
       <outline text="Newtalk 政治 [valid]" title="Newtalk 政治 [valid]" type="rss" xmlUrl="https://newtalk.tw/rss/category/2" htmlUrl="https://newtalk.tw"/>
       <outline text="Youth Daily News 軍聞 [valid]" title="Youth Daily News 軍聞 [valid]" type="rss" xmlUrl="https://www.ydn.com.tw/tw/Home/RSS.aspx?TID=2" htmlUrl="https://www.ydn.com.tw"/>
+      <outline text="PTS News [needs verification]" title="PTS News [needs verification]" type="rss" xmlUrl="https://news.pts.org.tw/xml/newsfeed.xml" htmlUrl="https://news.pts.org.tw"/>
+      <outline text="People News Taiwan [needs verification]" title="People News Taiwan [needs verification]" type="rss" xmlUrl="https://www.peoplenews.tw/feed" htmlUrl="https://www.peoplenews.tw"/>
     </outline>
     <outline text="Poland (PL)" title="Poland (PL)">
       <outline text="Onet [valid]" title="Onet [valid]" type="rss" xmlUrl="https://wiadomosci.onet.pl/rss" htmlUrl="https://wiadomosci.onet.pl"/>
