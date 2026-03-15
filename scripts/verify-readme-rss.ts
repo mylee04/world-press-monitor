@@ -103,7 +103,9 @@ const ARTICLE_VOLUME_WINDOW_HOURS = clampInt(process.env.RSS_ARTICLE_WINDOW_HOUR
 
 const COUNTRY_SECTION_HEADER = /^###\s+(.+?)\s+\(([^)]+)\)$/;
 const XML_MARKERS = ['<rss', '<feed', '<urlset', '<sitemapindex', '<?xml'];
-const USER_AGENT = 'PressLab-RSSReadmeVerifier/1.0 (+https://github.com/mylee04/world-press-monitor)';
+const USER_AGENT =
+  process.env.INGEST_USER_AGENT ||
+  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36';
 const GETENT_TIMEOUT_MS = clampInt(process.env.RSS_PRECHECK_GETENT_TIMEOUT_MS, 500, 10000, 3000);
 const SNAPSHOT_HEADING = '## Latest RSS verification snapshot';
 const COMMAND_OUTPUT_MAX_CHARS = 12000;
@@ -1545,7 +1547,10 @@ function fetchWithTimeout(url: string, timeoutMs: number): Promise<Response> {
     method: 'GET',
     headers: {
       'User-Agent': USER_AGENT,
-      Accept: 'application/rss+xml, application/xml, text/xml, */*',
+      Accept: 'application/rss+xml, application/xml, text/xml, application/atom+xml, */*',
+      'Accept-Language': process.env.INGEST_ACCEPT_LANGUAGE || 'en-US,en;q=0.9,es;q=0.8,ja;q=0.7',
+      Connection: 'keep-alive',
+      'Upgrade-Insecure-Requests': '1',
     },
     redirect: 'manual',
     signal: controller.signal,

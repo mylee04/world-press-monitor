@@ -35,6 +35,7 @@ export interface OutletFeed {
   country: string;
   rssUrl?: string;
   sitemapUrl?: string;
+  hasExplicitSitemapUrl?: boolean;
 }
 
 export interface SourcePreset {

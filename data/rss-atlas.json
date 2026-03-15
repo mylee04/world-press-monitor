@@ -8133,7 +8133,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 1
+          "row": 1,
+          "sitemapUrl": "https://www.ambito.com/sitemap-news.xml"
         },
         {
           "name": "Ámbito - Últimas noticias",
@@ -8351,8 +8352,7 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 28,
-          "sitemapUrl": "https://www.lanacion.com.ar/sitemap_news.xml"
+          "row": 28
         },
         {
           "name": "El Cronista - Noticias",
@@ -8360,7 +8360,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 29
+          "row": 29,
+          "sitemapUrl": "https://www.cronista.com/arc/outboundfeeds/sitemap-news-index/?outputType=xml"
         },
         {
           "name": "Clarín - Ultimo Momento (속보)",
@@ -8369,7 +8370,7 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 30,
-          "sitemapUrl": "https://www.clarin.com/sitemap_news.xml"
+          "sitemapUrl": "https://www.clarin.com/sitemaps/sitemap_google_news.xml"
         },
         {
           "name": "Clarín - Economía",
@@ -8404,13 +8405,13 @@
           "row": 34
         },
         {
-          "name": "Infobae - Argentina",
-          "url": "https://www.infobae.com/feeds/rss/argentina/",
+          "name": "Infobae",
+          "url": "https://www.infobae.com/arc/outboundfeeds/rss/?outputType=xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
           "row": 35,
-          "enabled": false
+          "sitemapUrl": "https://www.infobae.com/arc/outboundfeeds/news-sitemap2/"
         },
         {
           "name": "Infobae - Economía",
@@ -8453,7 +8454,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 40
+          "row": 40,
+          "sitemapUrl": "https://tn.com.ar/arc/outboundfeeds/news-sitemap/?outputType=xml"
         },
         {
           "name": "La Nación",
@@ -8462,7 +8464,7 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 41,
-          "sitemapUrl": "https://www.lanacion.com.ar/sitemap_news.xml"
+          "sitemapUrl": "https://www.lanacion.com.ar/sitemap-news.xml"
         },
         {
           "name": "Crónica",
@@ -8494,7 +8496,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 45
+          "row": 45,
+          "sitemapUrl": "https://www.perfil.com/sitemap/google-news-lastposts"
         },
         {
           "name": "Buenos Aires Times",
@@ -8526,7 +8529,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 49
+          "row": 49,
+          "sitemapUrl": "https://www.rionegro.com.ar/news-sitemap.xml"
         },
         {
           "name": "Econojournal",
@@ -8550,7 +8554,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 52
+          "row": 52,
+          "sitemapUrl": "https://www.lagaceta.com.ar/rss/sitemap_news"
         },
         {
           "name": "MercoPress",
@@ -8574,7 +8579,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 55
+          "row": 55,
+          "sitemapUrl": "https://www.ole.com.ar/sitemaps/sitemap_google_news.xml"
         },
         {
           "name": "Border Periodismo",
@@ -8662,7 +8668,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 66
+          "row": 66,
+          "sitemapUrl": "https://www.mdzol.com/sitemap-news.xml"
         },
         {
           "name": "MDZ Online - Últimas noticias Argentina",
@@ -8735,6 +8742,199 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 75
+        },
+        {
+          "name": "La Opinión Rafaela",
+          "url": "https://www.laopinion.com.ar/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 76
+        },
+        {
+          "name": "C5N - Home",
+          "url": "https://www.c5n.com/rss/pages/home.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 77
+        },
+        {
+          "name": "C5N - Política",
+          "url": "https://www.c5n.com/rss/pages/politica.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 78
+        },
+        {
+          "name": "C5N - Economía",
+          "url": "https://www.c5n.com/rss/pages/economia.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 79
+        },
+        {
+          "name": "C5N - Sociedad",
+          "url": "https://www.c5n.com/rss/pages/sociedad.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 80
+        },
+        {
+          "name": "C5N - Enfoque",
+          "url": "https://www.c5n.com/rss/pages/enfoque.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 81
+        },
+        {
+          "name": "C5N - Deportes",
+          "url": "https://www.c5n.com/rss/pages/deportes.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 82
+        },
+        {
+          "name": "C5N - Autos",
+          "url": "https://www.c5n.com/rss/pages/autos.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 83
+        },
+        {
+          "name": "C5N - Mundo",
+          "url": "https://www.c5n.com/rss/pages/mundo.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 84
+        },
+        {
+          "name": "C5N - Últimas noticias",
+          "url": "https://www.c5n.com/rss/pages/ultimas-noticias.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 85
+        },
+        {
+          "name": "C5N - Tecnología",
+          "url": "https://www.c5n.com/rss/pages/tecnologia.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 86
+        },
+        {
+          "name": "C5N - RatingCero",
+          "url": "https://www.c5n.com/rss/pages/ratingcero.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 87
+        },
+        {
+          "name": "C5N - Astrología",
+          "url": "https://www.c5n.com/rss/pages/astrologia.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 88
+        },
+        {
+          "name": "C5N - Lifestyle",
+          "url": "https://www.c5n.com/rss/pages/lifestyle.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 89
+        },
+        {
+          "name": "A24",
+          "url": null,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 90,
+          "sitemapUrl": "https://www.a24.com/sitemap-news.xml"
+        },
+        {
+          "name": "Canal 26",
+          "url": null,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 91,
+          "sitemapUrl": "https://www.canal26.com/arc/outboundfeeds/sitemap-news-index/?outputType=xml"
+        },
+        {
+          "name": "La Voz",
+          "url": null,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 92,
+          "sitemapUrl": "https://www.lavoz.com.ar/arc/outboundfeeds/feeds/news-sitemap/?outputType=xml"
+        },
+        {
+          "name": "Los Andes",
+          "url": null,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 93,
+          "sitemapUrl": "https://www.losandes.com.ar/sitemap-news.xml"
+        },
+        {
+          "name": "La Capital",
+          "url": null,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 94,
+          "sitemapUrl": "https://www.lacapital.com.ar/sitemap-news.xml"
+        },
+        {
+          "name": "Minutouno",
+          "url": null,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 95,
+          "sitemapUrl": "https://www.minutouno.com/sitemap-news.xml"
+        },
+        {
+          "name": "Urgente24",
+          "url": null,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 96,
+          "sitemapUrl": "https://urgente24.com/sitemap-news.xml"
+        },
+        {
+          "name": "El Destape Web",
+          "url": null,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 97,
+          "sitemapUrl": "https://www.eldestapeweb.com/sitemap-news.xml"
+        },
+        {
+          "name": "TyC Sports",
+          "url": null,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 98,
+          "sitemapUrl": "https://www.tycsports.com/sitemap_news_48hs.xml"
         }
       ]
     },
@@ -8756,7 +8956,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 2
+          "row": 2,
+          "sitemapUrl": "https://www.theclinic.cl/sitemap_index.xml"
         },
         {
           "name": "El Rancagüino",
@@ -8821,7 +9022,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 11
+          "row": 11,
+          "sitemapUrl": "https://eldesconcierto.cl/sitemap_index.xml"
         },
         {
           "name": "La Prensa Austral",
@@ -8837,7 +9039,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 14
+          "row": 14,
+          "sitemapUrl": "https://www.ciperchile.cl/sitemap_index.xml"
         },
         {
           "name": "Radio Universidad de Chile",
@@ -8853,7 +9056,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 31
+          "row": 31,
+          "sitemapUrl": "https://www.latercera.com/arc/outboundfeeds/news-sitemap-index?outputType=xml"
         },
         {
           "name": "Pulso (La Tercera Biz)",
@@ -8869,7 +9073,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 33
+          "row": 33,
+          "enabled": false
         },
         {
           "name": "Emol - Economía",
@@ -8877,16 +9082,17 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 34
+          "row": 34,
+          "enabled": false
         },
         {
           "name": "BioBioChile - Home",
-          "url": "https://www.biobiochile.cl/feed",
+          "url": "https://feeds.feedburner.com/radiobiobio/NNeJ",
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
           "row": 35,
-          "enabled": false
+          "sitemapUrl": "https://www.biobiochile.cl/news-sitemap.xml"
         },
         {
           "name": "Cooperativa - Economía",
@@ -9172,7 +9378,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 70
+          "row": 70,
+          "sitemapUrl": "https://www.concierto.cl/news-sitemap.xml"
         },
         {
           "name": "Futuro",
@@ -9180,7 +9387,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 71
+          "row": 71,
+          "sitemapUrl": "https://www.futuro.cl/out/sitesmap-news.xml"
         },
         {
           "name": "Rock&Pop",
@@ -9188,7 +9396,78 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 72
+          "row": 72,
+          "sitemapUrl": "https://www.rockandpop.cl/out/sitesmap-news.xml"
+        },
+        {
+          "name": "Diario Talca",
+          "url": "https://www.diariotalca.cl/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 73
+        },
+        {
+          "name": "Publimetro Chile - Home",
+          "url": "https://www.publimetro.cl/arc/outboundfeeds/rss/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 74
+        },
+        {
+          "name": "Cooperativa - Portada",
+          "url": "https://www.cooperativa.cl/noticias/site/tax/port/all/rss____1.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 75,
+          "sitemapUrl": "https://www.cooperativa.cl/noticias/sitemap_news.xml"
+        },
+        {
+          "name": "Meganoticias",
+          "url": null,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 76,
+          "sitemapUrl": "https://www.meganoticias.cl/sitemaps/sitemap-news.xml"
+        },
+        {
+          "name": "CNN Chile",
+          "url": null,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 77,
+          "sitemapUrl": "https://www.cnnchile.com/_files/sitemaps/sitemap_news.xml"
+        },
+        {
+          "name": "El Mostrador",
+          "url": null,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 78,
+          "sitemapUrl": "https://www.elmostrador.cl/sitemap_news.xml"
+        },
+        {
+          "name": "El Dínamo",
+          "url": null,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 79,
+          "sitemapUrl": "https://www.eldinamo.cl/_files/sitemaps/sitemap_news.xml"
+        },
+        {
+          "name": "Chilevisión Noticias",
+          "url": null,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 80,
+          "sitemapUrl": "https://www.chilevision.cl/chilevision/site/sitemap_news_chvn.xml"
         }
       ]
     },
@@ -9202,7 +9481,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 1
+          "row": 1,
+          "sitemapUrl": "https://www.diariolibre.com/sitemapnews"
         },
         {
           "name": "Diario Libre - Actualidad",
@@ -9367,12 +9647,12 @@
         },
         {
           "name": "Listín Diario - Portada",
-          "url": "https://listindiario.com/rss/portada.xml",
+          "url": null,
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
           "row": 31,
-          "enabled": false
+          "sitemapUrl": "https://listindiario.com/sitemap-google-news.xml"
         },
         {
           "name": "Listín Diario - Economía",
@@ -9384,12 +9664,12 @@
         },
         {
           "name": "Periódico Hoy",
-          "url": "https://hoy.com.do/feed/",
+          "url": "https://hoy.com.do/rss/home.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
           "row": 33,
-          "enabled": false
+          "sitemapUrl": "https://hoy.com.do/sitemap-google-news.xml"
         },
         {
           "name": "El Dinero",
@@ -9418,21 +9698,62 @@
         },
         {
           "name": "Noticias SIN",
-          "url": "https://feeds.feedburner.com/noticiassin1",
+          "url": "https://noticiassin.com/feed/",
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
           "row": 37
         },
         {
-          "name": "Noticias SIN",
-          "url": "https://noticiassin.com/feed/",
-          "enabled": false
+          "name": "Diario Libre - Revista",
+          "url": "https://www.diariolibre.com/rss/revista.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 38
+        },
+        {
+          "name": "El Día",
+          "url": "https://eldia.com.do/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 39,
+          "sitemapUrl": "https://eldia.com.do/news-sitemap.xml"
+        },
+        {
+          "name": "N Digital",
+          "url": "https://n.com.do/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 40,
+          "sitemapUrl": "https://n.com.do/sitemap_index.xml"
+        },
+        {
+          "name": "Z101 Digital",
+          "url": "https://www.z101digital.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 41
         },
         {
           "name": "El Caribe",
-          "url": "https://www.elcaribe.com.do/feed/",
-          "enabled": false
+          "url": null,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "sitemapUrl": "https://www.elcaribe.com.do/news-sitemap.xml"
+        },
+        {
+          "name": "Teleuniverso",
+          "url": null,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 42,
+          "sitemapUrl": "https://teleuniversotv.com/sitemaps.xml"
         }
       ]
     },
@@ -9446,7 +9767,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 1
+          "row": 1,
+          "sitemapUrl": "https://www.elobservador.com.uy/sitemap-news.xml"
         },
         {
           "name": "El Observador - Último momento",
@@ -9638,7 +9960,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 25
+          "row": 25,
+          "sitemapUrl": "https://www.montevideo.com.uy/sitemap.xml"
         },
         {
           "name": "Montevideo Portal - Noticias",
@@ -9686,7 +10009,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 31
+          "row": 31,
+          "sitemapUrl": "https://www.elpais.com.uy/news-sitemap.xml"
         },
         {
           "name": "El País - Economía",
@@ -9728,7 +10052,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 36
+          "row": 36,
+          "sitemapUrl": "https://www.subrayado.com.uy/sitemap-news.xml"
         },
         {
           "name": "Subrayado - Sociedad",
@@ -9809,12 +10134,16 @@
         },
         {
           "name": "Teledoce",
-          "url": "https://www.teledoce.com/feed/"
+          "url": "https://www.teledoce.com/feed/",
+          "sitemapUrl": "https://www.teledoce.com/wp-sitemap.xml"
         },
         {
-          "name": "La Diaria",
-          "url": "https://ladiaria.com.uy/feeds/articles/",
-          "enabled": false
+          "name": "La Diaria - Home",
+          "url": "https://ladiaria.com.uy/feeds/articulos/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "sitemapUrl": "https://ladiaria.com.uy/sitemap-news_48hs.xml"
         },
         {
           "name": "La Republica",
@@ -9822,14 +10151,77 @@
           "enabled": false
         },
         {
-          "name": "Caras y Caretas",
-          "url": "https://www.carasycaretas.com.uy/feed",
-          "enabled": false
+          "name": "Caras y Caretas - Home",
+          "url": "https://www.carasycaretas.com.uy/rss/pages/home.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "sitemapUrl": "https://www.carasycaretas.com.uy/sitemap-news.xml"
+        },
+        {
+          "name": "Telenoche",
+          "url": null,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "sitemapUrl": "https://www.telenoche.com.uy/sitemap-news.xml"
         },
         {
           "name": "El Pais Uruguay",
           "url": "https://www.elpais.com.uy/rss/ultimas-noticias",
           "enabled": false
+        },
+        {
+          "name": "970 Universal",
+          "url": "https://970universal.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification"
+        },
+        {
+          "name": "El Telégrafo",
+          "url": "https://www.eltelegrafo.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification"
+        },
+        {
+          "name": "Carmelo Portal",
+          "url": "https://www.carmeloportal.com/feed",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "sitemapUrl": "https://www.carmeloportal.com/sitemap_index.xml"
+        },
+        {
+          "name": "San José Ahora",
+          "url": "https://sanjoseahora.com.uy/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "sitemapUrl": "https://sanjoseahora.com.uy/news-sitemap.xml"
+        },
+        {
+          "name": "Sarandí 690",
+          "url": "https://www.sarandi690.com.uy/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification"
+        },
+        {
+          "name": "El Popular",
+          "url": "https://elpopular.uy/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification"
+        },
+        {
+          "name": "Grupo R Multimedio",
+          "url": "https://grupormultimedio.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "sitemapUrl": "https://grupormultimedio.com/sitemap_index.xml"
         }
       ]
     },

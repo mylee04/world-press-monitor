@@ -220,8 +220,14 @@ export function parseSitemapWithStats(xml: string, limit = 12): ParsedFeedBatch 
     .slice(0, limit)
     .map((body) => {
       const link = parseTag(body, 'loc');
-      const title = link.split('/').pop()?.replace(/[-_]/g, ' ') || link;
-      const publishedAt = normalizePublishedAt(parseTag(body, 'lastmod')) || inferPublishedAtFromLink(link);
+      const title =
+        parseTag(body, 'news:title')
+        || link.split('/').pop()?.replace(/[-_]/g, ' ')
+        || link;
+      const publishedAt =
+        normalizePublishedAt(parseTag(body, 'news:publication_date'))
+        || normalizePublishedAt(parseTag(body, 'lastmod'))
+        || inferPublishedAtFromLink(link);
       return {
         title,
         description: '',

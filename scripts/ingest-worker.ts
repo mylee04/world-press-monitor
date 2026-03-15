@@ -27,14 +27,14 @@ const FETCH_TIMEOUT_MS = Math.max(
   3000,
   Math.min(30000, Number.parseInt(process.env.INGEST_FETCH_TIMEOUT_MS || '12000', 10) || 12000)
 );
-const RSS_ITEM_LIMIT = Math.max(10, Math.min(300, Number.parseInt(process.env.INGEST_RSS_LIMIT || '120', 10) || 120));
+const RSS_ITEM_LIMIT = Math.max(10, Math.min(1000, Number.parseInt(process.env.INGEST_RSS_LIMIT || '1000', 10) || 1000));
 const SITEMAP_ITEM_LIMIT = Math.max(
   10,
-  Math.min(300, Number.parseInt(process.env.INGEST_SITEMAP_LIMIT || '80', 10) || 80)
+  Math.min(1000, Number.parseInt(process.env.INGEST_SITEMAP_LIMIT || '1000', 10) || 1000)
 );
 const SITEMAP_INDEX_CHILDREN_LIMIT = Math.max(
   1,
-  Math.min(10, Number.parseInt(process.env.INGEST_SITEMAP_INDEX_CHILDREN || '3', 10) || 3)
+  Math.min(48, Number.parseInt(process.env.INGEST_SITEMAP_INDEX_CHILDREN || '24', 10) || 24)
 );
 const FETCH_CONCURRENCY = Math.max(
   4,
@@ -216,17 +216,25 @@ function loadAtlasOutlets(): OutletFeed[] {
     const outlets = atlas.countries.flatMap((country) => {
       const countryName = country.name || country.code || 'Global';
       return (Array.isArray(country.feeds) ? country.feeds : [])
-      .filter((feed): feed is AtlasFeed => feed.url !== null && typeof feed.url === 'string' && feed.url.trim().length > 0 && feed.enabled !== false)
+      .filter((feed): feed is AtlasFeed => {
+        if (feed.enabled === false) return false;
+        const hasRssUrl = feed.url !== null && typeof feed.url === 'string' && feed.url.trim().length > 0;
+        const hasExplicitSitemapUrl = typeof feed.sitemapUrl === 'string' && feed.sitemapUrl.trim().length > 0;
+        return hasRssUrl || hasExplicitSitemapUrl;
+      })
       .map((feed) => ({
         name: feed.name || 'Unknown source',
-        url: typeof feed.url === 'string' ? feed.url.trim() : '',
+        rssUrl:
+          typeof feed.url === 'string' && feed.url.trim().length > 0
+            ? feed.url.trim()
+            : undefined,
         explicitSitemapUrl:
           typeof feed.sitemapUrl === 'string' && feed.sitemapUrl.trim().length > 0
             ? feed.sitemapUrl.trim()
             : undefined,
       }))
         .map((feed) => ({
-          id: makeOutletId(countryName, feed.name, feed.url),
+          id: makeOutletId(countryName, feed.name, feed.rssUrl || feed.explicitSitemapUrl || feed.name),
           name: feed.name,
           tier: 1 as OutletTier,
           section: 'others',
@@ -236,9 +244,10 @@ function loadAtlasOutlets(): OutletFeed[] {
           reviewDecision: 'keep_secondary',
           defaultEnabled: true,
           country: countryName,
-          rssUrl: feed.url,
+          rssUrl: feed.rssUrl,
           sitemapUrl:
-            feed.explicitSitemapUrl ?? buildSitemapFallbackUrls(feed.url)[0],
+            feed.explicitSitemapUrl ?? (feed.rssUrl ? buildSitemapFallbackUrls(feed.rssUrl)[0] : undefined),
+          hasExplicitSitemapUrl: Boolean(feed.explicitSitemapUrl),
         }) satisfies OutletFeed);
     });
     outlets.sort((a, b) => a.country.localeCompare(b.country) || a.name.localeCompare(b.name));
@@ -252,16 +261,83 @@ function loadAtlasOutlets(): OutletFeed[] {
   return [];
 }
 
+type SitemapIndexEntry = {
+  loc: string;
+  lastmodMs: number | null;
+  locDateMs: number | null;
+  locNumericTail: number | null;
+  index: number;
+};
+
+function decodeXmlEntities(value: string): string {
+  return value
+    .replace(/&amp;/gi, '&')
+    .replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>')
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;/gi, "'");
+}
+
+function parseSitemapIndexLocDateMs(loc: string): number | null {
+  const normalized = decodeXmlEntities(loc);
+  const slashPattern = normalized.match(/(20\d{2})\/(0[1-9]|1[0-2])\/([0-2]\d|3[01])/);
+  if (slashPattern) {
+    const ts = Date.parse(`${slashPattern[1]}-${slashPattern[2]}-${slashPattern[3]}T00:00:00Z`);
+    return Number.isFinite(ts) ? ts : null;
+  }
+  const dashPattern = normalized.match(/(20\d{2})-(0[1-9]|1[0-2])-([0-2]\d|3[01])/);
+  if (dashPattern) {
+    const ts = Date.parse(`${dashPattern[1]}-${dashPattern[2]}-${dashPattern[3]}T00:00:00Z`);
+    return Number.isFinite(ts) ? ts : null;
+  }
+  return null;
+}
+
+function parseSitemapIndexLocNumericTail(loc: string): number | null {
+  const normalized = decodeXmlEntities(loc);
+  const match = normalized.match(/(\d+)(?!.*\d)/);
+  if (!match) return null;
+  const parsed = Number.parseInt(match[1] || '', 10);
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
 function parseSitemapIndex(xml: string): string[] {
   if (!/<sitemapindex[\s>]/i.test(xml)) return [];
-  return [...xml.matchAll(/<sitemap>([\s\S]*?)<\/sitemap>/gi)]
-    .map((match) => match[1] || '')
-    .map((body) => {
-      const loc = body.match(/<loc[^>]*>([\s\S]*?)<\/loc>/i)?.[1]?.trim() || '';
-      return loc;
+  const entries = [...xml.matchAll(/<sitemap>([\s\S]*?)<\/sitemap>/gi)]
+    .map((match, index) => {
+      const body = match[1] || '';
+      const loc = decodeXmlEntities(body.match(/<loc[^>]*>([\s\S]*?)<\/loc>/i)?.[1]?.trim() || '');
+      const lastmodRaw = body.match(/<lastmod[^>]*>([\s\S]*?)<\/lastmod>/i)?.[1]?.trim() || '';
+      const lastmodMs = lastmodRaw ? Date.parse(lastmodRaw) : NaN;
+      return {
+        loc,
+        lastmodMs: Number.isFinite(lastmodMs) ? lastmodMs : null,
+        locDateMs: parseSitemapIndexLocDateMs(loc),
+        locNumericTail: parseSitemapIndexLocNumericTail(loc),
+        index,
+      } satisfies SitemapIndexEntry;
     })
-    .filter(Boolean)
-    .slice(0, SITEMAP_INDEX_CHILDREN_LIMIT);
+    .filter((entry) => Boolean(entry.loc));
+
+  entries.sort((left, right) => {
+    const leftLastmod = left.lastmodMs ?? Number.NEGATIVE_INFINITY;
+    const rightLastmod = right.lastmodMs ?? Number.NEGATIVE_INFINITY;
+    if (rightLastmod !== leftLastmod) return rightLastmod - leftLastmod;
+
+    const leftLocDate = left.locDateMs ?? Number.NEGATIVE_INFINITY;
+    const rightLocDate = right.locDateMs ?? Number.NEGATIVE_INFINITY;
+    if (rightLocDate !== leftLocDate) return rightLocDate - leftLocDate;
+
+    const leftLocNumericTail = left.locNumericTail ?? Number.NEGATIVE_INFINITY;
+    const rightLocNumericTail = right.locNumericTail ?? Number.NEGATIVE_INFINITY;
+    if (rightLocNumericTail !== leftLocNumericTail) return rightLocNumericTail - leftLocNumericTail;
+
+    return right.index - left.index;
+  });
+
+  return entries
+    .slice(0, SITEMAP_INDEX_CHILDREN_LIMIT)
+    .map((entry) => entry.loc);
 }
 
 type ParsedSitemapResult = ReturnType<typeof parseSitemapWithStats>;
@@ -739,6 +815,7 @@ async function trySitemapFallback(outlet: OutletFeed): Promise<ParsedSitemapResu
 }
 
 const ENABLE_RSS_TO_SITEMAP_FALLBACK = parseBoolEnv(process.env.INGEST_RSS_SITEMAP_FALLBACK, true);
+const ENABLE_EXPLICIT_SITEMAP_PARALLEL = parseBoolEnv(process.env.INGEST_EXPLICIT_SITEMAP_PARALLEL, true);
 
 const FEED_FETCH_HEADERS = {
   'User-Agent':
@@ -1741,7 +1818,16 @@ async function runOnce(): Promise<void> {
     failedRssResultByOutlet.set(result.run.outletId, result);
   }
 
-  const sitemapEndpoints = allSitemapEndpoints.filter((endpoint) => failedRssResultByOutlet.has(endpoint.outlet.id));
+  const explicitParallelSitemapEndpoints = ENABLE_EXPLICIT_SITEMAP_PARALLEL
+    ? allSitemapEndpoints.filter((endpoint) => endpoint.outlet.hasExplicitSitemapUrl)
+    : [];
+  const explicitParallelEndpointKeys = new Set(
+    explicitParallelSitemapEndpoints.map((endpoint) => `${endpoint.outlet.id}:${endpoint.method}`)
+  );
+  const fallbackSitemapEndpoints = allSitemapEndpoints.filter(
+    (endpoint) => failedRssResultByOutlet.has(endpoint.outlet.id) && !explicitParallelEndpointKeys.has(`${endpoint.outlet.id}:${endpoint.method}`)
+  );
+  const sitemapEndpoints = [...explicitParallelSitemapEndpoints, ...fallbackSitemapEndpoints];
 
   const sitemapResults = await runWithConcurrency<EndpointRun, EndpointResult>(sitemapEndpoints, FETCH_CONCURRENCY, async (endpoint) => {
     const endpointKey = `${endpoint.outlet.id}:${endpoint.method}`;
@@ -1993,6 +2079,7 @@ async function runOnce(): Promise<void> {
   console.log(
     `[ingest-worker] outlets=${selected.length}/${countryFilteredOutlets.length}/${allOutlets.length} endpoints=${attempted} ok=${okEndpoints} failed=${failedEndpoints} ` +
     `country_filter=${COUNTRY_FILTER ? COUNTRY_FILTER.display.join('|') : 'ALL'} ` +
+    `explicit_sitemap_parallel=${ENABLE_EXPLICIT_SITEMAP_PARALLEL ? 'on' : 'off'} ` +
     `backoff_skipped_total=${failingKeys.size} backoff_skipped=[rss=${fallbackSummary.rssBackoffSkipped}, sitemap=${fallbackSummary.sitemapBackoffSkipped}] ` +
     `sitemap_policy_disabled=${fallbackSummary.sitemapPolicyDisabled} ` +
     `method_stats= [rss attempted=${methodStats.rss.attempted}, ok=${methodStats.rss.ok}, fail=${methodStats.rss.fail}(${percent(methodStats.rss.fail, methodStats.rss.attempted)}%); ` +
