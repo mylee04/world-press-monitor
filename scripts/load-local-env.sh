@@ -42,4 +42,5 @@ load_local_env() {
 
   : "${DATABASE_URL:=postgresql://postgres:postgres@127.0.0.1:${WPM_PG_PORT:-5432}/wpm}"
   export DATABASE_URL
+  export PATH="${HOME}/.bun/bin:/opt/homebrew/bin:/usr/local/bin:${PATH}"
 }

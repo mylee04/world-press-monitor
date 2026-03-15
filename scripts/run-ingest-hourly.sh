@@ -29,6 +29,23 @@ fi
 
 export INGEST_OUTLET_CHUNK_SIZE="${INGEST_OUTLET_CHUNK_SIZE:-20000}"
 
+run_post_ingest_hooks() {
+  if [ "${WPM_POST_INGEST_REPORTS:-1}" = "0" ]; then
+    printf '[%s] Post-ingest hooks disabled via WPM_POST_INGEST_REPORTS=0\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
+    return 0
+  fi
+
+  printf '[%s] Trigger post-ingest hourly reports\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
+
+  if ! bash "${SCRIPT_DIR}/run-news-country-discord-report.sh"; then
+    printf '[%s] WARN: news-country discord hook failed\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
+  fi
+
+  if ! bash "${SCRIPT_DIR}/run-ingest-ops-hourly.sh"; then
+    printf '[%s] WARN: ingest-ops hourly hook failed\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
+  fi
+}
+
 {
   printf '\n[%s] Start hourly ingest pipeline\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
   printf 'Project: %s\n' "${PROJECT_ROOT}"
@@ -36,3 +53,5 @@ export INGEST_OUTLET_CHUNK_SIZE="${INGEST_OUTLET_CHUNK_SIZE:-20000}"
   printf 'Command: %s\n' "${RUNNER_COMMAND}"
   ${RUNNER_COMMAND}
 } >>"${LOG_FILE}" 2>&1
+
+run_post_ingest_hooks >>"${LOG_FILE}" 2>&1

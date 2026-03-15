@@ -29,6 +29,7 @@ repo/
   public/data/
   scripts/
     load-local-env.sh
+    setup-launchd-local.sh
     run-ingest-hourly-local.sh
     run-rss-health-daily-local.sh
     run-static-export-local.sh
@@ -57,10 +58,23 @@ repo/
 ## Launchd schedule
 
 - `com.wpm.ingest-hourly`: minute `25` each hour
+- `run-ingest-hourly-local.sh` chains `run-news-country-discord-report.sh` and `run-ingest-ops-hourly.sh` after a successful ingest
 - `com.wpm.health-daily`: `00:30 America/Chicago`
 - `com.wpm.export-deploy`: minute `40` each hour
 
-Replace `/Users/your-user/srv/world-press-monitor/repo` in the plist templates with the real repo path before loading them.
+Install the launchd jobs from a non-protected runtime path:
+
+```bash
+bash scripts/setup-launchd-local.sh install
+```
+
+Defaults:
+
+- runtime root: `~/srv/world-press-monitor`
+- runtime repo: `~/srv/world-press-monitor/repo`
+- launchd target: `~/Library/LaunchAgents`
+
+Do not point launchd at worktrees under `Desktop`, `Documents`, or `Downloads`; macOS background execution can block those paths with `Operation not permitted`.
 
 ## Vercel deploy setup
 
@@ -83,7 +97,7 @@ Recommended once per Mac mini:
 
 1. `docker compose up -d postgres`
 2. `bash scripts/bootstrap-wpm-db.sh`
-3. `bash scripts/run-ingest-hourly-local.sh`
+3. `bash scripts/setup-launchd-local.sh install`
 4. `bash scripts/run-rss-health-daily-local.sh`
 5. `bash scripts/run-static-export-local.sh`
 6. `bash scripts/run-static-deploy-local.sh`
