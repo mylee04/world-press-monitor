@@ -3,6 +3,7 @@
 import { Pool } from 'pg';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { resolveDatabaseUrl } from '@/lib/database-url';
 
 type CountryRow = {
   country: string;
@@ -174,10 +175,7 @@ async function postToDiscord(webhookUrl: string, content: string): Promise<void>
 }
 
 async function main(): Promise<void> {
-  const databaseUrl = process.env.DATABASE_URL?.trim();
-  if (!databaseUrl) {
-    throw new Error('DATABASE_URL is not configured. Set DATABASE_URL in .env.macmini.local, .env.local, or the shell environment.');
-  }
+  const databaseUrl = resolveDatabaseUrl();
 
   const webhookUrl = pickWebhookUrl();
   if (!webhookUrl) {

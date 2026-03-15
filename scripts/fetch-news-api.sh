@@ -3,14 +3,9 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
-ENV_FILE="${PROJECT_ROOT}/.env.local"
-
-if [ -f "${ENV_FILE}" ]; then
-  set -a
-  # shellcheck disable=SC1090
-  source "${ENV_FILE}"
-  set +a
-fi
+# shellcheck disable=SC1091
+source "${SCRIPT_DIR}/load-local-env.sh"
+load_local_env
 
 BASE_URL="${NEWS_API_BASE_URL:-http://127.0.0.1:4100}"
 TOKEN="${NEWS_API_TOKEN:-}"
@@ -26,7 +21,7 @@ PUB_FROM="${NEWS_API_PUBLICATION_FROM:-}"
 PUB_TO="${NEWS_API_PUBLICATION_TO:-}"
 
 if [ -z "${TOKEN}" ]; then
-  echo "ERROR: NEWS_API_TOKEN is missing in .env.local"
+  echo "ERROR: NEWS_API_TOKEN is missing. Set it in .env.macmini.local or the shell environment."
   exit 1
 fi
 

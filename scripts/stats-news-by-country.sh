@@ -3,17 +3,14 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
-ENV_FILE="${PROJECT_ROOT}/.env.local"
+# shellcheck disable=SC1091
+source "${SCRIPT_DIR}/load-local-env.sh"
+load_local_env
 
-if [ -f "${ENV_FILE}" ]; then
-  set -a
-  # shellcheck disable=SC1090
-  source "${ENV_FILE}"
-  set +a
-fi
+: "${DATABASE_URL:=postgresql://postgres:postgres@127.0.0.1:${WPM_PG_PORT:-5432}/wpm}"
 
 if [ -z "${DATABASE_URL:-}" ]; then
-  echo "ERROR: DATABASE_URL is required. Add DATABASE_URL in .env.local."
+  echo "ERROR: DATABASE_URL is required. Set it in .env.macmini.local or the shell environment."
   exit 1
 fi
 

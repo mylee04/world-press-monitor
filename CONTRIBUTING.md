@@ -11,7 +11,7 @@ Thanks for helping improve World Press Monitor.
 bun install
 ```
 
-3. Set local environment variables in `.env.local` (`DATABASE_URL`, `WPM_PG_PORT`, etc.).
+3. Set local environment variables in `.env.macmini.local` (`DATABASE_URL`, `WPM_PG_PORT`, etc.). If you need a different env file, set `WPM_ENV_FILE` explicitly.
 4. Boot the database (main DB is `wpm`):
 
 ```bash

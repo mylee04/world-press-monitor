@@ -2,6 +2,7 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { Pool } from 'pg';
+import { resolveDatabaseUrl } from '@/lib/database-url';
 import { normalizeLinkForId } from '../lib/pipeline';
 
 type IngestionRow = {
@@ -338,10 +339,7 @@ function writeMarkdown(path: string, rows: AggregatedEndpoint[], options: CliOpt
 
 async function main(): Promise<void> {
   const options = parseOptions();
-  const databaseUrl = (process.env.DATABASE_URL || '').trim();
-  if (!databaseUrl) {
-    throw new Error('DATABASE_URL is required');
-  }
+  const databaseUrl = resolveDatabaseUrl();
 
   mkdirSync(resolve(process.cwd(), 'audits'), { recursive: true });
 

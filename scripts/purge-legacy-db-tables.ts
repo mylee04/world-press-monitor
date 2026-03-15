@@ -1,6 +1,7 @@
 import { Client } from 'pg';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { resolveDatabaseUrl } from '@/lib/database-url';
 
 type Args = {
   apply: boolean;
@@ -10,7 +11,7 @@ type Args = {
 const DB_SCHEMA_PATH = resolve(process.cwd(), 'db/schema.sql');
 const APPLY = process.argv.includes('--apply');
 const PURGE_ALL = process.argv.includes('--all');
-const url = process.env.DATABASE_URL;
+const url = resolveDatabaseUrl();
 
 const LEGACY_HINT_TABLES = new Set([
   'drafts',
@@ -78,10 +79,6 @@ function pickLegacyTargets(
 }
 
 async function main(): Promise<void> {
-  if (!url) {
-    throw new Error('DATABASE_URL is required. Set env and run again.');
-  }
-
   const args: Args = {
     apply: APPLY,
     all: PURGE_ALL,

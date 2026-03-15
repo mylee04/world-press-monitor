@@ -45,7 +45,7 @@ curl -H "Authorization: Bearer <TOKEN>" \
 NEWS_API_HOST=0.0.0.0
 NEWS_API_TOKEN=<공유한 토큰>
 NEWS_API_CORS_ORIGINS=*
-DATABASE_URL=<Neon 또는 PostgreSQL 연결 문자열>
+DATABASE_URL=<현재 운영 PostgreSQL 연결 문자열>
 NODE_ENV=production
 ```
 - Render는 `$PORT`를 주입합니다. 따라서 별도 고정 포트가 아닌 `NEWS_API_PORT="$PORT"` 방식이 안정적입니다.
