@@ -25,8 +25,8 @@ export function DownloadsView() {
         <div className="eyebrow">Downloads</div>
         <h1>Static file entry points</h1>
         <p>
-          Common CSV ranges are prebuilt. JSON shards stay addressable directly so the web app can
-          fetch only the slices it needs.
+          `latest-24h.csv` is prebuilt. JSON shards stay addressable directly so the web app can
+          fetch only the slices it needs, and deeper CSV exports can be generated from Explorer.
         </p>
       </section>
 
@@ -34,10 +34,14 @@ export function DownloadsView() {
         <article className="panel">
           <div className="section-head">
             <h2>CSV downloads</h2>
-            <span>{manifest.downloads.byDate.length + manifest.downloads.byCountryMonth.length + 1} files</span>
+            <span>
+              {manifest.downloads.byDate.length + manifest.downloads.byCountryMonth.length + (manifest.downloads.latest24h ? 1 : 0)} files
+            </span>
           </div>
           <div className="link-list">
-            <a href={withBasePath(manifest.downloads.latest24h) || '#'}>latest-24h.csv</a>
+            {manifest.downloads.latest24h ? (
+              <a href={withBasePath(manifest.downloads.latest24h) || '#'}>latest-24h.csv</a>
+            ) : null}
             {manifest.downloads.byDate.map((path) => (
               <a href={withBasePath(path) || '#'} key={path}>
                 {path.replace('/data/downloads/', '')}
@@ -48,6 +52,9 @@ export function DownloadsView() {
                 {path.replace('/data/downloads/', '')}
               </a>
             ))}
+            {!manifest.downloads.latest24h && manifest.downloads.byDate.length === 0 && manifest.downloads.byCountryMonth.length === 0 ? (
+              <div className="muted">No prebuilt CSV files published in this export.</div>
+            ) : null}
           </div>
         </article>
 

@@ -10,16 +10,24 @@ load_local_env
 LOG_DIR="${WPM_LOG_DIR:-${PROJECT_ROOT}/logs}"
 LOG_FILE="${LOG_DIR}/static-deploy-local.log"
 WEB_DIST_DIR="${WPM_WEB_DIST_DIR:-${PROJECT_ROOT}/web-dist}"
+LOCK_DIR="${PROJECT_ROOT}/.wpm-static-deploy-lock"
+VERCEL_DEPLOY_ARCHIVE="${VERCEL_DEPLOY_ARCHIVE:-tgz}"
 
 mkdir -p "${LOG_DIR}" "${WEB_DIST_DIR}"
 cd "${PROJECT_ROOT}"
 export PATH="${PATH}:/opt/homebrew/bin:/usr/local/bin"
 
+if ! mkdir "${LOCK_DIR}" 2>/dev/null; then
+  printf '[%s] Another static deploy instance is already running; skip.\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')" >>"${LOG_FILE}"
+  exit 0
+fi
+trap 'rm -rf "${LOCK_DIR}"' EXIT
+
 run_default_vercel_deploy() {
   local -a build_command
   local -a deploy_command
   build_command=(vercel build --prod --yes)
-  deploy_command=(vercel deploy --prebuilt --prod --yes)
+  deploy_command=(vercel deploy --prebuilt --prod --yes --archive "${VERCEL_DEPLOY_ARCHIVE}")
 
   if [ -n "${VERCEL_SCOPE:-}" ]; then
     build_command+=(--scope "${VERCEL_SCOPE}")

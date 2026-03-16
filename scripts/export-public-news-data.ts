@@ -73,6 +73,9 @@ const LATEST_HOURS = clampInt(process.env.PUBLIC_EXPORT_LATEST_HOURS, 1, 72, 24)
 const MAX_ROWS = clampInt(process.env.PUBLIC_EXPORT_MAX_ROWS, 100, 250000, 50000);
 const PUBLIC_EXPORT_TIMEZONE = (process.env.PUBLIC_EXPORT_TIMEZONE || process.env.INGEST_TZ || 'America/Chicago').trim();
 const PUBLIC_EXPORT_SCHEDULE_MINUTE = clampInt(process.env.PUBLIC_EXPORT_SCHEDULE_MINUTE, 0, 59, 40);
+const WRITE_LATEST_24H_CSV = parseBool(process.env.PUBLIC_EXPORT_WRITE_LATEST_24H_CSV, true);
+const WRITE_BY_DATE_CSV = parseBool(process.env.PUBLIC_EXPORT_WRITE_BY_DATE_CSV, false);
+const WRITE_BY_COUNTRY_MONTH_CSV = parseBool(process.env.PUBLIC_EXPORT_WRITE_BY_COUNTRY_MONTH_CSV, false);
 const FALLBACK_COUNTRY_CODE = 'GLOBAL';
 const MAX_FUTURE_PUBLICATION_HOURS = clampInt(process.env.PUBLIC_EXPORT_MAX_FUTURE_HOURS, 1, 168, 6);
 
@@ -101,6 +104,15 @@ function clampInt(raw: string | undefined, min: number, max: number, fallback: n
   const parsed = Number.parseInt(raw || '', 10);
   if (!Number.isFinite(parsed)) return fallback;
   return Math.min(Math.max(parsed, min), max);
+}
+
+function parseBool(raw: string | undefined, fallback: boolean): boolean {
+  if (raw == null) return fallback;
+  const normalized = raw.trim().toLowerCase();
+  if (!normalized) return fallback;
+  if (['1', 'true', 'yes', 'y', 'on'].includes(normalized)) return true;
+  if (['0', 'false', 'no', 'n', 'off'].includes(normalized)) return false;
+  return fallback;
 }
 
 function loadAtlas(): Atlas {
@@ -275,10 +287,12 @@ function writeDataFiles(
     const outputPath = resolve(OUTPUT_DIR, 'by-date', `${date}.json`);
     writeJson(outputPath, shard);
     byDatePaths.push(`/data/by-date/${date}.json`);
-    writeCsv(
-      resolve(OUTPUT_DIR, 'downloads', 'by-date', `${date}.csv`),
-      dateArticles
-    );
+    if (WRITE_BY_DATE_CSV) {
+      writeCsv(
+        resolve(OUTPUT_DIR, 'downloads', 'by-date', `${date}.csv`),
+        dateArticles
+      );
+    }
   }
 
   const byCountryMonth = groupBy(articles, (article) => `${article.countryCode}|${article.publicationDatetime.slice(0, 7)}`);
@@ -296,13 +310,17 @@ function writeDataFiles(
     const outputPath = resolve(OUTPUT_DIR, 'by-country', countryCode, `${month}.json`);
     writeJson(outputPath, shard);
     byCountryMonthPaths.push(`/data/by-country/${countryCode}/${month}.json`);
-    writeCsv(
-      resolve(OUTPUT_DIR, 'downloads', 'by-country', countryCode, `${month}.csv`),
-      countryMonthArticles
-    );
+    if (WRITE_BY_COUNTRY_MONTH_CSV) {
+      writeCsv(
+        resolve(OUTPUT_DIR, 'downloads', 'by-country', countryCode, `${month}.csv`),
+        countryMonthArticles
+      );
+    }
   }
 
-  writeCsv(resolve(OUTPUT_DIR, 'downloads', 'latest-24h.csv'), latest24hArticles);
+  if (WRITE_LATEST_24H_CSV) {
+    writeCsv(resolve(OUTPUT_DIR, 'downloads', 'latest-24h.csv'), latest24hArticles);
+  }
   writeJson(resolve(OUTPUT_DIR, 'sources.json'), sources);
 
   const countryCodes = [...new Set([
@@ -328,11 +346,15 @@ function writeDataFiles(
     sections: PUBLIC_DATA_SECTIONS,
     availableDates,
     downloads: {
-      latest24h: '/data/downloads/latest-24h.csv',
-      byDate: byDatePaths.map((path) => path.replace('/by-date/', '/downloads/by-date/').replace('.json', '.csv')),
-      byCountryMonth: byCountryMonthPaths.map((path) =>
-        path.replace('/by-country/', '/downloads/by-country/').replace('.json', '.csv')
-      ),
+      latest24h: WRITE_LATEST_24H_CSV ? '/data/downloads/latest-24h.csv' : '',
+      byDate: WRITE_BY_DATE_CSV
+        ? byDatePaths.map((path) => path.replace('/by-date/', '/downloads/by-date/').replace('.json', '.csv'))
+        : [],
+      byCountryMonth: WRITE_BY_COUNTRY_MONTH_CSV
+        ? byCountryMonthPaths.map((path) =>
+            path.replace('/by-country/', '/downloads/by-country/').replace('.json', '.csv')
+          )
+        : [],
     },
     shards: {
       byDate: latestDate ? `/data/by-date/${latestDate}.json` : null,
