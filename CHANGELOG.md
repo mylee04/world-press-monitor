@@ -6,6 +6,206 @@
 
 ## Unreleased
 
+### [cc9ade2] Clarify news country freshness metrics
+- Commit: cc9ade274cd7f7d31ac861cb35d193541e69ca56
+- Date: 2026-03-16 08:15:45 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	scripts/report-news-by-country-discord.ts
+  - Git stat:
+  - scripts/report-news-by-country-discord.ts | 91 ++++++++++++++++++++++++++-----
+  -  1 file changed, 76 insertions(+), 15 deletions(-)
+
+### [d1be8ac] Expand Asia sitemap coverage
+- Commit: d1be8ac7038086247a3104f9ce9a56f6be001fd6
+- Date: 2026-03-15 13:42:45 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	data/rss-atlas.json
+    - M	data/rss-catalog.csv
+    - M	data/rss-catalog.opml
+  - Git stat:
+  - data/rss-atlas.json   |  352 +++++++-
+  -  data/rss-catalog.csv  | 2207 +++++++++++++++++++++++++------------------------
+  -  data/rss-catalog.opml |    9 +-
+  -  3 files changed, 1464 insertions(+), 1104 deletions(-)
+
+### [e15f85c] Stabilize local launchd automation
+- Commit: e15f85ccb875f8f220a3bd562d2cc1c95f93d5e1
+- Date: 2026-03-15 09:46:59 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	docs/macmini-static-ops.md
+    - M	scripts/load-local-env.sh
+    - M	scripts/run-ingest-hourly-local.sh
+    - M	scripts/run-ingest-hourly.sh
+    - M	scripts/run-news-country-discord-report.sh
+    - A	scripts/setup-launchd-local.sh
+  - Git stat:
+  - docs/macmini-static-ops.md                 |  18 +++-
+  -  scripts/load-local-env.sh                  |   1 +
+  -  scripts/run-ingest-hourly-local.sh         |  19 ++++
+  -  scripts/run-ingest-hourly.sh               |  19 ++++
+  -  scripts/run-news-country-discord-report.sh |   0
+  -  scripts/setup-launchd-local.sh             | 147 +++++++++++++++++++++++++++++
+  -  6 files changed, 202 insertions(+), 2 deletions(-)
+
+### [8868973] Add static public dashboard and local export pipeline
+- Commit: 88689736fdaff8e1099cd8dc2bbd07e0e9901c54
+- Date: 2026-03-15 09:32:36 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	.gitignore
+    - M	README.md
+    - A	app/downloads/page.tsx
+    - A	app/explorer/page.tsx
+    - A	app/globals.css
+    - A	app/layout.tsx
+    - A	app/page.tsx
+    - A	app/source-health/page.tsx
+    - A	components/dashboard-view.tsx
+    - A	components/downloads-view.tsx
+    - A	components/explorer-view.tsx
+    - A	components/public-data-hooks.ts
+    - A	components/source-health-view.tsx
+    - M	docker-compose.yml
+    - A	docs/macmini-static-ops.md
+    - M	lib/classifier/locales/en.ts
+    - M	lib/keyword-classifier.ts
+    - A	lib/public-data.ts
+    - A	lib/site-paths.ts
+    - M	next-env.d.ts
+    - M	next.config.ts
+    - A	ops/launchd/com.wpm.export-deploy.plist
+    - A	ops/launchd/com.wpm.health-daily.plist
+    - A	ops/launchd/com.wpm.ingest-hourly.plist
+    - M	package.json
+    - A	public/data/manifest.json
+    - A	public/data/sources.json
+    - M	scripts/bootstrap-wpm-db.sh
+    - A	scripts/export-public-news-data.ts
+    - M	scripts/run-api-news.sh
+    - M	scripts/run-fetch-news-api-incremental.sh
+    - A	scripts/run-ingest-hourly-local.sh
+    - M	scripts/run-ingest-hourly.sh
+    - M	scripts/run-ingest-ops-daily.sh
+    - M	scripts/run-ingest-ops-hourly.sh
+    - M	scripts/run-ingestion-retention.sh
+    - M	scripts/run-news-country-discord-report.sh
+    - M	scripts/run-rss-feed-stability-daily.sh
+    - A	scripts/run-rss-health-daily-local.sh
+    - M	scripts/run-rss-health-daily.sh
+    - A	scripts/run-static-deploy-local.sh
+    - A	scripts/run-static-export-local.sh
+    - M	scripts/setup-ingest-cron.sh
+    - M	scripts/setup-ingest-ops-cron.sh
+    - M	scripts/setup-news-country-discord-cron.sh
+    - M	scripts/setup-rss-health-cron.sh
+  - Git stat:
+  - .gitignore                                 |    11 +
+  -  README.md                                  |    40 +-
+  -  app/downloads/page.tsx                     |     5 +
+  -  app/explorer/page.tsx                      |     5 +
+  -  app/globals.css                            |   340 +
+  -  app/layout.tsx                             |    41 +
+  -  app/page.tsx                               |     5 +
+  -  app/source-health/page.tsx                 |     5 +
+  -  components/dashboard-view.tsx              |   188 +
+  -  components/downloads-view.tsx              |    82 +
+  -  components/explorer-view.tsx               |   266 +
+  -  components/public-data-hooks.ts            |    82 +
+  -  components/source-health-view.tsx          |   135 +
+  -  docker-compose.yml                         |     5 +-
+  -  docs/macmini-static-ops.md                 |   101 +
+  -  lib/classifier/locales/en.ts               |    27 +
+  -  lib/keyword-classifier.ts                  |    10 +-
+  -  lib/public-data.ts                         |   100 +
+  -  lib/site-paths.ts                          |     8 +
+  -  next-env.d.ts                              |     1 +
+  -  next.config.ts                             |    12 +-
+  -  ops/launchd/com.wpm.export-deploy.plist    |    27 +
+  -  ops/launchd/com.wpm.health-daily.plist     |    29 +
+  -  ops/launchd/com.wpm.ingest-hourly.plist    |    27 +
+  -  package.json                               |    10 +-
+  -  public/data/manifest.json                  |   378 +
+  -  public/data/sources.json                   | 25933 +++++++++++++++++++++++++++
+  -  scripts/bootstrap-wpm-db.sh                |    11 +-
+  -  scripts/export-public-news-data.ts         |   461 +
+  -  scripts/run-api-news.sh                    |    11 +-
+  -  scripts/run-fetch-news-api-incremental.sh  |    11 +-
+  -  scripts/run-ingest-hourly-local.sh         |    38 +
+  -  scripts/run-ingest-hourly.sh               |    71 +-
+  -  scripts/run-ingest-ops-daily.sh            |    22 +-
+  -  scripts/run-ingest-ops-hourly.sh           |    22 +-
+  -  scripts/run-ingestion-retention.sh         |    13 +-
+  -  scripts/run-news-country-discord-report.sh |    12 +-
+  -  scripts/run-rss-feed-stability-daily.sh    |    12 +-
+  -  scripts/run-rss-health-daily-local.sh      |    35 +
+  -  scripts/run-rss-health-daily.sh            |    12 +-
+  -  scripts/run-static-deploy-local.sh         |    65 +
+  -  scripts/run-static-export-local.sh         |    38 +
+  -  scripts/setup-ingest-cron.sh               |     4 +
+  -  scripts/setup-ingest-ops-cron.sh           |    11 +-
+  -  scripts/setup-news-country-discord-cron.sh |    10 +-
+  -  scripts/setup-rss-health-cron.sh           |    11 +-
+  -  46 files changed, 28570 insertions(+), 173 deletions(-)
+
+### [c698708] Default scripts to local Postgres
+- Commit: c6987084dd5dbbc7e6bee975b2c9d122795039bb
+- Date: 2026-03-15 09:29:51 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	CONTRIBUTING.md
+    - M	deploy/api-news-integration-guide.md
+    - A	lib/database-url.ts
+    - M	scripts/db-introspect.sh
+    - M	scripts/db-studio.sh
+    - M	scripts/fetch-news-api.sh
+    - A	scripts/load-local-env.sh
+    - M	scripts/purge-legacy-db-tables.ts
+    - M	scripts/report-news-by-country-discord.ts
+    - M	scripts/rss-failure-watchlist.ts
+    - M	scripts/stats-news-by-country.sh
+  - Git stat:
+  - CONTRIBUTING.md                           |  2 +-
+  -  deploy/api-news-integration-guide.md      |  2 +-
+  -  lib/database-url.ts                       | 14 ++++++++++
+  -  scripts/db-introspect.sh                  | 10 ++++---
+  -  scripts/db-studio.sh                      | 10 ++++---
+  -  scripts/fetch-news-api.sh                 | 13 +++------
+  -  scripts/load-local-env.sh                 | 45 +++++++++++++++++++++++++++++++
+  -  scripts/purge-legacy-db-tables.ts         |  7 ++---
+  -  scripts/report-news-by-country-discord.ts |  6 ++---
+  -  scripts/rss-failure-watchlist.ts          |  6 ++---
+  -  scripts/stats-news-by-country.sh          | 13 ++++-----
+  -  11 files changed, 88 insertions(+), 40 deletions(-)
+
+### [3ed6906] Improve RSS and sitemap coverage
+- Commit: 3ed690650cb8d7e59ef855eb6efb130de2339079
+- Date: 2026-03-15 07:08:13 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	data/rss-atlas.json
+    - M	data/rss-catalog.csv
+    - M	data/rss-catalog.opml
+    - M	lib/fetch-utils.ts
+    - M	lib/parsers.ts
+    - M	scripts/export-rss-atlas.ts
+    - M	scripts/ingest-ops-report.ts
+    - M	scripts/ingest-worker.ts
+    - M	scripts/report-news-by-country-discord.ts
+  - Git stat:
+  - data/rss-atlas.json                       | 1206 ++++++++++++++-
+  -  data/rss-catalog.csv                      | 2338 +++++++++++++++--------------
+  -  data/rss-catalog.opml                     |  162 +-
+  -  lib/fetch-utils.ts                        |   49 +
+  -  lib/parsers.ts                            |   79 +-
+  -  scripts/export-rss-atlas.ts               |    6 +-
+  -  scripts/ingest-ops-report.ts              |   10 +-
+  -  scripts/ingest-worker.ts                  |  526 +++++--
+  -  scripts/report-news-by-country-discord.ts |   37 +-
+  -  9 files changed, 3035 insertions(+), 1378 deletions(-)
+
 ### [8135e9b] feat: add multilingual category pipeline with locale dictionaries
 - Commit: 8135e9b629e410970002c6053d9108eafe42a802
 - Date: 2026-02-26 10:44:16 +0300
