@@ -89,13 +89,12 @@ Run health check (daily) locally:
 - `bun run rss:failure:24h:report` (Strict policy: report endpoints with 24h full failure)
 - `bun run rss:failure:24h:apply` (Strict policy: disable endpoints with 24h full failure)
 
-GitHub Actions is also configured:
-- Workflow: `.github/workflows/rss-health-daily.yml`
-- Schedule: 00:30 AM America/Chicago (cron is UTC in Actions; currently set at 06:30 UTC, so it runs at 01:30 during CDT and 00:30 during CST)
-- Manual run: Actions tab → `RSS Health Daily` → `Run workflow`
+GitHub Actions:
+- Only `.github/workflows/security-audit.yml` remains for repo-level dependency checks.
+- Ingest, Discord reporting, RSS health, and retention jobs now run locally via `launchd`/local scripts.
 
 Note about "Last checked" date in README:
-- This workflow runs with `contents: write` and auto-commits RSS health snapshot changes when `README.md`/catalog outputs change.
+- Local RSS health runs update `README.md`/catalog outputs when those snapshots change.
 - If no commit appears for a given day, the generated snapshot was identical (no diff), so there was nothing to push.
 - `Daily` / `Since baseline` columns are filled from Postgres ingest aggregates. If `DATABASE_URL` is missing or DB has no ingest rows for an outlet yet, they appear as `-` (DB unavailable) or `0` (available but no rows).
 
