@@ -80,6 +80,41 @@ export interface PublicDataManifest {
   sectionTotals: Record<NewsSection, number>;
 }
 
+export interface PublicCountryFeedFile {
+  generatedAt: string;
+  schemaVersion: number;
+  windowHours: number;
+  windowType: 'publicationDatetime' | 'createdAt';
+  countryCode: string;
+  country: string;
+  articleCount: number;
+  articles: PublicNewsArticle[];
+}
+
+export interface PublicIntegrationManifest {
+  generatedAt: string;
+  schemaVersion: number;
+  cadence?: {
+    frequency: 'hourly';
+    scheduledMinute: number;
+    timezone: string;
+  };
+  windowHours: number;
+  semantics: {
+    published24h: string;
+    inserted24h: string;
+  };
+  countries: string[];
+  countryNames: Record<string, string>;
+  feeds: Record<
+    string,
+    {
+      published24h: string;
+      inserted24h: string;
+    }
+  >;
+}
+
 export interface PublicSourcesFile {
   generatedAt: string;
   sources: PublicSourceRecord[];

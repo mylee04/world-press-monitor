@@ -5,9 +5,11 @@ import { Pool } from 'pg';
 import {
   PUBLIC_DATA_SCHEMA_VERSION,
   PUBLIC_DATA_SECTIONS,
+  type PublicCountryFeedFile,
   type PublicCountryMonthShard,
   type PublicDataManifest,
   type PublicDateShard,
+  type PublicIntegrationManifest,
   type PublicNewsArticle,
   type PublicSourceHealth,
   type PublicSourceRecord,
@@ -272,7 +274,8 @@ function writeDataFiles(
   const generatedAt = new Date().toISOString();
   const availableDates = getAvailableDates(articles);
   const latestDate = availableDates[0] || null;
-  const latest24hArticles = filterLatestHours(articles, LATEST_HOURS);
+  const latest24hInsertedArticles = filterLatestCreatedHours(articles, LATEST_HOURS);
+  const latest24hPublishedArticles = filterLatestPublicationHours(articles, LATEST_HOURS);
   const sectionTotals = countSections(articles);
   const byDatePaths: string[] = [];
   const byCountryMonthPaths: string[] = [];
@@ -319,7 +322,7 @@ function writeDataFiles(
   }
 
   if (WRITE_LATEST_24H_CSV) {
-    writeCsv(resolve(OUTPUT_DIR, 'downloads', 'latest-24h.csv'), latest24hArticles);
+    writeCsv(resolve(OUTPUT_DIR, 'downloads', 'latest-24h.csv'), latest24hInsertedArticles);
   }
   writeJson(resolve(OUTPUT_DIR, 'sources.json'), sources);
 
@@ -329,6 +332,13 @@ function writeDataFiles(
   ])].sort((a, b) => a.localeCompare(b));
   const countryNames = Object.fromEntries(
     countryCodes.map((code) => [code, directory.countryNameByCode.get(code) || code])
+  );
+  const integrationFeeds = writeIntegrationFeeds(
+    countryCodes,
+    countryNames,
+    latest24hPublishedArticles,
+    latest24hInsertedArticles,
+    generatedAt
   );
 
   const manifest: PublicDataManifest = {
@@ -362,13 +372,26 @@ function writeDataFiles(
     },
     totals: {
       articles: articles.length,
-      latest24h: latest24hArticles.length,
+      latest24h: latest24hInsertedArticles.length,
       sources: sources.sources.length,
     },
     sectionTotals,
   };
 
   writeJson(resolve(OUTPUT_DIR, 'manifest.json'), manifest);
+  writeJson(resolve(OUTPUT_DIR, 'integration-manifest.json'), {
+    generatedAt,
+    schemaVersion: PUBLIC_DATA_SCHEMA_VERSION,
+    cadence: manifest.cadence,
+    windowHours: LATEST_HOURS,
+    semantics: {
+      published24h: 'publicationDatetime within the last 24 hours',
+      inserted24h: 'createdAt within the last 24 hours',
+    },
+    countries: countryCodes,
+    countryNames,
+    feeds: integrationFeeds,
+  } satisfies PublicIntegrationManifest);
 }
 
 function countSections(articles: PublicNewsArticle[]): Record<NewsSection, number> {
@@ -383,9 +406,14 @@ function getAvailableDates(articles: PublicNewsArticle[]): string[] {
   return [...new Set(articles.map((article) => article.publicationDatetime.slice(0, 10)))].sort((a, b) => b.localeCompare(a));
 }
 
-function filterLatestHours(articles: PublicNewsArticle[], hours: number): PublicNewsArticle[] {
+function filterLatestCreatedHours(articles: PublicNewsArticle[], hours: number): PublicNewsArticle[] {
   const cutoff = Date.now() - hours * 60 * 60 * 1000;
   return articles.filter((article) => new Date(article.createdAt).getTime() >= cutoff);
+}
+
+function filterLatestPublicationHours(articles: PublicNewsArticle[], hours: number): PublicNewsArticle[] {
+  const cutoff = Date.now() - hours * 60 * 60 * 1000;
+  return articles.filter((article) => new Date(article.publicationDatetime).getTime() >= cutoff);
 }
 
 function groupBy<T>(items: T[], keyFn: (item: T) => string): Map<string, T[]> {
@@ -432,6 +460,52 @@ function makeSourceKey(country: string, source: string): string {
 function writeJson(path: string, value: unknown): void {
   mkdirSync(dirname(path), { recursive: true });
   writeFileSync(path, `${JSON.stringify(value, null, 2)}\n`, 'utf8');
+}
+
+function writeIntegrationFeeds(
+  countryCodes: string[],
+  countryNames: Record<string, string>,
+  latest24hPublishedArticles: PublicNewsArticle[],
+  latest24hInsertedArticles: PublicNewsArticle[],
+  generatedAt: string
+): Record<string, { published24h: string; inserted24h: string }> {
+  const publishedByCountry = groupBy(latest24hPublishedArticles, (article) => article.countryCode);
+  const insertedByCountry = groupBy(latest24hInsertedArticles, (article) => article.countryCode);
+  const feeds: Record<string, { published24h: string; inserted24h: string }> = {};
+
+  for (const countryCode of countryCodes) {
+    const country = countryNames[countryCode] || countryCode;
+    const publishedPath = `/data/country-published-24h-${countryCode}.json`;
+    const insertedPath = `/data/country-inserted-24h-${countryCode}.json`;
+    feeds[countryCode] = {
+      published24h: publishedPath,
+      inserted24h: insertedPath,
+    };
+
+    writeJson(resolve(OUTPUT_DIR, `country-published-24h-${countryCode}.json`), {
+      generatedAt,
+      schemaVersion: PUBLIC_DATA_SCHEMA_VERSION,
+      windowHours: LATEST_HOURS,
+      windowType: 'publicationDatetime',
+      countryCode,
+      country,
+      articleCount: (publishedByCountry.get(countryCode) || []).length,
+      articles: publishedByCountry.get(countryCode) || [],
+    } satisfies PublicCountryFeedFile);
+
+    writeJson(resolve(OUTPUT_DIR, `country-inserted-24h-${countryCode}.json`), {
+      generatedAt,
+      schemaVersion: PUBLIC_DATA_SCHEMA_VERSION,
+      windowHours: LATEST_HOURS,
+      windowType: 'createdAt',
+      countryCode,
+      country,
+      articleCount: (insertedByCountry.get(countryCode) || []).length,
+      articles: insertedByCountry.get(countryCode) || [],
+    } satisfies PublicCountryFeedFile);
+  }
+
+  return feeds;
 }
 
 function writeCsv(path: string, articles: PublicNewsArticle[]): void {

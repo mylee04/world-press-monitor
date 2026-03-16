@@ -26,7 +26,8 @@ export function DownloadsView() {
         <h1>Static file entry points</h1>
         <p>
           `latest-24h.csv` is prebuilt. JSON shards stay addressable directly so the web app can
-          fetch only the slices it needs, and deeper CSV exports can be generated from Explorer.
+          fetch only the slices it needs, and third-party consumers can poll the flat integration
+          feeds.
         </p>
       </section>
 
@@ -56,6 +57,22 @@ export function DownloadsView() {
               <div className="muted">No prebuilt CSV files published in this export.</div>
             ) : null}
           </div>
+        </article>
+
+        <article className="panel">
+          <div className="section-head">
+            <h2>Integration feeds</h2>
+            <span>Stable flat JSON</span>
+          </div>
+          <div className="link-list">
+            <a href={withBasePath('/data/integration-manifest.json') || '#'}>integration-manifest.json</a>
+            <a href={withBasePath('/data/country-published-24h-AR.json') || '#'}>country-published-24h-AR.json</a>
+            <a href={withBasePath('/data/country-inserted-24h-AR.json') || '#'}>country-inserted-24h-AR.json</a>
+          </div>
+          <p className="muted">
+            Poll `integration-manifest.json`, compare `generatedAt`, then fetch only the countries
+            you need. `published` uses `publicationDatetime`; `inserted` uses `createdAt`.
+          </p>
         </article>
 
         <article className="panel">
