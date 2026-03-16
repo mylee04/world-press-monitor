@@ -10,7 +10,17 @@ type CountryRow = {
   inserted_last_1h: string;
   inserted_last_24h: string;
   published_last_24h: string;
+  fresh_last_24h: string;
   late_last_24h: string;
+};
+
+type CountryMetrics = CountryRow & {
+  insertedLast1h: number;
+  insertedLast24h: number;
+  publishedLast24h: number;
+  freshLast24h: number;
+  lateLast24h: number;
+  lateShare: number;
 };
 
 type AtlasCountry = {
@@ -47,6 +57,15 @@ function redactWebhookUrlForLog(raw: string): string {
 
 function formatElapsedMs(startMs: number): number {
   return Date.now() - startMs;
+}
+
+function parseMetricCount(value: string): number {
+  const parsed = Number.parseInt(value, 10);
+  return Number.isFinite(parsed) ? parsed : 0;
+}
+
+function formatPercent(value: number): string {
+  return `${(value * 100).toFixed(1)}%`;
 }
 
 function pickWebhookUrl(): string {
@@ -193,11 +212,21 @@ async function main(): Promise<void> {
         COUNT(*) FILTER (WHERE publication_datetime >= NOW() - INTERVAL '24 hours')::bigint::text AS published_last_24h,
         COUNT(*) FILTER (
           WHERE created_at >= NOW() - INTERVAL '24 hours'
+            AND publication_datetime >= NOW() - INTERVAL '24 hours'
+        )::bigint::text AS fresh_last_24h,
+        COUNT(*) FILTER (
+          WHERE created_at >= NOW() - INTERVAL '24 hours'
             AND publication_datetime < NOW() - INTERVAL '24 hours'
         )::bigint::text AS late_last_24h
       FROM news_articles
       GROUP BY COALESCE(country, '(unknown)')
-      ORDER BY COUNT(*) FILTER (WHERE publication_datetime >= NOW() - INTERVAL '24 hours') DESC, country ASC
+      ORDER BY
+        COUNT(*) FILTER (WHERE publication_datetime >= NOW() - INTERVAL '24 hours') DESC,
+        COUNT(*) FILTER (
+          WHERE created_at >= NOW() - INTERVAL '24 hours'
+            AND publication_datetime >= NOW() - INTERVAL '24 hours'
+        ) DESC,
+        country ASC
     `;
 
     const result = await pool.query<CountryRow>(query);
@@ -206,12 +235,35 @@ async function main(): Promise<void> {
     const countryFilterSet = countryFilter.values;
     const excludedCountries = parseCountrySetFromEnv(process.env.NEWS_COUNTRY_REPORT_EXCLUDED_COUNTRIES);
 
-    const filteredRows = rows.filter((row) => {
-      const normalized = normalizeCountryValue(row.country);
-      if (countryFilterSet.size > 0 && !countryFilterSet.has(normalized)) return false;
-      if (excludedCountries.size > 0 && excludedCountries.has(normalized)) return false;
-      return true;
-    });
+    const filteredRows = rows
+      .filter((row) => {
+        const normalized = normalizeCountryValue(row.country);
+        if (countryFilterSet.size > 0 && !countryFilterSet.has(normalized)) return false;
+        if (excludedCountries.size > 0 && excludedCountries.has(normalized)) return false;
+        return true;
+      })
+      .map((row) => {
+        const insertedLast1h = parseMetricCount(row.inserted_last_1h);
+        const insertedLast24h = parseMetricCount(row.inserted_last_24h);
+        const publishedLast24h = parseMetricCount(row.published_last_24h);
+        const freshLast24h = parseMetricCount(row.fresh_last_24h);
+        const lateLast24h = parseMetricCount(row.late_last_24h);
+        return {
+          ...row,
+          insertedLast1h,
+          insertedLast24h,
+          publishedLast24h,
+          freshLast24h,
+          lateLast24h,
+          lateShare: insertedLast24h > 0 ? lateLast24h / insertedLast24h : 0,
+        } satisfies CountryMetrics;
+      })
+      .sort(
+        (left, right) =>
+          right.publishedLast24h - left.publishedLast24h ||
+          right.freshLast24h - left.freshLast24h ||
+          left.country.localeCompare(right.country),
+      );
 
     const unexpectedCountries = countryFilterSet.size > 0
       ? rows
@@ -226,15 +278,23 @@ async function main(): Promise<void> {
     const topCountries = parseTopCountriesLimit();
     const selectedRows = topCountries > 0 ? filteredRows.slice(0, topCountries) : filteredRows;
 
-    const totalInserted1h = filteredRows.reduce((acc, row) => acc + Number(row.inserted_last_1h), 0);
-    const totalInserted24h = filteredRows.reduce((acc, row) => acc + Number(row.inserted_last_24h), 0);
-    const totalPublished24h = filteredRows.reduce((acc, row) => acc + Number(row.published_last_24h), 0);
-    const totalLate24h = filteredRows.reduce((acc, row) => acc + Number(row.late_last_24h), 0);
+    const totalInserted1h = filteredRows.reduce((acc, row) => acc + row.insertedLast1h, 0);
+    const totalInserted24h = filteredRows.reduce((acc, row) => acc + row.insertedLast24h, 0);
+    const totalPublished24h = filteredRows.reduce((acc, row) => acc + row.publishedLast24h, 0);
+    const totalFresh24h = filteredRows.reduce((acc, row) => acc + row.freshLast24h, 0);
+    const totalLate24h = filteredRows.reduce((acc, row) => acc + row.lateLast24h, 0);
+    const totalLateShare = totalInserted24h > 0 ? totalLate24h / totalInserted24h : 0;
+
+    const lateHeavyCountries = filteredRows
+      .filter((row) => row.insertedLast24h >= 250 && row.lateLast24h > 0)
+      .sort((left, right) => right.lateShare - left.lateShare || right.lateLast24h - left.lateLast24h)
+      .slice(0, 5)
+      .map((row) => `${row.country} ${formatPercent(row.lateShare)}`);
 
     const lines = selectedRows
       .map(
         (row, index) =>
-          `${index + 1}. ${row.country}: pub24h ${row.published_last_24h}, ins24h ${row.inserted_last_24h}, late24h ${row.late_last_24h}, ins1h ${row.inserted_last_1h}`
+          `${index + 1}. ${row.country}: pub24h ${row.published_last_24h}, fresh24h ${row.fresh_last_24h}, late24h ${row.late_last_24h} (${formatPercent(row.lateShare)}), ins1h ${row.inserted_last_1h}`
       );
 
     const scopeLabel =
@@ -249,9 +309,10 @@ async function main(): Promise<void> {
     const header = [
       `📰 News Volume by Country (${new Date().toISOString()})`,
       `Source: news_articles`,
-      `Published 24h: ${totalPublished24h.toLocaleString()} / Inserted 24h: ${totalInserted24h.toLocaleString()} / Inserted 1h: ${totalInserted1h.toLocaleString()}`,
-      `Late-or-backfill in inserted 24h: ${totalLate24h.toLocaleString()}`,
-      `Fields: pub24h=publication_datetime, ins24h/ins1h=created_at, late24h=inserted now but published >24h old`,
+      `Published 24h: ${totalPublished24h.toLocaleString()} / Fresh 24h: ${totalFresh24h.toLocaleString()} / Late 24h: ${totalLate24h.toLocaleString()} / Inserted 1h: ${totalInserted1h.toLocaleString()}`,
+      `Supporting: Inserted 24h ${totalInserted24h.toLocaleString()} / Late share of ins24h ${formatPercent(totalLateShare)}`,
+      `Fields: pub24h=publication_datetime, fresh24h=published+inserted within last 24h, late24h=inserted within last 24h but published >24h old, ins1h=created_at within last 1h`,
+      `Late-heavy countries (ins24h>=250): ${lateHeavyCountries.join(', ') || 'none'}`,
       `Country semantics: inferred story geography from title, fallback to outlet country`,
       scopeLabel,
       configuredScopeLabel,
