@@ -24,27 +24,32 @@ fi
 trap 'rm -rf "${LOCK_DIR}"' EXIT
 
 run_default_vercel_deploy() {
+  local -a build_command
   local -a deploy_command
-  mkdir -p "${WEB_DIST_DIR}/.vercel"
-  cp "${PROJECT_ROOT}/.vercel/project.json" "${WEB_DIST_DIR}/.vercel/project.json"
-  deploy_command=(vercel deploy --prod --yes --archive "${VERCEL_DEPLOY_ARCHIVE}")
+  build_command=(vercel build --prod --yes)
+  deploy_command=(vercel deploy --prebuilt --prod --yes --archive "${VERCEL_DEPLOY_ARCHIVE}")
 
   if [ -n "${VERCEL_SCOPE:-}" ]; then
+    build_command+=(--scope "${VERCEL_SCOPE}")
     deploy_command+=(--scope "${VERCEL_SCOPE}")
   fi
   if [ -n "${VERCEL_TOKEN:-}" ]; then
+    build_command+=(--token "${VERCEL_TOKEN}")
     deploy_command+=(--token "${VERCEL_TOKEN}")
   fi
 
-  printf 'Auto deploy target: linked Vercel project via static web-dist directory\n'
-  printf 'Deploy cwd: %s\n' "${WEB_DIST_DIR}"
+  printf 'Auto deploy target: linked Vercel project with static output overlay\n'
+  printf 'Build command:'
+  printf ' %q' "${build_command[@]}"
+  printf '\n'
+  printf 'Overlay source: %s\n' "${WEB_DIST_DIR}"
   printf 'Deploy command:'
   printf ' %q' "${deploy_command[@]}"
   printf '\n'
-  (
-    cd "${WEB_DIST_DIR}"
-    "${deploy_command[@]}"
-  )
+  "${build_command[@]}"
+  mkdir -p "${PROJECT_ROOT}/.vercel/output/static"
+  rsync -a --delete "${WEB_DIST_DIR}/" "${PROJECT_ROOT}/.vercel/output/static/"
+  "${deploy_command[@]}"
 }
 
 {
