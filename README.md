@@ -46,6 +46,91 @@ Vercel static delivery:
 - keep `.env.macmini.local` populated with `PUBLIC_EXPORT_TIMEZONE=America/Chicago` and `PUBLIC_EXPORT_SCHEDULE_MINUTE=40`
 - `bun run deploy:static:local` will export JSON/CSV, build the static app, sync `web-dist/`, then run `vercel build --prod` and `vercel deploy --prebuilt --prod` against the linked `world-press-monitor` project by default
 
+## Public integration feeds
+
+For external read-only integrations, prefer the public static JSON feeds on Vercel instead of direct database access or the private `/api/news` service.
+
+Base URL:
+
+- `https://world-press-monitor.vercel.app`
+
+Source of truth for consumers:
+
+- `https://world-press-monitor.vercel.app/data/integration-manifest.json`
+
+What to do:
+
+1. Poll `integration-manifest.json` every hour.
+2. When `generatedAt` changes, fetch only the countries you need.
+3. Use `published24h` when you want articles actually published in the last 24 hours.
+4. Use `inserted24h` when you want what WPM newly inserted/discovered in the last 24 hours.
+5. Deduplicate on `id` in your downstream service.
+
+Current direct country feed examples:
+
+- Argentina published 24h:
+  `https://world-press-monitor.vercel.app/data/country-published-24h-AR.json`
+- Chile published 24h:
+  `https://world-press-monitor.vercel.app/data/country-published-24h-CL.json`
+- Dominican Republic published 24h:
+  `https://world-press-monitor.vercel.app/data/country-published-24h-DO.json`
+- Uruguay published 24h:
+  `https://world-press-monitor.vercel.app/data/country-published-24h-UY.json`
+- United States published 24h:
+  `https://world-press-monitor.vercel.app/data/country-published-24h-US.json`
+
+Inserted-window equivalents:
+
+- `https://world-press-monitor.vercel.app/data/country-inserted-24h-AR.json`
+- `https://world-press-monitor.vercel.app/data/country-inserted-24h-CL.json`
+- `https://world-press-monitor.vercel.app/data/country-inserted-24h-DO.json`
+- `https://world-press-monitor.vercel.app/data/country-inserted-24h-UY.json`
+- `https://world-press-monitor.vercel.app/data/country-inserted-24h-US.json`
+
+Example with `curl`:
+
+```bash
+curl -fsSL \
+  https://world-press-monitor.vercel.app/data/integration-manifest.json | jq
+
+curl -fsSL \
+  https://world-press-monitor.vercel.app/data/country-published-24h-AR.json | jq '.articleCount'
+```
+
+Example consumer flow in JavaScript:
+
+```js
+const base = 'https://world-press-monitor.vercel.app';
+
+const manifest = await fetch(`${base}/data/integration-manifest.json`, {
+  cache: 'no-store',
+}).then((res) => res.json());
+
+const countries = ['AR', 'CL', 'DO', 'UY', 'US'];
+
+for (const code of countries) {
+  const path = manifest.feeds[code].published24h;
+  const payload = await fetch(`${base}${path}`, { cache: 'no-store' }).then((res) => res.json());
+
+  for (const article of payload.articles) {
+    // Deduplicate on article.id in your own store.
+    console.log(code, article.id, article.publicationDatetime, article.title);
+  }
+}
+```
+
+Semantics:
+
+- `published24h`: `publicationDatetime` is within the last 24 hours
+- `inserted24h`: `createdAt` is within the last 24 hours
+- `generatedAt`: export generation timestamp
+- `windowHours`: current feed window size
+
+Recommendation:
+
+- Use the public static feeds for read-only partner integrations.
+- Keep `/api/news` for authenticated/internal use cases that need flexible querying.
+
 Open-source project goals:
 
 - Maintain a clean global RSS source catalog with a clear signal of healthy vs broken feeds.

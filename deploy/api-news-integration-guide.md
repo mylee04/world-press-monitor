@@ -1,5 +1,11 @@
 # WPM /api/news 외부 연동 가이드 (Render 기준 최신판)
 
+읽기 전용 외부 연동이면 `/api/news`보다 public static feed를 먼저 검토하세요.
+
+- public manifest: `https://world-press-monitor.vercel.app/data/integration-manifest.json`
+- 국가별 24h feed: `https://world-press-monitor.vercel.app/data/country-published-24h-<CODE>.json`
+- 이 문서는 인증이 필요한 `/api/news` 연동이 필요한 경우에만 사용하세요.
+
 이 문서는 동료 서비스에서 `news_articles` 조회 API를 사용하는 방법을 정리한 가이드입니다.
 
 ⚠️ 운영 버전 기준:
