@@ -1,13 +1,16 @@
 import type { NewsSection } from '@/lib/types';
 
-export const PUBLIC_DATA_SCHEMA_VERSION = 2;
+export const PUBLIC_DATA_SCHEMA_VERSION = 4;
 export const PUBLIC_DATA_SECTIONS: NewsSection[] = [
   'world',
   'politics',
+  'conflicts',
   'business',
   'tech',
   'sports',
   'health',
+  'entertainment',
+  'lifestyle',
   'arts',
   'science',
   'climate',

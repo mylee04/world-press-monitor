@@ -44,6 +44,14 @@ function renderRelativeTime(value: string | null | undefined): string {
   return `${Math.abs(diffDays)} day${Math.abs(diffDays) === 1 ? '' : 's'} ${diffDays >= 0 ? 'ago' : 'ahead'}`;
 }
 
+function renderSectionLabel(section: string): string {
+  if (section === 'entertainment') return 'entertainment';
+  if (section === 'lifestyle') return 'lifestyle';
+  if (section === 'arts') return 'arts';
+  if (section === 'others') return 'general / uncategorized';
+  return section;
+}
+
 export function DashboardView() {
   const manifestState = useManifest();
   const latestShardState = useShard(manifestState.data?.shards.byDate || null);
@@ -153,7 +161,7 @@ export function DashboardView() {
                 .filter((item) => item.count > 0)
                 .map((item) => (
                 <div className="stat-row" key={item.key}>
-                  <span>{item.key}</span>
+                  <span>{renderSectionLabel(item.key)}</span>
                   <strong>{item.count.toLocaleString()}</strong>
                 </div>
                 ))
@@ -174,7 +182,7 @@ export function DashboardView() {
           {latestArticles.slice(0, 8).map((article: PublicNewsArticle) => (
             <a className="headline-card" key={article.id} href={article.url} rel="noreferrer" target="_blank">
               <small>
-                {article.countryCode} · {article.source} · {article.section}
+                {article.countryCode} · {article.source} · {renderSectionLabel(article.section)}
               </small>
               <strong>{article.title}</strong>
               <span>{article.snippet || 'No snippet available.'}</span>

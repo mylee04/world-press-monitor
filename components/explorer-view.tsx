@@ -55,6 +55,14 @@ function triggerCsvDownload(rows: PublicNewsArticle[], filename: string): void {
   URL.revokeObjectURL(url);
 }
 
+function renderSectionLabel(section: string): string {
+  if (section === 'entertainment') return 'entertainment';
+  if (section === 'lifestyle') return 'lifestyle';
+  if (section === 'arts') return 'arts';
+  if (section === 'others') return 'general / uncategorized';
+  return section;
+}
+
 export function ExplorerView() {
   const manifestState = useManifest();
   const manifest = manifestState.data;
@@ -166,7 +174,7 @@ export function ExplorerView() {
               <option value="">All sections</option>
               {(manifest?.sections || []).map((item) => (
                 <option key={item} value={item}>
-                  {item}
+                  {renderSectionLabel(item)}
                 </option>
               ))}
             </select>
@@ -243,7 +251,7 @@ export function ExplorerView() {
                     <small>{article.countryCode}</small>
                   </td>
                   <td>{article.source}</td>
-                  <td>{article.section}</td>
+                  <td>{renderSectionLabel(article.section)}</td>
                   <td>{article.title}</td>
                   <td>
                     <a href={article.url} rel="noreferrer" target="_blank">

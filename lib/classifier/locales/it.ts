@@ -20,8 +20,16 @@ export const IT_HIGH: LocaleKeywordMap = {
   vaccino: 'health',
   arte: 'arts',
   cultura: 'arts',
-  cinema: 'arts',
-  musica: 'arts',
+  cinema: 'entertainment',
+  musica: 'entertainment',
+  spettacolo: 'entertainment',
+  lifestyle: 'lifestyle',
+  moda: 'lifestyle',
+  viaggio: 'lifestyle',
+  viaggi: 'lifestyle',
+  ricetta: 'lifestyle',
+  ricette: 'lifestyle',
+  cucina: 'lifestyle',
   scienza: 'science',
   ricerca: 'science',
   spazio: 'science',
@@ -32,10 +40,19 @@ export const IT_HIGH: LocaleKeywordMap = {
 };
 
 export const IT_MEDIUM: LocaleKeywordMap = {
+  guerra: 'conflicts',
+  conflitto: 'conflicts',
+  missile: 'conflicts',
+  missili: 'conflicts',
+  attacco: 'conflicts',
+  tregua: 'conflicts',
+  truppe: 'conflicts',
   inflazione: 'business',
   torneo: 'sports',
   sanità: 'health',
   sanita: 'health',
   mostra: 'arts',
+  ristorante: 'lifestyle',
+  ristoranti: 'lifestyle',
   laboratorio: 'science'
 };

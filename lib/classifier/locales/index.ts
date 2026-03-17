@@ -10,6 +10,13 @@ import { PT_HIGH, PT_MEDIUM } from './pt';
 import { ZH_HIGH, ZH_MEDIUM } from './zh';
 import { VI_HIGH, VI_MEDIUM } from './vi';
 import { NL_HIGH, NL_MEDIUM } from './nl';
+import { DE_HIGH, DE_MEDIUM } from './de';
+import { TR_HIGH, TR_MEDIUM } from './tr';
+import { TH_HIGH, TH_MEDIUM } from './th';
+import { FI_HIGH, FI_MEDIUM } from './fi';
+import { CS_HIGH, CS_MEDIUM } from './cs';
+import { PL_HIGH, PL_MEDIUM } from './pl';
+import { LT_HIGH, LT_MEDIUM } from './lt';
 
 function mergeKeywordMaps(maps: LocaleKeywordMap[]): LocaleKeywordMap {
   return maps.reduce<LocaleKeywordMap>((acc, map) => ({ ...acc, ...map }), {});
@@ -27,6 +34,13 @@ export const HIGH_PRIORITY_KEYWORDS = mergeKeywordMaps([
   ZH_HIGH,
   VI_HIGH,
   NL_HIGH,
+  DE_HIGH,
+  TR_HIGH,
+  TH_HIGH,
+  FI_HIGH,
+  CS_HIGH,
+  PL_HIGH,
+  LT_HIGH,
 ]);
 
 export const MEDIUM_PRIORITY_KEYWORDS = mergeKeywordMaps([
@@ -41,4 +55,11 @@ export const MEDIUM_PRIORITY_KEYWORDS = mergeKeywordMaps([
   ZH_MEDIUM,
   VI_MEDIUM,
   NL_MEDIUM,
+  DE_MEDIUM,
+  TR_MEDIUM,
+  TH_MEDIUM,
+  FI_MEDIUM,
+  CS_MEDIUM,
+  PL_MEDIUM,
+  LT_MEDIUM,
 ]);

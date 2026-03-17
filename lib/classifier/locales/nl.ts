@@ -21,8 +21,16 @@ export const NL_HIGH: LocaleKeywordMap = {
   vaccin: 'health',
   kunst: 'arts',
   cultuur: 'arts',
-  film: 'arts',
-  muziek: 'arts',
+  entertainment: 'entertainment',
+  beroemdheid: 'entertainment',
+  film: 'entertainment',
+  muziek: 'entertainment',
+  lifestyle: 'lifestyle',
+  mode: 'lifestyle',
+  reizen: 'lifestyle',
+  recept: 'lifestyle',
+  recepten: 'lifestyle',
+  eten: 'lifestyle',
   wetenschap: 'science',
   onderzoek: 'science',
   ruimtevaart: 'science',
@@ -33,10 +41,19 @@ export const NL_HIGH: LocaleKeywordMap = {
 };
 
 export const NL_MEDIUM: LocaleKeywordMap = {
+  oorlog: 'conflicts',
+  conflict: 'conflicts',
+  raket: 'conflicts',
+  raketten: 'conflicts',
+  aanval: 'conflicts',
+  wapenstilstand: 'conflicts',
+  troepen: 'conflicts',
   inflatie: 'business',
   competitie: 'sports',
   epidemie: 'health',
   tentoonstelling: 'arts',
+  restaurant: 'lifestyle',
+  restaurants: 'lifestyle',
   laboratorium: 'science',
   droogte: 'climate'
 };

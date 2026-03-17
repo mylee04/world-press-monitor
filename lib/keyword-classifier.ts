@@ -40,6 +40,13 @@ const FEED_CATEGORY_MAP: Record<string, NewsSection> = {
   politics: 'politics',
   political: 'politics',
   policy: 'politics',
+  conflict: 'conflicts',
+  conflicts: 'conflicts',
+  war: 'conflicts',
+  wars: 'conflicts',
+  military: 'conflicts',
+  defence: 'conflicts',
+  defense: 'conflicts',
   business: 'business',
   economy: 'business',
   economics: 'business',
@@ -52,8 +59,25 @@ const FEED_CATEGORY_MAP: Record<string, NewsSection> = {
   sports: 'sports',
   sport: 'sports',
   health: 'health',
+  entertainment: 'entertainment',
+  showbiz: 'entertainment',
+  celebrity: 'entertainment',
+  celebrities: 'entertainment',
+  music: 'entertainment',
+  movie: 'entertainment',
+  movies: 'entertainment',
+  film: 'entertainment',
+  films: 'entertainment',
+  tv: 'entertainment',
+  television: 'entertainment',
+  lifestyle: 'lifestyle',
+  fashion: 'lifestyle',
+  style: 'lifestyle',
+  travel: 'lifestyle',
+  food: 'lifestyle',
+  recipe: 'lifestyle',
+  recipes: 'lifestyle',
   arts: 'arts',
-  art: 'arts',
   culture: 'arts',
   climate: 'climate',
   world: 'world',
@@ -70,7 +94,12 @@ function getKeywordRegex(keyword: string): RegExp {
   let regex = regexCache.get(keyword);
   if (!regex) {
     const escaped = normalizedKeyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    regex = SHORT_KEYWORDS.has(normalizedKeyword) ? new RegExp(`\\b${escaped}\\b`, 'i') : new RegExp(escaped, 'i');
+    const asciiWordLike = /^[a-z0-9]+(?:[ -][a-z0-9]+)*$/.test(normalizedKeyword);
+    if (SHORT_KEYWORDS.has(normalizedKeyword) || asciiWordLike) {
+      regex = new RegExp(`(?:^|[^\\p{L}\\p{N}])${escaped}(?=$|[^\\p{L}\\p{N}])`, 'iu');
+    } else {
+      regex = new RegExp(escaped, 'i');
+    }
     regexCache.set(keyword, regex);
   }
   return regex;
@@ -244,10 +273,13 @@ function parseSection(value: string): NewsSection {
   if (value === 'general') return 'others';
   if (
     value === 'politics'
+    || value === 'conflicts'
     || value === 'business'
     || value === 'tech'
     || value === 'sports'
     || value === 'health'
+    || value === 'entertainment'
+    || value === 'lifestyle'
     || value === 'arts'
     || value === 'science'
     || value === 'climate'
@@ -296,7 +328,7 @@ async function callGroqClassifier(apiKey: string, title: string, summary: string
         role: 'system',
         content: [
           'Classify newsroom headlines into one section.',
-          'Allowed sections: politics, business, tech, sports, health, arts, science, climate, world, others.',
+          'Allowed sections: politics, conflicts, business, tech, sports, health, entertainment, lifestyle, arts, science, climate, world, others.',
           'Use the headline first, then short summary as context.',
           'Return strict JSON object only.',
           'Schema: {"section":"...","confidence":0.0,"reason":"..."}.'

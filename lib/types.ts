@@ -1,9 +1,12 @@
 export type NewsSection =
   | 'politics'
+  | 'conflicts'
   | 'business'
   | 'tech'
   | 'sports'
   | 'health'
+  | 'entertainment'
+  | 'lifestyle'
   | 'arts'
   | 'science'
   | 'climate'
@@ -12,10 +15,13 @@ export type NewsSection =
 export type SourceCategory =
   | 'global'
   | 'politics'
+  | 'conflicts'
   | 'business'
   | 'tech'
   | 'sports'
   | 'health'
+  | 'entertainment'
+  | 'lifestyle'
   | 'arts'
   | 'science'
   | 'world';

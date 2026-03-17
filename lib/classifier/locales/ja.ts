@@ -22,8 +22,15 @@ export const JA_HIGH: LocaleKeywordMap = {
   ワクチン: 'health',
   芸術: 'arts',
   文化: 'arts',
-  映画: 'arts',
-  音楽: 'arts',
+  芸能: 'entertainment',
+  映画: 'entertainment',
+  音楽: 'entertainment',
+  テレビ: 'entertainment',
+  ライフスタイル: 'lifestyle',
+  ファッション: 'lifestyle',
+  旅行: 'lifestyle',
+  レシピ: 'lifestyle',
+  グルメ: 'lifestyle',
   科学: 'science',
   研究: 'science',
   宇宙: 'science',
@@ -34,9 +41,17 @@ export const JA_HIGH: LocaleKeywordMap = {
 };
 
 export const JA_MEDIUM: LocaleKeywordMap = {
+  戦争: 'conflicts',
+  紛争: 'conflicts',
+  停戦: 'conflicts',
+  空爆: 'conflicts',
+  ミサイル: 'conflicts',
+  軍事: 'conflicts',
+  部隊: 'conflicts',
   物価: 'business',
   半導体: 'tech',
   感染症: 'health',
   展覧会: 'arts',
+  レストラン: 'lifestyle',
   天文学: 'science'
 };
