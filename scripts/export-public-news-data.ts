@@ -16,6 +16,7 @@ import {
   type PublicSourcesFile,
 } from '@/lib/public-data';
 import { resolveDatabaseUrl } from '@/lib/database-url';
+import { decodeHtmlEntities, normalizeHtmlText } from '@/lib/html-entities';
 import { classifySectionByKeyword } from '@/lib/keyword-classifier';
 import type { NewsSection } from '@/lib/types';
 
@@ -205,10 +206,18 @@ async function readArticles(pool: Pool, directory: CountryDirectory): Promise<Pu
   );
 
   return result.rows.map((row) => {
+    const title = normalizeHtmlText(row.title || '');
+    const snippet = normalizeHtmlText(row.snippet || '');
+    const url = decodeHtmlEntities(row.url || '');
     const countryName = normalizeCountryName(row.country);
     const countryCode = directory.countryCodeByName.get(countryName) || FALLBACK_COUNTRY_CODE;
     const publicationDatetime = normalizePublicationDatetime(row.publication_datetime, row.created_at);
-    const section = deriveArticleSection(row);
+    const section = deriveArticleSection({
+      ...row,
+      title,
+      snippet,
+      url,
+    });
     return {
       id: row.id,
       source: row.source,
@@ -216,9 +225,9 @@ async function readArticles(pool: Pool, directory: CountryDirectory): Promise<Pu
       countryCode,
       language: (row.language || '').trim() || 'und',
       section,
-      title: row.title,
-      snippet: row.snippet || '',
-      url: row.url,
+      title,
+      snippet,
+      url,
       publicationDatetime,
       createdAt: new Date(row.created_at).toISOString(),
     } satisfies PublicNewsArticle;

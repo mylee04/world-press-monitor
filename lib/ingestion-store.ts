@@ -1,6 +1,7 @@
 import { Pool } from 'pg';
 import { createHash } from 'node:crypto';
 import type { NewsItem } from '@/lib/types';
+import { decodeHtmlEntities, normalizeHtmlText } from '@/lib/html-entities';
 import { normalizeLinkForId } from '@/lib/pipeline';
 
 let pool: Pool | null = null;
@@ -684,6 +685,7 @@ function mapRowToNewsItem(row: {
   world_latam: boolean | null;
   tags: unknown;
 }): NewsItem {
+  const link = decodeHtmlEntities(row.link || '');
   const tierCandidate = Number(row.tier);
   const tier = tierCandidate === 1 || tierCandidate === 2 || tierCandidate === 3 ? tierCandidate : 2;
   const section = parseNewsSection(row.section);
@@ -694,12 +696,14 @@ function mapRowToNewsItem(row: {
       : 'global';
   const classificationSource: NewsItem['classificationSource'] = row.classification_source === 'llm' ? 'llm' : 'keyword';
   const tags = Array.isArray(row.tags) ? (row.tags.filter((value) => typeof value === 'string') as string[]) : [];
+  const title = normalizeHtmlText(row.title || '');
+  const description = normalizeHtmlText(row.description || '');
   return {
-    id: row.link,
+    id: link,
     outletId: row.outlet_id || undefined,
-    title: row.title,
-    description: row.description || '',
-    link: row.link,
+    title,
+    description,
+    link,
     source: row.source,
     language: row.language || undefined,
     sourceType,
@@ -921,9 +925,9 @@ export async function readNewsArticlesForApi(options: {
   const items = result.rows.map((row) => ({
     id: row.id,
     source: row.source,
-    title: row.title,
-    snippet: row.snippet_original,
-    url: row.url,
+    title: normalizeHtmlText(row.title || ''),
+    snippet: row.snippet_original ? normalizeHtmlText(row.snippet_original) : null,
+    url: decodeHtmlEntities(row.url),
     country: row.country,
     language: row.language,
     section: row.section,
@@ -2452,16 +2456,17 @@ type MissingPublishedAtPersistable = {
 };
 
 async function toNewsArticleRow(item: NewsItem): Promise<NewsArticlePersistable | null> {
-  const linkNorm = normalizeLinkForId(item.link);
+  const decodedLink = decodeHtmlEntities(item.link || '');
+  const linkNorm = normalizeLinkForId(decodedLink);
   if (!linkNorm) return null;
   const publicationTs = new Date(item.publishedAt).getTime();
   if (!Number.isFinite(publicationTs)) return null;
   if (publicationMaxAgeMs > 0 && publicationTs < Date.now() - publicationMaxAgeMs) return null;
 
   const language = item.language || null;
-  const titleOriginal = truncateText(item.title || '', storedTitleMaxChars);
+  const titleOriginal = truncateText(normalizeHtmlText(item.title || ''), storedTitleMaxChars);
   if (!titleOriginal) return null;
-  const rawSnippet = (item.description || '').trim();
+  const rawSnippet = normalizeHtmlText(item.description || '');
   const snippetOriginal = rawSnippet ? truncateText(rawSnippet, storedSnippetMaxChars) : null;
 
   return {
@@ -2471,18 +2476,19 @@ async function toNewsArticleRow(item: NewsItem): Promise<NewsArticlePersistable 
     titleOriginal,
     snippetOriginal,
     country: item.country || null,
-    url: item.link,
+    url: decodedLink,
     source: item.source,
     language
   };
 }
 
 async function toMissingPublishedAtRow(item: MissingPublishedAtCandidate): Promise<MissingPublishedAtPersistable | null> {
-  const linkNorm = normalizeLinkForId(item.link);
+  const decodedLink = decodeHtmlEntities(item.link || '');
+  const linkNorm = normalizeLinkForId(decodedLink);
   if (!linkNorm) return null;
-  const titleOriginal = truncateText((item.title || '').trim(), storedTitleMaxChars);
+  const titleOriginal = truncateText(normalizeHtmlText(item.title || ''), storedTitleMaxChars);
   if (!titleOriginal) return null;
-  const rawSnippet = (item.description || '').trim();
+  const rawSnippet = normalizeHtmlText(item.description || '');
   const snippetOriginal = rawSnippet ? truncateText(rawSnippet, storedSnippetMaxChars) : null;
   const categories = [...new Set((item.categories || []).map((entry) => entry.trim()).filter(Boolean))];
   const idSource = `${item.outletId}|${item.method}|${linkNorm}`;
@@ -2493,7 +2499,7 @@ async function toMissingPublishedAtRow(item: MissingPublishedAtCandidate): Promi
     source: item.source,
     country: item.country || 'Global',
     method: item.method,
-    url: item.link,
+    url: decodedLink,
     titleOriginal,
     snippetOriginal,
     language: item.language || null,

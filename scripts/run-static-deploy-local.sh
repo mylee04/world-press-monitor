@@ -10,10 +10,12 @@ load_local_env
 LOG_DIR="${WPM_LOG_DIR:-${PROJECT_ROOT}/logs}"
 LOG_FILE="${LOG_DIR}/static-deploy-local.log"
 WEB_DIST_DIR="${WPM_WEB_DIST_DIR:-${PROJECT_ROOT}/web-dist}"
+SOURCE_PUBLIC_DATA_DIR="${WPM_PUBLIC_DATA_DIR:-${PROJECT_ROOT}/public/data}"
+BUILD_PUBLIC_DATA_DIR="${PROJECT_ROOT}/public/data"
 LOCK_DIR="${PROJECT_ROOT}/.wpm-static-deploy-lock"
 VERCEL_DEPLOY_ARCHIVE="${VERCEL_DEPLOY_ARCHIVE:-tgz}"
 
-mkdir -p "${LOG_DIR}" "${WEB_DIST_DIR}"
+mkdir -p "${LOG_DIR}" "${WEB_DIST_DIR}" "${BUILD_PUBLIC_DATA_DIR}"
 cd "${PROJECT_ROOT}"
 export PATH="${PATH}:/opt/homebrew/bin:/usr/local/bin"
 
@@ -56,8 +58,13 @@ run_default_vercel_deploy() {
   printf '\n[%s] Start static export + deploy pipeline\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
   printf 'Project: %s\n' "${PROJECT_ROOT}"
   printf 'Web dist dir: %s\n' "${WEB_DIST_DIR}"
+  printf 'Source public data dir: %s\n' "${SOURCE_PUBLIC_DATA_DIR}"
+  printf 'Build public data dir: %s\n' "${BUILD_PUBLIC_DATA_DIR}"
   printf 'Env file: %s\n' "${WPM_ENV_FILE_SOURCE:-inline-defaults}"
   bash "${SCRIPT_DIR}/run-static-export-local.sh"
+  if [ "${SOURCE_PUBLIC_DATA_DIR}" != "${BUILD_PUBLIC_DATA_DIR}" ]; then
+    rsync -a --delete "${SOURCE_PUBLIC_DATA_DIR}/" "${BUILD_PUBLIC_DATA_DIR}/"
+  fi
   bun run web:build
   rsync -a --delete "${PROJECT_ROOT}/out/" "${WEB_DIST_DIR}/"
   if [ -n "${STATIC_DEPLOY_COMMAND:-}" ]; then

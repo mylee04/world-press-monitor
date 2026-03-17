@@ -1,3 +1,5 @@
+import { normalizeHtmlText } from './html-entities';
+
 export interface ParsedFeedItem {
   title: string;
   description?: string;
@@ -54,31 +56,31 @@ const DATE_TIMEZONE_OFFSETS: Record<string, string> = {
 
 function parseTag(body: string, tag: string): string {
   const match = body.match(new RegExp(`<${tag}[^>]*>([\\s\\S]*?)<\\/${tag}>`, 'i'));
-  return match ? clean(match[1] || '') : '';
+  return match ? normalizeHtmlText(clean(match[1] || '')) : '';
 }
 
 function parseTagByLocalName(body: string, localName: string): string {
   const tag = escapeRegExp(localName);
   const match = body.match(new RegExp(`<(?:[\\w.-]+:)?${tag}[^>]*>([\\s\\S]*?)<\\/(?:[\\w.-]+:)?${tag}>`, 'i'));
-  return match ? clean(match[1] || '') : '';
+  return match ? normalizeHtmlText(clean(match[1] || '')) : '';
 }
 
 function parseTags(body: string, tag: string): string[] {
   return [...body.matchAll(new RegExp(`<${tag}[^>]*>([\\s\\S]*?)<\\/${tag}>`, 'gi'))]
-    .map((match) => clean(match[1] || ''))
+    .map((match) => normalizeHtmlText(clean(match[1] || '')))
     .filter(Boolean);
 }
 
 function parseTagsByLocalName(body: string, localName: string): string[] {
   const tag = escapeRegExp(localName);
   return [...body.matchAll(new RegExp(`<(?:[\\w.-]+:)?${tag}[^>]*>([\\s\\S]*?)<\\/(?:[\\w.-]+:)?${tag}>`, 'gi'))]
-    .map((match) => clean(match[1] || ''))
+    .map((match) => normalizeHtmlText(clean(match[1] || '')))
     .filter(Boolean);
 }
 
 function parseAtomCategoryTerms(body: string): string[] {
   return [...body.matchAll(/<category[^>]*\bterm=["']([^"']+)["'][^>]*>/gi)]
-    .map((match) => clean(match[1] || ''))
+    .map((match) => normalizeHtmlText(clean(match[1] || '')))
     .filter(Boolean);
 }
 
@@ -94,12 +96,11 @@ function parseCategories(body: string, atomMode = false): string[] {
 }
 
 function stripHtml(value: string): string {
-  return (value || '')
+  return normalizeHtmlText((value || '')
     .replace(/<script[\s\S]*?<\/script>/gi, ' ')
     .replace(/<style[\s\S]*?<\/style>/gi, ' ')
     .replace(/<[^>]+>/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
+  );
 }
 
 function parseDescription(body: string): string {

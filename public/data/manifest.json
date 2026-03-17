@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-03-15T12:01:59.107Z",
-  "schemaVersion": 2,
+  "generatedAt": "2026-03-17T11:13:56.999Z",
+  "schemaVersion": 4,
   "cadence": {
     "frequency": "hourly",
     "scheduledMinute": 40,
     "timezone": "America/Chicago"
   },
-  "latestDate": "2026-03-15",
+  "latestDate": "2026-03-17",
   "countries": [
     "AR",
     "AT",
@@ -135,6 +135,9 @@
       "2026-03"
     ],
     "SK": [
+      "2026-03"
+    ],
+    "SI": [
       "2026-03"
     ],
     "SE": [
@@ -270,109 +273,51 @@
   "sections": [
     "world",
     "politics",
+    "conflicts",
     "business",
     "tech",
     "sports",
     "health",
+    "entertainment",
+    "lifestyle",
     "arts",
     "science",
     "climate",
     "others"
   ],
   "availableDates": [
+    "2026-03-17",
+    "2026-03-16",
     "2026-03-15",
-    "2026-03-14",
-    "2026-03-13",
-    "2026-03-12",
-    "2026-03-11",
-    "2026-03-10",
-    "2026-03-09",
-    "2026-03-08"
+    "2026-03-14"
   ],
   "downloads": {
     "latest24h": "/data/downloads/latest-24h.csv",
-    "byDate": [
-      "/data/downloads/by-date/2026-03-15.csv",
-      "/data/downloads/by-date/2026-03-14.csv",
-      "/data/downloads/by-date/2026-03-13.csv",
-      "/data/downloads/by-date/2026-03-12.csv",
-      "/data/downloads/by-date/2026-03-11.csv",
-      "/data/downloads/by-date/2026-03-10.csv",
-      "/data/downloads/by-date/2026-03-09.csv",
-      "/data/downloads/by-date/2026-03-08.csv"
-    ],
-    "byCountryMonth": [
-      "/data/downloads/by-country/UY/2026-03.csv",
-      "/data/downloads/by-country/US/2026-03.csv",
-      "/data/downloads/by-country/UA/2026-03.csv",
-      "/data/downloads/by-country/TW/2026-03.csv",
-      "/data/downloads/by-country/TR/2026-03.csv",
-      "/data/downloads/by-country/TH/2026-03.csv",
-      "/data/downloads/by-country/SK/2026-03.csv",
-      "/data/downloads/by-country/SE/2026-03.csv",
-      "/data/downloads/by-country/SA/2026-03.csv",
-      "/data/downloads/by-country/RU/2026-03.csv",
-      "/data/downloads/by-country/RS/2026-03.csv",
-      "/data/downloads/by-country/RO/2026-03.csv",
-      "/data/downloads/by-country/PT/2026-03.csv",
-      "/data/downloads/by-country/PL/2026-03.csv",
-      "/data/downloads/by-country/NO/2026-03.csv",
-      "/data/downloads/by-country/NL/2026-03.csv",
-      "/data/downloads/by-country/MX/2026-03.csv",
-      "/data/downloads/by-country/LV/2026-03.csv",
-      "/data/downloads/by-country/LT/2026-03.csv",
-      "/data/downloads/by-country/KR/2026-03.csv",
-      "/data/downloads/by-country/JP/2026-03.csv",
-      "/data/downloads/by-country/IT/2026-03.csv",
-      "/data/downloads/by-country/IS/2026-03.csv",
-      "/data/downloads/by-country/IR/2026-03.csv",
-      "/data/downloads/by-country/IN/2026-03.csv",
-      "/data/downloads/by-country/IE/2026-03.csv",
-      "/data/downloads/by-country/ID/2026-03.csv",
-      "/data/downloads/by-country/HU/2026-03.csv",
-      "/data/downloads/by-country/HR/2026-03.csv",
-      "/data/downloads/by-country/GR/2026-03.csv",
-      "/data/downloads/by-country/GLOBAL/2026-03.csv",
-      "/data/downloads/by-country/GB/2026-03.csv",
-      "/data/downloads/by-country/FR/2026-03.csv",
-      "/data/downloads/by-country/FI/2026-03.csv",
-      "/data/downloads/by-country/ES/2026-03.csv",
-      "/data/downloads/by-country/EE/2026-03.csv",
-      "/data/downloads/by-country/DO/2026-03.csv",
-      "/data/downloads/by-country/DK/2026-03.csv",
-      "/data/downloads/by-country/DE/2026-03.csv",
-      "/data/downloads/by-country/CZ/2026-03.csv",
-      "/data/downloads/by-country/CN/2026-03.csv",
-      "/data/downloads/by-country/CL/2026-03.csv",
-      "/data/downloads/by-country/CH/2026-03.csv",
-      "/data/downloads/by-country/CA/2026-03.csv",
-      "/data/downloads/by-country/BR/2026-03.csv",
-      "/data/downloads/by-country/BG/2026-03.csv",
-      "/data/downloads/by-country/BE/2026-03.csv",
-      "/data/downloads/by-country/AU/2026-03.csv",
-      "/data/downloads/by-country/AT/2026-03.csv",
-      "/data/downloads/by-country/AR/2026-03.csv"
-    ]
+    "byDate": [],
+    "byCountryMonth": []
   },
   "shards": {
-    "byDate": "/data/by-date/2026-03-15.json",
+    "byDate": "/data/by-date/2026-03-17.json",
     "byCountryMonth": "/data/by-country/UY/2026-03.json"
   },
   "totals": {
-    "articles": 99393,
-    "latest24h": 99393,
-    "sources": 1596
+    "articles": 250000,
+    "latest24h": 132508,
+    "sources": 2171
   },
   "sectionTotals": {
-    "world": 7057,
-    "politics": 5816,
-    "business": 2451,
-    "tech": 7688,
-    "sports": 3810,
-    "health": 2099,
-    "arts": 11027,
-    "science": 756,
-    "climate": 1447,
-    "others": 57242
+    "world": 70632,
+    "politics": 24727,
+    "conflicts": 10983,
+    "business": 18808,
+    "tech": 12049,
+    "sports": 29798,
+    "health": 8172,
+    "entertainment": 11635,
+    "lifestyle": 5030,
+    "arts": 6414,
+    "science": 2369,
+    "climate": 3234,
+    "others": 46149
   }
 }

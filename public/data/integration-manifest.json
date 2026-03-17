@@ -1,0 +1,332 @@
+{
+  "generatedAt": "2026-03-17T11:13:56.999Z",
+  "schemaVersion": 4,
+  "cadence": {
+    "frequency": "hourly",
+    "scheduledMinute": 40,
+    "timezone": "America/Chicago"
+  },
+  "windowHours": 24,
+  "semantics": {
+    "published24h": "publicationDatetime within the last 24 hours",
+    "inserted24h": "createdAt within the last 24 hours"
+  },
+  "countries": [
+    "AR",
+    "AT",
+    "AU",
+    "BE",
+    "BG",
+    "BR",
+    "CA",
+    "CH",
+    "CL",
+    "CN",
+    "CZ",
+    "DE",
+    "DK",
+    "DO",
+    "EE",
+    "ES",
+    "FI",
+    "FR",
+    "GB",
+    "GLOBAL",
+    "GR",
+    "HR",
+    "HU",
+    "ID",
+    "IE",
+    "IN",
+    "IR",
+    "IS",
+    "IT",
+    "JP",
+    "KR",
+    "LT",
+    "LU",
+    "LV",
+    "MX",
+    "NL",
+    "NO",
+    "PL",
+    "PT",
+    "RO",
+    "RS",
+    "RU",
+    "SA",
+    "SE",
+    "SI",
+    "SK",
+    "TH",
+    "TR",
+    "TW",
+    "UA",
+    "US",
+    "UY"
+  ],
+  "countryNames": {
+    "AR": "Argentina",
+    "AT": "Austria",
+    "AU": "Australia",
+    "BE": "Belgium",
+    "BG": "Bulgaria",
+    "BR": "Brazil",
+    "CA": "Canada",
+    "CH": "Switzerland",
+    "CL": "Chile",
+    "CN": "China",
+    "CZ": "Czech Republic",
+    "DE": "Germany",
+    "DK": "Denmark",
+    "DO": "Dominican Republic",
+    "EE": "Estonia",
+    "ES": "Spain",
+    "FI": "Finland",
+    "FR": "France",
+    "GB": "United Kingdom",
+    "GLOBAL": "Global Energy & Grid",
+    "GR": "Greece",
+    "HR": "Croatia",
+    "HU": "Hungary",
+    "ID": "Indonesia",
+    "IE": "Ireland",
+    "IN": "India",
+    "IR": "Iran",
+    "IS": "Iceland",
+    "IT": "Italy",
+    "JP": "Japan",
+    "KR": "South Korea",
+    "LT": "Lithuania",
+    "LU": "Luxembourg",
+    "LV": "Latvia",
+    "MX": "Mexico",
+    "NL": "Netherlands",
+    "NO": "Norway",
+    "PL": "Poland",
+    "PT": "Portugal",
+    "RO": "Romania",
+    "RS": "Serbia",
+    "RU": "Russia",
+    "SA": "Saudi Arabia",
+    "SE": "Sweden",
+    "SI": "Slovenia",
+    "SK": "Slovakia",
+    "TH": "Thailand",
+    "TR": "Turkey",
+    "TW": "Taiwan",
+    "UA": "Ukraine",
+    "US": "United States",
+    "UY": "Uruguay"
+  },
+  "feeds": {
+    "AR": {
+      "published24h": "/data/country-published-24h-AR.json",
+      "inserted24h": "/data/country-inserted-24h-AR.json"
+    },
+    "AT": {
+      "published24h": "/data/country-published-24h-AT.json",
+      "inserted24h": "/data/country-inserted-24h-AT.json"
+    },
+    "AU": {
+      "published24h": "/data/country-published-24h-AU.json",
+      "inserted24h": "/data/country-inserted-24h-AU.json"
+    },
+    "BE": {
+      "published24h": "/data/country-published-24h-BE.json",
+      "inserted24h": "/data/country-inserted-24h-BE.json"
+    },
+    "BG": {
+      "published24h": "/data/country-published-24h-BG.json",
+      "inserted24h": "/data/country-inserted-24h-BG.json"
+    },
+    "BR": {
+      "published24h": "/data/country-published-24h-BR.json",
+      "inserted24h": "/data/country-inserted-24h-BR.json"
+    },
+    "CA": {
+      "published24h": "/data/country-published-24h-CA.json",
+      "inserted24h": "/data/country-inserted-24h-CA.json"
+    },
+    "CH": {
+      "published24h": "/data/country-published-24h-CH.json",
+      "inserted24h": "/data/country-inserted-24h-CH.json"
+    },
+    "CL": {
+      "published24h": "/data/country-published-24h-CL.json",
+      "inserted24h": "/data/country-inserted-24h-CL.json"
+    },
+    "CN": {
+      "published24h": "/data/country-published-24h-CN.json",
+      "inserted24h": "/data/country-inserted-24h-CN.json"
+    },
+    "CZ": {
+      "published24h": "/data/country-published-24h-CZ.json",
+      "inserted24h": "/data/country-inserted-24h-CZ.json"
+    },
+    "DE": {
+      "published24h": "/data/country-published-24h-DE.json",
+      "inserted24h": "/data/country-inserted-24h-DE.json"
+    },
+    "DK": {
+      "published24h": "/data/country-published-24h-DK.json",
+      "inserted24h": "/data/country-inserted-24h-DK.json"
+    },
+    "DO": {
+      "published24h": "/data/country-published-24h-DO.json",
+      "inserted24h": "/data/country-inserted-24h-DO.json"
+    },
+    "EE": {
+      "published24h": "/data/country-published-24h-EE.json",
+      "inserted24h": "/data/country-inserted-24h-EE.json"
+    },
+    "ES": {
+      "published24h": "/data/country-published-24h-ES.json",
+      "inserted24h": "/data/country-inserted-24h-ES.json"
+    },
+    "FI": {
+      "published24h": "/data/country-published-24h-FI.json",
+      "inserted24h": "/data/country-inserted-24h-FI.json"
+    },
+    "FR": {
+      "published24h": "/data/country-published-24h-FR.json",
+      "inserted24h": "/data/country-inserted-24h-FR.json"
+    },
+    "GB": {
+      "published24h": "/data/country-published-24h-GB.json",
+      "inserted24h": "/data/country-inserted-24h-GB.json"
+    },
+    "GLOBAL": {
+      "published24h": "/data/country-published-24h-GLOBAL.json",
+      "inserted24h": "/data/country-inserted-24h-GLOBAL.json"
+    },
+    "GR": {
+      "published24h": "/data/country-published-24h-GR.json",
+      "inserted24h": "/data/country-inserted-24h-GR.json"
+    },
+    "HR": {
+      "published24h": "/data/country-published-24h-HR.json",
+      "inserted24h": "/data/country-inserted-24h-HR.json"
+    },
+    "HU": {
+      "published24h": "/data/country-published-24h-HU.json",
+      "inserted24h": "/data/country-inserted-24h-HU.json"
+    },
+    "ID": {
+      "published24h": "/data/country-published-24h-ID.json",
+      "inserted24h": "/data/country-inserted-24h-ID.json"
+    },
+    "IE": {
+      "published24h": "/data/country-published-24h-IE.json",
+      "inserted24h": "/data/country-inserted-24h-IE.json"
+    },
+    "IN": {
+      "published24h": "/data/country-published-24h-IN.json",
+      "inserted24h": "/data/country-inserted-24h-IN.json"
+    },
+    "IR": {
+      "published24h": "/data/country-published-24h-IR.json",
+      "inserted24h": "/data/country-inserted-24h-IR.json"
+    },
+    "IS": {
+      "published24h": "/data/country-published-24h-IS.json",
+      "inserted24h": "/data/country-inserted-24h-IS.json"
+    },
+    "IT": {
+      "published24h": "/data/country-published-24h-IT.json",
+      "inserted24h": "/data/country-inserted-24h-IT.json"
+    },
+    "JP": {
+      "published24h": "/data/country-published-24h-JP.json",
+      "inserted24h": "/data/country-inserted-24h-JP.json"
+    },
+    "KR": {
+      "published24h": "/data/country-published-24h-KR.json",
+      "inserted24h": "/data/country-inserted-24h-KR.json"
+    },
+    "LT": {
+      "published24h": "/data/country-published-24h-LT.json",
+      "inserted24h": "/data/country-inserted-24h-LT.json"
+    },
+    "LU": {
+      "published24h": "/data/country-published-24h-LU.json",
+      "inserted24h": "/data/country-inserted-24h-LU.json"
+    },
+    "LV": {
+      "published24h": "/data/country-published-24h-LV.json",
+      "inserted24h": "/data/country-inserted-24h-LV.json"
+    },
+    "MX": {
+      "published24h": "/data/country-published-24h-MX.json",
+      "inserted24h": "/data/country-inserted-24h-MX.json"
+    },
+    "NL": {
+      "published24h": "/data/country-published-24h-NL.json",
+      "inserted24h": "/data/country-inserted-24h-NL.json"
+    },
+    "NO": {
+      "published24h": "/data/country-published-24h-NO.json",
+      "inserted24h": "/data/country-inserted-24h-NO.json"
+    },
+    "PL": {
+      "published24h": "/data/country-published-24h-PL.json",
+      "inserted24h": "/data/country-inserted-24h-PL.json"
+    },
+    "PT": {
+      "published24h": "/data/country-published-24h-PT.json",
+      "inserted24h": "/data/country-inserted-24h-PT.json"
+    },
+    "RO": {
+      "published24h": "/data/country-published-24h-RO.json",
+      "inserted24h": "/data/country-inserted-24h-RO.json"
+    },
+    "RS": {
+      "published24h": "/data/country-published-24h-RS.json",
+      "inserted24h": "/data/country-inserted-24h-RS.json"
+    },
+    "RU": {
+      "published24h": "/data/country-published-24h-RU.json",
+      "inserted24h": "/data/country-inserted-24h-RU.json"
+    },
+    "SA": {
+      "published24h": "/data/country-published-24h-SA.json",
+      "inserted24h": "/data/country-inserted-24h-SA.json"
+    },
+    "SE": {
+      "published24h": "/data/country-published-24h-SE.json",
+      "inserted24h": "/data/country-inserted-24h-SE.json"
+    },
+    "SI": {
+      "published24h": "/data/country-published-24h-SI.json",
+      "inserted24h": "/data/country-inserted-24h-SI.json"
+    },
+    "SK": {
+      "published24h": "/data/country-published-24h-SK.json",
+      "inserted24h": "/data/country-inserted-24h-SK.json"
+    },
+    "TH": {
+      "published24h": "/data/country-published-24h-TH.json",
+      "inserted24h": "/data/country-inserted-24h-TH.json"
+    },
+    "TR": {
+      "published24h": "/data/country-published-24h-TR.json",
+      "inserted24h": "/data/country-inserted-24h-TR.json"
+    },
+    "TW": {
+      "published24h": "/data/country-published-24h-TW.json",
+      "inserted24h": "/data/country-inserted-24h-TW.json"
+    },
+    "UA": {
+      "published24h": "/data/country-published-24h-UA.json",
+      "inserted24h": "/data/country-inserted-24h-UA.json"
+    },
+    "US": {
+      "published24h": "/data/country-published-24h-US.json",
+      "inserted24h": "/data/country-inserted-24h-US.json"
+    },
+    "UY": {
+      "published24h": "/data/country-published-24h-UY.json",
+      "inserted24h": "/data/country-inserted-24h-UY.json"
+    }
+  }
+}
