@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-17T11:13:56.999Z",
+  "generatedAt": "2026-03-17T13:02:21.323Z",
   "schemaVersion": 4,
   "cadence": {
     "frequency": "hourly",
@@ -302,22 +302,22 @@
   },
   "totals": {
     "articles": 250000,
-    "latest24h": 132508,
+    "latest24h": 134090,
     "sources": 2171
   },
   "sectionTotals": {
-    "world": 70632,
-    "politics": 24727,
-    "conflicts": 10983,
-    "business": 18808,
-    "tech": 12049,
-    "sports": 29798,
-    "health": 8172,
-    "entertainment": 11635,
-    "lifestyle": 5030,
-    "arts": 6414,
-    "science": 2369,
-    "climate": 3234,
-    "others": 46149
+    "world": 70755,
+    "politics": 24982,
+    "conflicts": 11316,
+    "business": 19305,
+    "tech": 11244,
+    "sports": 29374,
+    "health": 8280,
+    "entertainment": 11541,
+    "lifestyle": 5081,
+    "arts": 6242,
+    "science": 2393,
+    "climate": 3258,
+    "others": 46229
   }
 }

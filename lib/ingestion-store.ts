@@ -1,7 +1,7 @@
 import { Pool } from 'pg';
 import { createHash } from 'node:crypto';
 import type { NewsItem } from '@/lib/types';
-import { decodeHtmlEntities, normalizeHtmlText } from '@/lib/html-entities';
+import { decodeHtmlEntities, normalizeArticleTitle, normalizeHtmlText } from '@/lib/html-entities';
 import { normalizeLinkForId } from '@/lib/pipeline';
 
 let pool: Pool | null = null;
@@ -696,7 +696,7 @@ function mapRowToNewsItem(row: {
       : 'global';
   const classificationSource: NewsItem['classificationSource'] = row.classification_source === 'llm' ? 'llm' : 'keyword';
   const tags = Array.isArray(row.tags) ? (row.tags.filter((value) => typeof value === 'string') as string[]) : [];
-  const title = normalizeHtmlText(row.title || '');
+  const title = normalizeArticleTitle(row.title || '', link);
   const description = normalizeHtmlText(row.description || '');
   return {
     id: link,
@@ -925,7 +925,7 @@ export async function readNewsArticlesForApi(options: {
   const items = result.rows.map((row) => ({
     id: row.id,
     source: row.source,
-    title: normalizeHtmlText(row.title || ''),
+    title: normalizeArticleTitle(row.title || '', row.url),
     snippet: row.snippet_original ? normalizeHtmlText(row.snippet_original) : null,
     url: decodeHtmlEntities(row.url),
     country: row.country,
@@ -2464,7 +2464,7 @@ async function toNewsArticleRow(item: NewsItem): Promise<NewsArticlePersistable 
   if (publicationMaxAgeMs > 0 && publicationTs < Date.now() - publicationMaxAgeMs) return null;
 
   const language = item.language || null;
-  const titleOriginal = truncateText(normalizeHtmlText(item.title || ''), storedTitleMaxChars);
+  const titleOriginal = truncateText(normalizeArticleTitle(item.title || '', decodedLink), storedTitleMaxChars);
   if (!titleOriginal) return null;
   const rawSnippet = normalizeHtmlText(item.description || '');
   const snippetOriginal = rawSnippet ? truncateText(rawSnippet, storedSnippetMaxChars) : null;
@@ -2486,7 +2486,7 @@ async function toMissingPublishedAtRow(item: MissingPublishedAtCandidate): Promi
   const decodedLink = decodeHtmlEntities(item.link || '');
   const linkNorm = normalizeLinkForId(decodedLink);
   if (!linkNorm) return null;
-  const titleOriginal = truncateText(normalizeHtmlText(item.title || ''), storedTitleMaxChars);
+  const titleOriginal = truncateText(normalizeArticleTitle(item.title || '', decodedLink), storedTitleMaxChars);
   if (!titleOriginal) return null;
   const rawSnippet = normalizeHtmlText(item.description || '');
   const snippetOriginal = rawSnippet ? truncateText(rawSnippet, storedSnippetMaxChars) : null;
@@ -2556,7 +2556,15 @@ export async function persistNewsArticles(items: NewsItem[]): Promise<{ persiste
       on conflict (external_id) do update set
         publication_datetime = excluded.publication_datetime,
         section = excluded.section,
-        title_original = excluded.title_original,
+        title_original = case
+          when (excluded.title_original = excluded.url or excluded.title_original like 'http%')
+            and news_articles.title_original is not null
+            and news_articles.title_original <> ''
+            and news_articles.title_original <> news_articles.url
+            and news_articles.title_original not like 'http%'
+          then news_articles.title_original
+          else excluded.title_original
+        end,
         snippet_original = coalesce(nullif(excluded.snippet_original, ''), news_articles.snippet_original),
         country = excluded.country,
         url = excluded.url,
@@ -2639,7 +2647,15 @@ export async function persistMissingPublishedAtCandidates(
         country = excluded.country,
         method = excluded.method,
         url = excluded.url,
-        title_original = excluded.title_original,
+        title_original = case
+          when (excluded.title_original = excluded.url or excluded.title_original like 'http%')
+            and ingest_missing_published_at.title_original is not null
+            and ingest_missing_published_at.title_original <> ''
+            and ingest_missing_published_at.title_original <> ingest_missing_published_at.url
+            and ingest_missing_published_at.title_original not like 'http%'
+          then ingest_missing_published_at.title_original
+          else excluded.title_original
+        end,
         snippet_original = coalesce(nullif(excluded.snippet_original, ''), ingest_missing_published_at.snippet_original),
         language = excluded.language,
         section = excluded.section,

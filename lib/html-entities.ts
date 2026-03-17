@@ -61,3 +61,40 @@ export function normalizeHtmlText(value: string): string {
     .replace(/\s+/g, ' ')
     .trim();
 }
+
+function safeDecodeURIComponent(value: string): string {
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    return value;
+  }
+}
+
+function titleFromLink(link: string): string {
+  if (!link) return '';
+  try {
+    const parsed = new URL(link);
+    const segments = parsed.pathname.split('/').filter(Boolean);
+    let candidate = segments[segments.length - 1] || '';
+    candidate = safeDecodeURIComponent(candidate)
+      .replace(/\.[a-z0-9]{2,6}$/i, '')
+      .replace(/(?:^|[-_])nid\d+$/i, '')
+      .replace(/[-_]+/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+    if (!candidate || /^\d+$/.test(candidate)) return '';
+    return candidate.charAt(0).toUpperCase() + candidate.slice(1);
+  } catch {
+    return '';
+  }
+}
+
+export function normalizeArticleTitle(title: string, link = ''): string {
+  const normalizedTitle = normalizeHtmlText(title);
+  const normalizedLink = decodeHtmlEntities(link || '');
+  if (!normalizedTitle) return titleFromLink(normalizedLink);
+  if (normalizedTitle === normalizedLink || /^https?:\/\//i.test(normalizedTitle)) {
+    return titleFromLink(normalizedLink) || normalizedTitle;
+  }
+  return normalizedTitle;
+}

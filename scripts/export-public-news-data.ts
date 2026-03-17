@@ -16,7 +16,7 @@ import {
   type PublicSourcesFile,
 } from '@/lib/public-data';
 import { resolveDatabaseUrl } from '@/lib/database-url';
-import { decodeHtmlEntities, normalizeHtmlText } from '@/lib/html-entities';
+import { decodeHtmlEntities, normalizeArticleTitle, normalizeHtmlText } from '@/lib/html-entities';
 import { classifySectionByKeyword } from '@/lib/keyword-classifier';
 import type { NewsSection } from '@/lib/types';
 
@@ -206,7 +206,7 @@ async function readArticles(pool: Pool, directory: CountryDirectory): Promise<Pu
   );
 
   return result.rows.map((row) => {
-    const title = normalizeHtmlText(row.title || '');
+    const title = normalizeArticleTitle(row.title || '', row.url || '');
     const snippet = normalizeHtmlText(row.snippet || '');
     const url = decodeHtmlEntities(row.url || '');
     const countryName = normalizeCountryName(row.country);

@@ -3,6 +3,7 @@ import { lookup } from 'node:dns/promises';
 import { isIP } from 'node:net';
 import { resolve } from 'node:path';
 import { parseRssOrAtomWithStats, parseSitemapWithStats } from '../lib/parsers';
+import { normalizeArticleTitle, normalizeHtmlText } from '../lib/html-entities';
 import { runWithConcurrency } from '../lib/concurrency';
 import { fetchWithRetry, readResponseText } from '../lib/fetch-utils';
 import { classifySection } from '../lib/keyword-classifier';
@@ -1315,6 +1316,8 @@ async function toNewsItem(
   method: 'rss' | 'sitemap',
   onMissingPublishedAtCandidate?: MissingPublishedAtCollector
 ): Promise<NewsItem | null> {
+  const title = normalizeArticleTitle(row.title || '', row.link || '');
+  const description = normalizeHtmlText(row.description || '');
   const rawPublishedAt = (row.publishedAt || '').trim();
   if (!rawPublishedAt && DROP_ITEMS_WITHOUT_PUBLISHED_AT) {
     onMissingPublishedAtCandidate?.({
@@ -1323,8 +1326,8 @@ async function toNewsItem(
       country: normalizeCountryName(outlet.country),
       method,
       link: row.link,
-      title: row.title,
-      description: row.description || null,
+      title,
+      description: description || null,
       language: outlet.language || 'en',
       section: outlet.section || 'others',
       categories: row.categories || [],
@@ -1332,11 +1335,11 @@ async function toNewsItem(
     return null;
   }
   const normalizedCountry = normalizeCountryName(outlet.country);
-  const geo = inferGeoFromTitle(row.title, normalizedCountry);
+  const geo = inferGeoFromTitle(title, normalizedCountry);
   const fallbackSection = outlet.section || 'others';
   const classification = await classifySection({
-    title: row.title,
-    summary: row.description,
+    title,
+    summary: description,
     fallbackSection,
     feedCategories: row.categories || []
   });
@@ -1349,8 +1352,8 @@ async function toNewsItem(
   return annotateWorldLatam({
     id: row.link,
     outletId: outlet.id,
-    title: row.title,
-    description: row.description || '',
+    title,
+    description,
     link: row.link,
     source: outlet.name,
     language: outlet.language || 'en',
@@ -1363,7 +1366,7 @@ async function toNewsItem(
     classificationSource: classification.source,
     classificationReason: classification.reason,
     publicationSource: 'feed',
-    summarySource: row.description ? 'feed' : undefined,
+    summarySource: description ? 'feed' : undefined,
     ...geo,
   });
 }
