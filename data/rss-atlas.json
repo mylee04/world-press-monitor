@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-03-07T18:54:26.130Z",
+  "generatedAt": "2026-03-16T18:51:10.652Z",
   "lastChecked": "2026-02-24T06:58:53.314Z",
   "countries": [
     {
@@ -3674,6 +3674,50 @@
           "checkedDate": "02/23/2026",
           "valid": null,
           "row": 58
+        },
+        {
+          "name": "CBC News - Top Stories",
+          "url": "https://www.cbc.ca/cmlink/rss-topstories"
+        },
+        {
+          "name": "CBC News - Canada",
+          "url": "https://www.cbc.ca/cmlink/rss-canada"
+        },
+        {
+          "name": "CBC News - Politics",
+          "url": "https://www.cbc.ca/cmlink/rss-politics"
+        },
+        {
+          "name": "The Globe and Mail - Sitemap Index",
+          "sitemapUrl": "https://www.theglobeandmail.com/sitemap.xml?outputType=xml"
+        },
+        {
+          "name": "CTV News - Sitemap News Index",
+          "sitemapUrl": "https://www.ctvnews.ca/arc/outboundfeeds/sitemap-news-index/"
+        },
+        {
+          "name": "La Presse - News Sitemap",
+          "sitemapUrl": "https://www.lapresse.ca/newsSitemap.xml"
+        },
+        {
+          "name": "CP24 - Sitemap News Index",
+          "sitemapUrl": "https://www.cp24.com/arc/outboundfeeds/sitemap-news-index/"
+        },
+        {
+          "name": "National Post - News Sitemap",
+          "sitemapUrl": "https://nationalpost.com/sitemap-news.xml"
+        },
+        {
+          "name": "Global News - News Sitemap",
+          "sitemapUrl": "https://globalnews.ca/news-sitemap.xml"
+        },
+        {
+          "name": "Toronto Star - Sitemap Index",
+          "sitemapUrl": "https://www.thestar.com/sitemap.xml"
+        },
+        {
+          "name": "CP24 - Sitemap Index",
+          "sitemapUrl": "https://www.cp24.com/arc/outboundfeeds/sitemap-index/"
         }
       ]
     },
@@ -4627,6 +4671,453 @@
         {
           "name": "ABC News Australia",
           "url": "https://www.abc.net.au/news/feed/51120/rss.xml"
+        },
+        {
+          "name": "News.com.au World",
+          "url": "https://www.news.com.au/content-feeds/latest-news-world/",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 38
+        },
+        {
+          "name": "News.com.au Technology",
+          "url": "https://www.news.com.au/content-feeds/latest-news-technology/",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 39
+        },
+        {
+          "name": "Sky News Australia",
+          "url": "https://www.skynews.com.au/australia-news/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 40
+        },
+        {
+          "name": "Sky News World",
+          "url": "https://www.skynews.com.au/world-news/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 41
+        },
+        {
+          "name": "ABC News - Politics",
+          "url": "https://www.abc.net.au/news/feed/45910/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 42
+        },
+        {
+          "name": "Sydney Morning Herald - National",
+          "url": "https://www.smh.com.au/rss/national.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 43
+        },
+        {
+          "name": "The Age - National",
+          "url": "https://www.theage.com.au/rss/national.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 44
+        },
+        {
+          "name": "Herald Sun",
+          "url": "https://www.heraldsun.com.au/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 45
+        },
+        {
+          "name": "ABC News - Rural",
+          "url": "https://www.abc.net.au/news/feed/52498/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 46
+        },
+        {
+          "name": "ABC News - Science",
+          "url": "https://www.abc.net.au/news/feed/45914/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 47
+        },
+        {
+          "name": "ABC News - Politics (Topic)",
+          "url": "https://www.abc.net.au/news/feed/45910/rss.xml?topic=technology",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 48
+        },
+        {
+          "name": "News.com.au - Sport",
+          "url": "https://www.news.com.au/content-feeds/latest-news-sport/",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 49
+        },
+        {
+          "name": "SBS News - Australia",
+          "url": "https://www.sbs.com.au/news/topic/australia/feed",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 50
+        },
+        {
+          "name": "SBS News - World",
+          "url": "https://www.sbs.com.au/news/topic/world/feed",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 51
+        },
+        {
+          "name": "News.com.au - Lifestyle",
+          "url": "https://www.news.com.au/content-feeds/latest-news-lifestyle/",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 52
+        },
+        {
+          "name": "News.com.au - Entertainment",
+          "url": "https://www.news.com.au/content-feeds/latest-news-entertainment/",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 53
+        },
+        {
+          "name": "News.com.au - Travel",
+          "url": "https://www.news.com.au/content-feeds/latest-news-travel/",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 54
+        },
+        {
+          "name": "ABC News - Analysis",
+          "url": "https://www.abc.net.au/news/feed/45924/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 55
+        },
+        {
+          "name": "The West Australian",
+          "url": "https://thewest.com.au/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 56
+        },
+        {
+          "name": "Courier Mail",
+          "url": "https://www.couriermail.com.au/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 57
+        },
+        {
+          "name": "Daily Telegraph Australia",
+          "url": "https://www.dailytelegraph.com.au/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 58
+        },
+        {
+          "name": "Geelong Advertiser",
+          "url": "https://www.geelongadvertiser.com.au/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 59
+        },
+        {
+          "name": "News.com.au - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.news.com.au/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 60
+        },
+        {
+          "name": "SBS News - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.sbs.com.au/news/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 61
+        },
+        {
+          "name": "SBS News - English Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.sbs.com.au/news/english/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 62
+        },
+        {
+          "name": "SBS Dateline - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.sbs.com.au/news/dateline/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 63
+        },
+        {
+          "name": "Cairns Post",
+          "url": "https://www.cairnspost.com.au/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 64
+        },
+        {
+          "name": "AdelaideNow - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.adelaidenow.com.au/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 112
+        },
+        {
+          "name": "The Mercury - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.themercury.com.au/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 113
+        },
+        {
+          "name": "Gold Coast Bulletin - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.goldcoastbulletin.com.au/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 114
+        },
+        {
+          "name": "Townsville Bulletin - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.townsvillebulletin.com.au/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 115
+        },
+        {
+          "name": "NT News - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.ntnews.com.au/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 116
+        },
+        {
+          "name": "Geelong Advertiser - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.geelongadvertiser.com.au/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 140
+        },
+        {
+          "name": "PerthNow - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.perthnow.com.au/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 141
+        },
+        {
+          "name": "The West Australian - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.thewest.com.au/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 142
+        },
+        {
+          "name": "The Chronicle - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.thechronicle.com.au/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 158
+        },
+        {
+          "name": "Weekly Times - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.weeklytimesnow.com.au/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 159
+        },
+        {
+          "name": "The Australian - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.theaustralian.com.au/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 160
+        },
+        {
+          "name": "Newcastle Herald",
+          "url": "https://www.newcastleherald.com.au/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 170
+        },
+        {
+          "name": "Illawarra Mercury",
+          "url": "https://www.illawarramercury.com.au/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 171
+        },
+        {
+          "name": "The Courier",
+          "url": "https://www.thecourier.com.au/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 172
+        },
+        {
+          "name": "Border Mail",
+          "url": "https://www.bordermail.com.au/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 173
+        },
+        {
+          "name": "The Advocate",
+          "url": "https://www.theadvocate.com.au/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 174
+        },
+        {
+          "name": "Daily Advertiser",
+          "url": "https://www.dailyadvertiser.com.au/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 175
+        },
+        {
+          "name": "Central Western Daily",
+          "url": "https://www.centralwesterndaily.com.au/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 176
+        },
+        {
+          "name": "The Examiner",
+          "url": "https://www.examiner.com.au/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 177
+        },
+        {
+          "name": "Bendigo Advertiser",
+          "url": "https://www.bendigoadvertiser.com.au/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 178
+        },
+        {
+          "name": "North West Star",
+          "url": "https://www.northweststar.com.au/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 179
+        },
+        {
+          "name": "Goulburn Post",
+          "url": "https://www.goulburnpost.com.au/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 180
+        },
+        {
+          "name": "The Land",
+          "url": "https://www.theland.com.au/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 181
+        },
+        {
+          "name": "Manning River Times",
+          "url": "https://www.manningrivertimes.com.au/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 182
+        },
+        {
+          "name": "Port Macquarie News",
+          "url": "https://www.portnews.com.au/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 183
+        },
+        {
+          "name": "Blue Mountains Gazette",
+          "url": "https://www.bluemountainsgazette.com.au/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 184
+        },
+        {
+          "name": "Warrnambool Standard",
+          "url": "https://www.standard.net.au/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 185
         }
       ]
     },
@@ -5336,6 +5827,117 @@
           "name": "Xataka México (Tech/IT)",
           "url": "https://www.xataka.com.mx/feed",
           "enabled": false
+        },
+        {
+          "name": "Milenio - Google News Sitemap",
+          "sitemapUrl": "https://www.milenio.com/sitemap/sitemap-google-news-index.xml"
+        },
+        {
+          "name": "Excelsior - News Sitemap",
+          "sitemapUrl": "https://www.excelsior.com.mx/sitemap-google-news.xml"
+        },
+        {
+          "name": "Animal Politico - News Sitemap",
+          "sitemapUrl": "https://sitemaps.animalpolitico.com/sitemap/news-sitemap.xml"
+        },
+        {
+          "name": "El Universal - Nacion Sitemap",
+          "sitemapUrl": "https://www.eluniversal.com.mx/arc/outboundfeeds/sitemap/category/nacion/?outputType=xml"
+        },
+        {
+          "name": "El Universal - Mundo Sitemap",
+          "sitemapUrl": "https://www.eluniversal.com.mx/arc/outboundfeeds/sitemap/category/mundo/?outputType=xml"
+        },
+        {
+          "name": "El Universal - Estados Sitemap",
+          "sitemapUrl": "https://www.eluniversal.com.mx/arc/outboundfeeds/sitemap/category/estados/?outputType=xml"
+        },
+        {
+          "name": "Milenio - Articles Sitemap Index",
+          "sitemapUrl": "https://www.milenio.com/sitemap/sitemap-articles-index.xml"
+        },
+        {
+          "name": "Excelsior - Sitemap Index",
+          "sitemapUrl": "https://www.excelsior.com.mx/sitemap-index.xml"
+        },
+        {
+          "name": "El Sol de Mexico - Update Sitemap",
+          "sitemapUrl": "https://www.elsoldemexico.com.mx/sitemap/update.xml"
+        },
+        {
+          "name": "El Universal - De Ultima Sitemap",
+          "sitemapUrl": "https://www.eluniversal.com.mx/arc/outboundfeeds/news/deultima/"
+        },
+        {
+          "name": "El Universal - Ciencia Sitemap",
+          "sitemapUrl": "https://www.eluniversal.com.mx/arc/outboundfeeds/news/ciencia/"
+        },
+        {
+          "name": "El Universal - Elecciones Sitemap",
+          "sitemapUrl": "https://www.eluniversal.com.mx/arc/outboundfeeds/news/elecciones/"
+        },
+        {
+          "name": "El Universal - Edomex Sitemap",
+          "sitemapUrl": "https://www.eluniversal.com.mx/arc/outboundfeeds/news/edomex/"
+        },
+        {
+          "name": "La Jornada - Politica",
+          "url": "https://www.jornada.com.mx/rss/politica.xml"
+        },
+        {
+          "name": "La Jornada - Estados",
+          "url": "https://www.jornada.com.mx/rss/estados.xml"
+        },
+        {
+          "name": "La Jornada - Mundo",
+          "url": "https://www.jornada.com.mx/rss/mundo.xml"
+        },
+        {
+          "name": "La Jornada - Capital",
+          "url": "https://www.jornada.com.mx/rss/capital.xml"
+        },
+        {
+          "name": "La Jornada - Deportes",
+          "url": "https://www.jornada.com.mx/rss/deportes.xml"
+        },
+        {
+          "name": "El Universal - Cultura Sitemap",
+          "sitemapUrl": "https://www.eluniversal.com.mx/arc/outboundfeeds/sitemap/category/cultura/?outputType=xml"
+        },
+        {
+          "name": "El Universal - Techbit Sitemap",
+          "sitemapUrl": "https://www.eluniversal.com.mx/arc/outboundfeeds/sitemap/category/techbit/?outputType=xml"
+        },
+        {
+          "name": "El Universal - Opinion Sitemap",
+          "sitemapUrl": "https://www.eluniversal.com.mx/arc/outboundfeeds/sitemap/category/opinion/?outputType=xml"
+        },
+        {
+          "name": "N+MÁS - News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.nmas.com.mx/nmas-video/s3fs-public/sitemap-news-v1.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 66
+        },
+        {
+          "name": "UnoTV - News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.unotv.com/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 67
+        },
+        {
+          "name": "El Heraldo de Mexico - News Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://heraldodemexico.com.mx/sitemaps/indexnews.asp",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 68
         }
       ]
     },
@@ -5962,12 +6564,12 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 46,
-          "enabled": false
+          "row": 46
         },
         {
           "name": "de Volkskrant",
           "url": "https://www.volkskrant.nl/voorpagina/rss.xml",
+          "sitemapUrl": "https://www.volkskrant.nl/sitemaps/news.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
@@ -5976,6 +6578,7 @@
         {
           "name": "Trouw",
           "url": "https://www.trouw.nl/voorpagina/rss.xml",
+          "sitemapUrl": "https://www.trouw.nl/sitemaps/news.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
@@ -5984,6 +6587,7 @@
         {
           "name": "Het Parool",
           "url": "https://www.parool.nl/voorpagina/rss.xml",
+          "sitemapUrl": "https://www.parool.nl/sitemaps/news.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
@@ -6045,6 +6649,38 @@
           "row": 55
         },
         {
+          "name": "NU.nl Binnenland",
+          "url": "https://www.nu.nl/rss/Binnenland",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 57
+        },
+        {
+          "name": "NU.nl Buitenland",
+          "url": "https://www.nu.nl/rss/Buitenland",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 58
+        },
+        {
+          "name": "NU.nl Politiek",
+          "url": "https://www.nu.nl/rss/Politiek",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 59
+        },
+        {
+          "name": "NU.nl Sport",
+          "url": "https://www.nu.nl/rss/Sport",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 60
+        },
+        {
           "name": "Tweakers",
           "url": "https://tweakers.net/feeds/nieuws.xml",
           "status": null,
@@ -6083,6 +6719,54 @@
           "enabled": false
         },
         {
+          "name": "Omroep Brabant",
+          "url": "https://www.omroepbrabant.nl/rss"
+        },
+        {
+          "name": "Oost - Index",
+          "url": "https://www.oost.nl/rss/index.xml"
+        },
+        {
+          "name": "Rijnmond - Index",
+          "url": "https://www.rijnmond.nl/rss/index.xml"
+        },
+        {
+          "name": "Omroep West - Index",
+          "url": "https://www.omroepwest.nl/rss/index.xml"
+        },
+        {
+          "name": "Omroep West - Den Haag",
+          "url": "https://www.omroepwest.nl/rss/denhaag.xml"
+        },
+        {
+          "name": "RTV Utrecht - Nieuws",
+          "url": "https://www.rtvutrecht.nl/rss/nieuws.xml"
+        },
+        {
+          "name": "GLD - Index",
+          "url": "https://www.gld.nl/rss/index.xml"
+        },
+        {
+          "name": "GLD - Arnhem",
+          "url": "https://www.gld.nl/rss/arnhem.xml"
+        },
+        {
+          "name": "RTV Drenthe - Home",
+          "url": "https://www.rtvdrenthe.nl/rss/home"
+        },
+        {
+          "name": "RTV Noord - Index",
+          "url": "https://www.rtvnoord.nl/rss/index.xml"
+        },
+        {
+          "name": "L1 Nieuws - Home",
+          "url": "https://www.l1nieuws.nl/rss/home"
+        },
+        {
+          "name": "Omroep Zeeland - Index",
+          "url": "https://www.omroepzeeland.nl/rss/index.xml"
+        },
+        {
           "name": "NU.nl - News Sitemap",
           "sitemapUrl": "https://www.nu.nl/sitemap_news.xml"
         },
@@ -6097,6 +6781,130 @@
         {
           "name": "NRC - Sitemap Index",
           "sitemapUrl": "https://www.nrc.nl/sitemap/index.xml"
+        },
+        {
+          "name": "AT5 - News Sitemap",
+          "sitemapUrl": "https://www.at5.nl/sitemap-news.xml"
+        },
+        {
+          "name": "NH Nieuws - News Sitemap",
+          "sitemapUrl": "https://www.nhnieuws.nl/sitemap-news.xml"
+        },
+        {
+          "name": "Hart van Nederland - News Sitemap",
+          "sitemapUrl": "https://www.hartvannederland.nl/sitemap-news.xml"
+        },
+        {
+          "name": "De Telegraaf - News Sitemap",
+          "sitemapUrl": "https://www.telegraaf.nl/sitemap-news.xml"
+        },
+        {
+          "name": "FD - Sitemap Index",
+          "sitemapUrl": "https://fd.nl/sitemap/sitemap_index.xml"
+        },
+        {
+          "name": "FD - Google News Sitemap",
+          "sitemapUrl": "https://fd.nl/sitemap/sitemap_google_news.xml"
+        },
+        {
+          "name": "Oost - Binnenland",
+          "url": "https://www.oost.nl/rss/binnenland.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 61
+        },
+        {
+          "name": "Oost - Overijssel",
+          "url": "https://www.oost.nl/rss/overijssel.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 62
+        },
+        {
+          "name": "RTV Noord - Groningen",
+          "url": "https://www.rtvnoord.nl/rss/groningen.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 63
+        },
+        {
+          "name": "L1 Nieuws - Limburg",
+          "url": "https://www.l1nieuws.nl/rss/limburg",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 64
+        },
+        {
+          "name": "Omroep Zeeland - Nieuws",
+          "url": "https://www.omroepzeeland.nl/rss/nieuws.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 65
+        },
+        {
+          "name": "RTV Utrecht - Sport",
+          "url": "https://www.rtvutrecht.nl/rss/sport.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 66
+        },
+        {
+          "name": "RTV Utrecht - Utrecht Stad",
+          "url": "https://www.rtvutrecht.nl/rss/utrecht-stad.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 67
+        },
+        {
+          "name": "RTV Drenthe - Nieuws",
+          "url": "https://www.rtvdrenthe.nl/rss/nieuws",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 68
+        },
+        {
+          "name": "BNR - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.bnr.nl/sitemap/sitemap_index.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 119
+        },
+        {
+          "name": "BNR - Google News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.bnr.nl/sitemap/sitemap_google_news.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 120
+        },
+        {
+          "name": "Omrop Fryslan - NL Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.omropfryslan.nl/sitemap/nl/sitemap.xml.gz",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 121
+        },
+        {
+          "name": "Rijnmond - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.rijnmond.nl/sitemap/sitemap.xml.gz",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 122
         }
       ]
     },
@@ -7208,6 +8016,10 @@
           "name": "Zawya Arabic (Middle East Business)",
           "url": "https://www.zawya.com/ar/rss",
           "enabled": false
+        },
+        {
+          "name": "Saudi Gazette",
+          "url": "https://saudigazette.com.sa/rssFeed/1"
         }
       ]
     },
@@ -7939,6 +8751,30 @@
           "url": "https://rss.gazeta.pl/pub/rss/wiadomosci.xml"
         },
         {
+          "name": "Interia - Wydarzenia",
+          "url": "https://wydarzenia.interia.pl/feed"
+        },
+        {
+          "name": "Interia - Biznes",
+          "url": "https://biznes.interia.pl/feed"
+        },
+        {
+          "name": "Interia - Sport",
+          "url": "https://sport.interia.pl/feed"
+        },
+        {
+          "name": "Business Insider Polska",
+          "url": "https://businessinsider.com.pl/.feed"
+        },
+        {
+          "name": "Forsal",
+          "url": "https://forsal.pl/.feed"
+        },
+        {
+          "name": "DoRzeczy",
+          "url": "https://dorzeczy.pl/feed"
+        },
+        {
           "name": "Wiadomosci WP (Wirtualna Polska News)",
           "url": "https://wiadomosci.wp.pl/rss.xml"
         },
@@ -7950,6 +8786,26 @@
         {
           "name": "Rzeczpospolita - News Sitemap",
           "sitemapUrl": "https://www.rp.pl/sitemaps/news-sitemap.xml"
+        },
+        {
+          "name": "Rzeczpospolita - RSS Main",
+          "url": "https://www.rp.pl/rss_main"
+        },
+        {
+          "name": "Wyborcza - Najnowsze",
+          "url": "https://wyborcza.pl/pub/rss/najnowsze_wyborcza.xml"
+        },
+        {
+          "name": "Wiadomosci WP - Aktualnosci",
+          "url": "https://wiadomosci.wp.pl/rss/aktualnosci"
+        },
+        {
+          "name": "PolskieRadio24 - Sitemap",
+          "sitemapUrl": "https://polskieradio24.pl/sitemap.xml"
+        },
+        {
+          "name": "SE.pl - News Sitemap",
+          "sitemapUrl": "https://www.se.pl/sitemap/sm-xKLf-AG26-AXQn/"
         }
       ]
     },
@@ -8419,6 +9275,14 @@
         {
           "name": "DHnet - News Sitemap",
           "sitemapUrl": "https://www.dhnet.be/arc/outboundfeeds/sitemap-index/news/?outputType=xml"
+        },
+        {
+          "name": "L'Avenir - News Sitemap",
+          "sitemapUrl": "https://www.lavenir.net/arc/outboundfeeds/sitemap-index/news/?outputType=xml"
+        },
+        {
+          "name": "BX1",
+          "url": "https://bx1.be/feed/"
         }
       ]
     },
@@ -8728,6 +9592,294 @@
           "name": "MCOT Economy",
           "url": "https://tna.mcot.net/category/economy/feed",
           "enabled": false
+        },
+        {
+          "name": "Bangkok Post - Top Stories",
+          "url": "https://www.bangkokpost.com/rss/data/topstories.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 51
+        },
+        {
+          "name": "Bangkok Post - Business",
+          "url": "https://www.bangkokpost.com/rss/data/business.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 52
+        },
+        {
+          "name": "Bangkok Post - World",
+          "url": "https://www.bangkokpost.com/rss/data/world.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 53
+        },
+        {
+          "name": "Bangkok Post - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.bangkokpost.com/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 54
+        },
+        {
+          "name": "Bangkok Post - Thailand",
+          "url": "https://www.bangkokpost.com/rss/data/thailand.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 55
+        },
+        {
+          "name": "Bangkok Post - Sports",
+          "url": "https://www.bangkokpost.com/rss/data/sports.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 56
+        },
+        {
+          "name": "Bangkok Post - Opinion",
+          "url": "https://www.bangkokpost.com/rss/data/opinion.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 57
+        },
+        {
+          "name": "Bangkok Post - Life",
+          "url": "https://www.bangkokpost.com/rss/data/life.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 58
+        },
+        {
+          "name": "Bangkok Post - Auto",
+          "url": "https://www.bangkokpost.com/rss/data/auto.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 59
+        },
+        {
+          "name": "Matichon - Politics",
+          "url": "https://www.matichon.co.th/politics/feed",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 60
+        },
+        {
+          "name": "Matichon - Economy",
+          "url": "https://www.matichon.co.th/economy/feed",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 61
+        },
+        {
+          "name": "Khaosod - Politics",
+          "url": "https://www.khaosod.co.th/politics/feed",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 62
+        },
+        {
+          "name": "Khaosod - Special Stories",
+          "url": "https://www.khaosod.co.th/special-stories/feed",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 63
+        },
+        {
+          "name": "Matichon - Foreign",
+          "url": "https://www.matichon.co.th/foreign/feed",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 64
+        },
+        {
+          "name": "Matichon - Region",
+          "url": "https://www.matichon.co.th/region/feed",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 65
+        },
+        {
+          "name": "Matichon - Lifestyle",
+          "url": "https://www.matichon.co.th/lifestyle/feed",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 66
+        },
+        {
+          "name": "Khaosod - Economics",
+          "url": "https://www.khaosod.co.th/economics/feed",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 67
+        },
+        {
+          "name": "Khaosod - Breaking News",
+          "url": "https://www.khaosod.co.th/breaking-news/feed",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 68
+        },
+        {
+          "name": "Khaosod - Around Thailand",
+          "url": "https://www.khaosod.co.th/around-thailand/feed",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 69
+        },
+        {
+          "name": "Khaosod - Sports",
+          "url": "https://www.khaosod.co.th/sports/feed",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 70
+        },
+        {
+          "name": "Khaosod - Foreign",
+          "url": "https://www.khaosod.co.th/around-the-world-news/feed",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 71
+        },
+        {
+          "name": "Khaosod - Covid",
+          "url": "https://www.khaosod.co.th/covid-19/feed",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 72
+        },
+        {
+          "name": "Matichon - Sports",
+          "url": "https://www.matichon.co.th/sport/feed",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 73
+        },
+        {
+          "name": "Matichon - Education",
+          "url": "https://www.matichon.co.th/education/feed",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 74
+        },
+        {
+          "name": "Prachachat - Politics",
+          "url": "https://www.prachachat.net/politics/feed",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 75
+        },
+        {
+          "name": "Prachachat - Economy",
+          "url": "https://www.prachachat.net/economy/feed",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 76
+        },
+        {
+          "name": "Prachachat - Finance",
+          "url": "https://www.prachachat.net/finance/feed",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 77
+        },
+        {
+          "name": "Bangkok Post - Learning",
+          "url": "https://www.bangkokpost.com/rss/data/learning.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 78
+        },
+        {
+          "name": "Thairath - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.thairath.co.th/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 79
+        },
+        {
+          "name": "Thairath - Hourly Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.thairath.co.th/sitemap-hourly.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 134
+        },
+        {
+          "name": "Nation TV - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.nationtv.tv/sitemap_index.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 135
+        },
+        {
+          "name": "Nation Thailand - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.nationthailand.com/sitemap_index.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 136
+        },
+        {
+          "name": "Post Today - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.posttoday.com/sitemap_index.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 137
+        },
+        {
+          "name": "Bangkok Biz News - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.bangkokbiznews.com/sitemap_index.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 138
+        },
+        {
+          "name": "PPTVHD36 - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.pptvhd36.com/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 139
         }
       ]
     },
@@ -9287,7 +10439,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 28
+          "row": 28,
+          "sitemapUrl": "https://www.lanacion.com.ar/sitemap-index.xml"
         },
         {
           "name": "El Cronista - Noticias",
@@ -9346,7 +10499,7 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 35,
-          "sitemapUrl": "https://www.infobae.com/arc/outboundfeeds/news-sitemap2/"
+          "sitemapUrl": "https://www.infobae.com/arc/outboundfeeds/sitemap2/"
         },
         {
           "name": "Infobae - Economía",
@@ -9390,7 +10543,7 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 40,
-          "sitemapUrl": "https://tn.com.ar/arc/outboundfeeds/news-sitemap/?outputType=xml"
+          "sitemapUrl": "https://tn.com.ar/arc/outboundfeeds/sitemap-index/?outputType=xml"
         },
         {
           "name": "La Nación",
@@ -9992,7 +11145,7 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 31,
-          "sitemapUrl": "https://www.latercera.com/arc/outboundfeeds/news-sitemap-index?outputType=xml"
+          "sitemapUrl": "https://www.latercera.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
         },
         {
           "name": "Pulso (La Tercera Biz)",
@@ -10241,7 +11394,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 61
+          "row": 61,
+          "sitemapUrl": "https://www.pauta.cl/sitemap_news.xml"
         },
         {
           "name": "El Pingüino",
@@ -10348,7 +11502,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 74
+          "row": 74,
+          "sitemapUrl": "https://www.publimetro.cl/arc/outboundfeeds/sitemap-index/?outputType=xml"
         },
         {
           "name": "Cooperativa - Portada",
@@ -10360,13 +11515,47 @@
           "sitemapUrl": "https://www.cooperativa.cl/noticias/sitemap_news.xml"
         },
         {
+          "name": "Cooperativa - Google News RSS",
+          "url": "https://www.cooperativa.cl/noticias/google_news_rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 81
+        },
+        {
+          "name": "ADN Radio - Portada",
+          "url": "https://www.adnradio.cl/arc/outboundfeeds/rss/?outputType=xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 82
+        },
+        {
+          "name": "La Cuarta",
+          "url": "https://www.lacuarta.com/arc/outboundfeeds/rss/?outputType=xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 83,
+          "sitemapUrl": "https://www.lacuarta.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+        },
+        {
+          "name": "Radio Agricultura",
+          "url": null,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 84,
+          "sitemapUrl": "https://www.radioagricultura.cl/_files/sitemaps/sitemap_news.xml"
+        },
+        {
           "name": "Meganoticias",
           "url": null,
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
           "row": 76,
-          "sitemapUrl": "https://www.meganoticias.cl/sitemaps/sitemap-news.xml"
+          "sitemapUrl": "https://www.meganoticias.cl/sitemaps/sitemap-noticias-index-content.xml"
         },
         {
           "name": "CNN Chile",
@@ -10375,7 +11564,7 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 77,
-          "sitemapUrl": "https://www.cnnchile.com/_files/sitemaps/sitemap_news.xml"
+          "sitemapUrl": "https://www.cnnchile.com/_files/sitemaps/sitemap_index.xml"
         },
         {
           "name": "El Mostrador",
@@ -10417,7 +11606,7 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 1,
-          "sitemapUrl": "https://www.diariolibre.com/sitemapnews"
+          "sitemapUrl": "https://www.diariolibre.com/sitemap.xml"
         },
         {
           "name": "Diario Libre - Actualidad",
@@ -10578,7 +11767,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 30
+          "row": 30,
+          "sitemapUrl": "https://elnuevodiario.com.do/news-sitemap.xml"
         },
         {
           "name": "Listín Diario - Portada",
@@ -10587,7 +11777,7 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 31,
-          "sitemapUrl": "https://listindiario.com/sitemap-google-news.xml"
+          "sitemapUrl": "https://listindiario.com/sitemap-index.xml"
         },
         {
           "name": "Listín Diario - Economía",
@@ -10604,7 +11794,7 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 33,
-          "sitemapUrl": "https://hoy.com.do/sitemap-google-news.xml"
+          "sitemapUrl": "https://hoy.com.do/sitemap-index.xml"
         },
         {
           "name": "El Dinero",
@@ -10616,12 +11806,12 @@
         },
         {
           "name": "Acento",
-          "url": "https://acento.com.do/feed/",
+          "url": null,
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
           "row": 35,
-          "enabled": false
+          "sitemapUrl": "https://acento.com.do/sitemaps/sitemaps-googlenews.xml"
         },
         {
           "name": "Acento - Author Feed",
@@ -10674,6 +11864,14 @@
           "row": 41
         },
         {
+          "name": "Z101 Digital - Nacionales",
+          "url": "https://z101digital.com/category/nacionales/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 45
+        },
+        {
           "name": "El Caribe",
           "url": null,
           "status": "⏩ OFFICIAL",
@@ -10683,12 +11881,85 @@
         },
         {
           "name": "Teleuniverso",
-          "url": null,
+          "url": "https://teleuniversotv.com/feed/",
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
           "row": 42,
           "sitemapUrl": "https://teleuniversotv.com/sitemaps.xml"
+        },
+        {
+          "name": "Remolacha",
+          "url": "https://remolacha.net/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 43,
+          "sitemapUrl": "https://remolacha.net/news-sitemap.xml"
+        },
+        {
+          "name": "De Último Minuto",
+          "url": "https://deultimominuto.net/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 44
+        },
+        {
+          "name": "De Último Minuto - Nacionales",
+          "url": "https://deultimominuto.net/category/nacionales/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 46
+        },
+        {
+          "name": "De Último Minuto - Internacionales",
+          "url": "https://deultimominuto.net/category/internacionales/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 47
+        },
+        {
+          "name": "De Último Minuto - Deportes",
+          "url": "https://deultimominuto.net/category/deportes/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 48
+        },
+        {
+          "name": "De Último Minuto - Entretenimiento",
+          "url": "https://deultimominuto.net/category/entretenimiento/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 49
+        },
+        {
+          "name": "De Último Minuto - Economía",
+          "url": "https://deultimominuto.net/category/economia/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 50
+        },
+        {
+          "name": "Telenoticias",
+          "url": "https://telenoticias.com.do/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 51
+        },
+        {
+          "name": "EnSegundos",
+          "url": "https://ensegundos.do/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 52
         }
       ]
     },
@@ -11064,8 +12335,11 @@
         },
         {
           "name": "Subrayado",
-          "url": "https://www.subrayado.com.uy/rss/pages/ultimas-noticias.xml",
-          "enabled": false
+          "url": null,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "sitemapUrl": "https://www.subrayado.com.uy/sitemap-news.xml"
         },
         {
           "name": "Teledoce",
@@ -11103,15 +12377,19 @@
         },
         {
           "name": "El Pais Uruguay",
-          "url": "https://www.elpais.com.uy/rss/ultimas-noticias",
-          "enabled": false
+          "url": null,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "sitemapUrl": "https://www.elpais.com.uy/news-sitemap-latest.xml"
         },
         {
           "name": "970 Universal",
           "url": "https://970universal.com/feed/",
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
-          "valid": "needs verification"
+          "valid": "needs verification",
+          "sitemapUrl": "https://970universal.com/sitemap_index.xml"
         },
         {
           "name": "El Telégrafo",
@@ -11157,6 +12435,15 @@
           "checkedDate": null,
           "valid": "needs verification",
           "sitemapUrl": "https://grupormultimedio.com/sitemap_index.xml"
+        },
+        {
+          "name": "El Observador Uruguay - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.elobservador.com.uy/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 46
         }
       ]
     },
@@ -11752,6 +13039,299 @@
           "name": "Adresseavisen",
           "url": "https://www.adressa.no/rss/",
           "sitemapUrl": "https://www.adressa.no/sitemaps/adresseavisen-news-sitemap.xml"
+        },
+        {
+          "name": "VG",
+          "url": "https://www.vg.no/rss/feed/"
+        },
+        {
+          "name": "VG - Dine Penger Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.vg.no/dinepenger/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 54
+        },
+        {
+          "name": "NRK - Oslo og Viken",
+          "url": "https://www.nrk.no/osloogviken/toppsaker.rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 55
+        },
+        {
+          "name": "NRK - Innlandet",
+          "url": "https://www.nrk.no/innlandet/toppsaker.rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 56
+        },
+        {
+          "name": "NRK - Vestland",
+          "url": "https://www.nrk.no/vestland/toppsaker.rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 57
+        },
+        {
+          "name": "NRK - Trondelag",
+          "url": "https://www.nrk.no/trondelag/toppsaker.rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 58
+        },
+        {
+          "name": "NRK - Rogaland",
+          "url": "https://www.nrk.no/rogaland/toppsaker.rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 59
+        },
+        {
+          "name": "NRK - Nordland",
+          "url": "https://www.nrk.no/nordland/toppsaker.rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 60
+        },
+        {
+          "name": "TV2 - Broom",
+          "url": "https://www.tv2.no/rss/broom",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 61
+        },
+        {
+          "name": "TV2 - Helse",
+          "url": "https://www.tv2.no/rss/nyheter/innenriks/helse",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 62
+        },
+        {
+          "name": "Bergens Tidende",
+          "url": "https://www.bt.no/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 63
+        },
+        {
+          "name": "iTromso",
+          "url": "https://www.itromso.no/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 64
+        },
+        {
+          "name": "NRK - Sorlandet",
+          "url": "https://www.nrk.no/sorlandet/toppsaker.rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 65
+        },
+        {
+          "name": "NRK - More og Romsdal",
+          "url": "https://www.nrk.no/mr/toppsaker.rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 66
+        },
+        {
+          "name": "NRK - Troms og Finnmark",
+          "url": "https://www.nrk.no/tromsogfinnmark/toppsaker.rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 67
+        },
+        {
+          "name": "NRK - Ostfold",
+          "url": "https://www.nrk.no/ostfold/toppsaker.rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 68
+        },
+        {
+          "name": "NRK - Telemark",
+          "url": "https://www.nrk.no/telemark/toppsaker.rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 69
+        },
+        {
+          "name": "Stavanger Aftenblad",
+          "url": "https://www.aftenbladet.no/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 70
+        },
+        {
+          "name": "Sunnmorsposten",
+          "url": "https://www.smp.no/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 71
+        },
+        {
+          "name": "NRK - Buskerud",
+          "url": "https://www.nrk.no/buskerud/toppsaker.rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 72
+        },
+        {
+          "name": "NRK - Vestfold",
+          "url": "https://www.nrk.no/vestfold/toppsaker.rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 73
+        },
+        {
+          "name": "NRK - Sogn og Fjordane",
+          "url": "https://www.nrk.no/sognogfjordane/toppsaker.rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 74
+        },
+        {
+          "name": "NRK - Agder",
+          "url": "https://www.nrk.no/agder/toppsaker.rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 75
+        },
+        {
+          "name": "NRK - Finnmark",
+          "url": "https://www.nrk.no/finnmark/toppsaker.rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 76
+        },
+        {
+          "name": "Avisa ST",
+          "url": "https://www.avisa-st.no/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 201
+        },
+        {
+          "name": "Framtid i Nord",
+          "url": "https://www.framtidinord.no/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 202
+        },
+        {
+          "name": "Altaposten",
+          "url": "https://www.altaposten.no/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 203
+        },
+        {
+          "name": "Folkebladet",
+          "url": "https://www.folkebladet.no/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 204
+        },
+        {
+          "name": "Varden",
+          "url": "https://www.varden.no/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 205
+        },
+        {
+          "name": "Agderposten",
+          "url": "https://www.agderposten.no/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 208
+        },
+        {
+          "name": "Lister24",
+          "url": "https://www.lister24.no/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 209
+        },
+        {
+          "name": "Romsdals Budstikke",
+          "url": "https://www.rbnett.no/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 210
+        },
+        {
+          "name": "Fosna-Folket",
+          "url": "https://www.fosna-folket.no/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 221
+        },
+        {
+          "name": "VOL",
+          "url": "https://www.vol.no/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 222
+        },
+        {
+          "name": "Innherred",
+          "url": "https://www.innherred.no/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 223
+        },
+        {
+          "name": "Hallingdølen",
+          "url": "https://www.hallingdolen.no/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 224
+        },
+        {
+          "name": "Sunnhordland",
+          "url": "https://www.sunnhordland.no/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 225
         }
       ]
     },
@@ -11761,7 +13341,8 @@
       "feeds": [
         {
           "name": "RTÉ News",
-          "url": "https://www.rte.ie/feeds/rss/?index=/news/"
+          "url": "https://www.rte.ie/feeds/rss/?index=/news/",
+          "sitemapUrl": "https://www.rte.ie/sitemap.xml"
         },
         {
           "name": "TheJournal.ie",
@@ -11779,8 +13360,358 @@
           "sitemapUrl": "https://www.irishtimes.com/arc/outboundfeeds/sitemap-news-index/"
         },
         {
+          "name": "DublinLive",
+          "url": "https://www.dublinlive.ie/rss.xml",
+          "sitemapUrl": "https://www.dublinlive.ie/map_news.xml"
+        },
+        {
           "name": "Irish Examiner",
+          "url": "https://www.irishexaminer.com/feed/35-top_news.xml",
           "sitemapUrl": "https://www.irishexaminer.com/sitemap-index/41-google_news.xml"
+        },
+        {
+          "name": "Irish Mirror",
+          "sitemapUrl": "https://www.irishmirror.ie/map_news.xml"
+        },
+        {
+          "name": "Irish Star",
+          "url": "https://www.irishstar.com/rss.xml",
+          "sitemapUrl": "https://www.irishstar.com/map_news.xml"
+        },
+        {
+          "name": "CorkBeo",
+          "url": "https://www.corkbeo.ie/rss.xml",
+          "sitemapUrl": "https://www.corkbeo.ie/map_news.xml"
+        },
+        {
+          "name": "GalwayBeo",
+          "url": "https://www.galwaybeo.ie/rss.xml",
+          "sitemapUrl": "https://www.galwaybeo.ie/map_news.xml"
+        },
+        {
+          "name": "Leinster Leader",
+          "sitemapUrl": "https://www.leinsterleader.ie/siteMapNews.jsp"
+        },
+        {
+          "name": "Limerick Leader",
+          "sitemapUrl": "https://www.limerickleader.ie/siteMapNews.jsp"
+        },
+        {
+          "name": "BreakingNews.ie",
+          "url": "https://feeds.breakingnews.ie/bntopstories"
+        },
+        {
+          "name": "Extra.ie",
+          "url": "https://extra.ie/feed"
+        },
+        {
+          "name": "Sunday World",
+          "url": "https://www.sundayworld.com/feed"
+        },
+        {
+          "name": "RTÉ News - World",
+          "url": "https://www.rte.ie/feeds/rss/?index=/news/world/",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 1
+        },
+        {
+          "name": "RTÉ News - Business",
+          "url": "https://www.rte.ie/feeds/rss/?index=/news/business/",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 2
+        },
+        {
+          "name": "RTÉ News - Politics",
+          "url": "https://www.rte.ie/feeds/rss/?index=/news/politics/",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 3
+        },
+        {
+          "name": "RTÉ News - Regional",
+          "url": "https://www.rte.ie/feeds/rss/?index=/news/regional/",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 4
+        },
+        {
+          "name": "Independent.ie - News",
+          "url": "https://www.independent.ie/rss/section/1f0f9d8c-1f0e-4c8e-9d95-4d7b5c6f8a0c",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 5
+        },
+        {
+          "name": "Independent.ie - World",
+          "url": "https://www.independent.ie/rss/section/9d5837b5-d2c4-400f-b668-56d7cb7781ef",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 6
+        },
+        {
+          "name": "BreakingNews.ie - Ireland",
+          "url": "https://feeds.breakingnews.ie/bnireland",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 7
+        },
+        {
+          "name": "RTÉ News - Europe",
+          "url": "https://www.rte.ie/feeds/rss/?index=/news/europe/",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 8
+        },
+        {
+          "name": "RTÉ News - Dublin",
+          "url": "https://www.rte.ie/feeds/rss/?index=/news/dublin/",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 9
+        },
+        {
+          "name": "RTÉ News - Munster",
+          "url": "https://www.rte.ie/feeds/rss/?index=/news/munster/",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 10
+        },
+        {
+          "name": "RTÉ News - Leinster",
+          "url": "https://www.rte.ie/feeds/rss/?index=/news/leinster/",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 11
+        },
+        {
+          "name": "RTÉ News - Connacht",
+          "url": "https://www.rte.ie/feeds/rss/?index=/news/connacht/",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 12
+        },
+        {
+          "name": "RTÉ News - Ulster",
+          "url": "https://www.rte.ie/feeds/rss/?index=/news/ulster/",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 13
+        },
+        {
+          "name": "Independent.ie - Business",
+          "url": "https://www.independent.ie/rss/section/business/",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 14
+        },
+        {
+          "name": "Independent.ie - Sport",
+          "url": "https://www.independent.ie/rss/section/sport/",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 15
+        },
+        {
+          "name": "Independent.ie - Irish News",
+          "url": "https://www.independent.ie/rss/section/irish-news/",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 16
+        },
+        {
+          "name": "Independent.ie - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.independent.ie/sitemap/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 17
+        },
+        {
+          "name": "The Sun Ireland",
+          "url": "https://www.thesun.ie/feed/",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 18
+        },
+        {
+          "name": "BelfastLive",
+          "url": "https://www.belfastlive.co.uk/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 19
+        },
+        {
+          "name": "Buzz.ie",
+          "url": "https://www.buzz.ie/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 20
+        },
+        {
+          "name": "BreakingNews.ie - World",
+          "url": "https://feeds.breakingnews.ie/bnworld",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 21
+        },
+        {
+          "name": "BreakingNews.ie - Business",
+          "url": "https://feeds.breakingnews.ie/bnbusiness",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 22
+        },
+        {
+          "name": "BreakingNews.ie - Sport",
+          "url": "https://feeds.breakingnews.ie/bnsport",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 23
+        },
+        {
+          "name": "Extra.ie - News",
+          "url": "https://extra.ie/category/news/feed",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 24
+        },
+        {
+          "name": "Extra.ie - Business",
+          "url": "https://extra.ie/category/business/feed",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 25
+        },
+        {
+          "name": "Extra.ie - Sport",
+          "url": "https://extra.ie/category/sport/feed",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 26
+        },
+        {
+          "name": "Extra.ie - Entertainment",
+          "url": "https://extra.ie/category/entertainment/feed",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 27
+        },
+        {
+          "name": "Newstalk",
+          "url": "https://www.newstalk.com/feed",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 28
+        },
+        {
+          "name": "Agriland",
+          "url": "https://www.agriland.ie/feed/",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 29
+        },
+        {
+          "name": "The42",
+          "url": "https://www.the42.ie/feed/",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 30
+        },
+        {
+          "name": "Silicon Republic",
+          "url": "https://www.siliconrepublic.com/feed",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 31
+        },
+        {
+          "name": "The Currency",
+          "url": "https://thecurrency.news/feed/",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 32
+        },
+        {
+          "name": "Off The Ball",
+          "url": "https://www.offtheball.com/feed",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 33
+        },
+        {
+          "name": "Business Plus",
+          "url": "https://businessplus.ie/feed/",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 34
+        },
+        {
+          "name": "Irish Tech News",
+          "url": "https://irishtechnews.ie/feed/",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 35
+        },
+        {
+          "name": "RTÉ Sport",
+          "url": "https://www.rte.ie/feeds/rss/?index=/sport/",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 36
+        },
+        {
+          "name": "Belfast Telegraph",
+          "url": "https://www.belfasttelegraph.co.uk/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 195
+        },
+        {
+          "name": "Irish Post",
+          "url": "https://www.irishpost.com/feed",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 196
         }
       ]
     },
@@ -11800,6 +13731,7 @@
         },
         {
           "name": "Público",
+          "url": "https://feeds.feedburner.com/PublicoRSS",
           "sitemapUrl": "https://www.publico.pt/sitemaps/news.xml"
         },
         {
@@ -11808,15 +13740,91 @@
         },
         {
           "name": "SIC Notícias",
+          "url": "https://rss.impresa.pt/feed/latest/sicnot.rss?type=ARTICLE,VIDEO,GALLERY,STREAM,PLAYLIST,EVENT,NEWSLETTER&limit=100&pubsubhub=true",
           "sitemapUrl": "https://sicnoticias.pt/sitemap/news.xml"
         },
         {
           "name": "Expresso",
+          "url": "https://rss.impresa.pt/feed/latest/expresso.rss?type=ARTICLE,VIDEO,STREAM,PLAYLIST,EVENT&limit=100&pubsubhub=true",
           "sitemapUrl": "https://expresso.pt/sitemap/news.xml"
         },
         {
           "name": "RTP Notícias",
           "sitemapUrl": "http://www.rtp.pt/noticias/sitemap"
+        },
+        {
+          "name": "RTP - País",
+          "url": "https://www.rtp.pt/noticias/rss/pais"
+        },
+        {
+          "name": "RTP - Mundo",
+          "url": "https://www.rtp.pt/noticias/rss/mundo"
+        },
+        {
+          "name": "RTP - Economia",
+          "url": "https://www.rtp.pt/noticias/rss/economia"
+        },
+        {
+          "name": "RTP - Desporto",
+          "url": "https://www.rtp.pt/noticias/rss/desporto"
+        },
+        {
+          "name": "RTP - Cultura",
+          "url": "https://www.rtp.pt/noticias/rss/cultura"
+        },
+        {
+          "name": "RTP - Videos",
+          "url": "https://www.rtp.pt/noticias/rss/videos"
+        },
+        {
+          "name": "RTP - Audios",
+          "url": "https://www.rtp.pt/noticias/rss/audios"
+        },
+        {
+          "name": "CNN Portugal",
+          "url": "https://cnnportugal.iol.pt/rss.xml",
+          "sitemapUrl": "https://cnnportugal.iol.pt/sitemaps/news.xml"
+        },
+        {
+          "name": "Noticias ao Minuto - Ultima Hora",
+          "url": "https://www.noticiasaominuto.com/rss/ultima-hora",
+          "sitemapUrl": "https://www.noticiasaominuto.com/sitemap.xml"
+        },
+        {
+          "name": "Executive Digest",
+          "url": "https://executivedigest.sapo.pt/feed/"
+        },
+        {
+          "name": "Visao",
+          "url": "https://visao.pt/feed/"
+        },
+        {
+          "name": "NiT",
+          "url": "https://www.nit.pt/feed"
+        },
+        {
+          "name": "24 Notícias",
+          "sitemapUrl": "https://24noticias.sapo.pt/sitemap.xml"
+        },
+        {
+          "name": "Jornal de Negócios",
+          "sitemapUrl": "https://www.jornaldenegocios.pt/sitemap"
+        },
+        {
+          "name": "Correio da Manhã",
+          "sitemapUrl": "https://www.cmjornal.pt/sitemap"
+        },
+        {
+          "name": "Sol",
+          "sitemapUrl": "https://sol.iol.pt/sitemaps/news.xml"
+        },
+        {
+          "name": "A Bola",
+          "sitemapUrl": "https://www.abola.pt/sitemap-news.xml"
+        },
+        {
+          "name": "Record",
+          "sitemapUrl": "https://www.record.pt/sitemap"
         }
       ]
     },
@@ -11830,7 +13838,8 @@
         },
         {
           "name": "Politiken",
-          "url": "https://politiken.dk/rss/senestenyt.rss"
+          "url": "https://politiken.dk/rss/senestenyt.rss",
+          "sitemapUrl": "https://politiken.dk/sitemaps/sitemap.xml"
         },
         {
           "name": "Ekstra Bladet",
@@ -11848,6 +13857,228 @@
         {
           "name": "Jyllands-Posten",
           "sitemapUrl": "https://jyllands-posten.dk/sitemapindex.xml"
+        },
+        {
+          "name": "Jyllands-Posten - Topnyheder",
+          "url": "https://feeds.jp.dk/jp/topnyheder"
+        },
+        {
+          "name": "Jyllands-Posten - Seneste",
+          "url": "https://feeds.jp.dk/jp/seneste"
+        },
+        {
+          "name": "Avisen.dk",
+          "sitemapUrl": "https://www.avisen.dk/sitemap_index.aspx"
+        },
+        {
+          "name": "TV Syd",
+          "url": "https://www.tvsyd.dk/rss"
+        },
+        {
+          "name": "DR Indland",
+          "url": "https://www.dr.dk/nyheder/service/feeds/indland"
+        },
+        {
+          "name": "DR Udland",
+          "url": "https://www.dr.dk/nyheder/service/feeds/udland"
+        },
+        {
+          "name": "DR Penge",
+          "url": "https://www.dr.dk/nyheder/service/feeds/penge"
+        },
+        {
+          "name": "DR Sporten",
+          "url": "https://www.dr.dk/nyheder/service/feeds/sporten"
+        },
+        {
+          "name": "DR Kultur",
+          "url": "https://www.dr.dk/nyheder/service/feeds/kultur"
+        },
+        {
+          "name": "Politiken - Indland",
+          "url": "https://politiken.dk/rss/indland.rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 1
+        },
+        {
+          "name": "Politiken - Udland",
+          "url": "https://politiken.dk/rss/udland.rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 2
+        },
+        {
+          "name": "Politiken - Kultur",
+          "url": "https://politiken.dk/rss/kultur.rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 3
+        },
+        {
+          "name": "Politiken - Sport",
+          "url": "https://politiken.dk/rss/sport.rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 4
+        },
+        {
+          "name": "Borsen",
+          "url": "https://borsen.dk/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 5
+        },
+        {
+          "name": "Borsen - Virksomheder",
+          "url": "https://borsen.dk/rss/virksomheder",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 6
+        },
+        {
+          "name": "TV2 Kosmopol - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.tv2kosmopol.dk/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 7
+        },
+        {
+          "name": "TV2 Fyn - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.tv2fyn.dk/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 8
+        },
+        {
+          "name": "TV MIDTVEST - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.tvmidtvest.dk/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 9
+        },
+        {
+          "name": "TV2 Nord - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.tv2nord.dk/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 10
+        },
+        {
+          "name": "TV2 Ostjylland - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.tv2ostjylland.dk/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 11
+        },
+        {
+          "name": "TV2 East - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.tv2east.dk/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 12
+        },
+        {
+          "name": "TV2 Bornholm - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.tv2bornholm.dk/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 13
+        },
+        {
+          "name": "TV2 Lorry - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.tv2lorry.dk/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 14
+        },
+        {
+          "name": "Nordjyske - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://nordjyske.dk/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 117
+        },
+        {
+          "name": "Fyens - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://fyens.dk/sitemap",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 118
+        },
+        {
+          "name": "Information - Sitemap",
+          "sitemapUrl": "https://www.information.dk/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 119
+        },
+        {
+          "name": "Finans.dk - Sitemap Index",
+          "sitemapUrl": "https://finans.dk/sitemapindex.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 120
+        },
+        {
+          "name": "Finans.dk - Topnyheder",
+          "url": "https://feeds.finans.dk/topnyheder",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 121
+        },
+        {
+          "name": "Finans.dk - Seneste",
+          "url": "https://feeds.finans.dk/seneste",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 122
+        },
+        {
+          "name": "DR Seneste Nyt",
+          "url": "https://www.dr.dk/nyheder/service/feeds/senestenyt",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 123
+        },
+        {
+          "name": "Information - Latest Sitemap",
+          "sitemapUrl": "https://www.information.dk/latest.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 124
         }
       ]
     },
@@ -11880,6 +14111,593 @@
         {
           "name": "Kauppalehti",
           "sitemapUrl": "https://www.kauppalehti.fi/sitemaps/sitemap_latest.xml.gz"
+        },
+        {
+          "name": "HBL",
+          "url": "https://www.hbl.fi/feeds/feed.xml"
+        },
+        {
+          "name": "ESS",
+          "url": "https://www.ess.fi/feed/rss"
+        },
+        {
+          "name": "Turun Sanomat - Latest Sitemap",
+          "sitemapUrl": "https://www.ts.fi/sitemap_latest.xml"
+        },
+        {
+          "name": "Turun Sanomat - Google News",
+          "sitemapUrl": "https://www.ts.fi/gnews_sitemap.xml"
+        },
+        {
+          "name": "Kaleva - Uusimmat",
+          "url": "https://kaleva.fi/feedit/rss/managed-listing/rss-uusimmat/"
+        },
+        {
+          "name": "Aamulehti",
+          "sitemapUrl": "https://www.aamulehti.fi/rss/custom/news-sitemap.xml"
+        },
+        {
+          "name": "Satakunnan Kansa",
+          "sitemapUrl": "https://www.satakunnankansa.fi/rss/custom/news-sitemap.xml"
+        },
+        {
+          "name": "KSML",
+          "url": "https://www.ksml.fi/feed/rss"
+        },
+        {
+          "name": "Maaseudun Tulevaisuus",
+          "url": "https://www.maaseuduntulevaisuus.fi/feeds/maaseuduntulevaisuus"
+        },
+        {
+          "name": "Aamuposti",
+          "url": "https://www.aamuposti.fi/feed/rss"
+        },
+        {
+          "name": "Lansi-Savo",
+          "url": "https://www.lansi-savo.fi/feed/rss"
+        },
+        {
+          "name": "Warkauden Lehti",
+          "url": "https://www.warkaudenlehti.fi/feed/rss"
+        },
+        {
+          "name": "Suur-Keuruu",
+          "sitemapUrl": "https://www.suurkeuruu.fi/rss/custom/news-sitemap.xml"
+        },
+        {
+          "name": "Ita-Savo",
+          "url": "https://www.ita-savo.fi/feed/rss"
+        },
+        {
+          "name": "Yle Uutiset - Kotimaa",
+          "url": "https://feeds.yle.fi/uutiset/v1/recent.rss?publisherIds=YLE_UUTISET&concepts=18-34837"
+        },
+        {
+          "name": "Ilta-Sanomat - Kotimaa",
+          "url": "https://www.is.fi/rss/kotimaa.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 1
+        },
+        {
+          "name": "Ilta-Sanomat - Ulkomaat",
+          "url": "https://www.is.fi/rss/ulkomaat.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 2
+        },
+        {
+          "name": "Ilta-Sanomat - Taloussanomat",
+          "url": "https://www.is.fi/rss/taloussanomat.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 3
+        },
+        {
+          "name": "Ilta-Sanomat - Urheilu",
+          "url": "https://www.is.fi/rss/urheilu.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 4
+        },
+        {
+          "name": "Iltalehti - Uutiset",
+          "url": "https://www.iltalehti.fi/rss/uutiset.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 5
+        },
+        {
+          "name": "Iltalehti - Kotimaa",
+          "url": "https://www.iltalehti.fi/rss/kotimaa.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 6
+        },
+        {
+          "name": "Iltalehti - Ulkomaat",
+          "url": "https://www.iltalehti.fi/rss/ulkomaat.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 7
+        },
+        {
+          "name": "Iltalehti - Talous",
+          "url": "https://www.iltalehti.fi/rss/talous.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 8
+        },
+        {
+          "name": "Helsingin Sanomat - Talous",
+          "url": "https://www.hs.fi/rss/talous.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 9
+        },
+        {
+          "name": "Helsingin Sanomat - Urheilu",
+          "url": "https://www.hs.fi/rss/urheilu.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 10
+        },
+        {
+          "name": "Yle Uutiset - Maailma",
+          "url": "https://feeds.yle.fi/uutiset/v1/recent.rss?publisherIds=YLE_UUTISET&concepts=18-34953",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 11
+        },
+        {
+          "name": "Yle Uutiset - Talous",
+          "url": "https://feeds.yle.fi/uutiset/v1/recent.rss?publisherIds=YLE_UUTISET&concepts=18-19274",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 12
+        },
+        {
+          "name": "Yle Urheilu",
+          "url": "https://feeds.yle.fi/uutiset/v1/recent.rss?publisherIds=YLE_URHEILU",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 13
+        },
+        {
+          "name": "Yle Uutiset - Kulttuuri",
+          "url": "https://feeds.yle.fi/uutiset/v1/recent.rss?publisherIds=YLE_UUTISET&concepts=18-150067",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 14
+        },
+        {
+          "name": "Yle Uutiset - Paakaupunkiseutu",
+          "url": "https://feeds.yle.fi/uutiset/v1/recent.rss?publisherIds=YLE_UUTISET&concepts=18-34953,18-34837",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 15
+        },
+        {
+          "name": "Savon Sanomat",
+          "url": "https://www.savonsanomat.fi/feed/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 16
+        },
+        {
+          "name": "Karjalainen",
+          "url": "https://www.karjalainen.fi/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 17
+        },
+        {
+          "name": "Hameen Sanomat",
+          "url": "https://www.hameensanomat.fi/feed/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 18
+        },
+        {
+          "name": "Kouvolan Sanomat",
+          "url": "https://www.kouvolansanomat.fi/feed/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 19
+        },
+        {
+          "name": "Keskipohjanmaa",
+          "url": "https://www.keskipohjanmaa.fi/feed/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 20
+        },
+        {
+          "name": "Kymen Sanomat",
+          "url": "https://www.kymensanomat.fi/feed/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 21
+        },
+        {
+          "name": "Etela-Saimaa",
+          "url": "https://www.esaimaa.fi/feed/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 22
+        },
+        {
+          "name": "Uusimaa",
+          "url": "https://www.uusimaa.fi/feed/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 23
+        },
+        {
+          "name": "Kainuun Sanomat",
+          "url": "https://www.kainuunsanomat.fi/feed/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 24
+        },
+        {
+          "name": "Aamulehti - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.aamulehti.fi/sitemap/html/al/sitemapindex.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 123
+        },
+        {
+          "name": "Talouselama - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.talouselama.fi/sitemaps/sitemapindex.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 124
+        },
+        {
+          "name": "Tekniikkatalous - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.tekniikkatalous.fi/sitemaps/sitemapindex.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 125
+        },
+        {
+          "name": "Verkkouutiset",
+          "url": "https://www.verkkouutiset.fi/feed/",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 126
+        },
+        {
+          "name": "Ilta-Sanomat - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.is.fi/sitemap/html/is/sitemapindex.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 143
+        },
+        {
+          "name": "Helsingin Sanomat - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.hs.fi/sitemap/html/hs/sitemapindex.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 144
+        },
+        {
+          "name": "MTV Uutiset - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.mtvuutiset.fi/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 145
+        },
+        {
+          "name": "Iltalehti - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.iltalehti.fi/sitemap/iltalehti.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 146
+        },
+        {
+          "name": "Helsingin Sanomat - Politiikka",
+          "url": "https://www.hs.fi/rss/politiikka.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 149
+        },
+        {
+          "name": "Helsingin Sanomat - Kulttuuri",
+          "url": "https://www.hs.fi/rss/kulttuuri.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 150
+        },
+        {
+          "name": "Ilta-Sanomat - Viihde",
+          "url": "https://www.is.fi/rss/viihde.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 151
+        },
+        {
+          "name": "Ilta-Sanomat - Digitoday",
+          "url": "https://www.is.fi/rss/digitoday.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 152
+        },
+        {
+          "name": "Ilta-Sanomat - Autot",
+          "url": "https://www.is.fi/rss/autot.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 153
+        },
+        {
+          "name": "Iltalehti - Viihde",
+          "url": "https://www.iltalehti.fi/rss/viihde.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 154
+        },
+        {
+          "name": "Iltalehti - Urheilu",
+          "url": "https://www.iltalehti.fi/rss/urheilu.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 155
+        },
+        {
+          "name": "Iltalehti - Digiuutiset",
+          "url": "https://www.iltalehti.fi/rss/digiuutiset.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 156
+        },
+        {
+          "name": "Iltalehti - TV ja leffat",
+          "url": "https://www.iltalehti.fi/rss/tv-ja-leffat.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 157
+        },
+        {
+          "name": "Ilta-Sanomat - Politiikka",
+          "url": "https://www.is.fi/rss/politiikka.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 185
+        },
+        {
+          "name": "Ilta-Sanomat - Tiede",
+          "url": "https://www.is.fi/rss/tiede.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 186
+        },
+        {
+          "name": "Ilta-Sanomat - Terveys",
+          "url": "https://www.is.fi/rss/terveys.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 187
+        },
+        {
+          "name": "Ilta-Sanomat - Matkat",
+          "url": "https://www.is.fi/rss/matkat.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 188
+        },
+        {
+          "name": "Ilta-Sanomat - Formula 1",
+          "url": "https://www.is.fi/rss/formula1.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 189
+        },
+        {
+          "name": "Iltalehti - Politiikka",
+          "url": "https://www.iltalehti.fi/rss/politiikka.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 190
+        },
+        {
+          "name": "Iltalehti - Autot",
+          "url": "https://www.iltalehti.fi/rss/autot.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 191
+        },
+        {
+          "name": "Iltalehti - Terveys",
+          "url": "https://www.iltalehti.fi/rss/terveys.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 192
+        },
+        {
+          "name": "Iltalehti - Jalkapallo",
+          "url": "https://www.iltalehti.fi/rss/jalkapallo.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 193
+        },
+        {
+          "name": "Iltalehti - Jaakiekko",
+          "url": "https://www.iltalehti.fi/rss/jaakiekko.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 194
+        },
+        {
+          "name": "Ilta-Sanomat - Jaakiekko",
+          "url": "https://www.is.fi/rss/jaakiekko.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 196
+        },
+        {
+          "name": "Ilta-Sanomat - Jalkapallo",
+          "url": "https://www.is.fi/rss/jalkapallo.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 197
+        },
+        {
+          "name": "Ilta-Sanomat - Ralli",
+          "url": "https://www.is.fi/rss/ralli.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 198
+        },
+        {
+          "name": "Iltalehti - Musiikki",
+          "url": "https://www.iltalehti.fi/rss/musiikki.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 199
+        },
+        {
+          "name": "Iltalehti - NHL",
+          "url": "https://www.iltalehti.fi/rss/nhl.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 200
+        },
+        {
+          "name": "Uusi Suomi - Sitemap Index",
+          "sitemapUrl": "https://www.uusisuomi.fi/sitemaps/sitemapindex.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 201
+        },
+        {
+          "name": "Suomenmaa",
+          "url": "https://www.suomenmaa.fi/feed/",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 202
+        },
+        {
+          "name": "Demokraatti",
+          "url": "https://demokraatti.fi/feed/",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 203
+        },
+        {
+          "name": "Tivi",
+          "url": "https://www.tivi.fi/api/feed/v2/rss/tv",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 204
+        },
+        {
+          "name": "Mikrobitti",
+          "url": "https://www.mikrobitti.fi/rss/bitti.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 205
+        },
+        {
+          "name": "Tekniikka & Talous",
+          "url": "https://www.tekniikkatalous.fi/api/feed/v2/rss/tt",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 206
+        },
+        {
+          "name": "Talouselama",
+          "url": "https://www.talouselama.fi/api/feed/v2/rss/te",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 207
+        },
+        {
+          "name": "Arvopaperi",
+          "url": "https://www.arvopaperi.fi/api/feed/v2/rss/ap",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 208
+        },
+        {
+          "name": "Seiska",
+          "url": "https://www.seiska.fi/latest.rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 209
         }
       ]
     },
@@ -11915,6 +14733,683 @@
         {
           "name": "iDNES.cz",
           "sitemapUrl": "https://www.idnes.cz/sitemap.xml"
+        },
+        {
+          "name": "Blesk",
+          "sitemapUrl": "https://www.blesk.cz/sitemap-news.xml"
+        },
+        {
+          "name": "E15",
+          "sitemapUrl": "https://www.e15.cz/sitemap-news.xml"
+        },
+        {
+          "name": "Lidovky.cz",
+          "sitemapUrl": "https://www.lidovky.cz/sitemap.xml"
+        },
+        {
+          "name": "Echo24",
+          "url": "https://www.echo24.cz/rss/s/homepage"
+        },
+        {
+          "name": "iROZHLAS",
+          "url": "https://www.irozhlas.cz/rss/irozhlas"
+        },
+        {
+          "name": "iROZHLAS - Domov",
+          "url": "https://www.irozhlas.cz/rss/irozhlas/section/zpravy-domov"
+        },
+        {
+          "name": "iROZHLAS - Svet",
+          "url": "https://www.irozhlas.cz/rss/irozhlas/section/zpravy-svet"
+        },
+        {
+          "name": "iROZHLAS - Sport",
+          "url": "https://www.irozhlas.cz/rss/irozhlas/section/sport"
+        },
+        {
+          "name": "CNN Prima",
+          "url": "https://cnn.iprima.cz/rss",
+          "sitemapUrl": "https://cnn.iprima.cz/sitemap-google-news.xml"
+        },
+        {
+          "name": "Forum24",
+          "url": "https://www.forum24.cz/feed"
+        },
+        {
+          "name": "Reflex",
+          "sitemapUrl": "https://www.reflex.cz/sitemap-news.xml"
+        },
+        {
+          "name": "ParlamentniListy",
+          "url": "http://www.parlamentnilisty.cz/export/rss.aspx"
+        },
+        {
+          "name": "Hospodarske noviny",
+          "url": "https://archiv.hn.cz/rss/zpravodajstvi",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 1
+        },
+        {
+          "name": "iSport",
+          "url": "https://isport.blesk.cz/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 2
+        },
+        {
+          "name": "Blesk - Zpravy",
+          "url": "https://www.blesk.cz/rss/zpravy",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 3
+        },
+        {
+          "name": "Seznam Zpravy - Domaci",
+          "url": "https://www.seznamzpravy.cz/rss/domaci",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 4
+        },
+        {
+          "name": "Seznam Zpravy - Zahranicni",
+          "url": "https://www.seznamzpravy.cz/rss/zahranicni",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 5
+        },
+        {
+          "name": "Zive.cz",
+          "url": "https://www.zive.cz/rss/sc-47/",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 6
+        },
+        {
+          "name": "Auto.cz",
+          "url": "https://www.auto.cz/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 7
+        },
+        {
+          "name": "Denik N",
+          "url": "https://denikn.cz/feed/",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 8
+        },
+        {
+          "name": "Lupa.cz",
+          "url": "https://www.lupa.cz/rss/clanky/",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 9
+        },
+        {
+          "name": "Aktualne.cz - Domaci",
+          "url": "https://zpravy.aktualne.cz/rss/domaci/",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 10
+        },
+        {
+          "name": "Aktualne.cz - Zahranici",
+          "url": "https://zpravy.aktualne.cz/rss/zahranici/",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 11
+        },
+        {
+          "name": "Sport.cz",
+          "url": "https://www.sport.cz/rss/",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 12
+        },
+        {
+          "name": "Novinky.cz - Domaci",
+          "url": "https://www.novinky.cz/rss/domaci",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 13
+        },
+        {
+          "name": "Novinky.cz - Zahranicni",
+          "url": "https://www.novinky.cz/rss/zahranicni",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 14
+        },
+        {
+          "name": "Novinky.cz - Ekonomika",
+          "url": "https://www.novinky.cz/rss/ekonomika",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 15
+        },
+        {
+          "name": "iDNES.cz - Ekonomika",
+          "url": "https://servis.idnes.cz/rss.aspx?c=ekonomika",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 16
+        },
+        {
+          "name": "iROZHLAS - Ekonomika",
+          "url": "https://www.irozhlas.cz/rss/irozhlas/section/ekonomika",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 17
+        },
+        {
+          "name": "iROZHLAS - Komentare",
+          "url": "https://www.irozhlas.cz/rss/irozhlas/section/komentare",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 18
+        },
+        {
+          "name": "iROZHLAS - Kultura",
+          "url": "https://www.irozhlas.cz/rss/irozhlas/section/kultura",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 19
+        },
+        {
+          "name": "Seznam Zpravy - Byznys",
+          "url": "https://www.seznamzpravy.cz/rss/byznys",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 20
+        },
+        {
+          "name": "Seznam Zpravy - Domaci Politika",
+          "url": "https://www.seznamzpravy.cz/rss/domaci-politika",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 21
+        },
+        {
+          "name": "iDNES.cz - Zpravodaj",
+          "url": "https://servis.idnes.cz/rss.aspx?c=zpravodaj",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 127
+        },
+        {
+          "name": "iDNES.cz - Domaci",
+          "url": "https://servis.idnes.cz/rss.aspx?c=domaci",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 128
+        },
+        {
+          "name": "iDNES.cz - Zahranicni",
+          "url": "https://servis.idnes.cz/rss.aspx?c=zahranicni",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 129
+        },
+        {
+          "name": "iDNES.cz - Sport",
+          "url": "https://servis.idnes.cz/rss.aspx?c=sport",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 130
+        },
+        {
+          "name": "iDNES.cz - Technet",
+          "url": "https://servis.idnes.cz/rss.aspx?c=technet",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 131
+        },
+        {
+          "name": "TN Nova",
+          "url": "https://tn.nova.cz/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 132
+        },
+        {
+          "name": "Blesk - Home",
+          "url": "https://www.blesk.cz/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 133
+        },
+        {
+          "name": "TN Nova - News Sitemap 2",
+          "url": null,
+          "sitemapUrl": "https://tn.nova.cz/api/v1/sitemap?type=news&category=tnnova-2&extensions=all",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 147
+        },
+        {
+          "name": "TN Nova - News Sitemap 3",
+          "url": null,
+          "sitemapUrl": "https://tn.nova.cz/api/v1/sitemap?type=news&category=tnnova-3&extensions=all",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 148
+        },
+        {
+          "name": "iDNES.cz - Kultura",
+          "url": "https://servis.idnes.cz/rss.aspx?c=kultura",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 161
+        },
+        {
+          "name": "iDNES.cz - Fotbal",
+          "url": "https://servis.idnes.cz/rss.aspx?c=fotbal",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 162
+        },
+        {
+          "name": "iDNES.cz - Hokej",
+          "url": "https://servis.idnes.cz/rss.aspx?c=hokej",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 163
+        },
+        {
+          "name": "Blesk - Sport",
+          "url": "https://www.blesk.cz/rss/sport",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 164
+        },
+        {
+          "name": "Blesk - Celebrity",
+          "url": "https://www.blesk.cz/rss/celebrity",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 165
+        },
+        {
+          "name": "Blesk - Krimi",
+          "url": "https://www.blesk.cz/rss/krimi",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 166
+        },
+        {
+          "name": "Blesk - Regiony",
+          "url": "https://www.blesk.cz/rss/regiony",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 167
+        },
+        {
+          "name": "Blesk - Ekonomika",
+          "url": "https://www.blesk.cz/rss/ekonomika",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 168
+        },
+        {
+          "name": "Blesk - Zahranici",
+          "url": "https://www.blesk.cz/rss/zahranici",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 169
+        },
+        {
+          "name": "Sport.cz - News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.sport.cz/sitemaps/sitemap_news.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 206
+        },
+        {
+          "name": "Sport.cz - Online Sitemap",
+          "url": null,
+          "sitemapUrl": "https://online.sport.cz/sitemap/sitemap_onlines.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 207
+        },
+        {
+          "name": "iDNES.cz - Ostrava",
+          "url": "https://servis.idnes.cz/rss.aspx?c=ostrava",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 211
+        },
+        {
+          "name": "iDNES.cz - Olomouc",
+          "url": "https://servis.idnes.cz/rss.aspx?c=olomouc",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 212
+        },
+        {
+          "name": "iDNES.cz - Plzen",
+          "url": "https://servis.idnes.cz/rss.aspx?c=plzen",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 213
+        },
+        {
+          "name": "iDNES.cz - Liberec",
+          "url": "https://servis.idnes.cz/rss.aspx?c=liberec",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 214
+        },
+        {
+          "name": "iDNES.cz - Usti",
+          "url": "https://servis.idnes.cz/rss.aspx?c=usti",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 215
+        },
+        {
+          "name": "iDNES.cz - Hradec",
+          "url": "https://servis.idnes.cz/rss.aspx?c=hradec",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 216
+        },
+        {
+          "name": "iDNES.cz - Pardubice",
+          "url": "https://servis.idnes.cz/rss.aspx?c=pardubice",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 217
+        },
+        {
+          "name": "iDNES.cz - Zlin",
+          "url": "https://servis.idnes.cz/rss.aspx?c=zlin",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 218
+        },
+        {
+          "name": "iDNES.cz - Vary",
+          "url": "https://servis.idnes.cz/rss.aspx?c=vary",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 219
+        },
+        {
+          "name": "iDNES.cz - Jihlava",
+          "url": "https://servis.idnes.cz/rss.aspx?c=jihlava",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 220
+        },
+        {
+          "name": "iDNES.cz - Budejovice",
+          "url": "https://servis.idnes.cz/rss.aspx?c=budejovice",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 226
+        },
+        {
+          "name": "Blesk - Auto",
+          "url": "https://www.blesk.cz/rss/auto",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 227
+        },
+        {
+          "name": "Blesk - Zdravi",
+          "url": "https://www.blesk.cz/rss/zdravi",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 228
+        },
+        {
+          "name": "Blesk - Cestovani",
+          "url": "https://www.blesk.cz/rss/cestovani",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 229
+        },
+        {
+          "name": "Blesk - Bydleni",
+          "url": "https://www.blesk.cz/rss/bydleni",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 230
+        },
+        {
+          "name": "Blesk - Praha",
+          "url": "https://www.blesk.cz/rss/praha",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 231
+        },
+        {
+          "name": "Blesk - Plzen",
+          "url": "https://www.blesk.cz/rss/plzen",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 232
+        },
+        {
+          "name": "Blesk - Ostrava Region",
+          "url": "https://www.blesk.cz/rss/ostrava",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 233
+        },
+        {
+          "name": "Blesk - Brno",
+          "url": "https://www.blesk.cz/rss/brno",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 234
+        },
+        {
+          "name": "Blesk - Olomouc Region",
+          "url": "https://www.blesk.cz/rss/olomouc",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 235
+        },
+        {
+          "name": "Sport.cz - Fotbal",
+          "url": "https://www.sport.cz/rss/fotbal",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 236
+        },
+        {
+          "name": "Sport.cz - Hokej",
+          "url": "https://www.sport.cz/rss/hokej",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 237
+        },
+        {
+          "name": "Sport.cz - Tenis",
+          "url": "https://www.sport.cz/rss/tenis",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 238
+        },
+        {
+          "name": "Denik - News Sitemap",
+          "sitemapUrl": "https://www.denik.cz/sitemaps/news.html",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 239
+        },
+        {
+          "name": "Sport.cz - Articles Sitemap",
+          "sitemapUrl": "https://www.sport.cz/sitemaps/sitemap_articles.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 240
+        },
+        {
+          "name": "Blesk - Videoarticle Sitemap",
+          "sitemapUrl": "https://www.blesk.cz/sitemap-videoarticle.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 241
+        },
+        {
+          "name": "Blesk - Elections Sitemap",
+          "sitemapUrl": "https://www.blesk.cz/sitemap-elections.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 242
+        },
+        {
+          "name": "Denik - Sport",
+          "url": "https://www.denik.cz/rss/sport.html",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 243
+        },
+        {
+          "name": "Denik - Ekonomika",
+          "url": "https://www.denik.cz/rss/ekonomika.html",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 244
+        },
+        {
+          "name": "Denik - Kultura",
+          "url": "https://www.denik.cz/rss/kultura.html",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 245
+        },
+        {
+          "name": "Denik - Regiony",
+          "url": "https://www.denik.cz/rss/regiony.html",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 246
+        },
+        {
+          "name": "Denik - Krimi",
+          "url": "https://www.denik.cz/rss/krimi.html",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 247
+        },
+        {
+          "name": "Novinky.cz - Kultura",
+          "url": "https://www.novinky.cz/rss/kultura",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 248
+        },
+        {
+          "name": "Novinky.cz - Krimi",
+          "url": "https://www.novinky.cz/rss/krimi",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 249
+        },
+        {
+          "name": "Novinky.cz - Koktejl",
+          "url": "https://www.novinky.cz/rss/koktejl",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 250
+        },
+        {
+          "name": "Denik - Zdravi",
+          "url": "https://www.denik.cz/rss/zdravi.html",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 251
+        },
+        {
+          "name": "Denik - Cestovani",
+          "url": "https://www.denik.cz/rss/cestovani.html",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 252
         }
       ]
     },
@@ -11946,6 +15441,18 @@
           "name": "In.gr",
           "url": "https://www.in.gr/feed/",
           "sitemapUrl": "https://www.in.gr/wp-content/uploads/json/sitemap-news.xml"
+        },
+        {
+          "name": "To Vima",
+          "url": "https://www.tovima.gr/feed/"
+        },
+        {
+          "name": "Newsbeast",
+          "url": "https://www.newsbeast.gr/feed"
+        },
+        {
+          "name": "Ethnos",
+          "url": "https://www.ethnos.gr/rss.xml"
         }
       ]
     },
@@ -11979,6 +15486,30 @@
         {
           "name": "Economedia",
           "sitemapUrl": "https://economedia.ro/sitemap_index.xml"
+        },
+        {
+          "name": "Stirile ProTV",
+          "sitemapUrl": "https://stirileprotv.ro/sitemap-news.xml"
+        },
+        {
+          "name": "Antena3",
+          "sitemapUrl": "https://www.antena3.ro/sitemap-news.xml"
+        },
+        {
+          "name": "Libertatea",
+          "sitemapUrl": "https://www.libertatea.ro/sitemap-news.xml"
+        },
+        {
+          "name": "Ziare.com",
+          "sitemapUrl": "https://ziare.com/sitemap_news_today.xml"
+        },
+        {
+          "name": "DCNews",
+          "sitemapUrl": "https://www.dcnews.ro/sitemap_news.xml"
+        },
+        {
+          "name": "Gandul",
+          "sitemapUrl": "https://www.gandul.ro/sitemaps/news.xml"
         }
       ]
     },
@@ -12013,6 +15544,14 @@
         {
           "name": "Interfax-Ukraine",
           "sitemapUrl": "https://interfax.com.ua/google-news-sitemap.xml"
+        },
+        {
+          "name": "UNIAN",
+          "url": "https://www.unian.net/rss"
+        },
+        {
+          "name": "TSN",
+          "url": "https://tsn.ua/rss/full.rss"
         }
       ]
     },
@@ -12053,6 +15592,18 @@
         {
           "name": "HNonline",
           "url": "https://hnonline.sk/feed"
+        },
+        {
+          "name": "TVNoviny.sk",
+          "sitemapUrl": "https://tvnoviny.sk/api/v1/sitemap-index"
+        },
+        {
+          "name": "TA3",
+          "url": "https://www.ta3.com/rss/top-spravy"
+        },
+        {
+          "name": "Topky",
+          "url": "https://www.topky.sk/rss/8/TOPKY"
         }
       ]
     },
@@ -12067,6 +15618,10 @@
         {
           "name": "Portfolio",
           "sitemapUrl": "https://www.portfolio.hu/sitemap/sitemapnews.xml"
+        },
+        {
+          "name": "Telex",
+          "url": "https://telex.hu/rss"
         }
       ]
     },
@@ -12081,6 +15636,75 @@
         {
           "name": "24 Chasa",
           "sitemapUrl": "https://www.24chasa.bg/sitemap.xml"
+        },
+        {
+          "name": "Mediapool",
+          "url": "https://www.mediapool.bg/rss"
+        },
+        {
+          "name": "BNR - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://bnr.bg/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 1
+        },
+        {
+          "name": "Dnevnik",
+          "url": "https://www.dnevnik.bg/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 2
+        },
+        {
+          "name": "Novinite",
+          "url": "https://www.novinite.com/services/rss.php",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 3
+        },
+        {
+          "name": "Darik News",
+          "url": "https://dariknews.bg/rss.php",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 4
+        },
+        {
+          "name": "StandartNews",
+          "url": "https://www.standartnews.com/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 5
+        },
+        {
+          "name": "Actualno",
+          "url": "https://www.actualno.com/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 6
+        },
+        {
+          "name": "Club Z",
+          "url": "https://clubz.bg/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 7
+        },
+        {
+          "name": "Marica",
+          "url": "https://www.marica.bg/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 8
         }
       ]
     },
@@ -12099,6 +15723,26 @@
         {
           "name": "Vecernji list",
           "url": "https://www.vecernji.hr/feeds/latest"
+        },
+        {
+          "name": "24sata",
+          "sitemapUrl": "https://www.24sata.hr/news-sitemap.xml"
+        },
+        {
+          "name": "Novi List",
+          "url": "https://www.novilist.hr/feed/",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 1
+        },
+        {
+          "name": "Tportal",
+          "url": "https://www.tportal.hr/rss",
+          "status": "NEW",
+          "checkedDate": "03/16/2026",
+          "valid": "valid",
+          "row": 2
         }
       ]
     },
@@ -12136,6 +15780,22 @@
         {
           "name": "Blic - Latest Sitemap",
           "sitemapUrl": "https://www.blic.rs/sitemap-stories-latest-index.xml.gz"
+        },
+        {
+          "name": "Blic",
+          "url": "https://www.blic.rs/rss/danasnje-vesti"
+        },
+        {
+          "name": "RTS",
+          "url": "https://www.rts.rs/page/stories/sr/rss/10/vesti.html"
+        },
+        {
+          "name": "N1",
+          "sitemapUrl": "https://n1info.rs/sitemap/sitemap_news_1.xml"
+        },
+        {
+          "name": "Kurir",
+          "sitemapUrl": "https://www.kurir.rs/sitemaps-v2/news.xml"
         }
       ]
     },
@@ -12150,6 +15810,35 @@
         {
           "name": "15min",
           "sitemapUrl": "https://www.15min.lt/static/sitemaps/articles_live_index.xml"
+        },
+        {
+          "name": "LRT",
+          "url": "https://www.lrt.lt/?rss",
+          "sitemapUrl": "https://www.lrt.lt/servisai/sitemap/sitemap-index.xml"
+        },
+        {
+          "name": "TV3 Lithuania",
+          "sitemapUrl": "https://www.tv3.lt/sitemap_news.xml"
+        },
+        {
+          "name": "Verslo zinios",
+          "url": "https://www.vz.lt/rss"
+        },
+        {
+          "name": "Delfi Lithuania - Sitemap Index",
+          "sitemapUrl": "https://www.delfi.lt/news/sitemap/index.xml"
+        },
+        {
+          "name": "15min - Articles Index",
+          "sitemapUrl": "https://www.15min.lt/static/sitemaps/articles_index.xml"
+        },
+        {
+          "name": "Lrytas",
+          "url": "https://www.lrytas.lt/rss"
+        },
+        {
+          "name": "Diena",
+          "sitemapUrl": "https://diena.lt/sitemap.xml"
         }
       ]
     },
@@ -12168,6 +15857,22 @@
         {
           "name": "Delfi Latvia",
           "sitemapUrl": "https://www.delfi.lv/sitemap/index.xml"
+        },
+        {
+          "name": "Jauns.lv",
+          "sitemapUrl": "https://jauns.lv/sitemap/news-sitemap.xml"
+        },
+        {
+          "name": "NRA",
+          "url": "https://nra.lv/rss/jaunakas-zinas/"
+        },
+        {
+          "name": "LSM",
+          "url": "https://www.lsm.lv/rss/"
+        },
+        {
+          "name": "Diena",
+          "url": "https://www.diena.lv/rss"
         }
       ]
     },
@@ -12190,6 +15895,19 @@
         {
           "name": "Delfi Estonia",
           "sitemapUrl": "https://www.delfi.ee/sitemap/index.xml"
+        },
+        {
+          "name": "Geenius",
+          "url": "https://geenius.ee/feed/"
+        },
+        {
+          "name": "Elu24",
+          "url": "https://elu24.postimees.ee/rss",
+          "sitemapUrl": "https://elu24.postimees.ee/sitemap"
+        },
+        {
+          "name": "Arileht",
+          "sitemapUrl": "https://arileht.delfi.ee/sitemap/index.xml"
         }
       ]
     },

@@ -44,6 +44,15 @@ run_post_ingest_hooks() {
   if ! bash "${SCRIPT_DIR}/run-ingest-ops-hourly.sh"; then
     printf '[%s] WARN: ingest-ops hourly hook failed\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
   fi
+
+  if [ "${WPM_POST_INGEST_EXPORT:-1}" = "0" ]; then
+    printf '[%s] Post-ingest export hook disabled via WPM_POST_INGEST_EXPORT=0\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
+    return 0
+  fi
+
+  if ! bash "${SCRIPT_DIR}/run-static-deploy-local.sh"; then
+    printf '[%s] WARN: static export/deploy hook failed\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
+  fi
 }
 
 {

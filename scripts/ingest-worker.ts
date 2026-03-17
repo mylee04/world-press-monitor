@@ -298,11 +298,35 @@ function parseSitemapIndexLocDateMs(loc: string): number | null {
     const ts = Date.parse(`${dashPattern[1]}-${dashPattern[2]}-${dashPattern[3]}T00:00:00Z`);
     return Number.isFinite(ts) ? ts : null;
   }
+
+  try {
+    const parsedUrl = new URL(normalized);
+    const year = parsedUrl.searchParams.get('yyyy') || parsedUrl.searchParams.get('year');
+    const month = parsedUrl.searchParams.get('mm') || parsedUrl.searchParams.get('month');
+    const day = parsedUrl.searchParams.get('dd') || parsedUrl.searchParams.get('day');
+    if (year && month && day) {
+      const ts = Date.parse(`${year}-${month}-${day}T00:00:00Z`);
+      return Number.isFinite(ts) ? ts : null;
+    }
+  } catch {
+    // Ignore malformed URLs and fall through.
+  }
+
   return null;
 }
 
 function parseSitemapIndexLocNumericTail(loc: string): number | null {
   const normalized = decodeXmlEntities(loc);
+  try {
+    const parsedUrl = new URL(normalized);
+    const fromParam = parsedUrl.searchParams.get('from');
+    if (fromParam) {
+      const parsedFrom = Number.parseInt(fromParam, 10);
+      if (Number.isFinite(parsedFrom)) return -parsedFrom;
+    }
+  } catch {
+    // Ignore malformed URLs and fall through.
+  }
   const match = normalized.match(/(\d+)(?!.*\d)/);
   if (!match) return null;
   const parsed = Number.parseInt(match[1] || '', 10);

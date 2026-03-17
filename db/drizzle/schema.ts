@@ -54,7 +54,7 @@ export const newsArticles = pgTable("news_articles", {
 	index("idx_news_articles_url").using("btree", table.url.asc().nullsLast().op("text_ops")),
 ]);
 
-export const ingestFeedWatermarks = pgTable("ingest_feed_watermarks", {
+export const ingestFeedWatermarks = pgTable("ingest_feed_watermarks_v2", {
 	outletId: text("outlet_id").notNull(),
 	source: text().notNull(),
 	country: text().default('Global').notNull(),
@@ -64,9 +64,9 @@ export const ingestFeedWatermarks = pgTable("ingest_feed_watermarks", {
 	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
 	updatedAt: timestamp("updated_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
 }, (table) => [
-	index("idx_ingest_feed_watermarks_country").using("btree", table.country.asc().nullsLast().op("text_ops")),
-	index("idx_ingest_feed_watermarks_source").using("btree", table.source.asc().nullsLast().op("text_ops")),
-	primaryKey({ columns: [table.outletId, table.method], name: "ingest_feed_watermarks_pkey"}),
+	index("idx_ingest_feed_watermarks_v2_country").using("btree", table.country.asc().nullsLast().op("text_ops")),
+	index("idx_ingest_feed_watermarks_v2_source").using("btree", table.source.asc().nullsLast().op("text_ops")),
+	primaryKey({ columns: [table.outletId, table.method], name: "ingest_feed_watermarks_v2_pkey"}),
 ]);
 
 export const ingestOpsHourly = pgTable("ingest_ops_hourly", {

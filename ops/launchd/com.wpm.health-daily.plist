@@ -8,7 +8,7 @@
   <array>
     <string>/bin/zsh</string>
     <string>-lc</string>
-    <string>cd /Users/your-user/srv/world-press-monitor/repo &amp;&amp; bash scripts/run-rss-health-daily-local.sh</string>
+    <string>bash /Users/your-user/srv/world-press-monitor/repo/scripts/run-rss-health-daily-local.sh</string>
   </array>
   <key>WorkingDirectory</key>
   <string>/Users/your-user/srv/world-press-monitor/repo</string>

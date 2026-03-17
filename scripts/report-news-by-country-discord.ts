@@ -38,6 +38,7 @@ type AtlasCountryFilter = {
 };
 
 const DEFAULT_WEBHOOK_ENV_VARS = ['WPM_HOURLY_DISCORD_WEBHOOK'];
+const DEFAULT_EXCLUDED_COUNTRIES = new Set(['global energy & grid']);
 const DEFAULT_ATLAS_PATH = resolve(process.cwd(), 'data/rss-atlas.json');
 
 const DEFAULT_LOG_PREFIX = '[news-country-discord]';
@@ -233,7 +234,10 @@ async function main(): Promise<void> {
     const rows = result.rows;
     const countryFilter = buildCountryFilterSet();
     const countryFilterSet = countryFilter.values;
-    const excludedCountries = parseCountrySetFromEnv(process.env.NEWS_COUNTRY_REPORT_EXCLUDED_COUNTRIES);
+    const excludedCountries = new Set([
+      ...DEFAULT_EXCLUDED_COUNTRIES,
+      ...parseCountrySetFromEnv(process.env.NEWS_COUNTRY_REPORT_EXCLUDED_COUNTRIES),
+    ]);
 
     const filteredRows = rows
       .filter((row) => {

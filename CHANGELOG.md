@@ -6,6 +6,72 @@
 
 ## Unreleased
 
+### [0489ab0] Include generated public data in Vercel source deploy
+- Commit: 0489ab0cb31840a71a52aad464e24361d70077c4
+- Date: 2026-03-16 20:34:04 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - A	.vercelignore
+  - Git stat:
+  - .vercelignore | 21 +++++++++++++++++++++
+  -  1 file changed, 21 insertions(+)
+
+### [34a1b55] Split arts coverage into entertainment and lifestyle
+- Commit: 34a1b558509b5e390651642c1d3d737ce9f4cb5b
+- Date: 2026-03-16 20:27:49 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	components/dashboard-view.tsx
+    - M	components/explorer-view.tsx
+    - A	lib/classifier/locales/cs.ts
+    - A	lib/classifier/locales/de.ts
+    - M	lib/classifier/locales/en.ts
+    - M	lib/classifier/locales/es.ts
+    - A	lib/classifier/locales/fi.ts
+    - M	lib/classifier/locales/fr.ts
+    - M	lib/classifier/locales/index.ts
+    - M	lib/classifier/locales/it.ts
+    - M	lib/classifier/locales/ja.ts
+    - M	lib/classifier/locales/ko.ts
+    - A	lib/classifier/locales/lt.ts
+    - M	lib/classifier/locales/nl.ts
+    - A	lib/classifier/locales/pl.ts
+    - M	lib/classifier/locales/pt.ts
+    - M	lib/classifier/locales/ru.ts
+    - A	lib/classifier/locales/th.ts
+    - A	lib/classifier/locales/tr.ts
+    - M	lib/classifier/locales/zh.ts
+    - M	lib/keyword-classifier.ts
+    - M	lib/public-data.ts
+    - M	lib/types.ts
+    - M	scripts/export-public-news-data.ts
+  - Git stat:
+  - components/dashboard-view.tsx      |  12 +-
+  -  components/explorer-view.tsx       |  12 +-
+  -  lib/classifier/locales/cs.ts       |  57 ++++
+  -  lib/classifier/locales/de.ts       |  61 ++++
+  -  lib/classifier/locales/en.ts       |  79 +++--
+  -  lib/classifier/locales/es.ts       |  29 +-
+  -  lib/classifier/locales/fi.ts       |  53 +++
+  -  lib/classifier/locales/fr.ts       |  29 +-
+  -  lib/classifier/locales/index.ts    |  21 ++
+  -  lib/classifier/locales/it.ts       |  21 +-
+  -  lib/classifier/locales/ja.ts       |  19 +-
+  -  lib/classifier/locales/ko.ts       |  20 +-
+  -  lib/classifier/locales/lt.ts       |  47 +++
+  -  lib/classifier/locales/nl.ts       |  21 +-
+  -  lib/classifier/locales/pl.ts       |  49 +++
+  -  lib/classifier/locales/pt.ts       |  26 +-
+  -  lib/classifier/locales/ru.ts       |  23 +-
+  -  lib/classifier/locales/th.ts       |  49 +++
+  -  lib/classifier/locales/tr.ts       |  68 ++++
+  -  lib/classifier/locales/zh.ts       |  32 +-
+  -  lib/keyword-classifier.ts          |  38 ++-
+  -  lib/public-data.ts                 |   5 +-
+  -  lib/types.ts                       |   6 +
+  -  scripts/export-public-news-data.ts | 643 ++++++++++++++++++++++++++++++++++++-
+  -  24 files changed, 1353 insertions(+), 67 deletions(-)
+
 ### [cc9ade2] Clarify news country freshness metrics
 - Commit: cc9ade274cd7f7d31ac861cb35d193541e69ca56
 - Date: 2026-03-16 08:15:45 -0500

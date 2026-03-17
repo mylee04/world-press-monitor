@@ -8,6 +8,9 @@ let poolFailed = false;
 let schemaReady = false;
 let poolDisabledReason = 'not_initialized';
 
+const INGEST_FEED_WATERMARKS_TABLE = 'ingest_feed_watermarks_v2';
+const INGEST_SITEMAP_POLICY_TABLE = 'ingest_sitemap_policy_v2';
+
 const publicationMaxAgeDays = (() => {
   const rawValue = process.env.NEWS_PUBLICATION_MAX_AGE_DAYS;
   if (!rawValue) return 7;
@@ -282,7 +285,7 @@ create table if not exists news_articles (
     create index if not exists idx_ingest_missing_published_at_source on ingest_missing_published_at(source);
     create index if not exists idx_ingest_missing_published_at_country on ingest_missing_published_at(country);
     create index if not exists idx_ingest_missing_published_at_method on ingest_missing_published_at(method);
-    create table if not exists ingest_feed_watermarks (
+    create table if not exists ingest_feed_watermarks_v2 (
       outlet_id text not null,
       source text not null,
       country text not null default 'Global',
@@ -293,10 +296,10 @@ create table if not exists news_articles (
       updated_at timestamptz not null default now(),
       primary key (outlet_id, method)
     );
-    create index if not exists idx_ingest_feed_watermarks_source on ingest_feed_watermarks(source);
-    create index if not exists idx_ingest_feed_watermarks_country on ingest_feed_watermarks(country);
+    create index if not exists idx_ingest_feed_watermarks_v2_source on ingest_feed_watermarks_v2(source);
+    create index if not exists idx_ingest_feed_watermarks_v2_country on ingest_feed_watermarks_v2(country);
 
-    create table if not exists ingest_sitemap_policy (
+    create table if not exists ingest_sitemap_policy_v2 (
       outlet_id text primary key,
       source text not null,
       country text not null default 'Global',
@@ -312,9 +315,9 @@ create table if not exists news_articles (
       created_at timestamptz not null default now(),
       updated_at timestamptz not null default now()
     );
-    create index if not exists idx_ingest_sitemap_policy_status on ingest_sitemap_policy(status);
-    create index if not exists idx_ingest_sitemap_policy_country on ingest_sitemap_policy(country);
-    create index if not exists idx_ingest_sitemap_policy_disabled_until on ingest_sitemap_policy(disabled_until);
+    create index if not exists idx_ingest_sitemap_policy_v2_status on ingest_sitemap_policy_v2(status);
+    create index if not exists idx_ingest_sitemap_policy_v2_country on ingest_sitemap_policy_v2(country);
+    create index if not exists idx_ingest_sitemap_policy_v2_disabled_until on ingest_sitemap_policy_v2(disabled_until);
     create table if not exists ingest_ops_hourly (
       hour_bucket timestamptz not null,
       runner text not null default 'worker',
@@ -476,6 +479,25 @@ function getFeedWatermarkKey(outletId: string, method: 'rss' | 'sitemap'): strin
   return `${outletId}:${method}`;
 }
 
+function isRecoverableIngestionStateError(error: unknown, relationNames: string[]): boolean {
+  if (!(error instanceof Error)) return false;
+  const message = error.message.toLowerCase();
+  return (
+    message.includes('pg_toast_2619')
+    || message.includes('pg_statistic')
+    || message.includes('missing chunk number')
+    || relationNames.some((name) => message.includes(name))
+  );
+}
+
+function isRecoverableFeedWatermarkError(error: unknown): boolean {
+  return isRecoverableIngestionStateError(error, ['ingest_feed_watermarks', INGEST_FEED_WATERMARKS_TABLE]);
+}
+
+function isRecoverableSitemapPolicyError(error: unknown): boolean {
+  return isRecoverableIngestionStateError(error, ['ingest_sitemap_policy', INGEST_SITEMAP_POLICY_TABLE]);
+}
+
 export async function readIngestionFeedWatermarks(rows: Array<{ outletId: string; method: 'rss' | 'sitemap' }>): Promise<Map<string, string | null>> {
   const db = getPool();
   if (!db) return new Map();
@@ -499,31 +521,37 @@ export async function readIngestionFeedWatermarks(rows: Array<{ outletId: string
       return `($${base + 1}, $${base + 2})`;
     })
     .join(', ');
-  const result = await db.query<FeedWatermarkDbRow>(
-    `
-    with requested(outlet_id, method) as (
-      values ${placeholders}
-    )
-    select
-      r.outlet_id,
-      r.method,
-      w.source,
-      w.country,
-      w.last_publication_at
-    from requested r
-    left join ingest_feed_watermarks w
-      on w.outlet_id = r.outlet_id
-      and w.method = r.method
-    `,
-    values
-  );
-
   const map = new Map<string, string | null>();
   for (const request of requests) {
     map.set(getFeedWatermarkKey(request.outletId, request.method), null);
   }
-  for (const row of result.rows) {
-    map.set(getFeedWatermarkKey(row.outlet_id, row.method as 'rss' | 'sitemap'), row.last_publication_at || null);
+
+  try {
+    const result = await db.query<FeedWatermarkDbRow>(
+      `
+      with requested(outlet_id, method) as (
+        values ${placeholders}
+      )
+      select
+        r.outlet_id,
+        r.method,
+        w.source,
+        w.country,
+        w.last_publication_at
+      from requested r
+      left join ingest_feed_watermarks_v2 w
+        on w.outlet_id = r.outlet_id
+        and w.method = r.method
+      `,
+      values
+    );
+
+    for (const row of result.rows) {
+      map.set(getFeedWatermarkKey(row.outlet_id, row.method as 'rss' | 'sitemap'), row.last_publication_at || null);
+    }
+  } catch (error) {
+    if (!isRecoverableFeedWatermarkError(error)) throw error;
+    console.warn('[ingestion-store] skipping feed watermark reads due to recoverable catalog error:', error instanceof Error ? error.message : String(error));
   }
   return map;
 }
@@ -561,27 +589,32 @@ export async function upsertIngestionFeedWatermarks(rows: FeedWatermark[]): Prom
 
   if (!parts.length) return;
 
-  await executeIngestionQuery(
-    db,
-    `
-    insert into ingest_feed_watermarks (
-      outlet_id, source, country, method, last_publication_at, last_fetched_at, updated_at
-    ) values ${parts.join(',')}
-    on conflict (outlet_id, method) do update set
-      source = excluded.source,
-      country = excluded.country,
-      last_publication_at = case
-        when ingest_feed_watermarks.last_publication_at is null then excluded.last_publication_at
-        when excluded.last_publication_at is null then ingest_feed_watermarks.last_publication_at
-        when excluded.last_publication_at > ingest_feed_watermarks.last_publication_at then excluded.last_publication_at
-        else ingest_feed_watermarks.last_publication_at
-      end,
-      last_fetched_at = excluded.last_fetched_at,
-      updated_at = now()
-    `,
-    values,
-    'upsertIngestionFeedWatermarks'
-  );
+  try {
+    await executeIngestionQuery(
+      db,
+      `
+      insert into ingest_feed_watermarks_v2 (
+        outlet_id, source, country, method, last_publication_at, last_fetched_at, updated_at
+      ) values ${parts.join(',')}
+      on conflict (outlet_id, method) do update set
+        source = excluded.source,
+        country = excluded.country,
+        last_publication_at = case
+          when ingest_feed_watermarks_v2.last_publication_at is null then excluded.last_publication_at
+          when excluded.last_publication_at is null then ingest_feed_watermarks_v2.last_publication_at
+          when excluded.last_publication_at > ingest_feed_watermarks_v2.last_publication_at then excluded.last_publication_at
+          else ingest_feed_watermarks_v2.last_publication_at
+        end,
+        last_fetched_at = excluded.last_fetched_at,
+        updated_at = now()
+      `,
+      values,
+      'upsertIngestionFeedWatermarks'
+    );
+  } catch (error) {
+    if (!isRecoverableFeedWatermarkError(error)) throw error;
+    console.warn('[ingestion-store] skipping feed watermark writes due to recoverable catalog error:', error instanceof Error ? error.message : String(error));
+  }
 }
 
 function chunk<T>(items: T[], size: number): T[][] {
@@ -597,10 +630,13 @@ function parseNewsSection(value: string | null | undefined): NewsItem['section']
   if (candidate === 'security') return 'tech';
   if (candidate === 'general') return 'others';
   return candidate === 'politics'
+    || candidate === 'conflicts'
     || candidate === 'business'
     || candidate === 'tech'
     || candidate === 'sports'
     || candidate === 'health'
+    || candidate === 'entertainment'
+    || candidate === 'lifestyle'
     || candidate === 'arts'
     || candidate === 'science'
     || candidate === 'climate'
@@ -1166,39 +1202,6 @@ export async function readSitemapPolicyStates(rows: ReadSitemapPolicyInput[]): P
   const requested = [...deduped.values()];
   if (!requested.length) return new Map();
 
-  const values: string[] = [];
-  const placeholders = requested
-    .map((request, index) => {
-      const base = index * 3;
-      values.push(request.outletId, request.source, normalizeSitemapPolicyCountry(request.country));
-      return `($${base + 1}, $${base + 2}, $${base + 3})`;
-    })
-    .join(', ');
-
-  const result = await db.query<SitemapPolicyDbRow>(
-    `
-    with requested(outlet_id, source, country) as (
-      values ${placeholders}
-    )
-    select
-      requested.outlet_id,
-      coalesce(p.source, requested.source) as source,
-      coalesce(p.country, requested.country) as country,
-      coalesce(p.status, 'active') as status,
-      p.reason,
-      p.last_failure_reason,
-      coalesce(p.consecutive_failures, 0) as consecutive_failures,
-      p.disabled_until,
-      p.last_attempted_at,
-      p.disabled_since,
-      p.last_success_at,
-      p.last_checked_at
-    from requested
-    left join ingest_sitemap_policy p on p.outlet_id = requested.outlet_id
-    `,
-    values
-  );
-
   const stateByOutlet = new Map<string, SitemapPolicyState>();
   for (const request of requested) {
     stateByOutlet.set(request.outletId, {
@@ -1217,8 +1220,46 @@ export async function readSitemapPolicyStates(rows: ReadSitemapPolicyInput[]): P
     });
   }
 
-  for (const row of result.rows) {
-    stateByOutlet.set(row.outlet_id, mapSitemapPolicyRow(row));
+  const values: string[] = [];
+  const placeholders = requested
+    .map((request, index) => {
+      const base = index * 3;
+      values.push(request.outletId, request.source, normalizeSitemapPolicyCountry(request.country));
+      return `($${base + 1}, $${base + 2}, $${base + 3})`;
+    })
+    .join(', ');
+
+  try {
+    const result = await db.query<SitemapPolicyDbRow>(
+      `
+      with requested(outlet_id, source, country) as (
+        values ${placeholders}
+      )
+      select
+        requested.outlet_id,
+        coalesce(p.source, requested.source) as source,
+        coalesce(p.country, requested.country) as country,
+        coalesce(p.status, 'active') as status,
+        p.reason,
+        p.last_failure_reason,
+        coalesce(p.consecutive_failures, 0) as consecutive_failures,
+        p.disabled_until,
+        p.last_attempted_at,
+        p.disabled_since,
+        p.last_success_at,
+        p.last_checked_at
+      from requested
+      left join ingest_sitemap_policy_v2 p on p.outlet_id = requested.outlet_id
+      `,
+      values
+    );
+
+    for (const row of result.rows) {
+      stateByOutlet.set(row.outlet_id, mapSitemapPolicyRow(row));
+    }
+  } catch (error) {
+    if (!isRecoverableSitemapPolicyError(error)) throw error;
+    console.warn('[ingestion-store] skipping sitemap policy reads due to recoverable catalog error:', error instanceof Error ? error.message : String(error));
   }
   return stateByOutlet;
 }
@@ -1265,30 +1306,35 @@ export async function upsertSitemapPolicyStates(rows: SitemapPolicyUpsertRow[]):
       values.push(row.lastFailureReason);
     });
 
-    await executeIngestionQuery(
-      db,
-      `
-      insert into ingest_sitemap_policy (
-        outlet_id, source, country, status, reason, consecutive_failures,
-        last_attempted_at, disabled_until, disabled_since, last_success_at, last_failure_reason, last_checked_at
-      ) values ${parts.join(',')}
-      on conflict (outlet_id) do update set
-        source = excluded.source,
-        country = excluded.country,
-        status = excluded.status,
-        reason = excluded.reason,
-        last_failure_reason = excluded.last_failure_reason,
-        consecutive_failures = excluded.consecutive_failures,
-        disabled_until = excluded.disabled_until,
-        last_attempted_at = excluded.last_attempted_at,
-        disabled_since = excluded.disabled_since,
-        last_success_at = excluded.last_success_at,
-        last_checked_at = now(),
-        updated_at = now()
-      `,
-      values,
-      'upsertSitemapPolicyStates'
-    );
+    try {
+      await executeIngestionQuery(
+        db,
+        `
+        insert into ingest_sitemap_policy_v2 (
+          outlet_id, source, country, status, reason, consecutive_failures,
+          last_attempted_at, disabled_until, disabled_since, last_success_at, last_failure_reason, last_checked_at
+        ) values ${parts.join(',')}
+        on conflict (outlet_id) do update set
+          source = excluded.source,
+          country = excluded.country,
+          status = excluded.status,
+          reason = excluded.reason,
+          last_failure_reason = excluded.last_failure_reason,
+          consecutive_failures = excluded.consecutive_failures,
+          disabled_until = excluded.disabled_until,
+          last_attempted_at = excluded.last_attempted_at,
+          disabled_since = excluded.disabled_since,
+          last_success_at = excluded.last_success_at,
+          last_checked_at = now(),
+          updated_at = now()
+        `,
+        values,
+        'upsertSitemapPolicyStates'
+      );
+    } catch (error) {
+      if (!isRecoverableSitemapPolicyError(error)) throw error;
+      console.warn('[ingestion-store] skipping sitemap policy writes due to recoverable catalog error:', error instanceof Error ? error.message : String(error));
+    }
   }
 }
 

@@ -91,7 +91,7 @@ drop index if exists idx_ingestion_endpoint_runs_source;
 drop index if exists idx_ingestion_endpoint_runs_outlet_id;
 drop index if exists idx_ingestion_endpoint_runs_runner_ran_at;
 
-create table if not exists ingest_feed_watermarks (
+create table if not exists ingest_feed_watermarks_v2 (
   outlet_id text not null,
   source text not null,
   country text not null default 'Global',
@@ -102,10 +102,10 @@ create table if not exists ingest_feed_watermarks (
   updated_at timestamptz not null default now(),
   primary key (outlet_id, method)
 );
-create index if not exists idx_ingest_feed_watermarks_source on ingest_feed_watermarks(source);
-create index if not exists idx_ingest_feed_watermarks_country on ingest_feed_watermarks(country);
+create index if not exists idx_ingest_feed_watermarks_v2_source on ingest_feed_watermarks_v2(source);
+create index if not exists idx_ingest_feed_watermarks_v2_country on ingest_feed_watermarks_v2(country);
 
-create table if not exists ingest_sitemap_policy (
+create table if not exists ingest_sitemap_policy_v2 (
   outlet_id text primary key,
   source text not null,
   country text not null default 'Global',
@@ -121,9 +121,9 @@ create table if not exists ingest_sitemap_policy (
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
-create index if not exists idx_ingest_sitemap_policy_status on ingest_sitemap_policy(status);
-create index if not exists idx_ingest_sitemap_policy_country on ingest_sitemap_policy(country);
-create index if not exists idx_ingest_sitemap_policy_disabled_until on ingest_sitemap_policy(disabled_until);
+create index if not exists idx_ingest_sitemap_policy_v2_status on ingest_sitemap_policy_v2(status);
+create index if not exists idx_ingest_sitemap_policy_v2_country on ingest_sitemap_policy_v2(country);
+create index if not exists idx_ingest_sitemap_policy_v2_disabled_until on ingest_sitemap_policy_v2(disabled_until);
 
 create table if not exists ingest_ops_hourly (
   hour_bucket timestamptz not null,
