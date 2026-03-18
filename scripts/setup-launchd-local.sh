@@ -20,6 +20,11 @@ PLIST_NAMES=(
   "com.wpm.export-deploy.plist"
 )
 
+LEGACY_PLIST_NAMES=(
+  "com.wpm.news-country-discord.plist"
+  "com.wpm.ingest-ops-hourly.plist"
+)
+
 escape_sed_replacement() {
   printf '%s' "$1" | sed -e 's/[\/&|]/\\&/g'
 }
@@ -69,6 +74,14 @@ render_plist() {
 
 install_launch_agents() {
   mkdir -p "${WPM_LAUNCHD_DIR}"
+
+  for plist_name in "${LEGACY_PLIST_NAMES[@]}"; do
+    local label="${plist_name%.plist}"
+    local target_path="${WPM_LAUNCHD_DIR}/${plist_name}"
+
+    launchctl bootout "${LAUNCHD_DOMAIN}/${label}" >/dev/null 2>&1 || true
+    rm -f "${target_path}"
+  done
 
   for plist_name in "${PLIST_NAMES[@]}"; do
     local label="${plist_name%.plist}"
@@ -121,6 +134,7 @@ Usage:
 Notes:
   - Runtime repo defaults to ~/srv/world-press-monitor/repo.
   - Hourly country Discord report and hourly ingest ops report are chained from run-ingest-hourly-local.sh.
+  - Legacy standalone com.wpm.news-country-discord / com.wpm.ingest-ops-hourly agents are removed on install/update.
   - Do not point launchd at Desktop/Documents/Downloads worktrees.
 USAGE
 }

@@ -6,6 +6,22 @@
 
 ## Unreleased
 
+### [da0bd59] Expand Denmark and Netherlands feed coverage
+- Commit: da0bd596c1f26b3df3120bd06f6a303048452b68
+- Date: 2026-03-17 21:08:26 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	CHANGELOG.md
+    - M	data/rss-atlas.json
+    - M	data/rss-catalog.csv
+    - M	data/rss-catalog.opml
+  - Git stat:
+  - CHANGELOG.md          |  510 +++++++++++
+  -  data/rss-atlas.json   |  378 +++++++-
+  -  data/rss-catalog.csv  | 2280 +++++++++++++++++++++++++------------------------
+  -  data/rss-catalog.opml |   86 +-
+  -  4 files changed, 2138 insertions(+), 1116 deletions(-)
+
 ### [c3c8205] Preserve readable titles in public feeds
 - Commit: c3c8205fc5673a71a152d65264de7fac890e8cf6
 - Date: 2026-03-17 08:06:03 -0500
