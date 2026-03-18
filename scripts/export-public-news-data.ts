@@ -16,7 +16,13 @@ import {
   type PublicSourcesFile,
 } from '@/lib/public-data';
 import { resolveDatabaseUrl } from '@/lib/database-url';
-import { decodeHtmlEntities, normalizeArticleTitle, normalizeHtmlText } from '@/lib/html-entities';
+import {
+  decodeHtmlEntities,
+  looksLikeLowSignalArticleTitle,
+  normalizeArticleTitle,
+  normalizeHtmlText,
+  normalizeReadableArticleTitle,
+} from '@/lib/html-entities';
 import { classifySectionByKeyword } from '@/lib/keyword-classifier';
 import type { NewsSection } from '@/lib/types';
 
@@ -98,15 +104,9 @@ const SECTION_HINT_TERMS: ReadonlyArray<readonly [NewsSection, readonly string[]
 const SECTION_HINT_PATTERNS: ReadonlyArray<readonly [NewsSection, readonly RegExp[]]> = SECTION_HINT_TERMS.map(
   ([section, terms]) => [section, terms.map((term) => buildHintRegex(term))] as const
 );
-const GENERIC_TITLE_PATTERNS: ReadonlyArray<RegExp> = [
-  /^art[- ]\d+(?:\.html)?$/iu,
-  /^c\d+\s+\d+\.html$/iu,
-  /^\d{6,}$/u,
-  /^(?:news|latest|domestic|international|photo|video)$/iu,
-];
 const GENERIC_HINT_NOISE_PATTERNS: ReadonlyArray<RegExp> = [
   /\bart[- ]\d+(?:\.html)?\b/giu,
-  /\bc\d+\s+\d+\.html\b/giu,
+  /\bc\d+\s+\d+(?:\.html)?\b/giu,
   /\b\d{6,}\b/gu,
 ];
 const CONFLICT_SIGNAL_PATTERN =
@@ -205,10 +205,13 @@ async function readArticles(pool: Pool, directory: CountryDirectory): Promise<Pu
     [EXPORT_DAYS, MAX_ROWS]
   );
 
-  return result.rows.map((row) => {
-    const title = normalizeArticleTitle(row.title || '', row.url || '');
+  return result.rows.flatMap((row) => {
     const snippet = normalizeHtmlText(row.snippet || '');
     const url = decodeHtmlEntities(row.url || '');
+    const title = normalizeReadableArticleTitle(row.title || '', url, row.source || '');
+    if (!title || looksLikeLowSignalArticleTitle(title, row.source || '', url)) {
+      return [];
+    }
     const countryName = normalizeCountryName(row.country);
     const countryCode = directory.countryCodeByName.get(countryName) || FALLBACK_COUNTRY_CODE;
     const publicationDatetime = normalizePublicationDatetime(row.publication_datetime, row.created_at);
@@ -218,7 +221,7 @@ async function readArticles(pool: Pool, directory: CountryDirectory): Promise<Pu
       snippet,
       url,
     });
-    return {
+    return [{
       id: row.id,
       source: row.source,
       country: countryName,
@@ -230,7 +233,7 @@ async function readArticles(pool: Pool, directory: CountryDirectory): Promise<Pu
       url,
       publicationDatetime,
       createdAt: new Date(row.created_at).toISOString(),
-    } satisfies PublicNewsArticle;
+    } satisfies PublicNewsArticle];
   });
 }
 
@@ -773,9 +776,9 @@ function buildHintRegex(term: string): RegExp {
 }
 
 function looksLikeGenericTitle(title: string): boolean {
-  const normalized = title.trim().toLowerCase();
+  const normalized = normalizeArticleTitle(title || '', '');
   if (!normalized) return true;
-  return GENERIC_TITLE_PATTERNS.some((pattern) => pattern.test(normalized));
+  return looksLikeLowSignalArticleTitle(normalized);
 }
 
 function safeDecodeURIComponent(value: string): string {

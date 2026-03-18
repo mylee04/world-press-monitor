@@ -1,7 +1,12 @@
 import { Pool } from 'pg';
 import { createHash } from 'node:crypto';
 import type { NewsItem } from '@/lib/types';
-import { decodeHtmlEntities, normalizeArticleTitle, normalizeHtmlText } from '@/lib/html-entities';
+import {
+  decodeHtmlEntities,
+  normalizeArticleTitle,
+  normalizeHtmlText,
+  normalizeReadableArticleTitle,
+} from '@/lib/html-entities';
 import { normalizeLinkForId } from '@/lib/pipeline';
 
 let pool: Pool | null = null;
@@ -2464,7 +2469,10 @@ async function toNewsArticleRow(item: NewsItem): Promise<NewsArticlePersistable 
   if (publicationMaxAgeMs > 0 && publicationTs < Date.now() - publicationMaxAgeMs) return null;
 
   const language = item.language || null;
-  const titleOriginal = truncateText(normalizeArticleTitle(item.title || '', decodedLink), storedTitleMaxChars);
+  const titleOriginal = truncateText(
+    normalizeReadableArticleTitle(item.title || '', decodedLink, item.source || ''),
+    storedTitleMaxChars
+  );
   if (!titleOriginal) return null;
   const rawSnippet = normalizeHtmlText(item.description || '');
   const snippetOriginal = rawSnippet ? truncateText(rawSnippet, storedSnippetMaxChars) : null;
@@ -2486,7 +2494,10 @@ async function toMissingPublishedAtRow(item: MissingPublishedAtCandidate): Promi
   const decodedLink = decodeHtmlEntities(item.link || '');
   const linkNorm = normalizeLinkForId(decodedLink);
   if (!linkNorm) return null;
-  const titleOriginal = truncateText(normalizeArticleTitle(item.title || '', decodedLink), storedTitleMaxChars);
+  const titleOriginal = truncateText(
+    normalizeReadableArticleTitle(item.title || '', decodedLink, item.source || ''),
+    storedTitleMaxChars
+  );
   if (!titleOriginal) return null;
   const rawSnippet = normalizeHtmlText(item.description || '');
   const snippetOriginal = rawSnippet ? truncateText(rawSnippet, storedSnippetMaxChars) : null;

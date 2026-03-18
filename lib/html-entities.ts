@@ -24,6 +24,21 @@ const NAMED_HTML_ENTITIES: Record<string, string> = {
   yen: '¥',
 };
 
+const GENERIC_LOW_SIGNAL_TITLE_PATTERNS: ReadonlyArray<RegExp> = [
+  /^c\d+\s+\d+(?:\.html)?$/iu,
+  /^art[- ]\d+(?:\.html)?$/iu,
+  /^\d{6,}$/u,
+  /^(?:news|latest|domestic|international|photo|video)$/iu,
+];
+
+const SOURCE_SPECIFIC_LOW_SIGNAL_TITLE_PATTERNS: ReadonlyArray<{
+  source: RegExp;
+  title: RegExp;
+}> = [
+  { source: /oricon/i, title: /^(?:full|news|anime|comic|voiceactor)$/iu },
+  { source: /abema times/i, title: /^(?:full|news|anime)$/iu },
+];
+
 function decodeHtmlEntitiesOnce(value: string): string {
   return (value || '').replace(/&(#x?[0-9a-f]+|[a-z][a-z0-9]+);/gi, (match, entity) => {
     if (!entity) return match;
@@ -89,6 +104,18 @@ function titleFromLink(link: string): string {
   }
 }
 
+export function looksLikeLowSignalArticleTitle(title: string, source = '', link = ''): boolean {
+  const normalizedTitle = normalizeHtmlText(title);
+  const normalizedLink = decodeHtmlEntities(link || '');
+  if (!normalizedTitle) return true;
+  if (normalizedTitle === normalizedLink || /^https?:\/\//i.test(normalizedTitle)) return true;
+  if (GENERIC_LOW_SIGNAL_TITLE_PATTERNS.some((pattern) => pattern.test(normalizedTitle))) return true;
+  return SOURCE_SPECIFIC_LOW_SIGNAL_TITLE_PATTERNS.some(
+    ({ source: sourcePattern, title: titlePattern }) =>
+      sourcePattern.test(source) && titlePattern.test(normalizedTitle)
+  );
+}
+
 export function normalizeArticleTitle(title: string, link = ''): string {
   const normalizedTitle = normalizeHtmlText(title);
   const normalizedLink = decodeHtmlEntities(link || '');
@@ -97,4 +124,17 @@ export function normalizeArticleTitle(title: string, link = ''): string {
     return titleFromLink(normalizedLink) || normalizedTitle;
   }
   return normalizedTitle;
+}
+
+export function normalizeReadableArticleTitle(title: string, link = '', source = ''): string {
+  const normalizedTitle = normalizeArticleTitle(title, link);
+  if (!normalizedTitle) return '';
+  const fallbackTitle = titleFromLink(link);
+  if (!looksLikeLowSignalArticleTitle(normalizedTitle, source, link)) {
+    return normalizedTitle;
+  }
+  if (fallbackTitle && !looksLikeLowSignalArticleTitle(fallbackTitle, source, link)) {
+    return fallbackTitle;
+  }
+  return '';
 }
