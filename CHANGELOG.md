@@ -6,6 +6,22 @@
 
 ## Unreleased
 
+### [f80f31a] Deduplicate hourly Discord reports
+- Commit: f80f31af0db50d2c737c13d8dd4d7cfff3809a80
+- Date: 2026-03-18 08:34:17 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	CHANGELOG.md
+    - M	scripts/run-ingest-ops-hourly.sh
+    - M	scripts/run-news-country-discord-report.sh
+    - M	scripts/setup-launchd-local.sh
+  - Git stat:
+  - CHANGELOG.md                               | 16 ++++++++++++++++
+  -  scripts/run-ingest-ops-hourly.sh           | 23 +++++++++++++++++++++++
+  -  scripts/run-news-country-discord-report.sh | 21 +++++++++++++++++++++
+  -  scripts/setup-launchd-local.sh             | 14 ++++++++++++++
+  -  4 files changed, 74 insertions(+)
+
 ### [da0bd59] Expand Denmark and Netherlands feed coverage
 - Commit: da0bd596c1f26b3df3120bd06f6a303048452b68
 - Date: 2026-03-17 21:08:26 -0500

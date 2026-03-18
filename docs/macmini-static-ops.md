@@ -73,6 +73,7 @@ Defaults:
 - runtime root: `~/srv/world-press-monitor`
 - runtime repo: `~/srv/world-press-monitor/repo`
 - launchd target: `~/Library/LaunchAgents`
+- optional primary worktree mirror: set `WPM_PRIMARY_WORKTREE` if you want RSS health outputs synced back to your main repo checkout
 
 Do not point launchd at worktrees under `Desktop`, `Documents`, or `Downloads`; macOS background execution can block those paths with `Operation not permitted`.
 

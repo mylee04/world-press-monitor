@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Tue, 17 Mar 2026 18:40:48 GMT</dateCreated>
+    <dateCreated>Wed, 18 Mar 2026 14:10:02 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -107,13 +107,13 @@
       <outline text="Sina News (General Breaking News) [valid]" title="Sina News (General Breaking News) [valid]" type="rss" xmlUrl="https://rss.sina.com.cn/news/world/focus15.xml" htmlUrl="https://rss.sina.com.cn"/>
       <outline text="HK01 (Hong Kong Digital Media Top Feed) [needs verification]" title="HK01 (Hong Kong Digital Media Top Feed) [needs verification]" type="rss" xmlUrl="https://www.hk01.com/rss" htmlUrl="https://www.hk01.com"/>
       <outline text="Ming Pao (Hong Kong Flagship Newspaper) [valid]" title="Ming Pao (Hong Kong Flagship Newspaper) [valid]" type="rss" xmlUrl="https://news.mingpao.com/rss/pns/s00001.xml" htmlUrl="https://news.mingpao.com"/>
-      <outline text="HKET (Hong Kong Economic Times) [valid]" title="HKET (Hong Kong Economic Times) [valid]" type="rss" xmlUrl="https://www.hket.com/rss/hongkong" htmlUrl="https://www.hket.com"/>
+      <outline text="HKET (Hong Kong Economic Times) [needs verification]" title="HKET (Hong Kong Economic Times) [needs verification]" type="rss" xmlUrl="https://www.hket.com/rss/hongkong" htmlUrl="https://www.hket.com"/>
       <outline text="Tencent Tech (Tencent Technology News) [invalid]" title="Tencent Tech (Tencent Technology News) [invalid]" type="rss" xmlUrl="https://new.qq.com/ch/tech/" htmlUrl="https://new.qq.com"/>
-      <outline text="China News Service - Scroll News [needs verification]" title="China News Service - Scroll News [needs verification]" type="rss" xmlUrl="https://www.chinanews.com.cn/rss/scroll-news.xml" htmlUrl="https://www.chinanews.com.cn"/>
-      <outline text="China News Service - China [needs verification]" title="China News Service - China [needs verification]" type="rss" xmlUrl="https://www.chinanews.com.cn/rss/china.xml" htmlUrl="https://www.chinanews.com.cn"/>
-      <outline text="China News Service - World [needs verification]" title="China News Service - World [needs verification]" type="rss" xmlUrl="https://www.chinanews.com.cn/rss/world.xml" htmlUrl="https://www.chinanews.com.cn"/>
-      <outline text="China News Service - Finance [needs verification]" title="China News Service - Finance [needs verification]" type="rss" xmlUrl="https://www.chinanews.com.cn/rss/finance.xml" htmlUrl="https://www.chinanews.com.cn"/>
-      <outline text="Hong Kong Free Press [needs verification]" title="Hong Kong Free Press [needs verification]" type="rss" xmlUrl="https://hongkongfp.com/feed/" htmlUrl="https://hongkongfp.com"/>
+      <outline text="China News Service - Scroll News [valid]" title="China News Service - Scroll News [valid]" type="rss" xmlUrl="https://www.chinanews.com.cn/rss/scroll-news.xml" htmlUrl="https://www.chinanews.com.cn"/>
+      <outline text="China News Service - China [valid]" title="China News Service - China [valid]" type="rss" xmlUrl="https://www.chinanews.com.cn/rss/china.xml" htmlUrl="https://www.chinanews.com.cn"/>
+      <outline text="China News Service - World [valid]" title="China News Service - World [valid]" type="rss" xmlUrl="https://www.chinanews.com.cn/rss/world.xml" htmlUrl="https://www.chinanews.com.cn"/>
+      <outline text="China News Service - Finance [valid]" title="China News Service - Finance [valid]" type="rss" xmlUrl="https://www.chinanews.com.cn/rss/finance.xml" htmlUrl="https://www.chinanews.com.cn"/>
+      <outline text="Hong Kong Free Press [valid]" title="Hong Kong Free Press [valid]" type="rss" xmlUrl="https://hongkongfp.com/feed/" htmlUrl="https://hongkongfp.com"/>
     </outline>
     <outline text="Japan (JP)" title="Japan (JP)">
       <outline text="NHK World (EN) [valid]" title="NHK World (EN) [valid]" type="rss" xmlUrl="https://www3.nhk.or.jp/rss/news/cat0.xml" htmlUrl="https://www3.nhk.or.jp"/>
@@ -169,7 +169,7 @@
       <outline text="Boundless (TechCrunch Japan Archive) [needs verification]" title="Boundless (TechCrunch Japan Archive) [needs verification]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/media/boundless/all.xml" htmlUrl="https://news.yahoo.co.jp"/>
       <outline text="Smart Japan [valid]" title="Smart Japan [valid]" type="rss" xmlUrl="https://rss.itmedia.co.jp/rss/2.0/smartjapan.xml" htmlUrl="https://rss.itmedia.co.jp"/>
       <outline text="Nikkei [needs verification]" title="Nikkei [needs verification]" type="rss" xmlUrl="https://assets.nikkei.jp/release/v1/rss/news.xml" htmlUrl="https://assets.nikkei.jp"/>
-      <outline text="Mainichi Flash [needs verification]" title="Mainichi Flash [needs verification]" type="rss" xmlUrl="https://mainichi.jp/rss/etc/mainichi-flash.rss" htmlUrl="https://mainichi.jp"/>
+      <outline text="Mainichi Flash [invalid]" title="Mainichi Flash [invalid]" type="rss" xmlUrl="https://mainichi.jp/rss/etc/mainichi-flash.rss" htmlUrl="https://mainichi.jp"/>
       <outline text="Gizmodo Japan [valid]" title="Gizmodo Japan [valid]" type="rss" xmlUrl="https://www.gizmodo.jp/index.xml" htmlUrl="https://www.gizmodo.jp"/>
       <outline text="PR TIMES - Business/Economy [needs verification]" title="PR TIMES - Business/Economy [needs verification]" type="rss" xmlUrl="https://prtimes.jp/business.rdf" htmlUrl="https://prtimes.jp"/>
       <outline text="PR TIMES - Technology [needs verification]" title="PR TIMES - Technology [needs verification]" type="rss" xmlUrl="https://prtimes.jp/technology.rdf" htmlUrl="https://prtimes.jp"/>
@@ -209,20 +209,20 @@
       <outline text="Heise Online [valid]" title="Heise Online [valid]" type="rss" xmlUrl="https://www.heise.de/rss/heise-atom.xml" htmlUrl="https://www.heise.de"/>
       <outline text="Der Spiegel [valid]" title="Der Spiegel [valid]" type="rss" xmlUrl="https://www.spiegel.de/schlagzeilen/index.rss" htmlUrl="https://www.spiegel.de"/>
       <outline text="Die Welt [valid]" title="Die Welt [valid]" type="rss" xmlUrl="https://www.welt.de/feeds/topnews.rss" htmlUrl="https://www.welt.de"/>
-      <outline text="WELT - Latest [needs verification]" title="WELT - Latest [needs verification]" type="rss" xmlUrl="https://www.welt.de/feeds/latest.rss" htmlUrl="https://www.welt.de"/>
-      <outline text="WELT - Politik [needs verification]" title="WELT - Politik [needs verification]" type="rss" xmlUrl="https://www.welt.de/feeds/section/politik.rss" htmlUrl="https://www.welt.de"/>
-      <outline text="WELT - Wirtschaft [needs verification]" title="WELT - Wirtschaft [needs verification]" type="rss" xmlUrl="https://www.welt.de/feeds/section/wirtschaft.rss" htmlUrl="https://www.welt.de"/>
-      <outline text="WELT - Sport [needs verification]" title="WELT - Sport [needs verification]" type="rss" xmlUrl="https://www.welt.de/feeds/section/sport.rss" htmlUrl="https://www.welt.de"/>
-      <outline text="WELT - Regionales [needs verification]" title="WELT - Regionales [needs verification]" type="rss" xmlUrl="https://www.welt.de/feeds/section/regionales.rss" htmlUrl="https://www.welt.de"/>
-      <outline text="WELT - Wissenschaft [needs verification]" title="WELT - Wissenschaft [needs verification]" type="rss" xmlUrl="https://www.welt.de/feeds/section/wissenschaft.rss" htmlUrl="https://www.welt.de"/>
-      <outline text="WELT - Vermischtes [needs verification]" title="WELT - Vermischtes [needs verification]" type="rss" xmlUrl="https://www.welt.de/feeds/section/vermischtes.rss" htmlUrl="https://www.welt.de"/>
-      <outline text="BILD - Alles [needs verification]" title="BILD - Alles [needs verification]" type="rss" xmlUrl="https://www.bild.de/feed/alles.xml" htmlUrl="https://www.bild.de"/>
-      <outline text="BILD - News [needs verification]" title="BILD - News [needs verification]" type="rss" xmlUrl="https://www.bild.de/feed/news.xml" htmlUrl="https://www.bild.de"/>
-      <outline text="BILD - Politik [needs verification]" title="BILD - Politik [needs verification]" type="rss" xmlUrl="https://www.bild.de/feed/politik.xml" htmlUrl="https://www.bild.de"/>
-      <outline text="BILD - Digital [needs verification]" title="BILD - Digital [needs verification]" type="rss" xmlUrl="https://www.bild.de/feed/digital.xml" htmlUrl="https://www.bild.de"/>
-      <outline text="BILD - Sport [needs verification]" title="BILD - Sport [needs verification]" type="rss" xmlUrl="https://www.bild.de/feed/sport.xml" htmlUrl="https://www.bild.de"/>
-      <outline text="BILD - Unterhaltung [needs verification]" title="BILD - Unterhaltung [needs verification]" type="rss" xmlUrl="https://www.bild.de/feed/unterhaltung.xml" htmlUrl="https://www.bild.de"/>
-      <outline text="BILD - Regional Chemnitz [needs verification]" title="BILD - Regional Chemnitz [needs verification]" type="rss" xmlUrl="https://www.bild.de/feed/regional-chemnitz.xml" htmlUrl="https://www.bild.de"/>
+      <outline text="WELT - Latest [valid]" title="WELT - Latest [valid]" type="rss" xmlUrl="https://www.welt.de/feeds/latest.rss" htmlUrl="https://www.welt.de"/>
+      <outline text="WELT - Politik [valid]" title="WELT - Politik [valid]" type="rss" xmlUrl="https://www.welt.de/feeds/section/politik.rss" htmlUrl="https://www.welt.de"/>
+      <outline text="WELT - Wirtschaft [valid]" title="WELT - Wirtschaft [valid]" type="rss" xmlUrl="https://www.welt.de/feeds/section/wirtschaft.rss" htmlUrl="https://www.welt.de"/>
+      <outline text="WELT - Sport [valid]" title="WELT - Sport [valid]" type="rss" xmlUrl="https://www.welt.de/feeds/section/sport.rss" htmlUrl="https://www.welt.de"/>
+      <outline text="WELT - Regionales [valid]" title="WELT - Regionales [valid]" type="rss" xmlUrl="https://www.welt.de/feeds/section/regionales.rss" htmlUrl="https://www.welt.de"/>
+      <outline text="WELT - Wissenschaft [valid]" title="WELT - Wissenschaft [valid]" type="rss" xmlUrl="https://www.welt.de/feeds/section/wissenschaft.rss" htmlUrl="https://www.welt.de"/>
+      <outline text="WELT - Vermischtes [valid]" title="WELT - Vermischtes [valid]" type="rss" xmlUrl="https://www.welt.de/feeds/section/vermischtes.rss" htmlUrl="https://www.welt.de"/>
+      <outline text="BILD - Alles [valid]" title="BILD - Alles [valid]" type="rss" xmlUrl="https://www.bild.de/feed/alles.xml" htmlUrl="https://www.bild.de"/>
+      <outline text="BILD - News [valid]" title="BILD - News [valid]" type="rss" xmlUrl="https://www.bild.de/feed/news.xml" htmlUrl="https://www.bild.de"/>
+      <outline text="BILD - Politik [valid]" title="BILD - Politik [valid]" type="rss" xmlUrl="https://www.bild.de/feed/politik.xml" htmlUrl="https://www.bild.de"/>
+      <outline text="BILD - Digital [valid]" title="BILD - Digital [valid]" type="rss" xmlUrl="https://www.bild.de/feed/digital.xml" htmlUrl="https://www.bild.de"/>
+      <outline text="BILD - Sport [valid]" title="BILD - Sport [valid]" type="rss" xmlUrl="https://www.bild.de/feed/sport.xml" htmlUrl="https://www.bild.de"/>
+      <outline text="BILD - Unterhaltung [valid]" title="BILD - Unterhaltung [valid]" type="rss" xmlUrl="https://www.bild.de/feed/unterhaltung.xml" htmlUrl="https://www.bild.de"/>
+      <outline text="BILD - Regional Chemnitz [valid]" title="BILD - Regional Chemnitz [valid]" type="rss" xmlUrl="https://www.bild.de/feed/regional-chemnitz.xml" htmlUrl="https://www.bild.de"/>
       <outline text="Focus [valid]" title="Focus [valid]" type="rss" xmlUrl="https://www.focus.de/rss/" htmlUrl="https://www.focus.de"/>
       <outline text="Handelsblatt Economy [valid]" title="Handelsblatt Economy [valid]" type="rss" xmlUrl="https://www.handelsblatt.com/contentexport/feed/finanzen/" htmlUrl="https://www.handelsblatt.com"/>
       <outline text="Frankfurter Allgemeine [valid]" title="Frankfurter Allgemeine [valid]" type="rss" xmlUrl="https://www.faz.net/rss/aktuell/wirtschaft/" htmlUrl="https://www.faz.net"/>
@@ -265,7 +265,7 @@
       <outline text="India Today (India) [valid]" title="India Today (India) [valid]" type="rss" xmlUrl="https://www.indiatoday.in/rss/1206578" htmlUrl="https://www.indiatoday.in"/>
       <outline text="The Indian Express [valid]" title="The Indian Express [valid]" type="rss" xmlUrl="https://indianexpress.com/feed" htmlUrl="https://indianexpress.com"/>
       <outline text="The Hindu (National) [valid]" title="The Hindu (National) [valid]" type="rss" xmlUrl="https://www.thehindu.com/news/national/?service=rss" htmlUrl="https://www.thehindu.com"/>
-      <outline text="Firstpost [valid]" title="Firstpost [valid]" type="rss" xmlUrl="https://www.firstpost.com/commonfeeds/v1/mfp/rss/web-stories.xml" htmlUrl="https://www.firstpost.com"/>
+      <outline text="Firstpost [invalid]" title="Firstpost [invalid]" type="rss" xmlUrl="https://www.firstpost.com/commonfeeds/v1/mfp/rss/web-stories.xml" htmlUrl="https://www.firstpost.com"/>
       <outline text="DNA India (India) [invalid]" title="DNA India (India) [invalid]" type="rss" xmlUrl="https://www.dnaindia.com/feeds/india.xml" htmlUrl="https://www.dnaindia.com"/>
       <outline text="Storify News [valid]" title="Storify News [valid]" type="rss" xmlUrl="https://www.storifynews.com/feed" htmlUrl="https://www.storifynews.com"/>
       <outline text="Amar Ujala (Breaking) [valid]" title="Amar Ujala (Breaking) [valid]" type="rss" xmlUrl="https://www.amarujala.com/rss/breaking-news.xml" htmlUrl="https://www.amarujala.com"/>
@@ -304,17 +304,17 @@
       <outline text="The Telegraph UK [invalid]" title="The Telegraph UK [invalid]" type="rss" xmlUrl="https://www.telegraph.co.uk/rss.xml" htmlUrl="https://www.telegraph.co.uk"/>
       <outline text="Daily Mail [valid]" title="Daily Mail [valid]" type="rss" xmlUrl="https://www.dailymail.co.uk/home/index.rss" htmlUrl="https://www.dailymail.co.uk"/>
       <outline text="Metro UK [valid]" title="Metro UK [valid]" type="rss" xmlUrl="https://metro.co.uk/feed/" htmlUrl="https://metro.co.uk"/>
-      <outline text="The Sun [needs verification]" title="The Sun [needs verification]" type="rss" xmlUrl="https://www.thesun.co.uk/feed/" htmlUrl="https://www.thesun.co.uk"/>
+      <outline text="The Sun [invalid]" title="The Sun [invalid]" type="rss" xmlUrl="https://www.thesun.co.uk/feed/" htmlUrl="https://www.thesun.co.uk"/>
       <outline text="The Guardian UK [valid]" title="The Guardian UK [valid]" type="rss" xmlUrl="https://www.theguardian.com/uk/rss" htmlUrl="https://www.theguardian.com"/>
       <outline text="Sky News [valid]" title="Sky News [valid]" type="rss" xmlUrl="https://feeds.skynews.com/feeds/rss/uk.xml" htmlUrl="https://feeds.skynews.com"/>
       <outline text="Financial Times [valid]" title="Financial Times [valid]" type="rss" xmlUrl="https://www.ft.com/rss/home" htmlUrl="https://www.ft.com"/>
       <outline text="iNews [valid]" title="iNews [valid]" type="rss" xmlUrl="https://inews.co.uk/rss" htmlUrl="https://inews.co.uk"/>
       <outline text="BBC Culture [valid]" title="BBC Culture [valid]" type="rss" xmlUrl="https://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml" htmlUrl="https://feeds.bbci.co.uk"/>
-      <outline text="BBC News - UK [needs verification]" title="BBC News - UK [needs verification]" type="rss" xmlUrl="https://feeds.bbci.co.uk/news/uk/rss.xml" htmlUrl="https://feeds.bbci.co.uk"/>
-      <outline text="BBC News - Politics [needs verification]" title="BBC News - Politics [needs verification]" type="rss" xmlUrl="https://feeds.bbci.co.uk/news/politics/rss.xml" htmlUrl="https://feeds.bbci.co.uk"/>
-      <outline text="BBC News - Technology [needs verification]" title="BBC News - Technology [needs verification]" type="rss" xmlUrl="https://feeds.bbci.co.uk/news/technology/rss.xml" htmlUrl="https://feeds.bbci.co.uk"/>
-      <outline text="The Guardian - Politics [needs verification]" title="The Guardian - Politics [needs verification]" type="rss" xmlUrl="https://www.theguardian.com/politics/rss" htmlUrl="https://www.theguardian.com"/>
-      <outline text="The Guardian - Technology [needs verification]" title="The Guardian - Technology [needs verification]" type="rss" xmlUrl="https://www.theguardian.com/uk/technology/rss" htmlUrl="https://www.theguardian.com"/>
+      <outline text="BBC News - UK [valid]" title="BBC News - UK [valid]" type="rss" xmlUrl="https://feeds.bbci.co.uk/news/uk/rss.xml" htmlUrl="https://feeds.bbci.co.uk"/>
+      <outline text="BBC News - Politics [valid]" title="BBC News - Politics [valid]" type="rss" xmlUrl="https://feeds.bbci.co.uk/news/politics/rss.xml" htmlUrl="https://feeds.bbci.co.uk"/>
+      <outline text="BBC News - Technology [valid]" title="BBC News - Technology [valid]" type="rss" xmlUrl="https://feeds.bbci.co.uk/news/technology/rss.xml" htmlUrl="https://feeds.bbci.co.uk"/>
+      <outline text="The Guardian - Politics [valid]" title="The Guardian - Politics [valid]" type="rss" xmlUrl="https://www.theguardian.com/politics/rss" htmlUrl="https://www.theguardian.com"/>
+      <outline text="The Guardian - Technology [valid]" title="The Guardian - Technology [valid]" type="rss" xmlUrl="https://www.theguardian.com/uk/technology/rss" htmlUrl="https://www.theguardian.com"/>
       <outline text="The Evening Standard [valid]" title="The Evening Standard [valid]" type="rss" xmlUrl="https://www.standard.co.uk/rss" htmlUrl="https://www.standard.co.uk"/>
     </outline>
     <outline text="France (FR)" title="France (FR)">
@@ -333,16 +333,16 @@
       <outline text="20 Minutes [valid]" title="20 Minutes [valid]" type="rss" xmlUrl="https://www.20minutes.fr/feeds/rss-une.xml" htmlUrl="https://www.20minutes.fr"/>
       <outline text="Yahoo Actualités [valid]" title="Yahoo Actualités [valid]" type="rss" xmlUrl="https://fr.news.yahoo.com/rss" htmlUrl="https://fr.news.yahoo.com"/>
       <outline text="InfoMigrants (EN) [needs verification]" title="InfoMigrants (EN) [needs verification]" type="rss" xmlUrl="https://www.infomigrants.net/en/rss/all.xml" htmlUrl="https://www.infomigrants.net"/>
-      <outline text="France Today [needs verification]" title="France Today [needs verification]" type="rss" xmlUrl="https://www.francetoday.com/feed" htmlUrl="https://www.francetoday.com"/>
+      <outline text="France Today [valid]" title="France Today [valid]" type="rss" xmlUrl="https://www.francetoday.com/feed" htmlUrl="https://www.francetoday.com"/>
       <outline text="FrenchDailyNews [valid]" title="FrenchDailyNews [valid]" type="rss" xmlUrl="https://frenchdailynews.com/feed" htmlUrl="https://frenchdailynews.com"/>
       <outline text="Le Monde (EN – Main) [valid]" title="Le Monde (EN – Main) [valid]" type="rss" xmlUrl="https://www.lemonde.fr/en/rss/une.xml" htmlUrl="https://www.lemonde.fr"/>
       <outline text="Le Monde (EN – International) [valid]" title="Le Monde (EN – International) [valid]" type="rss" xmlUrl="https://www.lemonde.fr/en/international/rss_full.xml" htmlUrl="https://www.lemonde.fr"/>
-      <outline text="Le Monde (EN – Editorials) [needs verification]" title="Le Monde (EN – Editorials) [needs verification]" type="rss" xmlUrl="https://www.lemonde.fr/en/editorials/rss_full.xml" htmlUrl="https://www.lemonde.fr"/>
-      <outline text="Le Monde (EN – Europe) [needs verification]" title="Le Monde (EN – Europe) [needs verification]" type="rss" xmlUrl="https://www.lemonde.fr/en/europe/rss_full.xml" htmlUrl="https://www.lemonde.fr"/>
-      <outline text="Le Monde (EN – United States) [needs verification]" title="Le Monde (EN – United States) [needs verification]" type="rss" xmlUrl="https://www.lemonde.fr/en/united-states/rss_full.xml" htmlUrl="https://www.lemonde.fr"/>
-      <outline text="Le Monde (EN – Economy) [needs verification]" title="Le Monde (EN – Economy) [needs verification]" type="rss" xmlUrl="https://www.lemonde.fr/en/economy/rss_full.xml" htmlUrl="https://www.lemonde.fr"/>
-      <outline text="Le Monde (EN – Culture) [needs verification]" title="Le Monde (EN – Culture) [needs verification]" type="rss" xmlUrl="https://www.lemonde.fr/en/culture/rss_full.xml" htmlUrl="https://www.lemonde.fr"/>
-      <outline text="Le Monde (EN – Sports) [needs verification]" title="Le Monde (EN – Sports) [needs verification]" type="rss" xmlUrl="https://www.lemonde.fr/en/sports/rss_full.xml" htmlUrl="https://www.lemonde.fr"/>
+      <outline text="Le Monde (EN – Editorials) [valid]" title="Le Monde (EN – Editorials) [valid]" type="rss" xmlUrl="https://www.lemonde.fr/en/editorials/rss_full.xml" htmlUrl="https://www.lemonde.fr"/>
+      <outline text="Le Monde (EN – Europe) [valid]" title="Le Monde (EN – Europe) [valid]" type="rss" xmlUrl="https://www.lemonde.fr/en/europe/rss_full.xml" htmlUrl="https://www.lemonde.fr"/>
+      <outline text="Le Monde (EN – United States) [valid]" title="Le Monde (EN – United States) [valid]" type="rss" xmlUrl="https://www.lemonde.fr/en/united-states/rss_full.xml" htmlUrl="https://www.lemonde.fr"/>
+      <outline text="Le Monde (EN – Economy) [valid]" title="Le Monde (EN – Economy) [valid]" type="rss" xmlUrl="https://www.lemonde.fr/en/economy/rss_full.xml" htmlUrl="https://www.lemonde.fr"/>
+      <outline text="Le Monde (EN – Culture) [valid]" title="Le Monde (EN – Culture) [valid]" type="rss" xmlUrl="https://www.lemonde.fr/en/culture/rss_full.xml" htmlUrl="https://www.lemonde.fr"/>
+      <outline text="Le Monde (EN – Sports) [valid]" title="Le Monde (EN – Sports) [valid]" type="rss" xmlUrl="https://www.lemonde.fr/en/sports/rss_full.xml" htmlUrl="https://www.lemonde.fr"/>
       <outline text="Le Monde (EN – Environment) [valid]" title="Le Monde (EN – Environment) [valid]" type="rss" xmlUrl="https://www.lemonde.fr/en/environment/rss_full.xml" htmlUrl="https://www.lemonde.fr"/>
       <outline text="Le Monde (EN – Science) [needs verification]" title="Le Monde (EN – Science) [needs verification]" type="rss" xmlUrl="https://www.lemonde.fr/en/science/rss_full.xml" htmlUrl="https://www.lemonde.fr"/>
       <outline text="Les Echos (Finance/Markets) [needs verification]" title="Les Echos (Finance/Markets) [needs verification]" type="rss" xmlUrl="https://services.lesechos.fr/api/rss/univers/finance-marches" htmlUrl="https://services.lesechos.fr"/>
@@ -351,14 +351,14 @@
       <outline text="Le Monde (Politics) [valid]" title="Le Monde (Politics) [valid]" type="rss" xmlUrl="https://www.lemonde.fr/politique/rss_full.xml" htmlUrl="https://www.lemonde.fr"/>
       <outline text="Le Figaro (Top Stories) [valid]" title="Le Figaro (Top Stories) [valid]" type="rss" xmlUrl="https://www.lefigaro.fr/rss/figaro_actualites.xml" htmlUrl="https://www.lefigaro.fr"/>
       <outline text="Le Figaro (Economy) [valid]" title="Le Figaro (Economy) [valid]" type="rss" xmlUrl="https://www.lefigaro.fr/rss/figaro_economie.xml" htmlUrl="https://www.lefigaro.fr"/>
-      <outline text="Le Figaro (Flash Actu) [needs verification]" title="Le Figaro (Flash Actu) [needs verification]" type="rss" xmlUrl="https://www.lefigaro.fr/rss/figaro_flash-actu.xml" htmlUrl="https://www.lefigaro.fr"/>
-      <outline text="Le Figaro (France) [needs verification]" title="Le Figaro (France) [needs verification]" type="rss" xmlUrl="https://www.lefigaro.fr/rss/figaro_actualite-france.xml" htmlUrl="https://www.lefigaro.fr"/>
-      <outline text="Le Figaro (International) [needs verification]" title="Le Figaro (International) [needs verification]" type="rss" xmlUrl="https://www.lefigaro.fr/rss/figaro_international.xml" htmlUrl="https://www.lefigaro.fr"/>
-      <outline text="Le Figaro (Politics) [needs verification]" title="Le Figaro (Politics) [needs verification]" type="rss" xmlUrl="https://www.lefigaro.fr/rss/figaro_politique.xml" htmlUrl="https://www.lefigaro.fr"/>
-      <outline text="Le Figaro (Flash Eco) [needs verification]" title="Le Figaro (Flash Eco) [needs verification]" type="rss" xmlUrl="https://www.lefigaro.fr/rss/figaro_flash-eco.xml" htmlUrl="https://www.lefigaro.fr"/>
-      <outline text="Le Figaro (Society) [needs verification]" title="Le Figaro (Society) [needs verification]" type="rss" xmlUrl="https://www.lefigaro.fr/rss/figaro_societes.xml" htmlUrl="https://www.lefigaro.fr"/>
-      <outline text="Le Figaro (Sport) [needs verification]" title="Le Figaro (Sport) [needs verification]" type="rss" xmlUrl="https://www.lefigaro.fr/rss/figaro_sport.xml" htmlUrl="https://www.lefigaro.fr"/>
-      <outline text="Le Figaro (Science) [needs verification]" title="Le Figaro (Science) [needs verification]" type="rss" xmlUrl="https://www.lefigaro.fr/rss/figaro_sciences.xml" htmlUrl="https://www.lefigaro.fr"/>
+      <outline text="Le Figaro (Flash Actu) [valid]" title="Le Figaro (Flash Actu) [valid]" type="rss" xmlUrl="https://www.lefigaro.fr/rss/figaro_flash-actu.xml" htmlUrl="https://www.lefigaro.fr"/>
+      <outline text="Le Figaro (France) [valid]" title="Le Figaro (France) [valid]" type="rss" xmlUrl="https://www.lefigaro.fr/rss/figaro_actualite-france.xml" htmlUrl="https://www.lefigaro.fr"/>
+      <outline text="Le Figaro (International) [valid]" title="Le Figaro (International) [valid]" type="rss" xmlUrl="https://www.lefigaro.fr/rss/figaro_international.xml" htmlUrl="https://www.lefigaro.fr"/>
+      <outline text="Le Figaro (Politics) [valid]" title="Le Figaro (Politics) [valid]" type="rss" xmlUrl="https://www.lefigaro.fr/rss/figaro_politique.xml" htmlUrl="https://www.lefigaro.fr"/>
+      <outline text="Le Figaro (Flash Eco) [valid]" title="Le Figaro (Flash Eco) [valid]" type="rss" xmlUrl="https://www.lefigaro.fr/rss/figaro_flash-eco.xml" htmlUrl="https://www.lefigaro.fr"/>
+      <outline text="Le Figaro (Society) [valid]" title="Le Figaro (Society) [valid]" type="rss" xmlUrl="https://www.lefigaro.fr/rss/figaro_societes.xml" htmlUrl="https://www.lefigaro.fr"/>
+      <outline text="Le Figaro (Sport) [valid]" title="Le Figaro (Sport) [valid]" type="rss" xmlUrl="https://www.lefigaro.fr/rss/figaro_sport.xml" htmlUrl="https://www.lefigaro.fr"/>
+      <outline text="Le Figaro (Science) [valid]" title="Le Figaro (Science) [valid]" type="rss" xmlUrl="https://www.lefigaro.fr/rss/figaro_sciences.xml" htmlUrl="https://www.lefigaro.fr"/>
       <outline text="La Tribune (Economy) [needs verification]" title="La Tribune (Economy) [needs verification]" type="rss" xmlUrl="https://www.latribune.fr/feed.xml" htmlUrl="https://www.latribune.fr"/>
       <outline text="Libération (Society/Politics) [needs verification]" title="Libération (Society/Politics) [needs verification]" type="rss" xmlUrl="https://www.liberation.fr/rss/" htmlUrl="https://www.liberation.fr"/>
       <outline text="L&apos;Express (Current Affairs Magazine) [needs verification]" title="L&apos;Express (Current Affairs Magazine) [needs verification]" type="rss" xmlUrl="https://www.lexpress.fr/arc/outboundfeeds/rss/" htmlUrl="https://www.lexpress.fr"/>
@@ -429,24 +429,24 @@
     <outline text="Canada (CA)" title="Canada (CA)">
       <outline text="Global News [valid]" title="Global News [valid]" type="rss" xmlUrl="https://globalnews.ca/feed" htmlUrl="https://globalnews.ca"/>
       <outline text="rabble.ca [valid]" title="rabble.ca [valid]" type="rss" xmlUrl="https://rabble.ca/feed" htmlUrl="https://rabble.ca"/>
-      <outline text="National Post [valid]" title="National Post [valid]" type="rss" xmlUrl="https://nationalpost.com/feed" htmlUrl="https://nationalpost.com"/>
-      <outline text="Toronto Sun [valid]" title="Toronto Sun [valid]" type="rss" xmlUrl="https://torontosun.com/feed" htmlUrl="https://torontosun.com"/>
+      <outline text="National Post [invalid]" title="National Post [invalid]" type="rss" xmlUrl="https://nationalpost.com/feed" htmlUrl="https://nationalpost.com"/>
+      <outline text="Toronto Sun [invalid]" title="Toronto Sun [invalid]" type="rss" xmlUrl="https://torontosun.com/feed" htmlUrl="https://torontosun.com"/>
       <outline text="Financial Post [valid]" title="Financial Post [valid]" type="rss" xmlUrl="https://feeds.feedburner.com/FP_TopStories" htmlUrl="https://feeds.feedburner.com"/>
       <outline text="CityNews Toronto [valid]" title="CityNews Toronto [valid]" type="rss" xmlUrl="https://toronto.citynews.ca/feed" htmlUrl="https://toronto.citynews.ca"/>
-      <outline text="Calgary Herald [valid]" title="Calgary Herald [valid]" type="rss" xmlUrl="https://calgaryherald.com/feed" htmlUrl="https://calgaryherald.com"/>
-      <outline text="Edmonton Journal [valid]" title="Edmonton Journal [valid]" type="rss" xmlUrl="https://edmontonjournal.com/feed" htmlUrl="https://edmontonjournal.com"/>
-      <outline text="Windsor Star [valid]" title="Windsor Star [valid]" type="rss" xmlUrl="https://windsorstar.com/feed" htmlUrl="https://windsorstar.com"/>
-      <outline text="The Province [valid]" title="The Province [valid]" type="rss" xmlUrl="https://theprovince.com/feed" htmlUrl="https://theprovince.com"/>
-      <outline text="Calgary Sun [valid]" title="Calgary Sun [valid]" type="rss" xmlUrl="https://calgarysun.com/feed" htmlUrl="https://calgarysun.com"/>
-      <outline text="Ottawa Sun [valid]" title="Ottawa Sun [valid]" type="rss" xmlUrl="https://ottawasun.com/feed" htmlUrl="https://ottawasun.com"/>
+      <outline text="Calgary Herald [invalid]" title="Calgary Herald [invalid]" type="rss" xmlUrl="https://calgaryherald.com/feed" htmlUrl="https://calgaryherald.com"/>
+      <outline text="Edmonton Journal [invalid]" title="Edmonton Journal [invalid]" type="rss" xmlUrl="https://edmontonjournal.com/feed" htmlUrl="https://edmontonjournal.com"/>
+      <outline text="Windsor Star [invalid]" title="Windsor Star [invalid]" type="rss" xmlUrl="https://windsorstar.com/feed" htmlUrl="https://windsorstar.com"/>
+      <outline text="The Province [invalid]" title="The Province [invalid]" type="rss" xmlUrl="https://theprovince.com/feed" htmlUrl="https://theprovince.com"/>
+      <outline text="Calgary Sun [invalid]" title="Calgary Sun [invalid]" type="rss" xmlUrl="https://calgarysun.com/feed" htmlUrl="https://calgarysun.com"/>
+      <outline text="Ottawa Sun [invalid]" title="Ottawa Sun [invalid]" type="rss" xmlUrl="https://ottawasun.com/feed" htmlUrl="https://ottawasun.com"/>
       <outline text="The Tyee [valid]" title="The Tyee [valid]" type="rss" xmlUrl="https://thetyee.ca/rss2.xml" htmlUrl="https://thetyee.ca"/>
-      <outline text="The StarPhoenix [valid]" title="The StarPhoenix [valid]" type="rss" xmlUrl="https://thestarphoenix.com/feed" htmlUrl="https://thestarphoenix.com"/>
-      <outline text="Edmonton Sun [valid]" title="Edmonton Sun [valid]" type="rss" xmlUrl="https://edmontonsun.com/feed" htmlUrl="https://edmontonsun.com"/>
-      <outline text="Canada.com [valid]" title="Canada.com [valid]" type="rss" xmlUrl="https://o.canada.com/feed" htmlUrl="https://o.canada.com"/>
+      <outline text="The StarPhoenix [invalid]" title="The StarPhoenix [invalid]" type="rss" xmlUrl="https://thestarphoenix.com/feed" htmlUrl="https://thestarphoenix.com"/>
+      <outline text="Edmonton Sun [invalid]" title="Edmonton Sun [invalid]" type="rss" xmlUrl="https://edmontonsun.com/feed" htmlUrl="https://edmontonsun.com"/>
+      <outline text="Canada.com [invalid]" title="Canada.com [invalid]" type="rss" xmlUrl="https://o.canada.com/feed" htmlUrl="https://o.canada.com"/>
       <outline text="Business In Vancouver (BIV) [valid]" title="Business In Vancouver (BIV) [valid]" type="rss" xmlUrl="https://biv.com/rss" htmlUrl="https://biv.com"/>
       <outline text="Regina Leader Post [valid]" title="Regina Leader Post [valid]" type="rss" xmlUrl="https://leaderpost.com/feed" htmlUrl="https://leaderpost.com"/>
-      <outline text="Owen Sound Sun Times [valid]" title="Owen Sound Sun Times [valid]" type="rss" xmlUrl="https://owensoundsuntimes.com/feed" htmlUrl="https://owensoundsuntimes.com"/>
-      <outline text="Stratford Beacon Herald [valid]" title="Stratford Beacon Herald [valid]" type="rss" xmlUrl="https://stratfordbeaconherald.com/feed" htmlUrl="https://stratfordbeaconherald.com"/>
+      <outline text="Owen Sound Sun Times [invalid (ERR)]" title="Owen Sound Sun Times [invalid (ERR)]" type="rss" xmlUrl="https://owensoundsuntimes.com/feed" htmlUrl="https://owensoundsuntimes.com"/>
+      <outline text="Stratford Beacon Herald [invalid]" title="Stratford Beacon Herald [invalid]" type="rss" xmlUrl="https://stratfordbeaconherald.com/feed" htmlUrl="https://stratfordbeaconherald.com"/>
       <outline text="The Georgia Straight [valid]" title="The Georgia Straight [valid]" type="rss" xmlUrl="https://straight.com/content/rss" htmlUrl="https://straight.com"/>
       <outline text="Grande Prairie Daily Herald Tribune [valid]" title="Grande Prairie Daily Herald Tribune [valid]" type="rss" xmlUrl="https://dailyheraldtribune.com/feed" htmlUrl="https://dailyheraldtribune.com"/>
       <outline text="YGK News (Kingston) [valid]" title="YGK News (Kingston) [valid]" type="rss" xmlUrl="https://ygknews.ca/feed" htmlUrl="https://ygknews.ca"/>
@@ -460,10 +460,10 @@
       <outline text="BNN Bloomberg (Canada Biz) [needs verification]" title="BNN Bloomberg (Canada Biz) [needs verification]" type="rss" xmlUrl="https://www.bnnbloomberg.ca/business/rss" htmlUrl="https://www.bnnbloomberg.ca"/>
       <outline text="CBC News - Business [valid]" title="CBC News - Business [valid]" type="rss" xmlUrl="https://www.cbc.ca/cmlink/rss-business" htmlUrl="https://www.cbc.ca"/>
       <outline text="CBC News - World [valid]" title="CBC News - World [valid]" type="rss" xmlUrl="https://www.cbc.ca/cmlink/rss-world" htmlUrl="https://www.cbc.ca"/>
-      <outline text="Financial Post (Economy) [valid]" title="Financial Post (Economy) [valid]" type="rss" xmlUrl="https://financialpost.com/feed" htmlUrl="https://financialpost.com"/>
-      <outline text="CBC News - Top Stories [needs verification]" title="CBC News - Top Stories [needs verification]" type="rss" xmlUrl="https://www.cbc.ca/cmlink/rss-topstories" htmlUrl="https://www.cbc.ca"/>
-      <outline text="CBC News - Canada [needs verification]" title="CBC News - Canada [needs verification]" type="rss" xmlUrl="https://www.cbc.ca/cmlink/rss-canada" htmlUrl="https://www.cbc.ca"/>
-      <outline text="CBC News - Politics [needs verification]" title="CBC News - Politics [needs verification]" type="rss" xmlUrl="https://www.cbc.ca/cmlink/rss-politics" htmlUrl="https://www.cbc.ca"/>
+      <outline text="Financial Post (Economy) [invalid (ERR)]" title="Financial Post (Economy) [invalid (ERR)]" type="rss" xmlUrl="https://financialpost.com/feed" htmlUrl="https://financialpost.com"/>
+      <outline text="CBC News - Top Stories [valid]" title="CBC News - Top Stories [valid]" type="rss" xmlUrl="https://www.cbc.ca/cmlink/rss-topstories" htmlUrl="https://www.cbc.ca"/>
+      <outline text="CBC News - Canada [valid]" title="CBC News - Canada [valid]" type="rss" xmlUrl="https://www.cbc.ca/cmlink/rss-canada" htmlUrl="https://www.cbc.ca"/>
+      <outline text="CBC News - Politics [valid]" title="CBC News - Politics [valid]" type="rss" xmlUrl="https://www.cbc.ca/cmlink/rss-politics" htmlUrl="https://www.cbc.ca"/>
     </outline>
     <outline text="Russia (RU)" title="Russia (RU)">
       <outline text="RT [valid]" title="RT [valid]" type="rss" xmlUrl="https://rt.com/feed" htmlUrl="https://rt.com"/>
@@ -485,7 +485,7 @@
       <outline text="Kommersant (Economy/Business Major Daily) [valid]" title="Kommersant (Economy/Business Major Daily) [valid]" type="rss" xmlUrl="https://www.kommersant.ru/RSS/news.xml" htmlUrl="https://www.kommersant.ru"/>
       <outline text="Vedomosti (Economy Major Daily) [valid]" title="Vedomosti (Economy Major Daily) [valid]" type="rss" xmlUrl="https://www.vedomosti.ru/rss/news" htmlUrl="https://www.vedomosti.ru"/>
       <outline text="Gazeta.ru (General News) [needs verification]" title="Gazeta.ru (General News) [needs verification]" type="rss" xmlUrl="https://www.gazeta.ru/export/rss/lenta.xml" htmlUrl="https://www.gazeta.ru"/>
-      <outline text="Izvestia (Traditional Daily) [invalid (ERR)]" title="Izvestia (Traditional Daily) [invalid (ERR)]" type="rss" xmlUrl="https://iz.ru/xml/rss/all.xml" htmlUrl="https://iz.ru"/>
+      <outline text="Izvestia (Traditional Daily) [valid]" title="Izvestia (Traditional Daily) [valid]" type="rss" xmlUrl="https://iz.ru/xml/rss/all.xml" htmlUrl="https://iz.ru"/>
       <outline text="RT Russian (RT Russian Main) [valid]" title="RT Russian (RT Russian Main) [valid]" type="rss" xmlUrl="https://russian.rt.com/rss" htmlUrl="https://russian.rt.com"/>
       <outline text="Rossiyskaya Gazeta (Official Gazette) [valid]" title="Rossiyskaya Gazeta (Official Gazette) [valid]" type="rss" xmlUrl="https://rg.ru/xml/index.xml" htmlUrl="https://rg.ru"/>
       <outline text="Forbes Russia (Forbes Russia Edition) [valid]" title="Forbes Russia (Forbes Russia Edition) [valid]" type="rss" xmlUrl="https://www.forbes.ru/newrss.xml" htmlUrl="https://www.forbes.ru"/>
@@ -499,7 +499,7 @@
     </outline>
     <outline text="South Korea (KR)" title="South Korea (KR)">
       <outline text="Yonhap (EN) [valid]" title="Yonhap (EN) [valid]" type="rss" xmlUrl="https://en.yna.co.kr/RSS/news.xml" htmlUrl="https://en.yna.co.kr"/>
-      <outline text="Donga Ilbo [valid]" title="Donga Ilbo [valid]" type="rss" xmlUrl="https://rss.donga.com/total.xml" htmlUrl="https://rss.donga.com"/>
+      <outline text="Donga Ilbo [invalid (ERR)]" title="Donga Ilbo [invalid (ERR)]" type="rss" xmlUrl="https://rss.donga.com/total.xml" htmlUrl="https://rss.donga.com"/>
       <outline text="Seoul Newspaper [valid]" title="Seoul Newspaper [valid]" type="rss" xmlUrl="https://www.seoul.co.kr/xml/rss/rss_top.xml" htmlUrl="https://www.seoul.co.kr"/>
       <outline text="Newsis [valid]" title="Newsis [valid]" type="rss" xmlUrl="https://www.newsis.com/RSS/sokbo.xml" htmlUrl="https://www.newsis.com"/>
       <outline text="Aju News [valid]" title="Aju News [valid]" type="rss" xmlUrl="https://rss.ajunews.com/sokbo.xml" htmlUrl="https://rss.ajunews.com"/>
@@ -595,8 +595,8 @@
       <outline text="MacroBusiness (매크로/부동산 심층분석) [valid]" title="MacroBusiness (매크로/부동산 심층분석) [valid]" type="rss" xmlUrl="https://www.macrobusiness.com.au/feed/" htmlUrl="https://www.macrobusiness.com.au"/>
       <outline text="SmartCompany (스타트업/비즈니스) [valid]" title="SmartCompany (스타트업/비즈니스) [valid]" type="rss" xmlUrl="https://www.smartcompany.com.au/feed/" htmlUrl="https://www.smartcompany.com.au"/>
       <outline text="Startup Daily (테크) [valid]" title="Startup Daily (테크) [valid]" type="rss" xmlUrl="https://www.startupdaily.net/feed/" htmlUrl="https://www.startupdaily.net"/>
-      <outline text="The Conversation AU (오피니언/정책) [needs verification]" title="The Conversation AU (오피니언/정책) [needs verification]" type="rss" xmlUrl="https://theconversation.com/au/articles.atom" htmlUrl="https://theconversation.com"/>
-      <outline text="Crikey [needs verification]" title="Crikey [needs verification]" type="rss" xmlUrl="https://www.crikey.com.au/feed/" htmlUrl="https://www.crikey.com.au"/>
+      <outline text="The Conversation AU (오피니언/정책) [valid]" title="The Conversation AU (오피니언/정책) [valid]" type="rss" xmlUrl="https://theconversation.com/au/articles.atom" htmlUrl="https://theconversation.com"/>
+      <outline text="Crikey [valid]" title="Crikey [valid]" type="rss" xmlUrl="https://www.crikey.com.au/feed/" htmlUrl="https://www.crikey.com.au"/>
       <outline text="News.com.au National Top News [valid]" title="News.com.au National Top News [valid]" type="rss" xmlUrl="https://www.news.com.au/content-feeds/latest-news-national/" htmlUrl="https://www.news.com.au"/>
       <outline text="News.com.au Finance [valid]" title="News.com.au Finance [valid]" type="rss" xmlUrl="https://www.news.com.au/content-feeds/latest-news-finance/" htmlUrl="https://www.news.com.au"/>
       <outline text="ABC News Australia [valid]" title="ABC News Australia [valid]" type="rss" xmlUrl="https://www.abc.net.au/news/feed/51120/rss.xml" htmlUrl="https://www.abc.net.au"/>
@@ -723,11 +723,11 @@
       <outline text="Sopitas (Millennial Portal) [valid]" title="Sopitas (Millennial Portal) [valid]" type="rss" xmlUrl="https://www.sopitas.com/feed/" htmlUrl="https://www.sopitas.com"/>
       <outline text="Animal Político (Political Deep Coverage) [needs verification]" title="Animal Político (Political Deep Coverage) [needs verification]" type="rss" xmlUrl="https://www.animalpolitico.com/feed" htmlUrl="https://www.animalpolitico.com"/>
       <outline text="Xataka México (Tech/IT) [needs verification]" title="Xataka México (Tech/IT) [needs verification]" type="rss" xmlUrl="https://www.xataka.com.mx/feed" htmlUrl="https://www.xataka.com.mx"/>
-      <outline text="La Jornada - Politica [needs verification]" title="La Jornada - Politica [needs verification]" type="rss" xmlUrl="https://www.jornada.com.mx/rss/politica.xml" htmlUrl="https://www.jornada.com.mx"/>
-      <outline text="La Jornada - Estados [needs verification]" title="La Jornada - Estados [needs verification]" type="rss" xmlUrl="https://www.jornada.com.mx/rss/estados.xml" htmlUrl="https://www.jornada.com.mx"/>
-      <outline text="La Jornada - Mundo [needs verification]" title="La Jornada - Mundo [needs verification]" type="rss" xmlUrl="https://www.jornada.com.mx/rss/mundo.xml" htmlUrl="https://www.jornada.com.mx"/>
-      <outline text="La Jornada - Capital [needs verification]" title="La Jornada - Capital [needs verification]" type="rss" xmlUrl="https://www.jornada.com.mx/rss/capital.xml" htmlUrl="https://www.jornada.com.mx"/>
-      <outline text="La Jornada - Deportes [needs verification]" title="La Jornada - Deportes [needs verification]" type="rss" xmlUrl="https://www.jornada.com.mx/rss/deportes.xml" htmlUrl="https://www.jornada.com.mx"/>
+      <outline text="La Jornada - Politica [valid]" title="La Jornada - Politica [valid]" type="rss" xmlUrl="https://www.jornada.com.mx/rss/politica.xml" htmlUrl="https://www.jornada.com.mx"/>
+      <outline text="La Jornada - Estados [valid]" title="La Jornada - Estados [valid]" type="rss" xmlUrl="https://www.jornada.com.mx/rss/estados.xml" htmlUrl="https://www.jornada.com.mx"/>
+      <outline text="La Jornada - Mundo [valid]" title="La Jornada - Mundo [valid]" type="rss" xmlUrl="https://www.jornada.com.mx/rss/mundo.xml" htmlUrl="https://www.jornada.com.mx"/>
+      <outline text="La Jornada - Capital [valid]" title="La Jornada - Capital [valid]" type="rss" xmlUrl="https://www.jornada.com.mx/rss/capital.xml" htmlUrl="https://www.jornada.com.mx"/>
+      <outline text="La Jornada - Deportes [valid]" title="La Jornada - Deportes [valid]" type="rss" xmlUrl="https://www.jornada.com.mx/rss/deportes.xml" htmlUrl="https://www.jornada.com.mx"/>
     </outline>
     <outline text="Indonesia (ID)" title="Indonesia (ID)">
       <outline text="Republika [valid]" title="Republika [valid]" type="rss" xmlUrl="https://www.republika.co.id/rss" htmlUrl="https://www.republika.co.id"/>
@@ -742,7 +742,7 @@
       <outline text="ANTARA - Hukum [valid]" title="ANTARA - Hukum [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/hukum.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Ekonomi [valid]" title="ANTARA - Ekonomi [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/ekonomi.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Ekonomi (Finansial) [valid]" title="ANTARA - Ekonomi (Finansial) [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/ekonomi-finansial.xml" htmlUrl="https://www.antaranews.com"/>
-      <outline text="ANTARA - Ekonomi (Bisnis) [valid]" title="ANTARA - Ekonomi (Bisnis) [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/ekonomi-bisnis.xml" htmlUrl="https://www.antaranews.com"/>
+      <outline text="ANTARA - Ekonomi (Bisnis) [invalid (ERR)]" title="ANTARA - Ekonomi (Bisnis) [invalid (ERR)]" type="rss" xmlUrl="https://www.antaranews.com/rss/ekonomi-bisnis.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Ekonomi (Bursa) [valid]" title="ANTARA - Ekonomi (Bursa) [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/ekonomi-bursa.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Metro [valid]" title="ANTARA - Metro [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/metro.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Metro (Kriminalitas) [valid]" title="ANTARA - Metro (Kriminalitas) [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/metro-kriminalitas.xml" htmlUrl="https://www.antaranews.com"/>
@@ -750,14 +750,14 @@
       <outline text="ANTARA - Metro (Lenggang Jakarta) [valid]" title="ANTARA - Metro (Lenggang Jakarta) [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/metro-lenggang-jakarta.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Sepakbola [valid]" title="ANTARA - Sepakbola [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/sepakbola.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Sepakbola (Liga Indonesia) [valid]" title="ANTARA - Sepakbola (Liga Indonesia) [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/sepakbola-liga-indonesia.xml" htmlUrl="https://www.antaranews.com"/>
-      <outline text="ANTARA - Sepakbola (Internasional) [valid]" title="ANTARA - Sepakbola (Internasional) [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/sepakbola-internasional.xml" htmlUrl="https://www.antaranews.com"/>
+      <outline text="ANTARA - Sepakbola (Internasional) [invalid (ERR)]" title="ANTARA - Sepakbola (Internasional) [invalid (ERR)]" type="rss" xmlUrl="https://www.antaranews.com/rss/sepakbola-internasional.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Sepakbola (Liga Inggris) [valid]" title="ANTARA - Sepakbola (Liga Inggris) [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/sepakbola-liga-inggris-premier.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Sepakbola (Liga Spanyol) [valid]" title="ANTARA - Sepakbola (Liga Spanyol) [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/sepakbola-liga-spanyol.xml" htmlUrl="https://www.antaranews.com"/>
-      <outline text="ANTARA - Sepakbola (Liga Italia) [invalid (ERR)]" title="ANTARA - Sepakbola (Liga Italia) [invalid (ERR)]" type="rss" xmlUrl="https://www.antaranews.com/rss/sepakbola-liga-italia-seri-a.xml" htmlUrl="https://www.antaranews.com"/>
+      <outline text="ANTARA - Sepakbola (Liga Italia) [valid]" title="ANTARA - Sepakbola (Liga Italia) [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/sepakbola-liga-italia-seri-a.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Liga Champions [valid]" title="ANTARA - Liga Champions [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/sepakbola-liga-champions.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Olahraga [valid]" title="ANTARA - Olahraga [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/olahraga.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Olahraga (Bulutangkis) [valid]" title="ANTARA - Olahraga (Bulutangkis) [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/olahraga-bulutangkis.xml" htmlUrl="https://www.antaranews.com"/>
-      <outline text="ANTARA - Olahraga (Bola Basket) [invalid (ERR)]" title="ANTARA - Olahraga (Bola Basket) [invalid (ERR)]" type="rss" xmlUrl="https://www.antaranews.com/rss/olahraga-bola-basket.xml" htmlUrl="https://www.antaranews.com"/>
+      <outline text="ANTARA - Olahraga (Bola Basket) [valid]" title="ANTARA - Olahraga (Bola Basket) [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/olahraga-bola-basket.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Olahraga (Tenis) [valid]" title="ANTARA - Olahraga (Tenis) [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/olahraga-tenis.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Olahraga (Balap) [valid]" title="ANTARA - Olahraga (Balap) [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/olahraga-balap.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Humaniora [valid]" title="ANTARA - Humaniora [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/humaniora.xml" htmlUrl="https://www.antaranews.com"/>
@@ -765,7 +765,7 @@
       <outline text="ANTARA - Hiburan [valid]" title="ANTARA - Hiburan [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/hiburan.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Dunia [valid]" title="ANTARA - Dunia [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/dunia.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="ANTARA - Dunia (ASEAN) [valid]" title="ANTARA - Dunia (ASEAN) [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/dunia-asean.xml" htmlUrl="https://www.antaranews.com"/>
-      <outline text="ANTARA - Tekno [valid]" title="ANTARA - Tekno [valid]" type="rss" xmlUrl="https://www.antaranews.com/rss/tekno.xml" htmlUrl="https://www.antaranews.com"/>
+      <outline text="ANTARA - Tekno [invalid (ERR)]" title="ANTARA - Tekno [invalid (ERR)]" type="rss" xmlUrl="https://www.antaranews.com/rss/tekno.xml" htmlUrl="https://www.antaranews.com"/>
       <outline text="RM.ID - Semua berita [valid]" title="RM.ID - Semua berita [valid]" type="rss" xmlUrl="https://rm.id/rss-rakyat-merdeka" htmlUrl="https://rm.id"/>
       <outline text="RM.ID - Nasional [needs verification]" title="RM.ID - Nasional [needs verification]" type="rss" xmlUrl="https://rm.id/rss-rakyat-merdeka/nasional" htmlUrl="https://rm.id"/>
       <outline text="RM.ID - Internasional [valid]" title="RM.ID - Internasional [valid]" type="rss" xmlUrl="https://rm.id/rss-rakyat-merdeka/internasional" htmlUrl="https://rm.id"/>
@@ -789,15 +789,15 @@
     </outline>
     <outline text="Netherlands (NL)" title="Netherlands (NL)">
       <outline text="NOS [valid]" title="NOS [valid]" type="rss" xmlUrl="https://feeds.nos.nl/nosnieuwsalgemeen" htmlUrl="https://feeds.nos.nl"/>
-      <outline text="NRC [valid]" title="NRC [valid]" type="rss" xmlUrl="https://www.nrc.nl/rss" htmlUrl="https://www.nrc.nl"/>
+      <outline text="NRC [invalid (ERR)]" title="NRC [invalid (ERR)]" type="rss" xmlUrl="https://www.nrc.nl/rss" htmlUrl="https://www.nrc.nl"/>
       <outline text="AD [valid]" title="AD [valid]" type="rss" xmlUrl="https://www.ad.nl/rss.xml" htmlUrl="https://www.ad.nl"/>
       <outline text="Nu [valid]" title="Nu [valid]" type="rss" xmlUrl="https://www.nu.nl/rss/algemeen" htmlUrl="https://www.nu.nl"/>
       <outline text="NPO Radio 1 [valid]" title="NPO Radio 1 [valid]" type="rss" xmlUrl="https://www.npo3fm.nl/rss/" htmlUrl="https://www.npo3fm.nl"/>
       <outline text="NOS Tech [valid]" title="NOS Tech [valid]" type="rss" xmlUrl="https://feeds.nos.nl/nosnieuwstech" htmlUrl="https://feeds.nos.nl"/>
-      <outline text="NRC [valid]" title="NRC [valid]" type="rss" xmlUrl="https://www.nrc.nl/nieuws/rss/" htmlUrl="https://www.nrc.nl"/>
+      <outline text="NRC [invalid (ERR)]" title="NRC [invalid (ERR)]" type="rss" xmlUrl="https://www.nrc.nl/nieuws/rss/" htmlUrl="https://www.nrc.nl"/>
       <outline text="Nieuwsuur [valid]" title="Nieuwsuur [valid]" type="rss" xmlUrl="https://feeds.nos.nl/nieuwsuuralgemeen" htmlUrl="https://feeds.nos.nl"/>
       <outline text="RTL [valid]" title="RTL [valid]" type="rss" xmlUrl="https://www.rtlnieuws.nl/nieuws/rss.xml" htmlUrl="https://www.rtlnieuws.nl"/>
-      <outline text="NRC [valid]" title="NRC [valid]" type="rss" xmlUrl="https://www.nrc.nl/rss/" htmlUrl="https://www.nrc.nl"/>
+      <outline text="NRC [invalid (ERR)]" title="NRC [invalid (ERR)]" type="rss" xmlUrl="https://www.nrc.nl/rss/" htmlUrl="https://www.nrc.nl"/>
       <outline text="NOS Nieuws - Binnenland [valid]" title="NOS Nieuws - Binnenland [valid]" type="rss" xmlUrl="https://feeds.nos.nl/nosnieuwsbinnenland" htmlUrl="https://feeds.nos.nl"/>
       <outline text="NOS Nieuws - Buitenland [valid]" title="NOS Nieuws - Buitenland [valid]" type="rss" xmlUrl="https://feeds.nos.nl/nosnieuwsbuitenland" htmlUrl="https://feeds.nos.nl"/>
       <outline text="NOS Nieuws - Politiek [valid]" title="NOS Nieuws - Politiek [valid]" type="rss" xmlUrl="https://feeds.nos.nl/nosnieuwspolitiek" htmlUrl="https://feeds.nos.nl"/>
@@ -813,7 +813,7 @@
       <outline text="NOS Sport - Formule 1 [valid]" title="NOS Sport - Formule 1 [valid]" type="rss" xmlUrl="https://feeds.nos.nl/nossportformule1" htmlUrl="https://feeds.nos.nl"/>
       <outline text="NOS op 3 [valid]" title="NOS op 3 [valid]" type="rss" xmlUrl="https://feeds.nos.nl/nosop3" htmlUrl="https://feeds.nos.nl"/>
       <outline text="NOS Jeugdjournaal [valid]" title="NOS Jeugdjournaal [valid]" type="rss" xmlUrl="https://feeds.nos.nl/jeugdjournaal" htmlUrl="https://feeds.nos.nl"/>
-      <outline text="De Telegraaf [needs verification]" title="De Telegraaf [needs verification]" type="rss" xmlUrl="https://www.telegraaf.nl/rss" htmlUrl="https://www.telegraaf.nl"/>
+      <outline text="De Telegraaf [invalid]" title="De Telegraaf [invalid]" type="rss" xmlUrl="https://www.telegraaf.nl/rss" htmlUrl="https://www.telegraaf.nl"/>
       <outline text="de Volkskrant [valid]" title="de Volkskrant [valid]" type="rss" xmlUrl="https://www.volkskrant.nl/voorpagina/rss.xml" htmlUrl="https://www.volkskrant.nl"/>
       <outline text="Trouw [valid]" title="Trouw [valid]" type="rss" xmlUrl="https://www.trouw.nl/voorpagina/rss.xml" htmlUrl="https://www.trouw.nl"/>
       <outline text="Het Parool [valid]" title="Het Parool [valid]" type="rss" xmlUrl="https://www.parool.nl/voorpagina/rss.xml" htmlUrl="https://www.parool.nl"/>
@@ -823,10 +823,10 @@
       <outline text="Telegraaf (Financieel) [needs verification]" title="Telegraaf (Financieel) [needs verification]" type="rss" xmlUrl="https://www.telegraaf.nl/rss/financieel" htmlUrl="https://www.telegraaf.nl"/>
       <outline text="RTL Z (Business) [invalid]" title="RTL Z (Business) [invalid]" type="rss" xmlUrl="https://www.rtlnieuws.nl/economie/rss.xml" htmlUrl="https://www.rtlnieuws.nl"/>
       <outline text="Nu.nl [valid]" title="Nu.nl [valid]" type="rss" xmlUrl="https://www.nu.nl/rss/Algemeen" htmlUrl="https://www.nu.nl"/>
-      <outline text="NU.nl Binnenland [needs verification]" title="NU.nl Binnenland [needs verification]" type="rss" xmlUrl="https://www.nu.nl/rss/Binnenland" htmlUrl="https://www.nu.nl"/>
-      <outline text="NU.nl Buitenland [needs verification]" title="NU.nl Buitenland [needs verification]" type="rss" xmlUrl="https://www.nu.nl/rss/Buitenland" htmlUrl="https://www.nu.nl"/>
-      <outline text="NU.nl Politiek [needs verification]" title="NU.nl Politiek [needs verification]" type="rss" xmlUrl="https://www.nu.nl/rss/Politiek" htmlUrl="https://www.nu.nl"/>
-      <outline text="NU.nl Sport [needs verification]" title="NU.nl Sport [needs verification]" type="rss" xmlUrl="https://www.nu.nl/rss/Sport" htmlUrl="https://www.nu.nl"/>
+      <outline text="NU.nl Binnenland [valid]" title="NU.nl Binnenland [valid]" type="rss" xmlUrl="https://www.nu.nl/rss/Binnenland" htmlUrl="https://www.nu.nl"/>
+      <outline text="NU.nl Buitenland [valid]" title="NU.nl Buitenland [valid]" type="rss" xmlUrl="https://www.nu.nl/rss/Buitenland" htmlUrl="https://www.nu.nl"/>
+      <outline text="NU.nl Politiek [valid]" title="NU.nl Politiek [valid]" type="rss" xmlUrl="https://www.nu.nl/rss/Politiek" htmlUrl="https://www.nu.nl"/>
+      <outline text="NU.nl Sport [valid]" title="NU.nl Sport [valid]" type="rss" xmlUrl="https://www.nu.nl/rss/Sport" htmlUrl="https://www.nu.nl"/>
       <outline text="Tweakers [needs verification]" title="Tweakers [needs verification]" type="rss" xmlUrl="https://tweakers.net/feeds/nieuws.xml" htmlUrl="https://tweakers.net"/>
       <outline text="NU.nl Economie (Portal Economy) [valid]" title="NU.nl Economie (Portal Economy) [valid]" type="rss" xmlUrl="https://www.nu.nl/rss/Economie" htmlUrl="https://www.nu.nl"/>
       <outline text="RTL Nieuws (General Breaking) [valid]" title="RTL Nieuws (General Breaking) [valid]" type="rss" xmlUrl="https://www.rtlnieuws.nl/rss.xml" htmlUrl="https://www.rtlnieuws.nl"/>
@@ -834,67 +834,67 @@
       <outline text="IEX.nl (Stocks/Investments) [needs verification]" title="IEX.nl (Stocks/Investments) [needs verification]" type="rss" xmlUrl="https://www.iex.nl/rss/nieuws.xml" htmlUrl="https://www.iex.nl"/>
       <outline text="De Correspondent (In-Depth Analysis) [needs verification]" title="De Correspondent (In-Depth Analysis) [needs verification]" type="rss" xmlUrl="https://decorrespondent.nl/feed" htmlUrl="https://decorrespondent.nl"/>
       <outline text="AG Connect (IT/Industry Trends) [needs verification]" title="AG Connect (IT/Industry Trends) [needs verification]" type="rss" xmlUrl="https://www.agconnect.nl/rss" htmlUrl="https://www.agconnect.nl"/>
-      <outline text="Omroep Brabant [needs verification]" title="Omroep Brabant [needs verification]" type="rss" xmlUrl="https://www.omroepbrabant.nl/rss" htmlUrl="https://www.omroepbrabant.nl"/>
-      <outline text="Oost - Index [needs verification]" title="Oost - Index [needs verification]" type="rss" xmlUrl="https://www.oost.nl/rss/index.xml" htmlUrl="https://www.oost.nl"/>
-      <outline text="Rijnmond - Index [needs verification]" title="Rijnmond - Index [needs verification]" type="rss" xmlUrl="https://www.rijnmond.nl/rss/index.xml" htmlUrl="https://www.rijnmond.nl"/>
-      <outline text="Omroep West - Index [needs verification]" title="Omroep West - Index [needs verification]" type="rss" xmlUrl="https://www.omroepwest.nl/rss/index.xml" htmlUrl="https://www.omroepwest.nl"/>
-      <outline text="Omroep West - Den Haag [needs verification]" title="Omroep West - Den Haag [needs verification]" type="rss" xmlUrl="https://www.omroepwest.nl/rss/denhaag.xml" htmlUrl="https://www.omroepwest.nl"/>
-      <outline text="Omroep West - Sport [needs verification]" title="Omroep West - Sport [needs verification]" type="rss" xmlUrl="https://www.omroepwest.nl/rss/sport.xml" htmlUrl="https://www.omroepwest.nl"/>
-      <outline text="RTV Utrecht - Nieuws [needs verification]" title="RTV Utrecht - Nieuws [needs verification]" type="rss" xmlUrl="https://www.rtvutrecht.nl/rss/nieuws.xml" htmlUrl="https://www.rtvutrecht.nl"/>
-      <outline text="GLD - Index [needs verification]" title="GLD - Index [needs verification]" type="rss" xmlUrl="https://www.gld.nl/rss/index.xml" htmlUrl="https://www.gld.nl"/>
-      <outline text="GLD - Arnhem [needs verification]" title="GLD - Arnhem [needs verification]" type="rss" xmlUrl="https://www.gld.nl/rss/arnhem.xml" htmlUrl="https://www.gld.nl"/>
-      <outline text="GLD - Nijmegen [needs verification]" title="GLD - Nijmegen [needs verification]" type="rss" xmlUrl="https://www.gld.nl/rss/nijmegen.xml" htmlUrl="https://www.gld.nl"/>
-      <outline text="GLD - Achterhoek [needs verification]" title="GLD - Achterhoek [needs verification]" type="rss" xmlUrl="https://www.gld.nl/rss/achterhoek.xml" htmlUrl="https://www.gld.nl"/>
-      <outline text="GLD - Economie [needs verification]" title="GLD - Economie [needs verification]" type="rss" xmlUrl="https://www.gld.nl/rss/economie.xml" htmlUrl="https://www.gld.nl"/>
-      <outline text="RTV Drenthe - Home [needs verification]" title="RTV Drenthe - Home [needs verification]" type="rss" xmlUrl="https://www.rtvdrenthe.nl/rss/home" htmlUrl="https://www.rtvdrenthe.nl"/>
-      <outline text="RTV Noord - Index [needs verification]" title="RTV Noord - Index [needs verification]" type="rss" xmlUrl="https://www.rtvnoord.nl/rss/index.xml" htmlUrl="https://www.rtvnoord.nl"/>
-      <outline text="L1 Nieuws - Home [needs verification]" title="L1 Nieuws - Home [needs verification]" type="rss" xmlUrl="https://www.l1nieuws.nl/rss/home" htmlUrl="https://www.l1nieuws.nl"/>
-      <outline text="Omroep Zeeland - Index [needs verification]" title="Omroep Zeeland - Index [needs verification]" type="rss" xmlUrl="https://www.omroepzeeland.nl/rss/index.xml" htmlUrl="https://www.omroepzeeland.nl"/>
+      <outline text="Omroep Brabant [valid]" title="Omroep Brabant [valid]" type="rss" xmlUrl="https://www.omroepbrabant.nl/rss" htmlUrl="https://www.omroepbrabant.nl"/>
+      <outline text="Oost - Index [valid]" title="Oost - Index [valid]" type="rss" xmlUrl="https://www.oost.nl/rss/index.xml" htmlUrl="https://www.oost.nl"/>
+      <outline text="Rijnmond - Index [valid]" title="Rijnmond - Index [valid]" type="rss" xmlUrl="https://www.rijnmond.nl/rss/index.xml" htmlUrl="https://www.rijnmond.nl"/>
+      <outline text="Omroep West - Index [valid]" title="Omroep West - Index [valid]" type="rss" xmlUrl="https://www.omroepwest.nl/rss/index.xml" htmlUrl="https://www.omroepwest.nl"/>
+      <outline text="Omroep West - Den Haag [valid]" title="Omroep West - Den Haag [valid]" type="rss" xmlUrl="https://www.omroepwest.nl/rss/denhaag.xml" htmlUrl="https://www.omroepwest.nl"/>
+      <outline text="Omroep West - Sport [valid]" title="Omroep West - Sport [valid]" type="rss" xmlUrl="https://www.omroepwest.nl/rss/sport.xml" htmlUrl="https://www.omroepwest.nl"/>
+      <outline text="RTV Utrecht - Nieuws [valid]" title="RTV Utrecht - Nieuws [valid]" type="rss" xmlUrl="https://www.rtvutrecht.nl/rss/nieuws.xml" htmlUrl="https://www.rtvutrecht.nl"/>
+      <outline text="GLD - Index [valid]" title="GLD - Index [valid]" type="rss" xmlUrl="https://www.gld.nl/rss/index.xml" htmlUrl="https://www.gld.nl"/>
+      <outline text="GLD - Arnhem [valid]" title="GLD - Arnhem [valid]" type="rss" xmlUrl="https://www.gld.nl/rss/arnhem.xml" htmlUrl="https://www.gld.nl"/>
+      <outline text="GLD - Nijmegen [valid]" title="GLD - Nijmegen [valid]" type="rss" xmlUrl="https://www.gld.nl/rss/nijmegen.xml" htmlUrl="https://www.gld.nl"/>
+      <outline text="GLD - Achterhoek [valid]" title="GLD - Achterhoek [valid]" type="rss" xmlUrl="https://www.gld.nl/rss/achterhoek.xml" htmlUrl="https://www.gld.nl"/>
+      <outline text="GLD - Economie [valid]" title="GLD - Economie [valid]" type="rss" xmlUrl="https://www.gld.nl/rss/economie.xml" htmlUrl="https://www.gld.nl"/>
+      <outline text="RTV Drenthe - Home [valid]" title="RTV Drenthe - Home [valid]" type="rss" xmlUrl="https://www.rtvdrenthe.nl/rss/home" htmlUrl="https://www.rtvdrenthe.nl"/>
+      <outline text="RTV Noord - Index [valid]" title="RTV Noord - Index [valid]" type="rss" xmlUrl="https://www.rtvnoord.nl/rss/index.xml" htmlUrl="https://www.rtvnoord.nl"/>
+      <outline text="L1 Nieuws - Home [valid]" title="L1 Nieuws - Home [valid]" type="rss" xmlUrl="https://www.l1nieuws.nl/rss/home" htmlUrl="https://www.l1nieuws.nl"/>
+      <outline text="Omroep Zeeland - Index [valid]" title="Omroep Zeeland - Index [valid]" type="rss" xmlUrl="https://www.omroepzeeland.nl/rss/index.xml" htmlUrl="https://www.omroepzeeland.nl"/>
       <outline text="Oost - Binnenland [valid]" title="Oost - Binnenland [valid]" type="rss" xmlUrl="https://www.oost.nl/rss/binnenland.xml" htmlUrl="https://www.oost.nl"/>
       <outline text="Oost - Overijssel [valid]" title="Oost - Overijssel [valid]" type="rss" xmlUrl="https://www.oost.nl/rss/overijssel.xml" htmlUrl="https://www.oost.nl"/>
-      <outline text="Oost - Sport [needs verification]" title="Oost - Sport [needs verification]" type="rss" xmlUrl="https://www.oost.nl/rss/sport.xml" htmlUrl="https://www.oost.nl"/>
+      <outline text="Oost - Sport [valid]" title="Oost - Sport [valid]" type="rss" xmlUrl="https://www.oost.nl/rss/sport.xml" htmlUrl="https://www.oost.nl"/>
       <outline text="RTV Noord - Groningen [valid]" title="RTV Noord - Groningen [valid]" type="rss" xmlUrl="https://www.rtvnoord.nl/rss/groningen.xml" htmlUrl="https://www.rtvnoord.nl"/>
-      <outline text="RTV Noord - Sport [needs verification]" title="RTV Noord - Sport [needs verification]" type="rss" xmlUrl="https://www.rtvnoord.nl/rss/sport.xml" htmlUrl="https://www.rtvnoord.nl"/>
+      <outline text="RTV Noord - Sport [valid]" title="RTV Noord - Sport [valid]" type="rss" xmlUrl="https://www.rtvnoord.nl/rss/sport.xml" htmlUrl="https://www.rtvnoord.nl"/>
       <outline text="L1 Nieuws - Limburg [valid]" title="L1 Nieuws - Limburg [valid]" type="rss" xmlUrl="https://www.l1nieuws.nl/rss/limburg" htmlUrl="https://www.l1nieuws.nl"/>
       <outline text="Omroep Zeeland - Nieuws [valid]" title="Omroep Zeeland - Nieuws [valid]" type="rss" xmlUrl="https://www.omroepzeeland.nl/rss/nieuws.xml" htmlUrl="https://www.omroepzeeland.nl"/>
       <outline text="RTV Utrecht - Sport [valid]" title="RTV Utrecht - Sport [valid]" type="rss" xmlUrl="https://www.rtvutrecht.nl/rss/sport.xml" htmlUrl="https://www.rtvutrecht.nl"/>
       <outline text="RTV Utrecht - Utrecht Stad [valid]" title="RTV Utrecht - Utrecht Stad [valid]" type="rss" xmlUrl="https://www.rtvutrecht.nl/rss/utrecht-stad.xml" htmlUrl="https://www.rtvutrecht.nl"/>
-      <outline text="Rijnmond - Rotterdam [needs verification]" title="Rijnmond - Rotterdam [needs verification]" type="rss" xmlUrl="https://www.rijnmond.nl/rss/rotterdam.xml" htmlUrl="https://www.rijnmond.nl"/>
+      <outline text="Rijnmond - Rotterdam [valid]" title="Rijnmond - Rotterdam [valid]" type="rss" xmlUrl="https://www.rijnmond.nl/rss/rotterdam.xml" htmlUrl="https://www.rijnmond.nl"/>
       <outline text="RTV Drenthe - Nieuws [valid]" title="RTV Drenthe - Nieuws [valid]" type="rss" xmlUrl="https://www.rtvdrenthe.nl/rss/nieuws" htmlUrl="https://www.rtvdrenthe.nl"/>
-      <outline text="BNNVARA [needs verification]" title="BNNVARA [needs verification]" type="rss" xmlUrl="https://www.bnnvara.nl/api/rss/bnnvara" htmlUrl="https://www.bnnvara.nl"/>
-      <outline text="Joop [needs verification]" title="Joop [needs verification]" type="rss" xmlUrl="https://www.bnnvara.nl/api/rss/joop" htmlUrl="https://www.bnnvara.nl"/>
-      <outline text="Zembla [needs verification]" title="Zembla [needs verification]" type="rss" xmlUrl="https://www.bnnvara.nl/api/rss/zembla" htmlUrl="https://www.bnnvara.nl"/>
-      <outline text="Omrop Fryslan - Nieuws RSS [needs verification]" title="Omrop Fryslan - Nieuws RSS [needs verification]" type="rss" xmlUrl="https://www.omropfryslan.nl/rss/nieuws" htmlUrl="https://www.omropfryslan.nl"/>
-      <outline text="Sleutelstad [needs verification]" title="Sleutelstad [needs verification]" type="rss" xmlUrl="https://sleutelstad.nl/feed/" htmlUrl="https://sleutelstad.nl"/>
-      <outline text="Unity.NU [needs verification]" title="Unity.NU [needs verification]" type="rss" xmlUrl="https://unity.nu/feed/" htmlUrl="https://unity.nu"/>
-      <outline text="Omroep Delft [needs verification]" title="Omroep Delft [needs verification]" type="rss" xmlUrl="https://omroepdelft.nl/feed/" htmlUrl="https://omroepdelft.nl"/>
-      <outline text="Open Rotterdam [needs verification]" title="Open Rotterdam [needs verification]" type="rss" xmlUrl="https://openrotterdam.nl/feed/" htmlUrl="https://openrotterdam.nl"/>
-      <outline text="WEEFF [needs verification]" title="WEEFF [needs verification]" type="rss" xmlUrl="https://www.weeff.nl/feed/" htmlUrl="https://www.weeff.nl"/>
-      <outline text="Omroep Tilburg [needs verification]" title="Omroep Tilburg [needs verification]" type="rss" xmlUrl="https://www.omroeptilburg.nl/feed/" htmlUrl="https://www.omroeptilburg.nl"/>
-      <outline text="Omroep Almere [needs verification]" title="Omroep Almere [needs verification]" type="rss" xmlUrl="https://www.omroepalmere.nl/feed/" htmlUrl="https://www.omroepalmere.nl"/>
-      <outline text="LC [needs verification]" title="LC [needs verification]" type="rss" xmlUrl="https://lc.nl/api/feed/rss" htmlUrl="https://lc.nl"/>
-      <outline text="DVHN [needs verification]" title="DVHN [needs verification]" type="rss" xmlUrl="https://dvhn.nl/api/feed/rss" htmlUrl="https://dvhn.nl"/>
-      <outline text="L1 Nieuws - Index [needs verification]" title="L1 Nieuws - Index [needs verification]" type="rss" xmlUrl="https://www.l1nieuws.nl/rss/index.xml" htmlUrl="https://www.l1nieuws.nl"/>
-      <outline text="L1 Nieuws - Sport [needs verification]" title="L1 Nieuws - Sport [needs verification]" type="rss" xmlUrl="https://www.l1nieuws.nl/rss/sport.xml" htmlUrl="https://www.l1nieuws.nl"/>
-      <outline text="RTV Focus Zwolle [needs verification]" title="RTV Focus Zwolle [needs verification]" type="rss" xmlUrl="https://www.rtvfocuszwolle.nl/feed/" htmlUrl="https://www.rtvfocuszwolle.nl"/>
-      <outline text="Salland1 [needs verification]" title="Salland1 [needs verification]" type="rss" xmlUrl="https://www.salland1.nl/feed/" htmlUrl="https://www.salland1.nl"/>
-      <outline text="RTV NOF [needs verification]" title="RTV NOF [needs verification]" type="rss" xmlUrl="https://www.rtvnof.nl/feed/" htmlUrl="https://www.rtvnof.nl"/>
-      <outline text="1Zwolle [needs verification]" title="1Zwolle [needs verification]" type="rss" xmlUrl="https://1zwolle.nl/feed" htmlUrl="https://1zwolle.nl"/>
-      <outline text="Dordt Centraal [needs verification]" title="Dordt Centraal [needs verification]" type="rss" xmlUrl="https://dordtcentraal.nl/feed/" htmlUrl="https://dordtcentraal.nl"/>
-      <outline text="RTV Papendrecht [needs verification]" title="RTV Papendrecht [needs verification]" type="rss" xmlUrl="https://www.rtvpapendrecht.nl/feed/" htmlUrl="https://www.rtvpapendrecht.nl"/>
-      <outline text="De Westkrant [needs verification]" title="De Westkrant [needs verification]" type="rss" xmlUrl="https://www.dewestkrant.nl/feed/" htmlUrl="https://www.dewestkrant.nl"/>
-      <outline text="PZC - Nieuws [needs verification]" title="PZC - Nieuws [needs verification]" type="rss" xmlUrl="https://www.pzc.nl/nieuws/rss.xml" htmlUrl="https://www.pzc.nl"/>
-      <outline text="Tubantia - Nieuws [needs verification]" title="Tubantia - Nieuws [needs verification]" type="rss" xmlUrl="https://www.tubantia.nl/nieuws/rss.xml" htmlUrl="https://www.tubantia.nl"/>
-      <outline text="De Stentor - Nieuws [needs verification]" title="De Stentor - Nieuws [needs verification]" type="rss" xmlUrl="https://www.destentor.nl/nieuws/rss.xml" htmlUrl="https://www.destentor.nl"/>
-      <outline text="De Gelderlander - Nieuws [needs verification]" title="De Gelderlander - Nieuws [needs verification]" type="rss" xmlUrl="https://www.gelderlander.nl/nieuws/rss.xml" htmlUrl="https://www.gelderlander.nl"/>
-      <outline text="Brabants Dagblad - Nieuws [needs verification]" title="Brabants Dagblad - Nieuws [needs verification]" type="rss" xmlUrl="https://www.bd.nl/nieuws/rss.xml" htmlUrl="https://www.bd.nl"/>
-      <outline text="Eindhovens Dagblad - Nieuws [needs verification]" title="Eindhovens Dagblad - Nieuws [needs verification]" type="rss" xmlUrl="https://www.ed.nl/nieuws/rss.xml" htmlUrl="https://www.ed.nl"/>
-      <outline text="BN DeStem - Nieuws [needs verification]" title="BN DeStem - Nieuws [needs verification]" type="rss" xmlUrl="https://www.bndestem.nl/nieuws/rss.xml" htmlUrl="https://www.bndestem.nl"/>
+      <outline text="BNNVARA [valid]" title="BNNVARA [valid]" type="rss" xmlUrl="https://www.bnnvara.nl/api/rss/bnnvara" htmlUrl="https://www.bnnvara.nl"/>
+      <outline text="Joop [valid]" title="Joop [valid]" type="rss" xmlUrl="https://www.bnnvara.nl/api/rss/joop" htmlUrl="https://www.bnnvara.nl"/>
+      <outline text="Zembla [valid]" title="Zembla [valid]" type="rss" xmlUrl="https://www.bnnvara.nl/api/rss/zembla" htmlUrl="https://www.bnnvara.nl"/>
+      <outline text="Omrop Fryslan - Nieuws RSS [valid]" title="Omrop Fryslan - Nieuws RSS [valid]" type="rss" xmlUrl="https://www.omropfryslan.nl/rss/nieuws" htmlUrl="https://www.omropfryslan.nl"/>
+      <outline text="Sleutelstad [valid]" title="Sleutelstad [valid]" type="rss" xmlUrl="https://sleutelstad.nl/feed/" htmlUrl="https://sleutelstad.nl"/>
+      <outline text="Unity.NU [valid]" title="Unity.NU [valid]" type="rss" xmlUrl="https://unity.nu/feed/" htmlUrl="https://unity.nu"/>
+      <outline text="Omroep Delft [invalid (ERR)]" title="Omroep Delft [invalid (ERR)]" type="rss" xmlUrl="https://omroepdelft.nl/feed/" htmlUrl="https://omroepdelft.nl"/>
+      <outline text="Open Rotterdam [valid]" title="Open Rotterdam [valid]" type="rss" xmlUrl="https://openrotterdam.nl/feed/" htmlUrl="https://openrotterdam.nl"/>
+      <outline text="WEEFF [valid]" title="WEEFF [valid]" type="rss" xmlUrl="https://www.weeff.nl/feed/" htmlUrl="https://www.weeff.nl"/>
+      <outline text="Omroep Tilburg [valid]" title="Omroep Tilburg [valid]" type="rss" xmlUrl="https://www.omroeptilburg.nl/feed/" htmlUrl="https://www.omroeptilburg.nl"/>
+      <outline text="Omroep Almere [valid]" title="Omroep Almere [valid]" type="rss" xmlUrl="https://www.omroepalmere.nl/feed/" htmlUrl="https://www.omroepalmere.nl"/>
+      <outline text="LC [valid]" title="LC [valid]" type="rss" xmlUrl="https://lc.nl/api/feed/rss" htmlUrl="https://lc.nl"/>
+      <outline text="DVHN [valid]" title="DVHN [valid]" type="rss" xmlUrl="https://dvhn.nl/api/feed/rss" htmlUrl="https://dvhn.nl"/>
+      <outline text="L1 Nieuws - Index [valid]" title="L1 Nieuws - Index [valid]" type="rss" xmlUrl="https://www.l1nieuws.nl/rss/index.xml" htmlUrl="https://www.l1nieuws.nl"/>
+      <outline text="L1 Nieuws - Sport [valid]" title="L1 Nieuws - Sport [valid]" type="rss" xmlUrl="https://www.l1nieuws.nl/rss/sport.xml" htmlUrl="https://www.l1nieuws.nl"/>
+      <outline text="RTV Focus Zwolle [valid]" title="RTV Focus Zwolle [valid]" type="rss" xmlUrl="https://www.rtvfocuszwolle.nl/feed/" htmlUrl="https://www.rtvfocuszwolle.nl"/>
+      <outline text="Salland1 [valid]" title="Salland1 [valid]" type="rss" xmlUrl="https://www.salland1.nl/feed/" htmlUrl="https://www.salland1.nl"/>
+      <outline text="RTV NOF [valid]" title="RTV NOF [valid]" type="rss" xmlUrl="https://www.rtvnof.nl/feed/" htmlUrl="https://www.rtvnof.nl"/>
+      <outline text="1Zwolle [valid]" title="1Zwolle [valid]" type="rss" xmlUrl="https://1zwolle.nl/feed" htmlUrl="https://1zwolle.nl"/>
+      <outline text="Dordt Centraal [valid]" title="Dordt Centraal [valid]" type="rss" xmlUrl="https://dordtcentraal.nl/feed/" htmlUrl="https://dordtcentraal.nl"/>
+      <outline text="RTV Papendrecht [valid]" title="RTV Papendrecht [valid]" type="rss" xmlUrl="https://www.rtvpapendrecht.nl/feed/" htmlUrl="https://www.rtvpapendrecht.nl"/>
+      <outline text="De Westkrant [valid]" title="De Westkrant [valid]" type="rss" xmlUrl="https://www.dewestkrant.nl/feed/" htmlUrl="https://www.dewestkrant.nl"/>
+      <outline text="PZC - Nieuws [valid]" title="PZC - Nieuws [valid]" type="rss" xmlUrl="https://www.pzc.nl/nieuws/rss.xml" htmlUrl="https://www.pzc.nl"/>
+      <outline text="Tubantia - Nieuws [valid]" title="Tubantia - Nieuws [valid]" type="rss" xmlUrl="https://www.tubantia.nl/nieuws/rss.xml" htmlUrl="https://www.tubantia.nl"/>
+      <outline text="De Stentor - Nieuws [valid]" title="De Stentor - Nieuws [valid]" type="rss" xmlUrl="https://www.destentor.nl/nieuws/rss.xml" htmlUrl="https://www.destentor.nl"/>
+      <outline text="De Gelderlander - Nieuws [valid]" title="De Gelderlander - Nieuws [valid]" type="rss" xmlUrl="https://www.gelderlander.nl/nieuws/rss.xml" htmlUrl="https://www.gelderlander.nl"/>
+      <outline text="Brabants Dagblad - Nieuws [valid]" title="Brabants Dagblad - Nieuws [valid]" type="rss" xmlUrl="https://www.bd.nl/nieuws/rss.xml" htmlUrl="https://www.bd.nl"/>
+      <outline text="Eindhovens Dagblad - Nieuws [valid]" title="Eindhovens Dagblad - Nieuws [valid]" type="rss" xmlUrl="https://www.ed.nl/nieuws/rss.xml" htmlUrl="https://www.ed.nl"/>
+      <outline text="BN DeStem - Nieuws [valid]" title="BN DeStem - Nieuws [valid]" type="rss" xmlUrl="https://www.bndestem.nl/nieuws/rss.xml" htmlUrl="https://www.bndestem.nl"/>
     </outline>
     <outline text="Switzerland (CH)" title="Switzerland (CH)">
       <outline text="Le Temps Economy [valid]" title="Le Temps Economy [valid]" type="rss" xmlUrl="https://www.letemps.ch/economie.rss" htmlUrl="https://www.letemps.ch"/>
-      <outline text="NZZ [needs verification]" title="NZZ [needs verification]" type="rss" xmlUrl="https://www.nzz.ch/startseite.rss" htmlUrl="https://www.nzz.ch"/>
-      <outline text="NDR [valid]" title="NDR [valid]" type="rss" xmlUrl="https://www.ndr.ch/rss/" htmlUrl="https://www.ndr.ch"/>
+      <outline text="NZZ [valid]" title="NZZ [valid]" type="rss" xmlUrl="https://www.nzz.ch/startseite.rss" htmlUrl="https://www.nzz.ch"/>
+      <outline text="NDR [needs verification]" title="NDR [needs verification]" type="rss" xmlUrl="https://www.ndr.ch/rss/" htmlUrl="https://www.ndr.ch"/>
       <outline text="SRF News (Latest) [valid]" title="SRF News (Latest) [valid]" type="rss" xmlUrl="https://www.srf.ch/news/bnf/rss/19032223" htmlUrl="https://www.srf.ch"/>
       <outline text="SRF News (Switzerland) [valid]" title="SRF News (Switzerland) [valid]" type="rss" xmlUrl="https://www.srf.ch/news/bnf/rss/1890" htmlUrl="https://www.srf.ch"/>
       <outline text="SRF News (International) [valid]" title="SRF News (International) [valid]" type="rss" xmlUrl="https://www.srf.ch/news/bnf/rss/1922" htmlUrl="https://www.srf.ch"/>
@@ -918,7 +918,7 @@
       <outline text="Le News (EN) [valid]" title="Le News (EN) [valid]" type="rss" xmlUrl="https://lenews.ch/feed" htmlUrl="https://lenews.ch"/>
       <outline text="The Local Switzerland (EN) [valid]" title="The Local Switzerland (EN) [valid]" type="rss" xmlUrl="https://feeds.thelocal.com/rss/ch" htmlUrl="https://feeds.thelocal.com"/>
       <outline text="NZZ (Latest) [valid]" title="NZZ (Latest) [valid]" type="rss" xmlUrl="https://www.nzz.ch/recent.rss" htmlUrl="https://www.nzz.ch"/>
-      <outline text="Tages-Anzeiger [needs verification]" title="Tages-Anzeiger [needs verification]" type="rss" xmlUrl="https://partner-feeds.publishing.tamedia.ch/rss/tagesanzeiger/" htmlUrl="https://partner-feeds.publishing.tamedia.ch"/>
+      <outline text="Tages-Anzeiger [valid]" title="Tages-Anzeiger [valid]" type="rss" xmlUrl="https://partner-feeds.publishing.tamedia.ch/rss/tagesanzeiger/" htmlUrl="https://partner-feeds.publishing.tamedia.ch"/>
       <outline text="Swissinfo (Business - EN) [needs verification]" title="Swissinfo (Business - EN) [needs verification]" type="rss" xmlUrl="https://www.swissinfo.ch/eng/business/feed" htmlUrl="https://www.swissinfo.ch"/>
       <outline text="Finews.ch (Swiss Finance) [valid]" title="Finews.ch (Swiss Finance) [valid]" type="rss" xmlUrl="https://www.finews.ch/news/finanzplatz?format=feed&amp;type=rss" htmlUrl="https://www.finews.ch"/>
       <outline text="20 Minuten (Wirtschaft) [needs verification]" title="20 Minuten (Wirtschaft) [needs verification]" type="rss" xmlUrl="https://www.20min.ch/rss/wirtschaft" htmlUrl="https://www.20min.ch"/>
@@ -938,26 +938,26 @@
       <outline text="Berner Zeitung (Bern Major Daily - German) [needs verification]" title="Berner Zeitung (Bern Major Daily - German) [needs verification]" type="rss" xmlUrl="https://www.bernerzeitung.ch/rss.xml" htmlUrl="https://www.bernerzeitung.ch"/>
       <outline text="Basler Zeitung (Basel Major Daily - German) [needs verification]" title="Basler Zeitung (Basel Major Daily - German) [needs verification]" type="rss" xmlUrl="https://www.bazonline.ch/rss.xml" htmlUrl="https://www.bazonline.ch"/>
       <outline text="Le Matin [needs verification]" title="Le Matin [needs verification]" type="rss" xmlUrl="https://www.lematin.ch/rss.xml" htmlUrl="https://www.lematin.ch"/>
-      <outline text="Blue News (German) [needs verification]" title="Blue News (German) [needs verification]" type="rss" xmlUrl="https://www.bluewin.ch/de/feed.xml" htmlUrl="https://www.bluewin.ch"/>
-      <outline text="Blue News (French) [needs verification]" title="Blue News (French) [needs verification]" type="rss" xmlUrl="https://www.bluewin.ch/fr/feed.xml" htmlUrl="https://www.bluewin.ch"/>
-      <outline text="Blue News (Italian) [needs verification]" title="Blue News (Italian) [needs verification]" type="rss" xmlUrl="https://www.bluewin.ch/it/feed.xml" htmlUrl="https://www.bluewin.ch"/>
-      <outline text="Blue News (English) [needs verification]" title="Blue News (English) [needs verification]" type="rss" xmlUrl="https://www.bluewin.ch/en/feed.xml" htmlUrl="https://www.bluewin.ch"/>
-      <outline text="Bilanz [needs verification]" title="Bilanz [needs verification]" type="rss" xmlUrl="https://www.bilanz.ch/rss.xml" htmlUrl="https://www.bilanz.ch"/>
-      <outline text="Inside Paradeplatz [needs verification]" title="Inside Paradeplatz [needs verification]" type="rss" xmlUrl="https://insideparadeplatz.ch/feed/" htmlUrl="https://insideparadeplatz.ch"/>
-      <outline text="Moneycab [needs verification]" title="Moneycab [needs verification]" type="rss" xmlUrl="https://www.moneycab.com/feed/" htmlUrl="https://www.moneycab.com"/>
-      <outline text="persoenlich.com [needs verification]" title="persoenlich.com [needs verification]" type="rss" xmlUrl="https://www.persoenlich.com/rss/news.xml" htmlUrl="https://www.persoenlich.com"/>
-      <outline text="LFM la radio [needs verification]" title="LFM la radio [needs verification]" type="rss" xmlUrl="https://www.lfm.ch/feed/" htmlUrl="https://www.lfm.ch"/>
-      <outline text="Radio Lac [needs verification]" title="Radio Lac [needs verification]" type="rss" xmlUrl="https://www.radiolac.ch/feed/" htmlUrl="https://www.radiolac.ch"/>
-      <outline text="NZZ Sport [needs verification]" title="NZZ Sport [needs verification]" type="rss" xmlUrl="https://www.nzz.ch/sport.rss" htmlUrl="https://www.nzz.ch"/>
-      <outline text="NZZ Wissenschaft [needs verification]" title="NZZ Wissenschaft [needs verification]" type="rss" xmlUrl="https://www.nzz.ch/wissenschaft.rss" htmlUrl="https://www.nzz.ch"/>
-      <outline text="NZZ Feuilleton [needs verification]" title="NZZ Feuilleton [needs verification]" type="rss" xmlUrl="https://www.nzz.ch/feuilleton.rss" htmlUrl="https://www.nzz.ch"/>
-      <outline text="Le Temps Articles [needs verification]" title="Le Temps Articles [needs verification]" type="rss" xmlUrl="https://www.letemps.ch/articles.rss" htmlUrl="https://www.letemps.ch"/>
-      <outline text="Le Temps Monde [needs verification]" title="Le Temps Monde [needs verification]" type="rss" xmlUrl="https://www.letemps.ch/monde.rss" htmlUrl="https://www.letemps.ch"/>
-      <outline text="Le Temps Société [needs verification]" title="Le Temps Société [needs verification]" type="rss" xmlUrl="https://www.letemps.ch/societe.rss" htmlUrl="https://www.letemps.ch"/>
-      <outline text="Le Temps Sport [needs verification]" title="Le Temps Sport [needs verification]" type="rss" xmlUrl="https://www.letemps.ch/sport.rss" htmlUrl="https://www.letemps.ch"/>
-      <outline text="Le Temps Culture [needs verification]" title="Le Temps Culture [needs verification]" type="rss" xmlUrl="https://www.letemps.ch/culture.rss" htmlUrl="https://www.letemps.ch"/>
-      <outline text="Le Temps Sciences [needs verification]" title="Le Temps Sciences [needs verification]" type="rss" xmlUrl="https://www.letemps.ch/sciences.rss" htmlUrl="https://www.letemps.ch"/>
-      <outline text="Le Temps Opinions [needs verification]" title="Le Temps Opinions [needs verification]" type="rss" xmlUrl="https://www.letemps.ch/opinions.rss" htmlUrl="https://www.letemps.ch"/>
+      <outline text="Blue News (German) [valid]" title="Blue News (German) [valid]" type="rss" xmlUrl="https://www.bluewin.ch/de/feed.xml" htmlUrl="https://www.bluewin.ch"/>
+      <outline text="Blue News (French) [valid]" title="Blue News (French) [valid]" type="rss" xmlUrl="https://www.bluewin.ch/fr/feed.xml" htmlUrl="https://www.bluewin.ch"/>
+      <outline text="Blue News (Italian) [valid]" title="Blue News (Italian) [valid]" type="rss" xmlUrl="https://www.bluewin.ch/it/feed.xml" htmlUrl="https://www.bluewin.ch"/>
+      <outline text="Blue News (English) [valid]" title="Blue News (English) [valid]" type="rss" xmlUrl="https://www.bluewin.ch/en/feed.xml" htmlUrl="https://www.bluewin.ch"/>
+      <outline text="Bilanz [valid]" title="Bilanz [valid]" type="rss" xmlUrl="https://www.bilanz.ch/rss.xml" htmlUrl="https://www.bilanz.ch"/>
+      <outline text="Inside Paradeplatz [valid]" title="Inside Paradeplatz [valid]" type="rss" xmlUrl="https://insideparadeplatz.ch/feed/" htmlUrl="https://insideparadeplatz.ch"/>
+      <outline text="Moneycab [valid]" title="Moneycab [valid]" type="rss" xmlUrl="https://www.moneycab.com/feed/" htmlUrl="https://www.moneycab.com"/>
+      <outline text="persoenlich.com [valid]" title="persoenlich.com [valid]" type="rss" xmlUrl="https://www.persoenlich.com/rss/news.xml" htmlUrl="https://www.persoenlich.com"/>
+      <outline text="LFM la radio [valid]" title="LFM la radio [valid]" type="rss" xmlUrl="https://www.lfm.ch/feed/" htmlUrl="https://www.lfm.ch"/>
+      <outline text="Radio Lac [valid]" title="Radio Lac [valid]" type="rss" xmlUrl="https://www.radiolac.ch/feed/" htmlUrl="https://www.radiolac.ch"/>
+      <outline text="NZZ Sport [valid]" title="NZZ Sport [valid]" type="rss" xmlUrl="https://www.nzz.ch/sport.rss" htmlUrl="https://www.nzz.ch"/>
+      <outline text="NZZ Wissenschaft [valid]" title="NZZ Wissenschaft [valid]" type="rss" xmlUrl="https://www.nzz.ch/wissenschaft.rss" htmlUrl="https://www.nzz.ch"/>
+      <outline text="NZZ Feuilleton [valid]" title="NZZ Feuilleton [valid]" type="rss" xmlUrl="https://www.nzz.ch/feuilleton.rss" htmlUrl="https://www.nzz.ch"/>
+      <outline text="Le Temps Articles [valid]" title="Le Temps Articles [valid]" type="rss" xmlUrl="https://www.letemps.ch/articles.rss" htmlUrl="https://www.letemps.ch"/>
+      <outline text="Le Temps Monde [valid]" title="Le Temps Monde [valid]" type="rss" xmlUrl="https://www.letemps.ch/monde.rss" htmlUrl="https://www.letemps.ch"/>
+      <outline text="Le Temps Société [valid]" title="Le Temps Société [valid]" type="rss" xmlUrl="https://www.letemps.ch/societe.rss" htmlUrl="https://www.letemps.ch"/>
+      <outline text="Le Temps Sport [valid]" title="Le Temps Sport [valid]" type="rss" xmlUrl="https://www.letemps.ch/sport.rss" htmlUrl="https://www.letemps.ch"/>
+      <outline text="Le Temps Culture [valid]" title="Le Temps Culture [valid]" type="rss" xmlUrl="https://www.letemps.ch/culture.rss" htmlUrl="https://www.letemps.ch"/>
+      <outline text="Le Temps Sciences [valid]" title="Le Temps Sciences [valid]" type="rss" xmlUrl="https://www.letemps.ch/sciences.rss" htmlUrl="https://www.letemps.ch"/>
+      <outline text="Le Temps Opinions [valid]" title="Le Temps Opinions [valid]" type="rss" xmlUrl="https://www.letemps.ch/opinions.rss" htmlUrl="https://www.letemps.ch"/>
       <outline text="Tribune de Geneve [needs verification]" title="Tribune de Geneve [needs verification]" type="rss" xmlUrl="https://www.tdg.ch/rss.xml" htmlUrl="https://www.tdg.ch"/>
     </outline>
     <outline text="Turkey (TR)" title="Turkey (TR)">
@@ -1045,7 +1045,7 @@
       <outline text="Akhbaar24 (General Portal) [invalid]" title="Akhbaar24 (General Portal) [invalid]" type="rss" xmlUrl="https://akhbaar24.argaam.com/rss" htmlUrl="https://akhbaar24.argaam.com"/>
       <outline text="Al Yaum (Domestic Trends) [needs verification]" title="Al Yaum (Domestic Trends) [needs verification]" type="rss" xmlUrl="https://www.alyaum.com/rss" htmlUrl="https://www.alyaum.com"/>
       <outline text="Zawya Arabic (Middle East Business) [needs verification]" title="Zawya Arabic (Middle East Business) [needs verification]" type="rss" xmlUrl="https://www.zawya.com/ar/rss" htmlUrl="https://www.zawya.com"/>
-      <outline text="Saudi Gazette [needs verification]" title="Saudi Gazette [needs verification]" type="rss" xmlUrl="https://saudigazette.com.sa/rssFeed/1" htmlUrl="https://saudigazette.com.sa"/>
+      <outline text="Saudi Gazette [valid]" title="Saudi Gazette [valid]" type="rss" xmlUrl="https://saudigazette.com.sa/rssFeed/1" htmlUrl="https://saudigazette.com.sa"/>
     </outline>
     <outline text="Taiwan (TW)" title="Taiwan (TW)">
       <outline text="Liberty Times - Business [valid]" title="Liberty Times - Business [valid]" type="rss" xmlUrl="https://news.ltn.com.tw/rss/business.xml" htmlUrl="https://news.ltn.com.tw"/>
@@ -1075,17 +1075,17 @@
       <outline text="Liberty Times 軍武 [valid]" title="Liberty Times 軍武 [valid]" type="rss" xmlUrl="https://news.ltn.com.tw/rss/def.xml" htmlUrl="https://news.ltn.com.tw"/>
       <outline text="Liberty Times 地方 [valid]" title="Liberty Times 地方 [valid]" type="rss" xmlUrl="https://news.ltn.com.tw/rss/local.xml" htmlUrl="https://news.ltn.com.tw"/>
       <outline text="Liberty Times 蒐奇 [valid]" title="Liberty Times 蒐奇 [valid]" type="rss" xmlUrl="https://news.ltn.com.tw/rss/novelty.xml" htmlUrl="https://news.ltn.com.tw"/>
-      <outline text="Taipei Times (EN) [needs verification]" title="Taipei Times (EN) [needs verification]" type="rss" xmlUrl="https://www.taipeitimes.com/xml/index.rss" htmlUrl="https://www.taipeitimes.com"/>
+      <outline text="Taipei Times (EN) [valid]" title="Taipei Times (EN) [valid]" type="rss" xmlUrl="https://www.taipeitimes.com/xml/index.rss" htmlUrl="https://www.taipeitimes.com"/>
       <outline text="The Reporter [valid]" title="The Reporter [valid]" type="rss" xmlUrl="https://www.twreporter.org/a/rss2.xml" htmlUrl="https://www.twreporter.org"/>
       <outline text="Newtalk 全部 [valid]" title="Newtalk 全部 [valid]" type="rss" xmlUrl="https://newtalk.tw/rss/all/" htmlUrl="https://newtalk.tw"/>
       <outline text="Newtalk 政治 [valid]" title="Newtalk 政治 [valid]" type="rss" xmlUrl="https://newtalk.tw/rss/category/2" htmlUrl="https://newtalk.tw"/>
       <outline text="Youth Daily News 軍聞 [valid]" title="Youth Daily News 軍聞 [valid]" type="rss" xmlUrl="https://www.ydn.com.tw/tw/Home/RSS.aspx?TID=2" htmlUrl="https://www.ydn.com.tw"/>
-      <outline text="PTS News [needs verification]" title="PTS News [needs verification]" type="rss" xmlUrl="https://news.pts.org.tw/xml/newsfeed.xml" htmlUrl="https://news.pts.org.tw"/>
-      <outline text="People News Taiwan [needs verification]" title="People News Taiwan [needs verification]" type="rss" xmlUrl="https://www.peoplenews.tw/feed" htmlUrl="https://www.peoplenews.tw"/>
+      <outline text="PTS News [valid]" title="PTS News [valid]" type="rss" xmlUrl="https://news.pts.org.tw/xml/newsfeed.xml" htmlUrl="https://news.pts.org.tw"/>
+      <outline text="People News Taiwan [valid]" title="People News Taiwan [valid]" type="rss" xmlUrl="https://www.peoplenews.tw/feed" htmlUrl="https://www.peoplenews.tw"/>
     </outline>
     <outline text="Poland (PL)" title="Poland (PL)">
       <outline text="Onet [valid]" title="Onet [valid]" type="rss" xmlUrl="https://wiadomosci.onet.pl/rss" htmlUrl="https://wiadomosci.onet.pl"/>
-      <outline text="TVN24 [invalid]" title="TVN24 [invalid]" type="rss" xmlUrl="https://tvn24.pl/tvnmeteo.xml" htmlUrl="https://tvn24.pl"/>
+      <outline text="TVN24 [needs verification]" title="TVN24 [needs verification]" type="rss" xmlUrl="https://tvn24.pl/tvnmeteo.xml" htmlUrl="https://tvn24.pl"/>
       <outline text="Fakt [valid]" title="Fakt [valid]" type="rss" xmlUrl="https://www.fakt.pl/rss/" htmlUrl="https://www.fakt.pl"/>
       <outline text="Wprost [valid]" title="Wprost [valid]" type="rss" xmlUrl="https://www.wprost.pl/rss/" htmlUrl="https://www.wprost.pl"/>
       <outline text="RMF24 (Main) [valid]" title="RMF24 (Main) [valid]" type="rss" xmlUrl="https://www.rmf24.pl/feed" htmlUrl="https://www.rmf24.pl"/>
@@ -1120,23 +1120,23 @@
       <outline text="PAP MediaRoom (Kalendarium) [valid]" title="PAP MediaRoom (Kalendarium) [valid]" type="rss" xmlUrl="https://pap-mediaroom.pl/kalendarium/rss.xml" htmlUrl="https://pap-mediaroom.pl"/>
       <outline text="Onet Wiadomości (Top Portal News) [valid]" title="Onet Wiadomości (Top Portal News) [valid]" type="rss" xmlUrl="https://wiadomosci.onet.pl/.feed" htmlUrl="https://wiadomosci.onet.pl"/>
       <outline text="TVN24 Najnowsze (TVN24 News) [valid]" title="TVN24 Najnowsze (TVN24 News) [valid]" type="rss" xmlUrl="https://tvn24.pl/najnowsze.xml" htmlUrl="https://tvn24.pl"/>
-      <outline text="TVN24 Biznes (TVN24 Business) [invalid]" title="TVN24 Biznes (TVN24 Business) [invalid]" type="rss" xmlUrl="https://tvn24.pl/biznes.xml" htmlUrl="https://tvn24.pl"/>
+      <outline text="TVN24 Biznes (TVN24 Business) [needs verification]" title="TVN24 Biznes (TVN24 Business) [needs verification]" type="rss" xmlUrl="https://tvn24.pl/biznes.xml" htmlUrl="https://tvn24.pl"/>
       <outline text="Money.pl (Polish Economy Portal #1) [valid]" title="Money.pl (Polish Economy Portal #1) [valid]" type="rss" xmlUrl="https://www.money.pl/rss/" htmlUrl="https://www.money.pl"/>
       <outline text="Bankier.pl (Finance/Investing) [valid]" title="Bankier.pl (Finance/Investing) [valid]" type="rss" xmlUrl="https://www.bankier.pl/rss/wiadomosci.xml" htmlUrl="https://www.bankier.pl"/>
       <outline text="Wprost (Politics/Current Affairs) [valid]" title="Wprost (Politics/Current Affairs) [valid]" type="rss" xmlUrl="https://www.wprost.pl/rss" htmlUrl="https://www.wprost.pl"/>
       <outline text="Rzeczpospolita (Economy/Politics) [needs verification]" title="Rzeczpospolita (Economy/Politics) [needs verification]" type="rss" xmlUrl="https://www.rp.pl/rss/all" htmlUrl="https://www.rp.pl"/>
       <outline text="Gazeta.pl (Top Portal News) [valid]" title="Gazeta.pl (Top Portal News) [valid]" type="rss" xmlUrl="https://rss.gazeta.pl/pub/rss/wiadomosci.xml" htmlUrl="https://rss.gazeta.pl"/>
-      <outline text="Interia - Wydarzenia [needs verification]" title="Interia - Wydarzenia [needs verification]" type="rss" xmlUrl="https://wydarzenia.interia.pl/feed" htmlUrl="https://wydarzenia.interia.pl"/>
-      <outline text="Interia - Biznes [needs verification]" title="Interia - Biznes [needs verification]" type="rss" xmlUrl="https://biznes.interia.pl/feed" htmlUrl="https://biznes.interia.pl"/>
-      <outline text="Interia - Sport [needs verification]" title="Interia - Sport [needs verification]" type="rss" xmlUrl="https://sport.interia.pl/feed" htmlUrl="https://sport.interia.pl"/>
-      <outline text="Business Insider Polska [needs verification]" title="Business Insider Polska [needs verification]" type="rss" xmlUrl="https://businessinsider.com.pl/.feed" htmlUrl="https://businessinsider.com.pl"/>
-      <outline text="Forsal [needs verification]" title="Forsal [needs verification]" type="rss" xmlUrl="https://forsal.pl/.feed" htmlUrl="https://forsal.pl"/>
-      <outline text="DoRzeczy [needs verification]" title="DoRzeczy [needs verification]" type="rss" xmlUrl="https://dorzeczy.pl/feed" htmlUrl="https://dorzeczy.pl"/>
+      <outline text="Interia - Wydarzenia [valid]" title="Interia - Wydarzenia [valid]" type="rss" xmlUrl="https://wydarzenia.interia.pl/feed" htmlUrl="https://wydarzenia.interia.pl"/>
+      <outline text="Interia - Biznes [valid]" title="Interia - Biznes [valid]" type="rss" xmlUrl="https://biznes.interia.pl/feed" htmlUrl="https://biznes.interia.pl"/>
+      <outline text="Interia - Sport [valid]" title="Interia - Sport [valid]" type="rss" xmlUrl="https://sport.interia.pl/feed" htmlUrl="https://sport.interia.pl"/>
+      <outline text="Business Insider Polska [valid]" title="Business Insider Polska [valid]" type="rss" xmlUrl="https://businessinsider.com.pl/.feed" htmlUrl="https://businessinsider.com.pl"/>
+      <outline text="Forsal [valid]" title="Forsal [valid]" type="rss" xmlUrl="https://forsal.pl/.feed" htmlUrl="https://forsal.pl"/>
+      <outline text="DoRzeczy [valid]" title="DoRzeczy [valid]" type="rss" xmlUrl="https://dorzeczy.pl/feed" htmlUrl="https://dorzeczy.pl"/>
       <outline text="Wiadomosci WP (Wirtualna Polska News) [valid]" title="Wiadomosci WP (Wirtualna Polska News) [valid]" type="rss" xmlUrl="https://wiadomosci.wp.pl/rss.xml" htmlUrl="https://wiadomosci.wp.pl"/>
       <outline text="Dziennik Gazeta Prawna (Business/Legal) [needs verification]" title="Dziennik Gazeta Prawna (Business/Legal) [needs verification]" type="rss" xmlUrl="https://www.gazetaprawna.pl/rss.xml" htmlUrl="https://www.gazetaprawna.pl"/>
-      <outline text="Rzeczpospolita - RSS Main [needs verification]" title="Rzeczpospolita - RSS Main [needs verification]" type="rss" xmlUrl="https://www.rp.pl/rss_main" htmlUrl="https://www.rp.pl"/>
-      <outline text="Wyborcza - Najnowsze [needs verification]" title="Wyborcza - Najnowsze [needs verification]" type="rss" xmlUrl="https://wyborcza.pl/pub/rss/najnowsze_wyborcza.xml" htmlUrl="https://wyborcza.pl"/>
-      <outline text="Wiadomosci WP - Aktualnosci [needs verification]" title="Wiadomosci WP - Aktualnosci [needs verification]" type="rss" xmlUrl="https://wiadomosci.wp.pl/rss/aktualnosci" htmlUrl="https://wiadomosci.wp.pl"/>
+      <outline text="Rzeczpospolita - RSS Main [valid]" title="Rzeczpospolita - RSS Main [valid]" type="rss" xmlUrl="https://www.rp.pl/rss_main" htmlUrl="https://www.rp.pl"/>
+      <outline text="Wyborcza - Najnowsze [valid]" title="Wyborcza - Najnowsze [valid]" type="rss" xmlUrl="https://wyborcza.pl/pub/rss/najnowsze_wyborcza.xml" htmlUrl="https://wyborcza.pl"/>
+      <outline text="Wiadomosci WP - Aktualnosci [valid]" title="Wiadomosci WP - Aktualnosci [valid]" type="rss" xmlUrl="https://wiadomosci.wp.pl/rss/aktualnosci" htmlUrl="https://wiadomosci.wp.pl"/>
     </outline>
     <outline text="Sweden (SE)" title="Sweden (SE)">
       <outline text="Dagens Nyheter [valid]" title="Dagens Nyheter [valid]" type="rss" xmlUrl="https://www.dn.se/nyheter/rss/" htmlUrl="https://www.dn.se"/>
@@ -1196,9 +1196,9 @@
       <outline text="De Standaard (example section) [needs verification]" title="De Standaard (example section) [needs verification]" type="rss" xmlUrl="https://www.standaard.be/rss/section/1f2838d4-99ea-49f0-9102-138784c7ea7c" htmlUrl="https://www.standaard.be"/>
       <outline text="Het Nieuwsblad (example section) [needs verification]" title="Het Nieuwsblad (example section) [needs verification]" type="rss" xmlUrl="https://www.nieuwsblad.be/rss/section/55178e67-15a8-4ddd-a3d8-bfe5708f8932" htmlUrl="https://www.nieuwsblad.be"/>
       <outline text="Le Soir (main) [needs verification]" title="Le Soir (main) [needs verification]" type="rss" xmlUrl="https://www.lesoir.be/rss2/9/cible_principale" htmlUrl="https://www.lesoir.be"/>
-      <outline text="Brussels Times [needs verification]" title="Brussels Times [needs verification]" type="rss" xmlUrl="https://www.brusselstimes.com/rss-feed" htmlUrl="https://www.brusselstimes.com"/>
+      <outline text="Brussels Times [invalid]" title="Brussels Times [invalid]" type="rss" xmlUrl="https://www.brusselstimes.com/rss-feed" htmlUrl="https://www.brusselstimes.com"/>
       <outline text="City of Brussels (official) [valid]" title="City of Brussels (official) [valid]" type="rss" xmlUrl="https://www.brussels.be/rss.xml" htmlUrl="https://www.brussels.be"/>
-      <outline text="BX1 [needs verification]" title="BX1 [needs verification]" type="rss" xmlUrl="https://bx1.be/feed/" htmlUrl="https://bx1.be"/>
+      <outline text="BX1 [valid]" title="BX1 [valid]" type="rss" xmlUrl="https://bx1.be/feed/" htmlUrl="https://bx1.be"/>
     </outline>
     <outline text="Thailand (TH)" title="Thailand (TH)">
       <outline text="The Thaiger [valid]" title="The Thaiger [valid]" type="rss" xmlUrl="https://thethaiger.com/feed" htmlUrl="https://thethaiger.com"/>
@@ -1261,10 +1261,10 @@
       <outline text="Matichon - Region [valid]" title="Matichon - Region [valid]" type="rss" xmlUrl="https://www.matichon.co.th/region/feed" htmlUrl="https://www.matichon.co.th"/>
       <outline text="Matichon - Lifestyle [valid]" title="Matichon - Lifestyle [valid]" type="rss" xmlUrl="https://www.matichon.co.th/lifestyle/feed" htmlUrl="https://www.matichon.co.th"/>
       <outline text="Khaosod - Economics [valid]" title="Khaosod - Economics [valid]" type="rss" xmlUrl="https://www.khaosod.co.th/economics/feed" htmlUrl="https://www.khaosod.co.th"/>
-      <outline text="Khaosod - Breaking News [valid]" title="Khaosod - Breaking News [valid]" type="rss" xmlUrl="https://www.khaosod.co.th/breaking-news/feed" htmlUrl="https://www.khaosod.co.th"/>
+      <outline text="Khaosod - Breaking News [invalid]" title="Khaosod - Breaking News [invalid]" type="rss" xmlUrl="https://www.khaosod.co.th/breaking-news/feed" htmlUrl="https://www.khaosod.co.th"/>
       <outline text="Khaosod - Around Thailand [valid]" title="Khaosod - Around Thailand [valid]" type="rss" xmlUrl="https://www.khaosod.co.th/around-thailand/feed" htmlUrl="https://www.khaosod.co.th"/>
-      <outline text="Khaosod - Sports [valid]" title="Khaosod - Sports [valid]" type="rss" xmlUrl="https://www.khaosod.co.th/sports/feed" htmlUrl="https://www.khaosod.co.th"/>
-      <outline text="Khaosod - Foreign [valid]" title="Khaosod - Foreign [valid]" type="rss" xmlUrl="https://www.khaosod.co.th/around-the-world-news/feed" htmlUrl="https://www.khaosod.co.th"/>
+      <outline text="Khaosod - Sports [invalid]" title="Khaosod - Sports [invalid]" type="rss" xmlUrl="https://www.khaosod.co.th/sports/feed" htmlUrl="https://www.khaosod.co.th"/>
+      <outline text="Khaosod - Foreign [invalid]" title="Khaosod - Foreign [invalid]" type="rss" xmlUrl="https://www.khaosod.co.th/around-the-world-news/feed" htmlUrl="https://www.khaosod.co.th"/>
       <outline text="Khaosod - Covid [valid]" title="Khaosod - Covid [valid]" type="rss" xmlUrl="https://www.khaosod.co.th/covid-19/feed" htmlUrl="https://www.khaosod.co.th"/>
       <outline text="Matichon - Sports [valid]" title="Matichon - Sports [valid]" type="rss" xmlUrl="https://www.matichon.co.th/sport/feed" htmlUrl="https://www.matichon.co.th"/>
       <outline text="Matichon - Education [valid]" title="Matichon - Education [valid]" type="rss" xmlUrl="https://www.matichon.co.th/education/feed" htmlUrl="https://www.matichon.co.th"/>
@@ -1388,20 +1388,20 @@
       <outline text="MDZ Online - Política [valid]" title="MDZ Online - Política [valid]" type="rss" xmlUrl="https://www.mdzol.com/rss/pages/politica.xml" htmlUrl="https://www.mdzol.com"/>
       <outline text="MDZ Online - Sociedad [valid]" title="MDZ Online - Sociedad [valid]" type="rss" xmlUrl="https://www.mdzol.com/rss/pages/sociedad.xml" htmlUrl="https://www.mdzol.com"/>
       <outline text="MDZ Online - Tecnología [valid]" title="MDZ Online - Tecnología [valid]" type="rss" xmlUrl="https://www.mdzol.com/rss/pages/tecnologia.xml" htmlUrl="https://www.mdzol.com"/>
-      <outline text="La Opinión Rafaela [needs verification]" title="La Opinión Rafaela [needs verification]" type="rss" xmlUrl="https://www.laopinion.com.ar/rss" htmlUrl="https://www.laopinion.com.ar"/>
-      <outline text="C5N - Home [needs verification]" title="C5N - Home [needs verification]" type="rss" xmlUrl="https://www.c5n.com/rss/pages/home.xml" htmlUrl="https://www.c5n.com"/>
-      <outline text="C5N - Política [needs verification]" title="C5N - Política [needs verification]" type="rss" xmlUrl="https://www.c5n.com/rss/pages/politica.xml" htmlUrl="https://www.c5n.com"/>
-      <outline text="C5N - Economía [needs verification]" title="C5N - Economía [needs verification]" type="rss" xmlUrl="https://www.c5n.com/rss/pages/economia.xml" htmlUrl="https://www.c5n.com"/>
-      <outline text="C5N - Sociedad [needs verification]" title="C5N - Sociedad [needs verification]" type="rss" xmlUrl="https://www.c5n.com/rss/pages/sociedad.xml" htmlUrl="https://www.c5n.com"/>
-      <outline text="C5N - Enfoque [needs verification]" title="C5N - Enfoque [needs verification]" type="rss" xmlUrl="https://www.c5n.com/rss/pages/enfoque.xml" htmlUrl="https://www.c5n.com"/>
-      <outline text="C5N - Deportes [needs verification]" title="C5N - Deportes [needs verification]" type="rss" xmlUrl="https://www.c5n.com/rss/pages/deportes.xml" htmlUrl="https://www.c5n.com"/>
-      <outline text="C5N - Autos [needs verification]" title="C5N - Autos [needs verification]" type="rss" xmlUrl="https://www.c5n.com/rss/pages/autos.xml" htmlUrl="https://www.c5n.com"/>
-      <outline text="C5N - Mundo [needs verification]" title="C5N - Mundo [needs verification]" type="rss" xmlUrl="https://www.c5n.com/rss/pages/mundo.xml" htmlUrl="https://www.c5n.com"/>
-      <outline text="C5N - Últimas noticias [needs verification]" title="C5N - Últimas noticias [needs verification]" type="rss" xmlUrl="https://www.c5n.com/rss/pages/ultimas-noticias.xml" htmlUrl="https://www.c5n.com"/>
-      <outline text="C5N - Tecnología [needs verification]" title="C5N - Tecnología [needs verification]" type="rss" xmlUrl="https://www.c5n.com/rss/pages/tecnologia.xml" htmlUrl="https://www.c5n.com"/>
-      <outline text="C5N - RatingCero [needs verification]" title="C5N - RatingCero [needs verification]" type="rss" xmlUrl="https://www.c5n.com/rss/pages/ratingcero.xml" htmlUrl="https://www.c5n.com"/>
-      <outline text="C5N - Astrología [needs verification]" title="C5N - Astrología [needs verification]" type="rss" xmlUrl="https://www.c5n.com/rss/pages/astrologia.xml" htmlUrl="https://www.c5n.com"/>
-      <outline text="C5N - Lifestyle [needs verification]" title="C5N - Lifestyle [needs verification]" type="rss" xmlUrl="https://www.c5n.com/rss/pages/lifestyle.xml" htmlUrl="https://www.c5n.com"/>
+      <outline text="La Opinión Rafaela [valid]" title="La Opinión Rafaela [valid]" type="rss" xmlUrl="https://www.laopinion.com.ar/rss" htmlUrl="https://www.laopinion.com.ar"/>
+      <outline text="C5N - Home [valid]" title="C5N - Home [valid]" type="rss" xmlUrl="https://www.c5n.com/rss/pages/home.xml" htmlUrl="https://www.c5n.com"/>
+      <outline text="C5N - Política [valid]" title="C5N - Política [valid]" type="rss" xmlUrl="https://www.c5n.com/rss/pages/politica.xml" htmlUrl="https://www.c5n.com"/>
+      <outline text="C5N - Economía [valid]" title="C5N - Economía [valid]" type="rss" xmlUrl="https://www.c5n.com/rss/pages/economia.xml" htmlUrl="https://www.c5n.com"/>
+      <outline text="C5N - Sociedad [valid]" title="C5N - Sociedad [valid]" type="rss" xmlUrl="https://www.c5n.com/rss/pages/sociedad.xml" htmlUrl="https://www.c5n.com"/>
+      <outline text="C5N - Enfoque [valid]" title="C5N - Enfoque [valid]" type="rss" xmlUrl="https://www.c5n.com/rss/pages/enfoque.xml" htmlUrl="https://www.c5n.com"/>
+      <outline text="C5N - Deportes [valid]" title="C5N - Deportes [valid]" type="rss" xmlUrl="https://www.c5n.com/rss/pages/deportes.xml" htmlUrl="https://www.c5n.com"/>
+      <outline text="C5N - Autos [valid]" title="C5N - Autos [valid]" type="rss" xmlUrl="https://www.c5n.com/rss/pages/autos.xml" htmlUrl="https://www.c5n.com"/>
+      <outline text="C5N - Mundo [valid]" title="C5N - Mundo [valid]" type="rss" xmlUrl="https://www.c5n.com/rss/pages/mundo.xml" htmlUrl="https://www.c5n.com"/>
+      <outline text="C5N - Últimas noticias [valid]" title="C5N - Últimas noticias [valid]" type="rss" xmlUrl="https://www.c5n.com/rss/pages/ultimas-noticias.xml" htmlUrl="https://www.c5n.com"/>
+      <outline text="C5N - Tecnología [valid]" title="C5N - Tecnología [valid]" type="rss" xmlUrl="https://www.c5n.com/rss/pages/tecnologia.xml" htmlUrl="https://www.c5n.com"/>
+      <outline text="C5N - RatingCero [valid]" title="C5N - RatingCero [valid]" type="rss" xmlUrl="https://www.c5n.com/rss/pages/ratingcero.xml" htmlUrl="https://www.c5n.com"/>
+      <outline text="C5N - Astrología [valid]" title="C5N - Astrología [valid]" type="rss" xmlUrl="https://www.c5n.com/rss/pages/astrologia.xml" htmlUrl="https://www.c5n.com"/>
+      <outline text="C5N - Lifestyle [valid]" title="C5N - Lifestyle [valid]" type="rss" xmlUrl="https://www.c5n.com/rss/pages/lifestyle.xml" htmlUrl="https://www.c5n.com"/>
     </outline>
     <outline text="Chile (CL)" title="Chile (CL)">
       <outline text="Diario Financiero [valid]" title="Diario Financiero [valid]" type="rss" xmlUrl="https://www.df.cl/noticias/site/list/port/rss.xml" htmlUrl="https://www.df.cl"/>
@@ -1411,7 +1411,7 @@
       <outline text="La Discusión [valid]" title="La Discusión [valid]" type="rss" xmlUrl="https://ladiscusion.cl/feed/" htmlUrl="https://ladiscusion.cl"/>
       <outline text="La Nación (Chile) [valid]" title="La Nación (Chile) [valid]" type="rss" xmlUrl="https://www.lanacion.cl/feed" htmlUrl="https://www.lanacion.cl"/>
       <outline text="El Siglo [valid]" title="El Siglo [valid]" type="rss" xmlUrl="https://elsiglo.cl/feed" htmlUrl="https://elsiglo.cl"/>
-      <outline text="The Santiago Times [valid]" title="The Santiago Times [valid]" type="rss" xmlUrl="https://santiagotimes.cl/feed" htmlUrl="https://santiagotimes.cl"/>
+      <outline text="The Santiago Times [invalid (ERR)]" title="The Santiago Times [invalid (ERR)]" type="rss" xmlUrl="https://santiagotimes.cl/feed" htmlUrl="https://santiagotimes.cl"/>
       <outline text="Infoweek [needs verification]" title="Infoweek [needs verification]" type="rss" xmlUrl="https://infoweek.biz/feed" htmlUrl="https://infoweek.biz"/>
       <outline text="El Desconcierto [valid]" title="El Desconcierto [valid]" type="rss" xmlUrl="https://eldesconcierto.cl/feeds/rss.xml" htmlUrl="https://eldesconcierto.cl"/>
       <outline text="La Prensa Austral [valid]" title="La Prensa Austral [valid]" type="rss" xmlUrl="https://laprensaaustral.cl/feed/" htmlUrl="https://laprensaaustral.cl"/>
@@ -1421,7 +1421,7 @@
       <outline text="Pulso (La Tercera Biz) [valid]" title="Pulso (La Tercera Biz) [valid]" type="rss" xmlUrl="https://www.latercera.com/arc/outboundfeeds/rss/?outputType=xml&amp;rotation=pulso" htmlUrl="https://www.latercera.com"/>
       <outline text="Emol - Nacional [needs verification]" title="Emol - Nacional [needs verification]" type="rss" xmlUrl="https://www.emol.com/rss/rss_nacional.xml" htmlUrl="https://www.emol.com"/>
       <outline text="Emol - Economía [needs verification]" title="Emol - Economía [needs verification]" type="rss" xmlUrl="https://www.emol.com/rss/rss_economia.xml" htmlUrl="https://www.emol.com"/>
-      <outline text="BioBioChile - Home [needs verification]" title="BioBioChile - Home [needs verification]" type="rss" xmlUrl="https://feeds.feedburner.com/radiobiobio/NNeJ" htmlUrl="https://feeds.feedburner.com"/>
+      <outline text="BioBioChile - Home [valid]" title="BioBioChile - Home [valid]" type="rss" xmlUrl="https://feeds.feedburner.com/radiobiobio/NNeJ" htmlUrl="https://feeds.feedburner.com"/>
       <outline text="Cooperativa - Economía [valid]" title="Cooperativa - Economía [valid]" type="rss" xmlUrl="https://www.cooperativa.cl/noticias/site/tax/port/all/rss_5___1.xml" htmlUrl="https://www.cooperativa.cl"/>
       <outline text="Cooperativa - País [valid]" title="Cooperativa - País [valid]" type="rss" xmlUrl="https://www.cooperativa.cl/noticias/site/tax/port/all/rss_3___1.xml" htmlUrl="https://www.cooperativa.cl"/>
       <outline text="Cooperativa - País (모바일) [valid]" title="Cooperativa - País (모바일) [valid]" type="rss" xmlUrl="https://m.cooperativa.cl/noticias/site/tax/port/all/rss_3___1.xml" htmlUrl="https://m.cooperativa.cl"/>
@@ -1460,12 +1460,12 @@
       <outline text="Concierto [valid]" title="Concierto [valid]" type="rss" xmlUrl="https://www.concierto.cl/feed/" htmlUrl="https://www.concierto.cl"/>
       <outline text="Futuro [valid]" title="Futuro [valid]" type="rss" xmlUrl="https://www.futuro.cl/feed/" htmlUrl="https://www.futuro.cl"/>
       <outline text="Rock&amp;Pop [valid]" title="Rock&amp;Pop [valid]" type="rss" xmlUrl="https://www.rockandpop.cl/feed/" htmlUrl="https://www.rockandpop.cl"/>
-      <outline text="Diario Talca [needs verification]" title="Diario Talca [needs verification]" type="rss" xmlUrl="https://www.diariotalca.cl/feed/" htmlUrl="https://www.diariotalca.cl"/>
-      <outline text="Publimetro Chile - Home [needs verification]" title="Publimetro Chile - Home [needs verification]" type="rss" xmlUrl="https://www.publimetro.cl/arc/outboundfeeds/rss/" htmlUrl="https://www.publimetro.cl"/>
-      <outline text="Cooperativa - Portada [needs verification]" title="Cooperativa - Portada [needs verification]" type="rss" xmlUrl="https://www.cooperativa.cl/noticias/site/tax/port/all/rss____1.xml" htmlUrl="https://www.cooperativa.cl"/>
-      <outline text="Cooperativa - Google News RSS [needs verification]" title="Cooperativa - Google News RSS [needs verification]" type="rss" xmlUrl="https://www.cooperativa.cl/noticias/google_news_rss.xml" htmlUrl="https://www.cooperativa.cl"/>
-      <outline text="ADN Radio - Portada [needs verification]" title="ADN Radio - Portada [needs verification]" type="rss" xmlUrl="https://www.adnradio.cl/arc/outboundfeeds/rss/?outputType=xml" htmlUrl="https://www.adnradio.cl"/>
-      <outline text="La Cuarta [needs verification]" title="La Cuarta [needs verification]" type="rss" xmlUrl="https://www.lacuarta.com/arc/outboundfeeds/rss/?outputType=xml" htmlUrl="https://www.lacuarta.com"/>
+      <outline text="Diario Talca [valid]" title="Diario Talca [valid]" type="rss" xmlUrl="https://www.diariotalca.cl/feed/" htmlUrl="https://www.diariotalca.cl"/>
+      <outline text="Publimetro Chile - Home [valid]" title="Publimetro Chile - Home [valid]" type="rss" xmlUrl="https://www.publimetro.cl/arc/outboundfeeds/rss/" htmlUrl="https://www.publimetro.cl"/>
+      <outline text="Cooperativa - Portada [valid]" title="Cooperativa - Portada [valid]" type="rss" xmlUrl="https://www.cooperativa.cl/noticias/site/tax/port/all/rss____1.xml" htmlUrl="https://www.cooperativa.cl"/>
+      <outline text="Cooperativa - Google News RSS [valid]" title="Cooperativa - Google News RSS [valid]" type="rss" xmlUrl="https://www.cooperativa.cl/noticias/google_news_rss.xml" htmlUrl="https://www.cooperativa.cl"/>
+      <outline text="ADN Radio - Portada [valid]" title="ADN Radio - Portada [valid]" type="rss" xmlUrl="https://www.adnradio.cl/arc/outboundfeeds/rss/?outputType=xml" htmlUrl="https://www.adnradio.cl"/>
+      <outline text="La Cuarta [valid]" title="La Cuarta [valid]" type="rss" xmlUrl="https://www.lacuarta.com/arc/outboundfeeds/rss/?outputType=xml" htmlUrl="https://www.lacuarta.com"/>
     </outline>
     <outline text="Dominican Republic (DO)" title="Dominican Republic (DO)">
       <outline text="Diario Libre - Portada [valid]" title="Diario Libre - Portada [valid]" type="rss" xmlUrl="https://www.diariolibre.com/rss/portada.xml" htmlUrl="https://www.diariolibre.com"/>
@@ -1490,25 +1490,25 @@
       <outline text="El Nacional [valid]" title="El Nacional [valid]" type="rss" xmlUrl="https://elnacional.com.do/feed/" htmlUrl="https://elnacional.com.do"/>
       <outline text="El Nuevo Diario [valid]" title="El Nuevo Diario [valid]" type="rss" xmlUrl="https://elnuevodiario.com.do/feed/" htmlUrl="https://elnuevodiario.com.do"/>
       <outline text="Listín Diario - Economía [valid]" title="Listín Diario - Economía [valid]" type="rss" xmlUrl="https://listindiario.com/rss/economia.xml" htmlUrl="https://listindiario.com"/>
-      <outline text="Periódico Hoy [needs verification]" title="Periódico Hoy [needs verification]" type="rss" xmlUrl="https://hoy.com.do/rss/home.xml" htmlUrl="https://hoy.com.do"/>
+      <outline text="Periódico Hoy [valid]" title="Periódico Hoy [valid]" type="rss" xmlUrl="https://hoy.com.do/rss/home.xml" htmlUrl="https://hoy.com.do"/>
       <outline text="El Dinero [valid]" title="El Dinero [valid]" type="rss" xmlUrl="https://eldinero.com.do/feed/" htmlUrl="https://eldinero.com.do"/>
       <outline text="Acento - Author Feed [invalid]" title="Acento - Author Feed [invalid]" type="rss" xmlUrl="https://acento.com.do/author/jcastillo/feed/" htmlUrl="https://acento.com.do"/>
-      <outline text="Noticias SIN [needs verification]" title="Noticias SIN [needs verification]" type="rss" xmlUrl="https://noticiassin.com/feed/" htmlUrl="https://noticiassin.com"/>
-      <outline text="Diario Libre - Revista [needs verification]" title="Diario Libre - Revista [needs verification]" type="rss" xmlUrl="https://www.diariolibre.com/rss/revista.xml" htmlUrl="https://www.diariolibre.com"/>
-      <outline text="El Día [needs verification]" title="El Día [needs verification]" type="rss" xmlUrl="https://eldia.com.do/feed/" htmlUrl="https://eldia.com.do"/>
-      <outline text="N Digital [needs verification]" title="N Digital [needs verification]" type="rss" xmlUrl="https://n.com.do/feed/" htmlUrl="https://n.com.do"/>
-      <outline text="Z101 Digital [needs verification]" title="Z101 Digital [needs verification]" type="rss" xmlUrl="https://www.z101digital.com/feed/" htmlUrl="https://www.z101digital.com"/>
-      <outline text="Z101 Digital - Nacionales [needs verification]" title="Z101 Digital - Nacionales [needs verification]" type="rss" xmlUrl="https://z101digital.com/category/nacionales/feed/" htmlUrl="https://z101digital.com"/>
-      <outline text="Teleuniverso [needs verification]" title="Teleuniverso [needs verification]" type="rss" xmlUrl="https://teleuniversotv.com/feed/" htmlUrl="https://teleuniversotv.com"/>
-      <outline text="Remolacha [needs verification]" title="Remolacha [needs verification]" type="rss" xmlUrl="https://remolacha.net/feed/" htmlUrl="https://remolacha.net"/>
-      <outline text="De Último Minuto [needs verification]" title="De Último Minuto [needs verification]" type="rss" xmlUrl="https://deultimominuto.net/feed/" htmlUrl="https://deultimominuto.net"/>
-      <outline text="De Último Minuto - Nacionales [needs verification]" title="De Último Minuto - Nacionales [needs verification]" type="rss" xmlUrl="https://deultimominuto.net/category/nacionales/feed/" htmlUrl="https://deultimominuto.net"/>
-      <outline text="De Último Minuto - Internacionales [needs verification]" title="De Último Minuto - Internacionales [needs verification]" type="rss" xmlUrl="https://deultimominuto.net/category/internacionales/feed/" htmlUrl="https://deultimominuto.net"/>
-      <outline text="De Último Minuto - Deportes [needs verification]" title="De Último Minuto - Deportes [needs verification]" type="rss" xmlUrl="https://deultimominuto.net/category/deportes/feed/" htmlUrl="https://deultimominuto.net"/>
-      <outline text="De Último Minuto - Entretenimiento [needs verification]" title="De Último Minuto - Entretenimiento [needs verification]" type="rss" xmlUrl="https://deultimominuto.net/category/entretenimiento/feed/" htmlUrl="https://deultimominuto.net"/>
-      <outline text="De Último Minuto - Economía [needs verification]" title="De Último Minuto - Economía [needs verification]" type="rss" xmlUrl="https://deultimominuto.net/category/economia/feed/" htmlUrl="https://deultimominuto.net"/>
-      <outline text="Telenoticias [needs verification]" title="Telenoticias [needs verification]" type="rss" xmlUrl="https://telenoticias.com.do/feed/" htmlUrl="https://telenoticias.com.do"/>
-      <outline text="EnSegundos [needs verification]" title="EnSegundos [needs verification]" type="rss" xmlUrl="https://ensegundos.do/feed/" htmlUrl="https://ensegundos.do"/>
+      <outline text="Noticias SIN [valid]" title="Noticias SIN [valid]" type="rss" xmlUrl="https://noticiassin.com/feed/" htmlUrl="https://noticiassin.com"/>
+      <outline text="Diario Libre - Revista [valid]" title="Diario Libre - Revista [valid]" type="rss" xmlUrl="https://www.diariolibre.com/rss/revista.xml" htmlUrl="https://www.diariolibre.com"/>
+      <outline text="El Día [valid]" title="El Día [valid]" type="rss" xmlUrl="https://eldia.com.do/feed/" htmlUrl="https://eldia.com.do"/>
+      <outline text="N Digital [valid]" title="N Digital [valid]" type="rss" xmlUrl="https://n.com.do/feed/" htmlUrl="https://n.com.do"/>
+      <outline text="Z101 Digital [invalid (ERR)]" title="Z101 Digital [invalid (ERR)]" type="rss" xmlUrl="https://www.z101digital.com/feed/" htmlUrl="https://www.z101digital.com"/>
+      <outline text="Z101 Digital - Nacionales [valid]" title="Z101 Digital - Nacionales [valid]" type="rss" xmlUrl="https://z101digital.com/category/nacionales/feed/" htmlUrl="https://z101digital.com"/>
+      <outline text="Teleuniverso [valid]" title="Teleuniverso [valid]" type="rss" xmlUrl="https://teleuniversotv.com/feed/" htmlUrl="https://teleuniversotv.com"/>
+      <outline text="Remolacha [valid]" title="Remolacha [valid]" type="rss" xmlUrl="https://remolacha.net/feed/" htmlUrl="https://remolacha.net"/>
+      <outline text="De Último Minuto [valid]" title="De Último Minuto [valid]" type="rss" xmlUrl="https://deultimominuto.net/feed/" htmlUrl="https://deultimominuto.net"/>
+      <outline text="De Último Minuto - Nacionales [valid]" title="De Último Minuto - Nacionales [valid]" type="rss" xmlUrl="https://deultimominuto.net/category/nacionales/feed/" htmlUrl="https://deultimominuto.net"/>
+      <outline text="De Último Minuto - Internacionales [valid]" title="De Último Minuto - Internacionales [valid]" type="rss" xmlUrl="https://deultimominuto.net/category/internacionales/feed/" htmlUrl="https://deultimominuto.net"/>
+      <outline text="De Último Minuto - Deportes [valid]" title="De Último Minuto - Deportes [valid]" type="rss" xmlUrl="https://deultimominuto.net/category/deportes/feed/" htmlUrl="https://deultimominuto.net"/>
+      <outline text="De Último Minuto - Entretenimiento [valid]" title="De Último Minuto - Entretenimiento [valid]" type="rss" xmlUrl="https://deultimominuto.net/category/entretenimiento/feed/" htmlUrl="https://deultimominuto.net"/>
+      <outline text="De Último Minuto - Economía [valid]" title="De Último Minuto - Economía [valid]" type="rss" xmlUrl="https://deultimominuto.net/category/economia/feed/" htmlUrl="https://deultimominuto.net"/>
+      <outline text="Telenoticias [valid]" title="Telenoticias [valid]" type="rss" xmlUrl="https://telenoticias.com.do/feed/" htmlUrl="https://telenoticias.com.do"/>
+      <outline text="EnSegundos [valid]" title="EnSegundos [valid]" type="rss" xmlUrl="https://ensegundos.do/feed/" htmlUrl="https://ensegundos.do"/>
     </outline>
     <outline text="Uruguay (UY)" title="Uruguay (UY)">
       <outline text="El Observador - Home [valid]" title="El Observador - Home [valid]" type="rss" xmlUrl="https://www.elobservador.com.uy/rss/pages/home.xml" htmlUrl="https://www.elobservador.com.uy"/>
@@ -1557,9 +1557,9 @@
       <outline text="Subrayado - Deportes [valid]" title="Subrayado - Deportes [valid]" type="rss" xmlUrl="https://www.subrayado.com.uy/rss/pages/deportes.xml" htmlUrl="https://www.subrayado.com.uy"/>
       <outline text="Subrayado - Economía [valid]" title="Subrayado - Economía [valid]" type="rss" xmlUrl="https://www.subrayado.com.uy/rss/pages/economia.xml" htmlUrl="https://www.subrayado.com.uy"/>
       <outline text="Teledoce [valid]" title="Teledoce [valid]" type="rss" xmlUrl="https://www.teledoce.com/feed/" htmlUrl="https://www.teledoce.com"/>
-      <outline text="La Diaria - Home [needs verification]" title="La Diaria - Home [needs verification]" type="rss" xmlUrl="https://ladiaria.com.uy/feeds/articulos/" htmlUrl="https://ladiaria.com.uy"/>
+      <outline text="La Diaria - Home [valid]" title="La Diaria - Home [valid]" type="rss" xmlUrl="https://ladiaria.com.uy/feeds/articulos/" htmlUrl="https://ladiaria.com.uy"/>
       <outline text="La Republica [needs verification]" title="La Republica [needs verification]" type="rss" xmlUrl="https://www.republica.com.uy/feed/" htmlUrl="https://www.republica.com.uy"/>
-      <outline text="Caras y Caretas - Home [needs verification]" title="Caras y Caretas - Home [needs verification]" type="rss" xmlUrl="https://www.carasycaretas.com.uy/rss/pages/home.xml" htmlUrl="https://www.carasycaretas.com.uy"/>
+      <outline text="Caras y Caretas - Home [valid]" title="Caras y Caretas - Home [valid]" type="rss" xmlUrl="https://www.carasycaretas.com.uy/rss/pages/home.xml" htmlUrl="https://www.carasycaretas.com.uy"/>
       <outline text="970 Universal [valid]" title="970 Universal [valid]" type="rss" xmlUrl="https://970universal.com/feed/" htmlUrl="https://970universal.com"/>
       <outline text="El Telégrafo [valid]" title="El Telégrafo [valid]" type="rss" xmlUrl="https://www.eltelegrafo.com/feed/" htmlUrl="https://www.eltelegrafo.com"/>
       <outline text="Carmelo Portal [valid]" title="Carmelo Portal [valid]" type="rss" xmlUrl="https://www.carmeloportal.com/feed" htmlUrl="https://www.carmeloportal.com"/>
@@ -1570,8 +1570,8 @@
     </outline>
     <outline text="Austria (AT)" title="Austria (AT)">
       <outline text="Der Standard [valid]" title="Der Standard [valid]" type="rss" xmlUrl="https://www.derstandard.at/rss" htmlUrl="https://www.derstandard.at"/>
-      <outline text="ORF [needs verification]" title="ORF [needs verification]" type="rss" xmlUrl="https://rss.orf.at/news.xml" htmlUrl="https://rss.orf.at"/>
-      <outline text="Die Presse [needs verification]" title="Die Presse [needs verification]" type="rss" xmlUrl="https://www.diepresse.com/rss" htmlUrl="https://www.diepresse.com"/>
+      <outline text="ORF [valid]" title="ORF [valid]" type="rss" xmlUrl="https://rss.orf.at/news.xml" htmlUrl="https://rss.orf.at"/>
+      <outline text="Die Presse [valid]" title="Die Presse [valid]" type="rss" xmlUrl="https://www.diepresse.com/rss" htmlUrl="https://www.diepresse.com"/>
       <outline text="Tiroler Tageszeitung [valid]" title="Tiroler Tageszeitung [valid]" type="rss" xmlUrl="https://www.tt.com/rss/news.xml" htmlUrl="https://www.tt.com"/>
       <outline text="ORF Aktuell [needs verification]" title="ORF Aktuell [needs verification]" type="rss" xmlUrl="https://rss.orf.at/" htmlUrl="https://rss.orf.at"/>
       <outline text="Kurier (Top News) [valid]" title="Kurier (Top News) [valid]" type="rss" xmlUrl="https://kurier.at/xml/rssd" htmlUrl="https://kurier.at"/>
@@ -1600,15 +1600,15 @@
       <outline text="derStandard - Recht [valid]" title="derStandard - Recht [valid]" type="rss" xmlUrl="https://www.derstandard.at/rss/recht" htmlUrl="https://www.derstandard.at"/>
       <outline text="ORF Wien (Vienna Local/Business) [valid]" title="ORF Wien (Vienna Local/Business) [valid]" type="rss" xmlUrl="https://rss.orf.at/wien.xml" htmlUrl="https://rss.orf.at"/>
       <outline text="Die Presse (Political Headlines) [needs verification]" title="Die Presse (Political Headlines) [needs verification]" type="rss" xmlUrl="https://www.diepresse.com/rss/Home" htmlUrl="https://www.diepresse.com"/>
-      <outline text="Die Presse (Economy) [needs verification]" title="Die Presse (Economy) [needs verification]" type="rss" xmlUrl="https://www.diepresse.com/rss/Wirtschaft" htmlUrl="https://www.diepresse.com"/>
+      <outline text="Die Presse (Economy) [valid]" title="Die Presse (Economy) [valid]" type="rss" xmlUrl="https://www.diepresse.com/rss/Wirtschaft" htmlUrl="https://www.diepresse.com"/>
       <outline text="Kurier (Top Daily) [valid]" title="Kurier (Top Daily) [valid]" type="rss" xmlUrl="https://kurier.at/xml/rss" htmlUrl="https://kurier.at"/>
       <outline text="Finanzen.at (Stocks/Finance) [invalid]" title="Finanzen.at (Stocks/Finance) [invalid]" type="rss" xmlUrl="https://www.finanzen.at/rss/news" htmlUrl="https://www.finanzen.at"/>
       <outline text="Trend.at (Business Magazine) [needs verification]" title="Trend.at (Business Magazine) [needs verification]" type="rss" xmlUrl="https://www.trend.at/xml/rss" htmlUrl="https://www.trend.at"/>
-      <outline text="Kronen Zeitung [needs verification]" title="Kronen Zeitung [needs verification]" type="rss" xmlUrl="https://www.krone.at/rss.xml" htmlUrl="https://www.krone.at"/>
+      <outline text="Kronen Zeitung [invalid]" title="Kronen Zeitung [invalid]" type="rss" xmlUrl="https://www.krone.at/rss.xml" htmlUrl="https://www.krone.at"/>
       <outline text="Heute [needs verification]" title="Heute [needs verification]" type="rss" xmlUrl="https://www.heute.at/rss/news" htmlUrl="https://www.heute.at"/>
-      <outline text="OE24 [needs verification]" title="OE24 [needs verification]" type="rss" xmlUrl="https://www.oe24.at/news/rss" htmlUrl="https://www.oe24.at"/>
-      <outline text="OR Nachrichten [needs verification]" title="OR Nachrichten [needs verification]" type="rss" xmlUrl="https://www.nachrichten.at/news/rss.xml" htmlUrl="https://www.nachrichten.at"/>
-      <outline text="Vienna Online [needs verification]" title="Vienna Online [needs verification]" type="rss" xmlUrl="https://www.vienna.at/news/feed" htmlUrl="https://www.vienna.at"/>
+      <outline text="OE24 [invalid]" title="OE24 [invalid]" type="rss" xmlUrl="https://www.oe24.at/news/rss" htmlUrl="https://www.oe24.at"/>
+      <outline text="OR Nachrichten [invalid]" title="OR Nachrichten [invalid]" type="rss" xmlUrl="https://www.nachrichten.at/news/rss.xml" htmlUrl="https://www.nachrichten.at"/>
+      <outline text="Vienna Online [invalid]" title="Vienna Online [invalid]" type="rss" xmlUrl="https://www.vienna.at/news/feed" htmlUrl="https://www.vienna.at"/>
     </outline>
     <outline text="Norway (NO)" title="Norway (NO)">
       <outline text="NRK [valid]" title="NRK [valid]" type="rss" xmlUrl="https://www.nrk.no/toppsaker.rss" htmlUrl="https://www.nrk.no"/>
@@ -1620,7 +1620,7 @@
       <outline text="E24 [valid]" title="E24 [valid]" type="rss" xmlUrl="https://e24.no/rss/okonomi.xml" htmlUrl="https://e24.no"/>
       <outline text="TV2 [needs verification]" title="TV2 [needs verification]" type="rss" xmlUrl="https://www.tv2.no/rss/politikk.xml" htmlUrl="https://www.tv2.no"/>
       <outline text="E24 [valid]" title="E24 [valid]" type="rss" xmlUrl="https://e24.no/rss/nyheter.xml" htmlUrl="https://e24.no"/>
-      <outline text="VG - Forsiden [needs verification]" title="VG - Forsiden [needs verification]" type="rss" xmlUrl="https://www.vg.no/rss/feed/forsiden/" htmlUrl="https://www.vg.no"/>
+      <outline text="VG - Forsiden [invalid]" title="VG - Forsiden [invalid]" type="rss" xmlUrl="https://www.vg.no/rss/feed/forsiden/" htmlUrl="https://www.vg.no"/>
       <outline text="VG - Innenriks [valid]" title="VG - Innenriks [valid]" type="rss" xmlUrl="https://www.vg.no/rss/feed/?categories=1069" htmlUrl="https://www.vg.no"/>
       <outline text="VG - Utenriks [valid]" title="VG - Utenriks [valid]" type="rss" xmlUrl="https://www.vg.no/rss/feed/?categories=1070" htmlUrl="https://www.vg.no"/>
       <outline text="E24 - Børs og finans [valid]" title="E24 - Børs og finans [valid]" type="rss" xmlUrl="https://e24.no/rss2/?seksjon=boers-og-finans" htmlUrl="https://e24.no"/>
@@ -1633,9 +1633,9 @@
       <outline text="TV2 - Utenriks [valid]" title="TV2 - Utenriks [valid]" type="rss" xmlUrl="https://www.tv2.no/rss/nyheter/utenriks" htmlUrl="https://www.tv2.no"/>
       <outline text="TV2 - Sport [valid]" title="TV2 - Sport [valid]" type="rss" xmlUrl="https://www.tv2.no/rss/sport" htmlUrl="https://www.tv2.no"/>
       <outline text="TV2 - Underholdning [valid]" title="TV2 - Underholdning [valid]" type="rss" xmlUrl="https://www.tv2.no/rss/underholdning" htmlUrl="https://www.tv2.no"/>
-      <outline text="Nettavisen - Alle saker [needs verification]" title="Nettavisen - Alle saker [needs verification]" type="rss" xmlUrl="https://www.nettavisen.no/service/rich-rss" htmlUrl="https://www.nettavisen.no"/>
-      <outline text="Nettavisen - Nyheter [needs verification]" title="Nettavisen - Nyheter [needs verification]" type="rss" xmlUrl="https://www.nettavisen.no/service/rich-rss?tag=nyheter" htmlUrl="https://www.nettavisen.no"/>
-      <outline text="Nettavisen - Sport [needs verification]" title="Nettavisen - Sport [needs verification]" type="rss" xmlUrl="https://www.nettavisen.no/service/rich-rss?tag=sport" htmlUrl="https://www.nettavisen.no"/>
+      <outline text="Nettavisen - Alle saker [valid]" title="Nettavisen - Alle saker [valid]" type="rss" xmlUrl="https://www.nettavisen.no/service/rich-rss" htmlUrl="https://www.nettavisen.no"/>
+      <outline text="Nettavisen - Nyheter [valid]" title="Nettavisen - Nyheter [valid]" type="rss" xmlUrl="https://www.nettavisen.no/service/rich-rss?tag=nyheter" htmlUrl="https://www.nettavisen.no"/>
+      <outline text="Nettavisen - Sport [valid]" title="Nettavisen - Sport [valid]" type="rss" xmlUrl="https://www.nettavisen.no/service/rich-rss?tag=sport" htmlUrl="https://www.nettavisen.no"/>
       <outline text="Dagbladet [valid]" title="Dagbladet [valid]" type="rss" xmlUrl="https://www.dagbladet.no/?lab_viewport=rss" htmlUrl="https://www.dagbladet.no"/>
       <outline text="Aftenposten [valid]" title="Aftenposten [valid]" type="rss" xmlUrl="https://www.aftenposten.no/rss/" htmlUrl="https://www.aftenposten.no"/>
       <outline text="Dagsavisen [valid]" title="Dagsavisen [valid]" type="rss" xmlUrl="https://www.dagsavisen.no/rss" htmlUrl="https://www.dagsavisen.no"/>
@@ -1645,10 +1645,10 @@
       <outline text="Finansavisen - Børs [valid]" title="Finansavisen - Børs [valid]" type="rss" xmlUrl="https://ws.finansavisen.no/api/articles.rss?category=B%C3%B8rs" htmlUrl="https://ws.finansavisen.no"/>
       <outline text="VG (Verdens Gang) [valid]" title="VG (Verdens Gang) [valid]" type="rss" xmlUrl="https://www.vg.no/rss/feed" htmlUrl="https://www.vg.no"/>
       <outline text="Finansavisen (Finance/Investment) [needs verification]" title="Finansavisen (Finance/Investment) [needs verification]" type="rss" xmlUrl="https://finansavisen.no/rss" htmlUrl="https://finansavisen.no"/>
-      <outline text="Teknisk Ukeblad (Tech/Energy/Marine) [needs verification]" title="Teknisk Ukeblad (Tech/Energy/Marine) [needs verification]" type="rss" xmlUrl="https://www.tu.no/feed" htmlUrl="https://www.tu.no"/>
+      <outline text="Teknisk Ukeblad (Tech/Energy/Marine) [invalid]" title="Teknisk Ukeblad (Tech/Energy/Marine) [invalid]" type="rss" xmlUrl="https://www.tu.no/feed" htmlUrl="https://www.tu.no"/>
       <outline text="E24 Energi (Energy/Marine Industry) [needs verification]" title="E24 Energi (Energy/Marine Industry) [needs verification]" type="rss" xmlUrl="https://e24.no/energi/rss" htmlUrl="https://e24.no"/>
       <outline text="Adresseavisen [valid]" title="Adresseavisen [valid]" type="rss" xmlUrl="https://www.adressa.no/rss/" htmlUrl="https://www.adressa.no"/>
-      <outline text="VG [needs verification]" title="VG [needs verification]" type="rss" xmlUrl="https://www.vg.no/rss/feed/" htmlUrl="https://www.vg.no"/>
+      <outline text="VG [valid]" title="VG [valid]" type="rss" xmlUrl="https://www.vg.no/rss/feed/" htmlUrl="https://www.vg.no"/>
       <outline text="NRK - Oslo og Viken [valid]" title="NRK - Oslo og Viken [valid]" type="rss" xmlUrl="https://www.nrk.no/osloogviken/toppsaker.rss" htmlUrl="https://www.nrk.no"/>
       <outline text="NRK - Innlandet [valid]" title="NRK - Innlandet [valid]" type="rss" xmlUrl="https://www.nrk.no/innlandet/toppsaker.rss" htmlUrl="https://www.nrk.no"/>
       <outline text="NRK - Vestland [valid]" title="NRK - Vestland [valid]" type="rss" xmlUrl="https://www.nrk.no/vestland/toppsaker.rss" htmlUrl="https://www.nrk.no"/>
@@ -1686,18 +1686,18 @@
       <outline text="Sunnhordland [valid]" title="Sunnhordland [valid]" type="rss" xmlUrl="https://www.sunnhordland.no/rss" htmlUrl="https://www.sunnhordland.no"/>
     </outline>
     <outline text="Ireland (IE)" title="Ireland (IE)">
-      <outline text="RTÉ News [needs verification]" title="RTÉ News [needs verification]" type="rss" xmlUrl="https://www.rte.ie/feeds/rss/?index=/news/" htmlUrl="https://www.rte.ie"/>
-      <outline text="TheJournal.ie [needs verification]" title="TheJournal.ie [needs verification]" type="rss" xmlUrl="https://www.thejournal.ie/feed/" htmlUrl="https://www.thejournal.ie"/>
-      <outline text="Independent.ie [needs verification]" title="Independent.ie [needs verification]" type="rss" xmlUrl="https://www.independent.ie/rss/section/ada62966-6b00-4ead-a0ba-2c179a0730b0" htmlUrl="https://www.independent.ie"/>
-      <outline text="Irish Times [needs verification]" title="Irish Times [needs verification]" type="rss" xmlUrl="https://www.irishtimes.com/arc/outboundfeeds/rss/" htmlUrl="https://www.irishtimes.com"/>
-      <outline text="DublinLive [needs verification]" title="DublinLive [needs verification]" type="rss" xmlUrl="https://www.dublinlive.ie/rss.xml" htmlUrl="https://www.dublinlive.ie"/>
-      <outline text="Irish Examiner [needs verification]" title="Irish Examiner [needs verification]" type="rss" xmlUrl="https://www.irishexaminer.com/feed/35-top_news.xml" htmlUrl="https://www.irishexaminer.com"/>
-      <outline text="Irish Star [needs verification]" title="Irish Star [needs verification]" type="rss" xmlUrl="https://www.irishstar.com/rss.xml" htmlUrl="https://www.irishstar.com"/>
-      <outline text="CorkBeo [needs verification]" title="CorkBeo [needs verification]" type="rss" xmlUrl="https://www.corkbeo.ie/rss.xml" htmlUrl="https://www.corkbeo.ie"/>
-      <outline text="GalwayBeo [needs verification]" title="GalwayBeo [needs verification]" type="rss" xmlUrl="https://www.galwaybeo.ie/rss.xml" htmlUrl="https://www.galwaybeo.ie"/>
-      <outline text="BreakingNews.ie [needs verification]" title="BreakingNews.ie [needs verification]" type="rss" xmlUrl="https://feeds.breakingnews.ie/bntopstories" htmlUrl="https://feeds.breakingnews.ie"/>
-      <outline text="Extra.ie [needs verification]" title="Extra.ie [needs verification]" type="rss" xmlUrl="https://extra.ie/feed" htmlUrl="https://extra.ie"/>
-      <outline text="Sunday World [needs verification]" title="Sunday World [needs verification]" type="rss" xmlUrl="https://www.sundayworld.com/feed" htmlUrl="https://www.sundayworld.com"/>
+      <outline text="RTÉ News [valid]" title="RTÉ News [valid]" type="rss" xmlUrl="https://www.rte.ie/feeds/rss/?index=/news/" htmlUrl="https://www.rte.ie"/>
+      <outline text="TheJournal.ie [valid]" title="TheJournal.ie [valid]" type="rss" xmlUrl="https://www.thejournal.ie/feed/" htmlUrl="https://www.thejournal.ie"/>
+      <outline text="Independent.ie [valid]" title="Independent.ie [valid]" type="rss" xmlUrl="https://www.independent.ie/rss/section/ada62966-6b00-4ead-a0ba-2c179a0730b0" htmlUrl="https://www.independent.ie"/>
+      <outline text="Irish Times [valid]" title="Irish Times [valid]" type="rss" xmlUrl="https://www.irishtimes.com/arc/outboundfeeds/rss/" htmlUrl="https://www.irishtimes.com"/>
+      <outline text="DublinLive [valid]" title="DublinLive [valid]" type="rss" xmlUrl="https://www.dublinlive.ie/rss.xml" htmlUrl="https://www.dublinlive.ie"/>
+      <outline text="Irish Examiner [valid]" title="Irish Examiner [valid]" type="rss" xmlUrl="https://www.irishexaminer.com/feed/35-top_news.xml" htmlUrl="https://www.irishexaminer.com"/>
+      <outline text="Irish Star [valid]" title="Irish Star [valid]" type="rss" xmlUrl="https://www.irishstar.com/rss.xml" htmlUrl="https://www.irishstar.com"/>
+      <outline text="CorkBeo [valid]" title="CorkBeo [valid]" type="rss" xmlUrl="https://www.corkbeo.ie/rss.xml" htmlUrl="https://www.corkbeo.ie"/>
+      <outline text="GalwayBeo [valid]" title="GalwayBeo [valid]" type="rss" xmlUrl="https://www.galwaybeo.ie/rss.xml" htmlUrl="https://www.galwaybeo.ie"/>
+      <outline text="BreakingNews.ie [valid]" title="BreakingNews.ie [valid]" type="rss" xmlUrl="https://feeds.breakingnews.ie/bntopstories" htmlUrl="https://feeds.breakingnews.ie"/>
+      <outline text="Extra.ie [valid]" title="Extra.ie [valid]" type="rss" xmlUrl="https://extra.ie/feed" htmlUrl="https://extra.ie"/>
+      <outline text="Sunday World [invalid]" title="Sunday World [invalid]" type="rss" xmlUrl="https://www.sundayworld.com/feed" htmlUrl="https://www.sundayworld.com"/>
       <outline text="RTÉ News - World [valid]" title="RTÉ News - World [valid]" type="rss" xmlUrl="https://www.rte.ie/feeds/rss/?index=/news/world/" htmlUrl="https://www.rte.ie"/>
       <outline text="RTÉ News - Business [valid]" title="RTÉ News - Business [valid]" type="rss" xmlUrl="https://www.rte.ie/feeds/rss/?index=/news/business/" htmlUrl="https://www.rte.ie"/>
       <outline text="RTÉ News - Politics [valid]" title="RTÉ News - Politics [valid]" type="rss" xmlUrl="https://www.rte.ie/feeds/rss/?index=/news/politics/" htmlUrl="https://www.rte.ie"/>
@@ -1714,7 +1714,7 @@
       <outline text="Independent.ie - Business [valid]" title="Independent.ie - Business [valid]" type="rss" xmlUrl="https://www.independent.ie/rss/section/business/" htmlUrl="https://www.independent.ie"/>
       <outline text="Independent.ie - Sport [valid]" title="Independent.ie - Sport [valid]" type="rss" xmlUrl="https://www.independent.ie/rss/section/sport/" htmlUrl="https://www.independent.ie"/>
       <outline text="Independent.ie - Irish News [valid]" title="Independent.ie - Irish News [valid]" type="rss" xmlUrl="https://www.independent.ie/rss/section/irish-news/" htmlUrl="https://www.independent.ie"/>
-      <outline text="The Sun Ireland [valid]" title="The Sun Ireland [valid]" type="rss" xmlUrl="https://www.thesun.ie/feed/" htmlUrl="https://www.thesun.ie"/>
+      <outline text="The Sun Ireland [invalid]" title="The Sun Ireland [invalid]" type="rss" xmlUrl="https://www.thesun.ie/feed/" htmlUrl="https://www.thesun.ie"/>
       <outline text="BelfastLive [valid]" title="BelfastLive [valid]" type="rss" xmlUrl="https://www.belfastlive.co.uk/rss.xml" htmlUrl="https://www.belfastlive.co.uk"/>
       <outline text="Buzz.ie [valid]" title="Buzz.ie [valid]" type="rss" xmlUrl="https://www.buzz.ie/rss.xml" htmlUrl="https://www.buzz.ie"/>
       <outline text="BreakingNews.ie - World [valid]" title="BreakingNews.ie - World [valid]" type="rss" xmlUrl="https://feeds.breakingnews.ie/bnworld" htmlUrl="https://feeds.breakingnews.ie"/>
@@ -1733,59 +1733,59 @@
       <outline text="Business Plus [valid]" title="Business Plus [valid]" type="rss" xmlUrl="https://businessplus.ie/feed/" htmlUrl="https://businessplus.ie"/>
       <outline text="Irish Tech News [valid]" title="Irish Tech News [valid]" type="rss" xmlUrl="https://irishtechnews.ie/feed/" htmlUrl="https://irishtechnews.ie"/>
       <outline text="RTÉ Sport [valid]" title="RTÉ Sport [valid]" type="rss" xmlUrl="https://www.rte.ie/feeds/rss/?index=/sport/" htmlUrl="https://www.rte.ie"/>
-      <outline text="Belfast Telegraph [valid]" title="Belfast Telegraph [valid]" type="rss" xmlUrl="https://www.belfasttelegraph.co.uk/rss" htmlUrl="https://www.belfasttelegraph.co.uk"/>
+      <outline text="Belfast Telegraph [invalid]" title="Belfast Telegraph [invalid]" type="rss" xmlUrl="https://www.belfasttelegraph.co.uk/rss" htmlUrl="https://www.belfasttelegraph.co.uk"/>
       <outline text="Irish Post [valid]" title="Irish Post [valid]" type="rss" xmlUrl="https://www.irishpost.com/feed" htmlUrl="https://www.irishpost.com"/>
     </outline>
     <outline text="Portugal (PT)" title="Portugal (PT)">
-      <outline text="Observador [needs verification]" title="Observador [needs verification]" type="rss" xmlUrl="https://observador.pt/feed/" htmlUrl="https://observador.pt"/>
-      <outline text="ECO [needs verification]" title="ECO [needs verification]" type="rss" xmlUrl="https://eco.sapo.pt/feed/" htmlUrl="https://eco.sapo.pt"/>
-      <outline text="Público [needs verification]" title="Público [needs verification]" type="rss" xmlUrl="https://feeds.feedburner.com/PublicoRSS" htmlUrl="https://feeds.feedburner.com"/>
-      <outline text="SIC Notícias [needs verification]" title="SIC Notícias [needs verification]" type="rss" xmlUrl="https://rss.impresa.pt/feed/latest/sicnot.rss?type=ARTICLE,VIDEO,GALLERY,STREAM,PLAYLIST,EVENT,NEWSLETTER&amp;limit=100&amp;pubsubhub=true" htmlUrl="https://rss.impresa.pt"/>
-      <outline text="Expresso [needs verification]" title="Expresso [needs verification]" type="rss" xmlUrl="https://rss.impresa.pt/feed/latest/expresso.rss?type=ARTICLE,VIDEO,STREAM,PLAYLIST,EVENT&amp;limit=100&amp;pubsubhub=true" htmlUrl="https://rss.impresa.pt"/>
-      <outline text="RTP - País [needs verification]" title="RTP - País [needs verification]" type="rss" xmlUrl="https://www.rtp.pt/noticias/rss/pais" htmlUrl="https://www.rtp.pt"/>
-      <outline text="RTP - Mundo [needs verification]" title="RTP - Mundo [needs verification]" type="rss" xmlUrl="https://www.rtp.pt/noticias/rss/mundo" htmlUrl="https://www.rtp.pt"/>
-      <outline text="RTP - Economia [needs verification]" title="RTP - Economia [needs verification]" type="rss" xmlUrl="https://www.rtp.pt/noticias/rss/economia" htmlUrl="https://www.rtp.pt"/>
-      <outline text="RTP - Desporto [needs verification]" title="RTP - Desporto [needs verification]" type="rss" xmlUrl="https://www.rtp.pt/noticias/rss/desporto" htmlUrl="https://www.rtp.pt"/>
-      <outline text="RTP - Cultura [needs verification]" title="RTP - Cultura [needs verification]" type="rss" xmlUrl="https://www.rtp.pt/noticias/rss/cultura" htmlUrl="https://www.rtp.pt"/>
-      <outline text="RTP - Videos [needs verification]" title="RTP - Videos [needs verification]" type="rss" xmlUrl="https://www.rtp.pt/noticias/rss/videos" htmlUrl="https://www.rtp.pt"/>
-      <outline text="RTP - Audios [needs verification]" title="RTP - Audios [needs verification]" type="rss" xmlUrl="https://www.rtp.pt/noticias/rss/audios" htmlUrl="https://www.rtp.pt"/>
-      <outline text="CNN Portugal [needs verification]" title="CNN Portugal [needs verification]" type="rss" xmlUrl="https://cnnportugal.iol.pt/rss.xml" htmlUrl="https://cnnportugal.iol.pt"/>
-      <outline text="Noticias ao Minuto - Ultima Hora [needs verification]" title="Noticias ao Minuto - Ultima Hora [needs verification]" type="rss" xmlUrl="https://www.noticiasaominuto.com/rss/ultima-hora" htmlUrl="https://www.noticiasaominuto.com"/>
-      <outline text="Executive Digest [needs verification]" title="Executive Digest [needs verification]" type="rss" xmlUrl="https://executivedigest.sapo.pt/feed/" htmlUrl="https://executivedigest.sapo.pt"/>
-      <outline text="Visao [needs verification]" title="Visao [needs verification]" type="rss" xmlUrl="https://visao.pt/feed/" htmlUrl="https://visao.pt"/>
-      <outline text="NiT [needs verification]" title="NiT [needs verification]" type="rss" xmlUrl="https://www.nit.pt/feed" htmlUrl="https://www.nit.pt"/>
+      <outline text="Observador [valid]" title="Observador [valid]" type="rss" xmlUrl="https://observador.pt/feed/" htmlUrl="https://observador.pt"/>
+      <outline text="ECO [valid]" title="ECO [valid]" type="rss" xmlUrl="https://eco.sapo.pt/feed/" htmlUrl="https://eco.sapo.pt"/>
+      <outline text="Público [valid]" title="Público [valid]" type="rss" xmlUrl="https://feeds.feedburner.com/PublicoRSS" htmlUrl="https://feeds.feedburner.com"/>
+      <outline text="SIC Notícias [valid]" title="SIC Notícias [valid]" type="rss" xmlUrl="https://rss.impresa.pt/feed/latest/sicnot.rss?type=ARTICLE,VIDEO,GALLERY,STREAM,PLAYLIST,EVENT,NEWSLETTER&amp;limit=100&amp;pubsubhub=true" htmlUrl="https://rss.impresa.pt"/>
+      <outline text="Expresso [valid]" title="Expresso [valid]" type="rss" xmlUrl="https://rss.impresa.pt/feed/latest/expresso.rss?type=ARTICLE,VIDEO,STREAM,PLAYLIST,EVENT&amp;limit=100&amp;pubsubhub=true" htmlUrl="https://rss.impresa.pt"/>
+      <outline text="RTP - País [valid]" title="RTP - País [valid]" type="rss" xmlUrl="https://www.rtp.pt/noticias/rss/pais" htmlUrl="https://www.rtp.pt"/>
+      <outline text="RTP - Mundo [valid]" title="RTP - Mundo [valid]" type="rss" xmlUrl="https://www.rtp.pt/noticias/rss/mundo" htmlUrl="https://www.rtp.pt"/>
+      <outline text="RTP - Economia [valid]" title="RTP - Economia [valid]" type="rss" xmlUrl="https://www.rtp.pt/noticias/rss/economia" htmlUrl="https://www.rtp.pt"/>
+      <outline text="RTP - Desporto [valid]" title="RTP - Desporto [valid]" type="rss" xmlUrl="https://www.rtp.pt/noticias/rss/desporto" htmlUrl="https://www.rtp.pt"/>
+      <outline text="RTP - Cultura [valid]" title="RTP - Cultura [valid]" type="rss" xmlUrl="https://www.rtp.pt/noticias/rss/cultura" htmlUrl="https://www.rtp.pt"/>
+      <outline text="RTP - Videos [valid]" title="RTP - Videos [valid]" type="rss" xmlUrl="https://www.rtp.pt/noticias/rss/videos" htmlUrl="https://www.rtp.pt"/>
+      <outline text="RTP - Audios [valid]" title="RTP - Audios [valid]" type="rss" xmlUrl="https://www.rtp.pt/noticias/rss/audios" htmlUrl="https://www.rtp.pt"/>
+      <outline text="CNN Portugal [valid]" title="CNN Portugal [valid]" type="rss" xmlUrl="https://cnnportugal.iol.pt/rss.xml" htmlUrl="https://cnnportugal.iol.pt"/>
+      <outline text="Noticias ao Minuto - Ultima Hora [valid]" title="Noticias ao Minuto - Ultima Hora [valid]" type="rss" xmlUrl="https://www.noticiasaominuto.com/rss/ultima-hora" htmlUrl="https://www.noticiasaominuto.com"/>
+      <outline text="Executive Digest [valid]" title="Executive Digest [valid]" type="rss" xmlUrl="https://executivedigest.sapo.pt/feed/" htmlUrl="https://executivedigest.sapo.pt"/>
+      <outline text="Visao [valid]" title="Visao [valid]" type="rss" xmlUrl="https://visao.pt/feed/" htmlUrl="https://visao.pt"/>
+      <outline text="NiT [valid]" title="NiT [valid]" type="rss" xmlUrl="https://www.nit.pt/feed" htmlUrl="https://www.nit.pt"/>
     </outline>
     <outline text="Denmark (DK)" title="Denmark (DK)">
-      <outline text="DR Nyheder [needs verification]" title="DR Nyheder [needs verification]" type="rss" xmlUrl="https://www.dr.dk/nyheder/service/feeds/allenyheder" htmlUrl="https://www.dr.dk"/>
-      <outline text="Politiken [needs verification]" title="Politiken [needs verification]" type="rss" xmlUrl="https://politiken.dk/rss/senestenyt.rss" htmlUrl="https://politiken.dk"/>
-      <outline text="Ekstra Bladet [needs verification]" title="Ekstra Bladet [needs verification]" type="rss" xmlUrl="https://ekstrabladet.dk/rssfeed/nyheder/" htmlUrl="https://ekstrabladet.dk"/>
-      <outline text="Jyllands-Posten - Topnyheder [needs verification]" title="Jyllands-Posten - Topnyheder [needs verification]" type="rss" xmlUrl="https://feeds.jp.dk/jp/topnyheder" htmlUrl="https://feeds.jp.dk"/>
-      <outline text="Jyllands-Posten - Seneste [needs verification]" title="Jyllands-Posten - Seneste [needs verification]" type="rss" xmlUrl="https://feeds.jp.dk/jp/seneste" htmlUrl="https://feeds.jp.dk"/>
-      <outline text="TV Syd [needs verification]" title="TV Syd [needs verification]" type="rss" xmlUrl="https://www.tvsyd.dk/rss" htmlUrl="https://www.tvsyd.dk"/>
-      <outline text="TV Midtvest [needs verification]" title="TV Midtvest [needs verification]" type="rss" xmlUrl="https://www.tvmidtvest.dk/rss" htmlUrl="https://www.tvmidtvest.dk"/>
-      <outline text="MigogKBH [needs verification]" title="MigogKBH [needs verification]" type="rss" xmlUrl="https://migogkbh.dk/feed/" htmlUrl="https://migogkbh.dk"/>
-      <outline text="MigogAarhus [needs verification]" title="MigogAarhus [needs verification]" type="rss" xmlUrl="https://migogaarhus.dk/feed/" htmlUrl="https://migogaarhus.dk"/>
-      <outline text="MigogOdense [needs verification]" title="MigogOdense [needs verification]" type="rss" xmlUrl="https://migogodense.dk/feed/" htmlUrl="https://migogodense.dk"/>
-      <outline text="MigogAalborg [needs verification]" title="MigogAalborg [needs verification]" type="rss" xmlUrl="https://migogaalborg.dk/feed/" htmlUrl="https://migogaalborg.dk"/>
-      <outline text="DR Indland [needs verification]" title="DR Indland [needs verification]" type="rss" xmlUrl="https://www.dr.dk/nyheder/service/feeds/indland" htmlUrl="https://www.dr.dk"/>
-      <outline text="DR Udland [needs verification]" title="DR Udland [needs verification]" type="rss" xmlUrl="https://www.dr.dk/nyheder/service/feeds/udland" htmlUrl="https://www.dr.dk"/>
-      <outline text="DR Penge [needs verification]" title="DR Penge [needs verification]" type="rss" xmlUrl="https://www.dr.dk/nyheder/service/feeds/penge" htmlUrl="https://www.dr.dk"/>
-      <outline text="DR Sporten [needs verification]" title="DR Sporten [needs verification]" type="rss" xmlUrl="https://www.dr.dk/nyheder/service/feeds/sporten" htmlUrl="https://www.dr.dk"/>
-      <outline text="DR Kultur [needs verification]" title="DR Kultur [needs verification]" type="rss" xmlUrl="https://www.dr.dk/nyheder/service/feeds/kultur" htmlUrl="https://www.dr.dk"/>
+      <outline text="DR Nyheder [valid]" title="DR Nyheder [valid]" type="rss" xmlUrl="https://www.dr.dk/nyheder/service/feeds/allenyheder" htmlUrl="https://www.dr.dk"/>
+      <outline text="Politiken [valid]" title="Politiken [valid]" type="rss" xmlUrl="https://politiken.dk/rss/senestenyt.rss" htmlUrl="https://politiken.dk"/>
+      <outline text="Ekstra Bladet [valid]" title="Ekstra Bladet [valid]" type="rss" xmlUrl="https://ekstrabladet.dk/rssfeed/nyheder/" htmlUrl="https://ekstrabladet.dk"/>
+      <outline text="Jyllands-Posten - Topnyheder [valid]" title="Jyllands-Posten - Topnyheder [valid]" type="rss" xmlUrl="https://feeds.jp.dk/jp/topnyheder" htmlUrl="https://feeds.jp.dk"/>
+      <outline text="Jyllands-Posten - Seneste [valid]" title="Jyllands-Posten - Seneste [valid]" type="rss" xmlUrl="https://feeds.jp.dk/jp/seneste" htmlUrl="https://feeds.jp.dk"/>
+      <outline text="TV Syd [valid]" title="TV Syd [valid]" type="rss" xmlUrl="https://www.tvsyd.dk/rss" htmlUrl="https://www.tvsyd.dk"/>
+      <outline text="TV Midtvest [valid]" title="TV Midtvest [valid]" type="rss" xmlUrl="https://www.tvmidtvest.dk/rss" htmlUrl="https://www.tvmidtvest.dk"/>
+      <outline text="MigogKBH [valid]" title="MigogKBH [valid]" type="rss" xmlUrl="https://migogkbh.dk/feed/" htmlUrl="https://migogkbh.dk"/>
+      <outline text="MigogAarhus [valid]" title="MigogAarhus [valid]" type="rss" xmlUrl="https://migogaarhus.dk/feed/" htmlUrl="https://migogaarhus.dk"/>
+      <outline text="MigogOdense [valid]" title="MigogOdense [valid]" type="rss" xmlUrl="https://migogodense.dk/feed/" htmlUrl="https://migogodense.dk"/>
+      <outline text="MigogAalborg [valid]" title="MigogAalborg [valid]" type="rss" xmlUrl="https://migogaalborg.dk/feed/" htmlUrl="https://migogaalborg.dk"/>
+      <outline text="DR Indland [valid]" title="DR Indland [valid]" type="rss" xmlUrl="https://www.dr.dk/nyheder/service/feeds/indland" htmlUrl="https://www.dr.dk"/>
+      <outline text="DR Udland [valid]" title="DR Udland [valid]" type="rss" xmlUrl="https://www.dr.dk/nyheder/service/feeds/udland" htmlUrl="https://www.dr.dk"/>
+      <outline text="DR Penge [valid]" title="DR Penge [valid]" type="rss" xmlUrl="https://www.dr.dk/nyheder/service/feeds/penge" htmlUrl="https://www.dr.dk"/>
+      <outline text="DR Sporten [valid]" title="DR Sporten [valid]" type="rss" xmlUrl="https://www.dr.dk/nyheder/service/feeds/sporten" htmlUrl="https://www.dr.dk"/>
+      <outline text="DR Kultur [valid]" title="DR Kultur [valid]" type="rss" xmlUrl="https://www.dr.dk/nyheder/service/feeds/kultur" htmlUrl="https://www.dr.dk"/>
       <outline text="Politiken - Indland [valid]" title="Politiken - Indland [valid]" type="rss" xmlUrl="https://politiken.dk/rss/indland.rss" htmlUrl="https://politiken.dk"/>
       <outline text="Politiken - Udland [valid]" title="Politiken - Udland [valid]" type="rss" xmlUrl="https://politiken.dk/rss/udland.rss" htmlUrl="https://politiken.dk"/>
       <outline text="Politiken - Kultur [valid]" title="Politiken - Kultur [valid]" type="rss" xmlUrl="https://politiken.dk/rss/kultur.rss" htmlUrl="https://politiken.dk"/>
       <outline text="Politiken - Sport [valid]" title="Politiken - Sport [valid]" type="rss" xmlUrl="https://politiken.dk/rss/sport.rss" htmlUrl="https://politiken.dk"/>
       <outline text="Borsen [valid]" title="Borsen [valid]" type="rss" xmlUrl="https://borsen.dk/rss" htmlUrl="https://borsen.dk"/>
-      <outline text="Borsen - Finans [needs verification]" title="Borsen - Finans [needs verification]" type="rss" xmlUrl="https://borsen.dk/rss/finans" htmlUrl="https://borsen.dk"/>
-      <outline text="Borsen - Investor [needs verification]" title="Borsen - Investor [needs verification]" type="rss" xmlUrl="https://borsen.dk/rss/investor" htmlUrl="https://borsen.dk"/>
-      <outline text="Borsen - Politik [needs verification]" title="Borsen - Politik [needs verification]" type="rss" xmlUrl="https://borsen.dk/rss/politik" htmlUrl="https://borsen.dk"/>
-      <outline text="Borsen - Udland [needs verification]" title="Borsen - Udland [needs verification]" type="rss" xmlUrl="https://borsen.dk/rss/udland" htmlUrl="https://borsen.dk"/>
-      <outline text="Borsen - Ejendomme [needs verification]" title="Borsen - Ejendomme [needs verification]" type="rss" xmlUrl="https://borsen.dk/rss/ejendomme" htmlUrl="https://borsen.dk"/>
-      <outline text="Borsen - Executive [needs verification]" title="Borsen - Executive [needs verification]" type="rss" xmlUrl="https://borsen.dk/rss/executive" htmlUrl="https://borsen.dk"/>
-      <outline text="Borsen - Opinion [needs verification]" title="Borsen - Opinion [needs verification]" type="rss" xmlUrl="https://borsen.dk/rss/opinion" htmlUrl="https://borsen.dk"/>
-      <outline text="Borsen - Markedsberetninger [needs verification]" title="Borsen - Markedsberetninger [needs verification]" type="rss" xmlUrl="https://borsen.dk/rss/markedsberetninger" htmlUrl="https://borsen.dk"/>
-      <outline text="Borsen - Baeredygtig [needs verification]" title="Borsen - Baeredygtig [needs verification]" type="rss" xmlUrl="https://borsen.dk/rss/baeredygtig" htmlUrl="https://borsen.dk"/>
+      <outline text="Borsen - Finans [valid]" title="Borsen - Finans [valid]" type="rss" xmlUrl="https://borsen.dk/rss/finans" htmlUrl="https://borsen.dk"/>
+      <outline text="Borsen - Investor [valid]" title="Borsen - Investor [valid]" type="rss" xmlUrl="https://borsen.dk/rss/investor" htmlUrl="https://borsen.dk"/>
+      <outline text="Borsen - Politik [valid]" title="Borsen - Politik [valid]" type="rss" xmlUrl="https://borsen.dk/rss/politik" htmlUrl="https://borsen.dk"/>
+      <outline text="Borsen - Udland [valid]" title="Borsen - Udland [valid]" type="rss" xmlUrl="https://borsen.dk/rss/udland" htmlUrl="https://borsen.dk"/>
+      <outline text="Borsen - Ejendomme [valid]" title="Borsen - Ejendomme [valid]" type="rss" xmlUrl="https://borsen.dk/rss/ejendomme" htmlUrl="https://borsen.dk"/>
+      <outline text="Borsen - Executive [valid]" title="Borsen - Executive [valid]" type="rss" xmlUrl="https://borsen.dk/rss/executive" htmlUrl="https://borsen.dk"/>
+      <outline text="Borsen - Opinion [valid]" title="Borsen - Opinion [valid]" type="rss" xmlUrl="https://borsen.dk/rss/opinion" htmlUrl="https://borsen.dk"/>
+      <outline text="Borsen - Markedsberetninger [valid]" title="Borsen - Markedsberetninger [valid]" type="rss" xmlUrl="https://borsen.dk/rss/markedsberetninger" htmlUrl="https://borsen.dk"/>
+      <outline text="Borsen - Baeredygtig [valid]" title="Borsen - Baeredygtig [valid]" type="rss" xmlUrl="https://borsen.dk/rss/baeredygtig" htmlUrl="https://borsen.dk"/>
       <outline text="Borsen - Virksomheder [valid]" title="Borsen - Virksomheder [valid]" type="rss" xmlUrl="https://borsen.dk/rss/virksomheder" htmlUrl="https://borsen.dk"/>
       <outline text="TV2 Kosmopol - Sitemap [valid]" title="TV2 Kosmopol - Sitemap [valid]" type="rss" xmlUrl="https://www.tv2kosmopol.dk/rss" htmlUrl="https://www.tv2kosmopol.dk"/>
       <outline text="TV2 Fyn - Sitemap [valid]" title="TV2 Fyn - Sitemap [valid]" type="rss" xmlUrl="https://www.tv2fyn.dk/rss" htmlUrl="https://www.tv2fyn.dk"/>
@@ -1799,40 +1799,40 @@
       <outline text="Finans.dk - Topnyheder [valid]" title="Finans.dk - Topnyheder [valid]" type="rss" xmlUrl="https://feeds.finans.dk/topnyheder" htmlUrl="https://feeds.finans.dk"/>
       <outline text="Finans.dk - Seneste [valid]" title="Finans.dk - Seneste [valid]" type="rss" xmlUrl="https://feeds.finans.dk/seneste" htmlUrl="https://feeds.finans.dk"/>
       <outline text="DR Seneste Nyt [valid]" title="DR Seneste Nyt [valid]" type="rss" xmlUrl="https://www.dr.dk/nyheder/service/feeds/senestenyt" htmlUrl="https://www.dr.dk"/>
-      <outline text="Jyllands-Posten - Mest Laeste [needs verification]" title="Jyllands-Posten - Mest Laeste [needs verification]" type="rss" xmlUrl="https://feeds.jp.dk/jp/mest-laeste" htmlUrl="https://feeds.jp.dk"/>
-      <outline text="Altinget [needs verification]" title="Altinget [needs verification]" type="rss" xmlUrl="https://www.altinget.dk/rss" htmlUrl="https://www.altinget.dk"/>
-      <outline text="Ingenioren [needs verification]" title="Ingenioren [needs verification]" type="rss" xmlUrl="https://ing.dk/rss" htmlUrl="https://ing.dk"/>
-      <outline text="Version2 [needs verification]" title="Version2 [needs verification]" type="rss" xmlUrl="https://version2.dk/rss" htmlUrl="https://version2.dk"/>
-      <outline text="Kristeligt Dagblad - Latest RSS [needs verification]" title="Kristeligt Dagblad - Latest RSS [needs verification]" type="rss" xmlUrl="https://www.kristeligt-dagblad.dk/feed/rss/latest" htmlUrl="https://www.kristeligt-dagblad.dk"/>
-      <outline text="Nordjyske - Nyheder [needs verification]" title="Nordjyske - Nyheder [needs verification]" type="rss" xmlUrl="https://nordjyske.dk/rss/nyheder" htmlUrl="https://nordjyske.dk"/>
-      <outline text="Nordjyske - Aalborg [needs verification]" title="Nordjyske - Aalborg [needs verification]" type="rss" xmlUrl="https://nordjyske.dk/rss/aalborg" htmlUrl="https://nordjyske.dk"/>
-      <outline text="Nordjyske - Frederikshavn [needs verification]" title="Nordjyske - Frederikshavn [needs verification]" type="rss" xmlUrl="https://nordjyske.dk/rss/frederikshavn" htmlUrl="https://nordjyske.dk"/>
-      <outline text="Nordjyske - Hjorring [needs verification]" title="Nordjyske - Hjorring [needs verification]" type="rss" xmlUrl="https://nordjyske.dk/rss/hjoerring" htmlUrl="https://nordjyske.dk"/>
-      <outline text="Nordjyske - Bronderslev [needs verification]" title="Nordjyske - Bronderslev [needs verification]" type="rss" xmlUrl="https://nordjyske.dk/rss/broenderslev" htmlUrl="https://nordjyske.dk"/>
-      <outline text="Nordjyske - Jammerbugt [needs verification]" title="Nordjyske - Jammerbugt [needs verification]" type="rss" xmlUrl="https://nordjyske.dk/rss/jammerbugt" htmlUrl="https://nordjyske.dk"/>
-      <outline text="Nordjyske - Mariagerfjord [needs verification]" title="Nordjyske - Mariagerfjord [needs verification]" type="rss" xmlUrl="https://nordjyske.dk/rss/mariagerfjord" htmlUrl="https://nordjyske.dk"/>
-      <outline text="Nordjyske - Mors [needs verification]" title="Nordjyske - Mors [needs verification]" type="rss" xmlUrl="https://nordjyske.dk/rss/mors" htmlUrl="https://nordjyske.dk"/>
-      <outline text="Nordjyske - Rebild [needs verification]" title="Nordjyske - Rebild [needs verification]" type="rss" xmlUrl="https://nordjyske.dk/rss/rebild" htmlUrl="https://nordjyske.dk"/>
-      <outline text="Nordjyske - Vesthimmerland [needs verification]" title="Nordjyske - Vesthimmerland [needs verification]" type="rss" xmlUrl="https://nordjyske.dk/rss/vesthimmerland" htmlUrl="https://nordjyske.dk"/>
-      <outline text="Nordjyske - Thisted [needs verification]" title="Nordjyske - Thisted [needs verification]" type="rss" xmlUrl="https://nordjyske.dk/rss/thisted" htmlUrl="https://nordjyske.dk"/>
-      <outline text="Nordjyske - Sport [needs verification]" title="Nordjyske - Sport [needs verification]" type="rss" xmlUrl="https://nordjyske.dk/rss/sport" htmlUrl="https://nordjyske.dk"/>
-      <outline text="Nordjyske - Erhverv [needs verification]" title="Nordjyske - Erhverv [needs verification]" type="rss" xmlUrl="https://nordjyske.dk/rss/erhverv" htmlUrl="https://nordjyske.dk"/>
+      <outline text="Jyllands-Posten - Mest Laeste [valid]" title="Jyllands-Posten - Mest Laeste [valid]" type="rss" xmlUrl="https://feeds.jp.dk/jp/mest-laeste" htmlUrl="https://feeds.jp.dk"/>
+      <outline text="Altinget [valid]" title="Altinget [valid]" type="rss" xmlUrl="https://www.altinget.dk/rss" htmlUrl="https://www.altinget.dk"/>
+      <outline text="Ingenioren [valid]" title="Ingenioren [valid]" type="rss" xmlUrl="https://ing.dk/rss" htmlUrl="https://ing.dk"/>
+      <outline text="Version2 [valid]" title="Version2 [valid]" type="rss" xmlUrl="https://version2.dk/rss" htmlUrl="https://version2.dk"/>
+      <outline text="Kristeligt Dagblad - Latest RSS [valid]" title="Kristeligt Dagblad - Latest RSS [valid]" type="rss" xmlUrl="https://www.kristeligt-dagblad.dk/feed/rss/latest" htmlUrl="https://www.kristeligt-dagblad.dk"/>
+      <outline text="Nordjyske - Nyheder [valid]" title="Nordjyske - Nyheder [valid]" type="rss" xmlUrl="https://nordjyske.dk/rss/nyheder" htmlUrl="https://nordjyske.dk"/>
+      <outline text="Nordjyske - Aalborg [valid]" title="Nordjyske - Aalborg [valid]" type="rss" xmlUrl="https://nordjyske.dk/rss/aalborg" htmlUrl="https://nordjyske.dk"/>
+      <outline text="Nordjyske - Frederikshavn [valid]" title="Nordjyske - Frederikshavn [valid]" type="rss" xmlUrl="https://nordjyske.dk/rss/frederikshavn" htmlUrl="https://nordjyske.dk"/>
+      <outline text="Nordjyske - Hjorring [valid]" title="Nordjyske - Hjorring [valid]" type="rss" xmlUrl="https://nordjyske.dk/rss/hjoerring" htmlUrl="https://nordjyske.dk"/>
+      <outline text="Nordjyske - Bronderslev [valid]" title="Nordjyske - Bronderslev [valid]" type="rss" xmlUrl="https://nordjyske.dk/rss/broenderslev" htmlUrl="https://nordjyske.dk"/>
+      <outline text="Nordjyske - Jammerbugt [valid]" title="Nordjyske - Jammerbugt [valid]" type="rss" xmlUrl="https://nordjyske.dk/rss/jammerbugt" htmlUrl="https://nordjyske.dk"/>
+      <outline text="Nordjyske - Mariagerfjord [valid]" title="Nordjyske - Mariagerfjord [valid]" type="rss" xmlUrl="https://nordjyske.dk/rss/mariagerfjord" htmlUrl="https://nordjyske.dk"/>
+      <outline text="Nordjyske - Mors [valid]" title="Nordjyske - Mors [valid]" type="rss" xmlUrl="https://nordjyske.dk/rss/mors" htmlUrl="https://nordjyske.dk"/>
+      <outline text="Nordjyske - Rebild [valid]" title="Nordjyske - Rebild [valid]" type="rss" xmlUrl="https://nordjyske.dk/rss/rebild" htmlUrl="https://nordjyske.dk"/>
+      <outline text="Nordjyske - Vesthimmerland [valid]" title="Nordjyske - Vesthimmerland [valid]" type="rss" xmlUrl="https://nordjyske.dk/rss/vesthimmerland" htmlUrl="https://nordjyske.dk"/>
+      <outline text="Nordjyske - Thisted [valid]" title="Nordjyske - Thisted [valid]" type="rss" xmlUrl="https://nordjyske.dk/rss/thisted" htmlUrl="https://nordjyske.dk"/>
+      <outline text="Nordjyske - Sport [valid]" title="Nordjyske - Sport [valid]" type="rss" xmlUrl="https://nordjyske.dk/rss/sport" htmlUrl="https://nordjyske.dk"/>
+      <outline text="Nordjyske - Erhverv [valid]" title="Nordjyske - Erhverv [valid]" type="rss" xmlUrl="https://nordjyske.dk/rss/erhverv" htmlUrl="https://nordjyske.dk"/>
     </outline>
     <outline text="Finland (FI)" title="Finland (FI)">
-      <outline text="Yle Uutiset [needs verification]" title="Yle Uutiset [needs verification]" type="rss" xmlUrl="https://feeds.yle.fi/uutiset/v1/majorHeadlines/YLE_UUTISET.rss?publisherIds=YLE_UUTISET" htmlUrl="https://feeds.yle.fi"/>
-      <outline text="Helsingin Sanomat [needs verification]" title="Helsingin Sanomat [needs verification]" type="rss" xmlUrl="https://www.hs.fi/rss/tuoreimmat.xml" htmlUrl="https://www.hs.fi"/>
-      <outline text="Ilta-Sanomat [needs verification]" title="Ilta-Sanomat [needs verification]" type="rss" xmlUrl="https://www.is.fi/rss/tuoreimmat.xml" htmlUrl="https://www.is.fi"/>
-      <outline text="Iltalehti [needs verification]" title="Iltalehti [needs verification]" type="rss" xmlUrl="https://www.iltalehti.fi/rss.xml" htmlUrl="https://www.iltalehti.fi"/>
-      <outline text="HBL [needs verification]" title="HBL [needs verification]" type="rss" xmlUrl="https://www.hbl.fi/feeds/feed.xml" htmlUrl="https://www.hbl.fi"/>
-      <outline text="ESS [needs verification]" title="ESS [needs verification]" type="rss" xmlUrl="https://www.ess.fi/feed/rss" htmlUrl="https://www.ess.fi"/>
-      <outline text="Kaleva - Uusimmat [needs verification]" title="Kaleva - Uusimmat [needs verification]" type="rss" xmlUrl="https://kaleva.fi/feedit/rss/managed-listing/rss-uusimmat/" htmlUrl="https://kaleva.fi"/>
-      <outline text="KSML [needs verification]" title="KSML [needs verification]" type="rss" xmlUrl="https://www.ksml.fi/feed/rss" htmlUrl="https://www.ksml.fi"/>
-      <outline text="Maaseudun Tulevaisuus [needs verification]" title="Maaseudun Tulevaisuus [needs verification]" type="rss" xmlUrl="https://www.maaseuduntulevaisuus.fi/feeds/maaseuduntulevaisuus" htmlUrl="https://www.maaseuduntulevaisuus.fi"/>
-      <outline text="Aamuposti [needs verification]" title="Aamuposti [needs verification]" type="rss" xmlUrl="https://www.aamuposti.fi/feed/rss" htmlUrl="https://www.aamuposti.fi"/>
-      <outline text="Lansi-Savo [needs verification]" title="Lansi-Savo [needs verification]" type="rss" xmlUrl="https://www.lansi-savo.fi/feed/rss" htmlUrl="https://www.lansi-savo.fi"/>
-      <outline text="Warkauden Lehti [needs verification]" title="Warkauden Lehti [needs verification]" type="rss" xmlUrl="https://www.warkaudenlehti.fi/feed/rss" htmlUrl="https://www.warkaudenlehti.fi"/>
-      <outline text="Ita-Savo [needs verification]" title="Ita-Savo [needs verification]" type="rss" xmlUrl="https://www.ita-savo.fi/feed/rss" htmlUrl="https://www.ita-savo.fi"/>
-      <outline text="Yle Uutiset - Kotimaa [needs verification]" title="Yle Uutiset - Kotimaa [needs verification]" type="rss" xmlUrl="https://feeds.yle.fi/uutiset/v1/recent.rss?publisherIds=YLE_UUTISET&amp;concepts=18-34837" htmlUrl="https://feeds.yle.fi"/>
+      <outline text="Yle Uutiset [valid]" title="Yle Uutiset [valid]" type="rss" xmlUrl="https://feeds.yle.fi/uutiset/v1/majorHeadlines/YLE_UUTISET.rss?publisherIds=YLE_UUTISET" htmlUrl="https://feeds.yle.fi"/>
+      <outline text="Helsingin Sanomat [valid]" title="Helsingin Sanomat [valid]" type="rss" xmlUrl="https://www.hs.fi/rss/tuoreimmat.xml" htmlUrl="https://www.hs.fi"/>
+      <outline text="Ilta-Sanomat [valid]" title="Ilta-Sanomat [valid]" type="rss" xmlUrl="https://www.is.fi/rss/tuoreimmat.xml" htmlUrl="https://www.is.fi"/>
+      <outline text="Iltalehti [valid]" title="Iltalehti [valid]" type="rss" xmlUrl="https://www.iltalehti.fi/rss.xml" htmlUrl="https://www.iltalehti.fi"/>
+      <outline text="HBL [valid]" title="HBL [valid]" type="rss" xmlUrl="https://www.hbl.fi/feeds/feed.xml" htmlUrl="https://www.hbl.fi"/>
+      <outline text="ESS [valid]" title="ESS [valid]" type="rss" xmlUrl="https://www.ess.fi/feed/rss" htmlUrl="https://www.ess.fi"/>
+      <outline text="Kaleva - Uusimmat [valid]" title="Kaleva - Uusimmat [valid]" type="rss" xmlUrl="https://kaleva.fi/feedit/rss/managed-listing/rss-uusimmat/" htmlUrl="https://kaleva.fi"/>
+      <outline text="KSML [valid]" title="KSML [valid]" type="rss" xmlUrl="https://www.ksml.fi/feed/rss" htmlUrl="https://www.ksml.fi"/>
+      <outline text="Maaseudun Tulevaisuus [valid]" title="Maaseudun Tulevaisuus [valid]" type="rss" xmlUrl="https://www.maaseuduntulevaisuus.fi/feeds/maaseuduntulevaisuus" htmlUrl="https://www.maaseuduntulevaisuus.fi"/>
+      <outline text="Aamuposti [valid]" title="Aamuposti [valid]" type="rss" xmlUrl="https://www.aamuposti.fi/feed/rss" htmlUrl="https://www.aamuposti.fi"/>
+      <outline text="Lansi-Savo [valid]" title="Lansi-Savo [valid]" type="rss" xmlUrl="https://www.lansi-savo.fi/feed/rss" htmlUrl="https://www.lansi-savo.fi"/>
+      <outline text="Warkauden Lehti [valid]" title="Warkauden Lehti [valid]" type="rss" xmlUrl="https://www.warkaudenlehti.fi/feed/rss" htmlUrl="https://www.warkaudenlehti.fi"/>
+      <outline text="Ita-Savo [valid]" title="Ita-Savo [valid]" type="rss" xmlUrl="https://www.ita-savo.fi/feed/rss" htmlUrl="https://www.ita-savo.fi"/>
+      <outline text="Yle Uutiset - Kotimaa [valid]" title="Yle Uutiset - Kotimaa [valid]" type="rss" xmlUrl="https://feeds.yle.fi/uutiset/v1/recent.rss?publisherIds=YLE_UUTISET&amp;concepts=18-34837" htmlUrl="https://feeds.yle.fi"/>
       <outline text="Ilta-Sanomat - Kotimaa [valid]" title="Ilta-Sanomat - Kotimaa [valid]" type="rss" xmlUrl="https://www.is.fi/rss/kotimaa.xml" htmlUrl="https://www.is.fi"/>
       <outline text="Ilta-Sanomat - Ulkomaat [valid]" title="Ilta-Sanomat - Ulkomaat [valid]" type="rss" xmlUrl="https://www.is.fi/rss/ulkomaat.xml" htmlUrl="https://www.is.fi"/>
       <outline text="Ilta-Sanomat - Taloussanomat [valid]" title="Ilta-Sanomat - Taloussanomat [valid]" type="rss" xmlUrl="https://www.is.fi/rss/taloussanomat.xml" htmlUrl="https://www.is.fi"/>
@@ -1885,27 +1885,27 @@
       <outline text="Suomenmaa [valid]" title="Suomenmaa [valid]" type="rss" xmlUrl="https://www.suomenmaa.fi/feed/" htmlUrl="https://www.suomenmaa.fi"/>
       <outline text="Demokraatti [valid]" title="Demokraatti [valid]" type="rss" xmlUrl="https://demokraatti.fi/feed/" htmlUrl="https://demokraatti.fi"/>
       <outline text="Tivi [valid]" title="Tivi [valid]" type="rss" xmlUrl="https://www.tivi.fi/api/feed/v2/rss/tv" htmlUrl="https://www.tivi.fi"/>
-      <outline text="Mikrobitti [valid]" title="Mikrobitti [valid]" type="rss" xmlUrl="https://www.mikrobitti.fi/rss/bitti.xml" htmlUrl="https://www.mikrobitti.fi"/>
+      <outline text="Mikrobitti [invalid]" title="Mikrobitti [invalid]" type="rss" xmlUrl="https://www.mikrobitti.fi/rss/bitti.xml" htmlUrl="https://www.mikrobitti.fi"/>
       <outline text="Tekniikka &amp; Talous [valid]" title="Tekniikka &amp; Talous [valid]" type="rss" xmlUrl="https://www.tekniikkatalous.fi/api/feed/v2/rss/tt" htmlUrl="https://www.tekniikkatalous.fi"/>
       <outline text="Talouselama [valid]" title="Talouselama [valid]" type="rss" xmlUrl="https://www.talouselama.fi/api/feed/v2/rss/te" htmlUrl="https://www.talouselama.fi"/>
       <outline text="Arvopaperi [valid]" title="Arvopaperi [valid]" type="rss" xmlUrl="https://www.arvopaperi.fi/api/feed/v2/rss/ap" htmlUrl="https://www.arvopaperi.fi"/>
       <outline text="Seiska [valid]" title="Seiska [valid]" type="rss" xmlUrl="https://www.seiska.fi/latest.rss" htmlUrl="https://www.seiska.fi"/>
-      <outline text="Suomen Kuvalehti [needs verification]" title="Suomen Kuvalehti [needs verification]" type="rss" xmlUrl="https://suomenkuvalehti.fi/feed/" htmlUrl="https://suomenkuvalehti.fi"/>
+      <outline text="Suomen Kuvalehti [valid]" title="Suomen Kuvalehti [valid]" type="rss" xmlUrl="https://suomenkuvalehti.fi/feed/" htmlUrl="https://suomenkuvalehti.fi"/>
     </outline>
     <outline text="Czech Republic (CZ)" title="Czech Republic (CZ)">
-      <outline text="ČT24 [needs verification]" title="ČT24 [needs verification]" type="rss" xmlUrl="https://ct24.ceskatelevize.cz/rss/tema/vyber-redakce-84313" htmlUrl="https://ct24.ceskatelevize.cz"/>
-      <outline text="Aktuálně.cz [needs verification]" title="Aktuálně.cz [needs verification]" type="rss" xmlUrl="https://zpravy.aktualne.cz/rss/" htmlUrl="https://zpravy.aktualne.cz"/>
-      <outline text="Novinky.cz [needs verification]" title="Novinky.cz [needs verification]" type="rss" xmlUrl="https://www.novinky.cz/rss" htmlUrl="https://www.novinky.cz"/>
-      <outline text="Seznam Zprávy [needs verification]" title="Seznam Zprávy [needs verification]" type="rss" xmlUrl="https://www.seznamzpravy.cz/rss" htmlUrl="https://www.seznamzpravy.cz"/>
-      <outline text="Deník [needs verification]" title="Deník [needs verification]" type="rss" xmlUrl="https://www.denik.cz/rss/zpravy.html" htmlUrl="https://www.denik.cz"/>
-      <outline text="Echo24 [needs verification]" title="Echo24 [needs verification]" type="rss" xmlUrl="https://www.echo24.cz/rss/s/homepage" htmlUrl="https://www.echo24.cz"/>
-      <outline text="iROZHLAS [needs verification]" title="iROZHLAS [needs verification]" type="rss" xmlUrl="https://www.irozhlas.cz/rss/irozhlas" htmlUrl="https://www.irozhlas.cz"/>
-      <outline text="iROZHLAS - Domov [needs verification]" title="iROZHLAS - Domov [needs verification]" type="rss" xmlUrl="https://www.irozhlas.cz/rss/irozhlas/section/zpravy-domov" htmlUrl="https://www.irozhlas.cz"/>
-      <outline text="iROZHLAS - Svet [needs verification]" title="iROZHLAS - Svet [needs verification]" type="rss" xmlUrl="https://www.irozhlas.cz/rss/irozhlas/section/zpravy-svet" htmlUrl="https://www.irozhlas.cz"/>
-      <outline text="iROZHLAS - Sport [needs verification]" title="iROZHLAS - Sport [needs verification]" type="rss" xmlUrl="https://www.irozhlas.cz/rss/irozhlas/section/sport" htmlUrl="https://www.irozhlas.cz"/>
-      <outline text="CNN Prima [needs verification]" title="CNN Prima [needs verification]" type="rss" xmlUrl="https://cnn.iprima.cz/rss" htmlUrl="https://cnn.iprima.cz"/>
-      <outline text="Forum24 [needs verification]" title="Forum24 [needs verification]" type="rss" xmlUrl="https://www.forum24.cz/feed" htmlUrl="https://www.forum24.cz"/>
-      <outline text="ParlamentniListy [needs verification]" title="ParlamentniListy [needs verification]" type="rss" xmlUrl="http://www.parlamentnilisty.cz/export/rss.aspx" htmlUrl="http://www.parlamentnilisty.cz"/>
+      <outline text="ČT24 [valid]" title="ČT24 [valid]" type="rss" xmlUrl="https://ct24.ceskatelevize.cz/rss/tema/vyber-redakce-84313" htmlUrl="https://ct24.ceskatelevize.cz"/>
+      <outline text="Aktuálně.cz [valid]" title="Aktuálně.cz [valid]" type="rss" xmlUrl="https://zpravy.aktualne.cz/rss/" htmlUrl="https://zpravy.aktualne.cz"/>
+      <outline text="Novinky.cz [valid]" title="Novinky.cz [valid]" type="rss" xmlUrl="https://www.novinky.cz/rss" htmlUrl="https://www.novinky.cz"/>
+      <outline text="Seznam Zprávy [valid]" title="Seznam Zprávy [valid]" type="rss" xmlUrl="https://www.seznamzpravy.cz/rss" htmlUrl="https://www.seznamzpravy.cz"/>
+      <outline text="Deník [valid]" title="Deník [valid]" type="rss" xmlUrl="https://www.denik.cz/rss/zpravy.html" htmlUrl="https://www.denik.cz"/>
+      <outline text="Echo24 [valid]" title="Echo24 [valid]" type="rss" xmlUrl="https://www.echo24.cz/rss/s/homepage" htmlUrl="https://www.echo24.cz"/>
+      <outline text="iROZHLAS [valid]" title="iROZHLAS [valid]" type="rss" xmlUrl="https://www.irozhlas.cz/rss/irozhlas" htmlUrl="https://www.irozhlas.cz"/>
+      <outline text="iROZHLAS - Domov [valid]" title="iROZHLAS - Domov [valid]" type="rss" xmlUrl="https://www.irozhlas.cz/rss/irozhlas/section/zpravy-domov" htmlUrl="https://www.irozhlas.cz"/>
+      <outline text="iROZHLAS - Svet [valid]" title="iROZHLAS - Svet [valid]" type="rss" xmlUrl="https://www.irozhlas.cz/rss/irozhlas/section/zpravy-svet" htmlUrl="https://www.irozhlas.cz"/>
+      <outline text="iROZHLAS - Sport [valid]" title="iROZHLAS - Sport [valid]" type="rss" xmlUrl="https://www.irozhlas.cz/rss/irozhlas/section/sport" htmlUrl="https://www.irozhlas.cz"/>
+      <outline text="CNN Prima [valid]" title="CNN Prima [valid]" type="rss" xmlUrl="https://cnn.iprima.cz/rss" htmlUrl="https://cnn.iprima.cz"/>
+      <outline text="Forum24 [valid]" title="Forum24 [valid]" type="rss" xmlUrl="https://www.forum24.cz/feed" htmlUrl="https://www.forum24.cz"/>
+      <outline text="ParlamentniListy [valid]" title="ParlamentniListy [valid]" type="rss" xmlUrl="http://www.parlamentnilisty.cz/export/rss.aspx" htmlUrl="http://www.parlamentnilisty.cz"/>
       <outline text="Hospodarske noviny [valid]" title="Hospodarske noviny [valid]" type="rss" xmlUrl="https://archiv.hn.cz/rss/zpravodajstvi" htmlUrl="https://archiv.hn.cz"/>
       <outline text="iSport [valid]" title="iSport [valid]" type="rss" xmlUrl="https://isport.blesk.cz/rss" htmlUrl="https://isport.blesk.cz"/>
       <outline text="Blesk - Zpravy [valid]" title="Blesk - Zpravy [valid]" type="rss" xmlUrl="https://www.blesk.cz/rss/zpravy" htmlUrl="https://www.blesk.cz"/>
@@ -1943,7 +1943,7 @@
       <outline text="Blesk - Regiony [valid]" title="Blesk - Regiony [valid]" type="rss" xmlUrl="https://www.blesk.cz/rss/regiony" htmlUrl="https://www.blesk.cz"/>
       <outline text="Blesk - Ekonomika [valid]" title="Blesk - Ekonomika [valid]" type="rss" xmlUrl="https://www.blesk.cz/rss/ekonomika" htmlUrl="https://www.blesk.cz"/>
       <outline text="Blesk - Zahranici [valid]" title="Blesk - Zahranici [valid]" type="rss" xmlUrl="https://www.blesk.cz/rss/zahranici" htmlUrl="https://www.blesk.cz"/>
-      <outline text="Ahaonline.cz [needs verification]" title="Ahaonline.cz [needs verification]" type="rss" xmlUrl="https://www.ahaonline.cz/rss" htmlUrl="https://www.ahaonline.cz"/>
+      <outline text="Ahaonline.cz [valid]" title="Ahaonline.cz [valid]" type="rss" xmlUrl="https://www.ahaonline.cz/rss" htmlUrl="https://www.ahaonline.cz"/>
       <outline text="iDNES.cz - Ostrava [valid]" title="iDNES.cz - Ostrava [valid]" type="rss" xmlUrl="https://servis.idnes.cz/rss.aspx?c=ostrava" htmlUrl="https://servis.idnes.cz"/>
       <outline text="iDNES.cz - Olomouc [valid]" title="iDNES.cz - Olomouc [valid]" type="rss" xmlUrl="https://servis.idnes.cz/rss.aspx?c=olomouc" htmlUrl="https://servis.idnes.cz"/>
       <outline text="iDNES.cz - Plzen [valid]" title="iDNES.cz - Plzen [valid]" type="rss" xmlUrl="https://servis.idnes.cz/rss.aspx?c=plzen" htmlUrl="https://servis.idnes.cz"/>
@@ -1977,46 +1977,46 @@
       <outline text="Novinky.cz - Koktejl [valid]" title="Novinky.cz - Koktejl [valid]" type="rss" xmlUrl="https://www.novinky.cz/rss/koktejl" htmlUrl="https://www.novinky.cz"/>
       <outline text="Denik - Zdravi [valid]" title="Denik - Zdravi [valid]" type="rss" xmlUrl="https://www.denik.cz/rss/zdravi.html" htmlUrl="https://www.denik.cz"/>
       <outline text="Denik - Cestovani [valid]" title="Denik - Cestovani [valid]" type="rss" xmlUrl="https://www.denik.cz/rss/cestovani.html" htmlUrl="https://www.denik.cz"/>
-      <outline text="Refresher CZ [needs verification]" title="Refresher CZ [needs verification]" type="rss" xmlUrl="https://refresher.cz/rss" htmlUrl="https://refresher.cz"/>
+      <outline text="Refresher CZ [valid]" title="Refresher CZ [valid]" type="rss" xmlUrl="https://refresher.cz/rss" htmlUrl="https://refresher.cz"/>
     </outline>
     <outline text="Greece (GR)" title="Greece (GR)">
-      <outline text="eKathimerini [needs verification]" title="eKathimerini [needs verification]" type="rss" xmlUrl="https://www.ekathimerini.com/infeeds/rss/nx-rss-feed.xml" htmlUrl="https://www.ekathimerini.com"/>
-      <outline text="Kathimerini [needs verification]" title="Kathimerini [needs verification]" type="rss" xmlUrl="https://www.kathimerini.gr/infeeds/rss/nx-rss-feed.xml" htmlUrl="https://www.kathimerini.gr"/>
-      <outline text="Naftemporiki [needs verification]" title="Naftemporiki [needs verification]" type="rss" xmlUrl="https://www.naftemporiki.gr/feed/" htmlUrl="https://www.naftemporiki.gr"/>
-      <outline text="Proto Thema [needs verification]" title="Proto Thema [needs verification]" type="rss" xmlUrl="https://www.protothema.gr/rss/" htmlUrl="https://www.protothema.gr"/>
-      <outline text="In.gr [needs verification]" title="In.gr [needs verification]" type="rss" xmlUrl="https://www.in.gr/feed/" htmlUrl="https://www.in.gr"/>
-      <outline text="To Vima [needs verification]" title="To Vima [needs verification]" type="rss" xmlUrl="https://www.tovima.gr/feed/" htmlUrl="https://www.tovima.gr"/>
-      <outline text="Newsbeast [needs verification]" title="Newsbeast [needs verification]" type="rss" xmlUrl="https://www.newsbeast.gr/feed" htmlUrl="https://www.newsbeast.gr"/>
-      <outline text="Ethnos [needs verification]" title="Ethnos [needs verification]" type="rss" xmlUrl="https://www.ethnos.gr/rss.xml" htmlUrl="https://www.ethnos.gr"/>
+      <outline text="eKathimerini [valid]" title="eKathimerini [valid]" type="rss" xmlUrl="https://www.ekathimerini.com/infeeds/rss/nx-rss-feed.xml" htmlUrl="https://www.ekathimerini.com"/>
+      <outline text="Kathimerini [valid]" title="Kathimerini [valid]" type="rss" xmlUrl="https://www.kathimerini.gr/infeeds/rss/nx-rss-feed.xml" htmlUrl="https://www.kathimerini.gr"/>
+      <outline text="Naftemporiki [valid]" title="Naftemporiki [valid]" type="rss" xmlUrl="https://www.naftemporiki.gr/feed/" htmlUrl="https://www.naftemporiki.gr"/>
+      <outline text="Proto Thema [valid]" title="Proto Thema [valid]" type="rss" xmlUrl="https://www.protothema.gr/rss/" htmlUrl="https://www.protothema.gr"/>
+      <outline text="In.gr [valid]" title="In.gr [valid]" type="rss" xmlUrl="https://www.in.gr/feed/" htmlUrl="https://www.in.gr"/>
+      <outline text="To Vima [valid]" title="To Vima [valid]" type="rss" xmlUrl="https://www.tovima.gr/feed/" htmlUrl="https://www.tovima.gr"/>
+      <outline text="Newsbeast [valid]" title="Newsbeast [valid]" type="rss" xmlUrl="https://www.newsbeast.gr/feed" htmlUrl="https://www.newsbeast.gr"/>
+      <outline text="Ethnos [valid]" title="Ethnos [valid]" type="rss" xmlUrl="https://www.ethnos.gr/rss.xml" htmlUrl="https://www.ethnos.gr"/>
     </outline>
     <outline text="Romania (RO)" title="Romania (RO)">
-      <outline text="Digi24 [needs verification]" title="Digi24 [needs verification]" type="rss" xmlUrl="https://www.digi24.ro/rss" htmlUrl="https://www.digi24.ro"/>
-      <outline text="HotNews [needs verification]" title="HotNews [needs verification]" type="rss" xmlUrl="https://hotnews.ro/feed" htmlUrl="https://hotnews.ro"/>
-      <outline text="Adevărul [needs verification]" title="Adevărul [needs verification]" type="rss" xmlUrl="https://adevarul.ro/rss/index" htmlUrl="https://adevarul.ro"/>
-      <outline text="G4Media [needs verification]" title="G4Media [needs verification]" type="rss" xmlUrl="https://www.g4media.ro/feed" htmlUrl="https://www.g4media.ro"/>
+      <outline text="Digi24 [valid]" title="Digi24 [valid]" type="rss" xmlUrl="https://www.digi24.ro/rss" htmlUrl="https://www.digi24.ro"/>
+      <outline text="HotNews [valid]" title="HotNews [valid]" type="rss" xmlUrl="https://hotnews.ro/feed" htmlUrl="https://hotnews.ro"/>
+      <outline text="Adevărul [valid]" title="Adevărul [valid]" type="rss" xmlUrl="https://adevarul.ro/rss/index" htmlUrl="https://adevarul.ro"/>
+      <outline text="G4Media [valid]" title="G4Media [valid]" type="rss" xmlUrl="https://www.g4media.ro/feed" htmlUrl="https://www.g4media.ro"/>
     </outline>
     <outline text="Ukraine (UA)" title="Ukraine (UA)">
-      <outline text="Kyiv Post [needs verification]" title="Kyiv Post [needs verification]" type="rss" xmlUrl="https://www.kyivpost.com/feed" htmlUrl="https://www.kyivpost.com"/>
-      <outline text="European Pravda [needs verification]" title="European Pravda [needs verification]" type="rss" xmlUrl="https://www.eurointegration.com.ua/rss/" htmlUrl="https://www.eurointegration.com.ua"/>
-      <outline text="NV [needs verification]" title="NV [needs verification]" type="rss" xmlUrl="https://nv.ua/rss/all.xml" htmlUrl="https://nv.ua"/>
-      <outline text="Ukrainska Pravda [needs verification]" title="Ukrainska Pravda [needs verification]" type="rss" xmlUrl="https://www.pravda.com.ua/rss/" htmlUrl="https://www.pravda.com.ua"/>
-      <outline text="UNIAN [needs verification]" title="UNIAN [needs verification]" type="rss" xmlUrl="https://www.unian.net/rss" htmlUrl="https://www.unian.net"/>
-      <outline text="TSN [needs verification]" title="TSN [needs verification]" type="rss" xmlUrl="https://tsn.ua/rss/full.rss" htmlUrl="https://tsn.ua"/>
+      <outline text="Kyiv Post [valid]" title="Kyiv Post [valid]" type="rss" xmlUrl="https://www.kyivpost.com/feed" htmlUrl="https://www.kyivpost.com"/>
+      <outline text="European Pravda [valid]" title="European Pravda [valid]" type="rss" xmlUrl="https://www.eurointegration.com.ua/rss/" htmlUrl="https://www.eurointegration.com.ua"/>
+      <outline text="NV [valid]" title="NV [valid]" type="rss" xmlUrl="https://nv.ua/rss/all.xml" htmlUrl="https://nv.ua"/>
+      <outline text="Ukrainska Pravda [valid]" title="Ukrainska Pravda [valid]" type="rss" xmlUrl="https://www.pravda.com.ua/rss/" htmlUrl="https://www.pravda.com.ua"/>
+      <outline text="UNIAN [valid]" title="UNIAN [valid]" type="rss" xmlUrl="https://www.unian.net/rss" htmlUrl="https://www.unian.net"/>
+      <outline text="TSN [valid]" title="TSN [valid]" type="rss" xmlUrl="https://tsn.ua/rss/full.rss" htmlUrl="https://tsn.ua"/>
     </outline>
     <outline text="Luxembourg (LU)" title="Luxembourg (LU)">
     </outline>
     <outline text="Slovakia (SK)" title="Slovakia (SK)">
-      <outline text="SME [needs verification]" title="SME [needs verification]" type="rss" xmlUrl="https://www.sme.sk/rss" htmlUrl="https://www.sme.sk"/>
-      <outline text="Pravda [needs verification]" title="Pravda [needs verification]" type="rss" xmlUrl="https://spravy.pravda.sk/rss/xml/" htmlUrl="https://spravy.pravda.sk"/>
-      <outline text="HNonline [needs verification]" title="HNonline [needs verification]" type="rss" xmlUrl="https://hnonline.sk/feed" htmlUrl="https://hnonline.sk"/>
-      <outline text="TA3 [needs verification]" title="TA3 [needs verification]" type="rss" xmlUrl="https://www.ta3.com/rss/top-spravy" htmlUrl="https://www.ta3.com"/>
-      <outline text="Topky [needs verification]" title="Topky [needs verification]" type="rss" xmlUrl="https://www.topky.sk/rss/8/TOPKY" htmlUrl="https://www.topky.sk"/>
+      <outline text="SME [valid]" title="SME [valid]" type="rss" xmlUrl="https://www.sme.sk/rss" htmlUrl="https://www.sme.sk"/>
+      <outline text="Pravda [valid]" title="Pravda [valid]" type="rss" xmlUrl="https://spravy.pravda.sk/rss/xml/" htmlUrl="https://spravy.pravda.sk"/>
+      <outline text="HNonline [valid]" title="HNonline [valid]" type="rss" xmlUrl="https://hnonline.sk/feed" htmlUrl="https://hnonline.sk"/>
+      <outline text="TA3 [valid]" title="TA3 [valid]" type="rss" xmlUrl="https://www.ta3.com/rss/top-spravy" htmlUrl="https://www.ta3.com"/>
+      <outline text="Topky [valid]" title="Topky [valid]" type="rss" xmlUrl="https://www.topky.sk/rss/8/TOPKY" htmlUrl="https://www.topky.sk"/>
     </outline>
     <outline text="Hungary (HU)" title="Hungary (HU)">
-      <outline text="Telex [needs verification]" title="Telex [needs verification]" type="rss" xmlUrl="https://telex.hu/rss" htmlUrl="https://telex.hu"/>
+      <outline text="Telex [valid]" title="Telex [valid]" type="rss" xmlUrl="https://telex.hu/rss" htmlUrl="https://telex.hu"/>
     </outline>
     <outline text="Bulgaria (BG)" title="Bulgaria (BG)">
-      <outline text="Mediapool [needs verification]" title="Mediapool [needs verification]" type="rss" xmlUrl="https://www.mediapool.bg/rss" htmlUrl="https://www.mediapool.bg"/>
+      <outline text="Mediapool [valid]" title="Mediapool [valid]" type="rss" xmlUrl="https://www.mediapool.bg/rss" htmlUrl="https://www.mediapool.bg"/>
       <outline text="Dnevnik [valid]" title="Dnevnik [valid]" type="rss" xmlUrl="https://www.dnevnik.bg/rss" htmlUrl="https://www.dnevnik.bg"/>
       <outline text="Novinite [valid]" title="Novinite [valid]" type="rss" xmlUrl="https://www.novinite.com/services/rss.php" htmlUrl="https://www.novinite.com"/>
       <outline text="Darik News [valid]" title="Darik News [valid]" type="rss" xmlUrl="https://dariknews.bg/rss.php" htmlUrl="https://dariknews.bg"/>
@@ -2026,34 +2026,34 @@
       <outline text="Marica [valid]" title="Marica [valid]" type="rss" xmlUrl="https://www.marica.bg/rss" htmlUrl="https://www.marica.bg"/>
     </outline>
     <outline text="Croatia (HR)" title="Croatia (HR)">
-      <outline text="Index.hr [needs verification]" title="Index.hr [needs verification]" type="rss" xmlUrl="https://www.index.hr/rss" htmlUrl="https://www.index.hr"/>
-      <outline text="Vecernji list [needs verification]" title="Vecernji list [needs verification]" type="rss" xmlUrl="https://www.vecernji.hr/feeds/latest" htmlUrl="https://www.vecernji.hr"/>
+      <outline text="Index.hr [valid]" title="Index.hr [valid]" type="rss" xmlUrl="https://www.index.hr/rss" htmlUrl="https://www.index.hr"/>
+      <outline text="Vecernji list [valid]" title="Vecernji list [valid]" type="rss" xmlUrl="https://www.vecernji.hr/feeds/latest" htmlUrl="https://www.vecernji.hr"/>
       <outline text="Novi List [valid]" title="Novi List [valid]" type="rss" xmlUrl="https://www.novilist.hr/feed/" htmlUrl="https://www.novilist.hr"/>
       <outline text="Tportal [valid]" title="Tportal [valid]" type="rss" xmlUrl="https://www.tportal.hr/rss" htmlUrl="https://www.tportal.hr"/>
     </outline>
     <outline text="Slovenia (SI)" title="Slovenia (SI)">
-      <outline text="Delo [needs verification]" title="Delo [needs verification]" type="rss" xmlUrl="https://www.delo.si/rss" htmlUrl="https://www.delo.si"/>
+      <outline text="Delo [valid]" title="Delo [valid]" type="rss" xmlUrl="https://www.delo.si/rss" htmlUrl="https://www.delo.si"/>
     </outline>
     <outline text="Serbia (RS)" title="Serbia (RS)">
-      <outline text="Blic [needs verification]" title="Blic [needs verification]" type="rss" xmlUrl="https://www.blic.rs/rss/danasnje-vesti" htmlUrl="https://www.blic.rs"/>
-      <outline text="RTS [needs verification]" title="RTS [needs verification]" type="rss" xmlUrl="https://www.rts.rs/page/stories/sr/rss/10/vesti.html" htmlUrl="https://www.rts.rs"/>
+      <outline text="Blic [valid]" title="Blic [valid]" type="rss" xmlUrl="https://www.blic.rs/rss/danasnje-vesti" htmlUrl="https://www.blic.rs"/>
+      <outline text="RTS [valid]" title="RTS [valid]" type="rss" xmlUrl="https://www.rts.rs/page/stories/sr/rss/10/vesti.html" htmlUrl="https://www.rts.rs"/>
     </outline>
     <outline text="Lithuania (LT)" title="Lithuania (LT)">
-      <outline text="LRT [needs verification]" title="LRT [needs verification]" type="rss" xmlUrl="https://www.lrt.lt/?rss" htmlUrl="https://www.lrt.lt"/>
-      <outline text="Verslo zinios [needs verification]" title="Verslo zinios [needs verification]" type="rss" xmlUrl="https://www.vz.lt/rss" htmlUrl="https://www.vz.lt"/>
-      <outline text="Lrytas [needs verification]" title="Lrytas [needs verification]" type="rss" xmlUrl="https://www.lrytas.lt/rss" htmlUrl="https://www.lrytas.lt"/>
+      <outline text="LRT [valid]" title="LRT [valid]" type="rss" xmlUrl="https://www.lrt.lt/?rss" htmlUrl="https://www.lrt.lt"/>
+      <outline text="Verslo zinios [valid]" title="Verslo zinios [valid]" type="rss" xmlUrl="https://www.vz.lt/rss" htmlUrl="https://www.vz.lt"/>
+      <outline text="Lrytas [valid]" title="Lrytas [valid]" type="rss" xmlUrl="https://www.lrytas.lt/rss" htmlUrl="https://www.lrytas.lt"/>
     </outline>
     <outline text="Latvia (LV)" title="Latvia (LV)">
-      <outline text="NRA [needs verification]" title="NRA [needs verification]" type="rss" xmlUrl="https://nra.lv/rss/jaunakas-zinas/" htmlUrl="https://nra.lv"/>
-      <outline text="LSM [needs verification]" title="LSM [needs verification]" type="rss" xmlUrl="https://www.lsm.lv/rss/" htmlUrl="https://www.lsm.lv"/>
-      <outline text="Diena [needs verification]" title="Diena [needs verification]" type="rss" xmlUrl="https://www.diena.lv/rss" htmlUrl="https://www.diena.lv"/>
+      <outline text="NRA [valid]" title="NRA [valid]" type="rss" xmlUrl="https://nra.lv/rss/jaunakas-zinas/" htmlUrl="https://nra.lv"/>
+      <outline text="LSM [valid]" title="LSM [valid]" type="rss" xmlUrl="https://www.lsm.lv/rss/" htmlUrl="https://www.lsm.lv"/>
+      <outline text="Diena [valid]" title="Diena [valid]" type="rss" xmlUrl="https://www.diena.lv/rss" htmlUrl="https://www.diena.lv"/>
     </outline>
     <outline text="Estonia (EE)" title="Estonia (EE)">
-      <outline text="Geenius [needs verification]" title="Geenius [needs verification]" type="rss" xmlUrl="https://geenius.ee/feed/" htmlUrl="https://geenius.ee"/>
-      <outline text="Elu24 [needs verification]" title="Elu24 [needs verification]" type="rss" xmlUrl="https://elu24.postimees.ee/rss" htmlUrl="https://elu24.postimees.ee"/>
+      <outline text="Geenius [valid]" title="Geenius [valid]" type="rss" xmlUrl="https://geenius.ee/feed/" htmlUrl="https://geenius.ee"/>
+      <outline text="Elu24 [valid]" title="Elu24 [valid]" type="rss" xmlUrl="https://elu24.postimees.ee/rss" htmlUrl="https://elu24.postimees.ee"/>
     </outline>
     <outline text="Iceland (IS)" title="Iceland (IS)">
-      <outline text="RUV [needs verification]" title="RUV [needs verification]" type="rss" xmlUrl="https://www.ruv.is/rss/frettir" htmlUrl="https://www.ruv.is"/>
+      <outline text="RUV [valid]" title="RUV [valid]" type="rss" xmlUrl="https://www.ruv.is/rss/frettir" htmlUrl="https://www.ruv.is"/>
     </outline>
     <outline text="Global Energy &amp; Grid (Global)" title="Global Energy &amp; Grid (Global)">
       <outline text="OilPrice [valid]" title="OilPrice [valid]" type="rss" xmlUrl="https://oilprice.com/rss/main" htmlUrl="https://oilprice.com"/>
