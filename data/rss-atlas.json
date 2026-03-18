@@ -4646,19 +4646,21 @@
         },
         {
           "name": "The Conversation AU (오피니언/정책)",
-          "url": "https://theconversation.com/au/rss",
+          "url": "https://theconversation.com/au/articles.atom",
           "category": "politics",
           "tier": 2,
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 37,
-          "enabled": false
+          "row": 37
         },
         {
           "name": "AFR (Financial Review)",
-          "url": "https://www.afr.com/rss",
-          "enabled": false
+          "sitemapUrl": "https://www.afr.com/sitemaps/news/brands/afr"
+        },
+        {
+          "name": "Crikey",
+          "url": "https://www.crikey.com.au/feed/"
         },
         {
           "name": "News.com.au National Top News",
@@ -6739,6 +6741,10 @@
           "url": "https://www.omroepwest.nl/rss/denhaag.xml"
         },
         {
+          "name": "Omroep West - Sport",
+          "url": "https://www.omroepwest.nl/rss/sport.xml"
+        },
+        {
           "name": "RTV Utrecht - Nieuws",
           "url": "https://www.rtvutrecht.nl/rss/nieuws.xml"
         },
@@ -6749,6 +6755,18 @@
         {
           "name": "GLD - Arnhem",
           "url": "https://www.gld.nl/rss/arnhem.xml"
+        },
+        {
+          "name": "GLD - Nijmegen",
+          "url": "https://www.gld.nl/rss/nijmegen.xml"
+        },
+        {
+          "name": "GLD - Achterhoek",
+          "url": "https://www.gld.nl/rss/achterhoek.xml"
+        },
+        {
+          "name": "GLD - Economie",
+          "url": "https://www.gld.nl/rss/economie.xml"
         },
         {
           "name": "RTV Drenthe - Home",
@@ -6792,7 +6810,23 @@
         },
         {
           "name": "Hart van Nederland - News Sitemap",
-          "sitemapUrl": "https://www.hartvannederland.nl/sitemap-news.xml"
+          "sitemapUrl": "https://www.hartvannederland.nl/sitemaps/category/algemeen-nieuws/articles-1.xml"
+        },
+        {
+          "name": "Hart van Nederland - Economie Sitemap",
+          "sitemapUrl": "https://www.hartvannederland.nl/sitemaps/category/economie/articles-1.xml"
+        },
+        {
+          "name": "Hart van Nederland - Politiek Sitemap",
+          "sitemapUrl": "https://www.hartvannederland.nl/sitemaps/category/politiek/articles-1.xml"
+        },
+        {
+          "name": "Hart van Nederland - Weer Sitemap",
+          "sitemapUrl": "https://www.hartvannederland.nl/sitemaps/category/weer/articles-1.xml"
+        },
+        {
+          "name": "Hart van Nederland - Milieu & Gezondheid Sitemap",
+          "sitemapUrl": "https://www.hartvannederland.nl/sitemaps/category/milieu-gezondheid/articles-1.xml"
         },
         {
           "name": "De Telegraaf - News Sitemap",
@@ -6823,12 +6857,20 @@
           "row": 62
         },
         {
+          "name": "Oost - Sport",
+          "url": "https://www.oost.nl/rss/sport.xml"
+        },
+        {
           "name": "RTV Noord - Groningen",
           "url": "https://www.rtvnoord.nl/rss/groningen.xml",
           "status": "NEW",
           "checkedDate": "03/16/2026",
           "valid": "valid",
           "row": 63
+        },
+        {
+          "name": "RTV Noord - Sport",
+          "url": "https://www.rtvnoord.nl/rss/sport.xml"
         },
         {
           "name": "L1 Nieuws - Limburg",
@@ -6861,6 +6903,10 @@
           "checkedDate": "03/16/2026",
           "valid": "valid",
           "row": 67
+        },
+        {
+          "name": "Rijnmond - Rotterdam",
+          "url": "https://www.rijnmond.nl/rss/rotterdam.xml"
         },
         {
           "name": "RTV Drenthe - Nieuws",
@@ -6905,6 +6951,133 @@
           "checkedDate": "03/16/2026",
           "valid": "valid",
           "row": 122
+        },
+        {
+          "name": "WNL - News Sitemap",
+          "sitemapUrl": "https://www.wnl.tv/news-sitemap.xml"
+        },
+        {
+          "name": "BNNVARA",
+          "url": "https://www.bnnvara.nl/api/rss/bnnvara"
+        },
+        {
+          "name": "Joop",
+          "url": "https://www.bnnvara.nl/api/rss/joop"
+        },
+        {
+          "name": "Zembla",
+          "url": "https://www.bnnvara.nl/api/rss/zembla"
+        },
+        {
+          "name": "Omrop Fryslan - Nieuws RSS",
+          "url": "https://www.omropfryslan.nl/rss/nieuws"
+        },
+        {
+          "name": "Sleutelstad",
+          "url": "https://sleutelstad.nl/feed/"
+        },
+        {
+          "name": "Unity.NU",
+          "url": "https://unity.nu/feed/"
+        },
+        {
+          "name": "Omroep Delft",
+          "url": "https://omroepdelft.nl/feed/"
+        },
+        {
+          "name": "Open Rotterdam",
+          "url": "https://openrotterdam.nl/feed/"
+        },
+        {
+          "name": "WEEFF",
+          "url": "https://www.weeff.nl/feed/"
+        },
+        {
+          "name": "Omroep Tilburg",
+          "url": "https://www.omroeptilburg.nl/feed/"
+        },
+        {
+          "name": "Omroep Almere",
+          "url": "https://www.omroepalmere.nl/feed/"
+        },
+        {
+          "name": "LC",
+          "url": "https://lc.nl/api/feed/rss"
+        },
+        {
+          "name": "DVHN",
+          "url": "https://dvhn.nl/api/feed/rss"
+        },
+        {
+          "name": "L1 Nieuws - Index",
+          "url": "https://www.l1nieuws.nl/rss/index.xml"
+        },
+        {
+          "name": "L1 Nieuws - Sport",
+          "url": "https://www.l1nieuws.nl/rss/sport.xml"
+        },
+        {
+          "name": "RTV Focus Zwolle",
+          "url": "https://www.rtvfocuszwolle.nl/feed/"
+        },
+        {
+          "name": "Salland1",
+          "url": "https://www.salland1.nl/feed/"
+        },
+        {
+          "name": "RTV NOF",
+          "url": "https://www.rtvnof.nl/feed/"
+        },
+        {
+          "name": "1Zwolle",
+          "url": "https://1zwolle.nl/feed"
+        },
+        {
+          "name": "Dordt Centraal",
+          "url": "https://dordtcentraal.nl/feed/"
+        },
+        {
+          "name": "RTV Papendrecht",
+          "url": "https://www.rtvpapendrecht.nl/feed/"
+        },
+        {
+          "name": "De Westkrant",
+          "url": "https://www.dewestkrant.nl/feed/"
+        },
+        {
+          "name": "PZC - Nieuws",
+          "url": "https://www.pzc.nl/nieuws/rss.xml",
+          "sitemapUrl": "https://www.pzc.nl/sitemap-news.xml"
+        },
+        {
+          "name": "Tubantia - Nieuws",
+          "url": "https://www.tubantia.nl/nieuws/rss.xml",
+          "sitemapUrl": "https://www.tubantia.nl/sitemap-news.xml"
+        },
+        {
+          "name": "De Stentor - Nieuws",
+          "url": "https://www.destentor.nl/nieuws/rss.xml",
+          "sitemapUrl": "https://www.destentor.nl/sitemap-news.xml"
+        },
+        {
+          "name": "De Gelderlander - Nieuws",
+          "url": "https://www.gelderlander.nl/nieuws/rss.xml",
+          "sitemapUrl": "https://www.gelderlander.nl/sitemap-news.xml"
+        },
+        {
+          "name": "Brabants Dagblad - Nieuws",
+          "url": "https://www.bd.nl/nieuws/rss.xml",
+          "sitemapUrl": "https://www.bd.nl/sitemap-news.xml"
+        },
+        {
+          "name": "Eindhovens Dagblad - Nieuws",
+          "url": "https://www.ed.nl/nieuws/rss.xml",
+          "sitemapUrl": "https://www.ed.nl/sitemap-news.xml"
+        },
+        {
+          "name": "BN DeStem - Nieuws",
+          "url": "https://www.bndestem.nl/nieuws/rss.xml",
+          "sitemapUrl": "https://www.bndestem.nl/sitemap-news.xml"
         }
       ]
     },
@@ -13875,6 +14048,26 @@
           "url": "https://www.tvsyd.dk/rss"
         },
         {
+          "name": "TV Midtvest",
+          "url": "https://www.tvmidtvest.dk/rss"
+        },
+        {
+          "name": "MigogKBH",
+          "url": "https://migogkbh.dk/feed/"
+        },
+        {
+          "name": "MigogAarhus",
+          "url": "https://migogaarhus.dk/feed/"
+        },
+        {
+          "name": "MigogOdense",
+          "url": "https://migogodense.dk/feed/"
+        },
+        {
+          "name": "MigogAalborg",
+          "url": "https://migogaalborg.dk/feed/"
+        },
+        {
           "name": "DR Indland",
           "url": "https://www.dr.dk/nyheder/service/feeds/indland"
         },
@@ -13935,6 +14128,42 @@
           "row": 5
         },
         {
+          "name": "Borsen - Finans",
+          "url": "https://borsen.dk/rss/finans"
+        },
+        {
+          "name": "Borsen - Investor",
+          "url": "https://borsen.dk/rss/investor"
+        },
+        {
+          "name": "Borsen - Politik",
+          "url": "https://borsen.dk/rss/politik"
+        },
+        {
+          "name": "Borsen - Udland",
+          "url": "https://borsen.dk/rss/udland"
+        },
+        {
+          "name": "Borsen - Ejendomme",
+          "url": "https://borsen.dk/rss/ejendomme"
+        },
+        {
+          "name": "Borsen - Executive",
+          "url": "https://borsen.dk/rss/executive"
+        },
+        {
+          "name": "Borsen - Opinion",
+          "url": "https://borsen.dk/rss/opinion"
+        },
+        {
+          "name": "Borsen - Markedsberetninger",
+          "url": "https://borsen.dk/rss/markedsberetninger"
+        },
+        {
+          "name": "Borsen - Baeredygtig",
+          "url": "https://borsen.dk/rss/baeredygtig"
+        },
+        {
           "name": "Borsen - Virksomheder",
           "url": "https://borsen.dk/rss/virksomheder",
           "status": "NEW",
@@ -13944,7 +14173,7 @@
         },
         {
           "name": "TV2 Kosmopol - Sitemap",
-          "url": null,
+          "url": "https://www.tv2kosmopol.dk/rss",
           "sitemapUrl": "https://www.tv2kosmopol.dk/sitemap.xml",
           "status": "NEW",
           "checkedDate": "03/16/2026",
@@ -13953,7 +14182,7 @@
         },
         {
           "name": "TV2 Fyn - Sitemap",
-          "url": null,
+          "url": "https://www.tv2fyn.dk/rss",
           "sitemapUrl": "https://www.tv2fyn.dk/sitemap.xml",
           "status": "NEW",
           "checkedDate": "03/16/2026",
@@ -13962,7 +14191,7 @@
         },
         {
           "name": "TV MIDTVEST - Sitemap",
-          "url": null,
+          "url": "https://www.tvmidtvest.dk/rss",
           "sitemapUrl": "https://www.tvmidtvest.dk/sitemap.xml",
           "status": "NEW",
           "checkedDate": "03/16/2026",
@@ -13971,7 +14200,7 @@
         },
         {
           "name": "TV2 Nord - Sitemap",
-          "url": null,
+          "url": "https://www.tv2nord.dk/rss",
           "sitemapUrl": "https://www.tv2nord.dk/sitemap.xml",
           "status": "NEW",
           "checkedDate": "03/16/2026",
@@ -13980,7 +14209,7 @@
         },
         {
           "name": "TV2 Ostjylland - Sitemap",
-          "url": null,
+          "url": "https://www.tv2ostjylland.dk/rss",
           "sitemapUrl": "https://www.tv2ostjylland.dk/sitemap.xml",
           "status": "NEW",
           "checkedDate": "03/16/2026",
@@ -13989,7 +14218,7 @@
         },
         {
           "name": "TV2 East - Sitemap",
-          "url": null,
+          "url": "https://www.tv2east.dk/rss",
           "sitemapUrl": "https://www.tv2east.dk/sitemap.xml",
           "status": "NEW",
           "checkedDate": "03/16/2026",
@@ -13998,7 +14227,7 @@
         },
         {
           "name": "TV2 Bornholm - Sitemap",
-          "url": null,
+          "url": "https://www.tv2bornholm.dk/rss",
           "sitemapUrl": "https://www.tv2bornholm.dk/sitemap.xml",
           "status": "NEW",
           "checkedDate": "03/16/2026",
@@ -14007,7 +14236,7 @@
         },
         {
           "name": "TV2 Lorry - Sitemap",
-          "url": null,
+          "url": "https://www.tv2lorry.dk/rss",
           "sitemapUrl": "https://www.tv2lorry.dk/sitemap.xml",
           "status": "NEW",
           "checkedDate": "03/16/2026",
@@ -14034,6 +14263,7 @@
         },
         {
           "name": "Information - Sitemap",
+          "url": "https://www.information.dk/feed",
           "sitemapUrl": "https://www.information.dk/sitemap.xml",
           "status": "NEW",
           "checkedDate": "03/16/2026",
@@ -14073,12 +14303,92 @@
           "row": 123
         },
         {
+          "name": "Avisen Danmark - Sitemap Index",
+          "sitemapUrl": "https://avisendanmark.dk/sitemap"
+        },
+        {
+          "name": "Jyllands-Posten - Mest Laeste",
+          "url": "https://feeds.jp.dk/jp/mest-laeste"
+        },
+        {
           "name": "Information - Latest Sitemap",
           "sitemapUrl": "https://www.information.dk/latest.xml",
           "status": "NEW",
           "checkedDate": "03/16/2026",
           "valid": "valid",
           "row": 124
+        },
+        {
+          "name": "Altinget",
+          "url": "https://www.altinget.dk/rss"
+        },
+        {
+          "name": "Weekendavisen",
+          "sitemapUrl": "https://www.weekendavisen.dk/news-sitemap.xml"
+        },
+        {
+          "name": "Ingenioren",
+          "url": "https://ing.dk/rss"
+        },
+        {
+          "name": "Version2",
+          "url": "https://version2.dk/rss"
+        },
+        {
+          "name": "Kristeligt Dagblad - Latest RSS",
+          "url": "https://www.kristeligt-dagblad.dk/feed/rss/latest"
+        },
+        {
+          "name": "Nordjyske - Nyheder",
+          "url": "https://nordjyske.dk/rss/nyheder"
+        },
+        {
+          "name": "Nordjyske - Aalborg",
+          "url": "https://nordjyske.dk/rss/aalborg"
+        },
+        {
+          "name": "Nordjyske - Frederikshavn",
+          "url": "https://nordjyske.dk/rss/frederikshavn"
+        },
+        {
+          "name": "Nordjyske - Hjorring",
+          "url": "https://nordjyske.dk/rss/hjoerring"
+        },
+        {
+          "name": "Nordjyske - Bronderslev",
+          "url": "https://nordjyske.dk/rss/broenderslev"
+        },
+        {
+          "name": "Nordjyske - Jammerbugt",
+          "url": "https://nordjyske.dk/rss/jammerbugt"
+        },
+        {
+          "name": "Nordjyske - Mariagerfjord",
+          "url": "https://nordjyske.dk/rss/mariagerfjord"
+        },
+        {
+          "name": "Nordjyske - Mors",
+          "url": "https://nordjyske.dk/rss/mors"
+        },
+        {
+          "name": "Nordjyske - Rebild",
+          "url": "https://nordjyske.dk/rss/rebild"
+        },
+        {
+          "name": "Nordjyske - Vesthimmerland",
+          "url": "https://nordjyske.dk/rss/vesthimmerland"
+        },
+        {
+          "name": "Nordjyske - Thisted",
+          "url": "https://nordjyske.dk/rss/thisted"
+        },
+        {
+          "name": "Nordjyske - Sport",
+          "url": "https://nordjyske.dk/rss/sport"
+        },
+        {
+          "name": "Nordjyske - Erhverv",
+          "url": "https://nordjyske.dk/rss/erhverv"
         }
       ]
     },
@@ -14698,6 +15008,10 @@
           "checkedDate": "03/16/2026",
           "valid": "valid",
           "row": 209
+        },
+        {
+          "name": "Suomen Kuvalehti",
+          "url": "https://suomenkuvalehti.fi/feed/"
         }
       ]
     },
@@ -15098,6 +15412,10 @@
           "row": 169
         },
         {
+          "name": "Ahaonline.cz",
+          "url": "https://www.ahaonline.cz/rss"
+        },
+        {
           "name": "Sport.cz - News Sitemap",
           "url": null,
           "sitemapUrl": "https://www.sport.cz/sitemaps/sitemap_news.xml",
@@ -15410,6 +15728,18 @@
           "checkedDate": "03/16/2026",
           "valid": "valid",
           "row": 252
+        },
+        {
+          "name": "Super.cz - News Sitemap",
+          "sitemapUrl": "https://www.super.cz/sitemaps/sitemap_news.xml"
+        },
+        {
+          "name": "Extra.cz - Google News Sitemap",
+          "sitemapUrl": "https://www.extra.cz/sitemap-google-news.xml"
+        },
+        {
+          "name": "Refresher CZ",
+          "url": "https://refresher.cz/rss"
         }
       ]
     },
@@ -15705,6 +16035,18 @@
           "checkedDate": "03/16/2026",
           "valid": "valid",
           "row": 8
+        },
+        {
+          "name": "NOVA - Latest News",
+          "sitemapUrl": "https://nova.bg/sitemap/latest_news"
+        },
+        {
+          "name": "NOVA - Latest Accents",
+          "sitemapUrl": "https://nova.bg/sitemap/latest_accents"
+        },
+        {
+          "name": "SEGA - Google News Sitemap",
+          "sitemapUrl": "https://www.segabg.com/google-news.xml"
         }
       ]
     },
@@ -15743,6 +16085,14 @@
           "checkedDate": "03/16/2026",
           "valid": "valid",
           "row": 2
+        },
+        {
+          "name": "Telegram.hr",
+          "sitemapUrl": "https://www.telegram.hr/sitemap.xml"
+        },
+        {
+          "name": "N1 Hrvatska",
+          "sitemapUrl": "https://n1info.hr/sitemap/sitemap_news_1.xml"
         }
       ]
     },
