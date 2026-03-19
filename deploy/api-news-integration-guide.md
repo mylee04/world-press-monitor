@@ -4,6 +4,7 @@
 
 - public manifest: `https://world-press-monitor.vercel.app/data/integration-manifest.json`
 - 국가별 24h feed: `https://world-press-monitor.vercel.app/data/country-published-24h-<CODE>.json`
+- 각 article에는 `keywordText`가 포함되어 있어서 consumer가 바로 keyword filter를 걸 수 있습니다.
 - 이 문서는 인증이 필요한 `/api/news` 연동이 필요한 경우에만 사용하세요.
 
 이 문서는 동료 서비스에서 `news_articles` 조회 API를 사용하는 방법을 정리한 가이드입니다.

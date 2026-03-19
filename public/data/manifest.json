@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-03-17T13:02:21.323Z",
-  "schemaVersion": 4,
+  "generatedAt": "2026-03-19T21:26:46.832Z",
+  "schemaVersion": 5,
   "cadence": {
     "frequency": "hourly",
     "scheduledMinute": 40,
     "timezone": "America/Chicago"
   },
-  "latestDate": "2026-03-17",
+  "latestDate": "2026-03-20",
   "countries": [
     "AR",
     "AT",
@@ -286,10 +286,12 @@
     "others"
   ],
   "availableDates": [
+    "2026-03-20",
+    "2026-03-19",
+    "2026-03-18",
     "2026-03-17",
     "2026-03-16",
-    "2026-03-15",
-    "2026-03-14"
+    "2026-03-15"
   ],
   "downloads": {
     "latest24h": "/data/downloads/latest-24h.csv",
@@ -297,27 +299,27 @@
     "byCountryMonth": []
   },
   "shards": {
-    "byDate": "/data/by-date/2026-03-17.json",
+    "byDate": "/data/by-date/2026-03-20.json",
     "byCountryMonth": "/data/by-country/UY/2026-03.json"
   },
   "totals": {
-    "articles": 250000,
-    "latest24h": 134090,
-    "sources": 2171
+    "articles": 245017,
+    "latest24h": 123318,
+    "sources": 2461
   },
   "sectionTotals": {
-    "world": 70755,
-    "politics": 24982,
-    "conflicts": 11316,
-    "business": 19305,
-    "tech": 11244,
-    "sports": 29374,
-    "health": 8280,
-    "entertainment": 11541,
-    "lifestyle": 5081,
-    "arts": 6242,
-    "science": 2393,
-    "climate": 3258,
-    "others": 46229
+    "world": 53065,
+    "politics": 22987,
+    "conflicts": 19635,
+    "business": 22909,
+    "tech": 9737,
+    "sports": 24219,
+    "health": 8031,
+    "entertainment": 10013,
+    "lifestyle": 5886,
+    "arts": 5066,
+    "science": 2593,
+    "climate": 2790,
+    "others": 58086
   }
 }

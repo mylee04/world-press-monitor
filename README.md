@@ -58,13 +58,33 @@ Source of truth for consumers:
 
 - `https://world-press-monitor.vercel.app/data/integration-manifest.json`
 
-What to do:
+Recommended consumer model:
 
 1. Poll `integration-manifest.json` every hour.
-2. When `generatedAt` changes, fetch only the countries you need.
-3. Use `published24h` when you want articles actually published in the last 24 hours.
-4. Use `inserted24h` when you want what WPM newly inserted/discovered in the last 24 hours.
-5. Deduplicate on `id` in your downstream service.
+2. If `generatedAt` did not change, stop.
+3. If `generatedAt` changed, fetch only the country feeds you need.
+4. For read-only downstream systems, treat `article.id` as the stable dedupe key.
+5. For keyword filtering, use `article.keywordText`.
+
+Which feed to use:
+
+1. Use `published24h` when you want the current rolling 24-hour view.
+2. Use `inserted24h` when you want hourly-style incremental sync.
+3. If you fetch every hour and want only newly discovered items, use `inserted24h` plus your own `lastSyncCreatedAt` checkpoint.
+4. If you fetch every hour and want the full current 24-hour set every time, use `published24h` plus downstream dedupe on `article.id`.
+
+LLM-friendly sync contract:
+
+1. Read `integration-manifest.json`.
+2. Check `generatedAt`.
+3. For each target country code, read either `feeds[CODE].published24h` or `feeds[CODE].inserted24h`.
+4. Keep an internal set of seen `article.id` values.
+5. For incremental sync, keep `lastSyncCreatedAt`.
+6. Accept an article if:
+   - its `id` is new, and
+   - its `createdAt` is newer than `lastSyncCreatedAt` when using `inserted24h`, and
+   - its `keywordText` matches at least one target keyword if you are doing keyword filtering.
+7. After processing, set `lastSyncCreatedAt` to the newest `createdAt` you accepted.
 
 Current direct country feed examples:
 
@@ -117,6 +137,64 @@ for (const code of countries) {
     console.log(code, article.id, article.publicationDatetime, article.title);
   }
 }
+
+const usTaxArticles = (await fetch(`${base}${manifest.feeds.US.published24h}`, {
+  cache: 'no-store',
+}).then((res) => res.json())).articles.filter((article) =>
+  article.keywordText.includes('tax') || article.keywordText.includes('irs')
+);
+```
+
+Example hourly incremental pattern in JavaScript:
+
+```js
+const base = 'https://world-press-monitor.vercel.app';
+const targetCountries = ['US', 'CA'];
+const targetKeywords = ['tax', 'irs', 'deduction', 'accounting'];
+
+let lastSeenManifestGeneratedAt = null;
+let lastSyncCreatedAt = '1970-01-01T00:00:00.000Z';
+const seenIds = new Set();
+
+async function syncOnce() {
+  const manifest = await fetch(`${base}/data/integration-manifest.json`, {
+    cache: 'no-store',
+  }).then((res) => res.json());
+
+  if (manifest.generatedAt === lastSeenManifestGeneratedAt) {
+    return [];
+  }
+
+  const accepted = [];
+
+  for (const code of targetCountries) {
+    const path = manifest.feeds[code].inserted24h;
+    const payload = await fetch(`${base}${path}`, { cache: 'no-store' }).then((res) => res.json());
+
+    for (const article of payload.articles) {
+      const isNewByTime = article.createdAt > lastSyncCreatedAt;
+      const isNewById = !seenIds.has(article.id);
+      const matchesKeyword = targetKeywords.some((keyword) =>
+        article.keywordText.includes(keyword.toLowerCase())
+      );
+
+      if (isNewByTime && isNewById && matchesKeyword) {
+        accepted.push(article);
+        seenIds.add(article.id);
+      }
+    }
+  }
+
+  if (accepted.length > 0) {
+    lastSyncCreatedAt = accepted
+      .map((article) => article.createdAt)
+      .sort()
+      .at(-1);
+  }
+
+  lastSeenManifestGeneratedAt = manifest.generatedAt;
+  return accepted;
+}
 ```
 
 Semantics:
@@ -125,6 +203,8 @@ Semantics:
 - `inserted24h`: `createdAt` is within the last 24 hours
 - `generatedAt`: export generation timestamp
 - `windowHours`: current feed window size
+- `keywordText`: lowercased, diacritics-stripped, whitespace-normalized search text built from title, snippet, source, country, country code, and section
+- `article.id`: stable dedupe key for downstream sync
 
 Recommendation:
 
@@ -3191,4 +3271,3 @@ Locale keyword dictionaries are split by language under:
 9|Energy Post|<https://energypost.eu/feed/>|needs check|03/18/2026|needs verification|0|
 10|Energy Storage News|<https://www.energy-storage.news/rss>|200|03/18/2026|valid|8|
 11|Energy Storage News|<https://www.energy-storage.news/feed>|200|03/18/2026|valid|8|
-

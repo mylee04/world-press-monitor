@@ -54,6 +54,34 @@ run_default_vercel_deploy() {
   "${deploy_command[@]}"
 }
 
+validate_public_manifests() {
+  python3 - "$1" <<'PY'
+import json
+import pathlib
+import sys
+
+base = pathlib.Path(sys.argv[1])
+manifest_path = base / "manifest.json"
+integration_path = base / "integration-manifest.json"
+
+manifest = json.loads(manifest_path.read_text())
+integration = json.loads(integration_path.read_text())
+
+manifest_generated = manifest.get("generatedAt")
+integration_generated = integration.get("generatedAt")
+
+if not manifest_generated or not integration_generated:
+    raise SystemExit("manifest validation failed: missing generatedAt")
+
+if manifest_generated != integration_generated:
+    raise SystemExit(
+        f"manifest validation failed: manifest generatedAt={manifest_generated} integration generatedAt={integration_generated}"
+    )
+
+print(f"Manifest validation OK: {manifest_generated}")
+PY
+}
+
 {
   printf '\n[%s] Start static export + deploy pipeline\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
   printf 'Project: %s\n' "${PROJECT_ROOT}"
@@ -65,6 +93,7 @@ run_default_vercel_deploy() {
   if [ "${SOURCE_PUBLIC_DATA_DIR}" != "${BUILD_PUBLIC_DATA_DIR}" ]; then
     rsync -a --delete "${SOURCE_PUBLIC_DATA_DIR}/" "${BUILD_PUBLIC_DATA_DIR}/"
   fi
+  validate_public_manifests "${BUILD_PUBLIC_DATA_DIR}"
   bun run web:build
   rsync -a --delete "${PROJECT_ROOT}/out/" "${WEB_DIST_DIR}/"
   if [ -n "${STATIC_DEPLOY_COMMAND:-}" ]; then

@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-03-17T13:02:21.323Z",
-  "schemaVersion": 4,
+  "generatedAt": "2026-03-19T21:26:46.832Z",
+  "schemaVersion": 5,
   "cadence": {
     "frequency": "hourly",
     "scheduledMinute": 40,
@@ -10,6 +10,10 @@
   "semantics": {
     "published24h": "publicationDatetime within the last 24 hours",
     "inserted24h": "createdAt within the last 24 hours"
+  },
+  "filtering": {
+    "keywordTextField": "keywordText",
+    "normalization": "lowercased, diacritics-stripped, whitespace-normalized title + snippet + source + country + countryCode + section"
   },
   "countries": [
     "AR",

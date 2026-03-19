@@ -48,8 +48,10 @@ const apiSnippetMaxChars = (() => {
 })();
 
 function truncateText(value: string, maxChars: number): string {
-  if (value.length <= maxChars) return value;
-  return value.slice(0, maxChars).trim();
+  const normalized = (value || '').replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, ' ');
+  const codePoints = Array.from(normalized);
+  if (codePoints.length <= maxChars) return normalized.trim();
+  return codePoints.slice(0, maxChars).join('').trim();
 }
 
 type NewsDbHealthResult = {

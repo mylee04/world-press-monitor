@@ -1,6 +1,6 @@
 import type { NewsSection } from '@/lib/types';
 
-export const PUBLIC_DATA_SCHEMA_VERSION = 4;
+export const PUBLIC_DATA_SCHEMA_VERSION = 5;
 export const PUBLIC_DATA_SECTIONS: NewsSection[] = [
   'world',
   'politics',
@@ -26,6 +26,7 @@ export interface PublicNewsArticle {
   section: NewsSection;
   title: string;
   snippet: string;
+  keywordText: string;
   url: string;
   publicationDatetime: string;
   createdAt: string;
@@ -106,6 +107,10 @@ export interface PublicIntegrationManifest {
   semantics: {
     published24h: string;
     inserted24h: string;
+  };
+  filtering: {
+    keywordTextField: 'keywordText';
+    normalization: string;
   };
   countries: string[];
   countryNames: Record<string, string>;

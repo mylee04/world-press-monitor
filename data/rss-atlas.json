@@ -2334,6 +2334,14 @@
           "checkedDate": null,
           "valid": null,
           "row": 30
+        },
+        {
+          "name": "Hindustan Times - India News RSS",
+          "url": "https://www.hindustantimes.com/feeds/rss/india-news/rssfeed.xml"
+        },
+        {
+          "name": "Hindustan Times - News Sitemap",
+          "sitemapUrl": "https://www.hindustantimes.com/sitemap/news.xml"
         }
       ]
     },
@@ -2915,8 +2923,7 @@
         },
         {
           "name": "L'Express (Current Affairs Magazine)",
-          "url": "https://www.lexpress.fr/arc/outboundfeeds/rss/",
-          "enabled": false
+          "url": "https://www.lexpress.fr/rss/alaune.xml"
         },
         {
           "name": "Le Point (Current Affairs/Economy)",
@@ -3030,6 +3037,10 @@
           "url": "https://www.lemonde.fr/rss/une.xml"
         },
         {
+          "name": "Le JDD",
+          "url": "https://www.lejdd.fr/rss.xml"
+        },
+        {
           "name": "Le Dauphiné Libéré",
           "url": "https://www.ledauphine.com/rss"
         },
@@ -3064,6 +3075,13 @@
         {
           "name": "France Info - News Sitemap",
           "sitemapUrl": "https://www.franceinfo.fr/sitemap_news.xml"
+        },
+        {
+          "name": "Le Parisien - News Sitemap Index",
+          "sitemapUrl": "https://www.leparisien.fr/arc/outboundfeeds/news-sitemap-index/?from=0&outputType=xml&_website=leparisien",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
         },
         {
           "name": "TF1 Info - News Sitemap",
@@ -3330,6 +3348,30 @@
           "row": 30
         },
         {
+          "name": "Il Messaggero - Home RSS",
+          "url": "https://www.ilmessaggero.it/rss/home.xml"
+        },
+        {
+          "name": "Il Giornale",
+          "url": "https://www.ilgiornale.it/feed.xml"
+        },
+        {
+          "name": "Leggo - Home RSS",
+          "url": "https://www.leggo.it/rss/home.xml"
+        },
+        {
+          "name": "Today.it",
+          "url": "https://www.today.it/rss"
+        },
+        {
+          "name": "Il Giorno",
+          "url": "https://www.ilgiorno.it/rss"
+        },
+        {
+          "name": "Il Resto del Carlino",
+          "url": "https://www.ilrestodelcarlino.it/rss"
+        },
+        {
           "name": "la Repubblica - News Sitemap",
           "sitemapUrl": "https://www.repubblica.it/sitemap-n.xml"
         },
@@ -3382,6 +3424,10 @@
           "sitemapUrl": "https://www.agi.it/sitemap_news.xml"
         },
         {
+          "name": "Open.online - News Sitemap",
+          "sitemapUrl": "https://www.open.online/wp-content/uploads/sitemaps/www-open-online-sitemap-news.xml"
+        },
+        {
           "name": "Quotidiano.net - Day Sitemap",
           "sitemapUrl": "https://www.quotidiano.net/feedservice/sitemap/generic/qn/2026/day/sitemap.xml"
         }
@@ -3409,7 +3455,7 @@
         },
         {
           "name": "National Post",
-          "url": "https://nationalpost.com/feed",
+          "url": "https://nationalpost.com/feed/atom",
           "status": null,
           "checkedDate": null,
           "valid": null,
@@ -3417,11 +3463,12 @@
         },
         {
           "name": "Toronto Sun",
-          "url": "https://torontosun.com/feed",
+          "url": "https://torontosun.com/feed/atom",
           "status": null,
           "checkedDate": null,
           "valid": null,
-          "row": 4
+          "row": 4,
+          "sitemapUrl": "https://torontosun.com/sitemap-news.xml"
         },
         {
           "name": "Financial Post",
@@ -3429,7 +3476,8 @@
           "status": null,
           "checkedDate": null,
           "valid": null,
-          "row": 5
+          "row": 5,
+          "sitemapUrl": "https://financialpost.com/sitemap-news.xml"
         },
         {
           "name": "CityNews Toronto",
@@ -3441,51 +3489,57 @@
         },
         {
           "name": "Calgary Herald",
-          "url": "https://calgaryherald.com/feed",
+          "url": "https://calgaryherald.com/feed/atom",
           "status": null,
           "checkedDate": null,
           "valid": null,
-          "row": 7
+          "row": 7,
+          "sitemapUrl": "https://calgaryherald.com/sitemap-news.xml"
         },
         {
           "name": "Edmonton Journal",
-          "url": "https://edmontonjournal.com/feed",
+          "url": "https://edmontonjournal.com/feed/atom",
           "status": null,
           "checkedDate": null,
           "valid": null,
-          "row": 8
+          "row": 8,
+          "sitemapUrl": "https://edmontonjournal.com/sitemap-news.xml"
         },
         {
           "name": "Windsor Star",
-          "url": "https://windsorstar.com/feed",
+          "url": "https://windsorstar.com/feed/atom",
           "status": null,
           "checkedDate": null,
           "valid": null,
-          "row": 9
+          "row": 9,
+          "sitemapUrl": "https://windsorstar.com/sitemap-news.xml"
         },
         {
           "name": "The Province",
-          "url": "https://theprovince.com/feed",
+          "url": "https://theprovince.com/feed/atom",
           "status": null,
           "checkedDate": null,
           "valid": null,
-          "row": 10
+          "row": 10,
+          "sitemapUrl": "https://theprovince.com/sitemap-news.xml"
         },
         {
           "name": "Calgary Sun",
-          "url": "https://calgarysun.com/feed",
+          "url": "https://calgarysun.com/feed/atom",
           "status": null,
           "checkedDate": null,
           "valid": null,
-          "row": 11
+          "row": 11,
+          "sitemapUrl": "https://calgarysun.com/sitemap-news.xml"
         },
         {
           "name": "Ottawa Sun",
-          "url": "https://ottawasun.com/feed",
+          "url": "https://ottawasun.com/feed/atom",
           "status": null,
           "checkedDate": null,
           "valid": null,
-          "row": 12
+          "row": 12,
+          "sitemapUrl": "https://ottawasun.com/sitemap-news.xml"
         },
         {
           "name": "The Tyee",
@@ -3497,11 +3551,12 @@
         },
         {
           "name": "The StarPhoenix",
-          "url": "https://thestarphoenix.com/feed",
+          "url": "https://thestarphoenix.com/feed/atom",
           "status": null,
           "checkedDate": null,
           "valid": null,
-          "row": 14
+          "row": 14,
+          "sitemapUrl": "https://thestarphoenix.com/sitemap-news.xml"
         },
         {
           "name": "Edmonton Sun",
@@ -3509,7 +3564,8 @@
           "status": null,
           "checkedDate": null,
           "valid": null,
-          "row": 15
+          "row": 15,
+          "sitemapUrl": "https://edmontonsun.com/sitemap-news.xml"
         },
         {
           "name": "Canada.com",
@@ -3529,11 +3585,12 @@
         },
         {
           "name": "Regina Leader Post",
-          "url": "https://leaderpost.com/feed",
+          "url": "https://leaderpost.com/feed/atom",
           "status": null,
           "checkedDate": null,
           "valid": null,
-          "row": 19
+          "row": 19,
+          "sitemapUrl": "https://leaderpost.com/sitemap-news.xml"
         },
         {
           "name": "Owen Sound Sun Times",
@@ -3631,6 +3688,181 @@
           "row": 53
         },
         {
+          "name": "Global News - Canada",
+          "url": "https://globalnews.ca/canada/feed/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Global News - Money",
+          "url": "https://globalnews.ca/money/feed/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Global News - Consumer",
+          "url": "https://globalnews.ca/consumer/feed/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Global News - Calgary",
+          "url": "https://globalnews.ca/calgary/feed/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Global News - Edmonton",
+          "url": "https://globalnews.ca/edmonton/feed/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Global News - Halifax",
+          "url": "https://globalnews.ca/halifax/feed/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Global News - Montreal",
+          "url": "https://globalnews.ca/montreal/feed/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Global News - National",
+          "url": "https://globalnews.ca/national/feed/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Global News - Toronto",
+          "url": "https://globalnews.ca/toronto/feed/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Global News - Winnipeg",
+          "url": "https://globalnews.ca/winnipeg/feed/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Global News - Ottawa",
+          "url": "https://globalnews.ca/ottawa/feed/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Global News - Kitchener",
+          "url": "https://globalnews.ca/kitchener/feed/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Global News - BC",
+          "url": "https://globalnews.ca/bc/feed/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Global News - Hamilton",
+          "url": "https://globalnews.ca/hamilton/feed/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Global News - Barrie",
+          "url": "https://globalnews.ca/barrie/feed/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Global News - London",
+          "url": "https://globalnews.ca/london/feed/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Global News - Kingston",
+          "url": "https://globalnews.ca/kingston/feed/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Global News - Durham",
+          "url": "https://globalnews.ca/durham/feed/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Global News - Guelph",
+          "url": "https://globalnews.ca/guelph/feed/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Global News - Okanagan",
+          "url": "https://globalnews.ca/okanagan/feed/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Global News - New Brunswick",
+          "url": "https://globalnews.ca/new-brunswick/feed/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Global News - Regina",
+          "url": "https://globalnews.ca/regina/feed/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Global News - Saskatoon",
+          "url": "https://globalnews.ca/saskatoon/feed/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Global News - Lethbridge",
+          "url": "https://globalnews.ca/lethbridge/feed/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Global News - Peterborough",
+          "url": "https://globalnews.ca/peterborough/feed/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Toronto Star - Politics",
           "url": "https://www.thestar.com/search/?f=rss&t=article&c=politics&l=50&s=start_time&sd=desc",
           "category": "politics",
@@ -3645,11 +3877,11 @@
           "url": "https://www.bnnbloomberg.ca/business/rss",
           "category": "business",
           "tier": 1,
-          "status": "⏩ OFFICIAL",
-          "checkedDate": null,
-          "valid": "needs verification",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid",
           "row": 55,
-          "enabled": false
+          "sitemapUrl": "https://www.bnnbloomberg.ca/arc/outboundfeeds/sitemap-news-index/"
         },
         {
           "name": "CBC News - Business",
@@ -3696,8 +3928,211 @@
           "sitemapUrl": "https://www.ctvnews.ca/arc/outboundfeeds/sitemap-news-index/"
         },
         {
+          "name": "CTV Calgary - Sitemap News Index",
+          "sitemapUrl": "https://calgary.ctvnews.ca/arc/outboundfeeds/sitemap-news-index/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CTV Edmonton - Sitemap News Index",
+          "sitemapUrl": "https://edmonton.ctvnews.ca/arc/outboundfeeds/sitemap-news-index/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CTV Montreal - Sitemap News Index",
+          "sitemapUrl": "https://montreal.ctvnews.ca/arc/outboundfeeds/sitemap-news-index/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CTV Toronto - Sitemap News Index",
+          "sitemapUrl": "https://toronto.ctvnews.ca/arc/outboundfeeds/sitemap-news-index/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CTV Ottawa - Sitemap News Index",
+          "sitemapUrl": "https://ottawa.ctvnews.ca/arc/outboundfeeds/sitemap-news-index/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CTV Vancouver - Sitemap News Index",
+          "sitemapUrl": "https://vancouver.ctvnews.ca/arc/outboundfeeds/sitemap-news-index/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CTV Vancouver Island - Sitemap News Index",
+          "sitemapUrl": "https://vancouverisland.ctvnews.ca/arc/outboundfeeds/sitemap-news-index/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CTV Kitchener - Sitemap News Index",
+          "sitemapUrl": "https://kitchener.ctvnews.ca/arc/outboundfeeds/sitemap-news-index/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CTV London - Sitemap News Index",
+          "sitemapUrl": "https://london.ctvnews.ca/arc/outboundfeeds/sitemap-news-index/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CTV Atlantic - Sitemap News Index",
+          "sitemapUrl": "https://atlantic.ctvnews.ca/arc/outboundfeeds/sitemap-news-index/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CTV Winnipeg - Sitemap News Index",
+          "sitemapUrl": "https://winnipeg.ctvnews.ca/arc/outboundfeeds/sitemap-news-index/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CTV Regina - Sitemap News Index",
+          "sitemapUrl": "https://regina.ctvnews.ca/arc/outboundfeeds/sitemap-news-index/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CTV Saskatoon - Sitemap News Index",
+          "sitemapUrl": "https://saskatoon.ctvnews.ca/arc/outboundfeeds/sitemap-news-index/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CTV Barrie - Sitemap News Index",
+          "sitemapUrl": "https://barrie.ctvnews.ca/arc/outboundfeeds/sitemap-news-index/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CTV Northern Ontario - Sitemap News Index",
+          "sitemapUrl": "https://northernontario.ctvnews.ca/arc/outboundfeeds/sitemap-news-index/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
           "name": "La Presse - News Sitemap",
           "sitemapUrl": "https://www.lapresse.ca/newsSitemap.xml"
+        },
+        {
+          "name": "Le Devoir - Sitemap",
+          "sitemapUrl": "https://www.ledevoir.com/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Journal de Montréal - News Sitemap",
+          "sitemapUrl": "https://www.journaldemontreal.com/news.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Journal de Québec - News Sitemap",
+          "sitemapUrl": "https://www.journaldequebec.com/news.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Le Droit - News Sitemap",
+          "sitemapUrl": "https://www.ledroit.com/arc/outboundfeeds/sitemap-news?outputType=xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Le Soleil - News Sitemap",
+          "sitemapUrl": "https://www.lesoleil.com/arc/outboundfeeds/sitemap-news?outputType=xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "La Tribune - News Sitemap",
+          "sitemapUrl": "https://www.latribune.ca/arc/outboundfeeds/sitemap-news?outputType=xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Le Nouvelliste - News Sitemap",
+          "sitemapUrl": "https://www.lenouvelliste.ca/arc/outboundfeeds/sitemap-news?outputType=xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Le Quotidien - News Sitemap",
+          "sitemapUrl": "https://www.lequotidien.com/arc/outboundfeeds/sitemap-news?outputType=xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "La Voix de l'Est - News Sitemap",
+          "sitemapUrl": "https://www.lavoixdelest.ca/arc/outboundfeeds/sitemap-news?outputType=xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TVA Nouvelles - News Sitemap",
+          "sitemapUrl": "https://www.tvanouvelles.ca/news.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Radio-Canada - Info Sitemap",
+          "sitemapUrl": "https://ici.radio-canada.ca/info/sitemaps.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Noovo Info - Latest News Sitemap",
+          "sitemapUrl": "https://www.noovo.info/arc/outboundfeeds/sitemap-news/latest/",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Noovo Info - News Sitemap Index",
+          "sitemapUrl": "https://www.noovo.info/arc/outboundfeeds/sitemap-news-index/",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TVA Sports - News Sitemap",
+          "sitemapUrl": "https://www.tvasports.ca/news.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
         },
         {
           "name": "CP24 - Sitemap News Index",
@@ -3718,6 +4153,226 @@
         {
           "name": "CP24 - Sitemap Index",
           "sitemapUrl": "https://www.cp24.com/arc/outboundfeeds/sitemap-index/"
+        },
+        {
+          "name": "CBC BC",
+          "url": "https://www.cbc.ca/cmlink/rss-canada-britishcolumbia",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CBC Toronto",
+          "url": "https://www.cbc.ca/cmlink/rss-canada-toronto",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CBC Montreal",
+          "url": "https://www.cbc.ca/cmlink/rss-canada-montreal",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CBC Calgary",
+          "url": "https://www.cbc.ca/cmlink/rss-canada-calgary",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CBC Edmonton",
+          "url": "https://www.cbc.ca/cmlink/rss-canada-edmonton",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CBC Ottawa",
+          "url": "https://www.cbc.ca/cmlink/rss-canada-ottawa",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CBC Saskatchewan",
+          "url": "https://www.cbc.ca/cmlink/rss-canada-saskatchewan",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CBC Manitoba",
+          "url": "https://www.cbc.ca/cmlink/rss-canada-manitoba",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CBC New Brunswick",
+          "url": "https://www.cbc.ca/cmlink/rss-canada-newbrunswick",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CBC Nova Scotia",
+          "url": "https://www.cbc.ca/cmlink/rss-canada-novascotia",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CBC Windsor",
+          "url": "https://www.cbc.ca/cmlink/rss-canada-windsor",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CBC Thunder Bay",
+          "url": "https://www.cbc.ca/cmlink/rss-canada-thunderbay",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CBC Sudbury",
+          "url": "https://www.cbc.ca/cmlink/rss-canada-sudbury",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CBC North",
+          "url": "https://www.cbc.ca/cmlink/rss-canada-north",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CBC Kitchener-Waterloo",
+          "url": "https://www.cbc.ca/cmlink/rss-canada-kitchenerwaterloo",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CBC Newfoundland",
+          "url": "https://www.cbc.ca/cmlink/rss-canada-newfoundland",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CBC PEI",
+          "url": "https://www.cbc.ca/cmlink/rss-canada-pei",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CBC London",
+          "url": "https://www.cbc.ca/cmlink/rss-canada-london",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CBC Kamloops",
+          "url": "https://www.cbc.ca/cmlink/rss-canada-kamloops",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CBC Saskatoon",
+          "url": "https://www.cbc.ca/cmlink/rss-canada-saskatoon",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Montreal Gazette",
+          "url": "https://montrealgazette.com/feed/atom",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid",
+          "sitemapUrl": "https://montrealgazette.com/sitemap-news.xml"
+        },
+        {
+          "name": "Vancouver Sun",
+          "url": "https://vancouversun.com/feed/atom",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid",
+          "sitemapUrl": "https://vancouversun.com/sitemap-news.xml"
+        },
+        {
+          "name": "Ottawa Citizen",
+          "url": "https://ottawacitizen.com/feed/atom",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid",
+          "sitemapUrl": "https://ottawacitizen.com/sitemap-news.xml"
+        },
+        {
+          "name": "660 NewsRadio Calgary",
+          "url": "https://calgary.citynews.ca/feed/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "1130 NewsRadio Vancouver",
+          "url": "https://vancouver.citynews.ca/feed/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CHEK News",
+          "url": "https://cheknews.ca/feed/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "HalifaxToday",
+          "url": "https://halifax.citynews.ca/feed/",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CityNews Montreal",
+          "url": "https://montreal.citynews.ca/feed/"
+        },
+        {
+          "name": "CityNews Ottawa",
+          "url": "https://ottawa.citynews.ca/feed/"
+        },
+        {
+          "name": "CityNews Edmonton",
+          "url": "https://edmonton.citynews.ca/feed/"
+        },
+        {
+          "name": "CityNews Winnipeg",
+          "url": "https://winnipeg.citynews.ca/feed/"
+        },
+        {
+          "name": "CityNews Kitchener",
+          "url": "https://kitchener.citynews.ca/feed/"
+        },
+        {
+          "name": "London Free Press",
+          "url": "https://lfpress.com/feed/"
+        },
+        {
+          "name": "The Recorder",
+          "url": "https://www.recorder.ca/feed/"
         }
       ]
     },
@@ -4433,6 +5088,20 @@
         {
           "name": "Correio Braziliense (Political Coverage)",
           "url": "https://www.correiobraziliense.com.br/rss/noticia/politica/rss.xml"
+        },
+        {
+          "name": "Metropoles - Google News Sitemap",
+          "sitemapUrl": "https://www.metropoles.com/sitemap/google-news.xml",
+          "enabled": true
+        },
+        {
+          "name": "O Globo - News Sitemap",
+          "sitemapUrl": "https://oglobo.globo.com/sitemap/oglobo/news.xml"
+        },
+        {
+          "name": "Estadão - Sitemap Index by Day",
+          "sitemapUrl": "https://www.estadao.com.br/arc/outboundfeeds/sitemap-index-by-day/?outputType=xml",
+          "enabled": true
         }
       ]
     },
@@ -4543,7 +5212,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 17
+          "row": 17,
+          "sitemapUrl": "https://www.9news.com.au/sitemap.xml"
         },
         {
           "name": "Sydney Morning Herald",
@@ -4551,7 +5221,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/19/2026",
           "valid": "needs verification",
-          "row": 18
+          "row": 18,
+          "sitemapUrl": "https://www.smh.com.au/sitemaps/news/brands/smh"
         },
         {
           "name": "The Age",
@@ -4559,7 +5230,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/19/2026",
           "valid": "needs verification",
-          "row": 19
+          "row": 19,
+          "sitemapUrl": "https://www.theage.com.au/sitemaps/news/brands/theage"
         },
         {
           "name": "Canberra Times",
@@ -5185,6 +5857,20 @@
           "row": 12
         },
         {
+          "name": "20 Minutos - Google News Sitemap",
+          "sitemapUrl": "https://www.20minutos.es/sitemap-google-news.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "20 Minutos - Incremental Sitemap",
+          "sitemapUrl": "https://www.20minutos.es/sitemap-noticias-incremental.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
           "name": "El Diario",
           "url": "https://www.eldiario.es/rss/",
           "status": "⏩ OFFICIAL",
@@ -5441,6 +6127,10 @@
           "row": 51
         },
         {
+          "name": "El Español - RSS",
+          "url": "https://www.elespanol.com/rss/"
+        },
+        {
           "name": "RTVE - News Sitemap",
           "sitemapUrl": "https://www.rtve.es/sitemaps/sitemaps-news.xml"
         },
@@ -5471,6 +6161,13 @@
         {
           "name": "El Periódico - News Sitemap",
           "sitemapUrl": "https://www.elperiodico.com/es/sitemapNews.xml"
+        },
+        {
+          "name": "El Periódico - Month Sitemap",
+          "sitemapUrl": "https://www.elperiodico.com/es/sitemapMonth.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
         },
         {
           "name": "eldiario.es - Google News Sitemap",
@@ -5553,6 +6250,27 @@
           "enabled": false
         },
         {
+          "name": "Azteca Noticias - Sitemap Latest",
+          "sitemapUrl": "https://www.tvazteca.com/aztecanoticias/sitemap-latest.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Azteca Noticias - News Latest Sitemap",
+          "sitemapUrl": "https://www.tvazteca.com/aztecanoticias/newslatest-sitemap-latest.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Reforma - News Sitemap",
+          "sitemapUrl": "https://www.reforma.com/news_sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
           "name": "El Financiero (Economía)",
           "url": "https://www.elfinanciero.com.mx/rss/economia",
           "category": "business",
@@ -5588,7 +6306,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 7
+          "row": 7,
+          "sitemapUrl": "https://editorial.aristeguinoticias.com/news-sitemap.xml"
         },
         {
           "name": "Aristegui (México)",
@@ -5806,7 +6525,7 @@
         {
           "name": "El Sol de México (Domestic Breaking)",
           "url": "https://www.elsoldemexico.com.mx/rss.xml",
-          "enabled": false
+          "enabled": true
         },
         {
           "name": "Expansión Economía (Economy Specialist)",
@@ -5831,6 +6550,13 @@
           "enabled": false
         },
         {
+          "name": "Xataka México - News Sitemap",
+          "sitemapUrl": "https://www.xataka.com.mx/sitemap_news.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Milenio - Google News Sitemap",
           "sitemapUrl": "https://www.milenio.com/sitemap/sitemap-google-news-index.xml"
         },
@@ -5841,6 +6567,20 @@
         {
           "name": "Animal Politico - News Sitemap",
           "sitemapUrl": "https://sitemaps.animalpolitico.com/sitemap/news-sitemap.xml"
+        },
+        {
+          "name": "El Universal - News Sitemap",
+          "sitemapUrl": "https://www.eluniversal.com.mx/arc/outboundfeeds/news/?outputType=xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "El Universal - General Sitemap",
+          "sitemapUrl": "https://www.eluniversal.com.mx/arc/outboundfeeds/general/?outputType=xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
         },
         {
           "name": "El Universal - Nacion Sitemap",
@@ -5861,6 +6601,20 @@
         {
           "name": "Excelsior - Sitemap Index",
           "sitemapUrl": "https://www.excelsior.com.mx/sitemap-index.xml"
+        },
+        {
+          "name": "Proceso - News Index",
+          "sitemapUrl": "https://www.proceso.com.mx/sitemaps/indexnews.asp",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "SDP Noticias - Sitemap Index",
+          "sitemapUrl": "https://www.sdpnoticias.com/arc/outboundfeeds/sitemap-index?outputType=xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
         },
         {
           "name": "El Sol de Mexico - Update Sitemap",
@@ -5901,6 +6655,10 @@
         {
           "name": "La Jornada - Deportes",
           "url": "https://www.jornada.com.mx/rss/deportes.xml"
+        },
+        {
+          "name": "La Jornada - Opinión",
+          "url": "https://www.jornada.com.mx/rss/opinion.xml"
         },
         {
           "name": "El Universal - Cultura Sitemap",
@@ -7293,7 +8051,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 26
+          "row": 26,
+          "sitemapUrl": "https://www.nzz.ch/sitemap/news0.xml"
         },
         {
           "name": "Tages-Anzeiger",
@@ -7308,6 +8067,41 @@
           "valid": "needs verification",
           "row": 29,
           "enabled": false
+        },
+        {
+          "name": "Swissinfo EN - News Sitemap",
+          "sitemapUrl": "https://www.swissinfo.ch/eng/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Swissinfo DE - News Sitemap",
+          "sitemapUrl": "https://www.swissinfo.ch/ger/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Swissinfo FR - News Sitemap",
+          "sitemapUrl": "https://www.swissinfo.ch/fre/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Swissinfo IT - News Sitemap",
+          "sitemapUrl": "https://www.swissinfo.ch/ita/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Swissinfo ES - News Sitemap",
+          "sitemapUrl": "https://www.swissinfo.ch/spa/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
         },
         {
           "name": "Finews.ch (Swiss Finance)",
@@ -7358,6 +8152,13 @@
           "url": "https://www.blick.ch/rss.xml"
         },
         {
+          "name": "Blick - News Sitemap",
+          "sitemapUrl": "https://www.blick.ch/news.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Handelszeitung (Economy Weekly - German)",
           "url": "https://www.handelszeitung.ch/rss.xml",
           "enabled": false
@@ -7390,6 +8191,20 @@
           "name": "Watson.ch (News Portal - German)",
           "url": "https://www.watson.ch/api/rss",
           "enabled": false
+        },
+        {
+          "name": "Watson - Google Sitemap DE",
+          "sitemapUrl": "https://www.watson.ch/api/2.0/feed/googlesitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Watson - Google Sitemap FR",
+          "sitemapUrl": "https://www.watson.ch/fr/api/2.0/feed/googlesitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
         },
         {
           "name": "Aargauer Zeitung (Regional Major Daily - German)",
@@ -7436,8 +8251,22 @@
           "sitemapUrl": "https://www.20min.ch/sitemaps/de/articles.xml"
         },
         {
+          "name": "20 Minuten - News Sitemap (German)",
+          "sitemapUrl": "https://www.20min.ch/sitemaps/de/news.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
           "name": "20 Minutes - Articles Sitemap (French)",
           "sitemapUrl": "https://www.20min.ch/sitemaps/fr/articles.xml"
+        },
+        {
+          "name": "20 Minutes - News Sitemap (French)",
+          "sitemapUrl": "https://www.20min.ch/sitemaps/fr/news.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
         },
         {
           "name": "Le Matin - Articles Sitemap",
@@ -7609,7 +8438,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 5
+          "row": 5,
+          "sitemapUrl": "https://www.sabah.com.tr/sitemap/news.xml"
         },
         {
           "name": "Haberturk",
@@ -7887,7 +8717,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 57
+          "row": 57,
+          "sitemapUrl": "https://www.haberturk.com/sitemap_google_news.xml"
         },
         {
           "name": "Dünya (Main)",
@@ -7928,6 +8759,26 @@
           "url": "https://www.ntv.com.tr/ekonomi.rss"
         },
         {
+          "name": "NTV Türkiye",
+          "url": "https://www.ntv.com.tr/turkiye.rss"
+        },
+        {
+          "name": "NTV Gündem",
+          "url": "https://www.ntv.com.tr/gundem.rss"
+        },
+        {
+          "name": "NTV Dünya",
+          "url": "https://www.ntv.com.tr/dunya.rss"
+        },
+        {
+          "name": "NTV Teknoloji",
+          "url": "https://www.ntv.com.tr/teknoloji.rss"
+        },
+        {
+          "name": "NTV Yaşam",
+          "url": "https://www.ntv.com.tr/yasam.rss"
+        },
+        {
           "name": "Sözcü (National Daily)",
           "url": "https://www.sozcu.com.tr/rss",
           "enabled": false
@@ -7956,7 +8807,8 @@
         },
         {
           "name": "Yeni Şafak (Conservative Daily)",
-          "url": "https://www.yenisafak.com/rss"
+          "url": "https://www.yenisafak.com/rss",
+          "sitemapUrl": "https://www.yenisafak.com/sitemap?contenttypes=news&contenttypes=official-announcement&name=mobile&take=500"
         },
         {
           "name": "Ensonhaber (General Breaking)",
@@ -7969,6 +8821,34 @@
         {
           "name": "Webtekno (Tech/IT)",
           "url": "https://www.webtekno.com/rss.xml"
+        },
+        {
+          "name": "Ahaber - News Sitemap",
+          "sitemapUrl": "https://www.ahaber.com.tr/sitemap/news.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TGRT Haber - Google News Sitemap",
+          "sitemapUrl": "https://www.tgrthaber.com/sitemap/google-news-sitemap",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Sözcü - Sitemap Index",
+          "sitemapUrl": "https://www.sozcu.com.tr/feeds/sitemapindex",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "NTV - News Sitemap",
+          "sitemapUrl": "https://www.ntv.com.tr/sitemaps/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
         }
       ]
     },
@@ -8746,6 +9626,20 @@
           "row": 16
         },
         {
+          "name": "RadioZet - Google News Sitemap",
+          "sitemapUrl": "https://wiadomosci.radiozet.pl/externals/xml/google_news_sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TVP Info - Sitemap 2026",
+          "sitemapUrl": "https://www.tvp.info/sitemap-full-2026-1.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
           "name": "PolsatNews Wszystkie",
           "url": "https://www.polsatnews.pl/rss/wszystkie.xml",
           "status": null,
@@ -8912,7 +9806,8 @@
         },
         {
           "name": "Wprost (Politics/Current Affairs)",
-          "url": "https://www.wprost.pl/rss"
+          "url": "https://www.wprost.pl/rss",
+          "sitemapUrl": "https://www.wprost.pl/sitemap/news"
         },
         {
           "name": "Rzeczpospolita (Economy/Politics)",
@@ -8937,7 +9832,8 @@
         },
         {
           "name": "Business Insider Polska",
-          "url": "https://businessinsider.com.pl/.feed"
+          "url": "https://businessinsider.com.pl/.feed",
+          "sitemapUrl": "https://businessinsider.com.pl/sitemap_news.xml"
         },
         {
           "name": "Forsal",
@@ -9069,6 +9965,13 @@
           "sitemapUrl": "https://www.aftonbladet.se/sitemap.xml"
         },
         {
+          "name": "Aftonbladet - 48h Sitemap",
+          "sitemapUrl": "https://www.aftonbladet.se/sitemaps/files/articles-48hrs.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Aftonbladet - Sportbladet",
           "url": "https://rss.aftonbladet.se/rss2/small/pages/sections/senastenytt/sport/",
           "status": "⏩ OFFICIAL",
@@ -9118,6 +10021,13 @@
           "sitemapUrl": "https://www.expressen.se/sitemap.xml"
         },
         {
+          "name": "Expressen - Google News Sitemap",
+          "sitemapUrl": "https://www.expressen.se/googlenews",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
           "name": "GT - Nyheter",
           "url": "https://feeds.expressen.se/gt/",
           "status": "⏩ OFFICIAL",
@@ -9133,6 +10043,27 @@
           "valid": "needs verification",
           "row": 37,
           "sitemapUrl": "https://www.svd.se/sitemap.xml"
+        },
+        {
+          "name": "Svenska Dagbladet - 48h Sitemap",
+          "sitemapUrl": "https://www.svd.se/sitemaps/files/articles-48hrs.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TV4 - Article Sitemap 2026-3",
+          "sitemapUrl": "https://www.tv4.se/api/sitemaps/article/2026-3.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TV4 - Breaking News Sitemap 2026-3",
+          "sitemapUrl": "https://www.tv4.se/api/sitemaps/breaking-news/2026-3.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
         },
         {
           "name": "The Local Sweden (EN)",
@@ -9265,6 +10196,90 @@
         {
           "name": "Privata Affärer (Personal Finance/Investing)",
           "url": "https://www.privataaffarer.se/rss.xml"
+        },
+        {
+          "name": "SVT Lokal - Stockholm",
+          "url": "https://www.svt.se/nyheter/lokalt/stockholm/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "SVT Lokal - Väst",
+          "url": "https://www.svt.se/nyheter/lokalt/vast/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "SVT Lokal - Uppsala",
+          "url": "https://www.svt.se/nyheter/lokalt/uppsala/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "SVT Lokal - Örebro",
+          "url": "https://www.svt.se/nyheter/lokalt/orebro/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "SVT Lokal - Halland",
+          "url": "https://www.svt.se/nyheter/lokalt/halland/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "SVT Lokal - Västerbotten",
+          "url": "https://www.svt.se/nyheter/lokalt/vasterbotten/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "SVT Lokal - Gävleborg",
+          "url": "https://www.svt.se/nyheter/lokalt/gavleborg/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "SVT Lokal - Dalarna",
+          "url": "https://www.svt.se/nyheter/lokalt/dalarna/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "SVT Lokal - Norrbotten",
+          "url": "https://www.svt.se/nyheter/lokalt/norrbotten/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "SVT Lokal - Småland",
+          "url": "https://www.svt.se/nyheter/lokalt/smaland/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "SVT Lokal - Sörmland",
+          "url": "https://www.svt.se/nyheter/lokalt/sormland/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "SVT Lokal - Öst",
+          "url": "https://www.svt.se/nyheter/lokalt/ost/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
         }
       ]
     },
@@ -10380,6 +11395,10 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 55
+        },
+        {
+          "name": "IFP News",
+          "url": "https://ifpnews.com/feed/"
         }
       ]
     },
@@ -11318,7 +12337,7 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 31,
-          "sitemapUrl": "https://www.latercera.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+          "sitemapUrl": "https://www.latercera.com/arc/outboundfeeds/news-sitemap-index?outputType=xml"
         },
         {
           "name": "Pulso (La Tercera Biz)",
@@ -11347,6 +12366,34 @@
           "enabled": false
         },
         {
+          "name": "Emol - Nacional Sitemap 2026",
+          "sitemapUrl": "http://www.emol.com/sitemap/xml/sitemap1_2026.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Emol - Internacional Sitemap 2026",
+          "sitemapUrl": "http://www.emol.com/sitemap/xml/sitemap2_2026.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Emol - Economía Sitemap 2026",
+          "sitemapUrl": "http://www.emol.com/sitemap/xml/sitemap3_2026.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Emol - Deportes Sitemap 2026",
+          "sitemapUrl": "http://www.emol.com/sitemap/xml/sitemap4_2026.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
           "name": "BioBioChile - Home",
           "url": "https://feeds.feedburner.com/radiobiobio/NNeJ",
           "status": "⏩ OFFICIAL",
@@ -11354,6 +12401,17 @@
           "valid": "needs verification",
           "row": 35,
           "sitemapUrl": "https://www.biobiochile.cl/news-sitemap.xml"
+        },
+        {
+          "name": "24Horas - Sitemap Index",
+          "sitemapUrl": "https://www.24horas.cl/24horas/site/sitemap_pags.xml"
+        },
+        {
+          "name": "24Horas - Sitemap 202603",
+          "sitemapUrl": "https://www.24horas.cl/24horas/site/sitemap/sitemap_pags_202603.xml.gz",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
         },
         {
           "name": "Cooperativa - Economía",
@@ -11731,6 +12789,10 @@
           "sitemapUrl": "https://www.meganoticias.cl/sitemaps/sitemap-noticias-index-content.xml"
         },
         {
+          "name": "Meganoticias - News Sitemap",
+          "sitemapUrl": "https://www.meganoticias.cl/sitemaps/sitemap-news.xml"
+        },
+        {
           "name": "CNN Chile",
           "url": null,
           "status": "⏩ OFFICIAL",
@@ -11764,7 +12826,7 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 80,
-          "sitemapUrl": "https://www.chilevision.cl/chilevision/site/sitemap_news_chvn.xml"
+          "sitemapUrl": "https://www.chilevision.cl/_files/sitemaps/sitemap_news.xml"
         }
       ]
     },
@@ -11953,6 +13015,13 @@
           "sitemapUrl": "https://listindiario.com/sitemap-index.xml"
         },
         {
+          "name": "Listín Diario - Google News Sitemap",
+          "sitemapUrl": "https://listindiario.com/sitemap-google-news.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Listín Diario - Economía",
           "url": "https://listindiario.com/rss/economia.xml",
           "status": "⏩ OFFICIAL",
@@ -12003,12 +13072,26 @@
           "row": 37
         },
         {
+          "name": "CDN - News Sitemap",
+          "sitemapUrl": "https://cdn.com.do/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Diario Libre - Revista",
           "url": "https://www.diariolibre.com/rss/revista.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
           "row": 38
+        },
+        {
+          "name": "Diario Libre - News Sitemap",
+          "sitemapUrl": "https://www.diariolibre.com/sitemapnews",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
         },
         {
           "name": "El Día",
@@ -12051,6 +13134,13 @@
           "checkedDate": null,
           "valid": "needs verification",
           "sitemapUrl": "https://www.elcaribe.com.do/news-sitemap.xml"
+        },
+        {
+          "name": "Periódico Hoy - Google News Sitemap",
+          "sitemapUrl": "https://hoy.com.do/sitemap-google-news.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
         },
         {
           "name": "Teleuniverso",
@@ -12630,7 +13720,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/19/2026",
           "valid": "needs verification",
-          "row": 1
+          "row": 1,
+          "sitemapUrl": "https://www.derstandard.at/sitemaps/news.xml"
         },
         {
           "name": "ORF",
@@ -12902,6 +13993,13 @@
           "enabled": false
         },
         {
+          "name": "Heute - Sitemap Index",
+          "sitemapUrl": "https://www.heute.at/sitemap/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
           "name": "OE24",
           "url": "https://www.oe24.at/news/rss",
           "sitemapUrl": "https://www.oe24.at/sitemap-news.xml"
@@ -12919,6 +14017,70 @@
         {
           "name": "Salzburger Nachrichten - News Sitemap",
           "sitemapUrl": "https://www.sn.at/news-artikel.sitemap.xml"
+        },
+        {
+          "name": "Kurier - Google News Sitemap",
+          "sitemapUrl": "https://kurier.at/sitemaps_google_news.xml"
+        },
+        {
+          "name": "Kleine Zeitung - News Sitemap",
+          "sitemapUrl": "https://www.kleinezeitung.at/news-sitemap"
+        },
+        {
+          "name": "ORF Niederösterreich",
+          "url": "https://rss.orf.at/noe.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "ORF Oberösterreich",
+          "url": "https://rss.orf.at/ooe.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "ORF Salzburg",
+          "url": "https://rss.orf.at/salzburg.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "ORF Tirol",
+          "url": "https://rss.orf.at/tirol.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "ORF Vorarlberg",
+          "url": "https://rss.orf.at/vorarlberg.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "ORF Kärnten",
+          "url": "https://rss.orf.at/kaernten.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "ORF Burgenland",
+          "url": "https://rss.orf.at/burgenland.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "ORF Steiermark",
+          "url": "https://rss.orf.at/steiermark.xml",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
         }
       ]
     },
@@ -13934,6 +15096,10 @@
           "url": "https://www.rtp.pt/noticias/rss/mundo"
         },
         {
+          "name": "RTP - Política",
+          "url": "https://www.rtp.pt/noticias/rss/politica"
+        },
+        {
           "name": "RTP - Economia",
           "url": "https://www.rtp.pt/noticias/rss/economia"
         },
@@ -13964,6 +15130,18 @@
           "sitemapUrl": "https://www.noticiasaominuto.com/sitemap.xml"
         },
         {
+          "name": "Noticias ao Minuto - País",
+          "url": "https://www.noticiasaominuto.com/rss/pais"
+        },
+        {
+          "name": "Noticias ao Minuto - Mundo",
+          "url": "https://www.noticiasaominuto.com/rss/mundo"
+        },
+        {
+          "name": "Noticias ao Minuto - Economia",
+          "url": "https://www.noticiasaominuto.com/rss/economia"
+        },
+        {
           "name": "Executive Digest",
           "url": "https://executivedigest.sapo.pt/feed/"
         },
@@ -13978,6 +15156,10 @@
         {
           "name": "24 Notícias",
           "sitemapUrl": "https://24noticias.sapo.pt/sitemap.xml"
+        },
+        {
+          "name": "SAPO - Article Sitemap",
+          "sitemapUrl": "https://sapo.pt/article/sitemap.xml"
         },
         {
           "name": "Jornal de Negócios",
@@ -13998,6 +15180,27 @@
         {
           "name": "Record",
           "sitemapUrl": "https://www.record.pt/sitemap"
+        },
+        {
+          "name": "Noticias ao Minuto - Desporto",
+          "url": "https://www.noticiasaominuto.com/rss/desporto",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Noticias ao Minuto - Tech",
+          "url": "https://www.noticiasaominuto.com/rss/tech",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Noticias ao Minuto - Fama",
+          "url": "https://www.noticiasaominuto.com/rss/fama",
+          "status": "NEW",
+          "checkedDate": "03/18/2026",
+          "valid": "valid"
         }
       ]
     },
@@ -15783,6 +16986,38 @@
         {
           "name": "Ethnos",
           "url": "https://www.ethnos.gr/rss.xml"
+        },
+        {
+          "name": "Newsit - News Sitemap",
+          "sitemapUrl": "https://www.newsit.gr/news-sitemap.xml"
+        },
+        {
+          "name": "Liberal - News Sitemap",
+          "sitemapUrl": "https://www.liberal.gr/sitemap_news.xml"
+        },
+        {
+          "name": "Enikos - News Sitemap",
+          "sitemapUrl": "https://www.enikos.gr/news-sitemap.xml"
+        },
+        {
+          "name": "Capital.gr - Google News Sitemap",
+          "sitemapUrl": "https://www.capital.gr/sitemap/googlenews"
+        },
+        {
+          "name": "Parapolitika - News Sitemap",
+          "sitemapUrl": "https://www.parapolitika.gr/sitemaps/NewsArticles.xml/"
+        },
+        {
+          "name": "Powergame - News Sitemap",
+          "sitemapUrl": "https://www.powergame.gr/sitemap-news.xml"
+        },
+        {
+          "name": "Newsbomb - Articles Sitemap",
+          "sitemapUrl": "https://www.newsbomb.gr/sitemap/articles"
+        },
+        {
+          "name": "Mononews - Sitemap",
+          "sitemapUrl": "https://www.mononews.gr/sitemap.xml"
         }
       ]
     },
@@ -15799,6 +17034,13 @@
           "name": "HotNews",
           "url": "https://hotnews.ro/feed",
           "sitemapUrl": "https://hotnews.ro/sitemap-news.xml"
+        },
+        {
+          "name": "HotNews - Sitemap Index",
+          "sitemapUrl": "https://hotnews.ro/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
         },
         {
           "name": "Adevărul",
@@ -15828,6 +17070,13 @@
         {
           "name": "Libertatea",
           "sitemapUrl": "https://www.libertatea.ro/sitemap-news.xml"
+        },
+        {
+          "name": "Libertatea - Articles Index",
+          "sitemapUrl": "https://www.libertatea.ro/sitemap-articles-index.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
         },
         {
           "name": "Ziare.com",
@@ -15882,6 +17131,38 @@
         {
           "name": "TSN",
           "url": "https://tsn.ua/rss/full.rss"
+        },
+        {
+          "name": "RBC Ukraine - News Sitemap",
+          "sitemapUrl": "https://www.rbc.ua/static/sitemap/news.xml"
+        },
+        {
+          "name": "Liga.net - News Sitemap",
+          "sitemapUrl": "https://www.liga.net/sitemap-main/sitemap-news.xml"
+        },
+        {
+          "name": "Focus - News Sitemap",
+          "sitemapUrl": "https://focus.ua/sitemap-news-uk.xml"
+        },
+        {
+          "name": "Ukrinform - Currentweek Sitemap",
+          "sitemapUrl": "https://www.ukrinform.ua/sitemap/currentweek.xml"
+        },
+        {
+          "name": "Espreso - News Sitemap",
+          "sitemapUrl": "https://espreso.tv/sitemapnews/1"
+        },
+        {
+          "name": "Hromadske - News Sitemap",
+          "sitemapUrl": "https://hromadske.ua/sitemap/news.xml"
+        },
+        {
+          "name": "UNN - Google News Sitemap",
+          "sitemapUrl": "https://unn.ua/sitemap/uk-google-news.xml"
+        },
+        {
+          "name": "Obozrevatel - News Last 24h",
+          "sitemapUrl": "https://www.obozrevatel.com/ukr/sitemap/news-last-24hours.xml"
         }
       ]
     },
@@ -16038,11 +17319,17 @@
         },
         {
           "name": "NOVA - Latest News",
-          "sitemapUrl": "https://nova.bg/sitemap/latest_news"
+          "sitemapUrl": "https://nova.bg/sitemap/latest_news",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
         },
         {
           "name": "NOVA - Latest Accents",
-          "sitemapUrl": "https://nova.bg/sitemap/latest_accents"
+          "sitemapUrl": "https://nova.bg/sitemap/latest_accents",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
         },
         {
           "name": "SEGA - Google News Sitemap",
@@ -16179,8 +17466,22 @@
           "sitemapUrl": "https://www.delfi.lt/news/sitemap/index.xml"
         },
         {
+          "name": "Delfi Lithuania - Latest Sitemap",
+          "sitemapUrl": "https://www.delfi.lt/news/sitemap/latest.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
           "name": "15min - Articles Index",
           "sitemapUrl": "https://www.15min.lt/static/sitemaps/articles_index.xml"
+        },
+        {
+          "name": "15min - Live Sitemap",
+          "sitemapUrl": "https://www.15min.lt/static/sitemaps/live/articles/sitemap_1.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
         },
         {
           "name": "Lrytas",

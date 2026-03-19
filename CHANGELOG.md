@@ -6,6 +6,44 @@
 
 ## Unreleased
 
+### [cbc7f97] Filter low-signal country titles
+- Commit: cbc7f978c0231324f2e2d3fec6f553d767a20d12
+- Date: 2026-03-18 11:16:57 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	lib/html-entities.ts
+    - M	lib/ingestion-store.ts
+    - M	scripts/export-public-news-data.ts
+    - M	scripts/report-news-by-country-discord.ts
+  - Git stat:
+  - lib/html-entities.ts                      |  40 +++++
+  -  lib/ingestion-store.ts                    |  17 +-
+  -  scripts/export-public-news-data.ts        |  31 ++--
+  -  scripts/report-news-by-country-discord.ts | 256 ++++++++++++++++++++++--------
+  -  4 files changed, 257 insertions(+), 87 deletions(-)
+
+### [75ee0e2] Sync RSS health snapshot to primary worktree
+- Commit: 75ee0e2b4c5d7fe2eb5d4e1d39864cfd34a22c8c
+- Date: 2026-03-18 09:52:34 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	CHANGELOG.md
+    - M	README.md
+    - M	audits/readme_rss_health_latest.json
+    - M	data/rss-catalog.csv
+    - M	data/rss-catalog.opml
+    - M	docs/macmini-static-ops.md
+    - M	scripts/run-rss-health-daily-local.sh
+  - Git stat:
+  - CHANGELOG.md                          |    16 +
+  -  README.md                             |  4138 +++++---
+  -  audits/readme_rss_health_latest.json  | 17012 +++++++++++++++++++++++---------
+  -  data/rss-catalog.csv                  |  3468 +++----
+  -  data/rss-catalog.opml                 |   744 +-
+  -  docs/macmini-static-ops.md            |     1 +
+  -  scripts/run-rss-health-daily-local.sh |    35 +
+  -  7 files changed, 17224 insertions(+), 8190 deletions(-)
+
 ### [f80f31a] Deduplicate hourly Discord reports
 - Commit: f80f31af0db50d2c737c13d8dd4d7cfff3809a80
 - Date: 2026-03-18 08:34:17 -0500

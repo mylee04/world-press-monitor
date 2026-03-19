@@ -230,6 +230,7 @@ async function readArticles(pool: Pool, directory: CountryDirectory): Promise<Pu
       section,
       title,
       snippet,
+      keywordText: buildKeywordText([title, snippet, row.source, countryName, countryCode, section]),
       url,
       publicationDatetime,
       createdAt: new Date(row.created_at).toISOString(),
@@ -1039,6 +1040,10 @@ function writeDataFiles(
       published24h: 'publicationDatetime within the last 24 hours',
       inserted24h: 'createdAt within the last 24 hours',
     },
+    filtering: {
+      keywordTextField: 'keywordText',
+      normalization: 'lowercased, diacritics-stripped, whitespace-normalized title + snippet + source + country + countryCode + section',
+    },
     countries: countryCodes,
     countryNames,
     feeds: integrationFeeds,
@@ -1089,6 +1094,19 @@ function normalizeSection(value: string | null): NewsSection {
 function normalizeCountryName(value: string | null): string {
   const normalized = (value || '').trim();
   return normalized || 'Global';
+}
+
+function buildKeywordText(parts: ReadonlyArray<string | null | undefined>): string {
+  const text = parts
+    .map((part) => decodeHtmlEntities(part || ''))
+    .join(' ')
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}]+/gu, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  return text;
 }
 
 function normalizePublicationDatetime(publicationDatetimeRaw: string, createdAtRaw: string): string {
@@ -1170,6 +1188,7 @@ function writeCsv(path: string, articles: PublicNewsArticle[]): void {
     'section',
     'title',
     'snippet',
+    'keywordText',
     'url',
     'publicationDatetime',
     'createdAt',
@@ -1184,6 +1203,7 @@ function writeCsv(path: string, articles: PublicNewsArticle[]): void {
       article.section,
       article.title,
       article.snippet,
+      article.keywordText,
       article.url,
       article.publicationDatetime,
       article.createdAt,
