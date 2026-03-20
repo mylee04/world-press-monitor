@@ -1,6 +1,6 @@
 # Customer Portal Ops
 
-This portal now assumes customer-only access through API tokens.
+This portal now assumes customer-only access through API tokens for World Press Radar.
 
 ## Required runtime pieces
 
@@ -17,21 +17,21 @@ This portal now assumes customer-only access through API tokens.
 
 ## Web app env
 
-Set on Vercel:
+Set on Vercel for `app.worldpressradar.com`:
 
-- `NEXT_PUBLIC_NEWS_API_BASE_URL=https://<stable-api-host>`
+- `NEXT_PUBLIC_NEWS_API_BASE_URL=https://api.worldpressradar.com`
 
 Do not point the production web app at a temporary tunnel URL.
 
 ## API env
 
-Set on the API host:
+Set on the API host for `api.worldpressradar.com`:
 
 - `DATABASE_URL`
 - `NEWS_API_HOST=0.0.0.0`
 - `NEWS_API_PORT=4100`
 - `NEWS_API_ALLOW_PUBLIC_READ_ONLY=0`
-- `NEWS_API_CORS_ORIGINS=https://world-press-monitor.vercel.app`
+- `NEWS_API_CORS_ORIGINS=https://app.worldpressradar.com`
 - `NEWS_API_TOKEN`
 - `NEWS_API_TOKEN_POLICIES`
 

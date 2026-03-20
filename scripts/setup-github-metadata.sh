@@ -11,8 +11,8 @@ if [ -n "${GH_TOKEN:-}" ]; then
   echo "$GH_TOKEN" | gh auth login --with-token -h github.com
 fi
 
-OWNER_REPO="${1:-mylee04/world-press-monitor}"
-DESCRIPTION="World Press Monitor: open-source RSS atlas and feed validation pipeline for global news sources."
+OWNER_REPO="${1:-mylee04/world-press-radar}"
+DESCRIPTION="World Press Radar: customer news intelligence portal and RSS ingestion pipeline for global news sources."
 
 printf 'Setting metadata for %s\n' "$OWNER_REPO"
 

@@ -931,7 +931,7 @@ const playgroundHtml = `
 
       <div>
         <label>API Base URL</label>
-        <input id="baseUrl" value="" placeholder="예: https://world-press-monitor.onrender.com" />
+        <input id="baseUrl" value="" placeholder="예: https://api.worldpressradar.com" />
       </div>
       <div>
         <label>Authorization Token</label>

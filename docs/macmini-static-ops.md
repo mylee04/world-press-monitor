@@ -82,7 +82,7 @@ Do not point launchd at worktrees under `Desktop`, `Documents`, or `Downloads`; 
 Recommended once per Mac mini:
 
 1. `vercel login`
-2. `vercel link --project world-press-monitor`
+2. `vercel link --project <your-vercel-project-name>`
 3. Keep `.vercel/project.json` on that machine
 4. Optionally set `VERCEL_TOKEN` in `.env.macmini.local` for headless launchd runs
 

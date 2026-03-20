@@ -5,7 +5,7 @@ import { CustomerAccessProvider } from '@/components/customer-access-provider';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'World Press Monitor Customer Portal',
+  title: 'World Press Radar Customer Portal',
   description: 'Customer news intelligence portal for filtered article access and live coverage summaries.',
 };
 
@@ -23,7 +23,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
           <div className="app-shell">
             <header className="site-header">
               <div>
-                <span className="brand-kicker">World Press Monitor</span>
+                <span className="brand-kicker">World Press Radar</span>
                 <p>Customer-only news intelligence portal. A valid API token is required to load article data.</p>
               </div>
               <nav>

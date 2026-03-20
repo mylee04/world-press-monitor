@@ -106,7 +106,7 @@ PY
     if ! command -v vercel >/dev/null 2>&1; then
       printf 'Reason: Vercel CLI not found in PATH.\n'
     elif [ ! -f "${PROJECT_ROOT}/.vercel/project.json" ]; then
-      printf 'Reason: no linked Vercel project found. Run `vercel link --project world-press-monitor` once.\n'
+      printf 'Reason: no linked Vercel project found. Run `vercel link --project <your-vercel-project-name>` once.\n'
     fi
   fi
 } >>"${LOG_FILE}" 2>&1

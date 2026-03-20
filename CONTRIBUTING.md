@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for helping improve World Press Monitor.
+Thanks for helping improve World Press Radar.
 
 ## Quick start
 

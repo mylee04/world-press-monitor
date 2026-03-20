@@ -1,20 +1,167 @@
-# World Press Monitor RSS Atlas
+# World Press Radar
 
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.7.3-3178c6?logo=typescript&logoColor=white)
 ![Bun](https://img.shields.io/badge/Bun-1.2-000000?logo=bun)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Ready-336791?logo=postgresql&logoColor=white)
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue)
 
-Maintenance-focused project for RSS source cataloging, feed validation, and periodic collection checks.
+Customer-only news intelligence portal backed by hourly RSS ingest, PostgreSQL, and a token-gated read API. Customers browse article counts and article lists by category, country, and date through the web app. Anonymous users are not allowed to browse or download article data.
+
+## What customers can do
+
+- open the portal and unlock access with an issued customer token
+- browse dashboard counts by section, country, and date
+- filter article lists in Explorer by section, country, and date
+- download only authenticated result sets when enabled for their account
+
+## Customer access model
+
+World Press Radar is no longer designed around public static article dumps. The primary product path is:
+
+1. customer opens the web app
+2. customer enters a valid API token on the access screen
+3. web app calls the authenticated news API
+4. API queries PostgreSQL and returns only the requested slice of data
+
+Without a valid token:
+
+- the dashboard does not load article counts
+- the explorer does not load article lists
+- article downloads stay locked
+- anonymous article browsing is blocked
+
+This keeps the UI fast, avoids multi-hundred-megabyte JSON downloads, and lets the product scale beyond the old public export cap.
+
+## Customer quick start
+
+1. Open the customer portal URL shared with you.
+2. Enter the token you received from the World Press Radar team.
+3. Use `Dashboard` for summary counts.
+4. Use `Explorer` for filtered article lists by section, country, and date.
+5. If your account has download rights, export only from authenticated screens.
+
+Customer token handling rules:
+
+- treat your token like a password
+- do not post it in shared chats, tickets, or email threads
+- request a rotation immediately if it was exposed
+- expect your token to be revoked if it is shared outside your organization
+
+Shareable customer instructions live in `docs/customer-api-access.md`.
+
+## Product architecture
+
+The customer portal uses an authenticated API instead of shipping the full article corpus as static files.
+
+Primary read path:
+
+- web app on Vercel
+- `api-news` service with PostgreSQL access
+- token-based authorization through `NEWS_API_TOKEN_POLICIES`
+
+Why this structure exists:
+
+- customers need live filtering and pagination
+- article volume is too large for browser-side static shard loading
+- access control must block anonymous readers
+- per-customer token issuance and revocation must be possible
+
+## Operator deployment overview
+
+There are three required runtime pieces:
+
+1. a web app deployment
+2. an API host that can reach PostgreSQL
+3. issued customer tokens
+
+Detailed operations notes live in `docs/customer-portal-ops.md`.
+
+Production domain cutover steps live in `docs/worldpressradar-domain-setup.md`.
+
+### Web app environment
+
+Set this on Vercel:
+
+```bash
+NEXT_PUBLIC_NEWS_API_BASE_URL=https://api.worldpressradar.com
+```
+
+Notes:
+
+- this should point to a stable HTTPS API hostname
+- do not use a temporary tunnel URL for production
+- the web app should never embed customer tokens at build time
+
+### API environment
+
+Set these on the API host:
+
+```bash
+DATABASE_URL=postgres://...
+NEWS_API_HOST=0.0.0.0
+NEWS_API_PORT=4100
+NEWS_API_ALLOW_PUBLIC_READ_ONLY=0
+NEWS_API_CORS_ORIGINS=https://app.worldpressradar.com
+NEWS_API_TOKEN=<internal-admin-token>
+NEWS_API_TOKEN_POLICIES='[{"token":"...","roles":["read"]}]'
+```
+
+Run the API:
+
+```bash
+bash scripts/run-api-news.sh
+```
+
+The API must return `401` for anonymous article requests in production.
+
+## Token issuance model
+
+World Press Radar supports two token classes:
+
+- `NEWS_API_TOKEN`
+  - internal admin token for operational checks and protected tooling
+  - do not share with customers
+- `NEWS_API_TOKEN_POLICIES`
+  - customer tokens with explicit read policies
+  - these are the tokens you issue to customer accounts
+
+Recommended policy:
+
+- issue at least one token per customer company
+- prefer one token per end user if you want clean revocation and audit trails
+- rotate tokens rather than reusing one shared token across every customer
+
+## Production rollout checklist
+
+1. Start PostgreSQL and confirm the ingest database is healthy.
+2. Start `api-news` and verify `GET /health` returns `200`.
+3. Keep `NEWS_API_ALLOW_PUBLIC_READ_ONLY=0`.
+4. Set `NEXT_PUBLIC_NEWS_API_BASE_URL` on the web app deployment.
+5. Redeploy the web app.
+6. Verify anonymous API requests return `401`.
+7. Verify a customer token can load dashboard summary and article results.
+
+Smoke tests:
+
+```bash
+curl -i https://<stable-api-host>/api/news
+```
+
+```bash
+curl -i \
+  -H "Authorization: Bearer <customer-token>" \
+  "https://<stable-api-host>/api/dashboard/summary"
+```
 
 ## Mac mini local operation
 
-The primary runtime now assumes:
+The primary local runtime assumes:
 
-- local Docker Postgres on the Mac mini
-- hourly ingest and daily health jobs against `127.0.0.1`
-- Discord reports can also run against the same local Postgres via `DATABASE_URL`
-- public delivery through static JSON/CSV exports and a static Next.js app
+- local Docker PostgreSQL on the Mac mini
+- hourly ingest jobs against `127.0.0.1`
+- daily RSS health checks against the same database
+- an `api-news` process managed locally for customer-portal reads
+- optional static export jobs for archive or legacy internal use only
 
 Key files:
 
@@ -22,10 +169,10 @@ Key files:
 - `.env.macmini.local`
 - `scripts/run-ingest-hourly-local.sh`
 - `scripts/run-rss-health-daily-local.sh`
-- `scripts/run-static-export-local.sh`
-- `scripts/run-static-deploy-local.sh`
-- `scripts/export-public-news-data.ts`
+- `scripts/run-api-news.sh`
+- `scripts/setup-launchd-local.sh`
 - `ops/launchd/*.plist`
+- `docs/customer-portal-ops.md`
 - `docs/macmini-static-ops.md`
 
 Useful commands:
@@ -35,196 +182,36 @@ docker compose up -d postgres
 bash scripts/bootstrap-wpm-db.sh
 bun run ingest:local:run
 bun run rss:health:local:run
-bun run export:public:local
-bun run deploy:static:local
+bash scripts/setup-launchd-local.sh update
+bash scripts/run-api-news.sh
 ```
 
-Vercel static delivery:
+## Legacy static exports
 
-- run `vercel login`
-- run `vercel link --project world-press-monitor` once on the Mac mini
-- keep `.env.macmini.local` populated with `PUBLIC_EXPORT_TIMEZONE=America/Chicago` and `PUBLIC_EXPORT_SCHEDULE_MINUTE=40`
-- `bun run deploy:static:local` will export JSON/CSV, build the static app, sync `web-dist/`, then run `vercel build --prod` and `vercel deploy --prebuilt --prod` against the linked `world-press-monitor` project by default
+Static JSON and CSV exports still exist in the repository for archive, diagnostics, and controlled batch delivery. They are no longer the primary customer experience.
 
-## Public integration feeds
+Important rules:
 
-For external read-only integrations, prefer the public static JSON feeds on Vercel instead of direct database access or the private `/api/news` service.
+- do not rely on static export files for the main customer portal
+- do not expose article dumps publicly if the portal is customer-only
+- use the authenticated API for dashboard counts, filters, and article retrieval
+- use static exports only when you explicitly need offline files or a historical snapshot
 
-Base URL:
+## Repository scope
 
-- `https://world-press-monitor.vercel.app`
-
-Source of truth for consumers:
-
-- `https://world-press-monitor.vercel.app/data/integration-manifest.json`
-
-Recommended consumer model:
-
-1. Poll `integration-manifest.json` every hour.
-2. If `generatedAt` did not change, stop.
-3. If `generatedAt` changed, fetch only the country feeds you need.
-4. For read-only downstream systems, treat `article.id` as the stable dedupe key.
-5. For keyword filtering, use `article.keywordText`.
-
-Which feed to use:
-
-1. Use `published24h` when you want the current rolling 24-hour view.
-2. Use `inserted24h` when you want hourly-style incremental sync.
-3. If you fetch every hour and want only newly discovered items, use `inserted24h` plus your own `lastSyncCreatedAt` checkpoint.
-4. If you fetch every hour and want the full current 24-hour set every time, use `published24h` plus downstream dedupe on `article.id`.
-
-LLM-friendly sync contract:
-
-1. Read `integration-manifest.json`.
-2. Check `generatedAt`.
-3. For each target country code, read either `feeds[CODE].published24h` or `feeds[CODE].inserted24h`.
-4. Keep an internal set of seen `article.id` values.
-5. For incremental sync, keep `lastSyncCreatedAt`.
-6. Accept an article if:
-   - its `id` is new, and
-   - its `createdAt` is newer than `lastSyncCreatedAt` when using `inserted24h`, and
-   - its `keywordText` matches at least one target keyword if you are doing keyword filtering.
-7. After processing, set `lastSyncCreatedAt` to the newest `createdAt` you accepted.
-
-Current direct country feed examples:
-
-- Argentina published 24h:
-  `https://world-press-monitor.vercel.app/data/country-published-24h-AR.json`
-- Chile published 24h:
-  `https://world-press-monitor.vercel.app/data/country-published-24h-CL.json`
-- Dominican Republic published 24h:
-  `https://world-press-monitor.vercel.app/data/country-published-24h-DO.json`
-- Uruguay published 24h:
-  `https://world-press-monitor.vercel.app/data/country-published-24h-UY.json`
-- United States published 24h:
-  `https://world-press-monitor.vercel.app/data/country-published-24h-US.json`
-
-Inserted-window equivalents:
-
-- `https://world-press-monitor.vercel.app/data/country-inserted-24h-AR.json`
-- `https://world-press-monitor.vercel.app/data/country-inserted-24h-CL.json`
-- `https://world-press-monitor.vercel.app/data/country-inserted-24h-DO.json`
-- `https://world-press-monitor.vercel.app/data/country-inserted-24h-UY.json`
-- `https://world-press-monitor.vercel.app/data/country-inserted-24h-US.json`
-
-Example with `curl`:
-
-```bash
-curl -fsSL \
-  https://world-press-monitor.vercel.app/data/integration-manifest.json | jq
-
-curl -fsSL \
-  https://world-press-monitor.vercel.app/data/country-published-24h-AR.json | jq '.articleCount'
-```
-
-Example consumer flow in JavaScript:
-
-```js
-const base = 'https://world-press-monitor.vercel.app';
-
-const manifest = await fetch(`${base}/data/integration-manifest.json`, {
-  cache: 'no-store',
-}).then((res) => res.json());
-
-const countries = ['AR', 'CL', 'DO', 'UY', 'US'];
-
-for (const code of countries) {
-  const path = manifest.feeds[code].published24h;
-  const payload = await fetch(`${base}${path}`, { cache: 'no-store' }).then((res) => res.json());
-
-  for (const article of payload.articles) {
-    // Deduplicate on article.id in your own store.
-    console.log(code, article.id, article.publicationDatetime, article.title);
-  }
-}
-
-const usTaxArticles = (await fetch(`${base}${manifest.feeds.US.published24h}`, {
-  cache: 'no-store',
-}).then((res) => res.json())).articles.filter((article) =>
-  article.keywordText.includes('tax') || article.keywordText.includes('irs')
-);
-```
-
-Example hourly incremental pattern in JavaScript:
-
-```js
-const base = 'https://world-press-monitor.vercel.app';
-const targetCountries = ['US', 'CA'];
-const targetKeywords = ['tax', 'irs', 'deduction', 'accounting'];
-
-let lastSeenManifestGeneratedAt = null;
-let lastSyncCreatedAt = '1970-01-01T00:00:00.000Z';
-const seenIds = new Set();
-
-async function syncOnce() {
-  const manifest = await fetch(`${base}/data/integration-manifest.json`, {
-    cache: 'no-store',
-  }).then((res) => res.json());
-
-  if (manifest.generatedAt === lastSeenManifestGeneratedAt) {
-    return [];
-  }
-
-  const accepted = [];
-
-  for (const code of targetCountries) {
-    const path = manifest.feeds[code].inserted24h;
-    const payload = await fetch(`${base}${path}`, { cache: 'no-store' }).then((res) => res.json());
-
-    for (const article of payload.articles) {
-      const isNewByTime = article.createdAt > lastSyncCreatedAt;
-      const isNewById = !seenIds.has(article.id);
-      const matchesKeyword = targetKeywords.some((keyword) =>
-        article.keywordText.includes(keyword.toLowerCase())
-      );
-
-      if (isNewByTime && isNewById && matchesKeyword) {
-        accepted.push(article);
-        seenIds.add(article.id);
-      }
-    }
-  }
-
-  if (accepted.length > 0) {
-    lastSyncCreatedAt = accepted
-      .map((article) => article.createdAt)
-      .sort()
-      .at(-1);
-  }
-
-  lastSeenManifestGeneratedAt = manifest.generatedAt;
-  return accepted;
-}
-```
-
-Semantics:
-
-- `published24h`: `publicationDatetime` is within the last 24 hours
-- `inserted24h`: `createdAt` is within the last 24 hours
-- `generatedAt`: export generation timestamp
-- `windowHours`: current feed window size
-- `keywordText`: lowercased, diacritics-stripped, whitespace-normalized search text built from title, snippet, source, country, country code, and section
-- `article.id`: stable dedupe key for downstream sync
-
-Recommendation:
-
-- Use the public static feeds for read-only partner integrations.
-- Keep `/api/news` for authenticated/internal use cases that need flexible querying.
-
-Open-source project goals:
-
-- Maintain a clean global RSS source catalog with a clear signal of healthy vs broken feeds.
-- Enable reproducible daily/cron verification and catalog exports.
-- Keep PRs simple: add source URLs, run validation, and commit only source changes.
+- maintain a global RSS source catalog with clear health status
+- ingest and normalize article data into PostgreSQL
+- power a token-gated customer portal for browsing tracked coverage
+- support repeatable health checks, exports, and operational workflows
 
 Suggested GitHub tags: `rss`, `news`, `feed`, `typescript`, `postgresql`, `docker`, `bun`, `monitoring`
 
-### Open-source metadata
+### Repository metadata
 
 Use `scripts/setup-github-metadata.sh` to set repository description and topics once:
 
 ```bash
-bash scripts/setup-github-metadata.sh mylee04/world-press-monitor
+bash scripts/setup-github-metadata.sh mylee04/world-press-radar
 ```
 
 You can also set them in GitHub settings manually.
