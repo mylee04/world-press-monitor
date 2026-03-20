@@ -16,6 +16,7 @@ LAUNCHD_DOMAIN="gui/$(id -u)"
 
 PLIST_NAMES=(
   "com.wpm.api-news.plist"
+  "com.wpm.api-tunnel.plist"
   "com.wpm.ingest-hourly.plist"
   "com.wpm.health-daily.plist"
   "com.wpm.export-deploy.plist"
