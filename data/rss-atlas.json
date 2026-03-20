@@ -13217,12 +13217,21 @@
           "sitemapUrl": "https://acento.com.do/sitemaps/sitemaps-googlenews.xml"
         },
         {
+          "name": "Acento - Daily Sitemap",
+          "url": null,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 36,
+          "sitemapUrl": "https://acento.com.do/sitemaps/sitemaps-daily.xml"
+        },
+        {
           "name": "Acento - Author Feed",
           "url": "https://acento.com.do/author/jcastillo/feed/",
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 36
+          "row": 37
         },
         {
           "name": "Noticias SIN",

@@ -6,6 +6,22 @@
 
 ## Unreleased
 
+### [eb4aeec] Expand atlas coverage across mid-volume countries
+- Commit: eb4aeec45edfd02900afb67f44c4d4c55674b79d
+- Date: 2026-03-20 09:32:38 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	CHANGELOG.md
+    - M	data/rss-atlas.json
+    - M	data/rss-catalog.csv
+    - M	data/rss-catalog.opml
+  - Git stat:
+  - CHANGELOG.md          |  260 ++++
+  -  data/rss-atlas.json   |  511 ++++++++
+  -  data/rss-catalog.csv  | 3448 ++++++++++++++++++++++++-------------------------
+  -  data/rss-catalog.opml |    2 +-
+  -  4 files changed, 2496 insertions(+), 1725 deletions(-)
+
 ### [8458ad3] Clarify capped export metrics and shard preview
 - Commit: 8458ad399cf144ca59a244d631695fee0d7448ac
 - Date: 2026-03-20 08:58:27 -0500
