@@ -4,10 +4,19 @@ import { CustomerAccessPanel } from '@/components/customer-access-panel';
 import { useCustomerAccess } from '@/components/customer-access-provider';
 
 export function SourceHealthView() {
-  const { hasToken, isReady } = useCustomerAccess();
+  const { hasToken, isReady, apiConfigured } = useCustomerAccess();
 
   if (!isReady) {
     return <div className="panel muted">Checking customer access...</div>;
+  }
+
+  if (!apiConfigured && isReady) {
+    return (
+      <CustomerAccessPanel
+        title="Portal API Not Configured"
+        description="This customer portal requires a server-side World Press Radar API base URL before authenticated source-health access can work."
+      />
+    );
   }
 
   if (!hasToken) {

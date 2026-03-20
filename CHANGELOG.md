@@ -6,6 +6,158 @@
 
 ## Unreleased
 
+### [d99a05e] Add persistent API tunnel launch agent
+- Commit: d99a05e43245525dd07575ef6068415c4d1d5edf
+- Date: 2026-03-20 16:10:36 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - A	ops/launchd/com.wpm.api-tunnel.plist
+    - M	scripts/setup-launchd-local.sh
+  - Git stat:
+  - ops/launchd/com.wpm.api-tunnel.plist | 24 ++++++++++++++++++++++++
+  -  scripts/setup-launchd-local.sh       |  1 +
+  -  2 files changed, 25 insertions(+)
+
+### [bbb1118] Rebrand docs and portal to World Press Radar
+- Commit: bbb11185454bb5ef4572ee68d36f8d7a1f0c8a19
+- Date: 2026-03-20 15:27:18 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	CONTRIBUTING.md
+    - M	README.md
+    - M	app/layout.tsx
+    - M	deploy/api-news-integration-guide.md
+    - A	docs/customer-api-access.md
+    - M	docs/customer-portal-ops.md
+    - M	docs/macmini-static-ops.md
+    - A	docs/worldpressradar-domain-setup.md
+    - M	package.json
+    - M	scripts/api-news.ts
+    - M	scripts/run-static-deploy-local.sh
+    - M	scripts/setup-github-metadata.sh
+  - Git stat:
+  - CONTRIBUTING.md                      |   2 +-
+  -  README.md                            | 323 +++++++++++++++++------------------
+  -  app/layout.tsx                       |   4 +-
+  -  deploy/api-news-integration-guide.md |  64 +++----
+  -  docs/customer-api-access.md          | 179 +++++++++++++++++++
+  -  docs/customer-portal-ops.md          |  10 +-
+  -  docs/macmini-static-ops.md           |   2 +-
+  -  docs/worldpressradar-domain-setup.md | 245 ++++++++++++++++++++++++++
+  -  package.json                         |   8 +-
+  -  scripts/api-news.ts                  |   2 +-
+  -  scripts/run-static-deploy-local.sh   |   2 +-
+  -  scripts/setup-github-metadata.sh     |   4 +-
+  -  12 files changed, 624 insertions(+), 221 deletions(-)
+
+### [51233cc] Add local api-news runtime automation
+- Commit: 51233cc9d33a2a3fcad68d844e880723c8b03dab
+- Date: 2026-03-20 14:51:40 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - A	docs/customer-portal-ops.md
+    - A	ops/launchd/com.wpm.api-news.plist
+    - M	scripts/setup-launchd-local.sh
+  - Git stat:
+  - docs/customer-portal-ops.md        | 62 ++++++++++++++++++++++++++++++++++++++
+  -  ops/launchd/com.wpm.api-news.plist | 24 +++++++++++++++
+  -  scripts/setup-launchd-local.sh     |  2 ++
+  -  3 files changed, 88 insertions(+)
+
+### [946dd32] Restore Vercel ignore defaults
+- Commit: 946dd32fd719eb0d301fcfba3619f64268cd3021
+- Date: 2026-03-20 14:33:22 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	.vercelignore
+  - Git stat:
+  - .vercelignore | 24 +++++++++++++++++++++---
+  -  1 file changed, 21 insertions(+), 3 deletions(-)
+
+### [2df034f] Ignore public export data in Vercel uploads
+- Commit: 2df034f248c47c752f6fd0c24ec0181f2796895e
+- Date: 2026-03-20 14:27:44 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	.vercelignore
+  - Git stat:
+  - .vercelignore | 22 +++-------------------
+  -  1 file changed, 3 insertions(+), 19 deletions(-)
+
+### [2480462] Lock customer portal behind API tokens
+- Commit: 2480462c83892ab1a48a407aff83dba8f093a386
+- Date: 2026-03-20 14:26:55 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - A	app/access/page.tsx
+    - M	app/globals.css
+    - M	app/layout.tsx
+    - A	components/customer-access-panel.tsx
+    - A	components/customer-access-provider.tsx
+    - M	components/dashboard-view.tsx
+    - M	components/downloads-view.tsx
+    - M	components/explorer-view.tsx
+    - M	components/news-api-hooks.ts
+    - M	components/source-health-view.tsx
+    - M	lib/ingestion-store.ts
+    - M	lib/news-api.ts
+    - M	package.json
+    - M	scripts/api-news.ts
+    - A	scripts/postprocess-customer-build.ts
+  - Git stat:
+  - app/access/page.tsx                     |   7 +
+  -  app/globals.css                         |   9 +
+  -  app/layout.tsx                          |  42 ++---
+  -  components/customer-access-panel.tsx    |  78 +++++++++
+  -  components/customer-access-provider.tsx |  68 ++++++++
+  -  components/dashboard-view.tsx           | 290 +++++++++++--------------------
+  -  components/downloads-view.tsx           | 110 +++---------
+  -  components/explorer-view.tsx            | 299 +++++---------------------------
+  -  components/news-api-hooks.ts            |  34 +++-
+  -  components/source-health-view.tsx       | 133 ++------------
+  -  lib/ingestion-store.ts                  |  34 +++-
+  -  lib/news-api.ts                         |   4 +
+  -  package.json                            |   6 +-
+  -  scripts/api-news.ts                     |   1 +
+  -  scripts/postprocess-customer-build.ts   |  66 +++++++
+  -  15 files changed, 502 insertions(+), 679 deletions(-)
+
+### [3941de3] Expand atlas coverage and live feed filtering
+- Commit: 3941de3cd43db7bf8cc9be0b751e7b35f2c50cda
+- Date: 2026-03-20 12:11:00 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	CHANGELOG.md
+    - M	components/dashboard-view.tsx
+    - M	components/explorer-view.tsx
+    - A	components/news-api-hooks.ts
+    - M	data/rss-atlas.json
+    - M	data/rss-catalog.csv
+    - M	data/rss-catalog.opml
+    - A	lib/article-url-filters.ts
+    - M	lib/ingestion-store.ts
+    - A	lib/news-api.ts
+    - M	lib/public-data.ts
+    - M	scripts/api-news.ts
+    - M	scripts/export-public-news-data.ts
+    - M	scripts/ingest-worker.ts
+  - Git stat:
+  - CHANGELOG.md                       |   30 +
+  -  components/dashboard-view.tsx      |  236 ++-
+  -  components/explorer-view.tsx       |  275 ++-
+  -  components/news-api-hooks.ts       |  136 ++
+  -  data/rss-atlas.json                |   65 +
+  -  data/rss-catalog.csv               | 3448 ++++++++++++++++++------------------
+  -  data/rss-catalog.opml              |    2 +-
+  -  lib/article-url-filters.ts         |   24 +
+  -  lib/ingestion-store.ts             |  422 ++++-
+  -  lib/news-api.ts                    |   94 +
+  -  lib/public-data.ts                 |    1 +
+  -  scripts/api-news.ts                |  274 ++-
+  -  scripts/export-public-news-data.ts |   18 +-
+  -  scripts/ingest-worker.ts           |    4 +
+  -  14 files changed, 3123 insertions(+), 1906 deletions(-)
+
 ### [048f26f] Move dashboard preview into manifest
 - Commit: 048f26f5b3021ab7abbf6a0289fad830045b0fc7
 - Date: 2026-03-20 10:24:34 -0500

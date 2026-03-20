@@ -3,7 +3,6 @@
 import { CustomerAccessPanel } from '@/components/customer-access-panel';
 import { useCustomerAccess } from '@/components/customer-access-provider';
 import { useNewsApiDashboardSummary } from '@/components/news-api-hooks';
-import { hasNewsApiBaseUrl } from '@/lib/news-api';
 import { PUBLIC_DATA_SECTIONS } from '@/lib/public-data';
 
 function renderGeneratedAt(value: string | null | undefined): string {
@@ -43,15 +42,15 @@ function renderSectionLabel(section: string | null | undefined): string {
 }
 
 export function DashboardView() {
-  const { hasToken, isReady } = useCustomerAccess();
+  const { hasToken, isReady, apiConfigured } = useCustomerAccess();
   const summaryState = useNewsApiDashboardSummary();
   const summary = summaryState.data?.storage === 'postgres' ? summaryState.data : null;
 
-  if (!hasNewsApiBaseUrl()) {
+  if (!apiConfigured && isReady) {
     return (
       <CustomerAccessPanel
         title="Portal API Not Configured"
-        description="This customer portal is configured to require authenticated API access, but the API base URL is missing."
+        description="This customer portal requires a server-side World Press Radar API base URL before authenticated article access can work."
       />
     );
   }

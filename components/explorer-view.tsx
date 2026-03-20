@@ -4,7 +4,7 @@ import { startTransition, useDeferredValue, useEffect, useMemo, useState } from 
 import { CustomerAccessPanel } from '@/components/customer-access-panel';
 import { useCustomerAccess } from '@/components/customer-access-provider';
 import { useNewsApiFilters, useNewsApiNews } from '@/components/news-api-hooks';
-import { buildNewsApiUrl, hasNewsApiBaseUrl, type NewsApiItem } from '@/lib/news-api';
+import { buildNewsApiUrl, type NewsApiItem } from '@/lib/news-api';
 
 type ExplorerCsvRow = {
   id: string;
@@ -91,7 +91,7 @@ function toDayRange(date: string): { from: string; to: string } {
 }
 
 export function ExplorerView() {
-  const { hasToken, isReady } = useCustomerAccess();
+  const { hasToken, isReady, apiConfigured } = useCustomerAccess();
   const filtersState = useNewsApiFilters();
   const filters = filtersState.data?.storage === 'postgres' ? filtersState.data.filters : null;
   const [country, setCountry] = useState('');
@@ -128,11 +128,11 @@ export function ExplorerView() {
   const currentCsvRows = rows.map(toExplorerCsvRow);
   const apiUrl = buildNewsApiUrl('/api/news');
 
-  if (!hasNewsApiBaseUrl()) {
+  if (!apiConfigured && isReady) {
     return (
       <CustomerAccessPanel
         title="Portal API Not Configured"
-        description="This customer portal requires a configured API base URL before filtered article browsing can work."
+        description="This customer portal requires a server-side World Press Radar API base URL before filtered article browsing can work."
       />
     );
   }

@@ -1,59 +1,138 @@
 'use client';
 
-import { createContext, type ReactNode, useContext, useEffect, useMemo, useState } from 'react';
-
-const CUSTOMER_API_TOKEN_STORAGE_KEY = 'wpm-customer-api-token';
+import { createContext, type ReactNode, useContext, useEffect, useState } from 'react';
 
 type CustomerAccessContextValue = {
-  token: string;
   hasToken: boolean;
   isReady: boolean;
-  setToken: (value: string) => void;
-  clearToken: () => void;
+  apiConfigured: boolean;
+  authError: string | null;
+  savePending: boolean;
+  saveToken: (value: string) => Promise<boolean>;
+  clearToken: () => Promise<void>;
+  refreshAccess: () => Promise<void>;
+};
+
+type AccessStatusResponse = {
+  apiConfigured?: boolean;
+  hasToken?: boolean;
+  error?: string;
 };
 
 const CustomerAccessContext = createContext<CustomerAccessContextValue | null>(null);
 
-function normalizeToken(value: string): string {
-  return value.trim();
+async function readAccessStatus(): Promise<AccessStatusResponse> {
+  const response = await fetch('/api/customer-access', {
+    cache: 'no-store',
+    credentials: 'same-origin',
+  });
+
+  if (!response.ok) {
+    throw new Error(`${response.status} ${response.statusText}`);
+  }
+
+  return (await response.json()) as AccessStatusResponse;
 }
 
 export function CustomerAccessProvider({ children }: Readonly<{ children: ReactNode }>) {
-  const [token, setTokenState] = useState('');
+  const [hasToken, setHasToken] = useState(false);
+  const [apiConfigured, setApiConfigured] = useState(false);
   const [isReady, setIsReady] = useState(false);
+  const [authError, setAuthError] = useState<string | null>(null);
+  const [savePending, setSavePending] = useState(false);
 
-  useEffect(() => {
-    const storedValue = window.localStorage.getItem(CUSTOMER_API_TOKEN_STORAGE_KEY) || '';
-    setTokenState(normalizeToken(storedValue));
-    setIsReady(true);
-  }, []);
-
-  const setToken = (value: string) => {
-    const normalized = normalizeToken(value);
-    setTokenState(normalized);
-    if (typeof window !== 'undefined') {
-      if (normalized) {
-        window.localStorage.setItem(CUSTOMER_API_TOKEN_STORAGE_KEY, normalized);
-      } else {
-        window.localStorage.removeItem(CUSTOMER_API_TOKEN_STORAGE_KEY);
-      }
+  const refreshAccess = async () => {
+    try {
+      const payload = await readAccessStatus();
+      setHasToken(Boolean(payload.hasToken));
+      setApiConfigured(Boolean(payload.apiConfigured));
+      setAuthError(payload.error || null);
+    } catch (error: unknown) {
+      setHasToken(false);
+      setApiConfigured(false);
+      setAuthError(error instanceof Error ? error.message : 'Failed to read customer access status.');
+    } finally {
+      setIsReady(true);
     }
   };
 
-  const clearToken = () => {
-    setToken('');
+  useEffect(() => {
+    void refreshAccess();
+  }, []);
+
+  const saveToken = async (value: string): Promise<boolean> => {
+    const token = value.trim();
+    if (!token) {
+      setAuthError('A customer token is required.');
+      return false;
+    }
+
+    setSavePending(true);
+    setAuthError(null);
+
+    try {
+      const response = await fetch('/api/customer-access', {
+        method: 'POST',
+        cache: 'no-store',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token }),
+      });
+
+      const payload = (await response.json().catch(() => null)) as AccessStatusResponse | null;
+      setApiConfigured(Boolean(payload?.apiConfigured));
+      setHasToken(Boolean(payload?.hasToken) && response.ok);
+
+      if (!response.ok) {
+        setAuthError(payload?.error || `${response.status} ${response.statusText}`);
+        return false;
+      }
+
+      setAuthError(null);
+      return true;
+    } catch (error: unknown) {
+      setHasToken(false);
+      setAuthError(error instanceof Error ? error.message : 'Failed to save customer token.');
+      return false;
+    } finally {
+      setSavePending(false);
+      setIsReady(true);
+    }
   };
 
-  const contextValue = useMemo<CustomerAccessContextValue>(() => ({
-    token,
-    hasToken: token.length > 0,
-    isReady,
-    setToken,
-    clearToken,
-  }), [token, isReady]);
+  const clearToken = async (): Promise<void> => {
+    setSavePending(true);
+    try {
+      await fetch('/api/customer-access', {
+        method: 'DELETE',
+        cache: 'no-store',
+        credentials: 'same-origin',
+      });
+      setHasToken(false);
+      setAuthError(null);
+    } catch (error: unknown) {
+      setAuthError(error instanceof Error ? error.message : 'Failed to clear customer session.');
+    } finally {
+      setSavePending(false);
+      setIsReady(true);
+    }
+  };
 
   return (
-    <CustomerAccessContext.Provider value={contextValue}>
+    <CustomerAccessContext.Provider
+      value={{
+        hasToken,
+        isReady,
+        apiConfigured,
+        authError,
+        savePending,
+        saveToken,
+        clearToken,
+        refreshAccess,
+      }}
+    >
       {children}
     </CustomerAccessContext.Provider>
   );

@@ -13,8 +13,11 @@
   },
   "private": true,
   "scripts": {
+    "build": "bun scripts/postprocess-customer-build.ts",
     "vercel-build": "bun scripts/postprocess-customer-build.ts",
     "typecheck": "tsc --noEmit",
+    "verify:customer-build": "bun scripts/verify-customer-build.ts",
+    "smoke:customer-portal": "bun scripts/customer-portal-smoke.ts",
     "web:dev": "next dev",
     "web:build": "bun scripts/postprocess-customer-build.ts",
     "browser:cdp:smoke": "bun scripts/browser-cdp-smoke.ts",

@@ -6,7 +6,7 @@ exports
 web-dist
 postgres
 backups
-public/data
+public/data*
 .wpm-build-cache
 .env
 .env.local

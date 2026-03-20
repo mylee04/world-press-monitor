@@ -7,7 +7,7 @@ import type {
   NewsApiFiltersResponse,
   NewsApiResponse,
 } from '@/lib/news-api';
-import { buildNewsApiUrl, hasNewsApiBaseUrl } from '@/lib/news-api';
+import { buildNewsApiUrl } from '@/lib/news-api';
 
 type JsonState<T> = {
   data: T | null;
@@ -32,25 +32,17 @@ type NewsApiQuery = {
   maxUpdatedAt?: string | null;
 };
 
-function buildAuthorizationHeader(token: string): Record<string, string> {
-  const normalized = token.trim();
-  if (!normalized) return {};
-  return {
-    Authorization: /^bearer\s+/i.test(normalized) ? normalized : `Bearer ${normalized}`,
-  };
-}
-
-function useRemoteJsonResource<T>(url: string | null, token: string | null): JsonState<T> {
+function useRemoteJsonResource<T>(url: string | null): JsonState<T> {
   const [state, setState] = useState<JsonState<T>>({
     data: null,
-    loading: Boolean(url && token),
+    loading: Boolean(url),
     error: null,
   });
 
   useEffect(() => {
     let cancelled = false;
 
-    if (!url || !token) {
+    if (!url) {
       setState({ data: null, loading: false, error: null });
       return () => {
         cancelled = true;
@@ -65,14 +57,15 @@ function useRemoteJsonResource<T>(url: string | null, token: string | null): Jso
 
     fetch(url, {
       cache: 'no-store',
+      credentials: 'same-origin',
       headers: {
         Accept: 'application/json',
-        ...buildAuthorizationHeader(token),
       },
     })
       .then(async (response) => {
         if (!response.ok) {
-          throw new Error(`${response.status} ${response.statusText}`);
+          const payload = (await response.json().catch(() => null)) as { message?: string } | null;
+          throw new Error(payload?.message || `${response.status} ${response.statusText}`);
         }
         return (await response.json()) as T;
       })
@@ -94,7 +87,7 @@ function useRemoteJsonResource<T>(url: string | null, token: string | null): Jso
     return () => {
       cancelled = true;
     };
-  }, [url, token]);
+  }, [url]);
 
   return state;
 }
@@ -109,10 +102,10 @@ function appendList(searchParams: URLSearchParams, key: string, values: string[]
 }
 
 function buildNewsApiQueryUrl(path: string, query?: NewsApiQuery): string | null {
-  if (!hasNewsApiBaseUrl()) return null;
   const baseUrl = buildNewsApiUrl(path);
   if (!baseUrl) return null;
-  const url = new URL(baseUrl);
+  const usesRelativePath = baseUrl.startsWith('/');
+  const url = new URL(baseUrl, 'http://localhost');
   const searchParams = url.searchParams;
 
   appendList(searchParams, 'country', query?.countries);
@@ -131,24 +124,24 @@ function buildNewsApiQueryUrl(path: string, query?: NewsApiQuery): string | null
   if (query?.minUpdatedAt) searchParams.set('min_updatedAt', query.minUpdatedAt);
   if (query?.maxUpdatedAt) searchParams.set('max_updatedAt', query.maxUpdatedAt);
 
-  return url.toString();
+  return usesRelativePath ? `${url.pathname}${url.search}` : url.toString();
 }
 
 export function useNewsApiFilters(): JsonState<NewsApiFiltersResponse> {
-  const { token, isReady } = useCustomerAccess();
+  const { hasToken, isReady, apiConfigured } = useCustomerAccess();
   const url = useMemo(() => buildNewsApiUrl('/api/filters'), []);
-  return useRemoteJsonResource<NewsApiFiltersResponse>(isReady ? url : null, isReady ? token : null);
+  return useRemoteJsonResource<NewsApiFiltersResponse>(isReady && apiConfigured && hasToken ? url : null);
 }
 
 export function useNewsApiDashboardSummary(): JsonState<NewsApiDashboardSummaryResponse> {
-  const { token, isReady } = useCustomerAccess();
+  const { hasToken, isReady, apiConfigured } = useCustomerAccess();
   const url = useMemo(() => buildNewsApiUrl('/api/dashboard/summary'), []);
-  return useRemoteJsonResource<NewsApiDashboardSummaryResponse>(isReady ? url : null, isReady ? token : null);
+  return useRemoteJsonResource<NewsApiDashboardSummaryResponse>(isReady && apiConfigured && hasToken ? url : null);
 }
 
 export function useNewsApiNews(query: NewsApiQuery): JsonState<NewsApiResponse> {
-  const { token, isReady } = useCustomerAccess();
+  const { hasToken, isReady, apiConfigured } = useCustomerAccess();
   const queryKey = JSON.stringify(query);
   const url = useMemo(() => buildNewsApiQueryUrl('/api/news', query), [queryKey]);
-  return useRemoteJsonResource<NewsApiResponse>(isReady ? url : null, isReady ? token : null);
+  return useRemoteJsonResource<NewsApiResponse>(isReady && apiConfigured && hasToken ? url : null);
 }

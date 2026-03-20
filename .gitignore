@@ -21,6 +21,7 @@ public/data/by-date/*.json
 public/data/by-country/**/*.json
 public/data/downloads/**/*.csv
 public/data/downloads/**/*.json
+public/data*
 
 # Keep only intentionally tracked audit artifacts.
 audits/*.json

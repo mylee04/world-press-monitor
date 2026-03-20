@@ -85,14 +85,12 @@ export interface NewsApiDashboardSummaryResponse {
   reason?: string;
 }
 
-const newsApiBaseUrl = (process.env.NEXT_PUBLIC_NEWS_API_BASE_URL || '').trim().replace(/\/+$/, '');
-
-export function hasNewsApiBaseUrl(): boolean {
-  return newsApiBaseUrl.length > 0;
-}
+const CUSTOMER_PROXY_BASE = '/api/customer';
 
 export function buildNewsApiUrl(path: string): string | null {
-  if (!newsApiBaseUrl) return null;
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
-  return `${newsApiBaseUrl}${normalizedPath}`;
+  if (normalizedPath === '/api/news') return `${CUSTOMER_PROXY_BASE}/news`;
+  if (normalizedPath === '/api/filters') return `${CUSTOMER_PROXY_BASE}/filters`;
+  if (normalizedPath === '/api/dashboard/summary') return `${CUSTOMER_PROXY_BASE}/dashboard/summary`;
+  return `${CUSTOMER_PROXY_BASE}${normalizedPath}`;
 }
