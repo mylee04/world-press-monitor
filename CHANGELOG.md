@@ -6,6 +6,58 @@
 
 ## Unreleased
 
+### [590ba04] Move customer portal auth behind server routes
+- Commit: 590ba045ee8b0c0689c1e615a3a08bb6cad6f0c1
+- Date: 2026-03-20 18:12:43 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	.gitignore
+    - M	.vercelignore
+    - M	CHANGELOG.md
+    - A	app/api/customer-access/route.ts
+    - A	app/api/customer/dashboard/summary/route.ts
+    - A	app/api/customer/filters/route.ts
+    - A	app/api/customer/news/route.ts
+    - M	components/customer-access-panel.tsx
+    - M	components/customer-access-provider.tsx
+    - M	components/dashboard-view.tsx
+    - M	components/downloads-view.tsx
+    - M	components/explorer-view.tsx
+    - M	components/news-api-hooks.ts
+    - M	components/source-health-view.tsx
+    - A	lib/customer-portal.ts
+    - M	lib/news-api.ts
+    - A	middleware.ts
+    - M	next.config.ts
+    - M	package.json
+    - A	scripts/customer-portal-smoke.ts
+    - M	scripts/postprocess-customer-build.ts
+    - A	scripts/verify-customer-build.ts
+  - Git stat:
+  - .gitignore                                  |   1 +
+  -  .vercelignore                               |   2 +-
+  -  CHANGELOG.md                                | 152 ++++++++++++++++++++
+  -  app/api/customer-access/route.ts            |  62 ++++++++
+  -  app/api/customer/dashboard/summary/route.ts |   8 ++
+  -  app/api/customer/filters/route.ts           |   8 ++
+  -  app/api/customer/news/route.ts              |   8 ++
+  -  components/customer-access-panel.tsx        |  34 +++--
+  -  components/customer-access-provider.tsx     | 141 ++++++++++++++----
+  -  components/dashboard-view.tsx               |   7 +-
+  -  components/downloads-view.tsx               |  11 +-
+  -  components/explorer-view.tsx                |   8 +-
+  -  components/news-api-hooks.ts                |  41 +++---
+  -  components/source-health-view.tsx           |  11 +-
+  -  lib/customer-portal.ts                      | 212 ++++++++++++++++++++++++++++
+  -  lib/news-api.ts                             |  12 +-
+  -  middleware.ts                               |  23 +++
+  -  next.config.ts                              |   1 -
+  -  package.json                                |   3 +
+  -  scripts/customer-portal-smoke.ts            | 124 ++++++++++++++++
+  -  scripts/postprocess-customer-build.ts       |  88 ++++++++----
+  -  scripts/verify-customer-build.ts            |  28 ++++
+  -  22 files changed, 870 insertions(+), 115 deletions(-)
+
 ### [d99a05e] Add persistent API tunnel launch agent
 - Commit: d99a05e43245525dd07575ef6068415c4d1d5edf
 - Date: 2026-03-20 16:10:36 -0500
