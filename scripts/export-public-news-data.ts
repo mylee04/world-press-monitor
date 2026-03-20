@@ -24,6 +24,7 @@ import {
   normalizeHtmlText,
   normalizeReadableArticleTitle,
 } from '@/lib/html-entities';
+import { isKnownNonArticleUrl } from '@/lib/article-url-filters';
 import { classifySectionByKeyword } from '@/lib/keyword-classifier';
 import type { NewsSection } from '@/lib/types';
 
@@ -74,12 +75,14 @@ type ExportStatsRow = {
   raw_rows_in_window: string;
   raw_latest_24h_inserted: string;
   raw_latest_24h_published: string;
+  checked_sources_24h: string;
 };
 
 type ExportStats = {
   rawRowsInWindow: number;
   rawLatest24hInserted: number;
   rawLatest24hPublished: number;
+  checkedSources24h: number;
   rowLimitHit: boolean;
 };
 
@@ -204,7 +207,14 @@ async function readExportStats(pool: Pool): Promise<ExportStats> {
     select
       count(*)::text as raw_rows_in_window,
       count(*) filter (where created_at >= now() - ($2::int * interval '1 hour'))::text as raw_latest_24h_inserted,
-      count(*) filter (where publication_datetime >= now() - ($2::int * interval '1 hour'))::text as raw_latest_24h_published
+      count(*) filter (where publication_datetime >= now() - ($2::int * interval '1 hour'))::text as raw_latest_24h_published,
+      (
+        select count(distinct coalesce(country, 'Global') || '|' || source)::text
+        from rss_health_status
+        where ran_at >= now() - ($2::int * interval '1 hour')
+          and runner = 'worker'
+          and attempted
+      ) as checked_sources_24h
     from news_articles
     where publication_datetime >= now() - ($1::int * interval '1 day')
     `,
@@ -215,11 +225,13 @@ async function readExportStats(pool: Pool): Promise<ExportStats> {
   const rawRowsInWindow = Number.parseInt(row?.raw_rows_in_window || '0', 10);
   const rawLatest24hInserted = Number.parseInt(row?.raw_latest_24h_inserted || '0', 10);
   const rawLatest24hPublished = Number.parseInt(row?.raw_latest_24h_published || '0', 10);
+  const checkedSources24h = Number.parseInt(row?.checked_sources_24h || '0', 10);
 
   return {
     rawRowsInWindow,
     rawLatest24hInserted,
     rawLatest24hPublished,
+    checkedSources24h,
     rowLimitHit: rawRowsInWindow > MAX_ROWS,
   };
 }
@@ -249,6 +261,9 @@ async function readArticles(pool: Pool, directory: CountryDirectory): Promise<Pu
   return result.rows.flatMap((row) => {
     const snippet = normalizeHtmlText(row.snippet || '');
     const url = decodeHtmlEntities(row.url || '');
+    if (isKnownNonArticleUrl(row.source || '', url)) {
+      return [];
+    }
     const title = normalizeReadableArticleTitle(row.title || '', url, row.source || '');
     if (!title || looksLikeLowSignalArticleTitle(title, row.source || '', url)) {
       return [];
@@ -1088,6 +1103,7 @@ function writeDataFiles(
       rawRowsInWindow: exportStats.rawRowsInWindow,
       rawLatest24hInserted: exportStats.rawLatest24hInserted,
       rawLatest24hPublished: exportStats.rawLatest24hPublished,
+      checkedSources24h: exportStats.checkedSources24h,
       rowLimitHit: exportStats.rowLimitHit,
     },
     dashboardPreview,

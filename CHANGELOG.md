@@ -6,6 +6,36 @@
 
 ## Unreleased
 
+### [048f26f] Move dashboard preview into manifest
+- Commit: 048f26f5b3021ab7abbf6a0289fad830045b0fc7
+- Date: 2026-03-20 10:24:34 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	components/dashboard-view.tsx
+    - M	lib/public-data.ts
+    - M	scripts/export-public-news-data.ts
+  - Git stat:
+  - components/dashboard-view.tsx      | 32 ++++++++++++++++++++------------
+  -  lib/public-data.ts                 | 14 ++++++++++++++
+  -  scripts/export-public-news-data.ts | 29 +++++++++++++++++++++++++++++
+  -  3 files changed, 63 insertions(+), 12 deletions(-)
+
+### [9b094a1] Expand Acento sitemap coverage
+- Commit: 9b094a1e68dcaa67691b4a21fd098692075fc26d
+- Date: 2026-03-20 09:59:59 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	CHANGELOG.md
+    - M	data/rss-atlas.json
+    - M	data/rss-catalog.csv
+    - M	data/rss-catalog.opml
+  - Git stat:
+  - CHANGELOG.md          |   16 +
+  -  data/rss-atlas.json   |   11 +-
+  -  data/rss-catalog.csv  | 3448 ++++++++++++++++++++++++-------------------------
+  -  data/rss-catalog.opml |    2 +-
+  -  4 files changed, 1751 insertions(+), 1726 deletions(-)
+
 ### [eb4aeec] Expand atlas coverage across mid-volume countries
 - Commit: eb4aeec45edfd02900afb67f44c4d4c55674b79d
 - Date: 2026-03-20 09:32:38 -0500

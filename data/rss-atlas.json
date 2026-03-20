@@ -5234,6 +5234,22 @@
           "sitemapUrl": "https://www.theage.com.au/sitemaps/news/brands/theage"
         },
         {
+          "name": "Sydney Morning Herald - Articles Sitemap Index",
+          "url": null,
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid",
+          "sitemapUrl": "https://www.smh.com.au/sitemaps/smh-sitemaps-articles.xml"
+        },
+        {
+          "name": "The Age - Articles Sitemap Index",
+          "url": null,
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid",
+          "sitemapUrl": "https://www.theage.com.au/sitemaps/theage-sitemaps-articles.xml"
+        },
+        {
           "name": "Canberra Times",
           "url": "https://www.canberratimes.com.au/rss.xml",
           "status": "⏩ OFFICIAL",
@@ -13183,6 +13199,13 @@
           "valid": "valid"
         },
         {
+          "name": "Listín Diario - March 2026 Sitemap",
+          "sitemapUrl": "https://listindiario.com/sitemap-noticias-202603.xml.gz",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Listín Diario - Economía",
           "url": "https://listindiario.com/rss/economia.xml",
           "status": "⏩ OFFICIAL",
@@ -13261,6 +13284,13 @@
           "sitemapUrl": "https://www.diariolibre.com/sitemapnews",
           "status": "NEW",
           "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Diario Libre - March 2026 Sitemap",
+          "sitemapUrl": "https://www.diariolibre.com/sitemapnoticias/202603",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
           "valid": "valid"
         },
         {
@@ -14189,6 +14219,20 @@
           "sitemapUrl": "https://www.sn.at/news-artikel.sitemap.xml"
         },
         {
+          "name": "Salzburg24 - News Artikel Sitemap",
+          "sitemapUrl": "https://www.salzburg24.at/news-artikel.sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Wiener Zeitung - News Sitemap",
+          "sitemapUrl": "https://www.wienerzeitung.at/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Kurier - Google News Sitemap",
           "sitemapUrl": "https://kurier.at/sitemaps_google_news.xml"
         },
@@ -14875,8 +14919,22 @@
           "sitemapUrl": "https://www.irishexaminer.com/sitemap-index/41-google_news.xml"
         },
         {
+          "name": "Irish Examiner - Google Sitemap",
+          "sitemapUrl": "https://www.irishexaminer.com/sitemap-index/44-google_sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Irish Mirror",
           "sitemapUrl": "https://www.irishmirror.ie/map_news.xml"
+        },
+        {
+          "name": "Irish Mirror - Sitemap Index",
+          "sitemapUrl": "https://www.irishmirror.ie/sitemaps/sitemap_index.xml",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
         },
         {
           "name": "Irish Star",
@@ -17689,6 +17747,13 @@
           "checkedDate": "03/16/2026",
           "valid": "valid",
           "row": 8
+        },
+        {
+          "name": "Dnes.bg - Current Sitemap",
+          "sitemapUrl": "https://www.dnes.bg/sitemap/sitemap-1.xml",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
         },
         {
           "name": "NOVA - Latest News",

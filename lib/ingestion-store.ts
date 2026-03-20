@@ -1,8 +1,10 @@
 import { Pool } from 'pg';
 import { createHash } from 'node:crypto';
 import type { NewsItem } from '@/lib/types';
+import type { NewsSection } from '@/lib/types';
 import {
   decodeHtmlEntities,
+  looksLikeLowSignalArticleTitle,
   normalizeArticleTitle,
   normalizeHtmlText,
   normalizeReadableArticleTitle,
@@ -46,6 +48,21 @@ const apiSnippetMaxChars = (() => {
   if (!Number.isFinite(parsed) || parsed < 80 || parsed > 8000) return 400;
   return parsed;
 })();
+const VALID_NEWS_SECTIONS: ReadonlySet<NewsSection> = new Set<NewsSection>([
+  'world',
+  'politics',
+  'conflicts',
+  'business',
+  'tech',
+  'sports',
+  'health',
+  'entertainment',
+  'lifestyle',
+  'arts',
+  'science',
+  'climate',
+  'others',
+]);
 
 function truncateText(value: string, maxChars: number): string {
   const normalized = (value || '').replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, ' ');
@@ -153,6 +170,14 @@ function buildOutletSourceFilterSql(params: unknown[], options: {
     return ` and ${options.sourceColumn} = any($${params.length}::text[])`;
   }
   return '';
+}
+
+function normalizeStoredSectionValue(value: string | null | undefined): NewsSection {
+  const normalized = (value || '').trim().toLowerCase();
+  if (VALID_NEWS_SECTIONS.has(normalized as NewsSection)) {
+    return normalized as NewsSection;
+  }
+  return 'others';
 }
 
 async function ensureSchema(): Promise<void> {
@@ -267,6 +292,8 @@ create table if not exists news_articles (
     alter table news_articles add column if not exists updated_at timestamptz not null default now();
     create index if not exists idx_news_articles_created_at on news_articles(created_at desc);
     create index if not exists idx_news_articles_updated_at on news_articles(updated_at desc);
+    create index if not exists idx_news_articles_publication_datetime on news_articles(publication_datetime desc);
+    create index if not exists idx_news_articles_publication_created_at on news_articles(publication_datetime desc, created_at desc);
     create index if not exists idx_news_articles_source on news_articles(source);
     create index if not exists idx_news_articles_url on news_articles(url);
     create index if not exists idx_news_articles_section on news_articles(section);
@@ -761,6 +788,42 @@ export interface NewsApiFiltersResult {
   };
 }
 
+export interface NewsApiDashboardHeadline {
+  id: string;
+  source: string;
+  title: string;
+  snippet: string | null;
+  url: string;
+  country: string | null;
+  language: string | null;
+  section: string | null;
+  publicationDatetime: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface NewsApiDashboardSummaryResult {
+  storage: 'postgres' | 'disabled';
+  reason?: string;
+  generatedAt: string | null;
+  windowDays: number;
+  latestHours: number;
+  latestDate: string | null;
+  previewDate: string | null;
+  totals: {
+    rowsWindow: number;
+    inserted24h: number;
+    published24h: number;
+    checkedSources24h: number;
+  };
+  sectionTotals: Record<string, number>;
+  preview: {
+    articleCount: number;
+    topCountries: Array<{ country: string | null; count: number }>;
+    headlines: NewsApiDashboardHeadline[];
+  };
+}
+
 type NewsApiFilterRow = {
   value: string;
 };
@@ -778,6 +841,33 @@ type NewsApiReadRow = {
   created_at: string;
   updated_at: string;
   generated_at: string | null;
+  total_count?: string | null;
+};
+
+type NewsApiSummaryTotalsRow = {
+  rows_window: string;
+  inserted_24h: string;
+  published_24h: string;
+  generated_at: string | null;
+};
+
+type NewsApiCheckedSourcesRow = {
+  checked_sources_24h: string;
+};
+
+type NewsApiSectionTotalRow = {
+  section: string | null;
+  count: string;
+};
+
+type NewsApiDateRow = {
+  preview_date: string | null;
+  latest_date: string | null;
+};
+
+type NewsApiCountryCountRow = {
+  country: string | null;
+  count: string;
 };
 
 function parseNewsApiFilterList(values: string[] | undefined): string[] {
@@ -796,6 +886,7 @@ export async function readNewsArticlesForApi(options: {
   countries?: string[];
   sections?: string[];
   languages?: string[];
+  q?: string | null;
   limit?: number;
   offset?: number;
   hours?: number;
@@ -820,6 +911,7 @@ export async function readNewsArticlesForApi(options: {
   const countries = parseNewsApiFilterList(options.countries);
   const sections = parseNewsApiFilterList(options.sections);
   const languages = parseNewsApiFilterList(options.languages);
+  const query = (options.q || '').trim().slice(0, 120);
   const params: unknown[] = [];
   const whereClauses: string[] = [];
 
@@ -841,6 +933,17 @@ export async function readNewsArticlesForApi(options: {
   if (languages.length > 0) {
     params.push(languages);
     whereClauses.push(`and e.language = any($${params.length}::text[])`);
+  }
+
+  if (query) {
+    params.push(`%${query}%`);
+    whereClauses.push(
+      `and (
+        e.title_original ilike $${params.length}
+        or e.source ilike $${params.length}
+        or coalesce(e.country, '') ilike $${params.length}
+      )`
+    );
   }
 
   const publicationFrom = options.publicationFrom || options.from || null;
@@ -890,17 +993,6 @@ export async function readNewsArticlesForApi(options: {
     where 1 = 1
     ${whereClauses.join('\n    ')}`;
 
-  const totalResult = await db.query<{ total: string }>(
-    `
-    select count(*)::bigint as total
-    from news_articles e
-    ${whereSql}
-    `,
-    params
-  );
-
-  const totalCount = totalResult.rows[0] ? Number(totalResult.rows[0].total) : 0;
-
   params.push(limit);
   const limitIndex = params.length;
   params.push(offset);
@@ -908,28 +1000,46 @@ export async function readNewsArticlesForApi(options: {
 
   const result = await db.query<NewsApiReadRow>(
     `
+    with filtered as (
+      select
+        e.external_id as id,
+        e.source,
+        e.title_original as title,
+        null::text as snippet_original,
+        e.url,
+        e.country,
+        e.language,
+        e.section,
+        e.publication_datetime,
+        e.created_at,
+        e.updated_at
+      from news_articles e
+      ${whereSql}
+    )
     select
-      e.external_id as id,
-      e.source,
-      e.title_original as title,
-      left(e.snippet_original, ${apiSnippetMaxChars}) as snippet_original,
-      e.url,
-      e.country,
-      e.language,
-      e.section,
-      e.publication_datetime,
-      e.created_at,
-      e.updated_at,
-      max(e.created_at) over() as generated_at
-    from news_articles e
-    ${whereSql}
-    order by e.publication_datetime desc, e.created_at desc
+      filtered.*,
+      max(filtered.created_at) over() as generated_at,
+      count(*) over()::text as total_count
+    from filtered
+    order by filtered.publication_datetime desc, filtered.created_at desc
     limit $${limitIndex} offset $${offsetIndex}
     `,
     params
   );
 
-  const items = result.rows.map((row) => ({
+  const items = result.rows.map((row) => mapRowToNewsApiItem(row));
+  const totalCount = result.rows[0]?.total_count ? Number(result.rows[0].total_count) : 0;
+
+  return {
+    storage: 'postgres',
+    totalCount,
+    generatedAt: result.rows[0]?.generated_at ? new Date(result.rows[0].generated_at).toISOString() : null,
+    items
+  };
+}
+
+function mapRowToNewsApiItem(row: NewsApiReadRow): NewsApiItem {
+  return {
     id: row.id,
     source: row.source,
     title: normalizeArticleTitle(row.title || '', row.url),
@@ -937,17 +1047,263 @@ export async function readNewsArticlesForApi(options: {
     url: decodeHtmlEntities(row.url),
     country: row.country,
     language: row.language,
-    section: row.section,
+    section: normalizeStoredSectionValue(row.section),
     publicationDatetime: row.publication_datetime,
     createdAt: row.created_at,
     updatedAt: row.updated_at
-  }));
+  };
+}
+
+export async function readNewsDashboardSummary(options?: {
+  windowDays?: number;
+  latestHours?: number;
+  previewLimit?: number;
+  topCountriesLimit?: number;
+  maxFutureHours?: number;
+}): Promise<NewsApiDashboardSummaryResult> {
+  const db = getPool();
+  if (!db) {
+    return {
+      storage: 'disabled',
+      reason: poolDisabledReason,
+      generatedAt: null,
+      windowDays: options?.windowDays || 31,
+      latestHours: options?.latestHours || 24,
+      latestDate: null,
+      previewDate: null,
+      totals: {
+        rowsWindow: 0,
+        inserted24h: 0,
+        published24h: 0,
+        checkedSources24h: 0,
+      },
+      sectionTotals: {},
+      preview: {
+        articleCount: 0,
+        topCountries: [],
+        headlines: [],
+      },
+    };
+  }
+
+  await ensureSchema();
+
+  const windowDays = Math.max(1, Math.min(90, Math.floor(options?.windowDays || 31)));
+  const latestHours = Math.max(1, Math.min(720, Math.floor(options?.latestHours || 24)));
+  const previewLimit = Math.max(1, Math.min(20, Math.floor(options?.previewLimit || 8)));
+  const topCountriesLimit = Math.max(1, Math.min(20, Math.floor(options?.topCountriesLimit || 6)));
+  const maxFutureHours = Math.max(1, Math.min(168, Math.floor(options?.maxFutureHours || 6)));
+
+  const [totalsResult, checkedSourcesResult, sectionTotalsResult, dateResult] = await Promise.all([
+    db.query<NewsApiSummaryTotalsRow>(
+      `
+      select
+        count(*)::text as rows_window,
+        count(*) filter (where created_at >= now() - ($2::int * interval '1 hour'))::text as inserted_24h,
+        count(*) filter (where publication_datetime >= now() - ($2::int * interval '1 hour'))::text as published_24h,
+        max(created_at)::text as generated_at
+      from news_articles
+      where publication_datetime >= now() - ($1::int * interval '1 day')
+      `,
+      [windowDays, latestHours]
+    ),
+    db.query<NewsApiCheckedSourcesRow>(
+      `
+      select
+        count(distinct coalesce(country, 'Global') || '|' || source)::text as checked_sources_24h
+      from rss_health_status
+      where ran_at >= now() - ($1::int * interval '1 hour')
+        and runner = 'worker'
+        and attempted
+      `,
+      [latestHours]
+    ),
+    db.query<NewsApiSectionTotalRow>(
+      `
+      select
+        coalesce(nullif(trim(section), ''), 'others') as section,
+        count(*)::text as count
+      from news_articles
+      where publication_datetime >= now() - ($1::int * interval '1 day')
+      group by 1
+      `,
+      [windowDays]
+    ),
+    db.query<NewsApiDateRow>(
+      `
+      with windowed as (
+        select
+          case
+            when publication_datetime > now() + ($2::int * interval '1 hour') then created_at
+            else publication_datetime
+          end as normalized_publication_datetime
+        from news_articles
+        where publication_datetime >= now() - ($1::int * interval '1 day')
+      ),
+      dates as (
+        select distinct (normalized_publication_datetime at time zone 'UTC')::date as date
+        from windowed
+      )
+      select
+        max(date)::text as latest_date,
+        coalesce(
+          max(date) filter (where date <= (now() at time zone 'UTC')::date),
+          max(date)
+        )::text as preview_date
+      from dates
+      `,
+      [windowDays, maxFutureHours]
+    ),
+  ]);
+
+  const dateRow = dateResult.rows[0];
+  const previewDate = dateRow?.preview_date || null;
+  const latestDate = dateRow?.latest_date || null;
+
+  let previewArticleCount = 0;
+  let previewTopCountries: Array<{ country: string | null; count: number }> = [];
+  let previewHeadlines: NewsApiDashboardHeadline[] = [];
+
+  if (previewDate) {
+    const [countryCountsResult, headlinesResult] = await Promise.all([
+      db.query<NewsApiCountryCountRow>(
+        `
+        with windowed as (
+          select
+            coalesce(country, 'Global') as country,
+            case
+              when publication_datetime > now() + ($2::int * interval '1 hour') then created_at
+              else publication_datetime
+            end as normalized_publication_datetime
+          from news_articles
+          where publication_datetime >= now() - ($1::int * interval '1 day')
+        )
+        select
+          country,
+          count(*)::text as count
+        from windowed
+        where (normalized_publication_datetime at time zone 'UTC')::date = $3::date
+        group by 1
+        order by count(*) desc, country asc
+        limit $4
+        `,
+        [windowDays, maxFutureHours, previewDate, topCountriesLimit]
+      ),
+      db.query<NewsApiReadRow>(
+        `
+        with windowed as (
+          select
+            external_id as id,
+            source,
+            title_original as title,
+            null::text as snippet_original,
+            url,
+            country,
+            language,
+            coalesce(section, 'others') as section,
+            publication_datetime,
+            created_at,
+            updated_at,
+            max(created_at) over() as generated_at,
+            case
+              when publication_datetime > now() + ($2::int * interval '1 hour') then created_at
+              else publication_datetime
+            end as normalized_publication_datetime
+          from news_articles
+          where publication_datetime >= now() - ($1::int * interval '1 day')
+        )
+        select
+          id,
+          source,
+          title,
+          snippet_original,
+          url,
+          country,
+          language,
+          section,
+          publication_datetime,
+          created_at,
+          updated_at,
+          generated_at
+        from windowed
+        where (normalized_publication_datetime at time zone 'UTC')::date = $3::date
+        order by normalized_publication_datetime desc, created_at desc
+        limit $4
+        `,
+        [windowDays, maxFutureHours, previewDate, previewLimit]
+      ),
+    ]);
+
+    previewTopCountries = countryCountsResult.rows.map((row) => ({
+      country: row.country,
+      count: Number(row.count) || 0,
+    }));
+
+    const countResult = await db.query<{ count: string }>(
+      `
+      with windowed as (
+        select
+          case
+            when publication_datetime > now() + ($2::int * interval '1 hour') then created_at
+            else publication_datetime
+          end as normalized_publication_datetime
+        from news_articles
+        where publication_datetime >= now() - ($1::int * interval '1 day')
+      )
+      select count(*)::text as count
+      from windowed
+      where (normalized_publication_datetime at time zone 'UTC')::date = $3::date
+      `,
+      [windowDays, maxFutureHours, previewDate]
+    );
+    previewArticleCount = Number(countResult.rows[0]?.count || 0);
+
+    previewHeadlines = headlinesResult.rows
+      .map((row) => {
+        const title = normalizeReadableArticleTitle(row.title || '', row.url, row.source || '');
+        if (!title || looksLikeLowSignalArticleTitle(title, row.source || '', row.url || '')) {
+          return null;
+        }
+        return {
+          ...mapRowToNewsApiItem(row),
+          title,
+          section: row.section,
+        } satisfies NewsApiDashboardHeadline;
+      })
+      .filter((row): row is NewsApiDashboardHeadline => row !== null);
+  }
 
   return {
     storage: 'postgres',
-    totalCount,
-    generatedAt: result.rows[0]?.generated_at ? new Date(result.rows[0].generated_at).toISOString() : null,
-    items
+    generatedAt: totalsResult.rows[0]?.generated_at ? new Date(totalsResult.rows[0].generated_at).toISOString() : null,
+    windowDays,
+    latestHours,
+    latestDate,
+    previewDate,
+    totals: {
+      rowsWindow: Number(totalsResult.rows[0]?.rows_window || 0),
+      inserted24h: Number(totalsResult.rows[0]?.inserted_24h || 0),
+      published24h: Number(totalsResult.rows[0]?.published_24h || 0),
+      checkedSources24h: Number(checkedSourcesResult.rows[0]?.checked_sources_24h || 0),
+    },
+    sectionTotals: Object.fromEntries(
+      sectionTotalsResult.rows.reduce<Array<[NewsSection, number]>>((acc, row) => {
+        const section = normalizeStoredSectionValue(row.section);
+        const count = Number(row.count) || 0;
+        const existing = acc.find(([key]) => key === section);
+        if (existing) {
+          existing[1] += count;
+        } else {
+          acc.push([section, count]);
+        }
+        return acc;
+      }, [])
+    ),
+    preview: {
+      articleCount: previewArticleCount,
+      topCountries: previewTopCountries,
+      headlines: previewHeadlines,
+    },
   };
 }
 
@@ -1013,7 +1369,7 @@ export async function readNewsApiFilters(): Promise<NewsApiFiltersResult> {
       countries: countriesResult.rows.map((row) => row.value),
       languages: languagesResult.rows.map((row) => row.value),
       sources: sourcesResult.rows.map((row) => row.value),
-      sections: sectionsResult.rows.map((row) => row.value)
+      sections: [...new Set(sectionsResult.rows.map((row) => normalizeStoredSectionValue(row.value)))]
     }
   };
 }

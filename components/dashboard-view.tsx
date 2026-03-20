@@ -1,9 +1,15 @@
 'use client';
 
 import Link from 'next/link';
+import { useNewsApiDashboardSummary } from '@/components/news-api-hooks';
 import { useManifest, useShard } from '@/components/public-data-hooks';
-import type { PublicNewsArticle } from '@/lib/public-data';
+import { hasNewsApiBaseUrl, type NewsApiCountryCount, type NewsApiDashboardItem } from '@/lib/news-api';
+import type { PublicDashboardCountryCount, PublicNewsArticle } from '@/lib/public-data';
+import { PUBLIC_DATA_SECTIONS } from '@/lib/public-data';
 import { withBasePath } from '@/lib/site-paths';
+
+type DashboardCountryCount = PublicDashboardCountryCount | NewsApiCountryCount;
+type DashboardHeadline = PublicNewsArticle | NewsApiDashboardItem;
 
 function countBy<T>(items: T[], getKey: (item: T) => string): Array<{ key: string; count: number }> {
   const counts = new Map<string, number>();
@@ -44,179 +50,253 @@ function renderRelativeTime(value: string | null | undefined): string {
   return `${Math.abs(diffDays)} day${Math.abs(diffDays) === 1 ? '' : 's'} ${diffDays >= 0 ? 'ago' : 'ahead'}`;
 }
 
-function renderSectionLabel(section: string): string {
+function renderSectionLabel(section: string | null | undefined): string {
+  if (!section || section === 'others') return 'general / uncategorized';
   if (section === 'entertainment') return 'entertainment';
   if (section === 'lifestyle') return 'lifestyle';
   if (section === 'arts') return 'arts';
-  if (section === 'others') return 'general / uncategorized';
   return section;
+}
+
+function renderCountryCode(value: string | null | undefined): string {
+  return value?.trim() || '-';
 }
 
 export function DashboardView() {
   const manifestState = useManifest();
-  const previewShardPath =
-    manifestState.data?.shards.featuredByDate || manifestState.data?.shards.byDate || null;
-  const shouldLoadPreviewShard = !manifestState.data?.dashboardPreview;
+  const apiSummaryState = useNewsApiDashboardSummary();
+  const manifest = manifestState.data;
+  const liveSummary =
+    hasNewsApiBaseUrl() && apiSummaryState.data?.storage === 'postgres' ? apiSummaryState.data : null;
+  const previewShardPath = manifest?.shards.featuredByDate || manifest?.shards.byDate || null;
+  const shouldLoadPreviewShard = !liveSummary && !manifest?.dashboardPreview;
   const latestShardState = useShard(shouldLoadPreviewShard ? previewShardPath : null);
 
-  if (manifestState.loading && !manifestState.data) {
-    return <div className="panel muted">Loading latest manifest...</div>;
+  if (manifestState.loading && !manifest && !liveSummary) {
+    return <div className="panel muted">Loading dashboard data...</div>;
   }
 
-  if (manifestState.error) {
-    return <div className="panel danger">Manifest load failed: {manifestState.error}</div>;
+  if (manifestState.error && !manifest && !liveSummary) {
+    return <div className="panel danger">Dashboard load failed: {manifestState.error}</div>;
   }
 
-  if (!manifestState.data) {
-    return <div className="panel muted">No public export found yet. Run `bun run export:public:local` first.</div>;
+  if (!manifest && !liveSummary) {
+    return <div className="panel muted">No dashboard data found yet.</div>;
   }
 
-  const manifest = manifestState.data;
-  const preview = manifest.dashboardPreview;
-  const latestArticles = preview?.headlines || latestShardState.data?.articles?.slice(0, 8) || [];
-  const countryRollup = preview?.topCountries || countBy(latestShardState.data?.articles || [], (article) => `${article.countryCode}|${article.country}`)
-    .slice(0, 6)
-    .map((item) => {
-      const [countryCode, country] = item.key.split('|');
-      return { countryCode, country, count: item.count };
-    });
-  const previewArticleCount = preview?.articleCount ?? latestShardState.data?.articles?.length ?? 0;
-  const sectionRollup = manifest.sections.map((section) => ({
-    key: section,
-    count: manifest.sectionTotals[section] || 0,
-  }));
-  const cadence = manifest.cadence;
-  const exportStats = manifest.exportStats;
-  const previewDate = manifest.featuredDate || manifest.latestDate || null;
-  const usingFallbackPreviewDate = Boolean(previewDate && manifest.latestDate && previewDate !== manifest.latestDate);
-  const cadenceLabel = cadence
-    ? `${cadence.frequency} snapshot, scheduled around :${String(cadence.scheduledMinute).padStart(2, '0')} ${cadence.timezone}`
-    : 'Snapshot export cadence not published in manifest yet.';
-  const exportCaption = exportStats
+  const preview = manifest?.dashboardPreview;
+  const latestArticles: DashboardHeadline[] = liveSummary
+    ? liveSummary.preview.headlines
+    : preview?.headlines || latestShardState.data?.articles?.slice(0, 8) || [];
+  const countryRollup: DashboardCountryCount[] = liveSummary
+    ? liveSummary.preview.topCountries
+    : preview?.topCountries || countBy(latestShardState.data?.articles || [], (article) => `${article.countryCode}|${article.country}`)
+      .slice(0, 6)
+      .map((item) => {
+        const [countryCode, country] = item.key.split('|');
+        return { countryCode, country, count: item.count };
+      });
+  const previewArticleCount = liveSummary
+    ? liveSummary.preview.articleCount
+    : preview?.articleCount ?? latestShardState.data?.articles?.length ?? 0;
+  const previewDate = liveSummary
+    ? liveSummary.previewDate || liveSummary.latestDate || null
+    : manifest?.featuredDate || manifest?.latestDate || null;
+  const usingFallbackPreviewDate = liveSummary
+    ? Boolean(previewDate && liveSummary.latestDate && previewDate !== liveSummary.latestDate)
+    : Boolean(previewDate && manifest?.latestDate && previewDate !== manifest.latestDate);
+  const cadence = manifest?.cadence;
+  const exportStats = manifest?.exportStats;
+  const generatedAt = liveSummary?.generatedAt || manifest?.generatedAt || null;
+  const cadenceLabel = liveSummary
+    ? 'Live API summary backed by the database. Static downloads remain available below.'
+    : cadence
+      ? `${cadence.frequency} export pipeline in ${cadence.timezone}. Actual publish time depends on ingest, export, build, and deploy.`
+      : 'Snapshot export cadence not published in manifest yet.';
+  const staticExportCaption = exportStats
     ? exportStats.rowLimitHit
       ? `${exportStats.rawRowsInWindow.toLocaleString()} raw rows in ${exportStats.windowDays}d window before the ${exportStats.maxRows.toLocaleString()}-row cap`
       : `${exportStats.rawRowsInWindow.toLocaleString()} raw rows in ${exportStats.windowDays}d window`
-    : null;
-  const latest24hCaption = exportStats
-    ? `${exportStats.rawLatest24hInserted.toLocaleString()} raw inserted rows before filtering`
-    : 'createdAt rows in latest-24h.csv';
+    : 'filtered rows written to the public snapshot';
+  const liveSectionTotals = liveSummary ? liveSummary.sectionTotals : null;
+  const sectionRollup = (liveSummary ? PUBLIC_DATA_SECTIONS : manifest?.sections || []).map((section) => ({
+    key: section,
+    count: liveSectionTotals ? liveSectionTotals[section] || 0 : manifest?.sectionTotals[section] || 0,
+  }));
 
   return (
     <div className="page-stack">
       <section className="hero-panel">
-        <div className="eyebrow">Static export dashboard</div>
-        <h1>Published news snapshots and downloads.</h1>
+        <div className="eyebrow">{liveSummary ? 'API-backed dashboard' : 'Static export dashboard'}</div>
+        <h1>{liveSummary ? 'Live news windows, filters, and downloadable snapshots.' : 'Published news snapshots and downloads.'}</h1>
         <p>
-          Explore published JSON and CSV snapshots of monitored coverage by date, country, source,
-          and section.
+          {liveSummary
+            ? 'The dashboard summary now reads directly from the database-backed API. Static CSV and JSON snapshots remain available as batch downloads.'
+            : 'Explore published JSON and CSV snapshots of monitored coverage by date, country, source, and section.'}
         </p>
         <div className="hero-note">
-          <strong>Public snapshot:</strong> last export {renderRelativeTime(manifest.generatedAt)}. {cadenceLabel}
+          <strong>{liveSummary ? 'Live snapshot:' : 'Public snapshot:'}</strong> last refresh {renderRelativeTime(generatedAt)}. {cadenceLabel}
         </div>
         <div className="hero-actions">
           <Link href="/explorer/">Open Explorer</Link>
-          <a href={withBasePath(manifest.downloads.latest24h) || '#'}>Download latest 24h CSV</a>
+          {manifest?.downloads.latest24h ? (
+            <a href={withBasePath(manifest.downloads.latest24h) || '#'}>Download latest 24h CSV</a>
+          ) : null}
         </div>
       </section>
 
+      {hasNewsApiBaseUrl() && apiSummaryState.error ? (
+        <div className="panel danger">Live API summary failed: {apiSummaryState.error}. Falling back to static export data.</div>
+      ) : null}
+      {manifestState.error && manifest ? (
+        <div className="panel danger">Manifest load degraded: {manifestState.error}</div>
+      ) : null}
+      {latestShardState.error && !liveSummary ? (
+        <div className="panel danger">Shard load failed: {latestShardState.error}</div>
+      ) : null}
+
       <section className="metric-grid">
         <article className="metric-card">
-          <span>Latest export</span>
-          <strong>{renderGeneratedAt(manifest.generatedAt)}</strong>
-          <small>{renderRelativeTime(manifest.generatedAt)}</small>
+          <span>{liveSummary ? 'Latest refresh' : 'Latest export'}</span>
+          <strong>{renderGeneratedAt(generatedAt)}</strong>
+          <small>{renderRelativeTime(generatedAt)}</small>
         </article>
         <article className="metric-card">
           <span>Rows in 31d window</span>
-          <strong>{exportStats ? exportStats.rawRowsInWindow.toLocaleString() : '-'}</strong>
-          <small>raw publicationDatetime rows in the export window</small>
+          <strong>{(liveSummary?.totals.rowsWindow ?? exportStats?.rawRowsInWindow ?? 0).toLocaleString()}</strong>
+          <small>{liveSummary ? 'raw publicationDatetime rows currently queryable in the rolling window' : 'raw publicationDatetime rows in the export window'}</small>
+        </article>
+        {liveSummary ? (
+          <article className="metric-card">
+            <span>Inserted in last 24h</span>
+            <strong>{liveSummary.totals.inserted24h.toLocaleString()}</strong>
+            <small>createdAt rows currently queryable via API</small>
+          </article>
+        ) : (
+          <article className="metric-card">
+            <span>Rows in public export</span>
+            <strong>{manifest?.totals.articles.toLocaleString() || '-'}</strong>
+            <small>{staticExportCaption}</small>
+          </article>
+        )}
+        {liveSummary ? (
+          <article className="metric-card">
+            <span>Published in last 24h</span>
+            <strong>{liveSummary.totals.published24h.toLocaleString()}</strong>
+            <small>publicationDatetime rows currently queryable via API</small>
+          </article>
+        ) : (
+          <article className="metric-card">
+            <span>Latest 24h CSV rows</span>
+            <strong>{manifest?.totals.latest24h.toLocaleString() || '-'}</strong>
+            <small>
+              {exportStats
+                ? `${exportStats.rawLatest24hInserted.toLocaleString()} raw inserted rows before filtering`
+                : 'createdAt rows in latest-24h.csv'}
+            </small>
+          </article>
+        )}
+        <article className="metric-card">
+          <span>Registered sources</span>
+          <strong>{manifest?.totals.sources.toLocaleString() || '-'}</strong>
+          <small>atlas inventory published in sources.json</small>
         </article>
         <article className="metric-card">
-          <span>Rows in public export</span>
-          <strong>{manifest.totals.articles.toLocaleString()}</strong>
-          <small>{exportCaption || 'filtered rows written to the public snapshot'}</small>
+          <span>Sources checked in last 24h</span>
+          <strong>{(liveSummary?.totals.checkedSources24h ?? exportStats?.checkedSources24h ?? 0).toLocaleString()}</strong>
+          <small>distinct country/source health checks by worker</small>
         </article>
         <article className="metric-card">
-          <span>Latest 24h CSV rows</span>
-          <strong>{manifest.totals.latest24h.toLocaleString()}</strong>
-          <small>{latest24hCaption}</small>
-        </article>
-        <article className="metric-card">
-          <span>Tracked sources</span>
-          <strong>{manifest.totals.sources.toLocaleString()}</strong>
-        </article>
-        <article className="metric-card">
-          <span>Publish cadence</span>
-          <strong>{cadence ? `:${String(cadence.scheduledMinute).padStart(2, '0')}` : 'Hourly'}</strong>
-          <small>{cadence ? cadence.timezone : 'Static snapshot schedule'}</small>
+          <span>Configured schedule</span>
+          <strong>{cadence ? 'Hourly' : liveSummary ? 'Live API' : 'Unavailable'}</strong>
+          <small>
+            {cadence
+              ? `${cadence.timezone} · actual publish time varies`
+              : liveSummary
+                ? 'API reads current database state on request'
+                : 'Static snapshot schedule'}
+          </small>
         </article>
       </section>
 
       <section className="grid-two">
         <article className="panel">
           <div className="section-head">
-            <h2>Top countries in current date shard</h2>
+            <h2>{liveSummary ? 'Top countries in live preview date' : 'Top countries in current date shard'}</h2>
             <span>{previewDate ? `${previewDate} · ${previewArticleCount.toLocaleString()} rows` : 'No data'}</span>
           </div>
           {usingFallbackPreviewDate ? (
             <div className="muted">
-              Latest UTC shard {manifest.latestDate} is still thin, so the dashboard previews {previewDate}.
+              Latest UTC shard/date is still thin, so the dashboard previews {previewDate}.
             </div>
           ) : null}
           <div className="stat-list">
             {countryRollup.length > 0 ? (
               countryRollup.map((item) => (
-                <div className="stat-row" key={`${item.countryCode}-${item.country}`}>
+                <div className="stat-row" key={`${item.countryCode || 'na'}-${item.country}`}>
                   <span>
-                    {item.country} <small>{item.countryCode}</small>
+                    {item.country} <small>{renderCountryCode(item.countryCode)}</small>
                   </span>
                   <strong>{item.count.toLocaleString()}</strong>
                 </div>
               ))
             ) : (
-              <div className="muted">No latest date shard rows yet.</div>
+              <div className="muted">{liveSummary ? 'No preview rows in the live API window yet.' : 'No latest date shard rows yet.'}</div>
             )}
           </div>
         </article>
 
         <article className="panel">
           <div className="section-head">
-            <h2>Section mix in full export</h2>
-            <span>{manifest.totals.articles.toLocaleString()} rows</span>
+            <h2>{liveSummary ? 'Section mix in live window' : 'Section mix in full export'}</h2>
+            <span>
+              {(liveSummary?.totals.rowsWindow ?? manifest?.totals.articles ?? 0).toLocaleString()} rows
+            </span>
           </div>
           <div className="stat-list">
             {sectionRollup.length > 0 ? (
               sectionRollup
                 .filter((item) => item.count > 0)
                 .map((item) => (
-                <div className="stat-row" key={item.key}>
-                  <span>{renderSectionLabel(item.key)}</span>
-                  <strong>{item.count.toLocaleString()}</strong>
-                </div>
+                  <div className="stat-row" key={item.key}>
+                    <span>{renderSectionLabel(item.key)}</span>
+                    <strong>{item.count.toLocaleString()}</strong>
+                  </div>
                 ))
             ) : (
               <div className="muted">No section distribution available yet.</div>
             )}
           </div>
-          <div className="muted">Separate from the latest date shard preview below.</div>
+          <div className="muted">
+            {liveSummary ? 'Live section totals come from direct database aggregation.' : 'Separate from the latest date shard preview below.'}
+          </div>
         </article>
       </section>
 
       <section className="panel">
         <div className="section-head">
           <h2>Recent headlines</h2>
-          <span>{latestArticles.length > 0 ? `Date-shard preview · ${previewDate || '-'}` : 'Waiting for export'}</span>
+          <span>
+            {latestArticles.length > 0
+              ? `${liveSummary ? 'Live preview' : 'Date-shard preview'} · ${previewDate || '-'}`
+              : liveSummary
+                ? 'Waiting for live rows'
+                : 'Waiting for export'}
+          </span>
         </div>
         <div className="headline-list">
-          {latestArticles.map((article: PublicNewsArticle) => (
+          {latestArticles.map((article) => (
             <a className="headline-card" key={article.id} href={article.url} rel="noreferrer" target="_blank">
               <small>
-                {article.countryCode} · {article.source} · {renderSectionLabel(article.section)}
+                {article.country || 'Unknown'} {article.countryCode ? `· ${article.countryCode}` : ''} · {article.source} · {renderSectionLabel(article.section)}
               </small>
               <strong>{article.title}</strong>
               <span>{article.snippet || 'No snippet available.'}</span>
             </a>
           ))}
-          {latestArticles.length === 0 ? <div className="muted">No articles in the latest shard yet.</div> : null}
+          {latestArticles.length === 0 ? (
+            <div className="muted">{liveSummary ? 'No rows in the live preview yet.' : 'No articles in the latest shard yet.'}</div>
+          ) : null}
         </div>
       </section>
     </div>

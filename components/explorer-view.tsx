@@ -1,11 +1,27 @@
 'use client';
 
-import { startTransition, useDeferredValue, useEffect, useState } from 'react';
+import { startTransition, useDeferredValue, useEffect, useMemo, useState } from 'react';
+import { useNewsApiFilters, useNewsApiNews } from '@/components/news-api-hooks';
 import { useManifest, useShard } from '@/components/public-data-hooks';
+import { buildNewsApiUrl, hasNewsApiBaseUrl, type NewsApiItem } from '@/lib/news-api';
 import type { PublicNewsArticle } from '@/lib/public-data';
-import { withBasePath } from '@/lib/site-paths';
 
-function buildClientCsv(rows: PublicNewsArticle[]): string {
+type ExplorerCsvRow = {
+  id: string;
+  source: string;
+  country: string;
+  countryCode: string;
+  language: string;
+  section: string;
+  title: string;
+  snippet: string;
+  url: string;
+  publicationDatetime: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+function buildClientCsv(rows: ExplorerCsvRow[]): string {
   const header = [
     'id',
     'source',
@@ -18,22 +34,12 @@ function buildClientCsv(rows: PublicNewsArticle[]): string {
     'url',
     'publicationDatetime',
     'createdAt',
+    'updatedAt',
   ];
   const body = rows.map((row) =>
-    [
-      row.id,
-      row.source,
-      row.country,
-      row.countryCode,
-      row.language,
-      row.section,
-      row.title,
-      row.snippet,
-      row.url,
-      row.publicationDatetime,
-      row.createdAt,
-    ]
-      .map((value) => {
+    header
+      .map((key) => {
+        const value = row[key as keyof ExplorerCsvRow];
         if (!/[",\n]/.test(value)) return value;
         return `"${value.replaceAll('"', '""')}"`;
       })
@@ -42,7 +48,7 @@ function buildClientCsv(rows: PublicNewsArticle[]): string {
   return `${header.join(',')}\n${body.join('\n')}${body.length ? '\n' : ''}`;
 }
 
-function triggerCsvDownload(rows: PublicNewsArticle[], filename: string): void {
+function triggerCsvDownload(rows: ExplorerCsvRow[], filename: string): void {
   const csv = buildClientCsv(rows);
   const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
   const url = URL.createObjectURL(blob);
@@ -55,15 +61,231 @@ function triggerCsvDownload(rows: PublicNewsArticle[], filename: string): void {
   URL.revokeObjectURL(url);
 }
 
-function renderSectionLabel(section: string): string {
+function renderSectionLabel(section: string | null | undefined): string {
+  if (!section || section === 'others') return 'general / uncategorized';
   if (section === 'entertainment') return 'entertainment';
   if (section === 'lifestyle') return 'lifestyle';
   if (section === 'arts') return 'arts';
-  if (section === 'others') return 'general / uncategorized';
   return section;
 }
 
-export function ExplorerView() {
+function toExplorerCsvRow(article: PublicNewsArticle | NewsApiItem): ExplorerCsvRow {
+  const countryCode = 'countryCode' in article ? article.countryCode || '' : '';
+  const updatedAt = 'updatedAt' in article ? article.updatedAt || '' : '';
+  return {
+    id: article.id,
+    source: article.source || '',
+    country: article.country || '',
+    countryCode,
+    language: article.language || '',
+    section: article.section || '',
+    title: article.title || '',
+    snippet: article.snippet || '',
+    url: article.url || '',
+    publicationDatetime: article.publicationDatetime || '',
+    createdAt: article.createdAt || '',
+    updatedAt,
+  };
+}
+
+function toDayRange(date: string): { from: string; to: string } {
+  return {
+    from: new Date(`${date}T00:00:00.000Z`).toISOString(),
+    to: new Date(`${date}T23:59:59.999Z`).toISOString(),
+  };
+}
+
+function ApiExplorerView() {
+  const filtersState = useNewsApiFilters();
+  const filters = filtersState.data?.storage === 'postgres' ? filtersState.data.filters : null;
+  const [country, setCountry] = useState('');
+  const [date, setDate] = useState('');
+  const [section, setSection] = useState('');
+  const [source, setSource] = useState('');
+  const [query, setQuery] = useState('');
+  const [offset, setOffset] = useState(0);
+  const deferredQuery = useDeferredValue(query.trim());
+  const limit = 100;
+  const publicationRange = useMemo(() => (date ? toDayRange(date) : null), [date]);
+
+  useEffect(() => {
+    startTransition(() => {
+      setOffset(0);
+    });
+  }, [country, date, section, source, deferredQuery]);
+
+  const newsState = useNewsApiNews({
+    countries: country ? [country] : undefined,
+    sections: section ? [section] : undefined,
+    sources: source ? [source] : undefined,
+    q: deferredQuery || null,
+    limit,
+    offset,
+    hours: publicationRange ? undefined : 48,
+    publicationFrom: publicationRange?.from || null,
+    publicationTo: publicationRange?.to || null,
+  });
+
+  const response = newsState.data?.storage === 'postgres' ? newsState.data : null;
+  const rows = response?.items || [];
+  const total = response?.total || 0;
+  const page = Math.floor(offset / limit) + 1;
+  const totalPages = Math.max(1, Math.ceil(total / limit));
+  const currentCsvRows = rows.map(toExplorerCsvRow);
+  const apiUrl = buildNewsApiUrl('/api/news');
+
+  return (
+    <div className="page-stack">
+      <section className="hero-panel compact">
+        <div className="eyebrow">Explorer</div>
+        <h1>Query the live news API with server-side filtering.</h1>
+        <p>
+          Results come from the database-backed API instead of loading giant date shards in the browser.
+          Filtering, search, and pagination now happen on the server.
+        </p>
+      </section>
+
+      <section className="panel">
+        <div className="control-grid">
+          <label>
+            <span>Country</span>
+            <select value={country} onChange={(event) => setCountry(event.target.value)}>
+              <option value="">All countries</option>
+              {(filters?.countries || []).map((item) => (
+                <option key={item} value={item}>
+                  {item}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
+            <span>Date</span>
+            <input type="date" value={date} onChange={(event) => setDate(event.target.value)} />
+          </label>
+          <label>
+            <span>Section</span>
+            <select value={section} onChange={(event) => setSection(event.target.value)}>
+              <option value="">All sections</option>
+              {(filters?.sections || []).map((item) => (
+                <option key={item} value={item}>
+                  {renderSectionLabel(item)}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
+            <span>Source</span>
+            <select value={source} onChange={(event) => setSource(event.target.value)}>
+              <option value="">All sources</option>
+              {(filters?.sources || []).map((item) => (
+                <option key={item} value={item}>
+                  {item}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
+            <span>Keyword</span>
+            <input
+              placeholder="Search title, snippet, source, country"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+            />
+          </label>
+        </div>
+
+        <div className="toolbar">
+          <div className="muted">
+            API mode: <code>{apiUrl || '-'}</code>
+          </div>
+          <button
+            className="button"
+            type="button"
+            onClick={() => triggerCsvDownload(currentCsvRows, `wpm-api-page-${page}.csv`)}
+            disabled={currentCsvRows.length === 0}
+          >
+            Download current page CSV
+          </button>
+          <button
+            className="button"
+            type="button"
+            onClick={() => setOffset((current) => Math.max(0, current - limit))}
+            disabled={offset === 0}
+          >
+            Previous page
+          </button>
+          <button
+            className="button"
+            type="button"
+            onClick={() => setOffset((current) => current + limit)}
+            disabled={offset + limit >= total}
+          >
+            Next page
+          </button>
+        </div>
+        <div className="muted">
+          {date
+            ? `Filtering publicationDatetime to ${date} UTC.`
+            : 'No date selected: defaulting to the latest 48h publication window.'}
+        </div>
+      </section>
+
+      {filtersState.error ? <div className="panel danger">Filter load failed: {filtersState.error}</div> : null}
+      {newsState.error ? <div className="panel danger">News query failed: {newsState.error}</div> : null}
+
+      <section className="panel">
+        <div className="section-head">
+          <h2>Results</h2>
+          <span>
+            {total.toLocaleString()} rows
+            {total > 0 ? ` · page ${page} / ${totalPages}` : ''}
+          </span>
+        </div>
+
+        {filtersState.loading && !filters ? <div className="muted">Loading API filter options...</div> : null}
+        {newsState.loading && !response ? <div className="muted">Loading live API results...</div> : null}
+
+        <div className="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Country</th>
+                <th>Source</th>
+                <th>Section</th>
+                <th>Title</th>
+                <th>Link</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((article) => (
+                <tr key={article.id}>
+                  <td>{article.publicationDatetime.replace('T', ' ').slice(0, 16)}</td>
+                  <td>{article.country || 'Unknown'}</td>
+                  <td>{article.source}</td>
+                  <td>{renderSectionLabel(article.section)}</td>
+                  <td>{article.title}</td>
+                  <td>
+                    <a href={article.url} rel="noreferrer" target="_blank">
+                      Open
+                    </a>
+                  </td>
+                </tr>
+              ))}
+              {!newsState.loading && rows.length === 0 ? (
+                <tr>
+                  <td colSpan={6}>No rows match the current filter set.</td>
+                </tr>
+              ) : null}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function StaticExplorerView() {
   const manifestState = useManifest();
   const manifest = manifestState.data;
 
@@ -208,7 +430,12 @@ export function ExplorerView() {
           <button
             className="button"
             type="button"
-            onClick={() => triggerCsvDownload(filteredArticles, `wpm-export-${countryCode || 'all'}-${date || month || 'all'}.csv`)}
+            onClick={() =>
+              triggerCsvDownload(
+                filteredArticles.map(toExplorerCsvRow),
+                `wpm-export-${countryCode || 'all'}-${date || month || 'all'}.csv`
+              )
+            }
             disabled={filteredArticles.length === 0}
           >
             Download current CSV
@@ -272,4 +499,8 @@ export function ExplorerView() {
       </section>
     </div>
   );
+}
+
+export function ExplorerView() {
+  return hasNewsApiBaseUrl() ? <ApiExplorerView /> : <StaticExplorerView />;
 }

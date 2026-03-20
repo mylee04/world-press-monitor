@@ -103,6 +103,7 @@ export interface PublicDataManifest {
     rawRowsInWindow: number;
     rawLatest24hInserted: number;
     rawLatest24hPublished: number;
+    checkedSources24h: number;
     rowLimitHit: boolean;
   };
   dashboardPreview?: PublicDashboardPreview;

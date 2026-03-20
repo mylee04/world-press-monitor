@@ -1,49 +1,19 @@
 import {
   readNewsArticlesForApi,
   readNewsApiFilters,
+  readNewsDashboardSummary,
   checkNewsDatabaseHealth,
   type NewsApiItem
 } from '@/lib/ingestion-store';
+import type {
+  NewsApiDashboardSummaryResponse,
+  NewsApiFiltersResponse,
+  NewsApiResponse,
+} from '@/lib/news-api';
 import { createHash, timingSafeEqual } from 'node:crypto';
 import { appendFileSync, existsSync, mkdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { createServer, type IncomingMessage, type ServerResponse } from 'node:http';
-
-type NewsApiResponse = {
-  storage: 'postgres' | 'disabled';
-  generatedAt: string | null;
-  total: number;
-  params: {
-    limit: number;
-    offset: number;
-    hours?: number;
-    from?: string | null;
-    to?: string | null;
-    publicationFrom?: string | null;
-    publicationTo?: string | null;
-    minCreatedAt?: string | null;
-    maxCreatedAt?: string | null;
-    minUpdatedAt?: string | null;
-    maxUpdatedAt?: string | null;
-    sources: string[];
-    countries: string[];
-    sections: string[];
-    languages: string[];
-  };
-  items: Array<NewsApiItem & { createdAt: string; updatedAt: string; publicationDatetime: string }>;
-  reason?: string;
-};
-
-type NewsFiltersResponse = {
-  storage: 'postgres' | 'disabled';
-  reason?: string;
-  filters: {
-    countries: string[];
-    languages: string[];
-    sources: string[];
-    sections: string[];
-  };
-};
 
 type HealthResponse = {
   status: 'ok' | 'degraded';
@@ -257,10 +227,30 @@ function parseTokenPolicies(): ApiAuthPolicy[] {
 }
 
 const tokenPolicies = parseTokenPolicies();
+const allowPublicReadOnly = /^1|true|yes$/i.test(process.env.NEWS_API_ALLOW_PUBLIC_READ_ONLY || 'false');
+const publicReadRateLimitPerMinute = Math.max(
+  1,
+  Math.min(10_000, Number.parseInt(process.env.NEWS_API_PUBLIC_RATE_LIMIT_PER_MINUTE || '60', 10) || 60)
+);
+const publicReadMaxLimit = Math.max(
+  1,
+  Math.min(500, Number.parseInt(process.env.NEWS_API_PUBLIC_MAX_LIMIT || '100', 10) || 100)
+);
+const PUBLIC_READ_ONLY_TOKEN_HASH = 'public-read-only';
+const publicReadPolicy: ApiAuthPolicy = {
+  token: '',
+  tokenHash: PUBLIC_READ_ONLY_TOKEN_HASH,
+  tenant: null,
+  roles: new Set<'read' | 'admin'>(['read']),
+  maxLimit: publicReadMaxLimit
+};
 
-if (!tokenPolicies.length) {
+if (!tokenPolicies.length && !allowPublicReadOnly) {
   console.error('[api-news] NEWS_API_TOKEN or NEWS_API_TOKENS is required. Set it before starting.');
   process.exit(1);
+}
+if (!tokenPolicies.length && allowPublicReadOnly) {
+  console.warn('[api-news] starting in public read-only mode without bearer tokens.');
 }
 
 const rateLimitPerMinute = Math.max(
@@ -305,6 +295,13 @@ function getAuthContext(req: IncomingMessage): ApiAuthContext | null {
   const policy = getMatchingAuthPolicy(token);
   if (!policy) return null;
   return { tokenHash: policy.tokenHash, policy };
+}
+
+function getPublicReadOnlyContext(): ApiAuthContext {
+  return {
+    tokenHash: PUBLIC_READ_ONLY_TOKEN_HASH,
+    policy: publicReadPolicy
+  };
 }
 
 function isTenantAllowed(policy: ApiAuthPolicy, req: IncomingMessage): boolean {
@@ -406,6 +403,13 @@ function parseDateParam(value: string | null): string | null {
     throw new Error('invalid-date');
   }
   return parsed.toISOString();
+}
+
+function parseTextParam(value: string | null, maxLength: number): string | null {
+  if (!value) return null;
+  const normalized = value.replace(/[\u0000-\u001F]/g, ' ').trim();
+  if (!normalized) return null;
+  return normalized.slice(0, maxLength);
 }
 
 function parseListParam(value: string | null): string[] {
@@ -558,6 +562,13 @@ const openApiSpec = {
             description: 'Optional section filter. Repeatable by comma-separated values.'
           },
           {
+            name: 'q',
+            in: 'query',
+            schema: { type: 'string', maxLength: 120 },
+            required: false,
+            description: 'Optional keyword filter against title, snippet, source, and country.'
+          },
+          {
             name: 'language',
             in: 'query',
             schema: { type: 'string' },
@@ -632,6 +643,7 @@ const openApiSpec = {
                         maxCreatedAt: { type: ['string', 'null'], format: 'date-time' },
                         minUpdatedAt: { type: ['string', 'null'], format: 'date-time' },
                         maxUpdatedAt: { type: ['string', 'null'], format: 'date-time' },
+                        q: { type: ['string', 'null'] },
                         sources: { type: 'array', items: { type: 'string' } },
                         countries: { type: 'array', items: { type: 'string' } },
                         sections: { type: 'array', items: { type: 'string' } },
@@ -693,6 +705,50 @@ const openApiSpec = {
         },
         security: [{ bearerAuth: [] }]
       }
+    },
+    '/api/dashboard/summary': {
+      get: {
+        summary: 'Get live dashboard summary for the ingested news window',
+        parameters: [
+          {
+            name: 'window_days',
+            in: 'query',
+            schema: { type: 'integer', minimum: 1, maximum: 90 },
+            required: false,
+            description: 'Rolling publication window in days. Default 31.'
+          },
+          {
+            name: 'latest_hours',
+            in: 'query',
+            schema: { type: 'integer', minimum: 1, maximum: 720 },
+            required: false,
+            description: 'Latest activity window in hours. Default 24.'
+          },
+          {
+            name: 'preview_limit',
+            in: 'query',
+            schema: { type: 'integer', minimum: 1, maximum: 20 },
+            required: false,
+            description: 'Max preview headlines to return. Default 8.'
+          },
+          {
+            name: 'top_countries_limit',
+            in: 'query',
+            schema: { type: 'integer', minimum: 1, maximum: 20 },
+            required: false,
+            description: 'Max preview countries to return. Default 6.'
+          }
+        ],
+        responses: {
+          200: {
+            description: 'Dashboard summary backed by the live database'
+          },
+          503: {
+            description: 'Storage unavailable'
+          }
+        },
+        security: [{ bearerAuth: [] }]
+      }
     }
   },
   components: {
@@ -710,11 +766,21 @@ const filtersCacheTtlMs = Math.max(
   5_000,
   (Number(process.env.NEWS_API_FILTERS_CACHE_TTL_SECONDS || '180') || 180) * 1_000
 );
+const dashboardSummaryCacheTtlMs = Math.max(
+  5_000,
+  (Number(process.env.NEWS_API_DASHBOARD_CACHE_TTL_SECONDS || '60') || 60) * 1_000
+);
 type FilterCacheEntry = {
-  payload: NewsFiltersResponse;
+  payload: NewsApiFiltersResponse;
   timestamp: number;
 };
 let filtersCache: FilterCacheEntry | null = null;
+type DashboardSummaryCacheEntry = {
+  cacheKey: string;
+  payload: NewsApiDashboardSummaryResponse;
+  timestamp: number;
+};
+let dashboardSummaryCache: DashboardSummaryCacheEntry | null = null;
 
 const docsHtml = `
 <!doctype html>
@@ -948,6 +1014,10 @@ const playgroundHtml = `
           <label>offset</label>
           <input id="offset" type="number" min="0" value="0" />
         </div>
+        <div>
+          <label>keyword</label>
+          <input id="keyword" type="text" placeholder="title, snippet, source, country" />
+        </div>
       </div>
 
       <div class="actions">
@@ -978,6 +1048,7 @@ const playgroundHtml = `
       const hoursInput = document.getElementById('hours');
       const limitInput = document.getElementById('limit');
       const offsetInput = document.getElementById('offset');
+      const keywordInput = document.getElementById('keyword');
       const fetchBtn = document.getElementById('fetchBtn');
       const downloadBtn = document.getElementById('downloadBtn');
       const downloadCsvBtn = document.getElementById('downloadCsvBtn');
@@ -1104,6 +1175,7 @@ const playgroundHtml = `
         const limit = limitInput.value.trim();
         const offset = offsetInput.value.trim();
         const hours = hoursInput.value.trim();
+        const keyword = keywordInput.value.trim();
         const publicationFrom = toIso(publicationFromInput.value);
         const publicationTo = toIso(publicationToInput.value);
         const createdFrom = toIso(createdFromInput.value);
@@ -1118,6 +1190,7 @@ const playgroundHtml = `
         if (hours) params.set('hours', hours);
         if (limit) params.set('limit', limit);
         if (offset) params.set('offset', offset);
+        if (keyword) params.set('q', keyword);
         if (publicationFrom) params.set('publication_from', publicationFrom);
         if (publicationTo) params.set('publication_to', publicationTo);
         if (createdFrom) params.set('created_from', createdFrom);
@@ -1332,6 +1405,7 @@ function sendHtmlResponse(req: IncomingMessage, res: ServerResponse, response: {
 const port = Number(process.env.NEWS_API_PORT || '4100');
 const host = process.env.NEWS_API_HOST || '0.0.0.0';
 const apiDocPaths = new Set(['/openapi.json', '/docs', '/playground', '/ui']);
+const publicReadPaths = new Set(['/api/news', '/api/filters', '/api/dashboard/summary']);
 
 const server = createServer(async (req: IncomingMessage, res: ServerResponse) => {
   const requestStart = Date.now();
@@ -1345,18 +1419,26 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
   const origin = getHeaderValue(req.headers, 'origin');
   const requestHost = req.headers.host || `${host}:${port}`;
   const method = (req.method || 'GET').toUpperCase();
-  const context = getAuthContext(req);
+  const explicitContext = getAuthContext(req);
   const isDocPath = apiDocPaths.has(path);
   const isHealthPath = path === '/health' || path === '/healthz';
-  const requiresAuth = !isHealthPath && !(allowPublicDocs && isDocPath);
+  const publicReadContext =
+    !explicitContext && allowPublicReadOnly && publicReadPaths.has(path) ? getPublicReadOnlyContext() : null;
+  const context = explicitContext || publicReadContext;
+  const isPublicReadContext = Boolean(publicReadContext);
+  const requiresAuth = !isHealthPath && !(allowPublicDocs && isDocPath) && !isPublicReadContext;
   const policy = context?.policy;
   const isAdminEndpoint = isDocPath;
   const requiredRole: ApiPolicyRole = isAdminEndpoint ? 'admin' : 'read';
 
   const rateLimitDecision = context
     ? checkRateLimit(
-      getApiRateLimitKey(req, context.tokenHash),
-      Math.max(1, Math.min(5000, policy?.maxLimit ?? rateLimitPerMinute))
+      isPublicReadContext
+        ? `public:${req.socket?.remoteAddress || 'unknown'}`
+        : getApiRateLimitKey(req, context.tokenHash),
+      isPublicReadContext
+        ? publicReadRateLimitPerMinute
+        : Math.max(1, Math.min(5000, policy?.maxLimit ?? rateLimitPerMinute))
     )
     : undefined;
 
@@ -1449,7 +1531,7 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
       );
       return;
     }
-  } else if (!allowPublicDocs) {
+  } else if (isDocPath && !allowPublicDocs) {
     sendJsonResponse(req, res, unauthorizedResponse());
     return;
   }
@@ -1525,8 +1607,8 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
     try {
       const now = Date.now();
       if (filtersCache && now - filtersCache.timestamp < filtersCacheTtlMs) {
-        const cached: NewsFiltersResponse = filtersCache.payload;
-        const filteredPayload: NewsFiltersResponse = {
+        const cached: NewsApiFiltersResponse = filtersCache.payload;
+        const filteredPayload: NewsApiFiltersResponse = {
           ...cached,
           filters: {
             countries: applyFilterValues(cached.filters.countries, policy.allowedCountries),
@@ -1541,7 +1623,7 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
 
       const filters = await readNewsApiFilters();
       if (filters.storage === 'disabled') {
-        const payload: NewsFiltersResponse = {
+        const payload: NewsApiFiltersResponse = {
           storage: 'disabled',
           reason: filters.reason || 'News storage is not available.',
           filters: {
@@ -1555,7 +1637,7 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
         return;
       }
 
-      const response: NewsFiltersResponse = {
+      const response: NewsApiFiltersResponse = {
         storage: 'postgres',
         reason: undefined,
         filters: {
@@ -1579,6 +1661,101 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
           {
             error: 'internal_error',
             message: 'Failed to read filter options.'
+          } satisfies ApiError,
+          500
+        ),
+        rateLimitDecision
+      );
+    }
+    return;
+  }
+
+  if (path === '/api/dashboard/summary') {
+    try {
+      const windowDays = parseIntParam(url.searchParams.get('window_days'), 31, 1, 90);
+      const latestHours = parseIntParam(url.searchParams.get('latest_hours'), 24, 1, 720);
+      const previewLimit = parseIntParam(url.searchParams.get('preview_limit'), 8, 1, 20);
+      const topCountriesLimit = parseIntParam(url.searchParams.get('top_countries_limit'), 6, 1, 20);
+      const maxFutureHours = parseIntParam(url.searchParams.get('max_future_hours'), 6, 1, 168);
+      const cacheKey = JSON.stringify({
+        windowDays,
+        latestHours,
+        previewLimit,
+        topCountriesLimit,
+        maxFutureHours
+      });
+      const now = Date.now();
+
+      if (
+        dashboardSummaryCache
+        && dashboardSummaryCache.cacheKey === cacheKey
+        && now - dashboardSummaryCache.timestamp < dashboardSummaryCacheTtlMs
+      ) {
+        sendJsonResponse(req, res, jsonResponse(dashboardSummaryCache.payload, 200), rateLimitDecision);
+        return;
+      }
+
+      const summary = await readNewsDashboardSummary({
+        windowDays,
+        latestHours,
+        previewLimit,
+        topCountriesLimit,
+        maxFutureHours
+      });
+
+      if (summary.storage === 'disabled') {
+        const errorPayload: ApiError = {
+          error: 'storage_unavailable',
+          message: summary.reason || 'News storage is not available.'
+        };
+        sendJsonResponse(req, res, jsonResponse(errorPayload, 503), rateLimitDecision);
+        return;
+      }
+
+      const response: NewsApiDashboardSummaryResponse = {
+        storage: summary.storage,
+        generatedAt: summary.generatedAt,
+        windowDays: summary.windowDays,
+        latestHours: summary.latestHours,
+        latestDate: summary.latestDate,
+        previewDate: summary.previewDate,
+        totals: {
+          rowsWindow: summary.totals.rowsWindow,
+          inserted24h: summary.totals.inserted24h,
+          published24h: summary.totals.published24h,
+          checkedSources24h: summary.totals.checkedSources24h
+        },
+        sectionTotals: summary.sectionTotals,
+        preview: {
+          articleCount: summary.preview.articleCount,
+          topCountries: summary.preview.topCountries
+            .filter((item): item is { country: string; count: number } => Boolean(item.country))
+            .map((item) => ({
+              country: item.country,
+              countryCode: null,
+              count: item.count
+            })),
+          headlines: summary.preview.headlines.map((item) => ({
+            ...item,
+            countryCode: null
+          }))
+        }
+      };
+      dashboardSummaryCache = {
+        cacheKey,
+        payload: response,
+        timestamp: now
+      };
+      sendJsonResponse(req, res, jsonResponse(response, 200), rateLimitDecision);
+    } catch (error) {
+      console.error('[api-news] dashboard summary request failed', error);
+      sendJsonResponse(
+        req,
+        res,
+        jsonResponse(
+          {
+            error: 'internal_error',
+            message: 'Failed to read dashboard summary.'
           } satisfies ApiError,
           500
         ),
@@ -1634,6 +1811,7 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
       const maxUpdatedAt = parseDateParam(url.searchParams.get('max_updatedAt') ||
         url.searchParams.get('max_updated_at') ||
         url.searchParams.get('updated_to'));
+      const q = parseTextParam(url.searchParams.get('q'), 120);
       const hours = parseIntParam(url.searchParams.get('hours'), 48, 1, 720);
 
       if (minCreatedAt && maxCreatedAt && new Date(minCreatedAt).getTime() > new Date(maxCreatedAt).getTime()) {
@@ -1689,6 +1867,7 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
         countries,
         sections,
         languages,
+        q,
         limit,
         offset,
         publicationFrom: from,
@@ -1723,6 +1902,7 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
           maxCreatedAt,
           minUpdatedAt,
           maxUpdatedAt,
+          q,
           from,
           to,
           sources: sourceNames,

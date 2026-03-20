@@ -2,6 +2,7 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { lookup } from 'node:dns/promises';
 import { isIP } from 'node:net';
 import { resolve } from 'node:path';
+import { isKnownNonArticleUrl } from '../lib/article-url-filters';
 import { parseRssOrAtomWithStats, parseSitemapWithStats } from '../lib/parsers';
 import { normalizeArticleTitle, normalizeHtmlText } from '../lib/html-entities';
 import { runWithConcurrency } from '../lib/concurrency';
@@ -1316,6 +1317,9 @@ async function toNewsItem(
   method: 'rss' | 'sitemap',
   onMissingPublishedAtCandidate?: MissingPublishedAtCollector
 ): Promise<NewsItem | null> {
+  if (isKnownNonArticleUrl(outlet.name, row.link || '')) {
+    return null;
+  }
   const title = normalizeArticleTitle(row.title || '', row.link || '');
   const description = normalizeHtmlText(row.description || '');
   const rawPublishedAt = (row.publishedAt || '').trim();
