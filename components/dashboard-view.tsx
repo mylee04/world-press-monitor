@@ -54,7 +54,9 @@ function renderSectionLabel(section: string): string {
 
 export function DashboardView() {
   const manifestState = useManifest();
-  const latestShardState = useShard(manifestState.data?.shards.byDate || null);
+  const previewShardPath =
+    manifestState.data?.shards.featuredByDate || manifestState.data?.shards.byDate || null;
+  const latestShardState = useShard(previewShardPath);
 
   const latestArticles = latestShardState.data?.articles || [];
   const countryRollup = countBy(latestArticles, (article) => `${article.countryCode}|${article.country}`)
@@ -81,9 +83,20 @@ export function DashboardView() {
     count: manifest.sectionTotals[section] || 0,
   }));
   const cadence = manifest.cadence;
+  const exportStats = manifest.exportStats;
+  const previewDate = manifest.featuredDate || manifest.latestDate || null;
+  const usingFallbackPreviewDate = Boolean(previewDate && manifest.latestDate && previewDate !== manifest.latestDate);
   const cadenceLabel = cadence
     ? `${cadence.frequency} snapshot, scheduled around :${String(cadence.scheduledMinute).padStart(2, '0')} ${cadence.timezone}`
     : 'Snapshot export cadence not published in manifest yet.';
+  const exportCaption = exportStats
+    ? exportStats.rowLimitHit
+      ? `${exportStats.rawRowsInWindow.toLocaleString()} raw rows in ${exportStats.windowDays}d window before the ${exportStats.maxRows.toLocaleString()}-row cap`
+      : `${exportStats.rawRowsInWindow.toLocaleString()} raw rows in ${exportStats.windowDays}d window`
+    : null;
+  const latest24hCaption = exportStats
+    ? `${exportStats.rawLatest24hInserted.toLocaleString()} raw inserted rows before filtering`
+    : 'createdAt rows in latest-24h.csv';
 
   return (
     <div className="page-stack">
@@ -112,10 +125,12 @@ export function DashboardView() {
         <article className="metric-card">
           <span>Articles in export</span>
           <strong>{manifest.totals.articles.toLocaleString()}</strong>
+          {exportCaption ? <small>{exportCaption}</small> : null}
         </article>
         <article className="metric-card">
           <span>Latest 24h CSV rows</span>
           <strong>{manifest.totals.latest24h.toLocaleString()}</strong>
+          <small>{latest24hCaption}</small>
         </article>
         <article className="metric-card">
           <span>Tracked sources</span>
@@ -131,9 +146,14 @@ export function DashboardView() {
       <section className="grid-two">
         <article className="panel">
           <div className="section-head">
-            <h2>Top countries in latest date shard</h2>
-            <span>{manifest.latestDate || 'No data'}</span>
+            <h2>Top countries in current date shard</h2>
+            <span>{previewDate ? `${previewDate} · ${latestArticles.length.toLocaleString()} rows` : 'No data'}</span>
           </div>
+          {usingFallbackPreviewDate ? (
+            <div className="muted">
+              Latest UTC shard {manifest.latestDate} is still thin, so the dashboard previews {previewDate}.
+            </div>
+          ) : null}
           <div className="stat-list">
             {countryRollup.length > 0 ? (
               countryRollup.map((item) => (
@@ -176,7 +196,7 @@ export function DashboardView() {
       <section className="panel">
         <div className="section-head">
           <h2>Recent headlines</h2>
-          <span>{latestArticles.length > 0 ? 'Latest shard preview' : 'Waiting for export'}</span>
+          <span>{latestArticles.length > 0 ? `Date-shard preview · ${previewDate || '-'}` : 'Waiting for export'}</span>
         </div>
         <div className="headline-list">
           {latestArticles.slice(0, 8).map((article: PublicNewsArticle) => (

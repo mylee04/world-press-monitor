@@ -74,15 +74,16 @@ export function ExplorerView() {
   const [source, setSource] = useState('');
   const [query, setQuery] = useState('');
   const deferredQuery = useDeferredValue(query.trim().toLowerCase());
+  const defaultDate = manifest?.featuredDate || manifest?.latestDate || '';
 
   useEffect(() => {
-    if (!manifest?.latestDate) return;
+    if (!defaultDate) return;
     if (!date) {
       startTransition(() => {
-        setDate(manifest.latestDate || '');
+        setDate(defaultDate);
       });
     }
-  }, [date, manifest]);
+  }, [date, defaultDate]);
 
   useEffect(() => {
     if (!manifest || !countryCode) return;

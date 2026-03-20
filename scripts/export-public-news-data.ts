@@ -69,6 +69,19 @@ type HealthRow = {
   final_url: string | null;
 };
 
+type ExportStatsRow = {
+  raw_rows_in_window: string;
+  raw_latest_24h_inserted: string;
+  raw_latest_24h_published: string;
+};
+
+type ExportStats = {
+  rawRowsInWindow: number;
+  rawLatest24hInserted: number;
+  rawLatest24hPublished: number;
+  rowLimitHit: boolean;
+};
+
 type CountryDirectory = {
   countryCodeByName: Map<string, string>;
   countryNameByCode: Map<string, string>;
@@ -128,15 +141,16 @@ async function main(): Promise<void> {
   const pool = new Pool({ connectionString: DATABASE_URL });
 
   try {
+    const exportStats = await readExportStats(pool);
     const articles = await readArticles(pool, countryDirectory);
     const health = await readLatestHealth(pool);
     const sources = buildSourcesFile(atlas, health, countryDirectory);
 
     resetOutputDir(OUTPUT_DIR);
-    writeDataFiles(articles, sources, countryDirectory);
+    writeDataFiles(articles, sources, countryDirectory, exportStats);
 
     console.log(
-      `[export-public-news-data] exported ${articles.length} articles, ${sources.sources.length} sources to ${OUTPUT_DIR}`
+      `[export-public-news-data] exported ${articles.length} articles, ${sources.sources.length} sources from ${exportStats.rawRowsInWindow} raw rows to ${OUTPUT_DIR}`
     );
   } finally {
     await pool.end();
@@ -181,6 +195,32 @@ function buildCountryDirectory(atlas: Atlas): CountryDirectory {
   countryNameByCode.set(FALLBACK_COUNTRY_CODE, 'Global');
 
   return { countryCodeByName, countryNameByCode };
+}
+
+async function readExportStats(pool: Pool): Promise<ExportStats> {
+  const result = await pool.query<ExportStatsRow>(
+    `
+    select
+      count(*)::text as raw_rows_in_window,
+      count(*) filter (where created_at >= now() - ($2::int * interval '1 hour'))::text as raw_latest_24h_inserted,
+      count(*) filter (where publication_datetime >= now() - ($2::int * interval '1 hour'))::text as raw_latest_24h_published
+    from news_articles
+    where publication_datetime >= now() - ($1::int * interval '1 day')
+    `,
+    [EXPORT_DAYS, LATEST_HOURS]
+  );
+
+  const row = result.rows[0];
+  const rawRowsInWindow = Number.parseInt(row?.raw_rows_in_window || '0', 10);
+  const rawLatest24hInserted = Number.parseInt(row?.raw_latest_24h_inserted || '0', 10);
+  const rawLatest24hPublished = Number.parseInt(row?.raw_latest_24h_published || '0', 10);
+
+  return {
+    rawRowsInWindow,
+    rawLatest24hInserted,
+    rawLatest24hPublished,
+    rowLimitHit: rawRowsInWindow > MAX_ROWS,
+  };
 }
 
 async function readArticles(pool: Pool, directory: CountryDirectory): Promise<PublicNewsArticle[]> {
@@ -921,11 +961,14 @@ function resetOutputDir(path: string): void {
 function writeDataFiles(
   articles: PublicNewsArticle[],
   sources: PublicSourcesFile,
-  directory: CountryDirectory
+  directory: CountryDirectory,
+  exportStats: ExportStats
 ): void {
   const generatedAt = new Date().toISOString();
   const availableDates = getAvailableDates(articles);
   const latestDate = availableDates[0] || null;
+  const currentUtcDate = new Date().toISOString().slice(0, 10);
+  const featuredDate = availableDates.find((date) => date <= currentUtcDate) || latestDate;
   const latest24hInsertedArticles = filterLatestCreatedHours(articles, LATEST_HOURS);
   const latest24hPublishedArticles = filterLatestPublicationHours(articles, LATEST_HOURS);
   const sectionTotals = countSections(articles);
@@ -1002,6 +1045,7 @@ function writeDataFiles(
       timezone: PUBLIC_EXPORT_TIMEZONE,
     },
     latestDate,
+    featuredDate,
     countries: countryCodes,
     countryNames,
     countryMonths,
@@ -1021,11 +1065,21 @@ function writeDataFiles(
     shards: {
       byDate: latestDate ? `/data/by-date/${latestDate}.json` : null,
       byCountryMonth: byCountryMonthPaths[0] || null,
+      featuredByDate: featuredDate ? `/data/by-date/${featuredDate}.json` : null,
     },
     totals: {
       articles: articles.length,
       latest24h: latest24hInsertedArticles.length,
       sources: sources.sources.length,
+    },
+    exportStats: {
+      windowDays: EXPORT_DAYS,
+      latestHours: LATEST_HOURS,
+      maxRows: MAX_ROWS,
+      rawRowsInWindow: exportStats.rawRowsInWindow,
+      rawLatest24hInserted: exportStats.rawLatest24hInserted,
+      rawLatest24hPublished: exportStats.rawLatest24hPublished,
+      rowLimitHit: exportStats.rowLimitHit,
     },
     sectionTotals,
   };

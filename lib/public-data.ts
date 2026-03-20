@@ -62,6 +62,7 @@ export interface PublicDataManifest {
     timezone: string;
   };
   latestDate: string | null;
+  featuredDate?: string | null;
   countries: string[];
   countryNames: Record<string, string>;
   countryMonths: Record<string, string[]>;
@@ -75,11 +76,21 @@ export interface PublicDataManifest {
   shards: {
     byDate: string | null;
     byCountryMonth: string | null;
+    featuredByDate?: string | null;
   };
   totals: {
     articles: number;
     latest24h: number;
     sources: number;
+  };
+  exportStats?: {
+    windowDays: number;
+    latestHours: number;
+    maxRows: number;
+    rawRowsInWindow: number;
+    rawLatest24hInserted: number;
+    rawLatest24hPublished: number;
+    rowLimitHit: boolean;
   };
   sectionTotals: Record<NewsSection, number>;
 }
