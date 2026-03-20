@@ -8815,12 +8815,68 @@
           "url": "https://www.ensonhaber.com/rss/ensonhaber.xml"
         },
         {
+          "name": "Ensonhaber - Google News Sitemap",
+          "sitemapUrl": "https://www.ensonhaber.com/sitemaps/google-news.xml",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
+        },
+        {
           "name": "T24 (Independent Digital Media)",
           "url": "https://t24.com.tr/rss"
         },
         {
+          "name": "T24 - Sitemap Index",
+          "sitemapUrl": "https://t24.com.tr/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Webtekno (Tech/IT)",
           "url": "https://www.webtekno.com/rss.xml"
+        },
+        {
+          "name": "Mynet - Google News Sitemap",
+          "sitemapUrl": "https://www.mynet.com/sitemaps/news/GoogleNews.xml",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TRT Haber - Sitemap Index",
+          "sitemapUrl": "https://www.trthaber.com/sitemaps/news.xml",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TRT Haber - News Sitemap",
+          "sitemapUrl": "https://www.trthaber.com/sitemap_haber.xml",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TRT Haber - March 2026 Sitemap",
+          "sitemapUrl": "https://www.trthaber.com/sitemaps/news-2026-03.xml",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Haber Global - News Sitemap",
+          "sitemapUrl": "https://haberglobal.com/sitemap/news.xml",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Haber Global - Google News Sitemap",
+          "sitemapUrl": "https://haberglobal.com/sitemap/sitemap_google_news.xml",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
         },
         {
           "name": "Ahaber - News Sitemap",
@@ -9875,6 +9931,27 @@
         {
           "name": "SE.pl - News Sitemap",
           "sitemapUrl": "https://www.se.pl/sitemap/sm-xKLf-AG26-AXQn/"
+        },
+        {
+          "name": "PolsatNews - Sitemap 0",
+          "sitemapUrl": "https://www.polsatnews.pl/sitemap0.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "PolsatNews - Sitemap 1",
+          "sitemapUrl": "https://www.polsatnews.pl/sitemap1.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "SE.pl - March 2026 Sitemap",
+          "sitemapUrl": "https://www.se.pl/sitemap/sm-USNi-K83w-jzEn/2026/03/",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
         }
       ]
     },
@@ -11025,6 +11102,22 @@
           "row": 134
         },
         {
+          "name": "Thairath - News Daily Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.thairath.co.th/sitemap-news-daily.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Thairath - March 2026 Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.thairath.co.th/sitemap-monthly-2026-03.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Nation TV - Sitemap Index",
           "url": null,
           "sitemapUrl": "https://www.nationtv.tv/sitemap_index.xml",
@@ -11032,6 +11125,22 @@
           "checkedDate": "03/16/2026",
           "valid": "valid",
           "row": 135
+        },
+        {
+          "name": "Nation TV - Latest Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.nationtv.tv/sitemap/latest",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Nation TV - March 2026 Sitemap",
+          "url": null,
+          "sitemapUrl": "https://resource.nationtv.tv/sitemap/xml/2026/sitemap_2026_03.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
         },
         {
           "name": "Nation Thailand - Sitemap Index",
@@ -11061,6 +11170,22 @@
           "row": 138
         },
         {
+          "name": "Bangkok Biz News - Latest Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.bangkokbiznews.com/sitemap/latest",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Bangkok Biz News - March 2026 Sitemap",
+          "url": null,
+          "sitemapUrl": "https://image.bangkokbiznews.com/sitemap/xml/2026/sitemap_2026_03.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
           "name": "PPTVHD36 - Sitemap Index",
           "url": null,
           "sitemapUrl": "https://www.pptvhd36.com/sitemap.xml",
@@ -11068,6 +11193,14 @@
           "checkedDate": "03/16/2026",
           "valid": "valid",
           "row": 139
+        },
+        {
+          "name": "Daily News - Article Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.dailynews.co.th/article-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
         }
       ]
     },
@@ -12827,6 +12960,34 @@
           "valid": "needs verification",
           "row": 80,
           "sitemapUrl": "https://www.chilevision.cl/_files/sitemaps/sitemap_news.xml"
+        },
+        {
+          "name": "Emol - Espectáculos Sitemap 2026",
+          "sitemapUrl": "http://www.emol.com/sitemap/xml/sitemap5_2026.xml",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Emol - Crónica Sitemap 2026",
+          "sitemapUrl": "http://www.emol.com/sitemap/xml/sitemap6_2026.xml",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Emol - Tecnología Sitemap 2026",
+          "sitemapUrl": "http://www.emol.com/sitemap/xml/sitemap7_2026.xml",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Emol - Autos Sitemap 2026",
+          "sitemapUrl": "http://www.emol.com/sitemap/xml/sitemap11_2026.xml",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
         }
       ]
     },
@@ -17018,6 +17179,55 @@
         {
           "name": "Mononews - Sitemap",
           "sitemapUrl": "https://www.mononews.gr/sitemap.xml"
+        },
+        {
+          "name": "News247 - News Sitemap",
+          "sitemapUrl": "https://www.news247.gr/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Zougla - News Sitemap",
+          "sitemapUrl": "https://www.zougla.gr/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CNN Greece - News Sitemap",
+          "sitemapUrl": "https://www.cnn.gr/sitemap-news",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Documento - News Sitemap",
+          "sitemapUrl": "https://www.documentonews.gr/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Ta Nea - News Sitemap",
+          "sitemapUrl": "https://www.tanea.gr/wp-content/uploads/json/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Gazzetta - News Sitemap",
+          "sitemapUrl": "https://www.gazzetta.gr/news.xml",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Newsbomb - Google News Sitemap",
+          "sitemapUrl": "https://www.newsbomb.gr/google-news",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
         }
       ]
     },
@@ -17048,6 +17258,13 @@
           "sitemapUrl": "https://adevarul.ro/_r/google_news_sitemap.xml"
         },
         {
+          "name": "Adevărul - Sitemap Index",
+          "sitemapUrl": "https://adevarul.ro/sitemap/index",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
           "name": "G4Media",
           "url": "https://www.g4media.ro/feed"
         },
@@ -17066,6 +17283,20 @@
         {
           "name": "Antena3",
           "sitemapUrl": "https://www.antena3.ro/sitemap-news.xml"
+        },
+        {
+          "name": "Stiripesurse - Sitemap Index",
+          "sitemapUrl": "https://www.stiripesurse.ro/sitemap-v2/sitemap-index.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Stiripesurse - Google News Sitemap",
+          "sitemapUrl": "https://www.stiripesurse.ro/sitemap-google-news/sitemap_google_news.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
         },
         {
           "name": "Libertatea",
@@ -17089,6 +17320,104 @@
         {
           "name": "Gandul",
           "sitemapUrl": "https://www.gandul.ro/sitemaps/news.xml"
+        },
+        {
+          "name": "RomaniaTV - WP Sitemap Index",
+          "sitemapUrl": "https://www.romaniatv.net/wp-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "EVZ - March 2026 Sitemap",
+          "sitemapUrl": "https://evz.ro/sitemaps/posts-2026-03.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "EVZ - Google News Sitemap",
+          "sitemapUrl": "https://evz.ro/sitemaps/google-news.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Capital - March 2026 Sitemap",
+          "sitemapUrl": "https://www.capital.ro/sitemaps/posts-2026-03.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Capital - Google News Sitemap",
+          "sitemapUrl": "https://www.capital.ro/sitemaps/google-news.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Observator News - Google News Sitemap",
+          "sitemapUrl": "https://observatornews.ro/sitemap-news.php",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Fanatik - Google News Sitemap",
+          "sitemapUrl": "https://www.fanatik.ro/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "ZF - Sitemap",
+          "sitemapUrl": "https://www.zf.ro/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Stirile Kanal D - News RSS",
+          "sitemapUrl": "https://www.stirilekanald.ro/news-rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "GSP - Google News Sitemap",
+          "sitemapUrl": "https://www.gsp.ro/google-news.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "ProSport - News Sitemap",
+          "sitemapUrl": "https://www.prosport.ro/sitemaps/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Click - Google News Sitemap",
+          "sitemapUrl": "https://click.ro/_r/google_news_sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Spynews - Google News Sitemap",
+          "sitemapUrl": "https://spynews.ro/sitemap-news.php",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "B1TV - News Sitemap",
+          "sitemapUrl": "https://www.b1tv.ro/maps/news.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
         }
       ]
     },
@@ -17133,6 +17462,13 @@
           "url": "https://tsn.ua/rss/full.rss"
         },
         {
+          "name": "TSN - Google News UK",
+          "sitemapUrl": "https://tsn.ua/sitemap/google_news_uk.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
           "name": "RBC Ukraine - News Sitemap",
           "sitemapUrl": "https://www.rbc.ua/static/sitemap/news.xml"
         },
@@ -17163,6 +17499,34 @@
         {
           "name": "Obozrevatel - News Last 24h",
           "sitemapUrl": "https://www.obozrevatel.com/ukr/sitemap/news-last-24hours.xml"
+        },
+        {
+          "name": "24tv.ua - News 202603",
+          "sitemapUrl": "https://24tv.ua/resources/xml/subdomain_sitemaps/24/sitemap-simple-news-202603.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Censor.net - News 202603",
+          "sitemapUrl": "https://assets.censor.net/sitemap/censor.net/sitemap_uk_news_202603.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "LB.ua - News Sitemap",
+          "sitemapUrl": "https://lb.ua/sitemap_news.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Gazeta.ua - Fresh Sitemap",
+          "sitemapUrl": "https://gazeta.ua/sitemaps/uk/sitemap_fresh.xml.gz",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
         }
       ]
     },
@@ -17332,8 +17696,78 @@
           "valid": "valid"
         },
         {
+          "name": "NOVA - Bulgaria",
+          "sitemapUrl": "https://nova.bg/sitemap/category_news/2/%D0%91%D1%8A%D0%BB%D0%B3%D0%B0%D1%80%D0%B8%D1%8F/",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "NOVA - World",
+          "sitemapUrl": "https://nova.bg/sitemap/category_news/5/%D0%A1%D0%B2%D0%B5%D1%82%D1%8A%D1%82/",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "NOVA - Crime",
+          "sitemapUrl": "https://nova.bg/sitemap/category_news/7/%D0%9A%D1%80%D0%B8%D0%BC%D0%B8/",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Blitz - Google News Sitemap",
+          "sitemapUrl": "https://blitz.bg/sitemap/google-news.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
           "name": "SEGA - Google News Sitemap",
           "sitemapUrl": "https://www.segabg.com/google-news.xml"
+        },
+        {
+          "name": "Vesti - Sitemap Index",
+          "sitemapUrl": "https://www.vesti.bg/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Fakti - Google News Sitemap",
+          "sitemapUrl": "https://fakti.bg/sitemapNews.xml",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Fakti - Sitemap Index",
+          "sitemapUrl": "https://fakti.bg/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Vesti - Latest News Sitemap",
+          "sitemapUrl": "https://www.vesti.bg/sitemap/latest_news",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Vesti - Bulgaria Sitemap",
+          "sitemapUrl": "https://www.vesti.bg/sitemap/category/bulgaria",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Vesti - World Sitemap",
+          "sitemapUrl": "https://www.vesti.bg/sitemap/category/sviat",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
         }
       ]
     },
@@ -17380,6 +17814,27 @@
         {
           "name": "N1 Hrvatska",
           "sitemapUrl": "https://n1info.hr/sitemap/sitemap_news_1.xml"
+        },
+        {
+          "name": "Jutarnji list - March 2026 Sitemap",
+          "sitemapUrl": "https://www.jutarnji.hr/sitemap-jutarnji-2026-03.xml.gz",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Net.hr - News Sitemap",
+          "sitemapUrl": "https://net.hr/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "RTL Hrvatska - Latest Pages",
+          "sitemapUrl": "https://www.rtl.hr/sitemaps/sites/30012/pages/0",
+          "status": "NEW",
+          "checkedDate": "03/19/2026",
+          "valid": "valid"
         }
       ]
     },
@@ -17433,6 +17888,41 @@
         {
           "name": "Kurir",
           "sitemapUrl": "https://www.kurir.rs/sitemaps-v2/news.xml"
+        },
+        {
+          "name": "Nova.rs - News Sitemap",
+          "sitemapUrl": "https://nova.rs/sitemap/sitemap_news_1.xml",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Informer - News Sitemap",
+          "sitemapUrl": "https://informer.rs/sitemap/news.xml",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Mondo - News Sitemap",
+          "sitemapUrl": "https://mondo.rs/sitemaps/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Republika - News Sitemap",
+          "sitemapUrl": "https://republika.rs/sitemap/news.xml",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Alo - Sitemap Index",
+          "sitemapUrl": "https://www.alo.rs/sitemap/sitemapindex.xml",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
         }
       ]
     },
@@ -17490,6 +17980,27 @@
         {
           "name": "Diena",
           "sitemapUrl": "https://diena.lt/sitemap.xml"
+        },
+        {
+          "name": "TV3 Lithuania - Sitemap Index",
+          "sitemapUrl": "https://www.tv3.lt/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Kauno Diena - Sitemap Index",
+          "sitemapUrl": "https://kauno.diena.lt/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TV3 Lithuania - Week 2026-12 Sitemap",
+          "sitemapUrl": "https://www.tv3.lt/sitemap_tv3.lt_2026_12.xml",
+          "status": "NEW",
+          "checkedDate": "03/20/2026",
+          "valid": "valid"
         }
       ]
     },

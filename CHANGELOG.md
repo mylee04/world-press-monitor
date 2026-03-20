@@ -6,6 +6,266 @@
 
 ## Unreleased
 
+### [8458ad3] Clarify capped export metrics and shard preview
+- Commit: 8458ad399cf144ca59a244d631695fee0d7448ac
+- Date: 2026-03-20 08:58:27 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	components/dashboard-view.tsx
+    - M	components/explorer-view.tsx
+    - M	lib/public-data.ts
+    - M	scripts/export-public-news-data.ts
+  - Git stat:
+  - components/dashboard-view.tsx      | 28 +++++++++++++++---
+  -  components/explorer-view.tsx       |  7 +++--
+  -  lib/public-data.ts                 | 11 +++++++
+  -  scripts/export-public-news-data.ts | 60 ++++++++++++++++++++++++++++++++++++--
+  -  4 files changed, 96 insertions(+), 10 deletions(-)
+
+### [712a6f8] Expand atlas coverage and add keyword filtering to public feeds
+- Commit: 712a6f895b2b737ee50fba958ffe7a17e626f746
+- Date: 2026-03-19 16:34:13 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	CHANGELOG.md
+    - M	README.md
+    - M	audits/readme_network_precheck_latest.json
+    - M	data/rss-atlas.json
+    - M	data/rss-catalog.csv
+    - M	data/rss-catalog.opml
+    - M	deploy/api-news-integration-guide.md
+    - M	lib/ingestion-store.ts
+    - M	lib/public-data.ts
+    - M	public/data/country-inserted-24h-AR.json
+    - M	public/data/country-inserted-24h-AT.json
+    - M	public/data/country-inserted-24h-AU.json
+    - M	public/data/country-inserted-24h-BE.json
+    - M	public/data/country-inserted-24h-BG.json
+    - M	public/data/country-inserted-24h-BR.json
+    - M	public/data/country-inserted-24h-CA.json
+    - M	public/data/country-inserted-24h-CH.json
+    - M	public/data/country-inserted-24h-CL.json
+    - M	public/data/country-inserted-24h-CN.json
+    - M	public/data/country-inserted-24h-CZ.json
+    - M	public/data/country-inserted-24h-DE.json
+    - M	public/data/country-inserted-24h-DK.json
+    - M	public/data/country-inserted-24h-DO.json
+    - M	public/data/country-inserted-24h-EE.json
+    - M	public/data/country-inserted-24h-ES.json
+    - M	public/data/country-inserted-24h-FI.json
+    - M	public/data/country-inserted-24h-FR.json
+    - M	public/data/country-inserted-24h-GB.json
+    - M	public/data/country-inserted-24h-GLOBAL.json
+    - M	public/data/country-inserted-24h-GR.json
+    - M	public/data/country-inserted-24h-HR.json
+    - M	public/data/country-inserted-24h-HU.json
+    - M	public/data/country-inserted-24h-ID.json
+    - M	public/data/country-inserted-24h-IE.json
+    - M	public/data/country-inserted-24h-IN.json
+    - M	public/data/country-inserted-24h-IR.json
+    - M	public/data/country-inserted-24h-IS.json
+    - M	public/data/country-inserted-24h-IT.json
+    - M	public/data/country-inserted-24h-JP.json
+    - M	public/data/country-inserted-24h-KR.json
+    - M	public/data/country-inserted-24h-LT.json
+    - M	public/data/country-inserted-24h-LU.json
+    - M	public/data/country-inserted-24h-LV.json
+    - M	public/data/country-inserted-24h-MX.json
+    - M	public/data/country-inserted-24h-NL.json
+    - M	public/data/country-inserted-24h-NO.json
+    - M	public/data/country-inserted-24h-PL.json
+    - M	public/data/country-inserted-24h-PT.json
+    - M	public/data/country-inserted-24h-RO.json
+    - M	public/data/country-inserted-24h-RS.json
+    - M	public/data/country-inserted-24h-RU.json
+    - M	public/data/country-inserted-24h-SA.json
+    - M	public/data/country-inserted-24h-SE.json
+    - M	public/data/country-inserted-24h-SI.json
+    - M	public/data/country-inserted-24h-SK.json
+    - M	public/data/country-inserted-24h-TH.json
+    - M	public/data/country-inserted-24h-TR.json
+    - M	public/data/country-inserted-24h-TW.json
+    - M	public/data/country-inserted-24h-UA.json
+    - M	public/data/country-inserted-24h-US.json
+    - M	public/data/country-inserted-24h-UY.json
+    - M	public/data/country-published-24h-AR.json
+    - M	public/data/country-published-24h-AT.json
+    - M	public/data/country-published-24h-AU.json
+    - M	public/data/country-published-24h-BE.json
+    - M	public/data/country-published-24h-BG.json
+    - M	public/data/country-published-24h-BR.json
+    - M	public/data/country-published-24h-CA.json
+    - M	public/data/country-published-24h-CH.json
+    - M	public/data/country-published-24h-CL.json
+    - M	public/data/country-published-24h-CN.json
+    - M	public/data/country-published-24h-CZ.json
+    - M	public/data/country-published-24h-DE.json
+    - M	public/data/country-published-24h-DK.json
+    - M	public/data/country-published-24h-DO.json
+    - M	public/data/country-published-24h-EE.json
+    - M	public/data/country-published-24h-ES.json
+    - M	public/data/country-published-24h-FI.json
+    - M	public/data/country-published-24h-FR.json
+    - M	public/data/country-published-24h-GB.json
+    - M	public/data/country-published-24h-GLOBAL.json
+    - M	public/data/country-published-24h-GR.json
+    - M	public/data/country-published-24h-HR.json
+    - M	public/data/country-published-24h-HU.json
+    - M	public/data/country-published-24h-ID.json
+    - M	public/data/country-published-24h-IE.json
+    - M	public/data/country-published-24h-IN.json
+    - M	public/data/country-published-24h-IR.json
+    - M	public/data/country-published-24h-IS.json
+    - M	public/data/country-published-24h-IT.json
+    - M	public/data/country-published-24h-JP.json
+    - M	public/data/country-published-24h-KR.json
+    - M	public/data/country-published-24h-LT.json
+    - M	public/data/country-published-24h-LU.json
+    - M	public/data/country-published-24h-LV.json
+    - M	public/data/country-published-24h-MX.json
+    - M	public/data/country-published-24h-NL.json
+    - M	public/data/country-published-24h-NO.json
+    - M	public/data/country-published-24h-PL.json
+    - M	public/data/country-published-24h-PT.json
+    - M	public/data/country-published-24h-RO.json
+    - M	public/data/country-published-24h-RS.json
+    - M	public/data/country-published-24h-RU.json
+    - M	public/data/country-published-24h-SA.json
+    - M	public/data/country-published-24h-SE.json
+    - M	public/data/country-published-24h-SI.json
+    - M	public/data/country-published-24h-SK.json
+    - M	public/data/country-published-24h-TH.json
+    - M	public/data/country-published-24h-TR.json
+    - M	public/data/country-published-24h-TW.json
+    - M	public/data/country-published-24h-UA.json
+    - M	public/data/country-published-24h-US.json
+    - M	public/data/country-published-24h-UY.json
+    - M	public/data/integration-manifest.json
+    - M	public/data/manifest.json
+    - M	public/data/sources.json
+    - M	scripts/export-public-news-data.ts
+    - M	scripts/run-static-deploy-local.sh
+  - Git stat:
+  - CHANGELOG.md                                  |     38 +
+  -  README.md                                     |     91 +-
+  -  audits/readme_network_precheck_latest.json    |     16 +-
+  -  data/rss-atlas.json                           |   1391 +-
+  -  data/rss-catalog.csv                          |   3573 +-
+  -  data/rss-catalog.opml                         |    128 +-
+  -  deploy/api-news-integration-guide.md          |      1 +
+  -  lib/ingestion-store.ts                        |      6 +-
+  -  lib/public-data.ts                            |      7 +-
+  -  public/data/country-inserted-24h-AR.json      |  83482 +++++-----
+  -  public/data/country-inserted-24h-AT.json      |  18405 ++-
+  -  public/data/country-inserted-24h-AU.json      |  23277 +--
+  -  public/data/country-inserted-24h-BE.json      | 144313 +++++++++--------
+  -  public/data/country-inserted-24h-BG.json      |  19094 ++-
+  -  public/data/country-inserted-24h-BR.json      |  52554 +++---
+  -  public/data/country-inserted-24h-CA.json      |  51430 ++++--
+  -  public/data/country-inserted-24h-CH.json      |  36352 +++--
+  -  public/data/country-inserted-24h-CL.json      |  29719 ++--
+  -  public/data/country-inserted-24h-CN.json      |  52163 +++---
+  -  public/data/country-inserted-24h-CZ.json      |  26734 ++--
+  -  public/data/country-inserted-24h-DE.json      |  51423 +++---
+  -  public/data/country-inserted-24h-DK.json      |  18887 +--
+  -  public/data/country-inserted-24h-DO.json      |  25034 +--
+  -  public/data/country-inserted-24h-EE.json      |   4598 +-
+  -  public/data/country-inserted-24h-ES.json      |  57176 ++++---
+  -  public/data/country-inserted-24h-FI.json      |  25400 +--
+  -  public/data/country-inserted-24h-FR.json      |  49999 +++---
+  -  public/data/country-inserted-24h-GB.json      | 119472 +++++++-------
+  -  public/data/country-inserted-24h-GLOBAL.json  |  22240 ++-
+  -  public/data/country-inserted-24h-GR.json      |  43906 +++--
+  -  public/data/country-inserted-24h-HR.json      |  16764 +-
+  -  public/data/country-inserted-24h-HU.json      |   3630 +-
+  -  public/data/country-inserted-24h-ID.json      |  17798 +--
+  -  public/data/country-inserted-24h-IE.json      |  27812 +---
+  -  public/data/country-inserted-24h-IN.json      |  58285 ++++---
+  -  public/data/country-inserted-24h-IR.json      |  51398 +++---
+  -  public/data/country-inserted-24h-IS.json      |    867 +-
+  -  public/data/country-inserted-24h-IT.json      |  53515 +++----
+  -  public/data/country-inserted-24h-JP.json      | 127067 +++++----------
+  -  public/data/country-inserted-24h-KR.json      |  96991 +++++------
+  -  public/data/country-inserted-24h-LT.json      |  26324 ++-
+  -  public/data/country-inserted-24h-LU.json      |      4 +-
+  -  public/data/country-inserted-24h-LV.json      |   8451 +-
+  -  public/data/country-inserted-24h-MX.json      |  44875 +++---
+  -  public/data/country-inserted-24h-NL.json      |  22881 +--
+  -  public/data/country-inserted-24h-NO.json      |  24000 ++-
+  -  public/data/country-inserted-24h-PL.json      |  31979 ++--
+  -  public/data/country-inserted-24h-PT.json      |  35524 ++---
+  -  public/data/country-inserted-24h-RO.json      |  26722 +---
+  -  public/data/country-inserted-24h-RS.json      |  23617 +--
+  -  public/data/country-inserted-24h-RU.json      |  90085 ++++++-----
+  -  public/data/country-inserted-24h-SA.json      |   7931 +-
+  -  public/data/country-inserted-24h-SE.json      |  22895 +--
+  -  public/data/country-inserted-24h-SI.json      |   1113 +-
+  -  public/data/country-inserted-24h-SK.json      |   5850 +-
+  -  public/data/country-inserted-24h-TH.json      |  24511 +--
+  -  public/data/country-inserted-24h-TR.json      |  59131 +++++--
+  -  public/data/country-inserted-24h-TW.json      | 194553 ++++++++---------------
+  -  public/data/country-inserted-24h-UA.json      |  27625 ++--
+  -  public/data/country-inserted-24h-US.json      |  60529 ++++---
+  -  public/data/country-inserted-24h-UY.json      |  11691 +-
+  -  public/data/country-published-24h-AR.json     |  80731 +++++-----
+  -  public/data/country-published-24h-AT.json     |  18483 ++-
+  -  public/data/country-published-24h-AU.json     |  21417 ++-
+  -  public/data/country-published-24h-BE.json     | 136131 +++++++++-------
+  -  public/data/country-published-24h-BG.json     |  18742 ++-
+  -  public/data/country-published-24h-BR.json     |  49362 +++---
+  -  public/data/country-published-24h-CA.json     |  40331 +++--
+  -  public/data/country-published-24h-CH.json     |  37664 +++--
+  -  public/data/country-published-24h-CL.json     |  26719 ++--
+  -  public/data/country-published-24h-CN.json     |  81492 +++-------
+  -  public/data/country-published-24h-CZ.json     |  18304 ++-
+  -  public/data/country-published-24h-DE.json     |  54342 ++++---
+  -  public/data/country-published-24h-DK.json     |  15625 +-
+  -  public/data/country-published-24h-DO.json     |  23225 +--
+  -  public/data/country-published-24h-EE.json     |   4145 +-
+  -  public/data/country-published-24h-ES.json     |  46411 +++---
+  -  public/data/country-published-24h-FI.json     |  16567 +-
+  -  public/data/country-published-24h-FR.json     |  42937 ++---
+  -  public/data/country-published-24h-GB.json     | 113811 +++++++------
+  -  public/data/country-published-24h-GLOBAL.json |  20602 +--
+  -  public/data/country-published-24h-GR.json     |  42973 +++--
+  -  public/data/country-published-24h-HR.json     |  14559 +-
+  -  public/data/country-published-24h-HU.json     |   4545 +-
+  -  public/data/country-published-24h-ID.json     |  17158 +-
+  -  public/data/country-published-24h-IE.json     |  15465 +-
+  -  public/data/country-published-24h-IN.json     |  57248 ++++---
+  -  public/data/country-published-24h-IR.json     |  50288 ++++--
+  -  public/data/country-published-24h-IS.json     |    830 +-
+  -  public/data/country-published-24h-IT.json     |  49041 +++---
+  -  public/data/country-published-24h-JP.json     |  82626 +++++-----
+  -  public/data/country-published-24h-KR.json     |  97850 ++++++------
+  -  public/data/country-published-24h-LT.json     |  17999 ++-
+  -  public/data/country-published-24h-LU.json     |      4 +-
+  -  public/data/country-published-24h-LV.json     |   6409 +-
+  -  public/data/country-published-24h-MX.json     |  36841 +++--
+  -  public/data/country-published-24h-NL.json     |  21444 ++-
+  -  public/data/country-published-24h-NO.json     |  18741 ++-
+  -  public/data/country-published-24h-PL.json     |  25615 +--
+  -  public/data/country-published-24h-PT.json     |  32062 ++--
+  -  public/data/country-published-24h-RO.json     |  16916 +-
+  -  public/data/country-published-24h-RS.json     |  14151 +-
+  -  public/data/country-published-24h-RU.json     |  86889 +++++-----
+  -  public/data/country-published-24h-SA.json     |   7211 +-
+  -  public/data/country-published-24h-SE.json     |  22394 +--
+  -  public/data/country-published-24h-SI.json     |   1082 +-
+  -  public/data/country-published-24h-SK.json     |   6041 +-
+  -  public/data/country-published-24h-TH.json     |  17573 +-
+  -  public/data/country-published-24h-TR.json     |  49379 ++++--
+  -  public/data/country-published-24h-TW.json     | 124076 ++++++++-------
+  -  public/data/country-published-24h-UA.json     |  27318 ++--
+  -  public/data/country-published-24h-US.json     |  59263 ++++---
+  -  public/data/country-published-24h-UY.json     |  11840 +-
+  -  public/data/integration-manifest.json         |      8 +-
+  -  public/data/manifest.json                     |     46 +-
+  -  public/data/sources.json                      |   9764 +-
+  -  scripts/export-public-news-data.ts            |     20 +
+  -  scripts/run-static-deploy-local.sh            |     29 +
+  -  118 files changed, 2163250 insertions(+), 1914816 deletions(-)
+
 ### [cbc7f97] Filter low-signal country titles
 - Commit: cbc7f978c0231324f2e2d3fec6f553d767a20d12
 - Date: 2026-03-18 11:16:57 -0500
