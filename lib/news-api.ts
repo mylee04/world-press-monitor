@@ -73,6 +73,10 @@ export interface NewsApiDashboardSummaryResponse {
     checkedSources24h: number;
   };
   sectionTotals: Record<string, number>;
+  recentDates: Array<{
+    date: string;
+    count: number;
+  }>;
   preview: {
     articleCount: number;
     topCountries: NewsApiCountryCount[];

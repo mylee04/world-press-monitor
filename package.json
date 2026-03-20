@@ -13,10 +13,10 @@
   },
   "private": true,
   "scripts": {
-    "vercel-build": "next build",
+    "vercel-build": "bun scripts/postprocess-customer-build.ts",
     "typecheck": "tsc --noEmit",
     "web:dev": "next dev",
-    "web:build": "next build",
+    "web:build": "bun scripts/postprocess-customer-build.ts",
     "browser:cdp:smoke": "bun scripts/browser-cdp-smoke.ts",
     "verify:readme-rss": "bun scripts/verify-readme-rss.ts",
     "verify:readme-rss:precheck": "bun scripts/verify-readme-rss.ts --precheck",

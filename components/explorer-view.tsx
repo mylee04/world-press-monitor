@@ -1,16 +1,15 @@
 'use client';
 
 import { startTransition, useDeferredValue, useEffect, useMemo, useState } from 'react';
+import { CustomerAccessPanel } from '@/components/customer-access-panel';
+import { useCustomerAccess } from '@/components/customer-access-provider';
 import { useNewsApiFilters, useNewsApiNews } from '@/components/news-api-hooks';
-import { useManifest, useShard } from '@/components/public-data-hooks';
 import { buildNewsApiUrl, hasNewsApiBaseUrl, type NewsApiItem } from '@/lib/news-api';
-import type { PublicNewsArticle } from '@/lib/public-data';
 
 type ExplorerCsvRow = {
   id: string;
   source: string;
   country: string;
-  countryCode: string;
   language: string;
   section: string;
   title: string;
@@ -26,7 +25,6 @@ function buildClientCsv(rows: ExplorerCsvRow[]): string {
     'id',
     'source',
     'country',
-    'countryCode',
     'language',
     'section',
     'title',
@@ -69,14 +67,11 @@ function renderSectionLabel(section: string | null | undefined): string {
   return section;
 }
 
-function toExplorerCsvRow(article: PublicNewsArticle | NewsApiItem): ExplorerCsvRow {
-  const countryCode = 'countryCode' in article ? article.countryCode || '' : '';
-  const updatedAt = 'updatedAt' in article ? article.updatedAt || '' : '';
+function toExplorerCsvRow(article: NewsApiItem): ExplorerCsvRow {
   return {
     id: article.id,
     source: article.source || '',
     country: article.country || '',
-    countryCode,
     language: article.language || '',
     section: article.section || '',
     title: article.title || '',
@@ -84,7 +79,7 @@ function toExplorerCsvRow(article: PublicNewsArticle | NewsApiItem): ExplorerCsv
     url: article.url || '',
     publicationDatetime: article.publicationDatetime || '',
     createdAt: article.createdAt || '',
-    updatedAt,
+    updatedAt: article.updatedAt || '',
   };
 }
 
@@ -95,13 +90,13 @@ function toDayRange(date: string): { from: string; to: string } {
   };
 }
 
-function ApiExplorerView() {
+export function ExplorerView() {
+  const { hasToken, isReady } = useCustomerAccess();
   const filtersState = useNewsApiFilters();
   const filters = filtersState.data?.storage === 'postgres' ? filtersState.data.filters : null;
   const [country, setCountry] = useState('');
   const [date, setDate] = useState('');
   const [section, setSection] = useState('');
-  const [source, setSource] = useState('');
   const [query, setQuery] = useState('');
   const [offset, setOffset] = useState(0);
   const deferredQuery = useDeferredValue(query.trim());
@@ -112,12 +107,11 @@ function ApiExplorerView() {
     startTransition(() => {
       setOffset(0);
     });
-  }, [country, date, section, source, deferredQuery]);
+  }, [country, date, section, deferredQuery]);
 
   const newsState = useNewsApiNews({
     countries: country ? [country] : undefined,
     sections: section ? [section] : undefined,
-    sources: source ? [source] : undefined,
     q: deferredQuery || null,
     limit,
     offset,
@@ -134,14 +128,43 @@ function ApiExplorerView() {
   const currentCsvRows = rows.map(toExplorerCsvRow);
   const apiUrl = buildNewsApiUrl('/api/news');
 
+  if (!hasNewsApiBaseUrl()) {
+    return (
+      <CustomerAccessPanel
+        title="Portal API Not Configured"
+        description="This customer portal requires a configured API base URL before filtered article browsing can work."
+      />
+    );
+  }
+
+  if (!isReady) {
+    return <div className="panel muted">Checking customer access...</div>;
+  }
+
+  if (!hasToken) {
+    return (
+      <CustomerAccessPanel description="Customers need a valid token before the Explorer will load category, country, or date-filtered article results." />
+    );
+  }
+
+  if (filtersState.error) {
+    return (
+      <CustomerAccessPanel
+        title="Customer Token Required"
+        description="The Explorer only loads for customers with a valid API token or API key."
+        error={filtersState.error}
+      />
+    );
+  }
+
   return (
     <div className="page-stack">
       <section className="hero-panel compact">
         <div className="eyebrow">Explorer</div>
-        <h1>Query the live news API with server-side filtering.</h1>
+        <h1>Filter live article results by category, country, date, and keyword.</h1>
         <p>
-          Results come from the database-backed API instead of loading giant date shards in the browser.
-          Filtering, search, and pagination now happen on the server.
+          This page no longer loads public JSON shards. Every result comes from the authenticated customer API,
+          with server-side filtering and page-level CSV export only for signed-in customers.
         </p>
       </section>
 
@@ -163,9 +186,9 @@ function ApiExplorerView() {
             <input type="date" value={date} onChange={(event) => setDate(event.target.value)} />
           </label>
           <label>
-            <span>Section</span>
+            <span>Category</span>
             <select value={section} onChange={(event) => setSection(event.target.value)}>
-              <option value="">All sections</option>
+              <option value="">All categories</option>
               {(filters?.sections || []).map((item) => (
                 <option key={item} value={item}>
                   {renderSectionLabel(item)}
@@ -174,20 +197,9 @@ function ApiExplorerView() {
             </select>
           </label>
           <label>
-            <span>Source</span>
-            <select value={source} onChange={(event) => setSource(event.target.value)}>
-              <option value="">All sources</option>
-              {(filters?.sources || []).map((item) => (
-                <option key={item} value={item}>
-                  {item}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label>
             <span>Keyword</span>
             <input
-              placeholder="Search title, snippet, source, country"
+              placeholder="Search title, source, country"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
             />
@@ -201,7 +213,7 @@ function ApiExplorerView() {
           <button
             className="button"
             type="button"
-            onClick={() => triggerCsvDownload(currentCsvRows, `wpm-api-page-${page}.csv`)}
+            onClick={() => triggerCsvDownload(currentCsvRows, `wpm-customer-explorer-page-${page}.csv`)}
             disabled={currentCsvRows.length === 0}
           >
             Download current page CSV
@@ -230,7 +242,6 @@ function ApiExplorerView() {
         </div>
       </section>
 
-      {filtersState.error ? <div className="panel danger">Filter load failed: {filtersState.error}</div> : null}
       {newsState.error ? <div className="panel danger">News query failed: {newsState.error}</div> : null}
 
       <section className="panel">
@@ -242,7 +253,7 @@ function ApiExplorerView() {
           </span>
         </div>
 
-        {filtersState.loading && !filters ? <div className="muted">Loading API filter options...</div> : null}
+        {filtersState.loading && !filters ? <div className="muted">Loading filter options...</div> : null}
         {newsState.loading && !response ? <div className="muted">Loading live API results...</div> : null}
 
         <div className="table-wrap">
@@ -252,7 +263,7 @@ function ApiExplorerView() {
                 <th>Date</th>
                 <th>Country</th>
                 <th>Source</th>
-                <th>Section</th>
+                <th>Category</th>
                 <th>Title</th>
                 <th>Link</th>
               </tr>
@@ -283,224 +294,4 @@ function ApiExplorerView() {
       </section>
     </div>
   );
-}
-
-function StaticExplorerView() {
-  const manifestState = useManifest();
-  const manifest = manifestState.data;
-
-  const [countryCode, setCountryCode] = useState('');
-  const [month, setMonth] = useState('');
-  const [date, setDate] = useState('');
-  const [section, setSection] = useState('');
-  const [source, setSource] = useState('');
-  const [query, setQuery] = useState('');
-  const deferredQuery = useDeferredValue(query.trim().toLowerCase());
-  const defaultDate = manifest?.featuredDate || manifest?.latestDate || '';
-
-  useEffect(() => {
-    if (!defaultDate) return;
-    if (!date) {
-      startTransition(() => {
-        setDate(defaultDate);
-      });
-    }
-  }, [date, defaultDate]);
-
-  useEffect(() => {
-    if (!manifest || !countryCode) return;
-    const months = manifest.countryMonths[countryCode] || [];
-    if (!months.length && month) {
-      startTransition(() => setMonth(''));
-      return;
-    }
-    if (!month || !months.includes(month)) {
-      startTransition(() => {
-        setMonth(months[0] || '');
-      });
-    }
-  }, [countryCode, manifest, month]);
-
-  const shardPath =
-    countryCode && month
-      ? `/data/by-country/${countryCode}/${month}.json`
-      : date
-        ? `/data/by-date/${date}.json`
-        : manifest?.shards.byDate || null;
-
-  const shardState = useShard(shardPath);
-  const shardArticles = shardState.data?.articles || [];
-  const sourceOptions = [...new Set(shardArticles.map((article) => article.source))].sort((a, b) => a.localeCompare(b));
-
-  const filteredArticles = shardArticles.filter((article) => {
-    if (countryCode && article.countryCode !== countryCode) return false;
-    if (date && article.publicationDatetime.slice(0, 10) !== date) return false;
-    if (section && article.section !== section) return false;
-    if (source && article.source !== source) return false;
-    if (!deferredQuery) return true;
-    const haystack = `${article.title} ${article.snippet} ${article.source} ${article.country}`.toLowerCase();
-    return haystack.includes(deferredQuery);
-  });
-
-  const tableRows = filteredArticles.slice(0, 200);
-  const selectedCountryMonths = countryCode && manifest ? manifest.countryMonths[countryCode] || [] : [];
-
-  return (
-    <div className="page-stack">
-      <section className="hero-panel compact">
-        <div className="eyebrow">Explorer</div>
-        <h1>Filter public shards without touching the database.</h1>
-        <p>
-          Date shards serve the latest overview. Country-month shards back deeper country views.
-          CSV export happens in the browser against the current filtered result set.
-        </p>
-      </section>
-
-      <section className="panel">
-        <div className="control-grid">
-          <label>
-            <span>Country</span>
-            <select value={countryCode} onChange={(event) => setCountryCode(event.target.value)}>
-              <option value="">All countries</option>
-              {(manifest?.countries || []).map((code) => (
-                <option key={code} value={code}>
-                  {manifest?.countryNames[code] || code}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label>
-            <span>Date</span>
-            <select value={date} onChange={(event) => setDate(event.target.value)}>
-              <option value="">All dates in shard</option>
-              {(manifest?.availableDates || []).map((item) => (
-                <option key={item} value={item}>
-                  {item}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label>
-            <span>Country month</span>
-            <select value={month} onChange={(event) => setMonth(event.target.value)} disabled={!countryCode}>
-              <option value="">{countryCode ? 'Choose month' : 'Select country first'}</option>
-              {selectedCountryMonths.map((item) => (
-                <option key={item} value={item}>
-                  {item}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label>
-            <span>Section</span>
-            <select value={section} onChange={(event) => setSection(event.target.value)}>
-              <option value="">All sections</option>
-              {(manifest?.sections || []).map((item) => (
-                <option key={item} value={item}>
-                  {renderSectionLabel(item)}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label>
-            <span>Source</span>
-            <select value={source} onChange={(event) => setSource(event.target.value)}>
-              <option value="">All sources</option>
-              {sourceOptions.map((item) => (
-                <option key={item} value={item}>
-                  {item}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label>
-            <span>Keyword</span>
-            <input
-              placeholder="Search title or snippet"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-            />
-          </label>
-        </div>
-
-        <div className="toolbar">
-          <div className="muted">
-            Loaded shard: <code>{shardPath || '-'}</code>
-          </div>
-          <button
-            className="button"
-            type="button"
-            onClick={() =>
-              triggerCsvDownload(
-                filteredArticles.map(toExplorerCsvRow),
-                `wpm-export-${countryCode || 'all'}-${date || month || 'all'}.csv`
-              )
-            }
-            disabled={filteredArticles.length === 0}
-          >
-            Download current CSV
-          </button>
-        </div>
-      </section>
-
-      {manifestState.error ? <div className="panel danger">Manifest load failed: {manifestState.error}</div> : null}
-      {shardState.error ? <div className="panel danger">Shard load failed: {shardState.error}</div> : null}
-
-      <section className="panel">
-        <div className="section-head">
-          <h2>Results</h2>
-          <span>
-            {filteredArticles.length.toLocaleString()} rows
-            {filteredArticles.length > tableRows.length ? ` · showing first ${tableRows.length.toLocaleString()}` : ''}
-          </span>
-        </div>
-
-        {manifestState.loading && !manifest ? <div className="muted">Loading manifest...</div> : null}
-        {shardState.loading && !shardState.data ? <div className="muted">Loading shard...</div> : null}
-
-        <div className="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Country</th>
-                <th>Source</th>
-                <th>Section</th>
-                <th>Title</th>
-                <th>Link</th>
-              </tr>
-            </thead>
-            <tbody>
-              {tableRows.map((article) => (
-                <tr key={article.id}>
-                  <td>{article.publicationDatetime.replace('T', ' ').slice(0, 16)}</td>
-                  <td>
-                    {article.country}
-                    <small>{article.countryCode}</small>
-                  </td>
-                  <td>{article.source}</td>
-                  <td>{renderSectionLabel(article.section)}</td>
-                  <td>{article.title}</td>
-                  <td>
-                    <a href={article.url} rel="noreferrer" target="_blank">
-                      Open
-                    </a>
-                  </td>
-                </tr>
-              ))}
-              {!manifestState.loading && !shardState.loading && tableRows.length === 0 ? (
-                <tr>
-                  <td colSpan={6}>No rows match the current filter set.</td>
-                </tr>
-              ) : null}
-            </tbody>
-          </table>
-        </div>
-      </section>
-    </div>
-  );
-}
-
-export function ExplorerView() {
-  return hasNewsApiBaseUrl() ? <ApiExplorerView /> : <StaticExplorerView />;
 }

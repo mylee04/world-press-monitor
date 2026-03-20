@@ -1726,6 +1726,7 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
           checkedSources24h: summary.totals.checkedSources24h
         },
         sectionTotals: summary.sectionTotals,
+        recentDates: summary.recentDates,
         preview: {
           articleCount: summary.preview.articleCount,
           topCountries: summary.preview.topCountries

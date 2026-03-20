@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { useCustomerAccess } from '@/components/customer-access-provider';
 import type {
   NewsApiDashboardSummaryResponse,
   NewsApiFiltersResponse,
@@ -31,17 +32,25 @@ type NewsApiQuery = {
   maxUpdatedAt?: string | null;
 };
 
-function useRemoteJsonResource<T>(url: string | null): JsonState<T> {
+function buildAuthorizationHeader(token: string): Record<string, string> {
+  const normalized = token.trim();
+  if (!normalized) return {};
+  return {
+    Authorization: /^bearer\s+/i.test(normalized) ? normalized : `Bearer ${normalized}`,
+  };
+}
+
+function useRemoteJsonResource<T>(url: string | null, token: string | null): JsonState<T> {
   const [state, setState] = useState<JsonState<T>>({
     data: null,
-    loading: Boolean(url),
+    loading: Boolean(url && token),
     error: null,
   });
 
   useEffect(() => {
     let cancelled = false;
 
-    if (!url) {
+    if (!url || !token) {
       setState({ data: null, loading: false, error: null });
       return () => {
         cancelled = true;
@@ -54,7 +63,13 @@ function useRemoteJsonResource<T>(url: string | null): JsonState<T> {
       error: null,
     }));
 
-    fetch(url, { cache: 'no-store' })
+    fetch(url, {
+      cache: 'no-store',
+      headers: {
+        Accept: 'application/json',
+        ...buildAuthorizationHeader(token),
+      },
+    })
       .then(async (response) => {
         if (!response.ok) {
           throw new Error(`${response.status} ${response.statusText}`);
@@ -79,7 +94,7 @@ function useRemoteJsonResource<T>(url: string | null): JsonState<T> {
     return () => {
       cancelled = true;
     };
-  }, [url]);
+  }, [url, token]);
 
   return state;
 }
@@ -120,17 +135,20 @@ function buildNewsApiQueryUrl(path: string, query?: NewsApiQuery): string | null
 }
 
 export function useNewsApiFilters(): JsonState<NewsApiFiltersResponse> {
+  const { token, isReady } = useCustomerAccess();
   const url = useMemo(() => buildNewsApiUrl('/api/filters'), []);
-  return useRemoteJsonResource<NewsApiFiltersResponse>(url);
+  return useRemoteJsonResource<NewsApiFiltersResponse>(isReady ? url : null, isReady ? token : null);
 }
 
 export function useNewsApiDashboardSummary(): JsonState<NewsApiDashboardSummaryResponse> {
+  const { token, isReady } = useCustomerAccess();
   const url = useMemo(() => buildNewsApiUrl('/api/dashboard/summary'), []);
-  return useRemoteJsonResource<NewsApiDashboardSummaryResponse>(url);
+  return useRemoteJsonResource<NewsApiDashboardSummaryResponse>(isReady ? url : null, isReady ? token : null);
 }
 
 export function useNewsApiNews(query: NewsApiQuery): JsonState<NewsApiResponse> {
+  const { token, isReady } = useCustomerAccess();
   const queryKey = JSON.stringify(query);
   const url = useMemo(() => buildNewsApiQueryUrl('/api/news', query), [queryKey]);
-  return useRemoteJsonResource<NewsApiResponse>(url);
+  return useRemoteJsonResource<NewsApiResponse>(isReady ? url : null, isReady ? token : null);
 }

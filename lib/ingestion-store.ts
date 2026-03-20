@@ -817,6 +817,7 @@ export interface NewsApiDashboardSummaryResult {
     checkedSources24h: number;
   };
   sectionTotals: Record<string, number>;
+  recentDates: Array<{ date: string; count: number }>;
   preview: {
     articleCount: number;
     topCountries: Array<{ country: string | null; count: number }>;
@@ -863,6 +864,11 @@ type NewsApiSectionTotalRow = {
 type NewsApiDateRow = {
   preview_date: string | null;
   latest_date: string | null;
+};
+
+type NewsApiDateCountRow = {
+  date: string;
+  count: string;
 };
 
 type NewsApiCountryCountRow = {
@@ -1078,6 +1084,7 @@ export async function readNewsDashboardSummary(options?: {
         checkedSources24h: 0,
       },
       sectionTotals: {},
+      recentDates: [],
       preview: {
         articleCount: 0,
         topCountries: [],
@@ -1094,7 +1101,7 @@ export async function readNewsDashboardSummary(options?: {
   const topCountriesLimit = Math.max(1, Math.min(20, Math.floor(options?.topCountriesLimit || 6)));
   const maxFutureHours = Math.max(1, Math.min(168, Math.floor(options?.maxFutureHours || 6)));
 
-  const [totalsResult, checkedSourcesResult, sectionTotalsResult, dateResult] = await Promise.all([
+  const [totalsResult, checkedSourcesResult, sectionTotalsResult, dateResult, recentDatesResult] = await Promise.all([
     db.query<NewsApiSummaryTotalsRow>(
       `
       select
@@ -1151,6 +1158,27 @@ export async function readNewsDashboardSummary(options?: {
           max(date)
         )::text as preview_date
       from dates
+      `,
+      [windowDays, maxFutureHours]
+    ),
+    db.query<NewsApiDateCountRow>(
+      `
+      with windowed as (
+        select
+          case
+            when publication_datetime > now() + ($2::int * interval '1 hour') then created_at
+            else publication_datetime
+          end as normalized_publication_datetime
+        from news_articles
+        where publication_datetime >= now() - ($1::int * interval '1 day')
+      )
+      select
+        (normalized_publication_datetime at time zone 'UTC')::date::text as date,
+        count(*)::text as count
+      from windowed
+      group by 1
+      order by 1 desc
+      limit 7
       `,
       [windowDays, maxFutureHours]
     ),
@@ -1299,6 +1327,10 @@ export async function readNewsDashboardSummary(options?: {
         return acc;
       }, [])
     ),
+    recentDates: recentDatesResult.rows.map((row) => ({
+      date: row.date,
+      count: Number(row.count) || 0,
+    })),
     preview: {
       articleCount: previewArticleCount,
       topCountries: previewTopCountries,

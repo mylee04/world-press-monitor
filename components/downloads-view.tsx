@@ -1,105 +1,45 @@
 'use client';
 
-import { useManifest } from '@/components/public-data-hooks';
-import { withBasePath } from '@/lib/site-paths';
+import { CustomerAccessPanel } from '@/components/customer-access-panel';
+import { useCustomerAccess } from '@/components/customer-access-provider';
 
 export function DownloadsView() {
-  const manifestState = useManifest();
-  const manifest = manifestState.data;
+  const { hasToken, isReady } = useCustomerAccess();
 
-  if (manifestState.loading && !manifest) {
-    return <div className="panel muted">Loading manifest...</div>;
+  if (!isReady) {
+    return <div className="panel muted">Checking customer access...</div>;
   }
 
-  if (manifestState.error) {
-    return <div className="panel danger">Manifest load failed: {manifestState.error}</div>;
-  }
-
-  if (!manifest) {
-    return <div className="panel muted">No static export available yet.</div>;
+  if (!hasToken) {
+    return (
+      <CustomerAccessPanel
+        title="Downloads Locked"
+        description="Anonymous users do not receive news article downloads. Customers can export only the current Explorer result page after providing a valid token."
+      />
+    );
   }
 
   return (
     <div className="page-stack">
       <section className="hero-panel compact">
         <div className="eyebrow">Downloads</div>
-        <h1>Static file entry points</h1>
+        <h1>Bulk public exports are disabled in the customer portal.</h1>
         <p>
-          `latest-24h.csv` is prebuilt. JSON shards stay addressable directly so the web app can
-          fetch only the slices it needs, and third-party consumers can poll the flat integration
-          feeds.
+          This portal no longer publishes static article files, manifest indexes, or hourly CSV snapshots.
+          Customers can export the current filtered Explorer page instead of downloading the old public shard set.
         </p>
       </section>
 
-      <section className="grid-two">
-        <article className="panel">
-          <div className="section-head">
-            <h2>CSV downloads</h2>
-            <span>
-              {manifest.downloads.byDate.length + manifest.downloads.byCountryMonth.length + (manifest.downloads.latest24h ? 1 : 0)} files
-            </span>
-          </div>
-          <div className="link-list">
-            {manifest.downloads.latest24h ? (
-              <a href={withBasePath(manifest.downloads.latest24h) || '#'}>latest-24h.csv</a>
-            ) : null}
-            {manifest.downloads.byDate.map((path) => (
-              <a href={withBasePath(path) || '#'} key={path}>
-                {path.replace('/data/downloads/', '')}
-              </a>
-            ))}
-            {manifest.downloads.byCountryMonth.map((path) => (
-              <a href={withBasePath(path) || '#'} key={path}>
-                {path.replace('/data/downloads/', '')}
-              </a>
-            ))}
-            {!manifest.downloads.latest24h && manifest.downloads.byDate.length === 0 && manifest.downloads.byCountryMonth.length === 0 ? (
-              <div className="muted">No prebuilt CSV files published in this export.</div>
-            ) : null}
-          </div>
-        </article>
-
-        <article className="panel">
-          <div className="section-head">
-            <h2>Integration feeds</h2>
-            <span>Stable flat JSON</span>
-          </div>
-          <div className="link-list">
-            <a href={withBasePath('/data/integration-manifest.json') || '#'}>integration-manifest.json</a>
-            <a href={withBasePath('/data/country-published-24h-AR.json') || '#'}>country-published-24h-AR.json</a>
-            <a href={withBasePath('/data/country-inserted-24h-AR.json') || '#'}>country-inserted-24h-AR.json</a>
-          </div>
-          <p className="muted">
-            Poll `integration-manifest.json`, compare `generatedAt`, then fetch only the countries
-            you need. `published` uses `publicationDatetime`; `inserted` uses `createdAt`.
-          </p>
-        </article>
-
-        <article className="panel">
-          <div className="section-head">
-            <h2>JSON shards</h2>
-            <span>{manifest.availableDates.length + Object.keys(manifest.countryMonths).length} groups</span>
-          </div>
-          <div className="link-list">
-            <a href={withBasePath('/data/manifest.json') || '#'}>manifest.json</a>
-            <a href={withBasePath('/data/sources.json') || '#'}>sources.json</a>
-            {manifest.availableDates.map((date) => (
-              <a href={withBasePath(`/data/by-date/${date}.json`) || '#'} key={date}>
-                by-date/{date}.json
-              </a>
-            ))}
-            {Object.entries(manifest.countryMonths).flatMap(([countryCode, months]) =>
-              months.map((month) => (
-                <a
-                  href={withBasePath(`/data/by-country/${countryCode}/${month}.json`) || '#'}
-                  key={`${countryCode}-${month}`}
-                >
-                  by-country/{countryCode}/{month}.json
-                </a>
-              ))
-            )}
-          </div>
-        </article>
+      <section className="panel">
+        <div className="section-head">
+          <h2>What changed</h2>
+          <span>Customer-only mode</span>
+        </div>
+        <div className="link-list">
+          <div>No public `manifest.json` download links are exposed from this portal build.</div>
+          <div>No public `latest-24h.csv` or shard JSON files are exposed from this portal build.</div>
+          <div>Use the Explorer page to export only the current page of authenticated search results.</div>
+        </div>
       </section>
     </div>
   );
