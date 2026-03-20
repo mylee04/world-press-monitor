@@ -15,6 +15,7 @@ WPM_LAUNCHD_DIR="${WPM_LAUNCHD_DIR:-${HOME}/Library/LaunchAgents}"
 LAUNCHD_DOMAIN="gui/$(id -u)"
 
 PLIST_NAMES=(
+  "com.wpm.api-news.plist"
   "com.wpm.ingest-hourly.plist"
   "com.wpm.health-daily.plist"
   "com.wpm.export-deploy.plist"
@@ -45,6 +46,7 @@ sync_runtime_repo() {
     "${PROJECT_ROOT}/" "${WPM_RUNTIME_REPO}/"
 
   chmod +x \
+    "${WPM_RUNTIME_REPO}/scripts/run-api-news.sh" \
     "${WPM_RUNTIME_REPO}/scripts/run-ingest-hourly-local.sh" \
     "${WPM_RUNTIME_REPO}/scripts/run-news-country-discord-report.sh" \
     "${WPM_RUNTIME_REPO}/scripts/run-ingest-ops-hourly.sh" \
