@@ -56,15 +56,9 @@ export function DashboardView() {
   const manifestState = useManifest();
   const previewShardPath =
     manifestState.data?.shards.featuredByDate || manifestState.data?.shards.byDate || null;
-  const latestShardState = useShard(previewShardPath);
+  const shouldLoadPreviewShard = !manifestState.data?.dashboardPreview;
+  const latestShardState = useShard(shouldLoadPreviewShard ? previewShardPath : null);
 
-  const latestArticles = latestShardState.data?.articles || [];
-  const countryRollup = countBy(latestArticles, (article) => `${article.countryCode}|${article.country}`)
-    .slice(0, 6)
-    .map((item) => {
-      const [countryCode, country] = item.key.split('|');
-      return { countryCode, country, count: item.count };
-    });
   if (manifestState.loading && !manifestState.data) {
     return <div className="panel muted">Loading latest manifest...</div>;
   }
@@ -78,6 +72,15 @@ export function DashboardView() {
   }
 
   const manifest = manifestState.data;
+  const preview = manifest.dashboardPreview;
+  const latestArticles = preview?.headlines || latestShardState.data?.articles?.slice(0, 8) || [];
+  const countryRollup = preview?.topCountries || countBy(latestShardState.data?.articles || [], (article) => `${article.countryCode}|${article.country}`)
+    .slice(0, 6)
+    .map((item) => {
+      const [countryCode, country] = item.key.split('|');
+      return { countryCode, country, count: item.count };
+    });
+  const previewArticleCount = preview?.articleCount ?? latestShardState.data?.articles?.length ?? 0;
   const sectionRollup = manifest.sections.map((section) => ({
     key: section,
     count: manifest.sectionTotals[section] || 0,
@@ -123,9 +126,14 @@ export function DashboardView() {
           <small>{renderRelativeTime(manifest.generatedAt)}</small>
         </article>
         <article className="metric-card">
-          <span>Articles in export</span>
+          <span>Rows in 31d window</span>
+          <strong>{exportStats ? exportStats.rawRowsInWindow.toLocaleString() : '-'}</strong>
+          <small>raw publicationDatetime rows in the export window</small>
+        </article>
+        <article className="metric-card">
+          <span>Rows in public export</span>
           <strong>{manifest.totals.articles.toLocaleString()}</strong>
-          {exportCaption ? <small>{exportCaption}</small> : null}
+          <small>{exportCaption || 'filtered rows written to the public snapshot'}</small>
         </article>
         <article className="metric-card">
           <span>Latest 24h CSV rows</span>
@@ -147,7 +155,7 @@ export function DashboardView() {
         <article className="panel">
           <div className="section-head">
             <h2>Top countries in current date shard</h2>
-            <span>{previewDate ? `${previewDate} · ${latestArticles.length.toLocaleString()} rows` : 'No data'}</span>
+            <span>{previewDate ? `${previewDate} · ${previewArticleCount.toLocaleString()} rows` : 'No data'}</span>
           </div>
           {usingFallbackPreviewDate ? (
             <div className="muted">
@@ -199,7 +207,7 @@ export function DashboardView() {
           <span>{latestArticles.length > 0 ? `Date-shard preview · ${previewDate || '-'}` : 'Waiting for export'}</span>
         </div>
         <div className="headline-list">
-          {latestArticles.slice(0, 8).map((article: PublicNewsArticle) => (
+          {latestArticles.map((article: PublicNewsArticle) => (
             <a className="headline-card" key={article.id} href={article.url} rel="noreferrer" target="_blank">
               <small>
                 {article.countryCode} · {article.source} · {renderSectionLabel(article.section)}

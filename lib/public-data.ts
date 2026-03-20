@@ -53,6 +53,19 @@ export interface PublicSourceRecord {
   latestHealth: PublicSourceHealth | null;
 }
 
+export interface PublicDashboardCountryCount {
+  country: string;
+  countryCode: string;
+  count: number;
+}
+
+export interface PublicDashboardPreview {
+  date: string | null;
+  articleCount: number;
+  topCountries: PublicDashboardCountryCount[];
+  headlines: PublicNewsArticle[];
+}
+
 export interface PublicDataManifest {
   generatedAt: string;
   schemaVersion: number;
@@ -92,6 +105,7 @@ export interface PublicDataManifest {
     rawLatest24hPublished: number;
     rowLimitHit: boolean;
   };
+  dashboardPreview?: PublicDashboardPreview;
   sectionTotals: Record<NewsSection, number>;
 }
 

@@ -7,6 +7,7 @@ import {
   PUBLIC_DATA_SECTIONS,
   type PublicCountryFeedFile,
   type PublicCountryMonthShard,
+  type PublicDashboardPreview,
   type PublicDataManifest,
   type PublicDateShard,
   type PublicIntegrationManifest,
@@ -993,6 +994,14 @@ function writeDataFiles(
     }
   }
 
+  const dashboardPreviewArticles = featuredDate ? byDate.get(featuredDate) || [] : [];
+  const dashboardPreview: PublicDashboardPreview = {
+    date: featuredDate,
+    articleCount: dashboardPreviewArticles.length,
+    topCountries: buildCountryRollup(dashboardPreviewArticles, 6),
+    headlines: dashboardPreviewArticles.slice(0, 8),
+  };
+
   const byCountryMonth = groupBy(articles, (article) => `${article.countryCode}|${article.publicationDatetime.slice(0, 7)}`);
   const countryMonths: Record<string, string[]> = {};
   for (const [key, countryMonthArticles] of [...byCountryMonth.entries()].sort((a, b) => b[0].localeCompare(a[0]))) {
@@ -1081,6 +1090,7 @@ function writeDataFiles(
       rawLatest24hPublished: exportStats.rawLatest24hPublished,
       rowLimitHit: exportStats.rowLimitHit,
     },
+    dashboardPreview,
     sectionTotals,
   };
 
@@ -1110,6 +1120,25 @@ function countSections(articles: PublicNewsArticle[]): Record<NewsSection, numbe
     totals[article.section] += 1;
   }
   return totals;
+}
+
+function buildCountryRollup(
+  articles: PublicNewsArticle[],
+  limit: number
+): Array<{ country: string; countryCode: string; count: number }> {
+  const counts = new Map<string, number>();
+  for (const article of articles) {
+    const key = `${article.countryCode}|${article.country}`;
+    counts.set(key, (counts.get(key) || 0) + 1);
+  }
+
+  return [...counts.entries()]
+    .map(([key, count]) => {
+      const [countryCode, country] = key.split('|');
+      return { country, countryCode, count };
+    })
+    .sort((a, b) => b.count - a.count || a.countryCode.localeCompare(b.countryCode) || a.country.localeCompare(b.country))
+    .slice(0, limit);
 }
 
 function getAvailableDates(articles: PublicNewsArticle[]): string[] {
