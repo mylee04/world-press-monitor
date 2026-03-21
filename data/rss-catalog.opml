@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Sat, 21 Mar 2026 05:28:20 GMT</dateCreated>
+    <dateCreated>Sat, 21 Mar 2026 13:21:09 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -2116,6 +2116,17 @@
     </outline>
     <outline text="Hungary (HU)" title="Hungary (HU)">
       <outline text="Telex [valid]" title="Telex [valid]" type="rss" xmlUrl="https://telex.hu/rss" htmlUrl="https://telex.hu"/>
+      <outline text="HVG [needs verification]" title="HVG [needs verification]" type="rss" xmlUrl="https://hvg.hu/rss" htmlUrl="https://hvg.hu"/>
+      <outline text="Infostart - 24 óra [needs verification]" title="Infostart - 24 óra [needs verification]" type="rss" xmlUrl="https://infostart.hu/24ora/rss/" htmlUrl="https://infostart.hu"/>
+      <outline text="Infostart - Belföld [needs verification]" title="Infostart - Belföld [needs verification]" type="rss" xmlUrl="https://infostart.hu/belfold/rss/" htmlUrl="https://infostart.hu"/>
+      <outline text="Infostart - Külföld [needs verification]" title="Infostart - Külföld [needs verification]" type="rss" xmlUrl="https://infostart.hu/kulfold/rss/" htmlUrl="https://infostart.hu"/>
+      <outline text="Infostart - Gazdaság [needs verification]" title="Infostart - Gazdaság [needs verification]" type="rss" xmlUrl="https://infostart.hu/gazdasag/rss/" htmlUrl="https://infostart.hu"/>
+      <outline text="Infostart - Sport [needs verification]" title="Infostart - Sport [needs verification]" type="rss" xmlUrl="https://infostart.hu/sport/rss/" htmlUrl="https://infostart.hu"/>
+      <outline text="Infostart - Életmód [needs verification]" title="Infostart - Életmód [needs verification]" type="rss" xmlUrl="https://infostart.hu/eletmod/rss/" htmlUrl="https://infostart.hu"/>
+      <outline text="Infostart - Tudomány [needs verification]" title="Infostart - Tudomány [needs verification]" type="rss" xmlUrl="https://infostart.hu/tudomany/rss/" htmlUrl="https://infostart.hu"/>
+      <outline text="Infostart - Bulvár [needs verification]" title="Infostart - Bulvár [needs verification]" type="rss" xmlUrl="https://infostart.hu/bulvar/rss/" htmlUrl="https://infostart.hu"/>
+      <outline text="Infostart - Bűnügyek [needs verification]" title="Infostart - Bűnügyek [needs verification]" type="rss" xmlUrl="https://infostart.hu/bunugyek/rss/" htmlUrl="https://infostart.hu"/>
+      <outline text="Infostart - Tudósítóink [needs verification]" title="Infostart - Tudósítóink [needs verification]" type="rss" xmlUrl="https://infostart.hu/tudositoink/rss/" htmlUrl="https://infostart.hu"/>
     </outline>
     <outline text="Bulgaria (BG)" title="Bulgaria (BG)">
       <outline text="Mediapool [valid]" title="Mediapool [valid]" type="rss" xmlUrl="https://www.mediapool.bg/rss" htmlUrl="https://www.mediapool.bg"/>

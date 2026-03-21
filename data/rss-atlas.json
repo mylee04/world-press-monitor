@@ -3098,6 +3098,14 @@
         {
           "name": "Le Télégramme - News Sitemap",
           "sitemapUrl": "https://www.letelegramme.fr/sitemaps/sitemap-news.xml"
+        },
+        {
+          "name": "Actu.fr - News Sitemap",
+          "sitemapUrl": "https://actu.fr/static/sitemaps/sitemap-news.xml"
+        },
+        {
+          "name": "L'Équipe - Dynamic News Sitemap",
+          "sitemapUrl": "https://www.lequipe.fr/dynamic-sitemap/sitemap_news.xml"
         }
       ]
     },
@@ -17822,6 +17830,26 @@
         {
           "name": "Topky",
           "url": "https://www.topky.sk/rss/8/TOPKY"
+        },
+        {
+          "name": "Novy Cas - March 2026 Sitemap",
+          "sitemapUrl": "https://www.cas.sk/sitemaps/articles/novycas/2026/3/sitemap-1.xml"
+        },
+        {
+          "name": "Pluska - March 2026 Sitemap",
+          "sitemapUrl": "https://www1.pluska.sk/sitemaps/articles/plus1/2026/3/sitemap-1.xml"
+        },
+        {
+          "name": "Trend - March 2026 Sitemap",
+          "sitemapUrl": "https://www.trend.sk/sitemaps/articles/trend/2026/3/sitemap-1.xml"
+        },
+        {
+          "name": "Refresher Slovakia - News Sitemap",
+          "sitemapUrl": "https://refresher.sk/sitemap/news.xml"
+        },
+        {
+          "name": "Webnoviny - Current Sitemap",
+          "sitemapUrl": "https://sita.sk/scripts/sitemap/current.php"
         }
       ]
     },
@@ -17840,6 +17868,78 @@
         {
           "name": "Telex",
           "url": "https://telex.hu/rss"
+        },
+        {
+          "name": "24.hu - Fresh Sitemap",
+          "sitemapUrl": "https://24.hu/app/uploads/sitemap/24.hu_sitemap_fresh.xml"
+        },
+        {
+          "name": "444.hu - News Sitemap",
+          "sitemapUrl": "https://444.hu/sitemap-news.xml"
+        },
+        {
+          "name": "HVG",
+          "url": "https://hvg.hu/rss"
+        },
+        {
+          "name": "Infostart - 24 óra",
+          "url": "https://infostart.hu/24ora/rss/"
+        },
+        {
+          "name": "Infostart - Belföld",
+          "url": "https://infostart.hu/belfold/rss/"
+        },
+        {
+          "name": "Infostart - Külföld",
+          "url": "https://infostart.hu/kulfold/rss/"
+        },
+        {
+          "name": "Infostart - Gazdaság",
+          "url": "https://infostart.hu/gazdasag/rss/"
+        },
+        {
+          "name": "Infostart - Sport",
+          "url": "https://infostart.hu/sport/rss/"
+        },
+        {
+          "name": "Infostart - Életmód",
+          "url": "https://infostart.hu/eletmod/rss/"
+        },
+        {
+          "name": "Infostart - Tudomány",
+          "url": "https://infostart.hu/tudomany/rss/"
+        },
+        {
+          "name": "Infostart - Bulvár",
+          "url": "https://infostart.hu/bulvar/rss/"
+        },
+        {
+          "name": "Infostart - Bűnügyek",
+          "url": "https://infostart.hu/bunugyek/rss/"
+        },
+        {
+          "name": "Infostart - Tudósítóink",
+          "url": "https://infostart.hu/tudositoink/rss/"
+        },
+        {
+          "name": "Pénzcentrum - Sitemap Index",
+          "sitemapUrl": "https://www.penzcentrum.hu/sitemap/sitemapindex.xml"
+        },
+        {
+          "name": "Mandiner - Sitemap Index",
+          "sitemapUrl": "https://mandiner.hu/sitemapindex.xml"
+        },
+        {
+          "name": "Blikk - News Sitemap",
+          "sitemapUrl": "https://www.blikk.hu/sitemap-news.xml"
+        },
+        {
+          "name": "Magyar Nemzet - Sitemap Index",
+          "sitemapUrl": "https://magyarnemzet.hu/sitemapindex.xml"
+        },
+        {
+          "name": "Népszava - Sitemap",
+          "sitemapUrl": "https://nepszava.hu/sitemap.xml"
         }
       ]
     },
