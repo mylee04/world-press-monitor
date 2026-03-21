@@ -7127,6 +7127,182 @@
         {
           "name": "Republika Ekonomi (Business Economy)",
           "url": "https://republika.co.id/rss/ekonomi"
+        },
+        {
+          "name": "Kompas - Sitemap Index",
+          "sitemapUrl": "https://www.kompas.com/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/21/2026",
+          "valid": "needs verification",
+          "row": 61
+        },
+        {
+          "name": "Detik - Sitemap Index",
+          "sitemapUrl": "https://www.detik.com/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/21/2026",
+          "valid": "needs verification",
+          "row": 62
+        },
+        {
+          "name": "Liputan6 - Sitemap Index",
+          "sitemapUrl": "https://www.liputan6.com/sitemap-news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/21/2026",
+          "valid": "needs verification",
+          "row": 63
+        },
+        {
+          "name": "Viva - Sitemap Index",
+          "sitemapUrl": "https://www.viva.co.id/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/21/2026",
+          "valid": "needs verification",
+          "row": 64
+        },
+        {
+          "name": "Merdeka - Sitemap Index",
+          "sitemapUrl": "https://www.merdeka.com/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/21/2026",
+          "valid": "needs verification",
+          "row": 65
+        },
+        {
+          "name": "CNBC Indonesia - Sitemap Index",
+          "sitemapUrl": "https://www.cnbcindonesia.com/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/21/2026",
+          "valid": "needs verification",
+          "row": 66
+        },
+        {
+          "name": "Bisnis.com - News Sitemap",
+          "sitemapUrl": "https://www.bisnis.com/sitemap-news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/21/2026",
+          "valid": "needs verification",
+          "row": 67
+        },
+        {
+          "name": "Kontan - Sitemap Index",
+          "sitemapUrl": "https://www.kontan.co.id/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/21/2026",
+          "valid": "needs verification",
+          "row": 68
+        },
+        {
+          "name": "Sindo News - Sitemap Index",
+          "sitemapUrl": "https://www.sindonews.com/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/21/2026",
+          "valid": "needs verification",
+          "row": 69
+        },
+        {
+          "name": "CNN Indonesia - Nasional Sitemap",
+          "sitemapUrl": "https://www.cnnindonesia.com/nasional/sitemap_news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/21/2026",
+          "valid": "needs verification",
+          "row": 70
+        },
+        {
+          "name": "CNN Indonesia - Internasional Sitemap",
+          "sitemapUrl": "https://www.cnnindonesia.com/internasional/sitemap_news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/21/2026",
+          "valid": "needs verification",
+          "row": 71
+        },
+        {
+          "name": "CNN Indonesia - Ekonomi Sitemap",
+          "sitemapUrl": "https://www.cnnindonesia.com/ekonomi/sitemap_news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/21/2026",
+          "valid": "needs verification",
+          "row": 72
+        },
+        {
+          "name": "CNN Indonesia - Olahraga Sitemap",
+          "sitemapUrl": "https://www.cnnindonesia.com/olahraga/sitemap_news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/21/2026",
+          "valid": "needs verification",
+          "row": 73
+        },
+        {
+          "name": "CNN Indonesia - Teknologi Sitemap",
+          "sitemapUrl": "https://www.cnnindonesia.com/teknologi/sitemap_news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/21/2026",
+          "valid": "needs verification",
+          "row": 74
+        },
+        {
+          "name": "CNN Indonesia - Otomotif Sitemap",
+          "sitemapUrl": "https://www.cnnindonesia.com/otomotif/sitemap_news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/21/2026",
+          "valid": "needs verification",
+          "row": 75
+        },
+        {
+          "name": "CNN Indonesia - Edukasi Sitemap",
+          "sitemapUrl": "https://www.cnnindonesia.com/edukasi/sitemap_news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/21/2026",
+          "valid": "needs verification",
+          "row": 76
+        },
+        {
+          "name": "CNN Indonesia - Hiburan Sitemap",
+          "sitemapUrl": "https://www.cnnindonesia.com/hiburan/sitemap_news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/21/2026",
+          "valid": "needs verification",
+          "row": 77
+        },
+        {
+          "name": "CNN Indonesia - Gaya Hidup Sitemap",
+          "sitemapUrl": "https://www.cnnindonesia.com/gaya-hidup/sitemap_news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/21/2026",
+          "valid": "needs verification",
+          "row": 78
+        },
+        {
+          "name": "MetroTV News - News Sitemap",
+          "sitemapUrl": "https://www.metrotvnews.com/sitemap/sitemap-news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/21/2026",
+          "valid": "needs verification",
+          "row": 79
+        },
+        {
+          "name": "MetroTV News - Nasional Sitemap",
+          "sitemapUrl": "https://www.metrotvnews.com/sitemap/sitemap-nasional.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/21/2026",
+          "valid": "needs verification",
+          "row": 80
+        },
+        {
+          "name": "MetroTV News - Internasional Sitemap",
+          "sitemapUrl": "https://www.metrotvnews.com/sitemap/sitemap-internasional.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/21/2026",
+          "valid": "needs verification",
+          "row": 81
+        },
+        {
+          "name": "MetroTV News - Ekonomi Sitemap",
+          "sitemapUrl": "https://www.metrotvnews.com/sitemap/sitemap-ekonomi.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/21/2026",
+          "valid": "needs verification",
+          "row": 82
         }
       ]
     },
