@@ -4882,6 +4882,62 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 42
+        },
+        {
+          "name": "JoongAng - Latest Articles",
+          "sitemapUrl": "https://www.joongang.co.kr/sitemap/latest-articles",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 43
+        },
+        {
+          "name": "JTBC - Latest Articles",
+          "sitemapUrl": "https://news.jtbc.co.kr/sitemaps/latest-articles",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 44
+        },
+        {
+          "name": "KBS News - Recent Sitemap",
+          "sitemapUrl": "https://news.kbs.co.kr/sitemap/recentNewsList.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 45
+        },
+        {
+          "name": "Yonhap Korea - News Sitemap 3",
+          "sitemapUrl": "https://www.yna.co.kr/news-sitemap3.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 46
+        },
+        {
+          "name": "Yonhap Korea - News Sitemap 4",
+          "sitemapUrl": "https://www.yna.co.kr/news-sitemap4.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 47
+        },
+        {
+          "name": "Yonhap Korea - News Sitemap 5",
+          "sitemapUrl": "https://www.yna.co.kr/news-sitemap5.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 48
+        },
+        {
+          "name": "Yonhap Korea - News Sitemap 6",
+          "sitemapUrl": "https://www.yna.co.kr/news-sitemap6.xml",
+          "status": null,
+          "checkedDate": null,
+          "valid": "needs verification",
+          "row": 49
         }
       ]
     },
