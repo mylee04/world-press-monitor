@@ -2342,6 +2342,38 @@
         {
           "name": "Hindustan Times - News Sitemap",
           "sitemapUrl": "https://www.hindustantimes.com/sitemap/news.xml"
+        },
+        {
+          "name": "ThePrint - Google News Sitemap",
+          "sitemapUrl": "https://theprint.in/googlenews.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/21/2026",
+          "valid": "needs verification",
+          "row": 31
+        },
+        {
+          "name": "Deccan Herald - News Sitemap",
+          "sitemapUrl": "https://www.deccanherald.com/news_sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/21/2026",
+          "valid": "needs verification",
+          "row": 32
+        },
+        {
+          "name": "Livemint - Today Sitemap",
+          "sitemapUrl": "https://www.livemint.com/sitemap/today.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/21/2026",
+          "valid": "needs verification",
+          "row": 33
+        },
+        {
+          "name": "Livemint - RSS News",
+          "url": "https://www.livemint.com/rss/news",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/21/2026",
+          "valid": "needs verification",
+          "row": 34
         }
       ]
     },
