@@ -17,10 +17,14 @@ LAUNCHD_DOMAIN="gui/$(id -u)"
 PLIST_NAMES=(
   "com.wpm.api-news.plist"
   "com.wpm.api-tunnel.plist"
+  "com.wpm.api-runtime-watchdog.plist"
   "com.wpm.ingest-hourly.plist"
   "com.wpm.health-daily.plist"
-  "com.wpm.export-deploy.plist"
 )
+
+if [ "${WPM_POST_INGEST_EXPORT:-1}" != "0" ]; then
+  PLIST_NAMES+=("com.wpm.export-deploy.plist")
+fi
 
 LEGACY_PLIST_NAMES=(
   "com.wpm.news-country-discord.plist"
@@ -47,6 +51,7 @@ sync_runtime_repo() {
     "${PROJECT_ROOT}/" "${WPM_RUNTIME_REPO}/"
 
   chmod +x \
+    "${WPM_RUNTIME_REPO}/scripts/ensure-api-runtime-local.sh" \
     "${WPM_RUNTIME_REPO}/scripts/run-api-news.sh" \
     "${WPM_RUNTIME_REPO}/scripts/run-ingest-hourly-local.sh" \
     "${WPM_RUNTIME_REPO}/scripts/run-news-country-discord-report.sh" \
@@ -58,6 +63,11 @@ sync_runtime_repo() {
     cd "${WPM_RUNTIME_REPO}"
     bun install
   )
+
+  if [ "${WPM_POST_INGEST_EXPORT:-1}" = "0" ]; then
+    launchctl bootout "${LAUNCHD_DOMAIN}/com.wpm.export-deploy" >/dev/null 2>&1 || true
+    rm -f "${WPM_LAUNCHD_DIR}/com.wpm.export-deploy.plist"
+  fi
 }
 
 render_plist() {
