@@ -9210,6 +9210,14 @@
           "enabled": false
         },
         {
+          "name": "Okaz - News Sitemap",
+          "sitemapUrl": "https://www.okaz.com.sa/sitemaps/news_sitemap.xml"
+        },
+        {
+          "name": "Ajel - Sitemap",
+          "sitemapUrl": "https://ajel.sa/sitemap.xml"
+        },
+        {
           "name": "Al Jazirah",
           "url": "https://www.aljazeera.net/rss",
           "status": "⏩ OFFICIAL",
@@ -9378,6 +9386,10 @@
           "enabled": false
         },
         {
+          "name": "Sabq - News Sitemap",
+          "sitemapUrl": "https://sabq.org/sitemap-news.xml"
+        },
+        {
           "name": "Maaal (Saudi Business)",
           "url": "https://www.maaal.com/feed",
           "enabled": false
@@ -9417,6 +9429,10 @@
         {
           "name": "Saudi Gazette",
           "url": "https://saudigazette.com.sa/rssFeed/1"
+        },
+        {
+          "name": "Saudi Gazette - News Sitemap",
+          "sitemapUrl": "https://saudigazette.com.sa/sitemaps/news_sitemap.xml"
         }
       ]
     },
@@ -14119,6 +14135,14 @@
           "sitemapUrl": "https://www.elpais.com.uy/news-sitemap-latest.xml"
         },
         {
+          "name": "El País Uruguay - Content Sitemap",
+          "url": null,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/21/2026",
+          "valid": "valid",
+          "sitemapUrl": "https://www.elpais.com.uy/news-sitemap-content.xml"
+        },
+        {
           "name": "970 Universal",
           "url": "https://970universal.com/feed/",
           "status": "⏩ OFFICIAL",
@@ -14157,6 +14181,14 @@
           "valid": "needs verification"
         },
         {
+          "name": "Canal 10 Uruguay - Sitemap",
+          "url": null,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/21/2026",
+          "valid": "valid",
+          "sitemapUrl": "https://www.canal10.com.uy/sitemap.xml"
+        },
+        {
           "name": "El Popular",
           "url": "https://elpopular.uy/feed/",
           "status": "⏩ OFFICIAL",
@@ -14179,6 +14211,18 @@
           "checkedDate": "03/16/2026",
           "valid": "valid",
           "row": 46
+        },
+        {
+          "name": "Tenfield",
+          "url": "https://www.tenfield.com.uy/feed/"
+        },
+        {
+          "name": "El Bocón",
+          "url": "https://www.elbocon.com.uy/feed/"
+        },
+        {
+          "name": "El Acontecer",
+          "url": "https://elacontecer.com.uy/feed/"
         }
       ]
     },
@@ -17889,10 +17933,12 @@
       "feeds": [
         {
           "name": "Aktuality.sk",
+          "url": "https://www.aktuality.sk/rss/",
           "sitemapUrl": "https://www.aktuality.sk/sitemap-articles-24h.xml"
         },
         {
           "name": "Dennik N",
+          "url": "https://dennikn.sk/feed/",
           "sitemapUrl": "https://dennikn.sk/api/sitemap/root"
         },
         {
@@ -17916,6 +17962,42 @@
           "url": "https://www.ta3.com/rss/top-spravy"
         },
         {
+          "name": "Teraz.sk",
+          "url": "https://www.teraz.sk/rss/vsetky-spravy.rss"
+        },
+        {
+          "name": "Teraz.sk - Slovakia",
+          "url": "https://www.teraz.sk/rss/slovensko.rss"
+        },
+        {
+          "name": "Teraz.sk - Regions",
+          "url": "https://www.teraz.sk/rss/regiony.rss"
+        },
+        {
+          "name": "Teraz.sk - World",
+          "url": "https://www.teraz.sk/rss/zahranicie.rss"
+        },
+        {
+          "name": "Teraz.sk - Economy",
+          "url": "https://www.teraz.sk/rss/ekonomika.rss"
+        },
+        {
+          "name": "Teraz.sk - Culture",
+          "url": "https://www.teraz.sk/rss/kultura.rss"
+        },
+        {
+          "name": "Teraz.sk - Sport",
+          "url": "https://www.teraz.sk/rss/sport.rss"
+        },
+        {
+          "name": "Teraz.sk - Magazine",
+          "url": "https://www.teraz.sk/rss/magazin.rss"
+        },
+        {
+          "name": "Teraz.sk - Health",
+          "url": "https://www.teraz.sk/rss/zdravie.rss"
+        },
+        {
           "name": "Topky",
           "url": "https://www.topky.sk/rss/8/TOPKY"
         },
@@ -17933,6 +18015,7 @@
         },
         {
           "name": "Refresher Slovakia - News Sitemap",
+          "url": "https://www.refresher.sk/rss",
           "sitemapUrl": "https://refresher.sk/sitemap/news.xml"
         },
         {
@@ -18282,12 +18365,106 @@
       "feeds": [
         {
           "name": "24ur",
-          "sitemapUrl": "https://www.24ur.com/sitemaps/sites/1",
-          "enabled": false
+          "url": "https://www.24ur.com/rss",
+          "sitemapUrl": "https://www.24ur.com/sitemaps/sites/1"
+        },
+        {
+          "name": "RTVSLO - All News",
+          "url": "https://www.rtvslo.si/feeds/00.xml"
+        },
+        {
+          "name": "RTVSLO - Slovenia",
+          "url": "https://www.rtvslo.si/feeds/01.xml"
+        },
+        {
+          "name": "RTVSLO - World",
+          "url": "https://www.rtvslo.si/feeds/02.xml"
+        },
+        {
+          "name": "RTVSLO - Sport",
+          "url": "https://www.rtvslo.si/feeds/03.xml"
+        },
+        {
+          "name": "RTVSLO - Business",
+          "url": "https://www.rtvslo.si/feeds/04.xml"
+        },
+        {
+          "name": "RTVSLO - Culture",
+          "url": "https://www.rtvslo.si/feeds/05.xml"
+        },
+        {
+          "name": "RTVSLO - Entertainment",
+          "url": "https://www.rtvslo.si/feeds/06.xml"
+        },
+        {
+          "name": "RTVSLO - Crime",
+          "url": "https://www.rtvslo.si/feeds/08.xml"
+        },
+        {
+          "name": "RTVSLO - Science & Tech",
+          "url": "https://www.rtvslo.si/feeds/09.xml"
+        },
+        {
+          "name": "RTVSLO - Environment",
+          "url": "https://www.rtvslo.si/feeds/12.xml"
+        },
+        {
+          "name": "RTVSLO - EU",
+          "url": "https://www.rtvslo.si/feeds/16.xml"
+        },
+        {
+          "name": "RTVSLO - Travel",
+          "url": "https://www.rtvslo.si/feeds/28.xml"
+        },
+        {
+          "name": "Siol - Latest",
+          "url": "https://siol.net/feeds/latest"
+        },
+        {
+          "name": "Zurnal24 - Latest",
+          "url": "https://www.zurnal24.si/feeds/latest"
+        },
+        {
+          "name": "N1 Slovenia",
+          "url": "https://n1info.si/feed",
+          "sitemapUrl": "https://n1info.si/sitemap/sitemap_news_1.xml"
         },
         {
           "name": "Delo",
-          "url": "https://www.delo.si/rss"
+          "url": "https://www.delo.si/rss",
+          "sitemapUrl": "https://www.delo.si/media/sitemaps/poc_sitemap.xml"
+        },
+        {
+          "name": "STA - News",
+          "url": "https://www.sta.si/rss-0"
+        },
+        {
+          "name": "STA - Slovenia",
+          "url": "https://www.sta.si/rss-1"
+        },
+        {
+          "name": "STA - World",
+          "url": "https://www.sta.si/rss-2"
+        },
+        {
+          "name": "STA - Business",
+          "url": "https://www.sta.si/rss-3"
+        },
+        {
+          "name": "STA - Sport",
+          "url": "https://www.sta.si/rss-4"
+        },
+        {
+          "name": "STA - Culture",
+          "url": "https://www.sta.si/rss-5"
+        },
+        {
+          "name": "Slovenske novice - Sitemap Index",
+          "sitemapUrl": "https://slovenskenovice.delo.si/media/sitemaps/poc_sitemap.xml"
+        },
+        {
+          "name": "Domovina",
+          "url": "https://www.domovina.je/feed"
         }
       ]
     },
@@ -18448,10 +18625,16 @@
       "feeds": [
         {
           "name": "TVNET",
+          "url": "https://www.tvnet.lv/rss",
           "sitemapUrl": "https://www.tvnet.lv/sitemap"
         },
         {
+          "name": "LA.LV",
+          "url": "https://www.la.lv/feed"
+        },
+        {
           "name": "Apollo",
+          "url": "https://www.apollo.lv/rss",
           "sitemapUrl": "https://www.apollo.lv/sitemap"
         },
         {
@@ -18459,7 +18642,12 @@
           "sitemapUrl": "https://www.delfi.lv/sitemap/index.xml"
         },
         {
+          "name": "Rus Delfi Latvia - News 1",
+          "sitemapUrl": "https://rus.delfi.lv/sitemap/news/1/index.xml"
+        },
+        {
           "name": "Jauns.lv",
+          "url": "https://jauns.lv/rss",
           "sitemapUrl": "https://jauns.lv/sitemap/news-sitemap.xml"
         },
         {
@@ -18471,8 +18659,76 @@
           "url": "https://www.lsm.lv/rss/"
         },
         {
+          "name": "Rus TVNET Latvia",
+          "url": "https://rus.tvnet.lv/rss",
+          "sitemapUrl": "https://rus.tvnet.lv/sitemap/news"
+        },
+        {
+          "name": "LSM - Russian",
+          "url": "https://rus.lsm.lv/rss/?lang=ru",
+          "sitemapUrl": "https://rus.lsm.lv/sitemap.xml"
+        },
+        {
+          "name": "BB.lv",
+          "url": "https://bb.lv/rss"
+        },
+        {
+          "name": "TV3 Latvia",
+          "url": "https://www.tv3.lv/feed",
+          "sitemapUrl": "https://tv3.lv/sitemaps/sitemap-news.xml"
+        },
+        {
+          "name": "Mixnews Latvia",
+          "url": "https://mixnews.lv/feed/"
+        },
+        {
+          "name": "Gorod.lv",
+          "url": "https://gorod.lv/rss",
+          "sitemapUrl": "https://gorod.lv/novosti/news_sitemap.xml"
+        },
+        {
+          "name": "LSM - Latvia",
+          "url": "https://www.lsm.lv/rss/?lang=lv&catid=20"
+        },
+        {
+          "name": "LSM - Economy",
+          "url": "https://www.lsm.lv/rss/?lang=lv&catid=22"
+        },
+        {
+          "name": "LSM - World",
+          "url": "https://www.lsm.lv/rss/?lang=lv&catid=21"
+        },
+        {
           "name": "Diena",
           "url": "https://www.diena.lv/rss"
+        },
+        {
+          "name": "Diena - Latvia",
+          "url": "https://www.diena.lv/rss/?c=3"
+        },
+        {
+          "name": "Diena - News",
+          "url": "https://www.diena.lv/rss/?c=71"
+        },
+        {
+          "name": "Diena - Politics",
+          "url": "https://www.diena.lv/rss/?c=19"
+        },
+        {
+          "name": "Diena - Riga",
+          "url": "https://www.diena.lv/rss/?c=20"
+        },
+        {
+          "name": "Diena - Regions",
+          "url": "https://www.diena.lv/rss/?c=21"
+        },
+        {
+          "name": "Diena - Crime",
+          "url": "https://www.diena.lv/rss/?c=23"
+        },
+        {
+          "name": "Diena - World",
+          "url": "https://www.diena.lv/rss/?c=4"
         }
       ]
     },
@@ -18482,15 +18738,66 @@
       "feeds": [
         {
           "name": "Postimees",
+          "url": "https://www.postimees.ee/rss",
           "sitemapUrl": "https://www.postimees.ee/sitemap"
         },
         {
+          "name": "Postimees - Sport",
+          "url": "https://sport.postimees.ee/rss"
+        },
+        {
+          "name": "Postimees - World",
+          "url": "https://maailm.postimees.ee/rss"
+        },
+        {
+          "name": "Postimees - Business",
+          "url": "https://majandus.postimees.ee/rss"
+        },
+        {
+          "name": "Postimees - Elu24",
+          "url": "https://elu24.postimees.ee/rss"
+        },
+        {
+          "name": "Postimees - Science",
+          "url": "https://teadus.postimees.ee/rss"
+        },
+        {
+          "name": "Postimees - Opinion",
+          "url": "https://arvamus.postimees.ee/rss"
+        },
+        {
           "name": "Ohtuleht",
+          "url": "https://www.ohtuleht.ee/rss",
           "sitemapUrl": "https://www.ohtuleht.ee/sitemaps/news.xml"
         },
         {
           "name": "ERR",
+          "url": "https://www.err.ee/rss",
           "sitemapUrl": "https://news.err.ee/sitemap"
+        },
+        {
+          "name": "ERR - Sport",
+          "url": "https://sport.err.ee/rss"
+        },
+        {
+          "name": "ERR - Culture",
+          "url": "https://kultuur.err.ee/rss"
+        },
+        {
+          "name": "ERR - Economy",
+          "url": "https://www.err.ee/rss/majandus"
+        },
+        {
+          "name": "ERR - World",
+          "url": "https://www.err.ee/rss/valismaa"
+        },
+        {
+          "name": "ERR - Russian",
+          "url": "https://rus.err.ee/rss"
+        },
+        {
+          "name": "ERR - Novaator",
+          "url": "https://novaator.err.ee/rss"
         },
         {
           "name": "Delfi Estonia",
@@ -18517,11 +18824,196 @@
       "feeds": [
         {
           "name": "Visir",
+          "url": "https://www.visir.is/rss/allt",
           "sitemapUrl": "https://visir.is/sitemap_index.xml"
         },
         {
           "name": "RUV",
           "url": "https://www.ruv.is/rss/frettir"
+        },
+        {
+          "name": "MBL Innlent",
+          "url": "https://www.mbl.is/feeds/innlent/"
+        },
+        {
+          "name": "MBL Erlent",
+          "url": "https://www.mbl.is/feeds/erlent/"
+        },
+        {
+          "name": "MBL Sport",
+          "url": "https://www.mbl.is/feeds/sport/"
+        },
+        {
+          "name": "MBL Business",
+          "url": "https://www.mbl.is/feeds/vidskipti/"
+        },
+        {
+          "name": "DV",
+          "url": "https://www.dv.is/feed/"
+        }
+      ]
+    },
+    {
+      "name": "Egypt",
+      "code": "EG",
+      "feeds": [
+        {
+          "name": "Egypt Independent",
+          "url": "https://egyptindependent.com/feed/"
+        },
+        {
+          "name": "Egyptian Gazette",
+          "url": "https://egyptian-gazette.com/feed/"
+        },
+        {
+          "name": "Daily News Egypt",
+          "url": "https://www.dailynewsegypt.com/feed/"
+        }
+      ]
+    },
+    {
+      "name": "Nigeria",
+      "code": "NG",
+      "feeds": [
+        {
+          "name": "Punch Nigeria",
+          "url": "https://rss.punchng.com/v1/category/latest_news"
+        },
+        {
+          "name": "Vanguard Nigeria",
+          "url": "https://www.vanguardngr.com/feed/"
+        },
+        {
+          "name": "Premium Times Nigeria",
+          "url": "https://www.premiumtimesng.com/feed"
+        },
+        {
+          "name": "Daily Trust",
+          "url": "https://dailytrust.com/feed/"
+        },
+        {
+          "name": "Channels TV",
+          "url": "https://www.channelstv.com/feed/"
+        },
+        {
+          "name": "BusinessDay Nigeria",
+          "url": "https://businessday.ng/feed/"
+        },
+        {
+          "name": "Nigerian Eye",
+          "url": "https://www.nigerianeye.com/feeds/posts/default"
+        },
+        {
+          "name": "THISDAY Live",
+          "url": "https://www.thisdaylive.com/feed/"
+        },
+        {
+          "name": "Ripples Nigeria",
+          "url": "https://www.ripplesnigeria.com/feed/"
+        },
+        {
+          "name": "People's Gazette",
+          "url": "https://gazettengr.com/feed/"
+        }
+      ]
+    },
+    {
+      "name": "Singapore",
+      "code": "SG",
+      "feeds": [
+        {
+          "name": "Straits Times World",
+          "url": "https://www.straitstimes.com/news/world/rss.xml"
+        },
+        {
+          "name": "Straits Times Asia",
+          "url": "https://www.straitstimes.com/news/asia/rss.xml"
+        },
+        {
+          "name": "Business Times Singapore",
+          "url": "https://www.businesstimes.com.sg/rss.xml"
+        },
+        {
+          "name": "CNA Top Stories",
+          "url": "https://www.channelnewsasia.com/api/v1/rss-outbound-feed?_format=xml"
+        },
+        {
+          "name": "Straits Times Singapore",
+          "url": "https://www.straitstimes.com/news/singapore/rss.xml"
+        },
+        {
+          "name": "Mothership",
+          "url": "https://mothership.sg/feed/"
+        },
+        {
+          "name": "CNA Singapore",
+          "url": "https://www.channelnewsasia.com/api/v1/rss-outbound-feed?_format=xml&category=6936"
+        },
+        {
+          "name": "Straits Times Sport",
+          "url": "https://www.straitstimes.com/news/sport/rss.xml"
+        }
+      ]
+    },
+    {
+      "name": "South Africa",
+      "code": "ZA",
+      "feeds": [
+        {
+          "name": "TimesLIVE",
+          "url": "https://www.timeslive.co.za/arc/outboundfeeds/rss/"
+        },
+        {
+          "name": "The Citizen",
+          "url": "https://www.citizen.co.za/feed/"
+        },
+        {
+          "name": "The South African",
+          "url": "https://www.thesouthafrican.com/feed/"
+        },
+        {
+          "name": "TimesLIVE News",
+          "url": "https://www.timeslive.co.za/arc/outboundfeeds/rss/category/news/"
+        },
+        {
+          "name": "SABC News",
+          "url": "https://www.sabcnews.com/sabcnews/feed/"
+        },
+        {
+          "name": "TimesLIVE Politics",
+          "url": "https://www.timeslive.co.za/arc/outboundfeeds/rss/category/politics/"
+        },
+        {
+          "name": "News24 South Africa",
+          "url": "https://feeds.capi24.com/v1/Search/articles/news24/SouthAfrica/rss"
+        },
+        {
+          "name": "News24 Top Stories",
+          "url": "https://feeds.capi24.com/v1/Search/articles/news24/TopStories/rss"
+        },
+        {
+          "name": "News24 World",
+          "url": "https://feeds.capi24.com/v1/Search/articles/news24/World/rss"
+        },
+        {
+          "name": "News24 Sport",
+          "url": "https://feeds.capi24.com/v1/Search/articles/news24/Sport/rss"
+        },
+        {
+          "name": "Business Day South Africa",
+          "url": "https://www.businessday.co.za/arc/outboundfeeds/rss/"
+        },
+        {
+          "name": "Sowetan",
+          "url": "https://www.sowetan.co.za/arc/outboundfeeds/rss/"
+        },
+        {
+          "name": "Mail & Guardian",
+          "url": "https://mg.co.za/feed/"
+        },
+        {
+          "name": "TechCentral",
+          "url": "https://techcentral.co.za/feed/"
         }
       ]
     },

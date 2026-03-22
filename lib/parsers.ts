@@ -258,12 +258,22 @@ export function parseSitemap(xml: string, limit = 12): ParsedFeedItem[] {
   return parseSitemapWithStats(xml, limit).items;
 }
 
-export function parseSitemapWithStats(xml: string, limit = 12): ParsedFeedBatch {
+function resolveFeedLink(link: string, baseUrl?: string): string {
+  if (!link) return '';
+  if (!baseUrl) return link;
+  try {
+    return new URL(link, baseUrl).toString();
+  } catch {
+    return link;
+  }
+}
+
+export function parseSitemapWithStats(xml: string, limit = 12, baseUrl?: string): ParsedFeedBatch {
   const rows = [...xml.matchAll(/<(?:[\w.-]+:)?url\b[^>]*>([\s\S]*?)<\/(?:[\w.-]+:)?url>/gi)]
     .map((match) => match[1])
     .slice(0, limit)
     .map((body) => {
-      const link = parseTagByLocalName(body, 'loc');
+      const link = resolveFeedLink(parseTagByLocalName(body, 'loc'), baseUrl);
       const title =
         parseTagByLocalName(body, 'title')
         || link.split('/').pop()?.replace(/[-_]/g, ' ')

@@ -1,4 +1,10 @@
 import type { NewsSection, SectionClassification } from '@/lib/types';
+import {
+  buildArticleHintText,
+  classifySectionBySourceFallback,
+  classifySectionByStructuredHints,
+  mapFeedCategoryToSection,
+} from '@/lib/article-section-context';
 import { HIGH_PRIORITY_KEYWORDS, MEDIUM_PRIORITY_KEYWORDS } from '@/lib/classifier/locales';
 
 const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
@@ -13,6 +19,8 @@ type ClassifyParams = {
   fallbackSection?: NewsSection;
   summary?: string;
   feedCategories?: string[];
+  source?: string;
+  url?: string;
 };
 
 type CachedSectionClassification = {
@@ -36,56 +44,6 @@ type KeywordMap = Record<string, NewsSection>;
 
 const HIGH_PRIORITY: KeywordMap = HIGH_PRIORITY_KEYWORDS;
 const MEDIUM_PRIORITY: KeywordMap = MEDIUM_PRIORITY_KEYWORDS;
-const FEED_CATEGORY_MAP: Record<string, NewsSection> = {
-  politics: 'politics',
-  political: 'politics',
-  policy: 'politics',
-  conflict: 'conflicts',
-  conflicts: 'conflicts',
-  war: 'conflicts',
-  wars: 'conflicts',
-  military: 'conflicts',
-  defence: 'conflicts',
-  defense: 'conflicts',
-  business: 'business',
-  economy: 'business',
-  economics: 'business',
-  finance: 'business',
-  market: 'business',
-  markets: 'business',
-  tech: 'tech',
-  technology: 'tech',
-  science: 'science',
-  sports: 'sports',
-  sport: 'sports',
-  health: 'health',
-  entertainment: 'entertainment',
-  showbiz: 'entertainment',
-  celebrity: 'entertainment',
-  celebrities: 'entertainment',
-  music: 'entertainment',
-  movie: 'entertainment',
-  movies: 'entertainment',
-  film: 'entertainment',
-  films: 'entertainment',
-  tv: 'entertainment',
-  television: 'entertainment',
-  lifestyle: 'lifestyle',
-  fashion: 'lifestyle',
-  style: 'lifestyle',
-  travel: 'lifestyle',
-  food: 'lifestyle',
-  recipe: 'lifestyle',
-  recipes: 'lifestyle',
-  arts: 'arts',
-  culture: 'arts',
-  climate: 'climate',
-  world: 'world',
-  general: 'others',
-  others: 'others',
-  security: 'tech',
-};
-
 const SHORT_KEYWORDS = new Set(['ai', 'war', 'gdp']);
 const regexCache = new Map<string, RegExp>();
 
@@ -122,7 +80,7 @@ export function classifySectionByFeedCategories(categories: string[] = [], fallb
     .filter(Boolean);
 
   for (const category of normalized) {
-    const direct = FEED_CATEGORY_MAP[category];
+    const direct = mapFeedCategoryToSection(category);
     if (direct) {
       return {
         section: direct,
@@ -192,11 +150,53 @@ export async function classifySection(params: ClassifyParams): Promise<SectionCl
   const summary = (params.summary || '').trim();
   const fallbackSection = params.fallbackSection || 'others';
   const feedCategories = params.feedCategories || [];
+  const source = (params.source || '').trim();
+  const url = (params.url || '').trim();
 
   // Hybrid order: feed categories -> keyword -> LLM fallback for low-confidence cases.
   const categoryResult = classifySectionByFeedCategories(feedCategories, fallbackSection);
   const keywordResult = classifySectionByKeyword(title, fallbackSection);
-  const baseResult = categoryResult && categoryResult.confidence >= keywordResult.confidence ? categoryResult : keywordResult;
+  const hintText = source || url ? buildArticleHintText(source, url) : '';
+  const hintKeywordResult = hintText ? classifySectionByKeyword(hintText, 'others') : null;
+  const structuredHintSection = source || url ? classifySectionByStructuredHints(source, url) : 'others';
+  const sourceFallbackSection = source || url ? classifySectionBySourceFallback({ source, url, title }) : 'others';
+  const contextCandidates: SectionClassification[] = [];
+
+  if (hintKeywordResult && hintKeywordResult.section !== 'others') {
+    contextCandidates.push({
+      ...hintKeywordResult,
+      confidence: Math.max(hintKeywordResult.confidence, 0.68),
+      reason: `Matched source/url hint: ${hintKeywordResult.reason || 'keyword hint'}`
+    });
+  }
+
+  if (structuredHintSection !== 'others') {
+    contextCandidates.push({
+      section: structuredHintSection,
+      confidence: 0.66,
+      source: 'keyword',
+      reason: 'Matched source/url structure hint'
+    });
+  }
+
+  if (sourceFallbackSection !== 'others') {
+    contextCandidates.push({
+      section: sourceFallbackSection,
+      confidence: 0.64,
+      source: 'keyword',
+      reason: 'Matched source-specific fallback'
+    });
+  }
+
+  const contextResult = contextCandidates.reduce<SectionClassification | null>((best, candidate) => (
+    !best || candidate.confidence > best.confidence ? candidate : best
+  ), null);
+
+  const baseResult = [categoryResult, keywordResult, contextResult]
+    .filter((result): result is SectionClassification => Boolean(result))
+    .reduce((best, candidate) => (
+      candidate.confidence > best.confidence ? candidate : best
+    ), keywordResult);
 
   if (!SHOULD_USE_AI_CLASSIFIER || !title) return baseResult;
   if (baseResult.confidence >= AI_TRIGGER_CONFIDENCE) return baseResult;

@@ -34,7 +34,7 @@ function renderRelativeTime(value: string | null | undefined): string {
 }
 
 function renderSectionLabel(section: string | null | undefined): string {
-  if (!section || section === 'others') return 'general / uncategorized';
+  if (!section || section === 'others') return 'general / unclassified';
   if (section === 'entertainment') return 'entertainment';
   if (section === 'lifestyle') return 'lifestyle';
   if (section === 'arts') return 'arts';
@@ -90,14 +90,14 @@ export function DashboardView() {
     <div className="page-stack">
       <section className="hero-panel">
         <div className="eyebrow">Customer Dashboard</div>
-        <h1>Live category, country, and date coverage from the authenticated news API.</h1>
+        <h1>Live article coverage by section, country, and UTC publication date.</h1>
         <p>
-          This dashboard reads directly from the customer API. Anonymous visitors do not receive article
-          data, static shards, or downloadable snapshots.
+          This dashboard reads live counts and preview headlines from the authenticated customer API.
+          Anonymous visitors do not receive article data or downloads.
         </p>
         <div className="hero-note">
-          <strong>Live refresh:</strong> last update {renderRelativeTime(summary.generatedAt)}.
-          Coverage metrics reflect the current database-backed window rather than a static export.
+          <strong>Live refresh:</strong> updated {renderRelativeTime(summary.generatedAt)} from the live database.
+          Coverage metrics reflect the current rolling window, not a static export.
         </div>
       </section>
 
@@ -108,32 +108,32 @@ export function DashboardView() {
           <small>{renderRelativeTime(summary.generatedAt)}</small>
         </article>
         <article className="metric-card">
-          <span>Rows in 31d window</span>
+          <span>Articles in 31d window</span>
           <strong>{summary.totals.rowsWindow.toLocaleString()}</strong>
-          <small>raw publicationDatetime rows currently available to the portal</small>
+          <small>Articles currently available in the rolling 31-day view</small>
         </article>
         <article className="metric-card">
-          <span>Inserted in last 24h</span>
+          <span>Added in last 24h</span>
           <strong>{summary.totals.inserted24h.toLocaleString()}</strong>
-          <small>createdAt rows loaded by the ingestion pipeline</small>
+          <small>Articles inserted by the ingestion pipeline in the last 24 hours</small>
         </article>
         <article className="metric-card">
           <span>Published in last 24h</span>
           <strong>{summary.totals.published24h.toLocaleString()}</strong>
-          <small>publicationDatetime rows in the latest rolling day</small>
+          <small>Articles whose publication time falls within the latest rolling day</small>
         </article>
         <article className="metric-card">
           <span>Sources checked in last 24h</span>
           <strong>{summary.totals.checkedSources24h.toLocaleString()}</strong>
-          <small>distinct country/source health checks by worker</small>
+          <small>Distinct source health checks completed by the worker</small>
         </article>
       </section>
 
       <section className="grid-two">
         <article className="panel">
           <div className="section-head">
-            <h2>Top countries in latest preview date</h2>
-            <span>{summary.previewDate ? `${summary.previewDate} · ${summary.preview.articleCount.toLocaleString()} rows` : 'No data'}</span>
+            <h2>Top countries on latest UTC publication date</h2>
+            <span>{summary.previewDate ? `${summary.previewDate} · ${summary.preview.articleCount.toLocaleString()} articles` : 'No data'}</span>
           </div>
           <div className="stat-list">
             {summary.preview.topCountries.length > 0 ? (
@@ -151,7 +151,7 @@ export function DashboardView() {
 
         <article className="panel">
           <div className="section-head">
-            <h2>Recent date counts</h2>
+            <h2>Recent UTC date counts</h2>
             <span>{summary.recentDates.length} dates</span>
           </div>
           <div className="stat-list">
@@ -171,8 +171,8 @@ export function DashboardView() {
 
       <section className="panel">
         <div className="section-head">
-          <h2>Category mix in 31d window</h2>
-          <span>{summary.totals.rowsWindow.toLocaleString()} rows</span>
+          <h2>Section mix in 31d window</h2>
+          <span>{summary.totals.rowsWindow.toLocaleString()} articles</span>
         </div>
         <div className="stat-list">
           {sectionRollup.length > 0 ? (
@@ -191,7 +191,7 @@ export function DashboardView() {
       <section className="panel">
         <div className="section-head">
           <h2>Recent headlines</h2>
-          <span>{summary.preview.headlines.length > 0 ? `Preview date · ${summary.previewDate || '-'}` : 'Waiting for live rows'}</span>
+          <span>{summary.preview.headlines.length > 0 ? `Preview date · ${summary.previewDate || '-'} UTC` : 'Waiting for live rows'}</span>
         </div>
         <div className="headline-list">
           {summary.preview.headlines.map((article) => (

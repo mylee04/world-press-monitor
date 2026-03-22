@@ -6,6 +6,62 @@
 
 ## Unreleased
 
+### [06ed4b7] Add India high-volume current feeds
+- Commit: 06ed4b7b66b49a17f2d6f7dc7d518a7df2d37b56
+- Date: 2026-03-21 19:01:51 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	data/rss-atlas.json
+    - M	data/rss-catalog.csv
+    - M	data/rss-catalog.opml
+  - Git stat:
+  - data/rss-atlas.json   |   32 +
+  -  data/rss-catalog.csv  | 3449 +++++++++++++++++++++++++------------------------
+  -  data/rss-catalog.opml |    3 +-
+  -  3 files changed, 1759 insertions(+), 1725 deletions(-)
+
+### [2df5a20] Expand South Korea atlas coverage
+- Commit: 2df5a20e9a264adc5afc0d94d4c751b7cf62d810
+- Date: 2026-03-21 18:19:44 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	data/rss-atlas.json
+    - M	data/rss-catalog.csv
+    - M	data/rss-catalog.opml
+  - Git stat:
+  - data/rss-atlas.json   |   56 +
+  -  data/rss-catalog.csv  | 3448 ++++++++++++++++++++++++-------------------------
+  -  data/rss-catalog.opml |    2 +-
+  -  3 files changed, 1781 insertions(+), 1725 deletions(-)
+
+### [56f328c] Expand atlas coverage in France and Hungary
+- Commit: 56f328c0a36e08547b3432b80a643adc0c4db0c3
+- Date: 2026-03-21 08:31:55 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	data/rss-atlas.json
+    - M	data/rss-catalog.csv
+    - M	data/rss-catalog.opml
+  - Git stat:
+  - data/rss-atlas.json   |  100 ++
+  -  data/rss-catalog.csv  | 3459 +++++++++++++++++++++++++------------------------
+  -  data/rss-catalog.opml |   13 +-
+  -  3 files changed, 1847 insertions(+), 1725 deletions(-)
+
+### [66381c4] Expand Indonesia sitemap coverage
+- Commit: 66381c463e2450f5cee85042fc539321027531f9
+- Date: 2026-03-21 08:01:22 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	data/rss-atlas.json
+    - M	data/rss-catalog.csv
+    - M	data/rss-catalog.opml
+  - Git stat:
+  - data/rss-atlas.json   |  176 +++
+  -  data/rss-catalog.csv  | 3448 ++++++++++++++++++++++++-------------------------
+  -  data/rss-catalog.opml |    2 +-
+  -  3 files changed, 1901 insertions(+), 1725 deletions(-)
+
 ### [590ba04] Move customer portal auth behind server routes
 - Commit: 590ba045ee8b0c0689c1e615a3a08bb6cad6f0c1
 - Date: 2026-03-20 18:12:43 -0500

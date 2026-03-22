@@ -20,5 +20,33 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     if (pathname.startsWith('/resources/')) return true;
   }
 
+  if (hostname.endsWith('pptvhd36.com') && pathname.startsWith('/tags/')) {
+    return true;
+  }
+
+  if (hostname.endsWith('liputan6.com') && pathname.startsWith('/tag/')) {
+    return true;
+  }
+
+  if (hostname.endsWith('delo.si') && pathname.startsWith('/tag/')) {
+    return true;
+  }
+
+  if (hostname === 'bb.lv' && normalizedSource.includes('bb.lv')) {
+    if (!pathname.startsWith('/statja/')) {
+      return true;
+    }
+  }
+
+  if (hostname === 'mixnews.lv' && normalizedSource.includes('mixnews')) {
+    if (
+      !pathname.startsWith('/latviya/') &&
+      !pathname.startsWith('/v-mire/') &&
+      !pathname.startsWith('/culture/')
+    ) {
+      return true;
+    }
+  }
+
   return false;
 }

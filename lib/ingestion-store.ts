@@ -2831,7 +2831,7 @@ export type MissingPublishedAtCandidate = {
   link: string;
   title: string;
   description: string | null;
-  language: string;
+  language: string | null;
   section: string;
   categories: string[];
 };

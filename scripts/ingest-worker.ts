@@ -1,3 +1,4 @@
+import { spawnSync } from 'node:child_process';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { lookup } from 'node:dns/promises';
 import { isIP } from 'node:net';
@@ -7,7 +8,8 @@ import { parseRssOrAtomWithStats, parseSitemapWithStats } from '../lib/parsers';
 import { normalizeArticleTitle, normalizeHtmlText } from '../lib/html-entities';
 import { runWithConcurrency } from '../lib/concurrency';
 import { fetchWithRetry, readResponseText } from '../lib/fetch-utils';
-import { classifySection } from '../lib/keyword-classifier';
+import { deriveSectionFromContext, mapFeedCategoryToSection } from '../lib/article-section-context';
+import { classifySection, classifySectionByKeyword } from '../lib/keyword-classifier';
 import { inferGeoFromTitle } from '../lib/geo';
 import {
   readFailingEndpointBackoff,
@@ -97,6 +99,14 @@ const SITEMAP_PERMANENT_RECHECK_DAYS = Math.max(
 );
 const FEED_HOST_ALLOWLIST = process.env.INGEST_FEED_HOST_ALLOWLIST || '';
 const FEED_MAX_REDIRECTS = Math.max(0, Math.min(20, Number.parseInt(process.env.INGEST_FEED_MAX_REDIRECTS || '8', 10) || 8));
+const ENABLE_BROWSER_SITEMAP_FALLBACK = parseBoolEnv(process.env.INGEST_BROWSER_SITEMAP_FALLBACK, false);
+const BROWSER_SITEMAP_FALLBACK_DOMAINS = new Set(
+  (process.env.INGEST_BROWSER_SITEMAP_DOMAINS || 'www.ouest-france.fr,www.standaard.be')
+    .split(',')
+    .map((value) => value.trim().toLowerCase())
+    .filter(Boolean)
+);
+const BROWSER_SITEMAP_HELPER = resolve(process.cwd(), 'scripts/fetch-sitemap-browser.mjs');
 const SITEMAP_TEMPORARY_DISABLE_THRESHOLD = Math.max(
   1,
   Number.parseInt(process.env.INGEST_SITEMAP_TEMP_DISABLE_FAILS || '2', 10) || 2
@@ -130,6 +140,10 @@ type AtlasFeed = {
   name: string;
   url: string | null;
   sitemapUrl?: string;
+  category?: string | null;
+  tier?: number | null;
+  language?: string | null;
+  sourceType?: string | null;
   enabled?: boolean;
   // status/check fields are present in atlas but not required for ingestion.
 };
@@ -216,6 +230,23 @@ function makeOutletId(countryName: string, sourceName: string, feedUrl: string):
   return `${safe || 'source'}-${(hash >>> 0).toString(36)}`;
 }
 
+function coerceOutletTier(value: number | null | undefined): OutletTier {
+  return value === 1 || value === 2 || value === 3 ? value : 1;
+}
+
+function deriveOutletSection(name: string, url: string, category?: string | null): NewsItem['section'] {
+  const mappedCategorySection = mapFeedCategoryToSection(category);
+  if (mappedCategorySection) return mappedCategorySection;
+
+  const hintSection = classifySectionByKeyword(`${name} ${url}`, 'others').section;
+  if (hintSection !== 'others') return hintSection;
+
+  const contextSection = deriveSectionFromContext({ source: name, url, title: name });
+  if (contextSection !== 'others') return contextSection;
+
+  return 'others';
+}
+
 function loadAtlasOutlets(): OutletFeed[] {
   try {
     const raw = readFileSync(ATLAS_PATH, 'utf8');
@@ -232,33 +263,41 @@ function loadAtlasOutlets(): OutletFeed[] {
         const hasExplicitSitemapUrl = typeof feed.sitemapUrl === 'string' && feed.sitemapUrl.trim().length > 0;
         return hasRssUrl || hasExplicitSitemapUrl;
       })
-      .map((feed) => ({
-        name: feed.name || 'Unknown source',
-        rssUrl:
-          typeof feed.url === 'string' && feed.url.trim().length > 0
-            ? feed.url.trim()
-            : undefined,
-        explicitSitemapUrl:
-          typeof feed.sitemapUrl === 'string' && feed.sitemapUrl.trim().length > 0
-            ? feed.sitemapUrl.trim()
-            : undefined,
-      }))
         .map((feed) => ({
-          id: makeOutletId(countryName, feed.name, feed.rssUrl || feed.explicitSitemapUrl || feed.name),
-          name: feed.name,
-          tier: 1 as OutletTier,
-          section: 'others',
-          categories: ['global'],
-          language: 'en',
-          sourceType: 'global',
-          reviewDecision: 'keep_secondary',
-          defaultEnabled: true,
-          country: countryName,
-          rssUrl: feed.rssUrl,
-          sitemapUrl:
-            feed.explicitSitemapUrl ?? (feed.rssUrl ? buildSitemapFallbackUrls(feed.rssUrl)[0] : undefined),
-          hasExplicitSitemapUrl: Boolean(feed.explicitSitemapUrl),
-        }) satisfies OutletFeed);
+          name: feed.name || 'Unknown source',
+          category: typeof feed.category === 'string' ? feed.category.trim() : undefined,
+          tier: feed.tier,
+          language: typeof feed.language === 'string' ? feed.language.trim() : undefined,
+          sourceType: typeof feed.sourceType === 'string' ? feed.sourceType.trim().toLowerCase() : undefined,
+          rssUrl:
+            typeof feed.url === 'string' && feed.url.trim().length > 0
+              ? feed.url.trim()
+              : undefined,
+          explicitSitemapUrl:
+            typeof feed.sitemapUrl === 'string' && feed.sitemapUrl.trim().length > 0
+              ? feed.sitemapUrl.trim()
+              : undefined,
+        }))
+        .map((feed) => {
+          const outletUrl = feed.rssUrl || feed.explicitSitemapUrl || '';
+          const section = deriveOutletSection(feed.name, outletUrl, feed.category);
+          return {
+            id: makeOutletId(countryName, feed.name, feed.rssUrl || feed.explicitSitemapUrl || feed.name),
+            name: feed.name,
+            tier: coerceOutletTier(feed.tier),
+            section,
+            categories: ['global'],
+            language: feed.language || undefined,
+            sourceType: feed.sourceType === 'local' || feed.sourceType === 'portal' ? feed.sourceType : 'global',
+            reviewDecision: 'keep_secondary',
+            defaultEnabled: true,
+            country: countryName,
+            rssUrl: feed.rssUrl,
+            sitemapUrl:
+              feed.explicitSitemapUrl ?? (feed.rssUrl ? buildSitemapFallbackUrls(feed.rssUrl)[0] : undefined),
+            hasExplicitSitemapUrl: Boolean(feed.explicitSitemapUrl),
+          } satisfies OutletFeed;
+        });
     });
     outlets.sort((a, b) => a.country.localeCompare(b.country) || a.name.localeCompare(b.name));
     if (outlets.length > 0) {
@@ -281,11 +320,22 @@ type SitemapIndexEntry = {
 
 function decodeXmlEntities(value: string): string {
   return value
+    .replace(/<!\[CDATA\[(.*?)\]\]>/gs, '$1')
+    .replace(/&#x([0-9a-f]+);/gi, (_, hex: string) => {
+      const codePoint = Number.parseInt(hex, 16);
+      return Number.isFinite(codePoint) ? String.fromCodePoint(codePoint) : _;
+    })
+    .replace(/&#([0-9]+);/g, (_, dec: string) => {
+      const codePoint = Number.parseInt(dec, 10);
+      return Number.isFinite(codePoint) ? String.fromCodePoint(codePoint) : _;
+    })
     .replace(/&amp;/gi, '&')
+    .replace(/&apos;/gi, "'")
     .replace(/&lt;/gi, '<')
     .replace(/&gt;/gi, '>')
     .replace(/&quot;/gi, '"')
-    .replace(/&#39;/gi, "'");
+    .replace(/&#39;/gi, "'")
+    .trim();
 }
 
 function parseSitemapIndexLocDateMs(loc: string): number | null {
@@ -335,12 +385,22 @@ function parseSitemapIndexLocNumericTail(loc: string): number | null {
   return Number.isFinite(parsed) ? parsed : null;
 }
 
-function parseSitemapIndex(xml: string): string[] {
+function resolveSitemapLoc(loc: string, baseUrl: string | null): string {
+  const normalized = decodeXmlEntities(loc);
+  if (!normalized || !baseUrl) return normalized;
+  try {
+    return new URL(normalized, baseUrl).toString();
+  } catch {
+    return normalized;
+  }
+}
+
+function parseSitemapIndex(xml: string, baseUrl: string | null = null): string[] {
   if (!/<sitemapindex[\s>]/i.test(xml)) return [];
   const entries = [...xml.matchAll(/<sitemap>([\s\S]*?)<\/sitemap>/gi)]
     .map((match, index) => {
       const body = match[1] || '';
-      const loc = decodeXmlEntities(body.match(/<loc[^>]*>([\s\S]*?)<\/loc>/i)?.[1]?.trim() || '');
+      const loc = resolveSitemapLoc(body.match(/<loc[^>]*>([\s\S]*?)<\/loc>/i)?.[1]?.trim() || '', baseUrl);
       const lastmodRaw = body.match(/<lastmod[^>]*>([\s\S]*?)<\/lastmod>/i)?.[1]?.trim() || '';
       const lastmodMs = lastmodRaw ? Date.parse(lastmodRaw) : NaN;
       return {
@@ -568,6 +628,13 @@ type CountryFilter = {
   normalized: Set<string>;
 };
 
+type EndpointMethod = 'rss' | 'sitemap';
+
+type MethodFilter = {
+  display: EndpointMethod[];
+  allowed: Set<EndpointMethod>;
+};
+
 type BackfillWindow = {
   from: string;
   to: string;
@@ -626,6 +693,56 @@ function countryMatchesFilter(country: string | undefined, filter: CountryFilter
 }
 
 const COUNTRY_FILTER = parseCountryFilter(process.argv.slice(2), process.env.INGEST_COUNTRIES);
+
+function parseMethodFilter(argv: string[], envValue: string | undefined): MethodFilter | null {
+  const values: string[] = [];
+
+  const pushCsv = (raw: string | undefined): void => {
+    if (!raw) return;
+    raw
+      .split(',')
+      .map((part) => part.trim().toLowerCase())
+      .filter((part) => part.length > 0)
+      .forEach((part) => values.push(part));
+  };
+
+  pushCsv(envValue);
+  for (let i = 0; i < argv.length; i += 1) {
+    const token = argv[i];
+    if (token.startsWith('--methods=')) {
+      pushCsv(token.slice('--methods='.length));
+      continue;
+    }
+    if (token === '--methods') {
+      pushCsv(argv[i + 1]);
+      i += 1;
+      continue;
+    }
+    if (token.startsWith('--method=')) {
+      pushCsv(token.slice('--method='.length));
+      continue;
+    }
+    if (token === '--method') {
+      pushCsv(argv[i + 1]);
+      i += 1;
+      continue;
+    }
+  }
+
+  const normalized = [...new Set(values)].filter((value): value is EndpointMethod => value === 'rss' || value === 'sitemap');
+  if (normalized.length === 0) return null;
+  return {
+    display: normalized,
+    allowed: new Set(normalized),
+  };
+}
+
+function methodMatchesFilter(method: EndpointMethod, filter: MethodFilter | null): boolean {
+  if (!filter) return true;
+  return filter.allowed.has(method);
+}
+
+const METHOD_FILTER = parseMethodFilter(process.argv.slice(2), process.env.INGEST_METHODS);
 
 function parseDateOnlyUtc(raw: string | undefined): number | null {
   if (!raw) return null;
@@ -994,7 +1111,10 @@ async function parseSitemapXmlRecursively(
   depth = 0,
   seen = new Set<string>()
 ): Promise<ParsedSitemapResult | null> {
-  const parsed = parseSitemapOrFeedXml(xml);
+  const sitemap = parseSitemapWithStats(xml, SITEMAP_ITEM_LIMIT, sitemapUrl);
+  const parsed = sitemap.items.length > 0 || sitemap.stats.totalCandidates > 0
+    ? sitemap
+    : parseRssOrAtomWithStats(xml, RSS_ITEM_LIMIT);
   if (parsed.items.length > 0) {
     return parsed;
   }
@@ -1002,7 +1122,7 @@ async function parseSitemapXmlRecursively(
     return parsed.stats.totalCandidates > 0 ? parsed : null;
   }
 
-  const children = parseSitemapIndex(xml).filter((childUrl) => !seen.has(childUrl));
+  const children = parseSitemapIndex(xml, sitemapUrl).filter((childUrl) => !seen.has(childUrl));
   if (children.length === 0) {
     return parsed.stats.totalCandidates > 0 ? parsed : null;
   }
@@ -1013,7 +1133,7 @@ async function parseSitemapXmlRecursively(
     if (nextSeen.has(childUrl)) return null;
     try {
       nextSeen.add(childUrl);
-      const childResponse = await fetchWithRetryFeed(childUrl);
+      const childResponse = await fetchWithRetryFeed(childUrl, sitemapUrl);
       if (!childResponse.ok) return null;
       const childXml = await childResponse.text();
       return await parseSitemapXmlRecursively(childUrl, childXml, depth + 1, nextSeen);
@@ -1060,8 +1180,22 @@ const FEED_FETCH_HEADERS = {
   'Accept-Language': process.env.INGEST_ACCEPT_LANGUAGE || 'en-US,en;q=0.9,es;q=0.8,ja;q=0.7',
   'Accept-Encoding': 'gzip, deflate, br',
   Connection: 'keep-alive',
-  'Upgrade-Insecure-Requests': '1'
+  'Upgrade-Insecure-Requests': '1',
+  'Cache-Control': 'no-cache',
+  Pragma: 'no-cache'
 };
+
+function buildFeedFetchHeaders(requestedUrl: string, referrerUrl?: string): Record<string, string> {
+  const headers: Record<string, string> = { ...FEED_FETCH_HEADERS };
+  try {
+    const target = new URL(requestedUrl);
+    headers.Origin = target.origin;
+    headers.Referer = referrerUrl || `${target.origin}/`;
+  } catch {
+    if (referrerUrl) headers.Referer = referrerUrl;
+  }
+  return headers;
+}
 
 function normalizeResponseContentType(response: Response): string {
   return (response.headers.get('content-type') || '').toLowerCase();
@@ -1072,6 +1206,52 @@ type ReadResponseBodyResult = {
   bodyLength: number;
   decodeFailed: boolean;
 };
+
+function shouldAttemptBrowserSitemapFallback(url: string, response: Response | null, body: string): boolean {
+  if (!ENABLE_BROWSER_SITEMAP_FALLBACK) return false;
+  try {
+    const parsed = new URL(url);
+    const host = parsed.hostname.toLowerCase();
+    if (!BROWSER_SITEMAP_FALLBACK_DOMAINS.has(host)) return false;
+    const path = `${parsed.pathname}${parsed.search}`.toLowerCase();
+    if (!path.includes('sitemap') && !path.endsWith('.xml') && !path.endsWith('.xml.gz') && !path.includes('googlenews')) {
+      return false;
+    }
+  } catch {
+    return false;
+  }
+
+  if (!response) return true;
+  if (response.status === 403 || response.status === 503) return true;
+  return isLikelyHtmlResponse(response, body);
+}
+
+function normalizeBrowserXmlPayload(payload: string): string {
+  const trimmed = payload.trim();
+  const xmlStart = trimmed.search(/<(?:\?xml|rss|feed|urlset|sitemapindex)\b/i);
+  return xmlStart >= 0 ? trimmed.slice(xmlStart) : trimmed;
+}
+
+async function fetchSitemapWithBrowser(url: string): Promise<Response> {
+  const result = spawnSync('node', [BROWSER_SITEMAP_HELPER, url], {
+    cwd: process.cwd(),
+    env: process.env,
+    encoding: 'utf8',
+    maxBuffer: 32 * 1024 * 1024,
+  });
+
+  if (result.status !== 0) {
+    const stderr = result.stderr?.trim();
+    const stdout = result.stdout?.trim();
+    throw new Error(stderr || stdout || `browser_sitemap_helper_failed:${result.status ?? 'unknown'}`);
+  }
+
+  const xml = normalizeBrowserXmlPayload(result.stdout || '');
+  return new Response(xml, {
+    status: 200,
+    headers: { 'content-type': 'application/xml; charset=utf-8', 'x-browser-sitemap-fallback': '1' },
+  });
+}
 
 async function readResponseBody(response: Response): Promise<ReadResponseBodyResult> {
   const decoded = await readResponseText(response);
@@ -1223,8 +1403,18 @@ async function fetchFeedWithFallback(url: string): Promise<FeedFetchResult> {
   const startMs = Date.now();
 
   try {
-    const primary = await fetchWithRetryFeed(requestedUrl);
-    const primaryBody = await readResponseBody(primary);
+    let primary = await fetchWithRetryFeed(requestedUrl);
+    let primaryBody = await readResponseBody(primary);
+
+    if (shouldAttemptBrowserSitemapFallback(requestedUrl, primary, primaryBody.body)) {
+      try {
+        primary = await fetchSitemapWithBrowser(requestedUrl);
+        primaryBody = await readResponseBody(primary);
+      } catch {
+        // Keep the original response if the browser fallback fails.
+      }
+    }
+
     const primaryFailure = describeFeedFailure(primary, primaryBody.body);
     const shouldUseSitemapFallback = shouldRetryWithSitemap(primary, primaryBody.body);
     const responseMs = Date.now() - startMs;
@@ -1262,7 +1452,7 @@ async function fetchFeedWithFallback(url: string): Promise<FeedFetchResult> {
   }
 }
 
-async function fetchWithRetryFeed(url: string): Promise<Response> {
+async function fetchWithRetryFeed(url: string, referrerUrl?: string): Promise<Response> {
   await validateFeedUrl(url);
 
   let currentUrl = url;
@@ -1272,7 +1462,7 @@ async function fetchWithRetryFeed(url: string): Promise<Response> {
     const response = await fetchWithRetry(currentUrl, {
       timeoutMs: FETCH_TIMEOUT_MS,
       fetchOptions: {
-        headers: FEED_FETCH_HEADERS,
+        headers: buildFeedFetchHeaders(currentUrl, referrerUrl),
         redirect: 'manual'
       },
       attempts: 1,
@@ -1293,6 +1483,14 @@ async function fetchWithRetryFeed(url: string): Promise<Response> {
       }
       currentUrl = nextUrl;
       continue;
+    }
+
+    if (shouldAttemptBrowserSitemapFallback(currentUrl, response, '')) {
+      try {
+        return await fetchSitemapWithBrowser(currentUrl);
+      } catch {
+        // Fall back to the original response if browser loading fails.
+      }
     }
 
     return response;
@@ -1332,7 +1530,7 @@ async function toNewsItem(
       link: row.link,
       title,
       description: description || null,
-      language: outlet.language || 'en',
+      language: outlet.language || null,
       section: outlet.section || 'others',
       categories: row.categories || [],
     });
@@ -1345,7 +1543,9 @@ async function toNewsItem(
     title,
     summary: description,
     fallbackSection,
-    feedCategories: row.categories || []
+    feedCategories: row.categories || [],
+    source: outlet.name,
+    url: row.link || ''
   });
   const section = classification.section;
   const isFallbackPublishedAt = !rawPublishedAt;
@@ -1360,7 +1560,7 @@ async function toNewsItem(
     description,
     link: row.link,
     source: outlet.name,
-    language: outlet.language || 'en',
+    language: outlet.language || undefined,
     sourceType: outlet.sourceType || 'global',
     tier: outlet.tier,
     publishedAt,
@@ -1950,8 +2150,8 @@ async function runOnce(): Promise<void> {
   const endpointLookup = new Map<string, EndpointRun>();
   const allEndpoints: EndpointRun[] = selected.flatMap((outlet) => {
     const runs: EndpointRun[] = [];
-    if (outlet.rssUrl) runs.push({ outlet, method: 'rss', url: outlet.rssUrl });
-    if (outlet.sitemapUrl) runs.push({ outlet, method: 'sitemap', url: outlet.sitemapUrl });
+    if (outlet.rssUrl && methodMatchesFilter('rss', METHOD_FILTER)) runs.push({ outlet, method: 'rss', url: outlet.rssUrl });
+    if (outlet.sitemapUrl && methodMatchesFilter('sitemap', METHOD_FILTER)) runs.push({ outlet, method: 'sitemap', url: outlet.sitemapUrl });
     return runs;
   });
   for (const endpoint of allEndpoints) {
@@ -2313,6 +2513,7 @@ async function runOnce(): Promise<void> {
       outletOffset: offset,
       nextOutletOffset: nextOffset,
       countryFilter: COUNTRY_FILTER?.display || null,
+      methodFilter: METHOD_FILTER?.display || null,
       endpointsAttempted: attempted,
       endpointsOk: okEndpoints,
       endpointsFailed: failedEndpoints,
@@ -2348,6 +2549,9 @@ async function main(): Promise<void> {
   const once = process.argv.includes('--once');
   if (COUNTRY_FILTER) {
     console.log(`[ingest-worker] country filter enabled: ${COUNTRY_FILTER.display.join(', ')}`);
+  }
+  if (METHOD_FILTER) {
+    console.log(`[ingest-worker] method filter enabled: ${METHOD_FILTER.display.join(', ')}`);
   }
   if (once) {
     await runOnce();

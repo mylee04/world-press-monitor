@@ -60,7 +60,7 @@ function triggerCsvDownload(rows: ExplorerCsvRow[], filename: string): void {
 }
 
 function renderSectionLabel(section: string | null | undefined): string {
-  if (!section || section === 'others') return 'general / uncategorized';
+  if (!section || section === 'others') return 'general / unclassified';
   if (section === 'entertainment') return 'entertainment';
   if (section === 'lifestyle') return 'lifestyle';
   if (section === 'arts') return 'arts';
@@ -161,7 +161,7 @@ export function ExplorerView() {
     <div className="page-stack">
       <section className="hero-panel compact">
         <div className="eyebrow">Explorer</div>
-        <h1>Filter live article results by category, country, date, and keyword.</h1>
+        <h1>Filter live article results by section, country, UTC publication date, and keyword.</h1>
         <p>
           This page no longer loads public JSON shards. Every result comes from the authenticated customer API,
           with server-side filtering and page-level CSV export only for signed-in customers.
@@ -186,9 +186,9 @@ export function ExplorerView() {
             <input type="date" value={date} onChange={(event) => setDate(event.target.value)} />
           </label>
           <label>
-            <span>Category</span>
+            <span>Section</span>
             <select value={section} onChange={(event) => setSection(event.target.value)}>
-              <option value="">All categories</option>
+              <option value="">All sections</option>
               {(filters?.sections || []).map((item) => (
                 <option key={item} value={item}>
                   {renderSectionLabel(item)}
@@ -237,8 +237,8 @@ export function ExplorerView() {
         </div>
         <div className="muted">
           {date
-            ? `Filtering publicationDatetime to ${date} UTC.`
-            : 'No date selected: defaulting to the latest 48h publication window.'}
+            ? `Filtering to the UTC publication date ${date}.`
+            : 'No date selected: defaulting to the latest 48-hour publication window.'}
         </div>
       </section>
 
@@ -248,7 +248,7 @@ export function ExplorerView() {
         <div className="section-head">
           <h2>Results</h2>
           <span>
-            {total.toLocaleString()} rows
+            {total.toLocaleString()} articles
             {total > 0 ? ` · page ${page} / ${totalPages}` : ''}
           </span>
         </div>
