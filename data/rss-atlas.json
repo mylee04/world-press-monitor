@@ -10850,6 +10850,22 @@
           "sitemapUrl": "https://www.lavenir.net/arc/outboundfeeds/sitemap-index/news/?outputType=xml"
         },
         {
+          "name": "De Standaard - News Sitemap",
+          "sitemapUrl": "https://www.standaard.be/sitemap-news.xml"
+        },
+        {
+          "name": "Het Nieuwsblad - News Sitemap",
+          "sitemapUrl": "https://www.nieuwsblad.be/sitemap-news.xml"
+        },
+        {
+          "name": "Gazet van Antwerpen - News Sitemap",
+          "sitemapUrl": "https://www.gva.be/sitemap-news.xml"
+        },
+        {
+          "name": "Het Belang van Limburg - News Sitemap",
+          "sitemapUrl": "https://www.hbvl.be/sitemap-news.xml"
+        },
+        {
           "name": "BX1",
           "url": "https://bx1.be/feed/"
         }
@@ -10894,6 +10910,7 @@
         {
           "name": "Daily News",
           "url": "https://www.dailynews.co.th/rss",
+          "sitemapUrl": "https://www.dailynews.co.th/sitemap_index.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
@@ -10910,6 +10927,7 @@
         {
           "name": "Thai PBS (news feed endpoint)",
           "url": "https://news.thaipbs.or.th/rss/news",
+          "sitemapUrl": "https://www.thaipbs.or.th/sitemap.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
@@ -13978,6 +13996,46 @@
           "row": 32
         },
         {
+          "name": "El País - Mundo",
+          "url": "https://www.elpais.com.uy/rss/mundo"
+        },
+        {
+          "name": "El País - Ovación",
+          "url": "https://www.elpais.com.uy/rss/ovacion"
+        },
+        {
+          "name": "El País - Información",
+          "url": "https://www.elpais.com.uy/rss/informacion"
+        },
+        {
+          "name": "El País - Bienestar",
+          "url": "https://www.elpais.com.uy/rss/bienestar"
+        },
+        {
+          "name": "El País - TV Show",
+          "url": "https://www.elpais.com.uy/rss/tvshow"
+        },
+        {
+          "name": "El País - Opinión",
+          "url": "https://www.elpais.com.uy/rss/opinion"
+        },
+        {
+          "name": "El País - Domingo",
+          "url": "https://www.elpais.com.uy/rss/domingo"
+        },
+        {
+          "name": "El País - Negocios",
+          "url": "https://www.elpais.com.uy/rss/negocios"
+        },
+        {
+          "name": "El País - Vida Actual",
+          "url": "https://www.elpais.com.uy/rss/vida-actual"
+        },
+        {
+          "name": "El País - Qué Pasa",
+          "url": "https://www.elpais.com.uy/rss/que-pasa"
+        },
+        {
           "name": "Montevideo Portal - Negocios",
           "url": "https://www.montevideo.com.uy/anxml.aspx?728",
           "status": "⏩ OFFICIAL",
@@ -14085,6 +14143,34 @@
           "row": 45
         },
         {
+          "name": "Subrayado - Fútbol Uruguayo",
+          "url": "https://www.subrayado.com.uy/rss/pages/futbol-uruguayo.xml"
+        },
+        {
+          "name": "Subrayado - Fútbol Internacional",
+          "url": "https://www.subrayado.com.uy/rss/pages/futbol-internacional.xml"
+        },
+        {
+          "name": "Subrayado - Turf",
+          "url": "https://www.subrayado.com.uy/rss/pages/turf.xml"
+        },
+        {
+          "name": "Subrayado - Empresariales",
+          "url": "https://www.subrayado.com.uy/rss/pages/empresariales.xml"
+        },
+        {
+          "name": "Subrayado - Curiosidades",
+          "url": "https://www.subrayado.com.uy/rss/pages/curiosidades.xml"
+        },
+        {
+          "name": "Subrayado - Cultura",
+          "url": "https://www.subrayado.com.uy/rss/pages/cultura.xml"
+        },
+        {
+          "name": "Subrayado - Show",
+          "url": "https://www.subrayado.com.uy/rss/pages/show.xml"
+        },
+        {
           "name": "Subrayado",
           "url": null,
           "status": "⏩ OFFICIAL",
@@ -14125,6 +14211,14 @@
           "checkedDate": null,
           "valid": "needs verification",
           "sitemapUrl": "https://www.telenoche.com.uy/sitemap-news.xml"
+        },
+        {
+          "name": "Telemundo Uruguay",
+          "url": "https://www.telemundo.com.uy/feed/"
+        },
+        {
+          "name": "Uypress - Internacionales",
+          "url": "https://www.uypress.net/anxml.aspx?13"
         },
         {
           "name": "El Pais Uruguay",
@@ -18435,6 +18529,14 @@
           "sitemapUrl": "https://www.delo.si/media/sitemaps/poc_sitemap.xml"
         },
         {
+          "name": "Dnevnik",
+          "url": "https://www.dnevnik.si/rss.xml"
+        },
+        {
+          "name": "Primorske",
+          "url": "https://www.primorske.si/rss.xml"
+        },
+        {
           "name": "STA - News",
           "url": "https://www.sta.si/rss-0"
         },
@@ -18463,8 +18565,16 @@
           "sitemapUrl": "https://slovenskenovice.delo.si/media/sitemaps/poc_sitemap.xml"
         },
         {
+          "name": "Slovenske novice",
+          "url": "https://slovenskenovice.delo.si/rss"
+        },
+        {
           "name": "Domovina",
           "url": "https://www.domovina.je/feed"
+        },
+        {
+          "name": "Finance - News Sitemap",
+          "sitemapUrl": "https://www.finance.si/sitemap/www.finance.si/news_sitemap.xml"
         }
       ]
     },
@@ -18766,6 +18876,10 @@
           "url": "https://arvamus.postimees.ee/rss"
         },
         {
+          "name": "Postimees - Russian",
+          "url": "https://rus.postimees.ee/rss"
+        },
+        {
           "name": "Ohtuleht",
           "url": "https://www.ohtuleht.ee/rss",
           "sitemapUrl": "https://www.ohtuleht.ee/sitemaps/news.xml"
@@ -18804,6 +18918,10 @@
           "sitemapUrl": "https://www.delfi.ee/sitemap/index.xml"
         },
         {
+          "name": "Delfi Estonia - News 1",
+          "sitemapUrl": "https://www.delfi.ee/sitemap/news-1.xml"
+        },
+        {
           "name": "Geenius",
           "url": "https://geenius.ee/feed/"
         },
@@ -18813,8 +18931,100 @@
           "sitemapUrl": "https://elu24.postimees.ee/sitemap"
         },
         {
+          "name": "Tartu Postimees",
+          "url": "https://tartu.postimees.ee/rss"
+        },
+        {
+          "name": "Pärnu Postimees",
+          "url": "https://parnu.postimees.ee/rss"
+        },
+        {
+          "name": "Virumaa Teataja",
+          "url": "https://virumaateataja.postimees.ee/rss"
+        },
+        {
+          "name": "Sakala",
+          "url": "https://sakala.postimees.ee/rss"
+        },
+        {
+          "name": "Postimees - Limon",
+          "url": "https://limon.postimees.ee/rss"
+        },
+        {
+          "name": "Postimees - Kodu",
+          "url": "https://kodu.postimees.ee/rss"
+        },
+        {
+          "name": "Postimees - Naine",
+          "url": "https://naine.postimees.ee/rss"
+        },
+        {
           "name": "Arileht",
           "sitemapUrl": "https://arileht.delfi.ee/sitemap/index.xml"
+        },
+        {
+          "name": "Arileht - News 1",
+          "sitemapUrl": "https://arileht.delfi.ee/sitemap/news-1.xml"
+        },
+        {
+          "name": "Maaleht - News 1",
+          "sitemapUrl": "https://maaleht.delfi.ee/sitemap/news-1.xml"
+        },
+        {
+          "name": "Ekspress - News 1",
+          "sitemapUrl": "https://ekspress.delfi.ee/sitemap/news-1.xml"
+        },
+        {
+          "name": "Delfi Russia - News 1",
+          "sitemapUrl": "https://rus.delfi.ee/sitemap/news-1.xml"
+        },
+        {
+          "name": "Forte - News 1",
+          "sitemapUrl": "https://forte.delfi.ee/sitemap/news-1.xml"
+        },
+        {
+          "name": "Kroonika - News 1",
+          "sitemapUrl": "https://kroonika.delfi.ee/sitemap/news-1.xml"
+        },
+        {
+          "name": "Delfi Sport - News 1",
+          "sitemapUrl": "https://sport.delfi.ee/sitemap/news-1.xml"
+        },
+        {
+          "name": "Arvamus - News 1",
+          "sitemapUrl": "https://arvamus.delfi.ee/sitemap/news-1.xml"
+        },
+        {
+          "name": "Eesti Naine - News 1",
+          "sitemapUrl": "https://eestinaine.delfi.ee/sitemap/news-1.xml"
+        },
+        {
+          "name": "Moodne Kodu - News 1",
+          "sitemapUrl": "https://moodnekodu.delfi.ee/sitemap/news-1.xml"
+        },
+        {
+          "name": "Järva Teataja",
+          "url": "https://jarvateataja.postimees.ee/rss"
+        },
+        {
+          "name": "Lõuna-Eesti Postimees",
+          "url": "https://lounapostimees.postimees.ee/rss"
+        },
+        {
+          "name": "Postimees - Tervis",
+          "url": "https://tervis.postimees.ee/rss"
+        },
+        {
+          "name": "Postimees - Lemmik",
+          "url": "https://lemmik.postimees.ee/rss"
+        },
+        {
+          "name": "Maaelu",
+          "url": "https://maaelu.postimees.ee/rss"
+        },
+        {
+          "name": "Anne & Stiil - News 1",
+          "sitemapUrl": "https://annestiil.delfi.ee/sitemap/news-1.xml"
         }
       ]
     },
@@ -18828,8 +19038,32 @@
           "sitemapUrl": "https://visir.is/sitemap_index.xml"
         },
         {
+          "name": "Visir - Lífið",
+          "url": "https://www.visir.is/rss/lifid"
+        },
+        {
+          "name": "Visir - Viðskipti",
+          "url": "https://www.visir.is/rss/vidskipti"
+        },
+        {
           "name": "RUV",
           "url": "https://www.ruv.is/rss/frettir"
+        },
+        {
+          "name": "RUV - Innlent",
+          "url": "https://www.ruv.is/rss/innlent"
+        },
+        {
+          "name": "RUV - Erlent",
+          "url": "https://www.ruv.is/rss/erlent"
+        },
+        {
+          "name": "RUV - Sport",
+          "url": "https://www.ruv.is/rss/ithrottir"
+        },
+        {
+          "name": "RUV - Culture",
+          "url": "https://www.ruv.is/rss/menning"
         },
         {
           "name": "MBL Innlent",
@@ -18846,6 +19080,38 @@
         {
           "name": "MBL Business",
           "url": "https://www.mbl.is/feeds/vidskipti/"
+        },
+        {
+          "name": "MBL Folk",
+          "url": "https://www.mbl.is/feeds/folk/"
+        },
+        {
+          "name": "MBL Smartland",
+          "url": "https://www.mbl.is/feeds/smartland/"
+        },
+        {
+          "name": "MBL Travel",
+          "url": "https://www.mbl.is/feeds/ferdalog/"
+        },
+        {
+          "name": "Visir - News",
+          "url": "https://www.visir.is/rss/frettir"
+        },
+        {
+          "name": "Visir - Domestic",
+          "url": "https://www.visir.is/rss/innlent"
+        },
+        {
+          "name": "Visir - World",
+          "url": "https://www.visir.is/rss/erlent"
+        },
+        {
+          "name": "Visir - Business",
+          "url": "https://www.visir.is/rss/vidskipti"
+        },
+        {
+          "name": "Visir - Sport",
+          "url": "https://www.visir.is/rss/sport"
         },
         {
           "name": "DV",
@@ -18914,6 +19180,22 @@
         {
           "name": "People's Gazette",
           "url": "https://gazettengr.com/feed/"
+        },
+        {
+          "name": "Leadership Nigeria",
+          "url": "https://leadership.ng/feed/"
+        },
+        {
+          "name": "Blueprint Nigeria",
+          "url": "https://blueprint.ng/feed/"
+        },
+        {
+          "name": "Daily Post Nigeria",
+          "url": "https://dailypost.ng/feed/"
+        },
+        {
+          "name": "PM News Nigeria",
+          "url": "https://pmnewsnigeria.com/feed/"
         }
       ]
     },
@@ -18952,6 +19234,30 @@
         {
           "name": "Straits Times Sport",
           "url": "https://www.straitstimes.com/news/sport/rss.xml"
+        },
+        {
+          "name": "Straits Times Business",
+          "url": "https://www.straitstimes.com/news/business/rss.xml"
+        },
+        {
+          "name": "Straits Times Life",
+          "url": "https://www.straitstimes.com/news/life/rss.xml"
+        },
+        {
+          "name": "Business Times International",
+          "url": "https://www.businesstimes.com.sg/rss/international"
+        },
+        {
+          "name": "Business Times Companies & Markets",
+          "url": "https://www.businesstimes.com.sg/rss/companies-markets"
+        },
+        {
+          "name": "MustShareNews",
+          "url": "https://mustsharenews.com/feed/"
+        },
+        {
+          "name": "The Independent Singapore",
+          "url": "https://theindependent.sg/feed/"
         }
       ]
     },
@@ -19000,6 +19306,14 @@
           "url": "https://feeds.capi24.com/v1/Search/articles/news24/Sport/rss"
         },
         {
+          "name": "News24 Business",
+          "url": "https://feeds.capi24.com/v1/Search/articles/news24/Business/rss"
+        },
+        {
+          "name": "News24 Life",
+          "url": "https://feeds.capi24.com/v1/Search/articles/news24/Life/rss"
+        },
+        {
           "name": "Business Day South Africa",
           "url": "https://www.businessday.co.za/arc/outboundfeeds/rss/"
         },
@@ -19014,6 +19328,34 @@
         {
           "name": "TechCentral",
           "url": "https://techcentral.co.za/feed/"
+        },
+        {
+          "name": "IOL",
+          "url": "https://www.iol.co.za/rss"
+        },
+        {
+          "name": "Moneyweb",
+          "url": "https://www.moneyweb.co.za/feed/"
+        },
+        {
+          "name": "The Herald",
+          "url": "https://www.theherald.co.za/arc/outboundfeeds/rss/"
+        },
+        {
+          "name": "Daily Dispatch",
+          "url": "https://www.dailydispatch.co.za/arc/outboundfeeds/rss/"
+        },
+        {
+          "name": "Sunday World",
+          "url": "https://sundayworld.co.za/feed/"
+        },
+        {
+          "name": "The Citizen Business",
+          "url": "https://www.citizen.co.za/business/feed/"
+        },
+        {
+          "name": "BizNews",
+          "url": "https://www.biznews.com/stories.rss"
         }
       ]
     },
