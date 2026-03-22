@@ -3,22 +3,22 @@
 <plist version="1.0">
 <dict>
   <key>Label</key>
-  <string>com.wpm.api-news</string>
+  <string>com.wpr.api-news</string>
   <key>ProgramArguments</key>
   <array>
     <string>/bin/zsh</string>
     <string>-lc</string>
-    <string>bash /Users/your-user/srv/world-press-monitor/repo/scripts/run-api-news.sh</string>
+    <string>bash /Users/your-user/srv/world-press-radar/repo/scripts/run-api-news.sh</string>
   </array>
   <key>WorkingDirectory</key>
-  <string>/Users/your-user/srv/world-press-monitor/repo</string>
+  <string>/Users/your-user/srv/world-press-radar/repo</string>
   <key>RunAtLoad</key>
   <true/>
   <key>KeepAlive</key>
   <true/>
   <key>StandardOutPath</key>
-  <string>/Users/your-user/srv/world-press-monitor/logs/launchd-api-news.log</string>
+  <string>/Users/your-user/srv/world-press-radar/logs/launchd-api-news.log</string>
   <key>StandardErrorPath</key>
-  <string>/Users/your-user/srv/world-press-monitor/logs/launchd-api-news.log</string>
+  <string>/Users/your-user/srv/world-press-radar/logs/launchd-api-news.log</string>
 </dict>
 </plist>

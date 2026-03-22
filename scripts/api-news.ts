@@ -1059,8 +1059,8 @@ const playgroundHtml = `
 
       const host = window.location.origin;
       const saved = {
-        baseUrl: storage.getItem('wpm-playground-base') || host,
-        token: storage.getItem('wpm-playground-token') || ''
+        baseUrl: storage.getItem('wpr-playground-base') || storage.getItem('wpm-playground-base') || host,
+        token: storage.getItem('wpr-playground-token') || storage.getItem('wpm-playground-token') || ''
       };
       baseUrlInput.value = saved.baseUrl;
       tokenInput.value = saved.token;
@@ -1228,8 +1228,8 @@ const playgroundHtml = `
           statusEl.textContent = 'OK - total ' + total + ', returned ' + returned;
           downloadBtn.disabled = false;
           downloadCsvBtn.disabled = false;
-          storage.setItem('wpm-playground-base', baseUrlInput.value.trim() || window.location.origin);
-          storage.setItem('wpm-playground-token', tokenInput.value.trim());
+          storage.setItem('wpr-playground-base', baseUrlInput.value.trim() || window.location.origin);
+          storage.setItem('wpr-playground-token', tokenInput.value.trim());
         } catch (error) {
           lastPayload = null;
           resultEl.textContent = String(error);

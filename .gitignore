@@ -12,6 +12,7 @@ backups
 env.local
 tsconfig.tsbuildinfo
 .warm-daemon.pid
+.wpr-build-cache
 audits/*.log
 audits/*.md
 logs/*.log

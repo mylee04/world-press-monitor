@@ -14,6 +14,7 @@ type Mode = 'hourly' | 'daily' | 'weekly';
 
 const DEFAULT_LOG_PREFIX = '[ingest-ops]';
 const DISCORD_WEBHOOK_ENV_KEYS = [
+  'WPR_HOURLY_DISCORD_WEBHOOK',
   'WPM_HOURLY_DISCORD_WEBHOOK',
   'INGEST_OPS_DISCORD_WEBHOOK',
   'RSS_HEALTH_DISCORD_WEBHOOK_URL',
@@ -449,10 +450,10 @@ async function sendIngestOpsDiscordReport(params: {
 
   const header =
     params.mode === 'hourly'
-      ? `🛰️ WPM Ingest Hourly (${new Date().toISOString()})`
+      ? `🛰️ WPR Ingest Hourly (${new Date().toISOString()})`
       : params.mode === 'daily'
-        ? `🛰️ WPM Ingest Daily (${new Date().toISOString()})`
-        : `🛰️ WPM Ingest Weekly (${new Date().toISOString()})`;
+        ? `🛰️ WPR Ingest Daily (${new Date().toISOString()})`
+        : `🛰️ WPR Ingest Weekly (${new Date().toISOString()})`;
   const statusLine = params.status === 'healthy'
     ? '✅ Healthy'
     : totalFailures >= 400

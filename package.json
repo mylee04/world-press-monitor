@@ -71,6 +71,7 @@
     "ingest:retention": "bun scripts/ingest-retention.ts --write-json",
     "ingest:retention:dry-run": "bun scripts/ingest-retention.ts --dry-run --write-json",
     "db:init": "psql \"$DATABASE_URL\" -f db/schema.sql",
+    "db:bootstrap-wpr": "bash scripts/bootstrap-wpr-db.sh",
     "db:bootstrap-wpm": "bash scripts/bootstrap-wpm-db.sh",
     "db:check-schema-sync": "bun scripts/check-db-schema-sync.ts",
     "db:studio": "bash scripts/db-studio.sh",

@@ -8,7 +8,7 @@ source "${SCRIPT_DIR}/load-local-env.sh"
 load_local_env
 
 RUNNER="${PROJECT_ROOT}/scripts/run-rss-health-daily.sh"
-MARKER="## WPM-RSS-HEALTH-DAILY"
+MARKER="## WPR-RSS-HEALTH-DAILY"
 CRON_TZ="America/Chicago"
 
 quote_cron_env_value() {
@@ -51,7 +51,7 @@ Usage:
 
 Commands:
   install   Add or refresh daily 00:30 America/Chicago cron job.
-  uninstall Remove WPM RSS health cron job.
+  uninstall Remove WPR RSS health cron job.
   print     Print crontab entry only.
 USAGE
 }

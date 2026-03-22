@@ -213,7 +213,7 @@ export function ExplorerView() {
           <button
             className="button"
             type="button"
-            onClick={() => triggerCsvDownload(currentCsvRows, `wpm-customer-explorer-page-${page}.csv`)}
+            onClick={() => triggerCsvDownload(currentCsvRows, `wpr-customer-explorer-page-${page}.csv`)}
             disabled={currentCsvRows.length === 0}
           >
             Download current page CSV

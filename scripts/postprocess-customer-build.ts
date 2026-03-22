@@ -4,9 +4,12 @@ import { existsSync, mkdirSync, readdirSync, renameSync, rmSync } from 'node:fs'
 import { dirname, resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
 
-const exposePublicExports = /^(1|true|yes)$/i.test(process.env.WPM_EXPOSE_PUBLIC_EXPORTS || 'false');
+const exposePublicExports = /^(1|true|yes)$/i.test(
+  process.env.WPR_EXPOSE_PUBLIC_EXPORTS || process.env.WPM_EXPOSE_PUBLIC_EXPORTS || 'false'
+);
 const publicPath = resolve(process.cwd(), 'public');
-const stagedPublicRootPath = resolve(process.cwd(), '.wpm-build-cache/public');
+const stagedPublicRootPath = resolve(process.cwd(), '.wpr-build-cache/public');
+const legacyStagedPublicRootPath = resolve(process.cwd(), '.wpm-build-cache/public');
 const legacyStagedPublicDataPath = resolve(process.cwd(), '.wpm-build-cache/public-data');
 const nextCliPath = resolve(process.cwd(), 'node_modules/next/dist/bin/next');
 const outPath = resolve(process.cwd(), 'out');
@@ -45,12 +48,14 @@ try {
     }
   }
 
-  for (const stagedPath of listMatchingDataDirectories(stagedPublicRootPath)) {
-    const sourcePath = resolve(publicPath, stagedPath.slice(stagedPublicRootPath.length + 1));
-    if (!existsSync(sourcePath)) {
-      mkdirSync(dirname(sourcePath), { recursive: true });
-      renameSync(stagedPath, sourcePath);
-      console.log(`[customer-build] restored stale backup to ${sourcePath}`);
+  for (const candidateRoot of [stagedPublicRootPath, legacyStagedPublicRootPath]) {
+    for (const stagedPath of listMatchingDataDirectories(candidateRoot)) {
+      const sourcePath = resolve(publicPath, stagedPath.slice(candidateRoot.length + 1));
+      if (!existsSync(sourcePath)) {
+        mkdirSync(dirname(sourcePath), { recursive: true });
+        renameSync(stagedPath, sourcePath);
+        console.log(`[customer-build] restored stale backup to ${sourcePath}`);
+      }
     }
   }
 
@@ -81,7 +86,7 @@ try {
   if (exitCode === 0 && !exposePublicExports) {
     stripExportedPublicData();
   } else if (exitCode === 0) {
-    console.log('[customer-build] WPM_EXPOSE_PUBLIC_EXPORTS enabled; keeping exported /data files.');
+    console.log('[customer-build] WPR_EXPOSE_PUBLIC_EXPORTS enabled; keeping exported /data files.');
   }
 } finally {
   for (const { sourcePath, stagedPath } of movedPublicDataDirectories.reverse()) {

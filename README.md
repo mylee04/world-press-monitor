@@ -179,7 +179,7 @@ Useful commands:
 
 ```bash
 docker compose up -d postgres
-bash scripts/bootstrap-wpm-db.sh
+bash scripts/bootstrap-wpr-db.sh
 bun run ingest:local:run
 bun run rss:health:local:run
 bash scripts/setup-launchd-local.sh update

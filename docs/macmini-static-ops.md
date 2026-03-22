@@ -1,4 +1,4 @@
-# WPM Mac mini local ops + static web delivery
+# WPR Mac mini local ops + static web delivery
 
 This repo now treats the Mac mini as the ingest, storage, export, build, and deploy node.
 
@@ -12,7 +12,7 @@ Operating rules:
 ## Recommended directory layout
 
 ```text
-/Users/<user>/srv/world-press-monitor/
+/Users/<user>/srv/world-press-radar/
   repo/
   postgres/
   exports/
@@ -36,14 +36,14 @@ repo/
     run-static-deploy-local.sh
     export-public-news-data.ts
   ops/launchd/
-    com.wpm.ingest-hourly.plist
-    com.wpm.health-daily.plist
-    com.wpm.export-deploy.plist
+    com.wpr.ingest-hourly.plist
+    com.wpr.health-daily.plist
+    com.wpr.export-deploy.plist
 ```
 
 ## What changed in code
 
-- `docker-compose.yml` uses a bind mount for Postgres data through `WPM_PGDATA_DIR`.
+- `docker-compose.yml` uses a bind mount for Postgres data through `WPR_PGDATA_DIR`.
 - `.env.macmini.local` is the primary local-ops env file.
 - Local runner scripts no longer auto-load `.env.local`, so stale remote `DATABASE_URL` values cannot win by accident.
 - `next.config.ts` now exports a static site.
@@ -57,10 +57,10 @@ repo/
 
 ## Launchd schedule
 
-- `com.wpm.ingest-hourly`: minute `25` each hour
+- `com.wpr.ingest-hourly`: minute `25` each hour
 - `run-ingest-hourly-local.sh` chains `run-news-country-discord-report.sh` and `run-ingest-ops-hourly.sh` after a successful ingest
-- `com.wpm.health-daily`: `00:30 America/Chicago`
-- `com.wpm.export-deploy`: minute `40` each hour
+- `com.wpr.health-daily`: `00:30 America/Chicago`
+- `com.wpr.export-deploy`: minute `40` each hour
 
 Install the launchd jobs from a non-protected runtime path:
 
@@ -70,10 +70,10 @@ bash scripts/setup-launchd-local.sh install
 
 Defaults:
 
-- runtime root: `~/srv/world-press-monitor`
-- runtime repo: `~/srv/world-press-monitor/repo`
+- runtime root: `~/srv/world-press-radar`
+- runtime repo: `~/srv/world-press-radar/repo`
 - launchd target: `~/Library/LaunchAgents`
-- optional primary worktree mirror: set `WPM_PRIMARY_WORKTREE` if you want RSS health outputs synced back to your main repo checkout
+- optional primary worktree mirror: set `WPR_PRIMARY_WORKTREE` if you want RSS health outputs synced back to your main repo checkout
 
 Do not point launchd at worktrees under `Desktop`, `Documents`, or `Downloads`; macOS background execution can block those paths with `Operation not permitted`.
 
@@ -97,7 +97,7 @@ Recommended once per Mac mini:
 ## Runtime flow
 
 1. `docker compose up -d postgres`
-2. `bash scripts/bootstrap-wpm-db.sh`
+2. `bash scripts/bootstrap-wpr-db.sh`
 3. `bash scripts/setup-launchd-local.sh install`
 4. `bash scripts/run-rss-health-daily-local.sh`
 5. `bash scripts/run-static-export-local.sh`

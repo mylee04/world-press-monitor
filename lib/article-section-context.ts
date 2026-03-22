@@ -414,6 +414,25 @@ export function classifySectionBySourceFallback(context: ArticleSectionContext):
     return 'world';
   }
 
+  if (source.includes('newsit')) {
+    if (/^\/media\//.test(pathname)) return 'entertainment';
+    if (/^\/athlitika\//.test(pathname)) return 'sports';
+    if (/^\/oikonomia\//.test(pathname)) return 'business';
+    if (/^\/politikh\//.test(pathname)) return 'politics';
+    if (/^\/auto\//.test(pathname)) return 'business';
+    if (/^\/(?:texnologia|technology)\//.test(pathname)) return 'tech';
+    if (/^\/(?:ygeia|health)\//.test(pathname)) return 'health';
+    if (/^\/(?:ellada|kosmos|koinonia)\//.test(pathname)) return 'world';
+    return 'world';
+  }
+
+  if (source.includes('mehr news')) {
+    const titleSection = classifyMehrTitle(title);
+    if (/^\/(?:news|photo|film)\//.test(pathname)) return titleSection !== 'others' ? titleSection : 'world';
+    if (titleSection !== 'others') return titleSection;
+    return 'world';
+  }
+
   if (source.includes('g1 globo')) {
     if (/\/esporte\//.test(pathname)) return 'sports';
     if (/\/economia\//.test(pathname)) return 'business';
@@ -625,6 +644,14 @@ export function classifySectionBySourceFallback(context: ArticleSectionContext):
     if (/^\/people\//.test(pathname)) return 'entertainment';
     if (/^\/lifestyle\//.test(pathname)) return 'lifestyle';
     if (/^\/(?:actu|regions|dernieres-depeches)\//.test(pathname)) return 'world';
+    return 'world';
+  }
+
+  if (source.includes('actu.fr')) {
+    const titleSection = classifyActuTitle(title);
+    if (/^\/(?:sport|sports|football|rugby|basket)\//.test(pathname)) return 'sports';
+    if (/^\/economie\//.test(pathname)) return 'business';
+    if (titleSection !== 'others') return titleSection;
     return 'world';
   }
 
@@ -1134,6 +1161,10 @@ export function classifySectionBySourceFallback(context: ArticleSectionContext):
   }
 
   if (source.includes('republika')) {
+    const titleSection = classifyRepublikaTitle(title);
+    if (hostname.startsWith('news.')) return titleSection !== 'others' ? titleSection : 'world';
+    if (hostname.startsWith('visual.')) return titleSection !== 'others' ? titleSection : 'world';
+    if (hostname.startsWith('khazanah.')) return titleSection !== 'others' ? titleSection : 'lifestyle';
     if (/^\/sport\//.test(pathname)) return 'sports';
     if (/^\/vesti\/politika\//.test(pathname)) return 'politics';
     if (/^\/biznis\//.test(pathname)) return 'business';
@@ -1142,6 +1173,7 @@ export function classifySectionBySourceFallback(context: ArticleSectionContext):
     if (/^\/zabava\/kultura\//.test(pathname)) return 'arts';
     if (/^\/(?:zabava|elita-9-farmeri)\//.test(pathname)) return 'entertainment';
     if (/^\/(?:hronika|svet|vesti)\//.test(pathname)) return 'world';
+    if (titleSection !== 'others') return titleSection;
     return 'world';
   }
 
@@ -1868,6 +1900,34 @@ function classifyKbsTitle(title: string): NewsSection {
   if (/BTS|공연|컴백|가수|배우|드라마|영화|콘서트/.test(title)) return 'entertainment';
   if (/야구|축구|농구|배구|골프|올림픽|월드컵|선수|경기/.test(title)) return 'sports';
   if (/G7|EU|미국|러시아|중국|이스라엘|이란|외교장관|정상회담|트럼프|머스크|나토|미군/.test(title)) return 'world';
+  return 'others';
+}
+
+function classifyMehrTitle(title: string): NewsSection {
+  if (!title) return 'others';
+  if (/تل[‌ ]?آویو|اسرائیل|اسرائيل|موشک|موشک‌های|حمله|آژیر|سپاه|تنگه هرمز|خوشه‌ای|دشمن/.test(title)) return 'conflicts';
+  if (/ترامپ|رئیس جمهور|رييس جمهور|دولت|مجلس|وزیر|وزير|سازمان اطلاعات|انتخابات/.test(title)) return 'politics';
+  if (/بیمه سلامت|بيمه سلامت|سلامت|خون|بیمارستان|بيمارستان|پزشک|درمان/.test(title)) return 'health';
+  if (/میلیارد|ميليارد|ریال|ريال|برق|آب|نیروگاه|نيروگاه|ظرفیت|ظرفيت|تولید|توليد|عرضه|اقتصاد|بازار/.test(title)) return 'business';
+  if (/موزه|باستان‌شناسی|باستان شناسی|مردم‌شناسی|مردم شناسی|نمایشگاه|نمايشگاه|فرهنگ|هنر/.test(title)) return 'arts';
+  if (/گردشگری|گردشگر|اقامتگاه|بوم[‌ ]?گردی|نوروزی|سفر|مسافران/.test(title)) return 'lifestyle';
+  return 'others';
+}
+
+function classifyActuTitle(title: string): NewsSection {
+  if (!title) return 'others';
+  if (/municipales|maire|mairie|conseil municipal|élection|election|élu|elu|préfet|prefet/i.test(title)) return 'politics';
+  if (/expo|exposition|photo|festival|concert|spectacle|théâtre|theatre|musée|musee|livre/i.test(title)) return 'arts';
+  if (/tourisme|touristique|vacances|balade|randonnée|randonnee|plage|fête|fete|foire/i.test(title)) return 'lifestyle';
+  return 'others';
+}
+
+function classifyRepublikaTitle(title: string): NewsSection {
+  if (!title) return 'others';
+  if (/menteri|pemerintah|bupati|gubernur|wali kota|dpr|pemilu|pilkada|strategi/i.test(title)) return 'politics';
+  if (/bandara|kinerja|ekonomi|bisnis|ongkos|hemat|pasar|penyeberangan|transportasi/i.test(title)) return 'business';
+  if (/literasi|buku|museum|seni|budaya/i.test(title)) return 'arts';
+  if (/wisata|destinasi|libur|lebaran|shalat|idul fitri|ramai dikunjungi|semangat/i.test(title)) return 'lifestyle';
   return 'others';
 }
 

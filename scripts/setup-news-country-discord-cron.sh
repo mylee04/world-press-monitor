@@ -3,7 +3,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
-MARKER="## WPM-NEWS-COUNTRY-DISCORD"
+MARKER="## WPR-NEWS-COUNTRY-DISCORD"
 CRON_TZ="America/Chicago"
 
 # shellcheck disable=SC1091
@@ -28,7 +28,7 @@ Usage:
 
 Commands:
   install   Add or refresh hourly country-count discord report cron job (at minute 30).
-  uninstall Remove WPM news-country-discord cron job.
+  uninstall Remove WPR news-country-discord cron job.
   print     Print crontab entry only.
 USAGE
 }

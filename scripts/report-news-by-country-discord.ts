@@ -47,7 +47,7 @@ type AtlasMetadata = {
   sourceCountryByNormalizedName: Map<string, string>;
 };
 
-const DEFAULT_WEBHOOK_ENV_VARS = ['WPM_HOURLY_DISCORD_WEBHOOK'];
+const DEFAULT_WEBHOOK_ENV_VARS = ['WPR_HOURLY_DISCORD_WEBHOOK', 'WPM_HOURLY_DISCORD_WEBHOOK'];
 const DEFAULT_EXCLUDED_COUNTRIES = new Set(['global energy & grid']);
 const DEFAULT_ATLAS_PATH = resolve(process.cwd(), 'data/rss-atlas.json');
 

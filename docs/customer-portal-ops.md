@@ -11,7 +11,7 @@ This portal now assumes customer-only access through API tokens for World Press 
 ## Current runtime defaults
 
 - API server command: `bash scripts/run-api-news.sh`
-- Mac mini launchd job: `com.wpm.api-news`
+- Mac mini launchd job: `com.wpr.api-news`
 - API port: `4100`
 - Public anonymous access: disabled via `NEWS_API_ALLOW_PUBLIC_READ_ONLY=0`
 

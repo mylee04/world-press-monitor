@@ -9,7 +9,7 @@ load_local_env
 
 RUNNER_HOURLY="${PROJECT_ROOT}/scripts/run-ingest-ops-hourly.sh"
 RUNNER_DAILY="${PROJECT_ROOT}/scripts/run-ingest-ops-daily.sh"
-MARKER="## WPM-INGEST-OPS"
+MARKER="## WPR-INGEST-OPS"
 CRON_TZ="America/Chicago"
 
 if [ -n "${INGEST_OPS_TZ:-}" ]; then
@@ -29,7 +29,7 @@ Usage:
 
 Commands:
   install   Add or refresh ingest ops cron jobs (hourly + daily at 02:00) using America/Chicago by default.
-  uninstall Remove WPM ingest ops cron jobs.
+  uninstall Remove WPR ingest ops cron jobs.
   print     Print crontab entries only.
 USAGE
 }

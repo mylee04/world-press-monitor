@@ -3,25 +3,25 @@
 <plist version="1.0">
 <dict>
   <key>Label</key>
-  <string>com.wpm.ingest-hourly</string>
+  <string>com.wpr.export-deploy</string>
   <key>ProgramArguments</key>
   <array>
     <string>/bin/zsh</string>
     <string>-lc</string>
-    <string>bash /Users/your-user/srv/world-press-monitor/repo/scripts/run-ingest-hourly-local.sh</string>
+    <string>bash /Users/your-user/srv/world-press-radar/repo/scripts/run-static-deploy-local.sh</string>
   </array>
   <key>WorkingDirectory</key>
-  <string>/Users/your-user/srv/world-press-monitor/repo</string>
+  <string>/Users/your-user/srv/world-press-radar/repo</string>
   <key>RunAtLoad</key>
   <true/>
   <key>StartCalendarInterval</key>
   <dict>
     <key>Minute</key>
-    <integer>25</integer>
+    <integer>40</integer>
   </dict>
   <key>StandardOutPath</key>
-  <string>/Users/your-user/srv/world-press-monitor/logs/launchd-ingest-hourly.log</string>
+  <string>/Users/your-user/srv/world-press-radar/logs/launchd-export-deploy.log</string>
   <key>StandardErrorPath</key>
-  <string>/Users/your-user/srv/world-press-monitor/logs/launchd-ingest-hourly.log</string>
+  <string>/Users/your-user/srv/world-press-radar/logs/launchd-export-deploy.log</string>
 </dict>
 </plist>

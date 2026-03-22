@@ -11,11 +11,11 @@ Thanks for helping improve World Press Radar.
 bun install
 ```
 
-3. Set local environment variables in `.env.macmini.local` (`DATABASE_URL`, `WPM_PG_PORT`, etc.). If you need a different env file, set `WPM_ENV_FILE` explicitly.
-4. Boot the database (main DB is `wpm`):
+3. Set local environment variables in `.env.macmini.local` (`DATABASE_URL`, `WPR_PG_PORT`, etc.). If you need a different env file, set `WPR_ENV_FILE` explicitly.
+4. Boot the database:
 
 ```bash
-bun run db:bootstrap-wpm
+bun run db:bootstrap-wpr
 ```
 
 5. Run health validation:

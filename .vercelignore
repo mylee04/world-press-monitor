@@ -7,6 +7,7 @@ web-dist
 postgres
 backups
 public/data*
+.wpr-build-cache
 .wpm-build-cache
 .env
 .env.local

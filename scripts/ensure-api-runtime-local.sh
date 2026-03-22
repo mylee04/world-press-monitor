@@ -8,13 +8,13 @@ source "${SCRIPT_DIR}/load-local-env.sh"
 load_local_env
 
 LAUNCHD_DOMAIN="gui/$(id -u)"
-API_NEWS_LABEL="com.wpm.api-news"
-API_TUNNEL_LABEL="com.wpm.api-tunnel"
+API_NEWS_LABEL="${WPR_API_NEWS_LABEL:-com.wpr.api-news}"
+API_TUNNEL_LABEL="${WPR_API_TUNNEL_LABEL:-com.wpr.api-tunnel}"
 API_NEWS_PLIST="${HOME}/Library/LaunchAgents/${API_NEWS_LABEL}.plist"
 API_TUNNEL_PLIST="${HOME}/Library/LaunchAgents/${API_TUNNEL_LABEL}.plist"
-PUBLIC_HEALTH_URL="${WPM_PUBLIC_API_HEALTH_URL:-https://api.worldpressradar.com/health}"
-LOCAL_HEALTH_URL="${WPM_LOCAL_API_HEALTH_URL:-http://127.0.0.1:${NEWS_API_PORT:-4100}/health}"
-LOG_DIR="${WPM_LOG_DIR:-${PROJECT_ROOT}/logs}"
+PUBLIC_HEALTH_URL="${WPR_PUBLIC_API_HEALTH_URL:-${WPM_PUBLIC_API_HEALTH_URL:-https://api.worldpressradar.com/health}}"
+LOCAL_HEALTH_URL="${WPR_LOCAL_API_HEALTH_URL:-${WPM_LOCAL_API_HEALTH_URL:-http://127.0.0.1:${NEWS_API_PORT:-4100}/health}}"
+LOG_DIR="${WPR_LOG_DIR:-${WPM_LOG_DIR:-${PROJECT_ROOT}/logs}}"
 LOG_FILE="${LOG_DIR}/api-runtime-watchdog.log"
 
 mkdir -p "${LOG_DIR}"

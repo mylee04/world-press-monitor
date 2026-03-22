@@ -116,9 +116,10 @@ function resolveTrustedContextSection(row: CandidateRow): BackfillDecision | nul
     if (/^\/business\//.test(pathname)) return buildContextDecision(row, 'business', 'Trusted TOI business path');
     if (/^\/technology\//.test(pathname)) return buildContextDecision(row, 'tech', 'Trusted TOI technology path');
     if (/^\/health\//.test(pathname)) return buildContextDecision(row, 'health', 'Trusted TOI health path');
-    if (/^\/entertainment\//.test(pathname)) return buildContextDecision(row, 'entertainment', 'Trusted TOI entertainment path');
-    if (/^\/lifestyle\//.test(pathname)) return buildContextDecision(row, 'lifestyle', 'Trusted TOI lifestyle path');
-    if (/^\/(education|city|india|world)\//.test(pathname)) return buildContextDecision(row, 'world', 'Trusted TOI general-news path');
+    if (/^\/(?:entertainment|tv|web-series|etimes)\//.test(pathname)) return buildContextDecision(row, 'entertainment', 'Trusted TOI entertainment path');
+    if (/^\/(?:lifestyle|life-style|astrology|religion)\//.test(pathname)) return buildContextDecision(row, 'lifestyle', 'Trusted TOI lifestyle path');
+    if (/^\/(?:real-estate|auto)\//.test(pathname)) return buildContextDecision(row, 'business', 'Trusted TOI markets/auto path');
+    if (/^\/(?:education|city|india|world|legal|times-special)\//.test(pathname)) return buildContextDecision(row, 'world', 'Trusted TOI general-news path');
   }
 
   if (source.includes('infobae')) {
@@ -500,7 +501,19 @@ function resolveTrustedContextSection(row: CandidateRow): BackfillDecision | nul
   }
 
   if (source.includes('republika')) {
-    return buildContextDecision(row, section, 'Trusted Republika section path');
+    return buildContextDecision(row, section, 'Trusted Republika host/path/title context');
+  }
+
+  if (source.includes('newsit')) {
+    return buildContextDecision(row, section, 'Trusted Newsit section path');
+  }
+
+  if (source.includes('actu.fr')) {
+    return buildContextDecision(row, section, 'Trusted Actu.fr title/path context');
+  }
+
+  if (source.includes('mehr news')) {
+    return buildContextDecision(row, section, 'Trusted Mehr title/path context');
   }
 
   if (source.includes('o globo')) {

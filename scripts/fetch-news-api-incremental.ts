@@ -107,7 +107,7 @@ async function main() {
   const limit = Math.max(1, Math.min(200, numberEnv('NEWS_API_PAGE_LIMIT', 100)));
   const overlapSeconds = Math.max(0, numberEnv('NEWS_API_OVERLAP_SECONDS', 120));
   const runMode = (process.env.NEWS_API_OUTPUT_MODE || 'json').toLowerCase();
-  const stateFile = process.env.NEWS_API_CURSOR_FILE || join(process.cwd(), '.wpm-news-api-cursor.json');
+  const stateFile = process.env.NEWS_API_CURSOR_FILE || join(process.cwd(), '.wpr-news-api-cursor.json');
 
   const fallbackFromDate = new Date(Date.now() - 60 * 60 * 1000);
   const state = await loadState(stateFile, fallbackFromDate.toISOString());

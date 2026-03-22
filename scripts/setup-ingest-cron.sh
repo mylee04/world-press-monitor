@@ -8,7 +8,7 @@ source "${SCRIPT_DIR}/load-local-env.sh"
 load_local_env
 
 RUNNER="${PROJECT_ROOT}/scripts/run-ingest-hourly.sh"
-MARKER="## WPM-INGEST-HOURLY"
+MARKER="## WPR-INGEST-HOURLY"
 CRON_TZ="America/Chicago"
 CRON_MINUTE="25"
 
@@ -28,7 +28,7 @@ Usage:
 
 Commands:
   install   Add or refresh hourly ingest cron job (at minute 25) using America/Chicago by default.
-  uninstall Remove WPM hourly ingest cron job.
+  uninstall Remove WPR hourly ingest cron job.
   print     Print crontab entry only.
 USAGE
 }

@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
   <key>Label</key>
-  <string>com.wpm.api-tunnel</string>
+  <string>com.wpr.api-tunnel</string>
   <key>ProgramArguments</key>
   <array>
     <string>/bin/zsh</string>
@@ -11,14 +11,14 @@
     <string>/opt/homebrew/bin/cloudflared --config "$HOME/.cloudflared/config.yml" tunnel run worldpressradar-api</string>
   </array>
   <key>WorkingDirectory</key>
-  <string>/Users/your-user/srv/world-press-monitor/repo</string>
+  <string>/Users/your-user/srv/world-press-radar/repo</string>
   <key>RunAtLoad</key>
   <true/>
   <key>KeepAlive</key>
   <true/>
   <key>StandardOutPath</key>
-  <string>/Users/your-user/srv/world-press-monitor/logs/launchd-api-tunnel.log</string>
+  <string>/Users/your-user/srv/world-press-radar/logs/launchd-api-tunnel.log</string>
   <key>StandardErrorPath</key>
-  <string>/Users/your-user/srv/world-press-monitor/logs/launchd-api-tunnel.log</string>
+  <string>/Users/your-user/srv/world-press-radar/logs/launchd-api-tunnel.log</string>
 </dict>
 </plist>

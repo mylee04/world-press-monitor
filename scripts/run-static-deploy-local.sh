@@ -7,12 +7,12 @@ PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 source "${SCRIPT_DIR}/load-local-env.sh"
 load_local_env
 
-LOG_DIR="${WPM_LOG_DIR:-${PROJECT_ROOT}/logs}"
+LOG_DIR="${WPR_LOG_DIR:-${WPM_LOG_DIR:-${PROJECT_ROOT}/logs}}"
 LOG_FILE="${LOG_DIR}/static-deploy-local.log"
-WEB_DIST_DIR="${WPM_WEB_DIST_DIR:-${PROJECT_ROOT}/web-dist}"
-SOURCE_PUBLIC_DATA_DIR="${WPM_PUBLIC_DATA_DIR:-${PROJECT_ROOT}/public/data}"
+WEB_DIST_DIR="${WPR_WEB_DIST_DIR:-${WPM_WEB_DIST_DIR:-${PROJECT_ROOT}/web-dist}}"
+SOURCE_PUBLIC_DATA_DIR="${WPR_PUBLIC_DATA_DIR:-${WPM_PUBLIC_DATA_DIR:-${PROJECT_ROOT}/public/data}}"
 BUILD_PUBLIC_DATA_DIR="${PROJECT_ROOT}/public/data"
-LOCK_DIR="${PROJECT_ROOT}/.wpm-static-deploy-lock"
+LOCK_DIR="${PROJECT_ROOT}/.wpr-static-deploy-lock"
 VERCEL_DEPLOY_ARCHIVE="${VERCEL_DEPLOY_ARCHIVE:-tgz}"
 
 mkdir -p "${LOG_DIR}" "${WEB_DIST_DIR}" "${BUILD_PUBLIC_DATA_DIR}"
@@ -88,7 +88,7 @@ PY
   printf 'Web dist dir: %s\n' "${WEB_DIST_DIR}"
   printf 'Source public data dir: %s\n' "${SOURCE_PUBLIC_DATA_DIR}"
   printf 'Build public data dir: %s\n' "${BUILD_PUBLIC_DATA_DIR}"
-  printf 'Env file: %s\n' "${WPM_ENV_FILE_SOURCE:-inline-defaults}"
+  printf 'Env file: %s\n' "${WPR_ENV_FILE_SOURCE:-${WPM_ENV_FILE_SOURCE:-inline-defaults}}"
   bash "${SCRIPT_DIR}/run-static-export-local.sh"
   if [ "${SOURCE_PUBLIC_DATA_DIR}" != "${BUILD_PUBLIC_DATA_DIR}" ]; then
     rsync -a --delete "${SOURCE_PUBLIC_DATA_DIR}/" "${BUILD_PUBLIC_DATA_DIR}/"

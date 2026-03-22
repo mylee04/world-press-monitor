@@ -3,15 +3,15 @@
 <plist version="1.0">
 <dict>
   <key>Label</key>
-  <string>com.wpm.health-daily</string>
+  <string>com.wpr.health-daily</string>
   <key>ProgramArguments</key>
   <array>
     <string>/bin/zsh</string>
     <string>-lc</string>
-    <string>bash /Users/your-user/srv/world-press-monitor/repo/scripts/run-rss-health-daily-local.sh</string>
+    <string>bash /Users/your-user/srv/world-press-radar/repo/scripts/run-rss-health-daily-local.sh</string>
   </array>
   <key>WorkingDirectory</key>
-  <string>/Users/your-user/srv/world-press-monitor/repo</string>
+  <string>/Users/your-user/srv/world-press-radar/repo</string>
   <key>RunAtLoad</key>
   <true/>
   <key>StartCalendarInterval</key>
@@ -22,8 +22,8 @@
     <integer>30</integer>
   </dict>
   <key>StandardOutPath</key>
-  <string>/Users/your-user/srv/world-press-monitor/logs/launchd-health-daily.log</string>
+  <string>/Users/your-user/srv/world-press-radar/logs/launchd-health-daily.log</string>
   <key>StandardErrorPath</key>
-  <string>/Users/your-user/srv/world-press-monitor/logs/launchd-health-daily.log</string>
+  <string>/Users/your-user/srv/world-press-radar/logs/launchd-health-daily.log</string>
 </dict>
 </plist>

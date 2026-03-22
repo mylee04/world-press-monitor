@@ -5,15 +5,15 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: wpm
+      POSTGRES_DB: "${WPR_DATABASE_NAME:-wpr}"
     ports:
-      - "${WPM_PG_PORT:-5432}:5432"
+      - "${WPR_PG_PORT:-5432}:5432"
     volumes:
-      - "${WPM_PGDATA_DIR:-./postgres}:/var/lib/postgresql/data"
+      - "${WPR_PGDATA_DIR:-./postgres}:/var/lib/postgresql/data"
       # Applied automatically on first boot (when the data volume is empty).
       - ./db/schema.sql:/docker-entrypoint-initdb.d/00_schema.sql:ro
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d wpm"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d \"$${POSTGRES_DB}\""]
       interval: 5s
       timeout: 3s
       retries: 20
