@@ -26,6 +26,10 @@ type ExplorerCsvRow = {
   updatedAt: string;
 };
 
+function escapeCsvValue(value: string): string {
+  return value.split('"').join('""');
+}
+
 function buildClientCsv(rows: ExplorerCsvRow[]): string {
   const header = [
     'id',
@@ -49,7 +53,7 @@ function buildClientCsv(rows: ExplorerCsvRow[]): string {
       .map((key) => {
         const value = row[key as keyof ExplorerCsvRow];
         if (!/[",\n]/.test(value)) return value;
-        return `"${value.replaceAll('"', '""')}"`;
+        return `"${escapeCsvValue(value)}"`;
       })
       .join(',')
   );
