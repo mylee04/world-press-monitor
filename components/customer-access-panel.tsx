@@ -78,7 +78,7 @@ export function CustomerAccessPanel({
           <Link href="/explorer/">Open Explorer</Link>
         </div>
         <div className="muted">
-          Without a valid token, this portal does not proxy article data and does not expose static export downloads.
+          Without a valid token, this portal does not proxy article data or customer CSV export.
         </div>
       </section>
     </div>

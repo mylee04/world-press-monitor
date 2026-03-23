@@ -25,6 +25,22 @@ const VALID_NEWS_SECTIONS: ReadonlySet<NewsSection> = new Set<NewsSection>([
   'others',
 ]);
 
+export const NEWS_SECTION_ORDER: NewsSection[] = [
+  'world',
+  'politics',
+  'conflicts',
+  'business',
+  'tech',
+  'sports',
+  'health',
+  'entertainment',
+  'lifestyle',
+  'arts',
+  'science',
+  'climate',
+  'others',
+];
+
 type ArticleTaxonomyInput = {
   storedSection?: string | null;
   sourceCategories?: ReadonlyArray<string> | null;

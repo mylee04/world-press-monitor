@@ -3,7 +3,7 @@
 import { CustomerAccessPanel } from '@/components/customer-access-panel';
 import { useCustomerAccess } from '@/components/customer-access-provider';
 import { useNewsApiDashboardSummary } from '@/components/news-api-hooks';
-import { PUBLIC_DATA_SECTIONS } from '@/lib/public-data';
+import { NEWS_SECTION_ORDER } from '@/lib/article-taxonomy';
 
 function renderGeneratedAt(value: string | null | undefined): string {
   if (!value) return '-';
@@ -87,7 +87,7 @@ export function DashboardView() {
     return <div className="panel danger">Dashboard summary is unavailable.</div>;
   }
 
-  const sectionRollup = PUBLIC_DATA_SECTIONS.map((section) => ({
+  const sectionRollup = NEWS_SECTION_ORDER.map((section) => ({
     key: section,
     count: summary.sectionTotals[section] || 0,
   })).filter((item) => item.count > 0);
@@ -103,7 +103,7 @@ export function DashboardView() {
         </p>
         <div className="hero-note">
           <strong>Live refresh:</strong> updated {renderRelativeTime(summary.generatedAt)} from the live database.
-          Coverage metrics reflect the current rolling window, not a static export.
+          Coverage metrics reflect the current rolling window from PostgreSQL.
         </div>
       </section>
 

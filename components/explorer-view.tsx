@@ -178,7 +178,7 @@ export function ExplorerView() {
         <div className="eyebrow">Explorer</div>
         <h1>Filter live article results by normalized sections, source tags, country, UTC publication date, and keyword.</h1>
         <p>
-          This page no longer loads public JSON shards. Every result comes from the authenticated customer API,
+          Every result comes from the authenticated customer API,
           with server-side filtering and page-level CSV export only for signed-in customers.
         </p>
       </section>

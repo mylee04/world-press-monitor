@@ -12,7 +12,6 @@ WPR_RUNTIME_ROOT="${WPR_RUNTIME_ROOT:-${WPM_RUNTIME_ROOT:-${HOME}/srv/world-pres
 WPR_RUNTIME_REPO="${WPR_RUNTIME_REPO:-${WPM_RUNTIME_REPO:-${WPR_RUNTIME_ROOT}/repo}}"
 WPR_RUNTIME_LOG_DIR="${WPR_RUNTIME_LOG_DIR:-${WPM_RUNTIME_LOG_DIR:-${WPR_RUNTIME_ROOT}/logs}}"
 WPR_LAUNCHD_DIR="${WPR_LAUNCHD_DIR:-${WPM_LAUNCHD_DIR:-${HOME}/Library/LaunchAgents}}"
-POST_INGEST_EXPORT_ENABLED="${WPR_POST_INGEST_EXPORT:-${WPM_POST_INGEST_EXPORT:-1}}"
 LAUNCHD_DOMAIN="gui/$(id -u)"
 
 PLIST_NAMES=(
@@ -23,17 +22,12 @@ PLIST_NAMES=(
   "com.wpr.health-daily.plist"
 )
 
-if [ "${POST_INGEST_EXPORT_ENABLED}" != "0" ]; then
-  PLIST_NAMES+=("com.wpr.export-deploy.plist")
-fi
-
 LEGACY_PLIST_NAMES=(
   "com.wpm.api-news.plist"
   "com.wpm.api-tunnel.plist"
   "com.wpm.api-runtime-watchdog.plist"
   "com.wpm.ingest-hourly.plist"
   "com.wpm.health-daily.plist"
-  "com.wpm.export-deploy.plist"
   "com.wpm.news-country-discord.plist"
   "com.wpm.ingest-ops-hourly.plist"
 )
@@ -53,7 +47,6 @@ sync_runtime_repo() {
     --exclude 'exports' \
     --exclude 'web-dist' \
     --exclude 'out' \
-    --exclude 'public/data' \
     --exclude '.next' \
     "${PROJECT_ROOT}/" "${WPR_RUNTIME_REPO}/"
 
@@ -63,20 +56,17 @@ sync_runtime_repo() {
     "${WPR_RUNTIME_REPO}/scripts/run-ingest-hourly-local.sh" \
     "${WPR_RUNTIME_REPO}/scripts/run-news-country-discord-report.sh" \
     "${WPR_RUNTIME_REPO}/scripts/run-ingest-ops-hourly.sh" \
-    "${WPR_RUNTIME_REPO}/scripts/run-rss-health-daily-local.sh" \
-    "${WPR_RUNTIME_REPO}/scripts/run-static-deploy-local.sh"
+    "${WPR_RUNTIME_REPO}/scripts/run-rss-health-daily-local.sh"
 
   (
     cd "${WPR_RUNTIME_REPO}"
     bun install
   )
 
-  if [ "${POST_INGEST_EXPORT_ENABLED}" = "0" ]; then
-    launchctl bootout "${LAUNCHD_DOMAIN}/com.wpm.export-deploy" >/dev/null 2>&1 || true
-    launchctl bootout "${LAUNCHD_DOMAIN}/com.wpr.export-deploy" >/dev/null 2>&1 || true
-    rm -f "${WPR_LAUNCHD_DIR}/com.wpm.export-deploy.plist"
-    rm -f "${WPR_LAUNCHD_DIR}/com.wpr.export-deploy.plist"
-  fi
+  launchctl bootout "${LAUNCHD_DOMAIN}/com.wpm.export-deploy" >/dev/null 2>&1 || true
+  launchctl bootout "${LAUNCHD_DOMAIN}/com.wpr.export-deploy" >/dev/null 2>&1 || true
+  rm -f "${WPR_LAUNCHD_DIR}/com.wpm.export-deploy.plist"
+  rm -f "${WPR_LAUNCHD_DIR}/com.wpr.export-deploy.plist"
 }
 
 render_plist() {

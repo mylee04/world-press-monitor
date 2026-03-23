@@ -161,7 +161,6 @@ The primary local runtime assumes:
 - hourly ingest jobs against `127.0.0.1`
 - daily RSS health checks against the same database
 - an `api-news` process managed locally for customer-portal reads
-- optional static export jobs for archive or legacy internal use only
 
 Key files:
 
@@ -173,7 +172,6 @@ Key files:
 - `scripts/setup-launchd-local.sh`
 - `ops/launchd/*.plist`
 - `docs/customer-portal-ops.md`
-- `docs/macmini-static-ops.md`
 
 Useful commands:
 
@@ -186,23 +184,12 @@ bash scripts/setup-launchd-local.sh update
 bash scripts/run-api-news.sh
 ```
 
-## Legacy static exports
-
-Static JSON and CSV exports still exist in the repository for archive, diagnostics, and controlled batch delivery. They are no longer the primary customer experience.
-
-Important rules:
-
-- do not rely on static export files for the main customer portal
-- do not expose article dumps publicly if the portal is customer-only
-- use the authenticated API for dashboard counts, filters, and article retrieval
-- use static exports only when you explicitly need offline files or a historical snapshot
-
 ## Repository scope
 
 - maintain a global RSS source catalog with clear health status
 - ingest and normalize article data into PostgreSQL
 - power a token-gated customer portal for browsing tracked coverage
-- support repeatable health checks, exports, and operational workflows
+- support repeatable health checks, API reads, and operational workflows
 
 Suggested GitHub tags: `rss`, `news`, `feed`, `typescript`, `postgresql`, `docker`, `bun`, `monitoring`
 
