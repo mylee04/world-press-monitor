@@ -48,6 +48,8 @@ sync_runtime_repo() {
     --exclude 'web-dist' \
     --exclude 'out' \
     --exclude '.next' \
+    --exclude '.wpr-state' \
+    --exclude 'data/news.db' \
     "${PROJECT_ROOT}/" "${WPR_RUNTIME_REPO}/"
 
   chmod +x \
