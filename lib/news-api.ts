@@ -8,6 +8,8 @@ export interface NewsApiItem {
   language: string | null;
   primarySection: string | null;
   sections: string[];
+  primaryTopic: string | null;
+  topics: string[];
   sourceCategories: string[];
   publicationDatetime: string;
   createdAt: string;
@@ -61,6 +63,15 @@ export interface NewsApiDashboardItem extends NewsApiItem {
   countryCode: string | null;
 }
 
+export interface NewsApiDashboardTopicGroup {
+  section: string;
+  articleCount: number;
+  topics: Array<{
+    topic: string;
+    count: number;
+  }>;
+}
+
 export interface NewsApiDashboardSummaryResponse {
   storage: 'postgres' | 'disabled';
   generatedAt: string | null;
@@ -79,6 +90,8 @@ export interface NewsApiDashboardSummaryResponse {
     date: string;
     count: number;
   }>;
+  topicSampleSize: number;
+  topicGroups: NewsApiDashboardTopicGroup[];
   preview: {
     articleCount: number;
     topCountries: NewsApiCountryCount[];

@@ -1257,6 +1257,8 @@ const playgroundHtml = `
           'language',
           'primarySection',
           'sections',
+          'primaryTopic',
+          'topics',
           'sourceCategories',
           'publicationDatetime',
           'createdAt',
@@ -1732,6 +1734,8 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
         },
         sectionTotals: summary.sectionTotals,
         recentDates: summary.recentDates,
+        topicSampleSize: summary.topicSampleSize,
+        topicGroups: summary.topicGroups,
         preview: {
           articleCount: summary.preview.articleCount,
           topCountries: summary.preview.topCountries

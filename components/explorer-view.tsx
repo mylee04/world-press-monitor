@@ -15,6 +15,8 @@ type ExplorerCsvRow = {
   language: string;
   primarySection: string;
   sections: string;
+  primaryTopic: string;
+  topics: string;
   sourceCategories: string;
   title: string;
   snippet: string;
@@ -32,6 +34,8 @@ function buildClientCsv(rows: ExplorerCsvRow[]): string {
     'language',
     'primarySection',
     'sections',
+    'primaryTopic',
+    'topics',
     'sourceCategories',
     'title',
     'snippet',
@@ -79,6 +83,12 @@ function renderSectionList(sections: string[] | null | undefined): string {
   return normalized.map((section) => renderSectionLabel(section)).join(', ');
 }
 
+function renderTopicList(topics: string[] | null | undefined): string {
+  const normalized = [...new Set((topics || []).filter(Boolean))];
+  if (!normalized.length) return '-';
+  return normalized.join(', ');
+}
+
 function toExplorerCsvRow(article: NewsApiItem): ExplorerCsvRow {
   return {
     id: article.id,
@@ -87,6 +97,8 @@ function toExplorerCsvRow(article: NewsApiItem): ExplorerCsvRow {
     language: article.language || '',
     primarySection: article.primarySection || '',
     sections: (article.sections || []).join('|'),
+    primaryTopic: article.primaryTopic || '',
+    topics: (article.topics || []).join('|'),
     sourceCategories: (article.sourceCategories || []).join('|'),
     title: article.title || '',
     snippet: article.snippet || '',
@@ -176,7 +188,7 @@ export function ExplorerView() {
     <div className="page-stack">
       <section className="hero-panel compact">
         <div className="eyebrow">Explorer</div>
-        <h1>Filter live article results by normalized sections, source tags, country, UTC publication date, and keyword.</h1>
+        <h1>Filter live article results by normalized sections, detailed topics, source tags, country, UTC publication date, and keyword.</h1>
         <p>
           Every result comes from the authenticated customer API,
           with server-side filtering and page-level CSV export only for signed-in customers.
@@ -299,6 +311,7 @@ export function ExplorerView() {
                 <th>Source</th>
                 <th>Primary</th>
                 <th>Sections</th>
+                <th>Topics</th>
                 <th>Source tags</th>
                 <th>Title</th>
                 <th>Link</th>
@@ -312,6 +325,7 @@ export function ExplorerView() {
                   <td>{article.source}</td>
                   <td>{renderSectionLabel(article.primarySection)}</td>
                   <td>{renderSectionList(article.sections)}</td>
+                  <td>{renderTopicList(article.topics)}</td>
                   <td>{article.sourceCategories.length > 0 ? article.sourceCategories.join(', ') : '-'}</td>
                   <td>{article.title}</td>
                   <td>
@@ -323,7 +337,7 @@ export function ExplorerView() {
               ))}
               {!newsState.loading && rows.length === 0 ? (
                 <tr>
-                  <td colSpan={8}>No rows match the current filter set.</td>
+                  <td colSpan={9}>No rows match the current filter set.</td>
                 </tr>
               ) : null}
             </tbody>

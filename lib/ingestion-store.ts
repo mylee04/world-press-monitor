@@ -10,7 +10,7 @@ import {
   normalizeReadableArticleTitle,
 } from '@/lib/html-entities';
 import { normalizeLinkForId } from '@/lib/pipeline';
-import { buildArticleTaxonomy, normalizeSourceCategories } from '@/lib/article-taxonomy';
+import { buildArticleTaxonomy, NEWS_SECTION_ORDER, normalizeSourceCategories } from '@/lib/article-taxonomy';
 
 let pool: Pool | null = null;
 let poolFailed = false;
@@ -56,6 +56,7 @@ const newsApiMaxFutureMinutes = (() => {
   if (!Number.isFinite(parsed) || parsed < 0 || parsed > 24 * 60) return 30;
   return parsed;
 })();
+const dashboardTopicSampleLimit = 2000;
 const VALID_NEWS_SECTION_LIST: readonly NewsSection[] = [
   'world',
   'politics',
@@ -783,6 +784,8 @@ export interface NewsApiItem {
   language: string | null;
   primarySection: string | null;
   sections: string[];
+  primaryTopic: string | null;
+  topics: string[];
   sourceCategories: string[];
   publicationDatetime: string;
   createdAt: string;
@@ -818,10 +821,21 @@ export interface NewsApiDashboardHeadline {
   language: string | null;
   primarySection: string | null;
   sections: string[];
+  primaryTopic: string | null;
+  topics: string[];
   sourceCategories: string[];
   publicationDatetime: string;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface NewsApiDashboardTopicGroup {
+  section: string;
+  articleCount: number;
+  topics: Array<{
+    topic: string;
+    count: number;
+  }>;
 }
 
 export interface NewsApiDashboardSummaryResult {
@@ -840,6 +854,8 @@ export interface NewsApiDashboardSummaryResult {
   };
   sectionTotals: Record<string, number>;
   recentDates: Array<{ date: string; count: number }>;
+  topicSampleSize: number;
+  topicGroups: NewsApiDashboardTopicGroup[];
   preview: {
     articleCount: number;
     topCountries: Array<{ country: string | null; count: number }>;
@@ -1127,10 +1143,24 @@ function mapRowToNewsApiItem(row: NewsApiReadRow): NewsApiItem {
     language: row.language,
     primarySection: taxonomy.primarySection,
     sections: taxonomy.sections,
+    primaryTopic: taxonomy.primaryTopic,
+    topics: taxonomy.topics,
     sourceCategories: taxonomy.sourceCategories,
     publicationDatetime: row.publication_datetime,
     createdAt: row.created_at,
     updatedAt: row.updated_at
+  };
+}
+
+function mapRowToDisplayNewsApiItem(row: NewsApiReadRow): NewsApiItem | null {
+  const title = normalizeReadableArticleTitle(row.title || '', row.url, row.source || '');
+  if (!title || looksLikeLowSignalArticleTitle(title, row.source || '', row.url || '')) {
+    return null;
+  }
+
+  return {
+    ...mapRowToNewsApiItem(row),
+    title,
   };
 }
 
@@ -1159,6 +1189,8 @@ export async function readNewsDashboardSummary(options?: {
       },
       sectionTotals: {},
       recentDates: [],
+      topicSampleSize: 0,
+      topicGroups: [],
       preview: {
         articleCount: 0,
         topCountries: [],
@@ -1177,7 +1209,7 @@ export async function readNewsDashboardSummary(options?: {
     ? newsApiMaxFutureMinutes
     : Math.max(0, Math.min(168 * 60, Math.floor(options.maxFutureHours * 60)));
 
-  const [totalsResult, checkedSourcesResult, sectionTotalsResult, dateResult, recentDatesResult] = await Promise.all([
+  const [totalsResult, checkedSourcesResult, sectionTotalsResult, dateResult, recentDatesResult, topicSampleResult] = await Promise.all([
     db.query<NewsApiSummaryTotalsRow>(
       `
       select
@@ -1262,6 +1294,30 @@ export async function readNewsDashboardSummary(options?: {
       `,
       [windowDays, maxFutureMinutes]
     ),
+    db.query<NewsApiReadRow>(
+      `
+      select
+        external_id as id,
+        source,
+        title_original as title,
+        null::text as snippet_original,
+        url,
+        country,
+        language,
+        coalesce(section, 'others') as section,
+        feed_categories,
+        publication_datetime,
+        created_at,
+        updated_at,
+        max(created_at) over() as generated_at
+      from news_articles
+      where publication_datetime >= now() - ($1::int * interval '1 hour')
+        and publication_datetime <= now() + ($2::int * interval '1 minute')
+      order by publication_datetime desc, created_at desc
+      limit $3
+      `,
+      [latestHours, maxFutureMinutes, dashboardTopicSampleLimit]
+    ),
   ]);
 
   const dateRow = dateResult.rows[0];
@@ -1271,6 +1327,8 @@ export async function readNewsDashboardSummary(options?: {
   let previewArticleCount = 0;
   let previewTopCountries: Array<{ country: string | null; count: number }> = [];
   let previewHeadlines: NewsApiDashboardHeadline[] = [];
+  let topicSampleSize = 0;
+  let topicGroups: NewsApiDashboardTopicGroup[] = [];
 
   if (previewDate) {
     const [countryCountsResult, headlinesResult] = await Promise.all([
@@ -1372,18 +1430,16 @@ export async function readNewsDashboardSummary(options?: {
     previewArticleCount = Number(countResult.rows[0]?.count || 0);
 
     previewHeadlines = headlinesResult.rows
-      .map((row) => {
-        const title = normalizeReadableArticleTitle(row.title || '', row.url, row.source || '');
-        if (!title || looksLikeLowSignalArticleTitle(title, row.source || '', row.url || '')) {
-          return null;
-        }
-        return {
-          ...mapRowToNewsApiItem(row),
-          title,
-        } satisfies NewsApiDashboardHeadline;
-      })
+      .map((row) => mapRowToDisplayNewsApiItem(row))
       .filter((row): row is NewsApiDashboardHeadline => row !== null);
   }
+
+  const topicSampleItems = topicSampleResult.rows
+    .map((row) => mapRowToDisplayNewsApiItem(row))
+    .filter((row): row is NewsApiItem => row !== null);
+
+  topicSampleSize = topicSampleItems.length;
+  topicGroups = buildDashboardTopicGroups(topicSampleItems);
 
   return {
     storage: 'postgres',
@@ -1415,12 +1471,57 @@ export async function readNewsDashboardSummary(options?: {
       date: row.date,
       count: Number(row.count) || 0,
     })),
+    topicSampleSize,
+    topicGroups,
     preview: {
       articleCount: previewArticleCount,
       topCountries: previewTopCountries,
       headlines: previewHeadlines,
     },
   };
+}
+
+function buildDashboardTopicGroups(items: ReadonlyArray<NewsApiItem>): NewsApiDashboardTopicGroup[] {
+  const countsBySection = new Map<string, { articleCount: number; topicCounts: Map<string, number> }>();
+
+  for (const item of items) {
+    const section = normalizeStoredSectionValue(item.primarySection);
+    if (section === 'others') continue;
+
+    const current = countsBySection.get(section) || {
+      articleCount: 0,
+      topicCounts: new Map<string, number>(),
+    };
+    current.articleCount += 1;
+
+    if (item.primaryTopic) {
+      current.topicCounts.set(item.primaryTopic, (current.topicCounts.get(item.primaryTopic) || 0) + 1);
+    }
+
+    countsBySection.set(section, current);
+  }
+
+  const groups: NewsApiDashboardTopicGroup[] = [];
+
+  for (const section of NEWS_SECTION_ORDER) {
+    if (section === 'others') continue;
+    const current = countsBySection.get(section);
+    if (!current || current.topicCounts.size === 0) continue;
+
+    groups.push({
+      section,
+      articleCount: current.articleCount,
+      topics: [...current.topicCounts.entries()]
+        .map(([topic, count]) => ({ topic, count }))
+        .sort((left, right) => {
+          if (right.count !== left.count) return right.count - left.count;
+          return left.topic.localeCompare(right.topic);
+        })
+        .slice(0, 5),
+    });
+  }
+
+  return groups;
 }
 
 export async function readNewsApiFilters(): Promise<NewsApiFiltersResult> {

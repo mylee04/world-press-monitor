@@ -254,6 +254,48 @@ td small {
   border: 1px solid rgba(12, 91, 111, 0.1);
 }
 
+.topic-group-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.topic-group {
+  padding: 16px;
+  border-radius: 20px;
+  background: var(--paper-strong);
+  border: 1px solid rgba(12, 91, 111, 0.1);
+}
+
+.topic-group-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: baseline;
+}
+
+.topic-group-head small,
+.topic-pill small {
+  color: var(--muted);
+}
+
+.topic-pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.topic-pill {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(12, 91, 111, 0.08);
+  border: 1px solid rgba(12, 91, 111, 0.12);
+}
+
 .control-grid {
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
 }

@@ -47,6 +47,12 @@ function renderSectionList(sections: string[] | null | undefined): string {
   return normalized.map((section) => renderSectionLabel(section)).join(', ');
 }
 
+function renderTopicList(topics: string[] | null | undefined): string {
+  const normalized = [...new Set((topics || []).filter(Boolean))];
+  if (!normalized.length) return 'No detailed topic mapped yet';
+  return normalized.join(', ');
+}
+
 export function DashboardView() {
   const { hasToken, isReady, apiConfigured } = useCustomerAccess();
   const summaryState = useNewsApiDashboardSummary();
@@ -91,6 +97,7 @@ export function DashboardView() {
     key: section,
     count: summary.sectionTotals[section] || 0,
   })).filter((item) => item.count > 0);
+  const topicGroups = summary.topicGroups.filter((group) => group.topics.length > 0);
 
   return (
     <div className="page-stack">
@@ -196,6 +203,37 @@ export function DashboardView() {
 
       <section className="panel">
         <div className="section-head">
+          <h2>Detailed topic leaders</h2>
+          <span>
+            {summary.topicSampleSize.toLocaleString()} recent articles sampled across the latest {summary.latestHours}h window
+          </span>
+        </div>
+        {topicGroups.length > 0 ? (
+          <div className="topic-group-grid">
+            {topicGroups.map((group) => (
+              <article className="topic-group" key={group.section}>
+                <div className="topic-group-head">
+                  <strong>{renderSectionLabel(group.section)}</strong>
+                  <small>{group.articleCount.toLocaleString()} sampled</small>
+                </div>
+                <div className="topic-pill-row">
+                  {group.topics.map((item) => (
+                    <span className="topic-pill" key={`${group.section}-${item.topic}`}>
+                      <strong>{item.topic}</strong>
+                      <small>{item.count.toLocaleString()}</small>
+                    </span>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div className="muted">Detailed topic leaders are still warming up.</div>
+        )}
+      </section>
+
+      <section className="panel">
+        <div className="section-head">
           <h2>Recent headlines</h2>
           <span>{summary.preview.headlines.length > 0 ? `Preview date · ${summary.previewDate || '-'} UTC` : 'Waiting for live rows'}</span>
         </div>
@@ -206,7 +244,11 @@ export function DashboardView() {
                 {article.country || 'Unknown'} · {article.source} · {renderSectionLabel(article.primarySection)}
               </small>
               <strong>{article.title}</strong>
-              <small>{renderSectionList(article.sections)}</small>
+              <small>
+                {article.topics.length > 0
+                  ? `Topics · ${renderTopicList(article.topics)}`
+                  : `Sections · ${renderSectionList(article.sections)}`}
+              </small>
               <span>{article.snippet || 'Snippet unavailable in customer API preview.'}</span>
             </a>
           ))}
