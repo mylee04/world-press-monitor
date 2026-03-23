@@ -18,6 +18,7 @@
         {
           "name": "Wall Street Journal",
           "url": "https://feeds.a.dj.com/rss/RSSWorldNews.xml",
+          "sitemapUrl": "https://www.wsj.com/sitemap.xml",
           "status": "ERR",
           "checkedDate": "02/18/2026",
           "valid": "invalid",
@@ -69,6 +70,7 @@
         {
           "name": "CBS News",
           "url": "https://www.cbsnews.com/latest/rss/main",
+          "sitemapUrl": "https://www.cbsnews.com/xml-sitemap/news.xml",
           "status": "ERR",
           "checkedDate": "02/18/2026",
           "valid": "invalid",
@@ -77,6 +79,7 @@
         {
           "name": "ABC News",
           "url": "https://feeds.abcnews.com/abcnews/topstories",
+          "sitemapUrl": "https://abcnews.com/xmlLatestStories",
           "status": "ERR",
           "checkedDate": "02/18/2026",
           "valid": "invalid",
@@ -105,10 +108,16 @@
         {
           "name": "NPR",
           "url": "https://feeds.npr.org/1001/rss.xml",
+          "sitemapUrl": "https://googlecrawl.npr.org/news/sitemap_news.xml",
           "status": "ERR",
           "checkedDate": "02/18/2026",
           "valid": "invalid",
           "row": 11
+        },
+        {
+          "name": "Washington Post",
+          "url": null,
+          "sitemapUrl": "https://www.washingtonpost.com/sitemaps/news-sitemap.xml.gz"
         },
         {
           "name": "Associated Press - News Sitemap",
@@ -258,6 +267,7 @@
         {
           "name": "Vox",
           "url": "https://www.vox.com/rss/index.xml",
+          "sitemapUrl": "https://www.vox.com/sitemaps/google_news",
           "status": "ERR",
           "checkedDate": "02/18/2026",
           "valid": "invalid",
@@ -282,6 +292,7 @@
         {
           "name": "Forbes",
           "url": "https://www.forbes.com/most-popular/feed/",
+          "sitemapUrl": "https://www.forbes.com/news_sitemap.xml",
           "status": "ERR",
           "checkedDate": "02/18/2026",
           "valid": "invalid",
@@ -290,6 +301,7 @@
         {
           "name": "Fortune",
           "url": "https://fortune.com/feed",
+          "sitemapUrl": "https://fortune.com/sitemap_index.xml",
           "status": "ERR",
           "checkedDate": "02/18/2026",
           "valid": "invalid",
@@ -410,6 +422,7 @@
         {
           "name": "Axios",
           "url": "https://api.axios.com/feed/",
+          "sitemapUrl": "https://www.axios.com/sitemap.xml",
           "status": "ERR",
           "checkedDate": "02/18/2026",
           "valid": "invalid",
@@ -442,6 +455,7 @@
         {
           "name": "The New Yorker",
           "url": "https://www.newyorker.com/feed/everything",
+          "sitemapUrl": "https://www.newyorker.com/feed/google-news-sitemap-feed/sitemap-google-news",
           "status": "ERR",
           "checkedDate": "02/18/2026",
           "valid": "invalid",
@@ -450,6 +464,7 @@
         {
           "name": "The Atlantic",
           "url": "https://www.theatlantic.com/feed/all/",
+          "sitemapUrl": "https://www.theatlantic.com/sitemap.xml",
           "status": "ERR",
           "checkedDate": "02/18/2026",
           "valid": "invalid",
@@ -711,6 +726,7 @@
         {
           "name": "Vanity Fair",
           "url": "http://feeds.feedburner.com/vfdotcomrss",
+          "sitemapUrl": "https://www.vanityfair.com/feed/google-latest-news/sitemap-google-news",
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/18/2026",
           "valid": "needs verification",
@@ -17252,7 +17268,8 @@
         },
         {
           "name": "iDNES.cz",
-          "sitemapUrl": "https://www.idnes.cz/sitemap.xml"
+          "sitemapUrl": "https://www.idnes.cz/sitemap.xml",
+          "enabled": false
         },
         {
           "name": "Blesk",

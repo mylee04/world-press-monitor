@@ -36,6 +36,10 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     return true;
   }
 
+  if (hostname.endsWith('grupormultimedio.com') && /^\/author\/[^/]+\/?$/.test(pathname)) {
+    return true;
+  }
+
   if (hostname.endsWith('nepszava.hu') && pathname.startsWith('/tag/')) {
     return true;
   }
@@ -48,8 +52,49 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     return true;
   }
 
+  if (hostname.endsWith('ciperchile.cl') && /^\/category\/[^/]+\/?$/.test(pathname)) {
+    return true;
+  }
+
+  if (hostname.endsWith('ciperchile.cl') && /^\/author\/[^/]+\/?$/.test(pathname)) {
+    return true;
+  }
+
   if (hostname.endsWith('delo.si') && pathname.startsWith('/tag/')) {
     return true;
+  }
+
+  if (hostname.endsWith('berliner-zeitung.de') && pathname.startsWith('/topics/')) {
+    return true;
+  }
+
+  if (hostname.endsWith('sindonews.com') && pathname.startsWith('/topic/')) {
+    return true;
+  }
+
+  if (hostname.endsWith('citynews.ca') && /^\/author\/[^/]+\/?$/.test(pathname)) {
+    return true;
+  }
+
+  if (hostname.endsWith('970universal.com') && /^\/category\/[^/]+\/?$/.test(pathname)) {
+    return true;
+  }
+
+  if (hostname.endsWith('n.com.do') && /^\/author\/[^/]+\/?$/.test(pathname)) {
+    return true;
+  }
+
+  if (hostname.endsWith('times.abema.tv') && pathname.startsWith('/tags/')) {
+    return true;
+  }
+
+  if (hostname.endsWith('carmeloportal.com') && /^\/author\/[^/]+\/?$/.test(pathname)) {
+    return true;
+  }
+
+  if (hostname.endsWith('fortune.com')) {
+    if (pathname.startsWith('/tag/')) return true;
+    if (pathname.startsWith('/section/')) return true;
   }
 
   if (hostname.endsWith('cumhuriyet.com.tr')) {
