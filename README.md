@@ -162,6 +162,13 @@ The primary local runtime assumes:
 - daily RSS health checks against the same database
 - an `api-news` process managed locally for customer-portal reads
 
+Runtime naming defaults:
+
+- `WPR_*` env keys are the primary runtime contract
+- runtime paths default to `~/srv/world-press-radar/*`
+- launchd labels default to `com.wpr.*`
+- legacy env aliases remain in scripts only as temporary migration fallbacks
+
 Key files:
 
 - `docker-compose.yml`
@@ -191,7 +198,7 @@ bash scripts/run-api-news.sh
 - power a token-gated customer portal for browsing tracked coverage
 - support repeatable health checks, API reads, and operational workflows
 
-Suggested GitHub tags: `rss`, `news`, `feed`, `typescript`, `postgresql`, `docker`, `bun`, `monitoring`
+Suggested GitHub tags: `rss`, `news`, `feed`, `typescript`, `postgresql`, `docker`, `bun`, `radar`
 
 ### Repository metadata
 

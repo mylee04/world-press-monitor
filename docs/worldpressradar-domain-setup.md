@@ -5,7 +5,7 @@ This runbook covers the production domain setup for:
 - `app.worldpressradar.com` -> Vercel web app
 - `api.worldpressradar.com` -> `api-news` on the Mac mini
 
-This is the recommended production path because the current web app is a static Next export and still depends on a separate API origin.
+This is the recommended production path because the customer portal and the authenticated article API are deployed as separate production services, even though the browser now talks to the portal first.
 
 ## Target architecture
 

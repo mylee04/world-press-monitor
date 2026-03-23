@@ -15,6 +15,13 @@ This portal now assumes customer-only access through API tokens for World Press 
 - API port: `4100`
 - Public anonymous access: disabled via `NEWS_API_ALLOW_PUBLIC_READ_ONLY=0`
 
+Runtime naming defaults:
+
+- prefer `WPR_*` env keys in local and hosted runtime config
+- prefer `~/srv/world-press-radar/*` for runtime paths
+- prefer `com.wpr.*` for launchd jobs
+- legacy env aliases exist only to help older local setups migrate cleanly
+
 ## Web app env
 
 Set on Vercel for `app.worldpressradar.com`:

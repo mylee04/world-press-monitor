@@ -8,6 +8,8 @@ PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 source "${SCRIPT_DIR}/load-local-env.sh"
 load_local_env
 
+# WPR names are the primary runtime contract. Legacy aliases remain here only so
+# older local env files can migrate without breaking install/update.
 WPR_RUNTIME_ROOT="${WPR_RUNTIME_ROOT:-${WPM_RUNTIME_ROOT:-${HOME}/srv/world-press-radar}}"
 WPR_RUNTIME_REPO="${WPR_RUNTIME_REPO:-${WPM_RUNTIME_REPO:-${WPR_RUNTIME_ROOT}/repo}}"
 WPR_RUNTIME_LOG_DIR="${WPR_RUNTIME_LOG_DIR:-${WPM_RUNTIME_LOG_DIR:-${WPR_RUNTIME_ROOT}/logs}}"
@@ -150,7 +152,7 @@ Usage:
 Notes:
   - Runtime repo defaults to ~/srv/world-press-radar/repo.
   - Hourly country Discord report and hourly ingest ops report are chained from run-ingest-hourly-local.sh.
-  - Legacy com.wpm.* agents are removed on install/update.
+  - Legacy pre-radar launch agents are removed on install/update.
   - Do not point launchd at Desktop/Documents/Downloads worktrees.
 USAGE
 }
