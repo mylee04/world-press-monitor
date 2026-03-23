@@ -1177,6 +1177,62 @@ function mapRowToDisplayNewsApiItem(row: NewsApiReadRow): NewsApiItem | null {
   };
 }
 
+async function readDashboardTopicSampleRows(
+  db: Pool,
+  latestHours: number,
+  maxFutureMinutes: number,
+  desiredLimit: number
+): Promise<NewsApiReadRow[]> {
+  const fallbackLimits = [desiredLimit, 7500, 5000, 3000, 2000, 1000, 500]
+    .filter((value, index, values) => value > 0 && values.indexOf(value) === index)
+    .sort((left, right) => right - left);
+
+  const sql = `
+    select
+      external_id as id,
+      source,
+      title_original as title,
+      null::text as snippet_original,
+      url,
+      country,
+      language,
+      coalesce(section, 'others') as section,
+      feed_categories,
+      publication_datetime,
+      created_at,
+      updated_at,
+      max(created_at) over() as generated_at
+    from news_articles
+    where publication_datetime >= now() - ($1::int * interval '1 hour')
+      and publication_datetime <= now() + ($2::int * interval '1 minute')
+    order by publication_datetime desc, created_at desc
+    limit $3
+  `;
+
+  let lastError: unknown = null;
+  for (const limit of fallbackLimits) {
+    try {
+      const result = await db.query<NewsApiReadRow>(sql, [latestHours, maxFutureMinutes, limit]);
+      return result.rows;
+    } catch (error: unknown) {
+      lastError = error;
+      const code = typeof error === 'object' && error && 'code' in error ? String((error as { code?: string }).code || '') : '';
+      const message = error instanceof Error ? error.message : String(error || '');
+      const isEncodingError = code === '22021' || message.includes('invalid byte sequence for encoding');
+      if (!isEncodingError) {
+        throw error;
+      }
+      console.warn(`[dashboard-summary] topic sample query failed at limit=${limit}, retrying lower limit`);
+    }
+  }
+
+  if (lastError) {
+    console.warn('[dashboard-summary] topic sample query exhausted fallback limits; returning empty topic sample');
+  }
+
+  return [];
+}
+
 export async function readNewsDashboardSummary(options?: {
   windowDays?: number;
   latestHours?: number;
@@ -1222,7 +1278,7 @@ export async function readNewsDashboardSummary(options?: {
     ? newsApiMaxFutureMinutes
     : Math.max(0, Math.min(168 * 60, Math.floor(options.maxFutureHours * 60)));
 
-  const [totalsResult, checkedSourcesResult, sectionTotalsResult, dateResult, recentDatesResult, topicSampleResult] = await Promise.all([
+  const [totalsResult, checkedSourcesResult, sectionTotalsResult, dateResult, recentDatesResult, topicSampleRows] = await Promise.all([
     db.query<NewsApiSummaryTotalsRow>(
       `
       select
@@ -1307,30 +1363,7 @@ export async function readNewsDashboardSummary(options?: {
       `,
       [windowDays, maxFutureMinutes]
     ),
-    db.query<NewsApiReadRow>(
-      `
-      select
-        external_id as id,
-        source,
-        title_original as title,
-        null::text as snippet_original,
-        url,
-        country,
-        language,
-        coalesce(section, 'others') as section,
-        feed_categories,
-        publication_datetime,
-        created_at,
-        updated_at,
-        max(created_at) over() as generated_at
-      from news_articles
-      where publication_datetime >= now() - ($1::int * interval '1 hour')
-        and publication_datetime <= now() + ($2::int * interval '1 minute')
-      order by publication_datetime desc, created_at desc
-      limit $3
-      `,
-      [latestHours, maxFutureMinutes, dashboardTopicSampleLimit]
-    ),
+    readDashboardTopicSampleRows(db, latestHours, maxFutureMinutes, dashboardTopicSampleLimit),
   ]);
 
   const dateRow = dateResult.rows[0];
@@ -1447,7 +1480,7 @@ export async function readNewsDashboardSummary(options?: {
       .filter((row): row is NewsApiDashboardHeadline => row !== null);
   }
 
-  const topicSampleItems = topicSampleResult.rows
+  const topicSampleItems = topicSampleRows
     .map((row) => mapRowToDisplayNewsApiItem(row))
     .filter((row): row is NewsApiItem => row !== null);
 
