@@ -44,13 +44,19 @@ run_default_vercel_deploy() {
   printf 'Build command:'
   printf ' %q' "${build_command[@]}"
   printf '\n'
-  printf 'Overlay source: %s\n' "${WEB_DIST_DIR}"
+  if [ "${STATIC_OVERLAY_READY:-0}" = "1" ]; then
+    printf 'Overlay source: %s\n' "${WEB_DIST_DIR}"
+  else
+    printf 'Overlay source: none (deploying direct Vercel build output)\n'
+  fi
   printf 'Deploy command:'
   printf ' %q' "${deploy_command[@]}"
   printf '\n'
   "${build_command[@]}"
-  mkdir -p "${PROJECT_ROOT}/.vercel/output/static"
-  rsync -a --delete "${WEB_DIST_DIR}/" "${PROJECT_ROOT}/.vercel/output/static/"
+  if [ "${STATIC_OVERLAY_READY:-0}" = "1" ]; then
+    mkdir -p "${PROJECT_ROOT}/.vercel/output/static"
+    rsync -a --delete "${WEB_DIST_DIR}/" "${PROJECT_ROOT}/.vercel/output/static/"
+  fi
   "${deploy_command[@]}"
 }
 
@@ -95,7 +101,14 @@ PY
   fi
   validate_public_manifests "${BUILD_PUBLIC_DATA_DIR}"
   bun run web:build
-  rsync -a --delete "${PROJECT_ROOT}/out/" "${WEB_DIST_DIR}/"
+  STATIC_OVERLAY_READY=0
+  if [ -d "${PROJECT_ROOT}/out" ]; then
+    rsync -a --delete "${PROJECT_ROOT}/out/" "${WEB_DIST_DIR}/"
+    STATIC_OVERLAY_READY=1
+  else
+    printf 'No local out/ directory produced by web:build; skipping static overlay sync.\n'
+  fi
+  export STATIC_OVERLAY_READY
   if [ -n "${STATIC_DEPLOY_COMMAND:-}" ]; then
     printf 'Deploy command: %s\n' "${STATIC_DEPLOY_COMMAND}"
     /bin/zsh -lc "${STATIC_DEPLOY_COMMAND}"
