@@ -6,6 +6,224 @@
 
 ## Unreleased
 
+### [83d8671] Expand US feed atlas and sitemap filters
+- Commit: 83d8671c57c6f8b7c7bafe6311b4c271aa98ca40
+- Date: 2026-03-22 22:57:47 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	data/rss-atlas.json
+    - M	lib/article-url-filters.ts
+  - Git stat:
+  - data/rss-atlas.json        | 151 ++++++++++++++++++++++++++++++++++++++++++++-
+  -  lib/article-url-filters.ts |  10 +++
+  -  2 files changed, 158 insertions(+), 3 deletions(-)
+
+### [f8779c0] Expand atlas coverage for UK and Germany sources
+- Commit: f8779c0af2ca59686788d4d89daf21fee98ad54f
+- Date: 2026-03-22 22:36:52 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	data/rss-atlas.json
+    - M	data/rss-catalog.csv
+    - M	data/rss-catalog.opml
+    - M	scripts/fetch-sitemap-browser.mjs
+  - Git stat:
+  - data/rss-atlas.json               |  136 ++
+  -  data/rss-catalog.csv              | 3674 ++++++++++++++++++++-----------------
+  -  data/rss-catalog.opml             |  242 ++-
+  -  scripts/fetch-sitemap-browser.mjs |   28 +-
+  -  4 files changed, 2344 insertions(+), 1736 deletions(-)
+
+### [4a15baf] Expand atlas feeds for G10 and low-volume countries
+- Commit: 4a15baf80a69cd757c37ea480ec05598c5a1a72b
+- Date: 2026-03-22 22:22:40 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	data/rss-atlas.json
+  - Git stat:
+  - data/rss-atlas.json | 94 +++++++++++++++++++++++++++++++++++++++++++++++++++--
+  -  1 file changed, 91 insertions(+), 3 deletions(-)
+
+### [826fca1] Expand section classification for remaining long-tail sources
+- Commit: 826fca18909250c21474244e99be3532f38278c4
+- Date: 2026-03-22 22:13:01 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	lib/article-section-context.ts
+    - M	lib/article-url-filters.ts
+    - M	scripts/backfill-article-sections.ts
+    - M	scripts/export-public-news-data.ts
+  - Git stat:
+  - lib/article-section-context.ts       | 187 ++++++++++++++++++++++++++++++++++-
+  -  lib/article-url-filters.ts           |  29 ++++++
+  -  scripts/backfill-article-sections.ts |  15 +++
+  -  scripts/export-public-news-data.ts   |   3 +-
+  -  4 files changed, 231 insertions(+), 3 deletions(-)
+
+### [529aeb9] Harden blocked sitemap ingestion
+- Commit: 529aeb9fb91749681fe590199668df9e0db4cff1
+- Date: 2026-03-22 19:12:30 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	lib/parsers.ts
+    - M	scripts/fetch-sitemap-browser.mjs
+    - M	scripts/ingest-worker.ts
+  - Git stat:
+  - lib/parsers.ts                    |  1 +
+  -  scripts/fetch-sitemap-browser.mjs | 12 ++++++++++--
+  -  scripts/ingest-worker.ts          |  7 +++++--
+  -  3 files changed, 16 insertions(+), 4 deletions(-)
+
+### [0918cd2] Expand atlas feeds for low-volume countries
+- Commit: 0918cd2fb889993f07c16ab49c24964f84c4c4e4
+- Date: 2026-03-22 13:38:57 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	data/rss-atlas.json
+  - Git stat:
+  - data/rss-atlas.json | 342 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+  -  1 file changed, 342 insertions(+)
+
+### [6fa0cb6] Rename runtime identifiers to WPR and backfill section rules
+- Commit: 6fa0cb6255a416e13287ad2e5cfea1dcddd7b0d9
+- Date: 2026-03-22 13:35:06 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	.gitignore
+    - M	.vercelignore
+    - M	CONTRIBUTING.md
+    - M	README.md
+    - M	components/explorer-view.tsx
+    - M	docker-compose.yml
+    - M	docs/customer-portal-ops.md
+    - M	docs/macmini-static-ops.md
+    - M	lib/article-section-context.ts
+    - M	lib/database-url.ts
+    - D	ops/launchd/com.wpm.api-news.plist
+    - D	ops/launchd/com.wpm.api-runtime-watchdog.plist
+    - D	ops/launchd/com.wpm.api-tunnel.plist
+    - D	ops/launchd/com.wpm.export-deploy.plist
+    - D	ops/launchd/com.wpm.health-daily.plist
+    - D	ops/launchd/com.wpm.ingest-hourly.plist
+    - A	ops/launchd/com.wpr.api-news.plist
+    - A	ops/launchd/com.wpr.api-runtime-watchdog.plist
+    - A	ops/launchd/com.wpr.api-tunnel.plist
+    - A	ops/launchd/com.wpr.export-deploy.plist
+    - A	ops/launchd/com.wpr.health-daily.plist
+    - A	ops/launchd/com.wpr.ingest-hourly.plist
+    - M	package.json
+    - M	scripts/api-news.ts
+    - M	scripts/backfill-article-sections.ts
+    - M	scripts/bootstrap-wpm-db.sh
+    - A	scripts/bootstrap-wpr-db.sh
+    - M	scripts/db-introspect.sh
+    - M	scripts/db-studio.sh
+    - M	scripts/ensure-api-runtime-local.sh
+    - M	scripts/fetch-news-api-incremental.ts
+    - M	scripts/ingest-ops-report.ts
+    - M	scripts/load-local-env.sh
+    - M	scripts/postprocess-customer-build.ts
+    - M	scripts/report-news-by-country-discord.ts
+    - M	scripts/run-ingest-hourly-local.sh
+    - M	scripts/run-ingest-hourly.sh
+    - M	scripts/run-ingest-ops-daily.sh
+    - M	scripts/run-ingest-ops-hourly.sh
+    - M	scripts/run-ingestion-retention.sh
+    - M	scripts/run-news-country-discord-report.sh
+    - M	scripts/run-rss-feed-stability-daily.sh
+    - M	scripts/run-rss-health-daily-local.sh
+    - M	scripts/run-rss-health-daily.sh
+    - M	scripts/run-static-deploy-local.sh
+    - M	scripts/run-static-export-local.sh
+    - M	scripts/setup-ingest-cron.sh
+    - M	scripts/setup-ingest-ops-cron.sh
+    - M	scripts/setup-launchd-local.sh
+    - M	scripts/setup-news-country-discord-cron.sh
+    - M	scripts/setup-rss-health-cron.sh
+    - M	scripts/stats-news-by-country.sh
+  - Git stat:
+  - .gitignore                                         |   1 +
+  -  .vercelignore                                      |   1 +
+  -  CONTRIBUTING.md                                    |   6 +-
+  -  README.md                                          |   2 +-
+  -  components/explorer-view.tsx                       |   2 +-
+  -  docker-compose.yml                                 |   8 +-
+  -  docs/customer-portal-ops.md                        |   2 +-
+  -  docs/macmini-static-ops.md                         |  26 ++--
+  -  lib/article-section-context.ts                     |  60 +++++++++
+  -  lib/database-url.ts                                |   8 +-
+  -  ...m.wpm.api-news.plist => com.wpr.api-news.plist} |  10 +-
+  -  ...og.plist => com.wpr.api-runtime-watchdog.plist} |  10 +-
+  -  ...m.api-tunnel.plist => com.wpr.api-tunnel.plist} |   8 +-
+  -  ...rt-deploy.plist => com.wpr.export-deploy.plist} |  10 +-
+  -  ...alth-daily.plist => com.wpr.health-daily.plist} |  10 +-
+  -  ...st-hourly.plist => com.wpr.ingest-hourly.plist} |  10 +-
+  -  package.json                                       |   1 +
+  -  scripts/api-news.ts                                |   8 +-
+  -  scripts/backfill-article-sections.ts               |  21 ++-
+  -  scripts/bootstrap-wpm-db.sh                        | 126 +-----------------
+  -  scripts/bootstrap-wpr-db.sh                        | 147 +++++++++++++++++++++
+  -  scripts/db-introspect.sh                           |   2 +-
+  -  scripts/db-studio.sh                               |   2 +-
+  -  scripts/ensure-api-runtime-local.sh                |  10 +-
+  -  scripts/fetch-news-api-incremental.ts              |   2 +-
+  -  scripts/ingest-ops-report.ts                       |   7 +-
+  -  scripts/load-local-env.sh                          |  79 +++++++++--
+  -  scripts/postprocess-customer-build.ts              |  23 ++--
+  -  scripts/report-news-by-country-discord.ts          |   2 +-
+  -  scripts/run-ingest-hourly-local.sh                 |  14 +-
+  -  scripts/run-ingest-hourly.sh                       |   8 +-
+  -  scripts/run-ingest-ops-daily.sh                    |   6 +-
+  -  scripts/run-ingest-ops-hourly.sh                   |  12 +-
+  -  scripts/run-ingestion-retention.sh                 |   4 +-
+  -  scripts/run-news-country-discord-report.sh         |  12 +-
+  -  scripts/run-rss-feed-stability-daily.sh            |   4 +-
+  -  scripts/run-rss-health-daily-local.sh              |   8 +-
+  -  scripts/run-rss-health-daily.sh                    |   4 +-
+  -  scripts/run-static-deploy-local.sh                 |  10 +-
+  -  scripts/run-static-export-local.sh                 |   8 +-
+  -  scripts/setup-ingest-cron.sh                       |   4 +-
+  -  scripts/setup-ingest-ops-cron.sh                   |   4 +-
+  -  scripts/setup-launchd-local.sh                     |  73 +++++-----
+  -  scripts/setup-news-country-discord-cron.sh         |   4 +-
+  -  scripts/setup-rss-health-cron.sh                   |   4 +-
+  -  scripts/stats-news-by-country.sh                   |   2 +-
+  -  46 files changed, 479 insertions(+), 306 deletions(-)
+
+### [c0e1222] Expand atlas coverage and blocked sitemap ingestion
+- Commit: c0e12228ef9fe6b59af5d3b824c9897f63a86481
+- Date: 2026-03-22 08:41:05 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	CHANGELOG.md
+    - M	components/dashboard-view.tsx
+    - M	components/explorer-view.tsx
+    - M	data/rss-atlas.json
+    - A	lib/article-page-section.ts
+    - A	lib/article-section-context.ts
+    - M	lib/article-url-filters.ts
+    - M	lib/ingestion-store.ts
+    - M	lib/keyword-classifier.ts
+    - M	lib/parsers.ts
+    - A	scripts/backfill-article-sections.ts
+    - A	scripts/fetch-sitemap-browser.mjs
+    - M	scripts/ingest-worker.ts
+  - Git stat:
+  - CHANGELOG.md                         |   56 +
+  -  components/dashboard-view.tsx        |   36 +-
+  -  components/explorer-view.tsx         |   14 +-
+  -  data/rss-atlas.json                  |  498 ++++++-
+  -  lib/article-page-section.ts          |  397 ++++++
+  -  lib/article-section-context.ts       | 2434 ++++++++++++++++++++++++++++++++++
+  -  lib/article-url-filters.ts           |   28 +
+  -  lib/ingestion-store.ts               |    2 +-
+  -  lib/keyword-classifier.ts            |  104 +-
+  -  lib/parsers.ts                       |   14 +-
+  -  scripts/backfill-article-sections.ts |  857 ++++++++++++
+  -  scripts/fetch-sitemap-browser.mjs    |   44 +
+  -  scripts/ingest-worker.ts             |  290 +++-
+  -  13 files changed, 4648 insertions(+), 126 deletions(-)
+
 ### [06ed4b7] Add India high-volume current feeds
 - Commit: 06ed4b7b66b49a17f2d6f7dc7d518a7df2d37b56
 - Date: 2026-03-21 19:01:51 -0500

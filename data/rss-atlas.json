@@ -2124,6 +2124,30 @@
           "sitemapUrl": "https://www.rtl.de/sitemap-news.xml"
         },
         {
+          "name": "TAG24 - Google News Sitemap",
+          "sitemapUrl": "https://www.tag24.de/sitemap/googlenews"
+        },
+        {
+          "name": "Frankfurter Rundschau - News Sitemap",
+          "sitemapUrl": "https://www.fr.de/news.xml"
+        },
+        {
+          "name": "Berliner Morgenpost - News Sitemap",
+          "sitemapUrl": "https://www.morgenpost.de/sitemaps/news.xml"
+        },
+        {
+          "name": "tz.de - News Sitemap",
+          "sitemapUrl": "https://www.tz.de/news.xml"
+        },
+        {
+          "name": "Berliner Zeitung - Sitemap Index",
+          "sitemapUrl": "https://www.berliner-zeitung.de/sitemap.xml"
+        },
+        {
+          "name": "kicker - Google News Sitemap",
+          "sitemapUrl": "https://newsfeed.kicker.de/googlesitemapnews.xml"
+        },
+        {
           "name": "Tagesspiegel",
           "url": "https://www.tagesspiegel.de/contentexport/feed/",
           "status": "⏩ OFFICIAL",

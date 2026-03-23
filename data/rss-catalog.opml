@@ -2,14 +2,13 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Mon, 23 Mar 2026 03:33:56 GMT</dateCreated>
+    <dateCreated>Mon, 23 Mar 2026 04:42:29 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
     <outline text="United States (US)" title="United States (US)">
       <outline text="The New York Times [valid]" title="The New York Times [valid]" type="rss" xmlUrl="https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml" htmlUrl="https://rss.nytimes.com"/>
       <outline text="Wall Street Journal [valid]" title="Wall Street Journal [valid]" type="rss" xmlUrl="https://feeds.a.dj.com/rss/RSSWorldNews.xml" htmlUrl="https://feeds.a.dj.com"/>
-      <outline text="USA Today - News Sitemap [needs verification]" title="USA Today - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.usatoday.com/news-sitemap.xml" htmlUrl="https://www.usatoday.com"/>
       <outline text="LA Times [valid]" title="LA Times [valid]" type="rss" xmlUrl="https://www.latimes.com/local/rss2.0.xml" htmlUrl="https://www.latimes.com"/>
       <outline text="CNN [valid]" title="CNN [valid]" type="rss" xmlUrl="http://rss.cnn.com/rss/cnn_topstories.rss" htmlUrl="http://rss.cnn.com"/>
       <outline text="Fox News [invalid]" title="Fox News [invalid]" type="rss" xmlUrl="https://feeds.foxnews.com/foxnews/latest" htmlUrl="https://feeds.foxnews.com"/>
@@ -88,6 +87,9 @@
       <outline text="San Jose Mercury News [invalid]" title="San Jose Mercury News [invalid]" type="rss" xmlUrl="https://mercurynews.com/feed" htmlUrl="https://mercurynews.com"/>
       <outline text="Las Vegas Review-Journal [valid]" title="Las Vegas Review-Journal [valid]" type="rss" xmlUrl="https://reviewjournal.com/feed" htmlUrl="https://reviewjournal.com"/>
       <outline text="San Diego Union-Tribune [invalid]" title="San Diego Union-Tribune [invalid]" type="rss" xmlUrl="https://sandiegouniontribune.com/feed" htmlUrl="https://sandiegouniontribune.com"/>
+      <outline text="Press Herald [needs verification]" title="Press Herald [needs verification]" type="rss" xmlUrl="https://www.pressherald.com/feed/" htmlUrl="https://www.pressherald.com"/>
+      <outline text="Arizona Daily Star [needs verification]" title="Arizona Daily Star [needs verification]" type="rss" xmlUrl="https://tucson.com/search/?f=rss&amp;t=article&amp;c=news/local*&amp;l=50&amp;s=start_time&amp;sd=desc" htmlUrl="https://tucson.com"/>
+      <outline text="Tulsa World [needs verification]" title="Tulsa World [needs verification]" type="rss" xmlUrl="https://tulsaworld.com/search/?f=rss&amp;t=article&amp;c=news/local*&amp;l=50&amp;s=start_time&amp;sd=desc" htmlUrl="https://tulsaworld.com"/>
       <outline text="Honolulu Star-Advertiser [valid]" title="Honolulu Star-Advertiser [valid]" type="rss" xmlUrl="https://staradvertiser.com/feed" htmlUrl="https://staradvertiser.com"/>
       <outline text="Variety [valid]" title="Variety [valid]" type="rss" xmlUrl="https://variety.com/feed" htmlUrl="https://variety.com"/>
       <outline text="The Hollywood Reporter [valid]" title="The Hollywood Reporter [valid]" type="rss" xmlUrl="https://hollywoodreporter.com/feed" htmlUrl="https://hollywoodreporter.com"/>
