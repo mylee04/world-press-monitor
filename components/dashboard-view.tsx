@@ -100,11 +100,29 @@ export function DashboardView() {
     return <div className="panel danger">Dashboard summary is unavailable.</div>;
   }
 
+  const totals = {
+    rowsWindow: Number(summary.totals?.rowsWindow || 0),
+    inserted24h: Number(summary.totals?.inserted24h || 0),
+    published24h: Number(summary.totals?.published24h || 0),
+    checkedSources24h: Number(summary.totals?.checkedSources24h || 0),
+  };
+  const sectionTotals = summary.sectionTotals && typeof summary.sectionTotals === 'object' ? summary.sectionTotals : {};
+  const recentDates = Array.isArray(summary.recentDates) ? summary.recentDates : [];
+  const preview =
+    summary.preview && typeof summary.preview === 'object'
+      ? {
+          articleCount: Number(summary.preview.articleCount || 0),
+          topCountries: Array.isArray(summary.preview.topCountries) ? summary.preview.topCountries : [],
+          headlines: Array.isArray(summary.preview.headlines) ? summary.preview.headlines : [],
+        }
+      : { articleCount: 0, topCountries: [], headlines: [] };
   const sectionRollup = NEWS_SECTION_ORDER.map((section) => ({
     key: section,
-    count: summary.sectionTotals[section] || 0,
+    count: Number(sectionTotals[section as keyof typeof sectionTotals] || 0),
   })).filter((item) => item.count > 0);
-  const topicGroups = summary.topicGroups.filter((group) => group.topics.length > 0);
+  const topicGroups = Array.isArray(summary.topicGroups)
+    ? summary.topicGroups.filter((group) => Array.isArray(group.topics) && group.topics.length > 0)
+    : [];
 
   return (
     <div className="page-stack">
@@ -129,22 +147,22 @@ export function DashboardView() {
         </article>
         <article className="metric-card">
           <span>Articles in 31d window</span>
-          <strong>{summary.totals.rowsWindow.toLocaleString()}</strong>
+          <strong>{totals.rowsWindow.toLocaleString()}</strong>
           <small>Articles currently available in the rolling 31-day view</small>
         </article>
         <article className="metric-card">
           <span>Added in last 24h</span>
-          <strong>{summary.totals.inserted24h.toLocaleString()}</strong>
+          <strong>{totals.inserted24h.toLocaleString()}</strong>
           <small>Articles inserted by the ingestion pipeline in the last 24 hours</small>
         </article>
         <article className="metric-card">
           <span>Published in last 24h</span>
-          <strong>{summary.totals.published24h.toLocaleString()}</strong>
+          <strong>{totals.published24h.toLocaleString()}</strong>
           <small>Articles whose publication time falls within the latest rolling day</small>
         </article>
         <article className="metric-card">
           <span>Sources checked in last 24h</span>
-          <strong>{summary.totals.checkedSources24h.toLocaleString()}</strong>
+          <strong>{totals.checkedSources24h.toLocaleString()}</strong>
           <small>Distinct source health checks completed by the worker</small>
         </article>
       </section>
@@ -153,11 +171,11 @@ export function DashboardView() {
         <article className="panel">
           <div className="section-head">
             <h2>Top countries on latest UTC publication date</h2>
-            <span>{summary.previewDate ? `${summary.previewDate} · ${summary.preview.articleCount.toLocaleString()} articles` : 'No data'}</span>
+            <span>{summary.previewDate ? `${summary.previewDate} · ${preview.articleCount.toLocaleString()} articles` : 'No data'}</span>
           </div>
           <div className="stat-list">
-            {summary.preview.topCountries.length > 0 ? (
-              summary.preview.topCountries.map((item) => (
+            {preview.topCountries.length > 0 ? (
+              preview.topCountries.map((item) => (
                 <div className="stat-row" key={item.country}>
                   <span>{item.country}</span>
                   <strong>{item.count.toLocaleString()}</strong>
@@ -172,11 +190,11 @@ export function DashboardView() {
         <article className="panel">
           <div className="section-head">
             <h2>Recent UTC date counts</h2>
-            <span>{summary.recentDates.length} dates</span>
+            <span>{recentDates.length} dates</span>
           </div>
           <div className="stat-list">
-            {summary.recentDates.length > 0 ? (
-              summary.recentDates.map((item) => (
+            {recentDates.length > 0 ? (
+              recentDates.map((item) => (
                 <div className="stat-row" key={item.date}>
                   <span>{item.date}</span>
                   <strong>{item.count.toLocaleString()}</strong>
@@ -192,7 +210,7 @@ export function DashboardView() {
       <section className="panel">
         <div className="section-head">
           <h2>Primary section mix in 31d window</h2>
-          <span>{summary.totals.rowsWindow.toLocaleString()} articles</span>
+          <span>{totals.rowsWindow.toLocaleString()} articles</span>
         </div>
         <div className="stat-list">
           {sectionRollup.length > 0 ? (
@@ -242,10 +260,10 @@ export function DashboardView() {
       <section className="panel">
         <div className="section-head">
           <h2>Recent headlines</h2>
-          <span>{summary.preview.headlines.length > 0 ? `Preview date · ${summary.previewDate || '-'} UTC` : 'Waiting for live rows'}</span>
+          <span>{preview.headlines.length > 0 ? `Preview date · ${summary.previewDate || '-'} UTC` : 'Waiting for live rows'}</span>
         </div>
         <div className="headline-list">
-          {summary.preview.headlines.map((article) => (
+          {preview.headlines.map((article) => (
             <a className="headline-card" key={article.id} href={article.url} rel="noreferrer" target="_blank">
               <small>
                 {article.country || 'Unknown'} · {article.source} · {renderSectionLabel(article.primarySection)}
@@ -259,7 +277,7 @@ export function DashboardView() {
               <span>{article.snippet || 'Snippet unavailable in customer API preview.'}</span>
             </a>
           ))}
-          {summary.preview.headlines.length === 0 ? <div className="muted">No recent headlines available yet.</div> : null}
+          {preview.headlines.length === 0 ? <div className="muted">No recent headlines available yet.</div> : null}
         </div>
       </section>
     </div>
