@@ -852,7 +852,7 @@
       "feeds": [
         {
           "name": "China Daily",
-          "url": "http://www.chinadaily.com.cn/rss/world_rss.xml",
+          "url": "https://www.chinadaily.com.cn/rss/world_rss.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/18/2026",
           "valid": "needs verification",
@@ -909,7 +909,7 @@
         },
         {
           "name": "China Daily - China",
-          "url": "http://www.chinadaily.com.cn/rss/china_rss.xml",
+          "url": "https://www.chinadaily.com.cn/rss/china_rss.xml",
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
@@ -917,7 +917,7 @@
         },
         {
           "name": "China Daily - BizChina",
-          "url": "http://www.chinadaily.com.cn/rss/bizchina_rss.xml",
+          "url": "https://www.chinadaily.com.cn/rss/bizchina_rss.xml",
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
@@ -925,7 +925,7 @@
         },
         {
           "name": "China Daily - Opinion",
-          "url": "http://www.chinadaily.com.cn/rss/opinion_rss.xml",
+          "url": "https://www.chinadaily.com.cn/rss/opinion_rss.xml",
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
@@ -933,7 +933,7 @@
         },
         {
           "name": "China Daily - Sports",
-          "url": "http://www.chinadaily.com.cn/rss/sports_rss.xml",
+          "url": "https://www.chinadaily.com.cn/rss/sports_rss.xml",
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
@@ -941,7 +941,7 @@
         },
         {
           "name": "China Daily - Entertainment",
-          "url": "http://www.chinadaily.com.cn/rss/entertainment_rss.xml",
+          "url": "https://www.chinadaily.com.cn/rss/entertainment_rss.xml",
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
@@ -949,7 +949,7 @@
         },
         {
           "name": "China Daily - Lifestyle",
-          "url": "http://www.chinadaily.com.cn/rss/lifestyle_rss.xml",
+          "url": "https://www.chinadaily.com.cn/rss/lifestyle_rss.xml",
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
@@ -957,7 +957,7 @@
         },
         {
           "name": "China Daily - Photos",
-          "url": "http://www.chinadaily.com.cn/rss/photo_rss.xml",
+          "url": "https://www.chinadaily.com.cn/rss/photo_rss.xml",
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
@@ -965,7 +965,7 @@
         },
         {
           "name": "China Daily - China Daily (main)",
-          "url": "http://www.chinadaily.com.cn/rss/cndy_rss.xml",
+          "url": "https://www.chinadaily.com.cn/rss/cndy_rss.xml",
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
@@ -973,7 +973,7 @@
         },
         {
           "name": "China Daily - HK Edition",
-          "url": "http://www.chinadaily.com.cn/rss/hk_rss.xml",
+          "url": "https://www.chinadaily.com.cn/rss/hk_rss.xml",
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
@@ -990,7 +990,7 @@
         },
         {
           "name": "China Daily - EU Weekly",
-          "url": "http://europe.chinadaily.com.cn/euweekly_rss.xml",
+          "url": "https://europe.chinadaily.com.cn/euweekly_rss.xml",
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
@@ -998,7 +998,7 @@
         },
         {
           "name": "People.cn - Politics",
-          "url": "http://www.people.com.cn/rss/politics.xml",
+          "url": "https://www.people.com.cn/rss/politics.xml",
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
@@ -1006,7 +1006,7 @@
         },
         {
           "name": "People.cn - Society",
-          "url": "http://www.people.com.cn/rss/society.xml",
+          "url": "https://www.people.com.cn/rss/society.xml",
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
@@ -1014,7 +1014,7 @@
         },
         {
           "name": "People.cn - Legal",
-          "url": "http://www.people.com.cn/rss/legal.xml",
+          "url": "https://www.people.com.cn/rss/legal.xml",
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
@@ -1022,7 +1022,7 @@
         },
         {
           "name": "People.cn - World",
-          "url": "http://www.people.com.cn/rss/world.xml",
+          "url": "https://www.people.com.cn/rss/world.xml",
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
@@ -1030,7 +1030,7 @@
         },
         {
           "name": "People.cn - Opinion",
-          "url": "http://www.people.com.cn/rss/opinion.xml",
+          "url": "https://www.people.com.cn/rss/opinion.xml",
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
@@ -1038,7 +1038,7 @@
         },
         {
           "name": "People.cn - ChinaPic",
-          "url": "http://www.people.com.cn/rss/chinapic.xml",
+          "url": "https://www.people.com.cn/rss/chinapic.xml",
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
@@ -1071,7 +1071,7 @@
         },
         {
           "name": "FT Chinese",
-          "url": "http://www.ftchinese.com/rss/feed",
+          "url": "https://www.ftchinese.com/rss/feed",
           "status": null,
           "checkedDate": "02/23/2026",
           "valid": null,
@@ -1079,11 +1079,35 @@
         },
         {
           "name": "Xinhua",
-          "url": "http://www.xinhuanet.com/politics/news_politics.xml",
+          "url": "https://www.xinhuanet.com/politics/news_politics.xml",
           "status": null,
           "checkedDate": "02/23/2026",
           "valid": null,
           "row": 29
+        },
+        {
+          "name": "People.cn - Finance",
+          "url": "https://www.people.com.cn/rss/finance.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification",
+          "row": 40
+        },
+        {
+          "name": "People.cn - Military",
+          "url": "https://www.people.com.cn/rss/military.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification",
+          "row": 41
+        },
+        {
+          "name": "People.cn - Culture",
+          "url": "https://www.people.com.cn/rss/culture.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification",
+          "row": 42
         },
         {
           "name": "Sina Finance (Top Financial Portal)",
@@ -1196,6 +1220,39 @@
           "checkedDate": "03/15/2026",
           "valid": "needs verification",
           "row": 39
+        },
+        {
+          "name": "Global Times - News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.globaltimes.cn/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification",
+          "row": 43
+        },
+        {
+          "name": "Caixin Global",
+          "url": "https://gateway.caixin.com/api/data/global/feedlyRss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification",
+          "row": 44
+        },
+        {
+          "name": "Sixth Tone",
+          "url": "https://www.sixthtone.com/rss/index.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification",
+          "row": 45
+        },
+        {
+          "name": "ECNS",
+          "url": "https://www.ecns.cn/rss/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification",
+          "row": 46
         }
       ]
     },
@@ -5397,11 +5454,12 @@
         {
           "name": "Estado de Minas",
           "url": "https://www.em.com.br/feed/",
+          "sitemapUrl": "https://www.em.com.br/sitemap-news.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
           "row": 10,
-          "enabled": false
+          "enabled": true
         },
         {
           "name": "Veja",
@@ -5502,6 +5560,22 @@
           "url": "https://g1.globo.com/rss/g1/politica/"
         },
         {
+          "name": "G1 Mundo",
+          "url": "https://g1.globo.com/rss/g1/mundo/"
+        },
+        {
+          "name": "G1 Ciência e Saúde",
+          "url": "https://g1.globo.com/rss/g1/ciencia-e-saude/"
+        },
+        {
+          "name": "G1 Economia - Tecnologia",
+          "url": "https://g1.globo.com/rss/g1/economia/tecnologia/"
+        },
+        {
+          "name": "G1 Carros",
+          "url": "https://g1.globo.com/rss/g1/carros/"
+        },
+        {
           "name": "UOL Notícias (Breaking and Top Stories)",
           "url": "https://rss.uol.com.br/feed/noticias.xml"
         },
@@ -5542,6 +5616,18 @@
           "name": "Metropoles - Google News Sitemap",
           "sitemapUrl": "https://www.metropoles.com/sitemap/google-news.xml",
           "enabled": true
+        },
+        {
+          "name": "Metropoles - Main Feed",
+          "url": "https://www.metropoles.com/feed"
+        },
+        {
+          "name": "Metropoles - Brasil Feed",
+          "url": "https://www.metropoles.com/brasil/feed"
+        },
+        {
+          "name": "Metropoles - Saúde Feed",
+          "url": "https://www.metropoles.com/saude/feed"
         },
         {
           "name": "O Globo - News Sitemap",
