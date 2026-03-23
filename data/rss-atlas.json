@@ -24,6 +24,10 @@
           "row": 3
         },
         {
+          "name": "USA Today - News Sitemap",
+          "url": "https://www.usatoday.com/news-sitemap.xml"
+        },
+        {
           "name": "LA Times",
           "url": "https://www.latimes.com/local/rss2.0.xml",
           "status": "ERR",
@@ -38,6 +42,10 @@
           "checkedDate": "02/18/2026",
           "valid": "invalid",
           "row": 6
+        },
+        {
+          "name": "CNN - News Sitemap",
+          "url": "https://www.cnn.com/sitemap/news.xml"
         },
         {
           "name": "Fox News",
@@ -72,12 +80,36 @@
           "row": 10
         },
         {
+          "name": "ABC News - U.S.",
+          "url": "https://feeds.abcnews.com/abcnews/usheadlines"
+        },
+        {
+          "name": "ABC News - Politics",
+          "url": "https://feeds.abcnews.com/abcnews/politicsheadlines"
+        },
+        {
+          "name": "ABC News - International",
+          "url": "https://feeds.abcnews.com/abcnews/internationalheadlines"
+        },
+        {
+          "name": "ABC News - Business",
+          "url": "https://feeds.abcnews.com/abcnews/businessheadlines"
+        },
+        {
+          "name": "ABC News - Technology",
+          "url": "https://feeds.abcnews.com/abcnews/technologyheadlines"
+        },
+        {
           "name": "NPR",
           "url": "https://feeds.npr.org/1001/rss.xml",
           "status": "ERR",
           "checkedDate": "02/18/2026",
           "valid": "invalid",
           "row": 11
+        },
+        {
+          "name": "Associated Press - News Sitemap",
+          "url": "https://apnews.com/news-sitemap-content.xml"
         },
         {
           "name": "The New York Times - U.S.",
@@ -96,12 +128,40 @@
           "url": "https://rss.nytimes.com/services/xml/rss/nyt/World.xml"
         },
         {
+          "name": "The New York Times - Politics",
+          "url": "https://rss.nytimes.com/services/xml/rss/nyt/Politics.xml"
+        },
+        {
           "name": "LA Times - World & Nation",
           "url": "https://www.latimes.com/world-nation/rss2.0.xml"
         },
         {
+          "name": "LA Times - Politics",
+          "url": "https://www.latimes.com/politics/rss2.0.xml"
+        },
+        {
+          "name": "LA Times - Business",
+          "url": "https://www.latimes.com/business/rss2.0.xml"
+        },
+        {
+          "name": "LA Times - California",
+          "url": "https://www.latimes.com/california/rss2.0.xml"
+        },
+        {
+          "name": "Politico Politics",
+          "url": "https://rss.politico.com/politics-news.xml"
+        },
+        {
           "name": "Politico Congress",
           "url": "https://rss.politico.com/congress.xml"
+        },
+        {
+          "name": "Politico White House",
+          "url": "https://rss.politico.com/whitehouse.xml"
+        },
+        {
+          "name": "Politico Playbook",
+          "url": "https://rss.politico.com/playbook.xml"
         },
         {
           "name": "Washington Post - World",
@@ -110,6 +170,70 @@
         {
           "name": "Washington Post - National",
           "url": "https://feeds.washingtonpost.com/rss/national"
+        },
+        {
+          "name": "Washington Post - Politics",
+          "url": "https://feeds.washingtonpost.com/rss/politics"
+        },
+        {
+          "name": "NPR - Politics",
+          "url": "https://feeds.npr.org/1014/rss.xml"
+        },
+        {
+          "name": "NPR - Business",
+          "url": "https://feeds.npr.org/1003/rss.xml"
+        },
+        {
+          "name": "NPR - World",
+          "url": "https://feeds.npr.org/1004/rss.xml"
+        },
+        {
+          "name": "NPR - Science",
+          "url": "https://feeds.npr.org/1007/rss.xml"
+        },
+        {
+          "name": "NPR - Technology",
+          "url": "https://feeds.npr.org/1019/rss.xml"
+        },
+        {
+          "name": "Fox News - Politics",
+          "url": "https://feeds.foxnews.com/foxnews/politics"
+        },
+        {
+          "name": "Fox News - National",
+          "url": "https://feeds.foxnews.com/foxnews/national"
+        },
+        {
+          "name": "Fox News - World",
+          "url": "https://feeds.foxnews.com/foxnews/world"
+        },
+        {
+          "name": "CBS News - Politics",
+          "url": "https://www.cbsnews.com/latest/rss/politics"
+        },
+        {
+          "name": "CBS News - World",
+          "url": "https://www.cbsnews.com/latest/rss/world"
+        },
+        {
+          "name": "CBS News - U.S.",
+          "url": "https://www.cbsnews.com/latest/rss/us"
+        },
+        {
+          "name": "NBC News - Politics",
+          "url": "https://feeds.nbcnews.com/nbcnews/public/politics"
+        },
+        {
+          "name": "NBC News - World",
+          "url": "https://feeds.nbcnews.com/nbcnews/public/world"
+        },
+        {
+          "name": "NBC News - U.S.",
+          "url": "https://feeds.nbcnews.com/nbcnews/public/us-news"
+        },
+        {
+          "name": "NBC News - Business",
+          "url": "https://feeds.nbcnews.com/nbcnews/public/business"
         },
         {
           "name": "HuffPost",
@@ -1847,6 +1971,14 @@
           "row": 15
         },
         {
+          "name": "Frankfurter Allgemeine - News Sitemap",
+          "sitemapUrl": "https://www.faz.net/sitemap-news.xml"
+        },
+        {
+          "name": "RTL.de - News Sitemap",
+          "sitemapUrl": "https://www.rtl.de/sitemap-news.xml"
+        },
+        {
           "name": "Tagesspiegel",
           "url": "https://www.tagesspiegel.de/contentexport/feed/",
           "status": "⏩ OFFICIAL",
@@ -2653,6 +2785,10 @@
         {
           "name": "Daily Express - Google News Sitemap",
           "sitemapUrl": "https://www.express.co.uk/googlenews.xml"
+        },
+        {
+          "name": "Daily Star - News Sitemap",
+          "sitemapUrl": "https://www.dailystar.co.uk/map_news.xml"
         },
         {
           "name": "Daily Record - News Sitemap",

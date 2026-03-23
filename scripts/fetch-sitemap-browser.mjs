@@ -17,9 +17,14 @@ const browser = await chromium.launch({ headless: false });
 try {
   const context = await browser.newContext();
   const page = await context.newPage();
-  if (url.toLowerCase().endsWith('.gz')) {
-    const target = new URL(url);
+  const target = new URL(url);
+
+  const ensureOriginContext = async () => {
     await page.goto(`${target.origin}/`, { waitUntil: 'domcontentloaded', timeout: 30000 });
+  };
+
+  if (url.toLowerCase().endsWith('.gz')) {
+    await ensureOriginContext();
     const base64 = await page.evaluate(async (targetUrl) => {
       const response = await fetch(String(targetUrl));
       const buffer = await response.arrayBuffer();
@@ -33,19 +38,26 @@ try {
     }, url);
     process.stdout.write(gunzipSync(Buffer.from(base64, 'base64')).toString('utf8'));
   } else {
-    await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
+    await ensureOriginContext();
 
+    const payload = await page.evaluate(async (targetUrl) => {
+      const response = await fetch(String(targetUrl));
+      return await response.text();
+    }, url);
+    const normalizedPayload = normalizeXmlPayload(payload);
+    if (/<(?:\?xml|rss|feed|urlset|sitemapindex)\b/i.test(normalizedPayload) && !normalizedPayload.includes('...')) {
+      process.stdout.write(normalizedPayload);
+      process.exit(0);
+    }
+
+    await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
     const bodyText = normalizeXmlPayload((await page.textContent('body')) || '');
     if (/<(?:\?xml|rss|feed|urlset|sitemapindex)\b/i.test(bodyText)) {
       process.stdout.write(bodyText);
       process.exit(0);
     }
 
-    const payload = await page.evaluate(async (targetUrl) => {
-      const response = await fetch(String(targetUrl));
-      return await response.text();
-    }, url);
-    process.stdout.write(normalizeXmlPayload(payload));
+    process.stdout.write(normalizedPayload);
   }
 } finally {
   await browser.close();
