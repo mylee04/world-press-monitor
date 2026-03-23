@@ -414,6 +414,64 @@ export function classifySectionBySourceFallback(context: ArticleSectionContext):
     return 'world';
   }
 
+  if (source.includes('informer')) {
+    if (/^\/sport\//.test(pathname)) return 'sports';
+    if (/^\/politika\//.test(pathname)) return 'politics';
+    if (/^\/(?:dzet-set|zabava|tv)\//.test(pathname)) return 'entertainment';
+    if (/^\/magazin\//.test(pathname)) return 'lifestyle';
+    if (/^\/(?:planeta|hronika|drustvo)\//.test(pathname)) return 'world';
+    return 'world';
+  }
+
+  if (source.includes('cumhuriyet')) {
+    const titleSection = classifyCumhuriyetTitle(title);
+    if (/^\/spor\//.test(pathname)) return 'sports';
+    if (/^\/siyaset\//.test(pathname)) return 'politics';
+    if (/^\/(?:ekonomi|otomotiv)\//.test(pathname)) return 'business';
+    if (/^\/(?:bilim-teknoloji|teknoloji)\//.test(pathname)) return 'tech';
+    if (/^\/magazin\//.test(pathname)) return 'entertainment';
+    if (/^\/(?:yasam|gurme|astroloji|cumhuriyet-pazar)\//.test(pathname)) return 'lifestyle';
+    if (/^\/(?:kultur-sanat|sanat|kitap|edebiyat)\//.test(pathname)) return 'arts';
+    if (/^\/yazarlar\//.test(pathname)) return titleSection !== 'others' ? titleSection : 'politics';
+    if (/^\/(?:dunya|turkiye|cumhuriyet-in-egesi)\//.test(pathname)) {
+      return titleSection !== 'others' ? titleSection : 'world';
+    }
+    if (titleSection !== 'others') return titleSection;
+    return 'world';
+  }
+
+  if (source.includes('vecernji list')) {
+    const titleSection = classifyVecernjiTitle(title);
+    if (/^\/sport\//.test(pathname)) return 'sports';
+    if (/^\/showbiz\//.test(pathname)) return 'entertainment';
+    if (/^\/lifestyle\//.test(pathname)) return 'lifestyle';
+    if (/^\/kultura\//.test(pathname)) return 'arts';
+    if (/^\/biznis\//.test(pathname)) return 'business';
+    if (/^\/barkod\//.test(pathname)) return titleSection !== 'others' ? titleSection : 'lifestyle';
+    if (/^\/(?:vijesti|zagreb)\//.test(pathname)) return titleSection !== 'others' ? titleSection : 'world';
+    if (titleSection !== 'others') return titleSection;
+    return 'world';
+  }
+
+  if (source.includes('le figaro')) {
+    const titleSection = classifyLeFigaroTitle(title);
+    if (/^\/sports\//.test(pathname)) return 'sports';
+    if (/^\/(?:flash-eco|conjoncture|economie|entreprises)\//.test(pathname)) return 'business';
+    if (/^\/elections\//.test(pathname)) return 'politics';
+    if (/^\/(?:cinema|musique|television|people)\//.test(pathname)) return 'entertainment';
+    if (/^\/(?:culture|livres|arts-expositions)\//.test(pathname)) return 'arts';
+    if (/^\/(?:voyages|bons-plans|style|gastronomie|maison)\//.test(pathname)) return 'lifestyle';
+    if (/^\/sante\//.test(pathname)) return 'health';
+    if (/^\/tech\//.test(pathname)) return 'tech';
+    if (/^\/vox\//.test(pathname)) return titleSection !== 'others' ? titleSection : 'politics';
+    if (/^\/story\//.test(pathname)) return titleSection !== 'others' ? titleSection : 'world';
+    if (/^\/(?:international|actualite-france|faits-divers|flash-actu|societe)\//.test(pathname)) {
+      return titleSection !== 'others' ? titleSection : 'world';
+    }
+    if (titleSection !== 'others') return titleSection;
+    return 'world';
+  }
+
   if (source.includes('newsit')) {
     if (/^\/media\//.test(pathname)) return 'entertainment';
     if (/^\/athlitika\//.test(pathname)) return 'sports';
@@ -981,6 +1039,20 @@ export function classifySectionBySourceFallback(context: ArticleSectionContext):
     return 'world';
   }
 
+  if (source.includes('china news service')) {
+    const titleSection = classifyChinaNewsTitle(title);
+    if (/^\/gj\//.test(pathname)) return 'world';
+    if (/^\/ty\//.test(pathname)) return 'sports';
+    if (/^\/cul\//.test(pathname)) return 'arts';
+    if (/^\/jk\//.test(pathname)) return 'health';
+    if (/^\/edu\//.test(pathname)) return titleSection !== 'others' ? titleSection : 'science';
+    if (/^\/txy\//.test(pathname)) return titleSection !== 'others' ? titleSection : 'arts';
+    if (/^\/tp\//.test(pathname)) return titleSection !== 'others' ? titleSection : 'lifestyle';
+    if (/^\/(?:sh|dwq|aseaninfo)\//.test(pathname)) return titleSection !== 'others' ? titleSection : 'world';
+    if (titleSection !== 'others') return titleSection;
+    return 'world';
+  }
+
   if (source.includes('newsis')) {
     if (/주요일정/.test(title)) return 'politics';
     if (/전시/.test(title)) return 'arts';
@@ -995,15 +1067,26 @@ export function classifySectionBySourceFallback(context: ArticleSectionContext):
     return 'world';
   }
 
-  if (source.includes('cna (central news agency)')) {
+  if (source.startsWith('cna ') || source.includes('cna (central news agency)')) {
     const titleSection = classifyCnaTitle(title);
     if (hostname.startsWith('netzero.')) return 'climate';
+    if (source.includes('運動')) return 'sports';
+    if (source.includes('產經證券')) return 'business';
+    if (source.includes('科技')) return 'tech';
+    if (source.includes('娛樂')) return 'entertainment';
+    if (source.includes('文化')) return 'arts';
+    if (source.includes('政治')) return 'politics';
+    if (source.includes('生活')) return titleSection !== 'others' ? titleSection : 'lifestyle';
+    if (source.includes('國際') || source.includes('地方') || source.includes('社會') || source.includes('兩岸')) {
+      return titleSection !== 'others' ? titleSection : 'world';
+    }
     if (/^\/news\/aspt\//.test(pathname)) return 'sports';
     if (/^\/news\/afe\//.test(pathname)) return 'business';
-    if (/^\/news\/aopl\//.test(pathname)) return 'politics';
     if (/^\/news\/ait\//.test(pathname)) return 'tech';
     if (/^\/news\/acul\//.test(pathname)) return 'arts';
     if (/^\/news\/amov\//.test(pathname)) return 'entertainment';
+    if (/^\/news\/apol\//.test(pathname)) return 'politics';
+    if (/^\/news\/aopl\//.test(pathname)) return titleSection !== 'others' ? titleSection : 'world';
     if (/^\/news\/(?:aipl|asoc|aloc|acn)\//.test(pathname)) return titleSection !== 'others' ? titleSection : 'world';
     if (/^\/news\/ahel\//.test(pathname)) return titleSection !== 'others' ? titleSection : 'lifestyle';
     if (titleSection !== 'others') return titleSection;
@@ -1012,6 +1095,29 @@ export function classifySectionBySourceFallback(context: ArticleSectionContext):
 
   if (source.includes('kbs news')) {
     const titleSection = classifyKbsTitle(title);
+    if (titleSection !== 'others') return titleSection;
+    return 'world';
+  }
+
+  if (source.includes('bnt news')) {
+    const titleSection = classifyBntTitle(title);
+    if (titleSection !== 'others') return titleSection;
+    return 'world';
+  }
+
+  if (source.includes('15min')) {
+    if (/^\/(?:sportas|24sek)\//.test(pathname)) return 'sports';
+    if (/^\/verslas\//.test(pathname)) return 'business';
+    if (/^\/sveikata\//.test(pathname)) return 'health';
+    if (/^\/kultura\//.test(pathname)) return 'arts';
+    if (/^\/zmones\//.test(pathname)) return 'entertainment';
+    if (/^\/gyvenimas\//.test(pathname)) return 'lifestyle';
+    if (/^\/mokslasit\//.test(pathname)) return 'science';
+    return 'world';
+  }
+
+  if (source.includes('한국경제') || source.includes('hankyung')) {
+    const titleSection = classifyHankyungTitle(title);
     if (titleSection !== 'others') return titleSection;
     return 'world';
   }
@@ -2098,6 +2204,83 @@ function classifyCnaTitle(title: string): NewsSection {
   if (/地震|震度|碳足跡|永續|淨零/.test(title)) return 'climate';
   if (/建築師|故事|文化|文學/.test(title)) return 'arts';
   if (/旅客出遊|旅遊|出遊|一週大事|早安世界/.test(title)) return 'lifestyle';
+  return 'others';
+}
+
+function classifyCumhuriyetTitle(title: string): NewsSection {
+  if (!title) return 'others';
+  if (/savaş|saldırı|füze|ukrayna|israil|iran|ordu|asker/i.test(title)) return 'conflicts';
+  if (/bakan|cumhurbaşkanı|secim|seçim|meclis|parti|gazeteci|gözaltı|gozalti|mahkeme/i.test(title)) return 'politics';
+  if (/ekonomi|zam|petrol|dolar|faiz|enflasyon|borsa/i.test(title)) return 'business';
+  if (/yapay zeka|teknoloji|bilim/i.test(title)) return 'tech';
+  if (/oyuncu|şarkı|sarki|dizi|film|konser|müzik|muzik/i.test(title)) return 'entertainment';
+  if (/tarifi|burç|burc|astroloji|mutfak|kahve|sofralara|kebap/i.test(title)) return 'lifestyle';
+  if (/kitap|sergi|sanat|edebiyat/i.test(title)) return 'arts';
+  if (/sağlık|saglik|hastane|doktor/i.test(title)) return 'health';
+  return 'others';
+}
+
+function classifyVecernjiTitle(title: string): NewsSection {
+  if (!title) return 'others';
+  if (/rat|napad|dron|projektil|teheran|iran|izrael/i.test(title)) return 'conflicts';
+  if (/golob|janša|jansa|državni tajnik|drzavni tajnik|vučić|vucic|izbor|vlada|mandat/i.test(title)) return 'politics';
+  if (/ekonomij|cijene|poskupjelo|najbrže rastuću ekonomiju|najbrze rastucu ekonomiju/i.test(title)) return 'business';
+  if (/samsung|android|ai|umjetna inteligencija|tehnolog/i.test(title)) return 'tech';
+  if (/showbiz|pjevač|pjevac|glum|film|serij/i.test(title)) return 'entertainment';
+  if (/odmor|destinacija|sat|vožnji|voznji|auto|ljeto|putovanj/i.test(title)) return 'lifestyle';
+  if (/kultura|muzej|izložb|izlozb|knjig/i.test(title)) return 'arts';
+  return 'others';
+}
+
+function classifyLeFigaroTitle(title: string): NewsSection {
+  if (!title) return 'others';
+  if (/sénat|senat|loi|élection|election|ministre|président|president|politique/i.test(title)) return 'politics';
+  if (/carburants|fiscale|euros|économie|economie|marché|marche|entreprise/i.test(title)) return 'business';
+  if (/cinéma|cinema|film|série|serie|musique/i.test(title)) return 'entertainment';
+  if (/cheveux|beauté|beaute|lidl|voyage|maison|bricolage/i.test(title)) return 'lifestyle';
+  if (/culture|livre|roman|exposition/i.test(title)) return 'arts';
+  if (/santé|sante|maladie|hôpital|hopital/i.test(title)) return 'health';
+  return 'others';
+}
+
+function classifyChinaNewsTitle(title: string): NewsSection {
+  if (!title) return 'others';
+  if (/袭击|攻势|战|戰|军|軍|警告|封锁|封鎖|导弹|導彈/.test(title)) return 'conflicts';
+  if (/国务院|國務院|金正恩|政府|主席|代表团|代表團|选举|選舉/.test(title)) return 'politics';
+  if (/经济|經濟|产业|產業|贸易|貿易|企业|企業|市场|市場|港湾|港灣|出海|金融/.test(title)) return 'business';
+  if (/科技|脑机接口|腦機接口|人工智能|机器人|機器人|芯片|晶片/.test(title)) return 'tech';
+  if (/健康|患者|医疗|醫療|医院|醫院/.test(title)) return 'health';
+  if (/文化|诗人|詩人|文旅|剧|劇|电影|電影/.test(title)) return 'arts';
+  if (/旅游|旅遊|美食|春味|出游|出遊/.test(title)) return 'lifestyle';
+  if (/比赛|比賽|世乒赛|世乒賽|足球|篮球|籃球|羽毛球/.test(title)) return 'sports';
+  if (/研究|领域|領域|团队|團隊|实验|實驗/.test(title)) return 'science';
+  return 'others';
+}
+
+function classifyBntTitle(title: string): NewsSection {
+  if (!title) return 'others';
+  if (/война|конфликт|дрон|ракет|удар|израел|иран|украйн/i.test(title)) return 'conflicts';
+  if (/правителств|президент|министър|парламент|избор/i.test(title)) return 'politics';
+  if (/иконом|цен[аи]|пазар|петрол/i.test(title)) return 'business';
+  if (/робот|изкуствен интелект|технолог|космос|учен/i.test(title)) return 'tech';
+  if (/здрав|болниц|лекар|пациент/i.test(title)) return 'health';
+  if (/филм|музик|сериал|актрис|певиц/i.test(title)) return 'entertainment';
+  if (/дъжд|вали|време|температур|облачно|сняг|валеж/i.test(title)) return 'climate';
+  if (/левски|черно море|мач|футбол|шампион|купа|тенис|волейбол|баскетбол|биатлон|ски/i.test(title)) return 'sports';
+  return 'others';
+}
+
+function classifyHankyungTitle(title: string): NewsSection {
+  if (!title) return 'others';
+  if (/전쟁|공습|드론|미사일|우크라|이스라엘|이란|군사|공격/.test(title)) return 'conflicts';
+  if (/대통령|총리|국회|정부|장관|선거|여당|야당|구속영장|법원|검찰|헌재|외교|국방/.test(title)) return 'politics';
+  if (/증시|주식|코스피|코스닥|환율|금리|기업|실적|부동산|분양|투자|경제|유가/.test(title)) return 'business';
+  if (/AI|인공지능|테크|기술|반도체|로봇|플랫폼|스마트폰|배터리/.test(title)) return 'tech';
+  if (/건강|의료|병원|질병|백신|뇌염|독감|환자/.test(title)) return 'health';
+  if (/HK직캠|연예|배우|가수|아이브|블랙핑크|드라마|영화|콘서트|앨범|뮤지컬/.test(title)) return 'entertainment';
+  if (/축구|야구|농구|배구|골프|올림픽|KBO|프로야구|손흥민|경기/.test(title)) return 'sports';
+  if (/전시|미술|작가|공연|문화|예술/.test(title)) return 'arts';
+  if (/산불|태풍|폭우|폭설|지진|기온/.test(title)) return 'climate';
   return 'others';
 }
 

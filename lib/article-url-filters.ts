@@ -28,7 +28,36 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     return true;
   }
 
+  if (hostname.endsWith('merdeka.com') && pathname.startsWith('/tag/')) {
+    return true;
+  }
+
+  if (hostname.endsWith('grupormultimedio.com') && pathname.startsWith('/tag/')) {
+    return true;
+  }
+
+  if (hostname.endsWith('nepszava.hu') && pathname.startsWith('/tag/')) {
+    return true;
+  }
+
+  if (hostname.endsWith('teledoce.com') && pathname.startsWith('/tag/')) {
+    return true;
+  }
+
+  if (hostname.endsWith('ciperchile.cl') && pathname.startsWith('/tag/')) {
+    return true;
+  }
+
   if (hostname.endsWith('delo.si') && pathname.startsWith('/tag/')) {
+    return true;
+  }
+
+  if (hostname.endsWith('cumhuriyet.com.tr')) {
+    if (pathname.startsWith('/resmi-ilanlar/')) return true;
+    if (pathname.startsWith('/tv-rehberi/')) return true;
+  }
+
+  if (pathname.startsWith('/iframe/')) {
     return true;
   }
 

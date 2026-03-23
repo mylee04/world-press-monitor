@@ -464,6 +464,21 @@ function resolveTrustedContextSection(row: CandidateRow): BackfillDecision | nul
     return buildContextDecision(row, section, 'Trusted CNA code/title context');
   }
 
+  if (
+    source.includes('informer')
+    || source.includes('cumhuriyet')
+    || source.includes('vecernji list')
+    || source.includes('le figaro')
+    || source.includes('china news service')
+    || source.includes('bnt news')
+    || source.includes('15min')
+    || source.includes('한국경제')
+    || source.includes('hankyung')
+    || source.startsWith('cna ')
+  ) {
+    return buildContextDecision(row, section, 'Trusted source/path/title context');
+  }
+
   if (source.includes('cgtn')) {
     return buildContextDecision(row, section, 'Trusted CGTN title-based section');
   }

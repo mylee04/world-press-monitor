@@ -24,6 +24,7 @@ import {
   normalizeHtmlText,
   normalizeReadableArticleTitle,
 } from '@/lib/html-entities';
+import { deriveSectionFromContext } from '@/lib/article-section-context';
 import { isKnownNonArticleUrl } from '@/lib/article-url-filters';
 import { classifySectionByKeyword } from '@/lib/keyword-classifier';
 import type { NewsSection } from '@/lib/types';
@@ -312,7 +313,7 @@ function deriveArticleSection(row: ArticleRow): NewsSection {
     : 'others';
   const structuredHintSection = classifySectionByStructuredHints(row.source, row.url);
   const keywordHintSection = classifySectionByKeyword(buildArticleHintText(row.source, row.url), 'others').section;
-  const sourceFallbackSection = classifySectionBySourceFallback(row);
+  const sourceFallbackSection = deriveSectionFromContext({ source: row.source, url: row.url, title: row.title });
   const derivedSection = [titleSection, textSection, structuredHintSection, keywordHintSection].find(
     (section) => section !== 'others'
   ) || sourceFallbackSection;
