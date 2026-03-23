@@ -64,6 +64,7 @@ export interface NewsItem {
   title: string;
   description?: string;
   link: string;
+  stableId?: string;
   source: string;
   language?: string;
   sourceType?: 'global' | 'local' | 'portal';

@@ -114,6 +114,33 @@ export function normalizeLinkForId(link: string): string {
   }
 }
 
+export function normalizeFeedStableId(value: string): string {
+  const clean = value.trim().replace(/&amp;/gi, '&');
+  if (!clean) return '';
+  if (/^https?:\/\//i.test(clean)) {
+    return normalizeLinkForId(clean);
+  }
+  return clean
+    .normalize('NFKC')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, 512);
+}
+
+export function buildFeedStableId(value: string, link = ''): string {
+  const stableId = normalizeFeedStableId(value);
+  if (!stableId) return '';
+
+  const normalizedLink = normalizeLinkForId(link);
+  const candidate = normalizedLink || link;
+  try {
+    const hostname = new URL(candidate).hostname.toLowerCase();
+    return hostname ? `feed:${hostname}:${stableId}` : `feed:${stableId}`;
+  } catch {
+    return `feed:${stableId}`;
+  }
+}
+
 export function draftIdFromLink(link: string): string {
   const normalized = normalizeLinkForId(link);
   return normalized || `draft-${Math.random().toString(36).slice(2, 10)}`;

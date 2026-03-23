@@ -11,6 +11,7 @@ import { fetchWithRetry, readResponseText } from '../lib/fetch-utils';
 import { deriveSectionFromContext, mapFeedCategoryToSection } from '../lib/article-section-context';
 import { classifySection, classifySectionByKeyword } from '../lib/keyword-classifier';
 import { inferGeoFromTitle } from '../lib/geo';
+import { buildFeedStableId } from '../lib/pipeline';
 import {
   readFailingEndpointBackoff,
   readIngestionFeedWatermarks,
@@ -808,6 +809,70 @@ const BACKFILL_IGNORE_BACKOFF = BACKFILL_WINDOW
   ? parseBoolEnv(process.env.INGEST_BACKFILL_IGNORE_BACKOFF, true)
   : false;
 
+function normalizeDedupeText(value: string): string {
+  return value
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/gi, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .toLowerCase();
+}
+
+function scoreItemUrlAgainstTitle(item: NewsItem): number {
+  const normalizedTitle = normalizeDedupeText(item.title || '');
+  if (!normalizedTitle) return 0;
+  const titleTokens = new Set(normalizedTitle.split(' ').filter((token) => token.length >= 4));
+  if (!titleTokens.size) return 0;
+
+  let pathname = '';
+  try {
+    pathname = new URL(item.link).pathname;
+  } catch {
+    pathname = item.link || '';
+  }
+  const urlTokens = new Set(normalizeDedupeText(pathname).split(' ').filter((token) => token.length >= 4));
+  if (!urlTokens.size) return 0;
+
+  let overlap = 0;
+  for (const token of titleTokens) {
+    if (urlTokens.has(token)) overlap += 1;
+  }
+  return overlap / titleTokens.size + Math.min(pathname.split('/').filter(Boolean).length, 6) * 0.01;
+}
+
+function mergeNewsItems(current: NewsItem, incoming: NewsItem): NewsItem {
+  const currentPublishedAt = new Date(current.publishedAt).getTime();
+  const incomingPublishedAt = new Date(incoming.publishedAt).getTime();
+  const currentScore =
+    scoreItemUrlAgainstTitle(current)
+    + (current.description ? Math.min(current.description.length, 400) / 10000 : 0)
+    + (current.publishedAtIsFallback ? 0 : 0.02);
+  const incomingScore =
+    scoreItemUrlAgainstTitle(incoming)
+    + (incoming.description ? Math.min(incoming.description.length, 400) / 10000 : 0)
+    + (incoming.publishedAtIsFallback ? 0 : 0.02);
+
+  const preferred =
+    incomingPublishedAt > currentPublishedAt
+      ? incoming
+      : incomingPublishedAt < currentPublishedAt
+        ? current
+        : incomingScore > currentScore
+          ? incoming
+          : current;
+  const secondary = preferred === incoming ? current : incoming;
+
+  return {
+    ...secondary,
+    ...preferred,
+    stableId: preferred.stableId || secondary.stableId,
+    sourceCategories: [...new Set([...(secondary.sourceCategories || []), ...(preferred.sourceCategories || [])])],
+    description: preferred.description || secondary.description,
+    classificationReason: preferred.classificationReason || secondary.classificationReason,
+  };
+}
+
 function normalizeFeedHost(host: string): string {
   return host.trim().toLowerCase().replace(/\.+$/, '');
 }
@@ -1503,17 +1568,16 @@ async function fetchWithRetryFeed(url: string, referrerUrl?: string): Promise<Re
 function dedupeAndSort(items: NewsItem[]): NewsItem[] {
   const byLink = new Map<string, NewsItem>();
   for (const item of items) {
-    const prev = byLink.get(item.link);
-    if (!prev || new Date(item.publishedAt).getTime() > new Date(prev.publishedAt).getTime()) {
-      byLink.set(item.link, item);
-    }
+    const key = item.stableId || item.link;
+    const prev = byLink.get(key);
+    byLink.set(key, prev ? mergeNewsItems(prev, item) : item);
   }
   return [...byLink.values()].sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
 }
 
 async function toNewsItem(
   outlet: OutletFeed,
-  row: { title: string; description?: string; link: string; publishedAt?: string; categories?: string[] },
+  row: { title: string; description?: string; link: string; publishedAt?: string; categories?: string[]; stableId?: string },
   fallbackPublishedAt: string,
   method: 'rss' | 'sitemap',
   onMissingPublishedAtCandidate?: MissingPublishedAtCollector
@@ -1556,12 +1620,14 @@ async function toNewsItem(
   if (parsePublishedAtMs(publishedAt) === null) {
     return null;
   }
+  const stableId = buildFeedStableId(row.stableId || '', row.link || '') || undefined;
   return annotateWorldLatam({
     id: row.link,
     outletId: outlet.id,
     title,
     description,
     link: row.link,
+    stableId,
     source: outlet.name,
     language: outlet.language || undefined,
     sourceType: outlet.sourceType || 'global',

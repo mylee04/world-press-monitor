@@ -64,8 +64,14 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     return true;
   }
 
-  if (hostname.endsWith('berliner-zeitung.de') && pathname.startsWith('/topics/')) {
+  if (hostname.endsWith('berliner-zeitung.de') && /^\/topics(?:\/|$)/.test(pathname)) {
     return true;
+  }
+
+  if (hostname.endsWith('index.hu') && normalizedSource.includes('index.hu')) {
+    if (!/\/20\d{2}\//.test(pathname)) {
+      return true;
+    }
   }
 
   if (hostname.endsWith('sindonews.com') && pathname.startsWith('/topic/')) {

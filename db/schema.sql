@@ -175,6 +175,7 @@ create index if not exists idx_ingest_ops_daily_day on ingest_ops_daily(day_buck
 
 create table if not exists news_articles (
   external_id text primary key,
+  stable_id text null,
   publication_datetime timestamptz not null,
   title_original text not null,
   snippet_original text null,
@@ -191,6 +192,7 @@ create index if not exists idx_news_articles_created_at on news_articles(created
 create index if not exists idx_news_articles_updated_at on news_articles(updated_at desc);
 create index if not exists idx_news_articles_source on news_articles(source);
 create index if not exists idx_news_articles_url on news_articles(url);
+create index if not exists idx_news_articles_stable_id on news_articles(stable_id);
 create index if not exists idx_news_articles_section on news_articles(section);
 create index if not exists idx_news_articles_country on news_articles(country);
 drop index if exists idx_external_news_articles_last_seen_at;

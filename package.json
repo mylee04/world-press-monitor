@@ -84,7 +84,12 @@
     "security:audit": "bun run scripts/security-audit.ts",
     "security:audit:ci": "bun run scripts/security-audit.ts -- --production --ci",
     "changelog:append": "bun scripts/changelog-append.ts",
-    "stats:news:by-country": "bash scripts/stats-news-by-country.sh"
+    "stats:news:by-country": "bash scripts/stats-news-by-country.sh",
+    "audit:article-links": "bun scripts/audit-article-url-resolves.ts",
+    "backfill:stable-ids": "bun scripts/backfill-news-article-stable-ids.ts",
+    "reconcile:url-drift": "bun scripts/reconcile-article-url-drift.ts",
+    "prune:non-article-news": "bun scripts/prune-known-non-article-news.ts",
+    "prune:live-landing-news": "bun scripts/prune-live-landing-news.ts"
   },
   "dependencies": {
     "@upstash/redis": "^1.35.6",

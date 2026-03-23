@@ -287,6 +287,7 @@ async function ensureSchema(): Promise<void> {
     drop index if exists idx_ingestion_endpoint_runs_runner_ran_at;
 create table if not exists news_articles (
       external_id text primary key,
+      stable_id text null,
       publication_datetime timestamptz not null,
       title_original text not null,
       snippet_original text null,
@@ -301,12 +302,14 @@ create table if not exists news_articles (
     );
     alter table news_articles add column if not exists updated_at timestamptz not null default now();
     alter table news_articles add column if not exists feed_categories text[] not null default '{}';
+    alter table news_articles add column if not exists stable_id text null;
     create index if not exists idx_news_articles_created_at on news_articles(created_at desc);
     create index if not exists idx_news_articles_updated_at on news_articles(updated_at desc);
     create index if not exists idx_news_articles_publication_datetime on news_articles(publication_datetime desc);
     create index if not exists idx_news_articles_publication_created_at on news_articles(publication_datetime desc, created_at desc);
     create index if not exists idx_news_articles_source on news_articles(source);
     create index if not exists idx_news_articles_url on news_articles(url);
+    create index if not exists idx_news_articles_stable_id on news_articles(stable_id);
     create index if not exists idx_news_articles_section on news_articles(section);
     create index if not exists idx_news_articles_country on news_articles(country);
     create table if not exists ingest_missing_published_at (
@@ -2895,6 +2898,7 @@ async function upsertIngestOpsRollups(db: Pool, runs: IngestionEndpointRun[], de
 
 type NewsArticlePersistable = {
   externalId: string;
+  stableId: string | null;
   publicationDatetime: string;
   titleOriginal: string;
   snippetOriginal: string | null;
@@ -2933,6 +2937,11 @@ type MissingPublishedAtPersistable = {
   feedCategories: string[];
 };
 
+type ExistingArticleIdentityRow = {
+  external_id: string;
+  stable_id: string | null;
+};
+
 async function toNewsArticleRow(item: NewsItem): Promise<NewsArticlePersistable | null> {
   const decodedLink = decodeHtmlEntities(item.link || '');
   const linkNorm = normalizeLinkForId(decodedLink);
@@ -2950,9 +2959,11 @@ async function toNewsArticleRow(item: NewsItem): Promise<NewsArticlePersistable 
   const rawSnippet = normalizeHtmlText(item.description || '');
   const snippetOriginal = rawSnippet ? truncateText(rawSnippet, storedSnippetMaxChars) : null;
   const feedCategories = normalizeSourceCategories(item.sourceCategories);
+  const stableId = typeof item.stableId === 'string' && item.stableId.trim() ? item.stableId.trim().slice(0, 700) : null;
 
   return {
     externalId: await sha256Hex(linkNorm),
+    stableId,
     publicationDatetime: new Date(publicationTs).toISOString(),
     section: item.section,
     feedCategories,
@@ -2994,6 +3005,53 @@ async function toMissingPublishedAtRow(item: MissingPublishedAtCandidate): Promi
   };
 }
 
+async function resolveExistingArticleExternalIds(
+  db: Pool,
+  rows: NewsArticlePersistable[]
+): Promise<Map<string, string>> {
+  const stableIds = [...new Set(rows.map((row) => row.stableId).filter((value): value is string => Boolean(value)))];
+  const externalIds = [...new Set(rows.map((row) => row.externalId).filter(Boolean))];
+  if (!stableIds.length && !externalIds.length) return new Map();
+
+  const result = await db.query<ExistingArticleIdentityRow>(
+    `
+    select external_id, stable_id
+    from news_articles
+    where (
+      cardinality($1::text[]) > 0
+      and external_id = any($1::text[])
+    ) or (
+      cardinality($2::text[]) > 0
+      and stable_id = any($2::text[])
+    )
+    `,
+    [externalIds, stableIds]
+  );
+
+  const stableIdToExternalId = new Map<string, string>();
+  const externalIdSet = new Set<string>();
+  for (const row of result.rows) {
+    if (row.stable_id) {
+      stableIdToExternalId.set(row.stable_id, row.external_id);
+    }
+    externalIdSet.add(row.external_id);
+  }
+
+  const resolved = new Map<string, string>();
+  for (const row of rows) {
+    const key = `${row.externalId}|${row.stableId || ''}`;
+    if (row.stableId && stableIdToExternalId.has(row.stableId)) {
+      resolved.set(key, stableIdToExternalId.get(row.stableId)!);
+      continue;
+    }
+    if (externalIdSet.has(row.externalId)) {
+      resolved.set(key, row.externalId);
+    }
+  }
+
+  return resolved;
+}
+
 export async function persistNewsArticles(items: NewsItem[]): Promise<{ persisted: number; storage: 'postgres' | 'disabled'; reason?: string }> {
   const db = getPool();
   if (!db) return { persisted: 0, storage: 'disabled', reason: poolDisabledReason };
@@ -3002,7 +3060,31 @@ export async function persistNewsArticles(items: NewsItem[]): Promise<{ persiste
   await ensureSchema();
   const rows = (await Promise.all(items.map(toNewsArticleRow))).filter((row): row is NewsArticlePersistable => Boolean(row));
   if (!rows.length) return { persisted: 0, storage: 'postgres' };
-  const dedupedRows = [...rows.reduce((acc, row) => {
+  const resolvedExisting = await resolveExistingArticleExternalIds(db, rows);
+  const resolvedRows = rows.map((row) => ({
+    ...row,
+    externalId: resolvedExisting.get(`${row.externalId}|${row.stableId || ''}`) || row.externalId,
+  }));
+  const dedupedRows = [...resolvedRows.reduce((acc, row) => {
+    const dedupeKey = row.stableId || row.externalId;
+    const current = acc.get(dedupeKey);
+    if (!current) {
+      acc.set(dedupeKey, row);
+      return acc;
+    }
+    const preferred =
+      new Date(row.publicationDatetime).getTime() > new Date(current.publicationDatetime).getTime()
+        ? row
+        : current;
+    acc.set(dedupeKey, {
+      ...preferred,
+      stableId: preferred.stableId || current.stableId,
+      feedCategories: [...new Set([...current.feedCategories, ...row.feedCategories])],
+      snippetOriginal: preferred.snippetOriginal || current.snippetOriginal,
+    });
+    return acc;
+  }, new Map<string, NewsArticlePersistable>()).values()];
+  const insertRows = [...dedupedRows.reduce((acc, row) => {
     const current = acc.get(row.externalId);
     if (!current) {
       acc.set(row.externalId, row);
@@ -3014,22 +3096,25 @@ export async function persistNewsArticles(items: NewsItem[]): Promise<{ persiste
         : current;
     acc.set(row.externalId, {
       ...preferred,
+      stableId: preferred.stableId || current.stableId,
       feedCategories: [...new Set([...current.feedCategories, ...row.feedCategories])],
+      snippetOriginal: preferred.snippetOriginal || current.snippetOriginal,
     });
     return acc;
   }, new Map<string, NewsArticlePersistable>()).values()];
 
-  const groups = chunk(dedupedRows, 250);
+  const groups = chunk(insertRows, 250);
   for (const group of groups) {
     const values: unknown[] = [];
     const parts: string[] = [];
     group.forEach((row, i) => {
-      const base = i * 10;
+      const base = i * 11;
       parts.push(
-        `($${base + 1}::text,$${base + 2}::timestamptz,$${base + 3}::text,$${base + 4}::text[],$${base + 5}::text,$${base + 6}::text,$${base + 7}::text,$${base + 8}::text,$${base + 9}::text,$${base + 10}::text,now(),now())`
+        `($${base + 1}::text,$${base + 2}::text,$${base + 3}::timestamptz,$${base + 4}::text,$${base + 5}::text[],$${base + 6}::text,$${base + 7}::text,$${base + 8}::text,$${base + 9}::text,$${base + 10}::text,$${base + 11}::text,now(),now())`
       );
       values.push(
         row.externalId,
+        row.stableId,
         row.publicationDatetime,
         row.section,
         row.feedCategories,
@@ -3046,10 +3131,11 @@ export async function persistNewsArticles(items: NewsItem[]): Promise<{ persiste
       db,
       `
       insert into news_articles (
-        external_id, publication_datetime, section, feed_categories, title_original, snippet_original,
+        external_id, stable_id, publication_datetime, section, feed_categories, title_original, snippet_original,
         country, url, source, language, created_at, updated_at
       ) values ${parts.join(',')}
       on conflict (external_id) do update set
+        stable_id = coalesce(excluded.stable_id, news_articles.stable_id),
         publication_datetime = excluded.publication_datetime,
         section = excluded.section,
         feed_categories = (
@@ -3081,7 +3167,7 @@ export async function persistNewsArticles(items: NewsItem[]): Promise<{ persiste
     );
   }
 
-  return { persisted: dedupedRows.length, storage: 'postgres' };
+  return { persisted: insertRows.length, storage: 'postgres' };
 }
 
 export async function persistMissingPublishedAtCandidates(

@@ -35,6 +35,7 @@ export const rssHealthStatus = pgTable("rss_health_status", {
 
 export const newsArticles = pgTable("news_articles", {
 	externalId: text("external_id").primaryKey().notNull(),
+	stableId: text("stable_id"),
 	publicationDatetime: timestamp("publication_datetime", { withTimezone: true, mode: 'string' }).notNull(),
 	titleOriginal: text("title_original").notNull(),
 	snippetOriginal: text("snippet_original"),
@@ -50,6 +51,7 @@ export const newsArticles = pgTable("news_articles", {
 	index("idx_news_articles_created_at").using("btree", table.createdAt.desc().nullsFirst().op("timestamptz_ops")),
 	index("idx_news_articles_section").using("btree", table.section.asc().nullsLast().op("text_ops")),
 	index("idx_news_articles_source").using("btree", table.source.asc().nullsLast().op("text_ops")),
+	index("idx_news_articles_stable_id").using("btree", table.stableId.asc().nullsLast().op("text_ops")),
 	index("idx_news_articles_updated_at").using("btree", table.updatedAt.desc().nullsFirst().op("timestamptz_ops")),
 	index("idx_news_articles_url").using("btree", table.url.asc().nullsLast().op("text_ops")),
 ]);

@@ -6,6 +6,7 @@ export interface ParsedFeedItem {
   link: string;
   publishedAt: string;
   categories?: string[];
+  stableId?: string;
 }
 
 export interface ParsedFeedStats {
@@ -28,6 +29,7 @@ interface ParsedFeedItemWithMissing {
   link: string;
   publishedAt: string;
   categories: string[];
+  stableId: string;
   missingTitle: boolean;
   missingSummary: boolean;
   missingLink: boolean;
@@ -169,6 +171,13 @@ function parsePublishedAt(body: string, fallbackLink = ''): string {
   return inferPublishedAtFromLink(fallbackLink);
 }
 
+function parseStableId(body: string, atomMode = false): string {
+  if (atomMode) {
+    return parseTagByLocalName(body, 'id') || parseTagByLocalName(body, 'guid');
+  }
+  return parseTagByLocalName(body, 'guid') || parseTagByLocalName(body, 'id');
+}
+
 function summarizeStats(rows: ParsedFeedItemWithMissing[]): ParsedFeedStats {
   return {
     totalCandidates: rows.length,
@@ -189,6 +198,7 @@ function toItems(rows: ParsedFeedItemWithMissing[]): ParsedFeedItem[] {
       link: row.link,
       publishedAt: row.publishedAt,
       categories: row.categories,
+      stableId: row.stableId || undefined,
     }));
 }
 
@@ -206,12 +216,14 @@ export function parseRssOrAtomWithStats(xml: string, limit = 10): ParsedFeedBatc
       const description = parseDescription(body);
       const publishedAt = parsePublishedAt(body, link);
       const categories = parseCategories(body);
+      const stableId = parseStableId(body);
       return {
         title,
         description,
         link,
         publishedAt,
         categories,
+        stableId,
         missingTitle: !title,
         missingLink: !link,
         missingSummary: !description,
@@ -235,12 +247,14 @@ export function parseRssOrAtomWithStats(xml: string, limit = 10): ParsedFeedBatc
       const description = parseDescription(body);
       const publishedAt = parsePublishedAt(body, linkHref);
       const categories = parseCategories(body, true);
+      const stableId = parseStableId(body, true);
       return {
         title,
         description,
         link: linkHref,
         publishedAt,
         categories,
+        stableId,
         missingTitle: !title,
         missingLink: !linkHref,
         missingSummary: !description,
@@ -289,6 +303,7 @@ export function parseSitemapWithStats(xml: string, limit = 12, baseUrl?: string)
         link,
         publishedAt,
         categories: [],
+        stableId: '',
         missingTitle: !title,
         missingLink: !link,
         missingSummary: true,
