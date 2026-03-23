@@ -1572,6 +1572,7 @@ async function toNewsItem(
     confidence: classification.confidence,
     classificationSource: classification.source,
     classificationReason: classification.reason,
+    sourceCategories: row.categories || [],
     publicationSource: 'feed',
     summarySource: description ? 'feed' : undefined,
     ...geo,

@@ -24,6 +24,7 @@ import {
   normalizeHtmlText,
   normalizeReadableArticleTitle,
 } from '@/lib/html-entities';
+import { buildArticleTaxonomy } from '@/lib/article-taxonomy';
 import { deriveSectionFromContext } from '@/lib/article-section-context';
 import { isKnownNonArticleUrl } from '@/lib/article-url-filters';
 import { classifySectionByKeyword } from '@/lib/keyword-classifier';
@@ -51,6 +52,7 @@ type ArticleRow = {
   country: string | null;
   language: string | null;
   section: string | null;
+  feed_categories: string[] | null;
   title: string;
   snippet: string | null;
   url: string;
@@ -146,6 +148,7 @@ async function main(): Promise<void> {
   const pool = new Pool({ connectionString: DATABASE_URL });
 
   try {
+    await ensureExportSchema(pool);
     const exportStats = await readExportStats(pool);
     const articles = await readArticles(pool, countryDirectory);
     const health = await readLatestHealth(pool);
@@ -160,6 +163,13 @@ async function main(): Promise<void> {
   } finally {
     await pool.end();
   }
+}
+
+async function ensureExportSchema(pool: Pool): Promise<void> {
+  await pool.query(`
+    alter table news_articles
+      add column if not exists feed_categories text[] not null default '{}'
+  `);
 }
 
 function clampInt(raw: string | undefined, min: number, max: number, fallback: number): number {
@@ -246,6 +256,7 @@ async function readArticles(pool: Pool, directory: CountryDirectory): Promise<Pu
       country,
       language,
       section,
+      feed_categories,
       title_original as title,
       snippet_original as snippet,
       url,
@@ -272,11 +283,13 @@ async function readArticles(pool: Pool, directory: CountryDirectory): Promise<Pu
     const countryName = normalizeCountryName(row.country);
     const countryCode = directory.countryCodeByName.get(countryName) || FALLBACK_COUNTRY_CODE;
     const publicationDatetime = normalizePublicationDatetime(row.publication_datetime, row.created_at);
-    const section = deriveArticleSection({
-      ...row,
+    const taxonomy = buildArticleTaxonomy({
+      storedSection: row.section,
+      sourceCategories: row.feed_categories,
+      source: row.source,
+      url,
       title,
       snippet,
-      url,
     });
     return [{
       id: row.id,
@@ -284,49 +297,26 @@ async function readArticles(pool: Pool, directory: CountryDirectory): Promise<Pu
       country: countryName,
       countryCode,
       language: (row.language || '').trim() || 'und',
-      section,
+      primarySection: taxonomy.primarySection,
+      sections: taxonomy.sections,
+      sourceCategories: taxonomy.sourceCategories,
       title,
       snippet,
-      keywordText: buildKeywordText([title, snippet, row.source, countryName, countryCode, section]),
+      keywordText: buildKeywordText([
+        title,
+        snippet,
+        row.source,
+        countryName,
+        countryCode,
+        taxonomy.primarySection,
+        taxonomy.sections.join(' '),
+        taxonomy.sourceCategories.join(' '),
+      ]),
       url,
       publicationDatetime,
       createdAt: new Date(row.created_at).toISOString(),
     } satisfies PublicNewsArticle];
   });
-}
-
-function deriveArticleSection(row: ArticleRow): NewsSection {
-  const storedSection = normalizeSection(row.section);
-  const genericTitle = looksLikeGenericTitle(row.title);
-  if (
-    storedSection !== 'others'
-    && storedSection !== 'arts'
-    && storedSection !== 'entertainment'
-    && storedSection !== 'lifestyle'
-  ) {
-    return storedSection;
-  }
-
-  const titleSection = genericTitle ? 'others' : classifySectionByKeyword(row.title, 'others').section;
-  const textSection = !genericTitle && row.snippet
-    ? classifySectionByKeyword(`${row.title} ${row.snippet}`, 'others').section
-    : 'others';
-  const structuredHintSection = classifySectionByStructuredHints(row.source, row.url);
-  const keywordHintSection = classifySectionByKeyword(buildArticleHintText(row.source, row.url), 'others').section;
-  const sourceFallbackSection = deriveSectionFromContext({ source: row.source, url: row.url, title: row.title });
-  const derivedSection = [titleSection, textSection, structuredHintSection, keywordHintSection].find(
-    (section) => section !== 'others'
-  ) || sourceFallbackSection;
-
-  if (storedSection === 'others') {
-    return derivedSection;
-  }
-
-  if (derivedSection !== 'others') {
-    return derivedSection;
-  }
-
-  return storedSection;
 }
 
 function classifySectionBySourceFallback(row: ArticleRow): NewsSection {
@@ -1123,7 +1113,11 @@ function writeDataFiles(
     },
     filtering: {
       keywordTextField: 'keywordText',
-      normalization: 'lowercased, diacritics-stripped, whitespace-normalized title + snippet + source + country + countryCode + section',
+      primarySectionField: 'primarySection',
+      sectionsField: 'sections',
+      sourceCategoriesField: 'sourceCategories',
+      normalization:
+        'lowercased, diacritics-stripped, whitespace-normalized title + snippet + source + country + countryCode + primarySection + sections + sourceCategories',
     },
     countries: countryCodes,
     countryNames,
@@ -1134,7 +1128,7 @@ function writeDataFiles(
 function countSections(articles: PublicNewsArticle[]): Record<NewsSection, number> {
   const totals = Object.fromEntries(PUBLIC_DATA_SECTIONS.map((section) => [section, 0])) as Record<NewsSection, number>;
   for (const article of articles) {
-    totals[article.section] += 1;
+    totals[article.primarySection] += 1;
   }
   return totals;
 }
@@ -1285,7 +1279,9 @@ function writeCsv(path: string, articles: PublicNewsArticle[]): void {
     'country',
     'countryCode',
     'language',
-    'section',
+    'primarySection',
+    'sections',
+    'sourceCategories',
     'title',
     'snippet',
     'keywordText',
@@ -1300,7 +1296,9 @@ function writeCsv(path: string, articles: PublicNewsArticle[]): void {
       article.country,
       article.countryCode,
       article.language,
-      article.section,
+      article.primarySection,
+      article.sections.join('|'),
+      article.sourceCategories.join('|'),
       article.title,
       article.snippet,
       article.keywordText,

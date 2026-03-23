@@ -5,13 +5,17 @@ import { CustomerAccessPanel } from '@/components/customer-access-panel';
 import { useCustomerAccess } from '@/components/customer-access-provider';
 import { useNewsApiFilters, useNewsApiNews } from '@/components/news-api-hooks';
 import { buildNewsApiUrl, type NewsApiItem } from '@/lib/news-api';
+import { usePublicationTimePreference } from '@/components/publication-time-provider';
+import { formatPublicationTime, renderPublicationTimeZoneLabel } from '@/lib/timezone-display';
 
 type ExplorerCsvRow = {
   id: string;
   source: string;
   country: string;
   language: string;
-  section: string;
+  primarySection: string;
+  sections: string;
+  sourceCategories: string;
   title: string;
   snippet: string;
   url: string;
@@ -26,7 +30,9 @@ function buildClientCsv(rows: ExplorerCsvRow[]): string {
     'source',
     'country',
     'language',
-    'section',
+    'primarySection',
+    'sections',
+    'sourceCategories',
     'title',
     'snippet',
     'url',
@@ -67,13 +73,21 @@ function renderSectionLabel(section: string | null | undefined): string {
   return section;
 }
 
+function renderSectionList(sections: string[] | null | undefined): string {
+  const normalized = [...new Set((sections || []).filter(Boolean))];
+  if (!normalized.length) return renderSectionLabel('others');
+  return normalized.map((section) => renderSectionLabel(section)).join(', ');
+}
+
 function toExplorerCsvRow(article: NewsApiItem): ExplorerCsvRow {
   return {
     id: article.id,
     source: article.source || '',
     country: article.country || '',
     language: article.language || '',
-    section: article.section || '',
+    primarySection: article.primarySection || '',
+    sections: (article.sections || []).join('|'),
+    sourceCategories: (article.sourceCategories || []).join('|'),
     title: article.title || '',
     snippet: article.snippet || '',
     url: article.url || '',
@@ -92,11 +106,12 @@ function toDayRange(date: string): { from: string; to: string } {
 
 export function ExplorerView() {
   const { hasToken, isReady, apiConfigured } = useCustomerAccess();
+  const { mode: publicationTimeMode, localTimeZone, setMode: setPublicationTimeMode } = usePublicationTimePreference();
   const filtersState = useNewsApiFilters();
   const filters = filtersState.data?.storage === 'postgres' ? filtersState.data.filters : null;
   const [country, setCountry] = useState('');
   const [date, setDate] = useState('');
-  const [section, setSection] = useState('');
+  const [sections, setSections] = useState<string[]>([]);
   const [query, setQuery] = useState('');
   const [offset, setOffset] = useState(0);
   const deferredQuery = useDeferredValue(query.trim());
@@ -107,11 +122,11 @@ export function ExplorerView() {
     startTransition(() => {
       setOffset(0);
     });
-  }, [country, date, section, deferredQuery]);
+  }, [country, date, sections, deferredQuery]);
 
   const newsState = useNewsApiNews({
     countries: country ? [country] : undefined,
-    sections: section ? [section] : undefined,
+    sections: sections.length > 0 ? sections : undefined,
     q: deferredQuery || null,
     limit,
     offset,
@@ -161,7 +176,7 @@ export function ExplorerView() {
     <div className="page-stack">
       <section className="hero-panel compact">
         <div className="eyebrow">Explorer</div>
-        <h1>Filter live article results by section, country, UTC publication date, and keyword.</h1>
+        <h1>Filter live article results by normalized sections, source tags, country, UTC publication date, and keyword.</h1>
         <p>
           This page no longer loads public JSON shards. Every result comes from the authenticated customer API,
           with server-side filtering and page-level CSV export only for signed-in customers.
@@ -186,9 +201,16 @@ export function ExplorerView() {
             <input type="date" value={date} onChange={(event) => setDate(event.target.value)} />
           </label>
           <label>
-            <span>Section</span>
-            <select value={section} onChange={(event) => setSection(event.target.value)}>
-              <option value="">All sections</option>
+            <span>Sections</span>
+            <select
+              multiple
+              size={6}
+              value={sections}
+              onChange={(event) => {
+                const values = Array.from(event.target.selectedOptions).map((option) => option.value);
+                setSections(values);
+              }}
+            >
               {(filters?.sections || []).map((item) => (
                 <option key={item} value={item}>
                   {renderSectionLabel(item)}
@@ -199,10 +221,18 @@ export function ExplorerView() {
           <label>
             <span>Keyword</span>
             <input
-              placeholder="Search title, source, country"
+              placeholder="Search title, source, country, source tags"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
             />
+          </label>
+          <label>
+            <span>Publication Time</span>
+            <select value={publicationTimeMode} onChange={(event) => setPublicationTimeMode(event.target.value as 'local' | 'utc' | 'chicago')}>
+              <option value="local">{renderPublicationTimeZoneLabel('local', localTimeZone)}</option>
+              <option value="utc">{renderPublicationTimeZoneLabel('utc', localTimeZone)}</option>
+              <option value="chicago">{renderPublicationTimeZoneLabel('chicago', localTimeZone)}</option>
+            </select>
           </label>
         </div>
 
@@ -240,6 +270,10 @@ export function ExplorerView() {
             ? `Filtering to the UTC publication date ${date}.`
             : 'No date selected: defaulting to the latest 48-hour publication window.'}
         </div>
+        <div className="muted">
+          Publication Time display: {renderPublicationTimeZoneLabel(publicationTimeMode, localTimeZone)}.
+        </div>
+        <div className="muted">Section filter accepts multiple normalized categories. Hold Command/Ctrl to select more than one.</div>
       </section>
 
       {newsState.error ? <div className="panel danger">News query failed: {newsState.error}</div> : null}
@@ -260,10 +294,12 @@ export function ExplorerView() {
           <table>
             <thead>
               <tr>
-                <th>Date</th>
+                <th>Publication Time</th>
                 <th>Country</th>
                 <th>Source</th>
-                <th>Category</th>
+                <th>Primary</th>
+                <th>Sections</th>
+                <th>Source tags</th>
                 <th>Title</th>
                 <th>Link</th>
               </tr>
@@ -271,10 +307,12 @@ export function ExplorerView() {
             <tbody>
               {rows.map((article) => (
                 <tr key={article.id}>
-                  <td>{article.publicationDatetime.replace('T', ' ').slice(0, 16)}</td>
+                  <td>{formatPublicationTime(article.publicationDatetime, publicationTimeMode, localTimeZone)}</td>
                   <td>{article.country || 'Unknown'}</td>
                   <td>{article.source}</td>
-                  <td>{renderSectionLabel(article.section)}</td>
+                  <td>{renderSectionLabel(article.primarySection)}</td>
+                  <td>{renderSectionList(article.sections)}</td>
+                  <td>{article.sourceCategories.length > 0 ? article.sourceCategories.join(', ') : '-'}</td>
                   <td>{article.title}</td>
                   <td>
                     <a href={article.url} rel="noreferrer" target="_blank">
@@ -285,7 +323,7 @@ export function ExplorerView() {
               ))}
               {!newsState.loading && rows.length === 0 ? (
                 <tr>
-                  <td colSpan={6}>No rows match the current filter set.</td>
+                  <td colSpan={8}>No rows match the current filter set.</td>
                 </tr>
               ) : null}
             </tbody>

@@ -1255,7 +1255,9 @@ const playgroundHtml = `
           'url',
           'country',
           'language',
-          'section',
+          'primarySection',
+          'sections',
+          'sourceCategories',
           'publicationDatetime',
           'createdAt',
           'updatedAt'
@@ -1676,13 +1678,16 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
       const latestHours = parseIntParam(url.searchParams.get('latest_hours'), 24, 1, 720);
       const previewLimit = parseIntParam(url.searchParams.get('preview_limit'), 8, 1, 20);
       const topCountriesLimit = parseIntParam(url.searchParams.get('top_countries_limit'), 6, 1, 20);
-      const maxFutureHours = parseIntParam(url.searchParams.get('max_future_hours'), 6, 1, 168);
+      const maxFutureHoursParam = url.searchParams.get('max_future_hours');
+      const maxFutureHours = maxFutureHoursParam == null
+        ? undefined
+        : parseIntParam(maxFutureHoursParam, 0, 0, 168);
       const cacheKey = JSON.stringify({
         windowDays,
         latestHours,
         previewLimit,
         topCountriesLimit,
-        maxFutureHours
+        maxFutureHours: maxFutureHours ?? 'default'
       });
       const now = Date.now();
 

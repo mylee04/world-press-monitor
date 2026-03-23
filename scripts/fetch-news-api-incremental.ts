@@ -15,7 +15,9 @@ type ApiNewsItem = {
   url: string;
   country: string | null;
   language: string | null;
-  section: string | null;
+  primarySection: string | null;
+  sections: string[];
+  sourceCategories: string[];
   publicationDatetime: string;
   createdAt: string;
   updatedAt: string;

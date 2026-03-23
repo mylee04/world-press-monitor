@@ -5,13 +5,13 @@
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Ready-336791?logo=postgresql&logoColor=white)
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue)
 
-Customer-only news intelligence portal backed by hourly RSS ingest, PostgreSQL, and a token-gated read API. Customers browse article counts and article lists by category, country, and date through the web app. Anonymous users are not allowed to browse or download article data.
+Customer-only news intelligence portal backed by hourly RSS ingest, PostgreSQL, and a token-gated read API. Customers browse article counts and article lists by normalized multi-category labels, source tags, country, and date through the web app. Anonymous users are not allowed to browse or download article data.
 
 ## What customers can do
 
 - open the portal and unlock access with an issued customer token
-- browse dashboard counts by section, country, and date
-- filter article lists in Explorer by section, country, and date
+- browse dashboard counts by primary section, country, and date
+- filter article lists in Explorer by multiple normalized sections, source tags, country, and date
 - download only authenticated result sets when enabled for their account
 
 ## Customer access model
@@ -37,7 +37,7 @@ This keeps the UI fast, avoids multi-hundred-megabyte JSON downloads, and lets t
 1. Open the customer portal URL shared with you.
 2. Enter the token you received from the World Press Radar team.
 3. Use `Dashboard` for summary counts.
-4. Use `Explorer` for filtered article lists by section, country, and date.
+4. Use `Explorer` for filtered article lists by one or more normalized sections, country, and date.
 5. If your account has download rights, export only from authenticated screens.
 
 Customer token handling rules:

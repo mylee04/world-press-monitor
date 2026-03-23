@@ -41,6 +41,12 @@ function renderSectionLabel(section: string | null | undefined): string {
   return section;
 }
 
+function renderSectionList(sections: string[] | null | undefined): string {
+  const normalized = [...new Set((sections || []).filter(Boolean))];
+  if (!normalized.length) return renderSectionLabel('others');
+  return normalized.map((section) => renderSectionLabel(section)).join(', ');
+}
+
 export function DashboardView() {
   const { hasToken, isReady, apiConfigured } = useCustomerAccess();
   const summaryState = useNewsApiDashboardSummary();
@@ -171,7 +177,7 @@ export function DashboardView() {
 
       <section className="panel">
         <div className="section-head">
-          <h2>Section mix in 31d window</h2>
+          <h2>Primary section mix in 31d window</h2>
           <span>{summary.totals.rowsWindow.toLocaleString()} articles</span>
         </div>
         <div className="stat-list">
@@ -197,9 +203,10 @@ export function DashboardView() {
           {summary.preview.headlines.map((article) => (
             <a className="headline-card" key={article.id} href={article.url} rel="noreferrer" target="_blank">
               <small>
-                {article.country || 'Unknown'} · {article.source} · {renderSectionLabel(article.section)}
+                {article.country || 'Unknown'} · {article.source} · {renderSectionLabel(article.primarySection)}
               </small>
               <strong>{article.title}</strong>
+              <small>{renderSectionList(article.sections)}</small>
               <span>{article.snippet || 'Snippet unavailable in customer API preview.'}</span>
             </a>
           ))}

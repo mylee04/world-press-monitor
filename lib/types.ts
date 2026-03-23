@@ -82,6 +82,7 @@ export interface NewsItem {
   lon?: number;
   worldLatam?: boolean;
   tags?: string[];
+  sourceCategories?: string[];
   publicationSource?: 'feed' | 'article_meta';
   summarySource?: 'feed' | 'article_meta';
 }

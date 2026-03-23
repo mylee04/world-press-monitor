@@ -10,6 +10,7 @@ import {
   normalizeReadableArticleTitle,
 } from '@/lib/html-entities';
 import { normalizeLinkForId } from '@/lib/pipeline';
+import { buildArticleTaxonomy, normalizeSourceCategories } from '@/lib/article-taxonomy';
 
 let pool: Pool | null = null;
 let poolFailed = false;
@@ -48,7 +49,14 @@ const apiSnippetMaxChars = (() => {
   if (!Number.isFinite(parsed) || parsed < 80 || parsed > 8000) return 400;
   return parsed;
 })();
-const VALID_NEWS_SECTIONS: ReadonlySet<NewsSection> = new Set<NewsSection>([
+const newsApiMaxFutureMinutes = (() => {
+  const rawValue = process.env.NEWS_API_MAX_FUTURE_MINUTES;
+  if (!rawValue) return 30;
+  const parsed = Number.parseInt(rawValue, 10);
+  if (!Number.isFinite(parsed) || parsed < 0 || parsed > 24 * 60) return 30;
+  return parsed;
+})();
+const VALID_NEWS_SECTION_LIST: readonly NewsSection[] = [
   'world',
   'politics',
   'conflicts',
@@ -62,7 +70,8 @@ const VALID_NEWS_SECTIONS: ReadonlySet<NewsSection> = new Set<NewsSection>([
   'science',
   'climate',
   'others',
-]);
+];
+const VALID_NEWS_SECTIONS: ReadonlySet<NewsSection> = new Set<NewsSection>(VALID_NEWS_SECTION_LIST);
 
 function truncateText(value: string, maxChars: number): string {
   const normalized = (value || '').replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, ' ');
@@ -287,9 +296,11 @@ create table if not exists news_articles (
       url text not null,
       source text not null,
       language text null,
-      section text null
+      section text null,
+      feed_categories text[] not null default '{}'
     );
     alter table news_articles add column if not exists updated_at timestamptz not null default now();
+    alter table news_articles add column if not exists feed_categories text[] not null default '{}';
     create index if not exists idx_news_articles_created_at on news_articles(created_at desc);
     create index if not exists idx_news_articles_updated_at on news_articles(updated_at desc);
     create index if not exists idx_news_articles_publication_datetime on news_articles(publication_datetime desc);
@@ -698,6 +709,7 @@ type NewsArticleReadRow = {
   confidence: number | null;
   world_latam: boolean | null;
   tags: unknown;
+  feed_categories: string[] | null;
   generated_at: string | null;
 };
 
@@ -718,6 +730,7 @@ function mapRowToNewsItem(row: {
   confidence: number | null;
   world_latam: boolean | null;
   tags: unknown;
+  feed_categories: string[] | null;
 }): NewsItem {
   const link = decodeHtmlEntities(row.link || '');
   const tierCandidate = Number(row.tier);
@@ -730,6 +743,7 @@ function mapRowToNewsItem(row: {
       : 'global';
   const classificationSource: NewsItem['classificationSource'] = row.classification_source === 'llm' ? 'llm' : 'keyword';
   const tags = Array.isArray(row.tags) ? (row.tags.filter((value) => typeof value === 'string') as string[]) : [];
+  const sourceCategories = normalizeSourceCategories(row.feed_categories);
   const title = normalizeArticleTitle(row.title || '', link);
   const description = normalizeHtmlText(row.description || '');
   return {
@@ -750,6 +764,7 @@ function mapRowToNewsItem(row: {
     country: row.country || undefined,
     worldLatam: Boolean(row.world_latam),
     tags,
+    sourceCategories,
     publicationSource: 'feed',
     summarySource: row.description ? 'feed' : undefined
   } satisfies NewsItem;
@@ -763,7 +778,9 @@ export interface NewsApiItem {
   url: string;
   country: string | null;
   language: string | null;
-  section: string | null;
+  primarySection: string | null;
+  sections: string[];
+  sourceCategories: string[];
   publicationDatetime: string;
   createdAt: string;
   updatedAt: string;
@@ -796,7 +813,9 @@ export interface NewsApiDashboardHeadline {
   url: string;
   country: string | null;
   language: string | null;
-  section: string | null;
+  primarySection: string | null;
+  sections: string[];
+  sourceCategories: string[];
   publicationDatetime: string;
   createdAt: string;
   updatedAt: string;
@@ -838,6 +857,7 @@ type NewsApiReadRow = {
   country: string | null;
   language: string | null;
   section: string | null;
+  feed_categories: string[] | null;
   publication_datetime: string;
   created_at: string;
   updated_at: string;
@@ -920,6 +940,10 @@ export async function readNewsArticlesForApi(options: {
   const query = (options.q || '').trim().slice(0, 120);
   const params: unknown[] = [];
   const whereClauses: string[] = [];
+  const normalizedSections = [...new Set(sections.map((section) => normalizeStoredSectionValue(section)))];
+
+  params.push(newsApiMaxFutureMinutes);
+  whereClauses.push(`and e.publication_datetime <= now() + ($${params.length}::int * interval '1 minute')`);
 
   if (sourceNames.length > 0) {
     params.push(sourceNames);
@@ -929,11 +953,6 @@ export async function readNewsArticlesForApi(options: {
   if (countries.length > 0) {
     params.push(countries);
     whereClauses.push(`and e.country = any($${params.length}::text[])`);
-  }
-
-  if (sections.length > 0) {
-    params.push(sections);
-    whereClauses.push(`and e.section = any($${params.length}::text[])`);
   }
 
   if (languages.length > 0) {
@@ -948,6 +967,7 @@ export async function readNewsArticlesForApi(options: {
         e.title_original ilike $${params.length}
         or e.source ilike $${params.length}
         or coalesce(e.country, '') ilike $${params.length}
+        or coalesce(array_to_string(e.feed_categories, ' '), '') ilike $${params.length}
       )`
     );
   }
@@ -999,6 +1019,42 @@ export async function readNewsArticlesForApi(options: {
     where 1 = 1
     ${whereClauses.join('\n    ')}`;
 
+  if (normalizedSections.length > 0) {
+    const result = await db.query<NewsApiReadRow>(
+      `
+      select
+        e.external_id as id,
+        e.source,
+        e.title_original as title,
+        left(e.snippet_original, ${apiSnippetMaxChars}) as snippet_original,
+        e.url,
+        e.country,
+        e.language,
+        e.section,
+        e.feed_categories,
+        e.publication_datetime,
+        e.created_at,
+        e.updated_at,
+        max(e.created_at) over() as generated_at
+      from news_articles e
+      ${whereSql}
+      order by e.publication_datetime desc, e.created_at desc
+      `,
+      params
+    );
+
+    const filteredItems = result.rows
+      .map((row) => mapRowToNewsApiItem(row))
+      .filter((item) => item.sections.some((section) => normalizedSections.includes(normalizeStoredSectionValue(section))));
+
+    return {
+      storage: 'postgres',
+      totalCount: filteredItems.length,
+      generatedAt: result.rows[0]?.generated_at ? new Date(result.rows[0].generated_at).toISOString() : null,
+      items: filteredItems.slice(offset, offset + limit),
+    };
+  }
+
   params.push(limit);
   const limitIndex = params.length;
   params.push(offset);
@@ -1011,11 +1067,12 @@ export async function readNewsArticlesForApi(options: {
         e.external_id as id,
         e.source,
         e.title_original as title,
-        null::text as snippet_original,
+        left(e.snippet_original, ${apiSnippetMaxChars}) as snippet_original,
         e.url,
         e.country,
         e.language,
         e.section,
+        e.feed_categories,
         e.publication_datetime,
         e.created_at,
         e.updated_at
@@ -1045,15 +1102,29 @@ export async function readNewsArticlesForApi(options: {
 }
 
 function mapRowToNewsApiItem(row: NewsApiReadRow): NewsApiItem {
+  const url = decodeHtmlEntities(row.url);
+  const title = normalizeArticleTitle(row.title || '', url);
+  const snippet = row.snippet_original ? normalizeHtmlText(row.snippet_original) : null;
+  const taxonomy = buildArticleTaxonomy({
+    storedSection: row.section,
+    sourceCategories: row.feed_categories,
+    source: row.source,
+    url,
+    title,
+    snippet,
+  });
+
   return {
     id: row.id,
     source: row.source,
-    title: normalizeArticleTitle(row.title || '', row.url),
-    snippet: row.snippet_original ? normalizeHtmlText(row.snippet_original) : null,
-    url: decodeHtmlEntities(row.url),
+    title,
+    snippet,
+    url,
     country: row.country,
     language: row.language,
-    section: normalizeStoredSectionValue(row.section),
+    primarySection: taxonomy.primarySection,
+    sections: taxonomy.sections,
+    sourceCategories: taxonomy.sourceCategories,
     publicationDatetime: row.publication_datetime,
     createdAt: row.created_at,
     updatedAt: row.updated_at
@@ -1099,7 +1170,9 @@ export async function readNewsDashboardSummary(options?: {
   const latestHours = Math.max(1, Math.min(720, Math.floor(options?.latestHours || 24)));
   const previewLimit = Math.max(1, Math.min(20, Math.floor(options?.previewLimit || 8)));
   const topCountriesLimit = Math.max(1, Math.min(20, Math.floor(options?.topCountriesLimit || 6)));
-  const maxFutureHours = Math.max(1, Math.min(168, Math.floor(options?.maxFutureHours || 6)));
+  const maxFutureMinutes = options?.maxFutureHours == null
+    ? newsApiMaxFutureMinutes
+    : Math.max(0, Math.min(168 * 60, Math.floor(options.maxFutureHours * 60)));
 
   const [totalsResult, checkedSourcesResult, sectionTotalsResult, dateResult, recentDatesResult] = await Promise.all([
     db.query<NewsApiSummaryTotalsRow>(
@@ -1111,8 +1184,9 @@ export async function readNewsDashboardSummary(options?: {
         max(created_at)::text as generated_at
       from news_articles
       where publication_datetime >= now() - ($1::int * interval '1 day')
+        and publication_datetime <= now() + ($3::int * interval '1 minute')
       `,
-      [windowDays, latestHours]
+      [windowDays, latestHours, maxFutureMinutes]
     ),
     db.query<NewsApiCheckedSourcesRow>(
       `
@@ -1132,20 +1206,22 @@ export async function readNewsDashboardSummary(options?: {
         count(*)::text as count
       from news_articles
       where publication_datetime >= now() - ($1::int * interval '1 day')
+        and publication_datetime <= now() + ($2::int * interval '1 minute')
       group by 1
       `,
-      [windowDays]
+      [windowDays, maxFutureMinutes]
     ),
     db.query<NewsApiDateRow>(
       `
       with windowed as (
         select
           case
-            when publication_datetime > now() + ($2::int * interval '1 hour') then created_at
+            when publication_datetime > now() + ($2::int * interval '1 minute') then created_at
             else publication_datetime
           end as normalized_publication_datetime
         from news_articles
         where publication_datetime >= now() - ($1::int * interval '1 day')
+          and publication_datetime <= now() + ($2::int * interval '1 minute')
       ),
       dates as (
         select distinct (normalized_publication_datetime at time zone 'UTC')::date as date
@@ -1159,18 +1235,19 @@ export async function readNewsDashboardSummary(options?: {
         )::text as preview_date
       from dates
       `,
-      [windowDays, maxFutureHours]
+      [windowDays, maxFutureMinutes]
     ),
     db.query<NewsApiDateCountRow>(
       `
       with windowed as (
         select
           case
-            when publication_datetime > now() + ($2::int * interval '1 hour') then created_at
+            when publication_datetime > now() + ($2::int * interval '1 minute') then created_at
             else publication_datetime
           end as normalized_publication_datetime
         from news_articles
         where publication_datetime >= now() - ($1::int * interval '1 day')
+          and publication_datetime <= now() + ($2::int * interval '1 minute')
       )
       select
         (normalized_publication_datetime at time zone 'UTC')::date::text as date,
@@ -1180,7 +1257,7 @@ export async function readNewsDashboardSummary(options?: {
       order by 1 desc
       limit 7
       `,
-      [windowDays, maxFutureHours]
+      [windowDays, maxFutureMinutes]
     ),
   ]);
 
@@ -1200,11 +1277,12 @@ export async function readNewsDashboardSummary(options?: {
           select
             coalesce(country, 'Global') as country,
             case
-              when publication_datetime > now() + ($2::int * interval '1 hour') then created_at
+              when publication_datetime > now() + ($2::int * interval '1 minute') then created_at
               else publication_datetime
             end as normalized_publication_datetime
           from news_articles
           where publication_datetime >= now() - ($1::int * interval '1 day')
+            and publication_datetime <= now() + ($2::int * interval '1 minute')
         )
         select
           country,
@@ -1215,7 +1293,7 @@ export async function readNewsDashboardSummary(options?: {
         order by count(*) desc, country asc
         limit $4
         `,
-        [windowDays, maxFutureHours, previewDate, topCountriesLimit]
+        [windowDays, maxFutureMinutes, previewDate, topCountriesLimit]
       ),
       db.query<NewsApiReadRow>(
         `
@@ -1224,21 +1302,23 @@ export async function readNewsDashboardSummary(options?: {
             external_id as id,
             source,
             title_original as title,
-            null::text as snippet_original,
+            left(snippet_original, ${apiSnippetMaxChars}) as snippet_original,
             url,
             country,
             language,
             coalesce(section, 'others') as section,
+            feed_categories,
             publication_datetime,
             created_at,
             updated_at,
             max(created_at) over() as generated_at,
             case
-              when publication_datetime > now() + ($2::int * interval '1 hour') then created_at
+              when publication_datetime > now() + ($2::int * interval '1 minute') then created_at
               else publication_datetime
             end as normalized_publication_datetime
           from news_articles
           where publication_datetime >= now() - ($1::int * interval '1 day')
+            and publication_datetime <= now() + ($2::int * interval '1 minute')
         )
         select
           id,
@@ -1249,6 +1329,7 @@ export async function readNewsDashboardSummary(options?: {
           country,
           language,
           section,
+          feed_categories,
           publication_datetime,
           created_at,
           updated_at,
@@ -1258,7 +1339,7 @@ export async function readNewsDashboardSummary(options?: {
         order by normalized_publication_datetime desc, created_at desc
         limit $4
         `,
-        [windowDays, maxFutureHours, previewDate, previewLimit]
+        [windowDays, maxFutureMinutes, previewDate, previewLimit]
       ),
     ]);
 
@@ -1272,17 +1353,18 @@ export async function readNewsDashboardSummary(options?: {
       with windowed as (
         select
           case
-            when publication_datetime > now() + ($2::int * interval '1 hour') then created_at
+            when publication_datetime > now() + ($2::int * interval '1 minute') then created_at
             else publication_datetime
           end as normalized_publication_datetime
         from news_articles
         where publication_datetime >= now() - ($1::int * interval '1 day')
+          and publication_datetime <= now() + ($2::int * interval '1 minute')
       )
       select count(*)::text as count
       from windowed
       where (normalized_publication_datetime at time zone 'UTC')::date = $3::date
       `,
-      [windowDays, maxFutureHours, previewDate]
+      [windowDays, maxFutureMinutes, previewDate]
     );
     previewArticleCount = Number(countResult.rows[0]?.count || 0);
 
@@ -1295,7 +1377,6 @@ export async function readNewsDashboardSummary(options?: {
         return {
           ...mapRowToNewsApiItem(row),
           title,
-          section: row.section,
         } satisfies NewsApiDashboardHeadline;
       })
       .filter((row): row is NewsApiDashboardHeadline => row !== null);
@@ -1401,7 +1482,7 @@ export async function readNewsApiFilters(): Promise<NewsApiFiltersResult> {
       countries: countriesResult.rows.map((row) => row.value),
       languages: languagesResult.rows.map((row) => row.value),
       sources: sourcesResult.rows.map((row) => row.value),
-      sections: [...new Set(sectionsResult.rows.map((row) => normalizeStoredSectionValue(row.value)))]
+      sections: [...VALID_NEWS_SECTION_LIST]
     }
   };
 }
@@ -1455,6 +1536,7 @@ export async function readNewsArticles(options: {
       null::real as confidence,
       false::boolean as world_latam,
       '[]'::jsonb as tags,
+      e.feed_categories,
       max(e.created_at) over() as generated_at
     from news_articles e
     where e.created_at > now() - ($1::text || ' hours')::interval
@@ -2818,6 +2900,7 @@ type NewsArticlePersistable = {
   snippetOriginal: string | null;
   country: string | null;
   section: string | null;
+  feedCategories: string[];
   url: string;
   source: string;
   language: string | null;
@@ -2866,11 +2949,13 @@ async function toNewsArticleRow(item: NewsItem): Promise<NewsArticlePersistable 
   if (!titleOriginal) return null;
   const rawSnippet = normalizeHtmlText(item.description || '');
   const snippetOriginal = rawSnippet ? truncateText(rawSnippet, storedSnippetMaxChars) : null;
+  const feedCategories = normalizeSourceCategories(item.sourceCategories);
 
   return {
     externalId: await sha256Hex(linkNorm),
     publicationDatetime: new Date(publicationTs).toISOString(),
     section: item.section,
+    feedCategories,
     titleOriginal,
     snippetOriginal,
     country: item.country || null,
@@ -2919,9 +3004,18 @@ export async function persistNewsArticles(items: NewsItem[]): Promise<{ persiste
   if (!rows.length) return { persisted: 0, storage: 'postgres' };
   const dedupedRows = [...rows.reduce((acc, row) => {
     const current = acc.get(row.externalId);
-    if (!current || new Date(row.publicationDatetime).getTime() > new Date(current.publicationDatetime).getTime()) {
+    if (!current) {
       acc.set(row.externalId, row);
+      return acc;
     }
+    const preferred =
+      new Date(row.publicationDatetime).getTime() > new Date(current.publicationDatetime).getTime()
+        ? row
+        : current;
+    acc.set(row.externalId, {
+      ...preferred,
+      feedCategories: [...new Set([...current.feedCategories, ...row.feedCategories])],
+    });
     return acc;
   }, new Map<string, NewsArticlePersistable>()).values()];
 
@@ -2930,14 +3024,15 @@ export async function persistNewsArticles(items: NewsItem[]): Promise<{ persiste
     const values: unknown[] = [];
     const parts: string[] = [];
     group.forEach((row, i) => {
-      const base = i * 9;
+      const base = i * 10;
       parts.push(
-        `($${base + 1}::text,$${base + 2}::timestamptz,$${base + 3}::text,$${base + 4}::text,$${base + 5}::text,$${base + 6}::text,$${base + 7}::text,$${base + 8}::text,$${base + 9}::text,now(),now())`
+        `($${base + 1}::text,$${base + 2}::timestamptz,$${base + 3}::text,$${base + 4}::text[],$${base + 5}::text,$${base + 6}::text,$${base + 7}::text,$${base + 8}::text,$${base + 9}::text,$${base + 10}::text,now(),now())`
       );
       values.push(
         row.externalId,
         row.publicationDatetime,
         row.section,
+        row.feedCategories,
         row.titleOriginal,
         row.snippetOriginal,
         row.country,
@@ -2951,12 +3046,20 @@ export async function persistNewsArticles(items: NewsItem[]): Promise<{ persiste
       db,
       `
       insert into news_articles (
-        external_id, publication_datetime, section, title_original, snippet_original,
+        external_id, publication_datetime, section, feed_categories, title_original, snippet_original,
         country, url, source, language, created_at, updated_at
       ) values ${parts.join(',')}
       on conflict (external_id) do update set
         publication_datetime = excluded.publication_datetime,
         section = excluded.section,
+        feed_categories = (
+          select array(
+            select distinct unnest(
+              coalesce(news_articles.feed_categories, '{}'::text[]) ||
+              coalesce(excluded.feed_categories, '{}'::text[])
+            )
+          )
+        ),
         title_original = case
           when (excluded.title_original = excluded.url or excluded.title_original like 'http%')
             and news_articles.title_original is not null
