@@ -106,8 +106,7 @@ export function DashboardView() {
     published24h: Number(summary.totals?.published24h || 0),
     checkedSources24h: Number(summary.totals?.checkedSources24h || 0),
   };
-  const latestHours = Number(summary.latestHours || 0);
-  const topicSampleSize = Number(summary.topicSampleSize || 0);
+  const windowDays = Number(summary.windowDays || 31);
   const sectionTotals = summary.sectionTotals && typeof summary.sectionTotals === 'object' ? summary.sectionTotals : {};
   const recentDates = Array.isArray(summary.recentDates) ? summary.recentDates : [];
   const preview =
@@ -255,7 +254,7 @@ export function DashboardView() {
         <div className="section-head">
           <h2>Detailed topic leaders</h2>
           <span>
-            {topicSampleSize.toLocaleString()} recent articles sampled across the latest {latestHours}h window
+            {totals.rowsWindow.toLocaleString()} articles across the full {windowDays}d window
           </span>
         </div>
         {topicGroups.length > 0 ? (
@@ -264,7 +263,7 @@ export function DashboardView() {
               <article className="topic-group" key={group.section}>
                 <div className="topic-group-head">
                   <strong>{renderSectionLabel(group.section)}</strong>
-                  <small>{group.articleCount.toLocaleString()} sampled</small>
+                  <small>{group.articleCount.toLocaleString()} articles</small>
                 </div>
                 <div className="topic-pill-row">
                   {group.topics.map((item) => (

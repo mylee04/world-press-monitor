@@ -10,7 +10,11 @@ import {
   normalizeReadableArticleTitle,
 } from '@/lib/html-entities';
 import { normalizeLinkForId } from '@/lib/pipeline';
-import { buildArticleTaxonomy, NEWS_SECTION_ORDER, normalizeSourceCategories } from '@/lib/article-taxonomy';
+import {
+  buildArticleTaxonomy,
+  NEWS_SECTION_ORDER,
+  normalizeSourceCategories,
+} from '@/lib/article-taxonomy';
 
 let pool: Pool | null = null;
 let poolFailed = false;
@@ -56,18 +60,18 @@ const newsApiMaxFutureMinutes = (() => {
   if (!Number.isFinite(parsed) || parsed < 0 || parsed > 24 * 60) return 30;
   return parsed;
 })();
-const dashboardTopicSampleLimit = (() => {
-  const rawValue = process.env.NEWS_API_DASHBOARD_TOPIC_SAMPLE_LIMIT;
-  if (!rawValue) return 10_000;
-  const parsed = Number.parseInt(rawValue, 10);
-  if (!Number.isFinite(parsed) || parsed < 500 || parsed > 100_000) return 10_000;
-  return parsed;
-})();
 const dashboardTopicDisplayLimit = (() => {
   const rawValue = process.env.NEWS_API_DASHBOARD_TOPIC_DISPLAY_LIMIT;
   if (!rawValue) return 10;
   const parsed = Number.parseInt(rawValue, 10);
   if (!Number.isFinite(parsed) || parsed < 3 || parsed > 30) return 10;
+  return parsed;
+})();
+const dashboardSummaryCacheMs = (() => {
+  const rawValue = process.env.NEWS_API_DASHBOARD_SUMMARY_CACHE_MS;
+  if (!rawValue) return 60_000;
+  const parsed = Number.parseInt(rawValue, 10);
+  if (!Number.isFinite(parsed) || parsed < 0 || parsed > 15 * 60_000) return 60_000;
   return parsed;
 })();
 const VALID_NEWS_SECTION_LIST: readonly NewsSection[] = [
@@ -86,6 +90,13 @@ const VALID_NEWS_SECTION_LIST: readonly NewsSection[] = [
   'others',
 ];
 const VALID_NEWS_SECTIONS: ReadonlySet<NewsSection> = new Set<NewsSection>(VALID_NEWS_SECTION_LIST);
+
+type DashboardSummaryCacheEntry = {
+  expiresAt: number;
+  value: NewsApiDashboardSummaryResult;
+};
+
+let dashboardSummaryCache = new Map<string, DashboardSummaryCacheEntry>();
 
 function truncateText(value: string, maxChars: number): string {
   const normalized = (value || '').replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, ' ');
@@ -312,11 +323,17 @@ create table if not exists news_articles (
       source text not null,
       language text null,
       section text null,
-      feed_categories text[] not null default '{}'
+      feed_categories text[] not null default '{}',
+      primary_topic text null,
+      topics text[] not null default '{}',
+      topics_derived_at timestamptz null
     );
     alter table news_articles add column if not exists updated_at timestamptz not null default now();
     alter table news_articles add column if not exists feed_categories text[] not null default '{}';
     alter table news_articles add column if not exists stable_id text null;
+    alter table news_articles add column if not exists primary_topic text null;
+    alter table news_articles add column if not exists topics text[] not null default '{}';
+    alter table news_articles add column if not exists topics_derived_at timestamptz null;
     create index if not exists idx_news_articles_created_at on news_articles(created_at desc);
     create index if not exists idx_news_articles_updated_at on news_articles(updated_at desc);
     create index if not exists idx_news_articles_publication_datetime on news_articles(publication_datetime desc);
@@ -326,6 +343,8 @@ create table if not exists news_articles (
     create index if not exists idx_news_articles_stable_id on news_articles(stable_id);
     create index if not exists idx_news_articles_section on news_articles(section);
     create index if not exists idx_news_articles_country on news_articles(country);
+    create index if not exists idx_news_articles_primary_topic on news_articles(primary_topic);
+    create index if not exists idx_news_articles_topics on news_articles using gin(topics);
     create table if not exists ingest_missing_published_at (
       candidate_id text primary key,
       outlet_id text not null,
@@ -890,6 +909,8 @@ type NewsApiReadRow = {
   language: string | null;
   section: string | null;
   feed_categories: string[] | null;
+  primary_topic: string | null;
+  topics: string[] | null;
   publication_datetime: string;
   created_at: string;
   updated_at: string;
@@ -925,6 +946,13 @@ type NewsApiDateCountRow = {
 
 type NewsApiCountryCountRow = {
   country: string | null;
+  count: string;
+};
+
+type NewsApiDashboardTopicCountRow = {
+  section: string;
+  article_count: string;
+  topic: string;
   count: string;
 };
 
@@ -1064,6 +1092,8 @@ export async function readNewsArticlesForApi(options: {
         e.language,
         e.section,
         e.feed_categories,
+        e.primary_topic,
+        e.topics,
         e.publication_datetime,
         e.created_at,
         e.updated_at,
@@ -1105,6 +1135,8 @@ export async function readNewsArticlesForApi(options: {
         e.language,
         e.section,
         e.feed_categories,
+        e.primary_topic,
+        e.topics,
         e.publication_datetime,
         e.created_at,
         e.updated_at
@@ -1145,6 +1177,9 @@ function mapRowToNewsApiItem(row: NewsApiReadRow): NewsApiItem {
     title,
     snippet,
   });
+  const storedTopics = normalizeSourceCategories(row.topics);
+  const resolvedTopics = storedTopics.length > 0 ? storedTopics : taxonomy.topics;
+  const storedPrimaryTopic = (row.primary_topic || '').trim() || null;
 
   return {
     id: row.id,
@@ -1156,8 +1191,8 @@ function mapRowToNewsApiItem(row: NewsApiReadRow): NewsApiItem {
     language: row.language,
     primarySection: taxonomy.primarySection,
     sections: taxonomy.sections,
-    primaryTopic: taxonomy.primaryTopic,
-    topics: taxonomy.topics,
+    primaryTopic: storedPrimaryTopic || resolvedTopics[0] || taxonomy.primaryTopic,
+    topics: resolvedTopics,
     sourceCategories: taxonomy.sourceCategories,
     publicationDatetime: row.publication_datetime,
     createdAt: row.created_at,
@@ -1177,60 +1212,106 @@ function mapRowToDisplayNewsApiItem(row: NewsApiReadRow): NewsApiItem | null {
   };
 }
 
-async function readDashboardTopicSampleRows(
+async function readDashboardTopicGroupsForWindow(
   db: Pool,
-  latestHours: number,
+  windowDays: number,
   maxFutureMinutes: number,
-  desiredLimit: number
-): Promise<NewsApiReadRow[]> {
-  const fallbackLimits = [desiredLimit, 7500, 5000, 3000, 2000, 1000, 500]
-    .filter((value, index, values) => value > 0 && values.indexOf(value) === index)
-    .sort((left, right) => right - left);
-
-  const sql = `
+  displayLimit: number
+): Promise<NewsApiDashboardTopicGroup[]> {
+  const result = await db.query<NewsApiDashboardTopicCountRow>(
+    `
+    with windowed as (
+      select
+        coalesce(nullif(trim(section), ''), 'others') as section,
+        coalesce(topics, '{}'::text[]) as topics
+      from news_articles
+      where publication_datetime >= now() - ($1::int * interval '1 day')
+        and publication_datetime <= now() + ($2::int * interval '1 minute')
+    ),
+    section_counts as (
+      select
+        section,
+        count(*)::text as article_count
+      from windowed
+      where section <> 'others'
+      group by 1
+    ),
+    expanded_topics as (
+      select
+        section,
+        unnest(topics) as topic
+      from windowed
+      where section <> 'others'
+        and cardinality(topics) > 0
+    ),
+    topic_counts as (
+      select
+        section,
+        topic,
+        count(*)::text as count
+      from expanded_topics
+      group by 1, 2
+    ),
+    ranked as (
+      select
+        topic_counts.section,
+        section_counts.article_count,
+        topic_counts.topic,
+        topic_counts.count,
+        row_number() over (
+          partition by topic_counts.section
+          order by topic_counts.count::bigint desc, topic_counts.topic asc
+        ) as rn
+      from topic_counts
+      join section_counts using (section)
+    )
     select
-      external_id as id,
-      source,
-      title_original as title,
-      null::text as snippet_original,
-      url,
-      country,
-      language,
-      coalesce(section, 'others') as section,
-      feed_categories,
-      publication_datetime,
-      created_at,
-      updated_at,
-      max(created_at) over() as generated_at
-    from news_articles
-    where publication_datetime >= now() - ($1::int * interval '1 hour')
-      and publication_datetime <= now() + ($2::int * interval '1 minute')
-    order by publication_datetime desc, created_at desc
-    limit $3
-  `;
+      section,
+      article_count,
+      topic,
+      count
+    from ranked
+    where rn <= $3
+    `,
+    [windowDays, maxFutureMinutes, displayLimit]
+  );
 
-  let lastError: unknown = null;
-  for (const limit of fallbackLimits) {
-    try {
-      const result = await db.query<NewsApiReadRow>(sql, [latestHours, maxFutureMinutes, limit]);
-      return result.rows;
-    } catch (error: unknown) {
-      lastError = error;
-      const code = typeof error === 'object' && error && 'code' in error ? String((error as { code?: string }).code || '') : '';
-      const message = error instanceof Error ? error.message : String(error || '');
-      const isEncodingError = code === '22021' || message.includes('invalid byte sequence for encoding');
-      if (!isEncodingError) {
-        throw error;
-      }
-      console.warn(`[dashboard-summary] topic sample query failed at limit=${limit}, retrying lower limit`);
-    }
+  const groupsBySection = new Map<string, NewsApiDashboardTopicGroup>();
+  for (const row of result.rows) {
+    const section = normalizeStoredSectionValue(row.section);
+    if (section === 'others') continue;
+    const current = groupsBySection.get(section) || {
+      section,
+      articleCount: Number(row.article_count) || 0,
+      topics: [],
+    };
+    current.topics.push({
+      topic: row.topic,
+      count: Number(row.count) || 0,
+    });
+    groupsBySection.set(section, current);
   }
 
-  if (lastError) {
-    console.warn('[dashboard-summary] topic sample query exhausted fallback limits; returning empty topic sample');
-  }
+  return NEWS_SECTION_ORDER
+    .filter((section) => section !== 'others')
+    .map((section) => groupsBySection.get(section))
+    .filter((group): group is NewsApiDashboardTopicGroup => Boolean(group));
+}
 
-  return [];
+function buildDashboardSummaryCacheKey(options?: {
+  windowDays?: number;
+  latestHours?: number;
+  previewLimit?: number;
+  topCountriesLimit?: number;
+  maxFutureHours?: number;
+}): string {
+  return JSON.stringify({
+    windowDays: options?.windowDays || 31,
+    latestHours: options?.latestHours || 24,
+    previewLimit: options?.previewLimit || 8,
+    topCountriesLimit: options?.topCountriesLimit || 6,
+    maxFutureHours: options?.maxFutureHours ?? null,
+  });
 }
 
 export async function readNewsDashboardSummary(options?: {
@@ -1240,6 +1321,12 @@ export async function readNewsDashboardSummary(options?: {
   topCountriesLimit?: number;
   maxFutureHours?: number;
 }): Promise<NewsApiDashboardSummaryResult> {
+  const cacheKey = buildDashboardSummaryCacheKey(options);
+  const cached = dashboardSummaryCache.get(cacheKey);
+  if (cached && cached.expiresAt > Date.now()) {
+    return cached.value;
+  }
+
   const db = getPool();
   if (!db) {
     return {
@@ -1278,7 +1365,7 @@ export async function readNewsDashboardSummary(options?: {
     ? newsApiMaxFutureMinutes
     : Math.max(0, Math.min(168 * 60, Math.floor(options.maxFutureHours * 60)));
 
-  const [totalsResult, checkedSourcesResult, sectionTotalsResult, dateResult, recentDatesResult, topicSampleRows] = await Promise.all([
+  const [totalsResult, checkedSourcesResult, sectionTotalsResult, dateResult, recentDatesResult, topicGroupRows] = await Promise.all([
     db.query<NewsApiSummaryTotalsRow>(
       `
       select
@@ -1363,7 +1450,7 @@ export async function readNewsDashboardSummary(options?: {
       `,
       [windowDays, maxFutureMinutes]
     ),
-    readDashboardTopicSampleRows(db, latestHours, maxFutureMinutes, dashboardTopicSampleLimit),
+    readDashboardTopicGroupsForWindow(db, windowDays, maxFutureMinutes, dashboardTopicDisplayLimit),
   ]);
 
   const dateRow = dateResult.rows[0];
@@ -1373,8 +1460,8 @@ export async function readNewsDashboardSummary(options?: {
   let previewArticleCount = 0;
   let previewTopCountries: Array<{ country: string | null; count: number }> = [];
   let previewHeadlines: NewsApiDashboardHeadline[] = [];
-  let topicSampleSize = 0;
-  let topicGroups: NewsApiDashboardTopicGroup[] = [];
+  const topicSampleSize = Number(totalsResult.rows[0]?.rows_window || 0);
+  const topicGroups = topicGroupRows;
 
   if (previewDate) {
     const [countryCountsResult, headlinesResult] = await Promise.all([
@@ -1415,6 +1502,8 @@ export async function readNewsDashboardSummary(options?: {
             language,
             coalesce(section, 'others') as section,
             feed_categories,
+            primary_topic,
+            topics,
             publication_datetime,
             created_at,
             updated_at,
@@ -1437,6 +1526,8 @@ export async function readNewsDashboardSummary(options?: {
           language,
           section,
           feed_categories,
+          primary_topic,
+          topics,
           publication_datetime,
           created_at,
           updated_at,
@@ -1480,14 +1571,7 @@ export async function readNewsDashboardSummary(options?: {
       .filter((row): row is NewsApiDashboardHeadline => row !== null);
   }
 
-  const topicSampleItems = topicSampleRows
-    .map((row) => mapRowToDisplayNewsApiItem(row))
-    .filter((row): row is NewsApiItem => row !== null);
-
-  topicSampleSize = topicSampleItems.length;
-  topicGroups = buildDashboardTopicGroups(topicSampleItems);
-
-  return {
+  const summary: NewsApiDashboardSummaryResult = {
     storage: 'postgres',
     generatedAt: totalsResult.rows[0]?.generated_at ? new Date(totalsResult.rows[0].generated_at).toISOString() : null,
     windowDays,
@@ -1525,54 +1609,15 @@ export async function readNewsDashboardSummary(options?: {
       headlines: previewHeadlines,
     },
   };
-}
 
-function buildDashboardTopicGroups(items: ReadonlyArray<NewsApiItem>): NewsApiDashboardTopicGroup[] {
-  const countsBySection = new Map<string, { articleCount: number; topicCounts: Map<string, number> }>();
-
-  for (const item of items) {
-    const section = normalizeStoredSectionValue(item.primarySection);
-    if (section === 'others') continue;
-
-    const current = countsBySection.get(section) || {
-      articleCount: 0,
-      topicCounts: new Map<string, number>(),
-    };
-    current.articleCount += 1;
-
-    const uniqueTopics = new Set<string>((item.topics || []).filter(Boolean));
-    if (uniqueTopics.size === 0 && item.primaryTopic) {
-      uniqueTopics.add(item.primaryTopic);
-    }
-
-    for (const topic of uniqueTopics) {
-      current.topicCounts.set(topic, (current.topicCounts.get(topic) || 0) + 1);
-    }
-
-    countsBySection.set(section, current);
-  }
-
-  const groups: NewsApiDashboardTopicGroup[] = [];
-
-  for (const section of NEWS_SECTION_ORDER) {
-    if (section === 'others') continue;
-    const current = countsBySection.get(section);
-    if (!current || current.topicCounts.size === 0) continue;
-
-    groups.push({
-      section,
-      articleCount: current.articleCount,
-      topics: [...current.topicCounts.entries()]
-        .map(([topic, count]) => ({ topic, count }))
-        .sort((left, right) => {
-          if (right.count !== left.count) return right.count - left.count;
-          return left.topic.localeCompare(right.topic);
-        })
-        .slice(0, dashboardTopicDisplayLimit),
+  if (dashboardSummaryCacheMs > 0) {
+    dashboardSummaryCache.set(cacheKey, {
+      expiresAt: Date.now() + dashboardSummaryCacheMs,
+      value: summary,
     });
   }
 
-  return groups;
+  return summary;
 }
 
 export async function readNewsApiFilters(): Promise<NewsApiFiltersResult> {
@@ -3057,6 +3102,8 @@ type NewsArticlePersistable = {
   country: string | null;
   section: string | null;
   feedCategories: string[];
+  primaryTopic: string | null;
+  topics: string[];
   url: string;
   source: string;
   language: string | null;
@@ -3117,6 +3164,14 @@ async function toNewsArticleRow(item: NewsItem): Promise<NewsArticlePersistable 
   const snippetOriginal = rawSnippet ? truncateText(rawSnippet, storedSnippetMaxChars) : null;
   const feedCategories = normalizeSourceCategories(item.sourceCategories);
   const stableId = typeof item.stableId === 'string' && item.stableId.trim() ? item.stableId.trim().slice(0, 700) : null;
+  const taxonomy = buildArticleTaxonomy({
+    storedSection: item.section,
+    sourceCategories: feedCategories,
+    source: item.source,
+    url: decodedLink,
+    title: titleOriginal,
+    snippet: snippetOriginal,
+  });
 
   return {
     externalId: await sha256Hex(linkNorm),
@@ -3124,6 +3179,8 @@ async function toNewsArticleRow(item: NewsItem): Promise<NewsArticlePersistable 
     publicationDatetime: new Date(publicationTs).toISOString(),
     section: item.section,
     feedCategories,
+    primaryTopic: taxonomy.primaryTopic,
+    topics: taxonomy.topics,
     titleOriginal,
     snippetOriginal,
     country: item.country || null,
@@ -3265,9 +3322,9 @@ export async function persistNewsArticles(items: NewsItem[]): Promise<{ persiste
     const values: unknown[] = [];
     const parts: string[] = [];
     group.forEach((row, i) => {
-      const base = i * 11;
+      const base = i * 14;
       parts.push(
-        `($${base + 1}::text,$${base + 2}::text,$${base + 3}::timestamptz,$${base + 4}::text,$${base + 5}::text[],$${base + 6}::text,$${base + 7}::text,$${base + 8}::text,$${base + 9}::text,$${base + 10}::text,$${base + 11}::text,now(),now())`
+        `($${base + 1}::text,$${base + 2}::text,$${base + 3}::timestamptz,$${base + 4}::text,$${base + 5}::text[],$${base + 6}::text,$${base + 7}::text[],$${base + 8}::timestamptz,$${base + 9}::text,$${base + 10}::text,$${base + 11}::text,$${base + 12}::text,$${base + 13}::text,$${base + 14}::text,now(),now())`
       );
       values.push(
         row.externalId,
@@ -3275,6 +3332,9 @@ export async function persistNewsArticles(items: NewsItem[]): Promise<{ persiste
         row.publicationDatetime,
         row.section,
         row.feedCategories,
+        row.primaryTopic,
+        row.topics,
+        new Date().toISOString(),
         row.titleOriginal,
         row.snippetOriginal,
         row.country,
@@ -3288,7 +3348,7 @@ export async function persistNewsArticles(items: NewsItem[]): Promise<{ persiste
       db,
       `
       insert into news_articles (
-        external_id, stable_id, publication_datetime, section, feed_categories, title_original, snippet_original,
+        external_id, stable_id, publication_datetime, section, feed_categories, primary_topic, topics, topics_derived_at, title_original, snippet_original,
         country, url, source, language, created_at, updated_at
       ) values ${parts.join(',')}
       on conflict (external_id) do update set
@@ -3303,6 +3363,18 @@ export async function persistNewsArticles(items: NewsItem[]): Promise<{ persiste
             )
           )
         ),
+        primary_topic = coalesce(excluded.primary_topic, news_articles.primary_topic),
+        topics = (
+          select array(
+            select distinct topic
+            from unnest(
+              coalesce(news_articles.topics, '{}'::text[]) ||
+              coalesce(excluded.topics, '{}'::text[])
+            ) as topic
+            where topic is not null and btrim(topic) <> ''
+          )
+        ),
+        topics_derived_at = now(),
         title_original = case
           when (excluded.title_original = excluded.url or excluded.title_original like 'http%')
             and news_articles.title_original is not null
