@@ -7,6 +7,10 @@ PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 source "${SCRIPT_DIR}/load-local-env.sh"
 load_local_env
 
+GIT_BIN="${WPR_GIT_BIN:-${WPM_GIT_BIN:-/usr/bin/git}}"
+CURL_BIN="${WPR_CURL_BIN:-${WPM_CURL_BIN:-/usr/bin/curl}}"
+BUN_BIN="${WPR_BUN_BIN:-${WPM_BUN_BIN:-${HOME}/.bun/bin/bun}}"
+
 if [ -z "${WPR_PRIMARY_WORKTREE:-${WPM_PRIMARY_WORKTREE:-}}" ] && [ -f "${PROJECT_ROOT}/.env.macmini.local" ]; then
   set -a
   # shellcheck disable=SC1090
@@ -63,7 +67,7 @@ restart_service() {
 }
 
 http_status() {
-  curl --max-time 10 -sS -o /dev/null -w '%{http_code}' "$1" || true
+  "${CURL_BIN}" --max-time 10 -sS -o /dev/null -w '%{http_code}' "$1" || true
 }
 
 resolved_dir() {
@@ -91,26 +95,26 @@ sync_runtime_repo_if_pushed() {
     return 0
   fi
 
-  if ! git -C "${PRIMARY_WORKTREE}" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+  if ! "${GIT_BIN}" -C "${PRIMARY_WORKTREE}" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
     printf 'Runtime sync: skipped (%s is not a git worktree)\n' "${PRIMARY_WORKTREE}"
     return 0
   fi
 
   local branch current_head last_synced_head remote_head
-  branch="$(git -C "${PRIMARY_WORKTREE}" rev-parse --abbrev-ref HEAD 2>/dev/null || true)"
+  branch="$("${GIT_BIN}" -C "${PRIMARY_WORKTREE}" rev-parse --abbrev-ref HEAD 2>/dev/null || true)"
   if [ "${branch}" != "${SYNC_BRANCH}" ]; then
     printf 'Runtime sync: skipped (branch=%s, target=%s)\n' "${branch:-unknown}" "${SYNC_BRANCH}"
     return 0
   fi
 
-  current_head="$(git -C "${PRIMARY_WORKTREE}" rev-parse HEAD 2>/dev/null || true)"
+  current_head="$("${GIT_BIN}" -C "${PRIMARY_WORKTREE}" rev-parse HEAD 2>/dev/null || true)"
   last_synced_head="$(cat "${SYNC_HEAD_FILE}" 2>/dev/null || true)"
   if [ -n "${current_head}" ] && [ "${current_head}" = "${last_synced_head}" ]; then
     printf 'Runtime sync: already at %s\n' "${current_head:0:12}"
     return 0
   fi
 
-  remote_head="$(git -C "${PRIMARY_WORKTREE}" ls-remote --heads "${SYNC_REMOTE}" "${SYNC_BRANCH}" 2>/dev/null | awk 'NR==1 { print $1 }')"
+  remote_head="$("${GIT_BIN}" -C "${PRIMARY_WORKTREE}" ls-remote --heads "${SYNC_REMOTE}" "${SYNC_BRANCH}" 2>/dev/null | awk 'NR==1 { print $1 }')"
   if [ -z "${remote_head}" ]; then
     printf 'Runtime sync: skipped (failed to resolve %s/%s)\n' "${SYNC_REMOTE}" "${SYNC_BRANCH}"
     return 0
@@ -125,7 +129,7 @@ sync_runtime_repo_if_pushed() {
 
   local sync_tmp
   sync_tmp="$(mktemp -d "${TMPDIR:-/tmp}/wpr-runtime-sync.XXXXXX")"
-  if ! git -C "${PRIMARY_WORKTREE}" archive --format=tar "${current_head}" | tar -xf - -C "${sync_tmp}"; then
+  if ! "${GIT_BIN}" -C "${PRIMARY_WORKTREE}" archive --format=tar "${current_head}" | tar -xf - -C "${sync_tmp}"; then
     rm -rf "${sync_tmp}"
     printf 'Runtime sync: failed to export git snapshot for %s\n' "${current_head:0:12}"
     return 0
@@ -150,7 +154,7 @@ sync_runtime_repo_if_pushed() {
 
   (
     cd "${RUNTIME_REPO}"
-    bun install >/dev/null
+    "${BUN_BIN}" install >/dev/null
   )
 
   rm -rf "${sync_tmp}"
