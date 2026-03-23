@@ -56,7 +56,20 @@ const newsApiMaxFutureMinutes = (() => {
   if (!Number.isFinite(parsed) || parsed < 0 || parsed > 24 * 60) return 30;
   return parsed;
 })();
-const dashboardTopicSampleLimit = 2000;
+const dashboardTopicSampleLimit = (() => {
+  const rawValue = process.env.NEWS_API_DASHBOARD_TOPIC_SAMPLE_LIMIT;
+  if (!rawValue) return 10_000;
+  const parsed = Number.parseInt(rawValue, 10);
+  if (!Number.isFinite(parsed) || parsed < 500 || parsed > 100_000) return 10_000;
+  return parsed;
+})();
+const dashboardTopicDisplayLimit = (() => {
+  const rawValue = process.env.NEWS_API_DASHBOARD_TOPIC_DISPLAY_LIMIT;
+  if (!rawValue) return 10;
+  const parsed = Number.parseInt(rawValue, 10);
+  if (!Number.isFinite(parsed) || parsed < 3 || parsed > 30) return 10;
+  return parsed;
+})();
 const VALID_NEWS_SECTION_LIST: readonly NewsSection[] = [
   'world',
   'politics',
@@ -1494,8 +1507,13 @@ function buildDashboardTopicGroups(items: ReadonlyArray<NewsApiItem>): NewsApiDa
     };
     current.articleCount += 1;
 
-    if (item.primaryTopic) {
-      current.topicCounts.set(item.primaryTopic, (current.topicCounts.get(item.primaryTopic) || 0) + 1);
+    const uniqueTopics = new Set<string>((item.topics || []).filter(Boolean));
+    if (uniqueTopics.size === 0 && item.primaryTopic) {
+      uniqueTopics.add(item.primaryTopic);
+    }
+
+    for (const topic of uniqueTopics) {
+      current.topicCounts.set(topic, (current.topicCounts.get(topic) || 0) + 1);
     }
 
     countsBySection.set(section, current);
@@ -1517,7 +1535,7 @@ function buildDashboardTopicGroups(items: ReadonlyArray<NewsApiItem>): NewsApiDa
           if (right.count !== left.count) return right.count - left.count;
           return left.topic.localeCompare(right.topic);
         })
-        .slice(0, 5),
+        .slice(0, dashboardTopicDisplayLimit),
     });
   }
 
