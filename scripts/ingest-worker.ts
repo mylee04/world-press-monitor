@@ -99,9 +99,12 @@ const SITEMAP_PERMANENT_RECHECK_DAYS = Math.max(
 );
 const FEED_HOST_ALLOWLIST = process.env.INGEST_FEED_HOST_ALLOWLIST || '';
 const FEED_MAX_REDIRECTS = Math.max(0, Math.min(20, Number.parseInt(process.env.INGEST_FEED_MAX_REDIRECTS || '8', 10) || 8));
-const ENABLE_BROWSER_SITEMAP_FALLBACK = parseBoolEnv(process.env.INGEST_BROWSER_SITEMAP_FALLBACK, false);
+const ENABLE_BROWSER_SITEMAP_FALLBACK = parseBoolEnv(process.env.INGEST_BROWSER_SITEMAP_FALLBACK, true);
 const BROWSER_SITEMAP_FALLBACK_DOMAINS = new Set(
-  (process.env.INGEST_BROWSER_SITEMAP_DOMAINS || 'www.ouest-france.fr,www.standaard.be')
+  (
+    process.env.INGEST_BROWSER_SITEMAP_DOMAINS ||
+    'www.ouest-france.fr,www.standaard.be,www.nieuwsblad.be,www.gva.be,www.hbvl.be'
+  )
     .split(',')
     .map((value) => value.trim().toLowerCase())
     .filter(Boolean)

@@ -281,6 +281,7 @@ export function parseSitemapWithStats(xml: string, limit = 12, baseUrl?: string)
       const publishedAt =
         normalizePublishedAt(parseTagByLocalName(body, 'publication_date'))
         || normalizePublishedAt(parseTagByLocalName(body, 'lastmod'))
+        || normalizePublishedAt(parseTagByLocalName(body, 'priority'))
         || inferPublishedAtFromLink(link);
       return {
         title,
