@@ -25,11 +25,13 @@
         },
         {
           "name": "USA Today - News Sitemap",
-          "url": "https://www.usatoday.com/news-sitemap.xml"
+          "url": null,
+          "sitemapUrl": "https://www.usatoday.com/news-sitemap.xml"
         },
         {
           "name": "LA Times",
           "url": "https://www.latimes.com/local/rss2.0.xml",
+          "sitemapUrl": "https://www.latimes.com/news-sitemap.xml",
           "status": "ERR",
           "checkedDate": "02/18/2026",
           "valid": "invalid",
@@ -45,7 +47,8 @@
         },
         {
           "name": "CNN - News Sitemap",
-          "url": "https://www.cnn.com/sitemap/news.xml"
+          "url": null,
+          "sitemapUrl": "https://www.cnn.com/sitemap/news.xml"
         },
         {
           "name": "Fox News",
@@ -109,7 +112,8 @@
         },
         {
           "name": "Associated Press - News Sitemap",
-          "url": "https://apnews.com/news-sitemap-content.xml"
+          "url": null,
+          "sitemapUrl": "https://apnews.com/news-sitemap-content.xml"
         },
         {
           "name": "The New York Times - U.S.",
@@ -470,6 +474,7 @@
         {
           "name": "Chicago Tribune",
           "url": "https://chicagotribune.com/feed",
+          "sitemapUrl": "https://www.chicagotribune.com/sitemap.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/18/2026",
           "valid": "needs verification",
@@ -486,6 +491,7 @@
         {
           "name": "Denver Post",
           "url": "https://denverpost.com/feed",
+          "sitemapUrl": "https://www.denverpost.com/sitemap.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/18/2026",
           "valid": "needs verification",
@@ -494,6 +500,7 @@
         {
           "name": "San Jose Mercury News",
           "url": "https://mercurynews.com/feed",
+          "sitemapUrl": "https://www.mercurynews.com/sitemap.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/18/2026",
           "valid": "needs verification",
@@ -510,10 +517,148 @@
         {
           "name": "San Diego Union-Tribune",
           "url": "https://sandiegouniontribune.com/feed",
+          "sitemapUrl": "https://www.sandiegouniontribune.com/sitemap.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/18/2026",
           "valid": "needs verification",
           "row": 78
+        },
+        {
+          "name": "Houston Chronicle",
+          "url": null,
+          "sitemapUrl": "https://www.houstonchronicle.com/sitemap_news.xml"
+        },
+        {
+          "name": "Dallas Morning News",
+          "url": null,
+          "sitemapUrl": "https://www.dallasnews.com/arc/outboundfeeds/sitemap-news/?outputType=xml"
+        },
+        {
+          "name": "The Philadelphia Inquirer",
+          "url": null,
+          "sitemapUrl": "https://www.inquirer.com/sitemaps/48hour-news-sitemap-partner.xml"
+        },
+        {
+          "name": "OregonLive",
+          "url": null,
+          "sitemapUrl": "https://www.oregonlive.com/arc/outboundfeeds/news-sitemap-index/?outputType=xml"
+        },
+        {
+          "name": "Newsday",
+          "url": null,
+          "sitemapUrl": "https://www.newsday.com/sitemap/news"
+        },
+        {
+          "name": "Baltimore Sun",
+          "url": null,
+          "sitemapUrl": "https://www.baltimoresun.com/sitemap.xml"
+        },
+        {
+          "name": "Orlando Sentinel",
+          "url": null,
+          "sitemapUrl": "https://www.orlandosentinel.com/sitemap.xml"
+        },
+        {
+          "name": "Detroit Free Press",
+          "url": null,
+          "sitemapUrl": "https://www.freep.com/news-sitemap.xml"
+        },
+        {
+          "name": "Arizona Republic",
+          "url": null,
+          "sitemapUrl": "https://www.azcentral.com/news-sitemap.xml"
+        },
+        {
+          "name": "Milwaukee Journal Sentinel",
+          "url": null,
+          "sitemapUrl": "https://www.jsonline.com/news-sitemap.xml"
+        },
+        {
+          "name": "The Tennessean",
+          "url": null,
+          "sitemapUrl": "https://www.tennessean.com/news-sitemap.xml"
+        },
+        {
+          "name": "IndyStar",
+          "url": null,
+          "sitemapUrl": "https://www.indystar.com/news-sitemap.xml"
+        },
+        {
+          "name": "The Columbus Dispatch",
+          "url": null,
+          "sitemapUrl": "https://www.dispatch.com/news-sitemap.xml"
+        },
+        {
+          "name": "Cincinnati Enquirer",
+          "url": null,
+          "sitemapUrl": "https://www.cincinnati.com/news-sitemap.xml"
+        },
+        {
+          "name": "Des Moines Register",
+          "url": null,
+          "sitemapUrl": "https://www.desmoinesregister.com/news-sitemap.xml"
+        },
+        {
+          "name": "Austin American-Statesman",
+          "url": null,
+          "sitemapUrl": "https://www.statesman.com/news-sitemap.xml"
+        },
+        {
+          "name": "Palm Beach Post",
+          "url": null,
+          "sitemapUrl": "https://www.palmbeachpost.com/news-sitemap.xml"
+        },
+        {
+          "name": "The Oklahoman",
+          "url": null,
+          "sitemapUrl": "https://www.oklahoman.com/news-sitemap.xml"
+        },
+        {
+          "name": "Asbury Park Press",
+          "url": null,
+          "sitemapUrl": "https://www.app.com/news-sitemap.xml"
+        },
+        {
+          "name": "Courier Journal",
+          "url": null,
+          "sitemapUrl": "https://www.courier-journal.com/news-sitemap.xml"
+        },
+        {
+          "name": "NorthJersey.com",
+          "url": null,
+          "sitemapUrl": "https://www.northjersey.com/news-sitemap.xml"
+        },
+        {
+          "name": "Knox News",
+          "url": null,
+          "sitemapUrl": "https://www.knoxnews.com/news-sitemap.xml"
+        },
+        {
+          "name": "Florida Today",
+          "url": null,
+          "sitemapUrl": "https://www.floridatoday.com/news-sitemap.xml"
+        },
+        {
+          "name": "Florida Times-Union",
+          "url": null,
+          "sitemapUrl": "https://www.jacksonville.com/news-sitemap.xml"
+        },
+        {
+          "name": "Lansing State Journal",
+          "url": null,
+          "sitemapUrl": "https://www.lansingstatejournal.com/news-sitemap.xml"
+        },
+        {
+          "name": "Press Herald",
+          "url": "https://www.pressherald.com/feed/"
+        },
+        {
+          "name": "Arizona Daily Star",
+          "url": "https://tucson.com/search/?f=rss&t=article&c=news/local*&l=50&s=start_time&sd=desc"
+        },
+        {
+          "name": "Tulsa World",
+          "url": "https://tulsaworld.com/search/?f=rss&t=article&c=news/local*&l=50&s=start_time&sd=desc"
         },
         {
           "name": "Honolulu Star-Advertiser",

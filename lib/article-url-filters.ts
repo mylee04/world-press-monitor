@@ -57,6 +57,16 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     if (pathname.startsWith('/tv-rehberi/')) return true;
   }
 
+  if (
+    (hostname.endsWith('orlandosentinel.com') ||
+      hostname.endsWith('sandiegouniontribune.com') ||
+      hostname.endsWith('denverpost.com') ||
+      hostname.endsWith('mercurynews.com')) &&
+    pathname.startsWith('/obituaries/')
+  ) {
+    return true;
+  }
+
   if (pathname.startsWith('/iframe/')) {
     return true;
   }
