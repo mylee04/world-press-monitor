@@ -25,6 +25,8 @@ type CliArgs = {
   pageConcurrency: number;
   pageLimitPerSource: number | null;
   pageTopSources: number | null;
+  pageTimeoutMs: number;
+  pageAttempts: number;
   sources: string[];
   countries: string[];
 };
@@ -88,9 +90,10 @@ const ATLAS_PATH = process.env.ATLAS_PATH || resolve(process.cwd(), 'data/rss-at
 const DEFAULT_DAYS = 7;
 const DEFAULT_CONCURRENCY = 8;
 const DEFAULT_PAGE_CONCURRENCY = 6;
+const DEFAULT_PAGE_TIMEOUT_MS = 12_000;
+const DEFAULT_PAGE_ATTEMPTS = 2;
 const FEED_ITEM_LIMIT = 2500;
 const FETCH_TIMEOUT_MS = 15_000;
-const ARTICLE_FETCH_TIMEOUT_MS = 12_000;
 const FEED_FETCH_HEADERS = {
   'User-Agent':
     process.env.INGEST_USER_AGENT
@@ -112,6 +115,8 @@ function parseArgs(argv: string[]): CliArgs {
     pageConcurrency: parseNumberArg(argv, '--page-concurrency=', DEFAULT_PAGE_CONCURRENCY, 1, 24),
     pageLimitPerSource: parseOptionalNumberArg(argv, '--page-limit-per-source=', 1),
     pageTopSources: parseOptionalNumberArg(argv, '--page-top-sources=', 1),
+    pageTimeoutMs: parseNumberArg(argv, '--page-timeout-ms=', DEFAULT_PAGE_TIMEOUT_MS, 1000, 60000),
+    pageAttempts: parseNumberArg(argv, '--page-attempts=', DEFAULT_PAGE_ATTEMPTS, 1, 5),
     sources: parseListArg(argv, '--sources='),
     countries: parseListArg(argv, '--countries=').map(normalizeKey),
   };
@@ -252,11 +257,11 @@ async function fetchFeedItems(url: string) {
   return parseRssOrAtomWithStats(decoded.text, FEED_ITEM_LIMIT);
 }
 
-async function fetchArticleHtml(url: string): Promise<string | null> {
+async function fetchArticleHtml(url: string, args: Pick<CliArgs, 'pageTimeoutMs' | 'pageAttempts'>): Promise<string | null> {
   try {
     const response = await fetchWithRetry(url, {
-      timeoutMs: ARTICLE_FETCH_TIMEOUT_MS,
-      attempts: 2,
+      timeoutMs: args.pageTimeoutMs,
+      attempts: args.pageAttempts,
       fetchOptions: {
         headers: {
           'User-Agent': FEED_FETCH_HEADERS['User-Agent'],
@@ -345,7 +350,11 @@ function formatTopPageSources(results: PageScanResult[]): string[] {
     );
 }
 
-async function scanSourcePages(source: string, rows: CandidateRow[]): Promise<PageScanResult> {
+async function scanSourcePages(
+  source: string,
+  rows: CandidateRow[],
+  args: Pick<CliArgs, 'pageTimeoutMs' | 'pageAttempts'>
+): Promise<PageScanResult> {
   const updatesByExternalId = new Map<string, string[]>();
   let fetchedPages = 0;
   let categorizedPages = 0;
@@ -353,7 +362,7 @@ async function scanSourcePages(source: string, rows: CandidateRow[]): Promise<Pa
   for (const row of rows) {
     const url = (row.url || '').trim();
     if (!url || isKnownNonArticleUrl(source, url)) continue;
-    const html = await fetchArticleHtml(url);
+    const html = await fetchArticleHtml(url, args);
     if (!html) continue;
     fetchedPages += 1;
     const sourceCategories = extractSourceCategoriesFromArticlePage({ source, html });
@@ -440,7 +449,7 @@ async function main(): Promise<void> {
         .map(([source, rows]) => ({ source, rows }));
 
       pageResults = await runWithConcurrency(pageSources, args.pageConcurrency, async (item) =>
-        scanSourcePages(item.source, item.rows)
+        scanSourcePages(item.source, item.rows, args)
       );
 
       pageUpdates = [...pageResults.flatMap((result) => result.updates).reduce((acc, item) => {
