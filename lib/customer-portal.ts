@@ -23,6 +23,15 @@ function buildAuthorizationHeader(token: string): string {
   return /^bearer\s+/i.test(token) ? token : `Bearer ${token}`;
 }
 
+function buildPortalUpstreamHeaders(token: string): HeadersInit {
+  return {
+    Accept: 'application/json',
+    Authorization: buildAuthorizationHeader(token),
+    // Cloudflare blocks some server-originated requests without a browser-like user agent.
+    'User-Agent': 'WorldPressRadarPortal/1.0 (+https://app.worldpressradar.com)',
+  };
+}
+
 function getCookieOptions(maxAge = SESSION_MAX_AGE_SECONDS) {
   return {
     httpOnly: true,
@@ -116,10 +125,7 @@ export async function validateCustomerPortalToken(token: string): Promise<{
   try {
     const response = await fetch(url, {
       cache: 'no-store',
-      headers: {
-        Accept: 'application/json',
-        Authorization: buildAuthorizationHeader(normalizedToken),
-      },
+      headers: buildPortalUpstreamHeaders(normalizedToken),
     });
 
     if (response.ok) {
@@ -184,10 +190,7 @@ export async function proxyCustomerApiRequest(
   try {
     upstreamResponse = await fetch(upstreamUrl, {
       cache: 'no-store',
-      headers: {
-        Accept: 'application/json',
-        Authorization: buildAuthorizationHeader(session.token),
-      },
+      headers: buildPortalUpstreamHeaders(session.token),
     });
   } catch (error: unknown) {
     return NextResponse.json(

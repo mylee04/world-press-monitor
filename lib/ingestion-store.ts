@@ -1305,7 +1305,7 @@ export async function readNewsDashboardSummary(options?: {
             external_id as id,
             source,
             title_original as title,
-            left(snippet_original, ${apiSnippetMaxChars}) as snippet_original,
+            null::text as snippet_original,
             url,
             country,
             language,
