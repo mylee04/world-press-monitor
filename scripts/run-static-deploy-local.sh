@@ -12,10 +12,11 @@ LOG_FILE="${LOG_DIR}/static-deploy-local.log"
 WEB_DIST_DIR="${WPR_WEB_DIST_DIR:-${WPM_WEB_DIST_DIR:-${PROJECT_ROOT}/web-dist}}"
 SOURCE_PUBLIC_DATA_DIR="${WPR_PUBLIC_DATA_DIR:-${WPM_PUBLIC_DATA_DIR:-${PROJECT_ROOT}/public/data}}"
 BUILD_PUBLIC_DATA_DIR="${PROJECT_ROOT}/public/data"
+STATIC_OVERLAY_DIR="${PROJECT_ROOT}/.wpr-static-overlay"
 LOCK_DIR="${PROJECT_ROOT}/.wpr-static-deploy-lock"
 VERCEL_DEPLOY_ARCHIVE="${VERCEL_DEPLOY_ARCHIVE:-tgz}"
 
-mkdir -p "${LOG_DIR}" "${WEB_DIST_DIR}" "${BUILD_PUBLIC_DATA_DIR}"
+mkdir -p "${LOG_DIR}" "${WEB_DIST_DIR}" "${BUILD_PUBLIC_DATA_DIR}" "${STATIC_OVERLAY_DIR}"
 cd "${PROJECT_ROOT}"
 export PATH="${PATH}:/opt/homebrew/bin:/usr/local/bin"
 
@@ -45,7 +46,7 @@ run_default_vercel_deploy() {
   printf ' %q' "${build_command[@]}"
   printf '\n'
   if [ "${STATIC_OVERLAY_READY:-0}" = "1" ]; then
-    printf 'Overlay source: %s\n' "${WEB_DIST_DIR}"
+    printf 'Overlay source: %s\n' "${STATIC_OVERLAY_DIR}"
   else
     printf 'Overlay source: none (deploying direct Vercel build output)\n'
   fi
@@ -55,7 +56,7 @@ run_default_vercel_deploy() {
   "${build_command[@]}"
   if [ "${STATIC_OVERLAY_READY:-0}" = "1" ]; then
     mkdir -p "${PROJECT_ROOT}/.vercel/output/static"
-    rsync -a --delete "${WEB_DIST_DIR}/" "${PROJECT_ROOT}/.vercel/output/static/"
+    rsync -a --delete "${STATIC_OVERLAY_DIR}/" "${PROJECT_ROOT}/.vercel/output/static/"
   fi
   "${deploy_command[@]}"
 }
@@ -101,13 +102,17 @@ PY
   fi
   validate_public_manifests "${BUILD_PUBLIC_DATA_DIR}"
   bun run web:build
+  rm -rf "${STATIC_OVERLAY_DIR}"
+  mkdir -p "${STATIC_OVERLAY_DIR}"
   STATIC_OVERLAY_READY=0
   if [ -d "${PROJECT_ROOT}/out" ]; then
-    rsync -a --delete "${PROJECT_ROOT}/out/" "${WEB_DIST_DIR}/"
-    STATIC_OVERLAY_READY=1
+    rsync -a --delete "${PROJECT_ROOT}/out/" "${STATIC_OVERLAY_DIR}/"
   else
-    printf 'No local out/ directory produced by web:build; skipping static overlay sync.\n'
+    printf 'No local out/ directory produced by web:build; using data-only overlay.\n'
   fi
+  mkdir -p "${STATIC_OVERLAY_DIR}/data"
+  rsync -a --delete "${BUILD_PUBLIC_DATA_DIR}/" "${STATIC_OVERLAY_DIR}/data/"
+  STATIC_OVERLAY_READY=1
   export STATIC_OVERLAY_READY
   if [ -n "${STATIC_DEPLOY_COMMAND:-}" ]; then
     printf 'Deploy command: %s\n' "${STATIC_DEPLOY_COMMAND}"
