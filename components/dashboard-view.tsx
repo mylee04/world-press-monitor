@@ -106,14 +106,28 @@ export function DashboardView() {
     published24h: Number(summary.totals?.published24h || 0),
     checkedSources24h: Number(summary.totals?.checkedSources24h || 0),
   };
+  const latestHours = Number(summary.latestHours || 0);
+  const topicSampleSize = Number(summary.topicSampleSize || 0);
   const sectionTotals = summary.sectionTotals && typeof summary.sectionTotals === 'object' ? summary.sectionTotals : {};
   const recentDates = Array.isArray(summary.recentDates) ? summary.recentDates : [];
   const preview =
     summary.preview && typeof summary.preview === 'object'
       ? {
           articleCount: Number(summary.preview.articleCount || 0),
-          topCountries: Array.isArray(summary.preview.topCountries) ? summary.preview.topCountries : [],
-          headlines: Array.isArray(summary.preview.headlines) ? summary.preview.headlines : [],
+          topCountries: Array.isArray(summary.preview.topCountries)
+            ? summary.preview.topCountries.map((item) => ({
+                ...item,
+                count: Number(item?.count || 0),
+              }))
+            : [],
+          headlines: Array.isArray(summary.preview.headlines)
+            ? summary.preview.headlines.map((article) => ({
+                ...article,
+                sections: Array.isArray(article?.sections) ? article.sections : [],
+                topics: Array.isArray(article?.topics) ? article.topics : [],
+                sourceCategories: Array.isArray(article?.sourceCategories) ? article.sourceCategories : [],
+              }))
+            : [],
         }
       : { articleCount: 0, topCountries: [], headlines: [] };
   const sectionRollup = NEWS_SECTION_ORDER.map((section) => ({
@@ -121,7 +135,18 @@ export function DashboardView() {
     count: Number(sectionTotals[section as keyof typeof sectionTotals] || 0),
   })).filter((item) => item.count > 0);
   const topicGroups = Array.isArray(summary.topicGroups)
-    ? summary.topicGroups.filter((group) => Array.isArray(group.topics) && group.topics.length > 0)
+    ? summary.topicGroups
+        .map((group) => ({
+          ...group,
+          articleCount: Number(group?.articleCount || 0),
+          topics: Array.isArray(group?.topics)
+            ? group.topics.map((item) => ({
+                ...item,
+                count: Number(item?.count || 0),
+              }))
+            : [],
+        }))
+        .filter((group) => group.topics.length > 0)
     : [];
 
   return (
@@ -230,7 +255,7 @@ export function DashboardView() {
         <div className="section-head">
           <h2>Detailed topic leaders</h2>
           <span>
-            {summary.topicSampleSize.toLocaleString()} recent articles sampled across the latest {summary.latestHours}h window
+            {topicSampleSize.toLocaleString()} recent articles sampled across the latest {latestHours}h window
           </span>
         </div>
         {topicGroups.length > 0 ? (
