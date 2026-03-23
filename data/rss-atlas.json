@@ -41,7 +41,7 @@
         },
         {
           "name": "Fox News",
-          "url": "http://moxie.foxnews.com/google-publisher/latest.xml",
+          "url": "https://feeds.foxnews.com/foxnews/latest",
           "status": "ERR",
           "checkedDate": "02/18/2026",
           "valid": "invalid",
@@ -49,7 +49,7 @@
         },
         {
           "name": "NBC News",
-          "url": "http://feeds.nbcnews.com/nbcnews/public/news",
+          "url": "https://feeds.nbcnews.com/nbcnews/public/news",
           "status": "ERR",
           "checkedDate": "02/18/2026",
           "valid": "invalid",
@@ -65,7 +65,7 @@
         },
         {
           "name": "ABC News",
-          "url": "https://abcnews.go.com/abcnews/topstories",
+          "url": "https://feeds.abcnews.com/abcnews/topstories",
           "status": "ERR",
           "checkedDate": "02/18/2026",
           "valid": "invalid",
@@ -78,6 +78,38 @@
           "checkedDate": "02/18/2026",
           "valid": "invalid",
           "row": 11
+        },
+        {
+          "name": "The New York Times - U.S.",
+          "url": "https://rss.nytimes.com/services/xml/rss/nyt/US.xml"
+        },
+        {
+          "name": "The New York Times - Business",
+          "url": "https://rss.nytimes.com/services/xml/rss/nyt/Business.xml"
+        },
+        {
+          "name": "The New York Times - Technology",
+          "url": "https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml"
+        },
+        {
+          "name": "The New York Times - World",
+          "url": "https://rss.nytimes.com/services/xml/rss/nyt/World.xml"
+        },
+        {
+          "name": "LA Times - World & Nation",
+          "url": "https://www.latimes.com/world-nation/rss2.0.xml"
+        },
+        {
+          "name": "Politico Congress",
+          "url": "https://rss.politico.com/congress.xml"
+        },
+        {
+          "name": "Washington Post - World",
+          "url": "https://feeds.washingtonpost.com/rss/world"
+        },
+        {
+          "name": "Washington Post - National",
+          "url": "https://feeds.washingtonpost.com/rss/national"
         },
         {
           "name": "HuffPost",
@@ -5371,6 +5403,13 @@
           "enabled": false
         },
         {
+          "name": "The Australian - News Sitemap",
+          "sitemapUrl": "https://www.theaustralian.com.au/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/22/2026",
+          "valid": "valid"
+        },
+        {
           "name": "7news",
           "url": "https://7news.com.au/feed",
           "status": "⏩ OFFICIAL",
@@ -5523,6 +5562,13 @@
           "row": 45
         },
         {
+          "name": "Herald Sun - News Sitemap",
+          "sitemapUrl": "https://www.heraldsun.com.au/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/22/2026",
+          "valid": "valid"
+        },
+        {
           "name": "ABC News - Rural",
           "url": "https://www.abc.net.au/news/feed/52498/rss.xml",
           "status": "NEW",
@@ -5619,12 +5665,26 @@
           "row": 57
         },
         {
+          "name": "Courier Mail - News Sitemap",
+          "sitemapUrl": "https://www.couriermail.com.au/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/22/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Daily Telegraph Australia",
           "url": "https://www.dailytelegraph.com.au/rss",
           "status": "NEW",
           "checkedDate": "03/16/2026",
           "valid": "valid",
           "row": 58
+        },
+        {
+          "name": "Daily Telegraph Australia - News Sitemap",
+          "sitemapUrl": "https://www.dailytelegraph.com.au/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/22/2026",
+          "valid": "valid"
         },
         {
           "name": "Geelong Advertiser",
@@ -19196,6 +19256,10 @@
         {
           "name": "PM News Nigeria",
           "url": "https://pmnewsnigeria.com/feed/"
+        },
+        {
+          "name": "Independent Nigeria",
+          "url": "https://independent.ng/feed/"
         }
       ]
     },
@@ -19244,12 +19308,28 @@
           "url": "https://www.straitstimes.com/news/life/rss.xml"
         },
         {
+          "name": "Straits Times Opinion",
+          "url": "https://www.straitstimes.com/news/opinion/rss.xml"
+        },
+        {
           "name": "Business Times International",
           "url": "https://www.businesstimes.com.sg/rss/international"
         },
         {
           "name": "Business Times Companies & Markets",
           "url": "https://www.businesstimes.com.sg/rss/companies-markets"
+        },
+        {
+          "name": "Business Times Wealth",
+          "url": "https://www.businesstimes.com.sg/rss/wealth"
+        },
+        {
+          "name": "Business Times Property",
+          "url": "https://www.businesstimes.com.sg/rss/property"
+        },
+        {
+          "name": "Business Times Startups & Tech",
+          "url": "https://www.businesstimes.com.sg/rss/startups-tech"
         },
         {
           "name": "MustShareNews",
@@ -19288,6 +19368,14 @@
         {
           "name": "TimesLIVE Politics",
           "url": "https://www.timeslive.co.za/arc/outboundfeeds/rss/category/politics/"
+        },
+        {
+          "name": "TimesLIVE Sport",
+          "url": "https://www.timeslive.co.za/arc/outboundfeeds/rss/category/sport/"
+        },
+        {
+          "name": "TimesLIVE Lifestyle",
+          "url": "https://www.timeslive.co.za/arc/outboundfeeds/rss/category/lifestyle/"
         },
         {
           "name": "News24 South Africa",
