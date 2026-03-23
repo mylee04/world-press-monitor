@@ -6,6 +6,602 @@
 
 ## Unreleased
 
+### [3dff7e5] Add token-based source category backfill
+- Commit: 3dff7e5d0388244ce2d655ab153c202d7428ddf3
+- Date: 2026-03-23 16:51:40 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - A	scripts/backfill-source-categories-by-url-token.ts
+  - Git stat:
+  - scripts/backfill-source-categories-by-url-token.ts | 307 +++++++++++++++++++++
+  -  1 file changed, 307 insertions(+)
+
+### [0d8f896] Add signature-based source category backfill
+- Commit: 0d8f8966c7cd1393c71c170b6510d21ebeaa76a2
+- Date: 2026-03-23 15:25:00 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - A	scripts/backfill-source-categories-by-signature.ts
+    - M	scripts/backfill-source-categories.ts
+  - Git stat:
+  - scripts/backfill-source-categories-by-signature.ts | 306 +++++++++++++++++++++
+  -  scripts/backfill-source-categories.ts              |  23 +-
+  -  2 files changed, 322 insertions(+), 7 deletions(-)
+
+### [3428d55] Move dashboard topic leaders to full-window counts
+- Commit: 3428d5545cb468d40a266fd0e0b38ede03a543e6
+- Date: 2026-03-23 13:32:58 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	components/dashboard-view.tsx
+    - M	lib/ingestion-store.ts
+    - A	scripts/backfill-article-topics.ts
+  - Git stat:
+  - components/dashboard-view.tsx      |   7 +-
+  -  lib/ingestion-store.ts             | 308 +++++++++++++++++++++++--------------
+  -  scripts/backfill-article-topics.ts | 248 +++++++++++++++++++++++++++++
+  -  3 files changed, 441 insertions(+), 122 deletions(-)
+
+### [dadca51] Fallback dashboard topic sample to safe limits
+- Commit: dadca51319ad5ea579a18f697ff6145bbeb64122
+- Date: 2026-03-23 12:42:47 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	lib/ingestion-store.ts
+  - Git stat:
+  - lib/ingestion-store.ts | 85 +++++++++++++++++++++++++++++++++++---------------
+  -  1 file changed, 59 insertions(+), 26 deletions(-)
+
+### [062a7c6] Broaden dashboard topic sampling and topic rollups
+- Commit: 062a7c6c1f8dca4abceaaa374ee5125e05a0d938
+- Date: 2026-03-23 12:38:35 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	lib/ingestion-store.ts
+  - Git stat:
+  - lib/ingestion-store.ts | 26 ++++++++++++++++++++++----
+  -  1 file changed, 22 insertions(+), 4 deletions(-)
+
+### [db8d27b] Use explicit tool paths in runtime watchdog
+- Commit: db8d27b9556396f2e6ff00b6f8d2f0e747ad0f67
+- Date: 2026-03-23 12:26:26 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	scripts/ensure-api-runtime-local.sh
+  - Git stat:
+  - scripts/ensure-api-runtime-local.sh | 18 +++++++++++-------
+  -  1 file changed, 11 insertions(+), 7 deletions(-)
+
+### [3619cfb] Normalize live dashboard payload before render
+- Commit: 3619cfbb63671a655f773dbb2b730be19134de5d
+- Date: 2026-03-23 12:12:36 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	components/dashboard-view.tsx
+  - Git stat:
+  - components/dashboard-view.tsx | 33 +++++++++++++++++++++++++++++----
+  -  1 file changed, 29 insertions(+), 4 deletions(-)
+
+### [ab3cfb0] Expand China and Brazil atlas coverage
+- Commit: ab3cfb0518777e1c83b7e7c7f5b92aa661e602a4
+- Date: 2026-03-23 12:07:13 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	data/rss-atlas.json
+
+  - Message:
+  - - switch legacy China official RSS endpoints from http to https for China Daily, People.cn, FT Chinese, and Xinhua\n- add new official China sources: People.cn Finance/Military/Culture, Global Times sitemap, Caixin Global RSS, Sixth Tone RSS, and ECNS RSS\n- enable Estado de Minas with its official news sitemap and add G1 Mundo/Ciencia e Saude/Economia Tecnologia/Carros section feeds\n- add Metropoles main, Brasil, and Saude feeds to improve Brazil daily coverage
+
+  - Git stat:
+  - data/rss-atlas.json | 126 +++++++++++++++++++++++++++++++++++++++++++---------
+  -  1 file changed, 106 insertions(+), 20 deletions(-)
+
+### [853551f] Guard customer dashboard against partial summary payloads
+- Commit: 853551f402a6938def8bb804749766ca70afee73
+- Date: 2026-03-23 11:12:57 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	components/dashboard-view.tsx
+  - Git stat:
+  - components/dashboard-view.tsx | 50 +++++++++++++++++++++++++++++--------------
+  -  1 file changed, 34 insertions(+), 16 deletions(-)
+
+### [374c550] Harden portal formatting for older browsers
+- Commit: 374c55098cf63898dd31ce866ea676ca75556537
+- Date: 2026-03-23 11:01:52 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	components/dashboard-view.tsx
+    - M	components/explorer-view.tsx
+    - M	lib/timezone-display.ts
+  - Git stat:
+  - components/dashboard-view.tsx | 15 +++++++++++----
+  -  components/explorer-view.tsx  |  6 +++++-
+  -  lib/timezone-display.ts       | 32 +++++++++++++++++++++++---------
+  -  3 files changed, 39 insertions(+), 14 deletions(-)
+
+### [e16a058] Backfill and enrich source categories from article pages
+- Commit: e16a058b722490c2a52c3fc6d1e6890e4b81e540
+- Date: 2026-03-23 10:55:50 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	lib/article-page-section.ts
+    - M	lib/ingestion-store.ts
+    - A	scripts/backfill-source-categories.ts
+    - M	scripts/ingest-worker.ts
+  - Git stat:
+  - lib/article-page-section.ts           |  70 +++++
+  -  lib/ingestion-store.ts                |  65 +++++
+  -  scripts/backfill-source-categories.ts | 494 ++++++++++++++++++++++++++++++++++
+  -  scripts/ingest-worker.ts              | 115 +++++++-
+  -  4 files changed, 742 insertions(+), 2 deletions(-)
+
+### [2f6ee7c] Add detailed topic taxonomy to customer views
+- Commit: 2f6ee7c169059a4156dd84383c4d76a97aaba518
+- Date: 2026-03-23 10:46:57 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	app/globals.css
+    - M	components/dashboard-view.tsx
+    - M	components/explorer-view.tsx
+    - M	lib/article-taxonomy.ts
+    - M	lib/ingestion-store.ts
+    - M	lib/news-api.ts
+    - M	scripts/api-news.ts
+  - Git stat:
+  - app/globals.css               |  42 +++++++++++
+  -  components/dashboard-view.tsx |  44 +++++++++++-
+  -  components/explorer-view.tsx  |  18 ++++-
+  -  lib/article-taxonomy.ts       | 157 ++++++++++++++++++++++++++++++++++++++++++
+  -  lib/ingestion-store.ts        | 125 +++++++++++++++++++++++++++++----
+  -  lib/news-api.ts               |  13 ++++
+  -  scripts/api-news.ts           |   4 ++
+  -  7 files changed, 388 insertions(+), 15 deletions(-)
+
+### [b166392] Tighten WPR naming in operator docs
+- Commit: b1663920f94f8e9f3a06be2a195cafa7636b7bf0
+- Date: 2026-03-23 10:23:00 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	README.md
+    - M	docs/customer-portal-ops.md
+    - M	docs/worldpressradar-domain-setup.md
+    - M	scripts/setup-launchd-local.sh
+  - Git stat:
+  - README.md                            | 9 ++++++++-
+  -  docs/customer-portal-ops.md          | 7 +++++++
+  -  docs/worldpressradar-domain-setup.md | 2 +-
+  -  scripts/setup-launchd-local.sh       | 4 +++-
+  -  4 files changed, 19 insertions(+), 3 deletions(-)
+
+### [3ab08cd] Auto-sync runtime API after pushed develop heads
+- Commit: 3ab08cdb96b8cb6501d9964f507d13ea2727c2e4
+- Date: 2026-03-23 10:11:23 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	scripts/ensure-api-runtime-local.sh
+    - M	scripts/setup-launchd-local.sh
+  - Git stat:
+  - scripts/ensure-api-runtime-local.sh | 111 +++++++++++++++++++++++++++++++++++-
+  -  scripts/setup-launchd-local.sh      |   2 +
+  -  2 files changed, 112 insertions(+), 1 deletion(-)
+
+### [f095912] Fix customer portal upstream auth and summary preview
+- Commit: f095912684c7f8492ea11aa5129d8f3af40d5ee5
+- Date: 2026-03-23 10:04:36 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	lib/customer-portal.ts
+    - M	lib/ingestion-store.ts
+  - Git stat:
+  - lib/customer-portal.ts | 19 +++++++++++--------
+  -  lib/ingestion-store.ts |  2 +-
+  -  2 files changed, 12 insertions(+), 9 deletions(-)
+
+### [4cb18ca] Remove legacy static export pipeline
+- Commit: 4cb18ca4c61b0bcb7679e7cbdd606e5222237b42
+- Date: 2026-03-23 09:47:53 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	README.md
+    - D	app/downloads/page.tsx
+    - D	app/source-health/page.tsx
+    - M	components/customer-access-panel.tsx
+    - M	components/dashboard-view.tsx
+    - D	components/downloads-view.tsx
+    - M	components/explorer-view.tsx
+    - D	components/public-data-hooks.ts
+    - D	components/source-health-view.tsx
+    - D	docs/macmini-static-ops.md
+    - M	lib/article-taxonomy.ts
+    - D	lib/public-data.ts
+    - D	ops/launchd/com.wpr.export-deploy.plist
+    - M	package.json
+    - D	public/data/country-inserted-24h-AR.json
+    - D	public/data/country-inserted-24h-AT.json
+    - D	public/data/country-inserted-24h-AU.json
+    - D	public/data/country-inserted-24h-BE.json
+    - D	public/data/country-inserted-24h-BG.json
+    - D	public/data/country-inserted-24h-BR.json
+    - D	public/data/country-inserted-24h-CA.json
+    - D	public/data/country-inserted-24h-CH.json
+    - D	public/data/country-inserted-24h-CL.json
+    - D	public/data/country-inserted-24h-CN.json
+    - D	public/data/country-inserted-24h-CZ.json
+    - D	public/data/country-inserted-24h-DE.json
+    - D	public/data/country-inserted-24h-DK.json
+    - D	public/data/country-inserted-24h-DO.json
+    - D	public/data/country-inserted-24h-EE.json
+    - D	public/data/country-inserted-24h-ES.json
+    - D	public/data/country-inserted-24h-FI.json
+    - D	public/data/country-inserted-24h-FR.json
+    - D	public/data/country-inserted-24h-GB.json
+    - D	public/data/country-inserted-24h-GLOBAL.json
+    - D	public/data/country-inserted-24h-GR.json
+    - D	public/data/country-inserted-24h-HR.json
+    - D	public/data/country-inserted-24h-HU.json
+    - D	public/data/country-inserted-24h-ID.json
+    - D	public/data/country-inserted-24h-IE.json
+    - D	public/data/country-inserted-24h-IN.json
+    - D	public/data/country-inserted-24h-IR.json
+    - D	public/data/country-inserted-24h-IS.json
+    - D	public/data/country-inserted-24h-IT.json
+    - D	public/data/country-inserted-24h-JP.json
+    - D	public/data/country-inserted-24h-KR.json
+    - D	public/data/country-inserted-24h-LT.json
+    - D	public/data/country-inserted-24h-LU.json
+    - D	public/data/country-inserted-24h-LV.json
+    - D	public/data/country-inserted-24h-MX.json
+    - D	public/data/country-inserted-24h-NL.json
+    - D	public/data/country-inserted-24h-NO.json
+    - D	public/data/country-inserted-24h-PL.json
+    - D	public/data/country-inserted-24h-PT.json
+    - D	public/data/country-inserted-24h-RO.json
+    - D	public/data/country-inserted-24h-RS.json
+    - D	public/data/country-inserted-24h-RU.json
+    - D	public/data/country-inserted-24h-SA.json
+    - D	public/data/country-inserted-24h-SE.json
+    - D	public/data/country-inserted-24h-SI.json
+    - D	public/data/country-inserted-24h-SK.json
+    - D	public/data/country-inserted-24h-TH.json
+    - D	public/data/country-inserted-24h-TR.json
+    - D	public/data/country-inserted-24h-TW.json
+    - D	public/data/country-inserted-24h-UA.json
+    - D	public/data/country-inserted-24h-US.json
+    - D	public/data/country-inserted-24h-UY.json
+    - D	public/data/country-published-24h-AR.json
+    - D	public/data/country-published-24h-AT.json
+    - D	public/data/country-published-24h-AU.json
+    - D	public/data/country-published-24h-BE.json
+    - D	public/data/country-published-24h-BG.json
+    - D	public/data/country-published-24h-BR.json
+    - D	public/data/country-published-24h-CA.json
+    - D	public/data/country-published-24h-CH.json
+    - D	public/data/country-published-24h-CL.json
+    - D	public/data/country-published-24h-CN.json
+    - D	public/data/country-published-24h-CZ.json
+    - D	public/data/country-published-24h-DE.json
+    - D	public/data/country-published-24h-DK.json
+    - D	public/data/country-published-24h-DO.json
+    - D	public/data/country-published-24h-EE.json
+    - D	public/data/country-published-24h-ES.json
+    - D	public/data/country-published-24h-FI.json
+    - D	public/data/country-published-24h-FR.json
+    - D	public/data/country-published-24h-GB.json
+    - D	public/data/country-published-24h-GLOBAL.json
+    - D	public/data/country-published-24h-GR.json
+    - D	public/data/country-published-24h-HR.json
+    - D	public/data/country-published-24h-HU.json
+    - D	public/data/country-published-24h-ID.json
+    - D	public/data/country-published-24h-IE.json
+    - D	public/data/country-published-24h-IN.json
+    - D	public/data/country-published-24h-IR.json
+    - D	public/data/country-published-24h-IS.json
+    - D	public/data/country-published-24h-IT.json
+    - D	public/data/country-published-24h-JP.json
+    - D	public/data/country-published-24h-KR.json
+    - D	public/data/country-published-24h-LT.json
+    - D	public/data/country-published-24h-LU.json
+    - D	public/data/country-published-24h-LV.json
+    - D	public/data/country-published-24h-MX.json
+    - D	public/data/country-published-24h-NL.json
+    - D	public/data/country-published-24h-NO.json
+    - D	public/data/country-published-24h-PL.json
+    - D	public/data/country-published-24h-PT.json
+    - D	public/data/country-published-24h-RO.json
+    - D	public/data/country-published-24h-RS.json
+    - D	public/data/country-published-24h-RU.json
+    - D	public/data/country-published-24h-SA.json
+    - D	public/data/country-published-24h-SE.json
+    - D	public/data/country-published-24h-SI.json
+    - D	public/data/country-published-24h-SK.json
+    - D	public/data/country-published-24h-TH.json
+    - D	public/data/country-published-24h-TR.json
+    - D	public/data/country-published-24h-TW.json
+    - D	public/data/country-published-24h-UA.json
+    - D	public/data/country-published-24h-US.json
+    - D	public/data/country-published-24h-UY.json
+    - D	public/data/integration-manifest.json
+    - D	public/data/manifest.json
+    - D	public/data/sources.json
+    - D	scripts/export-public-news-data.ts
+    - M	scripts/load-local-env.sh
+    - M	scripts/postprocess-customer-build.ts
+    - M	scripts/run-ingest-hourly-local.sh
+    - D	scripts/run-static-deploy-local.sh
+    - D	scripts/run-static-export-local.sh
+    - M	scripts/setup-launchd-local.sh
+  - Git stat:
+  - README.md                                     |     15 +-
+  -  app/downloads/page.tsx                        |      5 -
+  -  app/source-health/page.tsx                    |      5 -
+  -  components/customer-access-panel.tsx          |      2 +-
+  -  components/dashboard-view.tsx                 |      6 +-
+  -  components/downloads-view.tsx                 |     55 -
+  -  components/explorer-view.tsx                  |      2 +-
+  -  components/public-data-hooks.ts               |     82 -
+  -  components/source-health-view.tsx             |     43 -
+  -  docs/macmini-static-ops.md                    |    116 -
+  -  lib/article-taxonomy.ts                       |     16 +
+  -  lib/public-data.ts                            |    174 -
+  -  ops/launchd/com.wpr.export-deploy.plist       |     27 -
+  -  package.json                                  |      4 +-
+  -  public/data/country-inserted-24h-AR.json      |  76017 -------------
+  -  public/data/country-inserted-24h-AT.json      |  17217 ---
+  -  public/data/country-inserted-24h-AU.json      |  19121 ----
+  -  public/data/country-inserted-24h-BE.json      | 128307 ----------------------
+  -  public/data/country-inserted-24h-BG.json      |  17301 ---
+  -  public/data/country-inserted-24h-BR.json      |  46477 --------
+  -  public/data/country-inserted-24h-CA.json      |  48829 ---------
+  -  public/data/country-inserted-24h-CH.json      |  34073 ------
+  -  public/data/country-inserted-24h-CL.json      |  25603 -----
+  -  public/data/country-inserted-24h-CN.json      |  29873 ------
+  -  public/data/country-inserted-24h-CZ.json      |  16097 ---
+  -  public/data/country-inserted-24h-DE.json      |  46561 --------
+  -  public/data/country-inserted-24h-DK.json      |  14837 ---
+  -  public/data/country-inserted-24h-DO.json      |  21963 ----
+  -  public/data/country-inserted-24h-EE.json      |   4477 -
+  -  public/data/country-inserted-24h-ES.json      |  44881 --------
+  -  public/data/country-inserted-24h-FI.json      |  14669 ---
+  -  public/data/country-inserted-24h-FR.json      |  38231 -------
+  -  public/data/country-inserted-24h-GB.json      | 103387 ------------------
+  -  public/data/country-inserted-24h-GLOBAL.json  |  17805 ----
+  -  public/data/country-inserted-24h-GR.json      |  40821 -------
+  -  public/data/country-inserted-24h-HR.json      |  13899 ---
+  -  public/data/country-inserted-24h-HU.json      |   3567 -
+  -  public/data/country-inserted-24h-ID.json      |  11589 --
+  -  public/data/country-inserted-24h-IE.json      |  12961 ---
+  -  public/data/country-inserted-24h-IN.json      |  52931 ---------
+  -  public/data/country-inserted-24h-IR.json      |  46631 --------
+  -  public/data/country-inserted-24h-IS.json      |    865 -
+  -  public/data/country-inserted-24h-IT.json      |  45217 --------
+  -  public/data/country-inserted-24h-JP.json      |  70557 ------------
+  -  public/data/country-inserted-24h-KR.json      |  82863 --------------
+  -  public/data/country-inserted-24h-LT.json      |  17399 ---
+  -  public/data/country-inserted-24h-LU.json      |     10 -
+  -  public/data/country-inserted-24h-LV.json      |   6241 --
+  -  public/data/country-inserted-24h-MX.json      |  42501 --------
+  -  public/data/country-inserted-24h-NL.json      |  20353 ----
+  -  public/data/country-inserted-24h-NO.json      |  17819 ----
+  -  public/data/country-inserted-24h-PL.json      |  20563 ----
+  -  public/data/country-inserted-24h-PT.json      |  25085 -----
+  -  public/data/country-inserted-24h-RO.json      |  15509 ---
+  -  public/data/country-inserted-24h-RS.json      |  12359 ---
+  -  public/data/country-inserted-24h-RU.json      |  79923 --------------
+  -  public/data/country-inserted-24h-SA.json      |   7347 --
+  -  public/data/country-inserted-24h-SE.json      |  21095 ----
+  -  public/data/country-inserted-24h-SI.json      |    921 -
+  -  public/data/country-inserted-24h-SK.json      |   5261 -
+  -  public/data/country-inserted-24h-TH.json      |  14459 ---
+  -  public/data/country-inserted-24h-TR.json      |  54639 ----------
+  -  public/data/country-inserted-24h-TW.json      | 130435 -----------------------
+  -  public/data/country-inserted-24h-UA.json      |  25043 -----
+  -  public/data/country-inserted-24h-US.json      |  52693 ---------
+  -  public/data/country-inserted-24h-UY.json      |   9741 --
+  -  public/data/country-published-24h-AR.json     |  73077 -------------
+  -  public/data/country-published-24h-AT.json     |  17133 ---
+  -  public/data/country-published-24h-AU.json     |  18603 ----
+  -  public/data/country-published-24h-BE.json     | 122007 ---------------------
+  -  public/data/country-published-24h-BG.json     |  17413 ---
+  -  public/data/country-published-24h-BR.json     |  43495 --------
+  -  public/data/country-published-24h-CA.json     |  38343 -------
+  -  public/data/country-published-24h-CH.json     |  35095 ------
+  -  public/data/country-published-24h-CL.json     |  23755 -----
+  -  public/data/country-published-24h-CN.json     |  30699 ------
+  -  public/data/country-published-24h-CZ.json     |  15859 ---
+  -  public/data/country-published-24h-DE.json     |  49431 ---------
+  -  public/data/country-published-24h-DK.json     |  14739 ---
+  -  public/data/country-published-24h-DO.json     |  20381 ----
+  -  public/data/country-published-24h-EE.json     |   4435 -
+  -  public/data/country-published-24h-ES.json     |  41367 -------
+  -  public/data/country-published-24h-FI.json     |  14627 ---
+  -  public/data/country-published-24h-FR.json     |  36257 -------
+  -  public/data/country-published-24h-GB.json     | 102505 ------------------
+  -  public/data/country-published-24h-GLOBAL.json |  17581 ---
+  -  public/data/country-published-24h-GR.json     |  40065 -------
+  -  public/data/country-published-24h-HR.json     |  13325 ---
+  -  public/data/country-published-24h-HU.json     |   4743 -
+  -  public/data/country-published-24h-ID.json     |  11449 --
+  -  public/data/country-published-24h-IE.json     |  13535 ---
+  -  public/data/country-published-24h-IN.json     |  52889 ---------
+  -  public/data/country-published-24h-IR.json     |  46127 --------
+  -  public/data/country-published-24h-IS.json     |    837 -
+  -  public/data/country-published-24h-IT.json     |  44797 --------
+  -  public/data/country-published-24h-JP.json     |  73119 -------------
+  -  public/data/country-published-24h-KR.json     |  81995 --------------
+  -  public/data/country-published-24h-LT.json     |  16769 ---
+  -  public/data/country-published-24h-LU.json     |     10 -
+  -  public/data/country-published-24h-LV.json     |   6129 --
+  -  public/data/country-published-24h-MX.json     |  35865 -------
+  -  public/data/country-published-24h-NL.json     |  19989 ----
+  -  public/data/country-published-24h-NO.json     |  17357 ---
+  -  public/data/country-published-24h-PL.json     |  22453 ----
+  -  public/data/country-published-24h-PT.json     |  29663 ------
+  -  public/data/country-published-24h-RO.json     |  15467 ---
+  -  public/data/country-published-24h-RS.json     |  12009 ---
+  -  public/data/country-published-24h-RU.json     |  77179 --------------
+  -  public/data/country-published-24h-SA.json     |   6717 --
+  -  public/data/country-published-24h-SE.json     |  20675 ----
+  -  public/data/country-published-24h-SI.json     |    935 -
+  -  public/data/country-published-24h-SK.json     |   5555 -
+  -  public/data/country-published-24h-TH.json     |  14375 ---
+  -  public/data/country-published-24h-TR.json     |  44993 --------
+  -  public/data/country-published-24h-TW.json     | 123925 ---------------------
+  -  public/data/country-published-24h-UA.json     |  25015 -----
+  -  public/data/country-published-24h-US.json     |  51363 ---------
+  -  public/data/country-published-24h-UY.json     |  10315 --
+  -  public/data/integration-manifest.json         |    336 -
+  -  public/data/manifest.json                     |    325 -
+  -  public/data/sources.json                      |  42133 --------
+  -  scripts/export-public-news-data.ts            |   1326 -
+  -  scripts/load-local-env.sh                     |      4 -
+  -  scripts/postprocess-customer-build.ts         |     85 +-
+  -  scripts/run-ingest-hourly-local.sh            |      8 -
+  -  scripts/run-static-deploy-local.sh            |    130 -
+  -  scripts/run-static-export-local.sh            |     38 -
+  -  scripts/setup-launchd-local.sh                |     20 +-
+  -  128 files changed, 42 insertions(+), 3448379 deletions(-)
+
+### [e958aa1] Fix article URL drift and landing-page cleanup
+- Commit: e958aa169cf79d0ae86a88487af9677aa72c9e28
+- Date: 2026-03-23 09:46:01 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	db/drizzle/schema.ts
+    - M	db/schema.sql
+    - A	lib/article-url-audit.ts
+    - M	lib/article-url-filters.ts
+    - M	lib/ingestion-store.ts
+    - M	lib/parsers.ts
+    - M	lib/pipeline.ts
+    - M	lib/types.ts
+    - M	package.json
+    - A	scripts/audit-article-url-resolves.ts
+    - A	scripts/backfill-news-article-stable-ids.ts
+    - M	scripts/ingest-worker.ts
+    - A	scripts/prune-known-non-article-news.ts
+    - A	scripts/prune-live-landing-news.ts
+    - A	scripts/reconcile-article-url-drift.ts
+  - Git stat:
+  - db/drizzle/schema.ts                        |   2 +
+  -  db/schema.sql                               |   2 +
+  -  lib/article-url-audit.ts                    | 226 +++++++++++++++++++++++++
+  -  lib/article-url-filters.ts                  |   8 +-
+  -  lib/ingestion-store.ts                      |  98 ++++++++++-
+  -  lib/parsers.ts                              |  15 ++
+  -  lib/pipeline.ts                             |  27 +++
+  -  lib/types.ts                                |   1 +
+  -  package.json                                |   7 +-
+  -  scripts/audit-article-url-resolves.ts       | 219 ++++++++++++++++++++++++
+  -  scripts/backfill-news-article-stable-ids.ts | 197 ++++++++++++++++++++++
+  -  scripts/ingest-worker.ts                    |  76 ++++++++-
+  -  scripts/prune-known-non-article-news.ts     | 107 ++++++++++++
+  -  scripts/prune-live-landing-news.ts          | 212 ++++++++++++++++++++++++
+  -  scripts/reconcile-article-url-drift.ts      | 248 ++++++++++++++++++++++++++++
+  -  15 files changed, 1432 insertions(+), 13 deletions(-)
+
+### [ab7a5e5] Expand sitemap atlas and block taxonomy listings
+- Commit: ab7a5e5f442f2184548d5720d296db5d728e1849
+- Date: 2026-03-23 09:09:05 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	data/rss-atlas.json
+    - M	lib/article-url-filters.ts
+
+  - Message:
+  - Update the atlas with additional official sitemap coverage for major U.S. publishers, including sitemap-backed recovery paths for outlets that were still underrepresented in the 24h window.
+  - 
+  - Add non-article URL filters for taxonomy and listing pages that were being misread as articles during sitemap ingestion, covering topic/tag/author/category patterns across Berliner Zeitung, CIPER Chile, CityNews, Grupo R Multimedio, 970 Universal, N Digital, Abema Times, Carmelo Portal, Sindo News, and related sources.
+  - 
+  - These changes were validated against live reingestion and manual cleanup of contaminated rows so the known sitemap-index overread patterns no longer repopulate the database.
+
+  - Git stat:
+  - data/rss-atlas.json        | 19 ++++++++++++++++++-
+  -  lib/article-url-filters.ts | 45 +++++++++++++++++++++++++++++++++++++++++++++
+  -  2 files changed, 63 insertions(+), 1 deletion(-)
+
+### [55f0507] Overlay public data during static deploy
+- Commit: 55f0507c593eadeb29a601dee1f8731a5a84cf01
+- Date: 2026-03-23 09:04:17 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	scripts/run-static-deploy-local.sh
+  - Git stat:
+  - scripts/run-static-deploy-local.sh | 17 +++++++++++------
+  -  1 file changed, 11 insertions(+), 6 deletions(-)
+
+### [a0dc02f] Wire publication time preferences into customer portal
+- Commit: a0dc02fefb8a5d247afae7e7612a449df976bcd7
+- Date: 2026-03-23 09:02:59 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	app/layout.tsx
+    - A	components/publication-time-provider.tsx
+    - A	lib/timezone-display.ts
+  - Git stat:
+  - app/layout.tsx                           | 35 ++++++++++---------
+  -  components/publication-time-provider.tsx | 60 ++++++++++++++++++++++++++++++++
+  -  lib/timezone-display.ts                  | 38 ++++++++++++++++++++
+  -  3 files changed, 117 insertions(+), 16 deletions(-)
+
+### [61020fb] Fix static deploy script for customer build output
+- Commit: 61020fbe1e35bd52507a43c9592c56e66ea4f1b9
+- Date: 2026-03-23 09:01:34 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	scripts/run-static-deploy-local.sh
+  - Git stat:
+  - scripts/run-static-deploy-local.sh | 21 +++++++++++++++++----
+  -  1 file changed, 17 insertions(+), 4 deletions(-)
+
+### [20a64ef] Replace single section with multi-label taxonomy
+- Commit: 20a64effcfdfc07c8a3f124e9bca8a6822c17075
+- Date: 2026-03-23 08:57:38 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	README.md
+    - M	components/dashboard-view.tsx
+    - M	components/explorer-view.tsx
+    - A	lib/article-taxonomy.ts
+    - M	lib/ingestion-store.ts
+    - M	lib/news-api.ts
+    - M	lib/public-data.ts
+    - M	lib/types.ts
+    - M	scripts/api-news.ts
+    - M	scripts/export-public-news-data.ts
+    - M	scripts/fetch-news-api-incremental.ts
+    - M	scripts/ingest-worker.ts
+  - Git stat:
+  - README.md                             |   8 +-
+  -  components/dashboard-view.tsx         |  11 ++-
+  -  components/explorer-view.tsx          |  70 ++++++++++----
+  -  lib/article-taxonomy.ts               | 156 ++++++++++++++++++++++++++++++
+  -  lib/ingestion-store.ts                | 173 +++++++++++++++++++++++++++-------
+  -  lib/news-api.ts                       |   4 +-
+  -  lib/public-data.ts                    |   9 +-
+  -  lib/types.ts                          |   1 +
+  -  scripts/api-news.ts                   |  11 ++-
+  -  scripts/export-public-news-data.ts    |  84 ++++++++---------
+  -  scripts/fetch-news-api-incremental.ts |   4 +-
+  -  scripts/ingest-worker.ts              |   1 +
+  -  12 files changed, 425 insertions(+), 107 deletions(-)
+
+### [7d0ae24] Add major Germany sitemap sources
+- Commit: 7d0ae2402757fa5b9e97e007be31134f89ff3ef3
+- Date: 2026-03-23 08:06:04 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	CHANGELOG.md
+    - M	data/rss-atlas.json
+    - M	data/rss-catalog.csv
+    - M	data/rss-catalog.opml
+  - Git stat:
+  - CHANGELOG.md          |  218 ++++
+  -  data/rss-atlas.json   |   24 +
+  -  data/rss-catalog.csv  | 3446 +++++++++++++++++++++++++------------------------
+  -  data/rss-catalog.opml |    6 +-
+  -  4 files changed, 1970 insertions(+), 1724 deletions(-)
+
 ### [83d8671] Expand US feed atlas and sitemap filters
 - Commit: 83d8671c57c6f8b7c7bafe6311b4c271aa98ca40
 - Date: 2026-03-22 22:57:47 -0500

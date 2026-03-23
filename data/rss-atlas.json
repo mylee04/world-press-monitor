@@ -5702,6 +5702,27 @@
           "row": 8
         },
         {
+          "name": "The Guardian Australia - Business",
+          "url": "https://www.theguardian.com/au/business/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "The Guardian Australia - Environment",
+          "url": "https://www.theguardian.com/au/environment/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "The Guardian Australia - Media",
+          "url": "https://www.theguardian.com/au/media/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
+        },
+        {
           "name": "ABC News (Top)",
           "url": "https://www.abc.net.au/news/feed/1106/rss.xml",
           "status": "⏩ OFFICIAL",
@@ -5783,6 +5804,92 @@
           "checkedDate": "03/20/2026",
           "valid": "valid",
           "sitemapUrl": "https://www.theage.com.au/sitemaps/theage-sitemaps-articles.xml"
+        },
+        {
+          "name": "Brisbane Times",
+          "url": "https://www.brisbanetimes.com.au/rss/feed.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification",
+          "sitemapUrl": "https://www.brisbanetimes.com.au/sitemaps/news/brands/brisbanetimes"
+        },
+        {
+          "name": "Brisbane Times - Business",
+          "url": "https://www.brisbanetimes.com.au/rss/business.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Brisbane Times - National",
+          "url": "https://www.brisbanetimes.com.au/rss/national.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Brisbane Times - World",
+          "url": "https://www.brisbanetimes.com.au/rss/world.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Brisbane Times - Technology",
+          "url": "https://www.brisbanetimes.com.au/rss/technology.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Brisbane Times - News Sitemap",
+          "sitemapUrl": "https://www.brisbanetimes.com.au/sitemaps/news/brands/brisbanetimes",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "WAtoday",
+          "url": "https://www.watoday.com.au/rss/feed.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification",
+          "sitemapUrl": "https://www.watoday.com.au/sitemaps/news/brands/watoday"
+        },
+        {
+          "name": "WAtoday - Business",
+          "url": "https://www.watoday.com.au/rss/business.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "WAtoday - National",
+          "url": "https://www.watoday.com.au/rss/national.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "WAtoday - World",
+          "url": "https://www.watoday.com.au/rss/world.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "WAtoday - Technology",
+          "url": "https://www.watoday.com.au/rss/technology.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "WAtoday - News Sitemap",
+          "sitemapUrl": "https://www.watoday.com.au/sitemaps/news/brands/watoday",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
         },
         {
           "name": "Canberra Times",
@@ -7070,6 +7177,7 @@
         {
           "name": "Forbes México",
           "url": "https://www.forbes.com.mx/feed/",
+          "sitemapUrl": "https://www.forbes.com.mx/news-sitemap.xml",
           "category": "business",
           "tier": 1,
           "status": "⏩ OFFICIAL",
@@ -7115,6 +7223,13 @@
           "url": "https://expansion.mx/rss/empresas"
         },
         {
+          "name": "Expansión Política - News Sitemap",
+          "sitemapUrl": "https://politica.expansion.mx/news-sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
+        },
+        {
           "name": "Sopitas (Millennial Portal)",
           "url": "https://www.sopitas.com/feed/"
         },
@@ -7134,6 +7249,13 @@
           "status": "NEW",
           "checkedDate": "03/18/2026",
           "valid": "valid"
+        },
+        {
+          "name": "El Financiero - Google News Feed",
+          "url": "https://www.elfinanciero.com.mx/arc/outboundfeeds/google-news-feed/?outputType=xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
         },
         {
           "name": "Milenio - Google News Sitemap",
@@ -7172,6 +7294,34 @@
         {
           "name": "El Universal - Estados Sitemap",
           "sitemapUrl": "https://www.eluniversal.com.mx/arc/outboundfeeds/sitemap/category/estados/?outputType=xml"
+        },
+        {
+          "name": "El Universal - Cartera Sitemap",
+          "sitemapUrl": "https://www.eluniversal.com.mx/arc/outboundfeeds/sitemap/category/cartera/?outputType=xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "El Universal - Deportes Sitemap",
+          "sitemapUrl": "https://www.eluniversal.com.mx/arc/outboundfeeds/sitemap/category/deportes/?outputType=xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "El Universal - Espectaculos Sitemap",
+          "sitemapUrl": "https://www.eluniversal.com.mx/arc/outboundfeeds/sitemap/category/espectaculos/?outputType=xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "El Universal - Tendencias Sitemap",
+          "sitemapUrl": "https://www.eluniversal.com.mx/arc/outboundfeeds/sitemap/category/tendencias/?outputType=xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
         },
         {
           "name": "Milenio - Articles Sitemap Index",
@@ -19073,6 +19223,48 @@
         {
           "name": "RTS",
           "url": "https://www.rts.rs/page/stories/sr/rss/10/vesti.html"
+        },
+        {
+          "name": "Danas",
+          "url": "https://www.danas.rs/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Euronews Serbia - Srbija",
+          "url": "https://www.euronews.rs/rss/srbija",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Euronews Serbia - Svet",
+          "url": "https://www.euronews.rs/rss/svet",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Euronews Serbia - Evropa",
+          "url": "https://www.euronews.rs/rss/evropa",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Euronews Serbia - Biznis",
+          "url": "https://www.euronews.rs/rss/biznis",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Euronews Serbia - Sport",
+          "url": "https://www.euronews.rs/rss/sport",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
         },
         {
           "name": "N1",

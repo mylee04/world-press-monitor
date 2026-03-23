@@ -36,3 +36,4 @@ audits/*.csv
 # Local-only large directory (kept out of git and most tooling scans).
 listening_dashboard_shallow/
 .vercel
+.env*.local
