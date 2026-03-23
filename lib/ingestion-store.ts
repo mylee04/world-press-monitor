@@ -3043,6 +3043,11 @@ type ExistingArticleIdentityRow = {
   stable_id: string | null;
 };
 
+export type NewsArticleFeedCategoryBackfill = {
+  externalId: string;
+  sourceCategories: string[];
+};
+
 async function toNewsArticleRow(item: NewsItem): Promise<NewsArticlePersistable | null> {
   const decodedLink = decodeHtmlEntities(item.link || '');
   const linkNorm = normalizeLinkForId(decodedLink);
@@ -3269,6 +3274,66 @@ export async function persistNewsArticles(items: NewsItem[]): Promise<{ persiste
   }
 
   return { persisted: insertRows.length, storage: 'postgres' };
+}
+
+export async function backfillNewsArticleFeedCategories(
+  items: NewsArticleFeedCategoryBackfill[]
+): Promise<{ updated: number; storage: 'postgres' | 'disabled'; reason?: string }> {
+  const db = getPool();
+  if (!db) return { updated: 0, storage: 'disabled', reason: poolDisabledReason };
+  if (!items.length) return { updated: 0, storage: 'postgres' };
+
+  await ensureSchema();
+  const deduped = [...items.reduce((acc, item) => {
+    const externalId = (item.externalId || '').trim();
+    if (!externalId) return acc;
+    const current = acc.get(externalId) || [];
+    acc.set(externalId, normalizeSourceCategories([...current, ...(item.sourceCategories || [])]));
+    return acc;
+  }, new Map<string, string[]>()).entries()]
+    .map(([externalId, sourceCategories]) => ({ externalId, sourceCategories }))
+    .filter((item) => item.sourceCategories.length > 0);
+
+  if (!deduped.length) return { updated: 0, storage: 'postgres' };
+
+  let updated = 0;
+  const groups = chunk(deduped, 250);
+  for (const group of groups) {
+    const values: unknown[] = [];
+    const parts: string[] = [];
+    group.forEach((item, index) => {
+      const base = index * 2;
+      parts.push(`($${base + 1}::text, $${base + 2}::text[])`);
+      values.push(item.externalId, item.sourceCategories);
+    });
+    const result = await db.query(
+      `
+      with incoming as (
+        select *
+        from (values ${parts.join(',')}) as t(external_id, feed_categories)
+      )
+      update news_articles as n
+      set feed_categories = (
+            select array(
+              select distinct category
+              from unnest(
+                coalesce(n.feed_categories, '{}'::text[]) ||
+                coalesce(incoming.feed_categories, '{}'::text[])
+              ) as category
+              where category is not null and btrim(category) <> ''
+            )
+          ),
+          updated_at = now()
+      from incoming
+      where n.external_id = incoming.external_id
+        and cardinality(coalesce(incoming.feed_categories, '{}'::text[])) > 0
+      `,
+      values
+    );
+    updated += result.rowCount || 0;
+  }
+
+  return { updated, storage: 'postgres' };
 }
 
 export async function persistMissingPublishedAtCandidates(

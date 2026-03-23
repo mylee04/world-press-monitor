@@ -21,6 +21,45 @@ type SectionSignalBuckets = {
 
 const SECTION_META_KEYS = new Set(['article:section', 'article:section2', 'og:section', 'section']);
 const KEYWORD_META_KEYS = new Set(['news_keywords', 'keywords']);
+const SOURCE_CATEGORY_NOISE = new Set([
+  'home',
+  'homepage',
+  'news',
+  'latest news',
+  'breaking news',
+  'article',
+  'articles',
+  'story',
+  'stories',
+  'default',
+  'general',
+]);
+
+export function extractSourceCategoriesFromArticlePage(input: {
+  source: string;
+  html: string;
+}): string[] {
+  const buckets = extractSectionSignalBuckets(input.source, input.html);
+  const values: string[] = [];
+
+  for (const candidate of [
+    ...buckets.meta,
+    ...buckets.articleSection,
+    ...buckets.breadcrumb,
+    ...buckets.keywords,
+  ]) {
+    for (const exploded of explodeSourceCategorySignal(candidate)) {
+      const cleaned = cleanSourceCategorySignal(exploded);
+      if (!cleaned) continue;
+      pushUnique(values, cleaned);
+      if (values.length >= 24) {
+        return values;
+      }
+    }
+  }
+
+  return values;
+}
 
 export function deriveSectionFromArticlePage(input: {
   source: string;
@@ -366,6 +405,37 @@ function cleanSignalText(value: string | null | undefined): string {
     .replace(/^[-|/>\s]+|[-|/>\s]+$/g, '')
     .trim();
   return cleaned.slice(0, 160);
+}
+
+function explodeSourceCategorySignal(value: string): string[] {
+  const normalized = cleanSignalText(value);
+  if (!normalized) return [];
+
+  const pieces = normalized
+    .split(/\s*(?:,|;|\||>|›|»)\s*/g)
+    .map((item) => cleanSignalText(item))
+    .filter(Boolean);
+
+  if (pieces.length >= 2 && pieces.length <= 12) {
+    return pieces;
+  }
+
+  return [normalized];
+}
+
+function cleanSourceCategorySignal(value: string): string {
+  const cleaned = cleanSignalText(value)
+    .replace(/^#/, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+  if (!cleaned) return '';
+
+  const lower = cleaned.toLowerCase();
+  if (SOURCE_CATEGORY_NOISE.has(lower)) return '';
+  if (/^https?:\/\//i.test(cleaned)) return '';
+  if (/^[\d\s./:-]+$/.test(cleaned)) return '';
+  if (cleaned.length < 2 || cleaned.length > 80) return '';
+  return cleaned;
 }
 
 function extractAnchorTexts(fragment: string): string[] {

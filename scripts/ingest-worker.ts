@@ -9,6 +9,8 @@ import { normalizeArticleTitle, normalizeHtmlText } from '../lib/html-entities';
 import { runWithConcurrency } from '../lib/concurrency';
 import { fetchWithRetry, readResponseText } from '../lib/fetch-utils';
 import { deriveSectionFromContext, mapFeedCategoryToSection } from '../lib/article-section-context';
+import { extractSourceCategoriesFromArticlePage } from '../lib/article-page-section';
+import { normalizeSourceCategories } from '../lib/article-taxonomy';
 import { classifySection, classifySectionByKeyword } from '../lib/keyword-classifier';
 import { inferGeoFromTitle } from '../lib/geo';
 import { buildFeedStableId } from '../lib/pipeline';
@@ -1240,6 +1242,51 @@ async function trySitemapFallback(outlet: OutletFeed): Promise<ParsedSitemapResu
 
 const ENABLE_RSS_TO_SITEMAP_FALLBACK = parseBoolEnv(process.env.INGEST_RSS_SITEMAP_FALLBACK, true);
 const ENABLE_EXPLICIT_SITEMAP_PARALLEL = parseBoolEnv(process.env.INGEST_EXPLICIT_SITEMAP_PARALLEL, true);
+const ENABLE_ARTICLE_META_CATEGORY_FALLBACK = parseBoolEnv(process.env.INGEST_ARTICLE_META_CATEGORY_FALLBACK, true);
+const ARTICLE_META_CATEGORY_FALLBACK_SOURCES = new Set(
+  (
+    process.env.INGEST_ARTICLE_META_CATEGORY_SOURCES
+    || [
+      'people.cn',
+      'kbs news',
+      'yahoo taiwan',
+      'newsis',
+      'infobae',
+      '조선닷컴',
+      'times of india',
+      'jiji press',
+      'ria novosti',
+      'daily mail',
+      'welt',
+      'augsburger allgemeine',
+      'liberty times',
+      'mirror media',
+      'ntv',
+      'ansa',
+      'sponichi',
+      'the independent',
+      'the hindu',
+      'clarín',
+      'clarin',
+      'le télégramme',
+      'sabah',
+      'milenio',
+      'setn',
+      'swissinfo es',
+      'sports illustrated',
+      'bbc news',
+    ].join(',')
+  )
+    .split(',')
+    .map((value) => value.trim().toLowerCase())
+    .filter(Boolean)
+);
+const ARTICLE_META_CATEGORY_FETCH_TIMEOUT_MS = Math.max(
+  3000,
+  Math.min(20000, Number.parseInt(process.env.INGEST_ARTICLE_META_CATEGORY_TIMEOUT_MS || '12000', 10) || 12000)
+);
+
+const articleMetaCategoryCache = new Map<string, Promise<string[]>>();
 
 const FEED_FETCH_HEADERS = {
   'User-Agent':
@@ -1263,6 +1310,63 @@ function buildFeedFetchHeaders(requestedUrl: string, referrerUrl?: string): Reco
     if (referrerUrl) headers.Referer = referrerUrl;
   }
   return headers;
+}
+
+function normalizeSourceKey(value: string): string {
+  return (value || '').trim().toLowerCase();
+}
+
+function shouldFetchArticleMetaCategories(source: string, url: string, existingCategories: readonly string[]): boolean {
+  if (!ENABLE_ARTICLE_META_CATEGORY_FALLBACK) return false;
+  if (existingCategories.length > 0) return false;
+  if (!url || isKnownNonArticleUrl(source, url)) return false;
+
+  const normalizedSource = normalizeSourceKey(source);
+  for (const candidate of ARTICLE_META_CATEGORY_FALLBACK_SOURCES) {
+    if (candidate && normalizedSource.includes(candidate)) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+async function fetchArticleMetaCategories(source: string, url: string): Promise<string[]> {
+  const cacheKey = `${normalizeSourceKey(source)}\n${url.trim()}`;
+  const existing = articleMetaCategoryCache.get(cacheKey);
+  if (existing) {
+    return existing;
+  }
+
+  const task = (async () => {
+    try {
+      const response = await fetchWithRetry(url, {
+        timeoutMs: ARTICLE_META_CATEGORY_FETCH_TIMEOUT_MS,
+        attempts: 2,
+        fetchOptions: {
+          headers: {
+            'User-Agent': FEED_FETCH_HEADERS['User-Agent'],
+            Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            'Accept-Language': FEED_FETCH_HEADERS['Accept-Language'],
+            'Accept-Encoding': FEED_FETCH_HEADERS['Accept-Encoding'],
+            'Cache-Control': 'no-cache',
+            Pragma: 'no-cache',
+          },
+          redirect: 'follow',
+        },
+      });
+      if (!response.ok) return [];
+      const contentType = (response.headers.get('content-type') || '').toLowerCase();
+      if (contentType && !contentType.includes('html') && !contentType.includes('xml')) return [];
+      const html = (await readResponseText(response, response.url || url)).text;
+      return normalizeSourceCategories(extractSourceCategoriesFromArticlePage({ source, html }));
+    } catch {
+      return [];
+    }
+  })();
+
+  articleMetaCategoryCache.set(cacheKey, task);
+  return task;
 }
 
 function normalizeResponseContentType(response: Response): string {
@@ -1606,11 +1710,18 @@ async function toNewsItem(
   const normalizedCountry = normalizeCountryName(outlet.country);
   const geo = inferGeoFromTitle(title, normalizedCountry);
   const fallbackSection = outlet.section || 'others';
+  let sourceCategories = normalizeSourceCategories(row.categories || []);
+  if (shouldFetchArticleMetaCategories(outlet.name, row.link || '', sourceCategories)) {
+    const pageCategories = await fetchArticleMetaCategories(outlet.name, row.link || '');
+    if (pageCategories.length > 0) {
+      sourceCategories = normalizeSourceCategories([...sourceCategories, ...pageCategories]);
+    }
+  }
   const classification = await classifySection({
     title,
     summary: description,
     fallbackSection,
-    feedCategories: row.categories || [],
+    feedCategories: sourceCategories,
     source: outlet.name,
     url: row.link || ''
   });
@@ -1638,7 +1749,7 @@ async function toNewsItem(
     confidence: classification.confidence,
     classificationSource: classification.source,
     classificationReason: classification.reason,
-    sourceCategories: row.categories || [],
+    sourceCategories,
     publicationSource: 'feed',
     summarySource: description ? 'feed' : undefined,
     ...geo,
