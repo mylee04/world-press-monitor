@@ -4818,7 +4818,155 @@
         },
         {
           "name": "London Free Press",
-          "url": "https://lfpress.com/feed/"
+          "url": "https://lfpress.com/feed/atom",
+          "sitemapUrl": "https://lfpress.com/sitemap-news.xml"
+        },
+        {
+          "name": "Kingston Whig-Standard",
+          "url": "https://thewhig.com/feed/atom",
+          "sitemapUrl": "https://thewhig.com/sitemap-news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Sudbury Star",
+          "url": "https://www.thesudburystar.com/feed/atom",
+          "sitemapUrl": "https://www.thesudburystar.com/sitemap-news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Sarnia Observer",
+          "url": "https://theobserver.ca/feed/atom",
+          "sitemapUrl": "https://theobserver.ca/sitemap-news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Timmins Press",
+          "url": "https://timminspress.com/feed/atom",
+          "sitemapUrl": "https://timminspress.com/sitemap-news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Woodstock Sentinel-Review",
+          "url": "https://woodstocksentinelreview.com/feed/atom",
+          "sitemapUrl": "https://woodstocksentinelreview.com/sitemap-news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Brantford Expositor",
+          "url": "https://www.brantfordexpositor.ca/feed/atom",
+          "sitemapUrl": "https://www.brantfordexpositor.ca/sitemap-news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Chatham Daily News",
+          "url": "https://chathamdailynews.ca/feed/atom",
+          "sitemapUrl": "https://chathamdailynews.ca/sitemap-news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Standard-Freeholder",
+          "sitemapUrl": "https://www.standard-freeholder.com/sitemap-news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Winnipeg Free Press",
+          "url": "https://www.winnipegfreepress.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Hamilton Spectator - News Sitemap",
+          "sitemapUrl": "https://www.thespec.com/tncms/sitemap/news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Waterloo Region Record - News Sitemap",
+          "sitemapUrl": "https://www.therecord.com/tncms/sitemap/news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Niagara Falls Review - News Sitemap",
+          "sitemapUrl": "https://www.niagarafallsreview.ca/tncms/sitemap/news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "St. Catharines Standard - News Sitemap",
+          "sitemapUrl": "https://www.stcatharinesstandard.ca/tncms/sitemap/news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Welland Tribune - News Sitemap",
+          "sitemapUrl": "https://www.wellandtribune.ca/tncms/sitemap/news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Toronto.com - News Sitemap",
+          "sitemapUrl": "https://www.toronto.com/tncms/sitemap/news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "InsideHalton - News Sitemap",
+          "sitemapUrl": "https://www.insidehalton.com/tncms/sitemap/news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Simcoe - News Sitemap",
+          "sitemapUrl": "https://www.simcoe.com/tncms/sitemap/news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Guelph Mercury - News Sitemap",
+          "sitemapUrl": "https://www.guelphmercury.com/tncms/sitemap/news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Peterborough Examiner - News Sitemap",
+          "sitemapUrl": "https://www.thepeterboroughexaminer.com/tncms/sitemap/news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Cambridge Times - News Sitemap",
+          "sitemapUrl": "https://www.cambridgetimes.ca/tncms/sitemap/news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
         },
         {
           "name": "The Recorder",
@@ -5998,6 +6146,21 @@
         {
           "name": "Crikey",
           "url": "https://www.crikey.com.au/feed/"
+        },
+        {
+          "name": "The Mandarin",
+          "url": "https://www.themandarin.com.au/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification",
+          "sitemapUrl": "https://www.themandarin.com.au/sitemap_index.xml"
+        },
+        {
+          "name": "AAP - Sitemap",
+          "sitemapUrl": "https://aap.com.au/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
         },
         {
           "name": "News.com.au National Top News",
@@ -8048,6 +8211,48 @@
           "row": 3
         },
         {
+          "name": "AD - Binnenland",
+          "url": "https://www.ad.nl/binnenland/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "AD - Buitenland",
+          "url": "https://www.ad.nl/buitenland/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "AD - Politiek",
+          "url": "https://www.ad.nl/politiek/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "AD - Sport",
+          "url": "https://www.ad.nl/sport/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "AD - Economie",
+          "url": "https://www.ad.nl/economie/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "AD - Show",
+          "url": "https://www.ad.nl/show/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
           "name": "Nu",
           "url": "https://www.nu.nl/rss/algemeen",
           "status": "⏩ OFFICIAL",
@@ -8241,6 +8446,48 @@
           "row": 47
         },
         {
+          "name": "de Volkskrant - Binnenland",
+          "url": "https://www.volkskrant.nl/binnenland/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "de Volkskrant - Buitenland",
+          "url": "https://www.volkskrant.nl/buitenland/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "de Volkskrant - Politiek",
+          "url": "https://www.volkskrant.nl/politiek/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "de Volkskrant - Sport",
+          "url": "https://www.volkskrant.nl/sport/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "de Volkskrant - Economie",
+          "url": "https://www.volkskrant.nl/economie/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "de Volkskrant - Cultuur & Media",
+          "url": "https://www.volkskrant.nl/cultuur-media/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
           "name": "Trouw",
           "url": "https://www.trouw.nl/voorpagina/rss.xml",
           "sitemapUrl": "https://www.trouw.nl/sitemaps/news.xml",
@@ -8250,6 +8497,48 @@
           "row": 48
         },
         {
+          "name": "Trouw - Binnenland",
+          "url": "https://www.trouw.nl/binnenland/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Trouw - Buitenland",
+          "url": "https://www.trouw.nl/buitenland/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Trouw - Politiek",
+          "url": "https://www.trouw.nl/politiek/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Trouw - Sport",
+          "url": "https://www.trouw.nl/sport/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Trouw - Economie",
+          "url": "https://www.trouw.nl/economie/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Trouw - Cultuur & Media",
+          "url": "https://www.trouw.nl/cultuur-media/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
           "name": "Het Parool",
           "url": "https://www.parool.nl/voorpagina/rss.xml",
           "sitemapUrl": "https://www.parool.nl/sitemaps/news.xml",
@@ -8257,6 +8546,41 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 49
+        },
+        {
+          "name": "Het Parool - Binnenland",
+          "url": "https://www.parool.nl/binnenland/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Het Parool - Buitenland",
+          "url": "https://www.parool.nl/buitenland/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Het Parool - Politiek",
+          "url": "https://www.parool.nl/politiek/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Het Parool - Sport",
+          "url": "https://www.parool.nl/sport/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Het Parool - Economie",
+          "url": "https://www.parool.nl/economie/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
         },
         {
           "name": "Het Financieele Dagblad (FD)",
@@ -8713,9 +9037,58 @@
           "sitemapUrl": "https://www.pzc.nl/sitemap-news.xml"
         },
         {
+          "name": "PZC - Sport",
+          "url": "https://www.pzc.nl/sport/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "PZC - Show",
+          "url": "https://www.pzc.nl/show/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "PZC - Economie",
+          "url": "https://www.pzc.nl/economie/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "PZC - Binnenland",
+          "url": "https://www.pzc.nl/binnenland/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
           "name": "Tubantia - Nieuws",
           "url": "https://www.tubantia.nl/nieuws/rss.xml",
           "sitemapUrl": "https://www.tubantia.nl/sitemap-news.xml"
+        },
+        {
+          "name": "Tubantia - Sport",
+          "url": "https://www.tubantia.nl/sport/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Tubantia - Show",
+          "url": "https://www.tubantia.nl/show/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Tubantia - Economie",
+          "url": "https://www.tubantia.nl/economie/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
         },
         {
           "name": "De Stentor - Nieuws",
@@ -8723,9 +9096,58 @@
           "sitemapUrl": "https://www.destentor.nl/sitemap-news.xml"
         },
         {
+          "name": "De Stentor - Sport",
+          "url": "https://www.destentor.nl/sport/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "De Stentor - Show",
+          "url": "https://www.destentor.nl/show/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "De Stentor - Economie",
+          "url": "https://www.destentor.nl/economie/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
           "name": "De Gelderlander - Nieuws",
           "url": "https://www.gelderlander.nl/nieuws/rss.xml",
           "sitemapUrl": "https://www.gelderlander.nl/sitemap-news.xml"
+        },
+        {
+          "name": "De Gelderlander - Sport",
+          "url": "https://www.gelderlander.nl/sport/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "De Gelderlander - Show",
+          "url": "https://www.gelderlander.nl/show/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "De Gelderlander - Economie",
+          "url": "https://www.gelderlander.nl/economie/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "De Gelderlander - Binnenland",
+          "url": "https://www.gelderlander.nl/binnenland/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
         },
         {
           "name": "Brabants Dagblad - Nieuws",
@@ -8733,14 +9155,84 @@
           "sitemapUrl": "https://www.bd.nl/sitemap-news.xml"
         },
         {
+          "name": "Brabants Dagblad - Sport",
+          "url": "https://www.bd.nl/sport/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Brabants Dagblad - Show",
+          "url": "https://www.bd.nl/show/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Brabants Dagblad - Economie",
+          "url": "https://www.bd.nl/economie/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
           "name": "Eindhovens Dagblad - Nieuws",
           "url": "https://www.ed.nl/nieuws/rss.xml",
           "sitemapUrl": "https://www.ed.nl/sitemap-news.xml"
         },
         {
+          "name": "Eindhovens Dagblad - Sport",
+          "url": "https://www.ed.nl/sport/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Eindhovens Dagblad - Economie",
+          "url": "https://www.ed.nl/economie/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Eindhovens Dagblad - Show",
+          "url": "https://www.ed.nl/show/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Eindhovens Dagblad - Binnenland",
+          "url": "https://www.ed.nl/binnenland/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
           "name": "BN DeStem - Nieuws",
           "url": "https://www.bndestem.nl/nieuws/rss.xml",
           "sitemapUrl": "https://www.bndestem.nl/sitemap-news.xml"
+        },
+        {
+          "name": "BN DeStem - Sport",
+          "url": "https://www.bndestem.nl/sport/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "BN DeStem - Show",
+          "url": "https://www.bndestem.nl/show/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "BN DeStem - Economie",
+          "url": "https://www.bndestem.nl/economie/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
         }
       ]
     },
@@ -9062,6 +9554,27 @@
           "status": "NEW",
           "checkedDate": "03/18/2026",
           "valid": "valid"
+        },
+        {
+          "name": "Blick FR - News Sitemap",
+          "sitemapUrl": "https://www.blick.ch/fr/news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Blick - Article Sitemap",
+          "sitemapUrl": "https://www.blick.ch/article.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Blick FR - Article Sitemap",
+          "sitemapUrl": "https://www.blick.ch/fr/article.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
         },
         {
           "name": "Handelszeitung (Economy Weekly - German)",
@@ -11151,6 +11664,146 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 48
+        },
+        {
+          "name": "Sydsvenskan - News Sitemap",
+          "sitemapUrl": "https://www.sydsvenskan.se/sitemap-news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Borås Tidning - News Sitemap",
+          "sitemapUrl": "https://www.bt.se/sitemap-news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Smålandsposten - News Sitemap",
+          "sitemapUrl": "https://www.smp.se/sitemap-news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Barometern - News Sitemap",
+          "sitemapUrl": "https://www.barometern.se/sitemap-news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "BLT - News Sitemap",
+          "sitemapUrl": "https://www.blt.se/sitemap-news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Ystads Allehanda - News Sitemap",
+          "sitemapUrl": "https://www.ystadsallehanda.se/sitemap-news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Norra Skåne - News Sitemap",
+          "sitemapUrl": "https://www.nsk.se/sitemap-news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Nerikes Allehanda - News Sitemap",
+          "sitemapUrl": "https://www.na.se/sitemap-news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Sundsvalls Tidning",
+          "url": "https://www.st.nu/feeds/feed.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Länstidningen Södertälje",
+          "url": "https://www.lt.se/feeds/feed.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Allehanda",
+          "url": "https://www.allehanda.se/feeds/feed.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Arbetarbladet",
+          "url": "https://www.arbetarbladet.se/feeds/feed.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Gefle Dagblad",
+          "url": "https://www.gd.se/feeds/feed.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Östersunds-Posten",
+          "url": "https://www.op.se/feeds/feed.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Norrtälje Tidning",
+          "url": "https://www.norrteljetidning.se/feeds/feed.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "VLT",
+          "url": "https://www.vlt.se/feeds/feed.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Jönköpings-Posten",
+          "url": "https://www.jp.se/feeds/feed.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Värnamo Nyheter",
+          "url": "https://www.vn.se/feeds/feed.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Skånska Dagbladet",
+          "url": "https://www.skd.se/feeds/feed.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Helsingborgs Dagblad",
+          "url": "https://www.hd.se/feeds/feed.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
         },
         {
           "name": "Nerikes Allehanda (fallback)",
@@ -13439,28 +14092,28 @@
         },
         {
           "name": "Emol - Nacional Sitemap 2026",
-          "sitemapUrl": "http://www.emol.com/sitemap/xml/sitemap1_2026.xml",
+          "sitemapUrl": "https://www.emol.com/sitemap/xml/sitemap1_2026.xml",
           "status": "NEW",
           "checkedDate": "03/18/2026",
           "valid": "valid"
         },
         {
           "name": "Emol - Internacional Sitemap 2026",
-          "sitemapUrl": "http://www.emol.com/sitemap/xml/sitemap2_2026.xml",
+          "sitemapUrl": "https://www.emol.com/sitemap/xml/sitemap2_2026.xml",
           "status": "NEW",
           "checkedDate": "03/18/2026",
           "valid": "valid"
         },
         {
           "name": "Emol - Economía Sitemap 2026",
-          "sitemapUrl": "http://www.emol.com/sitemap/xml/sitemap3_2026.xml",
+          "sitemapUrl": "https://www.emol.com/sitemap/xml/sitemap3_2026.xml",
           "status": "NEW",
           "checkedDate": "03/18/2026",
           "valid": "valid"
         },
         {
           "name": "Emol - Deportes Sitemap 2026",
-          "sitemapUrl": "http://www.emol.com/sitemap/xml/sitemap4_2026.xml",
+          "sitemapUrl": "https://www.emol.com/sitemap/xml/sitemap4_2026.xml",
           "status": "NEW",
           "checkedDate": "03/18/2026",
           "valid": "valid"
@@ -13902,28 +14555,28 @@
         },
         {
           "name": "Emol - Espectáculos Sitemap 2026",
-          "sitemapUrl": "http://www.emol.com/sitemap/xml/sitemap5_2026.xml",
+          "sitemapUrl": "https://www.emol.com/sitemap/xml/sitemap5_2026.xml",
           "status": "NEW",
           "checkedDate": "03/20/2026",
           "valid": "valid"
         },
         {
           "name": "Emol - Crónica Sitemap 2026",
-          "sitemapUrl": "http://www.emol.com/sitemap/xml/sitemap6_2026.xml",
+          "sitemapUrl": "https://www.emol.com/sitemap/xml/sitemap6_2026.xml",
           "status": "NEW",
           "checkedDate": "03/20/2026",
           "valid": "valid"
         },
         {
           "name": "Emol - Tecnología Sitemap 2026",
-          "sitemapUrl": "http://www.emol.com/sitemap/xml/sitemap7_2026.xml",
+          "sitemapUrl": "https://www.emol.com/sitemap/xml/sitemap7_2026.xml",
           "status": "NEW",
           "checkedDate": "03/20/2026",
           "valid": "valid"
         },
         {
           "name": "Emol - Autos Sitemap 2026",
-          "sitemapUrl": "http://www.emol.com/sitemap/xml/sitemap11_2026.xml",
+          "sitemapUrl": "https://www.emol.com/sitemap/xml/sitemap11_2026.xml",
           "status": "NEW",
           "checkedDate": "03/20/2026",
           "valid": "valid"
@@ -15201,6 +15854,35 @@
           "url": "https://kurier.at/xml/rss"
         },
         {
+          "name": "PULS 24",
+          "url": "https://www.puls24.at/rssfeed",
+          "sitemapUrl": "https://www.puls24.at/sitemaps/google_news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "PULS 24 - Article Sitemap",
+          "sitemapUrl": "https://www.puls24.at/sitemaps/article/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "exxpress",
+          "sitemapUrl": "https://exxpress.at/wp-sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "MeinBezirk",
+          "sitemapUrl": "https://www.meinbezirk.at/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
           "name": "Finanzen.at (Stocks/Finance)",
           "url": "https://www.finanzen.at/rss/news"
         },
@@ -16329,6 +17011,20 @@
           "sitemapUrl": "https://www.dn.pt/news_sitemap.xml"
         },
         {
+          "name": "Dinheiro Vivo",
+          "url": "https://dinheirovivo.dn.pt/feed",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Jornal Económico",
+          "url": "https://jornaleconomico.sapo.pt/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
           "name": "SIC Notícias",
           "url": "https://rss.impresa.pt/feed/latest/sicnot.rss?type=ARTICLE,VIDEO,GALLERY,STREAM,PLAYLIST,EVENT,NEWSLETTER&limit=100&pubsubhub=true",
           "sitemapUrl": "https://sicnoticias.pt/sitemap/news.xml"
@@ -16398,7 +17094,8 @@
         },
         {
           "name": "Executive Digest",
-          "url": "https://executivedigest.sapo.pt/feed/"
+          "url": "https://executivedigest.sapo.pt/feed/",
+          "sitemapUrl": "https://executivedigest.sapo.pt/sitemap.xml"
         },
         {
           "name": "Visao",
@@ -18424,6 +19121,55 @@
           "valid": "valid"
         },
         {
+          "name": "Profit.ro",
+          "url": "https://www.profit.ro/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Business Magazin",
+          "sitemapUrl": "https://www.businessmagazin.ro/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Romania Insider",
+          "url": "https://www.romania-insider.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "SpotMedia",
+          "url": "https://spotmedia.ro/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Curs de Guvernare",
+          "url": "https://cursdeguvernare.ro/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Economica",
+          "url": "https://www.economica.net/feed",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Aktual24",
+          "url": "https://www.aktual24.ro/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
           "name": "EVZ - March 2026 Sitemap",
           "sitemapUrl": "https://evz.ro/sitemaps/posts-2026-03.xml",
           "status": "NEW",
@@ -18622,6 +19368,21 @@
           "status": "NEW",
           "checkedDate": "03/19/2026",
           "valid": "valid"
+        },
+        {
+          "name": "Babel",
+          "sitemapUrl": "https://babel.ua/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "ZN.UA",
+          "url": "https://zn.ua/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification",
+          "enabled": false
         }
       ]
     },
@@ -19223,6 +19984,112 @@
         {
           "name": "RTS",
           "url": "https://www.rts.rs/page/stories/sr/rss/10/vesti.html"
+        },
+        {
+          "name": "NIN - News Sitemap",
+          "sitemapUrl": "https://www.nin.rs/sitemap/news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Tanjug - News Sitemap",
+          "sitemapUrl": "https://www.tanjug.rs/sitemap/news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Vreme",
+          "url": "https://vreme.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification",
+          "sitemapUrl": "https://vreme.com/sitemaps.xml"
+        },
+        {
+          "name": "Vreme - Sitemap Index",
+          "sitemapUrl": "https://vreme.com/sitemaps.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Politika - Najnovije",
+          "url": "https://www.politika.rs/sr/columns/rss/63",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Politika - Politika",
+          "url": "https://www.politika.rs/sr/columns/rss/2",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Politika - Društvo",
+          "url": "https://www.politika.rs/sr/columns/rss/3",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Politika - Ekonomija",
+          "url": "https://www.politika.rs/sr/columns/rss/6",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Politika - Srbija",
+          "url": "https://www.politika.rs/sr/columns/rss/9",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Politika - Beograd",
+          "url": "https://www.politika.rs/sr/columns/rss/10",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "B92 - Info",
+          "url": "https://www.b92.net/rss/b92/info",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "B92 - Biz",
+          "url": "https://www.b92.net/rss/biz",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "B92 - Lokal",
+          "url": "https://www.b92.net/rss/lokal",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "021.rs - All",
+          "url": "https://www.021.rs/rss/all",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Nova Ekonomija",
+          "url": "https://novaekonomija.rs/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/23/2026",
+          "valid": "needs verification"
         },
         {
           "name": "Danas",
