@@ -1243,6 +1243,7 @@ async function readDashboardTopicGroupsForWindow(
   maxFutureMinutes: number,
   displayLimit: number
 ): Promise<NewsApiDashboardTopicGroup[]> {
+  const minTopicCount = 10;
   const result = await db.query<NewsApiDashboardTopicCountRow>(
     `
     with windowed as (
@@ -1276,6 +1277,7 @@ async function readDashboardTopicGroupsForWindow(
         count(*)::text as count
       from expanded_topics
       group by 1, 2
+      having count(*) >= $4
     ),
     ranked as (
       select
@@ -1298,7 +1300,7 @@ async function readDashboardTopicGroupsForWindow(
     from ranked
     where rn <= $3
     `,
-    [windowDays, maxFutureMinutes, displayLimit]
+    [windowDays, maxFutureMinutes, displayLimit, minTopicCount]
   );
 
   const groupsBySection = new Map<string, NewsApiDashboardTopicGroup>();

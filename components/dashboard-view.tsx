@@ -120,6 +120,7 @@ export function DashboardView() {
   const sectionRollup = NEWS_SECTION_ORDER.map((section) => ({
     key: section,
     count: Number(sectionTotals[section as keyof typeof sectionTotals] || 0),
+    share: totals.rowsWindow > 0 ? Number(sectionTotals[section as keyof typeof sectionTotals] || 0) / totals.rowsWindow : 0,
   })).filter((item) => item.count > 0);
   const topicGroups = Array.isArray(summary.topicGroups)
     ? summary.topicGroups
@@ -249,7 +250,10 @@ export function DashboardView() {
           {sectionRollup.length > 0 ? (
             sectionRollup.map((item) => (
               <div className="stat-row" key={item.key}>
-                <span>{getSectionLabel(item.key, resolvedLocale)}</span>
+                <span>
+                  {getSectionLabel(item.key, resolvedLocale)}
+                  <small style={{ display: 'block' }}>{(item.share * 100).toFixed(1)}%</small>
+                </span>
                 <strong>{item.count.toLocaleString()}</strong>
               </div>
             ))
@@ -268,6 +272,7 @@ export function DashboardView() {
         </div>
         <p className="muted" style={{ marginBottom: 12 }}>
           Topic leaders are grouped under the normalized primary section to reduce cross-section leakage.
+          Low-signal tails are hidden so the panel reflects material themes instead of one-off noise.
         </p>
         {topicGroups.length > 0 ? (
           <div className="topic-group-grid">
