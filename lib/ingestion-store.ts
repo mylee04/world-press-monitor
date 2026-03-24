@@ -67,6 +67,13 @@ const dashboardTopicDisplayLimit = (() => {
   if (!Number.isFinite(parsed) || parsed < 3 || parsed > 30) return 10;
   return parsed;
 })();
+const dashboardSourceCategoryDisplayLimit = (() => {
+  const rawValue = process.env.NEWS_API_DASHBOARD_SOURCE_CATEGORY_DISPLAY_LIMIT;
+  if (!rawValue) return 24;
+  const parsed = Number.parseInt(rawValue, 10);
+  if (!Number.isFinite(parsed) || parsed < 6 || parsed > 50) return 24;
+  return parsed;
+})();
 const dashboardSummaryCacheMs = (() => {
   const rawValue = process.env.NEWS_API_DASHBOARD_SUMMARY_CACHE_MS;
   if (!rawValue) return 60_000;
@@ -870,6 +877,11 @@ export interface NewsApiDashboardTopicGroup {
   }>;
 }
 
+export interface NewsApiDashboardSourceCategoryCount {
+  category: string;
+  count: number;
+}
+
 export interface NewsApiDashboardSummaryResult {
   storage: 'postgres' | 'disabled';
   reason?: string;
@@ -888,6 +900,12 @@ export interface NewsApiDashboardSummaryResult {
   recentDates: Array<{ date: string; count: number }>;
   topicSampleSize: number;
   topicGroups: NewsApiDashboardTopicGroup[];
+  sourceCategoryCoverage: {
+    categorizedArticles: number;
+    uncategorizedArticles: number;
+    distinctCategories: number;
+    topCategories: NewsApiDashboardSourceCategoryCount[];
+  };
   preview: {
     articleCount: number;
     topCountries: Array<{ country: string | null; count: number }>;
@@ -953,6 +971,17 @@ type NewsApiDashboardTopicCountRow = {
   section: string;
   article_count: string;
   topic: string;
+  count: string;
+};
+
+type NewsApiDashboardSourceCategoryCoverageRow = {
+  categorized_articles: string;
+  uncategorized_articles: string;
+  distinct_categories: string;
+};
+
+type NewsApiDashboardSourceCategoryCountRow = {
+  category: string;
   count: string;
 };
 
@@ -1298,6 +1327,65 @@ async function readDashboardTopicGroupsForWindow(
     .filter((group): group is NewsApiDashboardTopicGroup => Boolean(group));
 }
 
+async function readDashboardSourceCategoryCoverageForWindow(
+  db: Pool,
+  windowDays: number,
+  maxFutureMinutes: number,
+  displayLimit: number
+): Promise<NewsApiDashboardSummaryResult['sourceCategoryCoverage']> {
+  const [coverageResult, topCategoriesResult] = await Promise.all([
+    db.query<NewsApiDashboardSourceCategoryCoverageRow>(
+      `
+      with windowed as (
+        select coalesce(feed_categories, '{}'::text[]) as feed_categories
+        from news_articles
+        where publication_datetime >= now() - ($1::int * interval '1 day')
+          and publication_datetime <= now() + ($2::int * interval '1 minute')
+      ),
+      expanded as (
+        select unnest(feed_categories) as category
+        from windowed
+        where cardinality(feed_categories) > 0
+      )
+      select
+        (select count(*)::text from windowed where cardinality(feed_categories) > 0) as categorized_articles,
+        (select count(*)::text from windowed where cardinality(feed_categories) = 0) as uncategorized_articles,
+        (select count(distinct category)::text from expanded) as distinct_categories
+      `,
+      [windowDays, maxFutureMinutes]
+    ),
+    db.query<NewsApiDashboardSourceCategoryCountRow>(
+      `
+      with windowed as (
+        select unnest(feed_categories) as category
+        from news_articles
+        where publication_datetime >= now() - ($1::int * interval '1 day')
+          and publication_datetime <= now() + ($2::int * interval '1 minute')
+          and cardinality(feed_categories) > 0
+      )
+      select
+        category,
+        count(*)::text as count
+      from windowed
+      group by 1
+      order by count(*) desc, category asc
+      limit $3
+      `,
+      [windowDays, maxFutureMinutes, displayLimit]
+    ),
+  ]);
+
+  return {
+    categorizedArticles: Number(coverageResult.rows[0]?.categorized_articles || 0),
+    uncategorizedArticles: Number(coverageResult.rows[0]?.uncategorized_articles || 0),
+    distinctCategories: Number(coverageResult.rows[0]?.distinct_categories || 0),
+    topCategories: topCategoriesResult.rows.map((row) => ({
+      category: row.category,
+      count: Number(row.count) || 0,
+    })),
+  };
+}
+
 function buildDashboardSummaryCacheKey(options?: {
   windowDays?: number;
   latestHours?: number;
@@ -1347,6 +1435,12 @@ export async function readNewsDashboardSummary(options?: {
       recentDates: [],
       topicSampleSize: 0,
       topicGroups: [],
+      sourceCategoryCoverage: {
+        categorizedArticles: 0,
+        uncategorizedArticles: 0,
+        distinctCategories: 0,
+        topCategories: [],
+      },
       preview: {
         articleCount: 0,
         topCountries: [],
@@ -1365,7 +1459,7 @@ export async function readNewsDashboardSummary(options?: {
     ? newsApiMaxFutureMinutes
     : Math.max(0, Math.min(168 * 60, Math.floor(options.maxFutureHours * 60)));
 
-  const [totalsResult, checkedSourcesResult, sectionTotalsResult, dateResult, recentDatesResult, topicGroupRows] = await Promise.all([
+  const [totalsResult, checkedSourcesResult, sectionTotalsResult, dateResult, recentDatesResult, topicGroupRows, sourceCategoryCoverage] = await Promise.all([
     db.query<NewsApiSummaryTotalsRow>(
       `
       select
@@ -1451,6 +1545,12 @@ export async function readNewsDashboardSummary(options?: {
       [windowDays, maxFutureMinutes]
     ),
     readDashboardTopicGroupsForWindow(db, windowDays, maxFutureMinutes, dashboardTopicDisplayLimit),
+    readDashboardSourceCategoryCoverageForWindow(
+      db,
+      windowDays,
+      maxFutureMinutes,
+      dashboardSourceCategoryDisplayLimit
+    ),
   ]);
 
   const dateRow = dateResult.rows[0];
@@ -1603,6 +1703,7 @@ export async function readNewsDashboardSummary(options?: {
     })),
     topicSampleSize,
     topicGroups,
+    sourceCategoryCoverage,
     preview: {
       articleCount: previewArticleCount,
       topCountries: previewTopCountries,

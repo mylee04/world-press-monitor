@@ -72,6 +72,11 @@ export interface NewsApiDashboardTopicGroup {
   }>;
 }
 
+export interface NewsApiDashboardSourceCategoryCount {
+  category: string;
+  count: number;
+}
+
 export interface NewsApiDashboardSummaryResponse {
   storage: 'postgres' | 'disabled';
   generatedAt: string | null;
@@ -92,6 +97,12 @@ export interface NewsApiDashboardSummaryResponse {
   }>;
   topicSampleSize: number;
   topicGroups: NewsApiDashboardTopicGroup[];
+  sourceCategoryCoverage: {
+    categorizedArticles: number;
+    uncategorizedArticles: number;
+    distinctCategories: number;
+    topCategories: NewsApiDashboardSourceCategoryCount[];
+  };
   preview: {
     articleCount: number;
     topCountries: NewsApiCountryCount[];

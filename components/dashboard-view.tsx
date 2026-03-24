@@ -147,6 +147,28 @@ export function DashboardView() {
         }))
         .filter((group) => group.topics.length > 0)
     : [];
+  const sourceCategoryCoverage =
+    summary.sourceCategoryCoverage && typeof summary.sourceCategoryCoverage === 'object'
+      ? {
+          categorizedArticles: Number(summary.sourceCategoryCoverage.categorizedArticles || 0),
+          uncategorizedArticles: Number(summary.sourceCategoryCoverage.uncategorizedArticles || 0),
+          distinctCategories: Number(summary.sourceCategoryCoverage.distinctCategories || 0),
+          topCategories: Array.isArray(summary.sourceCategoryCoverage.topCategories)
+            ? summary.sourceCategoryCoverage.topCategories.map((item) => ({
+                category: item?.category || '',
+                count: Number(item?.count || 0),
+              }))
+            : [],
+        }
+      : {
+          categorizedArticles: 0,
+          uncategorizedArticles: 0,
+          distinctCategories: 0,
+          topCategories: [],
+        };
+  const sourceCategoryCoveragePct = totals.rowsWindow > 0
+    ? (sourceCategoryCoverage.categorizedArticles / totals.rowsWindow) * 100
+    : 0;
 
   return (
     <div className="page-stack">
@@ -278,6 +300,45 @@ export function DashboardView() {
           </div>
         ) : (
           <div className="muted">Detailed topic leaders are still warming up.</div>
+        )}
+      </section>
+
+      <section className="panel">
+        <div className="section-head">
+          <h2>Top source categories in {windowDays}d window</h2>
+          <span>
+            {sourceCategoryCoverage.categorizedArticles.toLocaleString()} categorized articles ·{' '}
+            {sourceCategoryCoverage.distinctCategories.toLocaleString()} distinct tags
+          </span>
+        </div>
+        <div className="stat-list">
+          <div className="stat-row">
+            <span>Category coverage</span>
+            <strong>{sourceCategoryCoveragePct.toFixed(1)}%</strong>
+          </div>
+          <div className="stat-row">
+            <span>Articles with source categories</span>
+            <strong>{sourceCategoryCoverage.categorizedArticles.toLocaleString()}</strong>
+          </div>
+          <div className="stat-row">
+            <span>Articles still missing source categories</span>
+            <strong>{sourceCategoryCoverage.uncategorizedArticles.toLocaleString()}</strong>
+          </div>
+        </div>
+        <p className="muted" style={{ marginTop: 12 }}>
+          Publisher-provided source tags can be multilingual and source-specific, so they complement the normalized section/topic taxonomy above.
+        </p>
+        {sourceCategoryCoverage.topCategories.length > 0 ? (
+          <div className="topic-pill-row" style={{ marginTop: 12 }}>
+            {sourceCategoryCoverage.topCategories.map((item) => (
+              <span className="topic-pill" key={`source-category-${item.category}`}>
+                <strong>{item.category}</strong>
+                <small>{item.count.toLocaleString()}</small>
+              </span>
+            ))}
+          </div>
+        ) : (
+          <div className="muted" style={{ marginTop: 12 }}>Source category leaders are still warming up.</div>
         )}
       </section>
 
