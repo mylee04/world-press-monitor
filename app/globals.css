@@ -319,6 +319,16 @@ select {
   cursor: pointer;
 }
 
+.details-summary {
+  cursor: pointer;
+  font-weight: 600;
+  list-style: none;
+}
+
+.details-summary::-webkit-details-marker {
+  display: none;
+}
+
 .button:disabled {
   cursor: not-allowed;
   opacity: 0.55;

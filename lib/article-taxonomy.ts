@@ -212,21 +212,26 @@ export function buildArticleTaxonomy(input: ArticleTaxonomyInput): ArticleTaxono
   const sourceFallbackSection = source || url ? classifySectionBySourceFallback({ source, url, title }) : 'others';
   const contextSection = source || url ? deriveSectionFromContext({ source, url, title }) : 'others';
   const derivedSection = pickFirstMeaningfulSection([
+    ...feedCategorySections,
     titleSection,
     textSection,
     structuredHintSection,
     hintKeywordSection,
     sourceFallbackSection,
     contextSection,
-    ...feedCategorySections,
   ]);
 
-  let primarySection = storedSection;
-  if (primarySection === 'others') {
+  let primarySection = pickFirstMeaningfulSection(feedCategorySections);
+  if (primarySection === 'others' && derivedSection !== 'others') {
     primarySection = derivedSection;
-  } else if (
-    (primarySection === 'arts' || primarySection === 'entertainment' || primarySection === 'lifestyle')
-    && derivedSection !== 'others'
+  }
+  if (primarySection === 'others' && storedSection !== 'others') {
+    primarySection = storedSection;
+  }
+  if (
+    primarySection !== derivedSection &&
+    derivedSection !== 'others' &&
+    (primarySection === 'arts' || primarySection === 'entertainment' || primarySection === 'lifestyle' || primarySection === 'others')
   ) {
     primarySection = derivedSection;
   }

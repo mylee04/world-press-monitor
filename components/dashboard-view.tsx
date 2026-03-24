@@ -3,7 +3,14 @@
 import { CustomerAccessPanel } from '@/components/customer-access-panel';
 import { useCustomerAccess } from '@/components/customer-access-provider';
 import { useNewsApiDashboardSummary } from '@/components/news-api-hooks';
+import { useTaxonomyLocalePreference } from '@/components/taxonomy-locale-provider';
 import { NEWS_SECTION_ORDER } from '@/lib/article-taxonomy';
+import {
+  getSectionLabel,
+  getTaxonomyLocaleLabel,
+  getTopicLabel,
+  type TaxonomyLocaleMode,
+} from '@/lib/taxonomy-display';
 
 function renderGeneratedAt(value: string | null | undefined): string {
   if (!value) return '-';
@@ -40,28 +47,9 @@ function renderRelativeTime(value: string | null | undefined): string {
   return `${Math.abs(diffDays)} day${Math.abs(diffDays) === 1 ? '' : 's'} ${diffDays >= 0 ? 'ago' : 'ahead'}`;
 }
 
-function renderSectionLabel(section: string | null | undefined): string {
-  if (!section || section === 'others') return 'general / unclassified';
-  if (section === 'entertainment') return 'entertainment';
-  if (section === 'lifestyle') return 'lifestyle';
-  if (section === 'arts') return 'arts';
-  return section;
-}
-
-function renderSectionList(sections: string[] | null | undefined): string {
-  const normalized = [...new Set((sections || []).filter(Boolean))];
-  if (!normalized.length) return renderSectionLabel('others');
-  return normalized.map((section) => renderSectionLabel(section)).join(', ');
-}
-
-function renderTopicList(topics: string[] | null | undefined): string {
-  const normalized = [...new Set((topics || []).filter(Boolean))];
-  if (!normalized.length) return 'No detailed topic mapped yet';
-  return normalized.join(', ');
-}
-
 export function DashboardView() {
   const { hasToken, isReady, apiConfigured } = useCustomerAccess();
+  const { mode: taxonomyLocaleMode, browserLocale, resolvedLocale, setMode: setTaxonomyLocaleMode } = useTaxonomyLocalePreference();
   const summaryState = useNewsApiDashboardSummary();
   const summary = summaryState.data?.storage === 'postgres' ? summaryState.data : null;
 
@@ -147,34 +135,12 @@ export function DashboardView() {
         }))
         .filter((group) => group.topics.length > 0)
     : [];
-  const sourceCategoryCoverage =
-    summary.sourceCategoryCoverage && typeof summary.sourceCategoryCoverage === 'object'
-      ? {
-          categorizedArticles: Number(summary.sourceCategoryCoverage.categorizedArticles || 0),
-          uncategorizedArticles: Number(summary.sourceCategoryCoverage.uncategorizedArticles || 0),
-          distinctCategories: Number(summary.sourceCategoryCoverage.distinctCategories || 0),
-          topCategories: Array.isArray(summary.sourceCategoryCoverage.topCategories)
-            ? summary.sourceCategoryCoverage.topCategories.map((item) => ({
-                category: item?.category || '',
-                count: Number(item?.count || 0),
-              }))
-            : [],
-        }
-      : {
-          categorizedArticles: 0,
-          uncategorizedArticles: 0,
-          distinctCategories: 0,
-          topCategories: [],
-        };
-  const sourceCategoryCoveragePct = totals.rowsWindow > 0
-    ? (sourceCategoryCoverage.categorizedArticles / totals.rowsWindow) * 100
-    : 0;
 
   return (
     <div className="page-stack">
       <section className="hero-panel">
         <div className="eyebrow">Customer Dashboard</div>
-        <h1>Live article coverage by section, country, and UTC publication date.</h1>
+        <h1>Live article coverage by normalized section, topic, country, and UTC publication date.</h1>
         <p>
           This dashboard reads live counts and preview headlines from the authenticated customer API.
           Anonymous visitors do not receive article data or downloads.
@@ -182,6 +148,24 @@ export function DashboardView() {
         <div className="hero-note">
           <strong>Live refresh:</strong> updated {renderRelativeTime(summary.generatedAt)} from the live database.
           Coverage metrics reflect the current rolling window from PostgreSQL.
+        </div>
+        <div className="hero-actions">
+          <label style={{ minWidth: 220 }}>
+            <span>Category language</span>
+            <select
+              value={taxonomyLocaleMode}
+              onChange={(event) => setTaxonomyLocaleMode(event.target.value as TaxonomyLocaleMode)}
+            >
+              <option value="auto">{getTaxonomyLocaleLabel('auto', browserLocale)}</option>
+              <option value="en">{getTaxonomyLocaleLabel('en', browserLocale)}</option>
+              <option value="ko">{getTaxonomyLocaleLabel('ko', browserLocale)}</option>
+              <option value="ja">{getTaxonomyLocaleLabel('ja', browserLocale)}</option>
+              <option value="es">{getTaxonomyLocaleLabel('es', browserLocale)}</option>
+              <option value="pt">{getTaxonomyLocaleLabel('pt', browserLocale)}</option>
+              <option value="it">{getTaxonomyLocaleLabel('it', browserLocale)}</option>
+              <option value="fr">{getTaxonomyLocaleLabel('fr', browserLocale)}</option>
+            </select>
+          </label>
         </div>
       </section>
 
@@ -255,14 +239,17 @@ export function DashboardView() {
 
       <section className="panel">
         <div className="section-head">
-          <h2>Primary section mix in 31d window</h2>
+          <h2>Coverage by normalized section</h2>
           <span>{totals.rowsWindow.toLocaleString()} articles</span>
         </div>
+        <p className="muted" style={{ marginBottom: 12 }}>
+          These are the product&apos;s normalized top-level sections, not raw publisher labels.
+        </p>
         <div className="stat-list">
           {sectionRollup.length > 0 ? (
             sectionRollup.map((item) => (
               <div className="stat-row" key={item.key}>
-                <span>{renderSectionLabel(item.key)}</span>
+                <span>{getSectionLabel(item.key, resolvedLocale)}</span>
                 <strong>{item.count.toLocaleString()}</strong>
               </div>
             ))
@@ -274,23 +261,26 @@ export function DashboardView() {
 
       <section className="panel">
         <div className="section-head">
-          <h2>Detailed topic leaders</h2>
+          <h2>Top normalized topics</h2>
           <span>
             {totals.rowsWindow.toLocaleString()} articles across the full {windowDays}d window
           </span>
         </div>
+        <p className="muted" style={{ marginBottom: 12 }}>
+          Topic leaders are grouped under the normalized primary section to reduce cross-section leakage.
+        </p>
         {topicGroups.length > 0 ? (
           <div className="topic-group-grid">
             {topicGroups.map((group) => (
               <article className="topic-group" key={group.section}>
                 <div className="topic-group-head">
-                  <strong>{renderSectionLabel(group.section)}</strong>
+                  <strong>{getSectionLabel(group.section, resolvedLocale)}</strong>
                   <small>{group.articleCount.toLocaleString()} articles</small>
                 </div>
                 <div className="topic-pill-row">
                   {group.topics.map((item) => (
                     <span className="topic-pill" key={`${group.section}-${item.topic}`}>
-                      <strong>{item.topic}</strong>
+                      <strong>{getTopicLabel(item.topic, resolvedLocale)}</strong>
                       <small>{item.count.toLocaleString()}</small>
                     </span>
                   ))}
@@ -305,45 +295,6 @@ export function DashboardView() {
 
       <section className="panel">
         <div className="section-head">
-          <h2>Top source categories in {windowDays}d window</h2>
-          <span>
-            {sourceCategoryCoverage.categorizedArticles.toLocaleString()} categorized articles ·{' '}
-            {sourceCategoryCoverage.distinctCategories.toLocaleString()} distinct tags
-          </span>
-        </div>
-        <div className="stat-list">
-          <div className="stat-row">
-            <span>Category coverage</span>
-            <strong>{sourceCategoryCoveragePct.toFixed(1)}%</strong>
-          </div>
-          <div className="stat-row">
-            <span>Articles with source categories</span>
-            <strong>{sourceCategoryCoverage.categorizedArticles.toLocaleString()}</strong>
-          </div>
-          <div className="stat-row">
-            <span>Articles still missing source categories</span>
-            <strong>{sourceCategoryCoverage.uncategorizedArticles.toLocaleString()}</strong>
-          </div>
-        </div>
-        <p className="muted" style={{ marginTop: 12 }}>
-          Publisher-provided source tags can be multilingual and source-specific, so they complement the normalized section/topic taxonomy above.
-        </p>
-        {sourceCategoryCoverage.topCategories.length > 0 ? (
-          <div className="topic-pill-row" style={{ marginTop: 12 }}>
-            {sourceCategoryCoverage.topCategories.map((item) => (
-              <span className="topic-pill" key={`source-category-${item.category}`}>
-                <strong>{item.category}</strong>
-                <small>{item.count.toLocaleString()}</small>
-              </span>
-            ))}
-          </div>
-        ) : (
-          <div className="muted" style={{ marginTop: 12 }}>Source category leaders are still warming up.</div>
-        )}
-      </section>
-
-      <section className="panel">
-        <div className="section-head">
           <h2>Recent headlines</h2>
           <span>{preview.headlines.length > 0 ? `Preview date · ${summary.previewDate || '-'} UTC` : 'Waiting for live rows'}</span>
         </div>
@@ -351,13 +302,13 @@ export function DashboardView() {
           {preview.headlines.map((article) => (
             <a className="headline-card" key={article.id} href={article.url} rel="noreferrer" target="_blank">
               <small>
-                {article.country || 'Unknown'} · {article.source} · {renderSectionLabel(article.primarySection)}
+                {article.country || 'Unknown'} · {article.source} · {getSectionLabel(article.primarySection, resolvedLocale)}
               </small>
               <strong>{article.title}</strong>
               <small>
                 {article.topics.length > 0
-                  ? `Topics · ${renderTopicList(article.topics)}`
-                  : `Sections · ${renderSectionList(article.sections)}`}
+                  ? `Topics · ${article.topics.map((topic) => getTopicLabel(topic, resolvedLocale)).join(', ')}`
+                  : `Sections · ${article.sections.map((section) => getSectionLabel(section, resolvedLocale)).join(', ') || getSectionLabel('others', resolvedLocale)}`}
               </small>
               <span>{article.snippet || 'Snippet unavailable in customer API preview.'}</span>
             </a>

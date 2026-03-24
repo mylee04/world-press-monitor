@@ -8,6 +8,7 @@ type CliArgs = {
   days: number;
   batchSize: number;
   limit: number | null;
+  force: boolean;
 };
 
 type CandidateKeyRow = {
@@ -19,6 +20,7 @@ type CandidateDetailRow = {
   external_id: string;
   source: string;
   title_original: string;
+  snippet_original: string | null;
   url: string;
   section: string | null;
   feed_categories: string[] | null;
@@ -26,6 +28,8 @@ type CandidateDetailRow = {
 
 type TopicUpdateRow = {
   externalId: string;
+  primarySection: string;
+  sectionsNormalized: string[];
   primaryTopic: string | null;
   topics: string[];
 };
@@ -40,6 +44,7 @@ function parseArgs(argv: string[]): CliArgs {
     days: parseNumberArg(argv, '--days=', DEFAULT_DAYS, 1, 3650),
     batchSize: parseNumberArg(argv, '--batch=', DEFAULT_BATCH_SIZE, 50, 10_000),
     limit: parseOptionalNumberArg(argv, '--limit=', 1),
+    force: argv.includes('--force'),
   };
 }
 
@@ -78,22 +83,28 @@ async function fetchCandidateKeys(
   days: number,
   batchSize: number,
   cursorCreatedAt: string | null,
-  cursorExternalId: string | null
+  cursorExternalId: string | null,
+  force: boolean
 ): Promise<CandidateKeyRow[]> {
   return (await client.query<CandidateKeyRow>(
     `
     select external_id, created_at::text
     from news_articles
     where publication_datetime >= now() - ($1::int * interval '1 day')
-      and topics_derived_at is null
+      and (
+        $4::boolean
+        or taxonomy_derived_at is null
+        or primary_section is null
+        or coalesce(cardinality(sections_normalized), 0) = 0
+      )
       and (
         $2::timestamptz is null
         or (created_at, external_id) < ($2::timestamptz, $3::text)
       )
     order by created_at desc, external_id desc
-    limit $4
+    limit $5
     `,
-    [days, cursorCreatedAt, cursorExternalId, batchSize]
+    [days, cursorCreatedAt, cursorExternalId, force, batchSize]
   )).rows;
 }
 
@@ -102,7 +113,7 @@ async function fetchCandidateDetailsByIds(client: Client, ids: string[]): Promis
   try {
     const result = await client.query<CandidateDetailRow>(
       `
-      select external_id, source, title_original, url, section, feed_categories
+      select external_id, source, title_original, snippet_original, url, section, feed_categories
       from news_articles
       where external_id = any($1::text[])
       `,
@@ -116,9 +127,15 @@ async function fetchCandidateDetailsByIds(client: Client, ids: string[]): Promis
       await client.query(
         `
         update news_articles
-        set primary_topic = null,
+        set primary_section = coalesce(primary_section, 'others'),
+            sections_normalized = case
+              when coalesce(cardinality(sections_normalized), 0) > 0 then sections_normalized
+              else array['others']::text[]
+            end,
+            primary_topic = null,
             topics = '{}'::text[],
             topics_derived_at = now(),
+            taxonomy_derived_at = now(),
             updated_at = now()
         where external_id = $1
         `,
@@ -144,10 +161,12 @@ function classifyTopicRow(row: CandidateDetailRow): TopicUpdateRow {
     source: row.source || '',
     url,
     title,
-    snippet: null,
+    snippet: row.snippet_original,
   });
   return {
     externalId: row.external_id,
+    primarySection: taxonomy.primarySection,
+    sectionsNormalized: taxonomy.sections,
     primaryTopic: taxonomy.primaryTopic,
     topics: taxonomy.topics,
   };
@@ -160,20 +179,23 @@ async function applyTopicUpdates(client: Client, rows: TopicUpdateRow[]): Promis
     const values: unknown[] = [];
     const parts: string[] = [];
     group.forEach((row, index) => {
-      const base = index * 3;
-      parts.push(`($${base + 1}::text, $${base + 2}::text, $${base + 3}::text[])`);
-      values.push(row.externalId, row.primaryTopic, row.topics);
+      const base = index * 5;
+      parts.push(`($${base + 1}::text, $${base + 2}::text, $${base + 3}::text[], $${base + 4}::text, $${base + 5}::text[])`);
+      values.push(row.externalId, row.primarySection, row.sectionsNormalized, row.primaryTopic, row.topics);
     });
     const result = await client.query(
       `
       with incoming as (
         select *
-        from (values ${parts.join(',')}) as t(external_id, primary_topic, topics)
+        from (values ${parts.join(',')}) as t(external_id, primary_section, sections_normalized, primary_topic, topics)
       )
       update news_articles as n
-      set primary_topic = incoming.primary_topic,
+      set primary_section = incoming.primary_section,
+          sections_normalized = coalesce(incoming.sections_normalized, array['others']::text[]),
+          primary_topic = incoming.primary_topic,
           topics = coalesce(incoming.topics, '{}'::text[]),
           topics_derived_at = now(),
+          taxonomy_derived_at = now(),
           updated_at = now()
       from incoming
       where n.external_id = incoming.external_id
@@ -195,9 +217,14 @@ async function main() {
   const client = new Client({ connectionString: databaseUrl });
   await client.connect();
   await client.query(`
+    alter table news_articles add column if not exists primary_section text null;
+    alter table news_articles add column if not exists sections_normalized text[] not null default '{}';
     alter table news_articles add column if not exists primary_topic text null;
     alter table news_articles add column if not exists topics text[] not null default '{}';
     alter table news_articles add column if not exists topics_derived_at timestamptz null;
+    alter table news_articles add column if not exists taxonomy_derived_at timestamptz null;
+    create index if not exists idx_news_articles_primary_section on news_articles(primary_section);
+    create index if not exists idx_news_articles_sections_normalized on news_articles using gin(sections_normalized);
     create index if not exists idx_news_articles_primary_topic on news_articles(primary_topic);
     create index if not exists idx_news_articles_topics on news_articles using gin(topics);
   `);
@@ -212,7 +239,7 @@ async function main() {
       const remaining = args.limit == null ? args.batchSize : Math.max(0, Math.min(args.batchSize, args.limit - scanned));
       if (remaining <= 0) break;
 
-      const keys = await fetchCandidateKeys(client, args.days, remaining, cursorCreatedAt, cursorExternalId);
+      const keys = await fetchCandidateKeys(client, args.days, remaining, cursorCreatedAt, cursorExternalId, args.force);
       if (!keys.length) break;
 
       scanned += keys.length;

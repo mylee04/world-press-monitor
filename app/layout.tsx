@@ -3,6 +3,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { CustomerAccessProvider } from '@/components/customer-access-provider';
 import { PublicationTimeProvider } from '@/components/publication-time-provider';
+import { TaxonomyLocaleProvider } from '@/components/taxonomy-locale-provider';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -21,24 +22,26 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
     <html lang="en">
       <body>
         <CustomerAccessProvider>
-          <PublicationTimeProvider>
-            <div className="app-shell">
-              <header className="site-header">
-                <div>
-                  <span className="brand-kicker">World Press Radar</span>
-                  <p>Customer-only news intelligence portal. A valid API token is required to load article data.</p>
-                </div>
-                <nav>
-                  {navItems.map((item) => (
-                    <Link href={item.href} key={item.href}>
-                      {item.label}
-                    </Link>
-                  ))}
-                </nav>
-              </header>
-              <main>{children}</main>
-            </div>
-          </PublicationTimeProvider>
+          <TaxonomyLocaleProvider>
+            <PublicationTimeProvider>
+              <div className="app-shell">
+                <header className="site-header">
+                  <div>
+                    <span className="brand-kicker">World Press Radar</span>
+                    <p>Customer-only news intelligence portal. A valid API token is required to load article data.</p>
+                  </div>
+                  <nav>
+                    {navItems.map((item) => (
+                      <Link href={item.href} key={item.href}>
+                        {item.label}
+                      </Link>
+                    ))}
+                  </nav>
+                </header>
+                <main>{children}</main>
+              </div>
+            </PublicationTimeProvider>
+          </TaxonomyLocaleProvider>
         </CustomerAccessProvider>
       </body>
     </html>

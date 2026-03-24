@@ -3,9 +3,17 @@
 import { startTransition, useDeferredValue, useEffect, useMemo, useState } from 'react';
 import { CustomerAccessPanel } from '@/components/customer-access-panel';
 import { useCustomerAccess } from '@/components/customer-access-provider';
-import { useNewsApiFilters, useNewsApiNews } from '@/components/news-api-hooks';
+import { useNewsApiDashboardSummary, useNewsApiFilters, useNewsApiNews } from '@/components/news-api-hooks';
 import { buildNewsApiUrl, type NewsApiItem } from '@/lib/news-api';
 import { usePublicationTimePreference } from '@/components/publication-time-provider';
+import { useTaxonomyLocalePreference } from '@/components/taxonomy-locale-provider';
+import {
+  getSectionLabel,
+  getSectionListLabel,
+  getTaxonomyLocaleLabel,
+  getTopicListLabel,
+  type TaxonomyLocaleMode,
+} from '@/lib/taxonomy-display';
 import { formatPublicationTime, renderPublicationTimeZoneLabel } from '@/lib/timezone-display';
 
 type ExplorerCsvRow = {
@@ -73,26 +81,6 @@ function triggerCsvDownload(rows: ExplorerCsvRow[], filename: string): void {
   URL.revokeObjectURL(url);
 }
 
-function renderSectionLabel(section: string | null | undefined): string {
-  if (!section || section === 'others') return 'general / unclassified';
-  if (section === 'entertainment') return 'entertainment';
-  if (section === 'lifestyle') return 'lifestyle';
-  if (section === 'arts') return 'arts';
-  return section;
-}
-
-function renderSectionList(sections: string[] | null | undefined): string {
-  const normalized = [...new Set((sections || []).filter(Boolean))];
-  if (!normalized.length) return renderSectionLabel('others');
-  return normalized.map((section) => renderSectionLabel(section)).join(', ');
-}
-
-function renderTopicList(topics: string[] | null | undefined): string {
-  const normalized = [...new Set((topics || []).filter(Boolean))];
-  if (!normalized.length) return '-';
-  return normalized.join(', ');
-}
-
 function toExplorerCsvRow(article: NewsApiItem): ExplorerCsvRow {
   return {
     id: article.id,
@@ -123,7 +111,9 @@ function toDayRange(date: string): { from: string; to: string } {
 export function ExplorerView() {
   const { hasToken, isReady, apiConfigured } = useCustomerAccess();
   const { mode: publicationTimeMode, localTimeZone, setMode: setPublicationTimeMode } = usePublicationTimePreference();
+  const { mode: taxonomyLocaleMode, browserLocale, resolvedLocale, setMode: setTaxonomyLocaleMode } = useTaxonomyLocalePreference();
   const filtersState = useNewsApiFilters();
+  const summaryState = useNewsApiDashboardSummary();
   const filters = filtersState.data?.storage === 'postgres' ? filtersState.data.filters : null;
   const [country, setCountry] = useState('');
   const [date, setDate] = useState('');
@@ -158,6 +148,23 @@ export function ExplorerView() {
   const totalPages = Math.max(1, Math.ceil(total / limit));
   const currentCsvRows = rows.map(toExplorerCsvRow);
   const apiUrl = buildNewsApiUrl('/api/news');
+  const sourceCategoryCoverage =
+    summaryState.data?.storage === 'postgres' && summaryState.data.sourceCategoryCoverage
+      ? {
+          categorizedArticles: Number(summaryState.data.sourceCategoryCoverage.categorizedArticles || 0),
+          uncategorizedArticles: Number(summaryState.data.sourceCategoryCoverage.uncategorizedArticles || 0),
+          distinctCategories: Number(summaryState.data.sourceCategoryCoverage.distinctCategories || 0),
+          topCategories: Array.isArray(summaryState.data.sourceCategoryCoverage.topCategories)
+            ? summaryState.data.sourceCategoryCoverage.topCategories.map((item) => ({
+                category: item?.category || '',
+                count: Number(item?.count || 0),
+              }))
+            : [],
+        }
+      : null;
+  const sourceCategoryCoveragePct = sourceCategoryCoverage && summaryState.data?.storage === 'postgres' && summaryState.data.totals.rowsWindow > 0
+    ? (sourceCategoryCoverage.categorizedArticles / summaryState.data.totals.rowsWindow) * 100
+    : 0;
 
   if (!apiConfigured && isReady) {
     return (
@@ -229,7 +236,7 @@ export function ExplorerView() {
             >
               {(filters?.sections || []).map((item) => (
                 <option key={item} value={item}>
-                  {renderSectionLabel(item)}
+                  {getSectionLabel(item, resolvedLocale)}
                 </option>
               ))}
             </select>
@@ -248,6 +255,19 @@ export function ExplorerView() {
               <option value="local">{renderPublicationTimeZoneLabel('local', localTimeZone)}</option>
               <option value="utc">{renderPublicationTimeZoneLabel('utc', localTimeZone)}</option>
               <option value="chicago">{renderPublicationTimeZoneLabel('chicago', localTimeZone)}</option>
+            </select>
+          </label>
+          <label>
+            <span>Category Language</span>
+            <select value={taxonomyLocaleMode} onChange={(event) => setTaxonomyLocaleMode(event.target.value as TaxonomyLocaleMode)}>
+              <option value="auto">{getTaxonomyLocaleLabel('auto', browserLocale)}</option>
+              <option value="en">{getTaxonomyLocaleLabel('en', browserLocale)}</option>
+              <option value="ko">{getTaxonomyLocaleLabel('ko', browserLocale)}</option>
+              <option value="ja">{getTaxonomyLocaleLabel('ja', browserLocale)}</option>
+              <option value="es">{getTaxonomyLocaleLabel('es', browserLocale)}</option>
+              <option value="pt">{getTaxonomyLocaleLabel('pt', browserLocale)}</option>
+              <option value="it">{getTaxonomyLocaleLabel('it', browserLocale)}</option>
+              <option value="fr">{getTaxonomyLocaleLabel('fr', browserLocale)}</option>
             </select>
           </label>
         </div>
@@ -292,6 +312,41 @@ export function ExplorerView() {
         <div className="muted">Section filter accepts multiple normalized categories. Hold Command/Ctrl to select more than one.</div>
       </section>
 
+      <details className="panel">
+        <summary className="details-summary">Advanced source tags (raw publisher labels)</summary>
+        <p className="muted" style={{ marginTop: 12 }}>
+          These raw tags come from publisher feeds and article pages. They are multilingual and source-specific, so they are best used for deep drilling rather than as the primary product taxonomy.
+        </p>
+        {sourceCategoryCoverage ? (
+          <>
+            <div className="stat-list" style={{ marginTop: 12 }}>
+              <div className="stat-row">
+                <span>Source-tag coverage in 31d window</span>
+                <strong>{sourceCategoryCoveragePct.toFixed(1)}%</strong>
+              </div>
+              <div className="stat-row">
+                <span>Articles with raw source tags</span>
+                <strong>{sourceCategoryCoverage.categorizedArticles.toLocaleString()}</strong>
+              </div>
+              <div className="stat-row">
+                <span>Distinct raw source tags</span>
+                <strong>{sourceCategoryCoverage.distinctCategories.toLocaleString()}</strong>
+              </div>
+            </div>
+            <div className="topic-pill-row" style={{ marginTop: 12 }}>
+              {sourceCategoryCoverage.topCategories.map((item) => (
+                <span className="topic-pill" key={`explorer-source-category-${item.category}`}>
+                  <strong>{item.category}</strong>
+                  <small>{item.count.toLocaleString()}</small>
+                </span>
+              ))}
+            </div>
+          </>
+        ) : (
+          <div className="muted" style={{ marginTop: 12 }}>Raw source tag leaders are still warming up.</div>
+        )}
+      </details>
+
       {newsState.error ? <div className="panel danger">News query failed: {newsState.error}</div> : null}
 
       <section className="panel">
@@ -316,7 +371,7 @@ export function ExplorerView() {
                 <th>Primary</th>
                 <th>Sections</th>
                 <th>Topics</th>
-                <th>Source tags</th>
+                <th>Publisher tags</th>
                 <th>Title</th>
                 <th>Link</th>
               </tr>
@@ -327,9 +382,9 @@ export function ExplorerView() {
                   <td>{formatPublicationTime(article.publicationDatetime, publicationTimeMode, localTimeZone)}</td>
                   <td>{article.country || 'Unknown'}</td>
                   <td>{article.source}</td>
-                  <td>{renderSectionLabel(article.primarySection)}</td>
-                  <td>{renderSectionList(article.sections)}</td>
-                  <td>{renderTopicList(article.topics)}</td>
+                  <td>{getSectionLabel(article.primarySection, resolvedLocale)}</td>
+                  <td>{getSectionListLabel(article.sections, resolvedLocale)}</td>
+                  <td>{getTopicListLabel(article.topics, resolvedLocale)}</td>
                   <td>{article.sourceCategories.length > 0 ? article.sourceCategories.join(', ') : '-'}</td>
                   <td>{article.title}</td>
                   <td>

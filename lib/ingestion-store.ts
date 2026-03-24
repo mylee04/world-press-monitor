@@ -330,17 +330,23 @@ create table if not exists news_articles (
       source text not null,
       language text null,
       section text null,
+      primary_section text null,
+      sections_normalized text[] not null default '{}',
       feed_categories text[] not null default '{}',
       primary_topic text null,
       topics text[] not null default '{}',
-      topics_derived_at timestamptz null
+      topics_derived_at timestamptz null,
+      taxonomy_derived_at timestamptz null
     );
     alter table news_articles add column if not exists updated_at timestamptz not null default now();
     alter table news_articles add column if not exists feed_categories text[] not null default '{}';
     alter table news_articles add column if not exists stable_id text null;
+    alter table news_articles add column if not exists primary_section text null;
+    alter table news_articles add column if not exists sections_normalized text[] not null default '{}';
     alter table news_articles add column if not exists primary_topic text null;
     alter table news_articles add column if not exists topics text[] not null default '{}';
     alter table news_articles add column if not exists topics_derived_at timestamptz null;
+    alter table news_articles add column if not exists taxonomy_derived_at timestamptz null;
     create index if not exists idx_news_articles_created_at on news_articles(created_at desc);
     create index if not exists idx_news_articles_updated_at on news_articles(updated_at desc);
     create index if not exists idx_news_articles_publication_datetime on news_articles(publication_datetime desc);
@@ -349,9 +355,11 @@ create table if not exists news_articles (
     create index if not exists idx_news_articles_url on news_articles(url);
     create index if not exists idx_news_articles_stable_id on news_articles(stable_id);
     create index if not exists idx_news_articles_section on news_articles(section);
+    create index if not exists idx_news_articles_primary_section on news_articles(primary_section);
     create index if not exists idx_news_articles_country on news_articles(country);
     create index if not exists idx_news_articles_primary_topic on news_articles(primary_topic);
     create index if not exists idx_news_articles_topics on news_articles using gin(topics);
+    create index if not exists idx_news_articles_sections_normalized on news_articles using gin(sections_normalized);
     create table if not exists ingest_missing_published_at (
       candidate_id text primary key,
       outlet_id text not null,
@@ -926,6 +934,8 @@ type NewsApiReadRow = {
   country: string | null;
   language: string | null;
   section: string | null;
+  primary_section: string | null;
+  sections_normalized: string[] | null;
   feed_categories: string[] | null;
   primary_topic: string | null;
   topics: string[] | null;
@@ -1049,6 +1059,19 @@ export async function readNewsArticlesForApi(options: {
     whereClauses.push(`and e.language = any($${params.length}::text[])`);
   }
 
+  if (normalizedSections.length > 0) {
+    params.push(normalizedSections);
+    whereClauses.push(`
+      and (
+        coalesce(e.sections_normalized, '{}'::text[]) && $${params.length}::text[]
+        or (
+          coalesce(cardinality(e.sections_normalized), 0) = 0
+          and coalesce(nullif(trim(e.section), ''), 'others') = any($${params.length}::text[])
+        )
+      )
+    `);
+  }
+
   if (query) {
     params.push(`%${query}%`);
     whereClauses.push(
@@ -1108,44 +1131,6 @@ export async function readNewsArticlesForApi(options: {
     where 1 = 1
     ${whereClauses.join('\n    ')}`;
 
-  if (normalizedSections.length > 0) {
-    const result = await db.query<NewsApiReadRow>(
-      `
-      select
-        e.external_id as id,
-        e.source,
-        e.title_original as title,
-        left(e.snippet_original, ${apiSnippetMaxChars}) as snippet_original,
-        e.url,
-        e.country,
-        e.language,
-        e.section,
-        e.feed_categories,
-        e.primary_topic,
-        e.topics,
-        e.publication_datetime,
-        e.created_at,
-        e.updated_at,
-        max(e.created_at) over() as generated_at
-      from news_articles e
-      ${whereSql}
-      order by e.publication_datetime desc, e.created_at desc
-      `,
-      params
-    );
-
-    const filteredItems = result.rows
-      .map((row) => mapRowToNewsApiItem(row))
-      .filter((item) => item.sections.some((section) => normalizedSections.includes(normalizeStoredSectionValue(section))));
-
-    return {
-      storage: 'postgres',
-      totalCount: filteredItems.length,
-      generatedAt: result.rows[0]?.generated_at ? new Date(result.rows[0].generated_at).toISOString() : null,
-      items: filteredItems.slice(offset, offset + limit),
-    };
-  }
-
   params.push(limit);
   const limitIndex = params.length;
   params.push(offset);
@@ -1163,6 +1148,8 @@ export async function readNewsArticlesForApi(options: {
         e.country,
         e.language,
         e.section,
+        e.primary_section,
+        e.sections_normalized,
         e.feed_categories,
         e.primary_topic,
         e.topics,
@@ -1207,6 +1194,13 @@ function mapRowToNewsApiItem(row: NewsApiReadRow): NewsApiItem {
     snippet,
   });
   const storedTopics = normalizeSourceCategories(row.topics);
+  const storedSections = normalizeSourceCategories(row.sections_normalized) as NewsSection[];
+  const resolvedPrimarySection = normalizeStoredSectionValue(row.primary_section) !== 'others'
+    ? normalizeStoredSectionValue(row.primary_section)
+    : taxonomy.primarySection;
+  const resolvedSections = storedSections.length > 0
+    ? storedSections.map((section) => normalizeStoredSectionValue(section))
+    : taxonomy.sections;
   const resolvedTopics = storedTopics.length > 0 ? storedTopics : taxonomy.topics;
   const storedPrimaryTopic = (row.primary_topic || '').trim() || null;
 
@@ -1218,8 +1212,8 @@ function mapRowToNewsApiItem(row: NewsApiReadRow): NewsApiItem {
     url,
     country: row.country,
     language: row.language,
-    primarySection: taxonomy.primarySection,
-    sections: taxonomy.sections,
+    primarySection: resolvedPrimarySection,
+    sections: resolvedSections,
     primaryTopic: storedPrimaryTopic || resolvedTopics[0] || taxonomy.primaryTopic,
     topics: resolvedTopics,
     sourceCategories: taxonomy.sourceCategories,
@@ -1251,7 +1245,7 @@ async function readDashboardTopicGroupsForWindow(
     `
     with windowed as (
       select
-        coalesce(nullif(trim(section), ''), 'others') as section,
+        coalesce(nullif(trim(primary_section), ''), nullif(trim(section), ''), 'others') as section,
         coalesce(topics, '{}'::text[]) as topics
       from news_articles
       where publication_datetime >= now() - ($1::int * interval '1 day')
@@ -1487,7 +1481,7 @@ export async function readNewsDashboardSummary(options?: {
     db.query<NewsApiSectionTotalRow>(
       `
       select
-        coalesce(nullif(trim(section), ''), 'others') as section,
+        coalesce(nullif(trim(primary_section), ''), nullif(trim(section), ''), 'others') as section,
         count(*)::text as count
       from news_articles
       where publication_datetime >= now() - ($1::int * interval '1 day')
@@ -1601,6 +1595,8 @@ export async function readNewsDashboardSummary(options?: {
             country,
             language,
             coalesce(section, 'others') as section,
+            primary_section,
+            sections_normalized,
             feed_categories,
             primary_topic,
             topics,
@@ -1625,6 +1621,8 @@ export async function readNewsDashboardSummary(options?: {
           country,
           language,
           section,
+          primary_section,
+          sections_normalized,
           feed_categories,
           primary_topic,
           topics,
@@ -3202,6 +3200,8 @@ type NewsArticlePersistable = {
   snippetOriginal: string | null;
   country: string | null;
   section: string | null;
+  primarySection: NewsSection;
+  sectionsNormalized: NewsSection[];
   feedCategories: string[];
   primaryTopic: string | null;
   topics: string[];
@@ -3279,6 +3279,8 @@ async function toNewsArticleRow(item: NewsItem): Promise<NewsArticlePersistable 
     stableId,
     publicationDatetime: new Date(publicationTs).toISOString(),
     section: item.section,
+    primarySection: taxonomy.primarySection,
+    sectionsNormalized: taxonomy.sections,
     feedCategories,
     primaryTopic: taxonomy.primaryTopic,
     topics: taxonomy.topics,
@@ -3394,6 +3396,8 @@ export async function persistNewsArticles(items: NewsItem[]): Promise<{ persiste
     acc.set(dedupeKey, {
       ...preferred,
       stableId: preferred.stableId || current.stableId,
+      primarySection: preferred.primarySection || current.primarySection,
+      sectionsNormalized: [...new Set([...current.sectionsNormalized, ...row.sectionsNormalized])] as NewsSection[],
       feedCategories: [...new Set([...current.feedCategories, ...row.feedCategories])],
       snippetOriginal: preferred.snippetOriginal || current.snippetOriginal,
     });
@@ -3412,6 +3416,8 @@ export async function persistNewsArticles(items: NewsItem[]): Promise<{ persiste
     acc.set(row.externalId, {
       ...preferred,
       stableId: preferred.stableId || current.stableId,
+      primarySection: preferred.primarySection || current.primarySection,
+      sectionsNormalized: [...new Set([...current.sectionsNormalized, ...row.sectionsNormalized])] as NewsSection[],
       feedCategories: [...new Set([...current.feedCategories, ...row.feedCategories])],
       snippetOriginal: preferred.snippetOriginal || current.snippetOriginal,
     });
@@ -3423,18 +3429,21 @@ export async function persistNewsArticles(items: NewsItem[]): Promise<{ persiste
     const values: unknown[] = [];
     const parts: string[] = [];
     group.forEach((row, i) => {
-      const base = i * 14;
+      const base = i * 17;
       parts.push(
-        `($${base + 1}::text,$${base + 2}::text,$${base + 3}::timestamptz,$${base + 4}::text,$${base + 5}::text[],$${base + 6}::text,$${base + 7}::text[],$${base + 8}::timestamptz,$${base + 9}::text,$${base + 10}::text,$${base + 11}::text,$${base + 12}::text,$${base + 13}::text,$${base + 14}::text,now(),now())`
+        `($${base + 1}::text,$${base + 2}::text,$${base + 3}::timestamptz,$${base + 4}::text,$${base + 5}::text,$${base + 6}::text[],$${base + 7}::text[],$${base + 8}::text,$${base + 9}::text[],$${base + 10}::timestamptz,$${base + 11}::timestamptz,$${base + 12}::text,$${base + 13}::text,$${base + 14}::text,$${base + 15}::text,$${base + 16}::text,$${base + 17}::text,now(),now())`
       );
       values.push(
         row.externalId,
         row.stableId,
         row.publicationDatetime,
         row.section,
+        row.primarySection,
+        row.sectionsNormalized,
         row.feedCategories,
         row.primaryTopic,
         row.topics,
+        new Date().toISOString(),
         new Date().toISOString(),
         row.titleOriginal,
         row.snippetOriginal,
@@ -3449,13 +3458,24 @@ export async function persistNewsArticles(items: NewsItem[]): Promise<{ persiste
       db,
       `
       insert into news_articles (
-        external_id, stable_id, publication_datetime, section, feed_categories, primary_topic, topics, topics_derived_at, title_original, snippet_original,
+        external_id, stable_id, publication_datetime, section, primary_section, sections_normalized, feed_categories, primary_topic, topics, topics_derived_at, taxonomy_derived_at, title_original, snippet_original,
         country, url, source, language, created_at, updated_at
       ) values ${parts.join(',')}
       on conflict (external_id) do update set
         stable_id = coalesce(excluded.stable_id, news_articles.stable_id),
         publication_datetime = excluded.publication_datetime,
         section = excluded.section,
+        primary_section = coalesce(excluded.primary_section, news_articles.primary_section),
+        sections_normalized = (
+          select array(
+            select distinct section_value
+            from unnest(
+              coalesce(news_articles.sections_normalized, '{}'::text[]) ||
+              coalesce(excluded.sections_normalized, '{}'::text[])
+            ) as section_value
+            where section_value is not null and btrim(section_value) <> ''
+          )
+        ),
         feed_categories = (
           select array(
             select distinct unnest(
@@ -3476,6 +3496,7 @@ export async function persistNewsArticles(items: NewsItem[]): Promise<{ persiste
           )
         ),
         topics_derived_at = now(),
+        taxonomy_derived_at = now(),
         title_original = case
           when (excluded.title_original = excluded.url or excluded.title_original like 'http%')
             and news_articles.title_original is not null
