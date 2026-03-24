@@ -8,10 +8,14 @@ import { buildNewsApiUrl, type NewsApiItem } from '@/lib/news-api';
 import { usePublicationTimePreference } from '@/components/publication-time-provider';
 import { useTaxonomyLocalePreference } from '@/components/taxonomy-locale-provider';
 import {
-  getSectionLabel,
-  getSectionListLabel,
+  expandTopLevelTaxonomySections,
   getTaxonomyLocaleLabel,
+  getTopLevelTaxonomyLabel,
+  getTopLevelTaxonomyListLabel,
   getTopicListLabel,
+  mapSectionToTopLevelTaxonomy,
+  TAXONOMY_TOP_LEVEL_ORDER,
+  type TaxonomyTopLevelGroup,
   type TaxonomyLocaleMode,
 } from '@/lib/taxonomy-display';
 import { formatPublicationTime, renderPublicationTimeZoneLabel } from '@/lib/timezone-display';
@@ -117,22 +121,23 @@ export function ExplorerView() {
   const filters = filtersState.data?.storage === 'postgres' ? filtersState.data.filters : null;
   const [country, setCountry] = useState('');
   const [date, setDate] = useState('');
-  const [sections, setSections] = useState<string[]>([]);
+  const [topLevelGroups, setTopLevelGroups] = useState<TaxonomyTopLevelGroup[]>([]);
   const [query, setQuery] = useState('');
   const [offset, setOffset] = useState(0);
   const deferredQuery = useDeferredValue(query.trim());
   const limit = 100;
   const publicationRange = useMemo(() => (date ? toDayRange(date) : null), [date]);
+  const selectedSections = useMemo(() => expandTopLevelTaxonomySections(topLevelGroups), [topLevelGroups]);
 
   useEffect(() => {
     startTransition(() => {
       setOffset(0);
     });
-  }, [country, date, sections, deferredQuery]);
+  }, [country, date, topLevelGroups, deferredQuery]);
 
   const newsState = useNewsApiNews({
     countries: country ? [country] : undefined,
-    sections: sections.length > 0 ? sections : undefined,
+    sections: selectedSections.length > 0 ? selectedSections : undefined,
     q: deferredQuery || null,
     limit,
     offset,
@@ -199,7 +204,7 @@ export function ExplorerView() {
     <div className="page-stack">
       <section className="hero-panel compact">
         <div className="eyebrow">Explorer</div>
-        <h1>Filter live article results by normalized sections, detailed topics, source tags, country, UTC publication date, and keyword.</h1>
+        <h1>Filter live article results by top-level category, normalized topics, source tags, country, UTC publication date, and keyword.</h1>
         <p>
           Every result comes from the authenticated customer API,
           with server-side filtering and page-level CSV export only for signed-in customers.
@@ -224,19 +229,19 @@ export function ExplorerView() {
             <input type="date" value={date} onChange={(event) => setDate(event.target.value)} />
           </label>
           <label>
-            <span>Sections</span>
+            <span>Top-level categories</span>
             <select
               multiple
               size={6}
-              value={sections}
+              value={topLevelGroups}
               onChange={(event) => {
-                const values = Array.from(event.target.selectedOptions).map((option) => option.value);
-                setSections(values);
+                const values = Array.from(event.target.selectedOptions).map((option) => option.value as TaxonomyTopLevelGroup);
+                setTopLevelGroups(values);
               }}
             >
-              {(filters?.sections || []).map((item) => (
+              {TAXONOMY_TOP_LEVEL_ORDER.map((item) => (
                 <option key={item} value={item}>
-                  {getSectionLabel(item, resolvedLocale)}
+                  {getTopLevelTaxonomyLabel(item, resolvedLocale)}
                 </option>
               ))}
             </select>
@@ -309,7 +314,7 @@ export function ExplorerView() {
         <div className="muted">
           Publication Time display: {renderPublicationTimeZoneLabel(publicationTimeMode, localTimeZone)}.
         </div>
-        <div className="muted">Section filter accepts multiple normalized categories. Hold Command/Ctrl to select more than one.</div>
+        <div className="muted">Category filter uses World Press Radar top-level groups. Hold Command/Ctrl to select more than one.</div>
       </section>
 
       <details className="panel">
@@ -368,8 +373,8 @@ export function ExplorerView() {
                 <th>Publication Time</th>
                 <th>Country</th>
                 <th>Source</th>
-                <th>Primary</th>
-                <th>Sections</th>
+                <th>Category</th>
+                <th>Mapped categories</th>
                 <th>Topics</th>
                 <th>Publisher tags</th>
                 <th>Title</th>
@@ -382,8 +387,8 @@ export function ExplorerView() {
                   <td>{formatPublicationTime(article.publicationDatetime, publicationTimeMode, localTimeZone)}</td>
                   <td>{article.country || 'Unknown'}</td>
                   <td>{article.source}</td>
-                  <td>{getSectionLabel(article.primarySection, resolvedLocale)}</td>
-                  <td>{getSectionListLabel(article.sections, resolvedLocale)}</td>
+                  <td>{getTopLevelTaxonomyLabel(mapSectionToTopLevelTaxonomy(article.primarySection), resolvedLocale)}</td>
+                  <td>{getTopLevelTaxonomyListLabel(article.sections, resolvedLocale, 'general_other')}</td>
                   <td>{getTopicListLabel(article.topics, resolvedLocale)}</td>
                   <td>{article.sourceCategories.length > 0 ? article.sourceCategories.join(', ') : '-'}</td>
                   <td>{article.title}</td>

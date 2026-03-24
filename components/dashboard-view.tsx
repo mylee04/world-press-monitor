@@ -6,9 +6,12 @@ import { useNewsApiDashboardSummary } from '@/components/news-api-hooks';
 import { useTaxonomyLocalePreference } from '@/components/taxonomy-locale-provider';
 import { NEWS_SECTION_ORDER } from '@/lib/article-taxonomy';
 import {
-  getSectionLabel,
   getTaxonomyLocaleLabel,
+  getTopLevelTaxonomyLabel,
+  getTopLevelTaxonomyListLabel,
   getTopicLabel,
+  mapSectionToTopLevelTaxonomy,
+  TAXONOMY_TOP_LEVEL_ORDER,
   type TaxonomyLocaleMode,
 } from '@/lib/taxonomy-display';
 
@@ -122,6 +125,16 @@ export function DashboardView() {
     count: Number(sectionTotals[section as keyof typeof sectionTotals] || 0),
     share: totals.rowsWindow > 0 ? Number(sectionTotals[section as keyof typeof sectionTotals] || 0) / totals.rowsWindow : 0,
   })).filter((item) => item.count > 0);
+  const topLevelRollup = TAXONOMY_TOP_LEVEL_ORDER.map((group) => {
+    const count = sectionRollup
+      .filter((item) => mapSectionToTopLevelTaxonomy(item.key) === group)
+      .reduce((sum, item) => sum + item.count, 0);
+    return {
+      key: group,
+      count,
+      share: totals.rowsWindow > 0 ? count / totals.rowsWindow : 0,
+    };
+  }).filter((item) => item.count > 0);
   const topicGroups = Array.isArray(summary.topicGroups)
     ? summary.topicGroups
         .map((group) => ({
@@ -136,12 +149,33 @@ export function DashboardView() {
         }))
         .filter((group) => group.topics.length > 0)
     : [];
+  const groupedTopicGroups = TAXONOMY_TOP_LEVEL_ORDER.map((group) => {
+    const sectionGroups = topicGroups.filter((item) => mapSectionToTopLevelTaxonomy(item.section) === group);
+    const articleCount = sectionRollup
+      .filter((item) => mapSectionToTopLevelTaxonomy(item.key) === group)
+      .reduce((sum, item) => sum + item.count, 0);
+    const topicCounts = new Map<string, number>();
+    for (const sectionGroup of sectionGroups) {
+      for (const topic of sectionGroup.topics) {
+        topicCounts.set(topic.topic, (topicCounts.get(topic.topic) || 0) + topic.count);
+      }
+    }
+    const topics = [...topicCounts.entries()]
+      .map(([topic, count]) => ({ topic, count }))
+      .sort((a, b) => b.count - a.count || a.topic.localeCompare(b.topic))
+      .slice(0, 10);
+    return {
+      group,
+      articleCount,
+      topics,
+    };
+  }).filter((group) => group.group !== 'general_other' && group.topics.length > 0);
 
   return (
     <div className="page-stack">
       <section className="hero-panel">
         <div className="eyebrow">Customer Dashboard</div>
-        <h1>Live article coverage by normalized section, topic, country, and UTC publication date.</h1>
+        <h1>Live article coverage by top-level category, topic, country, and UTC publication date.</h1>
         <p>
           This dashboard reads live counts and preview headlines from the authenticated customer API.
           Anonymous visitors do not receive article data or downloads.
@@ -240,18 +274,18 @@ export function DashboardView() {
 
       <section className="panel">
         <div className="section-head">
-          <h2>Coverage by normalized section</h2>
+          <h2>Coverage by top-level category</h2>
           <span>{totals.rowsWindow.toLocaleString()} articles</span>
         </div>
         <p className="muted" style={{ marginBottom: 12 }}>
-          These are the product&apos;s normalized top-level sections, not raw publisher labels.
+          These are World Press Radar&apos;s product categories, grouped from the underlying normalized sections rather than raw publisher labels.
         </p>
         <div className="stat-list">
-          {sectionRollup.length > 0 ? (
-            sectionRollup.map((item) => (
+          {topLevelRollup.length > 0 ? (
+            topLevelRollup.map((item) => (
               <div className="stat-row" key={item.key}>
                 <span>
-                  {getSectionLabel(item.key, resolvedLocale)}
+                  {getTopLevelTaxonomyLabel(item.key, resolvedLocale)}
                   <small style={{ display: 'block' }}>{(item.share * 100).toFixed(1)}%</small>
                 </span>
                 <strong>{item.count.toLocaleString()}</strong>
@@ -265,26 +299,26 @@ export function DashboardView() {
 
       <section className="panel">
         <div className="section-head">
-          <h2>Top normalized topics</h2>
+          <h2>Top normalized topics by category</h2>
           <span>
             {totals.rowsWindow.toLocaleString()} articles across the full {windowDays}d window
           </span>
         </div>
         <p className="muted" style={{ marginBottom: 12 }}>
-          Topic leaders are grouped under the normalized primary section to reduce cross-section leakage.
+          Topic leaders are grouped under the top-level product category so related sections such as Technology + Science or Culture + Entertainment read together.
           Low-signal tails are hidden so the panel reflects material themes instead of one-off noise.
         </p>
-        {topicGroups.length > 0 ? (
+        {groupedTopicGroups.length > 0 ? (
           <div className="topic-group-grid">
-            {topicGroups.map((group) => (
-              <article className="topic-group" key={group.section}>
+            {groupedTopicGroups.map((group) => (
+              <article className="topic-group" key={group.group}>
                 <div className="topic-group-head">
-                  <strong>{getSectionLabel(group.section, resolvedLocale)}</strong>
+                  <strong>{getTopLevelTaxonomyLabel(group.group, resolvedLocale)}</strong>
                   <small>{group.articleCount.toLocaleString()} articles</small>
                 </div>
                 <div className="topic-pill-row">
                   {group.topics.map((item) => (
-                    <span className="topic-pill" key={`${group.section}-${item.topic}`}>
+                    <span className="topic-pill" key={`${group.group}-${item.topic}`}>
                       <strong>{getTopicLabel(item.topic, resolvedLocale)}</strong>
                       <small>{item.count.toLocaleString()}</small>
                     </span>
@@ -307,13 +341,13 @@ export function DashboardView() {
           {preview.headlines.map((article) => (
             <a className="headline-card" key={article.id} href={article.url} rel="noreferrer" target="_blank">
               <small>
-                {article.country || 'Unknown'} · {article.source} · {getSectionLabel(article.primarySection, resolvedLocale)}
+                {article.country || 'Unknown'} · {article.source} · {getTopLevelTaxonomyLabel(mapSectionToTopLevelTaxonomy(article.primarySection), resolvedLocale)}
               </small>
               <strong>{article.title}</strong>
               <small>
                 {article.topics.length > 0
                   ? `Topics · ${article.topics.map((topic) => getTopicLabel(topic, resolvedLocale)).join(', ')}`
-                  : `Sections · ${article.sections.map((section) => getSectionLabel(section, resolvedLocale)).join(', ') || getSectionLabel('others', resolvedLocale)}`}
+                  : `Categories · ${getTopLevelTaxonomyListLabel(article.sections, resolvedLocale, 'general_other')}`}
               </small>
               <span>{article.snippet || 'Snippet unavailable in customer API preview.'}</span>
             </a>

@@ -2,6 +2,17 @@ import type { NewsSection } from '@/lib/types';
 
 export type TaxonomyLocale = 'en' | 'ko' | 'ja' | 'es' | 'pt' | 'it' | 'fr';
 export type TaxonomyLocaleMode = 'auto' | TaxonomyLocale;
+export type TaxonomyTopLevelGroup =
+  | 'world_affairs'
+  | 'politics_policy'
+  | 'conflict_security'
+  | 'business_economy'
+  | 'technology_science'
+  | 'sports'
+  | 'culture_entertainment'
+  | 'lifestyle_health'
+  | 'climate_environment'
+  | 'general_other';
 
 const SUPPORTED_TAXONOMY_LOCALES: readonly TaxonomyLocale[] = ['en', 'ko', 'ja', 'es', 'pt', 'it', 'fr'];
 
@@ -127,6 +138,141 @@ const SECTION_LABELS: Record<NewsSection, LabelMap> = {
   },
 };
 
+export const TAXONOMY_TOP_LEVEL_ORDER: readonly TaxonomyTopLevelGroup[] = [
+  'world_affairs',
+  'politics_policy',
+  'conflict_security',
+  'business_economy',
+  'technology_science',
+  'sports',
+  'culture_entertainment',
+  'lifestyle_health',
+  'climate_environment',
+  'general_other',
+] as const;
+
+const TAXONOMY_TOP_LEVEL_LABELS: Record<TaxonomyTopLevelGroup, LabelMap> = {
+  world_affairs: {
+    en: 'World Affairs',
+    ko: '국제 정세',
+    ja: '国際情勢',
+    es: 'Asuntos mundiales',
+    pt: 'Assuntos globais',
+    it: 'Affari mondiali',
+    fr: 'Affaires mondiales',
+  },
+  politics_policy: {
+    en: 'Politics & Policy',
+    ko: '정치 / 정책',
+    ja: '政治 / 政策',
+    es: 'Política y gobierno',
+    pt: 'Política e governo',
+    it: 'Politica e governo',
+    fr: 'Politique et politiques publiques',
+  },
+  conflict_security: {
+    en: 'Conflict & Security',
+    ko: '분쟁 / 안보',
+    ja: '紛争 / 安全保障',
+    es: 'Conflicto y seguridad',
+    pt: 'Conflito e segurança',
+    it: 'Conflitto e sicurezza',
+    fr: 'Conflits et sécurité',
+  },
+  business_economy: {
+    en: 'Business & Economy',
+    ko: '비즈니스 / 경제',
+    ja: 'ビジネス / 経済',
+    es: 'Negocios y economía',
+    pt: 'Negócios e economia',
+    it: 'Business ed economia',
+    fr: 'Économie et entreprises',
+  },
+  technology_science: {
+    en: 'Technology & Science',
+    ko: '기술 / 과학',
+    ja: 'テクノロジー / 科学',
+    es: 'Tecnología y ciencia',
+    pt: 'Tecnologia e ciência',
+    it: 'Tecnologia e scienza',
+    fr: 'Technologie et science',
+  },
+  sports: {
+    en: 'Sports',
+    ko: '스포츠',
+    ja: 'スポーツ',
+    es: 'Deportes',
+    pt: 'Esportes',
+    it: 'Sport',
+    fr: 'Sport',
+  },
+  culture_entertainment: {
+    en: 'Culture & Entertainment',
+    ko: '문화 / 엔터테인먼트',
+    ja: 'カルチャー / エンタメ',
+    es: 'Cultura y entretenimiento',
+    pt: 'Cultura e entretenimento',
+    it: 'Cultura e intrattenimento',
+    fr: 'Culture et divertissement',
+  },
+  lifestyle_health: {
+    en: 'Lifestyle & Health',
+    ko: '라이프스타일 / 건강',
+    ja: 'ライフスタイル / 健康',
+    es: 'Estilo de vida y salud',
+    pt: 'Estilo de vida e saúde',
+    it: 'Lifestyle e salute',
+    fr: 'Style de vie et santé',
+  },
+  climate_environment: {
+    en: 'Climate & Environment',
+    ko: '기후 / 환경',
+    ja: '気候 / 環境',
+    es: 'Clima y medio ambiente',
+    pt: 'Clima e meio ambiente',
+    it: 'Clima e ambiente',
+    fr: 'Climat et environnement',
+  },
+  general_other: {
+    en: 'General / Other',
+    ko: '일반 / 기타',
+    ja: '一般 / その他',
+    es: 'General / Otros',
+    pt: 'Geral / Outros',
+    it: 'Generale / Altro',
+    fr: 'Général / Autres',
+  },
+};
+
+const TAXONOMY_TOP_LEVEL_SECTIONS: Record<TaxonomyTopLevelGroup, readonly NewsSection[]> = {
+  world_affairs: ['world'],
+  politics_policy: ['politics'],
+  conflict_security: ['conflicts'],
+  business_economy: ['business'],
+  technology_science: ['tech', 'science'],
+  sports: ['sports'],
+  culture_entertainment: ['entertainment', 'arts'],
+  lifestyle_health: ['lifestyle', 'health'],
+  climate_environment: ['climate'],
+  general_other: ['others'],
+};
+
+const SECTION_TO_TOP_LEVEL: Record<NewsSection, TaxonomyTopLevelGroup> = {
+  world: 'world_affairs',
+  politics: 'politics_policy',
+  conflicts: 'conflict_security',
+  business: 'business_economy',
+  tech: 'technology_science',
+  sports: 'sports',
+  health: 'lifestyle_health',
+  entertainment: 'culture_entertainment',
+  lifestyle: 'lifestyle_health',
+  arts: 'culture_entertainment',
+  science: 'technology_science',
+  climate: 'climate_environment',
+  others: 'general_other',
+};
+
 const TOPIC_LABELS: Record<string, LabelMap> = {
   'diplomacy': { en: 'Diplomacy', ko: '외교', ja: '外交', es: 'Diplomacia', pt: 'Diplomacia', it: 'Diplomazia', fr: 'Diplomatie' },
   'migration': { en: 'Migration', ko: '이주', ja: '移民', es: 'Migración', pt: 'Migração', it: 'Migrazione', fr: 'Migration' },
@@ -248,6 +394,45 @@ export function getTaxonomyLocaleName(locale: TaxonomyLocale): string {
     fr: 'Français',
   };
   return names[locale];
+}
+
+export function mapSectionToTopLevelTaxonomy(section: string | null | undefined): TaxonomyTopLevelGroup {
+  const normalized = ((section || '').trim().toLowerCase() || 'others') as NewsSection;
+  return SECTION_TO_TOP_LEVEL[normalized] || 'general_other';
+}
+
+export function expandTopLevelTaxonomySections(
+  groups: ReadonlyArray<TaxonomyTopLevelGroup | string> | null | undefined
+): NewsSection[] {
+  const seen = new Set<NewsSection>();
+  const expanded: NewsSection[] = [];
+  for (const value of groups || []) {
+    const group = (value || '').trim() as TaxonomyTopLevelGroup;
+    const sections = TAXONOMY_TOP_LEVEL_SECTIONS[group];
+    if (!sections) continue;
+    for (const section of sections) {
+      if (seen.has(section)) continue;
+      seen.add(section);
+      expanded.push(section);
+    }
+  }
+  return expanded;
+}
+
+export function getTopLevelTaxonomyLabel(group: TaxonomyTopLevelGroup | string | null | undefined, locale: TaxonomyLocale): string {
+  const normalized = (group || '').trim() as TaxonomyTopLevelGroup;
+  const labels = TAXONOMY_TOP_LEVEL_LABELS[normalized] || TAXONOMY_TOP_LEVEL_LABELS.general_other;
+  return labels[locale] || labels.en;
+}
+
+export function getTopLevelTaxonomyListLabel(
+  sections: string[] | null | undefined,
+  locale: TaxonomyLocale,
+  emptyGroup: TaxonomyTopLevelGroup = 'general_other'
+): string {
+  const groups = [...new Set((sections || []).filter(Boolean).map((section) => mapSectionToTopLevelTaxonomy(section)))];
+  if (!groups.length) return getTopLevelTaxonomyLabel(emptyGroup, locale);
+  return groups.map((group) => getTopLevelTaxonomyLabel(group, locale)).join(', ');
 }
 
 export function getSectionLabel(section: string | null | undefined, locale: TaxonomyLocale): string {
