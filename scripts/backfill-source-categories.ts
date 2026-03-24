@@ -355,21 +355,40 @@ async function scanSourcePages(
   rows: CandidateRow[],
   args: Pick<CliArgs, 'pageTimeoutMs' | 'pageAttempts'>
 ): Promise<PageScanResult> {
+  const fetchableRows = rows.filter((row) => {
+    const url = (row.url || '').trim();
+    return Boolean(url) && !isKnownNonArticleUrl(source, url);
+  });
+
+  const pageScans = await runWithConcurrency(fetchableRows, Math.min(8, fetchableRows.length || 1), async (row) => {
+    const url = (row.url || '').trim();
+    const html = await fetchArticleHtml(url, args);
+    if (!html) {
+      return {
+        externalId: row.external_id,
+        fetched: false,
+        sourceCategories: [] as string[],
+      };
+    }
+    const sourceCategories = extractSourceCategoriesFromArticlePage({ source, html });
+    return {
+      externalId: row.external_id,
+      fetched: true,
+      sourceCategories,
+    };
+  });
+
   const updatesByExternalId = new Map<string, string[]>();
   let fetchedPages = 0;
   let categorizedPages = 0;
 
-  for (const row of rows) {
-    const url = (row.url || '').trim();
-    if (!url || isKnownNonArticleUrl(source, url)) continue;
-    const html = await fetchArticleHtml(url, args);
-    if (!html) continue;
+  for (const scan of pageScans) {
+    if (!scan.fetched) continue;
     fetchedPages += 1;
-    const sourceCategories = extractSourceCategoriesFromArticlePage({ source, html });
-    if (!sourceCategories.length) continue;
+    if (!scan.sourceCategories.length) continue;
     categorizedPages += 1;
-    const current = updatesByExternalId.get(row.external_id) || [];
-    updatesByExternalId.set(row.external_id, normalizeSourceCategories([...current, ...sourceCategories]));
+    const current = updatesByExternalId.get(scan.externalId) || [];
+    updatesByExternalId.set(scan.externalId, normalizeSourceCategories([...current, ...scan.sourceCategories]));
   }
 
   return {
@@ -388,9 +407,11 @@ async function scanSourcePages(
 async function main(): Promise<void> {
   const args = parseArgs(process.argv.slice(2));
   const atlasOutlets = loadAtlasRssOutlets(args);
-  const sourceNames = [...new Set(atlasOutlets.map((outlet) => outlet.source))];
+  const sourceNames = args.sources.length
+    ? [...new Set(args.sources)]
+    : [...new Set(atlasOutlets.map((outlet) => outlet.source))];
   if (!sourceNames.length) {
-    console.log('[backfill-source-categories] no atlas RSS outlets matched the requested filters');
+    console.log('[backfill-source-categories] no sources matched the requested filters');
     return;
   }
 

@@ -19,8 +19,8 @@ type SectionSignalBuckets = {
   keywords: string[];
 };
 
-const SECTION_META_KEYS = new Set(['article:section', 'article:section2', 'og:section', 'section']);
-const KEYWORD_META_KEYS = new Set(['news_keywords', 'keywords']);
+const SECTION_META_KEYS = new Set(['article:section', 'article:section2', 'articlesection', 'og:section', 'section']);
+const KEYWORD_META_KEYS = new Set(['article:tag', 'news_keywords', 'keywords']);
 const SOURCE_CATEGORY_NOISE = new Set([
   'home',
   'homepage',
@@ -43,6 +43,7 @@ export function extractSourceCategoriesFromArticlePage(input: {
   const values: string[] = [];
 
   for (const candidate of [
+    ...extractSourceSpecificCategoryCandidates(input.source, input.html),
     ...buckets.meta,
     ...buckets.articleSection,
     ...buckets.breadcrumb,
@@ -155,31 +156,37 @@ function resolveSourceSpecificSectionSignal(
   source: string,
   html: string,
 ): { section: NewsSection; source: Exclude<SectionSignalSource, 'context' | 'none'>; signals: string[] } | null {
+  const candidates = extractSourceSpecificCategoryCandidates(source, html);
+  if (candidates.length > 0) {
+    const resolved = resolveSectionFromCandidates(candidates, 'article_section');
+    if (resolved) return resolved;
+    return {
+      section: 'world',
+      source: 'article_section',
+      signals: candidates,
+    };
+  }
+
+  return null;
+}
+
+function extractSourceSpecificCategoryCandidates(source: string, html: string): string[] {
   const normalizedSource = source.toLowerCase();
 
   if (normalizedSource.includes('people.cn')) {
     const routeMatch = html.match(/<div\b[^>]*id=["']rwb_navpath["'][^>]*>([\s\S]*?)<\/div>/i);
-    const anchors = extractAnchorTexts(routeMatch?.[1] || '');
-    const lastAnchor = anchors.at(-1);
-    if (lastAnchor) {
-      const resolved = resolveSectionFromCandidates([lastAnchor], 'breadcrumb');
-      if (resolved) return resolved;
-    }
+    return [extractAnchorTexts(routeMatch?.[1] || '').at(-1)].filter(Boolean) as string[];
   }
 
   if (normalizedSource.includes('kbs')) {
-    const candidates = [
+    return [
       ...[...html.matchAll(/<a\b[^>]*class=["'][^"']*category-name[^"']*["'][^>]*>([\s\S]*?)<\/a>/gi)].map((match) => cleanSignalText(stripHtmlTags(match[1]))),
       ...[...html.matchAll(/<span\b[^>]*class=["'][^"']*program_name[^"']*["'][^>]*>([\s\S]*?)<\/span>/gi)].map((match) => cleanSignalText(stripHtmlTags(match[1]))),
     ].filter(Boolean);
-    if (candidates.length > 0) {
-      const resolved = resolveSectionFromCandidates(candidates, 'article_section');
-      if (resolved) return resolved;
-    }
   }
 
   if (normalizedSource.includes('kronen zeitung')) {
-    const candidates = [
+    return [
       ...extractMetaContents(html, 'cXenseParse:krz-category'),
       ...extractMetaContents(html, 'cXenseParse:krz-classifications'),
       ...extractMetaContents(html, 'krn-content-context'),
@@ -187,35 +194,90 @@ function resolveSourceSpecificSectionSignal(
       ...extractMetaContents(html, 'krn-ressort-slug'),
       ...extractMetaContents(html, 'cXenseParse:krz-ressort_name'),
     ].filter(Boolean);
-    if (candidates.length > 0) {
-      const resolved = resolveSectionFromCandidates(candidates, 'article_section');
-      if (resolved) return resolved;
-      return {
-        section: 'world',
-        source: 'article_section',
-        signals: candidates,
-      };
-    }
   }
 
   if (normalizedSource.includes('le télégramme') || normalizedSource.includes('le telegr')) {
-    const candidates = [
+    return [
       ...extractMetaContents(html, 'article:section'),
       ...extractMetaContents(html, 'news_keywords'),
       ...extractMetaContents(html, 'keywords'),
     ].filter(Boolean);
-    if (candidates.length > 0) {
-      const resolved = resolveSectionFromCandidates(candidates, 'article_section');
-      if (resolved) return resolved;
-      return {
-        section: 'world',
-        source: 'article_section',
-        signals: candidates,
-      };
-    }
   }
 
-  return null;
+  if (normalizedSource.includes('cgtn')) {
+    return [
+      ...[...html.matchAll(/<span\b[^>]*class=["'][^"']*\bsection\b[^"']*["'][^>]*>([\s\S]*?)<\/span>/gi)].map((match) =>
+        cleanSignalText(stripHtmlTags(match[1]))
+      ),
+      ...[...html.matchAll(/<div\b[^>]*class=["'][^"']*\bhotkeywords\b[^"']*["'][^>]*>([\s\S]*?)<\/div>/gi)].flatMap((match) =>
+        extractAnchorTexts(match[1] || '')
+      ),
+    ].filter(Boolean);
+  }
+
+  if (normalizedSource.includes('sözcü') || normalizedSource.includes('sozcu')) {
+    return [
+      ...[...html.matchAll(/content_category_name\s*=\s*['"]([^'"]+)['"]/gi)].map((match) =>
+        cleanSignalText(match[1])
+      ),
+      ...[...html.matchAll(/content_category_slug\s*=\s*['"]([^'"]+)['"]/gi)].map((match) =>
+        cleanSignalText(match[1])
+      ),
+    ].filter(Boolean);
+  }
+
+  if (normalizedSource.includes('tv4')) {
+    const candidates: string[] = [];
+    for (const scriptText of extractEmbeddedJsonScripts(html)) {
+      for (const parsed of parseEmbeddedJson(scriptText)) {
+        if (!parsed || typeof parsed !== 'object') continue;
+        const root = parsed as Record<string, unknown>;
+        const query = root.query && typeof root.query === 'object' ? (root.query as Record<string, unknown>) : null;
+        const queryId = typeof query?.id === 'string' ? query.id : '';
+        const props = root.props && typeof root.props === 'object' ? (root.props as Record<string, unknown>) : null;
+        const pageProps = props?.pageProps && typeof props.pageProps === 'object'
+          ? (props.pageProps as Record<string, unknown>)
+          : null;
+        const apolloState = pageProps?.__APOLLO_STATE__ && typeof pageProps.__APOLLO_STATE__ === 'object'
+          ? (pageProps.__APOLLO_STATE__ as Record<string, unknown>)
+          : null;
+        if (!queryId || !apolloState) continue;
+
+        const article = apolloState[`Article:${queryId}`];
+        if (!article || typeof article !== 'object') continue;
+        const articleRecord = article as Record<string, unknown>;
+
+        pushMixedValue(candidates, articleRecord.section);
+        pushMixedValue(candidates, articleRecord.category);
+
+        if (Array.isArray(articleRecord.feedOrigins)) {
+          for (const item of articleRecord.feedOrigins) {
+            if (!item || typeof item !== 'object') continue;
+            const ref = (item as Record<string, unknown>).__ref;
+            if (typeof ref !== 'string') continue;
+            const feedOrigin = apolloState[ref];
+            if (!feedOrigin || typeof feedOrigin !== 'object') continue;
+            const feedOriginRecord = feedOrigin as Record<string, unknown>;
+            if (typeof feedOriginRecord.title === 'string') {
+              pushUnique(candidates, cleanSignalText(feedOriginRecord.title));
+            }
+            if (typeof feedOriginRecord.slug === 'string') {
+              pushUnique(candidates, cleanSignalText(String(feedOriginRecord.slug).replace(/\//g, ' ')));
+            }
+          }
+        }
+      }
+    }
+    return candidates.filter(Boolean);
+  }
+
+  if (html.includes('YAHOO.JP.templa') || html.includes('news.yahoo.co.jp')) {
+    return [...html.matchAll(/"categoryId":"([^"]+)"/gi)]
+      .map((match) => cleanSignalText(match[1]))
+      .filter(Boolean);
+  }
+
+  return [];
 }
 
 function extractSectionSignalBuckets(source: string, html: string): SectionSignalBuckets {

@@ -43,6 +43,7 @@ const GLOBAL_STOP_SEGMENTS = new Set([
   'multimedia',
   'amp',
   'amphtml',
+  'view',
   'index',
   'sitemap',
   'rss',
@@ -117,7 +118,10 @@ function isMeaningfulSegment(source: string, segment: string): boolean {
   if (GLOBAL_STOP_SEGMENTS.has(segment)) return false;
   if (/^\d+$/.test(segment)) return false;
   if (/^\d{4,}$/.test(segment)) return false;
+  if (/^\d{1,2}\s+\d{1,2}$/.test(segment)) return false;
+  if (/^\d{4}(?:\s+\d{1,2}){1,2}$/.test(segment)) return false;
   if (segment.length < 2) return false;
+  if (/^(?=.*[a-z])(?=.*\d)[a-z0-9]{5,}$/i.test(segment)) return false;
   if (/^[a-f0-9]{12,}$/i.test(segment)) return false;
   const sourceStops = SOURCE_STOP_SEGMENTS.get(source);
   if (sourceStops?.has(segment)) return false;
@@ -130,6 +134,7 @@ function extractPathSegments(url: string, maxDepth: number): string[] {
     return parsed.pathname
       .split('/')
       .map(normalizeSegment)
+      .map((segment) => segment.replace(/^\d+\s+/g, ''))
       .filter(Boolean)
       .slice(0, maxDepth);
   } catch {
