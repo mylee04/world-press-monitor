@@ -6,6 +6,22 @@
 
 ## Unreleased
 
+### [9be7aaf] Add source category backfill fallbacks
+- Commit: 9be7aaf8483fe4d1f8fa7d39010631a089fb16df
+- Date: 2026-03-24 10:09:08 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	CHANGELOG.md
+    - A	scripts/backfill-source-categories-by-lexical-path.ts
+    - A	scripts/backfill-source-categories-by-source-name-lexical.ts
+    - A	scripts/backfill-source-categories-from-topics.ts
+  - Git stat:
+  - CHANGELOG.md                                       |  69 ++++++
+  -  .../backfill-source-categories-by-lexical-path.ts  | 265 +++++++++++++++++++++
+  -  ...ill-source-categories-by-source-name-lexical.ts | 128 ++++++++++
+  -  scripts/backfill-source-categories-from-topics.ts  |  74 ++++++
+  -  4 files changed, 536 insertions(+)
+
 ### [d6b94a6] Expand source category backfill strategies
 - Commit: d6b94a646daeea0bb3ce497ebd7a4a0cd2ede10a
 - Date: 2026-03-24 00:25:15 -0500

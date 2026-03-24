@@ -13,7 +13,10 @@ if (!url) {
   process.exit(2);
 }
 
-const browser = await chromium.launch({ headless: false });
+const headedEnv = (process.env.INGEST_BROWSER_SITEMAP_HEADED || process.env.PLAYWRIGHT_HEADED || '').trim().toLowerCase();
+const browser = await chromium.launch({
+  headless: !(headedEnv === '1' || headedEnv === 'true' || headedEnv === 'yes'),
+});
 try {
   const context = await browser.newContext();
   const page = await context.newPage();
