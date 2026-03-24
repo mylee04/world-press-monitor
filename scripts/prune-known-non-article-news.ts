@@ -39,6 +39,7 @@ async function main(): Promise<void> {
   if (!databaseUrl) throw new Error('DATABASE_URL is required');
 
   const hours = parseIntArg('--hours', 72);
+  const maxFutureMinutes = parseIntArg('--max-future-minutes', 30, 0, 24 * 365 * 24 * 60);
   const sourcePrefixes = parseCsvArg('--source-prefix');
   const apply = hasFlag('--apply');
   const db = new Pool({ connectionString: databaseUrl });
@@ -46,9 +47,9 @@ async function main(): Promise<void> {
   try {
     const whereClauses = [
       `publication_datetime >= now() - ($1::int * interval '1 hour')`,
-      `publication_datetime <= now() + interval '30 minutes'`
+      `publication_datetime <= now() + ($2::int * interval '1 minute')`
     ];
-    const values: unknown[] = [hours];
+    const values: unknown[] = [hours, maxFutureMinutes];
     if (sourcePrefixes.length > 0) {
       values.push(sourcePrefixes.map((prefix) => `${prefix}%`));
       whereClauses.push(`source like any($${values.length}::text[])`);
@@ -69,6 +70,7 @@ async function main(): Promise<void> {
       console.log(JSON.stringify({
         apply: false,
         hours,
+        maxFutureMinutes,
         sourcePrefixes,
         matches: matches.length,
         sample: matches.slice(0, 20),
@@ -77,7 +79,7 @@ async function main(): Promise<void> {
     }
 
     if (matches.length === 0) {
-      console.log(JSON.stringify({ apply: true, hours, sourcePrefixes, matches: 0, deleted: 0 }, null, 2));
+      console.log(JSON.stringify({ apply: true, hours, maxFutureMinutes, sourcePrefixes, matches: 0, deleted: 0 }, null, 2));
       return;
     }
 
@@ -92,6 +94,7 @@ async function main(): Promise<void> {
     console.log(JSON.stringify({
       apply: true,
       hours,
+      maxFutureMinutes,
       sourcePrefixes,
       matches: matches.length,
       deleted,

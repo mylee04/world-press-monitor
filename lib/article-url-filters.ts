@@ -6,12 +6,17 @@ function safeParseUrl(url: string): URL | null {
   }
 }
 
+function trimTrailingSlashes(pathname: string): string {
+  return pathname.replace(/\/+$/, '') || '/';
+}
+
 export function isKnownNonArticleUrl(source: string, url: string): boolean {
   const parsed = safeParseUrl(url);
   if (!parsed) return false;
 
   const hostname = parsed.hostname.toLowerCase();
   const pathname = parsed.pathname.toLowerCase();
+  const trimmedPathname = trimTrailingSlashes(pathname);
   const normalizedSource = (source || '').toLowerCase();
 
   if (hostname === 'acento.com.do' && normalizedSource.includes('acento')) {
@@ -78,6 +83,21 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     return true;
   }
 
+  if (hostname.endsWith('sindonews.com') && pathname.startsWith('/terkait/')) {
+    return true;
+  }
+
+  if (hostname.endsWith('sindonews.com') && pathname.startsWith('/blog/')) {
+    return true;
+  }
+
+  if (
+    hostname === 'kalam.sindonews.com' &&
+    /^(?:\/quran|\/murottal|\/juzamma|\/jadwalsholat)\/?$/i.test(pathname)
+  ) {
+    return true;
+  }
+
   if (hostname.endsWith('citynews.ca') && /^\/author\/[^/]+\/?$/.test(pathname)) {
     return true;
   }
@@ -101,6 +121,43 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
   if (hostname.endsWith('fortune.com')) {
     if (pathname.startsWith('/tag/')) return true;
     if (pathname.startsWith('/section/')) return true;
+  }
+
+  if (hostname === 'blog.idnes.cz' && /^\/bg\d{8}\/?$/i.test(pathname)) {
+    return true;
+  }
+
+  if (hostname.endsWith('vesti.bg')) {
+    if (
+      normalizedSource.includes('vesti - bulgaria sitemap') &&
+      /^\/bulgaria(?:\/[^/]+)?\/?$/.test(pathname) &&
+      !/-\d{5,}$/.test(trimmedPathname)
+    ) {
+      return true;
+    }
+
+    if (
+      normalizedSource.includes('vesti - world sitemap') &&
+      /^\/sviat(?:\/[^/]+)?\/?$/.test(pathname) &&
+      !/-\d{5,}$/.test(trimmedPathname)
+    ) {
+      return true;
+    }
+  }
+
+  if (hostname.endsWith('wsj.com') && normalizedSource.includes('wall street journal')) {
+    if (/^\/topics(?:\/|$)/.test(pathname)) return true;
+    if (/^\/audio\/?$/.test(pathname)) return true;
+    if (/^\/recipes\/?$/.test(pathname)) return true;
+    if (/^\/news\/author\/[^/]+\/?$/.test(pathname)) return true;
+    if (/^\/news\/types\/[^/]+\/?$/.test(pathname)) return true;
+    if (/^\/news\/heard-on-the-street\/?$/.test(pathname)) return true;
+    if (/^\/arts-culture\/?$/.test(pathname)) return true;
+    if (/^\/sports\/?$/.test(pathname)) return true;
+    if (/^\/lifestyle\/(?:fitness|workplace)\/?$/.test(pathname)) return true;
+    if (/^\/personal-finance\/mortgages\/?$/.test(pathname)) return true;
+    if (/^\/real-estate\/luxury-homes\/?$/.test(pathname)) return true;
+    if (/^\/news\/markets\/real-estate-commercial\/?$/.test(pathname)) return true;
   }
 
   if (hostname.endsWith('cumhuriyet.com.tr')) {

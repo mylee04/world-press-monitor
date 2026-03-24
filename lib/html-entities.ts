@@ -1,3 +1,5 @@
+import { isKnownNonArticleUrl } from '@/lib/article-url-filters';
+
 const NAMED_HTML_ENTITIES: Record<string, string> = {
   amp: '&',
   lt: '<',
@@ -85,6 +87,17 @@ function safeDecodeURIComponent(value: string): string {
   }
 }
 
+function lastPathSegment(link: string): string {
+  if (!link) return '';
+  try {
+    const parsed = new URL(link);
+    const segments = parsed.pathname.split('/').filter(Boolean);
+    return safeDecodeURIComponent(segments[segments.length - 1] || '').toLowerCase();
+  } catch {
+    return '';
+  }
+}
+
 function titleFromLink(link: string): string {
   if (!link) return '';
   try {
@@ -108,7 +121,15 @@ export function looksLikeLowSignalArticleTitle(title: string, source = '', link 
   const normalizedTitle = normalizeHtmlText(title);
   const normalizedLink = decodeHtmlEntities(link || '');
   if (!normalizedTitle) return true;
+  if (isKnownNonArticleUrl(source, normalizedLink)) return true;
   if (normalizedTitle === normalizedLink || /^https?:\/\//i.test(normalizedTitle)) return true;
+  if (/idnes/i.test(source) && /^bg\d{8}$/i.test(normalizedTitle)) return true;
+  if (/ajel/i.test(source) && /^[a-z0-9]{8,12}$/i.test(normalizedTitle)) {
+    const linkSlug = lastPathSegment(normalizedLink);
+    if (linkSlug && normalizedTitle.toLowerCase() === linkSlug) {
+      return true;
+    }
+  }
   if (GENERIC_LOW_SIGNAL_TITLE_PATTERNS.some((pattern) => pattern.test(normalizedTitle))) return true;
   return SOURCE_SPECIFIC_LOW_SIGNAL_TITLE_PATTERNS.some(
     ({ source: sourcePattern, title: titlePattern }) =>

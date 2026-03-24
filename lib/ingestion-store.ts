@@ -796,7 +796,8 @@ function mapRowToNewsItem(row: {
   const tags = Array.isArray(row.tags) ? (row.tags.filter((value) => typeof value === 'string') as string[]) : [];
   const sourceCategories = normalizeSourceCategories(row.feed_categories);
   const title = normalizeArticleTitle(row.title || '', link);
-  const description = normalizeHtmlText(row.description || '');
+  const normalizedDescription = normalizeHtmlText(row.description || '');
+  const description = normalizedDescription ? truncateText(normalizedDescription, apiSnippetMaxChars) : '';
   return {
     id: link,
     outletId: row.outlet_id || undefined,
@@ -1143,7 +1144,7 @@ export async function readNewsArticlesForApi(options: {
         e.external_id as id,
         e.source,
         e.title_original as title,
-        left(e.snippet_original, ${apiSnippetMaxChars}) as snippet_original,
+        e.snippet_original,
         e.url,
         e.country,
         e.language,
@@ -1184,7 +1185,8 @@ export async function readNewsArticlesForApi(options: {
 function mapRowToNewsApiItem(row: NewsApiReadRow): NewsApiItem {
   const url = decodeHtmlEntities(row.url);
   const title = normalizeArticleTitle(row.title || '', url);
-  const snippet = row.snippet_original ? normalizeHtmlText(row.snippet_original) : null;
+  const snippetText = row.snippet_original ? normalizeHtmlText(row.snippet_original) : '';
+  const snippet = snippetText ? truncateText(snippetText, apiSnippetMaxChars) : null;
   const taxonomy = buildArticleTaxonomy({
     storedSection: row.section,
     sourceCategories: row.feed_categories,
@@ -1822,7 +1824,7 @@ export async function readNewsArticles(options: {
       e.url as link,
       null::text as outlet_id,
       e.title_original as title,
-      left(e.snippet_original, ${apiSnippetMaxChars}) as description,
+      e.snippet_original as description,
       e.source,
       e.publication_datetime as published_at,
       e.country,

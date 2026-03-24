@@ -4,8 +4,14 @@ import { lookup } from 'node:dns/promises';
 import { isIP } from 'node:net';
 import { resolve } from 'node:path';
 import { isKnownNonArticleUrl } from '../lib/article-url-filters';
+import { extractArticlePageTitle } from '../lib/article-page-title';
 import { parseRssOrAtomWithStats, parseSitemapWithStats } from '../lib/parsers';
-import { normalizeArticleTitle, normalizeHtmlText } from '../lib/html-entities';
+import {
+  looksLikeLowSignalArticleTitle,
+  normalizeArticleTitle,
+  normalizeHtmlText,
+  normalizeReadableArticleTitle,
+} from '../lib/html-entities';
 import { runWithConcurrency } from '../lib/concurrency';
 import { fetchWithRetry, readResponseText } from '../lib/fetch-utils';
 import { deriveSectionFromContext, mapFeedCategoryToSection } from '../lib/article-section-context';
@@ -1243,6 +1249,7 @@ async function trySitemapFallback(outlet: OutletFeed): Promise<ParsedSitemapResu
 const ENABLE_RSS_TO_SITEMAP_FALLBACK = parseBoolEnv(process.env.INGEST_RSS_SITEMAP_FALLBACK, true);
 const ENABLE_EXPLICIT_SITEMAP_PARALLEL = parseBoolEnv(process.env.INGEST_EXPLICIT_SITEMAP_PARALLEL, true);
 const ENABLE_ARTICLE_META_CATEGORY_FALLBACK = parseBoolEnv(process.env.INGEST_ARTICLE_META_CATEGORY_FALLBACK, true);
+const ENABLE_ARTICLE_TITLE_FALLBACK = parseBoolEnv(process.env.INGEST_ARTICLE_TITLE_FALLBACK, true);
 const ARTICLE_META_CATEGORY_FALLBACK_SOURCES = new Set(
   (
     process.env.INGEST_ARTICLE_META_CATEGORY_SOURCES
@@ -1281,12 +1288,28 @@ const ARTICLE_META_CATEGORY_FALLBACK_SOURCES = new Set(
     .map((value) => value.trim().toLowerCase())
     .filter(Boolean)
 );
+const ARTICLE_TITLE_FALLBACK_SOURCES = new Set(
+  (
+    process.env.INGEST_ARTICLE_TITLE_SOURCES
+    || [
+      'ajel',
+    ].join(',')
+  )
+    .split(',')
+    .map((value) => value.trim().toLowerCase())
+    .filter(Boolean)
+);
 const ARTICLE_META_CATEGORY_FETCH_TIMEOUT_MS = Math.max(
   3000,
   Math.min(20000, Number.parseInt(process.env.INGEST_ARTICLE_META_CATEGORY_TIMEOUT_MS || '12000', 10) || 12000)
 );
+const ARTICLE_TITLE_FETCH_TIMEOUT_MS = Math.max(
+  3000,
+  Math.min(20000, Number.parseInt(process.env.INGEST_ARTICLE_TITLE_TIMEOUT_MS || '12000', 10) || 12000)
+);
 
 const articleMetaCategoryCache = new Map<string, Promise<string[]>>();
+const articleTitleCache = new Map<string, Promise<string>>();
 
 const FEED_FETCH_HEADERS = {
   'User-Agent':
@@ -1331,6 +1354,21 @@ function shouldFetchArticleMetaCategories(source: string, url: string, existingC
   return false;
 }
 
+function shouldFetchArticlePageTitle(source: string, url: string, title: string): boolean {
+  if (!ENABLE_ARTICLE_TITLE_FALLBACK) return false;
+  if (!url || isKnownNonArticleUrl(source, url)) return false;
+  if (!looksLikeLowSignalArticleTitle(title, source, url)) return false;
+
+  const normalizedSource = normalizeSourceKey(source);
+  for (const candidate of ARTICLE_TITLE_FALLBACK_SOURCES) {
+    if (candidate && normalizedSource.includes(candidate)) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 async function fetchArticleMetaCategories(source: string, url: string): Promise<string[]> {
   const cacheKey = `${normalizeSourceKey(source)}\n${url.trim()}`;
   const existing = articleMetaCategoryCache.get(cacheKey);
@@ -1366,6 +1404,44 @@ async function fetchArticleMetaCategories(source: string, url: string): Promise<
   })();
 
   articleMetaCategoryCache.set(cacheKey, task);
+  return task;
+}
+
+async function fetchArticlePageTitle(source: string, url: string): Promise<string> {
+  const cacheKey = `${normalizeSourceKey(source)}\n${url.trim()}`;
+  const existing = articleTitleCache.get(cacheKey);
+  if (existing) {
+    return existing;
+  }
+
+  const task = (async () => {
+    try {
+      const response = await fetchWithRetry(url, {
+        timeoutMs: ARTICLE_TITLE_FETCH_TIMEOUT_MS,
+        attempts: 2,
+        fetchOptions: {
+          headers: {
+            'User-Agent': FEED_FETCH_HEADERS['User-Agent'],
+            Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            'Accept-Language': FEED_FETCH_HEADERS['Accept-Language'],
+            'Accept-Encoding': FEED_FETCH_HEADERS['Accept-Encoding'],
+            'Cache-Control': 'no-cache',
+            Pragma: 'no-cache',
+          },
+          redirect: 'follow',
+        },
+      });
+      if (!response.ok) return '';
+      const contentType = (response.headers.get('content-type') || '').toLowerCase();
+      if (contentType && !contentType.includes('html') && !contentType.includes('xml')) return '';
+      const html = (await readResponseText(response, response.url || url)).text;
+      return normalizeReadableArticleTitle(extractArticlePageTitle(html), response.url || url, source);
+    } catch {
+      return '';
+    }
+  })();
+
+  articleTitleCache.set(cacheKey, task);
   return task;
 }
 
@@ -1689,7 +1765,13 @@ async function toNewsItem(
   if (isKnownNonArticleUrl(outlet.name, row.link || '')) {
     return null;
   }
-  const title = normalizeArticleTitle(row.title || '', row.link || '');
+  let title = normalizeArticleTitle(row.title || '', row.link || '');
+  if (shouldFetchArticlePageTitle(outlet.name, row.link || '', title)) {
+    const pageTitle = await fetchArticlePageTitle(outlet.name, row.link || '');
+    if (pageTitle) {
+      title = pageTitle;
+    }
+  }
   const description = normalizeHtmlText(row.description || '');
   const rawPublishedAt = (row.publishedAt || '').trim();
   if (!rawPublishedAt && DROP_ITEMS_WITHOUT_PUBLISHED_AT) {
