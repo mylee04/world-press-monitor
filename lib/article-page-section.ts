@@ -252,6 +252,12 @@ function extractSectionSignalBuckets(source: string, html: string): SectionSigna
     }
   }
 
+  for (const scriptText of extractEmbeddedJsonScripts(html)) {
+    for (const parsed of parseEmbeddedJson(scriptText)) {
+      collectEmbeddedArticleSignals(parsed, buckets);
+    }
+  }
+
   extractSourceSpecificSignals(source, html, buckets);
 
   return buckets;
@@ -325,6 +331,33 @@ function collectJsonLdSignals(value: unknown, buckets: SectionSignalBuckets, dep
   }
 }
 
+function collectEmbeddedArticleSignals(value: unknown, buckets: SectionSignalBuckets, depth = 0): void {
+  if (depth > 12 || value === null || value === undefined) return;
+
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      collectEmbeddedArticleSignals(item, buckets, depth + 1);
+    }
+    return;
+  }
+
+  if (typeof value !== 'object') return;
+  const record = value as Record<string, unknown>;
+
+  if (looksLikeArticlePayload(record)) {
+    pushNamedValues(buckets.keywords, record.tags);
+    pushNamedValues(buckets.keywords, record.tags_algo);
+    pushMixedValue(buckets.keywords, record.keywords);
+    pushMixedValue(buckets.articleSection, record.articleSection);
+    pushMixedValue(buckets.meta, record.section);
+    pushMixedValue(buckets.meta, record.category);
+  }
+
+  for (const child of Object.values(record)) {
+    collectEmbeddedArticleSignals(child, buckets, depth + 1);
+  }
+}
+
 function hasJsonLdType(record: Record<string, unknown>, expected: string): boolean {
   const typeValue = record['@type'];
   if (typeof typeValue === 'string') {
@@ -378,6 +411,21 @@ function pushMixedValue(target: string[], value: unknown): void {
   }
 }
 
+function pushNamedValues(target: string[], value: unknown): void {
+  if (!Array.isArray(value)) return;
+  for (const item of value) {
+    if (typeof item === 'string') {
+      pushUnique(target, cleanSignalText(item));
+      continue;
+    }
+    if (!item || typeof item !== 'object') continue;
+    const record = item as Record<string, unknown>;
+    if (typeof record.name === 'string') {
+      pushUnique(target, cleanSignalText(record.name));
+    }
+  }
+}
+
 function parseJsonLd(scriptText: string): unknown[] {
   const parsed: unknown[] = [];
   try {
@@ -386,6 +434,25 @@ function parseJsonLd(scriptText: string): unknown[] {
   } catch {
     return parsed;
   }
+}
+
+function parseEmbeddedJson(scriptText: string): unknown[] {
+  const parsed: unknown[] = [];
+  try {
+    parsed.push(JSON.parse(scriptText));
+  } catch {
+    return parsed;
+  }
+  return parsed;
+}
+
+function extractEmbeddedJsonScripts(html: string): string[] {
+  const values: string[] = [];
+  for (const match of html.matchAll(/<script\b[^>]*id=["']__NEXT_DATA__["'][^>]*>([\s\S]*?)<\/script>/gi)) {
+    const content = cleanJsonLd(match[1] || '');
+    if (content) values.push(content);
+  }
+  return values;
 }
 
 function cleanJsonLd(value: string): string {
@@ -405,6 +472,17 @@ function cleanSignalText(value: string | null | undefined): string {
     .replace(/^[-|/>\s]+|[-|/>\s]+$/g, '')
     .trim();
   return cleaned.slice(0, 160);
+}
+
+function looksLikeArticlePayload(record: Record<string, unknown>): boolean {
+  if (typeof record.title !== 'string' || !record.title.trim()) return false;
+  return (
+    typeof record.slug === 'string' ||
+    typeof record.url === 'string' ||
+    typeof record.publishedDate === 'string' ||
+    typeof record.datePublished === 'string' ||
+    typeof record.publishedAt === 'string'
+  );
 }
 
 function explodeSourceCategorySignal(value: string): string[] {
