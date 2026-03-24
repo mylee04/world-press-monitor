@@ -6042,6 +6042,7 @@
         {
           "name": "Canberra Times",
           "url": "https://www.canberratimes.com.au/rss.xml",
+          "sitemapUrl": "https://www.canberratimes.com.au/sitemap-news.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/19/2026",
           "valid": "needs verification",
@@ -6641,6 +6642,83 @@
           "checkedDate": "03/16/2026",
           "valid": "valid",
           "row": 185
+        },
+        {
+          "name": "TMP AdelaideNow Day 23",
+          "sitemapUrl": "https://www.adelaidenow.com.au/sitemap.xml?yyyy=2026&mm=03&dd=23",
+          "status": "NEW",
+          "checkedDate": "03/24/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TMP Courier Mail Day 23",
+          "sitemapUrl": "https://www.couriermail.com.au/sitemap.xml?yyyy=2026&mm=03&dd=23",
+          "status": "NEW",
+          "checkedDate": "03/24/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TMP Daily Telegraph Day 23",
+          "sitemapUrl": "https://www.dailytelegraph.com.au/sitemap.xml?yyyy=2026&mm=03&dd=23",
+          "status": "NEW",
+          "checkedDate": "03/24/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TMP Herald Sun Day 23",
+          "sitemapUrl": "https://www.heraldsun.com.au/sitemap.xml?yyyy=2026&mm=03&dd=23",
+          "status": "NEW",
+          "checkedDate": "03/24/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TMP The Australian Day 23",
+          "sitemapUrl": "https://www.theaustralian.com.au/sitemap.xml?yyyy=2026&mm=03&dd=23",
+          "status": "NEW",
+          "checkedDate": "03/24/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TMP The Mercury Day 23",
+          "sitemapUrl": "https://www.themercury.com.au/sitemap.xml?yyyy=2026&mm=03&dd=23",
+          "status": "NEW",
+          "checkedDate": "03/24/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TMP Gold Coast Bulletin Day 23",
+          "sitemapUrl": "https://www.goldcoastbulletin.com.au/sitemap.xml?yyyy=2026&mm=03&dd=23",
+          "status": "NEW",
+          "checkedDate": "03/24/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TMP Townsville Bulletin Day 23",
+          "sitemapUrl": "https://www.townsvillebulletin.com.au/sitemap.xml?yyyy=2026&mm=03&dd=23",
+          "status": "NEW",
+          "checkedDate": "03/24/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TMP NT News Day 23",
+          "sitemapUrl": "https://www.ntnews.com.au/sitemap.xml?yyyy=2026&mm=03&dd=23",
+          "status": "NEW",
+          "checkedDate": "03/24/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TMP The Chronicle Day 23",
+          "sitemapUrl": "https://www.thechronicle.com.au/sitemap.xml?yyyy=2026&mm=03&dd=23",
+          "status": "NEW",
+          "checkedDate": "03/24/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TMP Weekly Times Day 23",
+          "sitemapUrl": "https://www.weeklytimesnow.com.au/sitemap.xml?yyyy=2026&mm=03&dd=23",
+          "status": "NEW",
+          "checkedDate": "03/24/2026",
+          "valid": "valid"
         }
       ]
     },
@@ -11806,6 +11884,13 @@
           "valid": "needs verification"
         },
         {
+          "name": "Skövde Nyheter",
+          "url": "https://www.skovdenyheter.se/feeds/feed.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
           "name": "Nerikes Allehanda (fallback)",
           "url": "https://www.na.se/feeds/feed.xml",
           "status": "⏩ OFFICIAL",
@@ -14259,6 +14344,48 @@
           "row": 50
         },
         {
+          "name": "Cooperativa - Sociedad (all)",
+          "url": "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_7___1.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Cooperativa - Mundo (all)",
+          "url": "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_2___1.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Cooperativa - Entretención (all)",
+          "url": "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_4___1.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Cooperativa - Economía y Política (all)",
+          "url": "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_6___1.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Cooperativa - Deportes (all)",
+          "url": "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_1___1.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Cooperativa - Tecnología y Ciencia (all)",
+          "url": "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_8___1.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Cooperativa - Genética (Sociedad)",
           "url": "https://www.cooperativa.cl/noticias/site/tax/port/fid_audio/rss_7_221_1735_1.xml",
           "status": "⏩ OFFICIAL",
@@ -15673,6 +15800,20 @@
           "sitemapUrl": "https://www.kleinezeitung.at/news-sitemap"
         },
         {
+          "name": "Kleine Zeitung - Politik",
+          "url": "https://www.kleinezeitung.at/rss/politik",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Kleine Zeitung - Österreich",
+          "url": "https://www.kleinezeitung.at/rss/oesterreich",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
           "name": "Der Standard",
           "url": "https://www.derstandard.at/rss?output=amp",
           "status": "⏩ OFFICIAL",
@@ -16004,6 +16145,21 @@
           "status": "NEW",
           "checkedDate": "03/18/2026",
           "valid": "valid"
+        },
+        {
+          "name": "VOL.AT",
+          "url": "https://www.vol.at/rss",
+          "sitemapUrl": "https://www.vol.at/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "NÖN.at",
+          "url": "https://www.noen.at/xml/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
         }
       ]
     },
@@ -19596,8 +19752,99 @@
           "sitemapUrl": "https://bntnews.bg/sitemap.xml"
         },
         {
+          "name": "24Plovdiv",
+          "url": "https://www.24plovdiv.bg/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Burgas24",
+          "url": "https://burgas24.bg/rss.php",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Varna24",
+          "url": "https://varna24.bg/rss.php",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Sofia24",
+          "url": "https://sofia24.bg/rss.php",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Plovdiv24",
+          "url": "https://plovdiv24.bg/rss.php",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Ruse24",
+          "url": "https://ruse24.bg/rss.php",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Blagoevgrad24",
+          "url": "https://blagoevgrad24.bg/rss.php",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
           "name": "24 Chasa",
           "sitemapUrl": "https://www.24chasa.bg/sitemap.xml"
+        },
+        {
+          "name": "Dir.bg",
+          "url": "https://dir.bg/feeds/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Capital",
+          "url": "https://www.capital.bg/rss/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Investor.bg - Latest",
+          "url": "https://www.investor.bg/rss/latest",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Investor.bg - Economy & Politics",
+          "url": "https://www.investor.bg/rss/c/514-ikonomika-i-politika",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Focus News",
+          "url": "https://www.focus-news.net/rss.php",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Novsport",
+          "url": "https://www.novsport.com/feed/last",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
         },
         {
           "name": "Mediapool",
@@ -20096,6 +20343,27 @@
           "url": "https://www.danas.rs/feed/",
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/23/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Dnevnik.rs",
+          "url": "https://www.dnevnik.rs/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Beta",
+          "url": "https://www.beta.rs/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Srbija Danas",
+          "url": "https://www.sd.rs/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/24/2026",
           "valid": "needs verification"
         },
         {
@@ -20911,101 +21179,6 @@
         {
           "name": "BizNews",
           "url": "https://www.biznews.com/stories.rss"
-        }
-      ]
-    },
-    {
-      "name": "Global Energy & Grid",
-      "code": "Global",
-      "feeds": [
-        {
-          "name": "OilPrice",
-          "url": "https://oilprice.com/rss/main",
-          "status": "ERR",
-          "checkedDate": "02/18/2026",
-          "valid": "invalid",
-          "row": 1
-        },
-        {
-          "name": "Power Engineering",
-          "url": "https://www.power-eng.com/feed/",
-          "status": "ERR",
-          "checkedDate": "02/18/2026",
-          "valid": "invalid",
-          "row": 3
-        },
-        {
-          "name": "Renewable Energy World",
-          "url": "https://www.renewableenergyworld.com/feed/",
-          "status": "ERR",
-          "checkedDate": "02/18/2026",
-          "valid": "invalid",
-          "row": 4
-        },
-        {
-          "name": "Utility Dive",
-          "url": "https://www.utilitydive.com/feeds/news/",
-          "status": "ERR",
-          "checkedDate": "02/18/2026",
-          "valid": "invalid",
-          "row": 5
-        },
-        {
-          "name": "CleanTechnica",
-          "url": "https://cleantechnica.com/feed/",
-          "status": "ERR",
-          "checkedDate": "02/18/2026",
-          "valid": "invalid",
-          "row": 6
-        },
-        {
-          "name": "Carbon Brief",
-          "url": "https://www.carbonbrief.org/feed/",
-          "status": "⏩ OFFICIAL",
-          "checkedDate": null,
-          "valid": "needs verification",
-          "row": 11
-        },
-        {
-          "name": "Power Magazine",
-          "url": "https://www.powermag.com/feed/",
-          "status": "⏩ OFFICIAL",
-          "checkedDate": null,
-          "valid": "needs verification",
-          "row": 12
-        },
-        {
-          "name": "PV Magazine",
-          "url": "https://www.pv-magazine.com/feed/",
-          "status": "⏩ OFFICIAL",
-          "checkedDate": null,
-          "valid": "needs verification",
-          "row": 15
-        },
-        {
-          "name": "Energy Post",
-          "url": "https://energypost.eu/feed/",
-          "status": "⏩ OFFICIAL",
-          "checkedDate": null,
-          "valid": "needs verification",
-          "row": 17,
-          "enabled": false
-        },
-        {
-          "name": "Energy Storage News",
-          "url": "https://www.energy-storage.news/rss",
-          "status": "⏩ OFFICIAL",
-          "checkedDate": null,
-          "valid": "needs verification",
-          "row": 28
-        },
-        {
-          "name": "Energy Storage News",
-          "url": "https://www.energy-storage.news/feed",
-          "status": "⏩ OFFICIAL",
-          "checkedDate": null,
-          "valid": "needs verification",
-          "row": 29
         }
       ]
     }
