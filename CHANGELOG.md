@@ -6,6 +6,75 @@
 
 ## Unreleased
 
+### [d6b94a6] Expand source category backfill strategies
+- Commit: d6b94a646daeea0bb3ce497ebd7a4a0cd2ede10a
+- Date: 2026-03-24 00:25:15 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	lib/article-page-section.ts
+    - M	scripts/backfill-source-categories-by-path-segment.ts
+    - A	scripts/backfill-source-categories-from-source-label.ts
+    - M	scripts/backfill-source-categories.ts
+  - Git stat:
+  - lib/article-page-section.ts                        | 128 ++++++++++----
+  -  .../backfill-source-categories-by-path-segment.ts  |   5 +
+  -  ...backfill-source-categories-from-source-label.ts | 192 +++++++++++++++++++++
+  -  scripts/backfill-source-categories.ts              |  43 +++--
+  -  4 files changed, 324 insertions(+), 44 deletions(-)
+
+### [667a3ce] Expand atlas coverage across under-served countries
+- Commit: 667a3ce58175b2371b632ad9d9def2574ddc534f
+- Date: 2026-03-23 23:12:02 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	data/rss-atlas.json
+    - M	scripts/ingest-worker.ts
+
+  - Message:
+  - Add and repair official RSS and sitemap endpoints across the atlas, focusing on under-served countries and regional publishers.
+  - 
+  - Highlights:
+  - - expand Canada with additional local and metro publishers to restore daily volume above 3000
+  - - add Blick browser-sitemap fallback domains and restore Swiss Blick sitemap coverage
+  - - broaden Sweden with regional news sitemaps and feed.xml publishers, pushing daily volume above 2000
+  - - add more Netherlands regional section RSS feeds for sport, show, economy, and domestic coverage
+  - - add Romania Insider, SpotMedia, Curs de Guvernare, Economica, and Aktual24 feeds
+  - - repair Chile Emol sitemap URLs to use https and keep other country atlas additions aligned
+  - - include smaller atlas additions for Austria, Portugal, and Ukraine discovered during the coverage audit
+  - 
+  - Keep unrelated local changes out of the commit.
+
+  - Git stat:
+  - data/rss-atlas.json      | 887 ++++++++++++++++++++++++++++++++++++++++++++++-
+  -  scripts/ingest-worker.ts |   2 +-
+  -  2 files changed, 878 insertions(+), 11 deletions(-)
+
+### [1232241] Add path-based source category backfill
+- Commit: 1232241f6ee0a52b63a7376f9b0c49e4ac77d5ce
+- Date: 2026-03-23 22:56:00 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	lib/article-page-section.ts
+    - A	scripts/backfill-source-categories-by-path-segment.ts
+  - Git stat:
+  - lib/article-page-section.ts                        |  78 ++++++
+  -  .../backfill-source-categories-by-path-segment.ts  | 292 +++++++++++++++++++++
+  -  2 files changed, 370 insertions(+)
+
+### [d70e5a6] Expand atlas coverage for backfill candidates
+- Commit: d70e5a62e01eed62c2d372ab8dfd875098863a16
+- Date: 2026-03-23 18:03:25 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	.gitignore
+    - M	CHANGELOG.md
+    - M	data/rss-atlas.json
+  - Git stat:
+  - .gitignore          |   1 +
+  -  CHANGELOG.md        | 596 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+  -  data/rss-atlas.json | 192 +++++++++++++++++
+  -  3 files changed, 789 insertions(+)
+
 ### [3dff7e5] Add token-based source category backfill
 - Commit: 3dff7e5d0388244ce2d655ab153c202d7428ddf3
 - Date: 2026-03-23 16:51:40 -0500
