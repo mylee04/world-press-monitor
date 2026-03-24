@@ -95,22 +95,34 @@ function normalizeSource(value: string): string {
   return (value || '').trim();
 }
 
-function computeSignature(url: string, depth: number): string | null {
+function parseArticleUrl(rawUrl: string): URL | null {
+  const value = (rawUrl || '').trim();
+  if (!value) return null;
   try {
-    const parsed = new URL(url);
-    const host = parsed.hostname.toLowerCase().replace(/^www\./, '');
-    const parts = parsed.pathname
-      .split('/')
-      .map((segment) => decodeURIComponent(segment).trim().toLowerCase())
-      .filter(Boolean)
-      .map((segment) => segment.replace(/\.[a-z0-9]{2,8}$/i, ''))
-      .filter(Boolean);
-    if (!host) return null;
-    if (!parts.length) return `${host}/`;
-    return `${host}/${parts.slice(0, depth).join('/')}`;
+    return new URL(value);
   } catch {
-    return null;
+    try {
+      const decoded = decodeURIComponent(value);
+      return new URL(decoded);
+    } catch {
+      return null;
+    }
   }
+}
+
+function computeSignature(url: string, depth: number): string | null {
+  const parsed = parseArticleUrl(url);
+  if (!parsed) return null;
+  const host = parsed.hostname.toLowerCase().replace(/^www\./, '');
+  const parts = parsed.pathname
+    .split('/')
+    .map((segment) => decodeURIComponent(segment).trim().toLowerCase())
+    .filter(Boolean)
+    .map((segment) => segment.replace(/\.[a-z0-9]{2,8}$/i, ''))
+    .filter(Boolean);
+  if (!host) return null;
+  if (!parts.length) return `${host}/`;
+  return `${host}/${parts.slice(0, depth).join('/')}`;
 }
 
 async function fetchTopEmptySources(client: Client, days: number, limit: number): Promise<string[]> {

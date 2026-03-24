@@ -105,6 +105,21 @@ function normalizeSource(value: string): string {
   return (value || '').trim();
 }
 
+function parseArticleUrl(rawUrl: string): URL | null {
+  const value = (rawUrl || '').trim();
+  if (!value) return null;
+  try {
+    return new URL(value);
+  } catch {
+    try {
+      const decoded = decodeURIComponent(value);
+      return new URL(decoded);
+    } catch {
+      return null;
+    }
+  }
+}
+
 function normalizeSegment(value: string): string {
   return decodeURIComponent(value || '')
     .trim()
@@ -129,17 +144,14 @@ function isMeaningfulSegment(source: string, segment: string): boolean {
 }
 
 function extractPathSegments(url: string, maxDepth: number): string[] {
-  try {
-    const parsed = new URL(url);
-    return parsed.pathname
-      .split('/')
-      .map(normalizeSegment)
-      .map((segment) => segment.replace(/^\d+\s+/g, ''))
-      .filter(Boolean)
-      .slice(0, maxDepth);
-  } catch {
-    return [];
-  }
+  const parsed = parseArticleUrl(url);
+  if (!parsed) return [];
+  return parsed.pathname
+    .split('/')
+    .map(normalizeSegment)
+    .map((segment) => segment.replace(/^\d+\s+/g, ''))
+    .filter(Boolean)
+    .slice(0, maxDepth);
 }
 
 async function fetchTopEmptySources(client: Client, days: number, limit: number): Promise<string[]> {

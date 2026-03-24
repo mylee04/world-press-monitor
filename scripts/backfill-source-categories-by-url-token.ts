@@ -108,20 +108,32 @@ function normalizeSource(value: string): string {
   return (value || '').trim();
 }
 
-function extractTokens(url: string): string[] {
+function parseArticleUrl(rawUrl: string): URL | null {
+  const value = (rawUrl || '').trim();
+  if (!value) return null;
   try {
-    const parsed = new URL(url);
-    const raw = `${parsed.hostname} ${decodeURIComponent(parsed.pathname)}`.toLowerCase();
-    const tokens = raw.match(TOKEN_RE) || [];
-    return [...new Set(tokens.filter((token) => {
-      if (!token || STOP_TOKENS.has(token)) return false;
-      if (/^\d+$/.test(token)) return false;
-      if (/^\d{4,}$/.test(token)) return false;
-      return true;
-    }))];
+    return new URL(value);
   } catch {
-    return [];
+    try {
+      const decoded = decodeURIComponent(value);
+      return new URL(decoded);
+    } catch {
+      return null;
+    }
   }
+}
+
+function extractTokens(url: string): string[] {
+  const parsed = parseArticleUrl(url);
+  if (!parsed) return [];
+  const raw = `${parsed.hostname} ${decodeURIComponent(parsed.pathname)}`.toLowerCase();
+  const tokens = raw.match(TOKEN_RE) || [];
+  return [...new Set(tokens.filter((token) => {
+    if (!token || STOP_TOKENS.has(token)) return false;
+    if (/^\d+$/.test(token)) return false;
+    if (/^\d{4,}$/.test(token)) return false;
+    return true;
+  }))];
 }
 
 async function fetchTopEmptySources(client: Client, days: number, limit: number): Promise<string[]> {
