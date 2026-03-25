@@ -107,7 +107,18 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     return true;
   }
 
-  if (hostname.endsWith('times.abema.tv') && pathname.startsWith('/tags/')) {
+  if (hostname.endsWith('times.abema.tv')) {
+    if (pathname.startsWith('/tags/')) return true;
+    if (!/^\/(?:[a-z]{2}\/)?articles\/(?:-|photo)\/\d+\/?$/i.test(pathname)) {
+      return true;
+    }
+  }
+
+  if (hostname.endsWith('ledevoir.com') && normalizedSource.includes('le devoir')) {
+    if (/^\/sports\/?$/.test(pathname)) return true;
+  }
+
+  if (hostname.endsWith('cnnturk.com') && pathname.startsWith('/resmi-ilanlar/')) {
     return true;
   }
 

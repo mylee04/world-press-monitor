@@ -52,8 +52,8 @@ function getKeywordRegex(keyword: string): RegExp {
   let regex = regexCache.get(keyword);
   if (!regex) {
     const escaped = normalizedKeyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const asciiWordLike = /^[a-z0-9]+(?:[ -][a-z0-9]+)*$/.test(normalizedKeyword);
-    if (SHORT_KEYWORDS.has(normalizedKeyword) || asciiWordLike) {
+    const wordLike = /^[\p{L}\p{N}]+(?:[ -][\p{L}\p{N}]+)*$/u.test(normalizedKeyword);
+    if (SHORT_KEYWORDS.has(normalizedKeyword) || wordLike) {
       regex = new RegExp(`(?:^|[^\\p{L}\\p{N}])${escaped}(?=$|[^\\p{L}\\p{N}])`, 'iu');
     } else {
       regex = new RegExp(escaped, 'i');

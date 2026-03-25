@@ -155,7 +155,7 @@ const GENERIC_HINT_NOISE_PATTERNS: ReadonlyArray<RegExp> = [
 ];
 
 const CONFLICT_SIGNAL_PATTERN =
-  /war|wars|conflict|ceasefire|truce|airstrike|airstrikes|missile|missiles|military|troops|invasion|drone|drones|shelling|rocket|rockets|gaza|hamas|hezbollah|hormuz|guerre|guerra|conflit|conflitto|krieg|savaş|savas|สงคราม|전쟁|분쟁|충돌|戦争|紛争|战争|戰爭|冲突|衝突|война|конфликт|перемир|ракет|удар/iu;
+  /\b(?:war|wars|conflict|ceasefire|truce|airstrike|airstrikes|missile|missiles|military|troops|invasion|drone|drones|shelling|rocket|rockets|gaza|hamas|hezbollah|hormuz|guerre|guerra|conflit|conflitto|krieg)\b|savaş|savas|สงคราม|전쟁|분쟁|충돌|戦争|紛争|战争|戰爭|冲突|衝突|война|конфликт|перемир|ракет|удар/iu;
 
 const SOURCE_FALLBACKS: ReadonlyArray<{ pattern: RegExp; section: NewsSection }> = [
   { pattern: /people\.cn/i, section: 'world' },
@@ -1139,6 +1139,40 @@ export function classifySectionBySourceFallback(context: ArticleSectionContext):
     if (/^\/(?:showbiz|celebrity-news|entertainment)\//.test(pathname)) return 'entertainment';
     if (/^\/(?:life-style|travel)\//.test(pathname)) return 'lifestyle';
     if (/^\/news\//.test(pathname)) return 'world';
+    return 'world';
+  }
+
+  if (source.includes('cnn türk') || hostname.endsWith('cnnturk.com')) {
+    if (/^\/spor\//.test(pathname)) return 'sports';
+    if (/^\/magazin\//.test(pathname)) return 'entertainment';
+    if (/^\/kesfet\//.test(pathname)) return 'lifestyle';
+    if (/^\/dunya\//.test(pathname)) return looksLikeConflictSignal(`${title} ${hintText}`) ? 'conflicts' : 'world';
+    if (/^\/yerel-haberler\//.test(pathname)) {
+      if (/kültür|kultur|sanat|miras|dans|festival|sergi|tiyatro|edebiyat|müze|muze|müzik|muzik/i.test(title)) return 'arts';
+      if (/parti|belediye|başkan|baskan|vali|bakan|cumhurbaşkanı|cumhurbaskani|meclis|ziyaret/i.test(title)) return 'politics';
+      if (/ekonomi|borsa|faiz|enflasyon|yatırım|yatirim|iş dünyası|is dunyasi/i.test(title)) return 'business';
+      if (/sağlık|saglik|hastane|doktor|aşı|asi/i.test(title)) return 'health';
+      if (/spor|futbol|basketbol|tenis|voleybol|güreş|gures|maç|mac/i.test(title)) return 'sports';
+      return 'world';
+    }
+    if (/^\/(?:turkiye|yerel-haberler|video\/turkiye)\//.test(pathname)) return 'world';
+    return 'world';
+  }
+
+  if (source.includes('hürriyet') || source.includes('hurriyet') || hostname.endsWith('hurriyet.com.tr')) {
+    if (/^\/spor\//.test(pathname)) return 'sports';
+    if (/^\/(?:kelebek|magazin)\//.test(pathname)) return 'entertainment';
+    if (/^\/(?:yasam|seyahat|lezzetli-hayat)\//.test(pathname)) return 'lifestyle';
+    if (/^\/ekonomi\//.test(pathname)) return 'business';
+    if (/^\/teknoloji\//.test(pathname)) return 'tech';
+    if (/^\/dunya\//.test(pathname)) return looksLikeConflictSignal(`${title} ${hintText}`) ? 'conflicts' : 'world';
+    if (/^\/gundem\//.test(pathname)) {
+      if (/kültür|kultur|sanat|miras|dans|festival|sergi|tiyatro|edebiyat|müze|muze|müzik|muzik/i.test(title)) return 'arts';
+      if (/parti|başkan|baskan|bakan|cumhurbaşkanı|cumhurbaskani|meclis|ziyaret|milletvekili|vali/i.test(title)) return 'politics';
+      if (/ekonomi|borsa|faiz|enflasyon|yatırım|yatirim/i.test(title)) return 'business';
+      if (/sağlık|saglik|hastane|doktor|aşı|asi/i.test(title)) return 'health';
+      return 'world';
+    }
     return 'world';
   }
 
