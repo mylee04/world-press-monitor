@@ -79,23 +79,20 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     }
   }
 
-  if (hostname.endsWith('sindonews.com') && pathname.startsWith('/topic/')) {
-    return true;
-  }
-
-  if (hostname.endsWith('sindonews.com') && pathname.startsWith('/terkait/')) {
-    return true;
-  }
-
-  if (hostname.endsWith('sindonews.com') && pathname.startsWith('/blog/')) {
-    return true;
-  }
-
-  if (
-    hostname === 'kalam.sindonews.com' &&
-    /^(?:\/quran|\/murottal|\/juzamma|\/jadwalsholat)\/?$/i.test(pathname)
-  ) {
-    return true;
+  if (hostname.endsWith('sindonews.com') && normalizedSource.includes('sindo')) {
+    if (pathname.startsWith('/topic/')) return true;
+    if (pathname.startsWith('/terkait/')) return true;
+    if (pathname.startsWith('/blog/')) return true;
+    if (hostname === 'media.sindonews.com') return true;
+    if (
+      hostname === 'kalam.sindonews.com' &&
+      /^(?:\/quran|\/murottal|\/juzamma|\/jadwalsholat)\/?$/i.test(pathname)
+    ) {
+      return true;
+    }
+    if (!pathname.startsWith('/read/')) {
+      return true;
+    }
   }
 
   if (hostname.endsWith('citynews.ca') && /^\/author\/[^/]+\/?$/.test(pathname)) {
@@ -149,11 +146,25 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     if (/^\/topics(?:\/|$)/.test(pathname)) return true;
     if (/^\/audio\/?$/.test(pathname)) return true;
     if (/^\/recipes\/?$/.test(pathname)) return true;
+    if (/^\/podcasts(?:\/|$)/.test(pathname)) return true;
+    if (/^\/newsletters(?:\/|$)/.test(pathname)) return true;
+    if (/^\/video\/browse(?:\/|$)/.test(pathname)) return true;
+    if (/^\/livecoverage\/?$/.test(pathname)) return true;
+    if (/^\/cfo-journal\/?$/.test(pathname)) return true;
+    if (/^\/cmo-today\/?$/.test(pathname)) return true;
     if (/^\/news\/author\/[^/]+\/?$/.test(pathname)) return true;
     if (/^\/news\/types\/[^/]+\/?$/.test(pathname)) return true;
     if (/^\/news\/heard-on-the-street\/?$/.test(pathname)) return true;
     if (/^\/arts-culture\/?$/.test(pathname)) return true;
     if (/^\/sports\/?$/.test(pathname)) return true;
+    if (/^\/pro\/[^/]+\/?$/.test(pathname)) return true;
+    if (/^\/market-data\/[^/]+\/?$/.test(pathname)) return true;
+    if (/^\/(?:world|science|business|sports|politics|lifestyle|arts-culture|tech|economy|finance|personal-finance)(?:\/[^/]+){0,2}\/?$/.test(pathname)) {
+      const lastSegment = trimmedPathname.split('/').filter(Boolean).at(-1) || '';
+      const slugParts = lastSegment.split('-').filter(Boolean);
+      const looksLikeLandingSlug = slugParts.length <= 3 && lastSegment.length <= 32 && !/\d{5,}/.test(lastSegment);
+      if (looksLikeLandingSlug) return true;
+    }
     if (/^\/lifestyle\/(?:fitness|workplace)\/?$/.test(pathname)) return true;
     if (/^\/personal-finance\/mortgages\/?$/.test(pathname)) return true;
     if (/^\/real-estate\/luxury-homes\/?$/.test(pathname)) return true;
