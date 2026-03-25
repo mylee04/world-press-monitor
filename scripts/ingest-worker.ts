@@ -25,11 +25,11 @@ import {
   buildMethodStats,
   ensureWorkerAuditsDir,
   filterItemsForPersistence,
-  formatPercent,
   pickOutletChunk,
   writeWorkerState,
   type BackfillWindow,
 } from './ingest-worker-support';
+import { buildWorkerSummary, formatWorkerSummaryLog, summarizeEndpointResults } from './ingest-worker-summary';
 import {
   readFailingEndpointBackoff,
   readIngestionFeedWatermarks,
@@ -2730,49 +2730,46 @@ async function runOnce(): Promise<void> {
     await upsertIngestionFeedWatermarks(watermarkRows);
   }
 
-  const okEndpoints = diagnostics.filter((d) => d.attempted && d.ok).length;
-  const failedEndpoints = diagnostics.filter((d) => d.attempted && !d.ok).length;
-  const attempted = diagnostics.filter((d) => d.attempted).length;
-  const summary = {
-    generatedAt: new Date().toISOString(),
-    elapsedMs: Date.now() - started,
-    worker: {
-      outletsTotal: allOutlets.length,
-      outletsAfterCountryFilter: countryFilteredOutlets.length,
-      outletsSelected: selected.length,
-      outletOffset: offset,
-      nextOutletOffset: nextOffset,
-      countryFilter: COUNTRY_FILTER?.display || null,
-      methodFilter: METHOD_FILTER?.display || null,
-      endpointsAttempted: attempted,
-      endpointsOk: okEndpoints,
-      endpointsFailed: failedEndpoints,
-      endpointFailureRate: attempted > 0 ? failedEndpoints / attempted : 0,
-      uniqueItems: merged.length,
-      persisted: persistedNewsArticles.persisted,
-      newsArticlesPersisted: persistedNewsArticles.persisted,
-      missingPublishedAtPersisted: persistedMissingPublishedAt.persisted,
-      diagnosticsPersisted: persistedDiag.persisted,
-      fallback: fallbackSummary,
-    },
-  };
+  const counts = summarizeEndpointResults(diagnostics);
+  const summary = buildWorkerSummary({
+    started,
+    allOutletsCount: allOutlets.length,
+    countryFilteredOutletsCount: countryFilteredOutlets.length,
+    selectedCount: selected.length,
+    offset,
+    nextOffset,
+    countryFilter: COUNTRY_FILTER?.display || null,
+    methodFilter: METHOD_FILTER?.display || null,
+    diagnostics,
+    mergedItems: merged,
+    persistedArticles: persistedNewsArticles.persisted,
+    persistedMissingPublishedAt: persistedMissingPublishedAt.persisted,
+    persistedDiagnostics: persistedDiag.persisted,
+    fallbackSummary,
+  });
 
   writeFileSync(SUMMARY_FILE, JSON.stringify(summary, null, 2), 'utf8');
   if (!BACKFILL_WINDOW) {
     writeWorkerState(STATE_FILE, { offset: nextOffset, updatedAt: summary.generatedAt }, process.cwd());
   }
-  console.log(
-    `[ingest-worker] outlets=${selected.length}/${countryFilteredOutlets.length}/${allOutlets.length} endpoints=${attempted} ok=${okEndpoints} failed=${failedEndpoints} ` +
-    `country_filter=${COUNTRY_FILTER ? COUNTRY_FILTER.display.join('|') : 'ALL'} ` +
-    `backfill=${BACKFILL_WINDOW ? `${BACKFILL_WINDOW.from}..${BACKFILL_WINDOW.to}` : 'off'} ` +
-    `explicit_sitemap_parallel=${ENABLE_EXPLICIT_SITEMAP_PARALLEL ? 'on' : 'off'} ` +
-    `backoff_skipped_total=${failingKeys.size} backoff_skipped=[rss=${fallbackSummary.rssBackoffSkipped}, sitemap=${fallbackSummary.sitemapBackoffSkipped}] ` +
-    `sitemap_policy_disabled=${fallbackSummary.sitemapPolicyDisabled} ` +
-    `method_stats= [rss attempted=${methodStats.rss.attempted}, ok=${methodStats.rss.ok}, fail=${methodStats.rss.fail}(${formatPercent(methodStats.rss.fail, methodStats.rss.attempted)}%); ` +
-    `[sitemap attempted=${methodStats.sitemap.attempted}, ok=${methodStats.sitemap.ok}, fail=${methodStats.sitemap.fail}(${formatPercent(methodStats.sitemap.fail, methodStats.sitemap.attempted)}%)] ` +
-    `sitemapFallback=${fallbackSummary.rssSitemapFallbackSuccess}/${fallbackSummary.rssSitemapFallbackAttempts} skipped=${fallbackSummary.rssSitemapFallbackSkipped} unique=${merged.length} persisted=${persistedNewsArticles.persisted} newsArticles=${persistedNewsArticles.persisted} elapsedMs=${summary.elapsedMs}`
-    + ` missingPublishedAtPersisted=${persistedMissingPublishedAt.persisted}`
-  );
+  console.log(formatWorkerSummaryLog({
+    selectedCount: selected.length,
+    countryFilteredOutletsCount: countryFilteredOutlets.length,
+    allOutletsCount: allOutlets.length,
+    attempted: counts.attempted,
+    ok: counts.ok,
+    failed: counts.failed,
+    countryFilter: COUNTRY_FILTER?.display || null,
+    backfillLabel: BACKFILL_WINDOW ? `${BACKFILL_WINDOW.from}..${BACKFILL_WINDOW.to}` : 'off',
+    explicitSitemapParallel: ENABLE_EXPLICIT_SITEMAP_PARALLEL,
+    failingKeysSize: failingKeys.size,
+    fallbackSummary,
+    methodStats,
+    mergedCount: merged.length,
+    persistedArticles: persistedNewsArticles.persisted,
+    elapsedMs: summary.elapsedMs,
+    missingPublishedAtPersisted: persistedMissingPublishedAt.persisted,
+  }));
 }
 
 async function main(): Promise<void> {
