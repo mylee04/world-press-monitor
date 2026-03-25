@@ -85,6 +85,12 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     }
   }
 
+  if (hostname.endsWith('economedia.ro') && normalizedSource.includes('economedia')) {
+    if (!pathname.endsWith('.html')) {
+      return true;
+    }
+  }
+
   if (hostname.endsWith('sindonews.com') && normalizedSource.includes('sindo')) {
     if (pathname.startsWith('/topic/')) return true;
     if (pathname.startsWith('/terkait/')) return true;
@@ -103,6 +109,12 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
 
   if (hostname.endsWith('citynews.ca') && /^\/author\/[^/]+\/?$/.test(pathname)) {
     return true;
+  }
+
+  if (hostname.endsWith('adnkronos.com') && normalizedSource.includes('adnkronos')) {
+    if (trimmedPathname === '/') return true;
+    if (pathname.startsWith('/speciali/')) return true;
+    if (pathname.endsWith('/index.html')) return true;
   }
 
   if (hostname.endsWith('970universal.com') && /^\/category\/[^/]+\/?$/.test(pathname)) {
@@ -155,6 +167,18 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     if (pathname.startsWith('/cimke/')) return true;
   }
 
+  if (hostname.endsWith('magyarnemzet.hu') && normalizedSource.includes('magyar nemzet')) {
+    if (pathname.startsWith('/cimke/')) return true;
+  }
+
+  if (hostname.endsWith('fanatik.ro') && normalizedSource.includes('fanatik')) {
+    if (pathname.startsWith('/tags/')) return true;
+    if (pathname.startsWith('/autor/')) return true;
+    if (/^\/[a-z0-9-]+\/?$/.test(trimmedPathname) && !/\d{5,}/.test(trimmedPathname)) {
+      return true;
+    }
+  }
+
   if (hostname.endsWith('zeit.de') && normalizedSource.includes('die zeit')) {
     if (trimmedPathname === '/index') {
       return true;
@@ -172,6 +196,10 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
   if (hostname.endsWith('fortune.com')) {
     if (pathname.startsWith('/tag/')) return true;
     if (pathname.startsWith('/section/')) return true;
+  }
+
+  if (hostname.endsWith('yomiuri.co.jp') && normalizedSource.includes('yomiuri')) {
+    if (pathname.startsWith('/giants/archive/')) return true;
   }
 
   if (hostname === 'blog.idnes.cz' && /^\/bg\d{8}\/?$/i.test(pathname)) {

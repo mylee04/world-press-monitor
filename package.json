@@ -93,6 +93,7 @@
   "dependencies": {
     "@upstash/redis": "^1.35.6",
     "drizzle-orm": "^0.45.1",
+    "html-entities": "^2.6.0",
     "maplibre-gl": "^4.7.1",
     "next": "15.5.12",
     "pg": "^8.16.3",

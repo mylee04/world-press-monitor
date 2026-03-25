@@ -1,35 +1,12 @@
+import { decode as decodeNamedHtmlEntities } from 'html-entities';
 import { isKnownNonArticleUrl } from '@/lib/article-url-filters';
-
-const NAMED_HTML_ENTITIES: Record<string, string> = {
-  amp: '&',
-  lt: '<',
-  gt: '>',
-  quot: '"',
-  apos: "'",
-  nbsp: ' ',
-  ndash: '–',
-  mdash: '—',
-  hellip: '…',
-  lsquo: '‘',
-  rsquo: '’',
-  ldquo: '“',
-  rdquo: '”',
-  laquo: '«',
-  raquo: '»',
-  middot: '·',
-  bull: '•',
-  copy: '©',
-  reg: '®',
-  trade: '™',
-  euro: '€',
-  pound: '£',
-  yen: '¥',
-};
 
 const GENERIC_LOW_SIGNAL_TITLE_PATTERNS: ReadonlyArray<RegExp> = [
   /^c\d+\s+\d+(?:\.html)?$/iu,
   /^art[- ]\d+(?:\.html)?$/iu,
   /^\d{6,}$/u,
+  /^[\p{L}\p{N}\s'’.-]{3,}\.html$/u,
+  /^https?%3a%2f%2f/iu,
   /^(?:news|latest|domestic|international|photo|video)$/iu,
 ];
 
@@ -41,38 +18,37 @@ const SOURCE_SPECIFIC_LOW_SIGNAL_TITLE_PATTERNS: ReadonlyArray<{
   { source: /abema times/i, title: /^(?:full|news|anime)$/iu },
   { source: /tanjug/i, title: /^vest$/iu },
   { source: /die zeit/i, title: /^index$/iu },
+  { source: /censor\.net/i, title: /^[\p{L}\p{N}\s-]{1,24}$/u },
+  { source: /parapolitika/i, title: /^[\p{Ll}\p{N}-]{4,60}$/u },
 ];
 
 const SOURCE_SPECIFIC_SLUG_TITLE_SOURCES: ReadonlyArray<RegExp> = [
+  /24ur/i,
+  /acento/i,
+  /emol/i,
+  /fanatik/i,
+  /frapp/i,
   /informer/i,
+  /magyar nemzet/i,
+  /nexo jornal/i,
+  /nin - news sitemap/i,
   /republika/i,
   /tanjug/i,
+  /tv3 lithuania|tv3\.lt/i,
+  /tv midtvest/i,
+  /deník|denik/i,
   /milenio/i,
   /aftonbladet/i,
   /die zeit/i,
   /svenska dagbladet|svd/i,
   /axios/i,
+  /parapolitika/i,
+  /censor\.net/i,
+  /nordjyske/i,
 ];
 
 function decodeHtmlEntitiesOnce(value: string): string {
-  return (value || '').replace(/&(#x?[0-9a-f]+|[a-z][a-z0-9]+);/gi, (match, entity) => {
-    if (!entity) return match;
-    if (entity.startsWith('#')) {
-      const isHex = entity[1]?.toLowerCase() === 'x';
-      const rawCodePoint = isHex ? entity.slice(2) : entity.slice(1);
-      const codePoint = Number.parseInt(rawCodePoint, isHex ? 16 : 10);
-      if (!Number.isFinite(codePoint) || codePoint <= 0 || codePoint > 0x10ffff) {
-        return match;
-      }
-      try {
-        return String.fromCodePoint(codePoint);
-      } catch {
-        return match;
-      }
-    }
-
-    return NAMED_HTML_ENTITIES[entity.toLowerCase()] ?? match;
-  });
+  return decodeNamedHtmlEntities(value || '');
 }
 
 export function decodeHtmlEntities(value: string): string {

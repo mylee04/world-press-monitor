@@ -40,6 +40,22 @@ const APPROXIMATE_LOW_SIGNAL_WHERE = `
   )
 `;
 
+function maybeDecodeUrl(value: string): string {
+  const raw = (value || '').trim();
+  if (!raw) return raw;
+  if (/^http:\/\/(?:www\.)?emol\.com\//i.test(raw)) {
+    return raw.replace(/^http:\/\//i, 'https://');
+  }
+  if (/^https?%3a%2f%2f/i.test(raw)) {
+    try {
+      return decodeURIComponent(raw);
+    } catch {
+      return raw;
+    }
+  }
+  return raw;
+}
+
 function parseArgValue(flag: string): string | null {
   const inline = process.argv.find((token) => token.startsWith(`${flag}=`));
   if (inline) return inline.slice(flag.length + 1).trim() || null;
@@ -66,15 +82,22 @@ function hasFlag(flag: string): boolean {
 }
 
 async function recoverTitle(row: Row, timeoutMs: number, attempts: number): Promise<RepairResult | null> {
-  if (!row.url || isKnownNonArticleUrl(row.source || '', row.url)) {
+  const repairUrl = maybeDecodeUrl(row.url || '');
+  const fallbackTitle = normalizeReadableArticleTitle(
+    row.title_original || '',
+    repairUrl,
+    row.source || ''
+  );
+
+  if (!repairUrl || isKnownNonArticleUrl(row.source || '', repairUrl)) {
     return null;
   }
-  if (!looksLikeLowSignalArticleTitle(row.title_original || '', row.source || '', row.url || '')) {
+  if (!looksLikeLowSignalArticleTitle(row.title_original || '', row.source || '', repairUrl)) {
     return null;
   }
 
   try {
-    const response = await fetchWithRetry(row.url, {
+    const response = await fetchWithRetry(repairUrl, {
       timeoutMs,
       attempts,
       fetchOptions: {
@@ -89,26 +112,62 @@ async function recoverTitle(row: Row, timeoutMs: number, attempts: number): Prom
         redirect: 'follow',
       },
     });
-    if (!response.ok) return null;
+    if (!response.ok) {
+      if (fallbackTitle && fallbackTitle !== (row.title_original || '').trim()) {
+        return {
+          externalId: row.external_id,
+          source: row.source,
+          url: row.url,
+          previousTitle: row.title_original,
+          recoveredTitle: fallbackTitle,
+        };
+      }
+      return null;
+    }
     const contentType = (response.headers.get('content-type') || '').toLowerCase();
-    if (contentType && !contentType.includes('html') && !contentType.includes('xml')) return null;
-    const html = (await readResponseText(response, response.url || row.url)).text;
+    if (contentType && !contentType.includes('html') && !contentType.includes('xml')) {
+      if (fallbackTitle && fallbackTitle !== (row.title_original || '').trim()) {
+        return {
+          externalId: row.external_id,
+          source: row.source,
+          url: row.url,
+          previousTitle: row.title_original,
+          recoveredTitle: fallbackTitle,
+        };
+      }
+      return null;
+    }
+    const finalUrl = response.url || repairUrl;
+    const html = (await readResponseText(response, finalUrl)).text;
     const recoveredTitle = normalizeReadableArticleTitle(
       extractArticlePageTitle(html),
-      response.url || row.url,
+      finalUrl,
       row.source || ''
     );
-    if (!recoveredTitle) return null;
-    if (looksLikeLowSignalArticleTitle(recoveredTitle, row.source || '', response.url || row.url)) return null;
-    if (recoveredTitle === (row.title_original || '').trim()) return null;
+    const finalTitle =
+      recoveredTitle && !looksLikeLowSignalArticleTitle(recoveredTitle, row.source || '', finalUrl)
+        ? recoveredTitle
+        : fallbackTitle;
+    if (!finalTitle) return null;
+    if (looksLikeLowSignalArticleTitle(finalTitle, row.source || '', finalUrl)) return null;
+    if (finalTitle === (row.title_original || '').trim()) return null;
     return {
       externalId: row.external_id,
       source: row.source,
       url: row.url,
       previousTitle: row.title_original,
-      recoveredTitle,
+      recoveredTitle: finalTitle,
     };
   } catch {
+    if (fallbackTitle && fallbackTitle !== (row.title_original || '').trim()) {
+      return {
+        externalId: row.external_id,
+        source: row.source,
+        url: row.url,
+        previousTitle: row.title_original,
+        recoveredTitle: fallbackTitle,
+      };
+    }
     return null;
   }
 }
