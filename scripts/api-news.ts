@@ -2,9 +2,9 @@ import {
   readNewsArticlesForApi,
   readNewsApiFilters,
   readNewsDashboardSummary,
-  checkNewsDatabaseHealth,
   type NewsApiItem
-} from '@/lib/ingestion-store';
+} from '@/lib/news-api-store';
+import { checkNewsDatabaseHealth } from '@/lib/ingestion-store';
 import type {
   NewsApiDashboardSummaryResponse,
   NewsApiFiltersResponse,

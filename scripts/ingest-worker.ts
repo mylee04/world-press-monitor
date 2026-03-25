@@ -1,5 +1,5 @@
 import { spawnSync } from 'node:child_process';
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 import { lookup } from 'node:dns/promises';
 import { isIP } from 'node:net';
 import { resolve } from 'node:path';
@@ -21,6 +21,15 @@ import { normalizeSourceCategories } from '../lib/article-taxonomy';
 import { classifySection, classifySectionByKeyword } from '../lib/keyword-classifier';
 import { inferGeoFromTitle } from '../lib/geo';
 import { buildFeedStableId } from '../lib/pipeline';
+import {
+  buildMethodStats,
+  ensureWorkerAuditsDir,
+  filterItemsForPersistence,
+  formatPercent,
+  pickOutletChunk,
+  writeWorkerState,
+  type BackfillWindow,
+} from './ingest-worker-support';
 import {
   readFailingEndpointBackoff,
   readIngestionFeedWatermarks,
@@ -171,11 +180,6 @@ type AtlasCatalog = {
   countries: AtlasCountry[];
 };
 
-type WorkerState = {
-  offset: number;
-  updatedAt: string;
-};
-
 type EndpointRun = {
   outlet: OutletFeed;
   method: 'rss' | 'sitemap';
@@ -215,7 +219,7 @@ function annotateWorldLatam(item: NewsItem): NewsItem {
 }
 
 function ensureAuditsDir(): void {
-  mkdirSync(resolve(process.cwd(), 'audits'), { recursive: true });
+  ensureWorkerAuditsDir(process.cwd());
 }
 
 function normalizeCountryName(country: string): string {
@@ -646,13 +650,6 @@ type EndpointMethod = 'rss' | 'sitemap';
 type MethodFilter = {
   display: EndpointMethod[];
   allowed: Set<EndpointMethod>;
-};
-
-type BackfillWindow = {
-  from: string;
-  to: string;
-  fromMs: number;
-  toExclusiveMs: number;
 };
 
 function parseCountryFilter(argv: string[], envValue: string | undefined): CountryFilter | null {
@@ -2366,73 +2363,6 @@ async function fetchSitemapCandidate(
     };
   }
 }
-function readState(totalOutlets: number): WorkerState {
-  try {
-    const raw = readFileSync(STATE_FILE, 'utf8');
-    const json = JSON.parse(raw) as WorkerState;
-    const offset = Number.isFinite(json.offset) ? Math.max(0, Math.floor(json.offset)) : 0;
-    return {
-      offset: totalOutlets > 0 ? offset % totalOutlets : 0,
-      updatedAt: json.updatedAt || new Date(0).toISOString(),
-    };
-  } catch {
-    return { offset: 0, updatedAt: new Date(0).toISOString() };
-  }
-}
-
-function writeState(state: WorkerState): void {
-  ensureAuditsDir();
-  writeFileSync(STATE_FILE, JSON.stringify(state, null, 2), 'utf8');
-}
-
-function pickOutletChunk(all: OutletFeed[], chunkSize: number): { selected: OutletFeed[]; nextOffset: number; offset: number } {
-  if (all.length === 0) return { selected: [], nextOffset: 0, offset: 0 };
-  const state = readState(all.length);
-  if (chunkSize >= all.length) {
-    return { selected: all, nextOffset: 0, offset: 0 };
-  }
-  const offset = state.offset;
-  const selected = Array.from({ length: chunkSize }, (_, i) => all[(offset + i) % all.length]);
-  const nextOffset = (offset + selected.length) % all.length;
-  return { selected, nextOffset, offset };
-}
-
-function filterItemsByWatermark(
-  items: NewsItem[],
-  lastPublicationAt: string | null,
-  nowMs: number
-): NewsItem[] {
-  const parsedLastPublicationAt = parsePublishedAtMs(lastPublicationAt || '');
-  const watermarkCutoff = parsedLastPublicationAt == null ? null : parsedLastPublicationAt;
-  const ageCutoff = nowMs - INGEST_MAX_ARTICLE_AGE_MS;
-  const finalCutoff = watermarkCutoff === null ? ageCutoff : Math.max(watermarkCutoff, ageCutoff);
-  return items.filter((item) => {
-    const publishedAt = parsePublishedAtMs(item.publishedAt);
-    if (publishedAt === null) return true;
-    return publishedAt > finalCutoff;
-  });
-}
-
-function filterItemsByBackfillWindow(items: NewsItem[], window: BackfillWindow | null): NewsItem[] {
-  if (!window) return items;
-  return items.filter((item) => {
-    const publishedAt = parsePublishedAtMs(item.publishedAt);
-    if (publishedAt === null) return false;
-    return publishedAt >= window.fromMs && publishedAt < window.toExclusiveMs;
-  });
-}
-
-function filterItemsForPersistence(
-  items: NewsItem[],
-  lastPublicationAt: string | null,
-  nowMs: number
-): NewsItem[] {
-  const watermarkFiltered = BACKFILL_IGNORE_WATERMARK
-    ? items
-    : filterItemsByWatermark(items, lastPublicationAt, nowMs);
-  return filterItemsByBackfillWindow(watermarkFiltered, BACKFILL_WINDOW);
-}
-
 async function runOnce(): Promise<void> {
   const started = Date.now();
   ensureAuditsDir();
@@ -2442,7 +2372,7 @@ async function runOnce(): Promise<void> {
 
   const allOutlets = loadAtlasOutlets();
   const countryFilteredOutlets = allOutlets.filter((outlet) => countryMatchesFilter(outlet.country, COUNTRY_FILTER));
-  const { selected, nextOffset, offset } = pickOutletChunk(countryFilteredOutlets, OUTLET_CHUNK_SIZE);
+  const { selected, nextOffset, offset } = pickOutletChunk(countryFilteredOutlets, OUTLET_CHUNK_SIZE, STATE_FILE);
   const endpointLookup = new Map<string, EndpointRun>();
   const allEndpoints: EndpointRun[] = selected.flatMap((outlet) => {
     const runs: EndpointRun[] = [];
@@ -2557,7 +2487,18 @@ async function runOnce(): Promise<void> {
       },
     });
     const lastPublicationAt = watermarks.get(endpointKey) || null;
-    return { ...result, items: filterItemsForPersistence(result.items, lastPublicationAt, nowMs) };
+    return {
+      ...result,
+      items: filterItemsForPersistence({
+        items: result.items,
+        lastPublicationAt,
+        nowMs,
+        backfillWindow: BACKFILL_WINDOW,
+        ignoreWatermark: BACKFILL_IGNORE_WATERMARK,
+        maxArticleAgeMs: INGEST_MAX_ARTICLE_AGE_MS,
+        parsePublishedAtMs,
+      }),
+    };
   });
 
   const failedRssResultByOutlet = new Map<string, EndpointResult>();
@@ -2669,7 +2610,18 @@ async function runOnce(): Promise<void> {
     if (!result.run.attempted) {
       return { ...result, items: [] };
     }
-    return { ...result, items: filterItemsForPersistence(result.items, lastPublicationAt, nowMs) };
+    return {
+      ...result,
+      items: filterItemsForPersistence({
+        items: result.items,
+        lastPublicationAt,
+        nowMs,
+        backfillWindow: BACKFILL_WINDOW,
+        ignoreWatermark: BACKFILL_IGNORE_WATERMARK,
+        maxArticleAgeMs: INGEST_MAX_ARTICLE_AGE_MS,
+        parsePublishedAtMs,
+      }),
+    };
   });
 
   const results = [...rssResults, ...sitemapResults];
@@ -2688,25 +2640,7 @@ async function runOnce(): Promise<void> {
 
   const diagnostics = results.map((r) => r.run);
 
-  const methodStats = diagnostics.reduce(
-    (acc, diagnostic) => {
-      if (!diagnostic.attempted) return acc;
-      const method = diagnostic.method as 'rss' | 'sitemap';
-      const bucket = acc[method];
-      bucket.attempted += 1;
-      if (diagnostic.ok) {
-        bucket.ok += 1;
-      } else {
-        bucket.fail += 1;
-      }
-      return acc;
-    },
-    {
-      rss: { attempted: 0, ok: 0, fail: 0 },
-      sitemap: { attempted: 0, ok: 0, fail: 0 },
-    } as Record<'rss' | 'sitemap', { attempted: number; ok: number; fail: number }>,
-  );
-  const percent = (n: number, d: number): string => (d === 0 ? '0.00' : ((n / d) * 100).toFixed(2));
+  const methodStats = buildMethodStats(diagnostics);
   const sitemapResultByOutlet = new Map<string, EndpointResult>();
   for (const result of results) {
     if (result.run.method === 'sitemap') {
@@ -2825,7 +2759,7 @@ async function runOnce(): Promise<void> {
 
   writeFileSync(SUMMARY_FILE, JSON.stringify(summary, null, 2), 'utf8');
   if (!BACKFILL_WINDOW) {
-    writeState({ offset: nextOffset, updatedAt: summary.generatedAt });
+    writeWorkerState(STATE_FILE, { offset: nextOffset, updatedAt: summary.generatedAt }, process.cwd());
   }
   console.log(
     `[ingest-worker] outlets=${selected.length}/${countryFilteredOutlets.length}/${allOutlets.length} endpoints=${attempted} ok=${okEndpoints} failed=${failedEndpoints} ` +
@@ -2834,8 +2768,8 @@ async function runOnce(): Promise<void> {
     `explicit_sitemap_parallel=${ENABLE_EXPLICIT_SITEMAP_PARALLEL ? 'on' : 'off'} ` +
     `backoff_skipped_total=${failingKeys.size} backoff_skipped=[rss=${fallbackSummary.rssBackoffSkipped}, sitemap=${fallbackSummary.sitemapBackoffSkipped}] ` +
     `sitemap_policy_disabled=${fallbackSummary.sitemapPolicyDisabled} ` +
-    `method_stats= [rss attempted=${methodStats.rss.attempted}, ok=${methodStats.rss.ok}, fail=${methodStats.rss.fail}(${percent(methodStats.rss.fail, methodStats.rss.attempted)}%); ` +
-    `[sitemap attempted=${methodStats.sitemap.attempted}, ok=${methodStats.sitemap.ok}, fail=${methodStats.sitemap.fail}(${percent(methodStats.sitemap.fail, methodStats.sitemap.attempted)}%)] ` +
+    `method_stats= [rss attempted=${methodStats.rss.attempted}, ok=${methodStats.rss.ok}, fail=${methodStats.rss.fail}(${formatPercent(methodStats.rss.fail, methodStats.rss.attempted)}%); ` +
+    `[sitemap attempted=${methodStats.sitemap.attempted}, ok=${methodStats.sitemap.ok}, fail=${methodStats.sitemap.fail}(${formatPercent(methodStats.sitemap.fail, methodStats.sitemap.attempted)}%)] ` +
     `sitemapFallback=${fallbackSummary.rssSitemapFallbackSuccess}/${fallbackSummary.rssSitemapFallbackAttempts} skipped=${fallbackSummary.rssSitemapFallbackSkipped} unique=${merged.length} persisted=${persistedNewsArticles.persisted} newsArticles=${persistedNewsArticles.persisted} elapsedMs=${summary.elapsedMs}`
     + ` missingPublishedAtPersisted=${persistedMissingPublishedAt.persisted}`
   );
