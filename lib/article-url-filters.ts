@@ -114,10 +114,14 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
   if (hostname.endsWith('adnkronos.com') && normalizedSource.includes('adnkronos')) {
     if (trimmedPathname === '/') return true;
     if (pathname.startsWith('/speciali/')) return true;
+    if (pathname.startsWith('/newsletter/')) return true;
+    if (pathname.startsWith('/top/')) return true;
+    if (pathname.startsWith('/showcase/')) return true;
+    if (trimmedPathname === '/milano-cortina-2026') return true;
     if (pathname.endsWith('/index.html')) return true;
   }
 
-  if (hostname.endsWith('970universal.com') && /^\/category\/[^/]+\/?$/.test(pathname)) {
+  if (hostname.endsWith('970universal.com') && pathname.startsWith('/category/')) {
     return true;
   }
 
@@ -183,6 +187,12 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     if (trimmedPathname === '/index') {
       return true;
     }
+    if (pathname.startsWith('/thema/')) {
+      return true;
+    }
+    if (/^\/20\d{2}\/\d{2}\/playlist\/?$/.test(pathname)) {
+      return true;
+    }
   }
 
   if (hostname.endsWith('cnnturk.com') && pathname.startsWith('/resmi-ilanlar/')) {
@@ -193,6 +203,14 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     return true;
   }
 
+  if (hostname.endsWith('carmeloportal.com') && pathname.startsWith('/temas/')) {
+    return true;
+  }
+
+  if (hostname.endsWith('20min.ch') && pathname.endsWith('/analysis')) {
+    return true;
+  }
+
   if (hostname.endsWith('fortune.com')) {
     if (pathname.startsWith('/tag/')) return true;
     if (pathname.startsWith('/section/')) return true;
@@ -200,6 +218,12 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
 
   if (hostname.endsWith('yomiuri.co.jp') && normalizedSource.includes('yomiuri')) {
     if (pathname.startsWith('/giants/archive/')) return true;
+  }
+
+  if (hostname.endsWith('nikkei.com') && normalizedSource.includes('nikkei')) {
+    if (trimmedPathname === '/') return true;
+    if (trimmedPathname === '/money/borrow') return true;
+    if (trimmedPathname === '/politics/column') return true;
   }
 
   if (hostname === 'blog.idnes.cz' && /^\/bg\d{8}\/?$/i.test(pathname)) {

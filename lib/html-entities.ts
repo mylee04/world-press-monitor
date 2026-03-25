@@ -6,6 +6,7 @@ const GENERIC_LOW_SIGNAL_TITLE_PATTERNS: ReadonlyArray<RegExp> = [
   /^art[- ]\d+(?:\.html)?$/iu,
   /^\d{6,}$/u,
   /^[\p{L}\p{N}\s'’.-]{3,}\.html$/u,
+  /^[\p{L}\p{N}_\s'’.-]{3,}\.(?:jpg|jpeg|png|gif|webp)$/iu,
   /^https?%3a%2f%2f/iu,
   /^(?:news|latest|domestic|international|photo|video)$/iu,
 ];
@@ -18,8 +19,18 @@ const SOURCE_SPECIFIC_LOW_SIGNAL_TITLE_PATTERNS: ReadonlyArray<{
   { source: /abema times/i, title: /^(?:full|news|anime)$/iu },
   { source: /tanjug/i, title: /^vest$/iu },
   { source: /die zeit/i, title: /^index$/iu },
-  { source: /censor\.net/i, title: /^[\p{L}\p{N}\s-]{1,24}$/u },
+  { source: /censor\.net/i, title: /^[\p{L}\p{N}\s-]{1,80}$/u },
   { source: /parapolitika/i, title: /^[\p{Ll}\p{N}-]{4,60}$/u },
+  { source: /tvp info/i, title: /^[\p{Ll}\p{N}\s'’.-]{4,80}$/u },
+  { source: /sapo/i, title: /^[\p{Ll}\p{N}\s'’.-]{4,80}$/u },
+  { source: /milenio/i, title: /^[\p{Ll}\p{N}\s'’.-]{4,80}$/u },
+  { source: /die zeit/i, title: /^[\p{Ll}\p{N}\s'’.-]{4,80}$/u },
+  { source: /tv2 bornholm/i, title: /^[\p{Ll}\p{N}\s'’.-]{2,80}$/u },
+  { source: /mononews/i, title: /^[\p{Ll}\p{N}\s'’.-]{4,80}$/u },
+  { source: /sports illustrated/i, title: /^[\p{Ll}\p{N}\s'’.-]{4,80}$/u },
+  { source: /south china morning post/i, title: /^[\p{Ll}\p{N}\s'’.-]{4,80}$/u },
+  { source: /le télégramme|letelegramme/i, title: /^(?:\.|[\p{Ll}\p{N}\s'’.-]{4,80})$/u },
+  { source: /9news/i, title: /^[\p{Ll}\p{N}\s'’.-]{4,80}$/u },
 ];
 
 const SOURCE_SPECIFIC_SLUG_TITLE_SOURCES: ReadonlyArray<RegExp> = [
@@ -28,14 +39,17 @@ const SOURCE_SPECIFIC_SLUG_TITLE_SOURCES: ReadonlyArray<RegExp> = [
   /emol/i,
   /fanatik/i,
   /frapp/i,
+  /blick/i,
   /informer/i,
   /magyar nemzet/i,
   /nexo jornal/i,
   /nin - news sitemap/i,
   /republika/i,
+  /sapo/i,
   /tanjug/i,
   /tv3 lithuania|tv3\.lt/i,
   /tv midtvest/i,
+  /tvp info/i,
   /deník|denik/i,
   /milenio/i,
   /aftonbladet/i,
@@ -95,7 +109,7 @@ function titleFromLink(link: string): string {
     let candidate = segments[segments.length - 1] || '';
     candidate = safeDecodeURIComponent(candidate)
       .replace(/\.[a-z0-9]{2,6}$/i, '')
-      .replace(/(?:^|[-_])nid\d+$/i, '')
+      .replace(/(?:^|[-_])(?:nid|id)\d+$/i, '')
       .replace(/[-_]+/g, ' ')
       .replace(/\s+/g, ' ')
       .trim();
