@@ -74,6 +74,12 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
   }
 
   if (hostname.endsWith('index.hu') && normalizedSource.includes('index.hu')) {
+    if (trimmedPathname === '/') {
+      return true;
+    }
+    if (pathname.startsWith('/api/')) {
+      return true;
+    }
     if (!/\/20\d{2}\//.test(pathname)) {
       return true;
     }
@@ -114,8 +120,45 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     }
   }
 
+  if (hostname.endsWith('24horas.cl') && normalizedSource.includes('24horas')) {
+    if (
+      [
+        '/internacional',
+        '/envivo',
+        '/noticiarios',
+        '/programas',
+        '/regiones',
+        '/tendencias',
+        '/el-tiempo',
+        '/deportes',
+        '/coronavirus',
+        '/proceso-constituyente',
+        '/data',
+        '/senal-24hplay',
+        '/deportes-24horas',
+      ].includes(trimmedPathname)
+    ) {
+      return true;
+    }
+
+    if (trimmedPathname === '/deportes/rallymobil') return true;
+    if (trimmedPathname === '/informe-especial/capitulos') return true;
+    if (trimmedPathname === '/informe-especial/prueba-linea-de-tiempo-informe-especial') return true;
+    if (pathname.startsWith('/24horas/site/edic/base/port/')) return true;
+  }
+
   if (hostname.endsWith('ledevoir.com') && normalizedSource.includes('le devoir')) {
-    if (/^\/sports\/?$/.test(pathname)) return true;
+    if (!/\/\d{5,}(?:\/|$)/.test(pathname)) return true;
+  }
+
+  if (hostname.endsWith('mandiner.hu') && normalizedSource.includes('mandiner')) {
+    if (pathname.startsWith('/cimke/')) return true;
+  }
+
+  if (hostname.endsWith('zeit.de') && normalizedSource.includes('die zeit')) {
+    if (trimmedPathname === '/index') {
+      return true;
+    }
   }
 
   if (hostname.endsWith('cnnturk.com') && pathname.startsWith('/resmi-ilanlar/')) {

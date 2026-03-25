@@ -25,9 +25,20 @@ type RepairResult = {
 
 const DEFAULT_FETCH_TIMEOUT_MS = 12_000;
 const DEFAULT_CONCURRENCY = 4;
+const DEFAULT_ATTEMPTS = 1;
 const DEFAULT_USER_AGENT =
   process.env.INGEST_USER_AGENT
   || 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36';
+const APPROXIMATE_LOW_SIGNAL_WHERE = `
+  (
+    coalesce(title_original, '') = ''
+    or coalesce(title_original, '') ~ '^[0-9]{6,}$'
+    or coalesce(title_original, '') ~ '^[[:lower:][:space:]''’.-]{1,40}$'
+    or coalesce(title_original, '') = coalesce(url, '')
+    or coalesce(title_original, '') ilike 'http%'
+    or coalesce(title_original, '') ~* '^(news|latest|domestic|international|photo|video|full|anime|comic|voiceactor|vest)$'
+  )
+`;
 
 function parseArgValue(flag: string): string | null {
   const inline = process.argv.find((token) => token.startsWith(`${flag}=`));
@@ -54,7 +65,7 @@ function hasFlag(flag: string): boolean {
   return process.argv.includes(flag);
 }
 
-async function recoverTitle(row: Row, timeoutMs: number): Promise<RepairResult | null> {
+async function recoverTitle(row: Row, timeoutMs: number, attempts: number): Promise<RepairResult | null> {
   if (!row.url || isKnownNonArticleUrl(row.source || '', row.url)) {
     return null;
   }
@@ -65,7 +76,7 @@ async function recoverTitle(row: Row, timeoutMs: number): Promise<RepairResult |
   try {
     const response = await fetchWithRetry(row.url, {
       timeoutMs,
-      attempts: 2,
+      attempts,
       fetchOptions: {
         headers: {
           'User-Agent': DEFAULT_USER_AGENT,
@@ -110,6 +121,7 @@ async function main(): Promise<void> {
   const limit = parseIntArg('--limit', 1000, 1, 20_000);
   const concurrency = parseIntArg('--concurrency', DEFAULT_CONCURRENCY, 1, 24);
   const timeoutMs = parseIntArg('--timeout-ms', DEFAULT_FETCH_TIMEOUT_MS, 1000, 60_000);
+  const attempts = parseIntArg('--attempts', DEFAULT_ATTEMPTS, 1, 5);
   const sourcePrefixes = parseCsvArg('--source-prefix');
   const apply = hasFlag('--apply');
   const db = new Pool({ connectionString: databaseUrl });
@@ -118,6 +130,7 @@ async function main(): Promise<void> {
     const whereClauses = [
       `publication_datetime >= now() - ($1::int * interval '1 hour')`,
       `publication_datetime <= now() + interval '30 minutes'`,
+      APPROXIMATE_LOW_SIGNAL_WHERE,
     ];
     const values: unknown[] = [hours];
     if (sourcePrefixes.length > 0) {
@@ -143,7 +156,7 @@ async function main(): Promise<void> {
         && looksLikeLowSignalArticleTitle(row.title_original || '', row.source || '', row.url || '')
     );
 
-    const repairs = (await runWithConcurrency(candidates, concurrency, (row) => recoverTitle(row, timeoutMs)))
+    const repairs = (await runWithConcurrency(candidates, concurrency, (row) => recoverTitle(row, timeoutMs, attempts)))
       .filter((row): row is RepairResult => row !== null);
 
     if (!apply) {
@@ -152,6 +165,7 @@ async function main(): Promise<void> {
         hours,
         limit,
         concurrency,
+        attempts,
         sourcePrefixes,
         scanned: result.rows.length,
         candidates: candidates.length,
@@ -181,6 +195,7 @@ async function main(): Promise<void> {
       hours,
       limit,
       concurrency,
+      attempts,
       sourcePrefixes,
       scanned: result.rows.length,
       candidates: candidates.length,

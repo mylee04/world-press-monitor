@@ -19,6 +19,22 @@ export type DecodedResponseBody = {
   decodeFailed: boolean;
 };
 
+const CHARSET_ALIASES: Record<string, string> = {
+  'utf8': 'utf-8',
+  'utf-8': 'utf-8',
+  'us-ascii': 'utf-8',
+  'ascii': 'utf-8',
+  'shift_jis': 'shift_jis',
+  'shift-jis': 'shift_jis',
+  'sjis': 'shift_jis',
+  'windows-31j': 'shift_jis',
+  'ms932': 'shift_jis',
+  'cp932': 'shift_jis',
+  'x-sjis': 'shift_jis',
+  'euc-jp': 'euc-jp',
+  'iso-2022-jp': 'iso-2022-jp',
+};
+
 export function isRetryableStatus(status: number): boolean {
   return status === 429 || status === 503 || status === 504;
 }
@@ -71,6 +87,49 @@ function isLikelyGzipPayload(response: Response, bytes: Uint8Array, url = respon
   );
 }
 
+function normalizeCharsetLabel(charset: string | null | undefined): string | null {
+  const trimmed = (charset || '').trim().replace(/^["']|["']$/g, '').toLowerCase();
+  if (!trimmed) return null;
+  return CHARSET_ALIASES[trimmed] || trimmed;
+}
+
+function extractCharsetFromContentType(contentType: string | null): string | null {
+  const value = (contentType || '').trim();
+  if (!value) return null;
+  const match = value.match(/charset\s*=\s*("?)([^;"'\s]+)\1/i);
+  return normalizeCharsetLabel(match?.[2]);
+}
+
+function sniffHtmlCharset(bytes: Uint8Array): string | null {
+  if (bytes.length === 0) return null;
+  const head = Buffer.from(bytes.subarray(0, Math.min(bytes.length, 4096))).toString('latin1');
+  const direct = head.match(/<meta[^>]+charset\s*=\s*["']?\s*([^"'>\s]+)/i);
+  if (direct?.[1]) return normalizeCharsetLabel(direct[1]);
+  const equiv = head.match(/<meta[^>]+content\s*=\s*["'][^"']*charset\s*=\s*([^"'>\s;]+)/i);
+  if (equiv?.[1]) return normalizeCharsetLabel(equiv[1]);
+  return null;
+}
+
+function decodeWithCharset(bytes: Uint8Array, charset: string): DecodedResponseBody | null {
+  try {
+    return {
+      text: new TextDecoder(charset, { fatal: true }).decode(bytes),
+      byteLength: bytes.byteLength,
+      decodeFailed: false,
+    };
+  } catch {
+    try {
+      return {
+        text: new TextDecoder(charset).decode(bytes),
+        byteLength: bytes.byteLength,
+        decodeFailed: true,
+      };
+    } catch {
+      return null;
+    }
+  }
+}
+
 function decodeUtf8(bytes: Uint8Array): DecodedResponseBody {
   const byteLength = bytes.byteLength;
   try {
@@ -88,15 +147,30 @@ function decodeUtf8(bytes: Uint8Array): DecodedResponseBody {
   }
 }
 
+function decodeResponseBytes(response: Response, bytes: Uint8Array): DecodedResponseBody {
+  const charsets = [
+    extractCharsetFromContentType(response.headers.get('content-type')),
+    sniffHtmlCharset(bytes),
+  ].filter((value, index, array): value is string => Boolean(value) && array.indexOf(value) === index);
+
+  for (const charset of charsets) {
+    if (charset === 'utf-8') break;
+    const decoded = decodeWithCharset(bytes, charset);
+    if (decoded) return decoded;
+  }
+
+  return decodeUtf8(bytes);
+}
+
 export async function readResponseText(response: Response, url = response.url || ''): Promise<DecodedResponseBody> {
   const bytes = new Uint8Array(await response.arrayBuffer());
   if (!isLikelyGzipPayload(response, bytes, url)) {
-    return decodeUtf8(bytes);
+    return decodeResponseBytes(response, bytes);
   }
 
   try {
-    return decodeUtf8(new Uint8Array(gunzipSync(Buffer.from(bytes))));
+    return decodeResponseBytes(response, new Uint8Array(gunzipSync(Buffer.from(bytes))));
   } catch {
-    return decodeUtf8(bytes);
+    return decodeResponseBytes(response, bytes);
   }
 }

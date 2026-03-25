@@ -39,6 +39,19 @@ const SOURCE_SPECIFIC_LOW_SIGNAL_TITLE_PATTERNS: ReadonlyArray<{
 }> = [
   { source: /oricon/i, title: /^(?:full|news|anime|comic|voiceactor)$/iu },
   { source: /abema times/i, title: /^(?:full|news|anime)$/iu },
+  { source: /tanjug/i, title: /^vest$/iu },
+  { source: /die zeit/i, title: /^index$/iu },
+];
+
+const SOURCE_SPECIFIC_SLUG_TITLE_SOURCES: ReadonlyArray<RegExp> = [
+  /informer/i,
+  /republika/i,
+  /tanjug/i,
+  /milenio/i,
+  /aftonbladet/i,
+  /die zeit/i,
+  /svenska dagbladet|svd/i,
+  /axios/i,
 ];
 
 function decodeHtmlEntitiesOnce(value: string): string {
@@ -120,6 +133,7 @@ function titleFromLink(link: string): string {
 export function looksLikeLowSignalArticleTitle(title: string, source = '', link = ''): boolean {
   const normalizedTitle = normalizeHtmlText(title);
   const normalizedLink = decodeHtmlEntities(link || '');
+  const fallbackTitle = titleFromLink(normalizedLink);
   if (!normalizedTitle) return true;
   if (isKnownNonArticleUrl(source, normalizedLink)) return true;
   if (normalizedTitle === normalizedLink || /^https?:\/\//i.test(normalizedTitle)) return true;
@@ -131,6 +145,14 @@ export function looksLikeLowSignalArticleTitle(title: string, source = '', link 
     }
   }
   if (GENERIC_LOW_SIGNAL_TITLE_PATTERNS.some((pattern) => pattern.test(normalizedTitle))) return true;
+  if (
+    fallbackTitle
+    && SOURCE_SPECIFIC_SLUG_TITLE_SOURCES.some((pattern) => pattern.test(source))
+    && normalizedTitle.toLowerCase() === fallbackTitle.toLowerCase()
+    && /^[\p{Ll}\p{N}][\p{Ll}\p{N}\s'’.-]{8,}$/u.test(normalizedTitle)
+  ) {
+    return true;
+  }
   return SOURCE_SPECIFIC_LOW_SIGNAL_TITLE_PATTERNS.some(
     ({ source: sourcePattern, title: titlePattern }) =>
       sourcePattern.test(source) && titlePattern.test(normalizedTitle)
