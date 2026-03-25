@@ -1,7 +1,12 @@
 import { Pool } from 'pg';
 import { createHash } from 'node:crypto';
-import type { NewsItem } from '@/lib/types';
-import type { NewsSection } from '@/lib/types';
+import type {
+  NewsItem,
+  NewsSection,
+  NewsTitleQuality,
+  NewsTitleRepairSource,
+  NewsTitleRepairStatus,
+} from '@/lib/types';
 import {
   decodeHtmlEntities,
   looksLikeLowSignalArticleTitle,
@@ -9,6 +14,12 @@ import {
   normalizeHtmlText,
   normalizeReadableArticleTitle,
 } from '@/lib/html-entities';
+import {
+  assessNewsTitle,
+  newsTitleQualityRank,
+  normalizeNewsTitleQuality,
+  normalizeNewsTitleRepairStatus,
+} from '@/lib/title-quality';
 import { normalizeLinkForId } from '@/lib/pipeline';
 import {
   buildArticleTaxonomy,
@@ -97,6 +108,7 @@ const VALID_NEWS_SECTION_LIST: readonly NewsSection[] = [
   'others',
 ];
 const VALID_NEWS_SECTIONS: ReadonlySet<NewsSection> = new Set<NewsSection>(VALID_NEWS_SECTION_LIST);
+const CUSTOMER_VISIBLE_TITLE_QUALITY_SQL = `coalesce(nullif(trim(title_quality), ''), 'ok') <> 'suspect'`;
 
 type DashboardSummaryCacheEntry = {
   expiresAt: number;
@@ -104,6 +116,10 @@ type DashboardSummaryCacheEntry = {
 };
 
 let dashboardSummaryCache = new Map<string, DashboardSummaryCacheEntry>();
+
+function buildCustomerVisibleTitleQualitySql(columnExpression: string): string {
+  return `coalesce(nullif(trim(${columnExpression}), ''), 'ok') <> 'suspect'`;
+}
 
 function truncateText(value: string, maxChars: number): string {
   const normalized = (value || '').replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, ' ');
@@ -322,6 +338,13 @@ create table if not exists news_articles (
       stable_id text null,
       publication_datetime timestamptz not null,
       title_original text not null,
+      title_quality text not null default 'ok',
+      title_quality_reason text null,
+      title_quality_checked_at timestamptz null,
+      title_repair_status text not null default 'not_needed',
+      title_repair_source text null,
+      title_repair_attempted_at timestamptz null,
+      title_repaired_at timestamptz null,
       snippet_original text null,
       country text null,
       created_at timestamptz not null default now(),
@@ -341,6 +364,13 @@ create table if not exists news_articles (
     alter table news_articles add column if not exists updated_at timestamptz not null default now();
     alter table news_articles add column if not exists feed_categories text[] not null default '{}';
     alter table news_articles add column if not exists stable_id text null;
+    alter table news_articles add column if not exists title_quality text not null default 'ok';
+    alter table news_articles add column if not exists title_quality_reason text null;
+    alter table news_articles add column if not exists title_quality_checked_at timestamptz null;
+    alter table news_articles add column if not exists title_repair_status text not null default 'not_needed';
+    alter table news_articles add column if not exists title_repair_source text null;
+    alter table news_articles add column if not exists title_repair_attempted_at timestamptz null;
+    alter table news_articles add column if not exists title_repaired_at timestamptz null;
     alter table news_articles add column if not exists primary_section text null;
     alter table news_articles add column if not exists sections_normalized text[] not null default '{}';
     alter table news_articles add column if not exists primary_topic text null;
@@ -357,6 +387,8 @@ create table if not exists news_articles (
     create index if not exists idx_news_articles_section on news_articles(section);
     create index if not exists idx_news_articles_primary_section on news_articles(primary_section);
     create index if not exists idx_news_articles_country on news_articles(country);
+    create index if not exists idx_news_articles_title_quality on news_articles(title_quality);
+    create index if not exists idx_news_articles_title_repair_status on news_articles(title_repair_status);
     create index if not exists idx_news_articles_primary_topic on news_articles(primary_topic);
     create index if not exists idx_news_articles_topics on news_articles using gin(topics);
     create index if not exists idx_news_articles_sections_normalized on news_articles using gin(sections_normalized);
@@ -1044,6 +1076,7 @@ export async function readNewsArticlesForApi(options: {
 
   params.push(newsApiMaxFutureMinutes);
   whereClauses.push(`and e.publication_datetime <= now() + ($${params.length}::int * interval '1 minute')`);
+  whereClauses.push(`and ${buildCustomerVisibleTitleQualitySql('e.title_quality')}`);
 
   if (sourceNames.length > 0) {
     params.push(sourceNames);
@@ -1253,6 +1286,7 @@ async function readDashboardTopicGroupsForWindow(
       from news_articles
       where publication_datetime >= now() - ($1::int * interval '1 day')
         and publication_datetime <= now() + ($2::int * interval '1 minute')
+        and ${CUSTOMER_VISIBLE_TITLE_QUALITY_SQL}
     ),
     section_counts as (
       select
@@ -1339,6 +1373,7 @@ async function readDashboardSourceCategoryCoverageForWindow(
         from news_articles
         where publication_datetime >= now() - ($1::int * interval '1 day')
           and publication_datetime <= now() + ($2::int * interval '1 minute')
+          and ${CUSTOMER_VISIBLE_TITLE_QUALITY_SQL}
       ),
       expanded as (
         select unnest(feed_categories) as category
@@ -1360,6 +1395,7 @@ async function readDashboardSourceCategoryCoverageForWindow(
         where publication_datetime >= now() - ($1::int * interval '1 day')
           and publication_datetime <= now() + ($2::int * interval '1 minute')
           and cardinality(feed_categories) > 0
+          and ${CUSTOMER_VISIBLE_TITLE_QUALITY_SQL}
       )
       select
         category,
@@ -1468,6 +1504,7 @@ export async function readNewsDashboardSummary(options?: {
       from news_articles
       where publication_datetime >= now() - ($1::int * interval '1 day')
         and publication_datetime <= now() + ($3::int * interval '1 minute')
+        and ${CUSTOMER_VISIBLE_TITLE_QUALITY_SQL}
       `,
       [windowDays, latestHours, maxFutureMinutes]
     ),
@@ -1490,6 +1527,7 @@ export async function readNewsDashboardSummary(options?: {
       from news_articles
       where publication_datetime >= now() - ($1::int * interval '1 day')
         and publication_datetime <= now() + ($2::int * interval '1 minute')
+        and ${CUSTOMER_VISIBLE_TITLE_QUALITY_SQL}
       group by 1
       `,
       [windowDays, maxFutureMinutes]
@@ -1505,6 +1543,7 @@ export async function readNewsDashboardSummary(options?: {
         from news_articles
         where publication_datetime >= now() - ($1::int * interval '1 day')
           and publication_datetime <= now() + ($2::int * interval '1 minute')
+          and ${CUSTOMER_VISIBLE_TITLE_QUALITY_SQL}
       ),
       dates as (
         select distinct (normalized_publication_datetime at time zone 'UTC')::date as date
@@ -1531,6 +1570,7 @@ export async function readNewsDashboardSummary(options?: {
         from news_articles
         where publication_datetime >= now() - ($1::int * interval '1 day')
           and publication_datetime <= now() + ($2::int * interval '1 minute')
+          and ${CUSTOMER_VISIBLE_TITLE_QUALITY_SQL}
       )
       select
         (normalized_publication_datetime at time zone 'UTC')::date::text as date,
@@ -1575,6 +1615,7 @@ export async function readNewsDashboardSummary(options?: {
           from news_articles
           where publication_datetime >= now() - ($1::int * interval '1 day')
             and publication_datetime <= now() + ($2::int * interval '1 minute')
+            and ${CUSTOMER_VISIBLE_TITLE_QUALITY_SQL}
         )
         select
           country,
@@ -1615,6 +1656,7 @@ export async function readNewsDashboardSummary(options?: {
           from news_articles
           where publication_datetime >= now() - ($1::int * interval '1 day')
             and publication_datetime <= now() + ($2::int * interval '1 minute')
+            and ${CUSTOMER_VISIBLE_TITLE_QUALITY_SQL}
         )
         select
           id,
@@ -1656,10 +1698,11 @@ export async function readNewsDashboardSummary(options?: {
             when publication_datetime > now() + ($2::int * interval '1 minute') then created_at
             else publication_datetime
           end as normalized_publication_datetime
-        from news_articles
-        where publication_datetime >= now() - ($1::int * interval '1 day')
-          and publication_datetime <= now() + ($2::int * interval '1 minute')
-      )
+          from news_articles
+          where publication_datetime >= now() - ($1::int * interval '1 day')
+            and publication_datetime <= now() + ($2::int * interval '1 minute')
+            and ${CUSTOMER_VISIBLE_TITLE_QUALITY_SQL}
+        )
       select count(*)::text as count
       from windowed
       where (normalized_publication_datetime at time zone 'UTC')::date = $3::date
@@ -1747,6 +1790,7 @@ export async function readNewsApiFilters(): Promise<NewsApiFiltersResult> {
          select distinct trim(country) as value, lower(trim(country)) as sort_key
          from news_articles
          where country is not null and trim(country) <> ''
+           and ${CUSTOMER_VISIBLE_TITLE_QUALITY_SQL}
        ) t
        order by t.sort_key`
     ),
@@ -1756,6 +1800,7 @@ export async function readNewsApiFilters(): Promise<NewsApiFiltersResult> {
          select distinct trim(language) as value, lower(trim(language)) as sort_key
          from news_articles
          where language is not null and trim(language) <> ''
+           and ${CUSTOMER_VISIBLE_TITLE_QUALITY_SQL}
        ) t
        order by t.sort_key`
     ),
@@ -1765,6 +1810,7 @@ export async function readNewsApiFilters(): Promise<NewsApiFiltersResult> {
          select distinct trim(source) as value, lower(trim(source)) as sort_key
          from news_articles
          where source is not null and trim(source) <> ''
+           and ${CUSTOMER_VISIBLE_TITLE_QUALITY_SQL}
        ) t
        order by t.sort_key`
     ),
@@ -1774,6 +1820,7 @@ export async function readNewsApiFilters(): Promise<NewsApiFiltersResult> {
          select distinct trim(section) as value, lower(trim(section)) as sort_key
          from news_articles
          where section is not null and trim(section) <> ''
+           and ${CUSTOMER_VISIBLE_TITLE_QUALITY_SQL}
        ) t
        order by t.sort_key`
     )
@@ -3201,6 +3248,13 @@ type NewsArticlePersistable = {
   stableId: string | null;
   publicationDatetime: string;
   titleOriginal: string;
+  titleQuality: NewsTitleQuality;
+  titleQualityReason: string;
+  titleQualityCheckedAt: string;
+  titleRepairStatus: NewsTitleRepairStatus;
+  titleRepairSource: NewsTitleRepairSource | null;
+  titleRepairAttemptedAt: string | null;
+  titleRepairedAt: string | null;
   snippetOriginal: string | null;
   country: string | null;
   section: string | null;
@@ -3246,6 +3300,49 @@ type ExistingArticleIdentityRow = {
   stable_id: string | null;
 };
 
+function preferPersistedArticleRow(current: NewsArticlePersistable, incoming: NewsArticlePersistable): NewsArticlePersistable {
+  const currentQualityRank = newsTitleQualityRank(current.titleQuality);
+  const incomingQualityRank = newsTitleQualityRank(incoming.titleQuality);
+  const currentPublishedAt = new Date(current.publicationDatetime).getTime();
+  const incomingPublishedAt = new Date(incoming.publicationDatetime).getTime();
+
+  const preferred =
+    incomingQualityRank > currentQualityRank
+      ? incoming
+      : incomingQualityRank < currentQualityRank
+        ? current
+        : incomingPublishedAt > currentPublishedAt
+          ? incoming
+          : current;
+  const secondary = preferred === incoming ? current : incoming;
+  const preferredIsSuspect = normalizeNewsTitleQuality(preferred.titleQuality) === 'suspect';
+  const secondaryHasBetterTitle =
+    preferredIsSuspect
+    && newsTitleQualityRank(secondary.titleQuality) > newsTitleQualityRank(preferred.titleQuality);
+
+  return {
+    ...secondary,
+    ...preferred,
+    stableId: preferred.stableId || secondary.stableId,
+    primarySection: preferred.primarySection || secondary.primarySection,
+    sectionsNormalized: [...new Set([...secondary.sectionsNormalized, ...preferred.sectionsNormalized])] as NewsSection[],
+    feedCategories: [...new Set([...secondary.feedCategories, ...preferred.feedCategories])],
+    topics: [...new Set([...secondary.topics, ...preferred.topics])],
+    snippetOriginal: preferred.snippetOriginal || secondary.snippetOriginal,
+    titleOriginal: preferredIsSuspect && secondaryHasBetterTitle ? secondary.titleOriginal : preferred.titleOriginal,
+    titleQuality: preferredIsSuspect && secondaryHasBetterTitle ? secondary.titleQuality : preferred.titleQuality,
+    titleQualityReason: preferredIsSuspect && secondaryHasBetterTitle ? secondary.titleQualityReason : preferred.titleQualityReason,
+    titleQualityCheckedAt: preferred.titleQualityCheckedAt || secondary.titleQualityCheckedAt,
+    titleRepairStatus:
+      preferredIsSuspect
+        ? normalizeNewsTitleRepairStatus(preferred.titleRepairStatus || secondary.titleRepairStatus)
+        : preferred.titleRepairStatus,
+    titleRepairSource: preferred.titleRepairSource || secondary.titleRepairSource,
+    titleRepairAttemptedAt: preferred.titleRepairAttemptedAt || secondary.titleRepairAttemptedAt,
+    titleRepairedAt: preferred.titleRepairedAt || secondary.titleRepairedAt,
+  };
+}
+
 export type NewsArticleFeedCategoryBackfill = {
   externalId: string;
   sourceCategories: string[];
@@ -3260,8 +3357,15 @@ async function toNewsArticleRow(item: NewsItem): Promise<NewsArticlePersistable 
   if (publicationMaxAgeMs > 0 && publicationTs < Date.now() - publicationMaxAgeMs) return null;
 
   const language = item.language || null;
+  const titleAssessment = assessNewsTitle({
+    title: item.title || '',
+    source: item.source || '',
+    url: decodedLink,
+    repairAttempted: Boolean(item.titleRepairAttemptedAt) || item.titleRepairStatus === 'failed' || item.titleRepairStatus === 'recovered',
+    repairSource: item.titleRepairSource || (item.titleQuality === 'recovered' ? 'article_page' : null),
+  });
   const titleOriginal = truncateText(
-    normalizeReadableArticleTitle(item.title || '', decodedLink, item.source || ''),
+    titleAssessment.normalizedTitle || normalizeArticleTitle(item.title || '', decodedLink),
     storedTitleMaxChars
   );
   if (!titleOriginal) return null;
@@ -3269,6 +3373,17 @@ async function toNewsArticleRow(item: NewsItem): Promise<NewsArticlePersistable 
   const snippetOriginal = rawSnippet ? truncateText(rawSnippet, storedSnippetMaxChars) : null;
   const feedCategories = normalizeSourceCategories(item.sourceCategories);
   const stableId = typeof item.stableId === 'string' && item.stableId.trim() ? item.stableId.trim().slice(0, 700) : null;
+  const titleQuality = normalizeNewsTitleQuality(item.titleQuality || titleAssessment.quality);
+  const titleQualityReason = (item.titleQualityReason || titleAssessment.qualityReason || '').trim() || 'feed_title_ok';
+  const titleQualityCheckedAt = item.titleQualityCheckedAt || new Date().toISOString();
+  const titleRepairStatus = normalizeNewsTitleRepairStatus(item.titleRepairStatus || titleAssessment.repairStatus);
+  const titleRepairSource = item.titleRepairSource || titleAssessment.repairSource || null;
+  const titleRepairAttemptedAt =
+    item.titleRepairAttemptedAt
+    || (titleRepairStatus === 'failed' || titleRepairStatus === 'recovered' ? titleQualityCheckedAt : null);
+  const titleRepairedAt =
+    item.titleRepairedAt
+    || (titleQuality === 'recovered' ? titleQualityCheckedAt : null);
   const taxonomy = buildArticleTaxonomy({
     storedSection: item.section,
     sourceCategories: feedCategories,
@@ -3289,6 +3404,13 @@ async function toNewsArticleRow(item: NewsItem): Promise<NewsArticlePersistable 
     primaryTopic: taxonomy.primaryTopic,
     topics: taxonomy.topics,
     titleOriginal,
+    titleQuality,
+    titleQualityReason,
+    titleQualityCheckedAt,
+    titleRepairStatus,
+    titleRepairSource,
+    titleRepairAttemptedAt,
+    titleRepairedAt,
     snippetOriginal,
     country: item.country || null,
     url: decodedLink,
@@ -3302,7 +3424,7 @@ async function toMissingPublishedAtRow(item: MissingPublishedAtCandidate): Promi
   const linkNorm = normalizeLinkForId(decodedLink);
   if (!linkNorm) return null;
   const titleOriginal = truncateText(
-    normalizeReadableArticleTitle(item.title || '', decodedLink, item.source || ''),
+    normalizeArticleTitle(item.title || '', decodedLink),
     storedTitleMaxChars
   );
   if (!titleOriginal) return null;
@@ -3393,18 +3515,7 @@ export async function persistNewsArticles(items: NewsItem[]): Promise<{ persiste
       acc.set(dedupeKey, row);
       return acc;
     }
-    const preferred =
-      new Date(row.publicationDatetime).getTime() > new Date(current.publicationDatetime).getTime()
-        ? row
-        : current;
-    acc.set(dedupeKey, {
-      ...preferred,
-      stableId: preferred.stableId || current.stableId,
-      primarySection: preferred.primarySection || current.primarySection,
-      sectionsNormalized: [...new Set([...current.sectionsNormalized, ...row.sectionsNormalized])] as NewsSection[],
-      feedCategories: [...new Set([...current.feedCategories, ...row.feedCategories])],
-      snippetOriginal: preferred.snippetOriginal || current.snippetOriginal,
-    });
+    acc.set(dedupeKey, preferPersistedArticleRow(current, row));
     return acc;
   }, new Map<string, NewsArticlePersistable>()).values()];
   const insertRows = [...dedupedRows.reduce((acc, row) => {
@@ -3413,18 +3524,7 @@ export async function persistNewsArticles(items: NewsItem[]): Promise<{ persiste
       acc.set(row.externalId, row);
       return acc;
     }
-    const preferred =
-      new Date(row.publicationDatetime).getTime() > new Date(current.publicationDatetime).getTime()
-        ? row
-        : current;
-    acc.set(row.externalId, {
-      ...preferred,
-      stableId: preferred.stableId || current.stableId,
-      primarySection: preferred.primarySection || current.primarySection,
-      sectionsNormalized: [...new Set([...current.sectionsNormalized, ...row.sectionsNormalized])] as NewsSection[],
-      feedCategories: [...new Set([...current.feedCategories, ...row.feedCategories])],
-      snippetOriginal: preferred.snippetOriginal || current.snippetOriginal,
-    });
+    acc.set(row.externalId, preferPersistedArticleRow(current, row));
     return acc;
   }, new Map<string, NewsArticlePersistable>()).values()];
 
@@ -3433,9 +3533,9 @@ export async function persistNewsArticles(items: NewsItem[]): Promise<{ persiste
     const values: unknown[] = [];
     const parts: string[] = [];
     group.forEach((row, i) => {
-      const base = i * 17;
+      const base = i * 24;
       parts.push(
-        `($${base + 1}::text,$${base + 2}::text,$${base + 3}::timestamptz,$${base + 4}::text,$${base + 5}::text,$${base + 6}::text[],$${base + 7}::text[],$${base + 8}::text,$${base + 9}::text[],$${base + 10}::timestamptz,$${base + 11}::timestamptz,$${base + 12}::text,$${base + 13}::text,$${base + 14}::text,$${base + 15}::text,$${base + 16}::text,$${base + 17}::text,now(),now())`
+        `($${base + 1}::text,$${base + 2}::text,$${base + 3}::timestamptz,$${base + 4}::text,$${base + 5}::text,$${base + 6}::text[],$${base + 7}::text[],$${base + 8}::text,$${base + 9}::text[],$${base + 10}::timestamptz,$${base + 11}::timestamptz,$${base + 12}::text,$${base + 13}::text,$${base + 14}::timestamptz,$${base + 15}::text,$${base + 16}::text,$${base + 17}::timestamptz,$${base + 18}::timestamptz,$${base + 19}::text,$${base + 20}::text,$${base + 21}::text,$${base + 22}::text,$${base + 23}::text,$${base + 24}::text,now(),now())`
       );
       values.push(
         row.externalId,
@@ -3450,6 +3550,13 @@ export async function persistNewsArticles(items: NewsItem[]): Promise<{ persiste
         new Date().toISOString(),
         new Date().toISOString(),
         row.titleOriginal,
+        row.titleQuality,
+        row.titleQualityReason,
+        row.titleQualityCheckedAt,
+        row.titleRepairStatus,
+        row.titleRepairSource,
+        row.titleRepairAttemptedAt,
+        row.titleRepairedAt,
         row.snippetOriginal,
         row.country,
         row.url,
@@ -3462,7 +3569,7 @@ export async function persistNewsArticles(items: NewsItem[]): Promise<{ persiste
       db,
       `
       insert into news_articles (
-        external_id, stable_id, publication_datetime, section, primary_section, sections_normalized, feed_categories, primary_topic, topics, topics_derived_at, taxonomy_derived_at, title_original, snippet_original,
+        external_id, stable_id, publication_datetime, section, primary_section, sections_normalized, feed_categories, primary_topic, topics, topics_derived_at, taxonomy_derived_at, title_original, title_quality, title_quality_reason, title_quality_checked_at, title_repair_status, title_repair_source, title_repair_attempted_at, title_repaired_at, snippet_original,
         country, url, source, language, created_at, updated_at
       ) values ${parts.join(',')}
       on conflict (external_id) do update set
@@ -3502,6 +3609,9 @@ export async function persistNewsArticles(items: NewsItem[]): Promise<{ persiste
         topics_derived_at = now(),
         taxonomy_derived_at = now(),
         title_original = case
+          when coalesce(nullif(trim(news_articles.title_quality), ''), 'ok') in ('ok', 'recovered')
+            and coalesce(nullif(trim(excluded.title_quality), ''), 'ok') = 'suspect'
+          then news_articles.title_original
           when (excluded.title_original = excluded.url or excluded.title_original like 'http%')
             and news_articles.title_original is not null
             and news_articles.title_original <> ''
@@ -3509,6 +3619,48 @@ export async function persistNewsArticles(items: NewsItem[]): Promise<{ persiste
             and news_articles.title_original not like 'http%'
           then news_articles.title_original
           else excluded.title_original
+        end,
+        title_quality = case
+          when coalesce(nullif(trim(news_articles.title_quality), ''), 'ok') in ('ok', 'recovered')
+            and coalesce(nullif(trim(excluded.title_quality), ''), 'ok') = 'suspect'
+          then news_articles.title_quality
+          else excluded.title_quality
+        end,
+        title_quality_reason = case
+          when coalesce(nullif(trim(news_articles.title_quality), ''), 'ok') in ('ok', 'recovered')
+            and coalesce(nullif(trim(excluded.title_quality), ''), 'ok') = 'suspect'
+          then news_articles.title_quality_reason
+          else excluded.title_quality_reason
+        end,
+        title_quality_checked_at = case
+          when coalesce(nullif(trim(news_articles.title_quality), ''), 'ok') in ('ok', 'recovered')
+            and coalesce(nullif(trim(excluded.title_quality), ''), 'ok') = 'suspect'
+          then coalesce(news_articles.title_quality_checked_at, excluded.title_quality_checked_at)
+          else excluded.title_quality_checked_at
+        end,
+        title_repair_status = case
+          when coalesce(nullif(trim(news_articles.title_quality), ''), 'ok') in ('ok', 'recovered')
+            and coalesce(nullif(trim(excluded.title_quality), ''), 'ok') = 'suspect'
+          then news_articles.title_repair_status
+          else excluded.title_repair_status
+        end,
+        title_repair_source = case
+          when coalesce(nullif(trim(news_articles.title_quality), ''), 'ok') in ('ok', 'recovered')
+            and coalesce(nullif(trim(excluded.title_quality), ''), 'ok') = 'suspect'
+          then news_articles.title_repair_source
+          else excluded.title_repair_source
+        end,
+        title_repair_attempted_at = case
+          when coalesce(nullif(trim(news_articles.title_quality), ''), 'ok') in ('ok', 'recovered')
+            and coalesce(nullif(trim(excluded.title_quality), ''), 'ok') = 'suspect'
+          then news_articles.title_repair_attempted_at
+          else excluded.title_repair_attempted_at
+        end,
+        title_repaired_at = case
+          when coalesce(nullif(trim(news_articles.title_quality), ''), 'ok') in ('ok', 'recovered')
+            and coalesce(nullif(trim(excluded.title_quality), ''), 'ok') = 'suspect'
+          then news_articles.title_repaired_at
+          else excluded.title_repaired_at
         end,
         snippet_original = coalesce(nullif(excluded.snippet_original, ''), news_articles.snippet_original),
         country = excluded.country,

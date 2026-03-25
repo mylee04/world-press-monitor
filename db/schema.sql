@@ -178,6 +178,13 @@ create table if not exists news_articles (
   stable_id text null,
   publication_datetime timestamptz not null,
   title_original text not null,
+  title_quality text not null default 'ok',
+  title_quality_reason text null,
+  title_quality_checked_at timestamptz null,
+  title_repair_status text not null default 'not_needed',
+  title_repair_source text null,
+  title_repair_attempted_at timestamptz null,
+  title_repaired_at timestamptz null,
   snippet_original text null,
   country text null,
   created_at timestamptz not null default now(),
@@ -188,6 +195,13 @@ create table if not exists news_articles (
   updated_at timestamptz not null default now()
 );
 
+alter table news_articles add column if not exists title_quality text not null default 'ok';
+alter table news_articles add column if not exists title_quality_reason text null;
+alter table news_articles add column if not exists title_quality_checked_at timestamptz null;
+alter table news_articles add column if not exists title_repair_status text not null default 'not_needed';
+alter table news_articles add column if not exists title_repair_source text null;
+alter table news_articles add column if not exists title_repair_attempted_at timestamptz null;
+alter table news_articles add column if not exists title_repaired_at timestamptz null;
 create index if not exists idx_news_articles_created_at on news_articles(created_at desc);
 create index if not exists idx_news_articles_updated_at on news_articles(updated_at desc);
 create index if not exists idx_news_articles_source on news_articles(source);
@@ -195,6 +209,8 @@ create index if not exists idx_news_articles_url on news_articles(url);
 create index if not exists idx_news_articles_stable_id on news_articles(stable_id);
 create index if not exists idx_news_articles_section on news_articles(section);
 create index if not exists idx_news_articles_country on news_articles(country);
+create index if not exists idx_news_articles_title_quality on news_articles(title_quality);
+create index if not exists idx_news_articles_title_repair_status on news_articles(title_repair_status);
 drop index if exists idx_external_news_articles_last_seen_at;
 drop index if exists idx_external_news_articles_publication_datetime;
 drop index if exists idx_external_news_articles_source;

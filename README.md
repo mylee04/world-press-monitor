@@ -7,6 +7,49 @@
 
 Customer-only news intelligence portal backed by hourly RSS ingest, PostgreSQL, and a token-gated read API. Customers browse article counts and article lists by normalized multi-category labels, source tags, country, and date through the web app. Anonymous users are not allowed to browse or download article data.
 
+## Title quality gate
+
+World Press Radar now treats article-title quality as a first-class ingestion concern.
+
+Every newly ingested article is classified into one of three title states:
+
+- `ok`
+  - feed or sitemap title is already good enough to show to customers
+- `recovered`
+  - feed title looked weak, but the pipeline recovered a better headline from the article page
+- `suspect`
+  - title still looks low-signal, numeric, URL-like, hub-like, or otherwise unsafe for customer display
+
+Operational rules:
+
+- `ok` and `recovered` rows are eligible for customer API and dashboard visibility
+- `suspect` rows stay in PostgreSQL but are hidden from customer-facing reads by default
+- a background repair worker can retry only the suspect subset instead of re-fetching every article page
+
+Schema fields used for this flow:
+
+- `title_quality`
+- `title_quality_reason`
+- `title_quality_checked_at`
+- `title_repair_status`
+- `title_repair_source`
+- `title_repair_attempted_at`
+- `title_repaired_at`
+
+Useful commands:
+
+```bash
+bun run backfill:low-signal-titles
+bun run repair:suspect-titles
+```
+
+Recommended operational pattern:
+
+1. ingest articles normally
+2. let `suspect` rows stay hidden from customer reads
+3. run `repair:suspect-titles` on a schedule
+4. only show recovered titles after they pass the quality gate
+
 ## What customers can do
 
 - open the portal and unlock access with an issued customer token
@@ -113,6 +156,19 @@ bash scripts/run-api-news.sh
 ```
 
 The API must return `401` for anonymous article requests in production.
+
+### Deployment behavior
+
+Current production rollout path:
+
+- pushing `develop` updates the Vercel web app automatically
+- the local API runtime watchdog syncs pushed `develop` commits into the runtime repo and restarts `api-news` when the runtime head changes
+
+This means:
+
+- web changes are production-deployed through Vercel after push
+- API runtime code changes are pulled into the Mac mini runtime automatically after push
+- local uncommitted changes are not used for runtime sync; only pushed commits are applied
 
 ## Token issuance model
 

@@ -86,6 +86,7 @@
     "audit:article-links": "bun scripts/audit-article-url-resolves.ts",
     "backfill:stable-ids": "bun scripts/backfill-news-article-stable-ids.ts",
     "backfill:low-signal-titles": "bun scripts/backfill-low-signal-news-titles.ts",
+    "repair:suspect-titles": "bun scripts/repair-suspect-news-titles.ts",
     "reconcile:url-drift": "bun scripts/reconcile-article-url-drift.ts",
     "prune:non-article-news": "bun scripts/prune-known-non-article-news.ts",
     "prune:live-landing-news": "bun scripts/prune-live-landing-news.ts"

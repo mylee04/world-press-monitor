@@ -6,6 +6,7 @@ import { fetchWithRetry, readResponseText } from '@/lib/fetch-utils';
 import { extractArticlePageTitle } from '@/lib/article-page-title';
 import { isKnownNonArticleUrl } from '@/lib/article-url-filters';
 import { looksLikeLowSignalArticleTitle, normalizeReadableArticleTitle } from '@/lib/html-entities';
+import { assessNewsTitle } from '@/lib/title-quality';
 
 type Row = {
   external_id: string;
@@ -241,10 +242,28 @@ async function main(): Promise<void> {
         `
         update news_articles
         set title_original = $2,
+            title_quality = $3,
+            title_quality_reason = $4,
+            title_quality_checked_at = now(),
+            title_repair_status = 'recovered',
+            title_repair_source = 'background',
+            title_repair_attempted_at = now(),
+            title_repaired_at = now(),
             updated_at = now()
         where external_id = $1
         `,
-        [row.externalId, row.recoveredTitle]
+        [
+          row.externalId,
+          row.recoveredTitle,
+          assessNewsTitle({
+            title: row.recoveredTitle,
+            source: row.source,
+            url: row.url,
+            repairAttempted: true,
+            repairSource: 'background',
+          }).quality,
+          'recovered_in_background',
+        ]
       );
       updated += update.rowCount || 0;
     }

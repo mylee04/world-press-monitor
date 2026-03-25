@@ -27,6 +27,9 @@ export type SourceCategory =
   | 'world';
 
 export type OutletTier = 1 | 2 | 3;
+export type NewsTitleQuality = 'ok' | 'suspect' | 'recovered';
+export type NewsTitleRepairStatus = 'not_needed' | 'pending' | 'recovered' | 'failed';
+export type NewsTitleRepairSource = 'article_page' | 'background';
 
 export interface OutletFeed {
   id: string;
@@ -86,4 +89,11 @@ export interface NewsItem {
   sourceCategories?: string[];
   publicationSource?: 'feed' | 'article_meta';
   summarySource?: 'feed' | 'article_meta';
+  titleQuality?: NewsTitleQuality;
+  titleQualityReason?: string;
+  titleQualityCheckedAt?: string;
+  titleRepairStatus?: NewsTitleRepairStatus;
+  titleRepairSource?: NewsTitleRepairSource;
+  titleRepairAttemptedAt?: string;
+  titleRepairedAt?: string;
 }

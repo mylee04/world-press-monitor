@@ -12,6 +12,7 @@ import {
   normalizeHtmlText,
   normalizeReadableArticleTitle,
 } from '../lib/html-entities';
+import { assessNewsTitle, newsTitleQualityRank } from '../lib/title-quality';
 import { runWithConcurrency } from '../lib/concurrency';
 import { fetchWithRetry, readResponseText } from '../lib/fetch-utils';
 import { deriveSectionFromContext, mapFeedCategoryToSection } from '../lib/article-section-context';
@@ -855,11 +856,13 @@ function mergeNewsItems(current: NewsItem, incoming: NewsItem): NewsItem {
   const currentScore =
     scoreItemUrlAgainstTitle(current)
     + (current.description ? Math.min(current.description.length, 400) / 10000 : 0)
-    + (current.publishedAtIsFallback ? 0 : 0.02);
+    + (current.publishedAtIsFallback ? 0 : 0.02)
+    + newsTitleQualityRank(current.titleQuality) * 0.05;
   const incomingScore =
     scoreItemUrlAgainstTitle(incoming)
     + (incoming.description ? Math.min(incoming.description.length, 400) / 10000 : 0)
-    + (incoming.publishedAtIsFallback ? 0 : 0.02);
+    + (incoming.publishedAtIsFallback ? 0 : 0.02)
+    + newsTitleQualityRank(incoming.titleQuality) * 0.05;
 
   const preferred =
     incomingPublishedAt > currentPublishedAt
@@ -878,6 +881,13 @@ function mergeNewsItems(current: NewsItem, incoming: NewsItem): NewsItem {
     sourceCategories: [...new Set([...(secondary.sourceCategories || []), ...(preferred.sourceCategories || [])])],
     description: preferred.description || secondary.description,
     classificationReason: preferred.classificationReason || secondary.classificationReason,
+    titleQuality: preferred.titleQuality || secondary.titleQuality,
+    titleQualityReason: preferred.titleQualityReason || secondary.titleQualityReason,
+    titleQualityCheckedAt: preferred.titleQualityCheckedAt || secondary.titleQualityCheckedAt,
+    titleRepairStatus: preferred.titleRepairStatus || secondary.titleRepairStatus,
+    titleRepairSource: preferred.titleRepairSource || secondary.titleRepairSource,
+    titleRepairAttemptedAt: preferred.titleRepairAttemptedAt || secondary.titleRepairAttemptedAt,
+    titleRepairedAt: preferred.titleRepairedAt || secondary.titleRepairedAt,
   };
 }
 
@@ -1765,13 +1775,29 @@ async function toNewsItem(
   if (isKnownNonArticleUrl(outlet.name, row.link || '')) {
     return null;
   }
+  const titleCheckedAt = new Date().toISOString();
   let title = normalizeArticleTitle(row.title || '', row.link || '');
+  let titleRepairAttempted = false;
+  let titleRepairSource: 'article_page' | null = null;
   if (shouldFetchArticlePageTitle(outlet.name, row.link || '', title)) {
+    titleRepairAttempted = true;
     const pageTitle = await fetchArticlePageTitle(outlet.name, row.link || '');
     if (pageTitle) {
       title = pageTitle;
+      titleRepairSource = 'article_page';
     }
   }
+  const titleAssessment = assessNewsTitle({
+    title,
+    source: outlet.name,
+    url: row.link || '',
+    repairAttempted: titleRepairAttempted,
+    repairSource: titleRepairSource,
+  });
+  if (!titleAssessment.normalizedTitle) {
+    return null;
+  }
+  title = titleAssessment.normalizedTitle;
   const description = normalizeHtmlText(row.description || '');
   const rawPublishedAt = (row.publishedAt || '').trim();
   if (!rawPublishedAt && DROP_ITEMS_WITHOUT_PUBLISHED_AT) {
@@ -1834,6 +1860,13 @@ async function toNewsItem(
     sourceCategories,
     publicationSource: 'feed',
     summarySource: description ? 'feed' : undefined,
+    titleQuality: titleAssessment.quality,
+    titleQualityReason: titleAssessment.qualityReason,
+    titleQualityCheckedAt: titleCheckedAt,
+    titleRepairStatus: titleAssessment.repairStatus,
+    titleRepairSource: titleAssessment.repairSource || undefined,
+    titleRepairAttemptedAt: titleRepairAttempted ? titleCheckedAt : undefined,
+    titleRepairedAt: titleAssessment.quality === 'recovered' ? titleCheckedAt : undefined,
     ...geo,
   });
 }
