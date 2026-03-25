@@ -121,8 +121,21 @@ function buildCustomerVisibleTitleQualitySql(columnExpression: string): string {
   return `coalesce(nullif(trim(${columnExpression}), ''), 'ok') <> 'suspect'`;
 }
 
+function sanitizeTextForDatabase(value: string): string {
+  if (!value) return '';
+  const utf8Safe = new TextDecoder('utf-8').decode(new TextEncoder().encode(value));
+  return utf8Safe
+    .replace(/\u0000/g, '')
+    .replace(/[\u0001-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, '');
+}
+
+function sanitizeTitleRepairSource(value: string | null | undefined): NewsTitleRepairSource | null {
+  const normalized = sanitizeTextForDatabase(value || '');
+  return normalized === 'article_page' || normalized === 'background' ? normalized : null;
+}
+
 function truncateText(value: string, maxChars: number): string {
-  const normalized = (value || '').replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, ' ');
+  const normalized = sanitizeTextForDatabase(value || '').replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, ' ');
   const codePoints = Array.from(normalized);
   if (codePoints.length <= maxChars) return normalized.trim();
   return codePoints.slice(0, maxChars).join('').trim();
@@ -574,6 +587,25 @@ async function executeIngestionQuery(db: Pool, queryText: string, values: unknow
   try {
     await db.query(queryText, values);
   } catch (error) {
+    const code = typeof (error as { code?: unknown })?.code === 'string' ? String((error as { code: string }).code) : '';
+    const isInvalidUtf8 = code === '22021' || (error instanceof Error && error.message.includes('invalid byte sequence for encoding'));
+    if (isInvalidUtf8) {
+      const sanitizedValues = values.map((value) => {
+        if (typeof value === 'string') return sanitizeTextForDatabase(value);
+        if (Array.isArray(value)) {
+          return value.map((entry) => (typeof entry === 'string' ? sanitizeTextForDatabase(entry) : entry));
+        }
+        if (value instanceof Uint8Array) {
+          return sanitizeTextForDatabase(new TextDecoder('utf-8').decode(value));
+        }
+        return value;
+      });
+      if (process.env.INGEST_SQL_DEBUG === '1') {
+        console.error(`[ingest-store] ${label} retrying with sanitized UTF-8 values`);
+      }
+      await db.query(queryText, sanitizedValues);
+      return;
+    }
     if (process.env.INGEST_SQL_DEBUG === '1') {
       console.error(`[ingest-store] ${label} failed`);
       console.error(queryText);
@@ -3349,35 +3381,39 @@ export type NewsArticleFeedCategoryBackfill = {
 };
 
 async function toNewsArticleRow(item: NewsItem): Promise<NewsArticlePersistable | null> {
-  const decodedLink = decodeHtmlEntities(item.link || '');
+  const decodedLink = sanitizeTextForDatabase(decodeHtmlEntities(item.link || ''));
   const linkNorm = normalizeLinkForId(decodedLink);
   if (!linkNorm) return null;
   const publicationTs = new Date(item.publishedAt).getTime();
   if (!Number.isFinite(publicationTs)) return null;
   if (publicationMaxAgeMs > 0 && publicationTs < Date.now() - publicationMaxAgeMs) return null;
 
-  const language = item.language || null;
+  const language = item.language ? sanitizeTextForDatabase(item.language) : null;
   const titleAssessment = assessNewsTitle({
     title: item.title || '',
-    source: item.source || '',
+    source: sanitizeTextForDatabase(item.source || ''),
     url: decodedLink,
     repairAttempted: Boolean(item.titleRepairAttemptedAt) || item.titleRepairStatus === 'failed' || item.titleRepairStatus === 'recovered',
-    repairSource: item.titleRepairSource || (item.titleQuality === 'recovered' ? 'article_page' : null),
+    repairSource: sanitizeTitleRepairSource(item.titleRepairSource) || (item.titleQuality === 'recovered' ? 'article_page' : null),
   });
   const titleOriginal = truncateText(
-    titleAssessment.normalizedTitle || normalizeArticleTitle(item.title || '', decodedLink),
+    sanitizeTextForDatabase(titleAssessment.normalizedTitle || normalizeArticleTitle(item.title || '', decodedLink)),
     storedTitleMaxChars
   );
   if (!titleOriginal) return null;
-  const rawSnippet = normalizeHtmlText(item.description || '');
+  const rawSnippet = sanitizeTextForDatabase(normalizeHtmlText(item.description || ''));
   const snippetOriginal = rawSnippet ? truncateText(rawSnippet, storedSnippetMaxChars) : null;
-  const feedCategories = normalizeSourceCategories(item.sourceCategories);
-  const stableId = typeof item.stableId === 'string' && item.stableId.trim() ? item.stableId.trim().slice(0, 700) : null;
+  const feedCategories = normalizeSourceCategories(item.sourceCategories).map((entry) => sanitizeTextForDatabase(entry));
+  const stableId =
+    typeof item.stableId === 'string' && item.stableId.trim()
+      ? sanitizeTextForDatabase(item.stableId.trim()).slice(0, 700)
+      : null;
   const titleQuality = normalizeNewsTitleQuality(item.titleQuality || titleAssessment.quality);
-  const titleQualityReason = (item.titleQualityReason || titleAssessment.qualityReason || '').trim() || 'feed_title_ok';
+  const titleQualityReason =
+    sanitizeTextForDatabase((item.titleQualityReason || titleAssessment.qualityReason || '').trim()) || 'feed_title_ok';
   const titleQualityCheckedAt = item.titleQualityCheckedAt || new Date().toISOString();
   const titleRepairStatus = normalizeNewsTitleRepairStatus(item.titleRepairStatus || titleAssessment.repairStatus);
-  const titleRepairSource = item.titleRepairSource || titleAssessment.repairSource || null;
+  const titleRepairSource = sanitizeTitleRepairSource(item.titleRepairSource || titleAssessment.repairSource || null);
   const titleRepairAttemptedAt =
     item.titleRepairAttemptedAt
     || (titleRepairStatus === 'failed' || titleRepairStatus === 'recovered' ? titleQualityCheckedAt : null);
@@ -3397,7 +3433,7 @@ async function toNewsArticleRow(item: NewsItem): Promise<NewsArticlePersistable 
     externalId: await sha256Hex(linkNorm),
     stableId,
     publicationDatetime: new Date(publicationTs).toISOString(),
-    section: item.section,
+    section: item.section ? sanitizeTextForDatabase(item.section) : null,
     primarySection: taxonomy.primarySection,
     sectionsNormalized: taxonomy.sections,
     feedCategories,
@@ -3412,38 +3448,44 @@ async function toNewsArticleRow(item: NewsItem): Promise<NewsArticlePersistable 
     titleRepairAttemptedAt,
     titleRepairedAt,
     snippetOriginal,
-    country: item.country || null,
+    country: item.country ? sanitizeTextForDatabase(item.country) : null,
     url: decodedLink,
-    source: item.source,
+    source: sanitizeTextForDatabase(item.source),
     language
   };
 }
 
 async function toMissingPublishedAtRow(item: MissingPublishedAtCandidate): Promise<MissingPublishedAtPersistable | null> {
-  const decodedLink = decodeHtmlEntities(item.link || '');
+  const decodedLink = sanitizeTextForDatabase(decodeHtmlEntities(item.link || ''));
   const linkNorm = normalizeLinkForId(decodedLink);
   if (!linkNorm) return null;
   const titleOriginal = truncateText(
-    normalizeArticleTitle(item.title || '', decodedLink),
+    sanitizeTextForDatabase(normalizeArticleTitle(item.title || '', decodedLink)),
     storedTitleMaxChars
   );
   if (!titleOriginal) return null;
-  const rawSnippet = normalizeHtmlText(item.description || '');
+  const rawSnippet = sanitizeTextForDatabase(normalizeHtmlText(item.description || ''));
   const snippetOriginal = rawSnippet ? truncateText(rawSnippet, storedSnippetMaxChars) : null;
-  const categories = [...new Set((item.categories || []).map((entry) => entry.trim()).filter(Boolean))];
+  const categories = [
+    ...new Set(
+      (item.categories || [])
+        .map((entry) => sanitizeTextForDatabase(entry.trim()))
+        .filter(Boolean)
+    ),
+  ];
   const idSource = `${item.outletId}|${item.method}|${linkNorm}`;
 
   return {
     candidateId: await sha256Hex(idSource),
-    outletId: item.outletId,
-    source: item.source,
-    country: item.country || 'Global',
+    outletId: sanitizeTextForDatabase(item.outletId),
+    source: sanitizeTextForDatabase(item.source),
+    country: sanitizeTextForDatabase(item.country || 'Global'),
     method: item.method,
     url: decodedLink,
     titleOriginal,
     snippetOriginal,
-    language: item.language || null,
-    section: item.section || null,
+    language: item.language ? sanitizeTextForDatabase(item.language) : null,
+    section: item.section ? sanitizeTextForDatabase(item.section) : null,
     feedCategories: categories,
   };
 }
