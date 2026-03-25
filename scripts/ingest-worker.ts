@@ -29,6 +29,13 @@ import {
   writeWorkerState,
   type BackfillWindow,
 } from './ingest-worker-support';
+import {
+  buildDisabledSitemapOutletIds,
+  buildEndpointRuns,
+  buildFailingEndpointSet,
+  buildSitemapExecutionPlan,
+  type EndpointRun,
+} from './ingest-worker-selection';
 import { buildWorkerSummary, formatWorkerSummaryLog, summarizeEndpointResults } from './ingest-worker-summary';
 import {
   readFailingEndpointBackoff,
@@ -39,11 +46,10 @@ import {
   persistIngestionDiagnostics,
   upsertSitemapPolicyStates,
   upsertIngestionFeedWatermarks,
-  type EndpointBackoffRow,
   type IngestionEndpointRun,
   type MissingPublishedAtCandidate,
-  type SitemapPolicyState,
 } from '../lib/ingestion-store';
+import type { EndpointBackoffRow, SitemapPolicyState } from '../lib/news-ops-store';
 import type { NewsItem, OutletFeed, OutletTier } from '../lib/types';
 
 const FETCH_TIMEOUT_MS = Math.max(
@@ -178,12 +184,6 @@ type AtlasCountry = {
 
 type AtlasCatalog = {
   countries: AtlasCountry[];
-};
-
-type EndpointRun = {
-  outlet: OutletFeed;
-  method: 'rss' | 'sitemap';
-  url: string;
 };
 
 function normalizeText(value: string): string {
@@ -2373,20 +2373,11 @@ async function runOnce(): Promise<void> {
   const allOutlets = loadAtlasOutlets();
   const countryFilteredOutlets = allOutlets.filter((outlet) => countryMatchesFilter(outlet.country, COUNTRY_FILTER));
   const { selected, nextOffset, offset } = pickOutletChunk(countryFilteredOutlets, OUTLET_CHUNK_SIZE, STATE_FILE);
-  const endpointLookup = new Map<string, EndpointRun>();
-  const allEndpoints: EndpointRun[] = selected.flatMap((outlet) => {
-    const runs: EndpointRun[] = [];
-    if (outlet.rssUrl && methodMatchesFilter('rss', METHOD_FILTER)) runs.push({ outlet, method: 'rss', url: outlet.rssUrl });
-    if (outlet.sitemapUrl && methodMatchesFilter('sitemap', METHOD_FILTER)) runs.push({ outlet, method: 'sitemap', url: outlet.sitemapUrl });
-    return runs;
-  });
-  for (const endpoint of allEndpoints) {
-    const endpointKey = `${endpoint.outlet.id}:${endpoint.method}`;
-    endpointLookup.set(endpointKey, endpoint);
-  }
-  const dedupedEndpoints = [...endpointLookup.values()];
-  const rssEndpoints = dedupedEndpoints.filter((endpoint) => endpoint.method === 'rss');
-  const allSitemapEndpoints = dedupedEndpoints.filter((endpoint) => endpoint.method === 'sitemap');
+  const { endpointLookup, dedupedEndpoints, rssEndpoints, allSitemapEndpoints } = buildEndpointRuns(
+    selected,
+    methodMatchesFilter,
+    METHOD_FILTER
+  );
   const watermarks = await readIngestionFeedWatermarks(
     dedupedEndpoints.map((endpoint) => ({
       outletId: endpoint.outlet.id,
@@ -2419,9 +2410,7 @@ async function runOnce(): Promise<void> {
         limit: 5000,
       })
     : { rows: [] as EndpointBackoffRow[] };
-  const failingKeys = BACKFILL_IGNORE_BACKOFF
-    ? new Set<string>()
-    : new Set(failingBackoff.rows.map((row) => `${row.outletId}:${row.method}`));
+  const failingKeys = buildFailingEndpointSet(failingBackoff.rows, BACKFILL_IGNORE_BACKOFF);
   const disableSitemapBackoff = SITEMAP_DISABLE_ENABLED
     ? await readFailingEndpointBackoff({
         runner: 'worker',
@@ -2431,14 +2420,13 @@ async function runOnce(): Promise<void> {
         limit: 5000,
       })
     : { rows: [] as EndpointBackoffRow[] };
-  const disabledSitemapOutletIds = SITEMAP_DISABLE_ENABLED && !BACKFILL_IGNORE_BACKOFF
-    ? new Set(
-        disableSitemapBackoff.rows
-          .filter((row) => row.method === 'rss')
-          .filter((row) => row.attempted >= SITEMAP_DISABLE_MIN_ATTEMPTS && row.failPct >= SITEMAP_DISABLE_MIN_FAIL_PCT)
-          .map((row) => row.outletId),
-      )
-    : new Set<string>();
+  const disabledSitemapOutletIds = buildDisabledSitemapOutletIds({
+    rows: disableSitemapBackoff.rows,
+    sitemapDisableEnabled: SITEMAP_DISABLE_ENABLED,
+    ignoreBackoff: BACKFILL_IGNORE_BACKOFF,
+    minAttempts: SITEMAP_DISABLE_MIN_ATTEMPTS,
+    minFailPct: SITEMAP_DISABLE_MIN_FAIL_PCT,
+  });
 
   const fallbackSummary = {
     rssSitemapFallbackAttempts: 0,
@@ -2507,16 +2495,11 @@ async function runOnce(): Promise<void> {
     failedRssResultByOutlet.set(result.run.outletId, result);
   }
 
-  const explicitParallelSitemapEndpoints = ENABLE_EXPLICIT_SITEMAP_PARALLEL
-    ? allSitemapEndpoints.filter((endpoint) => endpoint.outlet.hasExplicitSitemapUrl)
-    : [];
-  const explicitParallelEndpointKeys = new Set(
-    explicitParallelSitemapEndpoints.map((endpoint) => `${endpoint.outlet.id}:${endpoint.method}`)
-  );
-  const fallbackSitemapEndpoints = allSitemapEndpoints.filter(
-    (endpoint) => failedRssResultByOutlet.has(endpoint.outlet.id) && !explicitParallelEndpointKeys.has(`${endpoint.outlet.id}:${endpoint.method}`)
-  );
-  const sitemapEndpoints = [...explicitParallelSitemapEndpoints, ...fallbackSitemapEndpoints];
+  const { sitemapEndpoints } = buildSitemapExecutionPlan({
+    allSitemapEndpoints,
+    failedRssOutletIds: new Set(failedRssResultByOutlet.keys()),
+    enableExplicitSitemapParallel: ENABLE_EXPLICIT_SITEMAP_PARALLEL,
+  });
 
   const sitemapResults = await runWithConcurrency<EndpointRun, EndpointResult>(sitemapEndpoints, FETCH_CONCURRENCY, async (endpoint) => {
     const endpointKey = `${endpoint.outlet.id}:${endpoint.method}`;

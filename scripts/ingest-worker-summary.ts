@@ -1,12 +1,6 @@
 import type { NewsItem } from '../lib/types';
-import type { IngestionEndpointRun, MissingPublishedAtCandidate, SitemapPolicyState } from '../lib/ingestion-store';
+import type { IngestionEndpointRun } from '../lib/ingestion-store';
 import { formatPercent } from './ingest-worker-support';
-
-type EndpointResult = {
-  items: NewsItem[];
-  run: IngestionEndpointRun;
-  fallbackUsed: 'none' | 'sitemap';
-};
 
 type WorkerSummary = {
   generatedAt: string;
