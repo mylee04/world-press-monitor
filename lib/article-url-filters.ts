@@ -163,19 +163,33 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     if (/^\/livecoverage\/?$/.test(pathname)) return true;
     if (/^\/cfo-journal\/?$/.test(pathname)) return true;
     if (/^\/cmo-today\/?$/.test(pathname)) return true;
+    if (/^\/cio-journal\/?$/.test(pathname)) return true;
+    if (/^\/journal-reports\/?$/.test(pathname)) return true;
+    if (/^\/risk-compliance-journal\/?$/.test(pathname)) return true;
+    if (/^\/logistics-report\/?$/.test(pathname)) return true;
+    if (/^\/future-of-everything\/?$/.test(pathname)) return true;
+    if (/^\/investment-banking-scorecard\/?$/.test(pathname)) return true;
+    if (/^\/market-data\/?$/.test(pathname)) return true;
+    if (/^\/opinion\/?$/.test(pathname)) return true;
+    if (/^\/(?:health|style|us-news|real-estate|lifestyle|science|business|tech|finance|personal-finance)\/?$/.test(pathname)) {
+      return true;
+    }
     if (/^\/news\/author\/[^/]+\/?$/.test(pathname)) return true;
     if (/^\/news\/types\/[^/]+\/?$/.test(pathname)) return true;
     if (/^\/news\/heard-on-the-street\/?$/.test(pathname)) return true;
+    if (/^\/news\/puzzle\/?$/.test(pathname)) return true;
     if (/^\/arts-culture\/?$/.test(pathname)) return true;
     if (/^\/sports\/?$/.test(pathname)) return true;
     if (/^\/pro\/[^/]+\/?$/.test(pathname)) return true;
     if (/^\/market-data\/[^/]+\/?$/.test(pathname)) return true;
-    if (/^\/(?:world|science|business|sports|politics|lifestyle|arts-culture|tech|economy|finance|personal-finance)(?:\/[^/]+){0,2}\/?$/.test(pathname)) {
+    if (/^\/(?:world|science|business|sports|politics|lifestyle|arts-culture|tech|economy|finance|personal-finance|us-news|health|style|real-estate)(?:\/[^/]+){0,2}\/?$/.test(pathname)) {
       const lastSegment = trimmedPathname.split('/').filter(Boolean).at(-1) || '';
       const slugParts = lastSegment.split('-').filter(Boolean);
       const looksLikeLandingSlug = slugParts.length <= 3 && lastSegment.length <= 32 && !/\d{5,}/.test(lastSegment);
       if (looksLikeLandingSlug) return true;
     }
+    if (/^\/news\/(?:business|markets|books-arts)\/[^/]+\/?$/.test(pathname)) return true;
+    if (/^\/opinion\/free-expression(?:\/[^/]+)?\/?$/.test(pathname)) return true;
     if (/^\/lifestyle\/(?:fitness|workplace)\/?$/.test(pathname)) return true;
     if (/^\/personal-finance\/mortgages\/?$/.test(pathname)) return true;
     if (/^\/real-estate\/luxury-homes\/?$/.test(pathname)) return true;
