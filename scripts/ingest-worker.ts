@@ -5,6 +5,7 @@ import { isIP } from 'node:net';
 import { resolve } from 'node:path';
 import { isKnownNonArticleUrl } from '../lib/article-url-filters';
 import { extractArticlePageTitle } from '../lib/article-page-title';
+import { buildArticlePageFetchHeaders } from '../lib/article-page-fetch';
 import { parseRssOrAtomWithStats, parseSitemapWithStats } from '../lib/parsers';
 import {
   looksLikeLowSignalArticleTitle,
@@ -1313,6 +1314,37 @@ const ARTICLE_TITLE_FALLBACK_SOURCES = new Set(
     process.env.INGEST_ARTICLE_TITLE_SOURCES
     || [
       'ajel',
+      'aap',
+      'setn',
+      'parapolitika',
+      'news.com.au',
+      'the australian',
+      'daily telegraph',
+      'courier mail',
+      'herald sun',
+      'adelaidenow',
+      'nt news',
+      'townsville bulletin',
+      'the mercury',
+      'the chronicle',
+      'gold coast bulletin',
+      'geelong advertiser',
+      'weekly times',
+      'people.cn',
+      'sponichi',
+      'abema times',
+      'ukrainska pravda',
+      'european pravda',
+      'eurointegration',
+      'vol.at',
+      'independent.ie',
+      'aamulehti',
+      'helsingin sanomat',
+      'ilta-sanomat',
+      'is.fi',
+      'fnn',
+      'puls 24',
+      'ekstra bladet',
     ].join(',')
   )
     .split(',')
@@ -1424,14 +1456,7 @@ async function fetchArticleMetaCategories(source: string, url: string): Promise<
         timeoutMs: ARTICLE_META_CATEGORY_FETCH_TIMEOUT_MS,
         attempts: 2,
         fetchOptions: {
-          headers: {
-            'User-Agent': FEED_FETCH_HEADERS['User-Agent'],
-            Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-            'Accept-Language': FEED_FETCH_HEADERS['Accept-Language'],
-            'Accept-Encoding': FEED_FETCH_HEADERS['Accept-Encoding'],
-            'Cache-Control': 'no-cache',
-            Pragma: 'no-cache',
-          },
+          headers: buildArticlePageFetchHeaders(url),
           redirect: 'follow',
         },
       });
@@ -1462,14 +1487,7 @@ async function fetchArticlePageTitle(source: string, url: string): Promise<strin
         timeoutMs: ARTICLE_TITLE_FETCH_TIMEOUT_MS,
         attempts: 2,
         fetchOptions: {
-          headers: {
-            'User-Agent': FEED_FETCH_HEADERS['User-Agent'],
-            Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-            'Accept-Language': FEED_FETCH_HEADERS['Accept-Language'],
-            'Accept-Encoding': FEED_FETCH_HEADERS['Accept-Encoding'],
-            'Cache-Control': 'no-cache',
-            Pragma: 'no-cache',
-          },
+          headers: buildArticlePageFetchHeaders(url),
           redirect: 'follow',
         },
       });
@@ -1809,6 +1827,10 @@ async function toNewsItem(
   }
   const titleCheckedAt = new Date().toISOString();
   let title = normalizeArticleTitle(row.title || '', row.link || '');
+  const readableFallbackTitle = normalizeReadableArticleTitle(row.title || '', row.link || '', outlet.name);
+  if (looksLikeLowSignalArticleTitle(title, outlet.name, row.link || '') && readableFallbackTitle) {
+    title = readableFallbackTitle;
+  }
   let titleRepairAttempted = false;
   let titleRepairSource: 'article_page' | null = null;
   if (shouldFetchArticlePageTitle(outlet.name, row.link || '', title)) {

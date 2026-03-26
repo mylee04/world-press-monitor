@@ -4,6 +4,7 @@ import { Pool } from 'pg';
 import { runWithConcurrency } from '@/lib/concurrency';
 import { fetchWithRetry, readResponseText } from '@/lib/fetch-utils';
 import { extractArticlePageTitle } from '@/lib/article-page-title';
+import { buildArticlePageFetchHeaders } from '@/lib/article-page-fetch';
 import { isKnownNonArticleUrl } from '@/lib/article-url-filters';
 import { looksLikeLowSignalArticleTitle, normalizeReadableArticleTitle } from '@/lib/html-entities';
 import { assessNewsTitle } from '@/lib/title-quality';
@@ -27,17 +28,18 @@ type RepairResult = {
 const DEFAULT_FETCH_TIMEOUT_MS = 12_000;
 const DEFAULT_CONCURRENCY = 4;
 const DEFAULT_ATTEMPTS = 1;
-const DEFAULT_USER_AGENT =
-  process.env.INGEST_USER_AGENT
-  || 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36';
 const APPROXIMATE_LOW_SIGNAL_WHERE = `
   (
     coalesce(title_original, '') = ''
     or coalesce(title_original, '') ~ '^[0-9]{6,}$'
+    or coalesce(title_original, '') ~* '^[[:xdigit:]]{32}$'
+    or coalesce(title_original, '') ~* '^Cision[[:alnum:]]+$'
+    or coalesce(title_original, '') ~* '^Catalog(?:\\.aspx)?(?:\\?.+)?$'
     or coalesce(title_original, '') ~ '^[[:lower:][:space:]''’.-]{1,40}$'
     or coalesce(title_original, '') = coalesce(url, '')
     or coalesce(title_original, '') ilike 'http%'
     or coalesce(title_original, '') ~* '^(news|latest|domestic|international|photo|video|full|anime|comic|voiceactor|vest)$'
+    or (source ~* 'parapolitika' and coalesce(title_original, '') ~* '^[a-z0-9_-]{4,180}$')
   )
 `;
 
@@ -96,20 +98,26 @@ async function recoverTitle(row: Row, timeoutMs: number, attempts: number): Prom
   if (!looksLikeLowSignalArticleTitle(row.title_original || '', row.source || '', repairUrl)) {
     return null;
   }
+  if (
+    fallbackTitle
+    && fallbackTitle !== (row.title_original || '').trim()
+    && !looksLikeLowSignalArticleTitle(fallbackTitle, row.source || '', repairUrl)
+  ) {
+    return {
+      externalId: row.external_id,
+      source: row.source,
+      url: row.url,
+      previousTitle: row.title_original,
+      recoveredTitle: fallbackTitle,
+    };
+  }
 
   try {
     const response = await fetchWithRetry(repairUrl, {
       timeoutMs,
       attempts,
       fetchOptions: {
-        headers: {
-          'User-Agent': DEFAULT_USER_AGENT,
-          Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-          'Accept-Language': process.env.INGEST_ACCEPT_LANGUAGE || 'en-US,en;q=0.9,es;q=0.8,ja;q=0.7',
-          'Accept-Encoding': 'gzip, deflate, br',
-          'Cache-Control': 'no-cache',
-          Pragma: 'no-cache',
-        },
+        headers: buildArticlePageFetchHeaders(repairUrl),
         redirect: 'follow',
       },
     });
@@ -188,8 +196,8 @@ async function main(): Promise<void> {
 
   try {
     const whereClauses = [
-      `publication_datetime >= now() - ($1::int * interval '1 hour')`,
-      `publication_datetime <= now() + interval '30 minutes'`,
+      `created_at >= now() - ($1::int * interval '1 hour')`,
+      `created_at <= now() + interval '30 minutes'`,
       APPROXIMATE_LOW_SIGNAL_WHERE,
     ];
     const values: unknown[] = [hours];

@@ -73,6 +73,14 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     return true;
   }
 
+  if (hostname.endsWith('berliner-zeitung.de') && normalizedSource.includes('berliner zeitung')) {
+    if (trimmedPathname === '/') return true;
+  }
+
+  if (hostname === '24.hu' && normalizedSource.includes('24.hu')) {
+    if (trimmedPathname === '/') return true;
+  }
+
   if (hostname.endsWith('index.hu') && normalizedSource.includes('index.hu')) {
     if (trimmedPathname === '/') {
       return true;
@@ -137,6 +145,9 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
   }
 
   if (hostname.endsWith('24horas.cl') && normalizedSource.includes('24horas')) {
+    if (trimmedPathname === '/') {
+      return true;
+    }
     if (
       [
         '/internacional',
@@ -249,11 +260,13 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
   }
 
   if (hostname.endsWith('wsj.com') && normalizedSource.includes('wall street journal')) {
+    if (trimmedPathname === '/') return true;
     if (/^\/topics(?:\/|$)/.test(pathname)) return true;
     if (/^\/audio\/?$/.test(pathname)) return true;
     if (/^\/recipes\/?$/.test(pathname)) return true;
     if (/^\/podcasts(?:\/|$)/.test(pathname)) return true;
     if (/^\/newsletters(?:\/|$)/.test(pathname)) return true;
+    if (/^\/video\/?$/.test(pathname)) return true;
     if (/^\/video\/browse(?:\/|$)/.test(pathname)) return true;
     if (/^\/livecoverage\/?$/.test(pathname)) return true;
     if (/^\/cfo-journal\/?$/.test(pathname)) return true;
@@ -324,6 +337,16 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     ) {
       return true;
     }
+  }
+
+  if (hostname.endsWith('setn.com') && normalizedSource.includes('setn')) {
+    if (trimmedPathname === '/catalog.aspx' && parsed.searchParams.has('PageGroupID')) {
+      return true;
+    }
+  }
+
+  if (hostname.endsWith('eluniversal.com.mx') && normalizedSource.includes('el universal')) {
+    if (trimmedPathname === '/') return true;
   }
 
   return false;

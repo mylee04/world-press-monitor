@@ -46,8 +46,8 @@ async function main(): Promise<void> {
 
   try {
     const whereClauses = [
-      `publication_datetime >= now() - ($1::int * interval '1 hour')`,
-      `publication_datetime <= now() + ($2::int * interval '1 minute')`
+      `created_at >= now() - ($1::int * interval '1 hour')`,
+      `created_at <= now() + ($2::int * interval '1 minute')`
     ];
     const values: unknown[] = [hours, maxFutureMinutes];
     if (sourcePrefixes.length > 0) {

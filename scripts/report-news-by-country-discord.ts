@@ -59,8 +59,12 @@ const LOW_SIGNAL_TITLE_SQL = `
     coalesce(nullif(trim(title_original), ''), '') = coalesce(url, '')
     or coalesce(nullif(trim(title_original), ''), '') ilike 'http%'
     or coalesce(nullif(trim(title_original), ''), '') ~* '^(c[0-9]+\\s+[0-9]+(?:\\.html)?|art[- ]?[0-9]+(?:\\.html)?|[0-9]{6,}|news|latest|domestic|international|photo|video)$'
+    or coalesce(nullif(trim(title_original), ''), '') ~* '^[[:xdigit:]]{32}$'
+    or coalesce(nullif(trim(title_original), ''), '') ~* '^Cision[[:alnum:]]+$'
+    or coalesce(nullif(trim(title_original), ''), '') ~* '^Catalog(?:\\.aspx)?(?:\\?.+)?$'
     or (source ~* 'oricon' and coalesce(nullif(trim(title_original), ''), '') ~* '^(full|news|anime|comic|voiceactor)$')
     or (source ~* 'abema times' and coalesce(nullif(trim(title_original), ''), '') ~* '^(full|news|anime)$')
+    or (source ~* 'parapolitika' and coalesce(nullif(trim(title_original), ''), '') ~* '^[a-z0-9_-]{4,180}$')
   )
 `;
 
