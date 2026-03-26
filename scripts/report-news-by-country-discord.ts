@@ -64,6 +64,19 @@ const LOW_SIGNAL_TITLE_SQL = `
   )
 `;
 
+function parseNoticeArg(argv: string[]): string {
+  for (let index = 0; index < argv.length; index += 1) {
+    const value = argv[index];
+    if (value === '--notice') {
+      return argv[index + 1]?.trim() ?? '';
+    }
+    if (value.startsWith('--notice=')) {
+      return value.slice('--notice='.length).trim();
+    }
+  }
+  return '';
+}
+
 function redactWebhookUrlForLog(raw: string): string {
   try {
     const parsed = new URL(raw);
@@ -305,14 +318,23 @@ async function postToDiscord(webhookUrl: string, content: string): Promise<void>
 }
 
 async function main(): Promise<void> {
-  const databaseUrl = resolveDatabaseUrl();
-
   const webhookUrl = pickWebhookUrl();
   if (!webhookUrl) {
     console.warn(`${DEFAULT_LOG_PREFIX} SKIP: no webhook configured. Set one of ${DEFAULT_WEBHOOK_ENV_VARS.join(', ')}.`);
     return;
   }
 
+  const notice = parseNoticeArg(process.argv.slice(2));
+  if (notice) {
+    const chunks = splitIntoChunks([notice]);
+    for (const content of chunks) {
+      await postToDiscord(webhookUrl, content);
+    }
+    console.log(`${DEFAULT_LOG_PREFIX} posted notice ${chunks.length} message(s).`);
+    return;
+  }
+
+  const databaseUrl = resolveDatabaseUrl();
   const pool = new Pool({ connectionString: databaseUrl });
   try {
     const query = `

@@ -59,7 +59,11 @@ const FETCH_TIMEOUT_MS = Math.max(
 const RSS_ITEM_LIMIT = Math.max(10, Math.min(5000, Number.parseInt(process.env.INGEST_RSS_LIMIT || '2000', 10) || 2000));
 const SITEMAP_ITEM_LIMIT = Math.max(
   10,
-  Math.min(5000, Number.parseInt(process.env.INGEST_SITEMAP_LIMIT || '5000', 10) || 5000)
+  Math.min(5000, Number.parseInt(process.env.INGEST_SITEMAP_LIMIT || '2000', 10) || 2000)
+);
+const ITEM_MAP_CONCURRENCY = Math.max(
+  4,
+  Math.min(64, Number.parseInt(process.env.INGEST_ITEM_MAP_CONCURRENCY || '24', 10) || 24)
 );
 const SITEMAP_INDEX_CHILDREN_LIMIT = Math.max(
   1,
@@ -1868,6 +1872,25 @@ async function toNewsItem(
   });
 }
 
+async function mapParsedItems(
+  outlet: OutletFeed,
+  rows: Array<Parameters<typeof toNewsItem>[1]>,
+  fallbackPublishedAt: string,
+  publicationSource: 'rss' | 'sitemap',
+  onMissingPublishedAtCandidate?: MissingPublishedAtCollector
+): Promise<NewsItem[]> {
+  if (rows.length === 0) {
+    return [];
+  }
+
+  const mappedItems = await runWithConcurrency(
+    rows,
+    Math.min(ITEM_MAP_CONCURRENCY, rows.length),
+    (row) => toNewsItem(outlet, row, fallbackPublishedAt, publicationSource, onMissingPublishedAtCandidate)
+  );
+  return mappedItems.filter((item): item is NewsItem => item !== null);
+}
+
 function buildMissingPublishedAtFallback(startedMs: number): string {
   const startedIso = new Date(startedMs).toISOString();
   return `${startedIso.slice(0, 11)}11:11:11.000Z`;
@@ -1917,12 +1940,13 @@ async function fetchRss(
       if (useSitemapFallback) {
         const sitemapParsed = await trySitemapFallback(outlet);
         if (sitemapParsed) {
-          const mappedItems = await Promise.all(
-            sitemapParsed.items.map((row) =>
-              toNewsItem(outlet, row, options.fallbackPublishedAt, 'sitemap', options.onMissingPublishedAtCandidate)
-            )
+          const items = await mapParsedItems(
+            outlet,
+            sitemapParsed.items,
+            options.fallbackPublishedAt,
+            'sitemap',
+            options.onMissingPublishedAtCandidate
           );
-          const items = mappedItems.filter((item): item is NewsItem => item !== null);
           const newestItem = latestItemPublishedAt(items);
           return {
             items,
@@ -2059,10 +2083,13 @@ async function fetchRss(
       };
     }
 
-    const mappedItems = await Promise.all(
-      parsed.items.map((row) => toNewsItem(outlet, row, options.fallbackPublishedAt, 'rss', options.onMissingPublishedAtCandidate))
+    const items = await mapParsedItems(
+      outlet,
+      parsed.items,
+      options.fallbackPublishedAt,
+      'rss',
+      options.onMissingPublishedAtCandidate
     );
-    const items = mappedItems.filter((item): item is NewsItem => item !== null);
     const rssFallbackUsed: FallbackKind = getFallbackKind(feedResult);
     const newestItem = latestItemPublishedAt(items);
     return {
@@ -2290,10 +2317,13 @@ async function fetchSitemapCandidate(
       };
     }
 
-    const mappedItems = await Promise.all(
-      parsed.items.map((row) => toNewsItem(outlet, row, fallbackPublishedAt, 'sitemap', onMissingPublishedAtCandidate))
+    const items = await mapParsedItems(
+      outlet,
+      parsed.items,
+      fallbackPublishedAt,
+      'sitemap',
+      onMissingPublishedAtCandidate
     );
-    const items = mappedItems.filter((item): item is NewsItem => item !== null);
     const newestItem = latestItemPublishedAt(items);
     return {
       items,

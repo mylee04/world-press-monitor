@@ -5,7 +5,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 LOG_DIR="${PROJECT_ROOT}/logs"
 LOG_FILE="${LOG_DIR}/news-country-discord-hourly.log"
-RUNNER_COMMAND="bun run news:country:discord"
+RUNNER_COMMAND=(bun scripts/report-news-by-country-discord.ts)
 LOCK_DIR="${PROJECT_ROOT}/.wpr-news-country-discord-report-lock"
 STATE_DIR="${WPR_STATE_DIR:-${WPM_STATE_DIR:-${PROJECT_ROOT}/.wpr-state}}"
 LAST_SUCCESS_FILE="${STATE_DIR}/news-country-discord-last-success"
@@ -18,6 +18,16 @@ load_local_env
 TIMEZONE="${NEWS_COUNTRY_REPORT_TZ:-America/Chicago}"
 : "${DATABASE_URL:=postgresql://postgres:postgres@127.0.0.1:${WPR_PG_PORT:-${WPM_PG_PORT:-5432}}/${WPR_DATABASE_NAME:-${WPM_DATABASE_NAME:-wpr}}}"
 
+NOTICE_MODE=0
+for arg in "$@"; do
+  case "${arg}" in
+    --notice|--notice=*)
+      NOTICE_MODE=1
+      break
+      ;;
+  esac
+done
+
 mkdir -p "${LOG_DIR}"
 mkdir -p "${STATE_DIR}"
 if ! mkdir "${LOCK_DIR}" 2>/dev/null; then
@@ -26,7 +36,7 @@ if ! mkdir "${LOCK_DIR}" 2>/dev/null; then
 fi
 trap 'rm -rf "${LOCK_DIR}"' EXIT
 
-if [ "${WPR_FORCE_NEWS_COUNTRY_REPORT:-${WPM_FORCE_NEWS_COUNTRY_REPORT:-0}}" != "1" ] && [ -f "${LAST_SUCCESS_FILE}" ]; then
+if [ "${NOTICE_MODE}" != "1" ] && [ "${WPR_FORCE_NEWS_COUNTRY_REPORT:-${WPM_FORCE_NEWS_COUNTRY_REPORT:-0}}" != "1" ] && [ -f "${LAST_SUCCESS_FILE}" ]; then
   now_epoch="$(date +%s)"
   last_success_epoch="$(cat "${LAST_SUCCESS_FILE}" 2>/dev/null || printf '0')"
   case "${last_success_epoch}" in
@@ -46,11 +56,17 @@ export TZ="${TIMEZONE}"
 export PATH="${PATH}:/opt/homebrew/bin:/usr/local/bin"
 
 {
-  printf '\n[%s] Start news country discord report\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
+  if [ "${NOTICE_MODE}" = "1" ]; then
+    printf '\n[%s] Start news country discord notice\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
+  else
+    printf '\n[%s] Start news country discord report\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
+  fi
   printf 'Project: %s\n' "${PROJECT_ROOT}"
   printf 'Env file: %s\n' "${WPR_ENV_FILE_SOURCE:-${WPM_ENV_FILE_SOURCE:-inline-defaults}}"
-  printf 'Command: %s\n' "${RUNNER_COMMAND}"
-  ${RUNNER_COMMAND}
+  printf 'Command: %s\n' "${RUNNER_COMMAND[*]} $*"
+  "${RUNNER_COMMAND[@]}" "$@"
 } >>"${LOG_FILE}" 2>&1
 
-date +%s > "${LAST_SUCCESS_FILE}"
+if [ "${NOTICE_MODE}" != "1" ]; then
+  date +%s > "${LAST_SUCCESS_FILE}"
+fi

@@ -43,6 +43,13 @@ bun run backfill:low-signal-titles
 bun run repair:suspect-titles
 ```
 
+Throughput defaults for the hourly path:
+
+- `INGEST_SITEMAP_LIMIT=2000`
+- `INGEST_ITEM_MAP_CONCURRENCY=24`
+
+These defaults keep coverage broad while preventing giant sitemap endpoints from exploding into 5,000-item fan-out work on a single hourly run.
+
 Recommended operational pattern:
 
 1. ingest articles normally
