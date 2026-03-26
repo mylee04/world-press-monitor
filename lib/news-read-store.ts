@@ -173,9 +173,10 @@ export async function readNewsArticlesForApiWithDeps(
   const params: unknown[] = [];
   const whereClauses: string[] = [];
   const normalizedSections = [...new Set(sections.map((section) => deps.normalizeStoredSectionValue(section)))];
+  const normalizedPublicationSql = 'least(e.publication_datetime, e.created_at)';
 
   params.push(deps.newsApiMaxFutureMinutes);
-  whereClauses.push(`and e.publication_datetime <= now() + ($${params.length}::int * interval '1 minute')`);
+  whereClauses.push(`and ${normalizedPublicationSql} <= now() + ($${params.length}::int * interval '1 minute')`);
   whereClauses.push(`and ${deps.buildCustomerVisibleTitleQualitySql('e.title_quality')}`);
 
   if (sourceNames.length > 0) {
@@ -227,11 +228,11 @@ export async function readNewsArticlesForApiWithDeps(
 
   if (publicationFrom) {
     params.push(publicationFrom);
-    whereClauses.push(`and e.publication_datetime >= $${params.length}`);
+    whereClauses.push(`and ${normalizedPublicationSql} >= $${params.length}`);
   }
   if (publicationTo) {
     params.push(publicationTo);
-    whereClauses.push(`and e.publication_datetime <= $${params.length}`);
+    whereClauses.push(`and ${normalizedPublicationSql} <= $${params.length}`);
   }
   if (minCreatedAt) {
     params.push(minCreatedAt);
@@ -253,7 +254,7 @@ export async function readNewsArticlesForApiWithDeps(
   if (!publicationFrom && !publicationTo && !minCreatedAt && !maxCreatedAt && !minUpdatedAt && !maxUpdatedAt) {
     const hours = Math.max(1, Math.min(720, Math.floor(options.hours || 48)));
     params.push(hours);
-    whereClauses.push(`and e.publication_datetime > now() - ($${params.length}::int * interval '1 hour')`);
+    whereClauses.push(`and ${normalizedPublicationSql} > now() - ($${params.length}::int * interval '1 hour')`);
   }
 
   const whereSql = `
@@ -282,7 +283,7 @@ export async function readNewsArticlesForApiWithDeps(
         e.feed_categories,
         e.primary_topic,
         e.topics,
-        e.publication_datetime,
+        ${normalizedPublicationSql} as publication_datetime,
         e.created_at,
         e.updated_at
       from news_articles e

@@ -78,6 +78,29 @@ export function truncatePersistedText(value: string, maxChars: number): string {
   return codePoints.slice(0, maxChars).join('').trim();
 }
 
+export function normalizePublicationDatetimeAgainstIngest(
+  publicationDatetimeRaw: string,
+  ingestDatetimeRaw: string | number | Date = Date.now()
+): string {
+  const publicationTs = new Date(publicationDatetimeRaw).getTime();
+  const ingestTs =
+    ingestDatetimeRaw instanceof Date
+      ? ingestDatetimeRaw.getTime()
+      : typeof ingestDatetimeRaw === 'string'
+        ? new Date(ingestDatetimeRaw).getTime()
+        : ingestDatetimeRaw;
+
+  if (!Number.isFinite(ingestTs)) {
+    return Number.isFinite(publicationTs)
+      ? new Date(publicationTs).toISOString()
+      : new Date().toISOString();
+  }
+  if (!Number.isFinite(publicationTs)) {
+    return new Date(ingestTs).toISOString();
+  }
+  return new Date(Math.min(publicationTs, ingestTs)).toISOString();
+}
+
 export function preferPersistedArticleRow(
   current: NewsArticlePersistable,
   incoming: NewsArticlePersistable
@@ -136,9 +159,10 @@ export async function toNewsArticlePersistable(
   const decodedLink = sanitizeTextForDatabase(decodeHtmlEntities(item.link || ''));
   const linkNorm = normalizeLinkForId(decodedLink);
   if (!linkNorm) return null;
+  const ingestedAt = Date.now();
   const publicationTs = new Date(item.publishedAt).getTime();
   if (!Number.isFinite(publicationTs)) return null;
-  if (options.publicationMaxAgeMs > 0 && publicationTs < Date.now() - options.publicationMaxAgeMs) return null;
+  if (options.publicationMaxAgeMs > 0 && publicationTs < ingestedAt - options.publicationMaxAgeMs) return null;
 
   const language = item.language ? sanitizeTextForDatabase(item.language) : null;
   const titleAssessment = assessNewsTitle({
@@ -184,7 +208,7 @@ export async function toNewsArticlePersistable(
   return {
     externalId: await options.sha256Hex(linkNorm),
     stableId,
-    publicationDatetime: new Date(publicationTs).toISOString(),
+    publicationDatetime: normalizePublicationDatetimeAgainstIngest(item.publishedAt, ingestedAt),
     section: item.section ? sanitizeTextForDatabase(item.section) : null,
     primarySection: taxonomy.primarySection,
     sectionsNormalized: taxonomy.sections,

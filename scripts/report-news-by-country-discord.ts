@@ -343,14 +343,14 @@ async function main(): Promise<void> {
         source,
         COUNT(*) FILTER (WHERE created_at >= NOW() - INTERVAL '1 hour')::bigint::text AS inserted_last_1h,
         COUNT(*) FILTER (WHERE created_at >= NOW() - INTERVAL '24 hours')::bigint::text AS inserted_last_24h,
-        COUNT(*) FILTER (WHERE publication_datetime >= NOW() - INTERVAL '24 hours')::bigint::text AS published_last_24h,
+        COUNT(*) FILTER (WHERE LEAST(publication_datetime, created_at) >= NOW() - INTERVAL '24 hours')::bigint::text AS published_last_24h,
         COUNT(*) FILTER (
           WHERE created_at >= NOW() - INTERVAL '24 hours'
-            AND publication_datetime >= NOW() - INTERVAL '24 hours'
+            AND LEAST(publication_datetime, created_at) >= NOW() - INTERVAL '24 hours'
         )::bigint::text AS fresh_last_24h,
         COUNT(*) FILTER (
           WHERE created_at >= NOW() - INTERVAL '24 hours'
-            AND publication_datetime < NOW() - INTERVAL '24 hours'
+            AND LEAST(publication_datetime, created_at) < NOW() - INTERVAL '24 hours'
         )::bigint::text AS late_last_24h
       FROM news_articles
       WHERE NOT ${LOW_SIGNAL_TITLE_SQL}
@@ -451,11 +451,11 @@ async function main(): Promise<void> {
       `Source: news_articles`,
       `Published 24h: ${totalPublished24h.toLocaleString()} / Fresh 24h: ${totalFresh24h.toLocaleString()} / Late 24h: ${totalLate24h.toLocaleString()} / Inserted 1h: ${totalInserted1h.toLocaleString()}`,
       `Supporting: Inserted 24h ${totalInserted24h.toLocaleString()} / Late share of ins24h ${formatPercent(totalLateShare)}`,
-      `Fields: pub24h=publication_datetime, fresh24h=published+inserted within last 24h, late24h=inserted within last 24h but published >24h old, ins1h=created_at within last 1h`,
+      `Fields: pub24h=normalized publication_datetime, fresh24h=published+inserted within last 24h, late24h=inserted within last 24h but published >24h old, ins1h=created_at within last 1h`,
       `Quality filter: excludes unreadable code-like titles from counts`,
       `Late-heavy countries (ins24h>=250): ${lateHeavyCountries.join(', ') || 'none'}`,
       `Domestic-only top ${selectedDomesticRows.length}: ${domesticSummary || 'none'}`,
-      `Country semantics: inferred story geography from title, fallback to outlet country`,
+      `Country semantics: atlas outlet country`,
       scopeLabel,
       configuredScopeLabel,
       unexpectedCountries.size > 0 ? `Unexpected countries in data: ${[...unexpectedCountries].join(', ')}` : '',

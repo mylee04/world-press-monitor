@@ -9,10 +9,10 @@ type Hub = {
 };
 
 const HUBS: Hub[] = [
-  { name: 'Washington', country: 'United States', lat: 38.9072, lon: -77.0369, keywords: ['white house', 'washington', 'pentagon', 'congress'] },
+  { name: 'Washington', country: 'United States', lat: 38.9072, lon: -77.0369, keywords: ['white house', 'washington', 'pentagon'] },
   { name: 'New York', country: 'United States', lat: 40.7128, lon: -74.006, keywords: ['new york', 'wall street', 'nyse', 'manhattan'] },
-  { name: 'London', country: 'United Kingdom', lat: 51.5072, lon: -0.1276, keywords: ['uk', 'britain', 'london', 'westminster'] },
-  { name: 'Brussels', country: 'Belgium', lat: 50.8503, lon: 4.3517, keywords: ['brussels', 'eu', 'european union', 'nato'] },
+  { name: 'London', country: 'United Kingdom', lat: 51.5072, lon: -0.1276, keywords: ['britain', 'london', 'westminster'] },
+  { name: 'Brussels', country: 'Belgium', lat: 50.8503, lon: 4.3517, keywords: ['brussels', 'bruxelles', 'brussel'] },
   { name: 'Paris', country: 'France', lat: 48.8566, lon: 2.3522, keywords: ['france', 'paris', 'elysee'] },
   { name: 'Berlin', country: 'Germany', lat: 52.52, lon: 13.405, keywords: ['germany', 'berlin', 'bundestag'] },
   { name: 'Rome', country: 'Italy', lat: 41.9028, lon: 12.4964, keywords: ['italy', 'rome', 'vatican'] },
@@ -21,7 +21,7 @@ const HUBS: Hub[] = [
   { name: 'Moscow', country: 'Russia', lat: 55.7558, lon: 37.6173, keywords: ['russia', 'moscow', 'kremlin'] },
   { name: 'Warsaw', country: 'Poland', lat: 52.2297, lon: 21.0122, keywords: ['poland', 'warsaw'] },
   { name: 'Istanbul', country: 'Turkey', lat: 41.0082, lon: 28.9784, keywords: ['turkey', 'istanbul', 'ankara'] },
-  { name: 'Tel Aviv', country: 'Israel', lat: 32.0853, lon: 34.7818, keywords: ['israel', 'tel aviv', 'jerusalem', 'gaza', 'west bank'] },
+  { name: 'Tel Aviv', country: 'Israel', lat: 32.0853, lon: 34.7818, keywords: ['israel', 'tel aviv', 'jerusalem'] },
   { name: 'Riyadh', country: 'Saudi Arabia', lat: 24.7136, lon: 46.6753, keywords: ['saudi', 'riyadh'] },
   { name: 'Tehran', country: 'Iran', lat: 35.6892, lon: 51.389, keywords: ['iran', 'tehran'] },
   { name: 'Doha', country: 'Qatar', lat: 25.2854, lon: 51.531, keywords: ['qatar', 'doha'] },
@@ -31,7 +31,7 @@ const HUBS: Hub[] = [
   { name: 'Beijing', country: 'China', lat: 39.9042, lon: 116.4074, keywords: ['china', 'beijing'] },
   { name: 'Shanghai', country: 'China', lat: 31.2304, lon: 121.4737, keywords: ['shanghai'] },
   { name: 'Taipei', country: 'Taiwan', lat: 25.033, lon: 121.5654, keywords: ['taiwan', 'taipei'] },
-  { name: 'Seoul', country: 'South Korea', lat: 37.5665, lon: 126.978, keywords: ['korea', 'seoul', 'north korea', 'pyongyang'] },
+  { name: 'Seoul', country: 'South Korea', lat: 37.5665, lon: 126.978, keywords: ['south korea', 'seoul'] },
   { name: 'Tokyo', country: 'Japan', lat: 35.6762, lon: 139.6503, keywords: ['japan', 'tokyo'] },
   { name: 'Singapore', country: 'Singapore', lat: 1.3521, lon: 103.8198, keywords: ['singapore'] },
   { name: 'Hong Kong', country: 'China', lat: 22.3193, lon: 114.1694, keywords: ['hong kong'] },
@@ -86,10 +86,16 @@ export function inferGeoFromTitle(
   title: string,
   fallbackCountry?: string
 ): Pick<NewsItem, 'lat' | 'lon' | 'locationName' | 'country'> {
-  const lower = title.toLowerCase();
+  const normalizedTitle = normalizeGeoText(title);
+  const haystack = normalizedTitle ? ` ${normalizedTitle} ` : '';
   for (const hub of HUBS) {
-    if (hub.keywords.some((keyword) => lower.includes(keyword))) {
-      return { lat: hub.lat, lon: hub.lon, locationName: hub.name, country: hub.country };
+    if (hub.keywords.some((keyword) => haystack.includes(` ${normalizeGeoText(keyword)} `))) {
+      return {
+        lat: hub.lat,
+        lon: hub.lon,
+        locationName: hub.name,
+        country: fallbackCountry || hub.country,
+      };
     }
   }
 
@@ -102,4 +108,14 @@ export function inferGeoFromTitle(
   }
 
   return {};
+}
+
+function normalizeGeoText(value: string): string {
+  return (value || '')
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}]+/gu, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
 }

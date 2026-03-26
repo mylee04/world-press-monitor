@@ -2304,7 +2304,7 @@ export async function persistNewsArticles(items: NewsItem[]): Promise<{ persiste
     group.forEach((row, i) => {
       const base = i * 24;
       parts.push(
-        `($${base + 1}::text,$${base + 2}::text,$${base + 3}::timestamptz,$${base + 4}::text,$${base + 5}::text,$${base + 6}::text[],$${base + 7}::text[],$${base + 8}::text,$${base + 9}::text[],$${base + 10}::timestamptz,$${base + 11}::timestamptz,$${base + 12}::text,$${base + 13}::text,$${base + 14}::timestamptz,$${base + 15}::text,$${base + 16}::text,$${base + 17}::timestamptz,$${base + 18}::timestamptz,$${base + 19}::text,$${base + 20}::text,$${base + 21}::text,$${base + 22}::text,$${base + 23}::text,$${base + 24}::text,now(),now())`
+        `($${base + 1}::text,$${base + 2}::text,least($${base + 3}::timestamptz, now()),$${base + 4}::text,$${base + 5}::text,$${base + 6}::text[],$${base + 7}::text[],$${base + 8}::text,$${base + 9}::text[],$${base + 10}::timestamptz,$${base + 11}::timestamptz,$${base + 12}::text,$${base + 13}::text,$${base + 14}::text,$${base + 15}::timestamptz,$${base + 16}::text,$${base + 17}::text,$${base + 18}::timestamptz,$${base + 19}::timestamptz,$${base + 20}::text,$${base + 21}::text,$${base + 22}::text,$${base + 23}::text,$${base + 24}::text,now(),now())`
       );
       values.push(
         row.externalId,
@@ -2343,7 +2343,7 @@ export async function persistNewsArticles(items: NewsItem[]): Promise<{ persiste
       ) values ${parts.join(',')}
       on conflict (external_id) do update set
         stable_id = coalesce(excluded.stable_id, news_articles.stable_id),
-        publication_datetime = excluded.publication_datetime,
+        publication_datetime = least(excluded.publication_datetime, news_articles.created_at),
         section = excluded.section,
         primary_section = coalesce(excluded.primary_section, news_articles.primary_section),
         sections_normalized = (
