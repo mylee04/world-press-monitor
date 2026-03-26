@@ -1261,6 +1261,15 @@ const ENABLE_RSS_TO_SITEMAP_FALLBACK = parseBoolEnv(process.env.INGEST_RSS_SITEM
 const ENABLE_EXPLICIT_SITEMAP_PARALLEL = parseBoolEnv(process.env.INGEST_EXPLICIT_SITEMAP_PARALLEL, true);
 const ENABLE_ARTICLE_META_CATEGORY_FALLBACK = parseBoolEnv(process.env.INGEST_ARTICLE_META_CATEGORY_FALLBACK, true);
 const ENABLE_ARTICLE_TITLE_FALLBACK = parseBoolEnv(process.env.INGEST_ARTICLE_TITLE_FALLBACK, true);
+const ARTICLE_META_CATEGORY_FETCH_MAX_PER_RUN = BACKFILL_WINDOW
+  ? Number.MAX_SAFE_INTEGER
+  : Math.max(0, Math.min(5000, Number.parseInt(process.env.INGEST_ARTICLE_META_CATEGORY_MAX_FETCHES || '400', 10) || 400));
+const ARTICLE_META_CATEGORY_FETCH_MAX_PER_SOURCE = BACKFILL_WINDOW
+  ? Number.MAX_SAFE_INTEGER
+  : Math.max(
+      0,
+      Math.min(500, Number.parseInt(process.env.INGEST_ARTICLE_META_CATEGORY_MAX_FETCHES_PER_SOURCE || '40', 10) || 40)
+    );
 const ARTICLE_META_CATEGORY_FALLBACK_SOURCES = new Set(
   (
     process.env.INGEST_ARTICLE_META_CATEGORY_SOURCES
@@ -1321,6 +1330,12 @@ const ARTICLE_TITLE_FETCH_TIMEOUT_MS = Math.max(
 
 const articleMetaCategoryCache = new Map<string, Promise<string[]>>();
 const articleTitleCache = new Map<string, Promise<string>>();
+const articleMetaCategoryFetchCountsBySource = new Map<string, number>();
+const articleMetaCategoryStats = {
+  fetchesStarted: 0,
+  cacheHits: 0,
+  budgetSkipped: 0,
+};
 
 const FEED_FETCH_HEADERS = {
   'User-Agent':
@@ -1381,11 +1396,27 @@ function shouldFetchArticlePageTitle(source: string, url: string, title: string)
 }
 
 async function fetchArticleMetaCategories(source: string, url: string): Promise<string[]> {
-  const cacheKey = `${normalizeSourceKey(source)}\n${url.trim()}`;
+  const normalizedSource = normalizeSourceKey(source);
+  const cacheKey = `${normalizedSource}\n${url.trim()}`;
   const existing = articleMetaCategoryCache.get(cacheKey);
   if (existing) {
+    articleMetaCategoryStats.cacheHits += 1;
     return existing;
   }
+
+  if (articleMetaCategoryStats.fetchesStarted >= ARTICLE_META_CATEGORY_FETCH_MAX_PER_RUN) {
+    articleMetaCategoryStats.budgetSkipped += 1;
+    return [];
+  }
+
+  const sourceCount = articleMetaCategoryFetchCountsBySource.get(normalizedSource) || 0;
+  if (sourceCount >= ARTICLE_META_CATEGORY_FETCH_MAX_PER_SOURCE) {
+    articleMetaCategoryStats.budgetSkipped += 1;
+    return [];
+  }
+
+  articleMetaCategoryStats.fetchesStarted += 1;
+  articleMetaCategoryFetchCountsBySource.set(normalizedSource, sourceCount + 1);
 
   const task = (async () => {
     try {
@@ -2759,6 +2790,7 @@ async function runOnce(): Promise<void> {
     persistedMissingPublishedAt: persistedMissingPublishedAt.persisted,
     persistedDiagnostics: persistedDiag.persisted,
     fallbackSummary,
+    articleMetaCategorySummary: { ...articleMetaCategoryStats },
   });
 
   writeFileSync(SUMMARY_FILE, JSON.stringify(summary, null, 2), 'utf8');
@@ -2777,6 +2809,7 @@ async function runOnce(): Promise<void> {
     explicitSitemapParallel: ENABLE_EXPLICIT_SITEMAP_PARALLEL,
     failingKeysSize: failingKeys.size,
     fallbackSummary,
+    articleMetaCategorySummary: articleMetaCategoryStats,
     methodStats,
     mergedCount: merged.length,
     persistedArticles: persistedNewsArticles.persisted,

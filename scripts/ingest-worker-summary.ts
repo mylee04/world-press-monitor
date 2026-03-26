@@ -30,6 +30,11 @@ type WorkerSummary = {
       sitemapBackoffSkipped: number;
       sitemapPolicyDisabled: number;
     };
+    articleMetaCategory: {
+      fetchesStarted: number;
+      cacheHits: number;
+      budgetSkipped: number;
+    };
   };
 };
 
@@ -55,6 +60,7 @@ export function buildWorkerSummary(params: {
   persistedMissingPublishedAt: number;
   persistedDiagnostics: number;
   fallbackSummary: WorkerSummary['worker']['fallback'];
+  articleMetaCategorySummary: WorkerSummary['worker']['articleMetaCategory'];
 }): WorkerSummary {
   const counts = summarizeEndpointResults(params.diagnostics);
   return {
@@ -78,6 +84,7 @@ export function buildWorkerSummary(params: {
       missingPublishedAtPersisted: params.persistedMissingPublishedAt,
       diagnosticsPersisted: params.persistedDiagnostics,
       fallback: params.fallbackSummary,
+      articleMetaCategory: params.articleMetaCategorySummary,
     },
   };
 }
@@ -94,6 +101,7 @@ export function formatWorkerSummaryLog(params: {
   explicitSitemapParallel: boolean;
   failingKeysSize: number;
   fallbackSummary: WorkerSummary['worker']['fallback'];
+  articleMetaCategorySummary: WorkerSummary['worker']['articleMetaCategory'];
   methodStats: Record<'rss' | 'sitemap', { attempted: number; ok: number; fail: number }>;
   mergedCount: number;
   persistedArticles: number;
@@ -107,6 +115,7 @@ export function formatWorkerSummaryLog(params: {
     `explicit_sitemap_parallel=${params.explicitSitemapParallel ? 'on' : 'off'} ` +
     `backoff_skipped_total=${params.failingKeysSize} backoff_skipped=[rss=${params.fallbackSummary.rssBackoffSkipped}, sitemap=${params.fallbackSummary.sitemapBackoffSkipped}] ` +
     `sitemap_policy_disabled=${params.fallbackSummary.sitemapPolicyDisabled} ` +
+    `article_meta_category=[fetches=${params.articleMetaCategorySummary.fetchesStarted}, cache_hits=${params.articleMetaCategorySummary.cacheHits}, budget_skipped=${params.articleMetaCategorySummary.budgetSkipped}] ` +
     `method_stats= [rss attempted=${params.methodStats.rss.attempted}, ok=${params.methodStats.rss.ok}, fail=${params.methodStats.rss.fail}(${formatPercent(params.methodStats.rss.fail, params.methodStats.rss.attempted)}%); ` +
     `[sitemap attempted=${params.methodStats.sitemap.attempted}, ok=${params.methodStats.sitemap.ok}, fail=${params.methodStats.sitemap.fail}(${formatPercent(params.methodStats.sitemap.fail, params.methodStats.sitemap.attempted)}%)] ` +
     `sitemapFallback=${params.fallbackSummary.rssSitemapFallbackSuccess}/${params.fallbackSummary.rssSitemapFallbackAttempts} skipped=${params.fallbackSummary.rssSitemapFallbackSkipped} unique=${params.mergedCount} persisted=${params.persistedArticles} newsArticles=${params.persistedArticles} elapsedMs=${params.elapsedMs}` +

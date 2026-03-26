@@ -47,8 +47,10 @@ Throughput defaults for the hourly path:
 
 - `INGEST_SITEMAP_LIMIT=2000`
 - `INGEST_ITEM_MAP_CONCURRENCY=24`
+- `INGEST_ARTICLE_META_CATEGORY_MAX_FETCHES=400`
+- `INGEST_ARTICLE_META_CATEGORY_MAX_FETCHES_PER_SOURCE=40`
 
-These defaults keep coverage broad while preventing giant sitemap endpoints from exploding into 5,000-item fan-out work on a single hourly run.
+These defaults keep coverage broad while preventing giant sitemap endpoints from exploding into 5,000-item fan-out work on a single hourly run. They also cap expensive article-page category fallback during hourly ingest while leaving backfill mode uncapped.
 
 Recommended operational pattern:
 
