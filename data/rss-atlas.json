@@ -1045,11 +1045,11 @@
           "row": 24
         },
         {
-          "name": "CGTN Documentary",
-          "url": "https://news.cgtn.com/rss/documentary/CGTN-Documentary.rss",
-          "status": null,
-          "checkedDate": null,
-          "valid": "needs verification",
+          "name": "CGTN - Documentary",
+          "url": "https://www.cgtn.com/subscribe/rss/section/documentary.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/26/2026",
+          "valid": "valid",
           "row": 25
         },
         {
@@ -1253,6 +1253,110 @@
           "checkedDate": "03/23/2026",
           "valid": "needs verification",
           "row": 46
+        },
+        {
+          "name": "CGTN - China",
+          "url": "https://www.cgtn.com/subscribe/rss/section/china.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/26/2026",
+          "valid": "valid",
+          "row": 47
+        },
+        {
+          "name": "CGTN - World",
+          "url": "https://www.cgtn.com/subscribe/rss/section/world.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/26/2026",
+          "valid": "valid",
+          "row": 48
+        },
+        {
+          "name": "CGTN - Politics",
+          "url": "https://www.cgtn.com/subscribe/rss/section/politics.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/26/2026",
+          "valid": "valid",
+          "row": 49
+        },
+        {
+          "name": "CGTN - Business",
+          "url": "https://www.cgtn.com/subscribe/rss/section/business.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/26/2026",
+          "valid": "valid",
+          "row": 50
+        },
+        {
+          "name": "CGTN - Opinion",
+          "url": "https://www.cgtn.com/subscribe/rss/section/opinion.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/26/2026",
+          "valid": "valid",
+          "row": 51
+        },
+        {
+          "name": "CGTN - Tech & Sci",
+          "url": "https://www.cgtn.com/subscribe/rss/section/tech-sci.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/26/2026",
+          "valid": "valid",
+          "row": 52
+        },
+        {
+          "name": "CGTN - Culture",
+          "url": "https://www.cgtn.com/subscribe/rss/section/culture.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/26/2026",
+          "valid": "valid",
+          "row": 53
+        },
+        {
+          "name": "CGTN - Sports",
+          "url": "https://www.cgtn.com/subscribe/rss/section/sports.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/26/2026",
+          "valid": "valid",
+          "row": 54
+        },
+        {
+          "name": "CGTN - Travel",
+          "url": "https://www.cgtn.com/subscribe/rss/section/travel.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/26/2026",
+          "valid": "valid",
+          "row": 55
+        },
+        {
+          "name": "CGTN - Nature",
+          "url": "https://www.cgtn.com/subscribe/rss/section/nature.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/26/2026",
+          "valid": "valid",
+          "row": 56
+        },
+        {
+          "name": "CGTN - Live",
+          "url": "https://www.cgtn.com/subscribe/rss/section/live.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/26/2026",
+          "valid": "valid",
+          "row": 57
+        },
+        {
+          "name": "CGTN - Video",
+          "url": "https://www.cgtn.com/subscribe/rss/section/video.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/26/2026",
+          "valid": "valid",
+          "row": 58
+        },
+        {
+          "name": "CGTN - Global Stringer",
+          "url": "https://www.cgtn.com/subscribe/rss/section/gstringer.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/26/2026",
+          "valid": "valid",
+          "row": 59
         }
       ]
     },
