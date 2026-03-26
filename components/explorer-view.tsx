@@ -88,7 +88,7 @@ function triggerCsvDownload(rows: ExplorerCsvRow[], filename: string): void {
 function toExplorerCsvRow(article: NewsApiItem): ExplorerCsvRow {
   return {
     id: article.id,
-    source: article.source || '',
+    source: article.sourceDisplay || article.source || '',
     country: article.country || '',
     language: article.language || '',
     primarySection: article.primarySection || '',
@@ -386,7 +386,7 @@ export function ExplorerView() {
                 <tr key={article.id}>
                   <td>{formatPublicationTime(article.publicationDatetime, publicationTimeMode, localTimeZone)}</td>
                   <td>{article.country || 'Unknown'}</td>
-                  <td>{article.source}</td>
+                  <td>{article.sourceDisplay || article.source}</td>
                   <td>{getTopLevelTaxonomyLabel(mapSectionToTopLevelTaxonomy(article.primarySection), resolvedLocale)}</td>
                   <td>{getTopLevelTaxonomyListLabel(article.sections, resolvedLocale, 'general_other')}</td>
                   <td>{getTopicListLabel(article.topics, resolvedLocale)}</td>

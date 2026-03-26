@@ -893,6 +893,7 @@ function mapRowToNewsItem(row: {
 export interface NewsApiItem {
   id: string;
   source: string;
+  sourceDisplay: string;
   title: string;
   snippet: string | null;
   url: string;
@@ -930,6 +931,7 @@ export interface NewsApiFiltersResult {
 export interface NewsApiDashboardHeadline {
   id: string;
   source: string;
+  sourceDisplay: string;
   title: string;
   snippet: string | null;
   url: string;

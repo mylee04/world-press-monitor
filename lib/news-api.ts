@@ -1,6 +1,7 @@
 export interface NewsApiItem {
   id: string;
   source: string;
+  sourceDisplay: string;
   title: string;
   snippet: string | null;
   url: string;

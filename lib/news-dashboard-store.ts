@@ -1,6 +1,7 @@
 import type { Pool } from 'pg';
 import type { NewsSection } from '@/lib/types';
 import { decodeHtmlEntities, looksLikeLowSignalArticleTitle, normalizeArticleTitle, normalizeHtmlText, normalizeReadableArticleTitle } from '@/lib/html-entities';
+import { buildDisplaySourceName } from '@/lib/source-display';
 import { buildArticleTaxonomy, NEWS_SECTION_ORDER, normalizeSourceCategories } from '@/lib/article-taxonomy';
 import { truncatePersistedText } from '@/lib/news-write-helpers';
 
@@ -76,6 +77,7 @@ type NewsApiDashboardSourceCategoryCountRow = {
 type NewsApiDashboardHeadlineItem = {
   id: string;
   source: string;
+  sourceDisplay: string;
   title: string;
   snippet: string | null;
   url: string;
@@ -186,6 +188,7 @@ function mapRowToNewsApiItem(
   return {
     id: row.id,
     source: row.source,
+    sourceDisplay: buildDisplaySourceName(row.source),
     title,
     snippet,
     url,

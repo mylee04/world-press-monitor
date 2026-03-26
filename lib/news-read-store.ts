@@ -1,12 +1,14 @@
 import type { Pool } from 'pg';
 import type { NewsSection } from '@/lib/types';
 import { decodeHtmlEntities, normalizeArticleTitle, normalizeHtmlText } from '@/lib/html-entities';
+import { buildDisplaySourceName } from '@/lib/source-display';
 import { buildArticleTaxonomy, normalizeSourceCategories } from '@/lib/article-taxonomy';
 import { truncatePersistedText } from '@/lib/news-write-helpers';
 
 type NewsApiItem = {
   id: string;
   source: string;
+  sourceDisplay: string;
   title: string;
   snippet: string | null;
   url: string;
@@ -120,6 +122,7 @@ function mapRowToNewsApiItem(row: NewsApiReadRow, deps: Pick<ReadStoreDeps, 'api
   return {
     id: row.id,
     source: row.source,
+    sourceDisplay: buildDisplaySourceName(row.source),
     title,
     snippet,
     url,

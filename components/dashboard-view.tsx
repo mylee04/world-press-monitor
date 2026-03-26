@@ -341,7 +341,7 @@ export function DashboardView() {
           {preview.headlines.map((article) => (
             <a className="headline-card" key={article.id} href={article.url} rel="noreferrer" target="_blank">
               <small>
-                {article.country || 'Unknown'} · {article.source} · {getTopLevelTaxonomyLabel(mapSectionToTopLevelTaxonomy(article.primarySection), resolvedLocale)}
+                {article.country || 'Unknown'} · {article.sourceDisplay || article.source} · {getTopLevelTaxonomyLabel(mapSectionToTopLevelTaxonomy(article.primarySection), resolvedLocale)}
               </small>
               <strong>{article.title}</strong>
               <small>
