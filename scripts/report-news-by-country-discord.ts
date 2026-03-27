@@ -438,7 +438,7 @@ async function main(): Promise<void> {
     const lines = selectedRows
       .map(
         (row, index) =>
-          `${index + 1}. ${row.country}: pub24h ${row.publishedLast24h.toLocaleString()}, fresh24h ${row.freshLast24h.toLocaleString()}, late24h ${row.lateLast24h.toLocaleString()} (${formatPercent(row.lateShare)}), ins1h ${row.insertedLast1h.toLocaleString()}`
+          `${index + 1}. ${row.country}: pub24h ${row.publishedLast24h.toLocaleString()}, fresh24h ${row.freshLast24h.toLocaleString()}, late24h ${row.lateLast24h.toLocaleString()} (${formatPercent(row.lateShare)}), first1h ${row.insertedLast1h.toLocaleString()}`
       );
 
     const scopeLabel =
@@ -453,11 +453,11 @@ async function main(): Promise<void> {
     const header = [
       `📰 News Volume by Country (${new Date().toISOString()})`,
       `Source: news_articles`,
-      `Published 24h: ${totalPublished24h.toLocaleString()} / Fresh 24h: ${totalFresh24h.toLocaleString()} / Late 24h: ${totalLate24h.toLocaleString()} / Inserted 1h: ${totalInserted1h.toLocaleString()}`,
-      `Supporting: Inserted 24h ${totalInserted24h.toLocaleString()} / Late share of ins24h ${formatPercent(totalLateShare)}`,
-      `Fields: pub24h=normalized publication_datetime, fresh24h=published+inserted within last 24h, late24h=inserted within last 24h but published >24h old, ins1h=created_at within last 1h`,
+      `Published 24h: ${totalPublished24h.toLocaleString()} / Fresh 24h: ${totalFresh24h.toLocaleString()} / Late 24h: ${totalLate24h.toLocaleString()} / First seen 1h: ${totalInserted1h.toLocaleString()}`,
+      `Supporting: First seen 24h ${totalInserted24h.toLocaleString()} / Late share of first-seen 24h ${formatPercent(totalLateShare)}`,
+      `Fields: pub24h=normalized publication_datetime, fresh24h=published+first-seen within last 24h, late24h=first-seen within last 24h but published >24h old, first1h=created_at within last 1h`,
       `Quality filter: excludes unreadable code-like titles from counts`,
-      `Late-heavy countries (ins24h>=250): ${lateHeavyCountries.join(', ') || 'none'}`,
+      `Late-heavy countries (first seen 24h >= 250): ${lateHeavyCountries.join(', ') || 'none'}`,
       `Domestic-only top ${selectedDomesticRows.length}: ${domesticSummary || 'none'}`,
       `Country semantics: atlas outlet country`,
       scopeLabel,
