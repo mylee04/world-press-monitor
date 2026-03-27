@@ -28,18 +28,23 @@ mirror_prefixed_env() {
   fi
 }
 
-pick_env_file() {
+pick_env_files() {
   local preferred_env_file="${WPR_ENV_FILE:-${WPM_ENV_FILE:-}}"
   if [ -n "${preferred_env_file}" ] && [ -f "${preferred_env_file}" ]; then
     printf '%s\n' "${preferred_env_file}"
     return 0
   fi
+
+  local emitted=0
   if [ -f "${WPR_PROJECT_ROOT}/.env.local" ]; then
     printf '%s\n' "${WPR_PROJECT_ROOT}/.env.local"
-    return 0
+    emitted=1
   fi
   if [ -f "${WPR_PROJECT_ROOT}/.env.macmini.local" ]; then
     printf '%s\n' "${WPR_PROJECT_ROOT}/.env.macmini.local"
+    emitted=1
+  fi
+  if [ "${emitted}" -eq 1 ]; then
     return 0
   fi
   if [ -f "${WPR_PROJECT_ROOT}/.env.example" ]; then
@@ -50,15 +55,29 @@ pick_env_file() {
 }
 
 load_local_env() {
-  local env_file
-  env_file="$(pick_env_file || true)"
-  if [ -n "${env_file}" ] && [ -f "${env_file}" ]; then
-    set -a
-    # shellcheck disable=SC1090
-    source "${env_file}"
-    set +a
-    export WPR_ENV_FILE_SOURCE="${env_file}"
-    export WPM_ENV_FILE_SOURCE="${env_file}"
+  local env_files env_file loaded_sources=()
+  env_files="$(pick_env_files || true)"
+  if [ -n "${env_files}" ]; then
+    while IFS= read -r env_file; do
+      [ -z "${env_file}" ] && continue
+      [ ! -f "${env_file}" ] && continue
+      set -a
+      # shellcheck disable=SC1090
+      source "${env_file}"
+      set +a
+      loaded_sources+=("${env_file}")
+    done <<EOF
+${env_files}
+EOF
+    if [ "${#loaded_sources[@]}" -gt 0 ]; then
+      local joined_sources
+      joined_sources="$(printf '%s\n' "${loaded_sources[@]}" | paste -sd ',' -)"
+      export WPR_ENV_FILE_SOURCE="${joined_sources}"
+      export WPM_ENV_FILE_SOURCE="${joined_sources}"
+    else
+      export WPR_ENV_FILE_SOURCE=""
+      export WPM_ENV_FILE_SOURCE=""
+    fi
   else
     export WPR_ENV_FILE_SOURCE=""
     export WPM_ENV_FILE_SOURCE=""
