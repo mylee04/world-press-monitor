@@ -21132,7 +21132,7 @@
         },
         {
           "name": "CNA Singapore",
-          "url": "https://www.channelnewsasia.com/api/v1/rss-outbound-feed?_format=xml&category=6936"
+          "url": "https://www.channelnewsasia.com/api/v1/rss-outbound-feed?_format=xml&category=1821876"
         },
         {
           "name": "Straits Times Sport",
@@ -21151,8 +21151,25 @@
           "url": "https://www.straitstimes.com/news/opinion/rss.xml"
         },
         {
+          "name": "Straits Times - Current Month Feeds Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.straitstimes.com/sitemap/2026/03/feeds.xml"
+        },
+        {
           "name": "Business Times International",
           "url": "https://www.businesstimes.com.sg/rss/international"
+        },
+        {
+          "name": "Business Times Top Stories",
+          "url": "https://www.businesstimes.com.sg/rss/top-stories"
+        },
+        {
+          "name": "Business Times Economy & Policy",
+          "url": "https://www.businesstimes.com.sg/rss/economy-policy"
+        },
+        {
+          "name": "Business Times Global Enterprise",
+          "url": "https://www.businesstimes.com.sg/rss/global-enterprise"
         },
         {
           "name": "Business Times Companies & Markets",
@@ -21160,23 +21177,174 @@
         },
         {
           "name": "Business Times Wealth",
-          "url": "https://www.businesstimes.com.sg/rss/wealth"
+          "url": "https://www.businesstimes.com.sg/rss/wealth",
+          "enabled": false
         },
         {
           "name": "Business Times Property",
-          "url": "https://www.businesstimes.com.sg/rss/property"
+          "url": "https://www.businesstimes.com.sg/rss/property",
+          "enabled": false
         },
         {
           "name": "Business Times Startups & Tech",
-          "url": "https://www.businesstimes.com.sg/rss/startups-tech"
+          "url": "https://www.businesstimes.com.sg/rss/startups-tech",
+          "enabled": false
+        },
+        {
+          "name": "Business Times - Google News Sitemap",
+          "url": "https://www.businesstimes.com.sg/googlenews.xml"
         },
         {
           "name": "MustShareNews",
           "url": "https://mustsharenews.com/feed/"
         },
         {
+          "name": "Yahoo News Singapore",
+          "url": "https://sg.news.yahoo.com/rss/"
+        },
+        {
           "name": "The Independent Singapore",
           "url": "https://theindependent.sg/feed/"
+        },
+        {
+          "name": "Singapore Business Review",
+          "url": "https://sbr.com.sg/rss.xml"
+        },
+        {
+          "name": "EdgeProp Singapore",
+          "url": "https://www.edgeprop.sg/rss.xml"
+        },
+        {
+          "name": "Berita Harian",
+          "url": "https://www.beritaharian.sg/rss.xml"
+        },
+        {
+          "name": "Tamil Murasu",
+          "url": "https://www.tamilmurasu.com.sg/rss.xml"
+        },
+        {
+          "name": "Tamil Murasu - Google News Sitemap",
+          "url": "https://www.tamilmurasu.com.sg/googlenews.xml"
+        },
+        {
+          "name": "Zaobao - News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.zaobao.com.sg/sitemap.xml"
+        },
+        {
+          "name": "8world - News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.8world.com/sitemap.xml"
+        },
+        {
+          "name": "Straits Times - Google News Sitemap",
+          "url": "https://www.straitstimes.com/googlenews.xml"
+        },
+        {
+          "name": "AsiaOne - Google News Sitemap",
+          "url": "https://www.asiaone.com/googlenews.xml"
+        },
+        {
+          "name": "STOMP - Google News Sitemap",
+          "url": "https://www.stomp.sg/googlenews.xml"
+        },
+        {
+          "name": "CNA Latest News",
+          "url": "https://www.channelnewsasia.com/api/v1/rss-outbound-feed?_format=xml&category=6511"
+        },
+        {
+          "name": "CNA East Asia",
+          "url": "https://www.channelnewsasia.com/api/v1/rss-outbound-feed?_format=xml&category=10416"
+        },
+        {
+          "name": "CNA World",
+          "url": "https://www.channelnewsasia.com/api/v1/rss-outbound-feed?_format=xml&category=10296"
+        },
+        {
+          "name": "CNA Business",
+          "url": "https://www.channelnewsasia.com/api/v1/rss-outbound-feed?_format=xml&category=6311"
+        },
+        {
+          "name": "CNA Asia",
+          "url": "https://www.channelnewsasia.com/api/v1/rss-outbound-feed?_format=xml&category=6936"
+        },
+        {
+          "name": "Singapore Business Review - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://sbr.com.sg/sitemap.xml",
+          "category": "Business",
+          "language": "en",
+          "sourceType": "sitemap",
+          "enabled": true
+        },
+        {
+          "name": "Shin Min - News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.shinmin.sg/sitemap.xml",
+          "category": "News",
+          "language": "zh",
+          "sourceType": "sitemap",
+          "enabled": true
+        },
+        {
+          "name": "8days Latest Stories",
+          "url": "https://www.8days.sg/api/v1/rss-outbound-feed?_format=xml",
+          "category": "Entertainment",
+          "language": "en",
+          "sourceType": "rss",
+          "enabled": true
+        },
+        {
+          "name": "ThinkChina - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.thinkchina.sg/_plat/api/sitemap",
+          "category": "Opinion",
+          "language": "zh",
+          "sourceType": "sitemap",
+          "enabled": true
+        },
+        {
+          "name": "HardwareZone - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.hardwarezone.com.sg/_plat/api/sitemap.xml",
+          "category": "Technology",
+          "language": "en",
+          "sourceType": "sitemap",
+          "enabled": true
+        },
+        {
+          "name": "BERITA Mediacorp",
+          "url": "https://berita.mediacorp.sg/api/v1/rss-outbound-feed?_format=xml",
+          "category": "News",
+          "language": "ms",
+          "sourceType": "rss",
+          "enabled": true
+        },
+        {
+          "name": "BERITA Mediacorp - News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://berita.mediacorp.sg/api/v1/sitemap-news-feed?_format=xml",
+          "category": "News",
+          "language": "ms",
+          "sourceType": "sitemap",
+          "enabled": true
+        },
+        {
+          "name": "Seithi Mediacorp",
+          "url": "https://seithi.mediacorp.sg/api/v1/rss-outbound-feed?_format=xml",
+          "category": "News",
+          "language": "ta",
+          "sourceType": "rss",
+          "enabled": true
+        },
+        {
+          "name": "Seithi Mediacorp - News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://seithi.mediacorp.sg/api/v1/sitemap-news-feed?_format=xml",
+          "category": "News",
+          "language": "ta",
+          "sourceType": "sitemap",
+          "enabled": true
         }
       ]
     },
