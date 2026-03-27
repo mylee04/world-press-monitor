@@ -15059,9 +15059,10 @@
           "name": "Acento - Author Feed",
           "url": "https://acento.com.do/author/jcastillo/feed/",
           "status": "⏩ OFFICIAL",
-          "checkedDate": null,
-          "valid": "needs verification",
-          "row": 37
+          "checkedDate": "03/27/2026",
+          "valid": "invalid",
+          "row": 37,
+          "enabled": false
         },
         {
           "name": "Noticias SIN",
@@ -15230,6 +15231,150 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 52
+        },
+        {
+          "name": "7 Días",
+          "url": "https://7dias.com.do/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/27/2026",
+          "valid": "valid",
+          "row": 53
+        },
+        {
+          "name": "Roberto Cavada",
+          "url": "https://robertocavada.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/27/2026",
+          "valid": "valid",
+          "row": 54
+        },
+        {
+          "name": "Panorama",
+          "url": "https://panorama.com.do/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/27/2026",
+          "valid": "valid",
+          "row": 55
+        },
+        {
+          "name": "DominicanosHoy",
+          "url": "https://www.dominicanoshoy.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/27/2026",
+          "valid": "valid",
+          "row": 56
+        },
+        {
+          "name": "El Pregonero RD",
+          "url": "https://elpregonerord.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/27/2026",
+          "valid": "valid",
+          "row": 57
+        },
+        {
+          "name": "Diario Digital RD",
+          "url": "https://diariodigitalrd.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/27/2026",
+          "valid": "valid",
+          "row": 58
+        },
+        {
+          "name": "Ciudad Oriental",
+          "url": "https://ciudadoriental.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/27/2026",
+          "valid": "valid",
+          "row": 59
+        },
+        {
+          "name": "El Jaya",
+          "url": "https://www.eljaya.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/27/2026",
+          "valid": "valid",
+          "row": 60
+        },
+        {
+          "name": "Diario 55",
+          "url": "https://diario55.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/27/2026",
+          "valid": "valid",
+          "row": 61
+        },
+        {
+          "name": "Noticia.do",
+          "url": "https://noticia.do/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/27/2026",
+          "valid": "valid",
+          "row": 62
+        },
+        {
+          "name": "Bávaro News",
+          "url": "https://bavaronews.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/27/2026",
+          "valid": "valid",
+          "row": 63
+        },
+        {
+          "name": "El Jacaguero",
+          "url": "https://eljacaguero.com.do/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/27/2026",
+          "valid": "valid",
+          "row": 64
+        },
+        {
+          "name": "Diario Azua",
+          "url": "https://www.diarioazua.com/feeds/posts/default?alt=rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/27/2026",
+          "valid": "valid",
+          "row": 65
+        },
+        {
+          "name": "Tras las Huellas Digital",
+          "url": "http://www.traslashuellasdigital.com.do/feed",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/27/2026",
+          "valid": "valid",
+          "row": 66
+        },
+        {
+          "name": "Noticiario Barahona",
+          "url": "https://www.noticiariobarahona.com/feeds/posts/default?alt=rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/27/2026",
+          "valid": "valid",
+          "row": 67
+        },
+        {
+          "name": "El Sol de Santiago",
+          "url": "https://elsoldesantiago.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/27/2026",
+          "valid": "valid",
+          "row": 68
+        },
+        {
+          "name": "Diario Puerto Plata",
+          "url": "https://diariopuertoplata.com.do/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/27/2026",
+          "valid": "valid",
+          "row": 69
+        },
+        {
+          "name": "Barriga Verde",
+          "url": "https://barrigaverde.net/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/27/2026",
+          "valid": "valid",
+          "row": 70
         }
       ]
     },

@@ -151,6 +151,7 @@ function buildOpml(atlas: Atlas, auditMap: Map<string, AuditResult>): string {
     );
 
     for (const feed of country.feeds) {
+      if (feed.enabled === false) continue;
       if (!feed.url) continue;
 
       const audit = auditMap.get(makeKey(country.code, feed.name, feed.url));
