@@ -15375,6 +15375,22 @@
           "checkedDate": "03/27/2026",
           "valid": "valid",
           "row": 70
+        },
+        {
+          "name": "La Información",
+          "url": "https://lainformacion.com.do/news/feed",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/27/2026",
+          "valid": "valid",
+          "row": 71
+        },
+        {
+          "name": "Costa Verde DR",
+          "url": "https://costaverdedr.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/27/2026",
+          "valid": "valid",
+          "row": 72
         }
       ]
     },
