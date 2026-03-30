@@ -18165,6 +18165,22 @@
           "checkedDate": "03/29/2026",
           "valid": "valid",
           "row": 134
+        },
+        {
+          "name": "Copenhagen Post",
+          "url": "https://cphpost.dk/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/30/2026",
+          "valid": "valid",
+          "row": 135
+        },
+        {
+          "name": "Arbejderen",
+          "url": "https://arbejderen.dk/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/30/2026",
+          "valid": "valid",
+          "row": 136
         }
       ]
     },

@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Mon, 30 Mar 2026 01:41:06 GMT</dateCreated>
+    <dateCreated>Mon, 30 Mar 2026 10:09:31 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -1909,6 +1909,8 @@
       <outline text="Nordjyske - Thisted [valid]" title="Nordjyske - Thisted [valid]" type="rss" xmlUrl="https://nordjyske.dk/rss/thisted" htmlUrl="https://nordjyske.dk"/>
       <outline text="Nordjyske - Sport [valid]" title="Nordjyske - Sport [valid]" type="rss" xmlUrl="https://nordjyske.dk/rss/sport" htmlUrl="https://nordjyske.dk"/>
       <outline text="Nordjyske - Erhverv [valid]" title="Nordjyske - Erhverv [valid]" type="rss" xmlUrl="https://nordjyske.dk/rss/erhverv" htmlUrl="https://nordjyske.dk"/>
+      <outline text="Copenhagen Post [valid]" title="Copenhagen Post [valid]" type="rss" xmlUrl="https://cphpost.dk/feed/" htmlUrl="https://cphpost.dk"/>
+      <outline text="Arbejderen [valid]" title="Arbejderen [valid]" type="rss" xmlUrl="https://arbejderen.dk/feed/" htmlUrl="https://arbejderen.dk"/>
     </outline>
     <outline text="Finland (FI)" title="Finland (FI)">
       <outline text="Yle Uutiset [valid]" title="Yle Uutiset [valid]" type="rss" xmlUrl="https://feeds.yle.fi/uutiset/v1/majorHeadlines/YLE_UUTISET.rss?publisherIds=YLE_UUTISET" htmlUrl="https://feeds.yle.fi"/>
