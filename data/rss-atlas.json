@@ -17532,6 +17532,70 @@
           "checkedDate": "03/30/2026",
           "valid": "valid",
           "row": 211
+        },
+        {
+          "name": "Independent.ie - Wexford",
+          "url": "https://www.independent.ie/rss/section/2320c30a-4d55-4ddc-ac2d-e5dafaefd385/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/30/2026",
+          "valid": "valid",
+          "row": 212
+        },
+        {
+          "name": "Independent.ie - Wicklow",
+          "url": "https://www.independent.ie/rss/section/72e3f15d-512a-4694-9184-7413cb673582/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/30/2026",
+          "valid": "valid",
+          "row": 213
+        },
+        {
+          "name": "Independent.ie - Louth",
+          "url": "https://www.independent.ie/rss/section/1095fba6-e53c-4aba-8f19-420bff2fdc77/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/30/2026",
+          "valid": "valid",
+          "row": 214
+        },
+        {
+          "name": "Independent.ie - Galway",
+          "url": "https://www.independent.ie/rss/section/206fde0b-458a-4fe4-b0c1-b076011030b7/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/30/2026",
+          "valid": "valid",
+          "row": 215
+        },
+        {
+          "name": "Independent.ie - Tipperary",
+          "url": "https://www.independent.ie/rss/section/fce880c7-e884-493a-934d-b07601174bfa/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/30/2026",
+          "valid": "valid",
+          "row": 216
+        },
+        {
+          "name": "Independent.ie - Clare",
+          "url": "https://www.independent.ie/rss/section/c3822c5d-48bc-4f56-9f4b-b076010a2da0/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/30/2026",
+          "valid": "valid",
+          "row": 217
+        },
+        {
+          "name": "Independent.ie - Longford",
+          "url": "https://www.independent.ie/rss/section/69967d4d-6418-480f-ad6b-b0760114a17f/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/30/2026",
+          "valid": "valid",
+          "row": 218
+        },
+        {
+          "name": "Independent.ie - Sligo",
+          "url": "https://www.independent.ie/rss/section/d46264f9-3ba1-4c55-a3fa-0b395c6fd904/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/30/2026",
+          "valid": "valid",
+          "row": 219
         }
       ]
     },
