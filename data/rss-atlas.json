@@ -6747,6 +6747,125 @@
           "checkedDate": "03/16/2026",
           "valid": "valid",
           "row": 185
+        },
+        {
+          "name": "Daily Liberal",
+          "url": "https://www.dailyliberal.com.au/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Northern Daily Leader",
+          "url": "https://www.northerndailyleader.com.au/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Western Advocate",
+          "url": "https://www.westernadvocate.com.au/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Queensland Country Life",
+          "url": "https://www.queenslandcountrylife.com.au/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "North Queensland Register",
+          "url": "https://www.northqueenslandregister.com.au/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Stock & Land",
+          "url": "https://www.stockandland.com.au/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Stock Journal",
+          "url": "https://www.stockjournal.com.au/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Farm Weekly",
+          "url": "https://www.farmweekly.com.au/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Farmonline",
+          "url": "https://www.farmonline.com.au/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "The Senior",
+          "url": "https://www.thesenior.com.au/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Maitland Mercury",
+          "url": "https://www.maitlandmercury.com.au/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Armidale Express",
+          "url": "https://www.armidaleexpress.com.au/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Area News",
+          "url": "https://www.areanews.com.au/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Singleton Argus",
+          "url": "https://www.singletonargus.com.au/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Glen Innes Examiner",
+          "url": "https://www.gleninnesexaminer.com.au/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Moree Champion",
+          "url": "https://www.moreechampion.com.au/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Tenterfield Star",
+          "url": "https://www.tenterfieldstar.com.au/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
         }
       ]
     },
