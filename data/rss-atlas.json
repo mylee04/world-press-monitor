@@ -20301,6 +20301,41 @@
         {
           "name": "Népszava - Sitemap",
           "sitemapUrl": "https://nepszava.hu/sitemap.xml"
+        },
+        {
+          "name": "Origo - News Sitemap",
+          "sitemapUrl": "https://www.origo.hu/news_sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "ATV",
+          "url": "https://www.atv.hu/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Magyar Hirlap",
+          "url": "https://magyarhirlap.hu/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Hungary Today",
+          "url": "https://hungarytoday.hu/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Economx - News Sitemap",
+          "sitemapUrl": "https://www.economx.hu/sitemap-news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
         }
       ]
     },
@@ -20636,6 +20671,34 @@
           "sitemapUrl": "https://www.rtl.hr/sitemaps/sites/30012/pages/0",
           "status": "NEW",
           "checkedDate": "03/19/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Slobodna Dalmacija",
+          "url": "https://slobodnadalmacija.hr/feed",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Glas Istre",
+          "url": "https://www.glasistre.hr/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Glas Slavonije",
+          "url": "https://glas-slavonije.hr/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Poslovni dnevnik",
+          "url": "https://www.poslovni.hr/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/30/2026",
           "valid": "valid"
         }
       ]
@@ -21381,6 +21444,20 @@
         {
           "name": "Anne & Stiil - News 1",
           "sitemapUrl": "https://annestiil.delfi.ee/sitemap/news-1.xml"
+        },
+        {
+          "name": "Aripaev",
+          "url": "https://www.aripaev.ee/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "DV.ee",
+          "url": "https://www.dv.ee/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
         }
       ]
     },

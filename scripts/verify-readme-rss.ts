@@ -1504,6 +1504,7 @@ function classifyFetchError(error: unknown): string {
 
 function classifyHttpBodyFailure(bodyStart: string, contentType: string): string {
   if (contentType.includes('json')) return 'INVALID_JSON';
+  if (XML_MARKERS.some((marker) => bodyStart.includes(marker))) return 'INVALID_FEED_FORMAT';
   if (contentType.includes('text/html')) return 'HTML_RETURNED';
   if (bodyStart.startsWith('<!doctype html')) return 'HTML_RETURNED';
   return 'INVALID_FEED_FORMAT';

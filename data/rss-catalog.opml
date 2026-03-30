@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Mon, 30 Mar 2026 10:38:11 GMT</dateCreated>
+    <dateCreated>Mon, 30 Mar 2026 13:45:22 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -2147,6 +2147,9 @@
       <outline text="Infostart - Bulvár [needs verification]" title="Infostart - Bulvár [needs verification]" type="rss" xmlUrl="https://infostart.hu/bulvar/rss/" htmlUrl="https://infostart.hu"/>
       <outline text="Infostart - Bűnügyek [needs verification]" title="Infostart - Bűnügyek [needs verification]" type="rss" xmlUrl="https://infostart.hu/bunugyek/rss/" htmlUrl="https://infostart.hu"/>
       <outline text="Infostart - Tudósítóink [needs verification]" title="Infostart - Tudósítóink [needs verification]" type="rss" xmlUrl="https://infostart.hu/tudositoink/rss/" htmlUrl="https://infostart.hu"/>
+      <outline text="ATV [valid]" title="ATV [valid]" type="rss" xmlUrl="https://www.atv.hu/feed/" htmlUrl="https://www.atv.hu"/>
+      <outline text="Magyar Hirlap [valid]" title="Magyar Hirlap [valid]" type="rss" xmlUrl="https://magyarhirlap.hu/rss" htmlUrl="https://magyarhirlap.hu"/>
+      <outline text="Hungary Today [valid]" title="Hungary Today [valid]" type="rss" xmlUrl="https://hungarytoday.hu/feed/" htmlUrl="https://hungarytoday.hu"/>
     </outline>
     <outline text="Bulgaria (BG)" title="Bulgaria (BG)">
       <outline text="24Plovdiv [needs verification]" title="24Plovdiv [needs verification]" type="rss" xmlUrl="https://www.24plovdiv.bg/rss" htmlUrl="https://www.24plovdiv.bg"/>
@@ -2176,6 +2179,10 @@
       <outline text="Vecernji list [valid]" title="Vecernji list [valid]" type="rss" xmlUrl="https://www.vecernji.hr/feeds/latest" htmlUrl="https://www.vecernji.hr"/>
       <outline text="Novi List [valid]" title="Novi List [valid]" type="rss" xmlUrl="https://www.novilist.hr/feed/" htmlUrl="https://www.novilist.hr"/>
       <outline text="Tportal [valid]" title="Tportal [valid]" type="rss" xmlUrl="https://www.tportal.hr/rss" htmlUrl="https://www.tportal.hr"/>
+      <outline text="Slobodna Dalmacija [valid]" title="Slobodna Dalmacija [valid]" type="rss" xmlUrl="https://slobodnadalmacija.hr/feed" htmlUrl="https://slobodnadalmacija.hr"/>
+      <outline text="Glas Istre [valid]" title="Glas Istre [valid]" type="rss" xmlUrl="https://www.glasistre.hr/rss.xml" htmlUrl="https://www.glasistre.hr"/>
+      <outline text="Glas Slavonije [valid]" title="Glas Slavonije [valid]" type="rss" xmlUrl="https://glas-slavonije.hr/rss.xml" htmlUrl="https://glas-slavonije.hr"/>
+      <outline text="Poslovni dnevnik [valid]" title="Poslovni dnevnik [valid]" type="rss" xmlUrl="https://www.poslovni.hr/feed/" htmlUrl="https://www.poslovni.hr"/>
     </outline>
     <outline text="Slovenia (SI)" title="Slovenia (SI)">
       <outline text="24ur [needs verification]" title="24ur [needs verification]" type="rss" xmlUrl="https://www.24ur.com/rss" htmlUrl="https://www.24ur.com"/>
@@ -2292,6 +2299,8 @@
       <outline text="Postimees - Tervis [needs verification]" title="Postimees - Tervis [needs verification]" type="rss" xmlUrl="https://tervis.postimees.ee/rss" htmlUrl="https://tervis.postimees.ee"/>
       <outline text="Postimees - Lemmik [needs verification]" title="Postimees - Lemmik [needs verification]" type="rss" xmlUrl="https://lemmik.postimees.ee/rss" htmlUrl="https://lemmik.postimees.ee"/>
       <outline text="Maaelu [needs verification]" title="Maaelu [needs verification]" type="rss" xmlUrl="https://maaelu.postimees.ee/rss" htmlUrl="https://maaelu.postimees.ee"/>
+      <outline text="Aripaev [valid]" title="Aripaev [valid]" type="rss" xmlUrl="https://www.aripaev.ee/rss" htmlUrl="https://www.aripaev.ee"/>
+      <outline text="DV.ee [valid]" title="DV.ee [valid]" type="rss" xmlUrl="https://www.dv.ee/rss" htmlUrl="https://www.dv.ee"/>
     </outline>
     <outline text="Iceland (IS)" title="Iceland (IS)">
       <outline text="Visir [needs verification]" title="Visir [needs verification]" type="rss" xmlUrl="https://www.visir.is/rss/allt" htmlUrl="https://www.visir.is"/>

@@ -19,7 +19,7 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
   const trimmedPathname = trimTrailingSlashes(pathname);
   const normalizedSource = (source || '').toLowerCase();
 
-  if (/^\/(?:annoncoerbetaltindhold|advertorials?)(?:\/|$)/.test(pathname)) {
+  if (/^\/(?:annoncoerbetaltindhold|advertorials?|sisuturundus)(?:\/|$)/.test(pathname)) {
     return true;
   }
 
@@ -188,6 +188,10 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
 
   if (hostname.endsWith('magyarnemzet.hu') && normalizedSource.includes('magyar nemzet')) {
     if (pathname.startsWith('/cimke/')) return true;
+  }
+
+  if (hostname.endsWith('origo.hu') && pathname.startsWith('/cimke/')) {
+    return true;
   }
 
   if (hostname.endsWith('fanatik.ro') && normalizedSource.includes('fanatik')) {

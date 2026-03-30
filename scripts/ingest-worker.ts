@@ -20,7 +20,7 @@ import { deriveSectionFromContext, mapFeedCategoryToSection } from '../lib/artic
 import { extractSourceCategoriesFromArticlePage } from '../lib/article-page-section';
 import { normalizeSourceCategories } from '../lib/article-taxonomy';
 import { classifySection, classifySectionByKeyword } from '../lib/keyword-classifier';
-import { inferGeoFromTitle } from '../lib/geo';
+import { inferGeoFromArticleSignals } from '../lib/geo';
 import { buildFeedStableId } from '../lib/pipeline';
 import {
   buildMethodStats,
@@ -1571,6 +1571,7 @@ async function readResponseBody(response: Response): Promise<ReadResponseBodyRes
 }
 
 function isLikelyHtmlResponse(response: Response, body: string): boolean {
+  if (isLikelyXmlPayload(body)) return false;
   const contentType = normalizeResponseContentType(response);
   if (contentType.includes('text/html') || contentType.includes('application/xhtml+xml')) return true;
   return /<html[\s>]/i.test(body) || /<head[\s>]/i.test(body) || /<!doctype html/i.test(body);
@@ -1604,6 +1605,9 @@ function describeFeedFailure(response: Response, body: string): string {
 function inferResponseSniffType(response: Response | null, body: string): string {
   if (!response) return 'fetch_failed';
   const contentType = normalizeResponseContentType(response);
+  if (isLikelyXmlPayload(body)) {
+    return 'xml';
+  }
   if (contentType.includes('text/html') || contentType.includes('application/xhtml+xml')) {
     return 'html';
   }
@@ -1870,7 +1874,12 @@ async function toNewsItem(
     return null;
   }
   const normalizedCountry = normalizeCountryName(outlet.country);
-  const geo = inferGeoFromTitle(title, normalizedCountry);
+  const geo = inferGeoFromArticleSignals({
+    title,
+    source: outlet.name,
+    url: row.link || '',
+    fallbackCountry: normalizedCountry,
+  });
   const fallbackSection = outlet.section || 'others';
   let sourceCategories = normalizeSourceCategories(row.categories || []);
   if (shouldFetchArticleMetaCategories(outlet.name, row.link || '', sourceCategories)) {

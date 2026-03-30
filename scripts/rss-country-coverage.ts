@@ -224,10 +224,22 @@ function dedupeFeeds(feeds: FeedInput[], currentFeeds: FeedInput[]): FeedInput[]
 }
 
 function isLikelyHtmlResponse(contentType: string, body: string): boolean {
+  if (isLikelyXmlPayload(body)) return false;
   const loweredType = contentType.toLowerCase();
   if (loweredType.includes('text/html') || loweredType.includes('application/xhtml+xml')) return true;
   const sample = body.slice(0, 4000).toLowerCase();
   return sample.includes('<html') || sample.includes('<!doctype html') || sample.includes('<head');
+}
+
+function isLikelyXmlPayload(body: string): boolean {
+  const sample = body.slice(0, 4000).toLowerCase();
+  return (
+    sample.includes('<rss') ||
+    sample.includes('<feed') ||
+    sample.includes('<urlset') ||
+    sample.includes('<sitemapindex') ||
+    sample.includes('<?xml')
+  );
 }
 
 function toIso(value: string): string | null {
