@@ -17405,6 +17405,117 @@
           "checkedDate": "03/16/2026",
           "valid": "valid",
           "row": 196
+        },
+        {
+          "name": "Donegal Daily",
+          "url": "https://www.donegaldaily.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/29/2026",
+          "valid": "valid",
+          "row": 197
+        },
+        {
+          "name": "Clare Echo",
+          "url": "https://www.clareecho.ie/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/29/2026",
+          "valid": "valid",
+          "row": 198
+        },
+        {
+          "name": "Echo Live",
+          "url": "https://www.echolive.ie/feed/395-EE_Top_news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/29/2026",
+          "valid": "valid",
+          "row": 199
+        },
+        {
+          "name": "IrishCentral",
+          "url": "https://www.irishcentral.com/feeds/section-articles.atom",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/29/2026",
+          "valid": "valid",
+          "row": 200
+        },
+        {
+          "name": "Connacht Tribune",
+          "url": "https://www.connachttribune.ie/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/29/2026",
+          "valid": "valid",
+          "row": 201
+        },
+        {
+          "name": "Limerick Post",
+          "url": "https://www.limerickpost.ie/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/29/2026",
+          "valid": "valid",
+          "row": 202
+        },
+        {
+          "name": "Irish News - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.irishnews.com/arc/outboundfeeds/sitemap-news-index/?outputType=xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/29/2026",
+          "valid": "valid",
+          "row": 203
+        },
+        {
+          "name": "Mayo News - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.mayonews.ie/siteMapNews.jsp",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/29/2026",
+          "valid": "valid",
+          "row": 204
+        },
+        {
+          "name": "Kilkenny People - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.kilkennypeople.ie/siteMapNews.jsp",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/29/2026",
+          "valid": "valid",
+          "row": 205
+        },
+        {
+          "name": "Longford Leader - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.longfordleader.ie/siteMapNews.jsp",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/29/2026",
+          "valid": "valid",
+          "row": 206
+        },
+        {
+          "name": "Leitrim Observer - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.leitrimobserver.ie/siteMapNews.jsp",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/29/2026",
+          "valid": "valid",
+          "row": 207
+        },
+        {
+          "name": "Waterford Live - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.waterfordlive.ie/siteMapNews.jsp",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/29/2026",
+          "valid": "valid",
+          "row": 208
+        },
+        {
+          "name": "Tipperary Live - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.tipperarylive.ie/siteMapNews.jsp",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/29/2026",
+          "valid": "valid",
+          "row": 209
         }
       ]
     },
@@ -17965,6 +18076,95 @@
         {
           "name": "Nordjyske - Erhverv",
           "url": "https://nordjyske.dk/rss/erhverv"
+        },
+        {
+          "name": "Folketidende - Sitemap",
+          "sitemapUrl": "https://folketidende.dk/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/29/2026",
+          "valid": "valid",
+          "row": 125
+        },
+        {
+          "name": "SN.dk - News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.sn.dk/sitemap-news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/29/2026",
+          "valid": "valid",
+          "row": 126
+        },
+        {
+          "name": "Stiften - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://stiften.dk/sitemap",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/29/2026",
+          "valid": "valid",
+          "row": 127
+        },
+        {
+          "name": "HSFO - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://hsfo.dk/sitemap",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/29/2026",
+          "valid": "valid",
+          "row": 128
+        },
+        {
+          "name": "Amtsavisen - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://amtsavisen.dk/sitemap",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/29/2026",
+          "valid": "valid",
+          "row": 129
+        },
+        {
+          "name": "VAFO - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://vafo.dk/sitemap",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/29/2026",
+          "valid": "valid",
+          "row": 130
+        },
+        {
+          "name": "Viborg Folkeblad - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://viborg-folkeblad.dk/sitemap",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/29/2026",
+          "valid": "valid",
+          "row": 131
+        },
+        {
+          "name": "Dagbladet Holstebro-Struer - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://dagbladet-holstebro-struer.dk/sitemap",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/29/2026",
+          "valid": "valid",
+          "row": 132
+        },
+        {
+          "name": "JV - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://jv.dk/sitemap",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/29/2026",
+          "valid": "valid",
+          "row": 133
+        },
+        {
+          "name": "FAA - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://faa.dk/sitemap",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/29/2026",
+          "valid": "valid",
+          "row": 134
         }
       ]
     },

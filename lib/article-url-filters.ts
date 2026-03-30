@@ -19,6 +19,10 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
   const trimmedPathname = trimTrailingSlashes(pathname);
   const normalizedSource = (source || '').toLowerCase();
 
+  if (/^\/(?:annoncoerbetaltindhold|advertorials?)(?:\/|$)/.test(pathname)) {
+    return true;
+  }
+
   if (hostname === 'acento.com.do' && normalizedSource.includes('acento')) {
     if (pathname.startsWith('/seccion/')) return true;
     if (pathname.startsWith('/tags/')) return true;

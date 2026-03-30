@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Fri, 27 Mar 2026 16:33:07 GMT</dateCreated>
+    <dateCreated>Mon, 30 Mar 2026 01:41:06 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -1812,6 +1812,12 @@
       <outline text="RTÉ Sport [valid]" title="RTÉ Sport [valid]" type="rss" xmlUrl="https://www.rte.ie/feeds/rss/?index=/sport/" htmlUrl="https://www.rte.ie"/>
       <outline text="Belfast Telegraph [invalid]" title="Belfast Telegraph [invalid]" type="rss" xmlUrl="https://www.belfasttelegraph.co.uk/rss" htmlUrl="https://www.belfasttelegraph.co.uk"/>
       <outline text="Irish Post [valid]" title="Irish Post [valid]" type="rss" xmlUrl="https://www.irishpost.com/feed" htmlUrl="https://www.irishpost.com"/>
+      <outline text="Donegal Daily [valid]" title="Donegal Daily [valid]" type="rss" xmlUrl="https://www.donegaldaily.com/feed/" htmlUrl="https://www.donegaldaily.com"/>
+      <outline text="Clare Echo [valid]" title="Clare Echo [valid]" type="rss" xmlUrl="https://www.clareecho.ie/feed/" htmlUrl="https://www.clareecho.ie"/>
+      <outline text="Echo Live [valid]" title="Echo Live [valid]" type="rss" xmlUrl="https://www.echolive.ie/feed/395-EE_Top_news.xml" htmlUrl="https://www.echolive.ie"/>
+      <outline text="IrishCentral [valid]" title="IrishCentral [valid]" type="rss" xmlUrl="https://www.irishcentral.com/feeds/section-articles.atom" htmlUrl="https://www.irishcentral.com"/>
+      <outline text="Connacht Tribune [valid]" title="Connacht Tribune [valid]" type="rss" xmlUrl="https://www.connachttribune.ie/rss" htmlUrl="https://www.connachttribune.ie"/>
+      <outline text="Limerick Post [valid]" title="Limerick Post [valid]" type="rss" xmlUrl="https://www.limerickpost.ie/feed/" htmlUrl="https://www.limerickpost.ie"/>
     </outline>
     <outline text="Portugal (PT)" title="Portugal (PT)">
       <outline text="Observador [valid]" title="Observador [valid]" type="rss" xmlUrl="https://observador.pt/feed/" htmlUrl="https://observador.pt"/>

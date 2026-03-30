@@ -282,10 +282,33 @@ function resolveFeedLink(link: string, baseUrl?: string): string {
   }
 }
 
+function normalizeHostForSitemapFilter(value: string): string {
+  return value.trim().toLowerCase().replace(/^www\./, '');
+}
+
+function isSameHostOrSubdomain(candidateHost: string, baseHost: string): boolean {
+  return (
+    candidateHost === baseHost
+    || candidateHost.endsWith(`.${baseHost}`)
+    || baseHost.endsWith(`.${candidateHost}`)
+  );
+}
+
+function shouldKeepSitemapLink(link: string, baseUrl?: string): boolean {
+  if (!link || !baseUrl) return true;
+  try {
+    const linkHost = normalizeHostForSitemapFilter(new URL(link).hostname);
+    const baseHost = normalizeHostForSitemapFilter(new URL(baseUrl).hostname);
+    if (!linkHost || !baseHost) return true;
+    return isSameHostOrSubdomain(linkHost, baseHost);
+  } catch {
+    return true;
+  }
+}
+
 export function parseSitemapWithStats(xml: string, limit = 12, baseUrl?: string): ParsedFeedBatch {
   const rows = [...xml.matchAll(/<(?:[\w.-]+:)?url\b[^>]*>([\s\S]*?)<\/(?:[\w.-]+:)?url>/gi)]
     .map((match) => match[1])
-    .slice(0, limit)
     .map((body) => {
       const link = resolveFeedLink(parseTagByLocalName(body, 'loc'), baseUrl);
       const title =
@@ -309,7 +332,9 @@ export function parseSitemapWithStats(xml: string, limit = 12, baseUrl?: string)
         missingSummary: true,
         missingPublishedAt: !publishedAt,
       };
-    });
+    })
+    .filter((row) => shouldKeepSitemapLink(row.link, baseUrl))
+    .slice(0, limit);
 
   return {
     items: toItems(rows),
