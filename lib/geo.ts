@@ -8,6 +8,17 @@ type Hub = {
   keywords: string[];
 };
 
+type CountryAlias = {
+  country: string;
+  keywords: string[];
+};
+
+type GeoInference = Pick<NewsItem, 'lat' | 'lon' | 'locationName' | 'country'>;
+
+type SourceUrlCountryHint = GeoInference & {
+  suppressFallback?: boolean;
+};
+
 const HUBS: Hub[] = [
   { name: 'Washington', country: 'United States', lat: 38.9072, lon: -77.0369, keywords: ['white house', 'washington', 'pentagon'] },
   { name: 'New York', country: 'United States', lat: 40.7128, lon: -74.006, keywords: ['new york', 'wall street', 'nyse', 'manhattan'] },
@@ -79,35 +90,219 @@ const COUNTRY_CENTROIDS = new Map<string, { lat: number; lon: number }>([
   ['South Africa', { lat: -30.5595, lon: 22.9375 }],
   ['Nigeria', { lat: 9.082, lon: 8.6753 }],
   ['Singapore', { lat: 1.3521, lon: 103.8198 }],
-  ['Indonesia', { lat: -0.7893, lon: 113.9213 }]
+  ['Indonesia', { lat: -0.7893, lon: 113.9213 }],
+  ['Malaysia', { lat: 4.2105, lon: 101.9758 }],
+  ['Thailand', { lat: 15.87, lon: 100.9925 }],
+  ['Philippines', { lat: 12.8797, lon: 121.774 }],
+  ['Switzerland', { lat: 46.8182, lon: 8.2275 }],
+  ['Netherlands', { lat: 52.1326, lon: 5.2913 }],
+  ['Portugal', { lat: 39.3999, lon: -8.2245 }],
+  ['Greece', { lat: 39.0742, lon: 21.8243 }],
+  ['Austria', { lat: 47.5162, lon: 14.5501 }],
+  ['Denmark', { lat: 56.2639, lon: 9.5018 }],
+  ['Norway', { lat: 60.472, lon: 8.4689 }],
+  ['Sweden', { lat: 60.1282, lon: 18.6435 }],
+  ['Finland', { lat: 61.9241, lon: 25.7482 }],
+  ['Romania', { lat: 45.9432, lon: 24.9668 }],
+  ['Bulgaria', { lat: 42.7339, lon: 25.4858 }],
+  ['Czech Republic', { lat: 49.8175, lon: 15.473 }],
+  ['Slovakia', { lat: 48.669, lon: 19.699 }],
+  ['Hungary', { lat: 47.1625, lon: 19.5033 }],
+  ['Croatia', { lat: 45.1, lon: 15.2 }],
+  ['Estonia', { lat: 58.5953, lon: 25.0136 }],
+  ['Latvia', { lat: 56.8796, lon: 24.6032 }],
+  ['Lithuania', { lat: 55.1694, lon: 23.8813 }],
+  ['Ireland', { lat: 53.1424, lon: -7.6921 }]
+]);
+
+const COUNTRY_ALIASES: ReadonlyArray<CountryAlias> = [
+  { country: 'Singapore', keywords: ['singapore', '新加坡', '狮城'] },
+  { country: 'China', keywords: ['china', '中国', '中国大陆', '大陆'] },
+  { country: 'Taiwan', keywords: ['taiwan', '台湾'] },
+  { country: 'South Korea', keywords: ['south korea', 'korea', '韩国', '南韩'] },
+  { country: 'Japan', keywords: ['japan', '日本'] },
+  { country: 'United States', keywords: ['united states', 'america', '美国'] },
+  { country: 'United Kingdom', keywords: ['united kingdom', 'britain', 'uk', '英国'] },
+  { country: 'Russia', keywords: ['russia', '俄罗斯'] },
+  { country: 'Ukraine', keywords: ['ukraine', '乌克兰'] },
+  { country: 'Iran', keywords: ['iran', '伊朗'] },
+  { country: 'Israel', keywords: ['israel', '以色列'] },
+  { country: 'Saudi Arabia', keywords: ['saudi arabia', 'saudi', '沙特', '沙特阿拉伯'] },
+  { country: 'India', keywords: ['india', '印度'] },
+  { country: 'Indonesia', keywords: ['indonesia', '印尼', '印度尼西亚'] },
+  { country: 'Malaysia', keywords: ['malaysia', '马来西亚', '马国'] },
+  { country: 'Thailand', keywords: ['thailand', '泰国'] },
+  { country: 'Philippines', keywords: ['philippines', '菲律宾'] },
+  { country: 'Switzerland', keywords: ['switzerland', '瑞士'] },
+  { country: 'France', keywords: ['france', '法国'] },
+  { country: 'Germany', keywords: ['germany', '德国'] },
+  { country: 'Italy', keywords: ['italy', '意大利'] },
+  { country: 'Spain', keywords: ['spain', '西班牙'] },
+  { country: 'Canada', keywords: ['canada', '加拿大'] },
+  { country: 'Australia', keywords: ['australia', 'australian', '澳大利亚', '澳洲'] },
+  { country: 'Brazil', keywords: ['brazil', '巴西'] },
+  { country: 'Argentina', keywords: ['argentina', '阿根廷'] },
+  { country: 'Chile', keywords: ['chile', '智利'] },
+  { country: 'Mexico', keywords: ['mexico', '墨西哥'] },
+  { country: 'Belgium', keywords: ['belgium', '比利时'] },
+  { country: 'Netherlands', keywords: ['netherlands', 'holland', '荷兰'] },
+  { country: 'Portugal', keywords: ['portugal', '葡萄牙'] },
+  { country: 'Greece', keywords: ['greece', '希腊'] },
+  { country: 'Egypt', keywords: ['egypt', '埃及'] },
+  { country: 'Nigeria', keywords: ['nigeria', '尼日利亚'] },
+  { country: 'South Africa', keywords: ['south africa', '南非'] },
+  { country: 'Poland', keywords: ['poland', '波兰'] },
+  { country: 'Turkey', keywords: ['turkey', '土耳其'] },
+  { country: 'Qatar', keywords: ['qatar', '卡塔尔'] },
+  { country: 'Austria', keywords: ['austria', '奥地利'] },
+  { country: 'Denmark', keywords: ['denmark', '丹麦'] },
+  { country: 'Norway', keywords: ['norway', '挪威'] },
+  { country: 'Sweden', keywords: ['sweden', '瑞典'] },
+  { country: 'Finland', keywords: ['finland', '芬兰'] },
+  { country: 'Romania', keywords: ['romania', '罗马尼亚'] },
+  { country: 'Bulgaria', keywords: ['bulgaria', '保加利亚'] },
+  { country: 'Czech Republic', keywords: ['czech republic', 'czechia', '捷克'] },
+  { country: 'Slovakia', keywords: ['slovakia', '斯洛伐克'] },
+  { country: 'Hungary', keywords: ['hungary', '匈牙利'] },
+  { country: 'Croatia', keywords: ['croatia', '克罗地亚'] },
+  { country: 'Estonia', keywords: ['estonia', '爱沙尼亚'] },
+  { country: 'Latvia', keywords: ['latvia', '拉脱维亚'] },
+  { country: 'Lithuania', keywords: ['lithuania', '立陶宛'] },
+  { country: 'Ireland', keywords: ['ireland', '爱尔兰'] },
+  { country: 'Uruguay', keywords: ['uruguay', '乌拉圭'] }
+];
+
+const ZAOBAO_DIRECT_SEGMENT_COUNTRIES = new Map<string, string>([
+  ['china', 'China'],
+  ['singapore', 'Singapore']
+]);
+
+const ZAOBAO_NON_LOCAL_SEGMENTS = new Set([
+  'world',
+  'sea',
+  'sports'
 ]);
 
 export function inferGeoFromTitle(
   title: string,
   fallbackCountry?: string
-): Pick<NewsItem, 'lat' | 'lon' | 'locationName' | 'country'> {
+): GeoInference {
   const normalizedTitle = normalizeGeoText(title);
-  const haystack = normalizedTitle ? ` ${normalizedTitle} ` : '';
+  const hubMatch = inferHubFromNormalizedTitle(normalizedTitle);
+  if (hubMatch) return hubMatch;
+
+  const countryMatch = inferCountryFromNormalizedTitle(normalizedTitle);
+  if (countryMatch) return buildCountryGeo(countryMatch);
+
+  return buildFallbackCountryGeo(fallbackCountry);
+}
+
+export function inferGeoFromArticleSignals(params: {
+  title: string;
+  source?: string;
+  url?: string;
+  fallbackCountry?: string;
+}): GeoInference {
+  const { title, source, url, fallbackCountry } = params;
+  const normalizedTitle = normalizeGeoText(title);
+  const hubMatch = inferHubFromNormalizedTitle(normalizedTitle);
+  if (hubMatch) return hubMatch;
+
+  const countryMatch = inferCountryFromNormalizedTitle(normalizedTitle);
+  if (countryMatch) return buildCountryGeo(countryMatch);
+
+  const sourceUrlHint = inferCountryFromSourceUrl(source || '', url || '');
+  if (sourceUrlHint?.country) {
+    return {
+      ...sourceUrlHint,
+      locationName: sourceUrlHint.locationName || sourceUrlHint.country,
+    };
+  }
+  if (sourceUrlHint?.suppressFallback) {
+    return {};
+  }
+
+  return buildFallbackCountryGeo(fallbackCountry);
+}
+
+function inferHubFromNormalizedTitle(normalizedTitle: string): GeoInference | null {
+  if (!normalizedTitle) return null;
   for (const hub of HUBS) {
-    if (hub.keywords.some((keyword) => haystack.includes(` ${normalizeGeoText(keyword)} `))) {
+    if (hub.keywords.some((keyword) => titleContainsGeoKeyword(normalizedTitle, keyword))) {
       return {
         lat: hub.lat,
         lon: hub.lon,
         locationName: hub.name,
-        country: fallbackCountry || hub.country,
+        country: hub.country,
       };
     }
   }
+  return null;
+}
 
-  if (fallbackCountry) {
-    const centroid = COUNTRY_CENTROIDS.get(fallbackCountry);
-    if (centroid) {
-      return { lat: centroid.lat, lon: centroid.lon, locationName: fallbackCountry, country: fallbackCountry };
+function inferCountryFromNormalizedTitle(normalizedTitle: string): string | null {
+  if (!normalizedTitle) return null;
+  for (const alias of COUNTRY_ALIASES) {
+    if (alias.keywords.some((keyword) => titleContainsGeoKeyword(normalizedTitle, keyword))) {
+      return alias.country;
     }
-    return { locationName: fallbackCountry, country: fallbackCountry };
+  }
+  return null;
+}
+
+function buildFallbackCountryGeo(fallbackCountry?: string): GeoInference {
+  if (!fallbackCountry) return {};
+  return buildCountryGeo(fallbackCountry);
+}
+
+function buildCountryGeo(country: string): GeoInference {
+  const centroid = COUNTRY_CENTROIDS.get(country);
+  if (centroid) {
+    return { lat: centroid.lat, lon: centroid.lon, locationName: country, country };
+  }
+  return { locationName: country, country };
+}
+
+function inferCountryFromSourceUrl(source: string, url: string): SourceUrlCountryHint | null {
+  if (!source || !url) return null;
+  if (/zaobao/i.test(source)) {
+    return inferZaobaoCountryFromUrl(url);
+  }
+  return null;
+}
+
+function inferZaobaoCountryFromUrl(url: string): SourceUrlCountryHint | null {
+  let pathname = '';
+  try {
+    pathname = new URL(url).pathname;
+  } catch {
+    return null;
   }
 
-  return {};
+  const segments = pathname.split('/').filter(Boolean).map((segment) => normalizeGeoText(segment));
+  if (segments.length === 0) return null;
+
+  const topLevel = segments[0] || '';
+  const section = segments[1] || '';
+  const directCountry = ZAOBAO_DIRECT_SEGMENT_COUNTRIES.get(section);
+  if (directCountry) {
+    return buildCountryGeo(directCountry);
+  }
+
+  if ((topLevel === 'news' || topLevel === 'finance') && ZAOBAO_NON_LOCAL_SEGMENTS.has(section)) {
+    return { suppressFallback: true };
+  }
+
+  return null;
+}
+
+function titleContainsGeoKeyword(normalizedTitle: string, keyword: string): boolean {
+  const normalizedKeyword = normalizeGeoText(keyword);
+  if (!normalizedTitle || !normalizedKeyword) return false;
+  if (/^[\p{Script=Latin}\p{N}\s]+$/u.test(normalizedKeyword)) {
+    return ` ${normalizedTitle} `.includes(` ${normalizedKeyword} `);
+  }
+  return normalizedTitle.includes(normalizedKeyword);
 }
 
 function normalizeGeoText(value: string): string {
