@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Mon, 30 Mar 2026 15:40:26 GMT</dateCreated>
+    <dateCreated>Mon, 30 Mar 2026 15:53:13 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -2213,6 +2213,7 @@
       <outline text="STA - Culture [needs verification]" title="STA - Culture [needs verification]" type="rss" xmlUrl="https://www.sta.si/rss-5" htmlUrl="https://www.sta.si"/>
       <outline text="Slovenske novice [needs verification]" title="Slovenske novice [needs verification]" type="rss" xmlUrl="https://slovenskenovice.delo.si/rss" htmlUrl="https://slovenskenovice.delo.si"/>
       <outline text="Domovina [needs verification]" title="Domovina [needs verification]" type="rss" xmlUrl="https://www.domovina.je/feed" htmlUrl="https://www.domovina.je"/>
+      <outline text="Nova24TV [valid]" title="Nova24TV [valid]" type="rss" xmlUrl="https://nova24tv.si/feed/" htmlUrl="https://nova24tv.si"/>
     </outline>
     <outline text="Serbia (RS)" title="Serbia (RS)">
       <outline text="Blic [valid]" title="Blic [valid]" type="rss" xmlUrl="https://www.blic.rs/rss/danasnje-vesti" htmlUrl="https://www.blic.rs"/>

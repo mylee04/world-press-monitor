@@ -6515,8 +6515,9 @@
         {
           "name": "Cairns Post",
           "url": "https://www.cairnspost.com.au/rss",
+          "sitemapUrl": "https://www.cairnspost.com.au/news-sitemap.xml",
           "status": "NEW",
-          "checkedDate": "03/16/2026",
+          "checkedDate": "03/30/2026",
           "valid": "valid",
           "row": 64
         },
@@ -20344,6 +20345,13 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/30/2026",
           "valid": "valid"
+        },
+        {
+          "name": "VG.hu - News Sitemap",
+          "sitemapUrl": "https://www.vg.hu/news_sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
         }
       ]
     },
@@ -20833,6 +20841,13 @@
         {
           "name": "Finance - News Sitemap",
           "sitemapUrl": "https://www.finance.si/sitemap/www.finance.si/news_sitemap.xml"
+        },
+        {
+          "name": "Nova24TV",
+          "url": "https://nova24tv.si/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
         }
       ]
     },
