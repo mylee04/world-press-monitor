@@ -6866,6 +6866,92 @@
           "status": "NEW",
           "checkedDate": "03/30/2026",
           "valid": "valid"
+        },
+        {
+          "name": "The New Daily",
+          "url": "https://wp.thenewdaily.com.au/feed",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "InDaily SA - News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://assets.indailysa.com.au/sitemaps/news-indailysa/posts/post-1.xml",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "InDaily QLD - News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://assets.indailyqld.com.au/sitemaps/news-indailyqld/posts/post-1.xml",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Region Canberra",
+          "url": "https://region.com.au/feed/",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Canberra Daily",
+          "url": "https://canberradaily.com.au/feed/",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Byron Shire Echo",
+          "url": "https://www.echo.net.au/feed/",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Michael West",
+          "url": "https://michaelwest.com.au/feed/",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Region Riverina",
+          "url": "https://regionriverina.com.au/feed/",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Region Illawarra",
+          "url": "https://regionillawarra.com.au/feed/",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Newcastle Weekly",
+          "url": "https://newcastleweekly.com.au/feed/",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Sunraysia Daily",
+          "url": "https://www.sunraysiadaily.com.au/feed/",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Murray Pioneer",
+          "url": "https://www.murraypioneer.com.au/feed/",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
         }
       ]
     },
