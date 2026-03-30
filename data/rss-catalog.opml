@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Mon, 30 Mar 2026 10:09:31 GMT</dateCreated>
+    <dateCreated>Mon, 30 Mar 2026 10:21:34 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -1818,6 +1818,8 @@
       <outline text="IrishCentral [valid]" title="IrishCentral [valid]" type="rss" xmlUrl="https://www.irishcentral.com/feeds/section-articles.atom" htmlUrl="https://www.irishcentral.com"/>
       <outline text="Connacht Tribune [valid]" title="Connacht Tribune [valid]" type="rss" xmlUrl="https://www.connachttribune.ie/rss" htmlUrl="https://www.connachttribune.ie"/>
       <outline text="Limerick Post [valid]" title="Limerick Post [valid]" type="rss" xmlUrl="https://www.limerickpost.ie/feed/" htmlUrl="https://www.limerickpost.ie"/>
+      <outline text="Clare Champion [valid]" title="Clare Champion [valid]" type="rss" xmlUrl="https://clarechampion.ie/feed/" htmlUrl="https://clarechampion.ie"/>
+      <outline text="Donegal News [valid]" title="Donegal News [valid]" type="rss" xmlUrl="https://donegalnews.com/feed/" htmlUrl="https://donegalnews.com"/>
     </outline>
     <outline text="Portugal (PT)" title="Portugal (PT)">
       <outline text="Observador [valid]" title="Observador [valid]" type="rss" xmlUrl="https://observador.pt/feed/" htmlUrl="https://observador.pt"/>

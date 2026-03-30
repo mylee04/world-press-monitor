@@ -17516,6 +17516,22 @@
           "checkedDate": "03/29/2026",
           "valid": "valid",
           "row": 209
+        },
+        {
+          "name": "Clare Champion",
+          "url": "https://clarechampion.ie/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/30/2026",
+          "valid": "valid",
+          "row": 210
+        },
+        {
+          "name": "Donegal News",
+          "url": "https://donegalnews.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/30/2026",
+          "valid": "valid",
+          "row": 211
         }
       ]
     },
