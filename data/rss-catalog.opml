@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Mon, 30 Mar 2026 15:53:13 GMT</dateCreated>
+    <dateCreated>Mon, 30 Mar 2026 16:06:20 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -1099,11 +1099,8 @@
       <outline text="Al Bilad Daily [valid]" title="Al Bilad Daily [valid]" type="rss" xmlUrl="https://albiladdaily.com/feed" htmlUrl="https://albiladdaily.com"/>
       <outline text="Makkah Newspaper [valid]" title="Makkah Newspaper [valid]" type="rss" xmlUrl="https://makkahnewspaper.com/rssFeed/0" htmlUrl="https://makkahnewspaper.com"/>
       <outline text="Al Jazirah [valid]" title="Al Jazirah [valid]" type="rss" xmlUrl="https://www.al-jazirah.com/rss/ln.xml" htmlUrl="https://www.al-jazirah.com"/>
-      <outline text="Gulf Business (Saudi Section) [invalid]" title="Gulf Business (Saudi Section) [invalid]" type="rss" xmlUrl="https://gulfbusiness.com/region/saudi-arabia/feed/" htmlUrl="https://gulfbusiness.com"/>
       <outline text="Sky News Arabia (Arabic Business) [valid]" title="Sky News Arabia (Arabic Business) [valid]" type="rss" xmlUrl="https://www.skynewsarabia.com/rss.xml" htmlUrl="https://www.skynewsarabia.com"/>
       <outline text="Independent Arabia (Independent Arabic) [valid]" title="Independent Arabia (Independent Arabic) [valid]" type="rss" xmlUrl="https://www.independentarabia.com/rss.xml" htmlUrl="https://www.independentarabia.com"/>
-      <outline text="Akhbaar24 (General Portal) [invalid]" title="Akhbaar24 (General Portal) [invalid]" type="rss" xmlUrl="https://akhbaar24.argaam.com/rss" htmlUrl="https://akhbaar24.argaam.com"/>
-      <outline text="Saudi Gazette [valid]" title="Saudi Gazette [valid]" type="rss" xmlUrl="https://saudigazette.com.sa/rssFeed/1" htmlUrl="https://saudigazette.com.sa"/>
     </outline>
     <outline text="Taiwan (TW)" title="Taiwan (TW)">
       <outline text="Liberty Times - Business [valid]" title="Liberty Times - Business [valid]" type="rss" xmlUrl="https://news.ltn.com.tw/rss/business.xml" htmlUrl="https://news.ltn.com.tw"/>
@@ -2331,6 +2328,7 @@
       <outline text="Egypt Independent [needs verification]" title="Egypt Independent [needs verification]" type="rss" xmlUrl="https://egyptindependent.com/feed/" htmlUrl="https://egyptindependent.com"/>
       <outline text="Egyptian Gazette [needs verification]" title="Egyptian Gazette [needs verification]" type="rss" xmlUrl="https://egyptian-gazette.com/feed/" htmlUrl="https://egyptian-gazette.com"/>
       <outline text="Daily News Egypt [needs verification]" title="Daily News Egypt [needs verification]" type="rss" xmlUrl="https://www.dailynewsegypt.com/feed/" htmlUrl="https://www.dailynewsegypt.com"/>
+      <outline text="Dostor [valid]" title="Dostor [valid]" type="rss" xmlUrl="https://www.dostor.org/RSS.aspx" htmlUrl="https://www.dostor.org"/>
       <outline text="EnterpriseAM Egypt [valid]" title="EnterpriseAM Egypt [valid]" type="rss" xmlUrl="https://enterpriseam.com/egypt/feed/" htmlUrl="https://enterpriseam.com"/>
     </outline>
     <outline text="Nigeria (NG)" title="Nigeria (NG)">

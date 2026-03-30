@@ -10524,11 +10524,17 @@
         },
         {
           "name": "Okaz - News Sitemap",
-          "sitemapUrl": "https://www.okaz.com.sa/sitemaps/news_sitemap.xml"
+          "sitemapUrl": "https://www.okaz.com.sa/sitemaps/news_sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
         },
         {
           "name": "Ajel - Sitemap",
-          "sitemapUrl": "https://ajel.sa/sitemap.xml"
+          "sitemapUrl": "https://ajel.sa/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
         },
         {
           "name": "Al Jazirah",
@@ -10609,9 +10615,10 @@
           "category": "business",
           "tier": 2,
           "status": "⏩ OFFICIAL",
-          "checkedDate": null,
-          "valid": "needs verification",
-          "row": 17
+          "checkedDate": "03/30/2026",
+          "valid": "invalid",
+          "row": 17,
+          "enabled": false
         },
         {
           "name": "Saudi Gazette (Business)",
@@ -10700,7 +10707,10 @@
         },
         {
           "name": "Sabq - News Sitemap",
-          "sitemapUrl": "https://sabq.org/sitemap-news.xml"
+          "sitemapUrl": "https://sabq.org/sitemap-news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
         },
         {
           "name": "Maaal (Saudi Business)",
@@ -10727,7 +10737,10 @@
         },
         {
           "name": "Akhbaar24 (General Portal)",
-          "url": "https://akhbaar24.argaam.com/rss"
+          "url": "https://akhbaar24.argaam.com/rss",
+          "checkedDate": "03/30/2026",
+          "valid": "invalid",
+          "enabled": false
         },
         {
           "name": "Al Yaum (Domestic Trends)",
@@ -10741,11 +10754,17 @@
         },
         {
           "name": "Saudi Gazette",
-          "url": "https://saudigazette.com.sa/rssFeed/1"
+          "url": "https://saudigazette.com.sa/rssFeed/1",
+          "checkedDate": "03/30/2026",
+          "valid": "invalid",
+          "enabled": false
         },
         {
           "name": "Saudi Gazette - News Sitemap",
-          "sitemapUrl": "https://saudigazette.com.sa/sitemaps/news_sitemap.xml"
+          "sitemapUrl": "https://saudigazette.com.sa/sitemaps/news_sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
         }
       ]
     },
@@ -21592,6 +21611,13 @@
           "url": "https://www.dailynewsegypt.com/feed/"
         },
         {
+          "name": "Dostor",
+          "url": "https://www.dostor.org/RSS.aspx",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
           "name": "EnterpriseAM Egypt",
           "url": "https://enterpriseam.com/egypt/feed/",
           "status": "⏩ OFFICIAL",
@@ -21601,6 +21627,27 @@
         {
           "name": "Cairo24 - Newsmap",
           "sitemapUrl": "https://www.cairo24.com/newsmap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Wafd - Sitemap Index",
+          "sitemapUrl": "https://www.alwafd.news/sitemaps.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "El Balad - Sitemap Index",
+          "sitemapUrl": "https://www.elbalad.news/sitemaps.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Mal - Sitemap Index",
+          "sitemapUrl": "https://almalnews.com/sitemaps.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/30/2026",
           "valid": "valid"
