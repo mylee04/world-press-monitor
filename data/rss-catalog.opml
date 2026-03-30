@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Mon, 30 Mar 2026 13:45:22 GMT</dateCreated>
+    <dateCreated>Mon, 30 Mar 2026 15:04:05 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -1820,14 +1820,15 @@
       <outline text="Limerick Post [valid]" title="Limerick Post [valid]" type="rss" xmlUrl="https://www.limerickpost.ie/feed/" htmlUrl="https://www.limerickpost.ie"/>
       <outline text="Clare Champion [valid]" title="Clare Champion [valid]" type="rss" xmlUrl="https://clarechampion.ie/feed/" htmlUrl="https://clarechampion.ie"/>
       <outline text="Donegal News [valid]" title="Donegal News [valid]" type="rss" xmlUrl="https://donegalnews.com/feed/" htmlUrl="https://donegalnews.com"/>
-      <outline text="Independent.ie - Wexford [valid]" title="Independent.ie - Wexford [valid]" type="rss" xmlUrl="https://www.independent.ie/rss/section/2320c30a-4d55-4ddc-ac2d-e5dafaefd385/" htmlUrl="https://www.independent.ie"/>
-      <outline text="Independent.ie - Wicklow [valid]" title="Independent.ie - Wicklow [valid]" type="rss" xmlUrl="https://www.independent.ie/rss/section/72e3f15d-512a-4694-9184-7413cb673582/" htmlUrl="https://www.independent.ie"/>
+      <outline text="Independent.ie - Wexford People [valid]" title="Independent.ie - Wexford People [valid]" type="rss" xmlUrl="https://www.independent.ie/rss/section/2320c30a-4d55-4ddc-ac2d-e5dafaefd385/" htmlUrl="https://www.independent.ie"/>
+      <outline text="Independent.ie - Wicklow People [valid]" title="Independent.ie - Wicklow People [valid]" type="rss" xmlUrl="https://www.independent.ie/rss/section/72e3f15d-512a-4694-9184-7413cb673582/" htmlUrl="https://www.independent.ie"/>
       <outline text="Independent.ie - Louth [valid]" title="Independent.ie - Louth [valid]" type="rss" xmlUrl="https://www.independent.ie/rss/section/1095fba6-e53c-4aba-8f19-420bff2fdc77/" htmlUrl="https://www.independent.ie"/>
       <outline text="Independent.ie - Galway [valid]" title="Independent.ie - Galway [valid]" type="rss" xmlUrl="https://www.independent.ie/rss/section/206fde0b-458a-4fe4-b0c1-b076011030b7/" htmlUrl="https://www.independent.ie"/>
       <outline text="Independent.ie - Tipperary [valid]" title="Independent.ie - Tipperary [valid]" type="rss" xmlUrl="https://www.independent.ie/rss/section/fce880c7-e884-493a-934d-b07601174bfa/" htmlUrl="https://www.independent.ie"/>
       <outline text="Independent.ie - Clare [valid]" title="Independent.ie - Clare [valid]" type="rss" xmlUrl="https://www.independent.ie/rss/section/c3822c5d-48bc-4f56-9f4b-b076010a2da0/" htmlUrl="https://www.independent.ie"/>
       <outline text="Independent.ie - Longford [valid]" title="Independent.ie - Longford [valid]" type="rss" xmlUrl="https://www.independent.ie/rss/section/69967d4d-6418-480f-ad6b-b0760114a17f/" htmlUrl="https://www.independent.ie"/>
-      <outline text="Independent.ie - Sligo [valid]" title="Independent.ie - Sligo [valid]" type="rss" xmlUrl="https://www.independent.ie/rss/section/d46264f9-3ba1-4c55-a3fa-0b395c6fd904/" htmlUrl="https://www.independent.ie"/>
+      <outline text="Independent.ie - Sligo Champion [valid]" title="Independent.ie - Sligo Champion [valid]" type="rss" xmlUrl="https://www.independent.ie/rss/section/d46264f9-3ba1-4c55-a3fa-0b395c6fd904/" htmlUrl="https://www.independent.ie"/>
+      <outline text="Independent.ie - Kerryman [valid]" title="Independent.ie - Kerryman [valid]" type="rss" xmlUrl="https://www.independent.ie/rss/section/f26f027f-1420-42b9-8bdf-bcafbf9e4b18/" htmlUrl="https://www.independent.ie"/>
     </outline>
     <outline text="Portugal (PT)" title="Portugal (PT)">
       <outline text="Observador [valid]" title="Observador [valid]" type="rss" xmlUrl="https://observador.pt/feed/" htmlUrl="https://observador.pt"/>

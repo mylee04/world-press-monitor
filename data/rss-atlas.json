@@ -17534,7 +17534,7 @@
           "row": 211
         },
         {
-          "name": "Independent.ie - Wexford",
+          "name": "Independent.ie - Wexford People",
           "url": "https://www.independent.ie/rss/section/2320c30a-4d55-4ddc-ac2d-e5dafaefd385/",
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/30/2026",
@@ -17542,7 +17542,7 @@
           "row": 212
         },
         {
-          "name": "Independent.ie - Wicklow",
+          "name": "Independent.ie - Wicklow People",
           "url": "https://www.independent.ie/rss/section/72e3f15d-512a-4694-9184-7413cb673582/",
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/30/2026",
@@ -17590,12 +17590,20 @@
           "row": 218
         },
         {
-          "name": "Independent.ie - Sligo",
+          "name": "Independent.ie - Sligo Champion",
           "url": "https://www.independent.ie/rss/section/d46264f9-3ba1-4c55-a3fa-0b395c6fd904/",
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/30/2026",
           "valid": "valid",
           "row": 219
+        },
+        {
+          "name": "Independent.ie - Kerryman",
+          "url": "https://www.independent.ie/rss/section/f26f027f-1420-42b9-8bdf-bcafbf9e4b18/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/30/2026",
+          "valid": "valid",
+          "row": 220
         }
       ]
     },
