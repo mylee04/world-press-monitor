@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Mon, 30 Mar 2026 21:49:14 GMT</dateCreated>
+    <dateCreated>Mon, 30 Mar 2026 22:19:31 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -688,6 +688,13 @@
       <outline text="SmartCompany (스타트업/비즈니스) [valid]" title="SmartCompany (스타트업/비즈니스) [valid]" type="rss" xmlUrl="https://www.smartcompany.com.au/feed/" htmlUrl="https://www.smartcompany.com.au"/>
       <outline text="Startup Daily (테크) [valid]" title="Startup Daily (테크) [valid]" type="rss" xmlUrl="https://www.startupdaily.net/feed/" htmlUrl="https://www.startupdaily.net"/>
       <outline text="The Conversation AU (오피니언/정책) [valid]" title="The Conversation AU (오피니언/정책) [valid]" type="rss" xmlUrl="https://theconversation.com/au/articles.atom" htmlUrl="https://theconversation.com"/>
+      <outline text="AFR - Latest News [valid]" title="AFR - Latest News [valid]" type="rss" xmlUrl="https://www.afr.com/rss/feed.xml" htmlUrl="https://www.afr.com"/>
+      <outline text="AFR - Politics [valid]" title="AFR - Politics [valid]" type="rss" xmlUrl="https://www.afr.com/rss/politics.xml" htmlUrl="https://www.afr.com"/>
+      <outline text="AFR - World [valid]" title="AFR - World [valid]" type="rss" xmlUrl="https://www.afr.com/rss/world.xml" htmlUrl="https://www.afr.com"/>
+      <outline text="AFR - Technology [valid]" title="AFR - Technology [valid]" type="rss" xmlUrl="https://www.afr.com/rss/technology.xml" htmlUrl="https://www.afr.com"/>
+      <outline text="AFR - Policy [valid]" title="AFR - Policy [valid]" type="rss" xmlUrl="https://www.afr.com/rss/policy.xml" htmlUrl="https://www.afr.com"/>
+      <outline text="AFR - Company [valid]" title="AFR - Company [valid]" type="rss" xmlUrl="https://www.afr.com/rss/company.xml" htmlUrl="https://www.afr.com"/>
+      <outline text="AFR - Markets [valid]" title="AFR - Markets [valid]" type="rss" xmlUrl="https://www.afr.com/rss/markets.xml" htmlUrl="https://www.afr.com"/>
       <outline text="Crikey [valid]" title="Crikey [valid]" type="rss" xmlUrl="https://www.crikey.com.au/feed/" htmlUrl="https://www.crikey.com.au"/>
       <outline text="The Mandarin [needs verification]" title="The Mandarin [needs verification]" type="rss" xmlUrl="https://www.themandarin.com.au/feed/" htmlUrl="https://www.themandarin.com.au"/>
       <outline text="News.com.au National Top News [valid]" title="News.com.au National Top News [valid]" type="rss" xmlUrl="https://www.news.com.au/content-feeds/latest-news-national/" htmlUrl="https://www.news.com.au"/>
@@ -695,8 +702,6 @@
       <outline text="ABC News Australia [valid]" title="ABC News Australia [valid]" type="rss" xmlUrl="https://www.abc.net.au/news/feed/51120/rss.xml" htmlUrl="https://www.abc.net.au"/>
       <outline text="News.com.au World [valid]" title="News.com.au World [valid]" type="rss" xmlUrl="https://www.news.com.au/content-feeds/latest-news-world/" htmlUrl="https://www.news.com.au"/>
       <outline text="News.com.au Technology [valid]" title="News.com.au Technology [valid]" type="rss" xmlUrl="https://www.news.com.au/content-feeds/latest-news-technology/" htmlUrl="https://www.news.com.au"/>
-      <outline text="Sky News Australia [valid]" title="Sky News Australia [valid]" type="rss" xmlUrl="https://www.skynews.com.au/australia-news/rss" htmlUrl="https://www.skynews.com.au"/>
-      <outline text="Sky News World [valid]" title="Sky News World [valid]" type="rss" xmlUrl="https://www.skynews.com.au/world-news/rss" htmlUrl="https://www.skynews.com.au"/>
       <outline text="ABC News - Politics [valid]" title="ABC News - Politics [valid]" type="rss" xmlUrl="https://www.abc.net.au/news/feed/45910/rss.xml" htmlUrl="https://www.abc.net.au"/>
       <outline text="Sydney Morning Herald - National [valid]" title="Sydney Morning Herald - National [valid]" type="rss" xmlUrl="https://www.smh.com.au/rss/national.xml" htmlUrl="https://www.smh.com.au"/>
       <outline text="The Age - National [valid]" title="The Age - National [valid]" type="rss" xmlUrl="https://www.theage.com.au/rss/national.xml" htmlUrl="https://www.theage.com.au"/>

@@ -79,6 +79,21 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     if (pathname.startsWith('/cartoon/')) return true;
   }
 
+  if (hostname.endsWith('7news.com.au')) {
+    if (pathname.startsWith('/7you/')) return true;
+    if (pathname.startsWith('/sunrise/')) return true;
+    if (pathname.startsWith('/the-morning-show/')) return true;
+    if (pathname.startsWith('/podcasts/')) return true;
+  }
+
+  if (hostname.endsWith('news.com.au') && pathname.startsWith('/checkout/')) {
+    return true;
+  }
+
+  if (hostname.endsWith('skynews.com.au') && pathname.startsWith('/lifestyle/')) {
+    return true;
+  }
+
   if (hostname.endsWith('berliner-zeitung.de') && /^\/topics(?:\/|$)/.test(pathname)) {
     return true;
   }

@@ -6173,8 +6173,9 @@
           "name": "The Australian - News Sitemap",
           "sitemapUrl": "https://www.theaustralian.com.au/news-sitemap.xml",
           "status": "NEW",
-          "checkedDate": "03/22/2026",
-          "valid": "valid"
+          "checkedDate": "03/30/2026",
+          "valid": "invalid",
+          "enabled": false
         },
         {
           "name": "7news",
@@ -6246,7 +6247,59 @@
         },
         {
           "name": "AFR (Financial Review)",
-          "sitemapUrl": "https://www.afr.com/sitemaps/news/brands/afr"
+          "sitemapUrl": "https://www.afr.com/sitemaps/news/brands/afr",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "AFR - Latest News",
+          "url": "https://www.afr.com/rss/feed.xml",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "AFR - Politics",
+          "url": "https://www.afr.com/rss/politics.xml",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "AFR - World",
+          "url": "https://www.afr.com/rss/world.xml",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "AFR - Technology",
+          "url": "https://www.afr.com/rss/technology.xml",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "AFR - Policy",
+          "url": "https://www.afr.com/rss/policy.xml",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "AFR - Company",
+          "url": "https://www.afr.com/rss/company.xml",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "AFR - Markets",
+          "url": "https://www.afr.com/rss/markets.xml",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
         },
         {
           "name": "Crikey",
@@ -6299,17 +6352,26 @@
           "name": "Sky News Australia",
           "url": "https://www.skynews.com.au/australia-news/rss",
           "status": "NEW",
-          "checkedDate": "03/16/2026",
-          "valid": "valid",
-          "row": 40
+          "checkedDate": "03/30/2026",
+          "valid": "invalid",
+          "row": 40,
+          "enabled": false
         },
         {
           "name": "Sky News World",
           "url": "https://www.skynews.com.au/world-news/rss",
           "status": "NEW",
-          "checkedDate": "03/16/2026",
-          "valid": "valid",
-          "row": 41
+          "checkedDate": "03/30/2026",
+          "valid": "invalid",
+          "row": 41,
+          "enabled": false
+        },
+        {
+          "name": "Sky News - Sitemap Index",
+          "sitemapUrl": "https://www.skynews.com.au/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
         },
         {
           "name": "ABC News - Politics",
