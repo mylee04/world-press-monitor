@@ -73,6 +73,12 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     return true;
   }
 
+  if (hostname.endsWith('dailymaverick.co.za')) {
+    if (pathname.startsWith('/opinionista/')) return true;
+    if (pathname.startsWith('/crossword/')) return true;
+    if (pathname.startsWith('/cartoon/')) return true;
+  }
+
   if (hostname.endsWith('berliner-zeitung.de') && /^\/topics(?:\/|$)/.test(pathname)) {
     return true;
   }

@@ -21575,6 +21575,20 @@
         {
           "name": "Daily News Egypt",
           "url": "https://www.dailynewsegypt.com/feed/"
+        },
+        {
+          "name": "EnterpriseAM Egypt",
+          "url": "https://enterpriseam.com/egypt/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Cairo24 - Newsmap",
+          "sitemapUrl": "https://www.cairo24.com/newsmap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
         }
       ]
     },
@@ -21993,6 +22007,13 @@
         {
           "name": "BizNews",
           "url": "https://www.biznews.com/stories.rss"
+        },
+        {
+          "name": "Daily Maverick - News Sitemap",
+          "sitemapUrl": "https://www.dailymaverick.co.za/news-sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
         }
       ]
     }

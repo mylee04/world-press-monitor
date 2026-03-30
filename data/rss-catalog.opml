@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Mon, 30 Mar 2026 15:04:05 GMT</dateCreated>
+    <dateCreated>Mon, 30 Mar 2026 15:40:26 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -2330,6 +2330,7 @@
       <outline text="Egypt Independent [needs verification]" title="Egypt Independent [needs verification]" type="rss" xmlUrl="https://egyptindependent.com/feed/" htmlUrl="https://egyptindependent.com"/>
       <outline text="Egyptian Gazette [needs verification]" title="Egyptian Gazette [needs verification]" type="rss" xmlUrl="https://egyptian-gazette.com/feed/" htmlUrl="https://egyptian-gazette.com"/>
       <outline text="Daily News Egypt [needs verification]" title="Daily News Egypt [needs verification]" type="rss" xmlUrl="https://www.dailynewsegypt.com/feed/" htmlUrl="https://www.dailynewsegypt.com"/>
+      <outline text="EnterpriseAM Egypt [valid]" title="EnterpriseAM Egypt [valid]" type="rss" xmlUrl="https://enterpriseam.com/egypt/feed/" htmlUrl="https://enterpriseam.com"/>
     </outline>
     <outline text="Nigeria (NG)" title="Nigeria (NG)">
       <outline text="Punch Nigeria [needs verification]" title="Punch Nigeria [needs verification]" type="rss" xmlUrl="https://rss.punchng.com/v1/category/latest_news" htmlUrl="https://rss.punchng.com"/>
