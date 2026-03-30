@@ -6344,10 +6344,10 @@
           "row": 45
         },
         {
-          "name": "Herald Sun - News Sitemap",
-          "sitemapUrl": "https://www.heraldsun.com.au/news-sitemap.xml",
+          "name": "Herald Sun - Sitemap Index",
+          "sitemapUrl": "https://www.heraldsun.com.au/sitemap.xml",
           "status": "NEW",
-          "checkedDate": "03/22/2026",
+          "checkedDate": "03/30/2026",
           "valid": "valid"
         },
         {
@@ -6447,10 +6447,10 @@
           "row": 57
         },
         {
-          "name": "Courier Mail - News Sitemap",
-          "sitemapUrl": "https://www.couriermail.com.au/news-sitemap.xml",
+          "name": "Courier Mail - Sitemap Index",
+          "sitemapUrl": "https://www.couriermail.com.au/sitemap.xml",
           "status": "NEW",
-          "checkedDate": "03/22/2026",
+          "checkedDate": "03/30/2026",
           "valid": "valid"
         },
         {
@@ -6462,10 +6462,10 @@
           "row": 58
         },
         {
-          "name": "Daily Telegraph Australia - News Sitemap",
-          "sitemapUrl": "https://www.dailytelegraph.com.au/news-sitemap.xml",
+          "name": "Daily Telegraph Australia - Sitemap Index",
+          "sitemapUrl": "https://www.dailytelegraph.com.au/sitemap.xml",
           "status": "NEW",
-          "checkedDate": "03/22/2026",
+          "checkedDate": "03/30/2026",
           "valid": "valid"
         },
         {
@@ -6515,7 +6515,7 @@
         {
           "name": "Cairns Post",
           "url": "https://www.cairnspost.com.au/rss",
-          "sitemapUrl": "https://www.cairnspost.com.au/news-sitemap.xml",
+          "sitemapUrl": "https://www.cairnspost.com.au/sitemap.xml",
           "status": "NEW",
           "checkedDate": "03/30/2026",
           "valid": "valid",
@@ -6607,7 +6607,7 @@
           "url": null,
           "sitemapUrl": "https://www.weeklytimesnow.com.au/sitemap.xml",
           "status": "NEW",
-          "checkedDate": "03/16/2026",
+          "checkedDate": "03/30/2026",
           "valid": "valid",
           "row": 159
         },
@@ -6747,83 +6747,6 @@
           "checkedDate": "03/16/2026",
           "valid": "valid",
           "row": 185
-        },
-        {
-          "name": "TMP AdelaideNow Day 23",
-          "sitemapUrl": "https://www.adelaidenow.com.au/sitemap.xml?yyyy=2026&mm=03&dd=23",
-          "status": "NEW",
-          "checkedDate": "03/24/2026",
-          "valid": "valid"
-        },
-        {
-          "name": "TMP Courier Mail Day 23",
-          "sitemapUrl": "https://www.couriermail.com.au/sitemap.xml?yyyy=2026&mm=03&dd=23",
-          "status": "NEW",
-          "checkedDate": "03/24/2026",
-          "valid": "valid"
-        },
-        {
-          "name": "TMP Daily Telegraph Day 23",
-          "sitemapUrl": "https://www.dailytelegraph.com.au/sitemap.xml?yyyy=2026&mm=03&dd=23",
-          "status": "NEW",
-          "checkedDate": "03/24/2026",
-          "valid": "valid"
-        },
-        {
-          "name": "TMP Herald Sun Day 23",
-          "sitemapUrl": "https://www.heraldsun.com.au/sitemap.xml?yyyy=2026&mm=03&dd=23",
-          "status": "NEW",
-          "checkedDate": "03/24/2026",
-          "valid": "valid"
-        },
-        {
-          "name": "TMP The Australian Day 23",
-          "sitemapUrl": "https://www.theaustralian.com.au/sitemap.xml?yyyy=2026&mm=03&dd=23",
-          "status": "NEW",
-          "checkedDate": "03/24/2026",
-          "valid": "valid"
-        },
-        {
-          "name": "TMP The Mercury Day 23",
-          "sitemapUrl": "https://www.themercury.com.au/sitemap.xml?yyyy=2026&mm=03&dd=23",
-          "status": "NEW",
-          "checkedDate": "03/24/2026",
-          "valid": "valid"
-        },
-        {
-          "name": "TMP Gold Coast Bulletin Day 23",
-          "sitemapUrl": "https://www.goldcoastbulletin.com.au/sitemap.xml?yyyy=2026&mm=03&dd=23",
-          "status": "NEW",
-          "checkedDate": "03/24/2026",
-          "valid": "valid"
-        },
-        {
-          "name": "TMP Townsville Bulletin Day 23",
-          "sitemapUrl": "https://www.townsvillebulletin.com.au/sitemap.xml?yyyy=2026&mm=03&dd=23",
-          "status": "NEW",
-          "checkedDate": "03/24/2026",
-          "valid": "valid"
-        },
-        {
-          "name": "TMP NT News Day 23",
-          "sitemapUrl": "https://www.ntnews.com.au/sitemap.xml?yyyy=2026&mm=03&dd=23",
-          "status": "NEW",
-          "checkedDate": "03/24/2026",
-          "valid": "valid"
-        },
-        {
-          "name": "TMP The Chronicle Day 23",
-          "sitemapUrl": "https://www.thechronicle.com.au/sitemap.xml?yyyy=2026&mm=03&dd=23",
-          "status": "NEW",
-          "checkedDate": "03/24/2026",
-          "valid": "valid"
-        },
-        {
-          "name": "TMP Weekly Times Day 23",
-          "sitemapUrl": "https://www.weeklytimesnow.com.au/sitemap.xml?yyyy=2026&mm=03&dd=23",
-          "status": "NEW",
-          "checkedDate": "03/24/2026",
-          "valid": "valid"
         }
       ]
     },
