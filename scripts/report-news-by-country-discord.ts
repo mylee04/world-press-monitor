@@ -7,6 +7,7 @@ import { resolveDatabaseUrl } from '@/lib/database-url';
 
 type CountrySourceRow = {
   country: string;
+  source_country: string | null;
   source: string;
   inserted_last_1h: string;
   inserted_last_24h: string;
@@ -346,6 +347,7 @@ async function main(): Promise<void> {
     const query = `
       SELECT
         COALESCE(country, '(unknown)') AS country,
+        source_country,
         source,
         COUNT(*) FILTER (WHERE created_at >= NOW() - INTERVAL '1 hour')::bigint::text AS inserted_last_1h,
         COUNT(*) FILTER (WHERE created_at >= NOW() - INTERVAL '24 hours')::bigint::text AS inserted_last_24h,
@@ -360,8 +362,8 @@ async function main(): Promise<void> {
         )::bigint::text AS late_last_24h
       FROM news_articles
       WHERE NOT ${LOW_SIGNAL_TITLE_SQL}
-      GROUP BY COALESCE(country, '(unknown)'), source
-      ORDER BY country ASC, source ASC
+      GROUP BY COALESCE(country, '(unknown)'), source_country, source
+      ORDER BY country ASC, source_country ASC, source ASC
     `;
 
     const result = await pool.query<CountrySourceRow>(query);
@@ -400,7 +402,8 @@ async function main(): Promise<void> {
       aggregateByCountry.set(canonicalCountry, aggregate);
 
       const sourceCountry =
-        atlasMetadata.sourceCountryByName.get(row.source)
+        row.source_country
+        || atlasMetadata.sourceCountryByName.get(row.source)
         || atlasMetadata.sourceCountryByNormalizedName.get(normalizeCountryValue(row.source));
       if (sourceCountry && normalizeCountryValue(sourceCountry) === normalizedCanonicalCountry) {
         const domestic = domesticByCountry.get(canonicalCountry) || createCountryMetrics(canonicalCountry);
@@ -461,7 +464,7 @@ async function main(): Promise<void> {
       `Quality filter: excludes unreadable code-like titles from counts`,
       `Late-heavy countries (first seen 24h >= 250): ${lateHeavyCountries.join(', ') || 'none'}`,
       `Domestic-only top ${selectedDomesticRows.length}: ${domesticSummary || 'none'}`,
-      `Country semantics: atlas outlet country`,
+      `Country semantics: row.country=article/inferred country, domestic-only filter=source_country (atlas outlet country fallback)`,
       scopeLabel,
       configuredScopeLabel,
       unexpectedCountries.size > 0 ? `Unexpected countries in data: ${[...unexpectedCountries].join(', ')}` : '',

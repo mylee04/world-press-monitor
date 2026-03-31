@@ -2024,6 +2024,7 @@ async function toNewsItem(
     language: outlet.language || undefined,
     sourceType: outlet.sourceType || 'global',
     tier: outlet.tier,
+    sourceCountry: normalizedCountry,
     publishedAt,
     publishedAtIsFallback: isFallbackPublishedAt,
     section,

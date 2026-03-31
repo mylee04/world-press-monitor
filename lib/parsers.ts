@@ -212,7 +212,7 @@ export function parseRssOrAtomWithStats(xml: string, limit = 10): ParsedFeedBatc
     .slice(0, limit)
     .map((body) => {
       const title = parseTag(body, 'title');
-      const link = parseTag(body, 'link');
+      const link = resolveFeedLink(parseTag(body, 'link'));
       const description = parseDescription(body);
       const publishedAt = parsePublishedAt(body, link);
       const categories = parseCategories(body);
@@ -274,6 +274,7 @@ export function parseSitemap(xml: string, limit = 12): ParsedFeedItem[] {
 
 function resolveFeedLink(link: string, baseUrl?: string): string {
   if (!link) return '';
+  if (link.startsWith('//')) return `https:${link}`;
   if (!baseUrl) return link;
   try {
     return new URL(link, baseUrl).toString();

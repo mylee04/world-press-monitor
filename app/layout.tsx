@@ -4,15 +4,17 @@ import type { ReactNode } from 'react';
 import { CustomerAccessProvider } from '@/components/customer-access-provider';
 import { PublicationTimeProvider } from '@/components/publication-time-provider';
 import { TaxonomyLocaleProvider } from '@/components/taxonomy-locale-provider';
+import 'maplibre-gl/dist/maplibre-gl.css';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'World Press Radar Customer Portal',
-  description: 'Customer news intelligence portal for filtered article access and live coverage summaries.',
+  title: 'World Press Radar',
+  description: 'Global news publishing monitoring, source coverage, and map-based intelligence views.',
 };
 
 const navItems = [
   { href: '/', label: 'Dashboard' },
+  { href: '/map/', label: 'Map' },
   { href: '/explorer/', label: 'Explorer' },
   { href: '/access/', label: 'Access' },
 ];

@@ -33,6 +33,7 @@ export type NewsArticlePersistable = {
   titleRepairedAt: string | null;
   snippetOriginal: string | null;
   country: string | null;
+  sourceCountry: string | null;
   section: string | null;
   primarySection: NewsSection;
   sectionsNormalized: NewsSection[];
@@ -128,6 +129,7 @@ export function preferPersistedArticleRow(
     ...secondary,
     ...preferred,
     stableId: preferred.stableId || secondary.stableId,
+    sourceCountry: preferred.sourceCountry || secondary.sourceCountry,
     primarySection: preferred.primarySection || secondary.primarySection,
     sectionsNormalized: [...new Set([...secondary.sectionsNormalized, ...preferred.sectionsNormalized])] as NewsSection[],
     feedCategories: [...new Set([...secondary.feedCategories, ...preferred.feedCategories])],
@@ -225,6 +227,7 @@ export async function toNewsArticlePersistable(
     titleRepairedAt,
     snippetOriginal,
     country: item.country ? sanitizeTextForDatabase(item.country) : null,
+    sourceCountry: item.sourceCountry ? sanitizeTextForDatabase(item.sourceCountry) : null,
     url: decodedLink,
     source: sanitizeTextForDatabase(item.source),
     language,

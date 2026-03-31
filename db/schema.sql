@@ -187,6 +187,7 @@ create table if not exists news_articles (
   title_repaired_at timestamptz null,
   snippet_original text null,
   country text null,
+  source_country text null,
   created_at timestamptz not null default now(),
   url text not null,
   source text not null,
@@ -202,6 +203,7 @@ alter table news_articles add column if not exists title_repair_status text not 
 alter table news_articles add column if not exists title_repair_source text null;
 alter table news_articles add column if not exists title_repair_attempted_at timestamptz null;
 alter table news_articles add column if not exists title_repaired_at timestamptz null;
+alter table news_articles add column if not exists source_country text null;
 create index if not exists idx_news_articles_created_at on news_articles(created_at desc);
 create index if not exists idx_news_articles_updated_at on news_articles(updated_at desc);
 create index if not exists idx_news_articles_source on news_articles(source);
@@ -209,6 +211,7 @@ create index if not exists idx_news_articles_url on news_articles(url);
 create index if not exists idx_news_articles_stable_id on news_articles(stable_id);
 create index if not exists idx_news_articles_section on news_articles(section);
 create index if not exists idx_news_articles_country on news_articles(country);
+create index if not exists idx_news_articles_source_country on news_articles(source_country);
 create index if not exists idx_news_articles_title_quality on news_articles(title_quality);
 create index if not exists idx_news_articles_title_repair_status on news_articles(title_repair_status);
 drop index if exists idx_external_news_articles_last_seen_at;

@@ -82,6 +82,7 @@ export interface NewsItem {
   publishedAtIsFallback?: boolean;
   locationName?: string;
   country?: string;
+  sourceCountry?: string;
   lat?: number;
   lon?: number;
   worldLatam?: boolean;

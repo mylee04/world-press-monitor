@@ -105,6 +105,14 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     if (pathname.startsWith('/auto-moto/')) return true;
   }
 
+  if (hostname.endsWith('dagen.no') && normalizedSource.includes('dagen')) {
+    if (pathname.startsWith('/meninger/')) return true;
+    if (pathname.startsWith('/reportasjer/')) return true;
+    if (pathname.startsWith('/tro/')) return true;
+    if (pathname.startsWith('/kultur/')) return true;
+    if (pathname.startsWith('/korsets-seier/')) return true;
+  }
+
   if (hostname.endsWith('7news.com.au')) {
     if (pathname.startsWith('/7you/')) return true;
     if (pathname.startsWith('/sunrise/')) return true;

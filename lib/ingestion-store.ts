@@ -364,6 +364,7 @@ create table if not exists news_articles (
       title_repaired_at timestamptz null,
       snippet_original text null,
       country text null,
+      source_country text null,
       created_at timestamptz not null default now(),
       updated_at timestamptz not null default now(),
       url text not null,
@@ -394,6 +395,7 @@ create table if not exists news_articles (
     alter table news_articles add column if not exists topics text[] not null default '{}';
     alter table news_articles add column if not exists topics_derived_at timestamptz null;
     alter table news_articles add column if not exists taxonomy_derived_at timestamptz null;
+    alter table news_articles add column if not exists source_country text null;
     create index if not exists idx_news_articles_created_at on news_articles(created_at desc);
     create index if not exists idx_news_articles_updated_at on news_articles(updated_at desc);
     create index if not exists idx_news_articles_publication_datetime on news_articles(publication_datetime desc);
@@ -404,6 +406,7 @@ create table if not exists news_articles (
     create index if not exists idx_news_articles_section on news_articles(section);
     create index if not exists idx_news_articles_primary_section on news_articles(primary_section);
     create index if not exists idx_news_articles_country on news_articles(country);
+    create index if not exists idx_news_articles_source_country on news_articles(source_country);
     create index if not exists idx_news_articles_title_quality on news_articles(title_quality);
     create index if not exists idx_news_articles_title_repair_status on news_articles(title_repair_status);
     create index if not exists idx_news_articles_primary_topic on news_articles(primary_topic);
@@ -2304,9 +2307,9 @@ export async function persistNewsArticles(items: NewsItem[]): Promise<{ persiste
     const values: unknown[] = [];
     const parts: string[] = [];
     group.forEach((row, i) => {
-      const base = i * 24;
+      const base = i * 25;
       parts.push(
-        `($${base + 1}::text,$${base + 2}::text,least($${base + 3}::timestamptz, now()),$${base + 4}::text,$${base + 5}::text,$${base + 6}::text[],$${base + 7}::text[],$${base + 8}::text,$${base + 9}::text[],$${base + 10}::timestamptz,$${base + 11}::timestamptz,$${base + 12}::text,$${base + 13}::text,$${base + 14}::text,$${base + 15}::timestamptz,$${base + 16}::text,$${base + 17}::text,$${base + 18}::timestamptz,$${base + 19}::timestamptz,$${base + 20}::text,$${base + 21}::text,$${base + 22}::text,$${base + 23}::text,$${base + 24}::text,now(),now())`
+        `($${base + 1}::text,$${base + 2}::text,least($${base + 3}::timestamptz, now()),$${base + 4}::text,$${base + 5}::text,$${base + 6}::text[],$${base + 7}::text[],$${base + 8}::text,$${base + 9}::text[],$${base + 10}::timestamptz,$${base + 11}::timestamptz,$${base + 12}::text,$${base + 13}::text,$${base + 14}::text,$${base + 15}::timestamptz,$${base + 16}::text,$${base + 17}::text,$${base + 18}::timestamptz,$${base + 19}::timestamptz,$${base + 20}::text,$${base + 21}::text,$${base + 22}::text,$${base + 23}::text,$${base + 24}::text,$${base + 25}::text,now(),now())`
       );
       values.push(
         row.externalId,
@@ -2330,6 +2333,7 @@ export async function persistNewsArticles(items: NewsItem[]): Promise<{ persiste
         row.titleRepairedAt,
         row.snippetOriginal,
         row.country,
+        row.sourceCountry,
         row.url,
         row.source,
         row.language
@@ -2341,7 +2345,7 @@ export async function persistNewsArticles(items: NewsItem[]): Promise<{ persiste
       `
       insert into news_articles (
         external_id, stable_id, publication_datetime, section, primary_section, sections_normalized, feed_categories, primary_topic, topics, topics_derived_at, taxonomy_derived_at, title_original, title_quality, title_quality_reason, title_quality_checked_at, title_repair_status, title_repair_source, title_repair_attempted_at, title_repaired_at, snippet_original,
-        country, url, source, language, created_at, updated_at
+        country, source_country, url, source, language, created_at, updated_at
       ) values ${parts.join(',')}
       on conflict (external_id) do update set
         stable_id = coalesce(excluded.stable_id, news_articles.stable_id),
@@ -2435,6 +2439,7 @@ export async function persistNewsArticles(items: NewsItem[]): Promise<{ persiste
         end,
         snippet_original = coalesce(nullif(excluded.snippet_original, ''), news_articles.snippet_original),
         country = excluded.country,
+        source_country = coalesce(excluded.source_country, news_articles.source_country),
         url = excluded.url,
         source = excluded.source,
         language = excluded.language,

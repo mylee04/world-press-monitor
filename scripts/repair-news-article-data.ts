@@ -29,7 +29,7 @@ type DuplicateArticleRow = {
   external_id: string;
   source: string;
   url: string;
-  country: string | null;
+  source_country: string | null;
 };
 
 const DEFAULT_ATLAS_PATH = resolve(process.cwd(), 'data/rss-atlas.json');
@@ -198,6 +198,8 @@ async function main(): Promise<void> {
 
   try {
     await pool.query('begin');
+    await pool.query(`alter table news_articles add column if not exists source_country text null`);
+    await pool.query(`create index if not exists idx_news_articles_source_country on news_articles(source_country)`);
 
     const futureBefore = Number((await pool.query(
       `select count(*)::text as count from news_articles where publication_datetime > created_at`
@@ -225,22 +227,22 @@ async function main(): Promise<void> {
           `select count(*)::int as count
            from news_articles as n
            join tmp_atlas_source_country as t on t.source = n.source
-           where n.country is distinct from t.country`
+           where n.source_country is distinct from t.country`
         )
       : await pool.query(
           `update news_articles as n
-           set country = t.country,
+           set source_country = t.country,
                updated_at = now()
            from tmp_atlas_source_country as t
            where n.source = t.source
-             and n.country is distinct from t.country`
+             and n.source_country is distinct from t.country`
         );
 
     let duplicateCountryRowsUpdated = 0;
     let unresolvedDuplicateRows = 0;
     if (duplicateSources.length > 0) {
       const duplicateRows = (await pool.query<DuplicateArticleRow>(
-        `select external_id, source, url, country
+        `select external_id, source, url, source_country
          from news_articles
          where source = any($1::text[])`,
         [duplicateSources]
@@ -253,7 +255,7 @@ async function main(): Promise<void> {
           unresolvedDuplicateRows += 1;
           continue;
         }
-        if ((row.country || null) === targetCountry) continue;
+        if ((row.source_country || null) === targetCountry) continue;
         duplicateUpdates.push({ externalId: row.external_id, country: targetCountry });
       }
 
@@ -271,11 +273,11 @@ async function main(): Promise<void> {
         } else {
           duplicateCountryRowsUpdated = (await pool.query(
             `update news_articles as n
-             set country = t.country,
+             set source_country = t.country,
                  updated_at = now()
              from tmp_atlas_duplicate_country as t
              where n.external_id = t.external_id
-               and n.country is distinct from t.country`
+               and n.source_country is distinct from t.country`
           )).rowCount || 0;
         }
       }
