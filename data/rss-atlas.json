@@ -337,7 +337,8 @@
           "status": "ERR",
           "checkedDate": "02/18/2026",
           "valid": "invalid",
-          "row": 28
+          "row": 28,
+          "sitemapUrl": "https://techcrunch.com/news-sitemap.xml"
         },
         {
           "name": "The Verge",
@@ -345,7 +346,8 @@
           "status": "ERR",
           "checkedDate": "02/18/2026",
           "valid": "invalid",
-          "row": 29
+          "row": 29,
+          "sitemapUrl": "https://www.theverge.com/sitemaps/google_news"
         },
         {
           "name": "Wired",
@@ -851,6 +853,11 @@
         {
           "name": "Politico Tech",
           "url": "https://rss.politico.com/technology.xml"
+        },
+        {
+          "name": "Politico - News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.politico.com/news-sitemap.xml"
         },
         {
           "name": "TechCrunch Startups",
@@ -3334,7 +3341,8 @@
         },
         {
           "name": "Nature News",
-          "url": "https://feeds.nature.com/nature/rss/current"
+          "url": "https://feeds.nature.com/nature/rss/current",
+          "sitemapUrl": "https://www.nature.com/latest-news/sitemap.xml"
         }
       ]
     },
@@ -3827,7 +3835,8 @@
         },
         {
           "name": "Jeune Afrique",
-          "url": "https://www.jeuneafrique.com/feed/"
+          "url": "https://www.jeuneafrique.com/feed/",
+          "sitemapUrl": "https://www.jeuneafrique.com/sitemap-googlenews.xml"
         }
       ]
     },
@@ -21808,7 +21817,8 @@
         },
         {
           "name": "AeroTime",
-          "url": "https://aerotime.aero/feed"
+          "url": "https://aerotime.aero/feed",
+          "sitemapUrl": "https://www.aerotime.aero/news-sitemap.xml"
         }
       ]
     },
@@ -22751,7 +22761,8 @@
       "feeds": [
         {
           "name": "Al Jazeera",
-          "url": "https://www.aljazeera.com/xml/rss/all.xml"
+          "url": "https://www.aljazeera.com/xml/rss/all.xml",
+          "sitemapUrl": "https://www.aljazeera.com/news-sitemap.xml"
         }
       ]
     },
@@ -22761,7 +22772,8 @@
       "feeds": [
         {
           "name": "The National",
-          "url": "https://www.thenationalnews.com/arc/outboundfeeds/rss/?outputType=xml"
+          "url": "https://www.thenationalnews.com/arc/outboundfeeds/rss/?outputType=xml",
+          "sitemapUrl": "https://www.thenationalnews.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
         }
       ]
     },
@@ -22771,7 +22783,8 @@
       "feeds": [
         {
           "name": "Primicias",
-          "url": "https://www.primicias.ec/feed/"
+          "url": "https://www.primicias.ec/feed/",
+          "sitemapUrl": "https://www.primicias.ec/sitemap-google-news.xml"
         },
         {
           "name": "El Universo",
