@@ -29,6 +29,32 @@ export type MapCountryMetricsResponse = {
   countries: MapCountryMetricRow[];
 };
 
+export type MapPublisherCountryRow = {
+  country: string;
+  countryCode: string | null;
+  lat: number;
+  lon: number;
+  pub24h: number;
+  activeSources24h: number;
+  healthySources24h: number;
+  degradedSources24h: number;
+};
+
+export type MapPublisherMetricRow = {
+  publisher: string;
+  pub24h: number;
+  activeCountries24h: number;
+  activeSources24h: number;
+  healthySources24h: number;
+  degradedSources24h: number;
+  countries: MapPublisherCountryRow[];
+};
+
+export type MapPublishersResponse = {
+  generatedAt: string;
+  publishers: MapPublisherMetricRow[];
+};
+
 export type MapSourceMetricRow = {
   sourceId: string;
   source: string;

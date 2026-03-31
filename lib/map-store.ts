@@ -13,6 +13,7 @@ import { buildDisplaySourceName } from '@/lib/source-display';
 import type {
   MapCountryMetricsResponse,
   MapCountryMetricRow,
+  MapPublishersResponse,
   MapCountrySourcesResponse,
   MapSourceDetailResponse,
   MapSourceMetricRow,
@@ -119,6 +120,7 @@ let publicCountryFeedCache: Map<string, PublicCountryFeedFile> | null = null;
 const MAP_COUNTRY_METRICS_CACHE_MS = 60_000;
 const MAP_COUNTRY_SOURCES_CACHE_MS = 60_000;
 const MAP_SOURCE_DETAIL_CACHE_MS = 60_000;
+const MAP_PUBLISHERS_CACHE_MS = 60_000;
 
 type TimedCacheEntry<T> = {
   value: T;
@@ -126,6 +128,7 @@ type TimedCacheEntry<T> = {
 };
 
 let mapCountryMetricsCache: TimedCacheEntry<MapCountryMetricsResponse> | null = null;
+let mapPublishersCache: TimedCacheEntry<MapPublishersResponse> | null = null;
 const mapCountrySourcesCache = new Map<string, TimedCacheEntry<MapCountrySourcesResponse>>();
 const mapSourceDetailCache = new Map<string, TimedCacheEntry<MapSourceDetailResponse | null>>();
 
@@ -1045,6 +1048,95 @@ export async function readMapCountryMetrics(): Promise<MapCountryMetricsResponse
     mapCountryMetricsCache = writeTimedCache(fallback, 15_000);
     return fallback;
   }
+}
+
+export async function readMapPublishers(): Promise<MapPublishersResponse> {
+  const cached = readTimedCache(mapPublishersCache);
+  if (cached) return cached;
+
+  const metricRows = await readRecentSourceMetrics(`coalesce(nullif(trim(e.country), ''), '') <> ''`);
+  const healthBySource = await readLatestHealthBySource();
+  const byPublisherCountry = new Map<string, {
+    publisher: string;
+    country: string;
+    countryCode: string | null;
+    lat: number;
+    lon: number;
+    pub24h: number;
+    activeSources24h: number;
+    healthySources24h: number;
+    degradedSources24h: number;
+  }>();
+
+  for (const row of metricRows) {
+    const country = resolveSourceCountry(row.source, row.country);
+    if (!country) continue;
+    const source = buildDisplaySourceName(row.source);
+    const publisher = resolvePublisherName(source, country);
+    const geo = inferGeoFromTitle(country, country);
+    const health = normalizeHealthStatus(healthBySource.get(normalizeSourceKey(row.source)));
+    const key = `${publisher}::${country}`;
+    const current = byPublisherCountry.get(key) || {
+      publisher,
+      country,
+      countryCode: getCountryCode(country),
+      lat: geo.lat || 0,
+      lon: geo.lon || 0,
+      pub24h: 0,
+      activeSources24h: 0,
+      healthySources24h: 0,
+      degradedSources24h: 0,
+    };
+
+    current.pub24h += Number(row.pub24h || 0);
+    current.activeSources24h += 1;
+    if (health === 'healthy' || health === 'warning') current.healthySources24h += 1;
+    if (health === 'degraded' || health === 'failing') current.degradedSources24h += 1;
+    byPublisherCountry.set(key, current);
+  }
+
+  const byPublisher = new Map<string, MapPublishersResponse['publishers'][number]>();
+  for (const row of byPublisherCountry.values()) {
+    const current = byPublisher.get(row.publisher) || {
+      publisher: row.publisher,
+      pub24h: 0,
+      activeCountries24h: 0,
+      activeSources24h: 0,
+      healthySources24h: 0,
+      degradedSources24h: 0,
+      countries: [],
+    };
+
+    current.pub24h += row.pub24h;
+    current.activeCountries24h += 1;
+    current.activeSources24h += row.activeSources24h;
+    current.healthySources24h += row.healthySources24h;
+    current.degradedSources24h += row.degradedSources24h;
+    current.countries.push({
+      country: row.country,
+      countryCode: row.countryCode,
+      lat: row.lat,
+      lon: row.lon,
+      pub24h: row.pub24h,
+      activeSources24h: row.activeSources24h,
+      healthySources24h: row.healthySources24h,
+      degradedSources24h: row.degradedSources24h,
+    });
+
+    byPublisher.set(row.publisher, current);
+  }
+
+  const payload = {
+    generatedAt: new Date().toISOString(),
+    publishers: [...byPublisher.values()]
+      .map((publisher) => ({
+        ...publisher,
+        countries: [...publisher.countries].sort((a, b) => b.pub24h - a.pub24h || a.country.localeCompare(b.country)),
+      }))
+      .sort((a, b) => b.pub24h - a.pub24h || a.publisher.localeCompare(b.publisher)),
+  };
+  mapPublishersCache = writeTimedCache(payload, MAP_PUBLISHERS_CACHE_MS);
+  return payload;
 }
 
 export async function readMapCountrySources(country: string): Promise<MapCountrySourcesResponse> {
