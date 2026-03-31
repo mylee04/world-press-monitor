@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Mon, 30 Mar 2026 22:19:31 GMT</dateCreated>
+    <dateCreated>Tue, 31 Mar 2026 06:18:43 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -669,12 +669,12 @@
       <outline text="9News [valid]" title="9News [valid]" type="rss" xmlUrl="https://www.9news.com.au/rss" htmlUrl="https://www.9news.com.au"/>
       <outline text="Sydney Morning Herald [valid]" title="Sydney Morning Herald [valid]" type="rss" xmlUrl="https://www.smh.com.au/rss/feed.xml" htmlUrl="https://www.smh.com.au"/>
       <outline text="The Age [valid]" title="The Age [valid]" type="rss" xmlUrl="https://www.theage.com.au/rss/feed.xml" htmlUrl="https://www.theage.com.au"/>
-      <outline text="Brisbane Times [needs verification]" title="Brisbane Times [needs verification]" type="rss" xmlUrl="https://www.brisbanetimes.com.au/rss/feed.xml" htmlUrl="https://www.brisbanetimes.com.au"/>
+      <outline text="Brisbane Times [valid]" title="Brisbane Times [valid]" type="rss" xmlUrl="https://www.brisbanetimes.com.au/rss/feed.xml" htmlUrl="https://www.brisbanetimes.com.au"/>
       <outline text="Brisbane Times - Business [needs verification]" title="Brisbane Times - Business [needs verification]" type="rss" xmlUrl="https://www.brisbanetimes.com.au/rss/business.xml" htmlUrl="https://www.brisbanetimes.com.au"/>
       <outline text="Brisbane Times - National [needs verification]" title="Brisbane Times - National [needs verification]" type="rss" xmlUrl="https://www.brisbanetimes.com.au/rss/national.xml" htmlUrl="https://www.brisbanetimes.com.au"/>
       <outline text="Brisbane Times - World [needs verification]" title="Brisbane Times - World [needs verification]" type="rss" xmlUrl="https://www.brisbanetimes.com.au/rss/world.xml" htmlUrl="https://www.brisbanetimes.com.au"/>
       <outline text="Brisbane Times - Technology [needs verification]" title="Brisbane Times - Technology [needs verification]" type="rss" xmlUrl="https://www.brisbanetimes.com.au/rss/technology.xml" htmlUrl="https://www.brisbanetimes.com.au"/>
-      <outline text="WAtoday [needs verification]" title="WAtoday [needs verification]" type="rss" xmlUrl="https://www.watoday.com.au/rss/feed.xml" htmlUrl="https://www.watoday.com.au"/>
+      <outline text="WAtoday [valid]" title="WAtoday [valid]" type="rss" xmlUrl="https://www.watoday.com.au/rss/feed.xml" htmlUrl="https://www.watoday.com.au"/>
       <outline text="WAtoday - Business [needs verification]" title="WAtoday - Business [needs verification]" type="rss" xmlUrl="https://www.watoday.com.au/rss/business.xml" htmlUrl="https://www.watoday.com.au"/>
       <outline text="WAtoday - National [needs verification]" title="WAtoday - National [needs verification]" type="rss" xmlUrl="https://www.watoday.com.au/rss/national.xml" htmlUrl="https://www.watoday.com.au"/>
       <outline text="WAtoday - World [needs verification]" title="WAtoday - World [needs verification]" type="rss" xmlUrl="https://www.watoday.com.au/rss/world.xml" htmlUrl="https://www.watoday.com.au"/>
@@ -702,6 +702,7 @@
       <outline text="ABC News Australia [valid]" title="ABC News Australia [valid]" type="rss" xmlUrl="https://www.abc.net.au/news/feed/51120/rss.xml" htmlUrl="https://www.abc.net.au"/>
       <outline text="News.com.au World [valid]" title="News.com.au World [valid]" type="rss" xmlUrl="https://www.news.com.au/content-feeds/latest-news-world/" htmlUrl="https://www.news.com.au"/>
       <outline text="News.com.au Technology [valid]" title="News.com.au Technology [valid]" type="rss" xmlUrl="https://www.news.com.au/content-feeds/latest-news-technology/" htmlUrl="https://www.news.com.au"/>
+      <outline text="Daily Mail Australia [valid]" title="Daily Mail Australia [valid]" type="rss" xmlUrl="https://www.dailymail.co.uk/auhome/index.rss" htmlUrl="https://www.dailymail.co.uk"/>
       <outline text="ABC News - Politics [valid]" title="ABC News - Politics [valid]" type="rss" xmlUrl="https://www.abc.net.au/news/feed/45910/rss.xml" htmlUrl="https://www.abc.net.au"/>
       <outline text="Sydney Morning Herald - National [valid]" title="Sydney Morning Herald - National [valid]" type="rss" xmlUrl="https://www.smh.com.au/rss/national.xml" htmlUrl="https://www.smh.com.au"/>
       <outline text="The Age - National [valid]" title="The Age - National [valid]" type="rss" xmlUrl="https://www.theage.com.au/rss/national.xml" htmlUrl="https://www.theage.com.au"/>
@@ -755,15 +756,21 @@
       <outline text="Moree Champion [valid]" title="Moree Champion [valid]" type="rss" xmlUrl="https://www.moreechampion.com.au/rss.xml" htmlUrl="https://www.moreechampion.com.au"/>
       <outline text="Tenterfield Star [valid]" title="Tenterfield Star [valid]" type="rss" xmlUrl="https://www.tenterfieldstar.com.au/rss.xml" htmlUrl="https://www.tenterfieldstar.com.au"/>
       <outline text="The New Daily [valid]" title="The New Daily [valid]" type="rss" xmlUrl="https://wp.thenewdaily.com.au/feed" htmlUrl="https://wp.thenewdaily.com.au"/>
+      <outline text="The Nightly [valid]" title="The Nightly [valid]" type="rss" xmlUrl="https://thenightly.com.au/feed/" htmlUrl="https://thenightly.com.au"/>
       <outline text="Region Canberra [valid]" title="Region Canberra [valid]" type="rss" xmlUrl="https://region.com.au/feed/" htmlUrl="https://region.com.au"/>
       <outline text="Canberra Daily [valid]" title="Canberra Daily [valid]" type="rss" xmlUrl="https://canberradaily.com.au/feed/" htmlUrl="https://canberradaily.com.au"/>
       <outline text="Byron Shire Echo [valid]" title="Byron Shire Echo [valid]" type="rss" xmlUrl="https://www.echo.net.au/feed/" htmlUrl="https://www.echo.net.au"/>
+      <outline text="Western Weekender [valid]" title="Western Weekender [valid]" type="rss" xmlUrl="https://westernweekender.com.au/feed/" htmlUrl="https://westernweekender.com.au"/>
       <outline text="Michael West [valid]" title="Michael West [valid]" type="rss" xmlUrl="https://michaelwest.com.au/feed/" htmlUrl="https://michaelwest.com.au"/>
       <outline text="Region Riverina [valid]" title="Region Riverina [valid]" type="rss" xmlUrl="https://regionriverina.com.au/feed/" htmlUrl="https://regionriverina.com.au"/>
       <outline text="Region Illawarra [valid]" title="Region Illawarra [valid]" type="rss" xmlUrl="https://regionillawarra.com.au/feed/" htmlUrl="https://regionillawarra.com.au"/>
       <outline text="Newcastle Weekly [valid]" title="Newcastle Weekly [valid]" type="rss" xmlUrl="https://newcastleweekly.com.au/feed/" htmlUrl="https://newcastleweekly.com.au"/>
       <outline text="Sunraysia Daily [valid]" title="Sunraysia Daily [valid]" type="rss" xmlUrl="https://www.sunraysiadaily.com.au/feed/" htmlUrl="https://www.sunraysiadaily.com.au"/>
       <outline text="Murray Pioneer [valid]" title="Murray Pioneer [valid]" type="rss" xmlUrl="https://www.murraypioneer.com.au/feed/" htmlUrl="https://www.murraypioneer.com.au"/>
+      <outline text="Port Lincoln Times [valid]" title="Port Lincoln Times [valid]" type="rss" xmlUrl="https://portlincolntimes.com.au/feed/" htmlUrl="https://portlincolntimes.com.au"/>
+      <outline text="Border Watch [valid]" title="Border Watch [valid]" type="rss" xmlUrl="https://borderwatch.com.au/feed/" htmlUrl="https://borderwatch.com.au"/>
+      <outline text="Geraldton Guardian [valid]" title="Geraldton Guardian [valid]" type="rss" xmlUrl="https://www.geraldtonguardian.com.au/feed/" htmlUrl="https://www.geraldtonguardian.com.au"/>
+      <outline text="Kalgoorlie Miner [valid]" title="Kalgoorlie Miner [valid]" type="rss" xmlUrl="https://www.kalminer.com.au/feed/" htmlUrl="https://www.kalminer.com.au"/>
     </outline>
     <outline text="Spain (ES)" title="Spain (ES)">
       <outline text="Expansión (Financial) [valid]" title="Expansión (Financial) [valid]" type="rss" xmlUrl="https://e00-expansion.uecdn.es/rss/empresas.xml" htmlUrl="https://e00-expansion.uecdn.es"/>
@@ -1296,6 +1303,9 @@
       <outline text="The Bulletin (EN) [valid]" title="The Bulletin (EN) [valid]" type="rss" xmlUrl="https://www.thebulletin.be/rss.xml" htmlUrl="https://www.thebulletin.be"/>
       <outline text="HLN (Het Laatste Nieuws) [valid]" title="HLN (Het Laatste Nieuws) [valid]" type="rss" xmlUrl="https://www.hln.be/home/rss.xml" htmlUrl="https://www.hln.be"/>
       <outline text="Brussels Morning [valid]" title="Brussels Morning [valid]" type="rss" xmlUrl="https://brusselsmorning.com/feed" htmlUrl="https://brusselsmorning.com"/>
+      <outline text="7sur7 [valid]" title="7sur7 [valid]" type="rss" xmlUrl="https://www.7sur7.be/rss.xml" htmlUrl="https://www.7sur7.be"/>
+      <outline text="Business AM [valid]" title="Business AM [valid]" type="rss" xmlUrl="https://businessam.be/feed/" htmlUrl="https://businessam.be"/>
+      <outline text="Bruzz [valid]" title="Bruzz [valid]" type="rss" xmlUrl="https://www.bruzz.be/rss.xml" htmlUrl="https://www.bruzz.be"/>
       <outline text="L&apos;Echo [valid]" title="L&apos;Echo [valid]" type="rss" xmlUrl="https://www.lecho.be/rss/top_stories.xml" htmlUrl="https://www.lecho.be"/>
       <outline text="Brussels Times [invalid]" title="Brussels Times [invalid]" type="rss" xmlUrl="https://www.brusselstimes.com/rss-feed" htmlUrl="https://www.brusselstimes.com"/>
       <outline text="City of Brussels (official) [valid]" title="City of Brussels (official) [valid]" type="rss" xmlUrl="https://www.brussels.be/rss.xml" htmlUrl="https://www.brussels.be"/>
@@ -2213,6 +2223,7 @@
       <outline text="Glas Istre [valid]" title="Glas Istre [valid]" type="rss" xmlUrl="https://www.glasistre.hr/rss.xml" htmlUrl="https://www.glasistre.hr"/>
       <outline text="Glas Slavonije [valid]" title="Glas Slavonije [valid]" type="rss" xmlUrl="https://glas-slavonije.hr/rss.xml" htmlUrl="https://glas-slavonije.hr"/>
       <outline text="Poslovni dnevnik [valid]" title="Poslovni dnevnik [valid]" type="rss" xmlUrl="https://www.poslovni.hr/feed/" htmlUrl="https://www.poslovni.hr"/>
+      <outline text="Nacional [valid]" title="Nacional [valid]" type="rss" xmlUrl="https://www.nacional.hr/feed/" htmlUrl="https://www.nacional.hr"/>
     </outline>
     <outline text="Slovenia (SI)" title="Slovenia (SI)">
       <outline text="24ur [needs verification]" title="24ur [needs verification]" type="rss" xmlUrl="https://www.24ur.com/rss" htmlUrl="https://www.24ur.com"/>
@@ -2273,6 +2284,7 @@
       <outline text="LRT [valid]" title="LRT [valid]" type="rss" xmlUrl="https://www.lrt.lt/?rss" htmlUrl="https://www.lrt.lt"/>
       <outline text="Verslo zinios [valid]" title="Verslo zinios [valid]" type="rss" xmlUrl="https://www.vz.lt/rss" htmlUrl="https://www.vz.lt"/>
       <outline text="Lrytas [valid]" title="Lrytas [valid]" type="rss" xmlUrl="https://www.lrytas.lt/rss" htmlUrl="https://www.lrytas.lt"/>
+      <outline text="Bernardinai [valid]" title="Bernardinai [valid]" type="rss" xmlUrl="https://www.bernardinai.lt/feed/rss" htmlUrl="https://www.bernardinai.lt"/>
     </outline>
     <outline text="Latvia (LV)" title="Latvia (LV)">
       <outline text="TVNET [needs verification]" title="TVNET [needs verification]" type="rss" xmlUrl="https://www.tvnet.lv/rss" htmlUrl="https://www.tvnet.lv"/>
@@ -2298,6 +2310,7 @@
       <outline text="Diena - Regions [needs verification]" title="Diena - Regions [needs verification]" type="rss" xmlUrl="https://www.diena.lv/rss/?c=21" htmlUrl="https://www.diena.lv"/>
       <outline text="Diena - Crime [needs verification]" title="Diena - Crime [needs verification]" type="rss" xmlUrl="https://www.diena.lv/rss/?c=23" htmlUrl="https://www.diena.lv"/>
       <outline text="Diena - World [needs verification]" title="Diena - World [needs verification]" type="rss" xmlUrl="https://www.diena.lv/rss/?c=4" htmlUrl="https://www.diena.lv"/>
+      <outline text="Sportacentrs [valid]" title="Sportacentrs [valid]" type="rss" xmlUrl="https://sportacentrs.com/static/non-publish/rss/sc/rss.xml" htmlUrl="https://sportacentrs.com"/>
     </outline>
     <outline text="Estonia (EE)" title="Estonia (EE)">
       <outline text="Postimees [needs verification]" title="Postimees [needs verification]" type="rss" xmlUrl="https://www.postimees.ee/rss" htmlUrl="https://www.postimees.ee"/>

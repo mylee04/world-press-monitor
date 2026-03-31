@@ -31,6 +31,7 @@ const DEFAULT_ATTEMPTS = 1;
 const APPROXIMATE_LOW_SIGNAL_WHERE = `
   (
     coalesce(title_original, '') = ''
+    or coalesce(title_original, '') ~* '^story[0-9]{8}(?:[-_ ]?[0-9]+)?(?:\\.html)?$'
     or coalesce(title_original, '') ~ '^[0-9]{6,}$'
     or coalesce(title_original, '') ~* '^[[:xdigit:]]{32}$'
     or coalesce(title_original, '') ~* '^Cision[[:alnum:]]+$'
@@ -40,6 +41,7 @@ const APPROXIMATE_LOW_SIGNAL_WHERE = `
     or coalesce(title_original, '') ilike 'http%'
     or coalesce(title_original, '') ~* '^(news|latest|domestic|international|photo|video|full|anime|comic|voiceactor|vest)$'
     or (source ~* 'parapolitika' and coalesce(title_original, '') ~* '^[a-z0-9_-]{4,180}$')
+    or (source ~* 'zaobao' and coalesce(title_original, '') ~* '^(china|singapore|world|finance|lifestyle|entertainment|forum|sports|sea|columns|views|talk|shorts|culture|gen|food|health|comic|zodiac|history[ -]heritage|design[ -]decor|fashion[ -]beauty|travel|campus|gadget|feature|motoring|zbclub)$')
   )
 `;
 

@@ -6027,8 +6027,8 @@
           "name": "Sydney Morning Herald",
           "url": "https://www.smh.com.au/rss/feed.xml",
           "status": "⏩ OFFICIAL",
-          "checkedDate": "02/19/2026",
-          "valid": "needs verification",
+          "checkedDate": "03/31/2026",
+          "valid": "valid",
           "row": 18,
           "sitemapUrl": "https://www.smh.com.au/sitemaps/news/brands/smh"
         },
@@ -6036,8 +6036,8 @@
           "name": "The Age",
           "url": "https://www.theage.com.au/rss/feed.xml",
           "status": "⏩ OFFICIAL",
-          "checkedDate": "02/19/2026",
-          "valid": "needs verification",
+          "checkedDate": "03/31/2026",
+          "valid": "valid",
           "row": 19,
           "sitemapUrl": "https://www.theage.com.au/sitemaps/news/brands/theage"
         },
@@ -6045,24 +6045,26 @@
           "name": "Sydney Morning Herald - Articles Sitemap Index",
           "url": null,
           "status": "NEW",
-          "checkedDate": "03/20/2026",
-          "valid": "valid",
-          "sitemapUrl": "https://www.smh.com.au/sitemaps/smh-sitemaps-articles.xml"
+          "checkedDate": "03/31/2026",
+          "valid": "invalid",
+          "sitemapUrl": "https://www.smh.com.au/sitemaps/smh-sitemaps-articles.xml",
+          "enabled": false
         },
         {
           "name": "The Age - Articles Sitemap Index",
           "url": null,
           "status": "NEW",
-          "checkedDate": "03/20/2026",
-          "valid": "valid",
-          "sitemapUrl": "https://www.theage.com.au/sitemaps/theage-sitemaps-articles.xml"
+          "checkedDate": "03/31/2026",
+          "valid": "invalid",
+          "sitemapUrl": "https://www.theage.com.au/sitemaps/theage-sitemaps-articles.xml",
+          "enabled": false
         },
         {
           "name": "Brisbane Times",
           "url": "https://www.brisbanetimes.com.au/rss/feed.xml",
           "status": "⏩ OFFICIAL",
-          "checkedDate": "03/23/2026",
-          "valid": "needs verification",
+          "checkedDate": "03/31/2026",
+          "valid": "valid",
           "sitemapUrl": "https://www.brisbanetimes.com.au/sitemaps/news/brands/brisbanetimes"
         },
         {
@@ -6097,15 +6099,16 @@
           "name": "Brisbane Times - News Sitemap",
           "sitemapUrl": "https://www.brisbanetimes.com.au/sitemaps/news/brands/brisbanetimes",
           "status": "⏩ OFFICIAL",
-          "checkedDate": "03/23/2026",
-          "valid": "needs verification"
+          "checkedDate": "03/31/2026",
+          "valid": "invalid",
+          "enabled": false
         },
         {
           "name": "WAtoday",
           "url": "https://www.watoday.com.au/rss/feed.xml",
           "status": "⏩ OFFICIAL",
-          "checkedDate": "03/23/2026",
-          "valid": "needs verification",
+          "checkedDate": "03/31/2026",
+          "valid": "valid",
           "sitemapUrl": "https://www.watoday.com.au/sitemaps/news/brands/watoday"
         },
         {
@@ -6140,16 +6143,17 @@
           "name": "WAtoday - News Sitemap",
           "sitemapUrl": "https://www.watoday.com.au/sitemaps/news/brands/watoday",
           "status": "⏩ OFFICIAL",
-          "checkedDate": "03/23/2026",
-          "valid": "needs verification"
+          "checkedDate": "03/31/2026",
+          "valid": "invalid",
+          "enabled": false
         },
         {
           "name": "Canberra Times",
           "url": "https://www.canberratimes.com.au/rss.xml",
           "sitemapUrl": "https://www.canberratimes.com.au/sitemap-news.xml",
           "status": "⏩ OFFICIAL",
-          "checkedDate": "02/19/2026",
-          "valid": "needs verification",
+          "checkedDate": "03/31/2026",
+          "valid": "valid",
           "row": 21
         },
         {
@@ -6181,9 +6185,10 @@
           "name": "7news",
           "url": "https://7news.com.au/feed",
           "status": "⏩ OFFICIAL",
-          "checkedDate": null,
-          "valid": "needs verification",
-          "row": 31
+          "checkedDate": "03/31/2026",
+          "valid": "valid",
+          "row": 31,
+          "sitemapUrl": "https://7news.com.au/news-sitemap.xml"
         },
         {
           "name": "RenewEconomy (호주 신재생/전력망 1위)",
@@ -6333,6 +6338,13 @@
           "url": "https://www.abc.net.au/news/feed/51120/rss.xml"
         },
         {
+          "name": "ABC News - Sitemap",
+          "sitemapUrl": "https://www.abc.net.au/sitemaps/sitemap-news-0.xml.gz",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
           "name": "News.com.au World",
           "url": "https://www.news.com.au/content-feeds/latest-news-world/",
           "status": "NEW",
@@ -6369,6 +6381,20 @@
         {
           "name": "Sky News - Sitemap Index",
           "sitemapUrl": "https://www.skynews.com.au/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Daily Mail Australia",
+          "url": "https://www.dailymail.co.uk/auhome/index.rss",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Yahoo News Australia - Google News Sitemap",
+          "sitemapUrl": "https://au.news.yahoo.com/sitemaps/news-sitemap_googlenews_AU_en-AU.xml.gz",
           "status": "NEW",
           "checkedDate": "03/30/2026",
           "valid": "valid"
@@ -6638,20 +6664,20 @@
           "row": 140
         },
         {
-          "name": "PerthNow - Sitemap Index",
+          "name": "PerthNow - News Sitemap",
           "url": null,
-          "sitemapUrl": "https://www.perthnow.com.au/sitemap.xml",
+          "sitemapUrl": "https://www.perthnow.com.au/news-sitemap.xml",
           "status": "NEW",
-          "checkedDate": "03/16/2026",
+          "checkedDate": "03/30/2026",
           "valid": "valid",
           "row": 141
         },
         {
-          "name": "The West Australian - Sitemap Index",
+          "name": "The West Australian - News Sitemap",
           "url": null,
-          "sitemapUrl": "https://www.thewest.com.au/sitemap.xml",
+          "sitemapUrl": "https://www.thewest.com.au/news-sitemap.xml",
           "status": "NEW",
-          "checkedDate": "03/16/2026",
+          "checkedDate": "03/30/2026",
           "valid": "valid",
           "row": 142
         },
@@ -6937,6 +6963,14 @@
           "valid": "valid"
         },
         {
+          "name": "The Nightly",
+          "url": "https://thenightly.com.au/feed/",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid",
+          "sitemapUrl": "https://thenightly.com.au/news-sitemap.xml"
+        },
+        {
           "name": "InDaily SA - News Sitemap",
           "url": null,
           "sitemapUrl": "https://assets.indailysa.com.au/sitemaps/news-indailysa/posts/post-1.xml",
@@ -6972,6 +7006,14 @@
           "status": "NEW",
           "checkedDate": "03/30/2026",
           "valid": "valid"
+        },
+        {
+          "name": "Western Weekender",
+          "url": "https://westernweekender.com.au/feed/",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid",
+          "sitemapUrl": "https://westernweekender.com.au/sitemap.xml"
         },
         {
           "name": "Michael West",
@@ -7014,6 +7056,36 @@
           "status": "NEW",
           "checkedDate": "03/30/2026",
           "valid": "valid"
+        },
+        {
+          "name": "Port Lincoln Times",
+          "url": "https://portlincolntimes.com.au/feed/",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Border Watch",
+          "url": "https://borderwatch.com.au/feed/",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Geraldton Guardian",
+          "url": "https://www.geraldtonguardian.com.au/feed/",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid",
+          "sitemapUrl": "https://www.geraldtonguardian.com.au/sitemap.xml"
+        },
+        {
+          "name": "Kalgoorlie Miner",
+          "url": "https://www.kalminer.com.au/feed/",
+          "status": "NEW",
+          "checkedDate": "03/30/2026",
+          "valid": "valid",
+          "sitemapUrl": "https://www.kalminer.com.au/sitemap.xml"
         }
       ]
     },
@@ -12443,6 +12515,27 @@
           "row": 30
         },
         {
+          "name": "7sur7",
+          "url": "https://www.7sur7.be/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Business AM",
+          "url": "https://businessam.be/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Bruzz",
+          "url": "https://www.bruzz.be/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
           "name": "L'Echo",
           "url": "https://www.lecho.be/rss/top_stories.xml",
           "status": "⏩ OFFICIAL",
@@ -17221,6 +17314,14 @@
           "checkedDate": "03/16/2026",
           "valid": "valid",
           "row": 225
+        },
+        {
+          "name": "ABC Nyheter - Article Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.abcnyheter.no/sitemap?start=0&pageType=article",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
         }
       ]
     },
@@ -20410,16 +20511,16 @@
           "url": "https://www.topky.sk/rss/8/TOPKY"
         },
         {
-          "name": "Novy Cas - March 2026 Sitemap",
-          "sitemapUrl": "https://www.cas.sk/sitemaps/articles/novycas/2026/3/sitemap-1.xml"
+          "name": "Novy Cas - Google News Sitemap",
+          "sitemapUrl": "https://www.cas.sk/google_news.xml"
         },
         {
-          "name": "Pluska - March 2026 Sitemap",
-          "sitemapUrl": "https://www1.pluska.sk/sitemaps/articles/plus1/2026/3/sitemap-1.xml"
+          "name": "Pluska - Google News Sitemap",
+          "sitemapUrl": "https://www1.pluska.sk/google_news.xml"
         },
         {
-          "name": "Trend - March 2026 Sitemap",
-          "sitemapUrl": "https://www.trend.sk/sitemaps/articles/trend/2026/3/sitemap-1.xml"
+          "name": "Trend - Google News Sitemap",
+          "sitemapUrl": "https://www.trend.sk/google_news.xml"
         },
         {
           "name": "Refresher Slovakia - News Sitemap",
@@ -20925,6 +21026,21 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/30/2026",
           "valid": "valid"
+        },
+        {
+          "name": "Nacional",
+          "url": "https://www.nacional.hr/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Dnevno - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.dnevno.hr/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
         }
       ]
     },
@@ -21377,6 +21493,21 @@
           "status": "NEW",
           "checkedDate": "03/20/2026",
           "valid": "valid"
+        },
+        {
+          "name": "Bernardinai",
+          "url": "https://www.bernardinai.lt/feed/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "VE.lt - News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.ve.lt/sitemap_news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
         }
       ]
     },
@@ -21490,6 +21621,14 @@
         {
           "name": "Diena - World",
           "url": "https://www.diena.lv/rss/?c=4"
+        },
+        {
+          "name": "Sportacentrs",
+          "url": "https://sportacentrs.com/static/non-publish/rss/sc/rss.xml",
+          "sitemapUrl": "https://sportacentrs.com/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
         }
       ]
     },

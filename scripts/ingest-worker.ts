@@ -1315,6 +1315,7 @@ const ARTICLE_TITLE_FALLBACK_SOURCES = new Set(
     || [
       'ajel',
       'aap',
+      'abc news',
       'setn',
       'parapolitika',
       'news.com.au',
@@ -1359,11 +1360,30 @@ const ARTICLE_TITLE_FETCH_TIMEOUT_MS = Math.max(
   3000,
   Math.min(20000, Number.parseInt(process.env.INGEST_ARTICLE_TITLE_TIMEOUT_MS || '12000', 10) || 12000)
 );
+const ARTICLE_PUBLISHED_AT_FETCH_TIMEOUT_MS = Math.max(
+  3000,
+  Math.min(20000, Number.parseInt(process.env.INGEST_ARTICLE_PUBLISHED_AT_TIMEOUT_MS || '12000', 10) || 12000)
+);
+const ARTICLE_PUBLISHED_AT_FETCH_MAX_PER_RUN = Math.max(
+  1,
+  Math.min(1000, Number.parseInt(process.env.INGEST_ARTICLE_PUBLISHED_AT_FETCH_MAX_PER_RUN || '240', 10) || 240)
+);
+const ARTICLE_PUBLISHED_AT_FETCH_MAX_PER_SOURCE = Math.max(
+  1,
+  Math.min(500, Number.parseInt(process.env.INGEST_ARTICLE_PUBLISHED_AT_FETCH_MAX_PER_SOURCE || '180', 10) || 180)
+);
 
 const articleMetaCategoryCache = new Map<string, Promise<string[]>>();
 const articleTitleCache = new Map<string, Promise<string>>();
+const articlePublishedAtCache = new Map<string, Promise<string>>();
 const articleMetaCategoryFetchCountsBySource = new Map<string, number>();
+const articlePublishedAtFetchCountsBySource = new Map<string, number>();
 const articleMetaCategoryStats = {
+  fetchesStarted: 0,
+  cacheHits: 0,
+  budgetSkipped: 0,
+};
+const articlePublishedAtStats = {
   fetchesStarted: 0,
   cacheHits: 0,
   budgetSkipped: 0,
@@ -1425,6 +1445,46 @@ function shouldFetchArticlePageTitle(source: string, url: string, title: string)
   }
 
   return false;
+}
+
+function shouldFetchArticlePublishedAt(source: string, url: string): boolean {
+  if (!url || isKnownNonArticleUrl(source, url)) return false;
+  const normalizedSource = normalizeSourceKey(source);
+  return (
+    normalizedSource === '9news' ||
+    normalizedSource.includes('news.com.au national top news') ||
+    normalizedSource.includes('news.com.au finance') ||
+    normalizedSource.includes('news.com.au world') ||
+    normalizedSource.includes('news.com.au technology') ||
+    normalizedSource.includes('news.com.au - sport')
+  );
+}
+
+function normalizePublishedAtCandidate(value: string): string {
+  const trimmed = (value || '').trim();
+  if (!trimmed) return '';
+  const ts = new Date(trimmed).getTime();
+  if (!Number.isFinite(ts)) return '';
+  return new Date(ts).toISOString();
+}
+
+function extractArticlePagePublishedAt(html: string): string {
+  const patterns = [
+    /<meta[^>]+property=["']article:published_time["'][^>]+content=["']([^"']+)["']/i,
+    /<meta[^>]+name=["']pubdate["'][^>]+content=["']([^"']+)["']/i,
+    /"datePublished"\s*:\s*"([^"]+)"/i,
+    /"publishedDate"\s*:\s*"([^"]+)"/i,
+    /"publishedAt"\s*:\s*"([^"]+)"/i,
+    /<time[^>]+datetime=["']([^"']+)["']/i,
+  ];
+
+  for (const pattern of patterns) {
+    const match = html.match(pattern);
+    const normalized = normalizePublishedAtCandidate(match?.[1] || '');
+    if (normalized) return normalized;
+  }
+
+  return '';
 }
 
 async function fetchArticleMetaCategories(source: string, url: string): Promise<string[]> {
@@ -1502,6 +1562,53 @@ async function fetchArticlePageTitle(source: string, url: string): Promise<strin
   })();
 
   articleTitleCache.set(cacheKey, task);
+  return task;
+}
+
+async function fetchArticlePagePublishedAt(source: string, url: string): Promise<string> {
+  const normalizedSource = normalizeSourceKey(source);
+  const cacheKey = `${normalizedSource}\n${url.trim()}`;
+  const existing = articlePublishedAtCache.get(cacheKey);
+  if (existing) {
+    articlePublishedAtStats.cacheHits += 1;
+    return existing;
+  }
+
+  if (articlePublishedAtStats.fetchesStarted >= ARTICLE_PUBLISHED_AT_FETCH_MAX_PER_RUN) {
+    articlePublishedAtStats.budgetSkipped += 1;
+    return '';
+  }
+
+  const sourceCount = articlePublishedAtFetchCountsBySource.get(normalizedSource) || 0;
+  if (sourceCount >= ARTICLE_PUBLISHED_AT_FETCH_MAX_PER_SOURCE) {
+    articlePublishedAtStats.budgetSkipped += 1;
+    return '';
+  }
+
+  articlePublishedAtStats.fetchesStarted += 1;
+  articlePublishedAtFetchCountsBySource.set(normalizedSource, sourceCount + 1);
+
+  const task = (async () => {
+    try {
+      const response = await fetchWithRetry(url, {
+        timeoutMs: ARTICLE_PUBLISHED_AT_FETCH_TIMEOUT_MS,
+        attempts: 2,
+        fetchOptions: {
+          headers: buildArticlePageFetchHeaders(url),
+          redirect: 'follow',
+        },
+      });
+      if (!response.ok) return '';
+      const contentType = (response.headers.get('content-type') || '').toLowerCase();
+      if (contentType && !contentType.includes('html') && !contentType.includes('xml')) return '';
+      const html = (await readResponseText(response, response.url || url)).text;
+      return extractArticlePagePublishedAt(html);
+    } catch {
+      return '';
+    }
+  })();
+
+  articlePublishedAtCache.set(cacheKey, task);
   return task;
 }
 
@@ -1837,7 +1944,7 @@ async function toNewsItem(
   }
   let titleRepairAttempted = false;
   let titleRepairSource: 'article_page' | null = null;
-  if (shouldFetchArticlePageTitle(outlet.name, row.link || '', title)) {
+  if (shouldFetchArticlePageTitle(outlet.name, row.link || '', row.title || title)) {
     titleRepairAttempted = true;
     const pageTitle = await fetchArticlePageTitle(outlet.name, row.link || '');
     if (pageTitle) {
@@ -1857,7 +1964,10 @@ async function toNewsItem(
   }
   title = titleAssessment.normalizedTitle;
   const description = normalizeHtmlText(row.description || '');
-  const rawPublishedAt = (row.publishedAt || '').trim();
+  let rawPublishedAt = (row.publishedAt || '').trim();
+  if (!rawPublishedAt && shouldFetchArticlePublishedAt(outlet.name, row.link || '')) {
+    rawPublishedAt = await fetchArticlePagePublishedAt(outlet.name, row.link || '');
+  }
   if (!rawPublishedAt && DROP_ITEMS_WITHOUT_PUBLISHED_AT) {
     onMissingPublishedAtCandidate?.({
       outletId: outlet.id,

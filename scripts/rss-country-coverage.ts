@@ -2,6 +2,7 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { basename, resolve } from 'node:path';
 import { fetchWithRetry } from '@/lib/fetch-utils';
+import { normalizeReadableArticleTitle } from '@/lib/html-entities';
 import { parseRssOrAtomWithStats } from '@/lib/parsers';
 import { runWithConcurrency } from '@/lib/concurrency';
 import { normalizeLinkForId } from '@/lib/pipeline';
@@ -293,11 +294,17 @@ async function inspectFeed(feed: FeedInput, itemLimit: number, timeoutMs: number
     const parsed = parseRssOrAtomWithStats(body, itemLimit);
     const nowMs = Date.now();
     const cutoffMs = nowMs - 24 * 60 * 60 * 1000;
-    const recentItems = parsed.items.filter((item) => {
-      const iso = toIso(item.publishedAt);
-      if (!iso) return false;
-      return new Date(iso).getTime() >= cutoffMs;
-    });
+    const recentItems = parsed.items
+      .map((item) => ({
+        ...item,
+        readableTitle: normalizeReadableArticleTitle(item.title || '', item.link || '', feed.source),
+      }))
+      .filter((item) => {
+        const iso = toIso(item.publishedAt);
+        if (!iso) return false;
+        if (new Date(iso).getTime() < cutoffMs) return false;
+        return Boolean(item.readableTitle);
+      });
     const recentLinkIds = recentItems
       .map((item) => normalizeLinkForId(item.link))
       .filter(Boolean);
@@ -315,7 +322,7 @@ async function inspectFeed(feed: FeedInput, itemLimit: number, timeoutMs: number
       totalParsed: parsed.items.length,
       recent24h: recentItems.length,
       newestItemAt,
-      sampleTitles: recentItems.slice(0, 3).map((item) => item.title),
+      sampleTitles: recentItems.slice(0, 3).map((item) => item.readableTitle || item.title),
       recentLinkIds,
     };
   } catch (error) {

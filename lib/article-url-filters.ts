@@ -79,6 +79,32 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     if (pathname.startsWith('/cartoon/')) return true;
   }
 
+  if (hostname.endsWith('abc.net.au') && normalizedSource.includes('abc news')) {
+    if (pathname.startsWith('/news/newschannel/')) return true;
+    if (pathname.includes('/latest-news-just-in-')) return true;
+    if (/^\/news\/20\d{2}-\d{2}-\d{2}\/abc-news\/\d+\/?$/.test(pathname)) return true;
+  }
+
+  if (hostname.endsWith('abcnyheter.no') && normalizedSource.includes('abc nyheter')) {
+    if (pathname.startsWith('/stemmer/')) return true;
+  }
+
+  if (hostname.endsWith('ve.lt') && normalizedSource.includes('ve.lt')) {
+    if (pathname.startsWith('/gyvenimas/')) return true;
+    if (pathname.startsWith('/horoskopai/')) return true;
+    if (pathname.startsWith('/nuomones/')) return true;
+    if (pathname.startsWith('/renginiai/')) return true;
+    if (pathname.startsWith('/orai/')) return true;
+  }
+
+  if (hostname.endsWith('dnevno.hr') && normalizedSource.includes('dnevno')) {
+    if (pathname.startsWith('/magazin/')) return true;
+    if (pathname.startsWith('/zdravlje/')) return true;
+    if (pathname.startsWith('/planet-x/')) return true;
+    if (pathname.startsWith('/vjera/')) return true;
+    if (pathname.startsWith('/auto-moto/')) return true;
+  }
+
   if (hostname.endsWith('7news.com.au')) {
     if (pathname.startsWith('/7you/')) return true;
     if (pathname.startsWith('/sunrise/')) return true;
@@ -90,7 +116,56 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     return true;
   }
 
+  if (hostname.endsWith('news.com.au') && normalizedSource.includes('news.com.au - sitemap')) {
+    if (pathname.startsWith('/entertainment/')) return true;
+    if (pathname.startsWith('/lifestyle/')) return true;
+    if (pathname.startsWith('/travel/')) return true;
+    if (pathname.startsWith('/motoring/')) return true;
+  }
+
+  if (hostname.endsWith('9news.com.au') && normalizedSource.includes('9news')) {
+    if (trimmedPathname === '/') return true;
+    if (pathname.startsWith('/meet-the-team/')) return true;
+    if (pathname.startsWith('/videos/')) return true;
+    const segments = pathname.split('/').filter(Boolean);
+    if (segments.length < 3) return true;
+  }
+
+  if (
+    (
+      hostname.endsWith('smh.com.au') ||
+      hostname.endsWith('theage.com.au') ||
+      hostname.endsWith('brisbanetimes.com.au') ||
+      hostname.endsWith('watoday.com.au')
+    ) &&
+    normalizedSource.includes('news sitemap')
+  ) {
+    if (pathname.startsWith('/goodfood/')) return true;
+    if (pathname.startsWith('/life-and-relationships/')) return true;
+  }
+
   if (hostname.endsWith('skynews.com.au') && pathname.startsWith('/lifestyle/')) {
+    return true;
+  }
+
+  if (hostname.endsWith('dailymail.co.uk') && normalizedSource.includes('daily mail australia')) {
+    if (!/^\/news\/article-\d+(?:\/|$)/.test(pathname)) {
+      return true;
+    }
+  }
+
+  if (
+    (
+      hostname.endsWith('adelaidenow.com.au') ||
+      hostname.endsWith('townsvillebulletin.com.au') ||
+      hostname.endsWith('goldcoastbulletin.com.au') ||
+      hostname.endsWith('ntnews.com.au') ||
+      hostname.endsWith('themercury.com.au') ||
+      hostname.endsWith('couriermail.com.au') ||
+      hostname.endsWith('dailytelegraph.com.au')
+    ) &&
+    pathname.includes('/hyperlocal/')
+  ) {
     return true;
   }
 
