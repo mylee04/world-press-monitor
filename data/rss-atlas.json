@@ -843,6 +843,126 @@
           "checkedDate": "02/19/2026",
           "valid": "needs verification",
           "row": 111
+        },
+        {
+          "name": "Wall Street Journal - U.S.",
+          "url": "https://feeds.content.dowjones.io/public/rss/RSSUSnews"
+        },
+        {
+          "name": "Politico Tech",
+          "url": "https://rss.politico.com/technology.xml"
+        },
+        {
+          "name": "TechCrunch Startups",
+          "url": "https://techcrunch.com/category/startups/feed/"
+        },
+        {
+          "name": "TechCrunch Layoffs",
+          "url": "https://techcrunch.com/tag/layoffs/feed/"
+        },
+        {
+          "name": "The Verge AI",
+          "url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml"
+        },
+        {
+          "name": "Yahoo Finance - Top Stories",
+          "url": "https://finance.yahoo.com/rss/topstories"
+        },
+        {
+          "name": "The Diplomat",
+          "url": "https://thediplomat.com/feed/"
+        },
+        {
+          "name": "Foreign Affairs",
+          "url": "https://www.foreignaffairs.com/rss.xml"
+        },
+        {
+          "name": "Foreign Policy",
+          "url": "https://foreignpolicy.com/feed/"
+        },
+        {
+          "name": "Defense One",
+          "url": "https://www.defenseone.com/rss/all/"
+        },
+        {
+          "name": "Defense News",
+          "url": "https://www.defensenews.com/arc/outboundfeeds/rss/?outputType=xml"
+        },
+        {
+          "name": "Military Times",
+          "url": "https://www.militarytimes.com/arc/outboundfeeds/rss/?outputType=xml"
+        },
+        {
+          "name": "War on the Rocks",
+          "url": "https://warontherocks.com/feed/"
+        },
+        {
+          "name": "gCaptain",
+          "url": "https://gcaptain.com/feed/"
+        },
+        {
+          "name": "CoinDesk",
+          "url": "https://www.coindesk.com/arc/outboundfeeds/rss/"
+        },
+        {
+          "name": "Cointelegraph",
+          "url": "https://cointelegraph.com/rss"
+        },
+        {
+          "name": "Blockworks",
+          "url": "https://blockworks.co/feed"
+        },
+        {
+          "name": "Decrypt",
+          "url": "https://decrypt.co/feed"
+        },
+        {
+          "name": "KrebsOnSecurity",
+          "url": "https://krebsonsecurity.com/feed/"
+        },
+        {
+          "name": "Dark Reading",
+          "url": "https://www.darkreading.com/rss.xml"
+        },
+        {
+          "name": "ScienceDaily",
+          "url": "https://www.sciencedaily.com/rss/all.xml"
+        },
+        {
+          "name": "MIT Technology Review",
+          "url": "https://www.technologyreview.com/feed/"
+        },
+        {
+          "name": "Crunchbase News",
+          "url": "https://news.crunchbase.com/feed/"
+        },
+        {
+          "name": "The New Stack",
+          "url": "https://thenewstack.io/feed/"
+        },
+        {
+          "name": "The Points Guy",
+          "url": "https://thepointsguy.com/feed/"
+        },
+        {
+          "name": "Airline Geeks",
+          "url": "https://airlinegeeks.com/feed/"
+        },
+        {
+          "name": "One Mile at a Time",
+          "url": "https://onemileatatime.com/feed/"
+        },
+        {
+          "name": "View from the Wing",
+          "url": "https://viewfromthewing.com/feed/"
+        },
+        {
+          "name": "Aviation Pros",
+          "url": "https://www.aviationpros.com/rss"
+        },
+        {
+          "name": "Aviation Week",
+          "url": "https://www.aviationweek.com/rss"
         }
       ]
     },
@@ -2884,6 +3004,14 @@
           "checkedDate": "03/21/2026",
           "valid": "needs verification",
           "row": 34
+        },
+        {
+          "name": "NDTV - Top Stories",
+          "url": "https://feeds.feedburner.com/ndtvnews-top-stories"
+        },
+        {
+          "name": "Inc42",
+          "url": "https://inc42.com/feed/"
         }
       ]
     },
@@ -3167,6 +3295,46 @@
         {
           "name": "ChronicleLive - News Sitemap",
           "sitemapUrl": "https://www.chroniclelive.co.uk/map_news.xml"
+        },
+        {
+          "name": "BBC Africa",
+          "url": "https://feeds.bbci.co.uk/news/world/africa/rss.xml"
+        },
+        {
+          "name": "BBC Asia",
+          "url": "https://feeds.bbci.co.uk/news/world/asia/rss.xml"
+        },
+        {
+          "name": "BBC Latin America",
+          "url": "https://feeds.bbci.co.uk/news/world/latin_america/rss.xml"
+        },
+        {
+          "name": "BBC Middle East",
+          "url": "https://feeds.bbci.co.uk/news/world/middle_east/rss.xml"
+        },
+        {
+          "name": "BBC Persian",
+          "url": "https://feeds.bbci.co.uk/persian/rss.xml"
+        },
+        {
+          "name": "The Guardian - Americas",
+          "url": "https://www.theguardian.com/world/americas/rss"
+        },
+        {
+          "name": "The Guardian - Middle East",
+          "url": "https://www.theguardian.com/world/middleeast/rss"
+        },
+        {
+          "name": "FlightGlobal",
+          "url": "https://www.flightglobal.com/rss"
+        },
+        {
+          "name": "Simple Flying",
+          "url": "https://simpleflying.com/feed/"
+        },
+        {
+          "name": "Nature News",
+          "url": "https://feeds.nature.com/nature/rss/current"
         }
       ]
     },
@@ -3652,6 +3820,14 @@
         {
           "name": "L'Équipe - Dynamic News Sitemap",
           "sitemapUrl": "https://www.lequipe.fr/dynamic-sitemap/sitemap_news.xml"
+        },
+        {
+          "name": "Africanews",
+          "url": "https://www.africanews.com/feed/"
+        },
+        {
+          "name": "Jeune Afrique",
+          "url": "https://www.jeuneafrique.com/feed/"
         }
       ]
     },
@@ -17322,6 +17498,14 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/31/2026",
           "valid": "valid"
+        },
+        {
+          "name": "Dagen - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.dagen.no/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
         }
       ]
     },
@@ -17364,6 +17548,14 @@
           "sitemapUrl": "https://www.irishexaminer.com/sitemap-index/44-google_sitemap.xml",
           "status": "NEW",
           "checkedDate": "03/20/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Irish Legal News",
+          "url": null,
+          "sitemapUrl": "https://www.irishlegal.com/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
           "valid": "valid"
         },
         {
@@ -18632,6 +18824,20 @@
         {
           "name": "Kaleva - Uusimmat",
           "url": "https://kaleva.fi/feedit/rss/managed-listing/rss-uusimmat/"
+        },
+        {
+          "name": "Lapin Kansa - Lappi",
+          "url": "https://www.lapinkansa.fi/feedit/rss/managed-listing/lappi/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Lapin Kansa - Urheilu",
+          "url": "https://www.lapinkansa.fi/feedit/rss/managed-listing/urheilu/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
         },
         {
           "name": "Aamulehti",
@@ -19932,6 +20138,13 @@
         {
           "name": "Refresher CZ",
           "url": "https://refresher.cz/rss"
+        },
+        {
+          "name": "České noviny - Zprávy",
+          "url": "https://www.ceskenoviny.cz/sluzby/rss/zpravy.php",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
         }
       ]
     },
@@ -20027,6 +20240,20 @@
           "sitemapUrl": "https://www.cnn.gr/sitemap-news",
           "status": "NEW",
           "checkedDate": "03/20/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "iefimerida",
+          "url": "https://www.iefimerida.gr/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "SKAI",
+          "url": "https://www.skai.gr/feed.xml",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
           "valid": "valid"
         },
         {
@@ -20433,6 +20660,62 @@
         {
           "name": "Luxemburger Wort",
           "sitemapUrl": "https://www.wort.lu/sitemap-news.xml"
+        },
+        {
+          "name": "Delano - Articles Sitemap",
+          "sitemapUrl": "https://delano.lu/articles.xml",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Paperjam - Articles Sitemap",
+          "sitemapUrl": "https://paperjam.lu/articles.xml",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "RTL Luxembourg - National",
+          "url": "https://www.rtl.lu/news/national.rss",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "RTL Luxembourg - International",
+          "url": "https://www.rtl.lu/news/international.rss",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "RTL Today - Luxembourg",
+          "url": "https://today.rtl.lu/news/luxembourg.rss",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "RTL Today - World",
+          "url": "https://today.rtl.lu/news/world.rss",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "RTL Infos - Luxembourg",
+          "url": "https://infos.rtl.lu/news/luxembourg.rss",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "RTL Infos - Monde",
+          "url": "https://infos.rtl.lu/news/monde.rss",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
         }
       ]
     },
@@ -20521,6 +20804,13 @@
         {
           "name": "Trend - Google News Sitemap",
           "sitemapUrl": "https://www.trend.sk/google_news.xml"
+        },
+        {
+          "name": "Štandard",
+          "sitemapUrl": "https://standard.sk/sitemap/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
         },
         {
           "name": "Refresher Slovakia - News Sitemap",
@@ -21041,6 +21331,13 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/31/2026",
           "valid": "valid"
+        },
+        {
+          "name": "HRT Vijesti",
+          "sitemapUrl": "https://vijesti.hrt.hr/sitemaps/articles-news.xml",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
         }
       ]
     },
@@ -21508,6 +21805,10 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/31/2026",
           "valid": "valid"
+        },
+        {
+          "name": "AeroTime",
+          "url": "https://aerotime.aero/feed"
         }
       ]
     },
@@ -22046,6 +22347,24 @@
         {
           "name": "Independent Nigeria",
           "url": "https://independent.ng/feed/"
+        },
+        {
+          "name": "TheCable - Sitemap Index",
+          "sitemapUrl": "https://www.thecable.ng/sitemap_index.xml",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Sahara Reporters",
+          "url": "https://saharareporters.com/articles/rss-feed",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TechCabal",
+          "url": "https://techcabal.com/feed/"
         }
       ]
     },
@@ -22292,6 +22611,10 @@
           "language": "ta",
           "sourceType": "sitemap",
           "enabled": true
+        },
+        {
+          "name": "Tech in Asia",
+          "url": "https://www.techinasia.com/feed"
         }
       ]
     },
@@ -22405,6 +22728,74 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/30/2026",
           "valid": "valid"
+        },
+        {
+          "name": "eNCA",
+          "url": "https://www.enca.com/rss.xml",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "EWN - Sitemap",
+          "sitemapUrl": "https://www.ewn.co.za/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        }
+      ]
+    },
+    {
+      "name": "Qatar",
+      "code": "QA",
+      "feeds": [
+        {
+          "name": "Al Jazeera",
+          "url": "https://www.aljazeera.com/xml/rss/all.xml"
+        }
+      ]
+    },
+    {
+      "name": "United Arab Emirates",
+      "code": "AE",
+      "feeds": [
+        {
+          "name": "The National",
+          "url": "https://www.thenationalnews.com/arc/outboundfeeds/rss/?outputType=xml"
+        }
+      ]
+    },
+    {
+      "name": "Ecuador",
+      "code": "EC",
+      "feeds": [
+        {
+          "name": "Primicias",
+          "url": "https://www.primicias.ec/feed/"
+        },
+        {
+          "name": "El Universo",
+          "url": "https://www.eluniverso.com/arc/outboundfeeds/rss/category/noticias/?outputType=xml"
+        }
+      ]
+    },
+    {
+      "name": "Oman",
+      "code": "OM",
+      "feeds": [
+        {
+          "name": "Oman Observer",
+          "url": "https://www.omanobserver.om/rssFeed/1"
+        }
+      ]
+    },
+    {
+      "name": "Colombia",
+      "code": "CO",
+      "feeds": [
+        {
+          "name": "InSight Crime",
+          "url": "https://insightcrime.org/feed/"
         }
       ]
     }
