@@ -11020,6 +11020,13 @@
           "valid": "valid"
         },
         {
+          "name": "Al Madina - Local",
+          "url": "https://www.al-madina.com/rssFeed/1",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Al Bilad Daily",
           "url": "https://albiladdaily.com/feed",
           "status": null,
@@ -11126,7 +11133,7 @@
         },
         {
           "name": "Saudi Press Agency (Arabic)",
-          "sitemapUrl": "https://www.spa.gov.sa/sitemap-0.xml",
+          "sitemapUrl": "https://www.spa.gov.sa/ar/sitemap.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/31/2026",
           "valid": "valid",
@@ -11219,10 +11226,9 @@
         },
         {
           "name": "Saudi Gazette",
-          "url": "https://saudigazette.com.sa/rssFeed/1",
+          "url": "https://saudigazette.com.sa/rssFeed/0",
           "checkedDate": "03/30/2026",
-          "valid": "invalid",
-          "enabled": false
+          "valid": "valid"
         },
         {
           "name": "Saudi Gazette - News Sitemap",
@@ -23006,6 +23012,20 @@
           "url": "https://www.gulf-times.com/rssFeed/2"
         },
         {
+          "name": "Gulf Times - Region",
+          "url": "https://www.gulf-times.com/rssFeed/6",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Gulf Times - International",
+          "url": "https://www.gulf-times.com/rssFeed/9",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Gulf Times - Qatar Local",
           "url": "https://www.gulf-times.com/rssFeed/8",
           "status": "NEW",
@@ -23019,7 +23039,6 @@
         {
           "name": "Doha News",
           "url": "https://www.dohanews.co/feed/",
-          "sitemapUrl": "https://www.dohanews.co/post-sitemap.xml",
           "status": "NEW",
           "checkedDate": "03/31/2026",
           "valid": "valid"
@@ -23121,6 +23140,13 @@
           "sitemapUrl": "https://www.khaleejtimes.com/news_sitemap.xml"
         },
         {
+          "name": "Khaleej Times - Arabic News Sitemap",
+          "sitemapUrl": "https://www.khaleejtimes.com/arabic/news_sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Emirates 24/7 - Sitemap",
           "sitemapUrl": "https://www.emirates247.com/sitemap.xml"
         },
@@ -23198,6 +23224,27 @@
         {
           "name": "Emarat Al Youm - Local Section",
           "sitemapUrl": "https://www.emaratalyoum.com/news-sitemaps-1.368006/local-section-1.1075475?ot=ot.AjaxPageLayout",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Emarat Al Youm - Business Section",
+          "sitemapUrl": "https://www.emaratalyoum.com/news-sitemaps-1.368006/business-1.1075476?ot=ot.AjaxPageLayout",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Emarat Al Youm - Politics Section",
+          "sitemapUrl": "https://www.emaratalyoum.com/news-sitemaps-1.368006/politics-1.1075478?ot=ot.AjaxPageLayout",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Emarat Al Youm - Sports Section",
+          "sitemapUrl": "https://www.emaratalyoum.com/news-sitemaps-1.368006/sports-1.1075480?ot=ot.AjaxPageLayout",
           "status": "NEW",
           "checkedDate": "03/31/2026",
           "valid": "valid"
