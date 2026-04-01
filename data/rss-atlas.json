@@ -23415,6 +23415,41 @@
         {
           "name": "El Universo",
           "url": "https://www.eluniverso.com/arc/outboundfeeds/rss/category/noticias/?outputType=xml"
+        },
+        {
+          "name": "El Comercio - Titulares",
+          "url": "https://elcomercio.com/rss",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "El Comercio - Actualidad",
+          "url": "https://elcomercio.com/rss/actualidad",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "El Comercio - Tendencias",
+          "url": "https://elcomercio.com/rss/tendencias",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "El Comercio - Deportes",
+          "url": "https://elcomercio.com/rss/deportes",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "El Comercio - Opinion",
+          "url": "https://elcomercio.com/rss/opinion",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
         }
       ]
     },
@@ -23454,6 +23489,20 @@
           "sitemapUrl": "https://www.muscatdaily.com/post-sitemap.xml",
           "status": "NEW",
           "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Muscat Daily - Oman",
+          "url": "https://www.muscatdaily.com/category/oman/feed/",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Muscat Daily - Business",
+          "url": "https://www.muscatdaily.com/category/business/feed/",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
           "valid": "valid"
         }
       ]
