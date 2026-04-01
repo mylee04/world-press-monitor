@@ -847,22 +847,29 @@ Current implementation already covers:
 - live DB-backed country metrics
 - source HQ registry and country geometry fallback handling
 - country zoom and pan interaction
+- country summary metrics with hourly trend, top publishers, top regions, and top sources
+- publisher footprint mode with publisher summary and country drill-down
+- health overlay mode with degraded-country and degraded-source ranking
+- observed benchmark summary sheet inside the map view
+- core URL state sync for mode, country, publisher, source, panel, benchmark sheet, and layer toggles
 
 Current known gaps:
 
-- publisher is still often equal to source label instead of network/company grouping
-- country summary lacks `top publishers`, `top regions`, and `country hourly trend`
-- dense metro countries still need stronger `city -> source list` drill-down polish
-- URL state is not yet deep-linkable
-- health overlay exists conceptually but is not yet a first-class visual mode
+- publisher grouping still needs stronger network/company normalization and confidence labeling
+- dense metro countries still need stronger `city -> source list` drill-down polish and cluster naming
+- URL state does not yet preserve flat-map pan/zoom camera state
+- country and publisher search are not implemented
+- time window switching (`1h` / `24h` / `7d`) is not yet exposed in the map UI
+- explicit live vs fallback provenance badges are not surfaced yet
+- reduced motion and persistent attribution are not implemented yet
 - geometry overrides are still heuristic for some multipolygon countries
 
 This means the next implementation wave should focus on:
 
-1. publisher grouping model
-2. country mode operational summary upgrades
-3. publisher mode foundation
-4. health overlay and URL state
+1. search and time window controls
+2. publisher grouping confidence model
+3. operational provenance, reduced motion, and attribution
+4. deeper metro drill-down and geometry overrides
 
 ## 17.2 Next Delivery Wave
 
@@ -944,6 +951,10 @@ Goal:
 
 - let users inspect one publisher/company across countries and sources
 
+Status:
+
+- largely shipped in current implementation
+
 Implementation tasks:
 
 - build `GET /api/customer/dashboard/map/publishers`
@@ -982,6 +993,7 @@ Implementation tasks:
   - layer
   - metric
   - zoom
+- keep query params stable while async detail data hydrates
 - add explicit `live` vs `fallback` badge for data source provenance
 - add reduced motion mode
 - add persistent attribution footer
@@ -995,6 +1007,11 @@ Acceptance criteria:
 - copied map URL restores current state
 - users can tell whether they are looking at live DB data
 - interaction remains responsive after country switches
+
+Current progress:
+
+- core URL state sync for mode, country, publisher, source, panel, benchmark visibility, and layer toggles is shipped
+- zoom/pan restoration, provenance badges, reduced motion, and attribution remain open
 
 ## 18. Suggested Initial File Structure
 

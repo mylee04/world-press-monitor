@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import type { CSSProperties, PointerEvent as ReactPointerEvent, WheelEvent as ReactWheelEvent } from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { geoGraticule10, geoMercator, geoOrthographic, geoPath } from 'd3-geo';
@@ -54,6 +55,8 @@ type MapLayerState = {
 };
 
 type MapMode = 'countries' | 'publishers' | 'health';
+type LeftTab = 'overview' | 'display';
+type DetailTab = 'metrics' | 'headlines' | 'health';
 
 const GLOBE_WIDTH = 1800;
 const GLOBE_HEIGHT = 1120;
@@ -127,6 +130,79 @@ function normalizeCountryName(value: string): string {
 }
 
 const MAP_AUTO_REFRESH_MS = 60 * 60 * 1000;
+const MAP_LAYER_KEYS = ['labels', 'graticule', 'land', 'glow', 'flows'] as const;
+const DEFAULT_MAP_LAYERS: MapLayerState = {
+  labels: true,
+  graticule: true,
+  land: true,
+  glow: true,
+  flows: true,
+};
+
+function isMapMode(value: string | null): value is MapMode {
+  return value === 'countries' || value === 'publishers' || value === 'health';
+}
+
+function isLeftTab(value: string | null): value is LeftTab {
+  return value === 'overview' || value === 'display';
+}
+
+function isDetailTab(value: string | null): value is DetailTab {
+  return value === 'metrics' || value === 'headlines' || value === 'health';
+}
+
+function serializeLayerState(layers: MapLayerState): string | null {
+  const enabled = MAP_LAYER_KEYS.filter((key) => layers[key]);
+  if (enabled.length === MAP_LAYER_KEYS.length) return null;
+  return enabled.join(',');
+}
+
+function parseLayerState(raw: string | null): MapLayerState | null {
+  if (!raw) return null;
+  const enabled = new Set(
+    raw
+      .split(',')
+      .map((value) => value.trim())
+      .filter((value): value is (typeof MAP_LAYER_KEYS)[number] => MAP_LAYER_KEYS.includes(value as (typeof MAP_LAYER_KEYS)[number]))
+  );
+  return {
+    labels: enabled.has('labels'),
+    graticule: enabled.has('graticule'),
+    land: enabled.has('land'),
+    glow: enabled.has('glow'),
+    flows: enabled.has('flows'),
+  };
+}
+
+function sameLayerState(a: MapLayerState, b: MapLayerState): boolean {
+  return MAP_LAYER_KEYS.every((key) => a[key] === b[key]);
+}
+
+function buildMapQueryString(input: {
+  mode: MapMode;
+  country: string | null;
+  publisher: string | null;
+  source: string | null;
+  leftTab: LeftTab;
+  detailTab: DetailTab;
+  benchmarkOpen: boolean;
+  layers: MapLayerState;
+}): string {
+  const params = new URLSearchParams();
+
+  if (input.mode !== 'countries') params.set('mode', input.mode);
+  if (input.country) params.set('country', input.country);
+  if (input.mode === 'publishers' && input.publisher) params.set('publisher', input.publisher);
+  if (input.country && input.source) params.set('source', input.source);
+  if (input.leftTab !== 'overview') params.set('panel', input.leftTab);
+  if (input.detailTab !== 'metrics') params.set('detail', input.detailTab);
+  if (!input.benchmarkOpen) params.set('benchmark', 'collapsed');
+
+  const serializedLayers = serializeLayerState(input.layers);
+  if (serializedLayers) params.set('layers', serializedLayers);
+
+  return params.toString();
+}
 
 function useRemoteJson<T>(url: string | null, refreshMs = MAP_AUTO_REFRESH_MS): JsonState<T> {
   const updatedAtRef = useRef<number | null>(null);
@@ -1418,9 +1494,12 @@ function CountryPlaneSvg({
 }
 
 export function MapView() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [mapMode, setMapMode] = useState<MapMode>('countries');
-  const [leftTab, setLeftTab] = useState<'overview' | 'display'>('overview');
-  const [detailTab, setDetailTab] = useState<'metrics' | 'headlines' | 'health'>('metrics');
+  const [leftTab, setLeftTab] = useState<LeftTab>('overview');
+  const [detailTab, setDetailTab] = useState<DetailTab>('metrics');
   const [benchmarkOpen, setBenchmarkOpen] = useState(true);
   const [selectedCountry, setSelectedCountry] = useState<MapCountryMetricRow | null>(null);
   const [selectedCluster, setSelectedCluster] = useState<CountrySourceCluster | null>(null);
@@ -1430,13 +1509,7 @@ export function MapView() {
   const [motionEnabled, setMotionEnabled] = useState(true);
   const [interactionPaused, setInteractionPaused] = useState(false);
   const [sceneOrigin, setSceneOrigin] = useState<{ x: number; y: number }>({ x: 56, y: 52 });
-  const [layers, setLayers] = useState<MapLayerState>({
-    labels: true,
-    graticule: true,
-    land: true,
-    glow: true,
-    flows: true,
-  });
+  const [layers, setLayers] = useState<MapLayerState>(DEFAULT_MAP_LAYERS);
   const countriesState = useRemoteJson<MapCountryMetricsResponse>('/api/customer/dashboard/map/countries');
   const publishersState = useRemoteJson<MapPublishersResponse>('/api/customer/dashboard/map/publishers');
   const benchmarkState = useRemoteJson<CountryBenchmarkResponse>('/api/customer/dashboard/benchmark');
@@ -1474,6 +1547,17 @@ export function MapView() {
   const benchmarkGeneratedLabel = benchmark?.generatedAt
     ? formatRelative(benchmark.generatedAt)
     : null;
+  const rawUrlMode = searchParams.get('mode');
+  const rawUrlPanel = searchParams.get('panel');
+  const rawUrlDetail = searchParams.get('detail');
+  const urlMode: MapMode = isMapMode(rawUrlMode) ? rawUrlMode : 'countries';
+  const urlCountry = searchParams.get('country')?.trim() || null;
+  const urlPublisher = searchParams.get('publisher')?.trim() || null;
+  const urlSource = searchParams.get('source')?.trim() || null;
+  const urlLeftTab: LeftTab = isLeftTab(rawUrlPanel) ? rawUrlPanel : 'overview';
+  const urlDetailTab: DetailTab = isDetailTab(rawUrlDetail) ? rawUrlDetail : 'metrics';
+  const urlBenchmarkOpen = searchParams.get('benchmark') !== 'collapsed';
+  const urlLayers = parseLayerState(searchParams.get('layers'));
 
   const healthTotals = useMemo(() => ({
     healthySources24h: healthCountries.reduce((sum, item) => sum + item.healthySources24h, 0),
@@ -1490,13 +1574,112 @@ export function MapView() {
     }
     return lookup;
   }, [countriesState.data]);
+  const normalizedUrlCountry = urlCountry ? normalizeCountryName(urlCountry) : null;
+  const desiredCountryMatch = normalizedUrlCountry
+    ? countryLookup.get(normalizedUrlCountry) || null
+    : null;
+  const desiredCountryResolved = !urlCountry
+    || (selectedCountry ? normalizeCountryName(selectedCountry.country) === normalizedUrlCountry : false)
+    || (countriesState.data !== null && !desiredCountryMatch);
+  const desiredPublisherResolved = urlMode !== 'publishers'
+    || !urlPublisher
+    || selectedPublisher?.publisher === urlPublisher
+    || (publishersState.data !== null && !publishersState.data.publishers.some((item) => item.publisher === urlPublisher));
+  const desiredSourceResolved = !urlSource
+    || !urlCountry
+    || selectedSource?.sourceId === urlSource
+    || (desiredCountryResolved && !selectedCountry)
+    || (sourcesState.data !== null && !sourcesState.data.sources.some((item) => item.sourceId === urlSource));
+  const urlSyncReady = Boolean(
+    countriesState.data
+    && publishersState.data
+    && desiredCountryResolved
+    && desiredPublisherResolved
+    && desiredSourceResolved
+  );
+
+  useEffect(() => {
+    if (urlMode !== mapMode) {
+      setMapMode(urlMode);
+    }
+    if (urlLeftTab !== leftTab) {
+      setLeftTab(urlLeftTab);
+    }
+    if (urlDetailTab !== detailTab) {
+      setDetailTab(urlDetailTab);
+    }
+    if (urlBenchmarkOpen !== benchmarkOpen) {
+      setBenchmarkOpen(urlBenchmarkOpen);
+    }
+    if (urlLayers && !sameLayerState(urlLayers, layers)) {
+      setLayers(urlLayers);
+    }
+    if (!urlLayers && !sameLayerState(DEFAULT_MAP_LAYERS, layers)) {
+      setLayers(DEFAULT_MAP_LAYERS);
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (!countriesState.data) return;
+
+    if (!urlCountry) {
+      if (selectedCountry) {
+        setSceneOrigin({ x: 50, y: 52 });
+        setSelectedCountry(null);
+        setSelectedCluster(null);
+        setSelectedSource(null);
+        setCountryViewport(DEFAULT_COUNTRY_VIEWPORT);
+      }
+      return;
+    }
+
+    if (!desiredCountryMatch) return;
+    if (selectedCountry?.country === desiredCountryMatch.country) return;
+
+    const point = projectToGlobe(desiredCountryMatch.lat, desiredCountryMatch.lon, globeRotationLon);
+    setSceneOrigin({
+      x: round((point.x / GLOBE_WIDTH) * 100, 2),
+      y: round((point.y / GLOBE_HEIGHT) * 100, 2),
+    });
+    setSelectedCountry(desiredCountryMatch);
+    setSelectedCluster(null);
+    setSelectedSource(null);
+    setCountryViewport(DEFAULT_COUNTRY_VIEWPORT);
+  }, [searchParams, countriesState.data, countryLookup, globeRotationLon]);
+
+  useEffect(() => {
+    if (urlMode !== 'publishers' || !publishersState.data) return;
+    if (!urlPublisher) return;
+    if (selectedPublisher?.publisher === urlPublisher) return;
+    const match = publishersState.data.publishers.find((item) => item.publisher === urlPublisher);
+    if (match) {
+      setSelectedPublisher(match);
+    }
+  }, [searchParams, publishersState.data]);
+
+  useEffect(() => {
+    if (!urlCountry || !urlSource || !sourcesState.data) return;
+    if (selectedSource?.sourceId === urlSource) return;
+    const match = sourcesState.data.sources.find((item) => item.sourceId === urlSource);
+    if (match) {
+      setSelectedCluster(null);
+      setSelectedSource(match);
+    }
+  }, [searchParams, sourcesState.data]);
+
+  useEffect(() => {
+    if (!urlSource && selectedSource) {
+      setSelectedSource(null);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     if (mapMode !== 'publishers') return;
+    if (urlPublisher) return;
     if (!selectedPublisher && publishersState.data?.publishers?.length) {
       setSelectedPublisher(publishersState.data.publishers[0]);
     }
-  }, [mapMode, publishersState.data, selectedPublisher]);
+  }, [mapMode, publishersState.data, selectedPublisher, urlPublisher]);
 
   const globeCountries = useMemo<MapCountryMetricRow[]>(() => {
     if (mapMode !== 'publishers' || !selectedPublisher) {
@@ -1636,6 +1819,35 @@ export function MapView() {
     if (!match) return;
     focusCountry(match);
   }
+
+  const currentUrlQuery = buildMapQueryString({
+    mode: urlMode,
+    country: urlCountry,
+    publisher: urlPublisher,
+    source: urlSource,
+    leftTab: urlLeftTab,
+    detailTab: urlDetailTab,
+    benchmarkOpen: urlBenchmarkOpen,
+    layers: urlLayers || DEFAULT_MAP_LAYERS,
+  });
+
+  const desiredUrlQuery = buildMapQueryString({
+    mode: mapMode,
+    country: selectedCountry?.country || null,
+    publisher: mapMode === 'publishers' ? selectedPublisher?.publisher || null : null,
+    source: selectedCountry ? selectedSource?.sourceId || null : null,
+    leftTab,
+    detailTab,
+    benchmarkOpen,
+    layers,
+  });
+
+  useEffect(() => {
+    if (!urlSyncReady) return;
+    if (desiredUrlQuery === currentUrlQuery) return;
+    const targetUrl = desiredUrlQuery ? `${pathname}?${desiredUrlQuery}` : pathname;
+    router.replace(targetUrl, { scroll: false });
+  }, [router, pathname, urlSyncReady, desiredUrlQuery, currentUrlQuery]);
 
   return (
     <div className="page-stack map-page-stack map-page-root">
