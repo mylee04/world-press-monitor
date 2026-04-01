@@ -113,6 +113,14 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     if (pathname.startsWith('/korsets-seier/')) return true;
   }
 
+  if (hostname.endsWith('plo.vn') && trimmedPathname === '/') {
+    return true;
+  }
+
+  if (hostname.endsWith('vietnamnews.vn') && pathname.startsWith('/media-outreach/')) {
+    return true;
+  }
+
   if (hostname.endsWith('7news.com.au')) {
     if (pathname.startsWith('/7you/')) return true;
     if (pathname.startsWith('/sunrise/')) return true;

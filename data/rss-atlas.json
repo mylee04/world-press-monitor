@@ -22825,6 +22825,80 @@
           "url": "https://insightcrime.org/feed/"
         }
       ]
+    },
+    {
+      "name": "Vietnam",
+      "code": "VN",
+      "feeds": [
+        {
+          "name": "VnExpress",
+          "url": "https://vnexpress.net/rss/tin-moi-nhat.rss"
+        },
+        {
+          "name": "Tuoi Tre",
+          "url": "https://tuoitre.vn/rss/tin-moi-nhat.rss"
+        },
+        {
+          "name": "Dan Tri",
+          "url": "https://dantri.com.vn/rss/home.rss"
+        },
+        {
+          "name": "Thanh Nien",
+          "url": "https://thanhnien.vn/rss/home.rss"
+        },
+        {
+          "name": "Tien Phong",
+          "url": "https://tienphong.vn/rss/home.rss"
+        },
+        {
+          "name": "Nguoi Lao Dong",
+          "url": "https://nld.com.vn/rss/home.rss"
+        },
+        {
+          "name": "VOV",
+          "url": "https://vov.vn/rss/home.rss"
+        },
+        {
+          "name": "VietnamPlus",
+          "url": "https://www.vietnamplus.vn/rss/home.rss"
+        },
+        {
+          "name": "VietnamNet - News Sitemap",
+          "sitemapUrl": "https://vietnamnet.vn/sitemap-news.xml"
+        },
+        {
+          "name": "PLO - News Index",
+          "sitemapUrl": "https://plo.vn/sitemaps/newsindex.xml"
+        },
+        {
+          "name": "Nhan Dan",
+          "url": "https://nhandan.vn/rss/home.rss"
+        },
+        {
+          "name": "SGGP",
+          "url": "https://www.sggp.org.vn/rss/home.rss"
+        },
+        {
+          "name": "VietTimes",
+          "url": "https://viettimes.vn/rss/home.rss"
+        },
+        {
+          "name": "Vietnam News - Sitemap",
+          "sitemapUrl": "https://vietnamnews.vn/sitemap_news.xml"
+        },
+        {
+          "name": "Cong Thuong - News Sitemap",
+          "sitemapUrl": "https://congthuong.vn/news-sitemap.xml"
+        },
+        {
+          "name": "An Ninh Thu Do",
+          "url": "https://anninhthudo.vn/rss/home.rss"
+        },
+        {
+          "name": "VTV",
+          "url": "https://vtv.vn/rss/home.rss"
+        }
+      ]
     }
   ]
 }

@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Tue, 31 Mar 2026 21:18:05 GMT</dateCreated>
+    <dateCreated>Wed, 01 Apr 2026 02:15:54 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -2533,6 +2533,21 @@
     </outline>
     <outline text="Colombia (CO)" title="Colombia (CO)">
       <outline text="InSight Crime [needs verification]" title="InSight Crime [needs verification]" type="rss" xmlUrl="https://insightcrime.org/feed/" htmlUrl="https://insightcrime.org"/>
+    </outline>
+    <outline text="Vietnam (VN)" title="Vietnam (VN)">
+      <outline text="VnExpress [needs verification]" title="VnExpress [needs verification]" type="rss" xmlUrl="https://vnexpress.net/rss/tin-moi-nhat.rss" htmlUrl="https://vnexpress.net"/>
+      <outline text="Tuoi Tre [needs verification]" title="Tuoi Tre [needs verification]" type="rss" xmlUrl="https://tuoitre.vn/rss/tin-moi-nhat.rss" htmlUrl="https://tuoitre.vn"/>
+      <outline text="Dan Tri [needs verification]" title="Dan Tri [needs verification]" type="rss" xmlUrl="https://dantri.com.vn/rss/home.rss" htmlUrl="https://dantri.com.vn"/>
+      <outline text="Thanh Nien [needs verification]" title="Thanh Nien [needs verification]" type="rss" xmlUrl="https://thanhnien.vn/rss/home.rss" htmlUrl="https://thanhnien.vn"/>
+      <outline text="Tien Phong [needs verification]" title="Tien Phong [needs verification]" type="rss" xmlUrl="https://tienphong.vn/rss/home.rss" htmlUrl="https://tienphong.vn"/>
+      <outline text="Nguoi Lao Dong [needs verification]" title="Nguoi Lao Dong [needs verification]" type="rss" xmlUrl="https://nld.com.vn/rss/home.rss" htmlUrl="https://nld.com.vn"/>
+      <outline text="VOV [needs verification]" title="VOV [needs verification]" type="rss" xmlUrl="https://vov.vn/rss/home.rss" htmlUrl="https://vov.vn"/>
+      <outline text="VietnamPlus [needs verification]" title="VietnamPlus [needs verification]" type="rss" xmlUrl="https://www.vietnamplus.vn/rss/home.rss" htmlUrl="https://www.vietnamplus.vn"/>
+      <outline text="Nhan Dan [needs verification]" title="Nhan Dan [needs verification]" type="rss" xmlUrl="https://nhandan.vn/rss/home.rss" htmlUrl="https://nhandan.vn"/>
+      <outline text="SGGP [needs verification]" title="SGGP [needs verification]" type="rss" xmlUrl="https://www.sggp.org.vn/rss/home.rss" htmlUrl="https://www.sggp.org.vn"/>
+      <outline text="VietTimes [needs verification]" title="VietTimes [needs verification]" type="rss" xmlUrl="https://viettimes.vn/rss/home.rss" htmlUrl="https://viettimes.vn"/>
+      <outline text="An Ninh Thu Do [needs verification]" title="An Ninh Thu Do [needs verification]" type="rss" xmlUrl="https://anninhthudo.vn/rss/home.rss" htmlUrl="https://anninhthudo.vn"/>
+      <outline text="VTV [needs verification]" title="VTV [needs verification]" type="rss" xmlUrl="https://vtv.vn/rss/home.rss" htmlUrl="https://vtv.vn"/>
     </outline>
   </body>
 </opml>
