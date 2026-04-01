@@ -21,12 +21,12 @@ It is an observed publishing benchmark with explicit confidence metadata.
   - article-level storage in `news_articles`
   - source-country attribution through `source_country`
   - source health observations in `rss_health_status`
-  - public export infrastructure in `scripts/export-public-news-data.ts`
+  - benchmark snapshot tables and web views
 
 If implemented well, this becomes both:
 
 - an internal coverage and operations benchmark
-- a public benchmark other people can use, cite, and compare against
+- a benchmark other people can cite and compare against through the product UI
 
 ## Product Positioning
 
@@ -89,8 +89,8 @@ Trust semantics:
 Current code that should be treated as the starting point:
 
 - `scripts/report-news-by-country-discord.ts`
-- `scripts/export-public-news-data.ts`
-- `lib/public-data.ts`
+- `scripts/build-country-benchmark-snapshots.ts`
+- `lib/benchmark-store.ts`
 - `db/schema.sql`
 
 Relevant tables already available:
@@ -364,23 +364,7 @@ Recommended initial backfill:
 - daily: 90 days
 - hourly: 14 days
 
-### Phase C: Public Export
-
-Extend:
-
-- `scripts/export-public-news-data.ts`
-- `lib/public-data.ts`
-
-New outputs:
-
-- `benchmark-manifest.json`
-- `country-benchmarks-latest.json`
-- `country-benchmarks-30d.json`
-- `country-benchmark-<CC>.json`
-- `benchmark-sources-<CC>-latest.json`
-- `external-sanity-<CC>.json`
-
-### Phase D: Internal UI
+### Phase C: Internal UI
 
 Prefer internal validation first.
 
@@ -423,19 +407,11 @@ Suggested thresholds:
 - warning when 7d ratio moves outside a configured band
 - critical when ratio stays outside the band for multiple days
 
-## Public Data Contract
+## UI Data Contract
 
-Add benchmark-specific public types in `lib/public-data.ts`.
+Add benchmark-specific web response types in the benchmark store and dashboard layer.
 
-Suggested new interfaces:
-
-- `PublicCountryBenchmark`
-- `PublicCountryBenchmarkLatest`
-- `PublicCountryBenchmarkSeriesPoint`
-- `PublicCountryBenchmarkSourceShare`
-- `PublicCountryBenchmarkExternalReference`
-
-Suggested public fields:
+Suggested fields:
 
 - country
 - countryCode
@@ -531,27 +507,17 @@ Exit criteria:
 - trend series populated
 - no missing-country gaps in normal periods
 
-### Milestone 4: Public Export
+### Milestone 4: Internal Dashboard
 
 Deliverables:
 
-- benchmark JSON outputs
-- benchmark manifest extensions
+- benchmark table and drilldown views
+- benchmark-specific web responses
 
 Exit criteria:
 
-- static export contains benchmark artifacts
-- artifacts are consumable without database access
-
-### Milestone 5: Internal Dashboard
-
-Deliverables:
-
-- internal benchmark view
-- drilldown by country
-- source concentration and health view
-
-Exit criteria:
+- internal users can inspect benchmark output without DB queries by hand
+- drilldown views expose concentration and health context
 
 - operators can understand low-volume countries without opening SQL
 

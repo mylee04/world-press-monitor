@@ -1655,13 +1655,8 @@ export function MapView() {
   const activeWindowLabel = mapWindowLabel(mapWindow);
   const activeWindowDescriptor = mapWindowDescriptor(mapWindow);
   const totalWindowMetrics = totals?.windows[mapWindow] || null;
-  const activeMapStorage = mapMode === 'publishers'
-    ? publishersState.data?.storage || 'postgres'
-    : countriesState.data?.storage || 'postgres';
-  const mapProvenanceLabel = activeMapStorage === 'export-fallback' ? 'Export fallback' : 'Live DB';
-  const mapProvenanceNote = activeMapStorage === 'export-fallback'
-    ? 'using latest export snapshot'
-    : 'auto refresh every 1h';
+  const mapProvenanceLabel = 'Live DB';
+  const mapProvenanceNote = 'auto refresh every 1h';
   const searchMode = !selectedCountry && mapMode === 'publishers' ? 'publishers' : 'countries';
   const normalizedSearchQuery = normalizeCountryName(searchQuery);
   const rawUrlMode = searchParams.get('mode');

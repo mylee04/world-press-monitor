@@ -1,5 +1,5 @@
 export type MapMetricWindow = '1h' | '24h' | '7d';
-export type MapStorageMode = 'postgres' | 'export-fallback';
+export type MapStorageMode = 'postgres';
 export type MapPublisherConfidence = 'high' | 'medium' | 'low';
 
 export type MapCountryWindowMetrics = {
