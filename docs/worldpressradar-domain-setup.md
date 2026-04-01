@@ -232,7 +232,7 @@ Portal flow:
 2. Without a token, verify that no article data loads
 3. Enter a valid customer token
 4. Verify `Dashboard` loads counts
-5. Verify `Explorer` loads paginated article results
+5. Verify `Benchmark` and `Map` load customer views
 
 ## Alternate API hosting option
 

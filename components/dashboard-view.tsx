@@ -178,7 +178,7 @@ export function DashboardView() {
         <h1>Live article coverage by top-level category, topic, country, and UTC publication date.</h1>
         <p>
           This dashboard reads live counts and preview headlines from the authenticated customer API.
-          Anonymous visitors do not receive article data or downloads.
+          Anonymous visitors do not receive article data or customer-only views.
         </p>
         <div className="hero-note">
           <strong>Live refresh:</strong> updated {renderRelativeTime(summary.generatedAt)} from the live database.

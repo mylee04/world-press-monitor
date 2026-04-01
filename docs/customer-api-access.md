@@ -50,7 +50,7 @@ If you omit the token or send an invalid token, the API returns `401 Unauthorize
 1. Open `https://app.worldpressradar.com`
 2. Go to `Access`
 3. Paste your token
-4. Open `Dashboard` or `Explorer`
+4. Open `Dashboard`, `Benchmark`, or `Map`
 
 ### 2. API health check
 

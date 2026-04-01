@@ -63,8 +63,8 @@ Recommended operational pattern:
 
 - open the portal and unlock access with an issued customer token
 - browse dashboard counts by primary section, country, and date
-- filter article lists in Explorer by multiple normalized sections, source tags, country, and date
-- download only authenticated result sets when enabled for their account
+- compare country-level publishing output in Benchmark
+- inspect geographic coverage and publisher footprints in Map
 
 ## Customer access model
 
@@ -78,8 +78,8 @@ World Press Radar is no longer designed around public static article dumps. The 
 Without a valid token:
 
 - the dashboard does not load article counts
-- the explorer does not load article lists
-- article downloads stay locked
+- the benchmark does not load customer-only benchmark views
+- the map does not load customer-only article detail and live overlays
 - anonymous article browsing is blocked
 
 This keeps the UI fast, avoids multi-hundred-megabyte JSON downloads, and lets the product scale beyond the old public export cap.
@@ -89,8 +89,8 @@ This keeps the UI fast, avoids multi-hundred-megabyte JSON downloads, and lets t
 1. Open the customer portal URL shared with you.
 2. Enter the token you received from the World Press Radar team.
 3. Use `Dashboard` for summary counts.
-4. Use `Explorer` for filtered article lists by one or more normalized sections, country, and date.
-5. If your account has download rights, export only from authenticated screens.
+4. Use `Benchmark` for country-level publishing comparisons.
+5. Use `Map` for country and publisher drill-downs.
 
 Customer token handling rules:
 

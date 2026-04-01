@@ -12,7 +12,7 @@ type CustomerAccessPanelProps = {
 
 export function CustomerAccessPanel({
   title = 'Customer Access Required',
-  description = 'News articles, live counts, and downloads are available only to customers with a valid API token or API key.',
+  description = 'News articles, live counts, and customer-only map and benchmark views are available only to customers with a valid API token or API key.',
   error = null,
 }: CustomerAccessPanelProps) {
   const { hasToken, apiConfigured, savePending, authError, saveToken, clearToken } = useCustomerAccess();
