@@ -1,4 +1,5 @@
 export type MapMetricWindow = '1h' | '24h' | '7d';
+export type MapStorageMode = 'postgres' | 'export-fallback';
 
 export type MapCountryWindowMetrics = {
   published: number;
@@ -36,6 +37,7 @@ export type MapCountryMetricRow = {
 
 export type MapCountryMetricsResponse = {
   generatedAt: string;
+  storage: MapStorageMode;
   window: MapMetricWindow;
   totals: {
     countries: number;
@@ -87,6 +89,7 @@ export type MapPublisherMetricRow = {
 
 export type MapPublishersResponse = {
   generatedAt: string;
+  storage: MapStorageMode;
   window: MapMetricWindow;
   publishers: MapPublisherMetricRow[];
 };

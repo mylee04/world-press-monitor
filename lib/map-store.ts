@@ -1052,6 +1052,7 @@ function buildCountryMetricsFromPublicData(window: MapMetricWindow = DEFAULT_MAP
   }
   return {
     generatedAt: new Date().toISOString(),
+    storage: 'export-fallback',
     window,
     totals: {
       countries: rows.length,
@@ -1462,6 +1463,7 @@ export async function readMapCountryMetrics(window: MapMetricWindow = DEFAULT_MA
 
     const payload = {
       generatedAt: new Date().toISOString(),
+      storage: 'postgres' as const,
       window: selectedWindow,
       totals: {
         countries: rows.length,
@@ -1590,6 +1592,7 @@ export async function readMapPublishers(window: MapMetricWindow = DEFAULT_MAP_WI
 
   const payload = {
     generatedAt: new Date().toISOString(),
+    storage: 'postgres' as const,
     window: selectedWindow,
     publishers: [...byPublisher.values()]
       .map((publisher) => ({
