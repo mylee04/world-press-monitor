@@ -75,7 +75,7 @@ export function CustomerAccessPanel({
             Clear token
           </button>
           <Link href="/">Go to Dashboard</Link>
-          <Link href="/explorer/">Open Explorer</Link>
+          <Link href="/benchmark/">Open Benchmark</Link>
         </div>
         <div className="muted">
           Without a valid token, this portal does not proxy article data or customer CSV export.

@@ -1724,7 +1724,7 @@ export function MapView() {
 
         </div>
 
-        <aside className="map-side-panel">
+        <aside className={`map-side-panel ${selectedCountry ? 'is-country-view' : ''}`}>
           <div className="map-panel-head">
             <div>
               <div className="eyebrow">{selectedCountry ? 'Country Detail' : 'Global Overview'}</div>
@@ -1929,42 +1929,36 @@ export function MapView() {
                   </div>
                 ) : null}
 
-                <div className="map-story-card">
-                  <div className="eyebrow">
-                    {selectedCountry
-                      ? 'Country Drilldown'
-                      : mapMode === 'publishers'
+                {!selectedCountry ? (
+                  <div className="map-story-card">
+                    <div className="eyebrow">
+                      {mapMode === 'publishers'
                         ? 'Publisher Footprint'
                         : mapMode === 'health'
                           ? 'Health Overlay'
                           : 'World Publishing Pulse'}
-                  </div>
-                  <strong>
-                    {selectedCountry
-                      ? `${selectedCountry.country} cluster map`
-                      : mapMode === 'publishers'
+                    </div>
+                    <strong>
+                      {mapMode === 'publishers'
                         ? `${selectedPublisher?.publisher || 'Publisher'} country footprint`
                         : mapMode === 'health'
                           ? 'Country health globe'
                           : 'Country publishing globe'}
-                  </strong>
-                  <span>
-                    {selectedCountry
-                      ? mapMode === 'publishers'
-                        ? 'Country detail is filtered to the selected publisher. Scroll to zoom, drag to pan, then inspect regional bubbles and source lists.'
-                        : 'Country detail shows city or regional bubbles first. Scroll to zoom, drag to pan, then click a bubble and choose a source from the drawer list.'
-                      : mapMode === 'publishers'
+                    </strong>
+                    <span>
+                      {mapMode === 'publishers'
                         ? 'Country bubbles show where the selected publisher is active across borders and how much output each market generated in the last 24 hours.'
                         : mapMode === 'health'
                           ? 'Country bubbles are colored by degraded-source share and sized by active source count.'
                           : 'Country bubbles are sized by 24h publishing volume and color-shift on freshness and late share.'}
-                  </span>
-                  <span>
-                    {latestMapUpdatedLabel
-                      ? `Live DB · auto refresh every 1h · last updated ${latestMapUpdatedLabel}`
-                      : 'Live DB · auto refresh every 1h'}
-                  </span>
-                </div>
+                    </span>
+                    <span>
+                      {latestMapUpdatedLabel
+                        ? `Live DB · auto refresh every 1h · last updated ${latestMapUpdatedLabel}`
+                        : 'Live DB · auto refresh every 1h'}
+                    </span>
+                  </div>
+                ) : null}
 
                 <div className="map-panel-block">
                   <div className="section-head">
