@@ -22777,6 +22777,23 @@
           "name": "Al Jazeera",
           "url": "https://www.aljazeera.com/xml/rss/all.xml",
           "sitemapUrl": "https://www.aljazeera.com/news-sitemap.xml"
+        },
+        {
+          "name": "The Peninsula Qatar",
+          "url": "https://thepeninsulaqatar.com/article",
+          "sitemapUrl": "https://thepeninsulaqatar.com/sitemap.xml"
+        },
+        {
+          "name": "Gulf Times",
+          "url": "https://www.gulf-times.com/rssFeed/0"
+        },
+        {
+          "name": "Gulf Times - Business",
+          "url": "https://www.gulf-times.com/rssFeed/2"
+        },
+        {
+          "name": "Qatar Tribune",
+          "url": "https://www.qatar-tribune.com/rssFeed/0"
         }
       ]
     },
@@ -22788,6 +22805,18 @@
           "name": "The National",
           "url": "https://www.thenationalnews.com/arc/outboundfeeds/rss/?outputType=xml",
           "sitemapUrl": "https://www.thenationalnews.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+        },
+        {
+          "name": "Gulf News - News Sitemap",
+          "sitemapUrl": "https://gulfnews.com/news_sitemap.xml"
+        },
+        {
+          "name": "Khaleej Times - News Sitemap",
+          "sitemapUrl": "https://www.khaleejtimes.com/news_sitemap.xml"
+        },
+        {
+          "name": "Emirates 24/7 - Sitemap",
+          "sitemapUrl": "https://www.emirates247.com/sitemap.xml"
         }
       ]
     },
@@ -22813,6 +22842,22 @@
         {
           "name": "Oman Observer",
           "url": "https://www.omanobserver.om/rssFeed/1"
+        },
+        {
+          "name": "Oman Observer - Sports",
+          "url": "https://www.omanobserver.om/rssFeed/3"
+        },
+        {
+          "name": "Oman Observer - Business",
+          "url": "https://www.omanobserver.om/rssFeed/4"
+        },
+        {
+          "name": "Times of Oman",
+          "url": "https://timesofoman.com/feed/"
+        },
+        {
+          "name": "The Arabian Stories",
+          "url": "https://www.thearabianstories.com/feed/"
         }
       ]
     },
@@ -22823,6 +22868,34 @@
         {
           "name": "InSight Crime",
           "url": "https://insightcrime.org/feed/"
+        },
+        {
+          "name": "El Tiempo",
+          "url": "https://www.eltiempo.com/rss/colombia.xml",
+          "sitemapUrl": "https://www.eltiempo.com/sitemap-google-news.xml"
+        },
+        {
+          "name": "El Espectador",
+          "url": "https://www.elespectador.com/arc/outboundfeeds/rss/?outputType=xml",
+          "sitemapUrl": "https://www.elespectador.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+        },
+        {
+          "name": "Semana",
+          "url": "https://www.semana.com/arc/outboundfeeds/rss/?outputType=xml",
+          "sitemapUrl": "https://www.semana.com/arc/outboundfeeds/news-sitemap-index/?outputType=xml"
+        },
+        {
+          "name": "La República",
+          "url": "https://www.larepublica.co/rss",
+          "sitemapUrl": "https://www.larepublica.co/sitemapnews"
+        },
+        {
+          "name": "Portafolio - News Sitemap",
+          "sitemapUrl": "https://www.portafolio.co/sitemap-google-news.xml"
+        },
+        {
+          "name": "El Colombiano - News Sitemap",
+          "sitemapUrl": "https://www.elcolombiano.com/sitemapforgoogle.xml"
         }
       ]
     },
@@ -22835,6 +22908,26 @@
           "url": "https://vnexpress.net/rss/tin-moi-nhat.rss"
         },
         {
+          "name": "VnExpress - Thoi Su",
+          "url": "https://vnexpress.net/rss/thoi-su.rss"
+        },
+        {
+          "name": "VnExpress - The Gioi",
+          "url": "https://vnexpress.net/rss/the-gioi.rss"
+        },
+        {
+          "name": "VnExpress - Kinh Doanh",
+          "url": "https://vnexpress.net/rss/kinh-doanh.rss"
+        },
+        {
+          "name": "VnExpress - Phap Luat",
+          "url": "https://vnexpress.net/rss/phap-luat.rss"
+        },
+        {
+          "name": "VnExpress - Giao Duc",
+          "url": "https://vnexpress.net/rss/giao-duc.rss"
+        },
+        {
           "name": "Tuoi Tre",
           "url": "https://tuoitre.vn/rss/tin-moi-nhat.rss"
         },
@@ -22843,8 +22936,44 @@
           "url": "https://dantri.com.vn/rss/home.rss"
         },
         {
+          "name": "Dan Tri - Thoi Su",
+          "url": "https://dantri.com.vn/rss/thoi-su.rss"
+        },
+        {
+          "name": "Dan Tri - Kinh Doanh",
+          "url": "https://dantri.com.vn/rss/kinh-doanh.rss"
+        },
+        {
+          "name": "Dan Tri - The Gioi",
+          "url": "https://dantri.com.vn/rss/the-gioi.rss"
+        },
+        {
+          "name": "Dan Tri - Phap Luat",
+          "url": "https://dantri.com.vn/rss/phap-luat.rss"
+        },
+        {
+          "name": "Dan Tri - Giao Duc",
+          "url": "https://dantri.com.vn/rss/giao-duc.rss"
+        },
+        {
           "name": "Thanh Nien",
           "url": "https://thanhnien.vn/rss/home.rss"
+        },
+        {
+          "name": "Thanh Nien - Chinh Tri",
+          "url": "https://thanhnien.vn/rss/chinh-tri.rss"
+        },
+        {
+          "name": "Thanh Nien - Kinh Te",
+          "url": "https://thanhnien.vn/rss/kinh-te.rss"
+        },
+        {
+          "name": "Thanh Nien - Doi Song",
+          "url": "https://thanhnien.vn/rss/doi-song.rss"
+        },
+        {
+          "name": "Thanh Nien - Giao Duc",
+          "url": "https://thanhnien.vn/rss/giao-duc.rss"
         },
         {
           "name": "Tien Phong",
@@ -22853,6 +22982,14 @@
         {
           "name": "Nguoi Lao Dong",
           "url": "https://nld.com.vn/rss/home.rss"
+        },
+        {
+          "name": "Nguoi Lao Dong - Kinh Te",
+          "url": "https://nld.com.vn/rss/kinh-te.rss"
+        },
+        {
+          "name": "Nguoi Lao Dong - Giao Duc Khoa Hoc",
+          "url": "https://nld.com.vn/rss/giao-duc-khoa-hoc.rss"
         },
         {
           "name": "VOV",
@@ -22887,6 +23024,14 @@
           "sitemapUrl": "https://vietnamnews.vn/sitemap_news.xml"
         },
         {
+          "name": "Bao Tin Tuc - Sitemap Index",
+          "sitemapUrl": "https://baotintuc.vn/sitemap-index.xml"
+        },
+        {
+          "name": "Dai Doan Ket - Sitemap Index",
+          "sitemapUrl": "https://daidoanket.vn/sitemaps.xml"
+        },
+        {
           "name": "Cong Thuong - News Sitemap",
           "sitemapUrl": "https://congthuong.vn/news-sitemap.xml"
         },
@@ -22897,6 +23042,14 @@
         {
           "name": "VTV",
           "url": "https://vtv.vn/rss/home.rss"
+        },
+        {
+          "name": "Bao Phap Luat - Latest Articles",
+          "sitemapUrl": "https://baophapluat.vn/sitemaps/latest-articles.xml"
+        },
+        {
+          "name": "QDND - Top 300 Sitemap",
+          "sitemapUrl": "https://www.qdnd.vn/sitemaps/0/top300article.xml"
         }
       ]
     }

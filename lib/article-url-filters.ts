@@ -121,6 +121,15 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     return true;
   }
 
+  if (hostname.endsWith('daidoanket.vn')) {
+    if (trimmedPathname === '/') return true;
+    if (pathname.startsWith('/chuyen-muc/')) return true;
+  }
+
+  if (hostname.endsWith('baotintuc.vn') && pathname.startsWith('/video/')) {
+    return true;
+  }
+
   if (hostname.endsWith('7news.com.au')) {
     if (pathname.startsWith('/7you/')) return true;
     if (pathname.startsWith('/sunrise/')) return true;

@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Wed, 01 Apr 2026 02:15:54 GMT</dateCreated>
+    <dateCreated>Wed, 01 Apr 2026 02:42:50 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -2520,6 +2520,10 @@
     </outline>
     <outline text="Qatar (QA)" title="Qatar (QA)">
       <outline text="Al Jazeera [needs verification]" title="Al Jazeera [needs verification]" type="rss" xmlUrl="https://www.aljazeera.com/xml/rss/all.xml" htmlUrl="https://www.aljazeera.com"/>
+      <outline text="The Peninsula Qatar [needs verification]" title="The Peninsula Qatar [needs verification]" type="rss" xmlUrl="https://thepeninsulaqatar.com/article" htmlUrl="https://thepeninsulaqatar.com"/>
+      <outline text="Gulf Times [needs verification]" title="Gulf Times [needs verification]" type="rss" xmlUrl="https://www.gulf-times.com/rssFeed/0" htmlUrl="https://www.gulf-times.com"/>
+      <outline text="Gulf Times - Business [needs verification]" title="Gulf Times - Business [needs verification]" type="rss" xmlUrl="https://www.gulf-times.com/rssFeed/2" htmlUrl="https://www.gulf-times.com"/>
+      <outline text="Qatar Tribune [needs verification]" title="Qatar Tribune [needs verification]" type="rss" xmlUrl="https://www.qatar-tribune.com/rssFeed/0" htmlUrl="https://www.qatar-tribune.com"/>
     </outline>
     <outline text="United Arab Emirates (AE)" title="United Arab Emirates (AE)">
       <outline text="The National [needs verification]" title="The National [needs verification]" type="rss" xmlUrl="https://www.thenationalnews.com/arc/outboundfeeds/rss/?outputType=xml" htmlUrl="https://www.thenationalnews.com"/>
@@ -2530,17 +2534,41 @@
     </outline>
     <outline text="Oman (OM)" title="Oman (OM)">
       <outline text="Oman Observer [needs verification]" title="Oman Observer [needs verification]" type="rss" xmlUrl="https://www.omanobserver.om/rssFeed/1" htmlUrl="https://www.omanobserver.om"/>
+      <outline text="Oman Observer - Sports [needs verification]" title="Oman Observer - Sports [needs verification]" type="rss" xmlUrl="https://www.omanobserver.om/rssFeed/3" htmlUrl="https://www.omanobserver.om"/>
+      <outline text="Oman Observer - Business [needs verification]" title="Oman Observer - Business [needs verification]" type="rss" xmlUrl="https://www.omanobserver.om/rssFeed/4" htmlUrl="https://www.omanobserver.om"/>
+      <outline text="Times of Oman [needs verification]" title="Times of Oman [needs verification]" type="rss" xmlUrl="https://timesofoman.com/feed/" htmlUrl="https://timesofoman.com"/>
+      <outline text="The Arabian Stories [needs verification]" title="The Arabian Stories [needs verification]" type="rss" xmlUrl="https://www.thearabianstories.com/feed/" htmlUrl="https://www.thearabianstories.com"/>
     </outline>
     <outline text="Colombia (CO)" title="Colombia (CO)">
       <outline text="InSight Crime [needs verification]" title="InSight Crime [needs verification]" type="rss" xmlUrl="https://insightcrime.org/feed/" htmlUrl="https://insightcrime.org"/>
+      <outline text="El Tiempo [needs verification]" title="El Tiempo [needs verification]" type="rss" xmlUrl="https://www.eltiempo.com/rss/colombia.xml" htmlUrl="https://www.eltiempo.com"/>
+      <outline text="El Espectador [needs verification]" title="El Espectador [needs verification]" type="rss" xmlUrl="https://www.elespectador.com/arc/outboundfeeds/rss/?outputType=xml" htmlUrl="https://www.elespectador.com"/>
+      <outline text="Semana [needs verification]" title="Semana [needs verification]" type="rss" xmlUrl="https://www.semana.com/arc/outboundfeeds/rss/?outputType=xml" htmlUrl="https://www.semana.com"/>
+      <outline text="La República [needs verification]" title="La República [needs verification]" type="rss" xmlUrl="https://www.larepublica.co/rss" htmlUrl="https://www.larepublica.co"/>
     </outline>
     <outline text="Vietnam (VN)" title="Vietnam (VN)">
       <outline text="VnExpress [needs verification]" title="VnExpress [needs verification]" type="rss" xmlUrl="https://vnexpress.net/rss/tin-moi-nhat.rss" htmlUrl="https://vnexpress.net"/>
+      <outline text="VnExpress - Thoi Su [needs verification]" title="VnExpress - Thoi Su [needs verification]" type="rss" xmlUrl="https://vnexpress.net/rss/thoi-su.rss" htmlUrl="https://vnexpress.net"/>
+      <outline text="VnExpress - The Gioi [needs verification]" title="VnExpress - The Gioi [needs verification]" type="rss" xmlUrl="https://vnexpress.net/rss/the-gioi.rss" htmlUrl="https://vnexpress.net"/>
+      <outline text="VnExpress - Kinh Doanh [needs verification]" title="VnExpress - Kinh Doanh [needs verification]" type="rss" xmlUrl="https://vnexpress.net/rss/kinh-doanh.rss" htmlUrl="https://vnexpress.net"/>
+      <outline text="VnExpress - Phap Luat [needs verification]" title="VnExpress - Phap Luat [needs verification]" type="rss" xmlUrl="https://vnexpress.net/rss/phap-luat.rss" htmlUrl="https://vnexpress.net"/>
+      <outline text="VnExpress - Giao Duc [needs verification]" title="VnExpress - Giao Duc [needs verification]" type="rss" xmlUrl="https://vnexpress.net/rss/giao-duc.rss" htmlUrl="https://vnexpress.net"/>
       <outline text="Tuoi Tre [needs verification]" title="Tuoi Tre [needs verification]" type="rss" xmlUrl="https://tuoitre.vn/rss/tin-moi-nhat.rss" htmlUrl="https://tuoitre.vn"/>
       <outline text="Dan Tri [needs verification]" title="Dan Tri [needs verification]" type="rss" xmlUrl="https://dantri.com.vn/rss/home.rss" htmlUrl="https://dantri.com.vn"/>
+      <outline text="Dan Tri - Thoi Su [needs verification]" title="Dan Tri - Thoi Su [needs verification]" type="rss" xmlUrl="https://dantri.com.vn/rss/thoi-su.rss" htmlUrl="https://dantri.com.vn"/>
+      <outline text="Dan Tri - Kinh Doanh [needs verification]" title="Dan Tri - Kinh Doanh [needs verification]" type="rss" xmlUrl="https://dantri.com.vn/rss/kinh-doanh.rss" htmlUrl="https://dantri.com.vn"/>
+      <outline text="Dan Tri - The Gioi [needs verification]" title="Dan Tri - The Gioi [needs verification]" type="rss" xmlUrl="https://dantri.com.vn/rss/the-gioi.rss" htmlUrl="https://dantri.com.vn"/>
+      <outline text="Dan Tri - Phap Luat [needs verification]" title="Dan Tri - Phap Luat [needs verification]" type="rss" xmlUrl="https://dantri.com.vn/rss/phap-luat.rss" htmlUrl="https://dantri.com.vn"/>
+      <outline text="Dan Tri - Giao Duc [needs verification]" title="Dan Tri - Giao Duc [needs verification]" type="rss" xmlUrl="https://dantri.com.vn/rss/giao-duc.rss" htmlUrl="https://dantri.com.vn"/>
       <outline text="Thanh Nien [needs verification]" title="Thanh Nien [needs verification]" type="rss" xmlUrl="https://thanhnien.vn/rss/home.rss" htmlUrl="https://thanhnien.vn"/>
+      <outline text="Thanh Nien - Chinh Tri [needs verification]" title="Thanh Nien - Chinh Tri [needs verification]" type="rss" xmlUrl="https://thanhnien.vn/rss/chinh-tri.rss" htmlUrl="https://thanhnien.vn"/>
+      <outline text="Thanh Nien - Kinh Te [needs verification]" title="Thanh Nien - Kinh Te [needs verification]" type="rss" xmlUrl="https://thanhnien.vn/rss/kinh-te.rss" htmlUrl="https://thanhnien.vn"/>
+      <outline text="Thanh Nien - Doi Song [needs verification]" title="Thanh Nien - Doi Song [needs verification]" type="rss" xmlUrl="https://thanhnien.vn/rss/doi-song.rss" htmlUrl="https://thanhnien.vn"/>
+      <outline text="Thanh Nien - Giao Duc [needs verification]" title="Thanh Nien - Giao Duc [needs verification]" type="rss" xmlUrl="https://thanhnien.vn/rss/giao-duc.rss" htmlUrl="https://thanhnien.vn"/>
       <outline text="Tien Phong [needs verification]" title="Tien Phong [needs verification]" type="rss" xmlUrl="https://tienphong.vn/rss/home.rss" htmlUrl="https://tienphong.vn"/>
       <outline text="Nguoi Lao Dong [needs verification]" title="Nguoi Lao Dong [needs verification]" type="rss" xmlUrl="https://nld.com.vn/rss/home.rss" htmlUrl="https://nld.com.vn"/>
+      <outline text="Nguoi Lao Dong - Kinh Te [needs verification]" title="Nguoi Lao Dong - Kinh Te [needs verification]" type="rss" xmlUrl="https://nld.com.vn/rss/kinh-te.rss" htmlUrl="https://nld.com.vn"/>
+      <outline text="Nguoi Lao Dong - Giao Duc Khoa Hoc [needs verification]" title="Nguoi Lao Dong - Giao Duc Khoa Hoc [needs verification]" type="rss" xmlUrl="https://nld.com.vn/rss/giao-duc-khoa-hoc.rss" htmlUrl="https://nld.com.vn"/>
       <outline text="VOV [needs verification]" title="VOV [needs verification]" type="rss" xmlUrl="https://vov.vn/rss/home.rss" htmlUrl="https://vov.vn"/>
       <outline text="VietnamPlus [needs verification]" title="VietnamPlus [needs verification]" type="rss" xmlUrl="https://www.vietnamplus.vn/rss/home.rss" htmlUrl="https://www.vietnamplus.vn"/>
       <outline text="Nhan Dan [needs verification]" title="Nhan Dan [needs verification]" type="rss" xmlUrl="https://nhandan.vn/rss/home.rss" htmlUrl="https://nhandan.vn"/>
