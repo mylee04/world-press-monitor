@@ -1,5 +1,10 @@
+import { Suspense } from 'react';
 import { MapView } from '@/components/map-view';
 
 export default function MapPage() {
-  return <MapView />;
+  return (
+    <Suspense fallback={null}>
+      <MapView />
+    </Suspense>
+  );
 }
