@@ -1,8 +1,11 @@
 'use client';
 
+import Link from 'next/link';
 import type { CSSProperties, PointerEvent as ReactPointerEvent, WheelEvent as ReactWheelEvent } from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { geoGraticule10, geoMercator, geoOrthographic, geoPath } from 'd3-geo';
+import type { CountryBenchmarkResponse } from '@/lib/benchmark-types';
+import { BENCHMARK_COLUMN_HELP, HelpTooltipLabel } from '@/components/help-tooltip-label';
 import type {
   MapCountryMetricsResponse,
   MapCountryMetricRow,
@@ -17,6 +20,7 @@ type JsonState<T> = {
   data: T | null;
   loading: boolean;
   error: string | null;
+  updatedAt: number | null;
 };
 
 type WorldGeoJsonFeature = {
@@ -122,51 +126,87 @@ function normalizeCountryName(value: string): string {
     .trim();
 }
 
-function useRemoteJson<T>(url: string | null): JsonState<T> {
+const MAP_AUTO_REFRESH_MS = 60 * 60 * 1000;
+
+function useRemoteJson<T>(url: string | null, refreshMs = MAP_AUTO_REFRESH_MS): JsonState<T> {
+  const updatedAtRef = useRef<number | null>(null);
   const [state, setState] = useState<JsonState<T>>({
     data: null,
     loading: Boolean(url),
     error: null,
+    updatedAt: null,
   });
 
   useEffect(() => {
     let cancelled = false;
     if (!url) {
-      setState({ data: null, loading: false, error: null });
+      setState({ data: null, loading: false, error: null, updatedAt: null });
       return () => {
         cancelled = true;
       };
     }
 
-    setState((current) => ({ data: current.data, loading: true, error: null }));
+    const load = async (isBackground = false) => {
+      if (!cancelled) {
+        setState((current) => ({
+          data: current.data,
+          loading: isBackground ? current.loading : true,
+          error: null,
+          updatedAt: current.updatedAt,
+        }));
+      }
 
-    fetch(url, { cache: 'no-store', credentials: 'same-origin' })
-      .then(async (response) => {
+      try {
+        const response = await fetch(url, { cache: 'no-store', credentials: 'same-origin' });
         if (!response.ok) {
           const payload = (await response.json().catch(() => null)) as { message?: string } | null;
           throw new Error(payload?.message || `${response.status} ${response.statusText}`);
         }
-        return (await response.json()) as T;
-      })
-      .then((payload) => {
+        const payload = (await response.json()) as T;
         if (!cancelled) {
-          setState({ data: payload, loading: false, error: null });
-        }
-      })
-      .catch((error: unknown) => {
-        if (!cancelled) {
+          updatedAtRef.current = Date.now();
           setState({
-            data: null,
+            data: payload,
             loading: false,
-            error: error instanceof Error ? error.message : 'Failed to load resource.',
+            error: null,
+            updatedAt: updatedAtRef.current,
           });
         }
-      });
+      } catch (error: unknown) {
+        if (!cancelled) {
+          setState((current) => ({
+            data: current.data,
+            loading: false,
+            error: error instanceof Error ? error.message : 'Failed to load resource.',
+            updatedAt: current.updatedAt,
+          }));
+        }
+      }
+    };
+
+    void load();
+
+    const interval = window.setInterval(() => {
+      void load(true);
+    }, refreshMs);
+
+    const handleVisibility = () => {
+      if (document.visibilityState !== 'visible') return;
+      const staleFor = Date.now() - (updatedAtRef.current || 0);
+      if (!updatedAtRef.current || staleFor >= refreshMs) {
+        void load(true);
+      }
+    };
+    window.addEventListener('focus', handleVisibility);
+    document.addEventListener('visibilitychange', handleVisibility);
 
     return () => {
       cancelled = true;
+      window.clearInterval(interval);
+      window.removeEventListener('focus', handleVisibility);
+      document.removeEventListener('visibilitychange', handleVisibility);
     };
-  }, [url]);
+  }, [url, refreshMs]);
 
   return state;
 }
@@ -235,6 +275,28 @@ function useIdleRotation(enabled: boolean): number {
 
 function formatNumber(value: number): string {
   return value.toLocaleString();
+}
+
+function formatPercentFromBps(value: number): string {
+  return `${(value / 100).toFixed(1)}%`;
+}
+
+function formatRelative(value: string | null | undefined): string {
+  if (!value) return 'time unavailable';
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return 'time unavailable';
+  const diffMinutes = Math.round((Date.now() - date.getTime()) / (60 * 1000));
+  if (Math.abs(diffMinutes) < 1) return 'just now';
+  if (Math.abs(diffMinutes) < 60) return `${Math.abs(diffMinutes)} min ${diffMinutes >= 0 ? 'ago' : 'ahead'}`;
+  const diffHours = Math.round(diffMinutes / 60);
+  if (Math.abs(diffHours) < 24) return `${Math.abs(diffHours)} hr ${diffHours >= 0 ? 'ago' : 'ahead'}`;
+  const diffDays = Math.round(diffHours / 24);
+  return `${Math.abs(diffDays)} day${Math.abs(diffDays) === 1 ? '' : 's'} ${diffDays >= 0 ? 'ago' : 'ahead'}`;
+}
+
+function formatLateShare(late: number, inserted: number): string {
+  if (inserted <= 0) return '-';
+  return `${((late / inserted) * 100).toFixed(1)}%`;
 }
 
 function sourceMethodLabel(value: MapSourceMetricRow['method']): string {
@@ -639,6 +701,48 @@ function deriveTopRegionsFromSources(items: MapSourceMetricRow[], country: strin
     .map(({ name, count, sources }) => ({ name, count, sources }));
 }
 
+function deriveTopDegradedRegionsFromSources(items: MapSourceMetricRow[], country: string, limit = 5) {
+  const byRegion = new Map<string, { degradedSources: number; sources: number; pub24h: number; degradedPub24h: number; unmapped: boolean }>();
+  for (const item of items) {
+    const unmapped = item.locationKind === 'country-fallback';
+    const name = unmapped ? 'Unmapped / National' : item.city || item.region || country;
+    const current = byRegion.get(name) || {
+      degradedSources: 0,
+      sources: 0,
+      pub24h: 0,
+      degradedPub24h: 0,
+      unmapped: false,
+    };
+    current.sources += 1;
+    current.pub24h += item.pub24h;
+    current.unmapped = current.unmapped || unmapped;
+    if (item.health === 'degraded' || item.health === 'failing') {
+      current.degradedSources += 1;
+      current.degradedPub24h += item.pub24h;
+    }
+    byRegion.set(name, current);
+  }
+
+  return [...byRegion.entries()]
+    .filter(([, value]) => value.degradedSources > 0)
+    .map(([name, value]) => ({
+      name,
+      degradedSources: value.degradedSources,
+      sources: value.sources,
+      degradedShare: value.sources > 0 ? value.degradedSources / value.sources : 0,
+      degradedPub24h: value.degradedPub24h,
+      unmapped: value.unmapped,
+    }))
+    .sort((a, b) =>
+      Number(a.unmapped) - Number(b.unmapped) ||
+      b.degradedShare - a.degradedShare ||
+      b.degradedSources - a.degradedSources ||
+      b.degradedPub24h - a.degradedPub24h ||
+      a.name.localeCompare(b.name)
+    )
+    .slice(0, limit);
+}
+
 function deriveTopDegradedCountries(items: MapCountryMetricRow[], limit = 6) {
   return [...items]
     .filter((item) => item.degradedSources24h > 0)
@@ -652,6 +756,19 @@ function deriveTopDegradedCountries(items: MapCountryMetricRow[], limit = 6) {
 
 function itemDegradedShare(row: Pick<MapCountryMetricRow, 'activeSources24h' | 'degradedSources24h'>) {
   return row.activeSources24h > 0 ? row.degradedSources24h / row.activeSources24h : 0;
+}
+
+function getHealthRank(status: MapSourceMetricRow['health']) {
+  switch (status) {
+    case 'failing':
+      return 3;
+    case 'degraded':
+      return 2;
+    case 'warning':
+      return 1;
+    default:
+      return 0;
+  }
 }
 
 const STAR_FIELD = buildStarField();
@@ -1302,8 +1419,9 @@ function CountryPlaneSvg({
 
 export function MapView() {
   const [mapMode, setMapMode] = useState<MapMode>('countries');
-  const [leftTab, setLeftTab] = useState<'overview' | 'layers' | 'leaders'>('overview');
+  const [leftTab, setLeftTab] = useState<'overview' | 'display'>('overview');
   const [detailTab, setDetailTab] = useState<'metrics' | 'headlines' | 'health'>('metrics');
+  const [benchmarkOpen, setBenchmarkOpen] = useState(true);
   const [selectedCountry, setSelectedCountry] = useState<MapCountryMetricRow | null>(null);
   const [selectedCluster, setSelectedCluster] = useState<CountrySourceCluster | null>(null);
   const [selectedSource, setSelectedSource] = useState<MapSourceMetricRow | null>(null);
@@ -1321,6 +1439,7 @@ export function MapView() {
   });
   const countriesState = useRemoteJson<MapCountryMetricsResponse>('/api/customer/dashboard/map/countries');
   const publishersState = useRemoteJson<MapPublishersResponse>('/api/customer/dashboard/map/publishers');
+  const benchmarkState = useRemoteJson<CountryBenchmarkResponse>('/api/customer/dashboard/benchmark');
   const worldState = useRemoteJson<WorldGeoJson>('/world.geojson');
   const countryName = selectedCountry?.country || null;
   const sourcesState = useRemoteJson<MapCountrySourcesResponse>(
@@ -1341,12 +1460,36 @@ export function MapView() {
   const sceneMode = selectedCountry && sourcesState.data ? 'country' : 'globe';
   const globeRotationLon = useIdleRotation(motionEnabled && !selectedCountry && !interactionPaused);
   const healthCountries = countriesState.data?.countries || [];
+  const benchmark = benchmarkState.data?.storage === 'postgres' ? benchmarkState.data : null;
+  const benchmarkRows = benchmark?.countries.slice(0, 14) || [];
+  const latestMapUpdatedAt = Math.max(
+    countriesState.updatedAt || 0,
+    publishersState.updatedAt || 0,
+    sourcesState.updatedAt || 0,
+    sourceDetailState.updatedAt || 0
+  ) || null;
+  const latestMapUpdatedLabel = latestMapUpdatedAt
+    ? new Date(latestMapUpdatedAt).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })
+    : null;
+  const benchmarkGeneratedLabel = benchmark?.generatedAt
+    ? formatRelative(benchmark.generatedAt)
+    : null;
 
   const healthTotals = useMemo(() => ({
     healthySources24h: healthCountries.reduce((sum, item) => sum + item.healthySources24h, 0),
     degradedSources24h: healthCountries.reduce((sum, item) => sum + item.degradedSources24h, 0),
     countriesWithIssues: healthCountries.filter((item) => item.degradedSources24h > 0).length,
   }), [healthCountries]);
+  const countryLookup = useMemo(() => {
+    const lookup = new Map<string, MapCountryMetricRow>();
+    for (const item of countriesState.data?.countries || []) {
+      lookup.set(normalizeCountryName(item.country), item);
+      for (const alias of COUNTRY_ALIASES[item.country] || []) {
+        lookup.set(normalizeCountryName(alias), item);
+      }
+    }
+    return lookup;
+  }, [countriesState.data]);
 
   useEffect(() => {
     if (mapMode !== 'publishers') return;
@@ -1396,10 +1539,45 @@ export function MapView() {
     () => selectedCountry ? deriveTopRegionsFromSources(displayedCountrySources, selectedCountry.country, 8) : [],
     [displayedCountrySources, selectedCountry]
   );
-  const selectedCountryTopRegionsDisplay = mapMode === 'publishers' ? derivedTopRegions : selectedCountryTopRegions;
-  const selectedCountryTopSourcesDisplay = mapMode === 'publishers' ? derivedTopSources : (sourcesState.data?.topSources || []);
+  const derivedTopDegradedRegions = useMemo(
+    () => selectedCountry ? deriveTopDegradedRegionsFromSources(displayedCountrySources, selectedCountry.country, 8) : [],
+    [displayedCountrySources, selectedCountry]
+  );
+  const derivedTopDegradedSources = useMemo(
+    () =>
+      [...displayedCountrySources]
+        .filter((item) => item.health === 'degraded' || item.health === 'failing')
+        .sort((a, b) => getHealthRank(b.health) - getHealthRank(a.health) || b.pub24h - a.pub24h || a.source.localeCompare(b.source))
+        .slice(0, 8),
+    [displayedCountrySources]
+  );
+  const selectedCountryTopRegionsDisplay = mapMode === 'health'
+    ? []
+    : mapMode === 'publishers'
+      ? derivedTopRegions
+      : selectedCountryTopRegions;
+  const selectedCountryTopSourcesDisplay = mapMode === 'health'
+    ? []
+    : mapMode === 'publishers'
+      ? derivedTopSources
+      : (sourcesState.data?.topSources || []);
   const selectedCountrySummaryDisplay = derivedCountrySummary;
   const topDegradedCountries = useMemo(() => deriveTopDegradedCountries(healthCountries, 6), [healthCountries]);
+  const selectedPublisherReliability = selectedPublisher
+    ? selectedPublisher.activeSources24h > 0
+      ? selectedPublisher.healthySources24h / selectedPublisher.activeSources24h
+      : 0
+    : 0;
+  const selectedClusterSourcesDisplay = useMemo(() => {
+    if (!selectedCluster) return [];
+    const items = [...selectedCluster.sources];
+    if (mapMode === 'health') {
+      return items.sort(
+        (a, b) => getHealthRank(b.health) - getHealthRank(a.health) || b.pub24h - a.pub24h || a.source.localeCompare(b.source)
+      );
+    }
+    return items.sort((a, b) => b.pub24h - a.pub24h || a.source.localeCompare(b.source));
+  }, [mapMode, selectedCluster]);
 
   useEffect(() => {
     setDetailTab('metrics');
@@ -1451,6 +1629,12 @@ export function MapView() {
       setSelectedSource(null);
     }
     setDetailTab('metrics');
+  }
+
+  function focusBenchmarkCountry(country: string) {
+    const match = countryLookup.get(normalizeCountryName(country));
+    if (!match) return;
+    focusCountry(match);
   }
 
   return (
@@ -1598,20 +1782,11 @@ export function MapView() {
             <button
               type="button"
               role="tab"
-              aria-selected={leftTab === 'leaders'}
-              className={`map-tab-chip ${leftTab === 'leaders' ? 'active' : ''}`}
-              onClick={() => setLeftTab('leaders')}
+              aria-selected={leftTab === 'display'}
+              className={`map-tab-chip ${leftTab === 'display' ? 'active' : ''}`}
+              onClick={() => setLeftTab('display')}
             >
-              Leaders
-            </button>
-            <button
-              type="button"
-              role="tab"
-              aria-selected={leftTab === 'layers'}
-              className={`map-tab-chip ${leftTab === 'layers' ? 'active' : ''}`}
-              onClick={() => setLeftTab('layers')}
-            >
-              Layers
+              Display
             </button>
           </div>
 
@@ -1784,182 +1959,213 @@ export function MapView() {
                           ? 'Country bubbles are colored by degraded-source share and sized by active source count.'
                           : 'Country bubbles are sized by 24h publishing volume and color-shift on freshness and late share.'}
                   </span>
-                </div>
-              </>
-            ) : null}
-
-            {leftTab === 'leaders' ? (
-              <div className="map-panel-block compact">
-                <div className="section-head">
-                  <h3>
-                    {selectedCountry
-                      ? 'Leaders'
-                      : mapMode === 'publishers'
-                        ? 'Top Publishers'
-                        : mapMode === 'health'
-                          ? 'Most Degraded'
-                          : 'Top Countries'}
-                  </h3>
                   <span>
-                    {selectedCountry
-                      ? '24h publishers and sources'
-                      : mapMode === 'publishers'
-                        ? '24h network output'
-                        : mapMode === 'health'
-                          ? 'degraded share and count'
-                          : '24h country output'}
+                    {latestMapUpdatedLabel
+                      ? `Live DB · auto refresh every 1h · last updated ${latestMapUpdatedLabel}`
+                      : 'Live DB · auto refresh every 1h'}
                   </span>
                 </div>
-                {!selectedCountry && mapMode === 'countries' ? (
-                  <div className="map-list">
-                    {topCountries.slice(0, 6).map((item) => (
-                      <button
-                        key={item.country}
-                        type="button"
-                        className="map-list-row"
-                        onClick={() => {
-                          const match = countriesState.data?.countries.find((countryRow) => countryRow.country === item.country);
-                          if (match) focusCountry(match);
-                        }}
-                      >
-                        <strong>{item.country}</strong>
-                        <span>{formatNumber(item.pub24h)}</span>
-                      </button>
-                    ))}
-                  </div>
-                ) : null}
 
-                {!selectedCountry && mapMode === 'publishers' ? (
-                  <>
+                <div className="map-panel-block">
+                  <div className="section-head">
+                    <h3>
+                      {selectedCountry
+                        ? 'Rankings'
+                        : mapMode === 'publishers'
+                          ? 'Top Publishers'
+                          : mapMode === 'health'
+                            ? 'Most Degraded'
+                            : 'Top Countries'}
+                    </h3>
+                    <span>
+                      {selectedCountry
+                        ? 'publishers, regions, and sources'
+                        : mapMode === 'publishers'
+                          ? '24h network output'
+                          : mapMode === 'health'
+                            ? 'degraded share and count'
+                            : '24h country output'}
+                    </span>
+                  </div>
+
+                  {!selectedCountry && mapMode === 'countries' ? (
                     <div className="map-list">
-                      {topPublishers.slice(0, 6).map((item) => (
+                      {topCountries.map((item) => (
                         <button
-                          key={item.publisher}
+                          key={item.country}
                           type="button"
-                          className={`map-list-row ${selectedPublisher?.publisher === item.publisher ? 'selected' : ''}`}
-                          onClick={() => setSelectedPublisher(item)}
+                          className="map-list-row"
+                          onClick={() => {
+                            const match = countriesState.data?.countries.find((countryRow) => countryRow.country === item.country);
+                            if (match) focusCountry(match);
+                          }}
                         >
-                          <div className="map-list-copy">
-                            <strong>{item.publisher}</strong>
-                            <span>{formatNumber(item.activeCountries24h)} countries</span>
-                          </div>
+                          <strong>{item.country}</strong>
                           <span>{formatNumber(item.pub24h)}</span>
                         </button>
                       ))}
                     </div>
-                    {selectedPublisher ? (
-                      <>
-                        <div className="section-head sub">
-                          <h3>Publisher Countries</h3>
-                          <span>24h footprint</span>
-                        </div>
-                        <div className="map-list">
-                          {selectedPublisher.countries.slice(0, 6).map((item) => (
-                            <button
-                              key={item.country}
-                              type="button"
-                              className="map-list-row"
-                              onClick={() => {
-                                const match = countriesState.data?.countries.find((countryRow) => countryRow.country === item.country);
-                                if (match) focusCountry(match);
-                              }}
-                            >
-                              <div className="map-list-copy">
-                                <strong>{item.country}</strong>
-                                <span>{formatNumber(item.activeSources24h)} sources</span>
-                              </div>
-                              <span>{formatNumber(item.pub24h)}</span>
-                            </button>
-                          ))}
-                        </div>
-                      </>
-                    ) : null}
-                  </>
-                ) : null}
+                  ) : null}
 
-                {!selectedCountry && mapMode === 'health' ? (
-                  <div className="map-list">
-                    {topDegradedCountries.map((item) => (
-                      <button
-                        key={item.country}
-                        type="button"
-                        className="map-list-row"
-                        onClick={() => {
-                          const match = countriesState.data?.countries.find((countryRow) => countryRow.country === item.country);
-                          if (match) focusCountry(match);
-                        }}
-                      >
-                        <div className="map-list-copy">
-                          <strong>{item.country}</strong>
-                          <span>{formatNumber(item.degradedSources24h)} degraded</span>
-                        </div>
-                        <span>{round(itemDegradedShare(item) * 100, 1)}%</span>
-                      </button>
-                    ))}
-                  </div>
-                ) : null}
-
-                {selectedCountry && sourcesState.data ? (
-                  <>
-                    <div className="section-head sub">
-                      <h3>Top Publishers</h3>
-                      <span>24h network output</span>
-                    </div>
-                    <div className="map-list">
-                      {(mapMode === 'publishers'
-                        ? [{ name: selectedPublisher?.publisher || 'Selected Publisher', count: selectedCountrySummaryDisplay?.pub24h || 0 }]
-                        : selectedCountryTopPublishers
-                      ).slice(0, 5).map((item) => (
-                        <div key={item.name} className="map-list-row static">
-                          <strong>{item.name}</strong>
-                          <span>{formatNumber(item.count)}</span>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="section-head sub">
-                      <h3>{mapMode === 'health' ? 'Top Degraded Regions' : 'Top Regions'}</h3>
-                      <span>{mapMode === 'health' ? 'degraded clusters' : '24h clustered output'}</span>
-                    </div>
-                    <div className="map-list">
-                      {selectedCountryTopRegionsDisplay.slice(0, 5).map((item) => (
-                        <div key={item.name} className="map-list-row static">
-                          <div className="map-list-copy">
-                            <strong>{item.name}</strong>
-                            <span>{formatNumber(item.sources)} sources</span>
+                  {!selectedCountry && mapMode === 'publishers' ? (
+                    <>
+                      <div className="map-list">
+                        {topPublishers.map((item) => (
+                          <button
+                            key={item.publisher}
+                            type="button"
+                            className={`map-list-row ${selectedPublisher?.publisher === item.publisher ? 'selected' : ''}`}
+                            onClick={() => setSelectedPublisher(item)}
+                          >
+                            <div className="map-list-copy">
+                              <strong>{item.publisher}</strong>
+                              <span>{formatNumber(item.activeCountries24h)} countries</span>
+                            </div>
+                            <span>{formatNumber(item.pub24h)}</span>
+                          </button>
+                        ))}
+                      </div>
+                      {selectedPublisher ? (
+                        <>
+                          <div className="section-head sub">
+                            <h3>Publisher Countries</h3>
+                            <span>24h footprint</span>
                           </div>
-                          <span>{formatNumber(item.count)}</span>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="section-head sub">
-                      <h3>Top Sources</h3>
-                      <span>24h source output</span>
-                    </div>
+                          <div className="map-list">
+                            {selectedPublisher.countries.slice(0, 10).map((item) => (
+                              <button
+                                key={item.country}
+                                type="button"
+                                className="map-list-row"
+                                onClick={() => {
+                                  const match = countriesState.data?.countries.find((countryRow) => countryRow.country === item.country);
+                                  if (match) focusCountry(match);
+                                }}
+                              >
+                                <div className="map-list-copy">
+                                  <strong>{item.country}</strong>
+                                  <span>{formatNumber(item.activeSources24h)} sources</span>
+                                </div>
+                                <span>{formatNumber(item.pub24h)}</span>
+                              </button>
+                            ))}
+                          </div>
+                        </>
+                      ) : null}
+                    </>
+                  ) : null}
+
+                  {!selectedCountry && mapMode === 'health' ? (
                     <div className="map-list">
-                      {selectedCountryTopSourcesDisplay.slice(0, 6).map((item) => (
+                      {topDegradedCountries.map((item) => (
                         <button
-                          key={item.name}
+                          key={item.country}
                           type="button"
                           className="map-list-row"
                           onClick={() => {
-                            const match = sourcesState.data?.sources.find((source) => source.source === item.name);
-                            if (match) {
-                              setSelectedCluster(null);
-                              setSelectedSource(match);
-                            }
+                            const match = countriesState.data?.countries.find((countryRow) => countryRow.country === item.country);
+                            if (match) focusCountry(match);
                           }}
                         >
-                          <strong>{item.name}</strong>
-                          <span>{formatNumber(item.count)}</span>
+                          <div className="map-list-copy">
+                            <strong>{item.country}</strong>
+                            <span>{formatNumber(item.degradedSources24h)} degraded</span>
+                          </div>
+                          <span>{round(itemDegradedShare(item) * 100, 1)}%</span>
                         </button>
                       ))}
                     </div>
-                  </>
-                ) : null}
-              </div>
-            ) : null}
+                  ) : null}
 
-            {leftTab === 'layers' ? (
+                  {selectedCountry && sourcesState.data ? (
+                    <>
+                      <div className="section-head sub">
+                        <h3>Top Publishers</h3>
+                        <span>24h network output</span>
+                      </div>
+                      <div className="map-list">
+                        {(mapMode === 'publishers'
+                          ? [{ name: selectedPublisher?.publisher || 'Selected Publisher', count: selectedCountrySummaryDisplay?.pub24h || 0 }]
+                          : selectedCountryTopPublishers
+                        ).slice(0, 8).map((item) => (
+                          <div key={item.name} className="map-list-row static">
+                            <strong>{item.name}</strong>
+                            <span>{formatNumber(item.count)}</span>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="section-head sub">
+                        <h3>{mapMode === 'health' ? 'Top Degraded Regions' : 'Top Regions'}</h3>
+                        <span>{mapMode === 'health' ? 'degraded clusters' : '24h clustered output'}</span>
+                      </div>
+                      <div className="map-list">
+                        {mapMode === 'health'
+                          ? derivedTopDegradedRegions.slice(0, 8).map((item) => (
+                              <div key={item.name} className="map-list-row static">
+                                <div className="map-list-copy">
+                                  <strong>{item.name}</strong>
+                                  <span>{formatNumber(item.degradedSources)} degraded · {formatNumber(item.sources)} total</span>
+                                </div>
+                                <span>{round(item.degradedShare * 100, 1)}%</span>
+                              </div>
+                            ))
+                          : selectedCountryTopRegionsDisplay.slice(0, 8).map((item) => (
+                              <div key={item.name} className="map-list-row static">
+                                <div className="map-list-copy">
+                                  <strong>{item.name}</strong>
+                                  <span>{formatNumber(item.sources)} sources</span>
+                                </div>
+                                <span>{formatNumber(item.count)}</span>
+                              </div>
+                            ))}
+                      </div>
+                      <div className="section-head sub">
+                        <h3>{mapMode === 'health' ? 'Top Degraded Sources' : 'Top Sources'}</h3>
+                        <span>{mapMode === 'health' ? 'degraded source priority' : '24h source output'}</span>
+                      </div>
+                      <div className="map-list">
+                        {mapMode === 'health'
+                          ? derivedTopDegradedSources.slice(0, 10).map((item) => (
+                              <button
+                                key={item.sourceId}
+                                type="button"
+                                className="map-list-row"
+                                onClick={() => {
+                                  setSelectedCluster(null);
+                                  setSelectedSource(item);
+                                }}
+                              >
+                                <div className="map-list-copy">
+                                  <strong>{item.source}</strong>
+                                  <span>{item.health} · {item.region || item.city || item.country}</span>
+                                </div>
+                                <span>{formatNumber(item.pub24h)}</span>
+                              </button>
+                            ))
+                          : selectedCountryTopSourcesDisplay.slice(0, 10).map((item) => (
+                              <button
+                                key={item.name}
+                                type="button"
+                                className="map-list-row"
+                                onClick={() => {
+                                  const match = sourcesState.data?.sources.find((source) => source.source === item.name);
+                                  if (match) {
+                                    setSelectedCluster(null);
+                                    setSelectedSource(match);
+                                  }
+                                }}
+                              >
+                                <strong>{item.name}</strong>
+                                <span>{formatNumber(item.count)}</span>
+                              </button>
+                            ))}
+                      </div>
+                    </>
+                  ) : null}
+                </div>
+              </>
+            ) : null}
+            {leftTab === 'display' ? (
               <div className="map-panel-block compact">
                 <div className="section-head">
                   <h3>Layer Controls</h3>
@@ -2028,16 +2234,128 @@ export function MapView() {
         <aside className="map-detail-drawer">
           <div className="map-panel-head">
             <div>
-              <div className="eyebrow">{selectedSource ? 'Source Detail' : selectedCluster ? 'Cluster Detail' : 'Source Detail'}</div>
-              <h2>{sourceDetail?.source || selectedCluster?.name || 'Select a source'}</h2>
+              <div className="eyebrow">
+                {selectedSource
+                  ? 'Source Detail'
+                  : selectedCluster
+                    ? 'Cluster Detail'
+                    : !selectedCountry && mapMode === 'publishers'
+                      ? 'Publisher Detail'
+                      : !selectedCountry && mapMode === 'health'
+                        ? 'Health Detail'
+                        : 'Source Detail'}
+              </div>
+              <h2>
+                {sourceDetail?.source ||
+                  selectedCluster?.name ||
+                  (!selectedCountry && mapMode === 'publishers' ? selectedPublisher?.publisher || 'Select a publisher' : null) ||
+                  (!selectedCountry && mapMode === 'health' ? 'Source Health' : null) ||
+                  'Select a source'}
+              </h2>
             </div>
             {sourceDetail ? <div className={`map-status-pill ${sourceDetail.health.status === 'healthy' ? 'globe' : 'flat'}`}>{sourceDetail.health.status}</div> : null}
             {!sourceDetail && selectedCluster ? <div className="map-status-pill globe">{selectedCluster.sourceCount} sources</div> : null}
+            {!selectedCountry && mapMode === 'publishers' && selectedPublisher ? <div className="map-status-pill globe">{selectedPublisher.activeCountries24h} countries</div> : null}
+            {!selectedCountry && mapMode === 'health' ? <div className="map-status-pill flat">{healthTotals.degradedSources24h} degraded</div> : null}
           </div>
 
-          {!selectedSource && !selectedCluster ? (
+          {!selectedCountry && !selectedSource && mapMode === 'publishers' && selectedPublisher ? (
+            <div className="map-source-detail">
+              <div className="map-detail-meta">
+                <div><span>Publisher</span><strong>{selectedPublisher.publisher}</strong></div>
+                <div><span>24h Output</span><strong>{formatNumber(selectedPublisher.pub24h)}</strong></div>
+                <div><span>Countries</span><strong>{formatNumber(selectedPublisher.activeCountries24h)}</strong></div>
+                <div><span>Active Sources</span><strong>{formatNumber(selectedPublisher.activeSources24h)}</strong></div>
+                <div><span>Reliability</span><strong>{round(selectedPublisherReliability * 100, 1)}%</strong></div>
+              </div>
+
+              <div className="map-stat-grid compact">
+                <article className="map-stat-card">
+                  <span>Healthy Sources</span>
+                  <strong>{formatNumber(selectedPublisher.healthySources24h)}</strong>
+                </article>
+                <article className="map-stat-card">
+                  <span>Degraded Sources</span>
+                  <strong>{formatNumber(selectedPublisher.degradedSources24h)}</strong>
+                </article>
+                <article className="map-stat-card">
+                  <span>Top Market</span>
+                  <strong>{selectedPublisher.countries[0]?.country || 'n/a'}</strong>
+                </article>
+                <article className="map-stat-card">
+                  <span>Top Market 24h</span>
+                  <strong>{formatNumber(selectedPublisher.countries[0]?.pub24h || 0)}</strong>
+                </article>
+              </div>
+
+              <div className="map-panel-block compact">
+                <div className="section-head">
+                  <h3>Country Footprint</h3>
+                  <span>click a market to drill down</span>
+                </div>
+                <div className="map-list">
+                  {selectedPublisher.countries.slice(0, 10).map((item) => (
+                    <button
+                      key={item.country}
+                      type="button"
+                      className="map-list-row"
+                      onClick={() => {
+                        const match = countriesState.data?.countries.find((countryRow) => countryRow.country === item.country);
+                        if (match) focusCountry(match);
+                      }}
+                    >
+                      <div className="map-list-copy">
+                        <strong>{item.country}</strong>
+                        <span>{formatNumber(item.activeSources24h)} sources · {formatNumber(item.degradedSources24h)} degraded</span>
+                      </div>
+                      <span>{formatNumber(item.pub24h)}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ) : !selectedCountry && !selectedSource && mapMode === 'health' ? (
+            <div className="map-source-detail">
+              <div className="map-detail-meta">
+                <div><span>Healthy Sources</span><strong>{formatNumber(healthTotals.healthySources24h)}</strong></div>
+                <div><span>Degraded Sources</span><strong>{formatNumber(healthTotals.degradedSources24h)}</strong></div>
+                <div><span>Countries With Issues</span><strong>{formatNumber(healthTotals.countriesWithIssues)}</strong></div>
+                <div><span>Mode</span><strong>Global health</strong></div>
+              </div>
+
+              <div className="map-panel-block compact">
+                <div className="section-head">
+                  <h3>Most Degraded Countries</h3>
+                  <span>sorted by degraded share</span>
+                </div>
+                <div className="map-list">
+                  {topDegradedCountries.slice(0, 8).map((item) => (
+                    <button
+                      key={item.country}
+                      type="button"
+                      className="map-list-row"
+                      onClick={() => {
+                        const match = countriesState.data?.countries.find((countryRow) => countryRow.country === item.country);
+                        if (match) focusCountry(match);
+                      }}
+                    >
+                      <div className="map-list-copy">
+                        <strong>{item.country}</strong>
+                        <span>{formatNumber(item.degradedSources24h)} degraded · {formatNumber(item.activeSources24h)} active</span>
+                      </div>
+                      <span>{round(itemDegradedShare(item) * 100, 1)}%</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ) : !selectedSource && !selectedCluster ? (
             <div className="panel muted">
-              Choose a country, then click a city or region bubble. The drawer will list sources in that area, and from there you can open full source detail.
+              {mapMode === 'health'
+                ? 'Choose a country, then click a city or region bubble. The drawer will prioritize degraded sources and show source-level health detail.'
+                : mapMode === 'publishers'
+                  ? 'Choose a country from the selected publisher footprint, then click a city or region bubble to inspect sources from that network.'
+                  : 'Choose a country, then click a city or region bubble. The drawer will list sources in that area, and from there you can open full source detail.'}
             </div>
           ) : !selectedSource && selectedCluster ? (
             <div className="map-source-detail">
@@ -2052,10 +2370,10 @@ export function MapView() {
               <div className="map-panel-block compact">
                 <div className="section-head">
                   <h3>Sources In Cluster</h3>
-                  <span>Choose a source for detail</span>
+                  <span>{mapMode === 'health' ? 'Degraded sources appear first' : 'Choose a source for detail'}</span>
                 </div>
                 <div className="map-list">
-                  {selectedCluster.sources.slice(0, 16).map((source) => (
+                  {selectedClusterSourcesDisplay.slice(0, 16).map((source) => (
                     <button
                       key={source.sourceId}
                       type="button"
@@ -2064,7 +2382,14 @@ export function MapView() {
                     >
                       <div className="map-list-copy">
                         <strong>{source.source}</strong>
-                        <span>{source.region || source.city || source.country}</span>
+                        <span>
+                          {source.region || source.city || source.country}
+                          {mapMode === 'health'
+                            ? ` · ${source.health}`
+                            : source.publisher && source.publisher !== source.source
+                              ? ` · ${source.publisher}`
+                              : ''}
+                        </span>
                       </div>
                       <span>{formatNumber(source.pub24h)}</span>
                     </button>
@@ -2236,6 +2561,121 @@ export function MapView() {
             <div className="panel muted">Source detail is unavailable.</div>
           )}
         </aside>
+
+        <section className={`map-benchmark-sheet ${benchmarkOpen ? 'is-open' : 'is-collapsed'}`}>
+          <div className="map-benchmark-head">
+            <div>
+              <div className="eyebrow">Observed Benchmark</div>
+              <h3>Country publishing table</h3>
+            </div>
+            <div className="map-benchmark-actions">
+              <span className="map-benchmark-meta">
+                {benchmarkGeneratedLabel
+                  ? `Snapshot ${benchmarkGeneratedLabel}`
+                  : benchmarkState.loading
+                    ? 'Loading snapshot'
+                    : 'Snapshot unavailable'}
+              </span>
+              <Link href="/benchmark/" className="map-inline-action map-benchmark-link">
+                Open Full Table
+              </Link>
+              <button
+                type="button"
+                className="map-inline-action"
+                onClick={() => setBenchmarkOpen((current) => !current)}
+              >
+                {benchmarkOpen ? 'Collapse' : 'Expand'}
+              </button>
+            </div>
+          </div>
+
+          {benchmarkOpen ? (
+            benchmark ? (
+              <>
+                <div className="map-benchmark-summary">
+                  <article className="map-benchmark-stat">
+                    <span>Published 24h</span>
+                    <strong>{formatNumber(benchmark.totals.hourlyPublished24h)}</strong>
+                  </article>
+                  <article className="map-benchmark-stat">
+                    <span>Fresh 24h</span>
+                    <strong>{formatNumber(benchmark.totals.hourlyFresh24h)}</strong>
+                  </article>
+                  <article className="map-benchmark-stat">
+                    <span>Countries</span>
+                    <strong>{formatNumber(benchmark.totals.countries)}</strong>
+                  </article>
+                  <article className="map-benchmark-stat">
+                    <span>Prev Day</span>
+                    <strong>{formatNumber(benchmark.totals.dailyPublishedCount)}</strong>
+                  </article>
+                </div>
+
+                <div className="map-benchmark-table-wrap">
+                  <table className="map-benchmark-table">
+                    <thead>
+                      <tr>
+                        <th>Country</th>
+                        <th><HelpTooltipLabel label="24h" description={BENCHMARK_COLUMN_HELP.published24h} /></th>
+                        <th><HelpTooltipLabel label="Late" description="Main line is late share, subline is the raw 24h late count." /></th>
+                        <th><HelpTooltipLabel label="Active" description={BENCHMARK_COLUMN_HELP.activeSources} /></th>
+                        <th><HelpTooltipLabel label="Top 5" description={BENCHMARK_COLUMN_HELP.top5Share} /></th>
+                        <th><HelpTooltipLabel label="Prev Day" description={BENCHMARK_COLUMN_HELP.prevDayPublished} /></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {benchmarkRows.map((row) => {
+                        const linkedCountry = countryLookup.get(normalizeCountryName(row.country)) || null;
+                        const isSelected = Boolean(linkedCountry && selectedCountry?.country === linkedCountry.country);
+                        return (
+                          <tr key={row.country} className={isSelected ? 'is-selected' : ''}>
+                            <td>
+                              <button
+                                type="button"
+                                className="map-benchmark-country"
+                                onClick={() => focusBenchmarkCountry(row.country)}
+                                disabled={!linkedCountry}
+                              >
+                                <strong>{row.country}</strong>
+                                <span>{row.countryCode || 'n/a'}</span>
+                              </button>
+                            </td>
+                            <td>
+                              <strong>{formatNumber(row.hourlyPublished24h)}</strong>
+                              <span>fresh {formatNumber(row.hourlyFresh24h)}</span>
+                            </td>
+                            <td>
+                              <strong>{formatLateShare(row.hourlyLate24h, row.hourlyInserted24h)}</strong>
+                              <span>{formatNumber(row.hourlyLate24h)} late</span>
+                            </td>
+                            <td>
+                              <strong>{formatNumber(row.hourlyActiveSources24h)}</strong>
+                              <span>1h {formatNumber(row.hourlyActiveSources1h)}</span>
+                            </td>
+                            <td>
+                              <strong>{formatPercentFromBps(row.hourlyTop5SourceShareBps)}</strong>
+                              <span>top 1 {formatPercentFromBps(row.hourlyTopSourceShareBps)}</span>
+                            </td>
+                            <td>
+                              <strong>{formatNumber(row.dailyPublishedCount)}</strong>
+                              <span>{formatNumber(row.dailyActiveSourcesCount)} active</span>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </>
+            ) : benchmarkState.error ? (
+              <div className="panel danger map-benchmark-empty">{benchmarkState.error}</div>
+            ) : benchmarkState.loading ? (
+              <div className="panel muted map-benchmark-empty">Loading benchmark snapshot...</div>
+            ) : (
+              <div className="panel muted map-benchmark-empty">No benchmark snapshot is available yet.</div>
+            )
+          ) : null}
+        </section>
       </section>
     </div>
   );

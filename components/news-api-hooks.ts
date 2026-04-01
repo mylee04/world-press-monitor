@@ -33,6 +33,10 @@ type NewsApiQuery = {
   maxUpdatedAt?: string | null;
 };
 
+function allowLocalPreview(): boolean {
+  return process.env.NODE_ENV !== 'production';
+}
+
 function useRemoteJsonResource<T>(url: string | null): JsonState<T> {
   const [state, setState] = useState<JsonState<T>>({
     data: null,
@@ -150,5 +154,5 @@ export function useNewsApiNews(query: NewsApiQuery): JsonState<NewsApiResponse> 
 export function useCountryBenchmark(): JsonState<CountryBenchmarkResponse> {
   const { hasToken, isReady } = useCustomerAccess();
   const url = useMemo(() => '/api/customer/dashboard/benchmark', []);
-  return useRemoteJsonResource<CountryBenchmarkResponse>(isReady && hasToken ? url : null);
+  return useRemoteJsonResource<CountryBenchmarkResponse>(isReady && (hasToken || allowLocalPreview()) ? url : null);
 }

@@ -1,5 +1,6 @@
 export type CountryBenchmarkWindow = {
   bucket: string;
+  label?: string | null;
   windowStart: string;
   windowEnd: string;
   generatedAt: string;
@@ -28,6 +29,22 @@ export type CountryBenchmarkCountryRow = {
   dailyTopSourceShareBps: number;
   dailyTop5SourceShareBps: number;
   dailyTop10SourceShareBps: number;
+  weeklyPublishedCount: number;
+  weeklyFreshCount: number;
+  weeklyLateCount: number;
+  weeklyInsertedCount: number;
+  weeklyAverageActiveSourcesCount: number;
+  weeklyTopSourceShareBps: number;
+  weeklyTop5SourceShareBps: number;
+  weeklyTop10SourceShareBps: number;
+  monthlyPublishedCount: number;
+  monthlyFreshCount: number;
+  monthlyLateCount: number;
+  monthlyInsertedCount: number;
+  monthlyAverageActiveSourcesCount: number;
+  monthlyTopSourceShareBps: number;
+  monthlyTop5SourceShareBps: number;
+  monthlyTop10SourceShareBps: number;
 };
 
 export type CountryBenchmarkResponse = {
@@ -41,9 +58,17 @@ export type CountryBenchmarkResponse = {
     dailyPublishedCount: number;
     dailyFreshCount: number;
     dailyInsertedCount: number;
+    weeklyPublishedCount: number;
+    weeklyFreshCount: number;
+    weeklyInsertedCount: number;
+    monthlyPublishedCount: number;
+    monthlyFreshCount: number;
+    monthlyInsertedCount: number;
   };
   hourly: CountryBenchmarkWindow | null;
   daily: CountryBenchmarkWindow | null;
+  weekly: CountryBenchmarkWindow | null;
+  monthly: CountryBenchmarkWindow | null;
   countries: CountryBenchmarkCountryRow[];
   reason?: string;
 };

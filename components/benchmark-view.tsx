@@ -1,8 +1,34 @@
 'use client';
 
+import { useMemo, useState } from 'react';
 import { CustomerAccessPanel } from '@/components/customer-access-panel';
 import { useCustomerAccess } from '@/components/customer-access-provider';
+import { BENCHMARK_COLUMN_HELP, HelpTooltipLabel } from '@/components/help-tooltip-label';
 import { useCountryBenchmark } from '@/components/news-api-hooks';
+import type { CountryBenchmarkCountryRow, CountryBenchmarkResponse, CountryBenchmarkWindow } from '@/lib/benchmark-types';
+
+type BenchmarkPeriod = 'hourly' | 'daily' | 'weekly' | 'monthly';
+type BenchmarkBadgeTone = 'emerald' | 'teal' | 'amber' | 'rose' | 'slate';
+
+type BenchmarkPeriodMetrics = {
+  output: number;
+  fresh: number;
+  late: number;
+  inserted: number;
+  active: number;
+  top1: number;
+  top5: number;
+  activeDescriptor: string;
+};
+
+type BenchmarkBadge = {
+  label: string;
+  tone: BenchmarkBadgeTone;
+};
+
+function allowLocalPreview(): boolean {
+  return process.env.NODE_ENV !== 'production';
+}
 
 function formatDateTime(value: string | null | undefined): string {
   if (!value) return '-';
@@ -39,21 +65,188 @@ function formatPercentFromBps(value: number): string {
   return `${(value / 100).toFixed(1)}%`;
 }
 
+function formatRate(numerator: number, denominator: number): string {
+  if (denominator <= 0) return '-';
+  return `${((numerator / denominator) * 100).toFixed(1)}%`;
+}
+
 function formatLateShare(late: number, inserted: number): string {
-  if (inserted <= 0) return '-';
-  return `${((late / inserted) * 100).toFixed(1)}%`;
+  return formatRate(late, inserted);
+}
+
+function formatBucketLabel(value: { bucket: string; label?: string | null } | null | undefined): string {
+  if (!value) return '-';
+  return value.label || value.bucket || '-';
+}
+
+function formatDateTimeShort(value: string | null | undefined): string {
+  return formatDateTime(value);
+}
+
+function getPeriodWindow(benchmark: CountryBenchmarkResponse, period: BenchmarkPeriod): CountryBenchmarkWindow | null {
+  if (period === 'hourly') return benchmark.hourly;
+  if (period === 'daily') return benchmark.daily;
+  if (period === 'weekly') return benchmark.weekly;
+  return benchmark.monthly;
+}
+
+function getPeriodLabel(period: BenchmarkPeriod): string {
+  if (period === 'hourly') return 'Rolling 24h';
+  if (period === 'daily') return 'Latest day';
+  if (period === 'weekly') return 'Week';
+  return 'Month';
+}
+
+function getPeriodDescription(period: BenchmarkPeriod): string {
+  if (period === 'hourly') return 'Rolling observed output ranked by the latest 24-hour window.';
+  if (period === 'daily') return 'Latest completed daily bucket, ranked by daily observed output.';
+  if (period === 'weekly') return 'Current week bucket using month-local 7-day slices.';
+  return 'Current calendar month rollup from stored daily snapshots.';
+}
+
+function getPeriodMetrics(row: CountryBenchmarkCountryRow, period: BenchmarkPeriod): BenchmarkPeriodMetrics {
+  if (period === 'hourly') {
+    return {
+      output: row.hourlyPublished24h,
+      fresh: row.hourlyFresh24h,
+      late: row.hourlyLate24h,
+      inserted: row.hourlyInserted24h,
+      active: row.hourlyActiveSources24h,
+      top1: row.hourlyTopSourceShareBps,
+      top5: row.hourlyTop5SourceShareBps,
+      activeDescriptor: 'active sources',
+    };
+  }
+
+  if (period === 'daily') {
+    return {
+      output: row.dailyPublishedCount,
+      fresh: row.dailyFreshCount,
+      late: row.dailyLateCount,
+      inserted: row.dailyInsertedCount,
+      active: row.dailyActiveSourcesCount,
+      top1: row.dailyTopSourceShareBps,
+      top5: row.dailyTop5SourceShareBps,
+      activeDescriptor: 'active sources',
+    };
+  }
+
+  if (period === 'weekly') {
+    return {
+      output: row.weeklyPublishedCount,
+      fresh: row.weeklyFreshCount,
+      late: row.weeklyLateCount,
+      inserted: row.weeklyInsertedCount,
+      active: row.weeklyAverageActiveSourcesCount,
+      top1: row.weeklyTopSourceShareBps,
+      top5: row.weeklyTop5SourceShareBps,
+      activeDescriptor: 'avg active/day',
+    };
+  }
+
+  return {
+    output: row.monthlyPublishedCount,
+    fresh: row.monthlyFreshCount,
+    late: row.monthlyLateCount,
+    inserted: row.monthlyInsertedCount,
+    active: row.monthlyAverageActiveSourcesCount,
+    top1: row.monthlyTopSourceShareBps,
+    top5: row.monthlyTop5SourceShareBps,
+    activeDescriptor: 'avg active/day',
+  };
+}
+
+function getCoverageBadge(metrics: BenchmarkPeriodMetrics): BenchmarkBadge {
+  if (metrics.active >= 40 && metrics.top5 <= 5500) return { label: 'Broad', tone: 'emerald' };
+  if (metrics.active >= 18 && metrics.top5 <= 7000) return { label: 'Established', tone: 'teal' };
+  if (metrics.active >= 8) return { label: 'Narrow', tone: 'amber' };
+  return { label: 'Thin', tone: 'rose' };
+}
+
+function getConcentrationBadge(top5Bps: number): BenchmarkBadge {
+  if (top5Bps <= 3500) return { label: 'Balanced', tone: 'emerald' };
+  if (top5Bps <= 5500) return { label: 'Mixed', tone: 'teal' };
+  if (top5Bps <= 7500) return { label: 'Concentrated', tone: 'amber' };
+  return { label: 'Dominated', tone: 'rose' };
+}
+
+function getConfidenceBadge(metrics: BenchmarkPeriodMetrics, period: BenchmarkPeriod): BenchmarkBadge {
+  const lateShare = metrics.inserted > 0 ? metrics.late / metrics.inserted : 0;
+  const outputFloor = period === 'monthly' ? 300 : period === 'weekly' ? 80 : 20;
+  let score = 0;
+  if (metrics.output >= outputFloor) score += 1;
+  if (metrics.active >= 8) score += 1;
+  if (metrics.top5 <= 7000) score += 1;
+  if (lateShare <= 0.15) score += 1;
+
+  if (score >= 4) return { label: 'High', tone: 'emerald' };
+  if (score === 3) return { label: 'Moderate', tone: 'teal' };
+  if (score === 2) return { label: 'Watch', tone: 'amber' };
+  return { label: 'Limited', tone: 'rose' };
+}
+
+function getSpotlightRows(rows: CountryBenchmarkCountryRow[], period: BenchmarkPeriod) {
+  const eligible = rows.filter((row) => getPeriodMetrics(row, period).output > 0);
+  const leaderMetrics = eligible[0] ? getPeriodMetrics(eligible[0], period) : null;
+  const balanceFloor = leaderMetrics ? Math.max(50, Math.round(leaderMetrics.output * 0.01)) : 50;
+  const speedFloor = leaderMetrics ? Math.max(100, Math.round(leaderMetrics.output * 0.02)) : 100;
+  const leader = eligible[0] || null;
+  const broadest = [...eligible].sort((left, right) => {
+    const rightMetrics = getPeriodMetrics(right, period);
+    const leftMetrics = getPeriodMetrics(left, period);
+    return rightMetrics.active - leftMetrics.active || rightMetrics.output - leftMetrics.output || left.country.localeCompare(right.country);
+  })[0] || null;
+  const balanced = [...eligible]
+    .filter((row) => {
+      const metrics = getPeriodMetrics(row, period);
+      return metrics.output >= balanceFloor && metrics.active >= 5;
+    })
+    .sort((left, right) => {
+      const rightMetrics = getPeriodMetrics(right, period);
+      const leftMetrics = getPeriodMetrics(left, period);
+      return leftMetrics.top5 - rightMetrics.top5 || rightMetrics.output - leftMetrics.output || left.country.localeCompare(right.country);
+    })[0] || null;
+  const fastest = [...eligible]
+    .filter((row) => {
+      const metrics = getPeriodMetrics(row, period);
+      return metrics.output >= speedFloor && metrics.inserted > 0;
+    })
+    .sort((left, right) => {
+      const rightMetrics = getPeriodMetrics(right, period);
+      const leftMetrics = getPeriodMetrics(left, period);
+      return (leftMetrics.late / Math.max(leftMetrics.inserted, 1)) - (rightMetrics.late / Math.max(rightMetrics.inserted, 1))
+        || rightMetrics.output - leftMetrics.output
+        || left.country.localeCompare(right.country);
+    })[0] || null;
+
+  return { leader, broadest, balanced, fastest };
 }
 
 export function BenchmarkView() {
   const { hasToken, isReady } = useCustomerAccess();
   const benchmarkState = useCountryBenchmark();
   const benchmark = benchmarkState.data?.storage === 'postgres' ? benchmarkState.data : null;
+  const localPreviewEnabled = allowLocalPreview();
+  const [period, setPeriod] = useState<BenchmarkPeriod>('hourly');
+  const [showAllRows, setShowAllRows] = useState(false);
+
+  const selectedWindow = benchmark ? getPeriodWindow(benchmark, period) : null;
+  const rankedRows = useMemo(() => {
+    if (!benchmark) return [];
+    return [...benchmark.countries].sort((left, right) => {
+      const rightMetrics = getPeriodMetrics(right, period);
+      const leftMetrics = getPeriodMetrics(left, period);
+      return rightMetrics.output - leftMetrics.output || rightMetrics.active - leftMetrics.active || left.country.localeCompare(right.country);
+    });
+  }, [benchmark, period]);
+  const visibleRows = showAllRows ? rankedRows : rankedRows.slice(0, 25);
+  const spotlights = useMemo(() => getSpotlightRows(rankedRows, period), [rankedRows, period]);
 
   if (!isReady) {
     return <div className="panel muted">Checking customer access...</div>;
   }
 
-  if (!hasToken) {
+  if (!hasToken && !localPreviewEnabled) {
     return (
       <CustomerAccessPanel
         title="Benchmark Access Required"
@@ -86,7 +279,7 @@ export function BenchmarkView() {
 
   return (
     <div className="page-stack">
-      <section className="hero-panel">
+      <section className="hero-panel benchmark-hero">
         <div className="eyebrow">Country Benchmark</div>
         <h1>Observed country-level news publishing benchmark from local snapshot tables.</h1>
         <p>
@@ -94,8 +287,16 @@ export function BenchmarkView() {
         </p>
         <div className="hero-note">
           <strong>Snapshot freshness:</strong> hourly snapshot {formatRelative(benchmark.hourly?.generatedAt)}.
-          Daily snapshot bucket {benchmark.daily?.bucket || '-'}.
+          Daily snapshot bucket {benchmark.daily?.bucket || '-'} (completed UTC day, generated {formatDateTimeShort(benchmark.daily?.generatedAt)}).
         </div>
+        <div className="hero-note">
+          <strong>Weekly buckets:</strong> month-local 7-day slices labeled like {`"March 2026 Week 1"`}. Monthly buckets roll up the full calendar month.
+        </div>
+        {!hasToken && localPreviewEnabled ? (
+          <div className="hero-note">
+            <strong>Local preview:</strong> customer session checks are bypassed outside production.
+          </div>
+        ) : null}
       </section>
 
       <section className="metric-grid">
@@ -120,92 +321,220 @@ export function BenchmarkView() {
           <small>Rows first stored in the latest rolling 24 hours</small>
         </article>
         <article className="metric-card">
-          <span>Latest daily bucket</span>
-          <strong>{benchmark.daily?.bucket || '-'}</strong>
+          <span>Latest daily bucket (UTC)</span>
+          <strong>{formatBucketLabel(benchmark.daily)}</strong>
           <small>{benchmark.daily ? `${benchmark.totals.dailyPublishedCount.toLocaleString()} published` : 'No daily snapshot'}</small>
         </article>
-        <article className="metric-card">
+        <article className="metric-card metric-card--wide">
+          <span>Latest weekly bucket</span>
+          <strong>{formatBucketLabel(benchmark.weekly)}</strong>
+          <small>{benchmark.weekly ? `${benchmark.totals.weeklyPublishedCount.toLocaleString()} published` : 'No weekly snapshot'}</small>
+        </article>
+        <article className="metric-card metric-card--wide">
+          <span>Latest monthly bucket</span>
+          <strong>{formatBucketLabel(benchmark.monthly)}</strong>
+          <small>{benchmark.monthly ? `${benchmark.totals.monthlyPublishedCount.toLocaleString()} published` : 'No monthly snapshot'}</small>
+        </article>
+        <article className="metric-card metric-card--wide metric-card--generated">
           <span>Generated</span>
           <strong>{formatDateTime(benchmark.generatedAt)}</strong>
           <small>{formatRelative(benchmark.generatedAt)}</small>
         </article>
       </section>
 
-      <section className="panel">
-        <div className="section-head">
-          <h2>Snapshot metadata</h2>
-          <span>Current benchmark inputs</span>
-        </div>
-        <div className="grid-two">
-          <div className="link-list">
-            <div><strong>Hourly bucket:</strong> {benchmark.hourly?.bucket || '-'}</div>
-            <div><strong>Hourly window:</strong> {benchmark.hourly ? `${formatDateTime(benchmark.hourly.windowStart)} to ${formatDateTime(benchmark.hourly.windowEnd)}` : '-'}</div>
-            <div><strong>Hourly metric version:</strong> {benchmark.hourly?.metricVersion || '-'}</div>
-            <div><strong>Hourly atlas version:</strong> {benchmark.hourly?.atlasVersion || '-'}</div>
+      <details className="panel benchmark-metadata-panel">
+        <summary className="details-summary benchmark-fold-summary">
+          <div>
+            <div className="benchmark-fold-title">Snapshot metadata</div>
+            <div className="benchmark-fold-copy">Current benchmark inputs</div>
           </div>
-          <div className="link-list">
-            <div><strong>Daily bucket:</strong> {benchmark.daily?.bucket || '-'}</div>
-            <div><strong>Daily window:</strong> {benchmark.daily ? `${formatDateTime(benchmark.daily.windowStart)} to ${formatDateTime(benchmark.daily.windowEnd)}` : '-'}</div>
-            <div><strong>Daily metric version:</strong> {benchmark.daily?.metricVersion || '-'}</div>
-            <div><strong>Daily atlas version:</strong> {benchmark.daily?.atlasVersion || '-'}</div>
-          </div>
+          <span className="benchmark-fold-chip" aria-hidden="true" />
+        </summary>
+        <div className="grid-two benchmark-fold-body">
+          <details className="benchmark-bucket-card">
+            <summary className="details-summary benchmark-bucket-summary">
+              <div>
+                <div className="benchmark-bucket-title">Hourly snapshot</div>
+                <div className="benchmark-bucket-copy">{benchmark.hourly?.bucket || '-'}</div>
+              </div>
+              <span className="benchmark-bucket-toggle" aria-hidden="true" />
+            </summary>
+            <div className="link-list benchmark-bucket-body">
+              <div><strong>Hourly bucket:</strong> {benchmark.hourly?.bucket || '-'}</div>
+              <div><strong>Hourly window:</strong> {benchmark.hourly ? `${formatDateTime(benchmark.hourly.windowStart)} to ${formatDateTime(benchmark.hourly.windowEnd)}` : '-'}</div>
+              <div><strong>Hourly metric version:</strong> {benchmark.hourly?.metricVersion || '-'}</div>
+              <div><strong>Hourly atlas version:</strong> {benchmark.hourly?.atlasVersion || '-'}</div>
+            </div>
+          </details>
+          <details className="benchmark-bucket-card">
+            <summary className="details-summary benchmark-bucket-summary">
+              <div>
+                <div className="benchmark-bucket-title">Daily snapshot</div>
+                <div className="benchmark-bucket-copy">{formatBucketLabel(benchmark.daily)}</div>
+              </div>
+              <span className="benchmark-bucket-toggle" aria-hidden="true" />
+            </summary>
+            <div className="link-list benchmark-bucket-body">
+              <div><strong>Daily bucket (UTC):</strong> {formatBucketLabel(benchmark.daily)}</div>
+              <div><strong>Daily window:</strong> {benchmark.daily ? `${formatDateTime(benchmark.daily.windowStart)} to ${formatDateTime(benchmark.daily.windowEnd)}` : '-'}</div>
+              <div><strong>Daily metric version:</strong> {benchmark.daily?.metricVersion || '-'}</div>
+              <div><strong>Daily atlas version:</strong> {benchmark.daily?.atlasVersion || '-'}</div>
+            </div>
+          </details>
+          <details className="benchmark-bucket-card">
+            <summary className="details-summary benchmark-bucket-summary">
+              <div>
+                <div className="benchmark-bucket-title">Weekly snapshot</div>
+                <div className="benchmark-bucket-copy">{formatBucketLabel(benchmark.weekly)}</div>
+              </div>
+              <span className="benchmark-bucket-toggle" aria-hidden="true" />
+            </summary>
+            <div className="link-list benchmark-bucket-body">
+              <div><strong>Weekly bucket:</strong> {formatBucketLabel(benchmark.weekly)}</div>
+              <div><strong>Weekly window:</strong> {benchmark.weekly ? `${formatDateTime(benchmark.weekly.windowStart)} to ${formatDateTime(benchmark.weekly.windowEnd)}` : '-'}</div>
+              <div><strong>Weekly metric version:</strong> {benchmark.weekly?.metricVersion || '-'}</div>
+              <div><strong>Weekly atlas version:</strong> {benchmark.weekly?.atlasVersion || '-'}</div>
+            </div>
+          </details>
+          <details className="benchmark-bucket-card">
+            <summary className="details-summary benchmark-bucket-summary">
+              <div>
+                <div className="benchmark-bucket-title">Monthly snapshot</div>
+                <div className="benchmark-bucket-copy">{formatBucketLabel(benchmark.monthly)}</div>
+              </div>
+              <span className="benchmark-bucket-toggle" aria-hidden="true" />
+            </summary>
+            <div className="link-list benchmark-bucket-body">
+              <div><strong>Monthly bucket:</strong> {formatBucketLabel(benchmark.monthly)}</div>
+              <div><strong>Monthly window:</strong> {benchmark.monthly ? `${formatDateTime(benchmark.monthly.windowStart)} to ${formatDateTime(benchmark.monthly.windowEnd)}` : '-'}</div>
+              <div><strong>Monthly metric version:</strong> {benchmark.monthly?.metricVersion || '-'}</div>
+              <div><strong>Monthly atlas version:</strong> {benchmark.monthly?.atlasVersion || '-'}</div>
+            </div>
+          </details>
         </div>
-      </section>
+      </details>
 
-      <section className="panel">
+      <section className="panel benchmark-ranking-panel">
         <div className="section-head">
-          <h2>Country Table</h2>
-          <span>{benchmark.countries.length.toLocaleString()} countries</span>
+          <div>
+            <h2>Country Ranking</h2>
+            <span className="benchmark-ranking-copy">{benchmark.countries.length.toLocaleString()} markets ranked by observed output</span>
+          </div>
+          <span>{getPeriodLabel(period)}</span>
         </div>
-        <div className="table-wrap">
-          <table>
+
+        <div className="benchmark-toolbar">
+          <div className="benchmark-pill-row" role="tablist" aria-label="Benchmark period">
+            {(['hourly', 'daily', 'weekly', 'monthly'] as BenchmarkPeriod[]).map((option) => (
+              <button
+                key={option}
+                type="button"
+                className={`benchmark-pill ${period === option ? 'is-active' : ''}`}
+                onClick={() => setPeriod(option)}
+              >
+                {getPeriodLabel(option)}
+              </button>
+            ))}
+          </div>
+          <button
+            type="button"
+            className="button benchmark-toggle-button"
+            onClick={() => setShowAllRows((current) => !current)}
+          >
+            {showAllRows ? 'Show top 25' : `Show all ${rankedRows.length.toLocaleString()}`}
+          </button>
+        </div>
+
+        <div className="benchmark-period-banner">
+          <div className="benchmark-period-meta">
+            <strong>{getPeriodLabel(period)}</strong>
+            <span>{selectedWindow ? formatBucketLabel(selectedWindow) : 'No snapshot'}</span>
+          </div>
+          <div className="benchmark-period-subcopy">
+            <span>{getPeriodDescription(period)}</span>
+            <span>{selectedWindow ? `${formatDateTime(selectedWindow.windowStart)} to ${formatDateTime(selectedWindow.windowEnd)}` : '-'}</span>
+          </div>
+        </div>
+
+        <div className="benchmark-spotlight-grid">
+          <article className="benchmark-spotlight-card">
+            <span>Output leader</span>
+            <strong>{spotlights.leader?.country || '-'}</strong>
+            <small>{spotlights.leader ? `${getPeriodMetrics(spotlights.leader, period).output.toLocaleString()} observed articles` : 'No data in this lens'}</small>
+          </article>
+          <article className="benchmark-spotlight-card">
+            <span>Broadest source base</span>
+            <strong>{spotlights.broadest?.country || '-'}</strong>
+            <small>{spotlights.broadest ? `${getPeriodMetrics(spotlights.broadest, period).active.toLocaleString()} ${getPeriodMetrics(spotlights.broadest, period).activeDescriptor}` : 'No data in this lens'}</small>
+          </article>
+          <article className="benchmark-spotlight-card">
+            <span>Most balanced market</span>
+            <strong>{spotlights.balanced?.country || '-'}</strong>
+            <small>{spotlights.balanced ? `Top 5 share ${formatPercentFromBps(getPeriodMetrics(spotlights.balanced, period).top5)}` : 'Not enough breadth yet'}</small>
+          </article>
+          <article className="benchmark-spotlight-card">
+            <span>Lowest delay pressure</span>
+            <strong>{spotlights.fastest?.country || '-'}</strong>
+            <small>{spotlights.fastest ? `Late share ${formatLateShare(getPeriodMetrics(spotlights.fastest, period).late, getPeriodMetrics(spotlights.fastest, period).inserted)}` : 'Not enough inserted rows yet'}</small>
+          </article>
+        </div>
+
+        <div className="table-wrap benchmark-table-wrap">
+          <table className="benchmark-table">
             <thead>
               <tr>
-                <th>Country</th>
-                <th>24h Published</th>
-                <th>24h Fresh</th>
-                <th>24h Late</th>
-                <th>Late Share</th>
-                <th>Active Sources</th>
-                <th>Top 5 Share</th>
-                <th>Prev Day Published</th>
-                <th>Prev Day Active</th>
-                <th>Prev Day Top 5</th>
+                <th>Rank</th>
+                <th>Market</th>
+                <th><HelpTooltipLabel label="Observed Output" description={BENCHMARK_COLUMN_HELP.benchmarkOutput} /></th>
+                <th><HelpTooltipLabel label="Timeliness" description={BENCHMARK_COLUMN_HELP.benchmarkFreshness} /></th>
+                <th><HelpTooltipLabel label="Coverage" description={BENCHMARK_COLUMN_HELP.benchmarkCoverage} /></th>
+                <th><HelpTooltipLabel label="Concentration" description={BENCHMARK_COLUMN_HELP.benchmarkConcentration} /></th>
+                <th><HelpTooltipLabel label="Confidence" description={BENCHMARK_COLUMN_HELP.benchmarkConfidence} /></th>
               </tr>
             </thead>
             <tbody>
-              {benchmark.countries.map((row) => (
-                <tr key={row.country}>
-                  <td>
-                    <strong>{row.country}</strong>
-                    <div className="muted">{row.countryCode || 'n/a'}</div>
-                  </td>
-                  <td>
-                    <strong>{row.hourlyPublished24h.toLocaleString()}</strong>
-                    <div className="muted">Inserted 1h: {row.hourlyInserted1h.toLocaleString()}</div>
-                  </td>
-                  <td>{row.hourlyFresh24h.toLocaleString()}</td>
-                  <td>{row.hourlyLate24h.toLocaleString()}</td>
-                  <td>{formatLateShare(row.hourlyLate24h, row.hourlyInserted24h)}</td>
-                  <td>
-                    <strong>{row.hourlyActiveSources24h.toLocaleString()}</strong>
-                    <div className="muted">1h active: {row.hourlyActiveSources1h.toLocaleString()}</div>
-                  </td>
-                  <td>
-                    <strong>{formatPercentFromBps(row.hourlyTop5SourceShareBps)}</strong>
-                    <div className="muted">Top 1: {formatPercentFromBps(row.hourlyTopSourceShareBps)}</div>
-                  </td>
-                  <td>
-                    <strong>{row.dailyPublishedCount.toLocaleString()}</strong>
-                    <div className="muted">Fresh: {row.dailyFreshCount.toLocaleString()}</div>
-                  </td>
-                  <td>{row.dailyActiveSourcesCount.toLocaleString()}</td>
-                  <td>
-                    <strong>{formatPercentFromBps(row.dailyTop5SourceShareBps)}</strong>
-                    <div className="muted">Top 1: {formatPercentFromBps(row.dailyTopSourceShareBps)}</div>
-                  </td>
-                </tr>
-              ))}
+              {visibleRows.map((row, index) => {
+                const metrics = getPeriodMetrics(row, period);
+                const coverageBadge = getCoverageBadge(metrics);
+                const concentrationBadge = getConcentrationBadge(metrics.top5);
+                const confidenceBadge = getConfidenceBadge(metrics, period);
+                const freshRate = formatRate(metrics.fresh, metrics.output);
+                const lateShare = formatLateShare(metrics.late, metrics.inserted);
+                const rank = index + 1;
+                return (
+                  <tr key={`${period}-${row.country}`}>
+                    <td>
+                      <span className={`benchmark-rank-badge ${rank <= 3 ? 'is-podium' : ''}`}>#{rank}</span>
+                    </td>
+                    <td>
+                      <div className="benchmark-market-cell">
+                        <strong>{row.country}</strong>
+                        <span>{row.countryCode || 'n/a'}</span>
+                      </div>
+                    </td>
+                    <td>
+                      <strong>{metrics.output.toLocaleString()}</strong>
+                      <div className="muted">fresh {metrics.fresh.toLocaleString()} · late {metrics.late.toLocaleString()}</div>
+                    </td>
+                    <td>
+                      <strong>{lateShare}</strong>
+                      <div className="muted">fresh rate {freshRate}</div>
+                    </td>
+                    <td>
+                      <span className={`benchmark-badge is-${coverageBadge.tone}`}>{coverageBadge.label}</span>
+                      <div className="muted">{metrics.active.toLocaleString()} {metrics.activeDescriptor}</div>
+                    </td>
+                    <td>
+                      <span className={`benchmark-badge is-${concentrationBadge.tone}`}>{concentrationBadge.label}</span>
+                      <div className="muted">Top 5 {formatPercentFromBps(metrics.top5)} · Top 1 {formatPercentFromBps(metrics.top1)}</div>
+                    </td>
+                    <td>
+                      <span className={`benchmark-badge is-${confidenceBadge.tone}`}>{confidenceBadge.label}</span>
+                      <div className="muted">observed benchmark read</div>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
