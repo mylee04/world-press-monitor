@@ -24,12 +24,6 @@ type HealthResponse = {
   timeoutMs?: number;
 };
 
-type HealthzResponse = {
-  status: 'ok';
-  checkedAt: string;
-  service: 'api-news';
-};
-
 type ApiError = {
   error: string;
   message: string;
@@ -487,16 +481,6 @@ const openApiSpec = {
         responses: {
           200: {
             description: 'Service health'
-          }
-        }
-      }
-    },
-    '/healthz': {
-      get: {
-        summary: 'Liveness probe endpoint',
-        responses: {
-          200: {
-            description: 'Service is running'
           }
         }
       }
@@ -1425,7 +1409,7 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
   const method = (req.method || 'GET').toUpperCase();
   const explicitContext = getAuthContext(req);
   const isDocPath = apiDocPaths.has(path);
-  const isHealthPath = path === '/health' || path === '/healthz';
+  const isHealthPath = path === '/health';
   const publicReadContext =
     !explicitContext && allowPublicReadOnly && publicReadPaths.has(path) ? getPublicReadOnlyContext() : null;
   const context = explicitContext || publicReadContext;
@@ -1478,16 +1462,6 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
       ),
       rateLimitDecision
     );
-    return;
-  }
-
-  if (path === '/healthz') {
-    const response: HealthzResponse = {
-      status: 'ok',
-      checkedAt: new Date().toISOString(),
-      service: 'api-news'
-    };
-    sendJsonResponse(req, res, jsonResponse(response, 200), rateLimitDecision);
     return;
   }
 
