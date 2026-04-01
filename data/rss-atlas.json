@@ -16397,6 +16397,13 @@
           "sitemapUrl": "https://www.teledoce.com/wp-sitemap.xml"
         },
         {
+          "name": "Teledoce - RSS",
+          "url": "https://www.teledoce.com/rss/",
+          "status": "NEW",
+          "checkedDate": null,
+          "valid": "needs verification"
+        },
+        {
           "name": "La Diaria - Home",
           "url": "https://ladiaria.com.uy/feeds/articulos/",
           "status": "⏩ OFFICIAL",
@@ -16428,6 +16435,13 @@
         {
           "name": "Telemundo Uruguay",
           "url": "https://www.telemundo.com.uy/feed/"
+        },
+        {
+          "name": "Telemundo Uruguay - RSS",
+          "url": "https://www.telemundo.com.uy/rss/",
+          "status": "NEW",
+          "checkedDate": null,
+          "valid": "needs verification"
         },
         {
           "name": "Uypress - Internacionales",
@@ -16503,6 +16517,13 @@
           "valid": "needs verification"
         },
         {
+          "name": "El Popular - www",
+          "url": "https://www.elpopular.com.uy/feed/",
+          "status": "NEW",
+          "checkedDate": null,
+          "valid": "needs verification"
+        },
+        {
           "name": "Grupo R Multimedio",
           "url": "https://grupormultimedio.com/feed/",
           "status": "⏩ OFFICIAL",
@@ -16524,12 +16545,27 @@
           "url": "https://www.tenfield.com.uy/feed/"
         },
         {
+          "name": "Tenfield - Sitemap",
+          "url": null,
+          "status": "NEW",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "sitemapUrl": "https://www.tenfield.com.uy/sitemap.xml"
+        },
+        {
           "name": "El Bocón",
           "url": "https://www.elbocon.com.uy/feed/"
         },
         {
           "name": "El Acontecer",
           "url": "https://elacontecer.com.uy/feed/"
+        },
+        {
+          "name": "Brecha",
+          "url": "https://www.brecha.com.uy/feed/",
+          "status": "NEW",
+          "checkedDate": null,
+          "valid": "needs verification"
         }
       ]
     },
@@ -25168,12 +25204,110 @@
     {
       "name": "Malaysia",
       "code": "MY",
-      "feeds": []
+      "feeds": [
+        {
+          "name": "Malaysiakini - News",
+          "url": "https://www.malaysiakini.com/rss/en/news.rss"
+        },
+        {
+          "name": "Kosmo - Feed",
+          "url": "https://www.kosmo.com.my/feed/"
+        },
+        {
+          "name": "Bharian - Feed",
+          "url": "https://www.bharian.com.my/feed/"
+        },
+        {
+          "name": "HMetro - Feed",
+          "url": "https://www.hmetro.com.my/feed/"
+        },
+        {
+          "name": "Free Malaysia Today - Feed",
+          "url": "https://www.freemalaysiatoday.com/feed/"
+        },
+        {
+          "name": "Utusan Malaysia - Feed",
+          "url": "https://www.utusan.com.my/feed/"
+        },
+        {
+          "name": "Astro Awani - Sitemap",
+          "sitemapUrl": "https://www.astroawani.com/sitemap.xml"
+        },
+        {
+          "name": "Bernama - Sitemap",
+          "sitemapUrl": "https://www.bernama.com/sitemap.xml"
+        },
+        {
+          "name": "NST - Sitemap",
+          "sitemapUrl": "https://www.nst.com.my/sitemap.xml"
+        },
+        {
+          "name": "Malay Mail - Sitemap",
+          "sitemapUrl": "https://www.malaymail.com/sitemap.xml"
+        },
+        {
+          "name": "The Star - Sitemap",
+          "sitemapUrl": "https://www.thestar.com.my/sitemap.xml"
+        }
+      ]
     },
     {
       "name": "Philippines",
       "code": "PH",
-      "feeds": []
+      "feeds": [
+        {
+          "name": "Rappler - Newsfeed",
+          "url": "https://www.rappler.com/feed/"
+        },
+        {
+          "name": "Rappler - Sitemap",
+          "sitemapUrl": "https://www.rappler.com/sitemap_index.xml"
+        },
+        {
+          "name": "Inquirer - Feed",
+          "url": "https://www.inquirer.net/feed/"
+        },
+        {
+          "name": "Inquirer - Sitemap",
+          "sitemapUrl": "https://www.inquirer.net/sitemap.xml"
+        },
+        {
+          "name": "BusinessWorld - Feed",
+          "url": "https://www.bworldonline.com/feed/"
+        },
+        {
+          "name": "BusinessWorld - Sitemap",
+          "sitemapUrl": "https://www.bworldonline.com/sitemap.xml"
+        },
+        {
+          "name": "SunStar - Feed",
+          "url": "https://www.sunstar.com.ph/feed/"
+        },
+        {
+          "name": "SunStar - Sitemap",
+          "sitemapUrl": "https://www.sunstar.com.ph/sitemap.xml"
+        },
+        {
+          "name": "Mindanews - Feed",
+          "url": "https://www.mindanews.com/feed/"
+        },
+        {
+          "name": "Mindanews - Sitemap",
+          "sitemapUrl": "https://www.mindanews.com/sitemap_index.xml"
+        },
+        {
+          "name": "InterAksyon - Feed",
+          "url": "https://www.interaksyon.com/feed/"
+        },
+        {
+          "name": "Philippine Star - Sitemap",
+          "sitemapUrl": "https://www.philstar.com/sitemap.xml"
+        },
+        {
+          "name": "GMA Network - Sitemap",
+          "sitemapUrl": "https://www.gmanetwork.com/sitemap.xml"
+        }
+      ]
     },
     {
       "name": "Vietnam",
