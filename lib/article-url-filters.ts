@@ -238,7 +238,7 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
   }
 
   if (hostname.endsWith('tyden.cz') && normalizedSource.includes('tyden.cz')) {
-    if (pathname.startsWith('/soutez')) {
+    if (/^\/+soutez(?:-|\/|$)/.test(pathname)) {
       return true;
     }
   }
