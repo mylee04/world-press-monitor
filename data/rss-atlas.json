@@ -20738,6 +20738,48 @@
           "status": "NEW",
           "checkedDate": "03/31/2026",
           "valid": "valid"
+        },
+        {
+          "name": "L'essentiel - FR Articles Sitemap",
+          "sitemapUrl": "https://www.lessentiel.lu/sitemaps/fr/articles.xml",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "L'essentiel - DE Articles Sitemap",
+          "sitemapUrl": "https://www.lessentiel.lu/sitemaps/de/articles.xml",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Luxtoday - News Sitemap",
+          "sitemapUrl": "https://luxtoday.lu/sitemaps/news/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Luxtoday - Articles Sitemap",
+          "sitemapUrl": "https://luxtoday.lu/sitemaps/articles/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Virgule - March 2026 Articles Sitemap",
+          "sitemapUrl": "https://www.virgule.lu/sitemaps/virgule-online-article-2026-03.xml.gz",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Contacto - March 2026 Articles Sitemap",
+          "sitemapUrl": "https://www.contacto.lu/sitemaps/contacto-online-article-2026-03.xml.gz",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
         }
       ]
     },
@@ -22780,8 +22822,14 @@
         },
         {
           "name": "The Peninsula Qatar",
-          "url": "https://thepeninsulaqatar.com/article",
           "sitemapUrl": "https://thepeninsulaqatar.com/sitemap.xml"
+        },
+        {
+          "name": "The Peninsula Qatar - March 2026 Sitemap",
+          "sitemapUrl": "https://thepeninsulaqatar.com/sitemap_articles-2026-3.xml",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
         },
         {
           "name": "Gulf Times",
@@ -22792,8 +22840,64 @@
           "url": "https://www.gulf-times.com/rssFeed/2"
         },
         {
+          "name": "Gulf Times - Qatar Local",
+          "url": "https://www.gulf-times.com/rssFeed/8",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Qatar Tribune",
           "url": "https://www.qatar-tribune.com/rssFeed/0"
+        },
+        {
+          "name": "Doha News",
+          "url": "https://www.dohanews.co/feed/",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Qatar Living - Articles Sitemap",
+          "sitemapUrl": "https://www.qatarliving.com/sitemap-articles.xml",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "QNA - Qatar",
+          "url": "https://qna.org.qa/en/Pages/RSS-Feeds/Qatar",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "QNA - Economy Local",
+          "url": "https://qna.org.qa/en/Pages/RSS-Feeds/Economy-Local",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "QNA - Sport Local",
+          "url": "https://qna.org.qa/en/Pages/RSS-Feeds/Sport-Local",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "QNA - Miscellaneous Local",
+          "url": "https://qna.org.qa/en/Pages/RSS-Feeds/Miscellaneous-Local",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "QNA - Reports and Analysis",
+          "url": "https://qna.org.qa/en/Pages/RSS-Feeds/Analysis-and-Reports",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
         }
       ]
     },
@@ -22817,6 +22921,34 @@
         {
           "name": "Emirates 24/7 - Sitemap",
           "sitemapUrl": "https://www.emirates247.com/sitemap.xml"
+        },
+        {
+          "name": "Khaleej Times - UAE RSS",
+          "url": "https://www.khaleejtimes.com/api/v1/collections/uae.rss",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Khaleej Times - Business RSS",
+          "url": "https://www.khaleejtimes.com/api/v1/collections/business.rss",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Khaleej Times - Top Section RSS",
+          "url": "https://www.khaleejtimes.com/api/v1/collections/top-section.rss",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Gulf Business",
+          "url": "https://gulfbusiness.com/feed/",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
         }
       ]
     },
@@ -22844,6 +22976,13 @@
           "url": "https://www.omanobserver.om/rssFeed/1"
         },
         {
+          "name": "Oman Observer - Main",
+          "url": "https://www.omanobserver.om/rssFeed/0",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Oman Observer - Sports",
           "url": "https://www.omanobserver.om/rssFeed/3"
         },
@@ -22858,6 +22997,13 @@
         {
           "name": "The Arabian Stories",
           "url": "https://www.thearabianstories.com/feed/"
+        },
+        {
+          "name": "Muscat Daily - Post Sitemap",
+          "sitemapUrl": "https://www.muscatdaily.com/post-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
         }
       ]
     },
@@ -22896,6 +23042,34 @@
         {
           "name": "El Colombiano - News Sitemap",
           "sitemapUrl": "https://www.elcolombiano.com/sitemapforgoogle.xml"
+        },
+        {
+          "name": "El Heraldo - News Sitemap",
+          "sitemapUrl": "https://www.elheraldo.co/arc/outboundfeeds/sitemap-news-index/",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Caracol Radio - News Sitemap",
+          "sitemapUrl": "https://caracol.com.co/arc/outboundfeeds/news-sitemap-index/?outputType=xml",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Blu Radio - Latest Sitemap",
+          "sitemapUrl": "https://www.bluradio.com/content-sitemap-latest.xml",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "El Pais - Colombia",
+          "url": "https://www.elpais.com.co/arc/outboundfeeds/rss/category/colombia/?outputType=xml",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
         }
       ]
     },
@@ -22996,6 +23170,10 @@
           "url": "https://vov.vn/rss/home.rss"
         },
         {
+          "name": "Suc Khoe & Doi Song",
+          "url": "https://suckhoedoisong.vn/index.rss"
+        },
+        {
           "name": "VietnamPlus",
           "url": "https://www.vietnamplus.vn/rss/home.rss"
         },
@@ -23018,6 +23196,10 @@
         {
           "name": "PLO - News Index",
           "sitemapUrl": "https://plo.vn/sitemaps/newsindex.xml"
+        },
+        {
+          "name": "Znews - Sitemap News",
+          "sitemapUrl": "https://znews.vn/sitemap/sitemap-news.xml"
         },
         {
           "name": "Nhan Dan",
@@ -23054,6 +23236,14 @@
         {
           "name": "VTV",
           "url": "https://vtv.vn/rss/home.rss"
+        },
+        {
+          "name": "VietnamBiz",
+          "url": "https://vietnambiz.vn/tin-moi-nhat.rss"
+        },
+        {
+          "name": "VietnamFinance - Sitemap",
+          "sitemapUrl": "https://vietnamfinance.vn/sitemap.xml"
         },
         {
           "name": "Bao Phap Luat - Latest Articles",
