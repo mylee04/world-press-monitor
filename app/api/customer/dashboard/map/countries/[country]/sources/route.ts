@@ -1,17 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { readCustomerPortalSession } from '@/lib/customer-portal';
-import { readMapCountrySources } from '@/lib/map-store';
-import type { MapMetricWindow } from '@/lib/map-types';
+import { normalizeMapMetricWindow, readMapCountrySources } from '@/lib/map-store';
 
 export const runtime = 'nodejs';
 
 function allowLocalPreview(): boolean {
   return process.env.NODE_ENV !== 'production';
-}
-
-function normalizeWindow(value: string | null): MapMetricWindow {
-  if (value === '1h' || value === '7d') return value;
-  return '24h';
 }
 
 export async function GET(request: NextRequest, context: { params: Promise<{ country: string }> }) {
@@ -32,7 +26,7 @@ export async function GET(request: NextRequest, context: { params: Promise<{ cou
         { status: 400, headers: { 'Cache-Control': 'no-store' } }
       );
     }
-    const window = normalizeWindow(request.nextUrl.searchParams.get('window'));
+    const window = normalizeMapMetricWindow(request.nextUrl.searchParams.get('window'));
     const payload = await readMapCountrySources(country, window);
     return NextResponse.json(payload, { headers: { 'Cache-Control': 'no-store' } });
   } catch (error: unknown) {
