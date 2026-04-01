@@ -207,6 +207,18 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     return true;
   }
 
+  if (hostname.endsWith('news.tvbs.com.tw') && normalizedSource.includes('tvbs')) {
+    if (pathname.startsWith('/life/')) return true;
+    if (pathname.startsWith('/entertainment/')) return true;
+    if (pathname.startsWith('/health/')) return true;
+    if (pathname.startsWith('/focus/')) return true;
+    if (pathname.startsWith('/english/')) return true;
+    if (pathname.startsWith('/compilation/')) return true;
+    if (pathname.startsWith('/cars/')) return true;
+    if (pathname.startsWith('/fun/')) return true;
+    if (pathname.startsWith('/travel/')) return true;
+  }
+
   if (hostname.endsWith('dailymail.co.uk') && normalizedSource.includes('daily mail australia')) {
     if (!/^\/news\/article-\d+(?:\/|$)/.test(pathname)) {
       return true;
