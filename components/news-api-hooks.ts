@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import type { CountryBenchmarkResponse } from '@/lib/benchmark-types';
 import { useCustomerAccess } from '@/components/customer-access-provider';
 import type {
   NewsApiDashboardSummaryResponse,
@@ -144,4 +145,10 @@ export function useNewsApiNews(query: NewsApiQuery): JsonState<NewsApiResponse> 
   const queryKey = JSON.stringify(query);
   const url = useMemo(() => buildNewsApiQueryUrl('/api/news', query), [queryKey]);
   return useRemoteJsonResource<NewsApiResponse>(isReady && apiConfigured && hasToken ? url : null);
+}
+
+export function useCountryBenchmark(): JsonState<CountryBenchmarkResponse> {
+  const { hasToken, isReady } = useCustomerAccess();
+  const url = useMemo(() => '/api/customer/dashboard/benchmark', []);
+  return useRemoteJsonResource<CountryBenchmarkResponse>(isReady && hasToken ? url : null);
 }
