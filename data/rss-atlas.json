@@ -1292,6 +1292,27 @@
           "enabled": false
         },
         {
+          "name": "Stheadline",
+          "url": "https://www.stheadline.com/rss",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "am730",
+          "sitemapUrl": "https://www.am730.com.hk/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Orange News",
+          "sitemapUrl": "https://www.orangenews.hk/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Tencent Tech (Tencent Technology News)",
           "url": "https://new.qq.com/ch/tech/"
         },
@@ -7360,6 +7381,27 @@
           "row": 7
         },
         {
+          "name": "Europa Press",
+          "sitemapUrl": "https://www.europapress.es/sitemap_index/",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "COPE",
+          "url": "https://www.cope.es/api/es/news/rss.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "La Razón",
+          "url": "https://www.larazon.es/?outputType=xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
           "name": "El Periodico",
           "url": "https://www.elperiodico.com/es/rss/rss_portada.xml",
           "status": "⏩ OFFICIAL",
@@ -12545,8 +12587,10 @@
         },
         {
           "name": "Ny Teknik (Tech and Engineering)",
-          "url": "https://www.nyteknik.se/rss.xml",
-          "enabled": false
+          "sitemapUrl": "https://www.nyteknik.se/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
         },
         {
           "name": "Breakit (Startups and VC)",
@@ -12555,6 +12599,118 @@
         {
           "name": "Privata Affärer (Personal Finance/Investing)",
           "url": "https://www.privataaffarer.se/rss.xml"
+        },
+        {
+          "name": "UNT - News Sitemap",
+          "sitemapUrl": "https://unt.se/sitemap/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Corren - News Sitemap",
+          "sitemapUrl": "https://corren.se/sitemap/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "NT - News Sitemap",
+          "sitemapUrl": "https://nt.se/sitemap/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Hallandsposten - News Sitemap",
+          "sitemapUrl": "https://www.hallandsposten.se/sitemap/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Hallands Nyheter - News Sitemap",
+          "sitemapUrl": "https://www.hn.se/sitemap/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TTELA - News Sitemap",
+          "sitemapUrl": "https://www.ttela.se/sitemap/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Bohuslänningen - News Sitemap",
+          "sitemapUrl": "https://www.bohuslaningen.se/sitemap/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Alingsås Tidning - News Sitemap",
+          "sitemapUrl": "https://www.alingsastidning.se/sitemap/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "NWT - News Sitemap",
+          "sitemapUrl": "https://www.nwt.se/sitemaps/news/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Sydöstran - News Sitemap",
+          "sitemapUrl": "https://www.sydostran.se/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Kristianstadsbladet - News Sitemap",
+          "sitemapUrl": "https://www.kristianstadsbladet.se/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Trelleborgs Allehanda - News Sitemap",
+          "sitemapUrl": "https://www.trelleborgsallehanda.se/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Folkbladet - News Sitemap",
+          "sitemapUrl": "https://www.folkbladet.nu/google-news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Västerbottens-Kuriren - News Sitemap",
+          "sitemapUrl": "https://www.vk.se/google-news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Skaraborgs Allehanda - News Sitemap",
+          "sitemapUrl": "https://www.sla.se/sitemaps/news/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Smålänningen",
+          "url": "https://www.smalanningen.se/feeds/feed.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
         },
         {
           "name": "SVT Lokal - Stockholm",
@@ -25316,6 +25472,10 @@
           "sitemapUrl": "https://www.astroawani.com/sitemap.xml"
         },
         {
+          "name": "Astro Awani - Feed",
+          "url": "https://www.astroawani.com/rss.xml"
+        },
+        {
           "name": "Bernama - Sitemap",
           "sitemapUrl": "https://www.bernama.com/sitemap.xml"
         },
@@ -25328,6 +25488,10 @@
           "sitemapUrl": "https://www.malaymail.com/sitemap.xml"
         },
         {
+          "name": "Malay Mail - Money Feed",
+          "url": "https://www.malaymail.com/feed/rss/money"
+        },
+        {
           "name": "Kosmo - Sitemap Index",
           "sitemapUrl": "https://www.kosmo.com.my/sitemap_index.xml"
         },
@@ -25338,6 +25502,18 @@
         {
           "name": "Free Malaysia Today - Headlines RSS",
           "url": "https://www.freemalaysiatoday.com/feeds/rss/headlines"
+        },
+        {
+          "name": "Free Malaysia Today - Nation Feed",
+          "url": "https://www.freemalaysiatoday.com/category/nation/feed/"
+        },
+        {
+          "name": "Free Malaysia Today - World Feed",
+          "url": "https://www.freemalaysiatoday.com/category/world/feed/"
+        },
+        {
+          "name": "Free Malaysia Today - Leisure Feed",
+          "url": "https://www.freemalaysiatoday.com/category/leisure/feed/"
         },
         {
           "name": "Free Malaysia Today - News Sitemap",
@@ -25370,6 +25546,30 @@
         {
           "name": "Focus Malaysia - Feed",
           "url": "https://focusmalaysia.my/feed/"
+        },
+        {
+          "name": "The Rakyat Post - Feed",
+          "url": "https://www.therakyatpost.com/feed/"
+        },
+        {
+          "name": "The Rakyat Post - Sitemap Index",
+          "sitemapUrl": "https://www.therakyatpost.com/sitemaps.xml"
+        },
+        {
+          "name": "BusinessToday - Feed",
+          "url": "https://www.businesstoday.com.my/feed/"
+        },
+        {
+          "name": "BusinessToday - Sitemap Index",
+          "sitemapUrl": "https://www.businesstoday.com.my/sitemaps.xml"
+        },
+        {
+          "name": "MalaysiaNow - Feed",
+          "url": "https://www.malaysianow.com/feed/"
+        },
+        {
+          "name": "MalaysiaNow - Malaysia Feed",
+          "url": "https://www.malaysianow.com/tag/malaysia/feed"
         },
         {
           "name": "Scoop - Feed",
@@ -25406,12 +25606,92 @@
           "url": "https://www.rappler.com/technology/feed/"
         },
         {
+          "name": "Rappler - Philippines Feed",
+          "url": "https://www.rappler.com/philippines/feed/"
+        },
+        {
+          "name": "Rappler - Nation Feed",
+          "url": "https://www.rappler.com/nation/feed/"
+        },
+        {
+          "name": "Rappler - Business Feed",
+          "url": "https://www.rappler.com/business/feed/"
+        },
+        {
+          "name": "Rappler - Sports Feed",
+          "url": "https://www.rappler.com/sports/feed/"
+        },
+        {
+          "name": "Rappler - Entertainment Feed",
+          "url": "https://www.rappler.com/entertainment/feed/"
+        },
+        {
+          "name": "Rappler - MovePH Feed",
+          "url": "https://www.rappler.com/moveph/feed/"
+        },
+        {
+          "name": "Rappler - Newsbreak Feed",
+          "url": "https://www.rappler.com/newsbreak/feed/"
+        },
+        {
           "name": "Inquirer - Feed",
           "url": "https://www.inquirer.net/feed/"
         },
         {
+          "name": "Inquirer - Full Feed",
+          "url": "https://www.inquirer.net/fullfeed/"
+        },
+        {
           "name": "Inquirer - Sitemap",
           "sitemapUrl": "https://www.inquirer.net/sitemap.xml"
+        },
+        {
+          "name": "Inquirer - Newsinfo Feed",
+          "url": "https://newsinfo.inquirer.net/feed"
+        },
+        {
+          "name": "Inquirer - Business Feed",
+          "url": "https://business.inquirer.net/feed"
+        },
+        {
+          "name": "Inquirer - Global Nation Feed",
+          "url": "https://globalnation.inquirer.net/feed"
+        },
+        {
+          "name": "Inquirer - Technology Feed",
+          "url": "https://technology.inquirer.net/feed"
+        },
+        {
+          "name": "Inquirer - Sports Feed",
+          "url": "https://sports.inquirer.net/feed"
+        },
+        {
+          "name": "Inquirer - Entertainment Feed",
+          "url": "https://entertainment.inquirer.net/feed"
+        },
+        {
+          "name": "Inquirer - Opinion Feed",
+          "url": "https://opinion.inquirer.net/feed"
+        },
+        {
+          "name": "Cebu Daily News - Feed",
+          "url": "https://cebudailynews.inquirer.net/feed"
+        },
+        {
+          "name": "Bandera - Feed",
+          "url": "https://bandera.inquirer.net/feed"
+        },
+        {
+          "name": "POP Inquirer - Feed",
+          "url": "https://pop.inquirer.net/feed"
+        },
+        {
+          "name": "Lifestyle Inquirer - Feed",
+          "url": "https://lifestyle.inquirer.net/feed/"
+        },
+        {
+          "name": "USA Inquirer - Feed",
+          "url": "https://usa.inquirer.net/feed"
         },
         {
           "name": "BusinessWorld - Feed",
@@ -25420,6 +25700,30 @@
         {
           "name": "BusinessWorld - Sitemap",
           "sitemapUrl": "https://www.bworldonline.com/sitemap.xml"
+        },
+        {
+          "name": "BusinessWorld - Economy Feed",
+          "url": "https://www.bworldonline.com/economy/feed/"
+        },
+        {
+          "name": "BusinessWorld - Corporate Feed",
+          "url": "https://www.bworldonline.com/corporate/feed/"
+        },
+        {
+          "name": "BusinessWorld - Stock Market Feed",
+          "url": "https://www.bworldonline.com/stock-market/feed/"
+        },
+        {
+          "name": "BusinessWorld - World Feed",
+          "url": "https://www.bworldonline.com/world/feed/"
+        },
+        {
+          "name": "BusinessWorld - The Nation Feed",
+          "url": "https://www.bworldonline.com/the-nation/feed/"
+        },
+        {
+          "name": "Bilyonaryo - Sitemap Index",
+          "sitemapUrl": "https://bilyonaryo.com/sitemap_index.xml"
         },
         {
           "name": "SunStar - Feed",
@@ -25436,6 +25740,34 @@
         {
           "name": "Philippine Star - Headlines RSS",
           "url": "https://www.philstar.com/rss/headlines"
+        },
+        {
+          "name": "Philippine Star - Nation RSS",
+          "url": "https://www.philstar.com/rss/nation"
+        },
+        {
+          "name": "Philippine Star - World RSS",
+          "url": "https://www.philstar.com/rss/world"
+        },
+        {
+          "name": "Philippine Star - Business RSS",
+          "url": "https://www.philstar.com/rss/business"
+        },
+        {
+          "name": "Philippine Star - Sports RSS",
+          "url": "https://www.philstar.com/rss/sports"
+        },
+        {
+          "name": "Philippine Star - Entertainment RSS",
+          "url": "https://www.philstar.com/rss/entertainment"
+        },
+        {
+          "name": "Philippine Star - Lifestyle RSS",
+          "url": "https://www.philstar.com/rss/lifestyle"
+        },
+        {
+          "name": "Philippine Star - Opinion RSS",
+          "url": "https://www.philstar.com/rss/opinion"
         },
         {
           "name": "Mindanews - Feed",
@@ -25482,6 +25814,22 @@
           "url": "https://www.manilatimes.net/news/regions/feed/"
         },
         {
+          "name": "The Manila Times - Sports Feed",
+          "url": "https://www.manilatimes.net/sports/feed/"
+        },
+        {
+          "name": "The Manila Times - Entertainment Lifestyle Feed",
+          "url": "https://www.manilatimes.net/entertainment-lifestyle/feed/"
+        },
+        {
+          "name": "The Manila Times - Opinion Feed",
+          "url": "https://www.manilatimes.net/opinion/feed/"
+        },
+        {
+          "name": "The Manila Times - Fast Times Feed",
+          "url": "https://www.manilatimes.net/fast-times/feed/"
+        },
+        {
           "name": "Manila Bulletin - National RSS",
           "url": "https://mb.com.ph/rss/national"
         },
@@ -25522,12 +25870,76 @@
           "url": "https://mb.com.ph/rss/health-and-wellness"
         },
         {
+          "name": "Manila Bulletin - Sports RSS",
+          "url": "https://mb.com.ph/rss/sports"
+        },
+        {
+          "name": "Manila Bulletin - Entertainment RSS",
+          "url": "https://mb.com.ph/rss/entertainment"
+        },
+        {
+          "name": "Manila Bulletin - Lifestyle RSS",
+          "url": "https://mb.com.ph/rss/lifestyle"
+        },
+        {
           "name": "Daily Guardian - Feed",
           "url": "https://dailyguardian.com.ph/feed/"
         },
         {
+          "name": "Bohol Chronicle - Feed",
+          "url": "https://www.boholchronicle.com.ph/feed/"
+        },
+        {
           "name": "Mindanao Times - Feed",
           "url": "https://mindanaotimes.com.ph/feed/"
+        },
+        {
+          "name": "Mindanao Gold Star Daily - Feed",
+          "url": "https://mindanaogoldstardaily.com/feed/"
+        },
+        {
+          "name": "Mindanao Gold Star Daily - Sitemap Index",
+          "sitemapUrl": "https://mindanaogoldstardaily.com/sitemap_index.xml"
+        },
+        {
+          "name": "EDGE Davao - Feed",
+          "url": "https://edgedavao.net/feed/"
+        },
+        {
+          "name": "EDGE Davao - Sitemap Index",
+          "sitemapUrl": "https://edgedavao.net/sitemap_index.xml"
+        },
+        {
+          "name": "Panay News - Feed",
+          "url": "https://www.panaynews.net/feed/"
+        },
+        {
+          "name": "Panay News - Sitemap Index",
+          "sitemapUrl": "https://www.panaynews.net/sitemap_index.xml"
+        },
+        {
+          "name": "Bulatlat - Feed",
+          "url": "https://www.bulatlat.com/feed/"
+        },
+        {
+          "name": "Bulatlat - Sitemap Index",
+          "sitemapUrl": "https://www.bulatlat.com/sitemap_index.xml"
+        },
+        {
+          "name": "Tiebreaker Times - Feed",
+          "url": "https://tiebreakertimes.com.ph/feed/"
+        },
+        {
+          "name": "Tiebreaker Times - Sitemap Index",
+          "sitemapUrl": "https://tiebreakertimes.com.ph/sitemap_index.xml"
+        },
+        {
+          "name": "Manila Today - Feed",
+          "url": "https://manilatoday.net/feed/"
+        },
+        {
+          "name": "Manila Today - Sitemap Index",
+          "sitemapUrl": "https://manilatoday.net/sitemap_index.xml"
         },
         {
           "name": "Newsbytes - Feed",
