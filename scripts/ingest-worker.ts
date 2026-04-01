@@ -133,7 +133,7 @@ const ENABLE_BROWSER_SITEMAP_FALLBACK = parseBoolEnv(process.env.INGEST_BROWSER_
 const BROWSER_SITEMAP_FALLBACK_DOMAINS = new Set(
   (
     process.env.INGEST_BROWSER_SITEMAP_DOMAINS ||
-    'www.ouest-france.fr,www.standaard.be,www.nieuwsblad.be,www.gva.be,www.hbvl.be,www.blick.ch,blick.ch'
+    'www.ouest-france.fr,www.standaard.be,www.nieuwsblad.be,www.gva.be,www.hbvl.be,www.blick.ch,blick.ch,www.pna.gov.ph,pna.gov.ph,businessmirror.com.ph,www.malaya.com.ph,malaya.com.ph,manilastandard.net,www.manilastandard.net,news.abs-cbn.com'
   )
     .split(',')
     .map((value) => value.trim().toLowerCase())
@@ -1629,7 +1629,16 @@ function shouldAttemptBrowserSitemapFallback(url: string, response: Response | n
     const host = parsed.hostname.toLowerCase();
     if (!BROWSER_SITEMAP_FALLBACK_DOMAINS.has(host)) return false;
     const path = `${parsed.pathname}${parsed.search}`.toLowerCase();
-    if (!path.includes('sitemap') && !path.endsWith('.xml') && !path.endsWith('.xml.gz') && !path.includes('googlenews')) {
+    const isSitemapLike =
+      path.includes('sitemap') || path.endsWith('.xml') || path.endsWith('.xml.gz') || path.includes('googlenews');
+    const isFeedLike =
+      path === '/feed' ||
+      path === '/feed/' ||
+      path.endsWith('/feed') ||
+      path.endsWith('/feed/') ||
+      path.includes('/rss') ||
+      path.endsWith('.rss');
+    if (!isSitemapLike && !isFeedLike) {
       return false;
     }
   } catch {

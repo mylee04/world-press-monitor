@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Wed, 01 Apr 2026 16:09:10 GMT</dateCreated>
+    <dateCreated>Wed, 01 Apr 2026 20:01:28 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -173,6 +173,7 @@
       <outline text="People.cn - Culture [needs verification]" title="People.cn - Culture [needs verification]" type="rss" xmlUrl="https://www.people.com.cn/rss/culture.xml" htmlUrl="https://www.people.com.cn"/>
       <outline text="Sina News (General Breaking News) [valid]" title="Sina News (General Breaking News) [valid]" type="rss" xmlUrl="https://rss.sina.com.cn/news/world/focus15.xml" htmlUrl="https://rss.sina.com.cn"/>
       <outline text="Ming Pao (Hong Kong Flagship Newspaper) [valid]" title="Ming Pao (Hong Kong Flagship Newspaper) [valid]" type="rss" xmlUrl="https://news.mingpao.com/rss/pns/s00001.xml" htmlUrl="https://news.mingpao.com"/>
+      <outline text="Stheadline [valid]" title="Stheadline [valid]" type="rss" xmlUrl="https://www.stheadline.com/rss" htmlUrl="https://www.stheadline.com"/>
       <outline text="Tencent Tech (Tencent Technology News) [invalid]" title="Tencent Tech (Tencent Technology News) [invalid]" type="rss" xmlUrl="https://new.qq.com/ch/tech/" htmlUrl="https://new.qq.com"/>
       <outline text="China News Service - Scroll News [valid]" title="China News Service - Scroll News [valid]" type="rss" xmlUrl="https://www.chinanews.com.cn/rss/scroll-news.xml" htmlUrl="https://www.chinanews.com.cn"/>
       <outline text="China News Service - China [valid]" title="China News Service - China [valid]" type="rss" xmlUrl="https://www.chinanews.com.cn/rss/china.xml" htmlUrl="https://www.chinanews.com.cn"/>
@@ -812,6 +813,8 @@
       <outline text="El País - Economy [valid]" title="El País - Economy [valid]" type="rss" xmlUrl="https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/economia/portada" htmlUrl="https://feeds.elpais.com"/>
       <outline text="El Mundo - Economy [valid]" title="El Mundo - Economy [valid]" type="rss" xmlUrl="https://e00-elmundo.uecdn.es/elmundo/rss/economia.xml" htmlUrl="https://e00-elmundo.uecdn.es"/>
       <outline text="El Confidencial [valid]" title="El Confidencial [valid]" type="rss" xmlUrl="https://rss.elconfidencial.com/espana/" htmlUrl="https://rss.elconfidencial.com"/>
+      <outline text="COPE [valid]" title="COPE [valid]" type="rss" xmlUrl="https://www.cope.es/api/es/news/rss.xml" htmlUrl="https://www.cope.es"/>
+      <outline text="La Razón [valid]" title="La Razón [valid]" type="rss" xmlUrl="https://www.larazon.es/?outputType=xml" htmlUrl="https://www.larazon.es"/>
       <outline text="20 Minutos [valid]" title="20 Minutos [valid]" type="rss" xmlUrl="https://www.20minutos.es/rss/" htmlUrl="https://www.20minutos.es"/>
       <outline text="El Diario [valid]" title="El Diario [valid]" type="rss" xmlUrl="https://www.eldiario.es/rss/" htmlUrl="https://www.eldiario.es"/>
       <outline text="eldiario [valid]" title="eldiario [valid]" type="rss" xmlUrl="https://www.eldiario.es/rss/" htmlUrl="https://www.eldiario.es"/>
@@ -1663,6 +1666,7 @@
       <outline text="Montevideo Portal - Tecnología [valid]" title="Montevideo Portal - Tecnología [valid]" type="rss" xmlUrl="https://www.montevideo.com.uy/anxml.aspx?133" htmlUrl="https://www.montevideo.com.uy"/>
       <outline text="Montevideo Portal - Negocios &amp; Tendencias [valid]" title="Montevideo Portal - Negocios &amp; Tendencias [valid]" type="rss" xmlUrl="https://www.montevideo.com.uy/anxml.aspx?728" htmlUrl="https://www.montevideo.com.uy"/>
       <outline text="Montevideo Portal - Deportes [valid]" title="Montevideo Portal - Deportes [valid]" type="rss" xmlUrl="https://www.montevideo.com.uy/anxml.aspx?1727" htmlUrl="https://www.montevideo.com.uy"/>
+      <outline text="Montevideo Portal - Pantallazo [needs verification]" title="Montevideo Portal - Pantallazo [needs verification]" type="rss" xmlUrl="https://www.montevideo.com.uy/anxml.aspx?1022" htmlUrl="https://www.montevideo.com.uy"/>
       <outline text="El País - Portada [valid]" title="El País - Portada [valid]" type="rss" xmlUrl="https://www.elpais.com.uy/rss" htmlUrl="https://www.elpais.com.uy"/>
       <outline text="El País - Economía [valid]" title="El País - Economía [valid]" type="rss" xmlUrl="https://www.elpais.com.uy/rss/economia-y-mercado" htmlUrl="https://www.elpais.com.uy"/>
       <outline text="El País - Mundo [needs verification]" title="El País - Mundo [needs verification]" type="rss" xmlUrl="https://www.elpais.com.uy/rss/mundo" htmlUrl="https://www.elpais.com.uy"/>
@@ -1694,20 +1698,33 @@
       <outline text="Subrayado - Cultura [needs verification]" title="Subrayado - Cultura [needs verification]" type="rss" xmlUrl="https://www.subrayado.com.uy/rss/pages/cultura.xml" htmlUrl="https://www.subrayado.com.uy"/>
       <outline text="Subrayado - Show [needs verification]" title="Subrayado - Show [needs verification]" type="rss" xmlUrl="https://www.subrayado.com.uy/rss/pages/show.xml" htmlUrl="https://www.subrayado.com.uy"/>
       <outline text="Teledoce [valid]" title="Teledoce [valid]" type="rss" xmlUrl="https://www.teledoce.com/feed/" htmlUrl="https://www.teledoce.com"/>
+      <outline text="Teledoce - RSS [needs verification]" title="Teledoce - RSS [needs verification]" type="rss" xmlUrl="https://www.teledoce.com/rss/" htmlUrl="https://www.teledoce.com"/>
       <outline text="La Diaria - Home [valid]" title="La Diaria - Home [valid]" type="rss" xmlUrl="https://ladiaria.com.uy/feeds/articulos/" htmlUrl="https://ladiaria.com.uy"/>
+      <outline text="LR21 [needs verification]" title="LR21 [needs verification]" type="rss" xmlUrl="https://www.lr21.com.uy/feed" htmlUrl="https://www.lr21.com.uy"/>
+      <outline text="La Mañana [needs verification]" title="La Mañana [needs verification]" type="rss" xmlUrl="https://www.xn--lamaana-7za.uy/feed/" htmlUrl="https://www.xn--lamaana-7za.uy"/>
       <outline text="Caras y Caretas - Home [valid]" title="Caras y Caretas - Home [valid]" type="rss" xmlUrl="https://www.carasycaretas.com.uy/rss/pages/home.xml" htmlUrl="https://www.carasycaretas.com.uy"/>
       <outline text="Telemundo Uruguay [needs verification]" title="Telemundo Uruguay [needs verification]" type="rss" xmlUrl="https://www.telemundo.com.uy/feed/" htmlUrl="https://www.telemundo.com.uy"/>
+      <outline text="Telemundo Uruguay - RSS [needs verification]" title="Telemundo Uruguay - RSS [needs verification]" type="rss" xmlUrl="https://www.telemundo.com.uy/rss/" htmlUrl="https://www.telemundo.com.uy"/>
+      <outline text="180 Uruguay - Home [needs verification]" title="180 Uruguay - Home [needs verification]" type="rss" xmlUrl="https://www.180.com.uy/feed.php" htmlUrl="https://www.180.com.uy"/>
       <outline text="Uypress - Internacionales [needs verification]" title="Uypress - Internacionales [needs verification]" type="rss" xmlUrl="https://www.uypress.net/anxml.aspx?13" htmlUrl="https://www.uypress.net"/>
       <outline text="970 Universal [valid]" title="970 Universal [valid]" type="rss" xmlUrl="https://970universal.com/feed/" htmlUrl="https://970universal.com"/>
+      <outline text="Radio Carve [needs verification]" title="Radio Carve [needs verification]" type="rss" xmlUrl="https://radiocarve.uy/feed" htmlUrl="https://radiocarve.uy"/>
       <outline text="El Telégrafo [valid]" title="El Telégrafo [valid]" type="rss" xmlUrl="https://www.eltelegrafo.com/feed/" htmlUrl="https://www.eltelegrafo.com"/>
       <outline text="Carmelo Portal [valid]" title="Carmelo Portal [valid]" type="rss" xmlUrl="https://www.carmeloportal.com/feed" htmlUrl="https://www.carmeloportal.com"/>
       <outline text="San José Ahora [valid]" title="San José Ahora [valid]" type="rss" xmlUrl="https://sanjoseahora.com.uy/feed/" htmlUrl="https://sanjoseahora.com.uy"/>
       <outline text="Sarandí 690 [valid]" title="Sarandí 690 [valid]" type="rss" xmlUrl="https://www.sarandi690.com.uy/feed/" htmlUrl="https://www.sarandi690.com.uy"/>
+      <outline text="Sarandí 690 - RSS [needs verification]" title="Sarandí 690 - RSS [needs verification]" type="rss" xmlUrl="https://www.sarandi690.com.uy/rss/" htmlUrl="https://www.sarandi690.com.uy"/>
       <outline text="El Popular [valid]" title="El Popular [valid]" type="rss" xmlUrl="https://elpopular.uy/feed/" htmlUrl="https://elpopular.uy"/>
+      <outline text="El Popular - www [needs verification]" title="El Popular - www [needs verification]" type="rss" xmlUrl="https://www.elpopular.com.uy/feed/" htmlUrl="https://www.elpopular.com.uy"/>
       <outline text="Grupo R Multimedio [valid]" title="Grupo R Multimedio [valid]" type="rss" xmlUrl="https://grupormultimedio.com/feed/" htmlUrl="https://grupormultimedio.com"/>
       <outline text="Tenfield [needs verification]" title="Tenfield [needs verification]" type="rss" xmlUrl="https://www.tenfield.com.uy/feed/" htmlUrl="https://www.tenfield.com.uy"/>
       <outline text="El Bocón [needs verification]" title="El Bocón [needs verification]" type="rss" xmlUrl="https://www.elbocon.com.uy/feed/" htmlUrl="https://www.elbocon.com.uy"/>
       <outline text="El Acontecer [needs verification]" title="El Acontecer [needs verification]" type="rss" xmlUrl="https://elacontecer.com.uy/feed/" htmlUrl="https://elacontecer.com.uy"/>
+      <outline text="El Acontecer - RSS [needs verification]" title="El Acontecer - RSS [needs verification]" type="rss" xmlUrl="https://elacontecer.com.uy/rss" htmlUrl="https://elacontecer.com.uy"/>
+      <outline text="Brecha [needs verification]" title="Brecha [needs verification]" type="rss" xmlUrl="https://www.brecha.com.uy/feed/" htmlUrl="https://www.brecha.com.uy"/>
+      <outline text="Telemundo - RSS [needs verification]" title="Telemundo - RSS [needs verification]" type="rss" xmlUrl="https://www.telemundo.com.uy/feed/rss" htmlUrl="https://www.telemundo.com.uy"/>
+      <outline text="Grupo R Multimedio - RSS [needs verification]" title="Grupo R Multimedio - RSS [needs verification]" type="rss" xmlUrl="https://www.grupormultimedio.com/rss" htmlUrl="https://www.grupormultimedio.com"/>
+      <outline text="Tenfield - RSS [needs verification]" title="Tenfield - RSS [needs verification]" type="rss" xmlUrl="https://www.tenfield.com.uy/rss" htmlUrl="https://www.tenfield.com.uy"/>
     </outline>
     <outline text="Austria (AT)" title="Austria (AT)">
       <outline text="Der Standard [valid]" title="Der Standard [valid]" type="rss" xmlUrl="https://www.derstandard.at/rss" htmlUrl="https://www.derstandard.at"/>
@@ -2545,13 +2562,37 @@
       <outline text="Jerusalem Post - Israel News [valid]" title="Jerusalem Post - Israel News [valid]" type="rss" xmlUrl="https://www.jpost.com/rss/rssfeedsisraelnews.aspx" htmlUrl="https://www.jpost.com"/>
       <outline text="Jerusalem Post - Middle East [valid]" title="Jerusalem Post - Middle East [valid]" type="rss" xmlUrl="https://www.jpost.com/rss/rssfeedsmiddleeastnews.aspx" htmlUrl="https://www.jpost.com"/>
       <outline text="Jerusalem Post - World [valid]" title="Jerusalem Post - World [valid]" type="rss" xmlUrl="https://www.jpost.com/rss/rssfeedsinternational" htmlUrl="https://www.jpost.com"/>
+      <outline text="Jerusalem Post - Front Page [valid]" title="Jerusalem Post - Front Page [valid]" type="rss" xmlUrl="https://www.jpost.com/rss/rssfeedsfrontpage.aspx" htmlUrl="https://www.jpost.com"/>
+      <outline text="Jerusalem Post - Business and Innovation [valid]" title="Jerusalem Post - Business and Innovation [valid]" type="rss" xmlUrl="https://www.jpost.com/rss/rssbusinessandinnovation" htmlUrl="https://www.jpost.com"/>
+      <outline text="Jerusalem Post - Banking and Finance [valid]" title="Jerusalem Post - Banking and Finance [valid]" type="rss" xmlUrl="https://www.jpost.com/rss/rssbankingandfinance" htmlUrl="https://www.jpost.com"/>
+      <outline text="Jerusalem Post - Energy and Infrastructure [valid]" title="Jerusalem Post - Energy and Infrastructure [valid]" type="rss" xmlUrl="https://www.jpost.com/rss/rssenergyandinfrastructure" htmlUrl="https://www.jpost.com"/>
+      <outline text="Jerusalem Post - Tech and Startups [valid]" title="Jerusalem Post - Tech and Startups [valid]" type="rss" xmlUrl="https://www.jpost.com/rss/rsstechandstartups" htmlUrl="https://www.jpost.com"/>
+      <outline text="Jerusalem Post - Defense and Tech [valid]" title="Jerusalem Post - Defense and Tech [valid]" type="rss" xmlUrl="https://www.jpost.com/rss/rssfeeddefense-and-tech" htmlUrl="https://www.jpost.com"/>
+      <outline text="Jerusalem Post - American Politics [valid]" title="Jerusalem Post - American Politics [valid]" type="rss" xmlUrl="https://www.jpost.com/rss/rssfeedsamerican-politics" htmlUrl="https://www.jpost.com"/>
+      <outline text="Jerusalem Post - Diaspora [valid]" title="Jerusalem Post - Diaspora [valid]" type="rss" xmlUrl="https://www.jpost.com/rss/rssfeedsdiaspora.aspx" htmlUrl="https://www.jpost.com"/>
+      <outline text="Jerusalem Post - Antisemitism [valid]" title="Jerusalem Post - Antisemitism [valid]" type="rss" xmlUrl="https://www.jpost.com/rss/rssfeedsantisemitism" htmlUrl="https://www.jpost.com"/>
       <outline text="Ynet - News [valid]" title="Ynet - News [valid]" type="rss" xmlUrl="https://www.ynet.co.il/Integration/StoryRss2.xml" htmlUrl="https://www.ynet.co.il"/>
+      <outline text="Ynet - Breaking News [valid]" title="Ynet - Breaking News [valid]" type="rss" xmlUrl="https://www.ynet.co.il/Integration/StoryRss1854.xml" htmlUrl="https://www.ynet.co.il"/>
+      <outline text="Ynet - Economy [valid]" title="Ynet - Economy [valid]" type="rss" xmlUrl="https://www.ynet.co.il/Integration/StoryRss6.xml" htmlUrl="https://www.ynet.co.il"/>
+      <outline text="Ynet - Sports [valid]" title="Ynet - Sports [valid]" type="rss" xmlUrl="https://www.ynet.co.il/Integration/StoryRss3.xml" htmlUrl="https://www.ynet.co.il"/>
+      <outline text="Ynet - Culture [valid]" title="Ynet - Culture [valid]" type="rss" xmlUrl="https://www.ynet.co.il/Integration/StoryRss538.xml" htmlUrl="https://www.ynet.co.il"/>
+      <outline text="Ynet - Health [valid]" title="Ynet - Health [valid]" type="rss" xmlUrl="https://www.ynet.co.il/Integration/StoryRss1208.xml" htmlUrl="https://www.ynet.co.il"/>
+      <outline text="Ynet - Auto [valid]" title="Ynet - Auto [valid]" type="rss" xmlUrl="https://www.ynet.co.il/Integration/StoryRss550.xml" htmlUrl="https://www.ynet.co.il"/>
+      <outline text="Ynet - Food [valid]" title="Ynet - Food [valid]" type="rss" xmlUrl="https://www.ynet.co.il/Integration/StoryRss975.xml" htmlUrl="https://www.ynet.co.il"/>
       <outline text="Walla - Main News [valid]" title="Walla - Main News [valid]" type="rss" xmlUrl="https://rss.walla.co.il/feed/1?type=main" htmlUrl="https://rss.walla.co.il"/>
       <outline text="Walla - Israel News [valid]" title="Walla - Israel News [valid]" type="rss" xmlUrl="https://rss.walla.co.il/feed/1" htmlUrl="https://rss.walla.co.il"/>
       <outline text="Walla - World News [valid]" title="Walla - World News [valid]" type="rss" xmlUrl="https://rss.walla.co.il/feed/2" htmlUrl="https://rss.walla.co.il"/>
       <outline text="Walla - Breaking News [valid]" title="Walla - Breaking News [valid]" type="rss" xmlUrl="https://rss.walla.co.il/feed/22" htmlUrl="https://rss.walla.co.il"/>
       <outline text="Walla - Security [valid]" title="Walla - Security [valid]" type="rss" xmlUrl="https://rss.walla.co.il/feed/2689" htmlUrl="https://rss.walla.co.il"/>
       <outline text="Walla - Politics [valid]" title="Walla - Politics [valid]" type="rss" xmlUrl="https://rss.walla.co.il/feed/2686" htmlUrl="https://rss.walla.co.il"/>
+      <outline text="Walla - Finance [valid]" title="Walla - Finance [valid]" type="rss" xmlUrl="https://rss.walla.co.il/feed/2?type=main" htmlUrl="https://rss.walla.co.il"/>
+      <outline text="Walla - Sports [valid]" title="Walla - Sports [valid]" type="rss" xmlUrl="https://rss.walla.co.il/feed/3?type=main" htmlUrl="https://rss.walla.co.il"/>
+      <outline text="Walla - Culture [valid]" title="Walla - Culture [valid]" type="rss" xmlUrl="https://rss.walla.co.il/feed/4?type=main" htmlUrl="https://rss.walla.co.il"/>
+      <outline text="Walla - Auto [valid]" title="Walla - Auto [valid]" type="rss" xmlUrl="https://rss.walla.co.il/feed/31?type=main" htmlUrl="https://rss.walla.co.il"/>
+      <outline text="Walla - Health [valid]" title="Walla - Health [valid]" type="rss" xmlUrl="https://rss.walla.co.il/feed/139?type=main" htmlUrl="https://rss.walla.co.il"/>
+      <outline text="Walla - Food [valid]" title="Walla - Food [valid]" type="rss" xmlUrl="https://rss.walla.co.il/feed/9?type=main" htmlUrl="https://rss.walla.co.il"/>
+      <outline text="Walla - Fashion [valid]" title="Walla - Fashion [valid]" type="rss" xmlUrl="https://rss.walla.co.il/feed/24?type=main" htmlUrl="https://rss.walla.co.il"/>
+      <outline text="Walla - Celebs [valid]" title="Walla - Celebs [valid]" type="rss" xmlUrl="https://rss.walla.co.il/feed/22?type=main" htmlUrl="https://rss.walla.co.il"/>
       <outline text="mako - Israel [valid]" title="mako - Israel [valid]" type="rss" xmlUrl="https://rcs.mako.co.il/rss/news-israel.xml" htmlUrl="https://rcs.mako.co.il"/>
       <outline text="mako - World [valid]" title="mako - World [valid]" type="rss" xmlUrl="https://rcs.mako.co.il/rss/news-world.xml" htmlUrl="https://rcs.mako.co.il"/>
       <outline text="mako - Military [valid]" title="mako - Military [valid]" type="rss" xmlUrl="https://rcs.mako.co.il/rss/dac23afee62ff210VgnVCM2000002a0c10acRCRD.xml" htmlUrl="https://rcs.mako.co.il"/>
@@ -2562,13 +2603,33 @@
       <outline text="Maariv - Israel News [valid]" title="Maariv - Israel News [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rssfeedschadashotbaarez" htmlUrl="https://www.maariv.co.il"/>
       <outline text="Maariv - Security [valid]" title="Maariv - Security [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rssfeedszavavebetachon" htmlUrl="https://www.maariv.co.il"/>
       <outline text="Maariv - World News [valid]" title="Maariv - World News [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rssfeedschadashotbaolam" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Maariv - Business [valid]" title="Maariv - Business [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rssfeedsasakim" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Maariv - Business World [valid]" title="Maariv - Business World [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rssfeedsasakimbaolam" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Maariv - Economy Israel [valid]" title="Maariv - Economy Israel [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rssfeedskalkalabaarez" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Maariv - Technology [valid]" title="Maariv - Technology [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rssfeedstechnologeya" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Maariv - Real Estate [valid]" title="Maariv - Real Estate [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rssfeedsnadlan" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Maariv - Law [valid]" title="Maariv - Law [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rssmishpat" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Maariv - Consumer [valid]" title="Maariv - Consumer [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rssfeedszarchanot" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Maariv - Health [valid]" title="Maariv - Health [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rssfeedsbriotveyeoz" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Maariv - Local [valid]" title="Maariv - Local [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rsshamekomon" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Maariv - Culture [valid]" title="Maariv - Culture [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rssfeedstarbot" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Maariv - Music [valid]" title="Maariv - Music [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rssfeedsmozika" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Maariv - Television [valid]" title="Maariv - Television [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rssfeedstelevizya" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Maariv - Celebs [valid]" title="Maariv - Celebs [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rssfeedstmicelebsnews" htmlUrl="https://www.maariv.co.il"/>
       <outline text="Srugim [valid]" title="Srugim [valid]" type="rss" xmlUrl="https://www.srugim.co.il/feed" htmlUrl="https://www.srugim.co.il"/>
       <outline text="ICE [valid]" title="ICE [valid]" type="rss" xmlUrl="https://www.ice.co.il/rss" htmlUrl="https://www.ice.co.il"/>
       <outline text="Israel Hayom - Latest [valid]" title="Israel Hayom - Latest [valid]" type="rss" xmlUrl="https://www.israelhayom.co.il/rss.xml" htmlUrl="https://www.israelhayom.co.il"/>
       <outline text="Kipa [valid]" title="Kipa [valid]" type="rss" xmlUrl="https://www.kipa.co.il/feed/" htmlUrl="https://www.kipa.co.il"/>
       <outline text="Bechadrei Haredim [valid]" title="Bechadrei Haredim [valid]" type="rss" xmlUrl="https://www.bhol.co.il/feed" htmlUrl="https://www.bhol.co.il"/>
+      <outline text="Kikar - Latest [valid]" title="Kikar - Latest [valid]" type="rss" xmlUrl="https://a.kikar.co.il/v1/rss/articles/latest/rss2" htmlUrl="https://a.kikar.co.il"/>
+      <outline text="Kikar - War Diary [valid]" title="Kikar - War Diary [valid]" type="rss" xmlUrl="https://a.kikar.co.il/v1/rss/articles/2014/rss2" htmlUrl="https://a.kikar.co.il"/>
+      <outline text="Kikar - Security [valid]" title="Kikar - Security [valid]" type="rss" xmlUrl="https://a.kikar.co.il/v1/rss/articles/1882/rss2" htmlUrl="https://a.kikar.co.il"/>
+      <outline text="Kikar - Today at Kikar [valid]" title="Kikar - Today at Kikar [valid]" type="rss" xmlUrl="https://a.kikar.co.il/v1/rss/articles/1387/rss2" htmlUrl="https://a.kikar.co.il"/>
       <outline text="JDN [valid]" title="JDN [valid]" type="rss" xmlUrl="https://www.jdn.co.il/feed/" htmlUrl="https://www.jdn.co.il"/>
       <outline text="ynetnews - English [valid]" title="ynetnews - English [valid]" type="rss" xmlUrl="https://www.ynetnews.com/Integration/StoryRss2.xml" htmlUrl="https://www.ynetnews.com"/>
+      <outline text="ynetnews - English News [valid]" title="ynetnews - English News [valid]" type="rss" xmlUrl="https://www.ynet.co.il/Integration/StoryRss3082.xml" htmlUrl="https://www.ynet.co.il"/>
+      <outline text="ynetnews - English Opinion [valid]" title="ynetnews - English Opinion [valid]" type="rss" xmlUrl="https://www.ynet.co.il/Integration/StoryRss3084.xml" htmlUrl="https://www.ynet.co.il"/>
+      <outline text="ynetnews - English Culture [valid]" title="ynetnews - English Culture [valid]" type="rss" xmlUrl="https://www.ynet.co.il/Integration/StoryRss3086.xml" htmlUrl="https://www.ynet.co.il"/>
     </outline>
     <outline text="Bahrain (BH)" title="Bahrain (BH)">
       <outline text="Al Bilad Press [valid]" title="Al Bilad Press [valid]" type="rss" xmlUrl="https://www.albiladpress.com/rss" htmlUrl="https://www.albiladpress.com"/>
@@ -2761,8 +2822,106 @@
       <outline text="El Pais - Colombia [valid]" title="El Pais - Colombia [valid]" type="rss" xmlUrl="https://www.elpais.com.co/arc/outboundfeeds/rss/category/colombia/?outputType=xml" htmlUrl="https://www.elpais.com.co"/>
     </outline>
     <outline text="Malaysia (MY)" title="Malaysia (MY)">
+      <outline text="Malaysiakini - News [needs verification]" title="Malaysiakini - News [needs verification]" type="rss" xmlUrl="https://www.malaysiakini.com/rss/en/news.rss" htmlUrl="https://www.malaysiakini.com"/>
+      <outline text="Kosmo - Feed [needs verification]" title="Kosmo - Feed [needs verification]" type="rss" xmlUrl="https://www.kosmo.com.my/feed/" htmlUrl="https://www.kosmo.com.my"/>
+      <outline text="Bharian - Feed [needs verification]" title="Bharian - Feed [needs verification]" type="rss" xmlUrl="https://www.bharian.com.my/feed/" htmlUrl="https://www.bharian.com.my"/>
+      <outline text="HMetro - Feed [needs verification]" title="HMetro - Feed [needs verification]" type="rss" xmlUrl="https://www.hmetro.com.my/feed/" htmlUrl="https://www.hmetro.com.my"/>
+      <outline text="Free Malaysia Today - Feed [needs verification]" title="Free Malaysia Today - Feed [needs verification]" type="rss" xmlUrl="https://www.freemalaysiatoday.com/feed/" htmlUrl="https://www.freemalaysiatoday.com"/>
+      <outline text="Utusan Malaysia - Feed [needs verification]" title="Utusan Malaysia - Feed [needs verification]" type="rss" xmlUrl="https://www.utusan.com.my/feed/" htmlUrl="https://www.utusan.com.my"/>
+      <outline text="Astro Awani - Feed [needs verification]" title="Astro Awani - Feed [needs verification]" type="rss" xmlUrl="https://www.astroawani.com/rss.xml" htmlUrl="https://www.astroawani.com"/>
+      <outline text="Malay Mail - Money Feed [needs verification]" title="Malay Mail - Money Feed [needs verification]" type="rss" xmlUrl="https://www.malaymail.com/feed/rss/money" htmlUrl="https://www.malaymail.com"/>
+      <outline text="Free Malaysia Today - Headlines RSS [needs verification]" title="Free Malaysia Today - Headlines RSS [needs verification]" type="rss" xmlUrl="https://www.freemalaysiatoday.com/feeds/rss/headlines" htmlUrl="https://www.freemalaysiatoday.com"/>
+      <outline text="Free Malaysia Today - Nation Feed [needs verification]" title="Free Malaysia Today - Nation Feed [needs verification]" type="rss" xmlUrl="https://www.freemalaysiatoday.com/category/nation/feed/" htmlUrl="https://www.freemalaysiatoday.com"/>
+      <outline text="Free Malaysia Today - World Feed [needs verification]" title="Free Malaysia Today - World Feed [needs verification]" type="rss" xmlUrl="https://www.freemalaysiatoday.com/category/world/feed/" htmlUrl="https://www.freemalaysiatoday.com"/>
+      <outline text="Free Malaysia Today - Leisure Feed [needs verification]" title="Free Malaysia Today - Leisure Feed [needs verification]" type="rss" xmlUrl="https://www.freemalaysiatoday.com/category/leisure/feed/" htmlUrl="https://www.freemalaysiatoday.com"/>
+      <outline text="The Borneo Post - Feed [needs verification]" title="The Borneo Post - Feed [needs verification]" type="rss" xmlUrl="https://theborneopost.com/feed/" htmlUrl="https://theborneopost.com"/>
+      <outline text="DayakDaily - Feed [needs verification]" title="DayakDaily - Feed [needs verification]" type="rss" xmlUrl="https://dayakdaily.com/feed/" htmlUrl="https://dayakdaily.com"/>
+      <outline text="Focus Malaysia - Feed [needs verification]" title="Focus Malaysia - Feed [needs verification]" type="rss" xmlUrl="https://focusmalaysia.my/feed/" htmlUrl="https://focusmalaysia.my"/>
+      <outline text="The Rakyat Post - Feed [needs verification]" title="The Rakyat Post - Feed [needs verification]" type="rss" xmlUrl="https://www.therakyatpost.com/feed/" htmlUrl="https://www.therakyatpost.com"/>
+      <outline text="BusinessToday - Feed [needs verification]" title="BusinessToday - Feed [needs verification]" type="rss" xmlUrl="https://www.businesstoday.com.my/feed/" htmlUrl="https://www.businesstoday.com.my"/>
+      <outline text="MalaysiaNow - Feed [needs verification]" title="MalaysiaNow - Feed [needs verification]" type="rss" xmlUrl="https://www.malaysianow.com/feed/" htmlUrl="https://www.malaysianow.com"/>
+      <outline text="MalaysiaNow - Malaysia Feed [needs verification]" title="MalaysiaNow - Malaysia Feed [needs verification]" type="rss" xmlUrl="https://www.malaysianow.com/tag/malaysia/feed" htmlUrl="https://www.malaysianow.com"/>
+      <outline text="Scoop - Feed [needs verification]" title="Scoop - Feed [needs verification]" type="rss" xmlUrl="https://scoop.my/feed/" htmlUrl="https://scoop.my"/>
+      <outline text="The Sun - Feed [needs verification]" title="The Sun - Feed [needs verification]" type="rss" xmlUrl="https://thesun.my/feed/" htmlUrl="https://thesun.my"/>
     </outline>
     <outline text="Philippines (PH)" title="Philippines (PH)">
+      <outline text="Rappler - Newsfeed [needs verification]" title="Rappler - Newsfeed [needs verification]" type="rss" xmlUrl="https://www.rappler.com/feed/" htmlUrl="https://www.rappler.com"/>
+      <outline text="Rappler - World Feed [needs verification]" title="Rappler - World Feed [needs verification]" type="rss" xmlUrl="https://www.rappler.com/section/world/feed/" htmlUrl="https://www.rappler.com"/>
+      <outline text="Rappler - Technology Feed [needs verification]" title="Rappler - Technology Feed [needs verification]" type="rss" xmlUrl="https://www.rappler.com/technology/feed/" htmlUrl="https://www.rappler.com"/>
+      <outline text="Rappler - Philippines Feed [needs verification]" title="Rappler - Philippines Feed [needs verification]" type="rss" xmlUrl="https://www.rappler.com/philippines/feed/" htmlUrl="https://www.rappler.com"/>
+      <outline text="Rappler - Nation Feed [needs verification]" title="Rappler - Nation Feed [needs verification]" type="rss" xmlUrl="https://www.rappler.com/nation/feed/" htmlUrl="https://www.rappler.com"/>
+      <outline text="Rappler - Business Feed [needs verification]" title="Rappler - Business Feed [needs verification]" type="rss" xmlUrl="https://www.rappler.com/business/feed/" htmlUrl="https://www.rappler.com"/>
+      <outline text="Rappler - Sports Feed [needs verification]" title="Rappler - Sports Feed [needs verification]" type="rss" xmlUrl="https://www.rappler.com/sports/feed/" htmlUrl="https://www.rappler.com"/>
+      <outline text="Rappler - Entertainment Feed [needs verification]" title="Rappler - Entertainment Feed [needs verification]" type="rss" xmlUrl="https://www.rappler.com/entertainment/feed/" htmlUrl="https://www.rappler.com"/>
+      <outline text="Rappler - MovePH Feed [needs verification]" title="Rappler - MovePH Feed [needs verification]" type="rss" xmlUrl="https://www.rappler.com/moveph/feed/" htmlUrl="https://www.rappler.com"/>
+      <outline text="Rappler - Newsbreak Feed [needs verification]" title="Rappler - Newsbreak Feed [needs verification]" type="rss" xmlUrl="https://www.rappler.com/newsbreak/feed/" htmlUrl="https://www.rappler.com"/>
+      <outline text="Inquirer - Feed [needs verification]" title="Inquirer - Feed [needs verification]" type="rss" xmlUrl="https://www.inquirer.net/feed/" htmlUrl="https://www.inquirer.net"/>
+      <outline text="Inquirer - Full Feed [needs verification]" title="Inquirer - Full Feed [needs verification]" type="rss" xmlUrl="https://www.inquirer.net/fullfeed/" htmlUrl="https://www.inquirer.net"/>
+      <outline text="Inquirer - Newsinfo Feed [needs verification]" title="Inquirer - Newsinfo Feed [needs verification]" type="rss" xmlUrl="https://newsinfo.inquirer.net/feed" htmlUrl="https://newsinfo.inquirer.net"/>
+      <outline text="Inquirer - Business Feed [needs verification]" title="Inquirer - Business Feed [needs verification]" type="rss" xmlUrl="https://business.inquirer.net/feed" htmlUrl="https://business.inquirer.net"/>
+      <outline text="Inquirer - Global Nation Feed [needs verification]" title="Inquirer - Global Nation Feed [needs verification]" type="rss" xmlUrl="https://globalnation.inquirer.net/feed" htmlUrl="https://globalnation.inquirer.net"/>
+      <outline text="Inquirer - Technology Feed [needs verification]" title="Inquirer - Technology Feed [needs verification]" type="rss" xmlUrl="https://technology.inquirer.net/feed" htmlUrl="https://technology.inquirer.net"/>
+      <outline text="Inquirer - Sports Feed [needs verification]" title="Inquirer - Sports Feed [needs verification]" type="rss" xmlUrl="https://sports.inquirer.net/feed" htmlUrl="https://sports.inquirer.net"/>
+      <outline text="Inquirer - Entertainment Feed [needs verification]" title="Inquirer - Entertainment Feed [needs verification]" type="rss" xmlUrl="https://entertainment.inquirer.net/feed" htmlUrl="https://entertainment.inquirer.net"/>
+      <outline text="Inquirer - Opinion Feed [needs verification]" title="Inquirer - Opinion Feed [needs verification]" type="rss" xmlUrl="https://opinion.inquirer.net/feed" htmlUrl="https://opinion.inquirer.net"/>
+      <outline text="Cebu Daily News - Feed [needs verification]" title="Cebu Daily News - Feed [needs verification]" type="rss" xmlUrl="https://cebudailynews.inquirer.net/feed" htmlUrl="https://cebudailynews.inquirer.net"/>
+      <outline text="Bandera - Feed [needs verification]" title="Bandera - Feed [needs verification]" type="rss" xmlUrl="https://bandera.inquirer.net/feed" htmlUrl="https://bandera.inquirer.net"/>
+      <outline text="POP Inquirer - Feed [needs verification]" title="POP Inquirer - Feed [needs verification]" type="rss" xmlUrl="https://pop.inquirer.net/feed" htmlUrl="https://pop.inquirer.net"/>
+      <outline text="Lifestyle Inquirer - Feed [needs verification]" title="Lifestyle Inquirer - Feed [needs verification]" type="rss" xmlUrl="https://lifestyle.inquirer.net/feed/" htmlUrl="https://lifestyle.inquirer.net"/>
+      <outline text="USA Inquirer - Feed [needs verification]" title="USA Inquirer - Feed [needs verification]" type="rss" xmlUrl="https://usa.inquirer.net/feed" htmlUrl="https://usa.inquirer.net"/>
+      <outline text="BusinessWorld - Feed [needs verification]" title="BusinessWorld - Feed [needs verification]" type="rss" xmlUrl="https://www.bworldonline.com/feed/" htmlUrl="https://www.bworldonline.com"/>
+      <outline text="BusinessWorld - Economy Feed [needs verification]" title="BusinessWorld - Economy Feed [needs verification]" type="rss" xmlUrl="https://www.bworldonline.com/economy/feed/" htmlUrl="https://www.bworldonline.com"/>
+      <outline text="BusinessWorld - Corporate Feed [needs verification]" title="BusinessWorld - Corporate Feed [needs verification]" type="rss" xmlUrl="https://www.bworldonline.com/corporate/feed/" htmlUrl="https://www.bworldonline.com"/>
+      <outline text="BusinessWorld - Stock Market Feed [needs verification]" title="BusinessWorld - Stock Market Feed [needs verification]" type="rss" xmlUrl="https://www.bworldonline.com/stock-market/feed/" htmlUrl="https://www.bworldonline.com"/>
+      <outline text="BusinessWorld - World Feed [needs verification]" title="BusinessWorld - World Feed [needs verification]" type="rss" xmlUrl="https://www.bworldonline.com/world/feed/" htmlUrl="https://www.bworldonline.com"/>
+      <outline text="BusinessWorld - The Nation Feed [needs verification]" title="BusinessWorld - The Nation Feed [needs verification]" type="rss" xmlUrl="https://www.bworldonline.com/the-nation/feed/" htmlUrl="https://www.bworldonline.com"/>
+      <outline text="SunStar - Feed [needs verification]" title="SunStar - Feed [needs verification]" type="rss" xmlUrl="https://www.sunstar.com.ph/feed/" htmlUrl="https://www.sunstar.com.ph"/>
+      <outline text="Philippine Star - Headlines RSS [needs verification]" title="Philippine Star - Headlines RSS [needs verification]" type="rss" xmlUrl="https://www.philstar.com/rss/headlines" htmlUrl="https://www.philstar.com"/>
+      <outline text="Philippine Star - Nation RSS [needs verification]" title="Philippine Star - Nation RSS [needs verification]" type="rss" xmlUrl="https://www.philstar.com/rss/nation" htmlUrl="https://www.philstar.com"/>
+      <outline text="Philippine Star - World RSS [needs verification]" title="Philippine Star - World RSS [needs verification]" type="rss" xmlUrl="https://www.philstar.com/rss/world" htmlUrl="https://www.philstar.com"/>
+      <outline text="Philippine Star - Business RSS [needs verification]" title="Philippine Star - Business RSS [needs verification]" type="rss" xmlUrl="https://www.philstar.com/rss/business" htmlUrl="https://www.philstar.com"/>
+      <outline text="Philippine Star - Sports RSS [needs verification]" title="Philippine Star - Sports RSS [needs verification]" type="rss" xmlUrl="https://www.philstar.com/rss/sports" htmlUrl="https://www.philstar.com"/>
+      <outline text="Philippine Star - Entertainment RSS [needs verification]" title="Philippine Star - Entertainment RSS [needs verification]" type="rss" xmlUrl="https://www.philstar.com/rss/entertainment" htmlUrl="https://www.philstar.com"/>
+      <outline text="Philippine Star - Lifestyle RSS [needs verification]" title="Philippine Star - Lifestyle RSS [needs verification]" type="rss" xmlUrl="https://www.philstar.com/rss/lifestyle" htmlUrl="https://www.philstar.com"/>
+      <outline text="Philippine Star - Opinion RSS [needs verification]" title="Philippine Star - Opinion RSS [needs verification]" type="rss" xmlUrl="https://www.philstar.com/rss/opinion" htmlUrl="https://www.philstar.com"/>
+      <outline text="Mindanews - Feed [needs verification]" title="Mindanews - Feed [needs verification]" type="rss" xmlUrl="https://www.mindanews.com/feed/" htmlUrl="https://www.mindanews.com"/>
+      <outline text="InterAksyon - Feed [needs verification]" title="InterAksyon - Feed [needs verification]" type="rss" xmlUrl="https://www.interaksyon.com/feed/" htmlUrl="https://www.interaksyon.com"/>
+      <outline text="Daily Tribune - Feed [needs verification]" title="Daily Tribune - Feed [needs verification]" type="rss" xmlUrl="https://tribune.net.ph/feed/" htmlUrl="https://tribune.net.ph"/>
+      <outline text="The Manila Times - News Feed [needs verification]" title="The Manila Times - News Feed [needs verification]" type="rss" xmlUrl="https://www.manilatimes.net/news/feed/" htmlUrl="https://www.manilatimes.net"/>
+      <outline text="The Manila Times - World Feed [needs verification]" title="The Manila Times - World Feed [needs verification]" type="rss" xmlUrl="https://www.manilatimes.net/world/feed/" htmlUrl="https://www.manilatimes.net"/>
+      <outline text="The Manila Times - Business Feed [needs verification]" title="The Manila Times - Business Feed [needs verification]" type="rss" xmlUrl="https://www.manilatimes.net/business/feed/" htmlUrl="https://www.manilatimes.net"/>
+      <outline text="The Manila Times - National Feed [needs verification]" title="The Manila Times - National Feed [needs verification]" type="rss" xmlUrl="https://www.manilatimes.net/news/national/feed/" htmlUrl="https://www.manilatimes.net"/>
+      <outline text="The Manila Times - Regions Feed [needs verification]" title="The Manila Times - Regions Feed [needs verification]" type="rss" xmlUrl="https://www.manilatimes.net/news/regions/feed/" htmlUrl="https://www.manilatimes.net"/>
+      <outline text="The Manila Times - Sports Feed [needs verification]" title="The Manila Times - Sports Feed [needs verification]" type="rss" xmlUrl="https://www.manilatimes.net/sports/feed/" htmlUrl="https://www.manilatimes.net"/>
+      <outline text="The Manila Times - Entertainment Lifestyle Feed [needs verification]" title="The Manila Times - Entertainment Lifestyle Feed [needs verification]" type="rss" xmlUrl="https://www.manilatimes.net/entertainment-lifestyle/feed/" htmlUrl="https://www.manilatimes.net"/>
+      <outline text="The Manila Times - Opinion Feed [needs verification]" title="The Manila Times - Opinion Feed [needs verification]" type="rss" xmlUrl="https://www.manilatimes.net/opinion/feed/" htmlUrl="https://www.manilatimes.net"/>
+      <outline text="The Manila Times - Fast Times Feed [needs verification]" title="The Manila Times - Fast Times Feed [needs verification]" type="rss" xmlUrl="https://www.manilatimes.net/fast-times/feed/" htmlUrl="https://www.manilatimes.net"/>
+      <outline text="Manila Bulletin - National RSS [needs verification]" title="Manila Bulletin - National RSS [needs verification]" type="rss" xmlUrl="https://mb.com.ph/rss/national" htmlUrl="https://mb.com.ph"/>
+      <outline text="Manila Bulletin - World RSS [needs verification]" title="Manila Bulletin - World RSS [needs verification]" type="rss" xmlUrl="https://mb.com.ph/rss/world" htmlUrl="https://mb.com.ph"/>
+      <outline text="Manila Bulletin - Business RSS [needs verification]" title="Manila Bulletin - Business RSS [needs verification]" type="rss" xmlUrl="https://mb.com.ph/rss/business" htmlUrl="https://mb.com.ph"/>
+      <outline text="Manila Bulletin - Business and Stock Market RSS [needs verification]" title="Manila Bulletin - Business and Stock Market RSS [needs verification]" type="rss" xmlUrl="https://mb.com.ph/rss/business-and-stock-market" htmlUrl="https://mb.com.ph"/>
+      <outline text="Manila Bulletin - Technology RSS [needs verification]" title="Manila Bulletin - Technology RSS [needs verification]" type="rss" xmlUrl="https://mb.com.ph/rss/technology" htmlUrl="https://mb.com.ph"/>
+      <outline text="Manila Bulletin - Metro RSS [needs verification]" title="Manila Bulletin - Metro RSS [needs verification]" type="rss" xmlUrl="https://mb.com.ph/rss/metro" htmlUrl="https://mb.com.ph"/>
+      <outline text="Manila Bulletin - News RSS [needs verification]" title="Manila Bulletin - News RSS [needs verification]" type="rss" xmlUrl="https://mb.com.ph/rss/news" htmlUrl="https://mb.com.ph"/>
+      <outline text="Manila Bulletin - Crime RSS [needs verification]" title="Manila Bulletin - Crime RSS [needs verification]" type="rss" xmlUrl="https://mb.com.ph/rss/crime" htmlUrl="https://mb.com.ph"/>
+      <outline text="Manila Bulletin - Education RSS [needs verification]" title="Manila Bulletin - Education RSS [needs verification]" type="rss" xmlUrl="https://mb.com.ph/rss/education" htmlUrl="https://mb.com.ph"/>
+      <outline text="Manila Bulletin - Health and Wellness RSS [needs verification]" title="Manila Bulletin - Health and Wellness RSS [needs verification]" type="rss" xmlUrl="https://mb.com.ph/rss/health-and-wellness" htmlUrl="https://mb.com.ph"/>
+      <outline text="Manila Bulletin - Sports RSS [needs verification]" title="Manila Bulletin - Sports RSS [needs verification]" type="rss" xmlUrl="https://mb.com.ph/rss/sports" htmlUrl="https://mb.com.ph"/>
+      <outline text="Manila Bulletin - Entertainment RSS [needs verification]" title="Manila Bulletin - Entertainment RSS [needs verification]" type="rss" xmlUrl="https://mb.com.ph/rss/entertainment" htmlUrl="https://mb.com.ph"/>
+      <outline text="Manila Bulletin - Lifestyle RSS [needs verification]" title="Manila Bulletin - Lifestyle RSS [needs verification]" type="rss" xmlUrl="https://mb.com.ph/rss/lifestyle" htmlUrl="https://mb.com.ph"/>
+      <outline text="Daily Guardian - Feed [needs verification]" title="Daily Guardian - Feed [needs verification]" type="rss" xmlUrl="https://dailyguardian.com.ph/feed/" htmlUrl="https://dailyguardian.com.ph"/>
+      <outline text="Bohol Chronicle - Feed [needs verification]" title="Bohol Chronicle - Feed [needs verification]" type="rss" xmlUrl="https://www.boholchronicle.com.ph/feed/" htmlUrl="https://www.boholchronicle.com.ph"/>
+      <outline text="Mindanao Times - Feed [needs verification]" title="Mindanao Times - Feed [needs verification]" type="rss" xmlUrl="https://mindanaotimes.com.ph/feed/" htmlUrl="https://mindanaotimes.com.ph"/>
+      <outline text="Mindanao Gold Star Daily - Feed [needs verification]" title="Mindanao Gold Star Daily - Feed [needs verification]" type="rss" xmlUrl="https://mindanaogoldstardaily.com/feed/" htmlUrl="https://mindanaogoldstardaily.com"/>
+      <outline text="EDGE Davao - Feed [needs verification]" title="EDGE Davao - Feed [needs verification]" type="rss" xmlUrl="https://edgedavao.net/feed/" htmlUrl="https://edgedavao.net"/>
+      <outline text="Panay News - Feed [needs verification]" title="Panay News - Feed [needs verification]" type="rss" xmlUrl="https://www.panaynews.net/feed/" htmlUrl="https://www.panaynews.net"/>
+      <outline text="Bulatlat - Feed [needs verification]" title="Bulatlat - Feed [needs verification]" type="rss" xmlUrl="https://www.bulatlat.com/feed/" htmlUrl="https://www.bulatlat.com"/>
+      <outline text="Tiebreaker Times - Feed [needs verification]" title="Tiebreaker Times - Feed [needs verification]" type="rss" xmlUrl="https://tiebreakertimes.com.ph/feed/" htmlUrl="https://tiebreakertimes.com.ph"/>
+      <outline text="Manila Today - Feed [needs verification]" title="Manila Today - Feed [needs verification]" type="rss" xmlUrl="https://manilatoday.net/feed/" htmlUrl="https://manilatoday.net"/>
+      <outline text="Newsbytes - Feed [needs verification]" title="Newsbytes - Feed [needs verification]" type="rss" xmlUrl="https://newsbytes.ph/feed/" htmlUrl="https://newsbytes.ph"/>
+      <outline text="Journal News - Feed [needs verification]" title="Journal News - Feed [needs verification]" type="rss" xmlUrl="https://journalnews.com.ph/feed/" htmlUrl="https://journalnews.com.ph"/>
+      <outline text="Tempo - Feed [needs verification]" title="Tempo - Feed [needs verification]" type="rss" xmlUrl="https://tempo.com.ph/feed/" htmlUrl="https://tempo.com.ph"/>
+      <outline text="Davao Today - Feed [needs verification]" title="Davao Today - Feed [needs verification]" type="rss" xmlUrl="https://davaotoday.com/feed/" htmlUrl="https://davaotoday.com"/>
     </outline>
     <outline text="Vietnam (VN)" title="Vietnam (VN)">
       <outline text="VnExpress [needs verification]" title="VnExpress [needs verification]" type="rss" xmlUrl="https://vnexpress.net/rss/tin-moi-nhat.rss" htmlUrl="https://vnexpress.net"/>

@@ -7,6 +7,84 @@ function normalizeXmlPayload(payload) {
   return xmlStart >= 0 ? trimmed.slice(xmlStart) : trimmed;
 }
 
+function isXmlPayload(payload) {
+  return /<(?:\?xml|rss|feed|urlset|sitemapindex)\b/i.test(normalizeXmlPayload(payload));
+}
+
+function detectInterstitialState(payload) {
+  const text = String(payload || '').toLowerCase();
+  if (!text) return 'none';
+  if (isXmlPayload(text)) return 'xml';
+  if (
+    text.includes('just a moment') ||
+    text.includes('checking your browser') ||
+    text.includes('verify you are human') ||
+    text.includes('cf-chl') ||
+    text.includes('__cf_bm') ||
+    text.includes('cloudflare')
+  ) {
+    return 'challenge';
+  }
+  if (
+    text.includes('access denied') ||
+    text.includes('403 forbidden') ||
+    text.includes("you don't have permission to access") ||
+    text.includes('request blocked')
+  ) {
+    return 'blocked';
+  }
+  return 'none';
+}
+
+async function fetchTextInPage(page, targetUrl) {
+  return await page.evaluate(async (url) => {
+    const response = await fetch(String(url), { credentials: 'include' });
+    return {
+      status: response.status,
+      contentType: response.headers.get('content-type') || '',
+      text: await response.text(),
+    };
+  }, targetUrl);
+}
+
+async function fetchBase64InPage(page, targetUrl) {
+  return await page.evaluate(async (url) => {
+    const response = await fetch(String(url), { credentials: 'include' });
+    const buffer = await response.arrayBuffer();
+    const bytes = new Uint8Array(buffer);
+    let binary = '';
+    const chunkSize = 0x8000;
+    for (let index = 0; index < bytes.length; index += chunkSize) {
+      binary += String.fromCharCode(...bytes.subarray(index, index + chunkSize));
+    }
+    return {
+      status: response.status,
+      contentType: response.headers.get('content-type') || '',
+      base64: btoa(binary),
+    };
+  }, targetUrl);
+}
+
+async function readPagePayload(page) {
+  const [content, bodyText, title] = await Promise.all([
+    page.content().catch(() => ''),
+    page.textContent('body').catch(() => ''),
+    page.title().catch(() => ''),
+  ]);
+  return `${title}\n${content}\n${bodyText}`;
+}
+
+async function waitForInterstitialToClear(page, timeoutMs) {
+  const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {
+    const payload = await readPagePayload(page);
+    const state = detectInterstitialState(payload);
+    if (state !== 'challenge') return payload;
+    await page.waitForTimeout(1000);
+  }
+  return await readPagePayload(page);
+}
+
 const url = process.argv[2];
 if (!url) {
   console.error('missing_url');
@@ -14,49 +92,61 @@ if (!url) {
 }
 
 const headedEnv = (process.env.INGEST_BROWSER_SITEMAP_HEADED || process.env.PLAYWRIGHT_HEADED || '').trim().toLowerCase();
+const interstitialTimeoutMs = Math.max(
+  0,
+  Number.parseInt(process.env.INGEST_BROWSER_SITEMAP_CHALLENGE_TIMEOUT_MS || '15000', 10) || 15000
+);
 const browser = await chromium.launch({
   headless: !(headedEnv === '1' || headedEnv === 'true' || headedEnv === 'yes'),
 });
 try {
-  const context = await browser.newContext();
+  const context = await browser.newContext({
+    userAgent:
+      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36',
+  });
   const page = await context.newPage();
   const target = new URL(url);
 
   const ensureOriginContext = async () => {
     await page.goto(`${target.origin}/`, { waitUntil: 'domcontentloaded', timeout: 30000 });
+    await waitForInterstitialToClear(page, interstitialTimeoutMs);
   };
 
   if (url.toLowerCase().endsWith('.gz')) {
     await ensureOriginContext();
-    const base64 = await page.evaluate(async (targetUrl) => {
-      const response = await fetch(String(targetUrl));
-      const buffer = await response.arrayBuffer();
-      const bytes = new Uint8Array(buffer);
-      let binary = '';
-      const chunkSize = 0x8000;
-      for (let index = 0; index < bytes.length; index += chunkSize) {
-        binary += String.fromCharCode(...bytes.subarray(index, index + chunkSize));
-      }
-      return btoa(binary);
-    }, url);
-    process.stdout.write(gunzipSync(Buffer.from(base64, 'base64')).toString('utf8'));
+    const fetched = await fetchBase64InPage(page, url);
+    process.stdout.write(gunzipSync(Buffer.from(fetched.base64, 'base64')).toString('utf8'));
   } else {
     await ensureOriginContext();
 
-    const payload = await page.evaluate(async (targetUrl) => {
-      const response = await fetch(String(targetUrl));
-      return await response.text();
-    }, url);
-    const normalizedPayload = normalizeXmlPayload(payload);
-    if (/<(?:\?xml|rss|feed|urlset|sitemapindex)\b/i.test(normalizedPayload) && !normalizedPayload.includes('...')) {
+    const initialFetch = await fetchTextInPage(page, url);
+    const normalizedPayload = normalizeXmlPayload(initialFetch.text);
+    if (isXmlPayload(normalizedPayload) && !normalizedPayload.includes('...')) {
       process.stdout.write(normalizedPayload);
       process.exit(0);
     }
 
-    await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
+    const response = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
+    await waitForInterstitialToClear(page, interstitialTimeoutMs);
+    if (response) {
+      const responseText = await response.text().catch(() => '');
+      const normalizedResponseText = normalizeXmlPayload(responseText);
+      if (isXmlPayload(normalizedResponseText) && !normalizedResponseText.includes('...')) {
+        process.stdout.write(normalizedResponseText);
+        process.exit(0);
+      }
+    }
+
     const bodyText = normalizeXmlPayload((await page.textContent('body')) || '');
-    if (/<(?:\?xml|rss|feed|urlset|sitemapindex)\b/i.test(bodyText)) {
+    if (isXmlPayload(bodyText)) {
       process.stdout.write(bodyText);
+      process.exit(0);
+    }
+
+    const finalFetch = await fetchTextInPage(page, url);
+    const normalizedFinalFetch = normalizeXmlPayload(finalFetch.text);
+    if (isXmlPayload(normalizedFinalFetch) && !normalizedFinalFetch.includes('...')) {
+      process.stdout.write(normalizedFinalFetch);
       process.exit(0);
     }
 
