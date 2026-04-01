@@ -23328,6 +23328,7 @@
         {
           "name": "Biz Bahrain",
           "url": "https://www.bizbahrain.com/feed/",
+          "sitemapUrl": "https://www.bizbahrain.com/post-sitemap1.xml",
           "status": "NEW",
           "checkedDate": "04/01/2026",
           "valid": "valid"
@@ -23335,6 +23336,7 @@
         {
           "name": "Gulf Insider",
           "url": "https://www.gulf-insider.com/feed/",
+          "sitemapUrl": "https://www.gulf-insider.com/post-sitemap1.xml",
           "status": "NEW",
           "checkedDate": "04/01/2026",
           "valid": "valid"
