@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Wed, 01 Apr 2026 14:42:53 GMT</dateCreated>
+    <dateCreated>Wed, 01 Apr 2026 15:11:56 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -101,7 +101,6 @@
       <outline text="GQ [valid]" title="GQ [valid]" type="rss" xmlUrl="https://www.gq.com/feed/rss" htmlUrl="https://www.gq.com"/>
       <outline text="Space.com [valid]" title="Space.com [valid]" type="rss" xmlUrl="https://www.space.com/feeds/all" htmlUrl="https://www.space.com"/>
       <outline text="ESPN [valid]" title="ESPN [valid]" type="rss" xmlUrl="https://www.espn.com/espn/rss/news" htmlUrl="https://www.espn.com"/>
-      <outline text="Sports Illustrated [valid]" title="Sports Illustrated [valid]" type="rss" xmlUrl="https://si.com/feed" htmlUrl="https://si.com"/>
       <outline text="Mother Jones [valid]" title="Mother Jones [valid]" type="rss" xmlUrl="https://motherjones.com/feed" htmlUrl="https://motherjones.com"/>
       <outline text="ProPublica [valid]" title="ProPublica [valid]" type="rss" xmlUrl="https://propublica.org/feed" htmlUrl="https://propublica.org"/>
       <outline text="Reason [valid]" title="Reason [valid]" type="rss" xmlUrl="https://reason.com/feed" htmlUrl="https://reason.com"/>
@@ -111,6 +110,7 @@
       <outline text="Newsweek [valid]" title="Newsweek [valid]" type="rss" xmlUrl="https://www.newsweek.com/rss" htmlUrl="https://www.newsweek.com"/>
       <outline text="Time [valid]" title="Time [valid]" type="rss" xmlUrl="https://time.com/feed" htmlUrl="https://time.com"/>
       <outline text="PBS NewsHour [valid]" title="PBS NewsHour [valid]" type="rss" xmlUrl="https://www.pbs.org/newshour/feeds/rss/headlines" htmlUrl="https://www.pbs.org"/>
+      <outline text="NewsNation [needs verification]" title="NewsNation [needs verification]" type="rss" xmlUrl="https://www.newsnationnow.com/feed/" htmlUrl="https://www.newsnationnow.com"/>
       <outline text="Wall Street Journal - U.S. [needs verification]" title="Wall Street Journal - U.S. [needs verification]" type="rss" xmlUrl="https://feeds.content.dowjones.io/public/rss/RSSUSnews" htmlUrl="https://feeds.content.dowjones.io"/>
       <outline text="Politico Tech [needs verification]" title="Politico Tech [needs verification]" type="rss" xmlUrl="https://rss.politico.com/technology.xml" htmlUrl="https://rss.politico.com"/>
       <outline text="TechCrunch Startups [needs verification]" title="TechCrunch Startups [needs verification]" type="rss" xmlUrl="https://techcrunch.com/category/startups/feed/" htmlUrl="https://techcrunch.com"/>
@@ -2506,6 +2506,7 @@
       <outline text="Business Times Economy &amp; Policy [needs verification]" title="Business Times Economy &amp; Policy [needs verification]" type="rss" xmlUrl="https://www.businesstimes.com.sg/rss/economy-policy" htmlUrl="https://www.businesstimes.com.sg"/>
       <outline text="Business Times Global Enterprise [needs verification]" title="Business Times Global Enterprise [needs verification]" type="rss" xmlUrl="https://www.businesstimes.com.sg/rss/global-enterprise" htmlUrl="https://www.businesstimes.com.sg"/>
       <outline text="Business Times Companies &amp; Markets [needs verification]" title="Business Times Companies &amp; Markets [needs verification]" type="rss" xmlUrl="https://www.businesstimes.com.sg/rss/companies-markets" htmlUrl="https://www.businesstimes.com.sg"/>
+      <outline text="Business Times Property [needs verification]" title="Business Times Property [needs verification]" type="rss" xmlUrl="https://www.businesstimes.com.sg/rss/property" htmlUrl="https://www.businesstimes.com.sg"/>
       <outline text="Business Times - Google News Sitemap [needs verification]" title="Business Times - Google News Sitemap [needs verification]" type="rss" xmlUrl="https://www.businesstimes.com.sg/googlenews.xml" htmlUrl="https://www.businesstimes.com.sg"/>
       <outline text="MustShareNews [needs verification]" title="MustShareNews [needs verification]" type="rss" xmlUrl="https://mustsharenews.com/feed/" htmlUrl="https://mustsharenews.com"/>
       <outline text="Yahoo News Singapore [needs verification]" title="Yahoo News Singapore [needs verification]" type="rss" xmlUrl="https://sg.news.yahoo.com/rss/" htmlUrl="https://sg.news.yahoo.com"/>
@@ -2528,6 +2529,8 @@
       <outline text="BERITA Mediacorp [needs verification]" title="BERITA Mediacorp [needs verification]" type="rss" xmlUrl="https://berita.mediacorp.sg/api/v1/rss-outbound-feed?_format=xml" htmlUrl="https://berita.mediacorp.sg"/>
       <outline text="Seithi Mediacorp [needs verification]" title="Seithi Mediacorp [needs verification]" type="rss" xmlUrl="https://seithi.mediacorp.sg/api/v1/rss-outbound-feed?_format=xml" htmlUrl="https://seithi.mediacorp.sg"/>
       <outline text="Tech in Asia [needs verification]" title="Tech in Asia [needs verification]" type="rss" xmlUrl="https://www.techinasia.com/feed" htmlUrl="https://www.techinasia.com"/>
+      <outline text="Vulcan Post [needs verification]" title="Vulcan Post [needs verification]" type="rss" xmlUrl="https://vulcanpost.com/feed/" htmlUrl="https://vulcanpost.com"/>
+      <outline text="tabla! [needs verification]" title="tabla! [needs verification]" type="rss" xmlUrl="https://www.tabla.com.sg/rss.xml" htmlUrl="https://www.tabla.com.sg"/>
     </outline>
     <outline text="South Africa (ZA)" title="South Africa (ZA)">
       <outline text="TimesLIVE [needs verification]" title="TimesLIVE [needs verification]" type="rss" xmlUrl="https://www.timeslive.co.za/arc/outboundfeeds/rss/" htmlUrl="https://www.timeslive.co.za"/>
@@ -2556,6 +2559,146 @@
       <outline text="The Citizen Business [needs verification]" title="The Citizen Business [needs verification]" type="rss" xmlUrl="https://www.citizen.co.za/business/feed/" htmlUrl="https://www.citizen.co.za"/>
       <outline text="BizNews [needs verification]" title="BizNews [needs verification]" type="rss" xmlUrl="https://www.biznews.com/stories.rss" htmlUrl="https://www.biznews.com"/>
       <outline text="eNCA [valid]" title="eNCA [valid]" type="rss" xmlUrl="https://www.enca.com/rss.xml" htmlUrl="https://www.enca.com"/>
+    </outline>
+    <outline text="Bahrain (BH)" title="Bahrain (BH)">
+      <outline text="Al Bilad Press [valid]" title="Al Bilad Press [valid]" type="rss" xmlUrl="https://www.albiladpress.com/rss" htmlUrl="https://www.albiladpress.com"/>
+      <outline text="Al Watan Bahrain [valid]" title="Al Watan Bahrain [valid]" type="rss" xmlUrl="https://alwatannews.net/rssFeed/100" htmlUrl="https://alwatannews.net"/>
+      <outline text="Al Watan Bahrain - Official [valid]" title="Al Watan Bahrain - Official [valid]" type="rss" xmlUrl="https://alwatannews.net/rssFeed/100/108" htmlUrl="https://alwatannews.net"/>
+      <outline text="Al Watan Bahrain - Local [valid]" title="Al Watan Bahrain - Local [valid]" type="rss" xmlUrl="https://alwatannews.net/rssFeed/100/119" htmlUrl="https://alwatannews.net"/>
+      <outline text="Al Watan Business [valid]" title="Al Watan Business [valid]" type="rss" xmlUrl="https://alwatannews.net/rssFeed/4" htmlUrl="https://alwatannews.net"/>
+      <outline text="Al Watan World [valid]" title="Al Watan World [valid]" type="rss" xmlUrl="https://alwatannews.net/rssFeed/97" htmlUrl="https://alwatannews.net"/>
+      <outline text="Al Watan International [valid]" title="Al Watan International [valid]" type="rss" xmlUrl="https://alwatannews.net/rssFeed/147" htmlUrl="https://alwatannews.net"/>
+      <outline text="Al Watan - Middle East [valid]" title="Al Watan - Middle East [valid]" type="rss" xmlUrl="https://alwatannews.net/rssFeed/147/123" htmlUrl="https://alwatannews.net"/>
+      <outline text="Al Watan Sports [valid]" title="Al Watan Sports [valid]" type="rss" xmlUrl="https://alwatannews.net/rssFeed/145" htmlUrl="https://alwatannews.net"/>
+      <outline text="Al Watan Files [valid]" title="Al Watan Files [valid]" type="rss" xmlUrl="https://alwatannews.net/rssFeed/135" htmlUrl="https://alwatannews.net"/>
+      <outline text="Al Watan Files - Incidents [valid]" title="Al Watan Files - Incidents [valid]" type="rss" xmlUrl="https://alwatannews.net/rssFeed/135/112" htmlUrl="https://alwatannews.net"/>
+      <outline text="Al Watan Variety [valid]" title="Al Watan Variety [valid]" type="rss" xmlUrl="https://alwatannews.net/rssFeed/139" htmlUrl="https://alwatannews.net"/>
+      <outline text="Al Watan Variety - Tech [valid]" title="Al Watan Variety - Tech [valid]" type="rss" xmlUrl="https://alwatannews.net/rssFeed/139/114" htmlUrl="https://alwatannews.net"/>
+      <outline text="Bahrain Mirror [valid]" title="Bahrain Mirror [valid]" type="rss" xmlUrl="https://bahrainmirror.com/rss.xml" htmlUrl="https://bahrainmirror.com"/>
+      <outline text="24x7 News Bahrain [valid]" title="24x7 News Bahrain [valid]" type="rss" xmlUrl="https://twentyfoursevennews.com/feed/" htmlUrl="https://twentyfoursevennews.com"/>
+      <outline text="Biz Bahrain [valid]" title="Biz Bahrain [valid]" type="rss" xmlUrl="https://www.bizbahrain.com/feed/" htmlUrl="https://www.bizbahrain.com"/>
+      <outline text="Gulf Insider [valid]" title="Gulf Insider [valid]" type="rss" xmlUrl="https://www.gulf-insider.com/feed/" htmlUrl="https://www.gulf-insider.com"/>
+      <outline text="Bahrain This Week [valid]" title="Bahrain This Week [valid]" type="rss" xmlUrl="https://www.bahrainthisweek.com/feed/" htmlUrl="https://www.bahrainthisweek.com"/>
+      <outline text="Bahrain Confidential [valid]" title="Bahrain Confidential [valid]" type="rss" xmlUrl="https://www.bahrain-confidential.com/feed/" htmlUrl="https://www.bahrain-confidential.com"/>
+      <outline text="LocalBH [valid]" title="LocalBH [valid]" type="rss" xmlUrl="https://www.localbh.com/feed/" htmlUrl="https://www.localbh.com"/>
+    </outline>
+    <outline text="Jordan (JO)" title="Jordan (JO)">
+      <outline text="Jo24 [valid]" title="Jo24 [valid]" type="rss" xmlUrl="https://jo24.net/feed/rss.php" htmlUrl="https://jo24.net"/>
+      <outline text="Ammon News - Jordan [valid]" title="Ammon News - Jordan [valid]" type="rss" xmlUrl="https://www.ammonnews.net/rss.php?type=news&amp;id=50" htmlUrl="https://www.ammonnews.net"/>
+      <outline text="Ammon News - East and West [valid]" title="Ammon News - East and West [valid]" type="rss" xmlUrl="https://www.ammonnews.net/rss.php?type=news&amp;id=20" htmlUrl="https://www.ammonnews.net"/>
+      <outline text="Ammon News - Economy [valid]" title="Ammon News - Economy [valid]" type="rss" xmlUrl="https://www.ammonnews.net/rss.php?type=news&amp;id=3" htmlUrl="https://www.ammonnews.net"/>
+      <outline text="Ammon News - Education [valid]" title="Ammon News - Education [valid]" type="rss" xmlUrl="https://www.ammonnews.net/rss.php?type=news&amp;id=16" htmlUrl="https://www.ammonnews.net"/>
+      <outline text="Ammon News - World [valid]" title="Ammon News - World [valid]" type="rss" xmlUrl="https://www.ammonnews.net/rss.php?type=news&amp;id=12" htmlUrl="https://www.ammonnews.net"/>
+      <outline text="Ammon News - Palestine [valid]" title="Ammon News - Palestine [valid]" type="rss" xmlUrl="https://www.ammonnews.net/rss.php?type=news&amp;id=28" htmlUrl="https://www.ammonnews.net"/>
+      <outline text="Ammon News - Parliament [valid]" title="Ammon News - Parliament [valid]" type="rss" xmlUrl="https://www.ammonnews.net/rss.php?type=news&amp;id=10" htmlUrl="https://www.ammonnews.net"/>
+      <outline text="Ammon News - Hirak [valid]" title="Ammon News - Hirak [valid]" type="rss" xmlUrl="https://www.ammonnews.net/rss.php?type=news&amp;id=73" htmlUrl="https://www.ammonnews.net"/>
+      <outline text="Ammon News - Sports [valid]" title="Ammon News - Sports [valid]" type="rss" xmlUrl="https://www.ammonnews.net/rss.php?type=news&amp;id=47" htmlUrl="https://www.ammonnews.net"/>
+      <outline text="Ammon News - Culture [valid]" title="Ammon News - Culture [valid]" type="rss" xmlUrl="https://www.ammonnews.net/rss.php?type=news&amp;id=44" htmlUrl="https://www.ammonnews.net"/>
+      <outline text="Ammon News - Incidents [valid]" title="Ammon News - Incidents [valid]" type="rss" xmlUrl="https://www.ammonnews.net/rss.php?type=news&amp;id=65" htmlUrl="https://www.ammonnews.net"/>
+      <outline text="Ammon News - Tech and Cars [valid]" title="Ammon News - Tech and Cars [valid]" type="rss" xmlUrl="https://www.ammonnews.net/rss.php?type=news&amp;id=77" htmlUrl="https://www.ammonnews.net"/>
+      <outline text="Ammon News - Panorama [valid]" title="Ammon News - Panorama [valid]" type="rss" xmlUrl="https://www.ammonnews.net/rss.php?type=news&amp;id=42" htmlUrl="https://www.ammonnews.net"/>
+      <outline text="Ammon News - Photo and Story [valid]" title="Ammon News - Photo and Story [valid]" type="rss" xmlUrl="https://www.ammonnews.net/rss.php?type=news&amp;id=43" htmlUrl="https://www.ammonnews.net"/>
+      <outline text="Ammon News - Selected Articles [valid]" title="Ammon News - Selected Articles [valid]" type="rss" xmlUrl="https://www.ammonnews.net/rss.php?type=news&amp;id=8" htmlUrl="https://www.ammonnews.net"/>
+      <outline text="Ammon News - Writers [valid]" title="Ammon News - Writers [valid]" type="rss" xmlUrl="https://www.ammonnews.net/rss.php?type=news&amp;id=23" htmlUrl="https://www.ammonnews.net"/>
+      <outline text="Ammon News - Ammoniyoon [valid]" title="Ammon News - Ammoniyoon [valid]" type="rss" xmlUrl="https://www.ammonnews.net/rss.php?type=news&amp;id=41" htmlUrl="https://www.ammonnews.net"/>
+      <outline text="Ammon News - Nights [valid]" title="Ammon News - Nights [valid]" type="rss" xmlUrl="https://www.ammonnews.net/rss.php?type=news&amp;id=64" htmlUrl="https://www.ammonnews.net"/>
+      <outline text="Ammon News - Health and Environment [valid]" title="Ammon News - Health and Environment [valid]" type="rss" xmlUrl="https://www.ammonnews.net/rss.php?type=news&amp;id=21" htmlUrl="https://www.ammonnews.net"/>
+      <outline text="Ammon News - Variety [valid]" title="Ammon News - Variety [valid]" type="rss" xmlUrl="https://www.ammonnews.net/rss.php?type=news&amp;id=78" htmlUrl="https://www.ammonnews.net"/>
+      <outline text="Al Rai - Local [valid]" title="Al Rai - Local [valid]" type="rss" xmlUrl="https://alrai.com/rss-feed/1" htmlUrl="https://alrai.com"/>
+      <outline text="Al Rai - Politics [valid]" title="Al Rai - Politics [valid]" type="rss" xmlUrl="https://alrai.com/rss-feed/2" htmlUrl="https://alrai.com"/>
+      <outline text="Al Rai - Sports [valid]" title="Al Rai - Sports [valid]" type="rss" xmlUrl="https://alrai.com/rss-feed/3" htmlUrl="https://alrai.com"/>
+      <outline text="Al Rai - Economy [valid]" title="Al Rai - Economy [valid]" type="rss" xmlUrl="https://alrai.com/rss-feed/4" htmlUrl="https://alrai.com"/>
+      <outline text="Al Rai - Arab and International [valid]" title="Al Rai - Arab and International [valid]" type="rss" xmlUrl="https://alrai.com/rss-feed/5" htmlUrl="https://alrai.com"/>
+      <outline text="Al Rai - Front Page [valid]" title="Al Rai - Front Page [valid]" type="rss" xmlUrl="https://alrai.com/rss-feed/6" htmlUrl="https://alrai.com"/>
+      <outline text="Al Rai - Culture [valid]" title="Al Rai - Culture [valid]" type="rss" xmlUrl="https://alrai.com/rss-feed/8" htmlUrl="https://alrai.com"/>
+      <outline text="Al Rai - Science and Technology [valid]" title="Al Rai - Science and Technology [valid]" type="rss" xmlUrl="https://alrai.com/rss-feed/9" htmlUrl="https://alrai.com"/>
+      <outline text="Al Rai - Education [valid]" title="Al Rai - Education [valid]" type="rss" xmlUrl="https://alrai.com/rss-feed/16" htmlUrl="https://alrai.com"/>
+      <outline text="Al Rai - Business Community [valid]" title="Al Rai - Business Community [valid]" type="rss" xmlUrl="https://alrai.com/rss-feed/20" htmlUrl="https://alrai.com"/>
+      <outline text="Al Rai - Incidents [valid]" title="Al Rai - Incidents [valid]" type="rss" xmlUrl="https://alrai.com/rss-feed/27" htmlUrl="https://alrai.com"/>
+      <outline text="Al Rai - Parliament and Parties [valid]" title="Al Rai - Parliament and Parties [valid]" type="rss" xmlUrl="https://alrai.com/rss-feed/31" htmlUrl="https://alrai.com"/>
+      <outline text="Al Rai - Investigations [valid]" title="Al Rai - Investigations [valid]" type="rss" xmlUrl="https://alrai.com/rss-feed/32" htmlUrl="https://alrai.com"/>
+      <outline text="Al Rai - Breaking News [valid]" title="Al Rai - Breaking News [valid]" type="rss" xmlUrl="https://alrai.com/rss-feed/37" htmlUrl="https://alrai.com"/>
+      <outline text="Al Rai - Arts and Culture [valid]" title="Al Rai - Arts and Culture [valid]" type="rss" xmlUrl="https://alrai.com/rss-feed/39" htmlUrl="https://alrai.com"/>
+      <outline text="Saraya - Politics [valid]" title="Saraya - Politics [valid]" type="rss" xmlUrl="https://www.sarayanews.com/rss.php?id=2&amp;type=news" htmlUrl="https://www.sarayanews.com"/>
+      <outline text="Saraya - Jordan Today [valid]" title="Saraya - Jordan Today [valid]" type="rss" xmlUrl="https://www.sarayanews.com/rss.php?id=24&amp;type=news" htmlUrl="https://www.sarayanews.com"/>
+      <outline text="Saraya - Economy [valid]" title="Saraya - Economy [valid]" type="rss" xmlUrl="https://www.sarayanews.com/rss.php?id=23&amp;type=news" htmlUrl="https://www.sarayanews.com"/>
+      <outline text="Saraya - Hot Files [valid]" title="Saraya - Hot Files [valid]" type="rss" xmlUrl="https://www.sarayanews.com/rss.php?id=143&amp;type=news" htmlUrl="https://www.sarayanews.com"/>
+      <outline text="Saraya - Parliament [valid]" title="Saraya - Parliament [valid]" type="rss" xmlUrl="https://www.sarayanews.com/rss.php?id=147&amp;type=news" htmlUrl="https://www.sarayanews.com"/>
+      <outline text="Saraya - Education [valid]" title="Saraya - Education [valid]" type="rss" xmlUrl="https://www.sarayanews.com/rss.php?id=149&amp;type=news" htmlUrl="https://www.sarayanews.com"/>
+      <outline text="Saraya - Technology [valid]" title="Saraya - Technology [valid]" type="rss" xmlUrl="https://www.sarayanews.com/rss.php?id=158&amp;type=news" htmlUrl="https://www.sarayanews.com"/>
+      <outline text="WatanA News [valid]" title="WatanA News [valid]" type="rss" xmlUrl="https://watananews.com/feed/" htmlUrl="https://watananews.com"/>
+      <outline text="JFRA News [valid]" title="JFRA News [valid]" type="rss" xmlUrl="https://jfranews.com.jo/feed/" htmlUrl="https://jfranews.com.jo"/>
+      <outline text="Sawaleif [valid]" title="Sawaleif [valid]" type="rss" xmlUrl="https://sawaleif.com/feed/" htmlUrl="https://sawaleif.com"/>
+    </outline>
+    <outline text="Kuwait (KW)" title="Kuwait (KW)">
+      <outline text="Alanba Kuwait [valid]" title="Alanba Kuwait [valid]" type="rss" xmlUrl="https://www.alanba.com.kw/alanba_rssfeed/kuwait-news.xml" htmlUrl="https://www.alanba.com.kw"/>
+      <outline text="Alanba Official [valid]" title="Alanba Official [valid]" type="rss" xmlUrl="https://www.alanba.com.kw/alanba_rssfeed/official.xml" htmlUrl="https://www.alanba.com.kw"/>
+      <outline text="Alanba Economy [valid]" title="Alanba Economy [valid]" type="rss" xmlUrl="https://www.alanba.com.kw/alanba_rssfeed/economy-news.xml" htmlUrl="https://www.alanba.com.kw"/>
+      <outline text="Alanba Sports [valid]" title="Alanba Sports [valid]" type="rss" xmlUrl="https://www.alanba.com.kw/alanba_rssfeed/sport-news.xml" htmlUrl="https://www.alanba.com.kw"/>
+      <outline text="Alanba World [valid]" title="Alanba World [valid]" type="rss" xmlUrl="https://www.alanba.com.kw/alanba_rssfeed/world-news.xml" htmlUrl="https://www.alanba.com.kw"/>
+      <outline text="Alanba Health [valid]" title="Alanba Health [valid]" type="rss" xmlUrl="https://www.alanba.com.kw/alanba_rssfeed/health.xml" htmlUrl="https://www.alanba.com.kw"/>
+      <outline text="Alanba Education [valid]" title="Alanba Education [valid]" type="rss" xmlUrl="https://www.alanba.com.kw/alanba_rssfeed/education.xml" htmlUrl="https://www.alanba.com.kw"/>
+      <outline text="Kuwait News [valid]" title="Kuwait News [valid]" type="rss" xmlUrl="https://kuwaitnews.com/feed/" htmlUrl="https://kuwaitnews.com"/>
+      <outline text="Kuwait News - Kuwait [valid]" title="Kuwait News - Kuwait [valid]" type="rss" xmlUrl="https://kuwaitnews.com/category/kuwait/feed/" htmlUrl="https://kuwaitnews.com"/>
+      <outline text="Kuwait News - World [valid]" title="Kuwait News - World [valid]" type="rss" xmlUrl="https://kuwaitnews.com/category/world/feed/" htmlUrl="https://kuwaitnews.com"/>
+      <outline text="Kuwait News - Middle East [valid]" title="Kuwait News - Middle East [valid]" type="rss" xmlUrl="https://kuwaitnews.com/category/middle-east/feed/" htmlUrl="https://kuwaitnews.com"/>
+      <outline text="Kuwait News - Business [valid]" title="Kuwait News - Business [valid]" type="rss" xmlUrl="https://kuwaitnews.com/category/business/feed/" htmlUrl="https://kuwaitnews.com"/>
+      <outline text="Kuwait News - Education [valid]" title="Kuwait News - Education [valid]" type="rss" xmlUrl="https://kuwaitnews.com/category/education/feed/" htmlUrl="https://kuwaitnews.com"/>
+      <outline text="Kuwait News - Sports [valid]" title="Kuwait News - Sports [valid]" type="rss" xmlUrl="https://kuwaitnews.com/category/sports/feed/" htmlUrl="https://kuwaitnews.com"/>
+      <outline text="Boursa Kuwait [valid]" title="Boursa Kuwait [valid]" type="rss" xmlUrl="https://rss.boursakuwait.com.kw/rss/FeedFull.aspx" htmlUrl="https://rss.boursakuwait.com.kw"/>
+      <outline text="Kuwait Times - Latest [valid]" title="Kuwait Times - Latest [valid]" type="rss" xmlUrl="https://kuwaittimes.com/rssFeed/0" htmlUrl="https://kuwaittimes.com"/>
+      <outline text="Kuwait Times - Sports [valid]" title="Kuwait Times - Sports [valid]" type="rss" xmlUrl="https://kuwaittimes.com/rssFeed/3" htmlUrl="https://kuwaittimes.com"/>
+      <outline text="Kuwait Times - World [valid]" title="Kuwait Times - World [valid]" type="rss" xmlUrl="https://kuwaittimes.com/rssFeed/10" htmlUrl="https://kuwaittimes.com"/>
+      <outline text="Kuwait Times - Business [valid]" title="Kuwait Times - Business [valid]" type="rss" xmlUrl="https://kuwaittimes.com/rssFeed/11" htmlUrl="https://kuwaittimes.com"/>
+      <outline text="Kuwait Times - Kuwait [valid]" title="Kuwait Times - Kuwait [valid]" type="rss" xmlUrl="https://kuwaittimes.com/rssFeed/14" htmlUrl="https://kuwaittimes.com"/>
+      <outline text="Kuwait Times - Technology [valid]" title="Kuwait Times - Technology [valid]" type="rss" xmlUrl="https://kuwaittimes.com/rssFeed/9" htmlUrl="https://kuwaittimes.com"/>
+      <outline text="Kuwait Times - Health [valid]" title="Kuwait Times - Health [valid]" type="rss" xmlUrl="https://kuwaittimes.com/rssFeed/15" htmlUrl="https://kuwaittimes.com"/>
+      <outline text="Kuwait Times - Top Stories [valid]" title="Kuwait Times - Top Stories [valid]" type="rss" xmlUrl="https://kuwaittimes.com/rssFeed/18" htmlUrl="https://kuwaittimes.com"/>
+      <outline text="Kuwait Times - Lifestyle [valid]" title="Kuwait Times - Lifestyle [valid]" type="rss" xmlUrl="https://kuwaittimes.com/rssFeed/12" htmlUrl="https://kuwaittimes.com"/>
+      <outline text="Kuwait Times - Opinion [valid]" title="Kuwait Times - Opinion [valid]" type="rss" xmlUrl="https://kuwaittimes.com/rssFeed/13" htmlUrl="https://kuwaittimes.com"/>
+      <outline text="Aljarida - Latest [valid]" title="Aljarida - Latest [valid]" type="rss" xmlUrl="https://www.aljarida.com/rssFeed/19" htmlUrl="https://www.aljarida.com"/>
+      <outline text="Aljarida - Local [valid]" title="Aljarida - Local [valid]" type="rss" xmlUrl="https://www.aljarida.com/rssFeed/1" htmlUrl="https://www.aljarida.com"/>
+      <outline text="Aljarida - Economy [valid]" title="Aljarida - Economy [valid]" type="rss" xmlUrl="https://www.aljarida.com/rssFeed/4" htmlUrl="https://www.aljarida.com"/>
+      <outline text="Aljarida - Sports [valid]" title="Aljarida - Sports [valid]" type="rss" xmlUrl="https://www.aljarida.com/rssFeed/3" htmlUrl="https://www.aljarida.com"/>
+      <outline text="Aljarida - World [valid]" title="Aljarida - World [valid]" type="rss" xmlUrl="https://www.aljarida.com/rssFeed/15" htmlUrl="https://www.aljarida.com"/>
+      <outline text="Aljarida - Pepper [valid]" title="Aljarida - Pepper [valid]" type="rss" xmlUrl="https://www.aljarida.com/rssFeed/13" htmlUrl="https://www.aljarida.com"/>
+      <outline text="Aljarida - Last Word [valid]" title="Aljarida - Last Word [valid]" type="rss" xmlUrl="https://www.aljarida.com/rssFeed/16" htmlUrl="https://www.aljarida.com"/>
+      <outline text="Aljarida - Articles [valid]" title="Aljarida - Articles [valid]" type="rss" xmlUrl="https://www.aljarida.com/rssFeed/23" htmlUrl="https://www.aljarida.com"/>
+      <outline text="Arab Times - Latest [valid]" title="Arab Times - Latest [valid]" type="rss" xmlUrl="https://www.arabtimesonline.com/rssFeed/0/" htmlUrl="https://www.arabtimesonline.com"/>
+      <outline text="Arab Times - Kuwait [valid]" title="Arab Times - Kuwait [valid]" type="rss" xmlUrl="https://www.arabtimesonline.com/rssFeed/73/" htmlUrl="https://www.arabtimesonline.com"/>
+      <outline text="Arab Times - Business [valid]" title="Arab Times - Business [valid]" type="rss" xmlUrl="https://www.arabtimesonline.com/rssFeed/30/" htmlUrl="https://www.arabtimesonline.com"/>
+      <outline text="Arab Times - International [valid]" title="Arab Times - International [valid]" type="rss" xmlUrl="https://www.arabtimesonline.com/rssFeed/47/" htmlUrl="https://www.arabtimesonline.com"/>
+      <outline text="Arab Times - Sports [valid]" title="Arab Times - Sports [valid]" type="rss" xmlUrl="https://www.arabtimesonline.com/rssFeed/46/" htmlUrl="https://www.arabtimesonline.com"/>
+      <outline text="Arab Times - Technology [valid]" title="Arab Times - Technology [valid]" type="rss" xmlUrl="https://www.arabtimesonline.com/rssFeed/79/" htmlUrl="https://www.arabtimesonline.com"/>
+      <outline text="Arab Times - Crime [valid]" title="Arab Times - Crime [valid]" type="rss" xmlUrl="https://www.arabtimesonline.com/rssFeed/83/" htmlUrl="https://www.arabtimesonline.com"/>
+      <outline text="Arab Times - Health and Science [valid]" title="Arab Times - Health and Science [valid]" type="rss" xmlUrl="https://www.arabtimesonline.com/rssFeed/91/" htmlUrl="https://www.arabtimesonline.com"/>
+      <outline text="Arab Times - News [valid]" title="Arab Times - News [valid]" type="rss" xmlUrl="https://www.arabtimesonline.com/rssFeed/29/" htmlUrl="https://www.arabtimesonline.com"/>
+      <outline text="Arab Times - Local News [valid]" title="Arab Times - Local News [valid]" type="rss" xmlUrl="https://www.arabtimesonline.com/rssFeed/75/" htmlUrl="https://www.arabtimesonline.com"/>
+      <outline text="Al Rai Media - Latest [valid]" title="Al Rai Media - Latest [valid]" type="rss" xmlUrl="https://www.alraimedia.com/rssFeed/0" htmlUrl="https://www.alraimedia.com"/>
+      <outline text="Al Rai Media - Local [valid]" title="Al Rai Media - Local [valid]" type="rss" xmlUrl="https://www.alraimedia.com/rssFeed/1" htmlUrl="https://www.alraimedia.com"/>
+      <outline text="Al Rai Media - Sports [valid]" title="Al Rai Media - Sports [valid]" type="rss" xmlUrl="https://www.alraimedia.com/rssFeed/3" htmlUrl="https://www.alraimedia.com"/>
+      <outline text="Al Rai Media - Economy [valid]" title="Al Rai Media - Economy [valid]" type="rss" xmlUrl="https://www.alraimedia.com/rssFeed/4" htmlUrl="https://www.alraimedia.com"/>
+      <outline text="Al Rai Media - World [valid]" title="Al Rai Media - World [valid]" type="rss" xmlUrl="https://www.alraimedia.com/rssFeed/5" htmlUrl="https://www.alraimedia.com"/>
+      <outline text="Al Rai Media - Arabs and World [valid]" title="Al Rai Media - Arabs and World [valid]" type="rss" xmlUrl="https://www.alraimedia.com/rssFeed/5/26" htmlUrl="https://www.alraimedia.com"/>
+      <outline text="Al Rai Media - Last [valid]" title="Al Rai Media - Last [valid]" type="rss" xmlUrl="https://www.alraimedia.com/rssFeed/7" htmlUrl="https://www.alraimedia.com"/>
+      <outline text="Al Rai Media - Security [valid]" title="Al Rai Media - Security [valid]" type="rss" xmlUrl="https://www.alraimedia.com/rssFeed/7/14" htmlUrl="https://www.alraimedia.com"/>
+      <outline text="Al Rai Media - Crime [valid]" title="Al Rai Media - Crime [valid]" type="rss" xmlUrl="https://www.alraimedia.com/rssFeed/7/15" htmlUrl="https://www.alraimedia.com"/>
+      <outline text="Al Rai Media - Arts [valid]" title="Al Rai Media - Arts [valid]" type="rss" xmlUrl="https://www.alraimedia.com/rssFeed/14" htmlUrl="https://www.alraimedia.com"/>
+      <outline text="Al Rai Media - Local Education [valid]" title="Al Rai Media - Local Education [valid]" type="rss" xmlUrl="https://www.alraimedia.com/rssFeed/1/11" htmlUrl="https://www.alraimedia.com"/>
+      <outline text="Al Rai Media - Sports Local [valid]" title="Al Rai Media - Sports Local [valid]" type="rss" xmlUrl="https://www.alraimedia.com/rssFeed/3/22" htmlUrl="https://www.alraimedia.com"/>
+      <outline text="Al Rai Media - Sports International [valid]" title="Al Rai Media - Sports International [valid]" type="rss" xmlUrl="https://www.alraimedia.com/rssFeed/3/23" htmlUrl="https://www.alraimedia.com"/>
+      <outline text="Al Rai Media - Economy Companies [valid]" title="Al Rai Media - Economy Companies [valid]" type="rss" xmlUrl="https://www.alraimedia.com/rssFeed/4/17" htmlUrl="https://www.alraimedia.com"/>
+      <outline text="Al Rai Media - Economy Aviation [valid]" title="Al Rai Media - Economy Aviation [valid]" type="rss" xmlUrl="https://www.alraimedia.com/rssFeed/4/18" htmlUrl="https://www.alraimedia.com"/>
+      <outline text="Al Rai Media - Economy Oil [valid]" title="Al Rai Media - Economy Oil [valid]" type="rss" xmlUrl="https://www.alraimedia.com/rssFeed/4/19" htmlUrl="https://www.alraimedia.com"/>
+      <outline text="Al Rai Media - Economy Tech [valid]" title="Al Rai Media - Economy Tech [valid]" type="rss" xmlUrl="https://www.alraimedia.com/rssFeed/4/20" htmlUrl="https://www.alraimedia.com"/>
+      <outline text="Al Rai Media - World Gulf [valid]" title="Al Rai Media - World Gulf [valid]" type="rss" xmlUrl="https://www.alraimedia.com/rssFeed/5/25" htmlUrl="https://www.alraimedia.com"/>
+      <outline text="Al Rai Media - World International [valid]" title="Al Rai Media - World International [valid]" type="rss" xmlUrl="https://www.alraimedia.com/rssFeed/5/26" htmlUrl="https://www.alraimedia.com"/>
+      <outline text="Times Kuwait [valid]" title="Times Kuwait [valid]" type="rss" xmlUrl="https://timeskuwait.com/feed/" htmlUrl="https://timeskuwait.com"/>
+      <outline text="Al Seyassah - International [valid]" title="Al Seyassah - International [valid]" type="rss" xmlUrl="https://alseyassah.com/rssFeed/4/" htmlUrl="https://alseyassah.com"/>
+      <outline text="Al Seyassah - Economy [valid]" title="Al Seyassah - Economy [valid]" type="rss" xmlUrl="https://alseyassah.com/rssFeed/5/" htmlUrl="https://alseyassah.com"/>
+      <outline text="Al Seyassah - Sports [valid]" title="Al Seyassah - Sports [valid]" type="rss" xmlUrl="https://alseyassah.com/rssFeed/6/" htmlUrl="https://alseyassah.com"/>
+      <outline text="Al Seyassah - Local [valid]" title="Al Seyassah - Local [valid]" type="rss" xmlUrl="https://alseyassah.com/rssFeed/8/" htmlUrl="https://alseyassah.com"/>
+      <outline text="Al Seyassah - Security and Judiciary [valid]" title="Al Seyassah - Security and Judiciary [valid]" type="rss" xmlUrl="https://alseyassah.com/rssFeed/8/3/" htmlUrl="https://alseyassah.com"/>
     </outline>
     <outline text="Qatar (QA)" title="Qatar (QA)">
       <outline text="Al Jazeera [needs verification]" title="Al Jazeera [needs verification]" type="rss" xmlUrl="https://www.aljazeera.com/xml/rss/all.xml" htmlUrl="https://www.aljazeera.com"/>
@@ -2589,11 +2732,6 @@
     <outline text="Ecuador (EC)" title="Ecuador (EC)">
       <outline text="Primicias [needs verification]" title="Primicias [needs verification]" type="rss" xmlUrl="https://www.primicias.ec/feed/" htmlUrl="https://www.primicias.ec"/>
       <outline text="El Universo [needs verification]" title="El Universo [needs verification]" type="rss" xmlUrl="https://www.eluniverso.com/arc/outboundfeeds/rss/category/noticias/?outputType=xml" htmlUrl="https://www.eluniverso.com"/>
-      <outline text="El Comercio - Titulares [valid]" title="El Comercio - Titulares [valid]" type="rss" xmlUrl="https://elcomercio.com/rss" htmlUrl="https://elcomercio.com"/>
-      <outline text="El Comercio - Actualidad [valid]" title="El Comercio - Actualidad [valid]" type="rss" xmlUrl="https://elcomercio.com/rss/actualidad" htmlUrl="https://elcomercio.com"/>
-      <outline text="El Comercio - Tendencias [valid]" title="El Comercio - Tendencias [valid]" type="rss" xmlUrl="https://elcomercio.com/rss/tendencias" htmlUrl="https://elcomercio.com"/>
-      <outline text="El Comercio - Deportes [valid]" title="El Comercio - Deportes [valid]" type="rss" xmlUrl="https://elcomercio.com/rss/deportes" htmlUrl="https://elcomercio.com"/>
-      <outline text="El Comercio - Opinion [valid]" title="El Comercio - Opinion [valid]" type="rss" xmlUrl="https://elcomercio.com/rss/opinion" htmlUrl="https://elcomercio.com"/>
     </outline>
     <outline text="Oman (OM)" title="Oman (OM)">
       <outline text="Oman Observer [needs verification]" title="Oman Observer [needs verification]" type="rss" xmlUrl="https://www.omanobserver.om/rssFeed/1" htmlUrl="https://www.omanobserver.om"/>
@@ -2602,8 +2740,6 @@
       <outline text="Oman Observer - Business [needs verification]" title="Oman Observer - Business [needs verification]" type="rss" xmlUrl="https://www.omanobserver.om/rssFeed/4" htmlUrl="https://www.omanobserver.om"/>
       <outline text="Times of Oman [needs verification]" title="Times of Oman [needs verification]" type="rss" xmlUrl="https://timesofoman.com/feed/" htmlUrl="https://timesofoman.com"/>
       <outline text="The Arabian Stories [needs verification]" title="The Arabian Stories [needs verification]" type="rss" xmlUrl="https://www.thearabianstories.com/feed/" htmlUrl="https://www.thearabianstories.com"/>
-      <outline text="Muscat Daily - Oman [valid]" title="Muscat Daily - Oman [valid]" type="rss" xmlUrl="https://www.muscatdaily.com/category/oman/feed/" htmlUrl="https://www.muscatdaily.com"/>
-      <outline text="Muscat Daily - Business [valid]" title="Muscat Daily - Business [valid]" type="rss" xmlUrl="https://www.muscatdaily.com/category/business/feed/" htmlUrl="https://www.muscatdaily.com"/>
     </outline>
     <outline text="Colombia (CO)" title="Colombia (CO)">
       <outline text="InSight Crime [needs verification]" title="InSight Crime [needs verification]" type="rss" xmlUrl="https://insightcrime.org/feed/" htmlUrl="https://insightcrime.org"/>
@@ -2612,6 +2748,10 @@
       <outline text="Semana [needs verification]" title="Semana [needs verification]" type="rss" xmlUrl="https://www.semana.com/arc/outboundfeeds/rss/?outputType=xml" htmlUrl="https://www.semana.com"/>
       <outline text="La República [needs verification]" title="La República [needs verification]" type="rss" xmlUrl="https://www.larepublica.co/rss" htmlUrl="https://www.larepublica.co"/>
       <outline text="El Pais - Colombia [valid]" title="El Pais - Colombia [valid]" type="rss" xmlUrl="https://www.elpais.com.co/arc/outboundfeeds/rss/category/colombia/?outputType=xml" htmlUrl="https://www.elpais.com.co"/>
+    </outline>
+    <outline text="Malaysia (MY)" title="Malaysia (MY)">
+    </outline>
+    <outline text="Philippines (PH)" title="Philippines (PH)">
     </outline>
     <outline text="Vietnam (VN)" title="Vietnam (VN)">
       <outline text="VnExpress [needs verification]" title="VnExpress [needs verification]" type="rss" xmlUrl="https://vnexpress.net/rss/tin-moi-nhat.rss" htmlUrl="https://vnexpress.net"/>

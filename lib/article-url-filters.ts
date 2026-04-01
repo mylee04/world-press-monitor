@@ -225,6 +225,34 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     }
   }
 
+  if (hostname.endsWith('dailymail.co.uk') && normalizedSource.includes('daily mail')) {
+    if (!/^\/news(?:\/[^/]+)?\/article-\d+(?:\/|$)/.test(pathname)) {
+      return true;
+    }
+  }
+
+  if (hostname.endsWith('mirror.co.uk') && normalizedSource.includes('mirror')) {
+    if (pathname.startsWith('/sport/')) return true;
+    if (pathname.startsWith('/3am/')) return true;
+    if (pathname.startsWith('/tv/')) return true;
+    if (pathname.startsWith('/money/')) return true;
+    if (pathname.startsWith('/lifestyle/')) return true;
+    if (pathname.startsWith('/travel/')) return true;
+    if (pathname.startsWith('/gaming/')) return true;
+    if (pathname.startsWith('/film/')) return true;
+    if (pathname.startsWith('/opinion/')) return true;
+  }
+
+  if (hostname.endsWith('express.co.uk') && normalizedSource.includes('express')) {
+    if (pathname.startsWith('/sport/')) return true;
+    if (pathname.startsWith('/life-style/')) return true;
+    if (pathname.startsWith('/showbiz/')) return true;
+    if (pathname.startsWith('/finance/')) return true;
+    if (pathname.startsWith('/celebrity-news/')) return true;
+    if (pathname.startsWith('/travel/')) return true;
+    if (pathname.startsWith('/entertainment/')) return true;
+  }
+
   if (hostname.endsWith('filgoal.com') && normalizedSource.includes('filgoal')) {
     if (pathname.startsWith('/videos/')) return true;
     if (!pathname.startsWith('/articles/')) return true;

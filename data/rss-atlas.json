@@ -769,6 +769,7 @@
         {
           "name": "Sports Illustrated",
           "url": "https://si.com/feed",
+          "enabled": false,
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/18/2026",
           "valid": "needs verification",
@@ -845,6 +846,15 @@
           "checkedDate": "02/19/2026",
           "valid": "needs verification",
           "row": 111
+        },
+        {
+          "name": "NewsNation",
+          "url": "https://www.newsnationnow.com/feed/"
+        },
+        {
+          "name": "Reuters - News Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.reuters.com/arc/outboundfeeds/news-sitemap-index/?outputType=xml"
         },
         {
           "name": "Wall Street Journal - U.S.",
@@ -2025,6 +2035,7 @@
         {
           "name": "Abema Times - Latest Sitemap",
           "url": null,
+          "enabled": false,
           "sitemapUrl": "https://times.abema.tv/common/files/sitemap-latest.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/15/2026",
@@ -2034,6 +2045,7 @@
         {
           "name": "Oricon - News Sitemap",
           "url": null,
+          "enabled": false,
           "sitemapUrl": "https://www.oricon.co.jp/sitemap/sitemap_news_1.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/15/2026",
@@ -2043,6 +2055,7 @@
         {
           "name": "Sponichi - Recent Sitemap",
           "url": null,
+          "enabled": false,
           "sitemapUrl": "https://www.sponichi.co.jp/sitemap_recent.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/15/2026",
@@ -11587,7 +11600,6 @@
           "name": "Yahoo Taiwan - News Sitemap p0",
           "url": null,
           "sitemapUrl": "https://tw.news.yahoo.com/news-sitemap-p0.xml",
-          "enabled": false,
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/15/2026",
           "valid": "needs verification",
@@ -11597,7 +11609,6 @@
           "name": "Yahoo Taiwan - News Sitemap p1",
           "url": null,
           "sitemapUrl": "https://tw.news.yahoo.com/news-sitemap-p1.xml",
-          "enabled": false,
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/15/2026",
           "valid": "needs verification",
@@ -11607,7 +11618,6 @@
           "name": "Yahoo Taiwan - News Sitemap p2",
           "url": null,
           "sitemapUrl": "https://tw.news.yahoo.com/news-sitemap-p2.xml",
-          "enabled": false,
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/15/2026",
           "valid": "needs verification",
@@ -22834,8 +22844,7 @@
         },
         {
           "name": "Business Times Property",
-          "url": "https://www.businesstimes.com.sg/rss/property",
-          "enabled": false
+          "url": "https://www.businesstimes.com.sg/rss/property"
         },
         {
           "name": "Business Times Startups & Tech",
@@ -23008,6 +23017,14 @@
         {
           "name": "Tech in Asia",
           "url": "https://www.techinasia.com/feed"
+        },
+        {
+          "name": "Vulcan Post",
+          "url": "https://vulcanpost.com/feed/"
+        },
+        {
+          "name": "tabla!",
+          "url": "https://www.tabla.com.sg/rss.xml"
         }
       ]
     },
@@ -23134,6 +23151,1036 @@
           "sitemapUrl": "https://www.ewn.co.za/sitemap.xml",
           "status": "NEW",
           "checkedDate": "03/31/2026",
+          "valid": "valid"
+        }
+      ]
+    },
+    {
+      "name": "Bahrain",
+      "code": "BH",
+      "feeds": [
+        {
+          "name": "Al Bilad Press",
+          "url": "https://www.albiladpress.com/rss",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Watan Bahrain",
+          "url": "https://alwatannews.net/rssFeed/100",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Watan Bahrain - Official",
+          "url": "https://alwatannews.net/rssFeed/100/108",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Watan Bahrain - Local",
+          "url": "https://alwatannews.net/rssFeed/100/119",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Watan Business",
+          "url": "https://alwatannews.net/rssFeed/4",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Watan World",
+          "url": "https://alwatannews.net/rssFeed/97",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Watan International",
+          "url": "https://alwatannews.net/rssFeed/147",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Watan - Middle East",
+          "url": "https://alwatannews.net/rssFeed/147/123",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Watan Sports",
+          "url": "https://alwatannews.net/rssFeed/145",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Watan Files",
+          "url": "https://alwatannews.net/rssFeed/135",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Watan Files - Incidents",
+          "url": "https://alwatannews.net/rssFeed/135/112",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Watan Variety",
+          "url": "https://alwatannews.net/rssFeed/139",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Watan Variety - Tech",
+          "url": "https://alwatannews.net/rssFeed/139/114",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Bahrain Mirror",
+          "url": "https://bahrainmirror.com/rss.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "24x7 News Bahrain",
+          "url": "https://twentyfoursevennews.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Biz Bahrain",
+          "url": "https://www.bizbahrain.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Gulf Insider",
+          "url": "https://www.gulf-insider.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Bahrain This Week",
+          "url": "https://www.bahrainthisweek.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Bahrain Confidential",
+          "url": "https://www.bahrain-confidential.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "LocalBH",
+          "url": "https://www.localbh.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        }
+      ]
+    },
+    {
+      "name": "Jordan",
+      "code": "JO",
+      "feeds": [
+        {
+          "name": "Jo24 - Sitemap",
+          "sitemapUrl": "https://jo24.net/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Jo24",
+          "url": "https://jo24.net/feed/rss.php",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Ammon News - Jordan",
+          "url": "https://www.ammonnews.net/rss.php?type=news&id=50",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Ammon News - East and West",
+          "url": "https://www.ammonnews.net/rss.php?type=news&id=20",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Ammon News - Economy",
+          "url": "https://www.ammonnews.net/rss.php?type=news&id=3",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Ammon News - Education",
+          "url": "https://www.ammonnews.net/rss.php?type=news&id=16",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Ammon News - World",
+          "url": "https://www.ammonnews.net/rss.php?type=news&id=12",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Ammon News - Palestine",
+          "url": "https://www.ammonnews.net/rss.php?type=news&id=28",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Ammon News - Parliament",
+          "url": "https://www.ammonnews.net/rss.php?type=news&id=10",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Ammon News - Hirak",
+          "url": "https://www.ammonnews.net/rss.php?type=news&id=73",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Ammon News - Sports",
+          "url": "https://www.ammonnews.net/rss.php?type=news&id=47",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Ammon News - Culture",
+          "url": "https://www.ammonnews.net/rss.php?type=news&id=44",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Ammon News - Incidents",
+          "url": "https://www.ammonnews.net/rss.php?type=news&id=65",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Ammon News - Tech and Cars",
+          "url": "https://www.ammonnews.net/rss.php?type=news&id=77",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Ammon News - Panorama",
+          "url": "https://www.ammonnews.net/rss.php?type=news&id=42",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Ammon News - Photo and Story",
+          "url": "https://www.ammonnews.net/rss.php?type=news&id=43",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Ammon News - Selected Articles",
+          "url": "https://www.ammonnews.net/rss.php?type=news&id=8",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Ammon News - Writers",
+          "url": "https://www.ammonnews.net/rss.php?type=news&id=23",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Ammon News - Ammoniyoon",
+          "url": "https://www.ammonnews.net/rss.php?type=news&id=41",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Ammon News - Nights",
+          "url": "https://www.ammonnews.net/rss.php?type=news&id=64",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Ammon News - Health and Environment",
+          "url": "https://www.ammonnews.net/rss.php?type=news&id=21",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Ammon News - Variety",
+          "url": "https://www.ammonnews.net/rss.php?type=news&id=78",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Rai - Local",
+          "url": "https://alrai.com/rss-feed/1",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Rai - Politics",
+          "url": "https://alrai.com/rss-feed/2",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Rai - Sports",
+          "url": "https://alrai.com/rss-feed/3",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Rai - Economy",
+          "url": "https://alrai.com/rss-feed/4",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Rai - Arab and International",
+          "url": "https://alrai.com/rss-feed/5",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Rai - Front Page",
+          "url": "https://alrai.com/rss-feed/6",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Rai - Culture",
+          "url": "https://alrai.com/rss-feed/8",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Rai - Science and Technology",
+          "url": "https://alrai.com/rss-feed/9",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Rai - Education",
+          "url": "https://alrai.com/rss-feed/16",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Rai - Business Community",
+          "url": "https://alrai.com/rss-feed/20",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Rai - Incidents",
+          "url": "https://alrai.com/rss-feed/27",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Rai - Parliament and Parties",
+          "url": "https://alrai.com/rss-feed/31",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Rai - Investigations",
+          "url": "https://alrai.com/rss-feed/32",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Rai - Breaking News",
+          "url": "https://alrai.com/rss-feed/37",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Rai - Arts and Culture",
+          "url": "https://alrai.com/rss-feed/39",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Saraya - Politics",
+          "url": "https://www.sarayanews.com/rss.php?id=2&type=news",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Saraya - Jordan Today",
+          "url": "https://www.sarayanews.com/rss.php?id=24&type=news",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Saraya - Economy",
+          "url": "https://www.sarayanews.com/rss.php?id=23&type=news",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Saraya - Hot Files",
+          "url": "https://www.sarayanews.com/rss.php?id=143&type=news",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Saraya - Parliament",
+          "url": "https://www.sarayanews.com/rss.php?id=147&type=news",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Saraya - Education",
+          "url": "https://www.sarayanews.com/rss.php?id=149&type=news",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Saraya - Technology",
+          "url": "https://www.sarayanews.com/rss.php?id=158&type=news",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Jordan News - Recent Sitemap",
+          "url": null,
+          "sitemapUrl": "https://jordannews.jo/recent.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Khaberni - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.khaberni.com/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Khaberni - Latest Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.khaberni.com/sitemaps/sitemap/1.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Mamlaka TV - News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.almamlakatv.com/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Wakeel News - Recent Sitemap",
+          "url": null,
+          "sitemapUrl": "https://alwakeelnews.com/recent.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "WatanA News",
+          "url": "https://watananews.com/feed/",
+          "sitemapUrl": "https://watananews.com/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "JFRA News",
+          "url": "https://jfranews.com.jo/feed/",
+          "sitemapUrl": "https://jfranews.com.jo/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Sawaleif",
+          "url": "https://sawaleif.com/feed/",
+          "sitemapUrl": "https://sawaleif.com/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        }
+      ]
+    },
+    {
+      "name": "Kuwait",
+      "code": "KW",
+      "feeds": [
+        {
+          "name": "Alanba Kuwait",
+          "url": "https://www.alanba.com.kw/alanba_rssfeed/kuwait-news.xml",
+          "sitemapUrl": "https://www.alanba.com.kw/sitemap/alanba_news.xml",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Alanba Official",
+          "url": "https://www.alanba.com.kw/alanba_rssfeed/official.xml",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Alanba Economy",
+          "url": "https://www.alanba.com.kw/alanba_rssfeed/economy-news.xml",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Alanba Sports",
+          "url": "https://www.alanba.com.kw/alanba_rssfeed/sport-news.xml",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Alanba World",
+          "url": "https://www.alanba.com.kw/alanba_rssfeed/world-news.xml",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Alanba Health",
+          "url": "https://www.alanba.com.kw/alanba_rssfeed/health.xml",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Alanba Education",
+          "url": "https://www.alanba.com.kw/alanba_rssfeed/education.xml",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Kuwait News",
+          "url": "https://kuwaitnews.com/feed/",
+          "sitemapUrl": "https://kuwaitnews.com/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Kuwait News - Kuwait",
+          "url": "https://kuwaitnews.com/category/kuwait/feed/",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Kuwait News - World",
+          "url": "https://kuwaitnews.com/category/world/feed/",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Kuwait News - Middle East",
+          "url": "https://kuwaitnews.com/category/middle-east/feed/",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Kuwait News - Business",
+          "url": "https://kuwaitnews.com/category/business/feed/",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Kuwait News - Education",
+          "url": "https://kuwaitnews.com/category/education/feed/",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Kuwait News - Sports",
+          "url": "https://kuwaitnews.com/category/sports/feed/",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Boursa Kuwait",
+          "url": "https://rss.boursakuwait.com.kw/rss/FeedFull.aspx",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Kuwait Times - Latest",
+          "url": "https://kuwaittimes.com/rssFeed/0",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Kuwait Times - March 2026 Sitemap",
+          "sitemapUrl": "https://kuwaittimes.com/sitemaps/2026/3/sitemap_0.xml?v=1.1",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Kuwait Times - April 2026 Sitemap",
+          "sitemapUrl": "https://kuwaittimes.com/sitemaps/2026/4/sitemap_0.xml?v=1.1",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Kuwait Times - Sports",
+          "url": "https://kuwaittimes.com/rssFeed/3",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Kuwait Times - World",
+          "url": "https://kuwaittimes.com/rssFeed/10",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Kuwait Times - Business",
+          "url": "https://kuwaittimes.com/rssFeed/11",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Kuwait Times - Kuwait",
+          "url": "https://kuwaittimes.com/rssFeed/14",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Kuwait Times - Technology",
+          "url": "https://kuwaittimes.com/rssFeed/9",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Kuwait Times - Health",
+          "url": "https://kuwaittimes.com/rssFeed/15",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Kuwait Times - Top Stories",
+          "url": "https://kuwaittimes.com/rssFeed/18",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Kuwait Times - Lifestyle",
+          "url": "https://kuwaittimes.com/rssFeed/12",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Kuwait Times - Opinion",
+          "url": "https://kuwaittimes.com/rssFeed/13",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Aljarida - Latest",
+          "url": "https://www.aljarida.com/rssFeed/19",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Aljarida - Local",
+          "url": "https://www.aljarida.com/rssFeed/1",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Aljarida - Economy",
+          "url": "https://www.aljarida.com/rssFeed/4",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Aljarida - Sports",
+          "url": "https://www.aljarida.com/rssFeed/3",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Aljarida - World",
+          "url": "https://www.aljarida.com/rssFeed/15",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Aljarida - Pepper",
+          "url": "https://www.aljarida.com/rssFeed/13",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Aljarida - Last Word",
+          "url": "https://www.aljarida.com/rssFeed/16",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Aljarida - Articles",
+          "url": "https://www.aljarida.com/rssFeed/23",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Arab Times - Latest",
+          "url": "https://www.arabtimesonline.com/rssFeed/0/",
+          "sitemapUrl": "https://www.arabtimesonline.com/sitemaps/latest_articles.xml?v=1.1",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Arab Times - Kuwait",
+          "url": "https://www.arabtimesonline.com/rssFeed/73/",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Arab Times - Business",
+          "url": "https://www.arabtimesonline.com/rssFeed/30/",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Arab Times - International",
+          "url": "https://www.arabtimesonline.com/rssFeed/47/",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Arab Times - Sports",
+          "url": "https://www.arabtimesonline.com/rssFeed/46/",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Arab Times - Technology",
+          "url": "https://www.arabtimesonline.com/rssFeed/79/",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Arab Times - Crime",
+          "url": "https://www.arabtimesonline.com/rssFeed/83/",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Arab Times - Health and Science",
+          "url": "https://www.arabtimesonline.com/rssFeed/91/",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Arab Times - News",
+          "url": "https://www.arabtimesonline.com/rssFeed/29/",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Arab Times - Local News",
+          "url": "https://www.arabtimesonline.com/rssFeed/75/",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Rai Media - Latest",
+          "url": "https://www.alraimedia.com/rssFeed/0",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Rai Media - Local",
+          "url": "https://www.alraimedia.com/rssFeed/1",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Rai Media - Sports",
+          "url": "https://www.alraimedia.com/rssFeed/3",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Rai Media - Economy",
+          "url": "https://www.alraimedia.com/rssFeed/4",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Rai Media - World",
+          "url": "https://www.alraimedia.com/rssFeed/5",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Rai Media - Arabs and World",
+          "url": "https://www.alraimedia.com/rssFeed/5/26",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Rai Media - Last",
+          "url": "https://www.alraimedia.com/rssFeed/7",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Rai Media - Security",
+          "url": "https://www.alraimedia.com/rssFeed/7/14",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Rai Media - Crime",
+          "url": "https://www.alraimedia.com/rssFeed/7/15",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Rai Media - Arts",
+          "url": "https://www.alraimedia.com/rssFeed/14",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Rai Media - Local Education",
+          "url": "https://www.alraimedia.com/rssFeed/1/11",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Rai Media - Sports Local",
+          "url": "https://www.alraimedia.com/rssFeed/3/22",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Rai Media - Sports International",
+          "url": "https://www.alraimedia.com/rssFeed/3/23",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Rai Media - Economy Companies",
+          "url": "https://www.alraimedia.com/rssFeed/4/17",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Rai Media - Economy Aviation",
+          "url": "https://www.alraimedia.com/rssFeed/4/18",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Rai Media - Economy Oil",
+          "url": "https://www.alraimedia.com/rssFeed/4/19",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Rai Media - Economy Tech",
+          "url": "https://www.alraimedia.com/rssFeed/4/20",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Rai Media - World Gulf",
+          "url": "https://www.alraimedia.com/rssFeed/5/25",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Rai Media - World International",
+          "url": "https://www.alraimedia.com/rssFeed/5/26",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Times Kuwait",
+          "url": "https://timeskuwait.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Seyassah - Latest Sitemap",
+          "sitemapUrl": "https://alseyassah.com/sitemaps/latest_articles.xml?v=1.1",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Seyassah - International",
+          "url": "https://alseyassah.com/rssFeed/4/",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Seyassah - Economy",
+          "url": "https://alseyassah.com/rssFeed/5/",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Seyassah - Sports",
+          "url": "https://alseyassah.com/rssFeed/6/",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Seyassah - Local",
+          "url": "https://alseyassah.com/rssFeed/8/",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Seyassah - Security and Judiciary",
+          "url": "https://alseyassah.com/rssFeed/8/3/",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
           "valid": "valid"
         }
       ]
@@ -23418,41 +24465,6 @@
         {
           "name": "El Universo",
           "url": "https://www.eluniverso.com/arc/outboundfeeds/rss/category/noticias/?outputType=xml"
-        },
-        {
-          "name": "El Comercio - Titulares",
-          "url": "https://elcomercio.com/rss",
-          "status": "NEW",
-          "checkedDate": "04/01/2026",
-          "valid": "valid"
-        },
-        {
-          "name": "El Comercio - Actualidad",
-          "url": "https://elcomercio.com/rss/actualidad",
-          "status": "NEW",
-          "checkedDate": "04/01/2026",
-          "valid": "valid"
-        },
-        {
-          "name": "El Comercio - Tendencias",
-          "url": "https://elcomercio.com/rss/tendencias",
-          "status": "NEW",
-          "checkedDate": "04/01/2026",
-          "valid": "valid"
-        },
-        {
-          "name": "El Comercio - Deportes",
-          "url": "https://elcomercio.com/rss/deportes",
-          "status": "NEW",
-          "checkedDate": "04/01/2026",
-          "valid": "valid"
-        },
-        {
-          "name": "El Comercio - Opinion",
-          "url": "https://elcomercio.com/rss/opinion",
-          "status": "NEW",
-          "checkedDate": "04/01/2026",
-          "valid": "valid"
         }
       ]
     },
@@ -23492,20 +24504,6 @@
           "sitemapUrl": "https://www.muscatdaily.com/post-sitemap.xml",
           "status": "NEW",
           "checkedDate": "03/31/2026",
-          "valid": "valid"
-        },
-        {
-          "name": "Muscat Daily - Oman",
-          "url": "https://www.muscatdaily.com/category/oman/feed/",
-          "status": "NEW",
-          "checkedDate": "04/01/2026",
-          "valid": "valid"
-        },
-        {
-          "name": "Muscat Daily - Business",
-          "url": "https://www.muscatdaily.com/category/business/feed/",
-          "status": "NEW",
-          "checkedDate": "04/01/2026",
           "valid": "valid"
         }
       ]
@@ -23575,6 +24573,16 @@
           "valid": "valid"
         }
       ]
+    },
+    {
+      "name": "Malaysia",
+      "code": "MY",
+      "feeds": []
+    },
+    {
+      "name": "Philippines",
+      "code": "PH",
+      "feeds": []
     },
     {
       "name": "Vietnam",
