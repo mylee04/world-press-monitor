@@ -9,7 +9,7 @@ import { MapBenchmarkSheet } from '@/components/map-benchmark-sheet';
 import { MapDetailDrawer } from '@/components/map-detail-drawer';
 import { MapFloatingToolbar } from '@/components/map-floating-toolbar';
 import { MapSidePanel } from '@/components/map-side-panel';
-import { useRemoteJson } from '@/components/use-remote-json';
+import { useRemoteJson } from '@/lib/use-remote-json';
 import {
   formatNumber,
   formatRelative,
@@ -565,17 +565,6 @@ function buildCountrySourceClusters(items: CountryPlottedPoint[], window: MapMet
       sources: [...entry.sources].sort((a, b) => getSourceWindowMetrics(b, window).published - getSourceWindowMetrics(a, window).published || a.source.localeCompare(b.source)),
     }))
     .sort((a, b) => getClusterWindowPublished(b, window) - getClusterWindowPublished(a, window) || a.name.localeCompare(b.name));
-}
-
-function rankCounts(items: Array<{ name: string; count: number }>, limit = 8): Array<{ name: string; count: number }> {
-  const byName = new Map<string, number>();
-  for (const item of items) {
-    byName.set(item.name, (byName.get(item.name) || 0) + item.count);
-  }
-  return [...byName.entries()]
-    .map(([name, count]) => ({ name, count }))
-    .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name))
-    .slice(0, limit);
 }
 
 function deriveSummaryFromSources(items: MapSourceMetricRow[], window: MapMetricWindow) {
@@ -1626,13 +1615,16 @@ export function MapView() {
   }, [mapMode, selectedPublisher, sourcesState.data]);
 
   const derivedCountrySummary = useMemo(() => deriveSummaryFromSources(displayedCountrySources, mapWindow), [displayedCountrySources, mapWindow]);
-  const derivedTopSources = useMemo(
-    () => rankCounts(
-      displayedCountrySources
+  const derivedTopSourceRows = useMemo(
+    () =>
+      [...displayedCountrySources]
         .filter((item) => isSourceWindowActive(item, mapWindow))
-        .map((item) => ({ name: item.source, count: getSourceWindowMetrics(item, mapWindow).published })),
-      8
-    ),
+        .sort(
+          (a, b) =>
+            getSourceWindowMetrics(b, mapWindow).published - getSourceWindowMetrics(a, mapWindow).published ||
+            a.source.localeCompare(b.source)
+        )
+        .slice(0, 10),
     [displayedCountrySources, mapWindow]
   );
   const derivedTopRegions = useMemo(
@@ -1656,11 +1648,9 @@ export function MapView() {
     : mapMode === 'publishers'
       ? derivedTopRegions
       : selectedCountryTopRegions;
-  const selectedCountryTopSourcesDisplay = mapMode === 'health'
-    ? []
-    : mapMode === 'publishers'
-      ? derivedTopSources
-      : (sourcesState.data?.topSources || []);
+  const selectedCountryTopSourceRows = mapMode === 'health'
+    ? derivedTopDegradedSources
+    : derivedTopSourceRows;
   const selectedCountrySummaryDisplay = derivedCountrySummary;
   const selectedCountryTrendBars = mapWindow === '7d'
     ? selectedCountryDaily.map((item) => ({ bucket: item.day, count: item.count }))
@@ -1953,7 +1943,7 @@ export function MapView() {
           selectedCountryTrendBars={selectedCountryTrendBars}
           selectedCountryTopRegionsDisplay={selectedCountryTopRegionsDisplay}
           selectedCountryTopPublishers={selectedCountryTopPublishers}
-          selectedCountryTopSourcesDisplay={selectedCountryTopSourcesDisplay}
+          selectedCountryTopSourceRows={selectedCountryTopSourceRows}
           derivedTopDegradedRegions={derivedTopDegradedRegions}
           derivedTopDegradedSources={derivedTopDegradedSources}
           activeWindowDescriptor={activeWindowDescriptor}

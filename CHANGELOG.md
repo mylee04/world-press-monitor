@@ -6,6 +6,264 @@
 
 ## Unreleased
 
+### [8b15bf5] Expand Israel coverage and include Bahrain/Jordan/Kuwait scope feeds
+- Commit: 8b15bf5d353ce49c2c18c9152a48a3b104759dc3
+- Date: 2026-04-01 11:34:41 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	data/rss-atlas.json
+  - Git stat:
+  - data/rss-atlas.json | 311 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+  -  1 file changed, 311 insertions(+)
+
+### [dca0dc1] Refactor map data readers and simplify map controls
+- Commit: dca0dc1de4edd366fac8cdc3ac0aad0da8e3593a
+- Date: 2026-04-01 11:21:39 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	app/globals.css
+    - M	components/map-side-panel.tsx
+    - A	lib/map-country-metrics-reader.ts
+    - A	lib/map-country-sources-reader.ts
+    - A	lib/map-publishers-reader.ts
+    - A	lib/map-source-detail-reader.ts
+    - A	lib/map-store-db.ts
+    - A	lib/map-store-locations.ts
+    - A	lib/map-store-source-meta.ts
+    - A	lib/map-store-windows.ts
+    - M	lib/map-store.ts
+  - Git stat:
+  - app/globals.css                   |   82 ++-
+  -  components/map-side-panel.tsx     |   83 ++-
+  -  lib/map-country-metrics-reader.ts |  213 ++++++
+  -  lib/map-country-sources-reader.ts |  164 +++++
+  -  lib/map-publishers-reader.ts      |  160 +++++
+  -  lib/map-source-detail-reader.ts   |  103 +++
+  -  lib/map-store-db.ts               |  390 +++++++++++
+  -  lib/map-store-locations.ts        |  156 +++++
+  -  lib/map-store-source-meta.ts      |  136 ++++
+  -  lib/map-store-windows.ts          |  231 ++++++
+  -  lib/map-store.ts                  | 1395 +------------------------------------
+  -  11 files changed, 1710 insertions(+), 1403 deletions(-)
+
+### [55913b2] Reduce soft-category skew in top markets
+- Commit: 55913b270a568a14a273244d3adfe52c2cdfbc77
+- Date: 2026-04-01 11:09:50 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	data/rss-atlas.json
+    - M	data/rss-catalog.csv
+    - M	data/rss-catalog.opml
+    - M	lib/article-url-filters.ts
+  - Git stat:
+  - data/rss-atlas.json        |   62 +-
+  -  data/rss-catalog.csv       | 3335 ++++++++++++++++++++++----------------------
+  -  data/rss-catalog.opml      |    9 +-
+  -  lib/article-url-filters.ts |  107 ++
+  -  4 files changed, 1842 insertions(+), 1671 deletions(-)
+
+### [8b0b4d2] Expand US general news coverage
+- Commit: 8b0b4d258c9fc381a7f398f29bad96dae5d36bbf
+- Date: 2026-04-01 10:54:25 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	data/rss-atlas.json
+    - M	data/rss-catalog.csv
+    - M	data/rss-catalog.opml
+    - M	lib/article-url-filters.ts
+  - Git stat:
+  - data/rss-atlas.json        |  143 +-
+  -  data/rss-catalog.csv       | 3353 ++++++++++++++++++++++----------------------
+  -  data/rss-catalog.opml      |   23 +-
+  -  lib/article-url-filters.ts |   26 +
+  -  4 files changed, 1871 insertions(+), 1674 deletions(-)
+
+### [5575711] Refactor map view into smaller components
+- Commit: 5575711d30bdea6f13cab727907c9af1a184b2dc
+- Date: 2026-04-01 10:44:56 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	app/api/customer/dashboard/map/countries/[country]/sources/route.ts
+    - A	components/map-benchmark-sheet.tsx
+    - A	components/map-detail-drawer.tsx
+    - A	components/map-floating-toolbar.tsx
+    - A	components/map-side-panel.tsx
+    - M	components/map-view.tsx
+    - A	components/use-remote-json.ts
+    - A	lib/map-display.ts
+    - A	lib/map-view-state.ts
+  - Git stat:
+  - .../map/countries/[country]/sources/route.ts       |   10 +-
+  -  components/map-benchmark-sheet.tsx                 |  142 ++
+  -  components/map-detail-drawer.tsx                   |  451 ++++++
+  -  components/map-floating-toolbar.tsx                |  173 +++
+  -  components/map-side-panel.tsx                      |  608 ++++++++
+  -  components/map-view.tsx                            | 1550 ++------------------
+  -  components/use-remote-json.ts                      |   95 ++
+  -  lib/map-display.ts                                 |   88 ++
+  -  lib/map-view-state.ts                              |  109 ++
+  -  9 files changed, 1827 insertions(+), 1399 deletions(-)
+
+### [a360124] Document RSS and sitemap quality rules
+- Commit: a360124af4a7548aa3bac4cd1fca92f90bffa51f
+- Date: 2026-04-01 10:42:00 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	docs/country-news-benchmark-plan.md
+    - A	docs/rss-sitemap-quality-playbook.md
+  - Git stat:
+  - docs/country-news-benchmark-plan.md  |   5 +
+  -  docs/rss-sitemap-quality-playbook.md | 349 +++++++++++++++++++++++++++++++++++
+  -  2 files changed, 354 insertions(+)
+
+### [6c596e5] Trim remaining Korea coverage duplicates
+- Commit: 6c596e5c3b4672a4216f228fb5b3f4d530858c06
+- Date: 2026-04-01 10:36:33 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	data/rss-atlas.json
+    - M	data/rss-catalog.csv
+    - M	data/rss-catalog.opml
+  - Git stat:
+  - data/rss-atlas.json   |   19 +-
+  -  data/rss-catalog.csv  | 3337 ++++++++++++++++++++++++-------------------------
+  -  data/rss-catalog.opml |    3 +-
+  -  3 files changed, 1686 insertions(+), 1673 deletions(-)
+
+### [98b721a] Add Bahrain sitemap support for current feeds
+- Commit: 98b721aba9a4f27aebd7c42f9a7983c6233e5955
+- Date: 2026-04-01 10:34:37 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	data/rss-atlas.json
+  - Git stat:
+  - data/rss-atlas.json | 2 ++
+  -  1 file changed, 2 insertions(+)
+
+### [71c1ae2] Reduce Korea Japan and Argentina coverage skew
+- Commit: 71c1ae2dde910e58cb87eac9a51b7e727587865a
+- Date: 2026-04-01 10:26:39 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	data/rss-atlas.json
+    - M	data/rss-catalog.csv
+    - M	data/rss-catalog.opml
+  - Git stat:
+  - data/rss-atlas.json   |   98 +-
+  -  data/rss-catalog.csv  | 3358 ++++++++++++++++++++++++-------------------------
+  -  data/rss-catalog.opml |   24 +-
+  -  3 files changed, 1765 insertions(+), 1715 deletions(-)
+
+### [16ad1a8] Reduce US UK and Japan coverage skew
+- Commit: 16ad1a8dbbf03ff4fd21b4571db36b405fb2cbe1
+- Date: 2026-04-01 10:13:23 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	data/rss-atlas.json
+    - M	data/rss-catalog.csv
+    - M	data/rss-catalog.opml
+    - M	lib/article-url-filters.ts
+  - Git stat:
+  - data/rss-atlas.json        | 1394 +++++++++++++++---
+  -  data/rss-catalog.csv       | 3514 +++++++++++++++++++++++---------------------
+  -  data/rss-catalog.opml      |  158 +-
+  -  lib/article-url-filters.ts |   28 +
+  -  4 files changed, 3200 insertions(+), 1894 deletions(-)
+
+### [6539960] Ignore local debug artifacts
+- Commit: 65399609bbe1f707f740cf40794b8118a8b40a6f
+- Date: 2026-04-01 10:07:02 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	.gitignore
+  - Git stat:
+  - .gitignore | 6 ++++++
+  -  1 file changed, 6 insertions(+)
+
+### [8d09b49] Remove map export fallback stack
+- Commit: 8d09b496c9eb25e6afbc3c31f7288d4a4a1b1884
+- Date: 2026-04-01 10:04:12 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	components/map-view.tsx
+    - M	docs/country-news-benchmark-plan.md
+    - M	lib/map-store.ts
+    - M	lib/map-types.ts
+  - Git stat:
+  - components/map-view.tsx             |   9 +-
+  -  docs/country-news-benchmark-plan.md |  60 +---
+  -  lib/map-store.ts                    | 569 +-----------------------------------
+  -  lib/map-types.ts                    |   2 +-
+  -  4 files changed, 22 insertions(+), 618 deletions(-)
+
+### [d94599f] Remove legacy explorer surface
+- Commit: d94599fce980536b8e3bb6847e9f7cbfd9321b47
+- Date: 2026-04-01 09:53:21 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	README.md
+    - D	app/explorer/page.tsx
+    - M	components/customer-access-panel.tsx
+    - M	components/dashboard-view.tsx
+    - D	components/explorer-view.tsx
+    - M	docs/customer-api-access.md
+    - M	docs/worldpressradar-domain-setup.md
+  - Git stat:
+  - README.md                            |  12 +-
+  -  app/explorer/page.tsx                |   5 -
+  -  components/customer-access-panel.tsx |   2 +-
+  -  components/dashboard-view.tsx        |   2 +-
+  -  components/explorer-view.tsx         | 413 -----------------------------------
+  -  docs/customer-api-access.md          |   2 +-
+  -  docs/worldpressradar-domain-setup.md |   2 +-
+  -  7 files changed, 10 insertions(+), 428 deletions(-)
+
+### [c6000dd] Reduce Taiwan portal skew in coverage
+- Commit: c6000dd97be13e856cc35ca4438750b92c1a038f
+- Date: 2026-04-01 09:45:37 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	data/rss-atlas.json
+    - M	data/rss-catalog.csv
+    - M	data/rss-catalog.opml
+    - M	lib/article-url-filters.ts
+  - Git stat:
+  - data/rss-atlas.json        |    3 +
+  -  data/rss-catalog.csv       | 3370 ++++++++++++++++++++++----------------------
+  -  data/rss-catalog.opml      |    2 +-
+  -  lib/article-url-filters.ts |   12 +
+  -  4 files changed, 1701 insertions(+), 1686 deletions(-)
+
+### [65658e3] Remove legacy healthz endpoint
+- Commit: 65658e36ec2bf4bf3d472413b083b3ff09c71ecd
+- Date: 2026-04-01 09:38:45 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	scripts/api-news.ts
+  - Git stat:
+  - scripts/api-news.ts | 28 +---------------------------
+  -  1 file changed, 1 insertion(+), 27 deletions(-)
+
+### [9c72c7c] Add map publisher confidence and country window views
+- Commit: 9c72c7cc3883a29b32929e93ec23a311eb71d266
+- Date: 2026-04-01 09:28:34 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	app/api/customer/dashboard/map/countries/[country]/sources/route.ts
+    - M	app/globals.css
+    - M	components/map-view.tsx
+    - M	lib/map-store.ts
+    - M	lib/map-types.ts
+    - M	lib/publisher-groups.ts
+  - Git stat:
+  - .../map/countries/[country]/sources/route.ts       |  11 +-
+  -  app/globals.css                                    |  15 ++
+  -  components/map-view.tsx                            | 189 +++++++++++++------
+  -  lib/map-store.ts                                   | 210 ++++++++++++++++++---
+  -  lib/map-types.ts                                   |  15 ++
+  -  lib/publisher-groups.ts                            |  41 +++-
+  -  6 files changed, 380 insertions(+), 101 deletions(-)
+
 ### [9be7aaf] Add source category backfill fallbacks
 - Commit: 9be7aaf8483fe4d1f8fa7d39010631a089fb16df
 - Date: 2026-03-24 10:09:08 -0500

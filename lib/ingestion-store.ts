@@ -1,5 +1,4 @@
 import { Pool } from 'pg';
-import { createHash } from 'node:crypto';
 import type {
   NewsItem,
   NewsSection,
@@ -23,12 +22,7 @@ import {
   preferPersistedArticleRow,
   sanitizeTextForDatabase,
   truncatePersistedText,
-  type NewsArticlePersistable,
-  type MissingPublishedAtPersistable,
-  toMissingPublishedAtPersistable,
-  toNewsArticlePersistable,
 } from '@/lib/news-write-helpers';
-import { normalizeLinkForId } from '@/lib/pipeline';
 import {
   buildArticleTaxonomy,
   normalizeSourceCategories,
@@ -46,13 +40,26 @@ import {
   type SitemapPolicyStatus,
 } from '@/lib/news-ops-store';
 import { readNewsApiFiltersWithDeps, readNewsArticlesForApiWithDeps } from '@/lib/news-read-store';
+import {
+  readIngestionFeedWatermarksWithDeps,
+  upsertIngestionFeedWatermarksWithDeps,
+  type FeedWatermark as IngestionFeedWatermark,
+} from '@/lib/ingestion-store-feed-watermarks';
+import {
+  backfillNewsArticleFeedCategoriesWithDeps,
+  MissingPublishedAtCandidate,
+  NewsArticleFeedCategoryBackfill,
+  persistMissingPublishedAtCandidatesWithDeps,
+  persistNewsArticlesWithDeps,
+} from '@/lib/ingestion-store-persistence';
+
+export type { MissingPublishedAtCandidate, NewsArticleFeedCategoryBackfill };
 
 let pool: Pool | null = null;
 let poolFailed = false;
 let schemaReady = false;
 let poolDisabledReason = 'not_initialized';
 
-const INGEST_FEED_WATERMARKS_TABLE = 'ingest_feed_watermarks_v2';
 const INGEST_SITEMAP_POLICY_TABLE = 'ingest_sitemap_policy_v2';
 
 const publicationMaxAgeDays = (() => {
@@ -702,30 +709,6 @@ async function executeIngestionQuery(db: Pool, queryText: string, values: unknow
   }
 }
 
-async function sha256Hex(value: string): Promise<string> {
-  return createHash('sha256').update(value).digest('hex');
-}
-
-type FeedWatermark = {
-  outletId: string;
-  source: string;
-  country: string;
-  method: 'rss' | 'sitemap';
-  lastPublicationAt: string | null;
-};
-
-type FeedWatermarkDbRow = {
-  outlet_id: string;
-  source: string;
-  country: string;
-  method: string;
-  last_publication_at: string | null;
-};
-
-function getFeedWatermarkKey(outletId: string, method: 'rss' | 'sitemap'): string {
-  return `${outletId}:${method}`;
-}
-
 function isRecoverableIngestionStateError(error: unknown, relationNames: string[]): boolean {
   if (!(error instanceof Error)) return false;
   const message = error.message.toLowerCase();
@@ -737,131 +720,24 @@ function isRecoverableIngestionStateError(error: unknown, relationNames: string[
   );
 }
 
-function isRecoverableFeedWatermarkError(error: unknown): boolean {
-  return isRecoverableIngestionStateError(error, ['ingest_feed_watermarks', INGEST_FEED_WATERMARKS_TABLE]);
-}
-
 function isRecoverableSitemapPolicyError(error: unknown): boolean {
   return isRecoverableIngestionStateError(error, ['ingest_sitemap_policy', INGEST_SITEMAP_POLICY_TABLE]);
 }
 
 export async function readIngestionFeedWatermarks(rows: Array<{ outletId: string; method: 'rss' | 'sitemap' }>): Promise<Map<string, string | null>> {
-  const db = getPool();
-  if (!db) return new Map();
-  if (!rows.length) return new Map();
-  await ensureSchema();
-
-  const unique = new Map<string, { outletId: string; method: 'rss' | 'sitemap' }>();
-  for (const row of rows) {
-    if (!row.outletId) continue;
-    unique.set(getFeedWatermarkKey(row.outletId, row.method), row);
-  }
-  const requests = [...unique.values()];
-  if (!requests.length) return new Map();
-
-  const values: string[] = [];
-  const placeholders = requests
-    .map((request, index) => {
-      const base = index * 2;
-      values.push(request.outletId);
-      values.push(request.method);
-      return `($${base + 1}, $${base + 2})`;
-    })
-    .join(', ');
-  const map = new Map<string, string | null>();
-  for (const request of requests) {
-    map.set(getFeedWatermarkKey(request.outletId, request.method), null);
-  }
-
-  try {
-    const result = await db.query<FeedWatermarkDbRow>(
-      `
-      with requested(outlet_id, method) as (
-        values ${placeholders}
-      )
-      select
-        r.outlet_id,
-        r.method,
-        w.source,
-        w.country,
-        w.last_publication_at
-      from requested r
-      left join ingest_feed_watermarks_v2 w
-        on w.outlet_id = r.outlet_id
-        and w.method = r.method
-      `,
-      values
-    );
-
-    for (const row of result.rows) {
-      map.set(getFeedWatermarkKey(row.outlet_id, row.method as 'rss' | 'sitemap'), row.last_publication_at || null);
-    }
-  } catch (error) {
-    if (!isRecoverableFeedWatermarkError(error)) throw error;
-    console.warn('[ingestion-store] skipping feed watermark reads due to recoverable catalog error:', error instanceof Error ? error.message : String(error));
-  }
-  return map;
+  return readIngestionFeedWatermarksWithDeps({
+    getPool,
+    ensureSchema,
+    executeIngestionQuery,
+  }, rows);
 }
 
-export async function upsertIngestionFeedWatermarks(rows: FeedWatermark[]): Promise<void> {
-  const db = getPool();
-  if (!db || !rows.length) return;
-  await ensureSchema();
-
-  const deduped = new Map<string, FeedWatermark>();
-  for (const row of rows) {
-    if (!row.outletId || !row.method) continue;
-    const key = getFeedWatermarkKey(row.outletId, row.method);
-    const current = deduped.get(key);
-    if (!current || (row.lastPublicationAt && (!current.lastPublicationAt || row.lastPublicationAt > current.lastPublicationAt))) {
-      deduped.set(key, row);
-    }
-  }
-
-  const values: unknown[] = [];
-  const parts: string[] = [];
-  [...deduped.values()].forEach((row, index) => {
-    const base = index * 5;
-    parts.push(
-      `($${base + 1}::text,$${base + 2}::text,$${base + 3}::text,$${base + 4}::text,$${base + 5}::timestamptz,now(),now())`
-    );
-    values.push(
-      row.outletId,
-      row.source,
-      row.country,
-      row.method,
-      row.lastPublicationAt
-    );
-  });
-
-  if (!parts.length) return;
-
-  try {
-    await executeIngestionQuery(
-      db,
-      `
-      insert into ingest_feed_watermarks_v2 (
-        outlet_id, source, country, method, last_publication_at, last_fetched_at, updated_at
-      ) values ${parts.join(',')}
-      on conflict (outlet_id, method) do update set
-        source = excluded.source,
-        country = excluded.country,
-        last_publication_at = case
-          when ingest_feed_watermarks_v2.last_publication_at is null then excluded.last_publication_at
-          when excluded.last_publication_at is null then ingest_feed_watermarks_v2.last_publication_at
-          when excluded.last_publication_at > ingest_feed_watermarks_v2.last_publication_at then excluded.last_publication_at
-          else ingest_feed_watermarks_v2.last_publication_at
-        end,
-        last_fetched_at = excluded.last_fetched_at,
-        updated_at = now()
-      `,
-      values,
-      'upsertIngestionFeedWatermarks'
-    );
-  } catch (error) {
-    if (!isRecoverableFeedWatermarkError(error)) throw error;
-    console.warn('[ingestion-store] skipping feed watermark writes due to recoverable catalog error:', error instanceof Error ? error.message : String(error));
-  }
+export async function upsertIngestionFeedWatermarks(rows: IngestionFeedWatermark[]): Promise<void> {
+  return upsertIngestionFeedWatermarksWithDeps({
+    getPool,
+    ensureSchema,
+    executeIngestionQuery,
+  }, rows);
 }
 
 function chunk<T>(items: T[], size: number): T[][] {
@@ -2267,269 +2143,23 @@ async function upsertIngestOpsRollups(db: Pool, runs: IngestionEndpointRun[], de
   }
 }
 
-export type MissingPublishedAtCandidate = {
-  outletId: string;
-  source: string;
-  country: string;
-  method: 'rss' | 'sitemap';
-  link: string;
-  title: string;
-  description: string | null;
-  language: string | null;
-  section: string;
-  categories: string[];
-};
-
-type ExistingArticleIdentityRow = {
-  external_id: string;
-  stable_id: string | null;
-};
-
-export type NewsArticleFeedCategoryBackfill = {
-  externalId: string;
-  sourceCategories: string[];
-};
-
-async function resolveExistingArticleExternalIds(
-  db: Pool,
-  rows: NewsArticlePersistable[]
-): Promise<Map<string, string>> {
-  const stableIds = [...new Set(rows.map((row) => row.stableId).filter((value): value is string => Boolean(value)))];
-  const externalIds = [...new Set(rows.map((row) => row.externalId).filter(Boolean))];
-  if (!stableIds.length && !externalIds.length) return new Map();
-
-  const result = await db.query<ExistingArticleIdentityRow>(
-    `
-    select external_id, stable_id
-    from news_articles
-    where (
-      cardinality($1::text[]) > 0
-      and external_id = any($1::text[])
-    ) or (
-      cardinality($2::text[]) > 0
-      and stable_id = any($2::text[])
-    )
-    `,
-    [externalIds, stableIds]
-  );
-
-  const stableIdToExternalId = new Map<string, string>();
-  const externalIdSet = new Set<string>();
-  for (const row of result.rows) {
-    if (row.stable_id) {
-      stableIdToExternalId.set(row.stable_id, row.external_id);
-    }
-    externalIdSet.add(row.external_id);
-  }
-
-  const resolved = new Map<string, string>();
-  for (const row of rows) {
-    const key = `${row.externalId}|${row.stableId || ''}`;
-    if (row.stableId && stableIdToExternalId.has(row.stableId)) {
-      resolved.set(key, stableIdToExternalId.get(row.stableId)!);
-      continue;
-    }
-    if (externalIdSet.has(row.externalId)) {
-      resolved.set(key, row.externalId);
-    }
-  }
-
-  return resolved;
-}
-
 export async function persistNewsArticles(items: NewsItem[]): Promise<{ persisted: number; storage: 'postgres' | 'disabled'; reason?: string }> {
   const db = getPool();
   if (!db) return { persisted: 0, storage: 'disabled', reason: poolDisabledReason };
   if (!items.length) return { persisted: 0, storage: 'postgres' };
 
-  await ensureSchema();
-  const rows = (
-    await Promise.all(
-      items.map((item) =>
-        toNewsArticlePersistable(item, {
-          publicationMaxAgeMs,
-          storedTitleMaxChars,
-          storedSnippetMaxChars,
-          sha256Hex,
-        })
-      )
-    )
-  ).filter((row): row is NewsArticlePersistable => Boolean(row));
-  if (!rows.length) return { persisted: 0, storage: 'postgres' };
-  const resolvedExisting = await resolveExistingArticleExternalIds(db, rows);
-  const resolvedRows = rows.map((row) => ({
-    ...row,
-    externalId: resolvedExisting.get(`${row.externalId}|${row.stableId || ''}`) || row.externalId,
-  }));
-  const dedupedRows = [...resolvedRows.reduce((acc, row) => {
-    const dedupeKey = row.stableId || row.externalId;
-    const current = acc.get(dedupeKey);
-    if (!current) {
-      acc.set(dedupeKey, row);
-      return acc;
-    }
-    acc.set(dedupeKey, preferPersistedArticleRow(current, row));
-    return acc;
-  }, new Map<string, NewsArticlePersistable>()).values()];
-  const insertRows = [...dedupedRows.reduce((acc, row) => {
-    const current = acc.get(row.externalId);
-    if (!current) {
-      acc.set(row.externalId, row);
-      return acc;
-    }
-    acc.set(row.externalId, preferPersistedArticleRow(current, row));
-    return acc;
-  }, new Map<string, NewsArticlePersistable>()).values()];
-
-  const groups = chunk(insertRows, 250);
-  for (const group of groups) {
-    const values: unknown[] = [];
-    const parts: string[] = [];
-    group.forEach((row, i) => {
-      const base = i * 25;
-      parts.push(
-        `($${base + 1}::text,$${base + 2}::text,least($${base + 3}::timestamptz, now()),$${base + 4}::text,$${base + 5}::text,$${base + 6}::text[],$${base + 7}::text[],$${base + 8}::text,$${base + 9}::text[],$${base + 10}::timestamptz,$${base + 11}::timestamptz,$${base + 12}::text,$${base + 13}::text,$${base + 14}::text,$${base + 15}::timestamptz,$${base + 16}::text,$${base + 17}::text,$${base + 18}::timestamptz,$${base + 19}::timestamptz,$${base + 20}::text,$${base + 21}::text,$${base + 22}::text,$${base + 23}::text,$${base + 24}::text,$${base + 25}::text,now(),now())`
-      );
-      values.push(
-        row.externalId,
-        row.stableId,
-        row.publicationDatetime,
-        row.section,
-        row.primarySection,
-        row.sectionsNormalized,
-        row.feedCategories,
-        row.primaryTopic,
-        row.topics,
-        new Date().toISOString(),
-        new Date().toISOString(),
-        row.titleOriginal,
-        row.titleQuality,
-        row.titleQualityReason,
-        row.titleQualityCheckedAt,
-        row.titleRepairStatus,
-        row.titleRepairSource,
-        row.titleRepairAttemptedAt,
-        row.titleRepairedAt,
-        row.snippetOriginal,
-        row.country,
-        row.sourceCountry,
-        row.url,
-        row.source,
-        row.language
-      );
-    });
-
-    await executeIngestionQuery(
-      db,
-      `
-      insert into news_articles (
-        external_id, stable_id, publication_datetime, section, primary_section, sections_normalized, feed_categories, primary_topic, topics, topics_derived_at, taxonomy_derived_at, title_original, title_quality, title_quality_reason, title_quality_checked_at, title_repair_status, title_repair_source, title_repair_attempted_at, title_repaired_at, snippet_original,
-        country, source_country, url, source, language, created_at, updated_at
-      ) values ${parts.join(',')}
-      on conflict (external_id) do update set
-        stable_id = coalesce(excluded.stable_id, news_articles.stable_id),
-        publication_datetime = least(excluded.publication_datetime, news_articles.created_at),
-        section = excluded.section,
-        primary_section = coalesce(excluded.primary_section, news_articles.primary_section),
-        sections_normalized = (
-          select array(
-            select distinct section_value
-            from unnest(
-              coalesce(news_articles.sections_normalized, '{}'::text[]) ||
-              coalesce(excluded.sections_normalized, '{}'::text[])
-            ) as section_value
-            where section_value is not null and btrim(section_value) <> ''
-          )
-        ),
-        feed_categories = (
-          select array(
-            select distinct unnest(
-              coalesce(news_articles.feed_categories, '{}'::text[]) ||
-              coalesce(excluded.feed_categories, '{}'::text[])
-            )
-          )
-        ),
-        primary_topic = coalesce(excluded.primary_topic, news_articles.primary_topic),
-        topics = (
-          select array(
-            select distinct topic
-            from unnest(
-              coalesce(news_articles.topics, '{}'::text[]) ||
-              coalesce(excluded.topics, '{}'::text[])
-            ) as topic
-            where topic is not null and btrim(topic) <> ''
-          )
-        ),
-        topics_derived_at = now(),
-        taxonomy_derived_at = now(),
-        title_original = case
-          when coalesce(nullif(trim(news_articles.title_quality), ''), 'ok') in ('ok', 'recovered')
-            and coalesce(nullif(trim(excluded.title_quality), ''), 'ok') = 'suspect'
-          then news_articles.title_original
-          when (excluded.title_original = excluded.url or excluded.title_original like 'http%')
-            and news_articles.title_original is not null
-            and news_articles.title_original <> ''
-            and news_articles.title_original <> news_articles.url
-            and news_articles.title_original not like 'http%'
-          then news_articles.title_original
-          else excluded.title_original
-        end,
-        title_quality = case
-          when coalesce(nullif(trim(news_articles.title_quality), ''), 'ok') in ('ok', 'recovered')
-            and coalesce(nullif(trim(excluded.title_quality), ''), 'ok') = 'suspect'
-          then news_articles.title_quality
-          else excluded.title_quality
-        end,
-        title_quality_reason = case
-          when coalesce(nullif(trim(news_articles.title_quality), ''), 'ok') in ('ok', 'recovered')
-            and coalesce(nullif(trim(excluded.title_quality), ''), 'ok') = 'suspect'
-          then news_articles.title_quality_reason
-          else excluded.title_quality_reason
-        end,
-        title_quality_checked_at = case
-          when coalesce(nullif(trim(news_articles.title_quality), ''), 'ok') in ('ok', 'recovered')
-            and coalesce(nullif(trim(excluded.title_quality), ''), 'ok') = 'suspect'
-          then coalesce(news_articles.title_quality_checked_at, excluded.title_quality_checked_at)
-          else excluded.title_quality_checked_at
-        end,
-        title_repair_status = case
-          when coalesce(nullif(trim(news_articles.title_quality), ''), 'ok') in ('ok', 'recovered')
-            and coalesce(nullif(trim(excluded.title_quality), ''), 'ok') = 'suspect'
-          then news_articles.title_repair_status
-          else excluded.title_repair_status
-        end,
-        title_repair_source = case
-          when coalesce(nullif(trim(news_articles.title_quality), ''), 'ok') in ('ok', 'recovered')
-            and coalesce(nullif(trim(excluded.title_quality), ''), 'ok') = 'suspect'
-          then news_articles.title_repair_source
-          else excluded.title_repair_source
-        end,
-        title_repair_attempted_at = case
-          when coalesce(nullif(trim(news_articles.title_quality), ''), 'ok') in ('ok', 'recovered')
-            and coalesce(nullif(trim(excluded.title_quality), ''), 'ok') = 'suspect'
-          then news_articles.title_repair_attempted_at
-          else excluded.title_repair_attempted_at
-        end,
-        title_repaired_at = case
-          when coalesce(nullif(trim(news_articles.title_quality), ''), 'ok') in ('ok', 'recovered')
-            and coalesce(nullif(trim(excluded.title_quality), ''), 'ok') = 'suspect'
-          then news_articles.title_repaired_at
-          else excluded.title_repaired_at
-        end,
-        snippet_original = coalesce(nullif(excluded.snippet_original, ''), news_articles.snippet_original),
-        country = excluded.country,
-        source_country = coalesce(excluded.source_country, news_articles.source_country),
-        url = excluded.url,
-        source = excluded.source,
-        language = excluded.language,
-        updated_at = now()
-      `,
-      values,
-      'persistNewsArticles.insert'
-    );
-  }
-
-  return { persisted: insertRows.length, storage: 'postgres' };
+  return persistNewsArticlesWithDeps(
+    {
+      getPool: () => db,
+      ensureSchema,
+      executeIngestionQuery,
+      chunk,
+      publicationMaxAgeMs,
+      storedTitleMaxChars,
+      storedSnippetMaxChars,
+    },
+    items
+  );
 }
 
 export async function backfillNewsArticleFeedCategories(
@@ -2539,57 +2169,18 @@ export async function backfillNewsArticleFeedCategories(
   if (!db) return { updated: 0, storage: 'disabled', reason: poolDisabledReason };
   if (!items.length) return { updated: 0, storage: 'postgres' };
 
-  await ensureSchema();
-  const deduped = [...items.reduce((acc, item) => {
-    const externalId = (item.externalId || '').trim();
-    if (!externalId) return acc;
-    const current = acc.get(externalId) || [];
-    acc.set(externalId, normalizeSourceCategories([...current, ...(item.sourceCategories || [])]));
-    return acc;
-  }, new Map<string, string[]>()).entries()]
-    .map(([externalId, sourceCategories]) => ({ externalId, sourceCategories }))
-    .filter((item) => item.sourceCategories.length > 0);
-
-  if (!deduped.length) return { updated: 0, storage: 'postgres' };
-
-  let updated = 0;
-  const groups = chunk(deduped, 250);
-  for (const group of groups) {
-    const values: unknown[] = [];
-    const parts: string[] = [];
-    group.forEach((item, index) => {
-      const base = index * 2;
-      parts.push(`($${base + 1}::text, $${base + 2}::text[])`);
-      values.push(item.externalId, item.sourceCategories);
-    });
-    const result = await db.query(
-      `
-      with incoming as (
-        select *
-        from (values ${parts.join(',')}) as t(external_id, feed_categories)
-      )
-      update news_articles as n
-      set feed_categories = (
-            select array(
-              select distinct category
-              from unnest(
-                coalesce(n.feed_categories, '{}'::text[]) ||
-                coalesce(incoming.feed_categories, '{}'::text[])
-              ) as category
-              where category is not null and btrim(category) <> ''
-            )
-          ),
-          updated_at = now()
-      from incoming
-      where n.external_id = incoming.external_id
-        and cardinality(coalesce(incoming.feed_categories, '{}'::text[])) > 0
-      `,
-      values
-    );
-    updated += result.rowCount || 0;
-  }
-
-  return { updated, storage: 'postgres' };
+  return backfillNewsArticleFeedCategoriesWithDeps(
+    {
+      getPool: () => db,
+      ensureSchema,
+      executeIngestionQuery,
+      chunk,
+      publicationMaxAgeMs,
+      storedTitleMaxChars,
+      storedSnippetMaxChars,
+    },
+    items
+  );
 }
 
 export async function persistMissingPublishedAtCandidates(
@@ -2599,106 +2190,18 @@ export async function persistMissingPublishedAtCandidates(
   if (!db) return { persisted: 0, storage: 'disabled', reason: poolDisabledReason };
   if (!items.length) return { persisted: 0, storage: 'postgres' };
 
-  await ensureSchema();
-  const rows = (
-    await Promise.all(
-      items.map((item) =>
-        toMissingPublishedAtPersistable(item, {
-          storedTitleMaxChars,
-          storedSnippetMaxChars,
-          sha256Hex,
-        })
-      )
-    )
-  ).filter(
-    (row): row is MissingPublishedAtPersistable => Boolean(row)
+  return persistMissingPublishedAtCandidatesWithDeps(
+    {
+      getPool: () => db,
+      ensureSchema,
+      executeIngestionQuery,
+      chunk,
+      publicationMaxAgeMs,
+      storedTitleMaxChars,
+      storedSnippetMaxChars,
+    },
+    items
   );
-  if (!rows.length) return { persisted: 0, storage: 'postgres' };
-
-  const dedupedRows = [...rows.reduce((acc, row) => {
-    const current = acc.get(row.candidateId);
-    if (!current) {
-      acc.set(row.candidateId, row);
-      return acc;
-    }
-    if ((row.snippetOriginal || '').length > (current.snippetOriginal || '').length) {
-      acc.set(row.candidateId, row);
-      return acc;
-    }
-    acc.set(row.candidateId, {
-      ...current,
-      feedCategories: [...new Set([...current.feedCategories, ...row.feedCategories])],
-    });
-    return acc;
-  }, new Map<string, MissingPublishedAtPersistable>()).values()];
-
-  const groups = chunk(dedupedRows, 250);
-  for (const group of groups) {
-    const values: unknown[] = [];
-    const parts: string[] = [];
-    group.forEach((row, i) => {
-      const base = i * 11;
-      parts.push(
-        `($${base + 1}::text,$${base + 2}::text,$${base + 3}::text,$${base + 4}::text,$${base + 5}::text,$${base + 6}::text,$${base + 7}::text,$${base + 8}::text,$${base + 9}::text,$${base + 10}::text,$${base + 11}::text[],now(),now(),now(),now())`
-      );
-      values.push(
-        row.candidateId,
-        row.outletId,
-        row.source,
-        row.country,
-        row.method,
-        row.url,
-        row.titleOriginal,
-        row.snippetOriginal,
-        row.language,
-        row.section,
-        row.feedCategories
-      );
-    });
-
-    await executeIngestionQuery(
-      db,
-      `
-      insert into ingest_missing_published_at (
-        candidate_id, outlet_id, source, country, method, url, title_original, snippet_original,
-        language, section, feed_categories, first_seen_at, last_seen_at, created_at, updated_at
-      ) values ${parts.join(',')}
-      on conflict (candidate_id) do update set
-        outlet_id = excluded.outlet_id,
-        source = excluded.source,
-        country = excluded.country,
-        method = excluded.method,
-        url = excluded.url,
-        title_original = case
-          when (excluded.title_original = excluded.url or excluded.title_original like 'http%')
-            and ingest_missing_published_at.title_original is not null
-            and ingest_missing_published_at.title_original <> ''
-            and ingest_missing_published_at.title_original <> ingest_missing_published_at.url
-            and ingest_missing_published_at.title_original not like 'http%'
-          then ingest_missing_published_at.title_original
-          else excluded.title_original
-        end,
-        snippet_original = coalesce(nullif(excluded.snippet_original, ''), ingest_missing_published_at.snippet_original),
-        language = excluded.language,
-        section = excluded.section,
-        feed_categories = (
-          select array(
-            select distinct unnest(
-              coalesce(ingest_missing_published_at.feed_categories, '{}'::text[]) ||
-              coalesce(excluded.feed_categories, '{}'::text[])
-            )
-          )
-        ),
-        last_seen_at = now(),
-        seen_count = ingest_missing_published_at.seen_count + 1,
-        updated_at = now()
-      `,
-      values,
-      'persistMissingPublishedAtCandidates.insert'
-    );
-  }
-
-  return { persisted: dedupedRows.length, storage: 'postgres' };
 }
 
 export async function getIngestionOpsSummary24h(): Promise<IngestionOpsSummary> {
