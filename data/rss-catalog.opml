@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Wed, 01 Apr 2026 02:42:50 GMT</dateCreated>
+    <dateCreated>Wed, 01 Apr 2026 02:50:19 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -2571,6 +2571,7 @@
       <outline text="Nguoi Lao Dong - Giao Duc Khoa Hoc [needs verification]" title="Nguoi Lao Dong - Giao Duc Khoa Hoc [needs verification]" type="rss" xmlUrl="https://nld.com.vn/rss/giao-duc-khoa-hoc.rss" htmlUrl="https://nld.com.vn"/>
       <outline text="VOV [needs verification]" title="VOV [needs verification]" type="rss" xmlUrl="https://vov.vn/rss/home.rss" htmlUrl="https://vov.vn"/>
       <outline text="VietnamPlus [needs verification]" title="VietnamPlus [needs verification]" type="rss" xmlUrl="https://www.vietnamplus.vn/rss/home.rss" htmlUrl="https://www.vietnamplus.vn"/>
+      <outline text="Bao Chinh Phu [needs verification]" title="Bao Chinh Phu [needs verification]" type="rss" xmlUrl="https://baochinhphu.vn/home.rss" htmlUrl="https://baochinhphu.vn"/>
       <outline text="Nhan Dan [needs verification]" title="Nhan Dan [needs verification]" type="rss" xmlUrl="https://nhandan.vn/rss/home.rss" htmlUrl="https://nhandan.vn"/>
       <outline text="SGGP [needs verification]" title="SGGP [needs verification]" type="rss" xmlUrl="https://www.sggp.org.vn/rss/home.rss" htmlUrl="https://www.sggp.org.vn"/>
       <outline text="VietTimes [needs verification]" title="VietTimes [needs verification]" type="rss" xmlUrl="https://viettimes.vn/rss/home.rss" htmlUrl="https://viettimes.vn"/>

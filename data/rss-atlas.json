@@ -23000,6 +23000,18 @@
           "url": "https://www.vietnamplus.vn/rss/home.rss"
         },
         {
+          "name": "Bao Chinh Phu",
+          "url": "https://baochinhphu.vn/home.rss"
+        },
+        {
+          "name": "VnEconomy - Google News Sitemap",
+          "sitemapUrl": "https://vneconomy.vn/sitemap/google-news.xml"
+        },
+        {
+          "name": "Nong Nghiep Moi Truong - Sitemap News",
+          "sitemapUrl": "https://nongnghiepmoitruong.vn/sitemap-news.xml"
+        },
+        {
           "name": "VietnamNet - News Sitemap",
           "sitemapUrl": "https://vietnamnet.vn/sitemap-news.xml"
         },
