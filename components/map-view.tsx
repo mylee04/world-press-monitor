@@ -1893,7 +1893,7 @@ export function MapView() {
                   <div className="map-panel-block compact">
                     <div className="section-head sub">
                       <h3>Country Hourly Trend</h3>
-                      <span>Last 24 hours</span>
+                      <span>24h</span>
                     </div>
                     <div className="mini-bars">
                       {selectedCountryHourly.length > 0 ? selectedCountryHourly.map((item) => {
@@ -1913,7 +1913,7 @@ export function MapView() {
                   <div className="map-panel-block compact">
                     <div className="section-head sub">
                       <h3>Top Regions</h3>
-                      <span>24h clustered output</span>
+                      <span>24h output</span>
                     </div>
                     <div className="map-list">
                       {selectedCountryTopRegions.slice(0, 5).map((item) => (
@@ -1973,7 +1973,7 @@ export function MapView() {
                     </h3>
                     <span>
                       {selectedCountry
-                        ? 'publishers, regions, and sources'
+                        ? 'publishers · regions · sources'
                         : mapMode === 'publishers'
                           ? '24h network output'
                           : mapMode === 'health'
@@ -2075,7 +2075,7 @@ export function MapView() {
                     <>
                       <div className="section-head sub">
                         <h3>Top Publishers</h3>
-                        <span>24h network output</span>
+                        <span>24h output</span>
                       </div>
                       <div className="map-list">
                         {(mapMode === 'publishers'
@@ -2090,7 +2090,7 @@ export function MapView() {
                       </div>
                       <div className="section-head sub">
                         <h3>{mapMode === 'health' ? 'Top Degraded Regions' : 'Top Regions'}</h3>
-                        <span>{mapMode === 'health' ? 'degraded clusters' : '24h clustered output'}</span>
+                        <span>{mapMode === 'health' ? 'degraded' : '24h output'}</span>
                       </div>
                       <div className="map-list">
                         {mapMode === 'health'
@@ -2115,7 +2115,7 @@ export function MapView() {
                       </div>
                       <div className="section-head sub">
                         <h3>{mapMode === 'health' ? 'Top Degraded Sources' : 'Top Sources'}</h3>
-                        <span>{mapMode === 'health' ? 'degraded source priority' : '24h source output'}</span>
+                        <span>{mapMode === 'health' ? 'degraded' : '24h output'}</span>
                       </div>
                       <div className="map-list">
                         {mapMode === 'health'
