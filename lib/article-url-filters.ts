@@ -113,6 +113,10 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     if (pathname.startsWith('/korsets-seier/')) return true;
   }
 
+  if (hostname.endsWith('fvn.no') && normalizedSource.includes('fædrelandsvennen')) {
+    if (pathname.startsWith('/mening/')) return true;
+  }
+
   if (hostname.endsWith('plo.vn') && trimmedPathname === '/') {
     return true;
   }
@@ -229,6 +233,12 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
       return true;
     }
     if (!/\/20\d{2}\//.test(pathname)) {
+      return true;
+    }
+  }
+
+  if (hostname.endsWith('tyden.cz') && normalizedSource.includes('tyden.cz')) {
+    if (pathname.startsWith('/soutez')) {
       return true;
     }
   }

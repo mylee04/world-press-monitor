@@ -17539,6 +17539,10 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/31/2026",
           "valid": "valid"
+        },
+        {
+          "name": "Fædrelandsvennen",
+          "url": "https://www.fvn.no/rss"
         }
       ]
     },
@@ -19537,6 +19541,18 @@
           "row": 1
         },
         {
+          "name": "HN - Byznys",
+          "url": "https://byznys.hn.cz/?m=rss"
+        },
+        {
+          "name": "HN - Domaci",
+          "url": "https://domaci.hn.cz/?m=rss"
+        },
+        {
+          "name": "HN - Zahranicni",
+          "url": "https://zahranicni.hn.cz/?m=rss"
+        },
+        {
           "name": "iSport",
           "url": "https://isport.blesk.cz/rss",
           "status": "NEW",
@@ -20178,6 +20194,10 @@
           "status": "NEW",
           "checkedDate": "03/31/2026",
           "valid": "valid"
+        },
+        {
+          "name": "Tyden.cz",
+          "url": "https://www.tyden.cz/rss"
         }
       ]
     },
@@ -21027,6 +21047,42 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/30/2026",
           "valid": "valid"
+        },
+        {
+          "name": "Nemzeti Sport",
+          "url": "https://www.nemzetisport.hu/publicapi/hu/rss/nso/articles"
+        },
+        {
+          "name": "Magyar Hang",
+          "url": "https://hang.hu/rss/"
+        },
+        {
+          "name": "Tenyek",
+          "url": "https://tenyek.hu/publicapi/hu/rss"
+        },
+        {
+          "name": "Mfor",
+          "url": "https://mfor.hu/rss/"
+        },
+        {
+          "name": "Privatbankar",
+          "url": "https://privatbankar.hu/rss"
+        },
+        {
+          "name": "Agrarszektor",
+          "url": "https://agrarszektor.hu/rss"
+        },
+        {
+          "name": "Novekedes",
+          "url": "https://novekedes.hu/feed/"
+        },
+        {
+          "name": "Tozsdeforum",
+          "url": "https://tozsdeforum.hu/feed/"
+        },
+        {
+          "name": "Forbes Hungary",
+          "url": "https://forbes.hu/feed/"
         }
       ]
     },
