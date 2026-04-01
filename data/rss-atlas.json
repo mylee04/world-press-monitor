@@ -16192,6 +16192,13 @@
           "row": 30
         },
         {
+          "name": "Montevideo Portal - Pantallazo",
+          "url": "https://www.montevideo.com.uy/anxml.aspx?1022",
+          "status": "NEW",
+          "checkedDate": null,
+          "valid": "needs verification"
+        },
+        {
           "name": "El País - Portada",
           "url": "https://www.elpais.com.uy/rss",
           "status": "⏩ OFFICIAL",
@@ -16412,9 +16419,31 @@
           "sitemapUrl": "https://ladiaria.com.uy/sitemap-news_48hs.xml"
         },
         {
+          "name": "LR21",
+          "url": "https://www.lr21.com.uy/feed",
+          "status": "NEW",
+          "checkedDate": null,
+          "valid": "needs verification"
+        },
+        {
+          "name": "La Mañana",
+          "url": "https://www.xn--lamaana-7za.uy/feed/",
+          "status": "NEW",
+          "checkedDate": null,
+          "valid": "needs verification"
+        },
+        {
           "name": "La Republica",
           "url": "https://www.republica.com.uy/feed/",
           "enabled": false
+        },
+        {
+          "name": "Búsqueda",
+          "url": null,
+          "status": "NEW",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "sitemapUrl": "https://www.busqueda.com.uy/sitemap.xml"
         },
         {
           "name": "Caras y Caretas - Home",
@@ -16434,11 +16463,19 @@
         },
         {
           "name": "Telemundo Uruguay",
-          "url": "https://www.telemundo.com.uy/feed/"
+          "url": "https://www.telemundo.com.uy/feed/",
+          "sitemapUrl": "https://www.telemundo.com.uy/wp-sitemap.xml"
         },
         {
           "name": "Telemundo Uruguay - RSS",
           "url": "https://www.telemundo.com.uy/rss/",
+          "status": "NEW",
+          "checkedDate": null,
+          "valid": "needs verification"
+        },
+        {
+          "name": "180 Uruguay - Home",
+          "url": "https://www.180.com.uy/feed.php",
           "status": "NEW",
           "checkedDate": null,
           "valid": "needs verification"
@@ -16472,11 +16509,20 @@
           "sitemapUrl": "https://970universal.com/sitemap_index.xml"
         },
         {
+          "name": "Radio Carve",
+          "url": "https://radiocarve.uy/feed",
+          "status": "NEW",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "sitemapUrl": "https://radiocarve.uy/sitemap_index.xml"
+        },
+        {
           "name": "El Telégrafo",
           "url": "https://www.eltelegrafo.com/feed/",
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
-          "valid": "needs verification"
+          "valid": "needs verification",
+          "sitemapUrl": "https://www.eltelegrafo.com/sitemap.xml"
         },
         {
           "name": "Carmelo Portal",
@@ -16498,6 +16544,13 @@
           "name": "Sarandí 690",
           "url": "https://www.sarandi690.com.uy/feed/",
           "status": "⏩ OFFICIAL",
+          "checkedDate": null,
+          "valid": "needs verification"
+        },
+        {
+          "name": "Sarandí 690 - RSS",
+          "url": "https://www.sarandi690.com.uy/rss/",
+          "status": "NEW",
           "checkedDate": null,
           "valid": "needs verification"
         },
@@ -16561,8 +16614,37 @@
           "url": "https://elacontecer.com.uy/feed/"
         },
         {
+          "name": "El Acontecer - RSS",
+          "url": "https://elacontecer.com.uy/rss",
+          "status": "NEW",
+          "checkedDate": null,
+          "valid": "needs verification"
+        },
+        {
           "name": "Brecha",
           "url": "https://www.brecha.com.uy/feed/",
+          "status": "NEW",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "sitemapUrl": "https://www.brecha.com.uy/wp-sitemap.xml"
+        },
+        {
+          "name": "Telemundo - RSS",
+          "url": "https://www.telemundo.com.uy/feed/rss",
+          "status": "NEW",
+          "checkedDate": null,
+          "valid": "needs verification"
+        },
+        {
+          "name": "Grupo R Multimedio - RSS",
+          "url": "https://www.grupormultimedio.com/rss",
+          "status": "NEW",
+          "checkedDate": null,
+          "valid": "needs verification"
+        },
+        {
+          "name": "Tenfield - RSS",
+          "url": "https://www.tenfield.com.uy/rss",
           "status": "NEW",
           "checkedDate": null,
           "valid": "needs verification"
@@ -25246,8 +25328,60 @@
           "sitemapUrl": "https://www.malaymail.com/sitemap.xml"
         },
         {
+          "name": "Kosmo - Sitemap Index",
+          "sitemapUrl": "https://www.kosmo.com.my/sitemap_index.xml"
+        },
+        {
           "name": "The Star - Sitemap",
           "sitemapUrl": "https://www.thestar.com.my/sitemap.xml"
+        },
+        {
+          "name": "Free Malaysia Today - Headlines RSS",
+          "url": "https://www.freemalaysiatoday.com/feeds/rss/headlines"
+        },
+        {
+          "name": "Free Malaysia Today - News Sitemap",
+          "sitemapUrl": "https://www.freemalaysiatoday.com/news-sitemap.xml"
+        },
+        {
+          "name": "Free Malaysia Today - Feeds Sitemap",
+          "sitemapUrl": "https://www.freemalaysiatoday.com/feeds-sitemap.xml"
+        },
+        {
+          "name": "The Borneo Post - Feed",
+          "url": "https://theborneopost.com/feed/"
+        },
+        {
+          "name": "The Borneo Post - Sitemap",
+          "sitemapUrl": "https://www.theborneopost.com/sitemap.xml"
+        },
+        {
+          "name": "The Sun - Sitemap Index",
+          "sitemapUrl": "https://thesun.my/sitemap_index.xml"
+        },
+        {
+          "name": "Sarawak Tribune - Sitemap Index",
+          "sitemapUrl": "https://www.sarawaktribune.com/sitemap_index.xml"
+        },
+        {
+          "name": "DayakDaily - Feed",
+          "url": "https://dayakdaily.com/feed/"
+        },
+        {
+          "name": "Focus Malaysia - Feed",
+          "url": "https://focusmalaysia.my/feed/"
+        },
+        {
+          "name": "Scoop - Feed",
+          "url": "https://scoop.my/feed/"
+        },
+        {
+          "name": "The Vibes - Sitemap",
+          "sitemapUrl": "https://thevibes.com/sitemap.xml"
+        },
+        {
+          "name": "The Sun - Feed",
+          "url": "https://thesun.my/feed/"
         }
       ]
     },
@@ -25262,6 +25396,14 @@
         {
           "name": "Rappler - Sitemap",
           "sitemapUrl": "https://www.rappler.com/sitemap_index.xml"
+        },
+        {
+          "name": "Rappler - World Feed",
+          "url": "https://www.rappler.com/section/world/feed/"
+        },
+        {
+          "name": "Rappler - Technology Feed",
+          "url": "https://www.rappler.com/technology/feed/"
         },
         {
           "name": "Inquirer - Feed",
@@ -25285,7 +25427,15 @@
         },
         {
           "name": "SunStar - Sitemap",
-          "sitemapUrl": "https://www.sunstar.com.ph/sitemap.xml"
+          "sitemapUrl": "https://www.sunstar.com.ph/news_sitemap.xml"
+        },
+        {
+          "name": "Newsbreak - Sitemap",
+          "sitemapUrl": "https://www.newsbreak.com.ph/sitemap.xml"
+        },
+        {
+          "name": "Philippine Star - Headlines RSS",
+          "url": "https://www.philstar.com/rss/headlines"
         },
         {
           "name": "Mindanews - Feed",
@@ -25305,7 +25455,103 @@
         },
         {
           "name": "GMA Network - Sitemap",
-          "sitemapUrl": "https://www.gmanetwork.com/sitemap.xml"
+          "sitemapUrl": "https://www.gmanetwork.com/news/sitemap-news.xml"
+        },
+        {
+          "name": "Daily Tribune - Feed",
+          "url": "https://tribune.net.ph/feed/"
+        },
+        {
+          "name": "The Manila Times - News Feed",
+          "url": "https://www.manilatimes.net/news/feed/"
+        },
+        {
+          "name": "The Manila Times - World Feed",
+          "url": "https://www.manilatimes.net/world/feed/"
+        },
+        {
+          "name": "The Manila Times - Business Feed",
+          "url": "https://www.manilatimes.net/business/feed/"
+        },
+        {
+          "name": "The Manila Times - National Feed",
+          "url": "https://www.manilatimes.net/news/national/feed/"
+        },
+        {
+          "name": "The Manila Times - Regions Feed",
+          "url": "https://www.manilatimes.net/news/regions/feed/"
+        },
+        {
+          "name": "Manila Bulletin - National RSS",
+          "url": "https://mb.com.ph/rss/national"
+        },
+        {
+          "name": "Manila Bulletin - World RSS",
+          "url": "https://mb.com.ph/rss/world"
+        },
+        {
+          "name": "Manila Bulletin - Business RSS",
+          "url": "https://mb.com.ph/rss/business"
+        },
+        {
+          "name": "Manila Bulletin - Business and Stock Market RSS",
+          "url": "https://mb.com.ph/rss/business-and-stock-market"
+        },
+        {
+          "name": "Manila Bulletin - Technology RSS",
+          "url": "https://mb.com.ph/rss/technology"
+        },
+        {
+          "name": "Manila Bulletin - Metro RSS",
+          "url": "https://mb.com.ph/rss/metro"
+        },
+        {
+          "name": "Manila Bulletin - News RSS",
+          "url": "https://mb.com.ph/rss/news"
+        },
+        {
+          "name": "Manila Bulletin - Crime RSS",
+          "url": "https://mb.com.ph/rss/crime"
+        },
+        {
+          "name": "Manila Bulletin - Education RSS",
+          "url": "https://mb.com.ph/rss/education"
+        },
+        {
+          "name": "Manila Bulletin - Health and Wellness RSS",
+          "url": "https://mb.com.ph/rss/health-and-wellness"
+        },
+        {
+          "name": "Daily Guardian - Feed",
+          "url": "https://dailyguardian.com.ph/feed/"
+        },
+        {
+          "name": "Mindanao Times - Feed",
+          "url": "https://mindanaotimes.com.ph/feed/"
+        },
+        {
+          "name": "Newsbytes - Feed",
+          "url": "https://newsbytes.ph/feed/"
+        },
+        {
+          "name": "Journal News - Feed",
+          "url": "https://journalnews.com.ph/feed/"
+        },
+        {
+          "name": "Tempo - Feed",
+          "url": "https://tempo.com.ph/feed/"
+        },
+        {
+          "name": "Palawan News - Sitemap Index",
+          "sitemapUrl": "https://palawan-news.com/sitemap_index.xml"
+        },
+        {
+          "name": "Davao Today - Feed",
+          "url": "https://davaotoday.com/feed/"
+        },
+        {
+          "name": "Politiko - News Sitemap",
+          "sitemapUrl": "https://politiko.com.ph/news-sitemap.xml"
         }
       ]
     },
