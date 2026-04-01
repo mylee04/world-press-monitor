@@ -130,6 +130,16 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     return true;
   }
 
+  if (hostname.endsWith('ahlmasrnews.com') && normalizedSource.includes('ahl masr')) {
+    if (!pathname.startsWith('/news/')) return true;
+    if (pathname.startsWith('/news/art/')) return true;
+    if (pathname.startsWith('/news/sport/')) return true;
+    if (pathname.startsWith('/news/opinion/')) return true;
+    if (pathname.startsWith('/news/talk-show/')) return true;
+    if (pathname.startsWith('/news/auto/')) return true;
+    if (pathname.startsWith('/news/cases-news/')) return true;
+  }
+
   if (hostname.endsWith('7news.com.au')) {
     if (pathname.startsWith('/7you/')) return true;
     if (pathname.startsWith('/sunrise/')) return true;
@@ -177,6 +187,11 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     if (!/^\/news\/article-\d+(?:\/|$)/.test(pathname)) {
       return true;
     }
+  }
+
+  if (hostname.endsWith('filgoal.com') && normalizedSource.includes('filgoal')) {
+    if (pathname.startsWith('/videos/')) return true;
+    if (!pathname.startsWith('/articles/')) return true;
   }
 
   if (

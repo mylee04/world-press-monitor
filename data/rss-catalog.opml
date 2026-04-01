@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Wed, 01 Apr 2026 03:09:12 GMT</dateCreated>
+    <dateCreated>Wed, 01 Apr 2026 04:01:17 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -1179,9 +1179,11 @@
     <outline text="Saudi Arabia (SA)" title="Saudi Arabia (SA)">
       <outline text="Al Jazirah [valid]" title="Al Jazirah [valid]" type="rss" xmlUrl="https://www.aljazeera.net/rss" htmlUrl="https://www.aljazeera.net"/>
       <outline text="Al Madina [valid]" title="Al Madina [valid]" type="rss" xmlUrl="https://www.al-madina.com/rssFeed/193" htmlUrl="https://www.al-madina.com"/>
+      <outline text="Al Madina - Main [valid]" title="Al Madina - Main [valid]" type="rss" xmlUrl="https://www.al-madina.com/rssFeed/0" htmlUrl="https://www.al-madina.com"/>
       <outline text="Al Bilad Daily [valid]" title="Al Bilad Daily [valid]" type="rss" xmlUrl="https://albiladdaily.com/feed" htmlUrl="https://albiladdaily.com"/>
       <outline text="Makkah Newspaper [valid]" title="Makkah Newspaper [valid]" type="rss" xmlUrl="https://makkahnewspaper.com/rssFeed/0" htmlUrl="https://makkahnewspaper.com"/>
       <outline text="Al Jazirah [valid]" title="Al Jazirah [valid]" type="rss" xmlUrl="https://www.al-jazirah.com/rss/ln.xml" htmlUrl="https://www.al-jazirah.com"/>
+      <outline text="Arab News [valid]" title="Arab News [valid]" type="rss" xmlUrl="https://www.arabnews.com/rss.xml" htmlUrl="https://www.arabnews.com"/>
       <outline text="Sky News Arabia (Arabic Business) [valid]" title="Sky News Arabia (Arabic Business) [valid]" type="rss" xmlUrl="https://www.skynewsarabia.com/rss.xml" htmlUrl="https://www.skynewsarabia.com"/>
       <outline text="Independent Arabia (Independent Arabic) [valid]" title="Independent Arabia (Independent Arabic) [valid]" type="rss" xmlUrl="https://www.independentarabia.com/rss.xml" htmlUrl="https://www.independentarabia.com"/>
     </outline>
@@ -2431,6 +2433,19 @@
       <outline text="Daily News Egypt [needs verification]" title="Daily News Egypt [needs verification]" type="rss" xmlUrl="https://www.dailynewsegypt.com/feed/" htmlUrl="https://www.dailynewsegypt.com"/>
       <outline text="Dostor [valid]" title="Dostor [valid]" type="rss" xmlUrl="https://www.dostor.org/RSS.aspx" htmlUrl="https://www.dostor.org"/>
       <outline text="EnterpriseAM Egypt [valid]" title="EnterpriseAM Egypt [valid]" type="rss" xmlUrl="https://enterpriseam.com/egypt/feed/" htmlUrl="https://enterpriseam.com"/>
+      <outline text="Al Masry Al Youm [valid]" title="Al Masry Al Youm [valid]" type="rss" xmlUrl="https://www.almasryalyoum.com/rss/rssfeeds" htmlUrl="https://www.almasryalyoum.com"/>
+      <outline text="Alborsa News [valid]" title="Alborsa News [valid]" type="rss" xmlUrl="https://www.alborsaanews.com/feed" htmlUrl="https://www.alborsaanews.com"/>
+      <outline text="Btolat [valid]" title="Btolat [valid]" type="rss" xmlUrl="https://www.btolat.com/rss/newsfeed" htmlUrl="https://www.btolat.com"/>
+      <outline text="Amwal Al Ghad - Atom [valid]" title="Amwal Al Ghad - Atom [valid]" type="rss" xmlUrl="https://amwalalghad.com/feed/atom/" htmlUrl="https://amwalalghad.com"/>
+      <outline text="Shorouk - Egypt [valid]" title="Shorouk - Egypt [valid]" type="rss" xmlUrl="https://www.shorouknews.com/egypt/rss" htmlUrl="https://www.shorouknews.com"/>
+      <outline text="Shorouk - Politics [valid]" title="Shorouk - Politics [valid]" type="rss" xmlUrl="https://www.shorouknews.com/Politics/rss" htmlUrl="https://www.shorouknews.com"/>
+      <outline text="Shorouk - Arab [valid]" title="Shorouk - Arab [valid]" type="rss" xmlUrl="https://www.shorouknews.com/Politics/arab/rss" htmlUrl="https://www.shorouknews.com"/>
+      <outline text="Shorouk - Economy [valid]" title="Shorouk - Economy [valid]" type="rss" xmlUrl="https://www.shorouknews.com/Economy/rss" htmlUrl="https://www.shorouknews.com"/>
+      <outline text="Shorouk - Citizens [valid]" title="Shorouk - Citizens [valid]" type="rss" xmlUrl="https://www.shorouknews.com/Economy/citizines/rss" htmlUrl="https://www.shorouknews.com"/>
+      <outline text="Shorouk - Local [valid]" title="Shorouk - Local [valid]" type="rss" xmlUrl="https://www.shorouknews.com/local/rss" htmlUrl="https://www.shorouknews.com"/>
+      <outline text="Shorouk - Accidents [valid]" title="Shorouk - Accidents [valid]" type="rss" xmlUrl="https://www.shorouknews.com/accidents/rss" htmlUrl="https://www.shorouknews.com"/>
+      <outline text="Shorouk - Sports [valid]" title="Shorouk - Sports [valid]" type="rss" xmlUrl="https://www.shorouknews.com/sports/rss" htmlUrl="https://www.shorouknews.com"/>
+      <outline text="Economy Plus [valid]" title="Economy Plus [valid]" type="rss" xmlUrl="https://economyplusme.com/feed/" htmlUrl="https://economyplusme.com"/>
     </outline>
     <outline text="Nigeria (NG)" title="Nigeria (NG)">
       <outline text="Punch Nigeria [needs verification]" title="Punch Nigeria [needs verification]" type="rss" xmlUrl="https://rss.punchng.com/v1/category/latest_news" htmlUrl="https://rss.punchng.com"/>
@@ -2525,11 +2540,16 @@
       <outline text="Gulf Times - Qatar Local [valid]" title="Gulf Times - Qatar Local [valid]" type="rss" xmlUrl="https://www.gulf-times.com/rssFeed/8" htmlUrl="https://www.gulf-times.com"/>
       <outline text="Qatar Tribune [needs verification]" title="Qatar Tribune [needs verification]" type="rss" xmlUrl="https://www.qatar-tribune.com/rssFeed/0" htmlUrl="https://www.qatar-tribune.com"/>
       <outline text="Doha News [valid]" title="Doha News [valid]" type="rss" xmlUrl="https://www.dohanews.co/feed/" htmlUrl="https://www.dohanews.co"/>
+      <outline text="Gulf Times - Sports [valid]" title="Gulf Times - Sports [valid]" type="rss" xmlUrl="https://www.gulf-times.com/rssFeed/4" htmlUrl="https://www.gulf-times.com"/>
       <outline text="QNA - Qatar [valid]" title="QNA - Qatar [valid]" type="rss" xmlUrl="https://qna.org.qa/en/Pages/RSS-Feeds/Qatar" htmlUrl="https://qna.org.qa"/>
       <outline text="QNA - Economy Local [valid]" title="QNA - Economy Local [valid]" type="rss" xmlUrl="https://qna.org.qa/en/Pages/RSS-Feeds/Economy-Local" htmlUrl="https://qna.org.qa"/>
       <outline text="QNA - Sport Local [valid]" title="QNA - Sport Local [valid]" type="rss" xmlUrl="https://qna.org.qa/en/Pages/RSS-Feeds/Sport-Local" htmlUrl="https://qna.org.qa"/>
       <outline text="QNA - Miscellaneous Local [valid]" title="QNA - Miscellaneous Local [valid]" type="rss" xmlUrl="https://qna.org.qa/en/Pages/RSS-Feeds/Miscellaneous-Local" htmlUrl="https://qna.org.qa"/>
       <outline text="QNA - Reports and Analysis [valid]" title="QNA - Reports and Analysis [valid]" type="rss" xmlUrl="https://qna.org.qa/en/Pages/RSS-Feeds/Analysis-and-Reports" htmlUrl="https://qna.org.qa"/>
+      <outline text="QNA - General [valid]" title="QNA - General [valid]" type="rss" xmlUrl="https://qna.org.qa/en/Pages/RSS-Feeds/General" htmlUrl="https://qna.org.qa"/>
+      <outline text="QNA - Economy International [valid]" title="QNA - Economy International [valid]" type="rss" xmlUrl="https://qna.org.qa/en/Pages/RSS-Feeds/Economy-International" htmlUrl="https://qna.org.qa"/>
+      <outline text="QNA - Sport International [valid]" title="QNA - Sport International [valid]" type="rss" xmlUrl="https://qna.org.qa/en/Pages/RSS-Feeds/Sport-International" htmlUrl="https://qna.org.qa"/>
+      <outline text="QNA - Miscellaneous International [valid]" title="QNA - Miscellaneous International [valid]" type="rss" xmlUrl="https://qna.org.qa/en/Pages/RSS-Feeds/Miscellaneous-International" htmlUrl="https://qna.org.qa"/>
     </outline>
     <outline text="United Arab Emirates (AE)" title="United Arab Emirates (AE)">
       <outline text="The National [needs verification]" title="The National [needs verification]" type="rss" xmlUrl="https://www.thenationalnews.com/arc/outboundfeeds/rss/?outputType=xml" htmlUrl="https://www.thenationalnews.com"/>
@@ -2537,6 +2557,8 @@
       <outline text="Khaleej Times - Business RSS [valid]" title="Khaleej Times - Business RSS [valid]" type="rss" xmlUrl="https://www.khaleejtimes.com/api/v1/collections/business.rss" htmlUrl="https://www.khaleejtimes.com"/>
       <outline text="Khaleej Times - Top Section RSS [valid]" title="Khaleej Times - Top Section RSS [valid]" type="rss" xmlUrl="https://www.khaleejtimes.com/api/v1/collections/top-section.rss" htmlUrl="https://www.khaleejtimes.com"/>
       <outline text="Gulf Business [valid]" title="Gulf Business [valid]" type="rss" xmlUrl="https://gulfbusiness.com/feed/" htmlUrl="https://gulfbusiness.com"/>
+      <outline text="Economy Middle East [valid]" title="Economy Middle East [valid]" type="rss" xmlUrl="https://economymiddleeast.com/feed/" htmlUrl="https://economymiddleeast.com"/>
+      <outline text="Arabian Business [valid]" title="Arabian Business [valid]" type="rss" xmlUrl="https://www.arabianbusiness.com/feed/" htmlUrl="https://www.arabianbusiness.com"/>
     </outline>
     <outline text="Ecuador (EC)" title="Ecuador (EC)">
       <outline text="Primicias [needs verification]" title="Primicias [needs verification]" type="rss" xmlUrl="https://www.primicias.ec/feed/" htmlUrl="https://www.primicias.ec"/>
