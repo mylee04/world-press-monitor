@@ -105,6 +105,25 @@ function stripHtml(value: string): string {
   );
 }
 
+function inferTitleFromLink(link: string): string {
+  const raw = (link || '').trim();
+  if (!raw) return '';
+  const normalizeSegment = (value: string) => {
+    const normalized = normalizeHtmlText(value.replace(/\.[a-z0-9]+$/i, '').replace(/[-_]+/g, ' ')).trim();
+    if (!normalized) return '';
+    return normalized.charAt(0).toUpperCase() + normalized.slice(1);
+  };
+  try {
+    const parsed = new URL(raw);
+    const segment = parsed.pathname.split('/').filter(Boolean).pop() || '';
+    if (!segment) return raw;
+    return normalizeSegment(decodeURIComponent(segment)) || raw;
+  } catch {
+    const segment = raw.split('/').filter(Boolean).pop() || raw;
+    return normalizeSegment(segment) || raw;
+  }
+}
+
 function parseDescription(body: string): string {
   const candidates = [
     parseTagByLocalName(body, 'description'),
@@ -313,11 +332,13 @@ export function parseSitemapWithStats(xml: string, limit = 12, baseUrl?: string)
     .map((body) => {
       const link = resolveFeedLink(parseTagByLocalName(body, 'loc'), baseUrl);
       const title =
-        parseTagByLocalName(body, 'title')
-        || link.split('/').pop()?.replace(/[-_]/g, ' ')
+        parseTag(body, 'news:title')
+        || parseTag(body, 'title')
+        || inferTitleFromLink(link)
         || link;
       const publishedAt =
-        normalizePublishedAt(parseTagByLocalName(body, 'publication_date'))
+        normalizePublishedAt(parseTag(body, 'news:publication_date'))
+        || normalizePublishedAt(parseTagByLocalName(body, 'publication_date'))
         || normalizePublishedAt(parseTagByLocalName(body, 'lastmod'))
         || normalizePublishedAt(parseTagByLocalName(body, 'priority'))
         || inferPublishedAtFromLink(link);

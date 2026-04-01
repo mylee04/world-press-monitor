@@ -890,7 +890,8 @@
         },
         {
           "name": "Defense One",
-          "url": "https://www.defenseone.com/rss/all/"
+          "url": "https://www.defenseone.com/rss/all/",
+          "sitemapUrl": "https://www.defenseone.com/sitemap-news.xml"
         },
         {
           "name": "Defense News",
@@ -22386,7 +22387,8 @@
         },
         {
           "name": "TechCabal",
-          "url": "https://techcabal.com/feed/"
+          "url": "https://techcabal.com/feed/",
+          "sitemapUrl": "https://techcabal.com/sitemap-posttype-post.2026.xml"
         }
       ]
     },
