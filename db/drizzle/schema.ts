@@ -122,3 +122,90 @@ export const ingestOpsDaily = pgTable("ingest_ops_daily", {
 	index("idx_ingest_ops_daily_source").using("btree", table.source.asc().nullsLast().op("text_ops")),
 	primaryKey({ columns: [table.dayBucket, table.runner, table.outletId, table.method], name: "ingest_ops_daily_pkey"}),
 ]);
+
+export const countryBenchmarkHourly = pgTable("country_benchmark_hourly", {
+	hourBucket: timestamp("hour_bucket", { withTimezone: true, mode: 'string' }).notNull(),
+	country: text().notNull(),
+	windowStart: timestamp("window_start", { withTimezone: true, mode: 'string' }).notNull(),
+	windowEnd: timestamp("window_end", { withTimezone: true, mode: 'string' }).notNull(),
+	metricVersion: text("metric_version").default('v1').notNull(),
+	atlasVersion: text("atlas_version"),
+	publishedLast24H: integer("published_last_24h").default(0).notNull(),
+	freshLast24H: integer("fresh_last_24h").default(0).notNull(),
+	lateLast24H: integer("late_last_24h").default(0).notNull(),
+	insertedLast24H: integer("inserted_last_24h").default(0).notNull(),
+	insertedLast1H: integer("inserted_last_1h").default(0).notNull(),
+	activeSourcesLast24H: integer("active_sources_last_24h").default(0).notNull(),
+	activeSourcesLast1H: integer("active_sources_last_1h").default(0).notNull(),
+	topSourceShareBps: integer("top_source_share_bps").default(0).notNull(),
+	top5SourceShareBps: integer("top_5_source_share_bps").default(0).notNull(),
+	top10SourceShareBps: integer("top_10_source_share_bps").default(0).notNull(),
+	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+	updatedAt: timestamp("updated_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+}, (table) => [
+	index("idx_country_benchmark_hourly_country").using("btree", table.country.asc().nullsLast().op("text_ops")),
+	index("idx_country_benchmark_hourly_hour").using("btree", table.hourBucket.desc().nullsFirst().op("timestamptz_ops")),
+	primaryKey({ columns: [table.hourBucket, table.country, table.metricVersion], name: "country_benchmark_hourly_pkey"}),
+]);
+
+export const countryBenchmarkDaily = pgTable("country_benchmark_daily", {
+	dayBucket: date("day_bucket").notNull(),
+	country: text().notNull(),
+	windowStart: timestamp("window_start", { withTimezone: true, mode: 'string' }).notNull(),
+	windowEnd: timestamp("window_end", { withTimezone: true, mode: 'string' }).notNull(),
+	metricVersion: text("metric_version").default('v1').notNull(),
+	atlasVersion: text("atlas_version"),
+	publishedCount: integer("published_count").default(0).notNull(),
+	freshCount: integer("fresh_count").default(0).notNull(),
+	lateCount: integer("late_count").default(0).notNull(),
+	insertedCount: integer("inserted_count").default(0).notNull(),
+	activeSourcesCount: integer("active_sources_count").default(0).notNull(),
+	topSourceShareBps: integer("top_source_share_bps").default(0).notNull(),
+	top5SourceShareBps: integer("top_5_source_share_bps").default(0).notNull(),
+	top10SourceShareBps: integer("top_10_source_share_bps").default(0).notNull(),
+	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+	updatedAt: timestamp("updated_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+}, (table) => [
+	index("idx_country_benchmark_daily_country").using("btree", table.country.asc().nullsLast().op("text_ops")),
+	index("idx_country_benchmark_daily_day").using("btree", table.dayBucket.desc().nullsFirst().op("date_ops")),
+	primaryKey({ columns: [table.dayBucket, table.country, table.metricVersion], name: "country_benchmark_daily_pkey"}),
+]);
+
+export const countryBenchmarkSourceDaily = pgTable("country_benchmark_source_daily", {
+	dayBucket: date("day_bucket").notNull(),
+	country: text().notNull(),
+	source: text().notNull(),
+	windowStart: timestamp("window_start", { withTimezone: true, mode: 'string' }).notNull(),
+	windowEnd: timestamp("window_end", { withTimezone: true, mode: 'string' }).notNull(),
+	metricVersion: text("metric_version").default('v1').notNull(),
+	atlasVersion: text("atlas_version"),
+	publishedCount: integer("published_count").default(0).notNull(),
+	freshCount: integer("fresh_count").default(0).notNull(),
+	lateCount: integer("late_count").default(0).notNull(),
+	insertedCount: integer("inserted_count").default(0).notNull(),
+	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+	updatedAt: timestamp("updated_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+}, (table) => [
+	index("idx_country_benchmark_source_daily_country").using("btree", table.country.asc().nullsLast().op("text_ops")),
+	index("idx_country_benchmark_source_daily_day").using("btree", table.dayBucket.desc().nullsFirst().op("date_ops")),
+	index("idx_country_benchmark_source_daily_source").using("btree", table.source.asc().nullsLast().op("text_ops")),
+	primaryKey({ columns: [table.dayBucket, table.country, table.source, table.metricVersion], name: "country_benchmark_source_daily_pkey"}),
+]);
+
+export const countryBenchmarkExternalDaily = pgTable("country_benchmark_external_daily", {
+	dayBucket: date("day_bucket").notNull(),
+	country: text().notNull(),
+	provider: text().notNull(),
+	metricName: text("metric_name").default('article_count').notNull(),
+	metricVersion: text("metric_version").default('v1').notNull(),
+	referenceValue: integer("reference_value").default(0).notNull(),
+	referenceUrl: text("reference_url"),
+	notes: text(),
+	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+	updatedAt: timestamp("updated_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+}, (table) => [
+	index("idx_country_benchmark_external_daily_country").using("btree", table.country.asc().nullsLast().op("text_ops")),
+	index("idx_country_benchmark_external_daily_day").using("btree", table.dayBucket.desc().nullsFirst().op("date_ops")),
+	index("idx_country_benchmark_external_daily_provider").using("btree", table.provider.asc().nullsLast().op("text_ops")),
+	primaryKey({ columns: [table.dayBucket, table.country, table.provider, table.metricName, table.metricVersion], name: "country_benchmark_external_daily_pkey"}),
+]);

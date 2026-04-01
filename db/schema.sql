@@ -173,6 +173,89 @@ create index if not exists idx_ingest_ops_daily_source on ingest_ops_daily(sourc
 create index if not exists idx_ingest_ops_daily_country on ingest_ops_daily(country);
 create index if not exists idx_ingest_ops_daily_day on ingest_ops_daily(day_bucket desc);
 
+create table if not exists country_benchmark_hourly (
+  hour_bucket timestamptz not null,
+  country text not null,
+  window_start timestamptz not null,
+  window_end timestamptz not null,
+  metric_version text not null default 'v1',
+  atlas_version text null,
+  published_last_24h integer not null default 0,
+  fresh_last_24h integer not null default 0,
+  late_last_24h integer not null default 0,
+  inserted_last_24h integer not null default 0,
+  inserted_last_1h integer not null default 0,
+  active_sources_last_24h integer not null default 0,
+  active_sources_last_1h integer not null default 0,
+  top_source_share_bps integer not null default 0,
+  top_5_source_share_bps integer not null default 0,
+  top_10_source_share_bps integer not null default 0,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  primary key (hour_bucket, country, metric_version)
+);
+create index if not exists idx_country_benchmark_hourly_country on country_benchmark_hourly(country);
+create index if not exists idx_country_benchmark_hourly_hour on country_benchmark_hourly(hour_bucket desc);
+
+create table if not exists country_benchmark_daily (
+  day_bucket date not null,
+  country text not null,
+  window_start timestamptz not null,
+  window_end timestamptz not null,
+  metric_version text not null default 'v1',
+  atlas_version text null,
+  published_count integer not null default 0,
+  fresh_count integer not null default 0,
+  late_count integer not null default 0,
+  inserted_count integer not null default 0,
+  active_sources_count integer not null default 0,
+  top_source_share_bps integer not null default 0,
+  top_5_source_share_bps integer not null default 0,
+  top_10_source_share_bps integer not null default 0,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  primary key (day_bucket, country, metric_version)
+);
+create index if not exists idx_country_benchmark_daily_country on country_benchmark_daily(country);
+create index if not exists idx_country_benchmark_daily_day on country_benchmark_daily(day_bucket desc);
+
+create table if not exists country_benchmark_source_daily (
+  day_bucket date not null,
+  country text not null,
+  source text not null,
+  window_start timestamptz not null,
+  window_end timestamptz not null,
+  metric_version text not null default 'v1',
+  atlas_version text null,
+  published_count integer not null default 0,
+  fresh_count integer not null default 0,
+  late_count integer not null default 0,
+  inserted_count integer not null default 0,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  primary key (day_bucket, country, source, metric_version)
+);
+create index if not exists idx_country_benchmark_source_daily_country on country_benchmark_source_daily(country);
+create index if not exists idx_country_benchmark_source_daily_day on country_benchmark_source_daily(day_bucket desc);
+create index if not exists idx_country_benchmark_source_daily_source on country_benchmark_source_daily(source);
+
+create table if not exists country_benchmark_external_daily (
+  day_bucket date not null,
+  country text not null,
+  provider text not null,
+  metric_name text not null default 'article_count',
+  metric_version text not null default 'v1',
+  reference_value integer not null default 0,
+  reference_url text null,
+  notes text null,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  primary key (day_bucket, country, provider, metric_name, metric_version)
+);
+create index if not exists idx_country_benchmark_external_daily_country on country_benchmark_external_daily(country);
+create index if not exists idx_country_benchmark_external_daily_day on country_benchmark_external_daily(day_bucket desc);
+create index if not exists idx_country_benchmark_external_daily_provider on country_benchmark_external_daily(provider);
+
 create table if not exists news_articles (
   external_id text primary key,
   stable_id text null,
