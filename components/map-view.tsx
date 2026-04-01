@@ -1639,6 +1639,11 @@ export function MapView() {
     degradedSources24h: healthCountries.reduce((sum, item) => sum + item.windows[mapWindow].degradedSources, 0),
     countriesWithIssues: healthCountries.filter((item) => item.windows[mapWindow].degradedSources > 0).length,
   }), [healthCountries, mapWindow]);
+  const mapPanelLoading = selectedCountry
+    ? sourcesState.loading || worldState.loading
+    : mapMode === 'publishers'
+      ? publishersState.loading || worldState.loading
+      : countriesState.loading || worldState.loading;
   const selectedPublisherWindowMetrics = selectedPublisher ? getPublisherWindowMetrics(selectedPublisher, mapWindow) : null;
   const countryLookup = useMemo(() => {
     const lookup = new Map<string, MapCountryMetricRow>();
@@ -2732,7 +2737,7 @@ export function MapView() {
             ) : null}
           </div>
 
-          {(countriesState.loading || publishersState.loading || sourcesState.loading || worldState.loading) ? <div className="panel muted">Loading map metrics...</div> : null}
+          {mapPanelLoading ? <div className="panel muted">Loading map metrics...</div> : null}
           {countriesState.error ? <div className="panel danger">{countriesState.error}</div> : null}
           {publishersState.error ? <div className="panel danger">{publishersState.error}</div> : null}
           {sourcesState.error ? <div className="panel danger">{sourcesState.error}</div> : null}
