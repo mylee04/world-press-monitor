@@ -11013,6 +11013,13 @@
           "row": 10
         },
         {
+          "name": "Al Madina - Main",
+          "url": "https://www.al-madina.com/rssFeed/0",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Al Bilad Daily",
           "url": "https://albiladdaily.com/feed",
           "status": null,
@@ -11119,12 +11126,11 @@
         },
         {
           "name": "Saudi Press Agency (Arabic)",
-          "url": "https://www.spa.gov.sa/rss",
-          "status": null,
-          "checkedDate": "02/23/2026",
-          "valid": null,
-          "row": 25,
-          "enabled": false
+          "sitemapUrl": "https://www.spa.gov.sa/sitemap-0.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid",
+          "row": 25
         },
         {
           "name": "Al Riyadh (Main - Arabic)",
@@ -22375,6 +22381,13 @@
           "valid": "valid"
         },
         {
+          "name": "Masrawy - Economy Sitemap",
+          "sitemapUrl": "https://www.masrawy.com/feeds/sitemap?categoryid=205",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
           "name": "FilGoal - Articles Sitemap Index",
           "sitemapUrl": "https://www.filgoal.com/sitemaps/sitemaps.xml",
           "status": "⏩ OFFICIAL",
@@ -22405,6 +22418,97 @@
         {
           "name": "Btolat",
           "url": "https://www.btolat.com/rss/newsfeed",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Veto - Newsmap",
+          "sitemapUrl": "https://www.vetogate.com/newsmap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Amwal Al Ghad - Atom",
+          "url": "https://amwalalghad.com/feed/atom/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Shorouk - Egypt",
+          "url": "https://www.shorouknews.com/egypt/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Shorouk - Politics",
+          "url": "https://www.shorouknews.com/Politics/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Shorouk - Arab",
+          "url": "https://www.shorouknews.com/Politics/arab/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Shorouk - Economy",
+          "url": "https://www.shorouknews.com/Economy/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Shorouk - Citizens",
+          "url": "https://www.shorouknews.com/Economy/citizines/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Shorouk - Local",
+          "url": "https://www.shorouknews.com/local/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Shorouk - Accidents",
+          "url": "https://www.shorouknews.com/accidents/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Shorouk - Sports",
+          "url": "https://www.shorouknews.com/sports/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Ahl Masr - Sitemap",
+          "sitemapUrl": "https://www.ahlmasrnews.com/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Economy Plus",
+          "url": "https://economyplusme.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "SEE News - Sitemap",
+          "sitemapUrl": "https://see.news/sitemap",
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/31/2026",
           "valid": "valid"
@@ -22915,6 +23019,14 @@
         {
           "name": "Doha News",
           "url": "https://www.dohanews.co/feed/",
+          "sitemapUrl": "https://www.dohanews.co/post-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Gulf Times - Sports",
+          "url": "https://www.gulf-times.com/rssFeed/4",
           "status": "NEW",
           "checkedDate": "03/31/2026",
           "valid": "valid"
@@ -23029,6 +23141,20 @@
         {
           "name": "Khaleej Times - Top Section RSS",
           "url": "https://www.khaleejtimes.com/api/v1/collections/top-section.rss",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Ittihad - News Sitemap",
+          "sitemapUrl": "https://saadmedia365aznc.blob.core.windows.net/media/sitemap/news.xml",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Khaleej - News Sitemap",
+          "sitemapUrl": "https://www.alkhaleej.ae/news-sitemap.xml",
           "status": "NEW",
           "checkedDate": "03/31/2026",
           "valid": "valid"
