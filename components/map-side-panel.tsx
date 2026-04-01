@@ -6,7 +6,6 @@ import {
   getPublisherCountryWindowMetrics,
   getPublisherWindowMetrics,
   getSourceWindowMetrics,
-  mapWindowLabel,
   publisherConfidenceLabel,
 } from '@/lib/map-display';
 import {
@@ -100,6 +99,12 @@ type MapSidePanelProps = {
   onSelectSource: (source: MapSourceMetricRow | RankedCount) => void;
 };
 
+const MAP_WINDOW_SELECT_LABELS: Record<MapMetricWindow, string> = {
+  '1h': 'Last 1 hour',
+  '24h': 'Rolling 24 hours',
+  '7d': 'Rolling 7 days',
+};
+
 function round(value: number, digits = 1): number {
   const precision = 10 ** digits;
   return Math.round(value * precision) / precision;
@@ -185,40 +190,62 @@ export function MapSidePanel({
       ) : null}
 
       {!selectedCountry ? (
-        <div className="map-mode-row" role="tablist" aria-label="Map time window">
-          {MAP_WINDOW_OPTIONS.map((option) => (
+        <div className="map-secondary-controls">
+          <div className="map-tab-row map-tab-row-secondary" role="tablist" aria-label="Map side panel sections">
             <button
-              key={option}
               type="button"
-              className={`map-mode-chip ${mapWindow === option ? 'active' : ''}`}
-              onClick={() => onMapWindowChange(option)}
+              role="tab"
+              aria-selected={leftTab === 'overview'}
+              className={`map-tab-chip map-tab-chip-secondary ${leftTab === 'overview' ? 'active' : ''}`}
+              onClick={() => onLeftTabChange('overview')}
             >
-              {mapWindowLabel(option)}
+              Overview
             </button>
-          ))}
+            <button
+              type="button"
+              role="tab"
+              aria-selected={leftTab === 'display'}
+              className={`map-tab-chip map-tab-chip-secondary ${leftTab === 'display' ? 'active' : ''}`}
+              onClick={() => onLeftTabChange('display')}
+            >
+              Display
+            </button>
+          </div>
+          <label className="map-select-control">
+            <span>Window</span>
+            <select value={mapWindow} onChange={(event) => onMapWindowChange(event.target.value as MapMetricWindow)}>
+              {MAP_WINDOW_OPTIONS.map((option) => (
+                <option key={option} value={option}>
+                  {MAP_WINDOW_SELECT_LABELS[option]}
+                </option>
+              ))}
+            </select>
+          </label>
         </div>
       ) : null}
 
-      <div className="map-tab-row" role="tablist" aria-label="Map side panel sections">
-        <button
-          type="button"
-          role="tab"
-          aria-selected={leftTab === 'overview'}
-          className={`map-tab-chip ${leftTab === 'overview' ? 'active' : ''}`}
-          onClick={() => onLeftTabChange('overview')}
-        >
-          Overview
-        </button>
-        <button
-          type="button"
-          role="tab"
-          aria-selected={leftTab === 'display'}
-          className={`map-tab-chip ${leftTab === 'display' ? 'active' : ''}`}
-          onClick={() => onLeftTabChange('display')}
-        >
-          Display
-        </button>
-      </div>
+      {selectedCountry ? (
+        <div className="map-tab-row" role="tablist" aria-label="Map side panel sections">
+          <button
+            type="button"
+            role="tab"
+            aria-selected={leftTab === 'overview'}
+            className={`map-tab-chip ${leftTab === 'overview' ? 'active' : ''}`}
+            onClick={() => onLeftTabChange('overview')}
+          >
+            Overview
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={leftTab === 'display'}
+            className={`map-tab-chip ${leftTab === 'display' ? 'active' : ''}`}
+            onClick={() => onLeftTabChange('display')}
+          >
+            Display
+          </button>
+        </div>
+      ) : null}
 
       <div className="map-tab-panel">
         {leftTab === 'overview' ? (
