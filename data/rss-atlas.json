@@ -9,7 +9,8 @@
       "feeds": [
         {
           "name": "The New York Times",
-          "url": "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml",
+          "url": null,
+          "sitemapUrl": "https://www.nytimes.com/sitemaps/new/news.xml.gz",
           "status": "ERR",
           "checkedDate": "02/18/2026",
           "valid": "invalid",
@@ -31,8 +32,8 @@
         },
         {
           "name": "LA Times",
-          "url": "https://www.latimes.com/local/rss2.0.xml",
-          "sitemapUrl": "https://www.latimes.com/news-sitemap.xml",
+          "url": null,
+          "sitemapUrl": "https://www.latimes.com/news-sitemap-latest.xml",
           "status": "ERR",
           "checkedDate": "02/18/2026",
           "valid": "invalid",
@@ -846,6 +847,16 @@
           "checkedDate": "02/19/2026",
           "valid": "needs verification",
           "row": 111
+        },
+        {
+          "name": "Scripps News - News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.scrippsnews.com/news-sitemap-content.xml"
+        },
+        {
+          "name": "Bloomberg - Latest News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.bloomberg.com/sitemaps/news/latest.xml"
         },
         {
           "name": "NewsNation",
@@ -23225,6 +23236,132 @@
         {
           "name": "Ynet - News",
           "url": "https://www.ynet.co.il/Integration/StoryRss2.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Walla - Main News",
+          "url": "https://rss.walla.co.il/feed/1?type=main",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Walla - Israel News",
+          "url": "https://rss.walla.co.il/feed/1",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Walla - World News",
+          "url": "https://rss.walla.co.il/feed/2",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Walla - Breaking News",
+          "url": "https://rss.walla.co.il/feed/22",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Walla - Security",
+          "url": "https://rss.walla.co.il/feed/2689",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Walla - Politics",
+          "url": "https://rss.walla.co.il/feed/2686",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "mako - Israel",
+          "url": "https://rcs.mako.co.il/rss/news-israel.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "mako - World",
+          "url": "https://rcs.mako.co.il/rss/news-world.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "mako - Military",
+          "url": "https://rcs.mako.co.il/rss/dac23afee62ff210VgnVCM2000002a0c10acRCRD.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "MivzakLive",
+          "url": "https://www.mivzaklive.co.il/feed",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Maariv - Main News",
+          "url": "https://www.maariv.co.il/rss/rsschadashot",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Maariv - Breaking News",
+          "url": "https://www.maariv.co.il/rss/rssfeedsmivzakichadashot",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Maariv - Politics",
+          "url": "https://www.maariv.co.il/rss/rssfeedspolitimedini",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Maariv - Israel News",
+          "url": "https://www.maariv.co.il/rss/rssfeedschadashotbaarez",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Maariv - Security",
+          "url": "https://www.maariv.co.il/rss/rssfeedszavavebetachon",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Maariv - World News",
+          "url": "https://www.maariv.co.il/rss/rssfeedschadashotbaolam",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Srugim",
+          "url": "https://www.srugim.co.il/feed",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "ICE",
+          "url": "https://www.ice.co.il/rss",
           "status": "NEW",
           "checkedDate": "04/01/2026",
           "valid": "valid"

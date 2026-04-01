@@ -2,14 +2,12 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Wed, 01 Apr 2026 15:35:40 GMT</dateCreated>
+    <dateCreated>Wed, 01 Apr 2026 15:53:26 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
     <outline text="United States (US)" title="United States (US)">
-      <outline text="The New York Times [valid]" title="The New York Times [valid]" type="rss" xmlUrl="https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml" htmlUrl="https://rss.nytimes.com"/>
       <outline text="Wall Street Journal [valid]" title="Wall Street Journal [valid]" type="rss" xmlUrl="https://feeds.a.dj.com/rss/RSSWorldNews.xml" htmlUrl="https://feeds.a.dj.com"/>
-      <outline text="LA Times [valid]" title="LA Times [valid]" type="rss" xmlUrl="https://www.latimes.com/local/rss2.0.xml" htmlUrl="https://www.latimes.com"/>
       <outline text="CNN [valid]" title="CNN [valid]" type="rss" xmlUrl="http://rss.cnn.com/rss/cnn_topstories.rss" htmlUrl="http://rss.cnn.com"/>
       <outline text="Fox News [invalid]" title="Fox News [invalid]" type="rss" xmlUrl="https://feeds.foxnews.com/foxnews/latest" htmlUrl="https://feeds.foxnews.com"/>
       <outline text="NBC News [invalid]" title="NBC News [invalid]" type="rss" xmlUrl="https://feeds.nbcnews.com/nbcnews/public/news" htmlUrl="https://feeds.nbcnews.com"/>
@@ -2549,6 +2547,25 @@
       <outline text="Jerusalem Post - Israel News [valid]" title="Jerusalem Post - Israel News [valid]" type="rss" xmlUrl="https://www.jpost.com/rss/rssfeedsisraelnews.aspx" htmlUrl="https://www.jpost.com"/>
       <outline text="Jerusalem Post - Middle East [valid]" title="Jerusalem Post - Middle East [valid]" type="rss" xmlUrl="https://www.jpost.com/rss/rssfeedsmiddleeastnews.aspx" htmlUrl="https://www.jpost.com"/>
       <outline text="Jerusalem Post - World [valid]" title="Jerusalem Post - World [valid]" type="rss" xmlUrl="https://www.jpost.com/rss/rssfeedsinternational" htmlUrl="https://www.jpost.com"/>
+      <outline text="Ynet - News [valid]" title="Ynet - News [valid]" type="rss" xmlUrl="https://www.ynet.co.il/Integration/StoryRss2.xml" htmlUrl="https://www.ynet.co.il"/>
+      <outline text="Walla - Main News [valid]" title="Walla - Main News [valid]" type="rss" xmlUrl="https://rss.walla.co.il/feed/1?type=main" htmlUrl="https://rss.walla.co.il"/>
+      <outline text="Walla - Israel News [valid]" title="Walla - Israel News [valid]" type="rss" xmlUrl="https://rss.walla.co.il/feed/1" htmlUrl="https://rss.walla.co.il"/>
+      <outline text="Walla - World News [valid]" title="Walla - World News [valid]" type="rss" xmlUrl="https://rss.walla.co.il/feed/2" htmlUrl="https://rss.walla.co.il"/>
+      <outline text="Walla - Breaking News [valid]" title="Walla - Breaking News [valid]" type="rss" xmlUrl="https://rss.walla.co.il/feed/22" htmlUrl="https://rss.walla.co.il"/>
+      <outline text="Walla - Security [valid]" title="Walla - Security [valid]" type="rss" xmlUrl="https://rss.walla.co.il/feed/2689" htmlUrl="https://rss.walla.co.il"/>
+      <outline text="Walla - Politics [valid]" title="Walla - Politics [valid]" type="rss" xmlUrl="https://rss.walla.co.il/feed/2686" htmlUrl="https://rss.walla.co.il"/>
+      <outline text="mako - Israel [valid]" title="mako - Israel [valid]" type="rss" xmlUrl="https://rcs.mako.co.il/rss/news-israel.xml" htmlUrl="https://rcs.mako.co.il"/>
+      <outline text="mako - World [valid]" title="mako - World [valid]" type="rss" xmlUrl="https://rcs.mako.co.il/rss/news-world.xml" htmlUrl="https://rcs.mako.co.il"/>
+      <outline text="mako - Military [valid]" title="mako - Military [valid]" type="rss" xmlUrl="https://rcs.mako.co.il/rss/dac23afee62ff210VgnVCM2000002a0c10acRCRD.xml" htmlUrl="https://rcs.mako.co.il"/>
+      <outline text="MivzakLive [valid]" title="MivzakLive [valid]" type="rss" xmlUrl="https://www.mivzaklive.co.il/feed" htmlUrl="https://www.mivzaklive.co.il"/>
+      <outline text="Maariv - Main News [valid]" title="Maariv - Main News [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rsschadashot" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Maariv - Breaking News [valid]" title="Maariv - Breaking News [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rssfeedsmivzakichadashot" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Maariv - Politics [valid]" title="Maariv - Politics [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rssfeedspolitimedini" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Maariv - Israel News [valid]" title="Maariv - Israel News [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rssfeedschadashotbaarez" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Maariv - Security [valid]" title="Maariv - Security [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rssfeedszavavebetachon" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Maariv - World News [valid]" title="Maariv - World News [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rssfeedschadashotbaolam" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Srugim [valid]" title="Srugim [valid]" type="rss" xmlUrl="https://www.srugim.co.il/feed" htmlUrl="https://www.srugim.co.il"/>
+      <outline text="ICE [valid]" title="ICE [valid]" type="rss" xmlUrl="https://www.ice.co.il/rss" htmlUrl="https://www.ice.co.il"/>
     </outline>
     <outline text="Bahrain (BH)" title="Bahrain (BH)">
       <outline text="Al Bilad Press [valid]" title="Al Bilad Press [valid]" type="rss" xmlUrl="https://www.albiladpress.com/rss" htmlUrl="https://www.albiladpress.com"/>

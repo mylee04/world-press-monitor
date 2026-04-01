@@ -85,6 +85,32 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     if (/^\/news\/20\d{2}-\d{2}-\d{2}\/abc-news\/\d+\/?$/.test(pathname)) return true;
   }
 
+  if (hostname.endsWith('nytimes.com') && normalizedSource === 'the new york times') {
+    if (pathname.startsWith('/athletic/')) return true;
+    if (pathname.startsWith('/crosswords/')) return true;
+    if (pathname.startsWith('/opinion/')) return true;
+    if (pathname.startsWith('/interactive/')) return true;
+    if (pathname.startsWith('/magazine/')) return true;
+    if (pathname.startsWith('/arts/')) return true;
+    if (pathname.startsWith('/theater/')) return true;
+  }
+
+  if (hostname.endsWith('latimes.com') && normalizedSource === 'la times') {
+    if (pathname.includes('/newsletter/')) return true;
+    if (pathname.startsWith('/sports/')) return true;
+    if (pathname.startsWith('/opinion/')) return true;
+    if (pathname.startsWith('/entertainment-arts/')) return true;
+  }
+
+  if (hostname.endsWith('scrippsnews.com') && normalizedSource.includes('scripps news - news sitemap')) {
+    if (pathname.startsWith('/life/')) return true;
+    if (pathname.startsWith('/sports/')) return true;
+  }
+
+  if (hostname.endsWith('bloomberg.com') && normalizedSource.includes('bloomberg - latest news sitemap')) {
+    if (pathname.startsWith('/news/newsletters/')) return true;
+  }
+
   if (hostname.endsWith('abcnyheter.no') && normalizedSource.includes('abc nyheter')) {
     if (pathname.startsWith('/stemmer/')) return true;
   }
