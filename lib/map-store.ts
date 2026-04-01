@@ -7,13 +7,14 @@ import { Pool } from 'pg';
 import { resolveDatabaseUrl } from '@/lib/database-url';
 import { inferGeoFromTitle } from '@/lib/geo';
 import { readNewsArticlesForApi } from '@/lib/ingestion-store';
-import { resolvePublisherName } from '@/lib/publisher-groups';
+import { resolvePublisherInfo, resolvePublisherName } from '@/lib/publisher-groups';
 import { resolveSourceHeadquarters } from '@/lib/source-headquarters';
 import { buildDisplaySourceName } from '@/lib/source-display';
 import type {
   MapMetricWindow,
   MapCountryMetricsResponse,
   MapCountryMetricRow,
+  MapPublisherConfidence,
   MapPublishersResponse,
   MapPublisherCountryRow,
   MapPublisherMetricRow,
@@ -174,6 +175,8 @@ type PublisherWindowAccumulator = {
   degradedSources: number;
 };
 
+type PublisherConfidenceVotes = Record<MapPublisherConfidence, number>;
+
 function readTimedCache<T>(entry: TimedCacheEntry<T> | null | undefined): T | null {
   if (!entry) return null;
   if (entry.expiresAt <= Date.now()) return null;
@@ -213,6 +216,33 @@ function emptyPublisherWindowAccumulator(): PublisherWindowAccumulator {
     healthySources: 0,
     degradedSources: 0,
   };
+}
+
+function emptyPublisherConfidenceVotes(): PublisherConfidenceVotes {
+  return {
+    high: 0,
+    medium: 0,
+    low: 0,
+  };
+}
+
+function addPublisherConfidenceVote(votes: PublisherConfidenceVotes, confidence: MapPublisherConfidence): void {
+  votes[confidence] += 1;
+}
+
+function mergePublisherConfidenceVotes(target: PublisherConfidenceVotes, source: PublisherConfidenceVotes): void {
+  target.high += source.high;
+  target.medium += source.medium;
+  target.low += source.low;
+}
+
+function resolvePublisherConfidence(votes: PublisherConfidenceVotes): MapPublisherConfidence {
+  const total = votes.high + votes.medium + votes.low;
+  if (total <= 0) return 'low';
+  const weightedScore = (votes.high * 3 + votes.medium * 2 + votes.low) / total;
+  if (weightedScore >= 2.6) return 'high';
+  if (weightedScore >= 1.6) return 'medium';
+  return 'low';
 }
 
 function buildCountryWindowRecord(
@@ -1065,7 +1095,11 @@ function buildCountryMetricsFromPublicData(window: MapMetricWindow = DEFAULT_MAP
   };
 }
 
-function buildCountrySourcesFromPublicData(country: string): MapCountrySourcesResponse {
+function buildCountrySourcesFromPublicData(
+  country: string,
+  window: MapMetricWindow = DEFAULT_MAP_WINDOW
+): MapCountrySourcesResponse {
+  const selectedWindow = normalizeMapMetricWindow(window);
   const publicSources = loadPublicSources();
   const publicCountryFeeds = loadPublicCountryFeeds();
   const files = [...publicCountryFeeds.values()];
@@ -1075,29 +1109,38 @@ function buildCountrySourcesFromPublicData(country: string): MapCountrySourcesRe
       generatedAt: new Date().toISOString(),
       country,
       countryCode: getCountryCode(country),
+      window: selectedWindow,
       center: { lat: fallback.lat || 0, lon: fallback.lon || 0 },
       summary: { pub24h: 0, pub1h: 0, activeSources24h: 0, rssSources24h: 0, sitemapSources24h: 0 },
       topSources: [],
       topPublishers: [],
       topRegions: [],
       hourly24h: [],
+      daily7d: [],
       sources: [],
     };
   }
 
   const bySource = new Map<string, {
     source: string;
+    pub7d: number;
     pub24h: number;
     pub1h: number;
+    fresh7d: number;
     fresh24h: number;
+    late7d: number;
     late24h: number;
+    firstSeen7d: number;
     firstSeen24h: number;
   }>();
   const hourly24h = new Map<string, number>();
+  const daily7d = new Map<string, number>();
   const seenHourlyArticleIds = new Set<string>();
+  const seenDailyArticleIds = new Set<string>();
 
   for (const file of files) {
     const referenceNow = deriveReferenceNow(file.generatedAt, file.articles || []);
+    const cutoff7d = referenceNow - 7 * 24 * 60 * 60 * 1000;
     const cutoff24h = referenceNow - 24 * 60 * 60 * 1000;
     const cutoff1h = referenceNow - 60 * 60 * 1000;
 
@@ -1109,16 +1152,24 @@ function buildCountrySourcesFromPublicData(country: string): MapCountrySourcesRe
       const createdMs = Date.parse(article.createdAt || '');
       const current = bySource.get(key) || {
         source: article.source,
+        pub7d: 0,
         pub24h: 0,
         pub1h: 0,
+        fresh7d: 0,
         fresh24h: 0,
+        late7d: 0,
         late24h: 0,
+        firstSeen7d: 0,
         firstSeen24h: 0,
       };
+      if (publicationMs >= cutoff7d) current.pub7d += 1;
       if (publicationMs >= cutoff24h) current.pub24h += 1;
       if (publicationMs >= cutoff1h) current.pub1h += 1;
+      if (createdMs >= cutoff7d) current.firstSeen7d += 1;
       if (createdMs >= cutoff24h) current.firstSeen24h += 1;
+      if (publicationMs >= cutoff7d && createdMs >= cutoff7d) current.fresh7d += 1;
       if (publicationMs >= cutoff24h && createdMs >= cutoff24h) current.fresh24h += 1;
+      if (createdMs >= cutoff7d && publicationMs < cutoff7d) current.late7d += 1;
       if (createdMs >= cutoff24h && publicationMs < cutoff24h) current.late24h += 1;
       if (publicationMs >= cutoff24h && !seenHourlyArticleIds.has(article.id)) {
         const hour = new Date(publicationMs);
@@ -1127,6 +1178,11 @@ function buildCountrySourcesFromPublicData(country: string): MapCountrySourcesRe
         hourly24h.set(hourKey, (hourly24h.get(hourKey) || 0) + 1);
         seenHourlyArticleIds.add(article.id);
       }
+      if (publicationMs >= cutoff7d && !seenDailyArticleIds.has(article.id)) {
+        const dayKey = new Date(publicationMs).toISOString().slice(0, 10);
+        daily7d.set(dayKey, (daily7d.get(dayKey) || 0) + 1);
+        seenDailyArticleIds.add(article.id);
+      }
       bySource.set(key, current);
     }
   }
@@ -1134,10 +1190,12 @@ function buildCountrySourcesFromPublicData(country: string): MapCountrySourcesRe
   const rows: MapSourceMetricRow[] = [...bySource.entries()].map(([key, entry]) => {
     const sourceRecord = publicSources.get(key);
     const coord = inferSourceCoordinate(buildDisplaySourceName(entry.source), country);
+    const publisherInfo = resolvePublisherInfo(buildDisplaySourceName(entry.source), country);
     return {
       sourceId: buildMapSourceId(country, entry.source),
       source: buildDisplaySourceName(entry.source),
-      publisher: resolvePublisherName(buildDisplaySourceName(entry.source), country),
+      publisher: publisherInfo.publisher,
+      publisherConfidence: publisherInfo.confidence,
       country,
       region: coord.region,
       city: coord.city,
@@ -1149,18 +1207,39 @@ function buildCountrySourcesFromPublicData(country: string): MapCountrySourcesRe
       fresh24h: entry.fresh24h,
       late24h: entry.late24h,
       firstSeen24h: entry.firstSeen24h,
+      windows: {
+        '1h': {
+          published: entry.pub1h,
+          fresh: entry.pub1h,
+          late: 0,
+          firstSeen: entry.pub1h,
+        },
+        '24h': {
+          published: entry.pub24h,
+          fresh: entry.fresh24h,
+          late: entry.late24h,
+          firstSeen: entry.firstSeen24h,
+        },
+        '7d': {
+          published: entry.pub7d,
+          fresh: entry.fresh7d,
+          late: entry.late7d,
+          firstSeen: entry.firstSeen7d,
+        },
+      },
       method: toPublicMethod(sourceRecord),
       health: classifyPublicHealth(sourceRecord),
       rssUrl: sourceRecord?.rssUrl || null,
       sitemapUrl: sourceRecord?.sitemapUrl || null,
     };
-  }).sort((a, b) => b.pub24h - a.pub24h || a.source.localeCompare(b.source));
+  }).sort((a, b) => b.windows[selectedWindow].published - a.windows[selectedWindow].published || a.source.localeCompare(b.source));
 
   const center = inferGeoFromTitle(country, country);
   return {
     generatedAt: new Date().toISOString(),
     country,
     countryCode: getCountryCode(country),
+    window: selectedWindow,
     center: {
       lat: center.lat || 0,
       lon: center.lon || 0,
@@ -1172,15 +1251,15 @@ function buildCountrySourcesFromPublicData(country: string): MapCountrySourcesRe
       rssSources24h: rows.filter((row) => row.method === 'rss' || row.method === 'rss+sitemap').length,
       sitemapSources24h: rows.filter((row) => row.method === 'sitemap' || row.method === 'rss+sitemap').length,
     },
-    topSources: rows.slice(0, 8).map((row) => ({ name: row.source, count: row.pub24h })),
+    topSources: rows.slice(0, 8).map((row) => ({ name: row.source, count: row.windows[selectedWindow].published })),
     topPublishers: rankTopCounts(
-      rows.map((row) => ({ name: row.publisher || row.source, count: row.pub24h })),
+      rows.map((row) => ({ name: row.publisher || row.source, count: row.windows[selectedWindow].published })),
       8
     ),
     topRegions: rankTopRegions(
       rows.map((row) => ({
         name: row.locationKind === 'country-fallback' ? 'Unmapped / National' : buildAreaLabel(row),
-        count: row.pub24h,
+        count: row.windows[selectedWindow].published,
         sources: 1,
         unmapped: row.locationKind === 'country-fallback',
       })),
@@ -1189,6 +1268,9 @@ function buildCountrySourcesFromPublicData(country: string): MapCountrySourcesRe
     hourly24h: [...hourly24h.entries()]
       .sort((a, b) => a[0].localeCompare(b[0]))
       .map(([hour, count]) => ({ hour, count })),
+    daily7d: [...daily7d.entries()]
+      .sort((a, b) => a[0].localeCompare(b[0]))
+      .map(([day, count]) => ({ day, count })),
     sources: rows,
   };
 }
@@ -1222,6 +1304,7 @@ function buildSourceDetailFromPublicData(sourceName: string): MapSourceDetailRes
   const cutoff1h = referenceNow - 60 * 60 * 1000;
   const country = matchedCountry || 'Unknown';
   const coord = inferSourceCoordinate(normalizedSource, country);
+  const publisherInfo = resolvePublisherInfo(normalizedSource, country);
   const hourly = new Map<string, number>();
   let pub24h = 0;
   let pub1h = 0;
@@ -1249,7 +1332,8 @@ function buildSourceDetailFromPublicData(sourceName: string): MapSourceDetailRes
     generatedAt: new Date().toISOString(),
     sourceId: buildMapSourceId(country, normalizedSource),
     source: normalizedSource,
-    publisher: resolvePublisherName(normalizedSource, country),
+    publisher: publisherInfo.publisher,
+    publisherConfidence: publisherInfo.confidence,
     country,
     region: coord.region,
     city: coord.city,
@@ -1496,6 +1580,7 @@ export async function readMapPublishers(window: MapMetricWindow = DEFAULT_MAP_WI
     countryCode: string | null;
     lat: number;
     lon: number;
+    publisherConfidenceVotes: PublisherConfidenceVotes;
     pub24h: number;
     activeSources24h: number;
     healthySources24h: number;
@@ -1507,7 +1592,8 @@ export async function readMapPublishers(window: MapMetricWindow = DEFAULT_MAP_WI
     const country = resolveSourceCountry(row.source, row.country);
     if (!country) continue;
     const source = buildDisplaySourceName(row.source);
-    const publisher = resolvePublisherName(source, country);
+    const publisherInfo = resolvePublisherInfo(source, country);
+    const publisher = publisherInfo.publisher;
     const geo = inferGeoFromTitle(country, country);
     const health = normalizeHealthStatus(healthBySource.get(normalizeSourceKey(row.source)));
     const sourceWindows = buildCountryWindowsFromSqlRow(row);
@@ -1518,6 +1604,7 @@ export async function readMapPublishers(window: MapMetricWindow = DEFAULT_MAP_WI
       countryCode: getCountryCode(country),
       lat: geo.lat || 0,
       lon: geo.lon || 0,
+      publisherConfidenceVotes: emptyPublisherConfidenceVotes(),
       pub24h: 0,
       activeSources24h: 0,
       healthySources24h: 0,
@@ -1530,6 +1617,7 @@ export async function readMapPublishers(window: MapMetricWindow = DEFAULT_MAP_WI
     };
 
     current.pub24h += sourceWindows['24h'].published;
+    addPublisherConfidenceVote(current.publisherConfidenceVotes, publisherInfo.confidence);
     if (isCountryWindowActive(sourceWindows['24h'])) current.activeSources24h += 1;
     if (isCountryWindowActive(sourceWindows['24h']) && (health === 'healthy' || health === 'warning')) current.healthySources24h += 1;
     if (isCountryWindowActive(sourceWindows['24h']) && (health === 'degraded' || health === 'failing')) current.degradedSources24h += 1;
@@ -1543,10 +1631,12 @@ export async function readMapPublishers(window: MapMetricWindow = DEFAULT_MAP_WI
     byPublisherCountry.set(key, current);
   }
 
-  const byPublisher = new Map<string, MapPublishersResponse['publishers'][number]>();
+  const byPublisher = new Map<string, MapPublishersResponse['publishers'][number] & { publisherConfidenceVotes: PublisherConfidenceVotes }>();
   for (const row of byPublisherCountry.values()) {
     const current = byPublisher.get(row.publisher) || {
       publisher: row.publisher,
+      publisherConfidence: 'low' as const,
+      publisherConfidenceVotes: emptyPublisherConfidenceVotes(),
       pub24h: 0,
       activeCountries24h: 0,
       activeSources24h: 0,
@@ -1561,6 +1651,8 @@ export async function readMapPublishers(window: MapMetricWindow = DEFAULT_MAP_WI
     current.activeSources24h += row.activeSources24h;
     current.healthySources24h += row.healthySources24h;
     current.degradedSources24h += row.degradedSources24h;
+    mergePublisherConfidenceVotes(current.publisherConfidenceVotes, row.publisherConfidenceVotes);
+    current.publisherConfidence = resolvePublisherConfidence(current.publisherConfidenceVotes);
     for (const metricWindow of MAP_WINDOWS) {
       const countryWindow = row.windowsAcc[metricWindow];
       if (countryWindow.published > 0 || countryWindow.activeSources > 0) {
@@ -1576,6 +1668,7 @@ export async function readMapPublishers(window: MapMetricWindow = DEFAULT_MAP_WI
       countryCode: row.countryCode,
       lat: row.lat,
       lon: row.lon,
+      publisherConfidence: resolvePublisherConfidence(row.publisherConfidenceVotes),
       pub24h: row.pub24h,
       activeSources24h: row.activeSources24h,
       healthySources24h: row.healthySources24h,
@@ -1595,7 +1688,7 @@ export async function readMapPublishers(window: MapMetricWindow = DEFAULT_MAP_WI
     storage: 'postgres' as const,
     window: selectedWindow,
     publishers: [...byPublisher.values()]
-      .map((publisher) => ({
+      .map(({ publisherConfidenceVotes: _publisherConfidenceVotes, ...publisher }) => ({
         ...publisher,
         countries: [...publisher.countries].sort(
           (a, b) => b.windows[selectedWindow].published - a.windows[selectedWindow].published || a.country.localeCompare(b.country)
@@ -1607,13 +1700,17 @@ export async function readMapPublishers(window: MapMetricWindow = DEFAULT_MAP_WI
   return payload;
 }
 
-export async function readMapCountrySources(country: string): Promise<MapCountrySourcesResponse> {
-  const countryKey = country.trim();
+export async function readMapCountrySources(
+  country: string,
+  window: MapMetricWindow = DEFAULT_MAP_WINDOW
+): Promise<MapCountrySourcesResponse> {
+  const selectedWindow = normalizeMapMetricWindow(window);
+  const countryKey = `${country.trim()}::${selectedWindow}`;
   const cached = readTimedCache(mapCountrySourcesCache.get(countryKey));
   if (cached) return cached;
 
   try {
-    const rows = await readRecentSourceMetrics(`coalesce(nullif(trim(e.source), ''), '') <> ''`);
+    const rows = await readWindowedSourceMetrics(selectedWindow, `coalesce(nullif(trim(e.source), ''), '') <> ''`);
     const healthBySource = await readLatestHealthBySource();
     const bySource = new Map<string, MapSourceMetricRow>();
 
@@ -1626,33 +1723,62 @@ export async function readMapCountrySources(country: string): Promise<MapCountry
       const meta = getSourceMeta(row.source);
       const method = classifySourceMethod(meta);
       const health = normalizeHealthStatus(healthBySource.get(normalizeSourceKey(row.source)));
+      const windows = {
+        '1h': {
+          published: Number(row.pub_1h || 0),
+          fresh: Number(row.fresh_1h || 0),
+          late: Number(row.late_1h || 0),
+          firstSeen: Number(row.first_seen_1h || 0),
+        },
+        '24h': {
+          published: Number(row.pub_24h || 0),
+          fresh: Number(row.fresh_24h || 0),
+          late: Number(row.late_24h || 0),
+          firstSeen: Number(row.first_seen_24h || 0),
+        },
+        '7d': {
+          published: Number(row.pub_7d || 0),
+          fresh: Number(row.fresh_7d || 0),
+          late: Number(row.late_7d || 0),
+          firstSeen: Number(row.first_seen_7d || 0),
+        },
+      } satisfies MapSourceMetricRow['windows'];
       const current = bySource.get(sourceKey);
 
       if (current) {
-        current.pub24h += Number(row.pub24h || 0);
-        current.pub1h += Number(row.pub1h || 0);
-        current.fresh24h += Number(row.fresh24h || 0);
-        current.late24h += Number(row.late24h || 0);
-        current.firstSeen24h += Number(row.first_seen_24h || 0);
+        current.pub24h += windows['24h'].published;
+        current.pub1h += windows['1h'].published;
+        current.fresh24h += windows['24h'].fresh;
+        current.late24h += windows['24h'].late;
+        current.firstSeen24h += windows['24h'].firstSeen;
+        for (const metricWindow of MAP_WINDOWS) {
+          current.windows[metricWindow].published += windows[metricWindow].published;
+          current.windows[metricWindow].fresh += windows[metricWindow].fresh;
+          current.windows[metricWindow].late += windows[metricWindow].late;
+          current.windows[metricWindow].firstSeen += windows[metricWindow].firstSeen;
+        }
         continue;
       }
 
       const coord = inferSourceCoordinate(displaySource, country);
+      const publisherInfo = resolvePublisherInfo(displaySource, country);
       bySource.set(sourceKey, {
         sourceId: buildMapSourceId(country, displaySource),
         source: displaySource,
-        publisher: resolvePublisherName(displaySource, country),
+        publisher: publisherInfo.publisher,
+        publisherConfidence: publisherInfo.confidence,
         country,
         region: coord.region,
         city: coord.city,
         locationKind: coord.locationKind,
         lat: coord.lat,
         lon: coord.lon,
-        pub24h: Number(row.pub24h || 0),
-        pub1h: Number(row.pub1h || 0),
-        fresh24h: Number(row.fresh24h || 0),
-        late24h: Number(row.late24h || 0),
-        firstSeen24h: Number(row.first_seen_24h || 0),
+        pub24h: windows['24h'].published,
+        pub1h: windows['1h'].published,
+        fresh24h: windows['24h'].fresh,
+        late24h: windows['24h'].late,
+        firstSeen24h: windows['24h'].firstSeen,
+        windows,
         method,
         health,
         rssUrl: meta?.rssUrl || null,
@@ -1661,7 +1787,7 @@ export async function readMapCountrySources(country: string): Promise<MapCountry
     }
 
     const sourceRows: MapSourceMetricRow[] = [...bySource.values()]
-      .sort((a, b) => b.pub24h - a.pub24h || a.source.localeCompare(b.source));
+      .sort((a, b) => b.windows[selectedWindow].published - a.windows[selectedWindow].published || a.source.localeCompare(b.source));
 
     const center = inferGeoFromTitle(country, country);
     const db = getPool();
@@ -1679,10 +1805,24 @@ export async function readMapCountrySources(country: string): Promise<MapCountry
       `,
       [country]
     );
+    const dailyResult = await db.query<{ day_bucket: string; published_count: string }>(
+      `
+      select
+        day_bucket::text,
+        published_count::text
+      from country_benchmark_daily
+      where country = $1
+        and metric_version = 'v1'
+      order by day_bucket desc
+      limit 7
+      `,
+      [country]
+    );
     const payload = {
       generatedAt: new Date().toISOString(),
       country,
       countryCode: getCountryCode(country),
+      window: selectedWindow,
       center: {
         lat: center.lat || 0,
         lon: center.lon || 0,
@@ -1694,15 +1834,15 @@ export async function readMapCountrySources(country: string): Promise<MapCountry
         rssSources24h: sourceRows.filter((row) => row.method === 'rss' || row.method === 'rss+sitemap').length,
         sitemapSources24h: sourceRows.filter((row) => row.method === 'sitemap' || row.method === 'rss+sitemap').length,
       },
-      topSources: sourceRows.slice(0, 8).map((row) => ({ name: row.source, count: row.pub24h })),
+      topSources: sourceRows.slice(0, 8).map((row) => ({ name: row.source, count: row.windows[selectedWindow].published })),
       topPublishers: rankTopCounts(
-        sourceRows.map((row) => ({ name: row.publisher || row.source, count: row.pub24h })),
+        sourceRows.map((row) => ({ name: row.publisher || row.source, count: row.windows[selectedWindow].published })),
         8
       ),
       topRegions: rankTopRegions(
         sourceRows.map((row) => ({
           name: row.locationKind === 'country-fallback' ? 'Unmapped / National' : buildAreaLabel(row),
-          count: row.pub24h,
+          count: row.windows[selectedWindow].published,
           sources: 1,
           unmapped: row.locationKind === 'country-fallback',
         })),
@@ -1712,12 +1852,18 @@ export async function readMapCountrySources(country: string): Promise<MapCountry
         hour: hour.hour_bucket,
         count: Number(hour.count || 0),
       })),
+      daily7d: [...dailyResult.rows]
+        .reverse()
+        .map((day) => ({
+          day: day.day_bucket,
+          count: Number(day.published_count || 0),
+        })),
       sources: sourceRows,
     };
     mapCountrySourcesCache.set(countryKey, writeTimedCache(payload, MAP_COUNTRY_SOURCES_CACHE_MS));
     return payload;
   } catch {
-    const fallback = buildCountrySourcesFromPublicData(country);
+    const fallback = buildCountrySourcesFromPublicData(country, selectedWindow);
     mapCountrySourcesCache.set(countryKey, writeTimedCache(fallback, 15_000));
     return fallback;
   }
@@ -1745,6 +1891,7 @@ export async function readMapSourceDetail(sourceName: string): Promise<MapSource
     const healthBySource = await readLatestHealthBySource();
     const healthRow = healthBySource.get(normalizeSourceKey(normalizedSource));
     const coord = inferSourceCoordinate(normalizedSource, country);
+    const publisherInfo = resolvePublisherInfo(normalizedSource, country);
     const articles = await readNewsArticlesForApi({
       sourceNames: rawSourceNames,
       countries: countryHint ? [countryHint] : undefined,
@@ -1784,7 +1931,8 @@ export async function readMapSourceDetail(sourceName: string): Promise<MapSource
       generatedAt: new Date().toISOString(),
       sourceId: buildMapSourceId(country, normalizedSource),
       source: normalizedSource,
-      publisher: resolvePublisherName(normalizedSource, country),
+      publisher: publisherInfo.publisher,
+      publisherConfidence: publisherInfo.confidence,
       country,
       region: coord.region,
       city: coord.city,

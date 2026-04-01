@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { readCustomerPortalSession } from '@/lib/customer-portal';
 import { readMapCountrySources } from '@/lib/map-store';
+import type { MapMetricWindow } from '@/lib/map-types';
 
 export const runtime = 'nodejs';
 
@@ -8,7 +9,12 @@ function allowLocalPreview(): boolean {
   return process.env.NODE_ENV !== 'production';
 }
 
-export async function GET(_request: NextRequest, context: { params: Promise<{ country: string }> }) {
+function normalizeWindow(value: string | null): MapMetricWindow {
+  if (value === '1h' || value === '7d') return value;
+  return '24h';
+}
+
+export async function GET(request: NextRequest, context: { params: Promise<{ country: string }> }) {
   const session = await readCustomerPortalSession();
   if (!allowLocalPreview() && !session.hasToken) {
     return NextResponse.json(
@@ -26,7 +32,8 @@ export async function GET(_request: NextRequest, context: { params: Promise<{ co
         { status: 400, headers: { 'Cache-Control': 'no-store' } }
       );
     }
-    const payload = await readMapCountrySources(country);
+    const window = normalizeWindow(request.nextUrl.searchParams.get('window'));
+    const payload = await readMapCountrySources(country, window);
     return NextResponse.json(payload, { headers: { 'Cache-Control': 'no-store' } });
   } catch (error: unknown) {
     return NextResponse.json(

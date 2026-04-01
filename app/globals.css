@@ -624,6 +624,21 @@ body:has(.map-page-root) main {
   box-shadow: 0 0 0 1px rgba(255, 207, 90, 0.18) inset;
 }
 
+.map-status-pill.confidence-high {
+  box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.18) inset;
+  color: #c6f6d5;
+}
+
+.map-status-pill.confidence-medium {
+  box-shadow: 0 0 0 1px rgba(250, 204, 21, 0.18) inset;
+  color: #fde68a;
+}
+
+.map-status-pill.confidence-low {
+  box-shadow: 0 0 0 1px rgba(248, 113, 113, 0.18) inset;
+  color: #fecaca;
+}
+
 .map-stat-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

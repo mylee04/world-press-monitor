@@ -1,16 +1,21 @@
 import { buildDisplaySourceName } from '@/lib/source-display';
 
+export type PublisherConfidence = 'high' | 'medium' | 'low';
+type PublisherMatchType = 'exact' | 'prefix' | 'contains' | 'fallback';
+
 type PublisherRule = {
   publisher: string;
   countries?: string[];
   exact?: string[];
   prefixes?: string[];
   contains?: string[];
+  confidence?: PublisherConfidence;
 };
 
 export type ResolvedPublisher = {
   publisher: string;
-  confidence: 'mapped' | 'fallback';
+  confidence: PublisherConfidence;
+  matchedBy: PublisherMatchType;
 };
 
 function normalize(value: string): string {
@@ -100,30 +105,46 @@ const PUBLISHER_RULES: PublisherRule[] = [
   { publisher: 'Mediahuis', countries: ['Belgium', 'Netherlands'], prefixes: ['De Standaard', 'Nieuwsblad', 'Gazet van Antwerpen'] },
 ];
 
-function matchesRule(source: string, country: string, rule: PublisherRule): boolean {
+function resolveRuleMatch(source: string, country: string, rule: PublisherRule): PublisherMatchType | null {
   const normalizedSource = normalize(source);
   if (rule.countries && rule.countries.length > 0 && !rule.countries.includes(country)) {
-    return false;
+    return null;
   }
-  if (rule.exact?.some((value) => normalize(value) === normalizedSource)) return true;
-  if (rule.prefixes?.some((value) => normalizedSource.startsWith(normalize(value)))) return true;
-  if (rule.contains?.some((value) => normalizedSource.includes(normalize(value)))) return true;
-  return false;
+  if (rule.exact?.some((value) => normalize(value) === normalizedSource)) return 'exact';
+  if (rule.prefixes?.some((value) => normalizedSource.startsWith(normalize(value)))) return 'prefix';
+  if (rule.contains?.some((value) => normalizedSource.includes(normalize(value)))) return 'contains';
+  return null;
+}
+
+function confidenceForMatch(rule: PublisherRule, matchType: PublisherMatchType): PublisherConfidence {
+  if (rule.confidence) return rule.confidence;
+  switch (matchType) {
+    case 'exact':
+      return 'high';
+    case 'prefix':
+      return 'medium';
+    case 'contains':
+    case 'fallback':
+      return 'low';
+  }
 }
 
 export function resolvePublisherInfo(source: string, country: string): ResolvedPublisher {
   for (const rule of PUBLISHER_RULES) {
-    if (matchesRule(source, country, rule)) {
+    const matchType = resolveRuleMatch(source, country, rule);
+    if (matchType) {
       return {
         publisher: rule.publisher,
-        confidence: 'mapped',
+        confidence: confidenceForMatch(rule, matchType),
+        matchedBy: matchType,
       };
     }
   }
 
   return {
     publisher: buildDisplaySourceName(source),
-    confidence: 'fallback',
+    confidence: 'low',
+    matchedBy: 'fallback',
   };
 }
 

@@ -1,5 +1,6 @@
 export type MapMetricWindow = '1h' | '24h' | '7d';
 export type MapStorageMode = 'postgres' | 'export-fallback';
+export type MapPublisherConfidence = 'high' | 'medium' | 'low';
 
 export type MapCountryWindowMetrics = {
   published: number;
@@ -61,6 +62,7 @@ export type MapPublisherCountryRow = {
   countryCode: string | null;
   lat: number;
   lon: number;
+  publisherConfidence: MapPublisherConfidence;
   pub24h: number;
   activeSources24h: number;
   healthySources24h: number;
@@ -78,6 +80,7 @@ export type MapPublisherWindowMetrics = {
 
 export type MapPublisherMetricRow = {
   publisher: string;
+  publisherConfidence: MapPublisherConfidence;
   pub24h: number;
   activeCountries24h: number;
   activeSources24h: number;
@@ -94,10 +97,18 @@ export type MapPublishersResponse = {
   publishers: MapPublisherMetricRow[];
 };
 
+export type MapSourceWindowMetrics = {
+  published: number;
+  fresh: number;
+  late: number;
+  firstSeen: number;
+};
+
 export type MapSourceMetricRow = {
   sourceId: string;
   source: string;
   publisher: string | null;
+  publisherConfidence: MapPublisherConfidence;
   country: string;
   region: string | null;
   city: string | null;
@@ -109,6 +120,7 @@ export type MapSourceMetricRow = {
   fresh24h: number;
   late24h: number;
   firstSeen24h: number;
+  windows: Record<MapMetricWindow, MapSourceWindowMetrics>;
   method: 'rss' | 'sitemap' | 'rss+sitemap';
   health: 'healthy' | 'warning' | 'degraded' | 'failing' | 'unknown';
   rssUrl: string | null;
@@ -119,6 +131,7 @@ export type MapCountrySourcesResponse = {
   generatedAt: string;
   country: string;
   countryCode: string | null;
+  window: MapMetricWindow;
   center: {
     lat: number;
     lon: number;
@@ -134,6 +147,7 @@ export type MapCountrySourcesResponse = {
   topPublishers: Array<{ name: string; count: number }>;
   topRegions: Array<{ name: string; count: number; sources: number }>;
   hourly24h: Array<{ hour: string; count: number }>;
+  daily7d: Array<{ day: string; count: number }>;
   sources: MapSourceMetricRow[];
 };
 
@@ -142,6 +156,7 @@ export type MapSourceDetailResponse = {
   sourceId: string;
   source: string;
   publisher: string | null;
+  publisherConfidence: MapPublisherConfidence;
   country: string;
   region: string | null;
   city: string | null;

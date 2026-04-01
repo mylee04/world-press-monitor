@@ -11,6 +11,7 @@ import type {
   MapMetricWindow,
   MapCountryMetricsResponse,
   MapCountryMetricRow,
+  MapPublisherConfidence,
   MapPublishersResponse,
   MapPublisherMetricRow,
   MapCountrySourcesResponse,
@@ -422,6 +423,25 @@ function getPublisherCountryWindowMetrics(row: MapPublisherMetricRow['countries'
   return row.windows[window];
 }
 
+function getSourceWindowMetrics(row: MapSourceMetricRow, window: MapMetricWindow) {
+  return row.windows[window];
+}
+
+function isSourceWindowActive(row: MapSourceMetricRow, window: MapMetricWindow) {
+  const metrics = getSourceWindowMetrics(row, window);
+  return metrics.published > 0 || metrics.firstSeen > 0;
+}
+
+function publisherConfidenceLabel(confidence: MapPublisherConfidence): string {
+  if (confidence === 'high') return 'High confidence';
+  if (confidence === 'medium') return 'Medium confidence';
+  return 'Low confidence';
+}
+
+function getClusterWindowPublished(cluster: CountrySourceCluster, window: MapMetricWindow) {
+  return cluster.windows[window].published;
+}
+
 function sourceMethodLabel(value: MapSourceMetricRow['method']): string {
   if (value === 'rss+sitemap') return 'RSS + Sitemap';
   if (value === 'sitemap') return 'Sitemap';
@@ -630,8 +650,10 @@ type CountrySourceCluster = {
   city: string | null;
   region: string | null;
   point: { x: number; y: number };
+  pub7d: number;
   pub24h: number;
   pub1h: number;
+  windows: Record<MapMetricWindow, { published: number }>;
   sourceCount: number;
   headquartersCount: number;
   health: MapSourceMetricRow['health'];
@@ -714,7 +736,7 @@ function mergeHealthStatus(values: MapSourceMetricRow['health'][]): MapSourceMet
   return 'unknown';
 }
 
-function buildCountrySourceClusters(items: CountryPlottedPoint[]): CountrySourceCluster[] {
+function buildCountrySourceClusters(items: CountryPlottedPoint[], window: MapMetricWindow): CountrySourceCluster[] {
   const byKey = new Map<string, {
     id: string;
     name: string;
@@ -722,8 +744,10 @@ function buildCountrySourceClusters(items: CountryPlottedPoint[]): CountrySource
     region: string | null;
     sumX: number;
     sumY: number;
+    pub7d: number;
     pub24h: number;
     pub1h: number;
+    windows: Record<MapMetricWindow, { published: number }>;
     headquartersCount: number;
     health: MapSourceMetricRow['health'][];
     sources: MapSourceMetricRow[];
@@ -740,8 +764,12 @@ function buildCountrySourceClusters(items: CountryPlottedPoint[]): CountrySource
     if (current) {
       current.sumX += item.point.x;
       current.sumY += item.point.y;
+      current.pub7d += item.source.windows['7d'].published;
       current.pub24h += item.source.pub24h;
       current.pub1h += item.source.pub1h;
+      for (const metricWindow of ['1h', '24h', '7d'] as const) {
+        current.windows[metricWindow].published += item.source.windows[metricWindow].published;
+      }
       current.sources.push(item.source);
       current.health.push(item.source.health);
       if (item.source.locationKind === 'headquarters') current.headquartersCount += 1;
@@ -755,8 +783,14 @@ function buildCountrySourceClusters(items: CountryPlottedPoint[]): CountrySource
       region: item.source.city ? null : item.source.region,
       sumX: item.point.x,
       sumY: item.point.y,
+      pub7d: item.source.windows['7d'].published,
       pub24h: item.source.pub24h,
       pub1h: item.source.pub1h,
+      windows: {
+        '1h': { published: item.source.windows['1h'].published },
+        '24h': { published: item.source.windows['24h'].published },
+        '7d': { published: item.source.windows['7d'].published },
+      },
       headquartersCount: item.source.locationKind === 'headquarters' ? 1 : 0,
       health: [item.source.health],
       sources: [item.source],
@@ -773,14 +807,16 @@ function buildCountrySourceClusters(items: CountryPlottedPoint[]): CountrySource
         x: round(entry.sumX / entry.sources.length, 2),
         y: round(entry.sumY / entry.sources.length, 2),
       },
+      pub7d: entry.pub7d,
       pub24h: entry.pub24h,
       pub1h: entry.pub1h,
+      windows: entry.windows,
       sourceCount: entry.sources.length,
       headquartersCount: entry.headquartersCount,
       health: mergeHealthStatus(entry.health),
-      sources: [...entry.sources].sort((a, b) => b.pub24h - a.pub24h || a.source.localeCompare(b.source)),
+      sources: [...entry.sources].sort((a, b) => getSourceWindowMetrics(b, window).published - getSourceWindowMetrics(a, window).published || a.source.localeCompare(b.source)),
     }))
-    .sort((a, b) => b.pub24h - a.pub24h || a.name.localeCompare(b.name));
+    .sort((a, b) => getClusterWindowPublished(b, window) - getClusterWindowPublished(a, window) || a.name.localeCompare(b.name));
 }
 
 function rankCounts(items: Array<{ name: string; count: number }>, limit = 8): Array<{ name: string; count: number }> {
@@ -794,25 +830,29 @@ function rankCounts(items: Array<{ name: string; count: number }>, limit = 8): A
     .slice(0, limit);
 }
 
-function deriveSummaryFromSources(items: MapSourceMetricRow[]) {
+function deriveSummaryFromSources(items: MapSourceMetricRow[], window: MapMetricWindow) {
+  const activeItems = items.filter((item) => isSourceWindowActive(item, window));
   return {
-    pub24h: items.reduce((sum, item) => sum + item.pub24h, 0),
-    pub1h: items.reduce((sum, item) => sum + item.pub1h, 0),
-    activeSources24h: items.length,
-    rssSources24h: items.filter((item) => item.method === 'rss' || item.method === 'rss+sitemap').length,
-    sitemapSources24h: items.filter((item) => item.method === 'sitemap' || item.method === 'rss+sitemap').length,
-    healthySources24h: items.filter((item) => item.health === 'healthy' || item.health === 'warning').length,
-    degradedSources24h: items.filter((item) => item.health === 'degraded' || item.health === 'failing').length,
+    published: activeItems.reduce((sum, item) => sum + getSourceWindowMetrics(item, window).published, 0),
+    fresh: activeItems.reduce((sum, item) => sum + getSourceWindowMetrics(item, window).fresh, 0),
+    late: activeItems.reduce((sum, item) => sum + getSourceWindowMetrics(item, window).late, 0),
+    firstSeen: activeItems.reduce((sum, item) => sum + getSourceWindowMetrics(item, window).firstSeen, 0),
+    activeSources: activeItems.length,
+    rssSources: activeItems.filter((item) => item.method === 'rss' || item.method === 'rss+sitemap').length,
+    sitemapSources: activeItems.filter((item) => item.method === 'sitemap' || item.method === 'rss+sitemap').length,
+    healthySources: activeItems.filter((item) => item.health === 'healthy' || item.health === 'warning').length,
+    degradedSources: activeItems.filter((item) => item.health === 'degraded' || item.health === 'failing').length,
   };
 }
 
-function deriveTopRegionsFromSources(items: MapSourceMetricRow[], country: string, limit = 5) {
+function deriveTopRegionsFromSources(items: MapSourceMetricRow[], country: string, window: MapMetricWindow, limit = 5) {
   const byRegion = new Map<string, { count: number; sources: number; unmapped: boolean }>();
   for (const item of items) {
+    if (!isSourceWindowActive(item, window)) continue;
     const unmapped = item.locationKind === 'country-fallback';
     const name = unmapped ? 'Unmapped / National' : item.city || item.region || country;
     const current = byRegion.get(name) || { count: 0, sources: 0, unmapped: false };
-    current.count += item.pub24h;
+    current.count += getSourceWindowMetrics(item, window).published;
     current.sources += 1;
     current.unmapped = current.unmapped || unmapped;
     byRegion.set(name, current);
@@ -825,9 +865,10 @@ function deriveTopRegionsFromSources(items: MapSourceMetricRow[], country: strin
     .map(({ name, count, sources }) => ({ name, count, sources }));
 }
 
-function deriveTopDegradedRegionsFromSources(items: MapSourceMetricRow[], country: string, limit = 5) {
+function deriveTopDegradedRegionsFromSources(items: MapSourceMetricRow[], country: string, window: MapMetricWindow, limit = 5) {
   const byRegion = new Map<string, { degradedSources: number; sources: number; pub24h: number; degradedPub24h: number; unmapped: boolean }>();
   for (const item of items) {
+    if (!isSourceWindowActive(item, window)) continue;
     const unmapped = item.locationKind === 'country-fallback';
     const name = unmapped ? 'Unmapped / National' : item.city || item.region || country;
     const current = byRegion.get(name) || {
@@ -838,11 +879,11 @@ function deriveTopDegradedRegionsFromSources(items: MapSourceMetricRow[], countr
       unmapped: false,
     };
     current.sources += 1;
-    current.pub24h += item.pub24h;
+    current.pub24h += getSourceWindowMetrics(item, window).published;
     current.unmapped = current.unmapped || unmapped;
     if (item.health === 'degraded' || item.health === 'failing') {
       current.degradedSources += 1;
-      current.degradedPub24h += item.pub24h;
+      current.degradedPub24h += getSourceWindowMetrics(item, window).published;
     }
     byRegion.set(name, current);
   }
@@ -1170,6 +1211,7 @@ function CountryPlaneSvg({
   country,
   world,
   sources,
+  window,
   layers,
   viewport,
   onViewportChange,
@@ -1180,6 +1222,7 @@ function CountryPlaneSvg({
   country: MapCountryMetricRow;
   world: WorldGeoJson | null;
   sources: MapSourceMetricRow[];
+  window: MapMetricWindow;
   layers: MapLayerState;
   viewport: CountryViewport;
   onViewportChange: (viewport: CountryViewport) => void;
@@ -1270,12 +1313,12 @@ function CountryPlaneSvg({
 
   const plotted = useMemo(() => spreadCountryPoints(projected), [projected]);
 
-  const clusters = useMemo(() => buildCountrySourceClusters(plotted), [plotted]);
+  const clusters = useMemo(() => buildCountrySourceClusters(plotted, window), [plotted, window]);
 
   const clusterLabels = useMemo(() => {
     return buildNonOverlappingLabels(
       [...clusters]
-        .sort((a, b) => b.pub24h - a.pub24h)
+        .sort((a, b) => getClusterWindowPublished(b, window) - getClusterWindowPublished(a, window))
         .slice(0, 14)
         .map((cluster) => ({
           cluster,
@@ -1285,7 +1328,7 @@ function CountryPlaneSvg({
         })),
       56
     );
-  }, [clusters]);
+  }, [clusters, window]);
 
   const contentBounds = useMemo(() => {
     const fallback = {
@@ -1498,7 +1541,7 @@ function CountryPlaneSvg({
 
       {clusters.map((cluster) => {
         const point = cluster.point;
-        const radius = Math.max(6, Math.min(22, Math.sqrt(cluster.pub24h) / 2.8 + cluster.sourceCount * 0.8));
+        const radius = Math.max(6, Math.min(22, Math.sqrt(getClusterWindowPublished(cluster, window)) / 2.8 + cluster.sourceCount * 0.8));
         const hitRadius = Math.max(14, radius * 2.1);
         const active = selectedClusterId === cluster.id || cluster.sources.some((source) => source.sourceId === selectedSourceId);
         return (
@@ -1523,7 +1566,7 @@ function CountryPlaneSvg({
               className="map-hit-dot"
               onClick={() => handleSelectCluster(cluster)}
             >
-              <title>{`${cluster.name}\n${formatNumber(cluster.pub24h)} / 24h\n${formatNumber(cluster.pub1h)} / 1h\n${cluster.sourceCount} sources`}</title>
+              <title>{`${cluster.name}\n${formatNumber(getClusterWindowPublished(cluster, window))} / ${mapWindowDescriptor(window)}\n${formatNumber(cluster.pub24h)} / 24h\n${cluster.sourceCount} sources`}</title>
             </circle>
             <circle cx={point.x} cy={point.y} r={Math.max(1.1, radius * 0.24)} fill="#ffffff" opacity={0.72} />
             {cluster.sourceCount > 1 ? (
@@ -1577,7 +1620,7 @@ export function MapView() {
   const worldState = useRemoteJson<WorldGeoJson>('/world.geojson');
   const countryName = selectedCountry?.country || null;
   const sourcesState = useRemoteJson<MapCountrySourcesResponse>(
-    countryName ? `/api/customer/dashboard/map/countries/${encodeURIComponent(countryName)}/sources` : null
+    countryName ? `/api/customer/dashboard/map/countries/${encodeURIComponent(countryName)}/sources?window=${mapWindow}` : null
   );
   const sourceDetailState = useRemoteJson<MapSourceDetailResponse>(
     selectedSource?.sourceId ? `/api/customer/dashboard/map/sources/${encodeURIComponent(selectedSource.sourceId)}` : null
@@ -1590,6 +1633,7 @@ export function MapView() {
     (selectedCountry ? sourcesState.data?.topPublishers || selectedCountry.topPublishers || [] : []);
   const selectedCountryTopRegions = selectedCountry ? sourcesState.data?.topRegions || [] : [];
   const selectedCountryHourly = selectedCountry ? sourcesState.data?.hourly24h || [] : [];
+  const selectedCountryDaily = selectedCountry ? sourcesState.data?.daily7d || [] : [];
   const sourceDetail = sourceDetailState.data;
   const sceneMode = selectedCountry && sourcesState.data ? 'country' : 'globe';
   const globeRotationLon = useIdleRotation(motionEnabled && !selectedCountry && !interactionPaused);
@@ -1840,26 +1884,31 @@ export function MapView() {
     return items.filter((item) => (item.publisher || item.source) === selectedPublisher.publisher);
   }, [mapMode, selectedPublisher, sourcesState.data]);
 
-  const derivedCountrySummary = useMemo(() => deriveSummaryFromSources(displayedCountrySources), [displayedCountrySources]);
+  const derivedCountrySummary = useMemo(() => deriveSummaryFromSources(displayedCountrySources, mapWindow), [displayedCountrySources, mapWindow]);
   const derivedTopSources = useMemo(
-    () => rankCounts(displayedCountrySources.map((item) => ({ name: item.source, count: item.pub24h })), 8),
-    [displayedCountrySources]
+    () => rankCounts(
+      displayedCountrySources
+        .filter((item) => isSourceWindowActive(item, mapWindow))
+        .map((item) => ({ name: item.source, count: getSourceWindowMetrics(item, mapWindow).published })),
+      8
+    ),
+    [displayedCountrySources, mapWindow]
   );
   const derivedTopRegions = useMemo(
-    () => selectedCountry ? deriveTopRegionsFromSources(displayedCountrySources, selectedCountry.country, 8) : [],
-    [displayedCountrySources, selectedCountry]
+    () => selectedCountry ? deriveTopRegionsFromSources(displayedCountrySources, selectedCountry.country, mapWindow, 8) : [],
+    [displayedCountrySources, selectedCountry, mapWindow]
   );
   const derivedTopDegradedRegions = useMemo(
-    () => selectedCountry ? deriveTopDegradedRegionsFromSources(displayedCountrySources, selectedCountry.country, 8) : [],
-    [displayedCountrySources, selectedCountry]
+    () => selectedCountry ? deriveTopDegradedRegionsFromSources(displayedCountrySources, selectedCountry.country, mapWindow, 8) : [],
+    [displayedCountrySources, selectedCountry, mapWindow]
   );
   const derivedTopDegradedSources = useMemo(
     () =>
       [...displayedCountrySources]
         .filter((item) => item.health === 'degraded' || item.health === 'failing')
-        .sort((a, b) => getHealthRank(b.health) - getHealthRank(a.health) || b.pub24h - a.pub24h || a.source.localeCompare(b.source))
+        .sort((a, b) => getHealthRank(b.health) - getHealthRank(a.health) || getSourceWindowMetrics(b, mapWindow).published - getSourceWindowMetrics(a, mapWindow).published || a.source.localeCompare(b.source))
         .slice(0, 8),
-    [displayedCountrySources]
+    [displayedCountrySources, mapWindow]
   );
   const selectedCountryTopRegionsDisplay = mapMode === 'health'
     ? []
@@ -1872,6 +1921,15 @@ export function MapView() {
       ? derivedTopSources
       : (sourcesState.data?.topSources || []);
   const selectedCountrySummaryDisplay = derivedCountrySummary;
+  const selectedCountryTrendBars = mapWindow === '7d'
+    ? selectedCountryDaily.map((item) => ({ bucket: item.day, count: item.count }))
+    : selectedCountryHourly.map((item) => ({ bucket: item.hour, count: item.count }));
+  const selectedCountryTrendTitle = mapWindow === '7d' ? 'Country Daily Trend' : 'Country Hourly Trend';
+  const selectedCountryTrendWindowLabel = mapWindow === '7d'
+    ? 'Last 7 days'
+    : mapWindow === '1h'
+      ? 'Last 24h context'
+      : 'Last 24h';
   const topDegradedCountries = useMemo(() => deriveTopDegradedCountries(healthCountries, mapWindow, 6), [healthCountries, mapWindow]);
   const selectedPublisherReliability = selectedPublisherWindowMetrics
     ? selectedPublisherWindowMetrics.activeSources > 0
@@ -1888,7 +1946,7 @@ export function MapView() {
         kind: 'publisher',
         key: `publisher:${item.publisher}`,
         title: item.publisher,
-        subtitle: `${formatNumber(getPublisherWindowMetrics(item, mapWindow).published)} published · ${formatNumber(getPublisherWindowMetrics(item, mapWindow).activeCountries)} countries`,
+        subtitle: `${formatNumber(getPublisherWindowMetrics(item, mapWindow).published)} published · ${formatNumber(getPublisherWindowMetrics(item, mapWindow).activeCountries)} countries · ${publisherConfidenceLabel(item.publisherConfidence)}`,
         publisher: item,
       }));
     }
@@ -2198,6 +2256,7 @@ export function MapView() {
                 country={selectedCountry}
                 world={worldState.data}
                 sources={displayedCountrySources}
+                window={mapWindow}
                 layers={layers}
                 viewport={countryViewport}
                 onViewportChange={setCountryViewport}
@@ -2378,20 +2437,20 @@ export function MapView() {
                 {selectedCountry && sourcesState.data ? (
                   <div className="map-stat-grid">
                     <article className="map-stat-card">
-                      <span>Published 24h</span>
-                      <strong>{formatNumber(selectedCountrySummaryDisplay.pub24h)}</strong>
+                      <span>Published {activeWindowDescriptor}</span>
+                      <strong>{formatNumber(selectedCountrySummaryDisplay.published)}</strong>
                     </article>
                     <article className="map-stat-card">
-                      <span>Published 1h</span>
-                      <strong>{formatNumber(selectedCountrySummaryDisplay.pub1h)}</strong>
+                      <span>{mapWindow === '1h' ? 'Fresh 1h' : `Fresh ${activeWindowDescriptor}`}</span>
+                      <strong>{formatNumber(selectedCountrySummaryDisplay.fresh)}</strong>
                     </article>
                     <article className="map-stat-card">
                       <span>{mapMode === 'health' ? 'Healthy Sources' : 'RSS Sources'}</span>
                       <strong>
                         {formatNumber(
                           mapMode === 'health'
-                            ? selectedCountrySummaryDisplay.healthySources24h
-                            : selectedCountrySummaryDisplay.rssSources24h
+                            ? selectedCountrySummaryDisplay.healthySources
+                            : selectedCountrySummaryDisplay.rssSources
                         )}
                       </strong>
                     </article>
@@ -2400,8 +2459,8 @@ export function MapView() {
                       <strong>
                         {formatNumber(
                           mapMode === 'health'
-                            ? selectedCountrySummaryDisplay.degradedSources24h
-                            : selectedCountrySummaryDisplay.sitemapSources24h
+                            ? selectedCountrySummaryDisplay.degradedSources
+                            : selectedCountrySummaryDisplay.sitemapSources
                         )}
                       </strong>
                     </article>
@@ -2411,19 +2470,19 @@ export function MapView() {
                 {selectedCountry && sourcesState.data ? (
                   <div className="map-panel-block compact">
                     <div className="section-head sub">
-                      <h3>Country Hourly Trend</h3>
-                      <span>24h</span>
+                      <h3>{selectedCountryTrendTitle}</h3>
+                      <span>{selectedCountryTrendWindowLabel}</span>
                     </div>
                     <div className="mini-bars">
-                      {selectedCountryHourly.length > 0 ? selectedCountryHourly.map((item) => {
-                        const max = Math.max(...selectedCountryHourly.map((hour) => hour.count), 1);
+                      {selectedCountryTrendBars.length > 0 ? selectedCountryTrendBars.map((item) => {
+                        const max = Math.max(...selectedCountryTrendBars.map((bucket) => bucket.count), 1);
                         const height = Math.max(8, Math.round((item.count / max) * 84));
                         return (
-                          <div key={item.hour} className="mini-bar-col" title={`${item.hour}: ${item.count}`}>
+                          <div key={item.bucket} className="mini-bar-col" title={`${item.bucket}: ${item.count}`}>
                             <div className="mini-bar" style={{ height }} />
                           </div>
                         );
-                      }) : <span className="muted">No hourly country data yet.</span>}
+                      }) : <span className="muted">{mapWindow === '7d' ? 'No daily country data yet.' : 'No hourly country data yet.'}</span>}
                     </div>
                   </div>
                 ) : null}
@@ -2432,10 +2491,10 @@ export function MapView() {
                   <div className="map-panel-block compact">
                     <div className="section-head sub">
                       <h3>Top Regions</h3>
-                      <span>24h output</span>
+                      <span>{activeWindowDescriptor} output</span>
                     </div>
                     <div className="map-list">
-                      {selectedCountryTopRegions.slice(0, 5).map((item) => (
+                      {selectedCountryTopRegionsDisplay.slice(0, 5).map((item) => (
                         <div key={item.name} className="map-list-row static">
                           <div className="map-list-copy">
                             <strong>{item.name}</strong>
@@ -2532,7 +2591,9 @@ export function MapView() {
                           >
                             <div className="map-list-copy">
                               <strong>{item.publisher}</strong>
-                              <span>{formatNumber(getPublisherWindowMetrics(item, mapWindow).activeCountries)} countries</span>
+                              <span>
+                                {formatNumber(getPublisherWindowMetrics(item, mapWindow).activeCountries)} countries · {publisherConfidenceLabel(item.publisherConfidence)}
+                              </span>
                             </div>
                             <span>{formatNumber(getPublisherWindowMetrics(item, mapWindow).published)}</span>
                           </button>
@@ -2594,11 +2655,11 @@ export function MapView() {
                     <>
                       <div className="section-head sub">
                         <h3>Top Publishers</h3>
-                        <span>24h output</span>
+                        <span>{activeWindowDescriptor} output</span>
                       </div>
                       <div className="map-list">
                         {(mapMode === 'publishers'
-                          ? [{ name: selectedPublisher?.publisher || 'Selected Publisher', count: selectedCountrySummaryDisplay?.pub24h || 0 }]
+                          ? [{ name: selectedPublisher?.publisher || 'Selected Publisher', count: selectedCountrySummaryDisplay.published || 0 }]
                           : selectedCountryTopPublishers
                         ).slice(0, 8).map((item) => (
                           <div key={item.name} className="map-list-row static">
@@ -2609,7 +2670,7 @@ export function MapView() {
                       </div>
                       <div className="section-head sub">
                         <h3>{mapMode === 'health' ? 'Top Degraded Regions' : 'Top Regions'}</h3>
-                        <span>{mapMode === 'health' ? 'degraded' : '24h output'}</span>
+                        <span>{mapMode === 'health' ? 'degraded' : `${activeWindowDescriptor} output`}</span>
                       </div>
                       <div className="map-list">
                         {mapMode === 'health'
@@ -2634,7 +2695,7 @@ export function MapView() {
                       </div>
                       <div className="section-head sub">
                         <h3>{mapMode === 'health' ? 'Top Degraded Sources' : 'Top Sources'}</h3>
-                        <span>{mapMode === 'health' ? 'degraded' : '24h output'}</span>
+                        <span>{mapMode === 'health' ? 'degraded' : `${activeWindowDescriptor} output`}</span>
                       </div>
                       <div className="map-list">
                         {mapMode === 'health'
@@ -2652,7 +2713,7 @@ export function MapView() {
                                   <strong>{item.source}</strong>
                                   <span>{item.health} · {item.region || item.city || item.country}</span>
                                 </div>
-                                <span>{formatNumber(item.pub24h)}</span>
+                                <span>{formatNumber(getSourceWindowMetrics(item, mapWindow).published)}</span>
                               </button>
                             ))
                           : selectedCountryTopSourcesDisplay.slice(0, 10).map((item) => (
@@ -2767,8 +2828,18 @@ export function MapView() {
               </h2>
             </div>
             {sourceDetail ? <div className={`map-status-pill ${sourceDetail.health.status === 'healthy' ? 'globe' : 'flat'}`}>{sourceDetail.health.status}</div> : null}
+            {sourceDetail ? (
+              <div className={`map-status-pill confidence-${sourceDetail.publisherConfidence}`}>
+                {publisherConfidenceLabel(sourceDetail.publisherConfidence)}
+              </div>
+            ) : null}
             {!sourceDetail && selectedCluster ? <div className="map-status-pill globe">{selectedCluster.sourceCount} sources</div> : null}
             {!selectedCountry && mapMode === 'publishers' && selectedPublisher && selectedPublisherWindowMetrics ? <div className="map-status-pill globe">{selectedPublisherWindowMetrics.activeCountries} countries</div> : null}
+            {!selectedCountry && mapMode === 'publishers' && selectedPublisher ? (
+              <div className={`map-status-pill confidence-${selectedPublisher.publisherConfidence}`}>
+                {publisherConfidenceLabel(selectedPublisher.publisherConfidence)}
+              </div>
+            ) : null}
             {!selectedCountry && mapMode === 'health' ? <div className="map-status-pill flat">{healthTotals.degradedSources24h} degraded</div> : null}
           </div>
 
@@ -2776,6 +2847,7 @@ export function MapView() {
             <div className="map-source-detail">
               <div className="map-detail-meta">
                 <div><span>Publisher</span><strong>{selectedPublisher.publisher}</strong></div>
+                <div><span>Grouping Confidence</span><strong>{publisherConfidenceLabel(selectedPublisher.publisherConfidence)}</strong></div>
                 <div><span>{activeWindowDescriptor} Output</span><strong>{formatNumber(selectedPublisherWindowMetrics.published)}</strong></div>
                 <div><span>Countries</span><strong>{formatNumber(selectedPublisherWindowMetrics.activeCountries)}</strong></div>
                 <div><span>Active Sources</span><strong>{formatNumber(selectedPublisherWindowMetrics.activeSources)}</strong></div>
@@ -2875,8 +2947,8 @@ export function MapView() {
               <div className="map-detail-meta">
                 <div><span>Area</span><strong>{selectedCluster.city || selectedCluster.region || selectedCountry?.country || 'National'}</strong></div>
                 <div><span>Sources</span><strong>{formatNumber(selectedCluster.sourceCount)}</strong></div>
-                <div><span>Pub 24h</span><strong>{formatNumber(selectedCluster.pub24h)}</strong></div>
-                <div><span>Pub 1h</span><strong>{formatNumber(selectedCluster.pub1h)}</strong></div>
+                <div><span>{activeWindowDescriptor} Output</span><strong>{formatNumber(getClusterWindowPublished(selectedCluster, mapWindow))}</strong></div>
+                <div><span>24h Context</span><strong>{formatNumber(selectedCluster.pub24h)}</strong></div>
                 <div><span>HQ Sources</span><strong>{formatNumber(selectedCluster.headquartersCount)}</strong></div>
               </div>
 
@@ -2900,11 +2972,11 @@ export function MapView() {
                           {mapMode === 'health'
                             ? ` · ${source.health}`
                             : source.publisher && source.publisher !== source.source
-                              ? ` · ${source.publisher}`
+                              ? ` · ${source.publisher} · ${publisherConfidenceLabel(source.publisherConfidence)}`
                               : ''}
                         </span>
                       </div>
-                      <span>{formatNumber(source.pub24h)}</span>
+                      <span>{formatNumber(getSourceWindowMetrics(source, mapWindow).published)}</span>
                     </button>
                   ))}
                 </div>
@@ -2931,6 +3003,7 @@ export function MapView() {
 
               <div className="map-detail-meta">
                 <div><span>Publisher</span><strong>{sourceDetail.publisher || sourceDetail.source}</strong></div>
+                <div><span>Publisher Confidence</span><strong>{publisherConfidenceLabel(sourceDetail.publisherConfidence)}</strong></div>
                 <div><span>Country</span><strong>{sourceDetail.country}</strong></div>
                 <div><span>Method</span><strong>{sourceMethodLabel(sourceDetail.method)}</strong></div>
                 <div><span>Location</span><strong>{sourceDetail.region || sourceDetail.city || 'National'}</strong></div>
