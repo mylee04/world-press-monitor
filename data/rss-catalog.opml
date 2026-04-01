@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Wed, 01 Apr 2026 15:53:26 GMT</dateCreated>
+    <dateCreated>Wed, 01 Apr 2026 16:09:10 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -333,7 +333,6 @@
       <outline text="IndiaVision [valid]" title="IndiaVision [valid]" type="rss" xmlUrl="https://www.indiavision.com/feed" htmlUrl="https://www.indiavision.com"/>
       <outline text="OpIndia [valid]" title="OpIndia [valid]" type="rss" xmlUrl="https://www.opindia.com/feed" htmlUrl="https://www.opindia.com"/>
       <outline text="OrissaPOST [valid]" title="OrissaPOST [valid]" type="rss" xmlUrl="https://www.orissapost.com/feed" htmlUrl="https://www.orissapost.com"/>
-      <outline text="India&apos;s News.Net [valid]" title="India&apos;s News.Net [valid]" type="rss" xmlUrl="https://feeds.indiasnews.net/rss/701ee96610c884a6" htmlUrl="https://feeds.indiasnews.net"/>
       <outline text="TechGenYZ [valid]" title="TechGenYZ [valid]" type="rss" xmlUrl="https://techgenyz.com/feed" htmlUrl="https://techgenyz.com"/>
       <outline text="WYM News (Blogspot) [valid]" title="WYM News (Blogspot) [valid]" type="rss" xmlUrl="https://latestnewsupdate4you.blogspot.com/feeds/posts/default" htmlUrl="https://latestnewsupdate4you.blogspot.com"/>
       <outline text="Star of Mysore [valid]" title="Star of Mysore [valid]" type="rss" xmlUrl="https://starofmysore.com/feed" htmlUrl="https://starofmysore.com"/>
@@ -605,7 +604,6 @@
       <outline text="The Moscow Times [valid]" title="The Moscow Times [valid]" type="rss" xmlUrl="https://www.themoscowtimes.com/rss/news" htmlUrl="https://www.themoscowtimes.com"/>
       <outline text="PravdaReport [valid]" title="PravdaReport [valid]" type="rss" xmlUrl="https://www.pravdareport.com/export.xml" htmlUrl="https://www.pravdareport.com"/>
       <outline text="Meduza (all) [valid]" title="Meduza (all) [valid]" type="rss" xmlUrl="https://meduza.io/rss2/all" htmlUrl="https://meduza.io"/>
-      <outline text="Habr (all) [valid]" title="Habr (all) [valid]" type="rss" xmlUrl="https://habr.com/ru/rss/all/all/?fl=ru" htmlUrl="https://habr.com"/>
       <outline text="RIA Novosti (Russian State Broadcaster) [valid]" title="RIA Novosti (Russian State Broadcaster) [valid]" type="rss" xmlUrl="https://ria.ru/export/rss2/archive/index.xml" htmlUrl="https://ria.ru"/>
       <outline text="TASS (TASS Russian Main) [valid]" title="TASS (TASS Russian Main) [valid]" type="rss" xmlUrl="https://tass.ru/rss/v2.xml" htmlUrl="https://tass.ru"/>
       <outline text="RBC (Russian Finance/Economy #1) [valid]" title="RBC (Russian Finance/Economy #1) [valid]" type="rss" xmlUrl="https://rssexport.rbc.ru/rbcnews/news/30/full.rss" htmlUrl="https://rssexport.rbc.ru"/>
@@ -2566,6 +2564,11 @@
       <outline text="Maariv - World News [valid]" title="Maariv - World News [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rssfeedschadashotbaolam" htmlUrl="https://www.maariv.co.il"/>
       <outline text="Srugim [valid]" title="Srugim [valid]" type="rss" xmlUrl="https://www.srugim.co.il/feed" htmlUrl="https://www.srugim.co.il"/>
       <outline text="ICE [valid]" title="ICE [valid]" type="rss" xmlUrl="https://www.ice.co.il/rss" htmlUrl="https://www.ice.co.il"/>
+      <outline text="Israel Hayom - Latest [valid]" title="Israel Hayom - Latest [valid]" type="rss" xmlUrl="https://www.israelhayom.co.il/rss.xml" htmlUrl="https://www.israelhayom.co.il"/>
+      <outline text="Kipa [valid]" title="Kipa [valid]" type="rss" xmlUrl="https://www.kipa.co.il/feed/" htmlUrl="https://www.kipa.co.il"/>
+      <outline text="Bechadrei Haredim [valid]" title="Bechadrei Haredim [valid]" type="rss" xmlUrl="https://www.bhol.co.il/feed" htmlUrl="https://www.bhol.co.il"/>
+      <outline text="JDN [valid]" title="JDN [valid]" type="rss" xmlUrl="https://www.jdn.co.il/feed/" htmlUrl="https://www.jdn.co.il"/>
+      <outline text="ynetnews - English [valid]" title="ynetnews - English [valid]" type="rss" xmlUrl="https://www.ynetnews.com/Integration/StoryRss2.xml" htmlUrl="https://www.ynetnews.com"/>
     </outline>
     <outline text="Bahrain (BH)" title="Bahrain (BH)">
       <outline text="Al Bilad Press [valid]" title="Al Bilad Press [valid]" type="rss" xmlUrl="https://www.albiladpress.com/rss" htmlUrl="https://www.albiladpress.com"/>

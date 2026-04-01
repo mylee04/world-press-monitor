@@ -85,6 +85,44 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     if (/^\/news\/20\d{2}-\d{2}-\d{2}\/abc-news\/\d+\/?$/.test(pathname)) return true;
   }
 
+  if (hostname.endsWith('indiatimes.com') && normalizedSource.includes('times of india')) {
+    if (pathname.startsWith('/astrology/')) return true;
+    if (pathname.startsWith('/entertainment/')) return true;
+    if (pathname.startsWith('/life-style/')) return true;
+    if (pathname.startsWith('/sports/')) return true;
+  }
+
+  if (hostname.endsWith('hindustantimes.com') && normalizedSource.includes('hindustan times')) {
+    if (pathname.startsWith('/astrology/')) return true;
+    if (pathname.startsWith('/car-bike/')) return true;
+    if (pathname.startsWith('/cricket/')) return true;
+    if (pathname.startsWith('/entertainment/')) return true;
+    if (pathname.startsWith('/lifestyle/')) return true;
+  }
+
+  if (hostname.endsWith('indiatoday.in') && normalizedSource.includes('india today')) {
+    if (pathname.startsWith('/auto/')) return true;
+  }
+
+  if (hostname.endsWith('abplive.com') && normalizedSource.includes('abp news')) {
+    if (pathname.startsWith('/astro/')) return true;
+    if (pathname.startsWith('/entertainment/')) return true;
+    if (pathname.startsWith('/sports/')) return true;
+  }
+
+  if (hostname.endsWith('ndtv.com') && normalizedSource.includes('ndtv')) {
+    if (hostname === 'food.ndtv.com') return true;
+  }
+
+  if (hostname.endsWith('gadgets360.com') && normalizedSource.includes('ndtv')) {
+    return true;
+  }
+
+  if (hostname.endsWith('deccanherald.com') && normalizedSource.includes('deccan herald')) {
+    if (pathname.startsWith('/ampstories/')) return true;
+    if (pathname.startsWith('/lifestyle/')) return true;
+  }
+
   if (hostname.endsWith('nytimes.com') && normalizedSource === 'the new york times') {
     if (pathname.startsWith('/athletic/')) return true;
     if (pathname.startsWith('/crosswords/')) return true;
@@ -141,6 +179,48 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
 
   if (hostname.endsWith('dagsavisen.no') && pathname.startsWith('/kommentar/')) {
     return true;
+  }
+
+  if (hostname.endsWith('protothema.gr') && normalizedSource.includes('proto thema')) {
+    if (pathname.startsWith('/advertorial/')) return true;
+    if (pathname.startsWith('/life-style/')) return true;
+  }
+
+  if (hostname.endsWith('newsbeast.gr') && normalizedSource.includes('newsbeast')) {
+    if (pathname.startsWith('/apopseis/')) return true;
+    if (pathname.startsWith('/lifestyle/')) return true;
+  }
+
+  if (hostname.endsWith('newsbomb.gr') && normalizedSource.includes('newsbomb')) {
+    if (pathname.startsWith('/aftokinito/')) return true;
+    if (pathname.startsWith('/sports/')) return true;
+  }
+
+  if (hostname.endsWith('zougla.gr') && normalizedSource.includes('zougla')) {
+    if (pathname.startsWith('/apopseis/')) return true;
+    if (pathname.startsWith('/automoto/')) return true;
+    if (pathname.startsWith('/lifestyle/')) return true;
+    if (pathname.startsWith('/sports/')) return true;
+  }
+
+  if (hostname.endsWith('iefimerida.gr') && normalizedSource.includes('iefimerida')) {
+    if (pathname.startsWith('/aytokinito/')) return true;
+    if (pathname.startsWith('/zoi/')) return true;
+  }
+
+  if (hostname.endsWith('newsit.gr') && normalizedSource.includes('newsit')) {
+    if (pathname.startsWith('/athlitika/')) return true;
+    if (pathname.startsWith('/opinion/')) return true;
+  }
+
+  if (hostname.endsWith('enikos.gr') && normalizedSource.includes('enikos')) {
+    if (pathname.startsWith('/arthra/')) return true;
+    if (pathname.startsWith('/lifestyle/')) return true;
+    if (pathname.startsWith('/media/')) return true;
+  }
+
+  if (hostname.endsWith('naftemporiki.gr') && normalizedSource.includes('naftemporiki')) {
+    if (pathname.startsWith('/afieromata/')) return true;
   }
 
   if (hostname.endsWith('fvn.no') && normalizedSource.includes('fædrelandsvennen')) {
@@ -284,6 +364,11 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     if (!pathname.startsWith('/articles/')) return true;
   }
 
+  if (hostname.endsWith('ensonhaber.com') && normalizedSource.includes('ensonhaber')) {
+    if (pathname.startsWith('/3-sayfa/')) return true;
+    if (pathname.startsWith('/kralspor/')) return true;
+  }
+
   if (
     (
       hostname.endsWith('adelaidenow.com.au') ||
@@ -408,6 +493,23 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     if (trimmedPathname === '/informe-especial/capitulos') return true;
     if (trimmedPathname === '/informe-especial/prueba-linea-de-tiempo-informe-especial') return true;
     if (pathname.startsWith('/24horas/site/edic/base/port/')) return true;
+  }
+
+  if (hostname.endsWith('tgrthaber.com') && normalizedSource.includes('tgrt haber')) {
+    if (pathname.startsWith('/3-sayfa/')) return true;
+    if (pathname.startsWith('/magazin/')) return true;
+    if (pathname.startsWith('/spor/')) return true;
+    if (pathname.startsWith('/yasam/')) return true;
+    if (pathname.startsWith('/yasam-videolari/')) return true;
+  }
+
+  if (hostname.endsWith('mynet.com') && normalizedSource.includes('mynet - google news sitemap')) {
+    if (hostname === 'www.mynet.com') return true;
+    if (pathname.startsWith('/hayat')) return true;
+  }
+
+  if (hostname.endsWith('iz.ru') && normalizedSource.includes('izvestia')) {
+    if (pathname.includes('/video/')) return true;
   }
 
   if (hostname.endsWith('ledevoir.com') && normalizedSource.includes('le devoir')) {
@@ -545,8 +647,13 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
   }
 
   if (hostname.endsWith('cumhuriyet.com.tr')) {
+    if (pathname.startsWith('/astroloji/')) return true;
+    if (pathname.startsWith('/magazin/')) return true;
     if (pathname.startsWith('/resmi-ilanlar/')) return true;
+    if (pathname.startsWith('/saglik/')) return true;
+    if (pathname.startsWith('/spor/')) return true;
     if (pathname.startsWith('/tv-rehberi/')) return true;
+    if (pathname.startsWith('/yasam/')) return true;
   }
 
   if (

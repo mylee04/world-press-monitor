@@ -2964,7 +2964,8 @@
           "status": null,
           "checkedDate": null,
           "valid": null,
-          "row": 24
+          "row": 24,
+          "enabled": false
         },
         {
           "name": "TechGenYZ",
@@ -5406,7 +5407,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 13
+          "row": 13,
+          "enabled": false
         },
         {
           "name": "RIA Novosti (Russian State Broadcaster)",
@@ -23362,6 +23364,62 @@
         {
           "name": "ICE",
           "url": "https://www.ice.co.il/rss",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Israel Hayom - Latest",
+          "url": "https://www.israelhayom.co.il/rss.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TheMarker - Latest News Sitemap",
+          "sitemapUrl": "https://www.themarker.com/news-sitemap-latest.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TheMarker - Content News Sitemap",
+          "sitemapUrl": "https://www.themarker.com/news-sitemap-content.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Bizportal - Latest Sitemap",
+          "sitemapUrl": "https://www.bizportal.co.il/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Kipa",
+          "url": "https://www.kipa.co.il/feed/",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Bechadrei Haredim",
+          "url": "https://www.bhol.co.il/feed",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "JDN",
+          "url": "https://www.jdn.co.il/feed/",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "ynetnews - English",
+          "url": "https://www.ynetnews.com/Integration/StoryRss2.xml",
           "status": "NEW",
           "checkedDate": "04/01/2026",
           "valid": "valid"
