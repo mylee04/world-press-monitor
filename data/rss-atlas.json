@@ -5764,7 +5764,7 @@
         },
         {
           "name": "경향신문 - 전체",
-          "url": "https://www.khan.co.kr/rss/rssdata/total_news.xml",
+          "url": null,
           "sitemapUrl": "https://www.khan.co.kr/sitemap/latest-articles.xml",
           "status": null,
           "checkedDate": null,
@@ -5843,7 +5843,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 49
+          "row": 49,
+          "enabled": false
         }
       ]
     },
@@ -23208,8 +23209,22 @@
           "valid": "valid"
         },
         {
+          "name": "Globes - Hebrew Sitemap",
+          "sitemapUrl": "https://www.globes.co.il/data/webservices/google-maps.ashx",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Haaretz - Latest News Sitemap",
           "sitemapUrl": "https://www.haaretz.com/news-sitemap-latest.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Ynet - News",
+          "url": "https://www.ynet.co.il/Integration/StoryRss2.xml",
           "status": "NEW",
           "checkedDate": "04/01/2026",
           "valid": "valid"

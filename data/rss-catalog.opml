@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Wed, 01 Apr 2026 15:25:35 GMT</dateCreated>
+    <dateCreated>Wed, 01 Apr 2026 15:35:40 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -651,7 +651,6 @@
       <outline text="한겨레:온 - 섹션1 [valid]" title="한겨레:온 - 섹션1 [valid]" type="rss" xmlUrl="https://www.hanion.co.kr/rss/S1N1.xml" htmlUrl="https://www.hanion.co.kr"/>
       <outline text="한겨레:온 - 섹션2 [valid]" title="한겨레:온 - 섹션2 [valid]" type="rss" xmlUrl="https://www.hanion.co.kr/rss/S1N2.xml" htmlUrl="https://www.hanion.co.kr"/>
       <outline text="한겨레:온 - 섹션3 [valid]" title="한겨레:온 - 섹션3 [valid]" type="rss" xmlUrl="https://www.hanion.co.kr/rss/S1N3.xml" htmlUrl="https://www.hanion.co.kr"/>
-      <outline text="경향신문 - 전체 [valid]" title="경향신문 - 전체 [valid]" type="rss" xmlUrl="https://www.khan.co.kr/rss/rssdata/total_news.xml" htmlUrl="https://www.khan.co.kr"/>
     </outline>
     <outline text="Brazil (BR)" title="Brazil (BR)">
       <outline text="G1 (Globo - Economy) [valid]" title="G1 (Globo - Economy) [valid]" type="rss" xmlUrl="https://g1.globo.com/rss/g1/economia/" htmlUrl="https://g1.globo.com"/>
