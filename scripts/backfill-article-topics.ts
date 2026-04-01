@@ -9,6 +9,10 @@ type CliArgs = {
   batchSize: number;
   limit: number | null;
   force: boolean;
+  createdHours: number | null;
+  primarySection: string | null;
+  feedCategories: string[];
+  sources: string[];
 };
 
 type CandidateKeyRow = {
@@ -45,6 +49,10 @@ function parseArgs(argv: string[]): CliArgs {
     batchSize: parseNumberArg(argv, '--batch=', DEFAULT_BATCH_SIZE, 50, 10_000),
     limit: parseOptionalNumberArg(argv, '--limit=', 1),
     force: argv.includes('--force'),
+    createdHours: parseOptionalNumberArg(argv, '--created-hours=', 1),
+    primarySection: parseStringArg(argv, '--primary-section='),
+    feedCategories: parseListArg(argv, '--feed-categories='),
+    sources: parseListArg(argv, '--sources='),
   };
 }
 
@@ -64,6 +72,19 @@ function parseOptionalNumberArg(argv: string[], prefix: string, min: number): nu
   return parsed;
 }
 
+function parseStringArg(argv: string[], prefix: string): string | null {
+  const raw = argv.find((item) => item.startsWith(prefix));
+  if (!raw) return null;
+  const value = raw.slice(prefix.length).trim();
+  return value || null;
+}
+
+function parseListArg(argv: string[], prefix: string): string[] {
+  const raw = argv.find((item) => item.startsWith(prefix));
+  if (!raw) return [];
+  return [...new Set(raw.slice(prefix.length).split(',').map((item) => item.trim()).filter(Boolean))];
+}
+
 function chunk<T>(items: readonly T[], size: number): T[][] {
   const chunks: T[][] = [];
   for (let index = 0; index < items.length; index += size) {
@@ -80,31 +101,62 @@ function isEncodingError(error: unknown): boolean {
 
 async function fetchCandidateKeys(
   client: Client,
-  days: number,
+  args: CliArgs,
   batchSize: number,
   cursorCreatedAt: string | null,
   cursorExternalId: string | null,
   force: boolean
 ): Promise<CandidateKeyRow[]> {
+  const values: unknown[] = [args.days, cursorCreatedAt, cursorExternalId, force, batchSize];
+  const filters = [
+    `publication_datetime >= now() - ($1::int * interval '1 day')`,
+    `(
+      $4::boolean
+      or taxonomy_derived_at is null
+      or primary_section is null
+      or coalesce(cardinality(sections_normalized), 0) = 0
+    )`,
+    `(
+      $2::timestamptz is null
+      or (created_at, external_id) < ($2::timestamptz, $3::text)
+    )`,
+  ];
+
+  if (args.createdHours != null) {
+    values.push(args.createdHours);
+    filters.push(`created_at >= now() - ($${values.length}::int * interval '1 hour')`);
+  }
+
+  if (args.primarySection) {
+    values.push(args.primarySection);
+    filters.push(`coalesce(nullif(trim(primary_section), ''), 'others') = $${values.length}::text`);
+  }
+
+  if (args.sources.length > 0) {
+    values.push(args.sources);
+    filters.push(`source = any($${values.length}::text[])`);
+  }
+
+  if (args.feedCategories.length > 0) {
+    values.push(args.feedCategories);
+    filters.push(`
+      exists (
+        select 1
+        from unnest(coalesce(feed_categories, '{}'::text[])) as category
+        where category = any($${values.length}::text[])
+      )
+    `);
+  }
+
   return (await client.query<CandidateKeyRow>(
     `
     select external_id, created_at::text
     from news_articles
-    where publication_datetime >= now() - ($1::int * interval '1 day')
-      and (
-        $4::boolean
-        or taxonomy_derived_at is null
-        or primary_section is null
-        or coalesce(cardinality(sections_normalized), 0) = 0
-      )
-      and (
-        $2::timestamptz is null
-        or (created_at, external_id) < ($2::timestamptz, $3::text)
-      )
+    where ${filters.join('\n      and ')}
     order by created_at desc, external_id desc
     limit $5
     `,
-    [days, cursorCreatedAt, cursorExternalId, force, batchSize]
+    values
   )).rows;
 }
 
@@ -239,7 +291,7 @@ async function main() {
       const remaining = args.limit == null ? args.batchSize : Math.max(0, Math.min(args.batchSize, args.limit - scanned));
       if (remaining <= 0) break;
 
-      const keys = await fetchCandidateKeys(client, args.days, remaining, cursorCreatedAt, cursorExternalId, args.force);
+      const keys = await fetchCandidateKeys(client, args, remaining, cursorCreatedAt, cursorExternalId, args.force);
       if (!keys.length) break;
 
       scanned += keys.length;
@@ -265,7 +317,7 @@ async function main() {
   }
 
   console.log(
-    `[backfill-article-topics] done apply=${args.apply} days=${args.days} scanned=${scanned} updated=${updated}`
+    `[backfill-article-topics] done apply=${args.apply} days=${args.days} createdHours=${args.createdHours ?? 'all'} primarySection=${args.primarySection || 'all'} feedCategories=${args.feedCategories.length} sources=${args.sources.length} scanned=${scanned} updated=${updated}`
   );
 }
 

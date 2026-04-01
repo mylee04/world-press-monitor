@@ -7,6 +7,7 @@ import { isKnownNonArticleUrl } from '../lib/article-url-filters';
 import { extractArticlePageTitle } from '../lib/article-page-title';
 import { buildArticlePageFetchHeaders } from '../lib/article-page-fetch';
 import { parseRssOrAtomWithStats, parseSitemapWithStats } from '../lib/parsers';
+import { inferSourceCategoriesFromUrlPath } from '../lib/source-category-path-segments';
 import {
   looksLikeLowSignalArticleTitle,
   normalizeArticleTitle,
@@ -1303,6 +1304,9 @@ const ARTICLE_META_CATEGORY_FALLBACK_SOURCES = new Set(
       'swissinfo es',
       'sports illustrated',
       'bbc news',
+      'el watan - news sitemap',
+      'khaberni - latest sitemap',
+      'vietnamnet - news sitemap',
     ].join(',')
   )
     .split(',')
@@ -2001,6 +2005,12 @@ async function toNewsItem(
   });
   const fallbackSection = outlet.section || 'others';
   let sourceCategories = normalizeSourceCategories(row.categories || []);
+  if (sourceCategories.length === 0) {
+    sourceCategories = inferSourceCategoriesFromUrlPath({
+      source: outlet.name,
+      url: row.link || '',
+    });
+  }
   if (shouldFetchArticleMetaCategories(outlet.name, row.link || '', sourceCategories)) {
     const pageCategories = await fetchArticleMetaCategories(outlet.name, row.link || '');
     if (pageCategories.length > 0) {

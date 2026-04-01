@@ -73,6 +73,7 @@
     "benchmark:parity": "bun scripts/validate-country-benchmark-parity.ts",
     "benchmark:parity:daily": "bun scripts/validate-country-benchmark-parity.ts --mode=daily",
     "benchmark:parity:hourly": "bun scripts/validate-country-benchmark-parity.ts --mode=hourly",
+    "taxonomy:audit": "bun scripts/category-taxonomy-audit.ts --write-json --write-md",
     "ingest:retention": "bun scripts/ingest-retention.ts --write-json",
     "ingest:retention:dry-run": "bun scripts/ingest-retention.ts --dry-run --write-json",
     "db:init": "psql \"$DATABASE_URL\" -f db/schema.sql",

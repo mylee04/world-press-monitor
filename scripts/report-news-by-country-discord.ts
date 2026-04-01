@@ -48,6 +48,7 @@ type AtlasCatalog = {
 type AtlasMetadata = {
   values: Set<string>;
   activeCountryCount: number;
+  canonicalCountries: string[];
   canonicalCountryByValue: Map<string, string>;
   sourceCountryByName: Map<string, string>;
   sourceCountryByNormalizedName: Map<string, string>;
@@ -114,6 +115,19 @@ function parseMetricCount(value: string): number {
 
 function formatPercent(value: number): string {
   return `${(value * 100).toFixed(1)}%`;
+}
+
+function formatCompactInteger(value: number): string {
+  return value.toLocaleString();
+}
+
+function formatCountryMetricsLine(row: CountryMetrics): string {
+  const freshSegment =
+    row.freshLast24h !== row.publishedLast24h
+      ? `  F: ${formatCompactInteger(row.freshLast24h)}`
+      : '';
+
+  return `${row.country}  P: ${formatCompactInteger(row.publishedLast24h)}${freshSegment}  L: ${formatCompactInteger(row.lateLast24h)} (${formatPercent(row.lateShare)})  1h: ${formatCompactInteger(row.insertedLast1h)}`;
 }
 
 function pickWebhookUrl(): string {
@@ -196,6 +210,7 @@ function loadAtlasMetadata(filePath: string): AtlasMetadata {
       return {
         values: new Set(),
         activeCountryCount: 0,
+        canonicalCountries: [],
         canonicalCountryByValue: new Map(),
         sourceCountryByName: new Map(),
         sourceCountryByNormalizedName: new Map(),
@@ -206,6 +221,7 @@ function loadAtlasMetadata(filePath: string): AtlasMetadata {
 
     const filterValues = new Set<string>();
     const countedCountries = new Set<string>();
+    const canonicalCountries = new Set<string>();
     const canonicalCountryByValue = new Map<string, string>();
     const sourceCountryByName = new Map<string, string>();
     const sourceCountryByNormalizedName = new Map<string, string>();
@@ -220,12 +236,14 @@ function loadAtlasMetadata(filePath: string): AtlasMetadata {
         filterValues.add(normalizedName);
         countedCountries.add(normalizedName);
         canonicalCountryByValue.set(normalizedName, country.name.trim());
+        canonicalCountries.add(country.name.trim());
       }
       if (hasCode) {
         const normalizedCode = normalizeCountryValue(country.code);
         filterValues.add(normalizedCode);
         if (!hasName) countedCountries.add(normalizedCode);
         if (hasName) canonicalCountryByValue.set(normalizedCode, country.name.trim());
+        if (!hasName) canonicalCountries.add(country.code!.trim());
       }
       if (hasName && Array.isArray(country.feeds)) {
         for (const feed of country.feeds) {
@@ -243,6 +261,7 @@ function loadAtlasMetadata(filePath: string): AtlasMetadata {
     return {
       values: filterValues,
       activeCountryCount: countedCountries.size,
+      canonicalCountries: [...canonicalCountries].sort((left, right) => left.localeCompare(right)),
       canonicalCountryByValue,
       sourceCountryByName,
       sourceCountryByNormalizedName,
@@ -256,6 +275,7 @@ function loadAtlasMetadata(filePath: string): AtlasMetadata {
     return {
       values: new Set(),
       activeCountryCount: 0,
+      canonicalCountries: [],
       canonicalCountryByValue: new Map(),
       sourceCountryByName: new Map(),
       sourceCountryByNormalizedName: new Map(),
@@ -271,6 +291,7 @@ function buildAtlasMetadata(): AtlasMetadata {
     return {
       values: explicitActive,
       activeCountryCount: explicitActive.size,
+      canonicalCountries: [],
       canonicalCountryByValue: new Map(),
       sourceCountryByName: new Map(),
       sourceCountryByNormalizedName: new Map(),
@@ -286,6 +307,7 @@ function buildAtlasMetadata(): AtlasMetadata {
   return {
     values: new Set(),
     activeCountryCount: 0,
+    canonicalCountries: [],
     canonicalCountryByValue: new Map(),
     sourceCountryByName: new Map(),
     sourceCountryByNormalizedName: new Map(),
@@ -453,6 +475,12 @@ async function main(): Promise<void> {
       }
     }
 
+    for (const country of atlasMetadata.canonicalCountries) {
+      if (!aggregateByCountry.has(country)) {
+        aggregateByCountry.set(country, createCountryMetrics(country));
+      }
+    }
+
     const filteredRows = sortCountryMetrics(
       [...aggregateByCountry.values()].map((row) => finalizeCountryMetrics(row))
     );
@@ -483,12 +511,6 @@ async function main(): Promise<void> {
       .map((row) => `${row.country} ${row.publishedLast24hCore.toLocaleString()}`)
       .join(', ');
 
-    const lines = selectedRows
-      .map(
-        (row, index) =>
-          `${index + 1}. ${row.country}: published24h_core ${row.publishedLast24hCore.toLocaleString()}, published24h_portal ${row.publishedLast24hPortal.toLocaleString()}, published24h_extended ${row.publishedLast24hExtended.toLocaleString()}, fresh24h ${row.freshLast24h.toLocaleString()}, late24h ${row.lateLast24h.toLocaleString()} (${formatPercent(row.lateShare)}), firstSeen1h ${row.insertedLast1h.toLocaleString()}`
-      );
-
     const scopeLabel =
       atlasMetadata.activeCountryCount > 0
         ? `Countries in scope: ${filteredRows.length}`
@@ -500,26 +522,22 @@ async function main(): Promise<void> {
 
     const header = [
       `📰 News Volume by Country (${new Date().toISOString()})`,
-      `Source: news_articles`,
-      `published24h_core ${totalPublished24hCore.toLocaleString()} / published24h_portal ${totalPublished24hPortal.toLocaleString()} / published24h_extended ${totalPublished24hExtended.toLocaleString()} / fresh24h ${totalFresh24h.toLocaleString()} / late24h ${totalLate24h.toLocaleString()} / firstSeen1h ${totalInserted1h.toLocaleString()}`,
-      `Supporting: firstSeen24h ${totalInserted24h.toLocaleString()} / Late share of firstSeen24h ${formatPercent(totalLateShare)}`,
-      `Fields: published24h_core=publication_datetime within last 24h from publisher-direct feeds, published24h_portal=publication_datetime within last 24h from portal/aggregator-classified feeds, published24h_extended=core+portal`,
-      `Fields (continued): fresh24h=extended corpus published+first-seen within last 24h, late24h=extended corpus first-seen within last 24h but published >24h old, firstSeen1h/24h=extended corpus created_at windows`,
-      `Quality filter: excludes unreadable code-like titles from counts`,
-      `Late-heavy countries (firstSeen24h >= 250): ${lateHeavyCountries.join(', ') || 'none'}`,
-      `Domestic-only top ${selectedDomesticRows.length} by published24h_core: ${domesticSummary || 'none'}`,
-      `Country semantics: row.country=article/inferred country, domestic-only filter=source_country (atlas outlet country fallback), portal classification=atlas feed distributionClass`,
+      `24h  P: ${totalPublished24h.toLocaleString()}  F: ${totalFresh24h.toLocaleString()}  L: ${totalLate24h.toLocaleString()}  |  1h: ${totalInserted1h.toLocaleString()}`,
+      `First-seen 24h: ${totalInserted24h.toLocaleString()}  |  Late share: ${formatPercent(totalLateShare)}`,
+      `Late-heavy: ${lateHeavyCountries.join(', ') || 'none'}`,
+      `Domestic top ${selectedDomesticRows.length}: ${domesticSummary || 'none'}`,
       scopeLabel,
       configuredScopeLabel,
-      unexpectedCountries.size > 0 ? `Unexpected countries in data: ${[...unexpectedCountries].join(', ')}` : '',
-      lines.length > 0 ? '' : 'No records in news_articles.'
+      unexpectedCountries.size > 0 ? `Unexpected: ${[...unexpectedCountries].join(', ')}` : '',
+      `Legend: P: pub24h, F: fresh24h if different, L: late24h (share), 1h: first-seen`,
+      selectedRows.length > 0 ? '' : 'No records in news_articles.'
     ]
       .filter((line) => line.length > 0)
       .join('\n');
 
     const chunks = splitIntoChunks([
       header,
-      ...(lines.length > 0 ? lines : []),
+      ...(selectedRows.length > 0 ? selectedRows.map(formatCountryMetricsLine) : []),
       `Total ${filteredRows.length} countries. Showing ${selectedRows.length}.`,
     ]);
 

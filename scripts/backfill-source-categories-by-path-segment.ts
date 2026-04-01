@@ -4,6 +4,11 @@ import { Client } from 'pg';
 import { normalizeSourceCategories } from '@/lib/article-taxonomy';
 import { resolveDatabaseUrl } from '@/lib/database-url';
 import {
+  extractSourcePathSegments,
+  hasExplicitSourcePathCategoryOverride,
+  resolveSourcePathSegmentCategories,
+} from '@/lib/source-category-path-segments';
+import {
   backfillNewsArticleFeedCategories,
   type NewsArticleFeedCategoryBackfill,
 } from '@/lib/ingestion-store';
@@ -27,46 +32,6 @@ const DEFAULT_DAYS = 3650;
 const DEFAULT_MIN_SEGMENT_SUPPORT = 20;
 const DEFAULT_MAX_DEPTH = 3;
 const DEFAULT_SOURCE_LIMIT = 50;
-
-const GLOBAL_STOP_SEGMENTS = new Set([
-  '',
-  'news',
-  'article',
-  'artikel',
-  'articles',
-  'story',
-  'stories',
-  'latest',
-  'breakingnews',
-  'video',
-  'videos',
-  'multimedia',
-  'amp',
-  'amphtml',
-  'view',
-  'index',
-  'sitemap',
-  'rss',
-  'content',
-  'tag',
-  'tags',
-  'topic',
-  'topics',
-  'author',
-  'authors',
-  'podcast',
-  'podcasts',
-  'p',
-  'id',
-]);
-
-const SOURCE_STOP_SEGMENTS = new Map<string, Set<string>>([
-  ['24Horas - Sitemap 202603', new Set(['programas'])],
-  ['Blic', new Set(['vesti'])],
-  ['L\'Avenir - News Sitemap', new Set(['regions'])],
-  ['SE.pl - News Sitemap', new Set(['wiadomosci'])],
-  ['The Standard - News Sitemap', new Set(['article'])],
-]);
 
 function parseArgs(argv: string[]): CliArgs {
   return {
@@ -103,55 +68,6 @@ function parseListArg(argv: string[], prefix: string): string[] {
 
 function normalizeSource(value: string): string {
   return (value || '').trim();
-}
-
-function parseArticleUrl(rawUrl: string): URL | null {
-  const value = (rawUrl || '').trim();
-  if (!value) return null;
-  try {
-    return new URL(value);
-  } catch {
-    try {
-      const decoded = decodeURIComponent(value);
-      return new URL(decoded);
-    } catch {
-      return null;
-    }
-  }
-}
-
-function normalizeSegment(value: string): string {
-  return decodeURIComponent(value || '')
-    .trim()
-    .toLowerCase()
-    .replace(/^[-_]+|[-_]+$/g, '')
-    .replace(/[-_]+/g, ' ');
-}
-
-function isMeaningfulSegment(source: string, segment: string): boolean {
-  if (!segment) return false;
-  if (GLOBAL_STOP_SEGMENTS.has(segment)) return false;
-  if (/^\d+$/.test(segment)) return false;
-  if (/^\d{4,}$/.test(segment)) return false;
-  if (/^\d{1,2}\s+\d{1,2}$/.test(segment)) return false;
-  if (/^\d{4}(?:\s+\d{1,2}){1,2}$/.test(segment)) return false;
-  if (segment.length < 2) return false;
-  if (/^(?=.*[a-z])(?=.*\d)[a-z0-9]{5,}$/i.test(segment)) return false;
-  if (/^[a-f0-9]{12,}$/i.test(segment)) return false;
-  const sourceStops = SOURCE_STOP_SEGMENTS.get(source);
-  if (sourceStops?.has(segment)) return false;
-  return true;
-}
-
-function extractPathSegments(url: string, maxDepth: number): string[] {
-  const parsed = parseArticleUrl(url);
-  if (!parsed) return [];
-  return parsed.pathname
-    .split('/')
-    .map(normalizeSegment)
-    .map((segment) => segment.replace(/^\d+\s+/g, ''))
-    .filter(Boolean)
-    .slice(0, maxDepth);
 }
 
 async function fetchTopEmptySources(client: Client, days: number, limit: number): Promise<string[]> {
@@ -206,8 +122,8 @@ function buildAllowedSegments(rows: EmptyRow[], args: CliArgs): Map<string, Set<
     const source = normalizeSource(row.source);
     if (!source) continue;
     const sourceCounts = counts.get(source) || new Map<string, number>();
-    for (const segment of extractPathSegments(row.url || '', args.maxDepth)) {
-      if (!isMeaningfulSegment(source, segment)) continue;
+    for (const segment of extractSourcePathSegments(source, row.url || '', args.maxDepth)) {
+      if (resolveSourcePathSegmentCategories(source, segment).length === 0) continue;
       sourceCounts.set(segment, (sourceCounts.get(segment) || 0) + 1);
     }
     counts.set(source, sourceCounts);
@@ -217,7 +133,7 @@ function buildAllowedSegments(rows: EmptyRow[], args: CliArgs): Map<string, Set<
   for (const [source, sourceCounts] of counts.entries()) {
     const chosen = new Set<string>();
     for (const [segment, count] of sourceCounts.entries()) {
-      if (count >= args.minSegmentSupport) {
+      if (count >= args.minSegmentSupport || hasExplicitSourcePathCategoryOverride(source, segment)) {
         chosen.add(segment);
       }
     }
@@ -236,9 +152,9 @@ function predictRowCategories(row: EmptyRow, allowedSegments: Map<string, Set<st
   if (!allowed?.size) return [];
 
   const picked: string[] = [];
-  for (const segment of extractPathSegments(row.url || '', args.maxDepth)) {
+  for (const segment of extractSourcePathSegments(source, row.url || '', args.maxDepth)) {
     if (!allowed.has(segment)) continue;
-    picked.push(segment);
+    picked.push(...resolveSourcePathSegmentCategories(source, segment));
   }
 
   return normalizeSourceCategories(picked);
