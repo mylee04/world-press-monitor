@@ -11103,20 +11103,19 @@
         {
           "name": "Arab News",
           "url": "https://www.arabnews.com/rss.xml",
-          "status": null,
-          "checkedDate": "02/23/2026",
-          "valid": null,
-          "row": 23,
-          "enabled": false
+          "sitemapUrl": "https://www.arabnews.com/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid",
+          "row": 23
         },
         {
           "name": "Al Eqtisadiah (Economy - Arabic)",
-          "url": "https://www.aleqt.com/feed",
-          "status": null,
-          "checkedDate": "02/23/2026",
-          "valid": null,
-          "row": 24,
-          "enabled": false
+          "sitemapUrl": "https://www.aleqt.com/sitemaps/newsSitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid",
+          "row": 24
         },
         {
           "name": "Saudi Press Agency (Arabic)",
@@ -22345,6 +22344,69 @@
           "sitemapUrl": "https://almalnews.com/sitemaps.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/30/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Al Masry Al Youm",
+          "url": "https://www.almasryalyoum.com/rss/rssfeeds",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "El Watan - News Sitemap",
+          "sitemapUrl": "https://www.elwatannews.com/news-sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Masrawy - General News Sitemap",
+          "sitemapUrl": "https://www.masrawy.com/feeds/sitemap?categoryid=25",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Masrawy - Sports Sitemap",
+          "sitemapUrl": "https://www.masrawy.com/feeds/sitemap?categoryid=27",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "FilGoal - Articles Sitemap Index",
+          "sitemapUrl": "https://www.filgoal.com/sitemaps/sitemaps.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Yallakora - Egypt News Sitemap",
+          "sitemapUrl": "https://www.yallakora.com/feed/sitemap?type=egyptnews&count=200&page=1",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Yallakora - International News Sitemap",
+          "sitemapUrl": "https://www.yallakora.com/feed/sitemap?type=internationalnews&count=200&page=1",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Alborsa News",
+          "url": "https://www.alborsaanews.com/feed",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Btolat",
+          "url": "https://www.btolat.com/rss/newsfeed",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
           "valid": "valid"
         }
       ]
