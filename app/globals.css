@@ -409,6 +409,95 @@ body:has(.map-page-root) main {
   cursor: pointer;
 }
 
+.map-search-shell {
+  position: relative;
+  min-width: min(320px, 42vw);
+}
+
+.map-search-input {
+  width: 100%;
+  min-height: 42px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(122, 221, 255, 0.18);
+  background: rgba(7, 14, 28, 0.76);
+  backdrop-filter: blur(14px);
+  color: #dff5ff;
+  box-shadow: 0 12px 36px rgba(1, 8, 18, 0.32);
+}
+
+.map-search-input::placeholder {
+  color: rgba(180, 220, 239, 0.72);
+}
+
+.map-search-input:focus {
+  outline: none;
+  border-color: rgba(126, 229, 255, 0.5);
+  box-shadow:
+    0 12px 36px rgba(1, 8, 18, 0.32),
+    0 0 0 1px rgba(126, 229, 255, 0.28);
+}
+
+.map-search-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  z-index: 32;
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(120, 199, 255, 0.14);
+  background: rgba(8, 14, 26, 0.96);
+  box-shadow: 0 22px 48px rgba(2, 8, 22, 0.32);
+}
+
+.map-search-heading {
+  color: #89daf7;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.map-search-results {
+  display: grid;
+  gap: 8px;
+}
+
+.map-search-option {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(120, 199, 255, 0.1);
+  background: rgba(11, 19, 34, 0.74);
+  color: #eef9ff;
+  text-align: left;
+  cursor: pointer;
+}
+
+.map-search-option:hover,
+.map-search-option:focus-visible {
+  border-color: rgba(143, 230, 255, 0.3);
+  background: rgba(13, 23, 40, 0.88);
+  outline: none;
+}
+
+.map-search-option strong {
+  display: block;
+  font-size: 0.86rem;
+}
+
+.map-search-option span,
+.map-search-empty {
+  display: block;
+  margin-top: 4px;
+  color: #99b9cd;
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
 .map-stage-loading {
   position: absolute;
   top: 84px;
@@ -1352,6 +1441,12 @@ body:has(.map-page-root) main {
 
   .map-floating-toolbar {
     top: 14px;
+    width: calc(100% - 24px);
+  }
+
+  .map-search-shell {
+    min-width: min(100%, 320px);
+    width: min(320px, 100%);
   }
 
   .map-stage-loading {

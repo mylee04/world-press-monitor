@@ -57,6 +57,21 @@ type MapLayerState = {
 type MapMode = 'countries' | 'publishers' | 'health';
 type LeftTab = 'overview' | 'display';
 type DetailTab = 'metrics' | 'headlines' | 'health';
+type MapSearchResult =
+  | {
+      kind: 'country';
+      key: string;
+      title: string;
+      subtitle: string;
+      country: MapCountryMetricRow;
+    }
+  | {
+      kind: 'publisher';
+      key: string;
+      title: string;
+      subtitle: string;
+      publisher: MapPublisherMetricRow;
+    };
 
 const GLOBE_WIDTH = 1800;
 const GLOBE_HEIGHT = 1120;
@@ -1497,10 +1512,13 @@ export function MapView() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const searchInputRef = useRef<HTMLInputElement | null>(null);
   const [mapMode, setMapMode] = useState<MapMode>('countries');
   const [leftTab, setLeftTab] = useState<LeftTab>('overview');
   const [detailTab, setDetailTab] = useState<DetailTab>('metrics');
   const [benchmarkOpen, setBenchmarkOpen] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchOpen, setSearchOpen] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState<MapCountryMetricRow | null>(null);
   const [selectedCluster, setSelectedCluster] = useState<CountrySourceCluster | null>(null);
   const [selectedSource, setSelectedSource] = useState<MapSourceMetricRow | null>(null);
@@ -1547,6 +1565,8 @@ export function MapView() {
   const benchmarkGeneratedLabel = benchmark?.generatedAt
     ? formatRelative(benchmark.generatedAt)
     : null;
+  const searchMode = !selectedCountry && mapMode === 'publishers' ? 'publishers' : 'countries';
+  const normalizedSearchQuery = normalizeCountryName(searchQuery);
   const rawUrlMode = searchParams.get('mode');
   const rawUrlPanel = searchParams.get('panel');
   const rawUrlDetail = searchParams.get('detail');
@@ -1751,6 +1771,37 @@ export function MapView() {
       ? selectedPublisher.healthySources24h / selectedPublisher.activeSources24h
       : 0
     : 0;
+  const searchResults = useMemo<MapSearchResult[]>(() => {
+    if (searchMode === 'publishers') {
+      const items = publishersState.data?.publishers || [];
+      const filtered = normalizedSearchQuery
+        ? items.filter((item) => normalizeCountryName(item.publisher).includes(normalizedSearchQuery))
+        : items;
+      return filtered.slice(0, 8).map((item) => ({
+        kind: 'publisher',
+        key: `publisher:${item.publisher}`,
+        title: item.publisher,
+        subtitle: `${formatNumber(item.pub24h)} published · ${formatNumber(item.activeCountries24h)} countries`,
+        publisher: item,
+      }));
+    }
+
+    const items = countriesState.data?.countries || [];
+    const filtered = normalizedSearchQuery
+      ? items.filter((item) => {
+          const normalizedCountry = normalizeCountryName(item.country);
+          if (normalizedCountry.includes(normalizedSearchQuery)) return true;
+          return (COUNTRY_ALIASES[item.country] || []).some((alias) => normalizeCountryName(alias).includes(normalizedSearchQuery));
+        })
+      : items;
+    return filtered.slice(0, 8).map((item) => ({
+      kind: 'country',
+      key: `country:${item.country}`,
+      title: item.country,
+      subtitle: `${formatNumber(item.pub24h)} published · ${formatNumber(item.activeSources24h)} active sources`,
+      country: item,
+    }));
+  }, [searchMode, publishersState.data, countriesState.data, normalizedSearchQuery]);
   const selectedClusterSourcesDisplay = useMemo(() => {
     if (!selectedCluster) return [];
     const items = [...selectedCluster.sources];
@@ -1820,6 +1871,28 @@ export function MapView() {
     focusCountry(match);
   }
 
+  function resetToPublisherGlobe(publisher: MapPublisherMetricRow) {
+    setMapMode('publishers');
+    setSceneOrigin({ x: 50, y: 52 });
+    setSelectedPublisher(publisher);
+    setSelectedCountry(null);
+    setSelectedCluster(null);
+    setSelectedSource(null);
+    setCountryViewport(DEFAULT_COUNTRY_VIEWPORT);
+    setLeftTab('overview');
+  }
+
+  function commitSearchResult(result: MapSearchResult) {
+    if (result.kind === 'country') {
+      focusCountry(result.country);
+    } else {
+      resetToPublisherGlobe(result.publisher);
+    }
+    setSearchQuery('');
+    setSearchOpen(false);
+    searchInputRef.current?.blur();
+  }
+
   const currentUrlQuery = buildMapQueryString({
     mode: urlMode,
     country: urlCountry,
@@ -1848,6 +1921,11 @@ export function MapView() {
     const targetUrl = desiredUrlQuery ? `${pathname}?${desiredUrlQuery}` : pathname;
     router.replace(targetUrl, { scroll: false });
   }, [router, pathname, urlSyncReady, desiredUrlQuery, currentUrlQuery]);
+
+  useEffect(() => {
+    setSearchQuery('');
+    setSearchOpen(false);
+  }, [mapMode, selectedCountry?.country]);
 
   return (
     <div className="page-stack map-page-stack map-page-root">
@@ -1879,11 +1957,115 @@ export function MapView() {
                 >
                   Reset Zoom
                 </button>
+                <div className={`map-search-shell ${searchOpen ? 'is-open' : ''}`}>
+                  <input
+                    ref={searchInputRef}
+                    type="search"
+                    value={searchQuery}
+                    className="map-search-input"
+                    placeholder="Jump to country"
+                    aria-label="Search country"
+                    onFocus={() => setSearchOpen(true)}
+                    onBlur={() => window.setTimeout(() => setSearchOpen(false), 120)}
+                    onChange={(event) => {
+                      setSearchQuery(event.target.value);
+                      setSearchOpen(true);
+                    }}
+                    onKeyDown={(event) => {
+                      if (event.key === 'Escape') {
+                        setSearchOpen(false);
+                        searchInputRef.current?.blur();
+                      }
+                      if (event.key === 'Enter' && searchResults[0]) {
+                        event.preventDefault();
+                        commitSearchResult(searchResults[0]);
+                      }
+                    }}
+                  />
+                  {searchOpen ? (
+                    <div className="map-search-dropdown">
+                      <div className="map-search-heading">Country search</div>
+                      <div className="map-search-results">
+                        {searchResults.length > 0 ? (
+                          searchResults.map((result) => (
+                            <button
+                              key={result.key}
+                              type="button"
+                              className="map-search-option"
+                              onMouseDown={(event) => event.preventDefault()}
+                              onClick={() => commitSearchResult(result)}
+                            >
+                              <strong>{result.title}</strong>
+                              <span>{result.subtitle}</span>
+                            </button>
+                          ))
+                        ) : (
+                          <div className="map-search-empty">
+                            {countriesState.loading ? 'Loading countries…' : 'No matching countries.'}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ) : null}
+                </div>
               </>
             ) : (
               <>
                 <div className="map-toolbar-chip">
                   {mapMode === 'publishers' ? 'Publisher Globe' : mapMode === 'health' ? 'Health Globe' : '3D Globe View'}
+                </div>
+                <div className={`map-search-shell ${searchOpen ? 'is-open' : ''}`}>
+                  <input
+                    ref={searchInputRef}
+                    type="search"
+                    value={searchQuery}
+                    className="map-search-input"
+                    placeholder={searchMode === 'publishers' ? 'Search publisher' : 'Search country'}
+                    aria-label={searchMode === 'publishers' ? 'Search publisher' : 'Search country'}
+                    onFocus={() => setSearchOpen(true)}
+                    onBlur={() => window.setTimeout(() => setSearchOpen(false), 120)}
+                    onChange={(event) => {
+                      setSearchQuery(event.target.value);
+                      setSearchOpen(true);
+                    }}
+                    onKeyDown={(event) => {
+                      if (event.key === 'Escape') {
+                        setSearchOpen(false);
+                        searchInputRef.current?.blur();
+                      }
+                      if (event.key === 'Enter' && searchResults[0]) {
+                        event.preventDefault();
+                        commitSearchResult(searchResults[0]);
+                      }
+                    }}
+                  />
+                  {searchOpen ? (
+                    <div className="map-search-dropdown">
+                      <div className="map-search-heading">{searchMode === 'publishers' ? 'Publisher search' : 'Country search'}</div>
+                      <div className="map-search-results">
+                        {searchResults.length > 0 ? (
+                          searchResults.map((result) => (
+                            <button
+                              key={result.key}
+                              type="button"
+                              className="map-search-option"
+                              onMouseDown={(event) => event.preventDefault()}
+                              onClick={() => commitSearchResult(result)}
+                            >
+                              <strong>{result.title}</strong>
+                              <span>{result.subtitle}</span>
+                            </button>
+                          ))
+                        ) : (
+                          <div className="map-search-empty">
+                            {searchMode === 'publishers'
+                              ? (publishersState.loading ? 'Loading publishers…' : 'No matching publishers.')
+                              : (countriesState.loading ? 'Loading countries…' : 'No matching countries.')}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ) : null}
                 </div>
                 <button type="button" className="map-toolbar-chip map-toolbar-button" onClick={() => setMotionEnabled((current) => !current)}>
                   {motionEnabled ? 'Pause Motion' : 'Resume Motion'}
