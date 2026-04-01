@@ -885,7 +885,8 @@
         },
         {
           "name": "Foreign Policy",
-          "url": "https://foreignpolicy.com/feed/"
+          "url": "https://foreignpolicy.com/feed/",
+          "sitemapUrl": "https://foreignpolicy.com/news-sitemap.xml"
         },
         {
           "name": "Defense One",
@@ -893,11 +894,13 @@
         },
         {
           "name": "Defense News",
-          "url": "https://www.defensenews.com/arc/outboundfeeds/rss/?outputType=xml"
+          "url": "https://www.defensenews.com/arc/outboundfeeds/rss/?outputType=xml",
+          "sitemapUrl": "https://www.defensenews.com/arc/outboundfeeds/sitemap-news/?outputType=xml"
         },
         {
           "name": "Military Times",
-          "url": "https://www.militarytimes.com/arc/outboundfeeds/rss/?outputType=xml"
+          "url": "https://www.militarytimes.com/arc/outboundfeeds/rss/?outputType=xml",
+          "sitemapUrl": "https://www.militarytimes.com/arc/outboundfeeds/sitemap-news/?outputType=xml"
         },
         {
           "name": "War on the Rocks",
@@ -909,15 +912,18 @@
         },
         {
           "name": "CoinDesk",
-          "url": "https://www.coindesk.com/arc/outboundfeeds/rss/"
+          "url": "https://www.coindesk.com/arc/outboundfeeds/rss/",
+          "sitemapUrl": "https://www.coindesk.com/arc/outboundfeeds/news-sitemap-index"
         },
         {
           "name": "Cointelegraph",
-          "url": "https://cointelegraph.com/rss"
+          "url": "https://cointelegraph.com/rss",
+          "sitemapUrl": "https://cointelegraph.com/sitemap-google-news.xml"
         },
         {
           "name": "Blockworks",
-          "url": "https://blockworks.co/feed"
+          "url": "https://blockworks.co/feed",
+          "sitemapUrl": "https://blockworks.com/news-sitemap-index.xml"
         },
         {
           "name": "Decrypt",
@@ -937,7 +943,8 @@
         },
         {
           "name": "MIT Technology Review",
-          "url": "https://www.technologyreview.com/feed/"
+          "url": "https://www.technologyreview.com/feed/",
+          "sitemapUrl": "https://www.technologyreview.com/news-sitemap.xml"
         },
         {
           "name": "Crunchbase News",
@@ -949,7 +956,8 @@
         },
         {
           "name": "The Points Guy",
-          "url": "https://thepointsguy.com/feed/"
+          "url": "https://thepointsguy.com/feed/",
+          "sitemapUrl": "https://thepointsguy.com/news-sitemap.xml/"
         },
         {
           "name": "Airline Geeks",
@@ -961,11 +969,13 @@
         },
         {
           "name": "View from the Wing",
-          "url": "https://viewfromthewing.com/feed/"
+          "url": "https://viewfromthewing.com/feed/",
+          "sitemapUrl": "https://viewfromthewing.com/news-sitemap.xml"
         },
         {
           "name": "Aviation Pros",
-          "url": "https://www.aviationpros.com/rss"
+          "url": "https://www.aviationpros.com/rss",
+          "sitemapUrl": "https://www.aviationpros.com/sitemap-google-news.xml"
         },
         {
           "name": "Aviation Week",
@@ -3018,7 +3028,8 @@
         },
         {
           "name": "Inc42",
-          "url": "https://inc42.com/feed/"
+          "url": "https://inc42.com/feed/",
+          "sitemapUrl": "https://inc42.com/news-sitemap.xml"
         }
       ]
     },
@@ -3337,7 +3348,8 @@
         },
         {
           "name": "Simple Flying",
-          "url": "https://simpleflying.com/feed/"
+          "url": "https://simpleflying.com/feed/",
+          "sitemapUrl": "https://simpleflying.com/post_google_news.xml"
         },
         {
           "name": "Nature News",
