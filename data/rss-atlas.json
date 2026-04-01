@@ -1976,7 +1976,7 @@
           "checkedDate": "03/15/2026",
           "valid": "needs verification",
           "row": 55,
-          "enabled": true
+          "enabled": false
         },
         {
           "name": "Yomiuri - Full Sitemap",
@@ -5478,7 +5478,7 @@
       "feeds": [
         {
           "name": "Yonhap (EN)",
-          "url": "https://en.yna.co.kr/RSS/news.xml",
+          "url": null,
           "sitemapUrl": "https://www.yna.co.kr/news-sitemap6.xml",
           "status": null,
           "checkedDate": null,
@@ -5561,7 +5561,7 @@
         },
         {
           "name": "한국경제 - 전체뉴스",
-          "url": "https://www.hankyung.com/feed/all-news",
+          "url": null,
           "sitemapUrl": "https://www.hankyung.com/sitemap/latest-article.xml",
           "status": null,
           "checkedDate": null,
@@ -5622,11 +5622,12 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 18
+          "row": 18,
+          "enabled": false
         },
         {
           "name": "매일경제 - 뉴스 전체뉴스",
-          "url": "https://www.mk.co.kr/rss/40300001/",
+          "url": null,
           "sitemapUrl": "https://www.mk.co.kr/sitemap/latest-articles/",
           "status": null,
           "checkedDate": null,
@@ -5781,7 +5782,7 @@
         },
         {
           "name": "조선닷컴 (전체)",
-          "url": "https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
+          "url": null,
           "sitemapUrl": "https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml",
           "status": null,
           "checkedDate": null,
@@ -13924,7 +13925,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 10
+          "row": 10,
+          "enabled": false
         },
         {
           "name": "Ámbito - Tecnología",
@@ -13940,7 +13942,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 12
+          "row": 12,
+          "enabled": false
         },
         {
           "name": "Ámbito - Edición impresa",
@@ -14004,7 +14007,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 20
+          "row": 20,
+          "enabled": false
         },
         {
           "name": "Página/12 - Ciencia",
@@ -14299,6 +14303,7 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 55,
+          "enabled": false,
           "sitemapUrl": "https://www.ole.com.ar/sitemaps/sitemap_google_news.xml"
         },
         {
@@ -14412,7 +14417,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 69
+          "row": 69,
+          "enabled": false
         },
         {
           "name": "MDZ Online - Economía",
@@ -14516,7 +14522,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 82
+          "row": 82,
+          "enabled": false
         },
         {
           "name": "C5N - Autos",
@@ -14524,7 +14531,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 83
+          "row": 83,
+          "enabled": false
         },
         {
           "name": "C5N - Mundo",
@@ -14556,7 +14564,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 87
+          "row": 87,
+          "enabled": false
         },
         {
           "name": "C5N - Astrología",
@@ -14564,7 +14573,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 88
+          "row": 88,
+          "enabled": false
         },
         {
           "name": "C5N - Lifestyle",
@@ -14572,7 +14582,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 89
+          "row": 89,
+          "enabled": false
         },
         {
           "name": "A24",
@@ -14653,6 +14664,7 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 98,
+          "enabled": false,
           "sitemapUrl": "https://www.tycsports.com/sitemap_news_48hs.xml"
         }
       ]
@@ -23156,6 +23168,55 @@
       ]
     },
     {
+      "name": "Israel",
+      "code": "IL",
+      "feeds": [
+        {
+          "name": "Times of Israel - Latest",
+          "url": "https://www.timesofisrael.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Jerusalem Post - Israel News",
+          "url": "https://www.jpost.com/rss/rssfeedsisraelnews.aspx",
+          "sitemapUrl": "https://www.jpost.com/jpgooglesitemap/latestarticles",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Jerusalem Post - Middle East",
+          "url": "https://www.jpost.com/rss/rssfeedsmiddleeastnews.aspx",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Jerusalem Post - World",
+          "url": "https://www.jpost.com/rss/rssfeedsinternational",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Globes - English Sitemap",
+          "sitemapUrl": "https://www.globes.co.il/data/webservices/google-maps.ashx?language=en",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Haaretz - Latest News Sitemap",
+          "sitemapUrl": "https://www.haaretz.com/news-sitemap-latest.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        }
+      ]
+    },
+    {
       "name": "Bahrain",
       "code": "BH",
       "feeds": [
@@ -23641,6 +23702,13 @@
           "name": "Al Mamlaka TV - News Sitemap",
           "url": null,
           "sitemapUrl": "https://www.almamlakatv.com/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "04/01/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Roya News",
+          "url": "https://royanews.tv/rss",
           "status": "NEW",
           "checkedDate": "04/01/2026",
           "valid": "valid"
