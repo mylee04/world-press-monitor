@@ -22898,6 +22898,34 @@
           "status": "NEW",
           "checkedDate": "03/31/2026",
           "valid": "valid"
+        },
+        {
+          "name": "QNA - General",
+          "url": "https://qna.org.qa/en/Pages/RSS-Feeds/General",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "QNA - Economy International",
+          "url": "https://qna.org.qa/en/Pages/RSS-Feeds/Economy-International",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "QNA - Sport International",
+          "url": "https://qna.org.qa/en/Pages/RSS-Feeds/Sport-International",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "QNA - Miscellaneous International",
+          "url": "https://qna.org.qa/en/Pages/RSS-Feeds/Miscellaneous-International",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
         }
       ]
     },
@@ -22946,6 +22974,42 @@
         {
           "name": "Gulf Business",
           "url": "https://gulfbusiness.com/feed/",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Economy Middle East",
+          "url": "https://economymiddleeast.com/feed/",
+          "sitemapUrl": "https://economymiddleeast.com/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Arabian Business",
+          "url": "https://www.arabianbusiness.com/feed/",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Albayan - News Sitemap",
+          "sitemapUrl": "https://www.albayan.ae/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Emarat Al Youm - News Sitemap",
+          "sitemapUrl": "https://www.emaratalyoum.com/news-sitemaps-1.368006?ot=ot.AjaxPageLayout",
+          "status": "NEW",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Emarat Al Youm - Local Section",
+          "sitemapUrl": "https://www.emaratalyoum.com/news-sitemaps-1.368006/local-section-1.1075475?ot=ot.AjaxPageLayout",
           "status": "NEW",
           "checkedDate": "03/31/2026",
           "valid": "valid"
