@@ -17541,6 +17541,46 @@
           "valid": "valid"
         },
         {
+          "name": "Dagsavisen - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.dagsavisen.no/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Vårt Land - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.vl.no/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Khrono - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://khrono.no/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Kampanje - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://kampanje.com/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Kommunal Rapport - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://kommunal-rapport.no/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Fædrelandsvennen",
           "url": "https://www.fvn.no/rss"
         }
@@ -20196,6 +20236,55 @@
           "valid": "valid"
         },
         {
+          "name": "České noviny - Ekonomika",
+          "url": "https://www.ceskenoviny.cz/sluzby/rss/ekonomika.php",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "České noviny - Sport",
+          "url": "https://www.ceskenoviny.cz/sluzby/rss/sport.php",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "České noviny - Domov",
+          "url": "https://www.ceskenoviny.cz/sluzby/rss/domov.php",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Info.cz",
+          "url": "https://www.info.cz/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CzechCrunch",
+          "url": "https://cc.cz/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Česká justice",
+          "url": "https://www.ceska-justice.cz/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "HlídacíPes",
+          "url": "https://hlidacipes.org/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Tyden.cz",
           "url": "https://www.tyden.cz/rss"
         }
@@ -22807,6 +22896,13 @@
         {
           "name": "STOMP - Google News Sitemap",
           "url": "https://www.stomp.sg/googlenews.xml"
+        },
+        {
+          "name": "STOMP RSS",
+          "url": "https://www.stomp.sg/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "03/31/2026",
+          "valid": "valid"
         },
         {
           "name": "CNA Latest News",

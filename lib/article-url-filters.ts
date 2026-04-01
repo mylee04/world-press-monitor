@@ -113,8 +113,20 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     if (pathname.startsWith('/korsets-seier/')) return true;
   }
 
+  if (hostname.endsWith('dagsavisen.no') && pathname.startsWith('/kommentar/')) {
+    return true;
+  }
+
   if (hostname.endsWith('fvn.no') && normalizedSource.includes('fædrelandsvennen')) {
     if (pathname.startsWith('/mening/')) return true;
+  }
+
+  if (hostname.endsWith('vl.no') && normalizedSource.includes('vårt land')) {
+    if (pathname.startsWith('/meninger/')) return true;
+  }
+
+  if (hostname.endsWith('kommunal-rapport.no') && normalizedSource.includes('kommunal rapport')) {
+    if (pathname.startsWith('/meninger/')) return true;
   }
 
   if (hostname.endsWith('plo.vn') && trimmedPathname === '/') {
@@ -128,6 +140,14 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
   if (hostname.endsWith('daidoanket.vn')) {
     if (trimmedPathname === '/') return true;
     if (pathname.startsWith('/chuyen-muc/')) return true;
+  }
+
+  if (hostname.endsWith('stomp.sg') && pathname.startsWith('/lifestyle/')) {
+    return true;
+  }
+
+  if (hostname.endsWith('info.cz') && pathname.startsWith('/podcasty/')) {
+    return true;
   }
 
   if (hostname.endsWith('baotintuc.vn') && pathname.startsWith('/video/')) {
