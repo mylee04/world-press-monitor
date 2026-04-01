@@ -1,6 +1,6 @@
 # World Press Radar Map Visualization Spec
 
-Last updated: 2026-03-31
+Last updated: 2026-04-01
 Owner: World Press Radar
 Status: Draft
 
@@ -836,7 +836,7 @@ Recommended implementation order:
 7. `G1-G3`
 8. `H1-H4`
 
-## 17.1 Current Status Snapshot (2026-03-31)
+## 17.1 Current Status Snapshot (2026-04-01)
 
 Current implementation already covers:
 
@@ -852,24 +852,25 @@ Current implementation already covers:
 - health overlay mode with degraded-country and degraded-source ranking
 - observed benchmark summary sheet inside the map view
 - core URL state sync for mode, country, publisher, source, panel, benchmark sheet, and layer toggles
+- country and publisher search from the globe toolbar
+- time window switching (`1h` / `24h` / `7d`) for the global country globe and publisher footprint mode
 
 Current known gaps:
 
 - publisher grouping still needs stronger network/company normalization and confidence labeling
 - dense metro countries still need stronger `city -> source list` drill-down polish and cluster naming
 - URL state does not yet preserve flat-map pan/zoom camera state
-- country and publisher search are not implemented
-- time window switching (`1h` / `24h` / `7d`) is not yet exposed in the map UI
+- flat country drill-down remains `24h / 1h` oriented and does not yet adopt the new global window toggle semantics
 - explicit live vs fallback provenance badges are not surfaced yet
 - reduced motion and persistent attribution are not implemented yet
 - geometry overrides are still heuristic for some multipolygon countries
 
 This means the next implementation wave should focus on:
 
-1. search and time window controls
-2. publisher grouping confidence model
-3. operational provenance, reduced motion, and attribution
-4. deeper metro drill-down and geometry overrides
+1. publisher grouping confidence model
+2. operational provenance, reduced motion, and attribution
+3. deeper metro drill-down and geometry overrides
+4. flat-map window semantics if country detail needs parity with globe mode
 
 ## 17.2 Next Delivery Wave
 

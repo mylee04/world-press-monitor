@@ -1,3 +1,18 @@
+export type MapMetricWindow = '1h' | '24h' | '7d';
+
+export type MapCountryWindowMetrics = {
+  published: number;
+  fresh: number;
+  late: number;
+  firstSeen: number;
+  lateShare: number;
+  activeSources: number;
+  rssSources: number;
+  sitemapSources: number;
+  healthySources: number;
+  degradedSources: number;
+};
+
 export type MapCountryMetricRow = {
   country: string;
   countryCode: string | null;
@@ -14,19 +29,29 @@ export type MapCountryMetricRow = {
   sitemapSources24h: number;
   healthySources24h: number;
   degradedSources24h: number;
+  windows: Record<MapMetricWindow, MapCountryWindowMetrics>;
   topSources: Array<{ name: string; count: number }>;
   topPublishers: Array<{ name: string; count: number }>;
 };
 
 export type MapCountryMetricsResponse = {
   generatedAt: string;
+  window: MapMetricWindow;
   totals: {
     countries: number;
     pub24h: number;
     pub1h: number;
     activeSources24h: number;
+    windows: Record<MapMetricWindow, MapCountryWindowMetrics>;
   };
   countries: MapCountryMetricRow[];
+};
+
+export type MapPublisherCountryWindowMetrics = {
+  published: number;
+  activeSources: number;
+  healthySources: number;
+  degradedSources: number;
 };
 
 export type MapPublisherCountryRow = {
@@ -38,6 +63,15 @@ export type MapPublisherCountryRow = {
   activeSources24h: number;
   healthySources24h: number;
   degradedSources24h: number;
+  windows: Record<MapMetricWindow, MapPublisherCountryWindowMetrics>;
+};
+
+export type MapPublisherWindowMetrics = {
+  published: number;
+  activeCountries: number;
+  activeSources: number;
+  healthySources: number;
+  degradedSources: number;
 };
 
 export type MapPublisherMetricRow = {
@@ -47,11 +81,13 @@ export type MapPublisherMetricRow = {
   activeSources24h: number;
   healthySources24h: number;
   degradedSources24h: number;
+  windows: Record<MapMetricWindow, MapPublisherWindowMetrics>;
   countries: MapPublisherCountryRow[];
 };
 
 export type MapPublishersResponse = {
   generatedAt: string;
+  window: MapMetricWindow;
   publishers: MapPublisherMetricRow[];
 };
 
