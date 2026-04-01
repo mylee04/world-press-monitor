@@ -112,6 +112,11 @@ Relevant existing columns:
 - `rss_health_status.health_classification`
 - `rss_health_status.attempted`
 
+Operational source-quality rules:
+
+- See [rss-sitemap-quality-playbook.md](/Users/myungeunlee/Desktop/mylee/world-press-monitor/docs/rss-sitemap-quality-playbook.md)
+- This playbook defines how to handle portal inflation, sports/soft skew, duplicate surfaces, and broken title quality in `data/rss-atlas.json`
+
 ## Benchmark Metrics
 
 ### Country Output Metrics
