@@ -22559,6 +22559,83 @@
         {
           "name": "Webnoviny - Current Sitemap",
           "sitemapUrl": "https://sita.sk/scripts/sitemap/current.php"
+        },
+        {
+          "name": "Sportnet",
+          "url": "https://sportnet.sme.sk/rss/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Startitup",
+          "url": "https://www.startitup.sk/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Startitup - News Sitemap",
+          "sitemapUrl": "https://www.startitup.sk/news-sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Hlavné správy",
+          "url": "https://www.hlavnespravy.sk/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Dobré noviny",
+          "url": "https://www.dobrenoviny.sk/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Postoj",
+          "url": "https://www.postoj.sk/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Bystricoviny",
+          "url": "https://www.bystricoviny.sk/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Techbyte",
+          "url": "https://www.techbyte.sk/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Vosveteit",
+          "url": "https://vosveteit.zoznam.sk/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "EMEFKA",
+          "url": "https://emefka.sk/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Touchit",
+          "url": "https://touchit.sk/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
         }
       ]
     },
