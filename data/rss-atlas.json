@@ -22627,6 +22627,104 @@
           "valid": "valid"
         },
         {
+          "name": "Bug",
+          "url": "https://www.bug.hr/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Lika online",
+          "url": "https://www.lika-online.hr/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Croatia Week",
+          "url": "https://www.croatiaweek.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Morski",
+          "url": "https://morski.hr/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "SiB",
+          "url": "https://sib.net.hr/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Klikaj",
+          "url": "https://www.klikaj.hr/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Dalmacija Danas",
+          "url": "https://www.dalmacijadanas.hr/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "057info",
+          "url": "https://www.057info.hr/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "eMedjimurje",
+          "url": "https://emedjimurje.net.hr/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Podravski",
+          "url": "https://podravski.hr/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "DubrovnikNet",
+          "url": "https://dubrovniknet.hr/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Zadarski list",
+          "url": "https://zadarskilist.novilist.hr/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Rijeka Danas",
+          "url": "https://www.rijekadanas.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Zagrebancija",
+          "url": "https://www.zagrebancija.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
           "name": "HRT Vijesti",
           "sitemapUrl": "https://vijesti.hrt.hr/sitemaps/articles-news.xml",
           "status": "NEW",
