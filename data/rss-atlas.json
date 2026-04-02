@@ -13794,6 +13794,36 @@
           "status": "NEW",
           "checkedDate": "03/19/2026",
           "valid": "valid"
+        },
+        {
+          "name": "Thai Post",
+          "url": "https://www.thaipost.net/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "InfoQuest",
+          "url": "https://www.infoquest.co.th/feed",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Workpoint Today",
+          "url": "https://www.workpointtoday.com/feed/",
+          "sitemapUrl": "https://www.workpointtoday.com/sitemaps/index.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Komchadluek - Latest Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.komchadluek.net/sitemap/latest",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
         }
       ]
     },
