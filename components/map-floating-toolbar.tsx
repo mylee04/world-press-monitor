@@ -84,7 +84,11 @@ export function MapFloatingToolbar({
       ) : (
         <>
           <div className="map-toolbar-chip">
-            {mapMode === 'publishers' ? 'Publisher Globe' : mapMode === 'health' ? 'Health Globe' : '3D Globe View'}
+            {mapMode === 'publishers'
+              ? 'Publisher Globe'
+              : mapMode === 'health'
+                ? 'Health Globe'
+                : 'World Publishing Pulse'}
           </div>
           <MapSearchBox
             searchOpen={searchOpen}
