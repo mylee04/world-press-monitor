@@ -21738,6 +21738,78 @@
           "status": "NEW",
           "checkedDate": "03/19/2026",
           "valid": "valid"
+        },
+        {
+          "name": "News.ro",
+          "url": "https://www.news.ro/rss"
+        },
+        {
+          "name": "Playtech",
+          "url": "https://playtech.ro/feed/"
+        },
+        {
+          "name": "Newsweek Romania",
+          "url": "https://newsweek.ro/rss"
+        },
+        {
+          "name": "Puterea",
+          "url": "https://www.puterea.ro/feed/"
+        },
+        {
+          "name": "Digi Sport",
+          "url": "https://www.digisport.ro/rss"
+        },
+        {
+          "name": "Sport.ro",
+          "url": "https://www.sport.ro/rss"
+        },
+        {
+          "name": "Monitorul de Cluj",
+          "url": "https://www.monitorulcj.ro/rss"
+        },
+        {
+          "name": "Turnul Sfatului",
+          "url": "https://www.turnulsfatului.ro/rss"
+        },
+        {
+          "name": "B365",
+          "url": "https://b365.ro/feed/"
+        },
+        {
+          "name": "Go4it",
+          "url": "https://www.go4it.ro/feed/"
+        },
+        {
+          "name": "StartupCafe",
+          "url": "https://www.startupcafe.ro/feed/"
+        },
+        {
+          "name": "PS News",
+          "url": "https://www.psnews.ro/feed/"
+        },
+        {
+          "name": "Descopera",
+          "url": "https://www.descopera.ro/feed/"
+        },
+        {
+          "name": "Cotidianul",
+          "url": "https://www.cotidianul.ro/feed/"
+        },
+        {
+          "name": "StiriDiaspora",
+          "url": "https://www.stiridiaspora.ro/feed/"
+        },
+        {
+          "name": "Republica",
+          "url": "https://www.republica.ro/rss"
+        },
+        {
+          "name": "Cancan",
+          "url": "https://www.cancan.ro/feed/"
+        },
+        {
+          "name": "Impact",
+          "url": "https://www.impact.ro/feed"
         }
       ]
     },
