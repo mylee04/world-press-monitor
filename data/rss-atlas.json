@@ -18186,6 +18186,35 @@
           "valid": "valid"
         },
         {
+          "name": "Harstad Tidende",
+          "url": "https://www.ht.no/rss",
+          "sitemapUrl": "https://www.ht.no/sitemaps/ht-news-sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "E24 Feed RSS",
+          "url": "https://www.e24.no/feed/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TV2 - Fotball",
+          "url": "https://www.tv2.no/rss/sport/fotball",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TV2 - Sykkel",
+          "url": "https://www.tv2.no/rss/sport/sykkel",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Fædrelandsvennen",
           "url": "https://www.fvn.no/rss"
         }
