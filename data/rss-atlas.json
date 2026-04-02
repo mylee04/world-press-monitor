@@ -9250,6 +9250,418 @@
       ]
     },
     {
+      "name": "Morocco",
+      "code": "MA",
+      "feeds": [
+        {
+          "name": "Le Site info",
+          "url": "https://www.lesiteinfo.com/feed/",
+          "sitemapUrl": "https://www.lesiteinfo.com/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 1
+        },
+        {
+          "name": "Le Matin - Latest articles",
+          "url": "https://lematin.ma/rssFeed/0",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 2
+        },
+        {
+          "name": "Yabiladi EN",
+          "url": "https://en.yabiladi.com/rss/news.xml",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 3
+        },
+        {
+          "name": "Hespress",
+          "url": "https://www.hespress.com/feed",
+          "sitemapUrl": "https://www.hespress.com/sitemap_index.xml",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 4
+        },
+        {
+          "name": "Le Matin - Economy",
+          "url": "https://lematin.ma/rssFeed/4",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 5
+        },
+        {
+          "name": "Yabiladi",
+          "url": "https://www.yabiladi.com/rss/news.xml",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 6
+        },
+        {
+          "name": "Hespress EN",
+          "url": "https://en.hespress.com/feed",
+          "sitemapUrl": "https://en.hespress.com/sitemap_index.xml",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 7
+        },
+        {
+          "name": "Medias24",
+          "url": "https://medias24.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 8
+        },
+        {
+          "name": "Morocco World News",
+          "url": "https://www.moroccoworldnews.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 9
+        },
+        {
+          "name": "Le Matin - Nation",
+          "url": "https://lematin.ma/rssFeed/7",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 10
+        },
+        {
+          "name": "Le Matin - Sports",
+          "url": "https://lematin.ma/rssFeed/3",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 11
+        },
+        {
+          "name": "Le Matin - Society",
+          "url": "https://lematin.ma/rssFeed/9",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 12
+        },
+        {
+          "name": "Le Matin - World",
+          "url": "https://lematin.ma/rssFeed/5",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 13
+        },
+        {
+          "name": "Le Matin - Regions",
+          "url": "https://lematin.ma/rssFeed/2",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 14
+        },
+        {
+          "name": "La Vie Eco",
+          "url": "https://www.lavieeco.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 15
+        },
+        {
+          "name": "Aujourdhui Le Maroc",
+          "url": "https://aujourdhui.ma/feed",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 16
+        },
+        {
+          "name": "Barlamane",
+          "url": "https://barlamane.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 17
+        },
+        {
+          "name": "Bladi",
+          "url": "https://www.bladi.net/spip.php?page=backend",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 18
+        },
+        {
+          "name": "Le Desk",
+          "url": "https://ledesk.ma/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 19
+        },
+        {
+          "name": "Challenge",
+          "url": "https://www.challenge.ma/feed/",
+          "sitemapUrl": "https://www.challenge.ma/sitemap_index.xml",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 20
+        },
+        {
+          "name": "Le Matin - Culture",
+          "url": "https://lematin.ma/rssFeed/84",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 21
+        },
+        {
+          "name": "Le Matin - Videos",
+          "url": "https://lematin.ma/rssFeed/128",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 22
+        },
+        {
+          "name": "Le Matin - Hi-Tech",
+          "url": "https://lematin.ma/rssFeed/32",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 23
+        },
+        {
+          "name": "Le Matin - Lifestyle",
+          "url": "https://lematin.ma/rssFeed/31",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 24
+        },
+        {
+          "name": "Akhbarona",
+          "url": "https://www.akhbarona.com/feed/index.rss",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 25
+        },
+        {
+          "name": "LesEco",
+          "url": "https://leseco.ma/feed",
+          "sitemapUrl": "https://leseco.ma/sitemap_index.xml",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 26
+        },
+        {
+          "name": "LeBrief",
+          "url": "https://www.lebrief.ma/feed/",
+          "sitemapUrl": "https://www.lebrief.ma/sitemap_index.xml",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 27
+        },
+        {
+          "name": "TelQuel",
+          "url": "https://telquel.ma/feed",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 28
+        },
+        {
+          "name": "Le Reporter",
+          "url": "https://www.lereporter.ma/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 29
+        },
+        {
+          "name": "Lakome2",
+          "url": "https://lakome2.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 30
+        },
+        {
+          "name": "Assahifa",
+          "url": "https://www.assahifa.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 31
+        },
+        {
+          "name": "Kech24",
+          "url": "https://kech24.com/feed",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 32
+        },
+        {
+          "name": "Le12",
+          "url": "https://le12.ma/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 33
+        },
+        {
+          "name": "Belpresse",
+          "url": "https://www.belpresse.com/feed",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 34
+        },
+        {
+          "name": "Alomk Sport",
+          "url": "https://alomksport.com/feed",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 35
+        },
+        {
+          "name": "Barlamane Sport",
+          "url": "https://barlamanesport.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 36
+        },
+        {
+          "name": "Hesport",
+          "url": "https://www.hesport.com/feed",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 37
+        },
+        {
+          "name": "Anfas Press",
+          "sitemapUrl": "https://anfaspress.com/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 38
+        },
+        {
+          "name": "LObservateur",
+          "sitemapUrl": "https://lobservateur.info/sitemaps/sitemap_0.xml",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 39
+        },
+        {
+          "name": "Madar21",
+          "url": "https://madar21.com/feed",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 40
+        },
+        {
+          "name": "Achkayen",
+          "url": "https://www.achkayen.com/feed",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 41
+        },
+        {
+          "name": "Actu Maroc",
+          "url": "https://actu-maroc.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 42
+        },
+        {
+          "name": "Marrakech Al Yaoum",
+          "url": "https://www.marrakechalyaoum.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 43
+        },
+        {
+          "name": "Marrakechalaan",
+          "url": "https://www.marrakechalaan.com/feed",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 44
+        },
+        {
+          "name": "Le Collimateur",
+          "url": "https://lecollimateur.ma/feed",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 45
+        },
+        {
+          "name": "Barlamantoday",
+          "url": "https://barlamantoday.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 46
+        },
+        {
+          "name": "Machahid24",
+          "url": "https://machahid24.com/feed",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 47
+        },
+        {
+          "name": "Awras",
+          "url": "https://www.awras.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 48
+        },
+        {
+          "name": "Cawalisse",
+          "url": "https://www.cawalisse.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 49
+        },
+        {
+          "name": "Le Canard Libere",
+          "url": "https://lecanardlibere.ma/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 50
+        }
+      ]
+    },
+    {
       "name": "Netherlands",
       "code": "NL",
       "feeds": [
@@ -18005,6 +18417,370 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/01/2026",
           "valid": "needs verification"
+        }
+      ]
+    },
+    {
+      "name": "New Zealand",
+      "code": "NZ",
+      "feeds": [
+        {
+          "name": "1News",
+          "url": "https://www.1news.co.nz/arc/outboundfeeds/rss/?outputType=xml",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 1,
+          "sitemapUrl": "https://www.1news.co.nz/arc/outboundfeeds/news-sitemap/?outputType=xml"
+        },
+        {
+          "name": "RNZ - New Zealand",
+          "url": "https://www.rnz.co.nz/rss/national.xml",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 2
+        },
+        {
+          "name": "RNZ - Politics",
+          "url": "https://www.rnz.co.nz/rss/political.xml",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 3
+        },
+        {
+          "name": "The Spinoff",
+          "url": "https://thespinoff.co.nz/feed/",
+          "sitemapUrl": "https://thespinoff.co.nz/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 4
+        },
+        {
+          "name": "NZ Herald - Business",
+          "url": "https://www.nzherald.co.nz/arc/outboundfeeds/rss/section/business/?outputType=xml&_website=nzh",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 5
+        },
+        {
+          "name": "NZ Herald - NZ News",
+          "url": "https://www.nzherald.co.nz/arc/outboundfeeds/rss/section/nz/?outputType=xml&_website=nzh",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 6
+        },
+        {
+          "name": "NZ Herald - Sport",
+          "url": "https://www.nzherald.co.nz/arc/outboundfeeds/rss/section/sport/?outputType=xml&_website=nzh",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 7
+        },
+        {
+          "name": "NZ Herald - World",
+          "url": "https://www.nzherald.co.nz/arc/outboundfeeds/rss/section/world/?outputType=xml&_website=nzh",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 8
+        },
+        {
+          "name": "Newsroom",
+          "url": "https://newsroom.co.nz/feed/",
+          "sitemapUrl": "https://newsroom.co.nz/sitemap_index.xml",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 9
+        },
+        {
+          "name": "RNZ - Business",
+          "url": "https://www.rnz.co.nz/rss/business.xml",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 10
+        },
+        {
+          "name": "NZ Herald - Top Stories",
+          "url": "https://www.nzherald.co.nz/arc/outboundfeeds/rss/curated/78/?outputType=xml&_website=nzh",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 11
+        },
+        {
+          "name": "Newstalk ZB",
+          "url": "https://www.newstalkzb.co.nz/rss/",
+          "sitemapUrl": "https://www.newstalkzb.co.nz/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 12
+        },
+        {
+          "name": "Newstalk ZB - News",
+          "url": "https://www.newstalkzb.co.nz/news/rss/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 13
+        },
+        {
+          "name": "BusinessDesk",
+          "url": "https://businessdesk.co.nz/feed",
+          "sitemapUrl": "https://businessdesk.co.nz/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 14
+        },
+        {
+          "name": "NZ Doctor",
+          "url": "https://www.nzdoctor.co.nz/rss.xml",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 15
+        },
+        {
+          "name": "RNZ - Pacific",
+          "url": "https://www.rnz.co.nz/rss/pacific.xml",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 16
+        },
+        {
+          "name": "NZ Herald - Entertainment",
+          "url": "https://www.nzherald.co.nz/arc/outboundfeeds/rss/section/entertainment/?outputType=xml&_website=nzh",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 17
+        },
+        {
+          "name": "RNZ - Sport",
+          "url": "https://www.rnz.co.nz/rss/sport.xml",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 18
+        },
+        {
+          "name": "NZ Herald - Technology",
+          "url": "https://www.nzherald.co.nz/arc/outboundfeeds/rss/section/technology/?outputType=xml&_website=nzh",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 19
+        },
+        {
+          "name": "NZ Herald - Travel",
+          "url": "https://www.nzherald.co.nz/arc/outboundfeeds/rss/section/travel/?outputType=xml&_website=nzh",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 20
+        },
+        {
+          "name": "NZ Herald - Lifestyle",
+          "url": "https://www.nzherald.co.nz/arc/outboundfeeds/rss/section/lifestyle/?outputType=xml&_website=nzh",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 21
+        },
+        {
+          "name": "RNZ - World",
+          "url": "https://www.rnz.co.nz/rss/world.xml",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 22
+        },
+        {
+          "name": "RNZ - IndoNZ",
+          "url": "https://www.rnz.co.nz/rss/indonz.xml",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 23
+        },
+        {
+          "name": "Waatea News",
+          "url": "https://waateanews.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 24
+        },
+        {
+          "name": "Otago Daily Times",
+          "url": "https://www.odt.co.nz/news/feed",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 25
+        },
+        {
+          "name": "Stuff",
+          "sitemapUrl": "https://www.stuff.co.nz/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 26
+        },
+        {
+          "name": "The Post",
+          "sitemapUrl": "https://www.thepost.co.nz/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 27
+        },
+        {
+          "name": "The Press",
+          "sitemapUrl": "https://www.thepress.co.nz/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 28
+        },
+        {
+          "name": "Waikato Times",
+          "sitemapUrl": "https://www.waikatotimes.co.nz/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 29
+        },
+        {
+          "name": "Inside Government NZ",
+          "url": "https://insidegovernment.co.nz/feed/",
+          "sitemapUrl": "https://insidegovernment.co.nz/sitemap_index.xml",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 30
+        },
+        {
+          "name": "Local Matters",
+          "url": "https://www.localmatters.co.nz/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 31
+        },
+        {
+          "name": "Chris Lynch Media",
+          "url": "https://www.chrislynchmedia.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 32
+        },
+        {
+          "name": "Farmers Weekly",
+          "url": "https://www.farmersweekly.co.nz/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 33
+        },
+        {
+          "name": "NZBusiness",
+          "url": "https://nzbusiness.co.nz/feed",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 34
+        },
+        {
+          "name": "Reseller News",
+          "url": "https://www.reseller.co.nz/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 35
+        },
+        {
+          "name": "Computerworld NZ",
+          "url": "https://www.computerworld.com/nz/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 36
+        },
+        {
+          "name": "KiwiBlog",
+          "url": "https://www.kiwiblog.co.nz/feed",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 37
+        },
+        {
+          "name": "Waikato Business News",
+          "url": "https://wbn.co.nz/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 38
+        },
+        {
+          "name": "NZCPR",
+          "url": "https://www.nzcpr.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 39
+        },
+        {
+          "name": "Hospitality Business",
+          "url": "https://www.hospitalitybusiness.co.nz/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 40
+        },
+        {
+          "name": "SecurityBrief NZ",
+          "url": "https://securitybrief.co.nz/feed",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 41
+        },
+        {
+          "name": "ChannelLife NZ",
+          "url": "https://channellife.co.nz/feed",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 42
+        },
+        {
+          "name": "IT Brief NZ",
+          "url": "https://itbrief.co.nz/feed",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 43
+        },
+        {
+          "name": "TechDay NZ",
+          "url": "https://techday.co.nz/feed",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 44
         }
       ]
     },
