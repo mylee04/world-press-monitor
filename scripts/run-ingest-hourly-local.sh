@@ -190,6 +190,14 @@ run_post_ingest_hooks() {
 
   printf '[%s] Trigger post-ingest hourly reports\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
 
+  if ! bun run map:snapshots:build; then
+    printf '[%s] WARN: map snapshot build hook failed\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
+  fi
+
+  if ! bun run benchmark:build; then
+    printf '[%s] WARN: country benchmark build hook failed\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
+  fi
+
   if ! bash "${SCRIPT_DIR}/run-news-country-discord-report.sh"; then
     printf '[%s] WARN: news-country discord hook failed\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
   fi
