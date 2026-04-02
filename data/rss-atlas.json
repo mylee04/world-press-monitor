@@ -13284,6 +13284,69 @@
           "sitemapUrl": "https://www.hbvl.be/sitemap-news.xml"
         },
         {
+          "name": "RTL - News Sitemap",
+          "sitemapUrl": "https://www.rtl.be/sites/default/files/sitemaps/sitemapnews-0.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Trends",
+          "url": "https://trends.knack.be/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "DataNews",
+          "url": "https://datanews.knack.be/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Newsmonkey - Sitemap News",
+          "sitemapUrl": "https://newsmonkey.be/sitemap-news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Made in",
+          "url": "https://www.made-in.be/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Trends Tendance",
+          "url": "https://trends-tendances.be/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Kanaal Z",
+          "url": "https://kanaalz.knack.be/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "VRT NWS Binnenland",
+          "url": "https://www.vrt.be/vrtnws/nl.rss.articles.binnenland.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "VRT NWS Economie",
+          "url": "https://www.vrt.be/vrtnws/nl.rss.articles.economie.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
           "name": "BX1",
           "url": "https://bx1.be/feed/"
         }
