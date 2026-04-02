@@ -18917,6 +18917,54 @@
           "valid": "valid",
           "row": 61,
           "sitemapUrl": "https://www.nzherald.co.nz/arc/outboundfeeds/sitemap-news/?outputType=xml&_website=gisborne-herald"
+        },
+        {
+          "name": "NZ Herald Sitemap Index",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 62,
+          "sitemapUrl": "https://www.nzherald.co.nz/arc/outboundfeeds/sitemap-index/?outputType=xml&_website=nzh"
+        },
+        {
+          "name": "Viva News Sitemap",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 63,
+          "sitemapUrl": "https://www.nzherald.co.nz/arc/outboundfeeds/sitemap-news/?outputType=xml&_website=viva"
+        },
+        {
+          "name": "Eatwell News Sitemap",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 64,
+          "sitemapUrl": "https://www.nzherald.co.nz/arc/outboundfeeds/sitemap-news/?outputType=xml&_website=eatwell"
+        },
+        {
+          "name": "Regional News",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 65,
+          "sitemapUrl": "https://www.regionalnews.kiwi/sitemap.xml"
+        },
+        {
+          "name": "The Daily Blog",
+          "url": "https://thedailyblog.co.nz/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 66
+        },
+        {
+          "name": "The Platform",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 67,
+          "sitemapUrl": "https://theplatform.kiwi/sitemap.xml"
         }
       ]
     },
