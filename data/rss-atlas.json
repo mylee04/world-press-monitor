@@ -19492,6 +19492,26 @@
           "url": "https://www.hbl.fi/feeds/feed.xml"
         },
         {
+          "name": "Nya Aland",
+          "url": "https://www.nyan.ax/feed/"
+        },
+        {
+          "name": "Vasabladet",
+          "url": "https://www.vasabladet.fi/feed/"
+        },
+        {
+          "name": "Osterbottens Tidning",
+          "url": "https://www.ot.fi/feed/"
+        },
+        {
+          "name": "Ostnyland",
+          "url": "https://www.ostnyland.fi/feed/"
+        },
+        {
+          "name": "Sydin",
+          "url": "https://www.sydin.fi/feeds/feed.xml"
+        },
+        {
           "name": "ESS",
           "url": "https://www.ess.fi/feed/rss"
         },
@@ -19542,8 +19562,28 @@
           "url": "https://www.aamuposti.fi/feed/rss"
         },
         {
+          "name": "Keski-Uusimaa",
+          "url": "https://www.keski-uusimaa.fi/feed/rss"
+        },
+        {
+          "name": "Lansi-Uusimaa",
+          "url": "https://www.lansi-uusimaa.fi/feed/rss"
+        },
+        {
+          "name": "Loviisan Sanomat",
+          "url": "https://www.loviisansanomat.fi/feed/rss"
+        },
+        {
           "name": "Lansi-Savo",
           "url": "https://www.lansi-savo.fi/feed/rss"
+        },
+        {
+          "name": "Forssan Lehti",
+          "url": "https://www.forssanlehti.fi/feed/rss"
+        },
+        {
+          "name": "Salon Seudun Sanomat",
+          "url": "https://www.sss.fi/feed/rss"
         },
         {
           "name": "Warkauden Lehti",
@@ -19556,6 +19596,14 @@
         {
           "name": "Ita-Savo",
           "url": "https://www.ita-savo.fi/feed/rss"
+        },
+        {
+          "name": "Ita-Hame",
+          "url": "https://www.itahame.fi/feed/rss"
+        },
+        {
+          "name": "Uutisvuoksi",
+          "url": "https://www.uutisvuoksi.fi/feed/rss"
         },
         {
           "name": "Yle Uutiset - Kotimaa",
@@ -19716,6 +19764,7 @@
         {
           "name": "Keskipohjanmaa",
           "url": "https://www.keskipohjanmaa.fi/feed/rss",
+          "sitemapUrl": "https://www.keskipohjanmaa.fi/sitemap/news",
           "status": "NEW",
           "checkedDate": "03/16/2026",
           "valid": "valid",
@@ -20041,6 +20090,10 @@
           "row": 203
         },
         {
+          "name": "Kotimaa",
+          "url": "https://www.kotimaa.fi/feed/"
+        },
+        {
           "name": "Tivi",
           "url": "https://www.tivi.fi/api/feed/v2/rss/tv",
           "status": "NEW",
@@ -20050,7 +20103,7 @@
         },
         {
           "name": "Mikrobitti",
-          "url": "https://www.mikrobitti.fi/rss/bitti.xml",
+          "url": "https://www.mikrobitti.fi/api/feed/v2/rss/mb",
           "status": "NEW",
           "checkedDate": "03/16/2026",
           "valid": "valid",
