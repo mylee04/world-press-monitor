@@ -12173,6 +12173,78 @@
           "status": "NEW",
           "checkedDate": "03/19/2026",
           "valid": "valid"
+        },
+        {
+          "name": "Niezalezna",
+          "url": "https://niezalezna.pl/feed"
+        },
+        {
+          "name": "Niezalezna - Polska",
+          "url": "https://niezalezna.pl/feed/polska"
+        },
+        {
+          "name": "Niezalezna - Swiat",
+          "url": "https://niezalezna.pl/feed/swiat"
+        },
+        {
+          "name": "Niezalezna - Polityka",
+          "url": "https://niezalezna.pl/feed/polityka"
+        },
+        {
+          "name": "TVP Info RSS",
+          "url": "http://www.tvp.info/tvp.info/rss+xml.php"
+        },
+        {
+          "name": "Polityka - News Sitemap",
+          "sitemapUrl": "https://www.polityka.pl/sitemap/newsSitemap.xml"
+        },
+        {
+          "name": "Dziennik.pl",
+          "url": "https://www.dziennik.pl/.feed"
+        },
+        {
+          "name": "Puls Biznesu - Articles Sitemap",
+          "sitemapUrl": "https://www.pb.pl/sitemap/sitemap_articles_1.xml"
+        },
+        {
+          "name": "wPolityce - Publications Sitemap",
+          "sitemapUrl": "https://wpolityce.pl/sitemap-publications.xml"
+        },
+        {
+          "name": "TV Republika - Article Sitemap",
+          "sitemapUrl": "https://tvrepublika.pl/sitemaps/article/sitemap.xml"
+        },
+        {
+          "name": "Rynek Zdrowia - News Sitemap",
+          "sitemapUrl": "https://www.rynekzdrowia.pl/sitemap-news.xml"
+        },
+        {
+          "name": "wGospodarce FeedBurner Main",
+          "url": "https://feeds.feedburner.com/wGospodarce"
+        },
+        {
+          "name": "wGospodarce FeedBurner Finanse",
+          "url": "https://feeds.feedburner.com/wGospodarce-tag-finanse"
+        },
+        {
+          "name": "Newsweek Polska",
+          "url": "https://www.newsweek.pl/.feed"
+        },
+        {
+          "name": "OKO.press - Feed",
+          "url": "https://oko.press/feed/"
+        },
+        {
+          "name": "OKO.press - News Sitemap",
+          "sitemapUrl": "https://oko.press/news-sitemap.xml"
+        },
+        {
+          "name": "Polityka - Articles RSS",
+          "url": "https://www.polityka.pl/rss/articles.xml?list=517"
+        },
+        {
+          "name": "wPolityce FeedBurner Polityka",
+          "url": "https://feeds.feedburner.com/wPolityce-polityka"
         }
       ]
     },
