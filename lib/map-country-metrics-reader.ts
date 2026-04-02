@@ -1,5 +1,3 @@
-import 'server-only';
-
 import { buildMapCountryMetricsPayload } from '@/lib/map-country-metrics-builder';
 import { readMapCountryMetricsSnapshot } from '@/lib/map-snapshot-store';
 import type { MapCountryMetricsResponse, MapMetricWindow } from '@/lib/map-types';

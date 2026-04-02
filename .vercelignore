@@ -1,5 +1,7 @@
 node_modules
+.git
 .next
+.next 2
 .next.bak-*
 out
 exports
@@ -16,6 +18,10 @@ env.local
 tsconfig.tsbuildinfo
 .warm-daemon.pid
 logs/
+output
+.playwright-cli
+.wpr-state
+.wpr-static-deploy-lock
 audits/*.log
 audits/*.md
 audits/*.json

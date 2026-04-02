@@ -16,17 +16,6 @@ type FeedWatermarkDbRow = {
   last_publication_at: string | null;
 };
 
-type FeedWatermarkDeps = {
-  getPool: () => Pool | null;
-  ensureSchema: () => Promise<void>;
-  executeIngestionQuery: (
-    db: Pool,
-    queryText: string,
-    values: unknown[],
-    label: string
-  ) => Promise<void>;
-};
-
 const INGEST_FEED_WATERMARKS_TABLE = 'ingest_feed_watermarks_v2';
 
 function getFeedWatermarkKey(outletId: string, method: 'rss' | 'sitemap'): string {
@@ -48,9 +37,15 @@ function isRecoverableFeedWatermarkError(error: unknown): boolean {
   return isRecoverableIngestionStateError(error, ['ingest_feed_watermarks', INGEST_FEED_WATERMARKS_TABLE]);
 }
 
+export type IngestionFeedWatermarksDeps = {
+  getPool: () => Pool | null;
+  ensureSchema: () => Promise<void>;
+  executeIngestionQuery: (db: Pool, queryText: string, values: unknown[], label: string) => Promise<void>;
+};
+
 export async function readIngestionFeedWatermarksWithDeps(
-  deps: FeedWatermarkDeps,
-  rows: Array<{ outletId: string; method: 'rss' | 'sitemap' }>
+  deps: IngestionFeedWatermarksDeps,
+  rows: Array<{ outletId: string; method: 'rss' | 'sitemap' }>,
 ): Promise<Map<string, string | null>> {
   const db = deps.getPool();
   if (!db) return new Map();
@@ -62,6 +57,7 @@ export async function readIngestionFeedWatermarksWithDeps(
     if (!row.outletId) continue;
     unique.set(getFeedWatermarkKey(row.outletId, row.method), row);
   }
+
   const requests = [...unique.values()];
   if (!requests.length) return new Map();
 
@@ -74,6 +70,7 @@ export async function readIngestionFeedWatermarksWithDeps(
       return `($${base + 1}, $${base + 2})`;
     })
     .join(', ');
+
   const map = new Map<string, string | null>();
   for (const request of requests) {
     map.set(getFeedWatermarkKey(request.outletId, request.method), null);
@@ -106,12 +103,13 @@ export async function readIngestionFeedWatermarksWithDeps(
     if (!isRecoverableFeedWatermarkError(error)) throw error;
     console.warn('[ingestion-store] skipping feed watermark reads due to recoverable catalog error:', error instanceof Error ? error.message : String(error));
   }
+
   return map;
 }
 
 export async function upsertIngestionFeedWatermarksWithDeps(
-  deps: FeedWatermarkDeps,
-  rows: FeedWatermark[]
+  deps: IngestionFeedWatermarksDeps,
+  rows: FeedWatermark[],
 ): Promise<void> {
   const db = deps.getPool();
   if (!db || !rows.length) return;

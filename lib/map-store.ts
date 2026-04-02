@@ -24,10 +24,10 @@ import type {
 } from '@/lib/map-types';
 
 export { normalizeMapMetricWindow } from '@/lib/map-store-windows';
-const MAP_COUNTRY_METRICS_CACHE_MS = 60_000;
-const MAP_COUNTRY_SOURCES_CACHE_MS = 60_000;
-const MAP_SOURCE_DETAIL_CACHE_MS = 60_000;
-const MAP_PUBLISHERS_CACHE_MS = 60_000;
+const MAP_COUNTRY_METRICS_CACHE_MS = 5 * 60_000;
+const MAP_COUNTRY_SOURCES_CACHE_MS = 5 * 60_000;
+const MAP_SOURCE_DETAIL_CACHE_MS = 5 * 60_000;
+const MAP_PUBLISHERS_CACHE_MS = 5 * 60_000;
 
 let mapCountryMetricsCache = new Map<MapMetricWindow, TimedCacheEntry<MapCountryMetricsResponse>>();
 let mapPublishersCache = new Map<MapMetricWindow, TimedCacheEntry<MapPublishersResponse>>();

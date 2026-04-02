@@ -6,6 +6,84 @@
 
 ## Unreleased
 
+### [534cf15] feat(map): publish public map portal flow
+- Commit: 534cf15e9c73c17c8e05a27fa84a85dad3da74b5
+- Date: 2026-04-02 00:10:30 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	.vercelignore
+    - M	app/access/page.tsx
+    - M	app/api/customer/dashboard/map/countries/[country]/sources/route.ts
+    - M	app/api/customer/dashboard/map/countries/route.ts
+    - M	app/api/customer/dashboard/map/publishers/route.ts
+    - M	app/api/customer/dashboard/map/sources/[sourceId]/route.ts
+    - M	app/globals.css
+    - M	components/customer-access-panel.tsx
+    - M	components/map-side-panel-overview-tab.tsx
+    - M	components/map-side-panel.tsx
+    - M	components/map-view.tsx
+    - M	data/publisher-headquarters.generated.json
+    - M	lib/ingestion-store-feed-watermarks.ts
+    - M	lib/ingestion-store-persistence.ts
+    - M	lib/ingestion-store.ts
+    - M	lib/map-country-metrics-builder.ts
+    - M	lib/map-country-metrics-reader.ts
+    - M	lib/map-country-sources-reader.ts
+    - M	lib/map-publishers-builder.ts
+    - M	lib/map-publishers-reader.ts
+    - M	lib/map-snapshot-store.ts
+    - M	lib/map-store-db.ts
+    - M	lib/map-store-locations.ts
+    - M	lib/map-store-source-meta.ts
+    - M	lib/map-store.ts
+    - M	lib/publisher-groups.ts
+    - M	lib/publisher-headquarters.ts
+    - M	lib/use-remote-json.ts
+    - A	scripts/backfill-mothership-publication-datetime.ts
+    - M	scripts/build-publisher-headquarters-generated.ts
+    - M	scripts/enrich-publisher-headquarters.ts
+    - M	scripts/run-ingest-hourly-local.sh
+    - M	scripts/run-ingest-hourly.sh
+
+  - Message:
+  - (cherry picked from commit 4bd0f41537c8e8a563231470bad0d99ce47988e7)
+
+  - Git stat:
+  - .vercelignore                                      |     6 +
+  -  app/access/page.tsx                                |     2 +-
+  -  .../map/countries/[country]/sources/route.ts       |    17 +-
+  -  app/api/customer/dashboard/map/countries/route.ts  |     8 +-
+  -  app/api/customer/dashboard/map/publishers/route.ts |     8 +-
+  -  .../dashboard/map/sources/[sourceId]/route.ts      |    23 +-
+  -  app/globals.css                                    |    39 +-
+  -  components/customer-access-panel.tsx               |     4 +-
+  -  components/map-side-panel-overview-tab.tsx         |   377 +-
+  -  components/map-side-panel.tsx                      |     2 -
+  -  components/map-view.tsx                            |  2211 ++-
+  -  data/publisher-headquarters.generated.json         | 14330 +------------------
+  -  lib/ingestion-store-feed-watermarks.ts             |    28 +-
+  -  lib/ingestion-store-persistence.ts                 |    44 +-
+  -  lib/ingestion-store.ts                             |    22 +
+  -  lib/map-country-metrics-builder.ts                 |    10 +-
+  -  lib/map-country-metrics-reader.ts                  |     2 -
+  -  lib/map-country-sources-reader.ts                  |     2 +-
+  -  lib/map-publishers-builder.ts                      |     2 +-
+  -  lib/map-publishers-reader.ts                       |     2 -
+  -  lib/map-snapshot-store.ts                          |     6 +-
+  -  lib/map-store-db.ts                                |   116 +-
+  -  lib/map-store-locations.ts                         |     2 +-
+  -  lib/map-store-source-meta.ts                       |     2 -
+  -  lib/map-store.ts                                   |     8 +-
+  -  lib/publisher-groups.ts                            |   420 +-
+  -  lib/publisher-headquarters.ts                      |  2570 +---
+  -  lib/use-remote-json.ts                             |     2 +-
+  -  .../backfill-mothership-publication-datetime.ts    |   236 +
+  -  scripts/build-publisher-headquarters-generated.ts  |    13 +-
+  -  scripts/enrich-publisher-headquarters.ts           |    45 +-
+  -  scripts/run-ingest-hourly-local.sh                 |     4 -
+  -  scripts/run-ingest-hourly.sh                       |     4 -
+  -  33 files changed, 3105 insertions(+), 17462 deletions(-)
+
 ### [8b15bf5] Expand Israel coverage and include Bahrain/Jordan/Kuwait scope feeds
 - Commit: 8b15bf5d353ce49c2c18c9152a48a3b104759dc3
 - Date: 2026-04-01 11:34:41 -0500

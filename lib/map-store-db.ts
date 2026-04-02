@@ -1,5 +1,3 @@
-import 'server-only';
-
 import { Pool } from 'pg';
 import { resolveDatabaseUrl } from '@/lib/database-url';
 import { normalizeSourceKey } from '@/lib/map-store-source-meta';
@@ -102,81 +100,47 @@ export async function readWindowedSourceMetrics(
   if (selectedWindow === '7d') {
     const result = await db.query<SourceMetricWindowSqlRow>(
       `
-      with recent as (
-        select
-          coalesce(nullif(trim(source_country), ''), nullif(trim(country), '')) as country,
-          source,
-          count(*) filter (where publication_datetime >= now() - interval '1 hour')::text as pub_1h,
-          count(*) filter (where publication_datetime >= now() - interval '24 hours')::text as pub_24h,
-          count(*) filter (where publication_datetime >= now() - interval '7 days')::text as pub_7d,
-          count(*) filter (
-            where publication_datetime >= now() - interval '1 hour'
-              and created_at >= now() - interval '1 hour'
-          )::text as fresh_1h,
-          count(*) filter (
-            where publication_datetime >= now() - interval '24 hours'
-              and created_at >= now() - interval '24 hours'
-          )::text as fresh_24h,
-          count(*) filter (
-            where publication_datetime >= now() - interval '7 days'
-              and created_at >= now() - interval '7 days'
-          )::text as fresh_7d,
-          count(*) filter (
-            where created_at >= now() - interval '1 hour'
-              and publication_datetime < now() - interval '1 hour'
-          )::text as late_1h,
-          count(*) filter (
-            where created_at >= now() - interval '24 hours'
-              and publication_datetime < now() - interval '24 hours'
-          )::text as late_24h,
-          count(*) filter (
-            where created_at >= now() - interval '7 days'
-              and publication_datetime < now() - interval '7 days'
-          )::text as late_7d,
-          count(*) filter (where created_at >= now() - interval '1 hour')::text as first_seen_1h,
-          count(*) filter (where created_at >= now() - interval '24 hours')::text as first_seen_24h,
-          count(*) filter (where created_at >= now() - interval '7 days')::text as first_seen_7d
-        from news_articles
-        where (
-          publication_datetime >= now() - interval '7 days'
-          or created_at >= now() - interval '7 days'
-        )
-          and coalesce(nullif(trim(title_quality), ''), 'ok') <> 'suspect'
-          ${whereSql ? `and ${whereSql}` : ''}
-        group by 1, 2
-      ),
-      snapshot_7d as (
-        select
-          country,
-          source,
-          coalesce(sum(published_count), 0)::text as pub_7d,
-          coalesce(sum(fresh_count), 0)::text as fresh_7d,
-          coalesce(sum(late_count), 0)::text as late_7d,
-          coalesce(sum(inserted_count), 0)::text as first_seen_7d
-        from country_benchmark_source_daily s
-        where s.day_bucket >= current_date - interval '6 days'
-          and s.metric_version = 'v1'
-        group by 1, 2
-      )
       select
-        coalesce(recent.country, snapshot_7d.country) as country,
-        coalesce(recent.source, snapshot_7d.source) as source,
-        coalesce(recent.pub_1h, '0') as pub_1h,
-        coalesce(recent.pub_24h, '0') as pub_24h,
-        coalesce(snapshot_7d.pub_7d, recent.pub_7d, '0') as pub_7d,
-        coalesce(recent.fresh_1h, '0') as fresh_1h,
-        coalesce(recent.fresh_24h, '0') as fresh_24h,
-        coalesce(snapshot_7d.fresh_7d, recent.fresh_7d, '0') as fresh_7d,
-        coalesce(recent.late_1h, '0') as late_1h,
-        coalesce(recent.late_24h, '0') as late_24h,
-        coalesce(snapshot_7d.late_7d, recent.late_7d, '0') as late_7d,
-        coalesce(recent.first_seen_1h, '0') as first_seen_1h,
-        coalesce(recent.first_seen_24h, '0') as first_seen_24h,
-        coalesce(snapshot_7d.first_seen_7d, recent.first_seen_7d, '0') as first_seen_7d
-      from recent
-      full outer join snapshot_7d
-        on snapshot_7d.country is not distinct from recent.country
-       and snapshot_7d.source = recent.source
+        coalesce(nullif(trim(source_country), ''), nullif(trim(country), '')) as country,
+        source,
+        count(*) filter (where publication_datetime >= now() - interval '1 hour')::text as pub_1h,
+        count(*) filter (where publication_datetime >= now() - interval '24 hours')::text as pub_24h,
+        count(*) filter (where publication_datetime >= now() - interval '7 days')::text as pub_7d,
+        count(*) filter (
+          where publication_datetime >= now() - interval '1 hour'
+            and created_at >= now() - interval '1 hour'
+        )::text as fresh_1h,
+        count(*) filter (
+          where publication_datetime >= now() - interval '24 hours'
+            and created_at >= now() - interval '24 hours'
+        )::text as fresh_24h,
+        count(*) filter (
+          where publication_datetime >= now() - interval '7 days'
+            and created_at >= now() - interval '7 days'
+        )::text as fresh_7d,
+        count(*) filter (
+          where created_at >= now() - interval '1 hour'
+            and publication_datetime < now() - interval '1 hour'
+        )::text as late_1h,
+        count(*) filter (
+          where created_at >= now() - interval '24 hours'
+            and publication_datetime < now() - interval '24 hours'
+        )::text as late_24h,
+        count(*) filter (
+          where created_at >= now() - interval '7 days'
+            and publication_datetime < now() - interval '7 days'
+        )::text as late_7d,
+        count(*) filter (where created_at >= now() - interval '1 hour')::text as first_seen_1h,
+        count(*) filter (where created_at >= now() - interval '24 hours')::text as first_seen_24h,
+        count(*) filter (where created_at >= now() - interval '7 days')::text as first_seen_7d
+      from news_articles
+      where (
+        publication_datetime >= now() - interval '7 days'
+        or created_at >= now() - interval '7 days'
+      )
+        and coalesce(nullif(trim(title_quality), ''), 'ok') <> 'suspect'
+        ${whereSql ? `and ${whereSql}` : ''}
+      group by 1, 2
       `,
       params
     );

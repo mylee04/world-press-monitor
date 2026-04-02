@@ -1,4 +1,4 @@
-import { inferGeoFromCountry } from '@/lib/geo';
+import { inferGeoFromTitle } from '@/lib/geo';
 import {
   readLatestHealthBySource,
   readWindowedSourceMetrics,
@@ -6,7 +6,6 @@ import {
 } from '@/lib/map-store-db';
 import { rankTopCounts } from '@/lib/map-store-locations';
 import {
-  classifySourceDistribution,
   getCountryCode,
   getSourceMeta,
   normalizeSourceKey,
@@ -44,9 +43,8 @@ export async function buildMapCountryMetricsPayload(selectedWindow: MapMetricWin
     const country = resolveSourceCountry(row.source, row.country);
     if (!country) continue;
     const displaySource = buildDisplaySourceName(row.source);
-    const meta = getSourceMeta(row.source);
-    if (classifySourceDistribution(meta) === 'portal') continue;
     const sourceKey = `${country}::${normalizeSourceKey(displaySource)}`;
+    const meta = getSourceMeta(row.source);
     const health = normalizeHealthStatus(healthBySource.get(normalizeSourceKey(row.source)));
     const current = byCountrySource.get(sourceKey) || {
       country,
@@ -81,7 +79,7 @@ export async function buildMapCountryMetricsPayload(selectedWindow: MapMetricWin
 
   for (const row of byCountrySource.values()) {
     const country = row.country;
-    const geo = inferGeoFromCountry(country);
+    const geo = inferGeoFromTitle(country, country);
 
     const current = countries.get(country) || {
       country,
@@ -199,7 +197,7 @@ export async function buildMapCountryMetricsPayload(selectedWindow: MapMetricWin
 
   return {
     generatedAt: new Date().toISOString(),
-    storage: 'postgres',
+    storage: 'postgres' as const,
     window: selectedWindow,
     totals: {
       countries: rows.length,

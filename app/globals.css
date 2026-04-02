@@ -361,11 +361,6 @@ body:has(.map-page-root) main {
   --map-detail-panel-width: 236px;
 }
 
-.map-workbench.has-publisher-focus {
-  --map-side-panel-width: 304px;
-  --map-detail-panel-width: 344px;
-}
-
 .map-stage-shell {
   position: relative;
   min-height: calc(100vh - 132px);
@@ -448,8 +443,8 @@ body:has(.map-page-root) main {
 }
 
 .map-floating-toolbar.is-globe {
-  left: calc(var(--map-panel-offset) + var(--map-side-panel-width) + 34px);
-  right: calc(var(--map-panel-offset) + var(--map-detail-panel-width) + 30px);
+  left: calc(var(--map-panel-offset) + var(--map-side-panel-width) + 26px);
+  right: calc(var(--map-panel-offset) + var(--map-detail-panel-width) + 26px);
   transform: none;
   display: grid;
   grid-template-columns: auto minmax(160px, 1fr) auto;
@@ -463,22 +458,12 @@ body:has(.map-page-root) main {
   transform: translateX(-50%);
   flex-wrap: wrap;
   justify-content: center;
-  gap: 8px;
-}
-
-.map-floating-toolbar.is-country .map-toolbar-chip,
-.map-floating-toolbar.is-country .button {
-  min-height: 34px;
-  padding: 0 12px;
-  font-size: 0.8rem;
-  line-height: 1;
-  box-shadow: 0 10px 28px rgba(1, 8, 18, 0.28);
 }
 
 .map-stage-legend {
   position: absolute;
   top: 78px;
-  left: calc(var(--map-panel-offset) + var(--map-side-panel-width) + 34px);
+  left: calc(var(--map-panel-offset) + var(--map-side-panel-width) + 26px);
   z-index: 27;
   display: grid;
   gap: 6px;
@@ -762,7 +747,7 @@ body:has(.map-page-root) main {
 }
 
 .map-side-panel.is-country-view {
-  width: 336px;
+  width: 320px;
   grid-template-rows: auto auto minmax(0, 1fr);
   gap: 10px;
   padding: 16px 16px 14px;
@@ -777,7 +762,7 @@ body:has(.map-page-root) main {
 }
 
 .map-detail-drawer.is-country-view {
-  width: 320px;
+  width: 292px;
   padding: 18px 16px 16px;
   gap: 10px;
 }
@@ -1217,8 +1202,8 @@ body:has(.map-page-root) main {
 
 .map-side-panel.is-country-view .map-tab-panel {
   gap: 10px;
-  padding-right: 12px;
-  padding-bottom: 10px;
+  padding-right: 18px;
+  padding-bottom: 20px;
 }
 
 .map-layer-list {
@@ -1308,13 +1293,9 @@ body:has(.map-page-root) main {
 }
 
 .map-side-panel.is-country-view .section-head {
-  grid-template-columns: minmax(0, 1fr);
-  gap: 4px;
-  padding-right: 0;
-}
-
-.map-side-panel.is-country-view .section-head span {
-  text-align: left;
+  grid-template-columns: minmax(0, 1fr) minmax(72px, 104px);
+  gap: 10px;
+  padding-right: 18px;
 }
 
 .map-side-panel.is-country-view .map-stat-grid {

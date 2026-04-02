@@ -599,6 +599,28 @@ create table if not exists news_articles (
     create index if not exists idx_country_benchmark_external_daily_country on country_benchmark_external_daily(country);
     create index if not exists idx_country_benchmark_external_daily_day on country_benchmark_external_daily(day_bucket desc);
     create index if not exists idx_country_benchmark_external_daily_provider on country_benchmark_external_daily(provider);
+    create table if not exists map_country_metrics_snapshots (
+      metric_window text not null,
+      metric_version text not null default 'v1',
+      generated_at timestamptz not null,
+      payload jsonb not null,
+      created_at timestamptz not null default now(),
+      updated_at timestamptz not null default now(),
+      primary key (metric_window, metric_version)
+    );
+    create index if not exists idx_map_country_metrics_snapshots_generated_at
+      on map_country_metrics_snapshots(generated_at desc);
+    create table if not exists map_publishers_snapshots (
+      metric_window text not null,
+      metric_version text not null default 'v1',
+      generated_at timestamptz not null,
+      payload jsonb not null,
+      created_at timestamptz not null default now(),
+      updated_at timestamptz not null default now(),
+      primary key (metric_window, metric_version)
+    );
+    create index if not exists idx_map_publishers_snapshots_generated_at
+      on map_publishers_snapshots(generated_at desc);
     drop index if exists idx_external_news_articles_last_seen_at;
     drop index if exists idx_external_news_articles_publication_datetime;
     drop index if exists idx_external_news_articles_source;

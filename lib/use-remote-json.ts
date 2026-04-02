@@ -25,7 +25,7 @@ type CachedRemoteJsonValue<T> = {
   updatedAt: number;
 };
 
-const REMOTE_JSON_SESSION_PREFIX = 'remote-json:v2:';
+const REMOTE_JSON_SESSION_PREFIX = 'remote-json:v1:';
 const remoteJsonMemoryCache = new Map<string, CachedRemoteJsonValue<unknown>>();
 
 function getSessionStorageKey(url: string): string {

@@ -352,27 +352,6 @@ const DISTRICTISH_INSTANCE_IDS = new Set([
   'Q188509',
 ]);
 
-function looksAdministrativeArea(label: string | null): boolean {
-  return /\b(county|district|province|prefecture|region|governorate|oblast|voivodeship|municipality)\b/i.test(
-    label || ''
-  );
-}
-
-function stripAdministrativeSuffix(label: string | null): string | null {
-  if (!label) return null;
-  const cleaned = label
-    .replace(/\b(county|district|province|prefecture|region|governorate|oblast|voivodeship|municipality)\b/gi, '')
-    .replace(/\s+/g, ' ')
-    .trim();
-  return cleaned || label;
-}
-
-function looksVenueLike(label: string | null): boolean {
-  return /(tower|square|center|centre|campus|building|plaza|avenue|street|studio|studios|house|media)/i.test(
-    label || ''
-  );
-}
-
 async function selectPreferredParentId(
   parentIds: string[],
   cache: Map<string, unknown>,
@@ -480,27 +459,9 @@ async function resolveLocationHierarchy(
   }
 
   if (!foundCityish) {
-    const first = chain[0];
-    const second = chain[1];
-    const third = chain[2];
-
-    if (first?.label && looksVenueLike(first.label) && second?.label) {
-      city = stripAdministrativeSuffix(second.label) || second.label;
-    } else if (
-      first?.label &&
-      (first.instanceOfIds.some((id) => DISTRICTISH_INSTANCE_IDS.has(id)) || looksAdministrativeArea(first.label))
-    ) {
-      city = stripAdministrativeSuffix(first.label) || first.label;
-      if (city === first.label && second?.label) {
-        city = stripAdministrativeSuffix(second.label) || second.label;
-      }
-    } else if (first?.label) {
-      city = first.label;
-    }
-
-    if (second?.label && normalize(city || '') === normalize(second.label) && third?.label) {
-      city = stripAdministrativeSuffix(second.label) || second.label;
-    }
+    const nonCountryChain = chain.slice(0, -1).filter((item) => item.label);
+    const broadestSubcountry = nonCountryChain[nonCountryChain.length - 1];
+    if (broadestSubcountry?.label) city = broadestSubcountry.label;
   }
 
   const coordinate = chain.find((item) => item.coordinate)?.coordinate || null;

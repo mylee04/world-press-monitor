@@ -1,11 +1,7 @@
 import { Pool } from 'pg';
 import { resolveDatabaseUrl } from '@/lib/database-url';
 import { DEFAULT_MAP_WINDOW, normalizeMapMetricWindow } from '@/lib/map-store-windows';
-import type {
-  MapCountryMetricsResponse,
-  MapMetricWindow,
-  MapPublishersResponse,
-} from '@/lib/map-types';
+import type { MapCountryMetricsResponse, MapMetricWindow, MapPublishersResponse } from '@/lib/map-types';
 
 type SnapshotKind = 'countries' | 'publishers';
 

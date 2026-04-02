@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { hasPortalServerApiProxyConfig, proxyCustomerApiRequest, readCustomerPortalSession } from '@/lib/customer-portal';
-import { readMapSourceDetail } from '@/lib/map-store';
+import { PUBLIC_MAP_RESPONSE_CACHE_CONTROL } from '@/lib/dashboard-cache-control';
+import { proxyPortalServerApiRequest } from '@/lib/customer-portal';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -15,22 +15,9 @@ export async function GET(request: NextRequest, context: { params: Promise<{ sou
         { status: 400, headers: { 'Cache-Control': 'no-store' } }
       );
     }
-
-    if (process.env.NODE_ENV !== 'production') {
-      const session = await readCustomerPortalSession();
-      if (!hasPortalServerApiProxyConfig() || !session.hasToken) {
-        const payload = await readMapSourceDetail(sourceId);
-        if (!payload) {
-          return NextResponse.json(
-            { message: 'Source not found.' },
-            { status: 404, headers: { 'Cache-Control': 'no-store' } }
-          );
-        }
-        return NextResponse.json(payload, { headers: { 'Cache-Control': 'no-store' } });
-      }
-    }
-
-    return proxyCustomerApiRequest(request, `/api/map/sources/${encodeURIComponent(sourceId)}`);
+    return proxyPortalServerApiRequest(request, `/api/map/sources/${encodeURIComponent(sourceId)}`, {
+      cacheControl: PUBLIC_MAP_RESPONSE_CACHE_CONTROL,
+    });
   } catch (error: unknown) {
     return NextResponse.json(
       { message: error instanceof Error ? error.message : 'Failed to load source detail.' },

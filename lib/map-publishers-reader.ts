@@ -1,5 +1,3 @@
-import 'server-only';
-
 import { buildMapPublishersPayload } from '@/lib/map-publishers-builder';
 import { readMapPublishersSnapshot } from '@/lib/map-snapshot-store';
 import type { MapMetricWindow, MapPublishersResponse } from '@/lib/map-types';

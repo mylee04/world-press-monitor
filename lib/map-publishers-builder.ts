@@ -144,7 +144,7 @@ export async function buildMapPublishersPayload(selectedWindow: MapMetricWindow)
 
   return {
     generatedAt: new Date().toISOString(),
-    storage: 'postgres',
+    storage: 'postgres' as const,
     window: selectedWindow,
     publishers: [...byPublisher.values()]
       .map(({ publisherConfidenceVotes: _publisherConfidenceVotes, ...publisher }) => ({

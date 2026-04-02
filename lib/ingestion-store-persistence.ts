@@ -1,14 +1,23 @@
 import { createHash } from 'node:crypto';
 import type { Pool } from 'pg';
-import { normalizeSourceCategories } from '@/lib/article-taxonomy';
+import type { NewsItem } from '@/lib/types';
 import {
   preferPersistedArticleRow,
-  type MissingPublishedAtPersistable,
   type NewsArticlePersistable,
+  type MissingPublishedAtPersistable,
   toMissingPublishedAtPersistable,
   toNewsArticlePersistable,
 } from '@/lib/news-write-helpers';
-import type { NewsItem } from '@/lib/types';
+import { normalizeSourceCategories } from '@/lib/article-taxonomy';
+
+function sha256Hex(value: string): Promise<string> {
+  return Promise.resolve(createHash('sha256').update(value).digest('hex'));
+}
+
+type ExistingArticleIdentityRow = {
+  external_id: string;
+  stable_id: string | null;
+};
 
 export type MissingPublishedAtCandidate = {
   outletId: string;
@@ -28,29 +37,15 @@ export type NewsArticleFeedCategoryBackfill = {
   sourceCategories: string[];
 };
 
-type ExistingArticleIdentityRow = {
-  external_id: string;
-  stable_id: string | null;
-};
-
-type IngestionPersistenceDeps = {
+export type IngestionPersistenceDeps = {
   getPool: () => Pool | null;
   ensureSchema: () => Promise<void>;
-  executeIngestionQuery: (
-    db: Pool,
-    queryText: string,
-    values: unknown[],
-    label: string
-  ) => Promise<void>;
+  executeIngestionQuery: (db: Pool, queryText: string, values: unknown[], label: string) => Promise<void>;
   chunk: <T>(items: T[], size: number) => T[][];
   publicationMaxAgeMs: number;
   storedTitleMaxChars: number;
   storedSnippetMaxChars: number;
 };
-
-async function sha256Hex(value: string): Promise<string> {
-  return createHash('sha256').update(value).digest('hex');
-}
 
 async function resolveExistingArticleExternalIds(
   db: Pool,
@@ -101,7 +96,7 @@ async function resolveExistingArticleExternalIds(
 
 export async function persistNewsArticlesWithDeps(
   deps: IngestionPersistenceDeps,
-  items: NewsItem[]
+  items: NewsItem[],
 ): Promise<{ persisted: number; storage: 'postgres' | 'disabled'; reason?: string }> {
   const db = deps.getPool();
   if (!db) return { persisted: 0, storage: 'disabled', reason: 'missing_database_url' };
@@ -121,7 +116,6 @@ export async function persistNewsArticlesWithDeps(
     )
   ).filter((row): row is NewsArticlePersistable => Boolean(row));
   if (!rows.length) return { persisted: 0, storage: 'postgres' };
-
   const resolvedExisting = await resolveExistingArticleExternalIds(db, rows);
   const resolvedRows = rows.map((row) => ({
     ...row,
@@ -300,7 +294,7 @@ export async function persistNewsArticlesWithDeps(
 
 export async function backfillNewsArticleFeedCategoriesWithDeps(
   deps: IngestionPersistenceDeps,
-  items: NewsArticleFeedCategoryBackfill[]
+  items: NewsArticleFeedCategoryBackfill[],
 ): Promise<{ updated: number; storage: 'postgres' | 'disabled'; reason?: string }> {
   const db = deps.getPool();
   if (!db) return { updated: 0, storage: 'disabled', reason: 'missing_database_url' };
@@ -361,7 +355,7 @@ export async function backfillNewsArticleFeedCategoriesWithDeps(
 
 export async function persistMissingPublishedAtCandidatesWithDeps(
   deps: IngestionPersistenceDeps,
-  items: MissingPublishedAtCandidate[]
+  items: MissingPublishedAtCandidate[],
 ): Promise<{ persisted: number; storage: 'postgres' | 'disabled'; reason?: string }> {
   const db = deps.getPool();
   if (!db) return { persisted: 0, storage: 'disabled', reason: 'missing_database_url' };
@@ -378,7 +372,9 @@ export async function persistMissingPublishedAtCandidatesWithDeps(
         })
       )
     )
-  ).filter((row): row is MissingPublishedAtPersistable => Boolean(row));
+  ).filter(
+    (row): row is MissingPublishedAtPersistable => Boolean(row)
+  );
   if (!rows.length) return { persisted: 0, storage: 'postgres' };
 
   const dedupedRows = [...rows.reduce((acc, row) => {

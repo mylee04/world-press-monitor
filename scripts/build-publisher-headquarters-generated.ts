@@ -31,17 +31,6 @@ function normalize(value: string): string {
   return (value || '').trim().toLowerCase();
 }
 
-function looksSuspiciousVenueLabel(value: string): boolean {
-  return /(tower|square|center|centre|campus|building|plaza|avenue|street|studio|studios|house|media)/i.test(value);
-}
-
-function shouldSkipCandidate(row: CandidateRecord): boolean {
-  if (!row.city || !Number.isFinite(row.lat) || !Number.isFinite(row.lon)) return true;
-  if (normalize(row.city) === normalize(row.country)) return true;
-  if (normalize(row.city) === normalize(row.region || '') && looksSuspiciousVenueLabel(row.city)) return true;
-  return false;
-}
-
 function parseArgs(argv: string[]): { inputs: string[]; outPath: string } {
   const inputs: string[] = [];
   let outPath = path.join(process.cwd(), 'data', 'publisher-headquarters.generated.json');
@@ -72,7 +61,7 @@ async function main(): Promise<void> {
     for (const row of parsed.records || []) {
       if (row.confidence !== 'high' || !row.matchedDomain) continue;
       const key = `${normalize(row.country)}::${normalize(row.publisher)}`;
-      if (shouldSkipCandidate(row)) continue;
+      if (!row.city || !Number.isFinite(row.lat) || !Number.isFinite(row.lon)) continue;
       merged.set(key, {
         country: row.country,
         publisher: row.publisher,
