@@ -4,7 +4,13 @@ import {
   readNewsDashboardSummary,
   type NewsApiItem
 } from '@/lib/news-api-store';
+import { PUBLIC_MAP_RESPONSE_CACHE_CONTROL } from '@/lib/dashboard-cache-control';
 import { checkNewsDatabaseHealth } from '@/lib/ingestion-store';
+import { loadMapCountryMetrics } from '@/lib/map-country-metrics-reader';
+import { loadMapCountrySources } from '@/lib/map-country-sources-reader';
+import { loadMapPublishers } from '@/lib/map-publishers-reader';
+import { loadMapSourceDetail } from '@/lib/map-source-detail-reader';
+import { normalizeMapMetricWindow } from '@/lib/map-store-windows';
 import type {
   NewsApiDashboardSummaryResponse,
   NewsApiFiltersResponse,
@@ -1339,6 +1345,16 @@ function applyFilterValues(values: string[], allowed: string[] | undefined): str
   return values.filter((value) => allowedSet.has(value.toLowerCase()));
 }
 
+function decodePathParam(value: string | undefined): string | null {
+  if (!value) return null;
+  try {
+    const decoded = decodeURIComponent(value).trim();
+    return decoded || null;
+  } catch {
+    return null;
+  }
+}
+
 function formatRateLimitHeaders(decision: ApiRateLimitDecision): Record<string, string> {
   const headers: Record<string, string> = {
     'X-RateLimit-Limit': String(decision.limit),
@@ -1578,6 +1594,154 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
 
   if (!context || !policy) {
     sendJsonResponse(req, res, unauthorizedResponse(), rateLimitDecision);
+    return;
+  }
+
+  const mapCountrySourcesMatch = path.match(/^\/api\/map\/countries\/([^/]+)\/sources$/);
+  const mapSourceDetailMatch = path.match(/^\/api\/map\/sources\/([^/]+)$/);
+
+  if (path === '/api/map/countries') {
+    try {
+      const window = normalizeMapMetricWindow(url.searchParams.get('window'));
+      const response = jsonResponse(await loadMapCountryMetrics(window), 200);
+      response.headers['cache-control'] = PUBLIC_MAP_RESPONSE_CACHE_CONTROL;
+      sendJsonResponse(req, res, response, rateLimitDecision);
+    } catch (error) {
+      console.error('[api-news] map countries request failed', error);
+      sendJsonResponse(
+        req,
+        res,
+        jsonResponse(
+          {
+            error: 'internal_error',
+            message: 'Failed to load map country metrics.'
+          } satisfies ApiError,
+          500
+        ),
+        rateLimitDecision
+      );
+    }
+    return;
+  }
+
+  if (path === '/api/map/publishers') {
+    try {
+      const window = normalizeMapMetricWindow(url.searchParams.get('window'));
+      const response = jsonResponse(await loadMapPublishers(window), 200);
+      response.headers['cache-control'] = PUBLIC_MAP_RESPONSE_CACHE_CONTROL;
+      sendJsonResponse(req, res, response, rateLimitDecision);
+    } catch (error) {
+      console.error('[api-news] map publishers request failed', error);
+      sendJsonResponse(
+        req,
+        res,
+        jsonResponse(
+          {
+            error: 'internal_error',
+            message: 'Failed to load map publisher metrics.'
+          } satisfies ApiError,
+          500
+        ),
+        rateLimitDecision
+      );
+    }
+    return;
+  }
+
+  if (mapCountrySourcesMatch) {
+    const country = decodePathParam(mapCountrySourcesMatch[1]);
+    if (!country) {
+      sendJsonResponse(
+        req,
+        res,
+        jsonResponse(
+          {
+            error: 'bad_request',
+            message: 'Country is required.'
+          } satisfies ApiError,
+          400
+        ),
+        rateLimitDecision
+      );
+      return;
+    }
+
+    try {
+      const window = normalizeMapMetricWindow(url.searchParams.get('window'));
+      const response = jsonResponse(await loadMapCountrySources(country, window), 200);
+      response.headers['cache-control'] = PUBLIC_MAP_RESPONSE_CACHE_CONTROL;
+      sendJsonResponse(req, res, response, rateLimitDecision);
+    } catch (error) {
+      console.error('[api-news] map country sources request failed', error);
+      sendJsonResponse(
+        req,
+        res,
+        jsonResponse(
+          {
+            error: 'internal_error',
+            message: 'Failed to load country sources.'
+          } satisfies ApiError,
+          500
+        ),
+        rateLimitDecision
+      );
+    }
+    return;
+  }
+
+  if (mapSourceDetailMatch) {
+    const sourceId = decodePathParam(mapSourceDetailMatch[1]);
+    if (!sourceId) {
+      sendJsonResponse(
+        req,
+        res,
+        jsonResponse(
+          {
+            error: 'bad_request',
+            message: 'Source id is required.'
+          } satisfies ApiError,
+          400
+        ),
+        rateLimitDecision
+      );
+      return;
+    }
+
+    try {
+      const payload = await loadMapSourceDetail(sourceId);
+      if (!payload) {
+        sendJsonResponse(
+          req,
+          res,
+          jsonResponse(
+            {
+              error: 'not_found',
+              message: 'Source not found.'
+            } satisfies ApiError,
+            404
+          ),
+          rateLimitDecision
+        );
+        return;
+      }
+      const response = jsonResponse(payload, 200);
+      response.headers['cache-control'] = PUBLIC_MAP_RESPONSE_CACHE_CONTROL;
+      sendJsonResponse(req, res, response, rateLimitDecision);
+    } catch (error) {
+      console.error('[api-news] map source detail request failed', error);
+      sendJsonResponse(
+        req,
+        res,
+        jsonResponse(
+          {
+            error: 'internal_error',
+            message: 'Failed to load source detail.'
+          } satisfies ApiError,
+          500
+        ),
+        rateLimitDecision
+      );
+    }
     return;
   }
 

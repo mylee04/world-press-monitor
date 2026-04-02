@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { CountryBenchmarkResponse } from '@/lib/benchmark-types';
 import { useCustomerAccess } from '@/components/customer-access-provider';
+import { useRemoteJson } from '@/lib/use-remote-json';
 import type {
   NewsApiDashboardSummaryResponse,
   NewsApiFiltersResponse,
@@ -32,10 +33,6 @@ type NewsApiQuery = {
   minUpdatedAt?: string | null;
   maxUpdatedAt?: string | null;
 };
-
-function allowLocalPreview(): boolean {
-  return process.env.NODE_ENV !== 'production';
-}
 
 function useRemoteJsonResource<T>(url: string | null): JsonState<T> {
   const [state, setState] = useState<JsonState<T>>({
@@ -154,5 +151,9 @@ export function useNewsApiNews(query: NewsApiQuery): JsonState<NewsApiResponse> 
 export function useCountryBenchmark(): JsonState<CountryBenchmarkResponse> {
   const { hasToken, isReady } = useCustomerAccess();
   const url = useMemo(() => '/api/customer/dashboard/benchmark', []);
-  return useRemoteJsonResource<CountryBenchmarkResponse>(isReady && (hasToken || allowLocalPreview()) ? url : null);
+  return useRemoteJson<CountryBenchmarkResponse>(
+    isReady && hasToken ? url : null,
+    undefined,
+    { cacheMode: 'session' }
+  );
 }

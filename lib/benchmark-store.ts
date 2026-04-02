@@ -90,7 +90,7 @@ type TimedCacheEntry<T> = {
 };
 
 const DEFAULT_METRIC_VERSION = 'v1';
-const BENCHMARK_CACHE_MS = 60_000;
+const BENCHMARK_CACHE_MS = 5 * 60_000;
 
 let pool: Pool | null = null;
 let benchmarkCache: TimedCacheEntry<CountryBenchmarkResponse> | null = null;

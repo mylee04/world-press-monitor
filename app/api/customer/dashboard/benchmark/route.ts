@@ -1,16 +1,13 @@
 import { NextResponse } from 'next/server';
 import { readCountryBenchmark } from '@/lib/benchmark-store';
 import { readCustomerPortalSession } from '@/lib/customer-portal';
+import { PRIVATE_DASHBOARD_RESPONSE_CACHE_CONTROL } from '@/lib/dashboard-cache-control';
 
 export const runtime = 'nodejs';
 
-function allowLocalPreview(): boolean {
-  return process.env.NODE_ENV !== 'production';
-}
-
 export async function GET() {
   const session = await readCustomerPortalSession();
-  if (!allowLocalPreview() && !session.hasToken) {
+  if (!session.hasToken) {
     return NextResponse.json(
       {
         error: 'unauthorized',
@@ -23,7 +20,7 @@ export async function GET() {
   const payload = await readCountryBenchmark();
   return NextResponse.json(payload, {
     headers: {
-      'Cache-Control': 'no-store',
+      'Cache-Control': PRIVATE_DASHBOARD_RESPONSE_CACHE_CONTROL,
     },
   });
 }

@@ -26,10 +26,6 @@ type BenchmarkBadge = {
   tone: BenchmarkBadgeTone;
 };
 
-function allowLocalPreview(): boolean {
-  return process.env.NODE_ENV !== 'production';
-}
-
 function formatDateTime(value: string | null | undefined): string {
   if (!value) return '-';
   const date = new Date(value);
@@ -226,7 +222,6 @@ export function BenchmarkView() {
   const { hasToken, isReady } = useCustomerAccess();
   const benchmarkState = useCountryBenchmark();
   const benchmark = benchmarkState.data?.storage === 'postgres' ? benchmarkState.data : null;
-  const localPreviewEnabled = allowLocalPreview();
   const [period, setPeriod] = useState<BenchmarkPeriod>('hourly');
   const [showAllRows, setShowAllRows] = useState(false);
 
@@ -246,7 +241,7 @@ export function BenchmarkView() {
     return <div className="panel muted">Checking customer access...</div>;
   }
 
-  if (!hasToken && !localPreviewEnabled) {
+  if (!hasToken) {
     return (
       <CustomerAccessPanel
         title="Benchmark Access Required"
@@ -292,11 +287,6 @@ export function BenchmarkView() {
         <div className="hero-note">
           <strong>Weekly buckets:</strong> month-local 7-day slices labeled like {`"March 2026 Week 1"`}. Monthly buckets roll up the full calendar month.
         </div>
-        {!hasToken && localPreviewEnabled ? (
-          <div className="hero-note">
-            <strong>Local preview:</strong> customer session checks are bypassed outside production.
-          </div>
-        ) : null}
       </section>
 
       <section className="metric-grid">

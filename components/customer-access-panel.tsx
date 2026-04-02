@@ -12,7 +12,7 @@ type CustomerAccessPanelProps = {
 
 export function CustomerAccessPanel({
   title = 'Customer Access Required',
-  description = 'News articles, live counts, and customer-only map and benchmark views are available only to customers with a valid API token or API key.',
+  description = 'Dashboard counts, benchmark views, and restricted customer data require a valid API token or API key.',
   error = null,
 }: CustomerAccessPanelProps) {
   const { hasToken, apiConfigured, savePending, authError, saveToken, clearToken } = useCustomerAccess();
@@ -78,7 +78,7 @@ export function CustomerAccessPanel({
           <Link href="/benchmark/">Open Benchmark</Link>
         </div>
         <div className="muted">
-          Without a valid token, this portal does not proxy article data or customer CSV export.
+          A valid token unlocks restricted dashboard, benchmark, and export features.
         </div>
       </section>
     </div>
