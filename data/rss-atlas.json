@@ -19278,6 +19278,195 @@
           "checkedDate": "03/30/2026",
           "valid": "valid",
           "row": 220
+        },
+        {
+          "name": "The Irish Catholic",
+          "url": "https://www.irishcatholic.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 221
+        },
+        {
+          "name": "West Cork People",
+          "url": "https://westcorkpeople.ie/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 222
+        },
+        {
+          "name": "The Liberal",
+          "url": "https://theliberal.ie/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 223
+        },
+        {
+          "name": "Galway Daily",
+          "url": "https://www.galwaydaily.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 224
+        },
+        {
+          "name": "The Avondhu",
+          "url": "https://avondhupress.ie/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 225
+        },
+        {
+          "name": "KildareNow - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.kildarenow.com/siteMapNews.jsp",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 226
+        },
+        {
+          "name": "Offaly Live - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.offalyexpress.ie/siteMapNews.jsp",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 227
+        },
+        {
+          "name": "Cork Safety Alerts",
+          "url": "https://news.corksafetyalerts.com/rss/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 228
+        },
+        {
+          "name": "Roscommon People",
+          "url": "https://roscommonpeople.ie/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 229
+        },
+        {
+          "name": "Wexford Weekly",
+          "url": "https://wexfordweekly.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 230
+        },
+        {
+          "name": "Dublin People",
+          "url": "https://dublinpeople.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 231
+        },
+        {
+          "name": "Derry Now - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.derrynow.com/siteMapNews.jsp",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 232
+        },
+        {
+          "name": "Dundalk Democrat - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.dundalkdemocrat.ie/siteMapNews.jsp",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 233
+        },
+        {
+          "name": "Highland Radio",
+          "url": "https://highlandradio.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 234
+        },
+        {
+          "name": "Clare FM",
+          "url": "https://www.clare.fm/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 235
+        },
+        {
+          "name": "Beat 102 103",
+          "url": "https://www.beat102103.com/feed",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 236
+        },
+        {
+          "name": "Donegal Live - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.donegallive.ie/siteMapNews.jsp",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 237
+        },
+        {
+          "name": "Derry Journal",
+          "url": "https://www.derryjournal.com/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 238
+        },
+        {
+          "name": "Laois Today",
+          "url": "https://www.laoistoday.ie/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 239
+        },
+        {
+          "name": "Armagh I",
+          "url": "https://armaghi.com/feed",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 240
+        },
+        {
+          "name": "Dublin Gazette",
+          "url": "https://dublingazette.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 241
+        },
+        {
+          "name": "TheCork.ie",
+          "url": "https://www.thecork.ie/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 242
+        },
+        {
+          "name": "TechCentral",
+          "url": "https://www.techcentral.ie/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 243
         }
       ]
     },
