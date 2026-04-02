@@ -18781,6 +18781,142 @@
           "checkedDate": "04/02/2026",
           "valid": "valid",
           "row": 44
+        },
+        {
+          "name": "Scoop News Sitemap",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 45,
+          "sitemapUrl": "https://www.scoop.co.nz/sitemap-news.xml"
+        },
+        {
+          "name": "Voxy",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 46,
+          "sitemapUrl": "https://voxy.co.nz/sitemap_index.xml"
+        },
+        {
+          "name": "interest.co.nz",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 47,
+          "sitemapUrl": "https://www.interest.co.nz/sitemap.xml"
+        },
+        {
+          "name": "Te Ao Maori News",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 48,
+          "sitemapUrl": "https://www.teaonews.co.nz/arc/outboundfeeds/sitemap-index/?outputType=xml"
+        },
+        {
+          "name": "Crux",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 49,
+          "sitemapUrl": "https://crux.org.nz/sitemap.xml"
+        },
+        {
+          "name": "RNZ News Sitemap",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 50,
+          "sitemapUrl": "https://www.rnz.co.nz/sitemap-news.xml"
+        },
+        {
+          "name": "NZ Herald News Sitemap",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 51,
+          "sitemapUrl": "https://www.nzherald.co.nz/arc/outboundfeeds/sitemap-news/?outputType=xml&_website=nzh"
+        },
+        {
+          "name": "Bay of Plenty Times",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 52,
+          "sitemapUrl": "https://www.nzherald.co.nz/arc/outboundfeeds/sitemap-news/?outputType=xml&_website=bay-of-plenty-times"
+        },
+        {
+          "name": "Hawkes Bay Today",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 53,
+          "sitemapUrl": "https://www.nzherald.co.nz/arc/outboundfeeds/sitemap-news/?outputType=xml&_website=hawkes-bay-today"
+        },
+        {
+          "name": "Rotorua Daily Post",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 54,
+          "sitemapUrl": "https://www.nzherald.co.nz/arc/outboundfeeds/sitemap-news/?outputType=xml&_website=rotorua-daily-post"
+        },
+        {
+          "name": "Northern Advocate",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 55,
+          "sitemapUrl": "https://www.nzherald.co.nz/arc/outboundfeeds/sitemap-news/?outputType=xml&_website=northern-advocate"
+        },
+        {
+          "name": "Northland Age",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 56,
+          "sitemapUrl": "https://www.nzherald.co.nz/arc/outboundfeeds/sitemap-news/?outputType=xml&_website=northland-age"
+        },
+        {
+          "name": "Waikato News",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 57,
+          "sitemapUrl": "https://www.nzherald.co.nz/arc/outboundfeeds/sitemap-news/?outputType=xml&_website=waikato-news"
+        },
+        {
+          "name": "Whanganui Chronicle",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 58,
+          "sitemapUrl": "https://www.nzherald.co.nz/arc/outboundfeeds/sitemap-news/?outputType=xml&_website=whanganui-chronicle"
+        },
+        {
+          "name": "The Country News Sitemap",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 59,
+          "sitemapUrl": "https://www.nzherald.co.nz/arc/outboundfeeds/sitemap-news/?outputType=xml&_website=the-country"
+        },
+        {
+          "name": "The Listener News Sitemap",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 60,
+          "sitemapUrl": "https://www.nzherald.co.nz/arc/outboundfeeds/sitemap-news/?outputType=xml&_website=the-listener"
+        },
+        {
+          "name": "Gisborne Herald News Sitemap",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid",
+          "row": 61,
+          "sitemapUrl": "https://www.nzherald.co.nz/arc/outboundfeeds/sitemap-news/?outputType=xml&_website=gisborne-herald"
         }
       ]
     },
