@@ -18,6 +18,8 @@ type MapFloatingToolbarProps = {
   publishersLoading: boolean;
   searchInputRef: RefObject<HTMLInputElement | null>;
   onResetToGlobe: () => void;
+  onZoomOut: () => void;
+  onZoomIn: () => void;
   onResetZoom: () => void;
   onToggleMotion: () => void;
   onSearchOpen: () => void;
@@ -39,6 +41,8 @@ export function MapFloatingToolbar({
   publishersLoading,
   searchInputRef,
   onResetToGlobe,
+  onZoomOut,
+  onZoomIn,
   onResetZoom,
   onToggleMotion,
   onSearchOpen,
@@ -47,13 +51,19 @@ export function MapFloatingToolbar({
   onCommitSearchResult,
 }: MapFloatingToolbarProps) {
   return (
-    <div className="map-floating-toolbar">
+    <div className={`map-floating-toolbar ${selectedCountry ? 'is-country' : 'is-globe'}`}>
       {selectedCountry ? (
         <>
           <button type="button" className="button" onClick={onResetToGlobe}>
             Back To Globe
           </button>
+          <button type="button" className="map-toolbar-chip map-toolbar-button" onClick={onZoomOut} aria-label="Zoom out">
+            -
+          </button>
           <div className="map-toolbar-chip">{countryZoomLabel}</div>
+          <button type="button" className="map-toolbar-chip map-toolbar-button" onClick={onZoomIn} aria-label="Zoom in">
+            +
+          </button>
           <button type="button" className="map-toolbar-chip map-toolbar-button" onClick={onResetZoom}>
             Reset Zoom
           </button>

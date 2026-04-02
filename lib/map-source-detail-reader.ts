@@ -1,6 +1,3 @@
-import 'server-only';
-
-import { readNewsArticlesForApi } from '@/lib/ingestion-store';
 import {
   readHourlyCountsForSource,
   readLatestHealthBySource,
@@ -36,13 +33,9 @@ export async function loadMapSourceDetail(sourceName: string): Promise<MapSource
   const method = classifySourceMethod(meta);
   const healthBySource = await readLatestHealthBySource();
   const healthRow = healthBySource.get(normalizeSourceKey(normalizedSource));
-  const coord = inferSourceCoordinate(normalizedSource, country);
   const publisherInfo = resolvePublisherInfo(normalizedSource, country);
-  const articles = await readNewsArticlesForApi({
-    sourceNames: rawSourceNames,
-    countries: countryHint ? [countryHint] : undefined,
-    hours: 48,
-    limit: 12,
+  const coord = inferSourceCoordinate(normalizedSource, country, {
+    publisher: publisherInfo.publisher,
   });
   const hourlyRows = await readHourlyCountsForSource(rawSourceNames, countryHint);
 
@@ -91,13 +84,6 @@ export async function loadMapSourceDetail(sourceName: string): Promise<MapSource
     hourly24h: hourlyRows.map((hour) => ({
       hour: hour.hour_bucket,
       count: Number(hour.count || 0),
-    })),
-    latestArticles: (articles.items || []).slice(0, 12).map((item) => ({
-      id: item.id,
-      title: item.title,
-      url: item.url,
-      publicationDatetime: item.publicationDatetime,
-      primarySection: item.primarySection,
     })),
   };
 }

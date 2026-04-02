@@ -58,25 +58,6 @@ export function MapBenchmarkSheet({
       {open ? (
         benchmark ? (
           <>
-            <div className="map-benchmark-summary">
-              <article className="map-benchmark-stat">
-                <span>Published 24h</span>
-                <strong>{formatNumber(benchmark.totals.hourlyPublished24h)}</strong>
-              </article>
-              <article className="map-benchmark-stat">
-                <span>Fresh 24h</span>
-                <strong>{formatNumber(benchmark.totals.hourlyFresh24h)}</strong>
-              </article>
-              <article className="map-benchmark-stat">
-                <span>Countries</span>
-                <strong>{formatNumber(benchmark.totals.countries)}</strong>
-              </article>
-              <article className="map-benchmark-stat">
-                <span>Prev Day</span>
-                <strong>{formatNumber(benchmark.totals.dailyPublishedCount)}</strong>
-              </article>
-            </div>
-
             <div className="map-benchmark-table-wrap">
               <table className="map-benchmark-table">
                 <thead>

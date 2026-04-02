@@ -29,6 +29,7 @@ type MapSidePanelProps = {
   leftTab: LeftTab;
   selectedCountry: MapCountryMetricRow | null;
   countryDataReady: boolean;
+  detailSelectionActive: boolean;
   selectedPublisher: MapPublisherMetricRow | null;
   selectedPublisherWindowMetrics: MapPublisherMetricRow['windows'][MapMetricWindow] | null;
   totals: MapCountryMetricsResponse['totals'] | null;
@@ -43,6 +44,10 @@ type MapSidePanelProps = {
   selectedCountryTopRegionsDisplay: MapSidePanelRegionCount[];
   selectedCountryTopPublishers: MapSidePanelRankedCount[];
   selectedCountryTopSourceRows: MapSourceMetricRow[];
+  selectedCountryFallbackSummary: {
+    sourceCount: number;
+    published: number;
+  } | null;
   derivedTopDegradedRegions: MapSidePanelDegradedRegion[];
   derivedTopDegradedSources: MapSourceMetricRow[];
   activeWindowDescriptor: string;
@@ -80,6 +85,7 @@ export function MapSidePanel({
   leftTab,
   selectedCountry,
   countryDataReady,
+  detailSelectionActive,
   selectedPublisher,
   selectedPublisherWindowMetrics,
   totals,
@@ -94,6 +100,7 @@ export function MapSidePanel({
   selectedCountryTopRegionsDisplay,
   selectedCountryTopPublishers,
   selectedCountryTopSourceRows,
+  selectedCountryFallbackSummary,
   derivedTopDegradedRegions,
   derivedTopDegradedSources,
   activeWindowDescriptor,
@@ -118,8 +125,16 @@ export function MapSidePanel({
     <aside className={`map-side-panel ${selectedCountry ? 'is-country-view' : ''}`}>
       <div className="map-panel-head">
         <div>
-          <div className="eyebrow">{selectedCountry ? 'Country Detail' : 'Global Overview'}</div>
-          <h2>
+          <div className="eyebrow">
+            {selectedCountry
+              ? 'Country Detail'
+              : mapMode === 'publishers' && selectedPublisher
+                ? 'Publisher Compare'
+                : mapMode === 'health'
+                  ? 'Health Overview'
+                  : 'Global Overview'}
+          </div>
+          <h2 className={!selectedCountry && mapMode === 'countries' ? 'map-panel-title is-global-pulse' : 'map-panel-title'}>
             {selectedCountry
               ? selectedCountry.country
               : mapMode === 'publishers' && selectedPublisher
@@ -129,9 +144,7 @@ export function MapSidePanel({
                   : 'World Publishing Pulse'}
           </h2>
         </div>
-        <div className={`map-status-pill ${selectedCountry ? 'flat' : 'globe'}`}>
-          {selectedCountry ? 'Flat Map' : '3D Globe'}
-        </div>
+        {selectedCountry ? <div className="map-status-pill flat">Flat Map</div> : null}
       </div>
 
       {!selectedCountry ? (
@@ -213,6 +226,7 @@ export function MapSidePanel({
             mapWindow={mapWindow}
             selectedCountry={selectedCountry}
             countryDataReady={countryDataReady}
+            detailSelectionActive={detailSelectionActive}
             selectedPublisher={selectedPublisher}
             selectedPublisherWindowMetrics={selectedPublisherWindowMetrics}
             totals={totals}
@@ -227,6 +241,7 @@ export function MapSidePanel({
             selectedCountryTopRegionsDisplay={selectedCountryTopRegionsDisplay}
             selectedCountryTopPublishers={selectedCountryTopPublishers}
             selectedCountryTopSourceRows={selectedCountryTopSourceRows}
+            selectedCountryFallbackSummary={selectedCountryFallbackSummary}
             derivedTopDegradedRegions={derivedTopDegradedRegions}
             derivedTopDegradedSources={derivedTopDegradedSources}
             activeWindowDescriptor={activeWindowDescriptor}

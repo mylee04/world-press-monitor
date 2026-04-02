@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import {
   formatNumber,
   getCountryWindowMetrics,
@@ -29,6 +30,7 @@ type MapSidePanelOverviewTabProps = {
   mapWindow: MapMetricWindow;
   selectedCountry: MapCountryMetricRow | null;
   countryDataReady: boolean;
+  detailSelectionActive: boolean;
   selectedPublisher: MapPublisherMetricRow | null;
   selectedPublisherWindowMetrics: MapPublisherMetricRow['windows'][MapMetricWindow] | null;
   totals: MapCountryMetricsResponse['totals'] | null;
@@ -43,6 +45,10 @@ type MapSidePanelOverviewTabProps = {
   selectedCountryTopRegionsDisplay: MapSidePanelRegionCount[];
   selectedCountryTopPublishers: MapSidePanelRankedCount[];
   selectedCountryTopSourceRows: MapSourceMetricRow[];
+  selectedCountryFallbackSummary: {
+    sourceCount: number;
+    published: number;
+  } | null;
   derivedTopDegradedRegions: MapSidePanelDegradedRegion[];
   derivedTopDegradedSources: MapSourceMetricRow[];
   activeWindowDescriptor: string;
@@ -73,11 +79,41 @@ function itemDegradedShare(row: MapCountryMetricRow, window: MapMetricWindow): n
   return metrics.activeSources > 0 ? metrics.degradedSources / metrics.activeSources : 0;
 }
 
+function parseTrendBucket(bucket: string): Date | null {
+  const parsed = new Date(bucket);
+  if (!Number.isNaN(parsed.getTime())) return parsed;
+  const utcParsed = new Date(`${bucket}Z`);
+  return Number.isNaN(utcParsed.getTime()) ? null : utcParsed;
+}
+
+function formatTrendBucket(bucket: string, window: MapMetricWindow, timeZone: string | null): string {
+  const parsed = parseTrendBucket(bucket);
+  if (!parsed) return bucket;
+
+  if (window === '7d') {
+    return new Intl.DateTimeFormat(undefined, {
+      month: 'short',
+      day: 'numeric',
+      timeZone: timeZone || 'UTC',
+    }).format(parsed);
+  }
+
+  return new Intl.DateTimeFormat(undefined, {
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    timeZone: timeZone || 'UTC',
+    timeZoneName: 'short',
+  }).format(parsed);
+}
+
 export function MapSidePanelOverviewTab({
   mapMode,
   mapWindow,
   selectedCountry,
   countryDataReady,
+  detailSelectionActive,
   selectedPublisher,
   selectedPublisherWindowMetrics,
   totals,
@@ -92,6 +128,7 @@ export function MapSidePanelOverviewTab({
   selectedCountryTopRegionsDisplay,
   selectedCountryTopPublishers,
   selectedCountryTopSourceRows,
+  selectedCountryFallbackSummary,
   derivedTopDegradedRegions,
   derivedTopDegradedSources,
   activeWindowDescriptor,
@@ -103,6 +140,7 @@ export function MapSidePanelOverviewTab({
   onSelectPublisher,
   onSelectSource,
 }: MapSidePanelOverviewTabProps) {
+  const [browserTimeZone, setBrowserTimeZone] = useState<string | null>(null);
   const selectedCountryLivePublished = selectedCountry ? getCountryWindowMetrics(selectedCountry, '1h').published : 0;
   const selectedCountryLateShare = selectedCountrySummaryDisplay.firstSeen > 0
     ? selectedCountrySummaryDisplay.late / selectedCountrySummaryDisplay.firstSeen
@@ -125,6 +163,21 @@ export function MapSidePanelOverviewTab({
   const selectedCountryHealthShare = selectedCountrySummaryDisplay.activeSources > 0
     ? selectedCountrySummaryDisplay.degradedSources / selectedCountrySummaryDisplay.activeSources
     : 0;
+  const showCountrySourceSignals = selectedCountry && countryDataReady && !detailSelectionActive;
+  const selectedCountryPeakBucketLabel = selectedCountryPeakBucket
+    ? formatTrendBucket(selectedCountryPeakBucket.bucket, mapWindow, browserTimeZone)
+    : null;
+  const publisherComparisonMode = !selectedCountry && mapMode === 'publishers' && Boolean(selectedPublisher);
+  const comparisonPublishers =
+    mapMode === 'publishers' && selectedPublisher
+      ? topPublishers.filter((item) => item.publisher !== selectedPublisher.publisher)
+      : topPublishers;
+
+  useEffect(() => {
+    const resolvedTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    if (!resolvedTimeZone) return;
+    setBrowserTimeZone(resolvedTimeZone);
+  }, []);
 
   return (
     <>
@@ -149,7 +202,7 @@ export function MapSidePanelOverviewTab({
         </div>
       ) : null}
 
-      {!selectedCountry && mapMode === 'publishers' && selectedPublisher && selectedPublisherWindowMetrics ? (
+      {!publisherComparisonMode && !selectedCountry && mapMode === 'publishers' && selectedPublisher && selectedPublisherWindowMetrics ? (
         <div className="map-stat-grid">
           <article className="map-stat-card">
             <span>Publisher {activeWindowDescriptor}</span>
@@ -225,15 +278,10 @@ export function MapSidePanelOverviewTab({
             {selectedCountry.country} has {formatNumber(selectedCountrySummaryDisplay.published)} published items across{' '}
             {formatNumber(selectedCountrySummaryDisplay.activeSources)} active sources in the last {activeWindowDescriptor}.
           </strong>
-          {selectedCountryTopRegion ? (
+          {selectedCountryFallbackSummary ? (
             <span>
-              Top region: {selectedCountryTopRegion.name} · {formatNumber(selectedCountryTopRegion.count)} published ·{' '}
-              {formatNumber(selectedCountryTopRegion.sources)} sources
-            </span>
-          ) : null}
-          {selectedCountryTopPublisher ? (
-            <span>
-              Top publisher: {selectedCountryTopPublisher.name} · {formatNumber(selectedCountryTopPublisher.count)} published
+              National fallback: {formatNumber(selectedCountryFallbackSummary.sourceCount)} sources ·{' '}
+              {formatNumber(selectedCountryFallbackSummary.published)} published kept off-map.
             </span>
           ) : null}
           <div className="map-story-metrics">
@@ -259,61 +307,44 @@ export function MapSidePanelOverviewTab({
 
       {selectedCountry && countryDataReady ? (
         <div className="map-highlight-grid">
+          {showCountrySourceSignals ? (
+            <div className="map-highlight-card">
+              <span>{mapMode === 'health' ? 'Most Degraded Source' : 'Lead Source'}</span>
+              <strong>
+                {mapMode === 'health'
+                  ? derivedTopDegradedSources[0]?.source || 'No degraded source'
+                  : selectedCountryTopSource?.source || 'No source signal yet'}
+              </strong>
+              <p>
+                {mapMode === 'health'
+                  ? derivedTopDegradedSources[0]
+                    ? `${derivedTopDegradedSources[0].health} · ${formatNumber(getSourceWindowMetrics(derivedTopDegradedSources[0], mapWindow).published)} published`
+                    : 'No failing or degraded source is currently leading the country.'
+                  : selectedCountryTopSource
+                    ? `${selectedCountryTopSource.publisher && selectedCountryTopSource.publisher !== selectedCountryTopSource.source ? `${selectedCountryTopSource.publisher} · ` : ''}${selectedCountryTopSource.region || selectedCountryTopSource.city || selectedCountryTopSource.country}`
+                    : 'No source is active in the current window.'}
+              </p>
+            </div>
+          ) : null}
           <div className="map-highlight-card">
-            <span>{mapMode === 'health' ? 'Most Degraded Region' : 'Top Region'}</span>
-            <strong>
-              {mapMode === 'health'
-                ? derivedTopDegradedRegions[0]?.name || 'No region signal yet'
-                : selectedCountryTopRegion?.name || 'No region signal yet'}
-            </strong>
-            <p>
-              {mapMode === 'health'
-                ? derivedTopDegradedRegions[0]
-                  ? `${formatNumber(derivedTopDegradedRegions[0].degradedSources)} degraded across ${formatNumber(derivedTopDegradedRegions[0].sources)} sources · ${formatPercent(derivedTopDegradedRegions[0].degradedShare)}`
-                  : 'No degraded-region outlier in the active window.'
-                : selectedCountryTopRegion
-                  ? `${formatNumber(selectedCountryTopRegion.count)} published · ${formatNumber(selectedCountryTopRegion.sources)} sources`
-                  : 'No region cluster is active in the current window.'}
-            </p>
-          </div>
-          <div className="map-highlight-card">
-            <span>{mapMode === 'health' ? 'Most Degraded Source' : 'Lead Source'}</span>
-            <strong>
-              {mapMode === 'health'
-                ? derivedTopDegradedSources[0]?.source || 'No degraded source'
-                : selectedCountryTopSource?.source || 'No source signal yet'}
-            </strong>
-            <p>
-              {mapMode === 'health'
-                ? derivedTopDegradedSources[0]
-                  ? `${derivedTopDegradedSources[0].health} · ${formatNumber(getSourceWindowMetrics(derivedTopDegradedSources[0], mapWindow).published)} published`
-                  : 'No failing or degraded source is currently leading the country.'
-                : selectedCountryTopSource
-                  ? `${selectedCountryTopSource.publisher && selectedCountryTopSource.publisher !== selectedCountryTopSource.source ? `${selectedCountryTopSource.publisher} · ` : ''}${selectedCountryTopSource.region || selectedCountryTopSource.city || selectedCountryTopSource.country}`
-                  : 'No source is active in the current window.'}
-            </p>
-          </div>
-          <div className="map-highlight-card">
-            <span>{mapMode === 'health' ? 'Health Mix' : 'Top Publisher'}</span>
+            <span>{mapMode === 'health' ? 'Health Mix' : 'Avg Per Source'}</span>
             <strong>
               {mapMode === 'health'
                 ? `${formatPercent(1 - selectedCountryHealthShare)} healthy`
-                : selectedCountryTopPublisher?.name || 'No publisher signal yet'}
+                : `${round(selectedCountryAveragePerSource, 1)}`}
             </strong>
             <p>
               {mapMode === 'health'
                 ? `${formatNumber(selectedCountrySummaryDisplay.healthySources)} healthy · ${formatNumber(selectedCountrySummaryDisplay.degradedSources)} degraded`
-                : selectedCountryTopPublisher
-                  ? `${formatNumber(selectedCountryTopPublisher.count)} published · avg ${round(selectedCountryAveragePerSource, 1)} per active source`
-                  : `Average ${round(selectedCountryAveragePerSource, 1)} published per active source.`}
+                : `${formatNumber(selectedCountrySummaryDisplay.published)} published across ${formatNumber(selectedCountrySummaryDisplay.activeSources)} active sources.`}
             </p>
           </div>
           <div className="map-highlight-card">
             <span>{mapWindow === '7d' ? 'Peak Day' : 'Peak Hour'}</span>
-            <strong>{selectedCountryPeakBucket?.bucket || 'No trend yet'}</strong>
+            <strong>{selectedCountryPeakBucketLabel || 'No trend yet'}</strong>
             <p>
               {selectedCountryPeakBucket
-                ? `${formatNumber(selectedCountryPeakBucket.count)} published · avg ${round(selectedCountryAveragePerBucket, 1)} per ${mapWindow === '7d' ? 'day' : 'hour'}`
+                ? `${formatNumber(selectedCountryPeakBucket.count)} published · avg ${round(selectedCountryAveragePerBucket, 1)}/${mapWindow === '7d' ? 'day' : 'hr'}`
                 : `No ${mapWindow === '7d' ? 'daily' : 'hourly'} country trend has been collected yet.`}
             </p>
           </div>
@@ -329,7 +360,7 @@ export function MapSidePanelOverviewTab({
           <div className="map-trend-summary">
             <span>
               {selectedCountryPeakBucket
-                ? `${mapWindow === '7d' ? 'Peak day' : 'Peak hour'} ${selectedCountryPeakBucket.bucket}`
+                ? `${mapWindow === '7d' ? 'Peak day' : 'Peak hour'} ${selectedCountryPeakBucketLabel}`
                 : 'Awaiting trend buckets'}
             </span>
             <strong>
@@ -343,7 +374,7 @@ export function MapSidePanelOverviewTab({
               const max = Math.max(...selectedCountryTrendBars.map((bucket) => bucket.count), 1);
               const height = Math.max(8, Math.round((item.count / max) * 84));
               return (
-                <div key={item.bucket} className="mini-bar-col" title={`${item.bucket}: ${item.count}`}>
+                <div key={item.bucket} className="mini-bar-col" title={`${formatTrendBucket(item.bucket, mapWindow, browserTimeZone)}: ${item.count}`}>
                   <div className="mini-bar" style={{ height }} />
                 </div>
               );
@@ -352,7 +383,7 @@ export function MapSidePanelOverviewTab({
         </div>
       ) : null}
 
-      {!selectedCountry ? (
+      {!selectedCountry && !publisherComparisonMode ? (
         <div className="map-story-card">
           <div className="eyebrow">
             {mapMode === 'publishers'
@@ -389,14 +420,18 @@ export function MapSidePanelOverviewTab({
             {selectedCountry
               ? 'Country Breakdown'
               : mapMode === 'publishers'
-                ? 'Top Publishers'
+                ? publisherComparisonMode
+                  ? 'Other Publishers'
+                  : 'Top Publishers'
                 : mapMode === 'health'
                   ? 'Most Degraded'
                   : 'Top Countries'}
           </h3>
           <span>
             {selectedCountry
-              ? 'publishers · regions · sources'
+              ? detailSelectionActive
+                ? 'publishers'
+                : 'publishers · regions · sources'
               : mapMode === 'publishers'
                 ? `${activeWindowDescriptor} network output`
                 : mapMode === 'health'
@@ -419,11 +454,11 @@ export function MapSidePanelOverviewTab({
         {!selectedCountry && mapMode === 'publishers' ? (
           <>
             <div className="map-list">
-              {topPublishers.map((item) => (
+              {comparisonPublishers.map((item) => (
                 <button
                   key={item.publisher}
                   type="button"
-                  className={`map-list-row ${selectedPublisher?.publisher === item.publisher ? 'selected' : ''}`}
+                  className="map-list-row"
                   onClick={() => onSelectPublisher(item)}
                 >
                   <div className="map-list-copy">
@@ -437,7 +472,7 @@ export function MapSidePanelOverviewTab({
                 </button>
               ))}
             </div>
-            {selectedPublisher ? (
+            {selectedPublisher && !publisherComparisonMode ? (
               <>
                 <div className="section-head sub">
                   <h3>Publisher Countries</h3>
@@ -493,66 +528,74 @@ export function MapSidePanelOverviewTab({
               {(mapMode === 'publishers'
                 ? [{ name: selectedPublisher?.publisher || 'Selected Publisher', count: selectedCountrySummaryDisplay.published }]
                 : selectedCountryTopPublishers
-              ).slice(0, 8).map((item) => (
+              ).map((item) => (
                 <div key={item.name} className="map-list-row static">
                   <strong>{item.name}</strong>
                   <span>{formatNumber(item.count)}</span>
                 </div>
               ))}
             </div>
-            <div className="section-head sub">
-              <h3>{mapMode === 'health' ? 'Top Degraded Regions' : 'Top Regions'}</h3>
-              <span>{mapMode === 'health' ? 'degraded' : `${activeWindowDescriptor} output`}</span>
-            </div>
-            <div className="map-list">
-              {mapMode === 'health'
-                ? derivedTopDegradedRegions.slice(0, 8).map((item) => (
-                    <div key={item.name} className="map-list-row static">
-                      <div className="map-list-copy">
-                        <strong>{item.name}</strong>
-                        <span>{formatNumber(item.degradedSources)} degraded · {formatNumber(item.sources)} total</span>
-                      </div>
-                      <span>{round(item.degradedShare * 100, 1)}%</span>
-                    </div>
-                  ))
-                : selectedCountryTopRegionsDisplay.slice(0, 8).map((item) => (
-                    <div key={item.name} className="map-list-row static">
-                      <div className="map-list-copy">
-                        <strong>{item.name}</strong>
-                        <span>{formatNumber(item.sources)} sources</span>
-                      </div>
-                      <span>{formatNumber(item.count)}</span>
-                    </div>
-                  ))}
-            </div>
-            <div className="section-head sub">
-              <h3>{mapMode === 'health' ? 'Top Degraded Sources' : 'Top Sources'}</h3>
-              <span>{mapMode === 'health' ? 'degraded' : `${activeWindowDescriptor} output`}</span>
-            </div>
-            <div className="map-list">
-              {mapMode === 'health'
-                ? derivedTopDegradedSources.slice(0, 10).map((item) => (
-                    <button key={item.sourceId} type="button" className="map-list-row" onClick={() => onSelectSource(item)}>
-                      <div className="map-list-copy">
-                        <strong>{item.source}</strong>
-                        <span>{item.health} · {item.region || item.city || item.country}</span>
-                      </div>
-                      <span>{formatNumber(getSourceWindowMetrics(item, mapWindow).published)}</span>
-                    </button>
-                  ))
-                : selectedCountryTopSourceRows.slice(0, 10).map((item) => (
-                    <button key={item.sourceId} type="button" className="map-list-row" onClick={() => onSelectSource(item)}>
-                      <div className="map-list-copy">
-                        <strong>{item.source}</strong>
-                        <span>
-                          {(item.publisher && item.publisher !== item.source ? `${item.publisher} · ` : '') +
-                            (item.region || item.city || item.country)}
-                        </span>
-                      </div>
-                      <span>{formatNumber(getSourceWindowMetrics(item, mapWindow).published)}</span>
-                    </button>
-                  ))}
-            </div>
+            {!detailSelectionActive ? (
+              <>
+                <div className="section-head sub">
+                  <h3>{mapMode === 'health' ? 'Top Degraded Regions' : 'Top Regions'}</h3>
+                  <span>{mapMode === 'health' ? 'degraded' : `${activeWindowDescriptor} output`}</span>
+                </div>
+                <div className="map-list">
+                  {mapMode === 'health'
+                    ? derivedTopDegradedRegions.map((item) => (
+                        <div key={item.name} className="map-list-row static">
+                          <div className="map-list-copy">
+                            <strong>{item.name}</strong>
+                            <span>{formatNumber(item.degradedSources)} degraded · {formatNumber(item.sources)} total</span>
+                          </div>
+                          <span>{round(item.degradedShare * 100, 1)}%</span>
+                        </div>
+                      ))
+                    : selectedCountryTopRegionsDisplay.map((item) => (
+                        <div key={item.name} className="map-list-row static">
+                          <div className="map-list-copy">
+                            <strong>{item.name}</strong>
+                            <span>{formatNumber(item.sources)} sources</span>
+                          </div>
+                          <span>{formatNumber(item.count)}</span>
+                        </div>
+                      ))}
+                </div>
+              </>
+            ) : null}
+            {!detailSelectionActive ? (
+              <>
+                <div className="section-head sub">
+                  <h3>{mapMode === 'health' ? 'Top Degraded Sources' : 'Top Sources'}</h3>
+                  <span>{mapMode === 'health' ? 'degraded' : `${activeWindowDescriptor} output`}</span>
+                </div>
+                <div className="map-list">
+                  {mapMode === 'health'
+                    ? derivedTopDegradedSources.map((item) => (
+                        <button key={item.sourceId} type="button" className="map-list-row" onClick={() => onSelectSource(item)}>
+                          <div className="map-list-copy">
+                            <strong>{item.source}</strong>
+                            <span>{item.health} · {item.region || item.city || item.country}</span>
+                          </div>
+                          <span>{formatNumber(getSourceWindowMetrics(item, mapWindow).published)}</span>
+                        </button>
+                      ))
+                    : selectedCountryTopSourceRows.map((item) => (
+                        <button key={item.sourceId} type="button" className="map-list-row" onClick={() => onSelectSource(item)}>
+                          <div className="map-list-copy">
+                            <strong>{item.source}</strong>
+                            <span>
+                              {(item.publisher && item.publisher !== item.source ? `${item.publisher} · ` : '') +
+                                (item.region || item.city || item.country)}
+                            </span>
+                          </div>
+                          <span>{formatNumber(getSourceWindowMetrics(item, mapWindow).published)}</span>
+                        </button>
+                      ))}
+                </div>
+              </>
+            ) : null}
           </>
         ) : null}
       </div>

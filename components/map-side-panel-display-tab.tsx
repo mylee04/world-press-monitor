@@ -68,11 +68,7 @@ export function MapSidePanelDisplayTab({
           <span className={`map-switch ${motionEnabled ? 'on' : ''}`} />
         </button>
       </div>
-      <div className="map-legend compact">
-        <div><span className="legend-dot late-low" /> {mapMode === 'health' ? 'Healthy source base' : 'Healthy / fresh'}</div>
-        <div><span className="legend-dot late-mid" /> {mapMode === 'health' ? 'Moderate degraded share' : 'Moderate late share'}</div>
-        <div><span className="legend-dot late-high" /> {mapMode === 'health' ? 'High degraded share' : 'High late share / degraded'}</div>
-      </div>
+      {!mapMode ? null : <div className="map-inline-note">Bubble color help is shown above the globe.</div>}
     </div>
   );
 }

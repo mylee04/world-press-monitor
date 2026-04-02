@@ -1,5 +1,5 @@
 export type MapMetricWindow = '1h' | '24h' | '7d';
-export type MapStorageMode = 'postgres';
+export type MapStorageMode = 'postgres' | 'snapshot';
 export type MapPublisherConfidence = 'high' | 'medium' | 'low';
 
 export type MapCountryWindowMetrics = {
@@ -180,11 +180,4 @@ export type MapSourceDetailResponse = {
     firstSeen24h: number;
   };
   hourly24h: Array<{ hour: string; count: number }>;
-  latestArticles: Array<{
-    id: string;
-    title: string;
-    url: string;
-    publicationDatetime: string;
-    primarySection: string | null;
-  }>;
 };

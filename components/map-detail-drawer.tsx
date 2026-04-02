@@ -17,7 +17,7 @@ import type {
   MapSourceMetricRow,
 } from '@/lib/map-types';
 
-type DetailTab = 'metrics' | 'headlines' | 'health';
+type DetailTab = 'metrics' | 'health';
 type MapMode = 'countries' | 'publishers' | 'health';
 
 type CountrySourceCluster = {
@@ -148,9 +148,10 @@ export function MapDetailDrawer(props: MapDetailDrawerProps) {
     onSelectSource,
     onClearSelectedSource,
   } = props;
+  const compactHint = mapMode === 'countries' && !selectedSource && !selectedCluster;
 
   return (
-    <aside className="map-detail-drawer">
+    <aside className={`map-detail-drawer ${selectedCountry ? 'is-country-view' : ''} ${compactHint ? 'is-compact-hint' : ''}`}>
       {renderPanelHead(props)}
 
       {!selectedCountry && !selectedSource && mapMode === 'publishers' && selectedPublisher && selectedPublisherWindowMetrics ? (
@@ -244,7 +245,11 @@ export function MapDetailDrawer(props: MapDetailDrawerProps) {
             ? 'Choose a country, then click a city or region bubble. The drawer will prioritize degraded sources and show source-level health detail.'
             : mapMode === 'publishers'
               ? 'Choose a country from the selected publisher footprint, then click a city or region bubble to inspect sources from that network.'
-              : 'Choose a country, then click a city or region bubble. The drawer will list sources in that area, and from there you can open full source detail.'}
+              : compactHint && !selectedCountry
+                ? 'Choose a country, then click a city or region bubble to inspect sources.'
+                : compactHint && selectedCountry
+                  ? 'Click a city or region bubble to inspect sources. National fallback sources stay in the country panel and are not plotted on the map.'
+                  : 'Choose a country, then click a city or region bubble. The drawer will list sources in that area, and from there you can open full source detail.'}
         </div>
       ) : !selectedSource && selectedCluster ? (
         <div className="map-source-detail">
@@ -256,16 +261,16 @@ export function MapDetailDrawer(props: MapDetailDrawerProps) {
             <div><span>HQ Sources</span><strong>{formatNumber(selectedCluster.headquartersCount)}</strong></div>
           </div>
 
-          <div className="map-panel-block compact">
-            <div className="section-head">
-              <h3>Sources In Cluster</h3>
-              <span>{mapMode === 'health' ? 'Degraded sources appear first' : 'Choose a source for detail'}</span>
-            </div>
-            <div className="map-list">
-              {selectedClusterSourcesDisplay.slice(0, 16).map((source) => (
-                <button
-                  key={source.sourceId}
-                  type="button"
+              <div className="map-panel-block compact">
+                <div className="section-head">
+                  <h3>Cluster Sources</h3>
+                  <span>{mapMode === 'health' ? 'Degraded sources appear first' : 'Choose a source for detail'}</span>
+                </div>
+                <div className="map-list">
+                  {selectedClusterSourcesDisplay.map((source) => (
+                    <button
+                      key={source.sourceId}
+                      type="button"
                   className="map-list-row"
                   onClick={() => onSelectSource(source)}
                 >
@@ -323,15 +328,6 @@ export function MapDetailDrawer(props: MapDetailDrawerProps) {
             <button
               type="button"
               role="tab"
-              aria-selected={detailTab === 'headlines'}
-              className={`map-detail-tab ${detailTab === 'headlines' ? 'active' : ''}`}
-              onClick={() => onDetailTabChange('headlines')}
-            >
-              Headlines
-            </button>
-            <button
-              type="button"
-              role="tab"
               aria-selected={detailTab === 'health'}
               className={`map-detail-tab ${detailTab === 'health' ? 'active' : ''}`}
               onClick={() => onDetailTabChange('health')}
@@ -382,24 +378,6 @@ export function MapDetailDrawer(props: MapDetailDrawerProps) {
               </>
             ) : null}
 
-            {detailTab === 'headlines' ? (
-              <div className="map-panel-block compact">
-                <div className="section-head">
-                  <h3>Latest Headlines</h3>
-                  <span>Recent source output</span>
-                </div>
-                <div className="map-headline-list">
-                  {sourceDetail.latestArticles.slice(0, 5).map((article) => (
-                    <a key={article.id} href={article.url} target="_blank" rel="noreferrer" className="map-headline-row">
-                      <strong>{article.title}</strong>
-                      <span>{new Date(article.publicationDatetime).toLocaleString()}</span>
-                      {article.primarySection ? <span>{article.primarySection}</span> : null}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            ) : null}
-
             {detailTab === 'health' ? (
               <div className="map-panel-block compact">
                 <div className="map-health-grid">
@@ -410,31 +388,6 @@ export function MapDetailDrawer(props: MapDetailDrawerProps) {
                   <div>
                     <span>Last Checked</span>
                     <strong>{sourceDetail.health.lastCheckedAt ? new Date(sourceDetail.health.lastCheckedAt).toLocaleString() : 'Unavailable'}</strong>
-                  </div>
-                </div>
-
-                <div className="map-endpoint-list">
-                  {sourceDetail.rssUrl ? (
-                    <a href={sourceDetail.rssUrl} target="_blank" rel="noreferrer" className="map-endpoint-card">
-                      <span>RSS Endpoint</span>
-                      <strong>{sourceDetail.rssUrl}</strong>
-                    </a>
-                  ) : null}
-                  {sourceDetail.sitemapUrl ? (
-                    <a href={sourceDetail.sitemapUrl} target="_blank" rel="noreferrer" className="map-endpoint-card">
-                      <span>Sitemap Endpoint</span>
-                      <strong>{sourceDetail.sitemapUrl}</strong>
-                    </a>
-                  ) : null}
-                </div>
-
-                <div className="map-panel-block">
-                  <div className="section-head">
-                    <h3>Last Error</h3>
-                    <span>Most recent health signal</span>
-                  </div>
-                  <div className="panel">
-                    {sourceDetail.health.lastError || 'No recent ingest error recorded.'}
                   </div>
                 </div>
               </div>

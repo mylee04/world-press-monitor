@@ -4,15 +4,13 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import type { CSSProperties, PointerEvent as ReactPointerEvent, WheelEvent as ReactWheelEvent } from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { geoGraticule10, geoMercator, geoOrthographic, geoPath } from 'd3-geo';
-import type { CountryBenchmarkResponse } from '@/lib/benchmark-types';
-import { MapBenchmarkSheet } from '@/components/map-benchmark-sheet';
 import { MapDetailDrawer } from '@/components/map-detail-drawer';
 import { MapFloatingToolbar } from '@/components/map-floating-toolbar';
+import { HelpTooltipLabel } from '@/components/help-tooltip-label';
 import { MapSidePanel } from '@/components/map-side-panel';
 import { useRemoteJson } from '@/lib/use-remote-json';
 import {
   formatNumber,
-  formatRelative,
   getCountryWindowMetrics,
   getPublisherWindowMetrics,
   getSourceWindowMetrics,
@@ -75,10 +73,41 @@ const GLOBE_CENTER_Y = 554;
 const GLOBE_RADIUS = 422;
 const GLOBE_ROTATION_LON = 78;
 const GLOBE_ROTATION_LAT = 18;
-const MAP_SAFE_LEFT = 338;
-const MAP_SAFE_RIGHT = 334;
-const MAP_SAFE_TOP = 96;
-const MAP_SAFE_BOTTOM = 96;
+type CountrySafeInsets = {
+  left: number;
+  right: number;
+  top: number;
+  bottom: number;
+};
+
+type CountryStageSize = {
+  width: number;
+  height: number;
+};
+
+const COUNTRY_PANEL_OFFSET = 18;
+const COUNTRY_SIDE_PANEL_WIDTH = 336;
+const COUNTRY_DETAIL_PANEL_WIDTH = 320;
+const COUNTRY_COMPACT_DETAIL_PANEL_WIDTH = 224;
+const COUNTRY_SAFE_EDGE_GAP = 24;
+const DEFAULT_COUNTRY_STAGE_SIZE: CountryStageSize = {
+  width: 1252,
+  height: 780,
+};
+
+const COUNTRY_SAFE_INSETS_EXPANDED_PX: CountrySafeInsets = {
+  left: COUNTRY_PANEL_OFFSET + COUNTRY_SIDE_PANEL_WIDTH + COUNTRY_SAFE_EDGE_GAP,
+  right: COUNTRY_PANEL_OFFSET + COUNTRY_DETAIL_PANEL_WIDTH + COUNTRY_SAFE_EDGE_GAP,
+  top: 96,
+  bottom: 96,
+};
+
+const COUNTRY_SAFE_INSETS_COMPACT_PX: CountrySafeInsets = {
+  left: COUNTRY_PANEL_OFFSET + COUNTRY_SIDE_PANEL_WIDTH + COUNTRY_SAFE_EDGE_GAP,
+  right: COUNTRY_PANEL_OFFSET + COUNTRY_COMPACT_DETAIL_PANEL_WIDTH + COUNTRY_SAFE_EDGE_GAP,
+  top: 96,
+  bottom: 96,
+};
 const COUNTRY_ZOOM_MIN = 1;
 const COUNTRY_ZOOM_MAX = 8;
 const COUNTRY_ZOOM_STEP = 1.18;
@@ -94,6 +123,21 @@ const DEFAULT_COUNTRY_VIEWPORT: CountryViewport = {
   tx: 0,
   ty: 0,
 };
+
+function scaleCountrySafeInsets(pxInsets: CountrySafeInsets, stageSize: CountryStageSize): CountrySafeInsets {
+  const width = stageSize.width > 0 ? stageSize.width : DEFAULT_COUNTRY_STAGE_SIZE.width;
+  const height = stageSize.height > 0 ? stageSize.height : DEFAULT_COUNTRY_STAGE_SIZE.height;
+  return {
+    left: Math.round((pxInsets.left / width) * GLOBE_WIDTH),
+    right: Math.round((pxInsets.right / width) * GLOBE_WIDTH),
+    top: Math.round((pxInsets.top / height) * GLOBE_HEIGHT),
+    bottom: Math.round((pxInsets.bottom / height) * GLOBE_HEIGHT),
+  };
+}
+
+function sameCountryViewport(a: CountryViewport, b: CountryViewport): boolean {
+  return Math.abs(a.scale - b.scale) < 0.0001 && Math.abs(a.tx - b.tx) < 0.01 && Math.abs(a.ty - b.ty) < 0.01;
+}
 
 const COUNTRY_ALIASES: Record<string, string[]> = {
   'United States': ['United States of America', 'USA'],
@@ -233,6 +277,50 @@ function getCountryBubbleColor(row: MapCountryMetricRow, mode: MapMode, window: 
   if (windowMetrics.lateShare >= 0.2) return '#ff5f8b';
   if (windowMetrics.lateShare >= 0.08) return '#ffcf5a';
   return '#62dcff';
+}
+
+type StageLegendItem = {
+  dotClassName: string;
+  label: string;
+  description: string;
+};
+
+function getStageLegendItems(mapMode: MapMode): StageLegendItem[] {
+  return mapMode === 'health'
+    ? [
+      {
+        dotClassName: 'late-low',
+        label: 'Healthy',
+        description: 'Lower degraded-source share across the country or source base in the current window.',
+      },
+      {
+        dotClassName: 'late-mid',
+        label: 'Watch',
+        description: 'Moderate degraded-source share. Some feeds or sitemaps are unstable and worth checking.',
+      },
+      {
+        dotClassName: 'late-high',
+        label: 'Degraded',
+        description: 'High degraded-source share. This usually points to source-level delivery problems.',
+      },
+    ]
+    : [
+      {
+        dotClassName: 'late-low',
+        label: 'Fresh',
+        description: 'Lower late share for the current window. Output is arriving relatively on time.',
+      },
+      {
+        dotClassName: 'late-mid',
+        label: 'Watch',
+        description: 'Moderate late share. The market is active, but a noticeable part of the flow is delayed.',
+      },
+      {
+        dotClassName: 'late-high',
+        label: 'Late',
+        description: 'High late share or degraded behavior in the current window. Inspect lagging or unstable sources.',
+      },
+    ];
 }
 
 function buildStarField(): Array<{ x: number; y: number; r: number; opacity: number }> {
@@ -408,56 +496,6 @@ type CountrySourceCluster = {
   sources: MapSourceMetricRow[];
 };
 
-function spreadCountryPoints(
-  items: CountryPlottedPoint[],
-  threshold = 20
-): CountryPlottedPoint[] {
-  if (items.length <= 1) return items;
-
-  const nodes = items.map((item) => ({
-    source: item.source,
-    x: item.point.x,
-    y: item.point.y,
-    baseX: item.point.x,
-    baseY: item.point.y,
-    radius: Math.max(10, Math.min(24, 8 + Math.sqrt(item.source.pub24h) / 2.2)),
-  }));
-
-  for (let step = 0; step < 28; step += 1) {
-    for (let index = 0; index < nodes.length; index += 1) {
-      const current = nodes[index];
-      for (let inner = index + 1; inner < nodes.length; inner += 1) {
-        const neighbor = nodes[inner];
-        const dx = neighbor.x - current.x;
-        const dy = neighbor.y - current.y;
-        const distance = Math.max(0.001, Math.hypot(dx, dy));
-        const minDistance = Math.max(threshold, (current.radius + neighbor.radius) * 0.54);
-        if (distance >= minDistance) continue;
-
-        const overlap = (minDistance - distance) / 2;
-        const pushX = (dx / distance) * overlap;
-        const pushY = (dy / distance) * overlap;
-
-        current.x -= pushX;
-        current.y -= pushY;
-        neighbor.x += pushX;
-        neighbor.y += pushY;
-      }
-
-      current.x += (current.baseX - current.x) * 0.08;
-      current.y += (current.baseY - current.y) * 0.08;
-    }
-  }
-
-  return nodes.map((node) => ({
-    source: node.source,
-    point: {
-      x: round(node.x, 2),
-      y: round(node.y, 2),
-    },
-  }));
-}
-
 function buildNonOverlappingLabels<T extends { x: number; y: number }>(
   items: T[],
   distance = 56
@@ -545,7 +583,7 @@ function buildCountrySourceClusters(items: CountryPlottedPoint[], window: MapMet
     });
   }
 
-  return [...byKey.values()]
+  const semanticClusters = [...byKey.values()]
     .map((entry) => ({
       id: entry.id,
       name: entry.sources.length === 1 ? entry.sources[0].source : entry.name,
@@ -563,8 +601,99 @@ function buildCountrySourceClusters(items: CountryPlottedPoint[], window: MapMet
       headquartersCount: entry.headquartersCount,
       health: mergeHealthStatus(entry.health),
       sources: [...entry.sources].sort((a, b) => getSourceWindowMetrics(b, window).published - getSourceWindowMetrics(a, window).published || a.source.localeCompare(b.source)),
-    }))
-    .sort((a, b) => getClusterWindowPublished(b, window) - getClusterWindowPublished(a, window) || a.name.localeCompare(b.name));
+    }));
+
+  const mergeDistance =
+    semanticClusters.length >= 28
+      ? 64
+      : semanticClusters.length >= 16
+        ? 54
+        : 46;
+  const sorted = [...semanticClusters].sort(
+    (a, b) =>
+      getClusterWindowPublished(b, window) - getClusterWindowPublished(a, window) ||
+      b.sourceCount - a.sourceCount ||
+      a.name.localeCompare(b.name)
+  );
+  const consumed = new Set<string>();
+  const merged: CountrySourceCluster[] = [];
+
+  for (const seed of sorted) {
+    if (consumed.has(seed.id)) continue;
+
+    const group = [seed];
+    consumed.add(seed.id);
+    let expanded = true;
+
+    while (expanded) {
+      expanded = false;
+      for (const candidate of sorted) {
+        if (consumed.has(candidate.id)) continue;
+        const closeToGroup = group.some(
+          (current) => Math.hypot(current.point.x - candidate.point.x, current.point.y - candidate.point.y) <= mergeDistance
+        );
+        if (!closeToGroup) continue;
+        group.push(candidate);
+        consumed.add(candidate.id);
+        expanded = true;
+      }
+    }
+
+    if (group.length === 1) {
+      merged.push(seed);
+      continue;
+    }
+
+    const primary = [...group].sort(
+      (a, b) =>
+        getClusterWindowPublished(b, window) - getClusterWindowPublished(a, window) ||
+        b.sourceCount - a.sourceCount ||
+        a.name.localeCompare(b.name)
+    )[0];
+    const cities = [...new Set(group.map((item) => item.city).filter((value): value is string => Boolean(value)))];
+    const regions = [...new Set(group.map((item) => item.region).filter((value): value is string => Boolean(value)))];
+    const weightTotal = group.reduce((sum, item) => sum + Math.max(1, getClusterWindowPublished(item, window)), 0);
+    const sources = group
+      .flatMap((item) => item.sources)
+      .sort(
+        (a, b) =>
+          getSourceWindowMetrics(b, window).published - getSourceWindowMetrics(a, window).published ||
+          a.source.localeCompare(b.source)
+      );
+
+    merged.push({
+      id: `merged:${group.map((item) => item.id).sort().join('|')}`,
+      name: cities.length === 1 ? cities[0] : regions.length === 1 ? regions[0] : primary.name,
+      city: cities.length === 1 ? cities[0] : null,
+      region: cities.length === 1 ? null : regions.length === 1 ? regions[0] : null,
+      point: {
+        x: round(
+          group.reduce((sum, item) => sum + item.point.x * Math.max(1, getClusterWindowPublished(item, window)), 0) / weightTotal,
+          2
+        ),
+        y: round(
+          group.reduce((sum, item) => sum + item.point.y * Math.max(1, getClusterWindowPublished(item, window)), 0) / weightTotal,
+          2
+        ),
+      },
+      pub7d: group.reduce((sum, item) => sum + item.pub7d, 0),
+      pub24h: group.reduce((sum, item) => sum + item.pub24h, 0),
+      pub1h: group.reduce((sum, item) => sum + item.pub1h, 0),
+      windows: {
+        '1h': { published: group.reduce((sum, item) => sum + item.windows['1h'].published, 0) },
+        '24h': { published: group.reduce((sum, item) => sum + item.windows['24h'].published, 0) },
+        '7d': { published: group.reduce((sum, item) => sum + item.windows['7d'].published, 0) },
+      },
+      sourceCount: group.reduce((sum, item) => sum + item.sourceCount, 0),
+      headquartersCount: group.reduce((sum, item) => sum + item.headquartersCount, 0),
+      health: mergeHealthStatus(group.map((item) => item.health)),
+      sources,
+    });
+  }
+
+  return merged.sort(
+    (a, b) => getClusterWindowPublished(b, window) - getClusterWindowPublished(a, window) || a.name.localeCompare(b.name)
+  );
 }
 
 function deriveSummaryFromSources(items: MapSourceMetricRow[], window: MapMetricWindow) {
@@ -684,6 +813,7 @@ function WorldGlobeSvg({
   window,
   rotationLon,
   selectedCountry,
+  publisherFocused,
   onSelectCountry,
 }: {
   countries: MapCountryMetricRow[];
@@ -693,6 +823,7 @@ function WorldGlobeSvg({
   window: MapMetricWindow;
   rotationLon: number;
   selectedCountry: string | null;
+  publisherFocused: boolean;
   onSelectCountry: (country: MapCountryMetricRow) => void;
 }) {
   const projection = useMemo(
@@ -784,7 +915,12 @@ function WorldGlobeSvg({
   }, [visibleCountries, window]);
 
   return (
-    <svg viewBox={`0 0 ${GLOBE_WIDTH} ${GLOBE_HEIGHT}`} className="map-svg-stage" role="img" aria-label="Global publishing globe">
+    <svg
+      viewBox={`0 0 ${GLOBE_WIDTH} ${GLOBE_HEIGHT}`}
+      className={`map-svg-stage ${publisherFocused ? 'map-svg-stage--publisher-focus' : 'map-svg-stage--globe-default'}`}
+      role="img"
+      aria-label="Global publishing globe"
+    >
       <defs>
         <radialGradient id="globe-ocean-fill" cx="34%" cy="28%" r="76%">
           <stop offset="0%" stopColor="#173e73" />
@@ -951,6 +1087,7 @@ function CountryPlaneSvg({
   window,
   layers,
   viewport,
+  safeInsets,
   onViewportChange,
   selectedClusterId,
   selectedSourceId,
@@ -962,6 +1099,7 @@ function CountryPlaneSvg({
   window: MapMetricWindow;
   layers: MapLayerState;
   viewport: CountryViewport;
+  safeInsets: CountrySafeInsets;
   onViewportChange: (viewport: CountryViewport) => void;
   selectedClusterId: string | null;
   selectedSourceId: string | null;
@@ -996,12 +1134,12 @@ function CountryPlaneSvg({
     if (!displayCountryFeature) return null;
     return geoMercator().fitExtent(
       [
-        [MAP_SAFE_LEFT + 36, MAP_SAFE_TOP + 42],
-        [GLOBE_WIDTH - MAP_SAFE_RIGHT - 44, GLOBE_HEIGHT - MAP_SAFE_BOTTOM - 52],
+        [safeInsets.left + 36, safeInsets.top + 42],
+        [GLOBE_WIDTH - safeInsets.right - 44, GLOBE_HEIGHT - safeInsets.bottom - 52],
       ],
       displayCountryFeature as never
     );
-  }, [displayCountryFeature]);
+  }, [displayCountryFeature, safeInsets]);
 
   const pathFactory = useMemo(() => (projection ? geoPath(projection) : null), [projection]);
   const countryPath = useMemo(
@@ -1048,31 +1186,29 @@ function CountryPlaneSvg({
     [sources, projection, bounds]
   );
 
-  const plotted = useMemo(() => spreadCountryPoints(projected), [projected]);
-
-  const clusters = useMemo(() => buildCountrySourceClusters(plotted, window), [plotted, window]);
+  const clusters = useMemo(() => buildCountrySourceClusters(projected, window), [projected, window]);
 
   const clusterLabels = useMemo(() => {
     return buildNonOverlappingLabels(
       [...clusters]
         .sort((a, b) => getClusterWindowPublished(b, window) - getClusterWindowPublished(a, window))
-        .slice(0, 14)
+        .slice(0, 8)
         .map((cluster) => ({
           cluster,
           point: cluster.point,
           x: round(cluster.point.x + 12, 2),
           y: round(cluster.point.y - 10, 2),
         })),
-      56
+      76
     );
   }, [clusters, window]);
 
   const contentBounds = useMemo(() => {
     const fallback = {
-      minX: MAP_SAFE_LEFT + 36,
-      maxX: GLOBE_WIDTH - MAP_SAFE_RIGHT - 36,
-      minY: MAP_SAFE_TOP + 36,
-      maxY: GLOBE_HEIGHT - MAP_SAFE_BOTTOM - 36,
+      minX: safeInsets.left + 36,
+      maxX: GLOBE_WIDTH - safeInsets.right - 36,
+      minY: safeInsets.top + 36,
+      maxY: GLOBE_HEIGHT - safeInsets.bottom - 36,
     };
 
     const xs = clusters.map((cluster) => cluster.point.x);
@@ -1093,13 +1229,13 @@ function CountryPlaneSvg({
       minY: Math.min(...ys) - 56,
       maxY: Math.max(...ys) + 56,
     };
-  }, [clusters, projectedCountryBounds]);
+  }, [clusters, projectedCountryBounds, safeInsets]);
 
   function clampViewport(next: CountryViewport): CountryViewport {
-    const frameLeft = MAP_SAFE_LEFT;
-    const frameTop = MAP_SAFE_TOP;
-    const frameWidth = GLOBE_WIDTH - MAP_SAFE_LEFT - MAP_SAFE_RIGHT;
-    const frameHeight = GLOBE_HEIGHT - MAP_SAFE_TOP - MAP_SAFE_BOTTOM;
+    const frameLeft = safeInsets.left;
+    const frameTop = safeInsets.top;
+    const frameWidth = GLOBE_WIDTH - safeInsets.left - safeInsets.right;
+    const frameHeight = GLOBE_HEIGHT - safeInsets.top - safeInsets.bottom;
     const contentWidth = contentBounds.maxX - contentBounds.minX;
     const contentHeight = contentBounds.maxY - contentBounds.minY;
     const scale = clamp(next.scale, COUNTRY_ZOOM_MIN, COUNTRY_ZOOM_MAX);
@@ -1129,6 +1265,12 @@ function CountryPlaneSvg({
       ty: round(ty, 2),
     };
   }
+
+  useEffect(() => {
+    const clamped = clampViewport(viewport);
+    if (sameCountryViewport(clamped, viewport)) return;
+    onViewportChange(clamped);
+  }, [viewport, safeInsets, contentBounds, onViewportChange]);
 
   function applyViewport(next: CountryViewport) {
     onViewportChange(clampViewport(next));
@@ -1228,10 +1370,10 @@ function CountryPlaneSvg({
         </linearGradient>
         <clipPath id="country-map-clip">
           <rect
-            x={MAP_SAFE_LEFT}
-            y={MAP_SAFE_TOP}
-            width={GLOBE_WIDTH - MAP_SAFE_LEFT - MAP_SAFE_RIGHT}
-            height={GLOBE_HEIGHT - MAP_SAFE_TOP - MAP_SAFE_BOTTOM}
+            x={safeInsets.left}
+            y={safeInsets.top}
+            width={GLOBE_WIDTH - safeInsets.left - safeInsets.right}
+            height={GLOBE_HEIGHT - safeInsets.top - safeInsets.bottom}
             rx="28"
           />
         </clipPath>
@@ -1242,23 +1384,23 @@ function CountryPlaneSvg({
       {layers.graticule ? (
         <g opacity="0.38">
           {Array.from({ length: 9 }).map((_, index) => {
-            const span = GLOBE_WIDTH - MAP_SAFE_LEFT - MAP_SAFE_RIGHT;
-            const x = MAP_SAFE_LEFT + (index * span) / 8;
-            return <line key={`vx-${index}`} x1={x} y1={MAP_SAFE_TOP} x2={x} y2={GLOBE_HEIGHT - MAP_SAFE_BOTTOM} stroke="rgba(102, 196, 255, 0.07)" strokeWidth="1" />;
+            const span = GLOBE_WIDTH - safeInsets.left - safeInsets.right;
+            const x = safeInsets.left + (index * span) / 8;
+            return <line key={`vx-${index}`} x1={x} y1={safeInsets.top} x2={x} y2={GLOBE_HEIGHT - safeInsets.bottom} stroke="rgba(102, 196, 255, 0.07)" strokeWidth="1" />;
           })}
           {Array.from({ length: 6 }).map((_, index) => {
-            const span = GLOBE_HEIGHT - MAP_SAFE_TOP - MAP_SAFE_BOTTOM;
-            const y = MAP_SAFE_TOP + (index * span) / 5;
-            return <line key={`hy-${index}`} x1={MAP_SAFE_LEFT} y1={y} x2={GLOBE_WIDTH - MAP_SAFE_RIGHT} y2={y} stroke="rgba(102, 196, 255, 0.07)" strokeWidth="1" />;
+            const span = GLOBE_HEIGHT - safeInsets.top - safeInsets.bottom;
+            const y = safeInsets.top + (index * span) / 5;
+            return <line key={`hy-${index}`} x1={safeInsets.left} y1={y} x2={GLOBE_WIDTH - safeInsets.right} y2={y} stroke="rgba(102, 196, 255, 0.07)" strokeWidth="1" />;
           })}
         </g>
       ) : null}
 
       <rect
-        x={MAP_SAFE_LEFT}
-        y={MAP_SAFE_TOP}
-        width={GLOBE_WIDTH - MAP_SAFE_LEFT - MAP_SAFE_RIGHT}
-        height={GLOBE_HEIGHT - MAP_SAFE_TOP - MAP_SAFE_BOTTOM}
+        x={safeInsets.left}
+        y={safeInsets.top}
+        width={GLOBE_WIDTH - safeInsets.left - safeInsets.right}
+        height={GLOBE_HEIGHT - safeInsets.top - safeInsets.bottom}
         rx="28"
         fill="none"
         stroke="rgba(126, 226, 255, 0.12)"
@@ -1291,8 +1433,8 @@ function CountryPlaneSvg({
               className="map-hit-dot"
               onClick={() => handleSelectCluster(cluster)}
             />
-            {layers.glow ? <circle cx={point.x} cy={point.y} r={radius * 2.6} fill={getHealthColor(cluster.health)} opacity={0.05} filter="url(#bubble-glow)" /> : null}
-            <circle cx={point.x} cy={point.y} r={radius * 1.44} fill={getHealthColor(cluster.health)} opacity={layers.glow ? 0.14 : 0.08} />
+            {layers.glow ? <circle cx={point.x} cy={point.y} r={radius * 2.6} fill={getHealthColor(cluster.health)} opacity={0.05} filter="url(#bubble-glow)" pointerEvents="none" /> : null}
+            <circle cx={point.x} cy={point.y} r={radius * 1.44} fill={getHealthColor(cluster.health)} opacity={layers.glow ? 0.14 : 0.08} pointerEvents="none" />
             <circle
               cx={point.x}
               cy={point.y}
@@ -1305,7 +1447,7 @@ function CountryPlaneSvg({
             >
               <title>{`${cluster.name}\n${formatNumber(getClusterWindowPublished(cluster, window))} / ${mapWindowDescriptor(window)}\n${formatNumber(cluster.pub24h)} / 24h\n${cluster.sourceCount} sources`}</title>
             </circle>
-            <circle cx={point.x} cy={point.y} r={Math.max(1.1, radius * 0.24)} fill="#ffffff" opacity={0.72} />
+            <circle cx={point.x} cy={point.y} r={Math.max(1.1, radius * 0.24)} fill="#ffffff" opacity={0.72} pointerEvents="none" />
             {cluster.sourceCount > 1 ? (
               <text x={point.x} y={point.y + 4} textAnchor="middle" className="map-cluster-count">
                 {cluster.sourceCount}
@@ -1335,11 +1477,11 @@ export function MapView() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const searchInputRef = useRef<HTMLInputElement | null>(null);
+  const stageRef = useRef<HTMLDivElement | null>(null);
   const [mapMode, setMapMode] = useState<MapMode>('countries');
   const [mapWindow, setMapWindow] = useState<MapMetricWindow>('24h');
   const [leftTab, setLeftTab] = useState<LeftTab>('overview');
   const [detailTab, setDetailTab] = useState<DetailTab>('metrics');
-  const [benchmarkOpen, setBenchmarkOpen] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchOpen, setSearchOpen] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState<MapCountryMetricRow | null>(null);
@@ -1347,20 +1489,35 @@ export function MapView() {
   const [selectedSource, setSelectedSource] = useState<MapSourceMetricRow | null>(null);
   const [selectedPublisher, setSelectedPublisher] = useState<MapPublisherMetricRow | null>(null);
   const [countryViewport, setCountryViewport] = useState<CountryViewport>(DEFAULT_COUNTRY_VIEWPORT);
+  const [countryStageSize, setCountryStageSize] = useState<CountryStageSize>(DEFAULT_COUNTRY_STAGE_SIZE);
   const [motionEnabled, setMotionEnabled] = useState(true);
   const [interactionPaused, setInteractionPaused] = useState(false);
   const [sceneOrigin, setSceneOrigin] = useState<{ x: number; y: number }>({ x: 56, y: 52 });
   const [layers, setLayers] = useState<MapLayerState>(DEFAULT_MAP_LAYERS);
-  const countriesState = useRemoteJson<MapCountryMetricsResponse>(`/api/customer/dashboard/map/countries?window=${mapWindow}`);
-  const publishersState = useRemoteJson<MapPublishersResponse>(`/api/customer/dashboard/map/publishers?window=${mapWindow}`);
-  const benchmarkState = useRemoteJson<CountryBenchmarkResponse>('/api/customer/dashboard/benchmark');
-  const worldState = useRemoteJson<WorldGeoJson>('/world.geojson');
+  const countriesState = useRemoteJson<MapCountryMetricsResponse>(
+    `/api/customer/dashboard/map/countries?window=${mapWindow}`,
+    undefined,
+    { cacheMode: 'session' }
+  );
+  const publishersState = useRemoteJson<MapPublishersResponse>(
+    `/api/customer/dashboard/map/publishers?window=${mapWindow}`,
+    undefined,
+    { cacheMode: 'session' }
+  );
+  const worldState = useRemoteJson<WorldGeoJson>('/world.geojson', undefined, {
+    cacheMode: 'session',
+    staleMs: 24 * 60 * 60 * 1000,
+  });
   const countryName = selectedCountry?.country || null;
   const sourcesState = useRemoteJson<MapCountrySourcesResponse>(
-    countryName ? `/api/customer/dashboard/map/countries/${encodeURIComponent(countryName)}/sources?window=${mapWindow}` : null
+    countryName ? `/api/customer/dashboard/map/countries/${encodeURIComponent(countryName)}/sources?window=${mapWindow}` : null,
+    undefined,
+    { cacheMode: 'session' }
   );
   const sourceDetailState = useRemoteJson<MapSourceDetailResponse>(
-    selectedSource?.sourceId ? `/api/customer/dashboard/map/sources/${encodeURIComponent(selectedSource.sourceId)}` : null
+    selectedSource?.sourceId ? `/api/customer/dashboard/map/sources/${encodeURIComponent(selectedSource.sourceId)}` : null,
+    undefined,
+    { cacheMode: 'session' }
   );
 
   const totals = countriesState.data?.totals || null;
@@ -1371,27 +1528,66 @@ export function MapView() {
   const selectedCountryTopRegions = selectedCountry ? sourcesState.data?.topRegions || [] : [];
   const selectedCountryHourly = selectedCountry ? sourcesState.data?.hourly24h || [] : [];
   const selectedCountryDaily = selectedCountry ? sourcesState.data?.daily7d || [] : [];
-  const sourceDetail = sourceDetailState.data;
-  const sceneMode = selectedCountry && sourcesState.data ? 'country' : 'globe';
+  const sourceDetailFallback = useMemo<MapSourceDetailResponse | null>(() => {
+    if (!selectedSource) return null;
+    return {
+      generatedAt:
+        sourcesState.data?.generatedAt ||
+        countriesState.data?.generatedAt ||
+        publishersState.data?.generatedAt ||
+        new Date().toISOString(),
+      sourceId: selectedSource.sourceId,
+      source: selectedSource.source,
+      publisher: selectedSource.publisher,
+      publisherConfidence: selectedSource.publisherConfidence,
+      country: selectedSource.country,
+      region: selectedSource.region,
+      city: selectedSource.city,
+      locationKind: selectedSource.locationKind,
+      lat: selectedSource.lat,
+      lon: selectedSource.lon,
+      method: selectedSource.method,
+      rssUrl: selectedSource.rssUrl,
+      sitemapUrl: selectedSource.sitemapUrl,
+      health: {
+        status: selectedSource.health,
+        lastCheckedAt: null,
+        failRate24h: null,
+        lastError: null,
+      },
+      metrics: {
+        pub24h: selectedSource.pub24h,
+        pub1h: selectedSource.pub1h,
+        fresh24h: selectedSource.fresh24h,
+        late24h: selectedSource.late24h,
+        firstSeen24h: selectedSource.firstSeen24h,
+      },
+      hourly24h: [],
+    };
+  }, [selectedSource, sourcesState.data?.generatedAt, countriesState.data?.generatedAt, publishersState.data?.generatedAt]);
+  const sourceDetail = sourceDetailState.data || sourceDetailFallback;
+  const isCountryTransition = Boolean(selectedCountry && !sourcesState.data);
+  const sceneMode = selectedCountry ? 'country' : 'globe';
   const globeRotationLon = useIdleRotation(motionEnabled && !selectedCountry && !interactionPaused);
   const healthCountries = countriesState.data?.countries || [];
-  const benchmark = benchmarkState.data?.storage === 'postgres' ? benchmarkState.data : null;
   const latestMapUpdatedAt = Math.max(
-    countriesState.updatedAt || 0,
-    publishersState.updatedAt || 0,
-    sourcesState.updatedAt || 0,
-    sourceDetailState.updatedAt || 0
+    countriesState.data?.generatedAt ? Date.parse(countriesState.data.generatedAt) : 0,
+    publishersState.data?.generatedAt ? Date.parse(publishersState.data.generatedAt) : 0,
+    sourcesState.data?.generatedAt ? Date.parse(sourcesState.data.generatedAt) : 0,
+    sourceDetailState.data?.generatedAt ? Date.parse(sourceDetailState.data.generatedAt) : 0
   ) || null;
   const latestMapUpdatedLabel = latestMapUpdatedAt
     ? new Date(latestMapUpdatedAt).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })
     : null;
-  const benchmarkGeneratedLabel = benchmark?.generatedAt
-    ? formatRelative(benchmark.generatedAt)
-    : null;
   const activeWindowDescriptor = mapWindowDescriptor(mapWindow);
   const totalWindowMetrics = totals?.windows[mapWindow] || null;
-  const mapProvenanceLabel = 'Live DB';
-  const mapProvenanceNote = 'auto refresh every 1h';
+  const mapStorageMode = selectedCountry
+    ? 'postgres'
+    : (countriesState.data?.storage === 'snapshot' || publishersState.data?.storage === 'snapshot')
+      ? 'snapshot'
+      : 'postgres';
+  const mapProvenanceLabel = mapStorageMode === 'snapshot' ? 'Hourly snapshot' : 'Live DB';
+  const mapProvenanceNote = mapStorageMode === 'snapshot' ? 'precomputed after ingest' : 'auto refresh every 1h';
   const searchMode = !selectedCountry && mapMode === 'publishers' ? 'publishers' : 'countries';
   const normalizedSearchQuery = normalizeCountryName(searchQuery);
   const rawUrlMode = searchParams.get('mode');
@@ -1405,7 +1601,6 @@ export function MapView() {
   const urlSource = searchParams.get('source')?.trim() || null;
   const urlLeftTab: LeftTab = isLeftTab(rawUrlPanel) ? rawUrlPanel : 'overview';
   const urlDetailTab: DetailTab = isDetailTab(rawUrlDetail) ? rawUrlDetail : 'metrics';
-  const urlBenchmarkOpen = searchParams.get('benchmark') !== 'collapsed';
   const urlLayers = parseLayerState(searchParams.get('layers'));
 
   const healthTotals = useMemo(() => ({
@@ -1466,9 +1661,6 @@ export function MapView() {
     if (urlDetailTab !== detailTab) {
       setDetailTab(urlDetailTab);
     }
-    if (urlBenchmarkOpen !== benchmarkOpen) {
-      setBenchmarkOpen(urlBenchmarkOpen);
-    }
     if (urlLayers && !sameLayerState(urlLayers, layers)) {
       setLayers(urlLayers);
     }
@@ -1506,24 +1698,24 @@ export function MapView() {
   }, [searchParams, countriesState.data, countryLookup, globeRotationLon]);
 
   useEffect(() => {
-    if (mapMode !== 'publishers' || !publishersState.data) return;
-    if (urlPublisher) {
-      const match = publishersState.data.publishers.find((item) => item.publisher === urlPublisher);
-      if (match && selectedPublisher?.publisher !== match.publisher) {
-        setSelectedPublisher(match);
-      }
-      return;
+    if (mapMode !== 'publishers' || !publishersState.data || !urlPublisher) return;
+    const match = publishersState.data.publishers.find((item) => item.publisher === urlPublisher);
+    if (match && selectedPublisher?.publisher !== match.publisher) {
+      setSelectedPublisher(match);
     }
+  }, [mapMode, publishersState.data, urlPublisher]);
 
-    if (selectedPublisher?.publisher) {
-      const refreshed = publishersState.data.publishers.find((item) => item.publisher === selectedPublisher.publisher);
-      if (refreshed && refreshed !== selectedPublisher) {
-        setSelectedPublisher(refreshed);
-        return;
-      }
+  useEffect(() => {
+    if (mapMode !== 'publishers' || !publishersState.data || !selectedPublisher?.publisher) return;
+    const refreshed = publishersState.data.publishers.find((item) => item.publisher === selectedPublisher.publisher);
+    if (refreshed && refreshed !== selectedPublisher) {
+      setSelectedPublisher(refreshed);
     }
+  }, [mapMode, publishersState.data, selectedPublisher]);
 
-    if (!selectedPublisher && publishersState.data.publishers.length > 0) {
+  useEffect(() => {
+    if (mapMode !== 'publishers' || !publishersState.data || urlPublisher || selectedPublisher) return;
+    if (publishersState.data.publishers.length > 0) {
       setSelectedPublisher(publishersState.data.publishers[0]);
     }
   }, [mapMode, publishersState.data, selectedPublisher, urlPublisher]);
@@ -1613,6 +1805,20 @@ export function MapView() {
     if (mapMode !== 'publishers' || !selectedPublisher) return items;
     return items.filter((item) => (item.publisher || item.source) === selectedPublisher.publisher);
   }, [mapMode, selectedPublisher, sourcesState.data]);
+  const mappedCountrySources = useMemo(
+    () => displayedCountrySources.filter((item) => item.locationKind !== 'country-fallback'),
+    [displayedCountrySources]
+  );
+  const selectedCountryFallbackSummary = useMemo(() => {
+    const fallbackSources = displayedCountrySources.filter(
+      (item) => item.locationKind === 'country-fallback' && isSourceWindowActive(item, mapWindow)
+    );
+    if (fallbackSources.length === 0) return null;
+    return {
+      sourceCount: fallbackSources.length,
+      published: fallbackSources.reduce((sum, item) => sum + getSourceWindowMetrics(item, mapWindow).published, 0),
+    };
+  }, [displayedCountrySources, mapWindow]);
 
   const derivedCountrySummary = useMemo(() => deriveSummaryFromSources(displayedCountrySources, mapWindow), [displayedCountrySources, mapWindow]);
   const derivedTopSourceRows = useMemo(
@@ -1667,15 +1873,6 @@ export function MapView() {
       ? selectedPublisherWindowMetrics.healthySources / selectedPublisherWindowMetrics.activeSources
       : 0
     : 0;
-  const benchmarkRows = useMemo(
-    () =>
-      (benchmark?.countries.slice(0, 14) || []).map((row) => ({
-        ...row,
-        linked: countryLookup.has(normalizeCountryName(row.country)),
-        selected: selectedCountry?.country === row.country,
-      })),
-    [benchmark, countryLookup, selectedCountry]
-  );
   const searchResults = useMemo<MapSearchResult[]>(() => {
     if (searchMode === 'publishers') {
       const items = publishersState.data?.publishers || [];
@@ -1734,6 +1931,40 @@ export function MapView() {
     setSelectedCluster(null);
   }, [displayedCountrySources, selectedCluster]);
 
+  useEffect(() => {
+    const stageNode = stageRef.current;
+    if (!stageNode) return;
+    const stageElement: HTMLDivElement = stageNode;
+
+    function updateStageSize() {
+      const rect = stageElement.getBoundingClientRect();
+      if (rect.width <= 0 || rect.height <= 0) return;
+      setCountryStageSize((current) => (
+        Math.abs(current.width - rect.width) < 1 && Math.abs(current.height - rect.height) < 1
+          ? current
+          : { width: rect.width, height: rect.height }
+      ));
+    }
+
+    updateStageSize();
+    if (typeof ResizeObserver === 'undefined') return;
+    const observer = new ResizeObserver(() => updateStageSize());
+    observer.observe(stageElement);
+    return () => observer.disconnect();
+  }, []);
+
+  const compactDetailHint = !selectedCountry && !selectedSource && !selectedCluster && mapMode === 'countries';
+  const countrySafeInsets = useMemo(
+    () =>
+      scaleCountrySafeInsets(
+        selectedCountry && mapMode === 'countries' && !selectedSource && !selectedCluster
+          ? COUNTRY_SAFE_INSETS_COMPACT_PX
+          : COUNTRY_SAFE_INSETS_EXPANDED_PX,
+        countryStageSize
+      ),
+    [selectedCountry, mapMode, selectedSource, selectedCluster, countryStageSize]
+  );
+
   function toggleLayer(key: keyof MapLayerState) {
     setLayers((current) => ({ ...current, [key]: !current[key] }));
   }
@@ -1760,6 +1991,29 @@ export function MapView() {
     setLeftTab('overview');
   }
 
+  function zoomCountry(direction: 1 | -1) {
+    if (!selectedCountry) return;
+    const nextScale = clamp(
+      countryViewport.scale * (direction > 0 ? COUNTRY_ZOOM_STEP : 1 / COUNTRY_ZOOM_STEP),
+      COUNTRY_ZOOM_MIN,
+      COUNTRY_ZOOM_MAX
+    );
+    if (Math.abs(nextScale - countryViewport.scale) < 0.0001) return;
+
+    const frameWidth = GLOBE_WIDTH - countrySafeInsets.left - countrySafeInsets.right;
+    const frameHeight = GLOBE_HEIGHT - countrySafeInsets.top - countrySafeInsets.bottom;
+    const centerX = countrySafeInsets.left + frameWidth / 2;
+    const centerY = countrySafeInsets.top + frameHeight / 2;
+    const worldX = (centerX - countryViewport.tx) / countryViewport.scale;
+    const worldY = (centerY - countryViewport.ty) / countryViewport.scale;
+
+    setCountryViewport({
+      scale: nextScale,
+      tx: round(centerX - worldX * nextScale, 2),
+      ty: round(centerY - worldY * nextScale, 2),
+    });
+  }
+
   function focusCluster(cluster: CountrySourceCluster) {
     setSelectedCluster(cluster);
     if (cluster.sources.length === 1) {
@@ -1768,12 +2022,6 @@ export function MapView() {
       setSelectedSource(null);
     }
     setDetailTab('metrics');
-  }
-
-  function focusBenchmarkCountry(country: string) {
-    const match = countryLookup.get(normalizeCountryName(country));
-    if (!match) return;
-    focusCountry(match);
   }
 
   function resetToPublisherGlobe(publisher: MapPublisherMetricRow) {
@@ -1785,6 +2033,20 @@ export function MapView() {
     setSelectedSource(null);
     setCountryViewport(DEFAULT_COUNTRY_VIEWPORT);
     setLeftTab('overview');
+    const targetQuery = buildMapQueryString({
+      mode: 'publishers',
+      window: mapWindow,
+      country: null,
+      publisher: publisher.publisher,
+      source: null,
+      leftTab: 'overview',
+      detailTab,
+      benchmarkOpen: false,
+      layers,
+    });
+    const targetUrl = targetQuery ? `${pathname}?${targetQuery}` : pathname;
+    window.history.replaceState(window.history.state, '', targetUrl);
+    router.replace(targetUrl, { scroll: false });
   }
 
   function commitSearchResult(result: MapSearchResult) {
@@ -1806,7 +2068,7 @@ export function MapView() {
     source: urlSource,
     leftTab: urlLeftTab,
     detailTab: urlDetailTab,
-    benchmarkOpen: urlBenchmarkOpen,
+    benchmarkOpen: false,
     layers: urlLayers || DEFAULT_MAP_LAYERS,
   });
 
@@ -1818,7 +2080,7 @@ export function MapView() {
     source: selectedCountry ? selectedSource?.sourceId || null : null,
     leftTab,
     detailTab,
-    benchmarkOpen,
+    benchmarkOpen: false,
     layers,
   });
 
@@ -1834,187 +2096,212 @@ export function MapView() {
     setSearchOpen(false);
   }, [mapMode, selectedCountry?.country]);
 
-  const panelErrors = [
+  const panelErrors = [...new Set([
     countriesState.error,
     publishersState.error,
     sourcesState.error,
     worldState.error,
-  ].filter((value): value is string => Boolean(value));
+  ].filter((value): value is string => Boolean(value)))];
   const countryZoomLabel = `${countryViewport.scale.toFixed(1)}x Zoom`;
-
+  const stageLegendItems = !selectedCountry ? getStageLegendItems(mapMode) : [];
+  const publisherFocusActive = !selectedCountry && mapMode === 'publishers' && Boolean(selectedPublisher);
   return (
     <div className="page-stack map-page-stack map-page-root">
-      <section className="map-workbench">
-        <div
-          className="map-stage"
-          onPointerEnter={() => {
-            if (!selectedCountry) setInteractionPaused(true);
-          }}
-          onPointerLeave={() => {
-            if (!selectedCountry) setInteractionPaused(false);
-          }}
-        >
-          <MapFloatingToolbar
-            selectedCountry={selectedCountry}
-            mapMode={mapMode}
-            motionEnabled={motionEnabled}
-            searchOpen={searchOpen}
-            searchQuery={searchQuery}
-            searchMode={searchMode}
-            searchResults={searchResults}
-            countryZoomLabel={countryZoomLabel}
-            countriesLoading={countriesState.loading}
-            publishersLoading={publishersState.loading}
-            searchInputRef={searchInputRef}
-            onResetToGlobe={resetToGlobe}
-            onResetZoom={() => setCountryViewport(DEFAULT_COUNTRY_VIEWPORT)}
-            onToggleMotion={() => setMotionEnabled((current) => !current)}
-            onSearchOpen={() => setSearchOpen(true)}
-            onSearchClose={() => setSearchOpen(false)}
-            onSearchChange={(value) => {
-              setSearchQuery(value);
-              setSearchOpen(true);
-            }}
-            onCommitSearchResult={commitSearchResult}
-          />
-
+      <section className={`map-workbench ${compactDetailHint ? 'is-compact-detail-hint' : ''} ${publisherFocusActive ? 'has-publisher-focus' : ''}`}>
+        <div className="map-stage-shell">
           <div
-            key={sceneMode === 'country' ? `country-${selectedCountry?.country}` : 'globe'}
-            className={`map-scene-frame ${sceneMode === 'country' ? 'is-country' : 'is-globe'}`}
-            style={
-              {
-                ['--map-origin-x' as string]: `${sceneOrigin.x}%`,
-                ['--map-origin-y' as string]: `${sceneOrigin.y}%`,
-              } as CSSProperties
-            }
+            ref={stageRef}
+            className="map-stage"
+            onPointerEnter={() => {
+              if (!selectedCountry) setInteractionPaused(true);
+            }}
+            onPointerLeave={() => {
+              if (!selectedCountry) setInteractionPaused(false);
+            }}
           >
-            {selectedCountry && sourcesState.data ? (
-              <CountryPlaneSvg
-                country={selectedCountry}
-                world={worldState.data}
-                sources={displayedCountrySources}
-                window={mapWindow}
-                layers={layers}
-                viewport={countryViewport}
-                onViewportChange={setCountryViewport}
-                selectedClusterId={selectedCluster?.id || null}
-                selectedSourceId={selectedSource?.sourceId || null}
-                onSelectCluster={focusCluster}
-              />
-            ) : (
-              <WorldGlobeSvg
-                countries={globeCountries}
-                world={worldState.data}
-                layers={layers}
-                mapMode={mapMode}
-                window={mapWindow}
-                rotationLon={globeRotationLon}
-                selectedCountry={selectedCountry?.country || null}
-                onSelectCountry={focusCountry}
-              />
-            )}
+            <MapFloatingToolbar
+              selectedCountry={selectedCountry}
+              mapMode={mapMode}
+              motionEnabled={motionEnabled}
+              searchOpen={searchOpen}
+              searchQuery={searchQuery}
+              searchMode={searchMode}
+              searchResults={searchResults}
+              countryZoomLabel={countryZoomLabel}
+              countriesLoading={countriesState.loading}
+              publishersLoading={publishersState.loading}
+              searchInputRef={searchInputRef}
+              onResetToGlobe={resetToGlobe}
+              onZoomOut={() => zoomCountry(-1)}
+              onZoomIn={() => zoomCountry(1)}
+              onResetZoom={() => setCountryViewport(DEFAULT_COUNTRY_VIEWPORT)}
+              onToggleMotion={() => setMotionEnabled((current) => !current)}
+              onSearchOpen={() => setSearchOpen(true)}
+              onSearchClose={() => setSearchOpen(false)}
+              onSearchChange={(value) => {
+                setSearchQuery(value);
+                setSearchOpen(true);
+              }}
+              onCommitSearchResult={commitSearchResult}
+            />
+
+            {!selectedCountry ? (
+              <div className="map-stage-legend" aria-label="Bubble color meaning">
+                {stageLegendItems.map((item) => (
+                  <div key={item.label} className="map-stage-legend-item">
+                    <span className={`legend-dot ${item.dotClassName}`} />
+                    <HelpTooltipLabel label={item.label} description={item.description} />
+                  </div>
+                ))}
+              </div>
+            ) : null}
+
+            <div
+              key={sceneMode === 'country' ? `country-${selectedCountry?.country}` : 'globe'}
+              className={`map-scene-frame ${sceneMode === 'country' ? 'is-country' : 'is-globe'}`}
+              style={
+                {
+                  ['--map-origin-x' as string]: `${sceneOrigin.x}%`,
+                  ['--map-origin-y' as string]: `${sceneOrigin.y}%`,
+                } as CSSProperties
+              }
+            >
+              {selectedCountry ? (
+                sourcesState.data ? (
+                  <CountryPlaneSvg
+                    country={selectedCountry}
+                    world={worldState.data}
+                    sources={mappedCountrySources}
+                    window={mapWindow}
+                    layers={layers}
+                    viewport={countryViewport}
+                    safeInsets={countrySafeInsets}
+                    onViewportChange={setCountryViewport}
+                    selectedClusterId={selectedCluster?.id || null}
+                    selectedSourceId={selectedSource?.sourceId || null}
+                    onSelectCluster={focusCluster}
+                  />
+                ) : (
+                  <div className="map-country-transition">
+                    <div className="map-country-transition-card">
+                      <div className="eyebrow">Camera Shift</div>
+                      <strong>
+                        {sourcesState.loading
+                          ? `Loading ${selectedCountry.country} regional map`
+                          : sourcesState.error
+                            ? `${selectedCountry.country} regional map unavailable`
+                            : `Preparing ${selectedCountry.country} regional map`}
+                      </strong>
+                      <span>
+                        {sourcesState.loading
+                          ? 'Switching from the globe to a focused flat country view.'
+                          : sourcesState.error
+                            ? 'Country-level source clusters could not be loaded for this selection.'
+                            : 'Building the flat map scene and source clusters.'}
+                      </span>
+                    </div>
+                  </div>
+                )
+              ) : (
+                <WorldGlobeSvg
+                  countries={globeCountries}
+                  world={worldState.data}
+                  layers={layers}
+                  mapMode={mapMode}
+                  window={mapWindow}
+                  rotationLon={globeRotationLon}
+                  selectedCountry={null}
+                  publisherFocused={publisherFocusActive}
+                  onSelectCountry={focusCountry}
+                />
+              )}
+            </div>
           </div>
 
-          {selectedCountry && !sourcesState.data && sourcesState.loading ? (
-            <div className="map-stage-loading">
-              <div className="eyebrow">Camera Shift</div>
-              <strong>Loading {selectedCountry.country} regional map</strong>
-            </div>
-          ) : null}
+          <MapSidePanel
+            mapMode={mapMode}
+            mapWindow={mapWindow}
+            leftTab={leftTab}
+            selectedCountry={selectedCountry}
+            countryDataReady={Boolean(selectedCountry && sourcesState.data)}
+            detailSelectionActive={Boolean(selectedCluster || selectedSource)}
+            selectedPublisher={selectedPublisher}
+            selectedPublisherWindowMetrics={selectedPublisherWindowMetrics}
+            totals={totals}
+            totalWindowMetrics={totalWindowMetrics}
+            topCountries={topCountries}
+            topPublishers={topPublishers}
+            topDegradedCountries={topDegradedCountries}
+            selectedCountrySummaryDisplay={selectedCountrySummaryDisplay}
+            selectedCountryTrendTitle={selectedCountryTrendTitle}
+            selectedCountryTrendWindowLabel={selectedCountryTrendWindowLabel}
+            selectedCountryTrendBars={selectedCountryTrendBars}
+            selectedCountryTopRegionsDisplay={selectedCountryTopRegionsDisplay}
+            selectedCountryTopPublishers={selectedCountryTopPublishers}
+            selectedCountryTopSourceRows={selectedCountryTopSourceRows}
+            selectedCountryFallbackSummary={selectedCountryFallbackSummary}
+            derivedTopDegradedRegions={derivedTopDegradedRegions}
+            derivedTopDegradedSources={derivedTopDegradedSources}
+            activeWindowDescriptor={activeWindowDescriptor}
+            latestMapUpdatedLabel={latestMapUpdatedLabel}
+            mapProvenanceLabel={mapProvenanceLabel}
+            mapProvenanceNote={mapProvenanceNote}
+            motionEnabled={motionEnabled}
+            layers={layers}
+            healthTotals={healthTotals}
+            loading={mapPanelLoading}
+            errors={panelErrors}
+            onMapModeChange={setMapMode}
+            onMapWindowChange={setMapWindow}
+            onLeftTabChange={setLeftTab}
+            onToggleLayer={toggleLayer}
+            onToggleMotion={() => setMotionEnabled((current) => !current)}
+            onFocusCountryName={(countryName) => {
+              const match = countriesState.data?.countries.find((countryRow) => countryRow.country === countryName);
+              if (match) focusCountry(match);
+            }}
+            onSelectPublisher={resetToPublisherGlobe}
+            onSelectSource={(item) => {
+              if ('sourceId' in item) {
+                setSelectedCluster(null);
+                setSelectedSource(item);
+                return;
+              }
+              const match = sourcesState.data?.sources.find((source) => source.source === item.name);
+              if (match) {
+                setSelectedCluster(null);
+                setSelectedSource(match);
+              }
+            }}
+          />
 
+          <MapDetailDrawer
+            mapMode={mapMode}
+            mapWindow={mapWindow}
+            activeWindowDescriptor={activeWindowDescriptor}
+            selectedCountry={selectedCountry}
+            selectedCluster={selectedCluster}
+            selectedSource={selectedSource}
+            selectedPublisher={selectedPublisher}
+            selectedPublisherWindowMetrics={selectedPublisherWindowMetrics}
+            selectedPublisherReliability={selectedPublisherReliability}
+            sourceDetail={sourceDetail}
+            sourceDetailLoading={sourceDetailState.loading}
+            sourceDetailError={sourceDetailState.error}
+            selectedClusterSourcesDisplay={selectedClusterSourcesDisplay}
+            topDegradedCountries={topDegradedCountries}
+            healthTotals={healthTotals}
+            detailTab={detailTab}
+            onDetailTabChange={setDetailTab}
+            onFocusCountry={(countryName) => {
+              const match = countriesState.data?.countries.find((countryRow) => countryRow.country === countryName);
+              if (match) focusCountry(match);
+            }}
+            onSelectSource={setSelectedSource}
+            onClearSelectedSource={() => setSelectedSource(null)}
+          />
         </div>
 
-        <MapSidePanel
-          mapMode={mapMode}
-          mapWindow={mapWindow}
-          leftTab={leftTab}
-          selectedCountry={selectedCountry}
-          countryDataReady={Boolean(selectedCountry && sourcesState.data)}
-          selectedPublisher={selectedPublisher}
-          selectedPublisherWindowMetrics={selectedPublisherWindowMetrics}
-          totals={totals}
-          totalWindowMetrics={totalWindowMetrics}
-          topCountries={topCountries}
-          topPublishers={topPublishers}
-          topDegradedCountries={topDegradedCountries}
-          selectedCountrySummaryDisplay={selectedCountrySummaryDisplay}
-          selectedCountryTrendTitle={selectedCountryTrendTitle}
-          selectedCountryTrendWindowLabel={selectedCountryTrendWindowLabel}
-          selectedCountryTrendBars={selectedCountryTrendBars}
-          selectedCountryTopRegionsDisplay={selectedCountryTopRegionsDisplay}
-          selectedCountryTopPublishers={selectedCountryTopPublishers}
-          selectedCountryTopSourceRows={selectedCountryTopSourceRows}
-          derivedTopDegradedRegions={derivedTopDegradedRegions}
-          derivedTopDegradedSources={derivedTopDegradedSources}
-          activeWindowDescriptor={activeWindowDescriptor}
-          latestMapUpdatedLabel={latestMapUpdatedLabel}
-          mapProvenanceLabel={mapProvenanceLabel}
-          mapProvenanceNote={mapProvenanceNote}
-          motionEnabled={motionEnabled}
-          layers={layers}
-          healthTotals={healthTotals}
-          loading={mapPanelLoading}
-          errors={panelErrors}
-          onMapModeChange={setMapMode}
-          onMapWindowChange={setMapWindow}
-          onLeftTabChange={setLeftTab}
-          onToggleLayer={toggleLayer}
-          onToggleMotion={() => setMotionEnabled((current) => !current)}
-          onFocusCountryName={(countryName) => {
-            const match = countriesState.data?.countries.find((countryRow) => countryRow.country === countryName);
-            if (match) focusCountry(match);
-          }}
-          onSelectPublisher={setSelectedPublisher}
-          onSelectSource={(item) => {
-            if ('sourceId' in item) {
-              setSelectedCluster(null);
-              setSelectedSource(item);
-              return;
-            }
-            const match = sourcesState.data?.sources.find((source) => source.source === item.name);
-            if (match) {
-              setSelectedCluster(null);
-              setSelectedSource(match);
-            }
-          }}
-        />
-
-        <MapDetailDrawer
-          mapMode={mapMode}
-          mapWindow={mapWindow}
-          activeWindowDescriptor={activeWindowDescriptor}
-          selectedCountry={selectedCountry}
-          selectedCluster={selectedCluster}
-          selectedSource={selectedSource}
-          selectedPublisher={selectedPublisher}
-          selectedPublisherWindowMetrics={selectedPublisherWindowMetrics}
-          selectedPublisherReliability={selectedPublisherReliability}
-          sourceDetail={sourceDetail}
-          sourceDetailLoading={sourceDetailState.loading}
-          sourceDetailError={sourceDetailState.error}
-          selectedClusterSourcesDisplay={selectedClusterSourcesDisplay}
-          topDegradedCountries={topDegradedCountries}
-          healthTotals={healthTotals}
-          detailTab={detailTab}
-          onDetailTabChange={setDetailTab}
-          onFocusCountry={(countryName) => {
-            const match = countriesState.data?.countries.find((countryRow) => countryRow.country === countryName);
-            if (match) focusCountry(match);
-          }}
-          onSelectSource={setSelectedSource}
-          onClearSelectedSource={() => setSelectedSource(null)}
-        />
-
-        <MapBenchmarkSheet
-          benchmark={benchmark}
-          rows={benchmarkRows}
-          loading={benchmarkState.loading}
-          error={benchmarkState.error}
-          generatedLabel={benchmarkGeneratedLabel}
-          open={benchmarkOpen}
-          onToggle={() => setBenchmarkOpen((current) => !current)}
-          onSelectCountry={focusBenchmarkCountry}
-        />
       </section>
     </div>
   );

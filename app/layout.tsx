@@ -30,7 +30,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
                 <header className="site-header">
                   <div>
                     <span className="brand-kicker">World Press Radar</span>
-                    <p>Customer-only news intelligence portal. A valid API token is required to load article data.</p>
+                    <p>Global news publishing map, source coverage, and customer dashboard intelligence.</p>
                   </div>
                   <nav>
                     {navItems.map((item) => (

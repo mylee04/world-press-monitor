@@ -10,7 +10,7 @@ export type MapLayerState = {
 
 export type MapMode = 'countries' | 'publishers' | 'health';
 export type LeftTab = 'overview' | 'display';
-export type DetailTab = 'metrics' | 'headlines' | 'health';
+export type DetailTab = 'metrics' | 'health';
 export type MapSearchResult =
   | {
       kind: 'country';
@@ -46,7 +46,7 @@ export function isLeftTab(value: string | null): value is LeftTab {
 }
 
 export function isDetailTab(value: string | null): value is DetailTab {
-  return value === 'metrics' || value === 'headlines' || value === 'health';
+  return value === 'metrics' || value === 'health';
 }
 
 export function isMapMetricWindow(value: string | null): value is MapMetricWindow {
@@ -100,7 +100,7 @@ export function buildMapQueryString(input: {
   if (input.country && input.source) params.set('source', input.source);
   if (input.leftTab !== 'overview') params.set('panel', input.leftTab);
   if (input.detailTab !== 'metrics') params.set('detail', input.detailTab);
-  if (!input.benchmarkOpen) params.set('benchmark', 'collapsed');
+  if (input.benchmarkOpen) params.set('benchmark', 'open');
 
   const serializedLayers = serializeLayerState(input.layers);
   if (serializedLayers) params.set('layers', serializedLayers);
