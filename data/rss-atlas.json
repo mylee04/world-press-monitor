@@ -21051,6 +21051,76 @@
         {
           "name": "Tyden.cz",
           "url": "https://www.tyden.cz/rss"
+        },
+        {
+          "name": "Romea",
+          "url": "https://romea.cz/feed",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Alarm",
+          "url": "https://a2larm.cz/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Prima Zeny",
+          "url": "https://zeny.iprima.cz/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Prima COOL",
+          "url": "https://cool.iprima.cz/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Prima Zoom",
+          "url": "https://zoom.iprima.cz/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Podnikatel",
+          "url": "https://www.podnikatel.cz/rss/clanky/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Mesec - Clanky",
+          "url": "https://www.mesec.cz/rss/clanky/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Mesec - Aktuality",
+          "url": "https://www.mesec.cz/rss/aktuality/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Vitalia",
+          "url": "https://www.vitalia.cz/rss/clanky/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "AutoRevue",
+          "url": "https://www.autorevue.cz/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
         }
       ]
     },
