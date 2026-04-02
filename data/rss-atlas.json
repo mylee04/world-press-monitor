@@ -7540,6 +7540,153 @@
           "checkedDate": "03/30/2026",
           "valid": "valid",
           "sitemapUrl": "https://www.kalminer.com.au/sitemap.xml"
+        },
+        {
+          "name": "B&T",
+          "url": "https://www.bandt.com.au/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Mumbrella",
+          "url": "https://mumbrella.com.au/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Mediaweek",
+          "url": "https://www.mediaweek.com.au/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Drive",
+          "url": "https://www.drive.com.au/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "WhichCar",
+          "url": "https://www.whichcar.com.au/feed",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "iTnews",
+          "url": "https://www.itnews.com.au/RSS/rss.ashx",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Inside Retail",
+          "url": "https://insideretail.com.au/feed",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "RetailBiz",
+          "url": "https://www.retailbiz.com.au/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Dynamic Business",
+          "url": "https://dynamicbusiness.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Glam Adelaide",
+          "url": "https://glamadelaide.com.au/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Women's Agenda",
+          "url": "https://womensagenda.com.au/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "SecurityBrief Australia",
+          "url": "https://securitybrief.com.au/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "ChannelLife Australia",
+          "url": "https://channellife.com.au/rss",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Australian FinTech",
+          "url": "https://australianfintech.com.au/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Hospitality Magazine",
+          "url": "https://www.hospitalitymagazine.com.au/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Retail World Magazine",
+          "url": "https://retailworldmagazine.com.au/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Elite Agent",
+          "url": "https://eliteagent.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Canberra Weekly",
+          "url": "https://canberraweekly.com.au/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "City Hub",
+          "url": "https://cityhub.com.au/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Eco Voice",
+          "url": "https://www.ecovoice.com.au/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "The Greek Herald - News Sitemap",
+          "sitemapUrl": "https://greekherald.com.au/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
         }
       ]
     },
