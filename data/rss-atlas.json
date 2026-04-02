@@ -19483,6 +19483,83 @@
           "checkedDate": "03/30/2026",
           "valid": "valid",
           "row": 136
+        },
+        {
+          "name": "DR Viden",
+          "url": "https://www.dr.dk/nyheder/service/feeds/viden",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "DR Vejret",
+          "url": "https://www.dr.dk/nyheder/service/feeds/vejret",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Journalisten",
+          "url": "https://journalisten.dk/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Dagens Byggeri",
+          "url": "https://dagensbyggeri.dk/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Frihedsbrevet",
+          "url": "https://frihedsbrevet.dk/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Pio",
+          "url": "https://piopio.dk/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Maskinbladet",
+          "url": "https://www.maskinbladet.dk/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Fagbladet 3F",
+          "url": "https://fagbladet3f.dk/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Mobilsiden",
+          "url": "https://mobilsiden.dk/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Input",
+          "url": "https://www.inputmag.dk/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Soundvenue",
+          "url": "https://soundvenue.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
         }
       ]
     },
