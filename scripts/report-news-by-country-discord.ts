@@ -20,14 +20,19 @@ type CountryMetrics = {
   country: string;
   insertedLast1h: number;
   insertedLast24h: number;
-  publishedLast24h: number;
+  publishedLast24hCore: number;
+  publishedLast24hPortal: number;
+  publishedLast24hExtended: number;
   freshLast24h: number;
   lateLast24h: number;
   lateShare: number;
 };
 
+type DistributionClass = 'publisher' | 'portal';
+
 type AtlasFeed = {
   name?: string;
+  distributionClass?: DistributionClass;
 };
 
 type AtlasCountry = {
@@ -46,6 +51,8 @@ type AtlasMetadata = {
   canonicalCountryByValue: Map<string, string>;
   sourceCountryByName: Map<string, string>;
   sourceCountryByNormalizedName: Map<string, string>;
+  sourceDistributionClassByName: Map<string, DistributionClass>;
+  sourceDistributionClassByNormalizedName: Map<string, DistributionClass>;
 };
 
 const DEFAULT_WEBHOOK_ENV_VARS = ['WPR_HOURLY_DISCORD_WEBHOOK', 'WPM_HOURLY_DISCORD_WEBHOOK'];
@@ -192,6 +199,8 @@ function loadAtlasMetadata(filePath: string): AtlasMetadata {
         canonicalCountryByValue: new Map(),
         sourceCountryByName: new Map(),
         sourceCountryByNormalizedName: new Map(),
+        sourceDistributionClassByName: new Map(),
+        sourceDistributionClassByNormalizedName: new Map(),
       };
     }
 
@@ -200,6 +209,8 @@ function loadAtlasMetadata(filePath: string): AtlasMetadata {
     const canonicalCountryByValue = new Map<string, string>();
     const sourceCountryByName = new Map<string, string>();
     const sourceCountryByNormalizedName = new Map<string, string>();
+    const sourceDistributionClassByName = new Map<string, DistributionClass>();
+    const sourceDistributionClassByNormalizedName = new Map<string, DistributionClass>();
 
     for (const country of parsed.countries) {
       const hasName = typeof country?.name === 'string' && country.name.trim().length > 0;
@@ -221,6 +232,10 @@ function loadAtlasMetadata(filePath: string): AtlasMetadata {
           if (typeof feed?.name !== 'string' || feed.name.trim().length === 0) continue;
           sourceCountryByName.set(feed.name.trim(), country.name.trim());
           sourceCountryByNormalizedName.set(normalizeCountryValue(feed.name), country.name.trim());
+          if (feed.distributionClass === 'portal' || feed.distributionClass === 'publisher') {
+            sourceDistributionClassByName.set(feed.name.trim(), feed.distributionClass);
+            sourceDistributionClassByNormalizedName.set(normalizeCountryValue(feed.name), feed.distributionClass);
+          }
         }
       }
     }
@@ -231,6 +246,8 @@ function loadAtlasMetadata(filePath: string): AtlasMetadata {
       canonicalCountryByValue,
       sourceCountryByName,
       sourceCountryByNormalizedName,
+      sourceDistributionClassByName,
+      sourceDistributionClassByNormalizedName,
     };
   } catch (error) {
     console.warn(
@@ -242,6 +259,8 @@ function loadAtlasMetadata(filePath: string): AtlasMetadata {
       canonicalCountryByValue: new Map(),
       sourceCountryByName: new Map(),
       sourceCountryByNormalizedName: new Map(),
+      sourceDistributionClassByName: new Map(),
+      sourceDistributionClassByNormalizedName: new Map(),
     };
   }
 }
@@ -255,6 +274,8 @@ function buildAtlasMetadata(): AtlasMetadata {
       canonicalCountryByValue: new Map(),
       sourceCountryByName: new Map(),
       sourceCountryByNormalizedName: new Map(),
+      sourceDistributionClassByName: new Map(),
+      sourceDistributionClassByNormalizedName: new Map(),
     };
   }
 
@@ -268,6 +289,8 @@ function buildAtlasMetadata(): AtlasMetadata {
     canonicalCountryByValue: new Map(),
     sourceCountryByName: new Map(),
     sourceCountryByNormalizedName: new Map(),
+    sourceDistributionClassByName: new Map(),
+    sourceDistributionClassByNormalizedName: new Map(),
   };
 }
 
@@ -276,7 +299,9 @@ function createCountryMetrics(country: string): CountryMetrics {
     country,
     insertedLast1h: 0,
     insertedLast24h: 0,
-    publishedLast24h: 0,
+    publishedLast24hCore: 0,
+    publishedLast24hPortal: 0,
+    publishedLast24hExtended: 0,
     freshLast24h: 0,
     lateLast24h: 0,
     lateShare: 0,
@@ -286,14 +311,28 @@ function createCountryMetrics(country: string): CountryMetrics {
 function finalizeCountryMetrics(row: CountryMetrics): CountryMetrics {
   return {
     ...row,
+    publishedLast24hExtended: row.publishedLast24hCore + row.publishedLast24hPortal,
     lateShare: row.insertedLast24h > 0 ? row.lateLast24h / row.insertedLast24h : 0,
   };
 }
 
-function sumCountryMetrics(target: CountryMetrics, row: CountrySourceRow): void {
+function classifyDistributionClass(row: CountrySourceRow, atlasMetadata: AtlasMetadata): DistributionClass {
+  return (
+    atlasMetadata.sourceDistributionClassByName.get(row.source)
+    || atlasMetadata.sourceDistributionClassByNormalizedName.get(normalizeCountryValue(row.source))
+    || 'publisher'
+  );
+}
+
+function sumCountryMetrics(target: CountryMetrics, row: CountrySourceRow, distributionClass: DistributionClass): void {
   target.insertedLast1h += parseMetricCount(row.inserted_last_1h);
   target.insertedLast24h += parseMetricCount(row.inserted_last_24h);
-  target.publishedLast24h += parseMetricCount(row.published_last_24h);
+  const publishedLast24h = parseMetricCount(row.published_last_24h);
+  if (distributionClass === 'portal') {
+    target.publishedLast24hPortal += publishedLast24h;
+  } else {
+    target.publishedLast24hCore += publishedLast24h;
+  }
   target.freshLast24h += parseMetricCount(row.fresh_last_24h);
   target.lateLast24h += parseMetricCount(row.late_last_24h);
 }
@@ -301,7 +340,8 @@ function sumCountryMetrics(target: CountryMetrics, row: CountrySourceRow): void 
 function sortCountryMetrics(rows: CountryMetrics[]): CountryMetrics[] {
   return rows.sort(
     (left, right) =>
-      right.publishedLast24h - left.publishedLast24h ||
+      right.publishedLast24hCore - left.publishedLast24hCore ||
+      right.publishedLast24hExtended - left.publishedLast24hExtended ||
       right.freshLast24h - left.freshLast24h ||
       left.country.localeCompare(right.country),
   );
@@ -397,8 +437,9 @@ async function main(): Promise<void> {
 
       if (excluded) continue;
 
+      const distributionClass = classifyDistributionClass(row, atlasMetadata);
       const aggregate = aggregateByCountry.get(canonicalCountry) || createCountryMetrics(canonicalCountry);
-      sumCountryMetrics(aggregate, row);
+      sumCountryMetrics(aggregate, row, distributionClass);
       aggregateByCountry.set(canonicalCountry, aggregate);
 
       const sourceCountry =
@@ -407,7 +448,7 @@ async function main(): Promise<void> {
         || atlasMetadata.sourceCountryByNormalizedName.get(normalizeCountryValue(row.source));
       if (sourceCountry && normalizeCountryValue(sourceCountry) === normalizedCanonicalCountry) {
         const domestic = domesticByCountry.get(canonicalCountry) || createCountryMetrics(canonicalCountry);
-        sumCountryMetrics(domestic, row);
+        sumCountryMetrics(domestic, row, distributionClass);
         domesticByCountry.set(canonicalCountry, domestic);
       }
     }
@@ -426,7 +467,9 @@ async function main(): Promise<void> {
 
     const totalInserted1h = filteredRows.reduce((acc, row) => acc + row.insertedLast1h, 0);
     const totalInserted24h = filteredRows.reduce((acc, row) => acc + row.insertedLast24h, 0);
-    const totalPublished24h = filteredRows.reduce((acc, row) => acc + row.publishedLast24h, 0);
+    const totalPublished24hCore = filteredRows.reduce((acc, row) => acc + row.publishedLast24hCore, 0);
+    const totalPublished24hPortal = filteredRows.reduce((acc, row) => acc + row.publishedLast24hPortal, 0);
+    const totalPublished24hExtended = filteredRows.reduce((acc, row) => acc + row.publishedLast24hExtended, 0);
     const totalFresh24h = filteredRows.reduce((acc, row) => acc + row.freshLast24h, 0);
     const totalLate24h = filteredRows.reduce((acc, row) => acc + row.lateLast24h, 0);
     const totalLateShare = totalInserted24h > 0 ? totalLate24h / totalInserted24h : 0;
@@ -437,13 +480,13 @@ async function main(): Promise<void> {
       .slice(0, 5)
       .map((row) => `${row.country} ${formatPercent(row.lateShare)}`);
     const domesticSummary = selectedDomesticRows
-      .map((row) => `${row.country} ${row.publishedLast24h.toLocaleString()}`)
+      .map((row) => `${row.country} ${row.publishedLast24hCore.toLocaleString()}`)
       .join(', ');
 
     const lines = selectedRows
       .map(
         (row, index) =>
-          `${index + 1}. ${row.country}: pub24h ${row.publishedLast24h.toLocaleString()}, fresh24h ${row.freshLast24h.toLocaleString()}, late24h ${row.lateLast24h.toLocaleString()} (${formatPercent(row.lateShare)}), first1h ${row.insertedLast1h.toLocaleString()}`
+          `${index + 1}. ${row.country}: published24h_core ${row.publishedLast24hCore.toLocaleString()}, published24h_portal ${row.publishedLast24hPortal.toLocaleString()}, published24h_extended ${row.publishedLast24hExtended.toLocaleString()}, fresh24h ${row.freshLast24h.toLocaleString()}, late24h ${row.lateLast24h.toLocaleString()} (${formatPercent(row.lateShare)}), firstSeen1h ${row.insertedLast1h.toLocaleString()}`
       );
 
     const scopeLabel =
@@ -458,13 +501,14 @@ async function main(): Promise<void> {
     const header = [
       `📰 News Volume by Country (${new Date().toISOString()})`,
       `Source: news_articles`,
-      `Published 24h: ${totalPublished24h.toLocaleString()} / Fresh 24h: ${totalFresh24h.toLocaleString()} / Late 24h: ${totalLate24h.toLocaleString()} / First seen 1h: ${totalInserted1h.toLocaleString()}`,
-      `Supporting: First seen 24h ${totalInserted24h.toLocaleString()} / Late share of first-seen 24h ${formatPercent(totalLateShare)}`,
-      `Fields: pub24h=normalized publication_datetime, fresh24h=published+first-seen within last 24h, late24h=first-seen within last 24h but published >24h old, first1h=created_at within last 1h`,
+      `published24h_core ${totalPublished24hCore.toLocaleString()} / published24h_portal ${totalPublished24hPortal.toLocaleString()} / published24h_extended ${totalPublished24hExtended.toLocaleString()} / fresh24h ${totalFresh24h.toLocaleString()} / late24h ${totalLate24h.toLocaleString()} / firstSeen1h ${totalInserted1h.toLocaleString()}`,
+      `Supporting: firstSeen24h ${totalInserted24h.toLocaleString()} / Late share of firstSeen24h ${formatPercent(totalLateShare)}`,
+      `Fields: published24h_core=publication_datetime within last 24h from publisher-direct feeds, published24h_portal=publication_datetime within last 24h from portal/aggregator-classified feeds, published24h_extended=core+portal`,
+      `Fields (continued): fresh24h=extended corpus published+first-seen within last 24h, late24h=extended corpus first-seen within last 24h but published >24h old, firstSeen1h/24h=extended corpus created_at windows`,
       `Quality filter: excludes unreadable code-like titles from counts`,
-      `Late-heavy countries (first seen 24h >= 250): ${lateHeavyCountries.join(', ') || 'none'}`,
-      `Domestic-only top ${selectedDomesticRows.length}: ${domesticSummary || 'none'}`,
-      `Country semantics: row.country=article/inferred country, domestic-only filter=source_country (atlas outlet country fallback)`,
+      `Late-heavy countries (firstSeen24h >= 250): ${lateHeavyCountries.join(', ') || 'none'}`,
+      `Domestic-only top ${selectedDomesticRows.length} by published24h_core: ${domesticSummary || 'none'}`,
+      `Country semantics: row.country=article/inferred country, domestic-only filter=source_country (atlas outlet country fallback), portal classification=atlas feed distributionClass`,
       scopeLabel,
       configuredScopeLabel,
       unexpectedCountries.size > 0 ? `Unexpected countries in data: ${[...unexpectedCountries].join(', ')}` : '',
