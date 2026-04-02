@@ -143,6 +143,45 @@ run_hourly_ingest() {
   return "${exit_code}"
 }
 
+send_ingest_failure_notice() {
+  local exit_code="$1"
+  local reason="failed"
+  local detail="exit code ${exit_code}"
+  local started_at="unknown"
+  local timed_out=0
+
+  if [ -f "${LOCK_STARTED_FILE}" ]; then
+    started_at="$(tr -d '\n' < "${LOCK_STARTED_FILE}" 2>/dev/null || printf 'unknown')"
+  fi
+
+  if [ "${exit_code}" -eq 124 ] || [ "${exit_code}" -eq 137 ]; then
+    reason="timed out"
+    detail="exceeded ${INGEST_MAX_RUNTIME_SECONDS}s runtime limit (+${INGEST_TIMEOUT_GRACE_SECONDS}s grace)"
+    timed_out=1
+  fi
+
+  local notice
+  notice=$(
+    cat <<EOF
+⚠️ WPR ingest ${reason} ($(date -u '+%Y-%m-%dT%H:%M:%SZ'))
+Started: ${started_at}
+Reason: ${detail}
+Action: this run did not reach post-ingest reporting, so no fresh hourly country/ops Discord report was published from it.
+Next step: the next scheduled hourly ingest will retry automatically.
+EOF
+  )
+
+  if ! bash "${SCRIPT_DIR}/run-news-country-discord-report.sh" --notice "${notice}" >>"${LOG_FILE}" 2>&1; then
+    log_utc "WARN: failed to post ingest-failure discord notice" >>"${LOG_FILE}"
+  fi
+
+  if [ "${timed_out}" -eq 1 ]; then
+    log_utc "Timeout failure notice sent for hourly ingest." >>"${LOG_FILE}"
+  else
+    log_utc "Failure notice sent for hourly ingest exit code ${exit_code}." >>"${LOG_FILE}"
+  fi
+}
+
 run_post_ingest_hooks() {
   if [ "${WPR_POST_INGEST_REPORTS:-${WPM_POST_INGEST_REPORTS:-1}}" = "0" ]; then
     printf '[%s] Post-ingest hooks disabled via WPR_POST_INGEST_REPORTS=0\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
@@ -161,12 +200,18 @@ run_post_ingest_hooks() {
 
 }
 
+ingest_exit_code=0
 {
   printf '\n[%s] Start hourly ingest pipeline (local postgres)\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
   printf 'Project: %s\n' "${PROJECT_ROOT}"
   printf 'Env file: %s\n' "${WPR_ENV_FILE_SOURCE:-${WPM_ENV_FILE_SOURCE:-inline-defaults}}"
   printf 'Command: %s\n' "${RUNNER_COMMAND[*]}"
   run_hourly_ingest
-} >>"${LOG_FILE}" 2>&1
+} >>"${LOG_FILE}" 2>&1 || ingest_exit_code=$?
+
+if [ "${ingest_exit_code}" -ne 0 ]; then
+  send_ingest_failure_notice "${ingest_exit_code}"
+  exit "${ingest_exit_code}"
+fi
 
 run_post_ingest_hooks >>"${LOG_FILE}" 2>&1
