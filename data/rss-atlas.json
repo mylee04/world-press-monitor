@@ -4226,6 +4226,76 @@
           "sitemapUrl": "https://www.open.online/wp-content/uploads/sitemaps/www-open-online-sitemap-news.xml"
         },
         {
+          "name": "Il Manifesto",
+          "url": "https://ilmanifesto.it/feed",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Affaritaliani",
+          "url": "https://www.affaritaliani.it/rss/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Il Mattino",
+          "url": "https://www.ilmattino.it/rss/home.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Money.it",
+          "url": "https://www.money.it/spip.php?page=backend",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "QuiFinanza",
+          "url": "https://quifinanza.it/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Calcio e Finanza",
+          "url": "https://www.calcioefinanza.it/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TuttoMercatoWeb",
+          "url": "https://www.tuttomercatoweb.com/rss/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "FormulaPassion",
+          "url": "https://www.formulapassion.it/feed",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "HDblog",
+          "url": "https://www.hdblog.it/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Wired Italia",
+          "url": "https://www.wired.it/feed/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Quotidiano.net - Day Sitemap",
           "sitemapUrl": "https://www.quotidiano.net/feedservice/sitemap/generic/qn/2026/day/sitemap.xml"
         }
