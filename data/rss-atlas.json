@@ -9529,6 +9529,10 @@
           "sitemapUrl": "https://www.hartvannederland.nl/sitemaps/category/milieu-gezondheid/articles-1.xml"
         },
         {
+          "name": "Hart van Nederland - Top News Sitemap",
+          "sitemapUrl": "https://www.hartvannederland.nl/sitemap-news.xml"
+        },
+        {
           "name": "De Telegraaf - News Sitemap",
           "sitemapUrl": "https://www.telegraaf.nl/sitemap-news.xml"
         },
@@ -9655,6 +9659,46 @@
         {
           "name": "WNL - News Sitemap",
           "sitemapUrl": "https://www.wnl.tv/news-sitemap.xml"
+        },
+        {
+          "name": "Metro Nieuws - News Sitemap",
+          "sitemapUrl": "https://www.metronieuws.nl/news-sitemap.xml"
+        },
+        {
+          "name": "Reformatorisch Dagblad",
+          "sitemapUrl": "https://www.rd.nl/sitemap/sitemap-news.xml"
+        },
+        {
+          "name": "Nieuws.nl - News Sitemap",
+          "sitemapUrl": "https://nieuws.nl/sitemap/news.xml"
+        },
+        {
+          "name": "Bright - Google News Sitemap",
+          "sitemapUrl": "https://www.bright.nl/sitemap-google-news.xml"
+        },
+        {
+          "name": "EW Magazine",
+          "url": "https://www.ewmagazine.nl/feed/"
+        },
+        {
+          "name": "VI",
+          "url": "https://www.vi.nl/feed/news.xml"
+        },
+        {
+          "name": "VoetbalPrimeur",
+          "url": "https://www.voetbalprimeur.nl/feed/news.xml"
+        },
+        {
+          "name": "FCUpdate",
+          "url": "https://www.fcupdate.nl/rss"
+        },
+        {
+          "name": "Autoblog",
+          "url": "https://www.autoblog.nl/feed/news.xml"
+        },
+        {
+          "name": "AutoWeek",
+          "url": "https://www.autoweek.nl/rss/"
         },
         {
           "name": "BNNVARA",
