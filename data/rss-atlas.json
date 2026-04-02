@@ -22538,6 +22538,83 @@
         {
           "name": "Forbes Hungary",
           "url": "https://forbes.hu/feed/"
+        },
+        {
+          "name": "Magyar Narancs",
+          "url": "https://magyarnarancs.hu/rss",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Ripost",
+          "url": "https://ripost.hu/feed",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Neokohn",
+          "url": "https://neokohn.hu/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Nuus",
+          "url": "https://nuus.hu/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "HelloMagyar",
+          "url": "https://hellomagyar.hu/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Media1",
+          "url": "https://media1.hu/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "HWSW",
+          "url": "https://www.hwsw.hu/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Alfahir",
+          "url": "https://alfahir.hu/rss",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Qubit",
+          "url": "https://qubit.hu/feed",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Atlatszo",
+          "url": "https://atlatszo.hu/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Kultura.hu",
+          "url": "https://kultura.hu/feed",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
         }
       ]
     },
