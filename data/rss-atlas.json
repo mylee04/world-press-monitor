@@ -17250,6 +17250,182 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/24/2026",
           "valid": "needs verification"
+        },
+        {
+          "name": "profil",
+          "sitemapUrl": "https://www.profil.at/sitemaps_article.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/01/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "profil - Google News Sitemap",
+          "sitemapUrl": "https://www.profil.at/sitemaps_google_news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/01/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Falter",
+          "url": "https://www.falter.at/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/01/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Tips - News Sitemap Page 1",
+          "sitemapUrl": "https://www.tips.at/sitemap/news/page/1",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/01/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "BVZ",
+          "url": "https://www.bvz.at/xml/rss",
+          "sitemapUrl": "https://www.bvz.at/sitemapnews.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/01/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Nachrichten.at - Oberoesterreich Sitemap",
+          "sitemapUrl": "https://www.nachrichten.at/oberoesterreich.sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/01/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Nachrichten.at - Wirtschaft Sitemap",
+          "sitemapUrl": "https://www.nachrichten.at/wirtschaft.sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/01/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Nachrichten.at - Chronik Sitemap",
+          "sitemapUrl": "https://www.nachrichten.at/chronik.sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/01/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Nachrichten.at - Politik Sitemap",
+          "sitemapUrl": "https://www.nachrichten.at/politik.sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/01/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Kurier - Article Sitemap",
+          "sitemapUrl": "https://kurier.at/sitemaps_article.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/01/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "news.at - Articles Sitemap",
+          "sitemapUrl": "https://www.news.at/sitemaps/sitemap-news-articles.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/01/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "news.at - Google News Sitemap",
+          "sitemapUrl": "https://www.news.at/sitemaps/sitemap-news-googlenews.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/01/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "futurezone",
+          "sitemapUrl": "https://futurezone.at/sitemaps_article.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/01/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "JOYN News - Articles Sitemap",
+          "sitemapUrl": "https://news.joyn.at/sitemap.articles.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/01/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "medianet - News Sitemap",
+          "sitemapUrl": "https://medianet.at/news/sitemap-index.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/01/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "NÖN - News Sitemap",
+          "sitemapUrl": "https://www.noen.at/sitemapnews.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/01/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "NÖN - Regional Mix 242193944",
+          "url": "https://www.noen.at/collection/242193944/xml/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/01/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "NÖN - Meinfussball",
+          "url": "https://www.noen.at/collection/360975721/xml/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/01/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "NÖN - Regional Mix 173249428",
+          "url": "https://www.noen.at/collection/173249428/xml/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/01/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "NÖN - Regional Mix 173249808",
+          "url": "https://www.noen.at/collection/173249808/xml/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/01/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "NÖN - Regional Mix 173248385",
+          "url": "https://www.noen.at/collection/173248385/xml/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/01/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "NÖN - Regional Mix 173249653",
+          "url": "https://www.noen.at/collection/173249653/xml/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/01/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "VOL.AT - News Sitemap",
+          "sitemapUrl": "https://www.vol.at/sitemap-news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/01/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Kleine Zeitung - Steiermark",
+          "url": "https://www.kleinezeitung.at/rss/steiermark",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/01/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Kleine Zeitung - Kaernten",
+          "url": "https://www.kleinezeitung.at/rss/kaernten",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/01/2026",
+          "valid": "needs verification"
         }
       ]
     },
