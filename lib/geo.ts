@@ -112,7 +112,42 @@ const COUNTRY_CENTROIDS = new Map<string, { lat: number; lon: number }>([
   ['Estonia', { lat: 58.5953, lon: 25.0136 }],
   ['Latvia', { lat: 56.8796, lon: 24.6032 }],
   ['Lithuania', { lat: 55.1694, lon: 23.8813 }],
-  ['Ireland', { lat: 53.1424, lon: -7.6921 }]
+  ['Ireland', { lat: 53.1424, lon: -7.6921 }],
+  ['Poland', { lat: 51.9194, lon: 19.1451 }],
+  ['Serbia', { lat: 44.0165, lon: 21.0059 }],
+  ['Vietnam', { lat: 14.0583, lon: 108.2772 }],
+  ['Dominican Republic', { lat: 18.7357, lon: -70.1627 }],
+  ['Colombia', { lat: 4.5709, lon: -74.2973 }],
+  ['Slovenia', { lat: 46.1512, lon: 14.9955 }],
+  ['Jordan', { lat: 30.5852, lon: 36.2384 }],
+  ['United Arab Emirates', { lat: 23.4241, lon: 53.8478 }],
+  ['Kuwait', { lat: 29.3117, lon: 47.4818 }],
+  ['Iceland', { lat: 64.9631, lon: -19.0208 }],
+  ['Bahrain', { lat: 25.9304, lon: 50.6378 }],
+  ['Luxembourg', { lat: 49.8153, lon: 6.1296 }],
+  ['Ecuador', { lat: -1.8312, lon: -78.1834 }],
+  ['Oman', { lat: 21.5126, lon: 55.9233 }],
+  ['Albania', { lat: 41.1533, lon: 20.1683 }],
+  ['Armenia', { lat: 40.0691, lon: 45.0382 }],
+  ['Azerbaijan', { lat: 40.1431, lon: 47.5769 }],
+  ['Belarus', { lat: 53.7098, lon: 27.9534 }],
+  ['Bosnia and Herzegovina', { lat: 43.9159, lon: 17.6791 }],
+  ['Cyprus', { lat: 35.1264, lon: 33.4299 }],
+  ['Georgia', { lat: 42.3154, lon: 43.3569 }],
+  ['Iraq', { lat: 33.2232, lon: 43.6793 }],
+  ['Kazakhstan', { lat: 48.0196, lon: 66.9237 }],
+  ['Kyrgyzstan', { lat: 41.2044, lon: 74.7661 }],
+  ['Lebanon', { lat: 33.8547, lon: 35.8623 }],
+  ['Libya', { lat: 26.3351, lon: 17.2283 }],
+  ['Mongolia', { lat: 46.8625, lon: 103.8467 }],
+  ['Myanmar', { lat: 21.9162, lon: 95.956 }],
+  ['Nepal', { lat: 28.3949, lon: 84.124 }],
+  ['New Zealand', { lat: -40.9006, lon: 174.886 }],
+  ['Pakistan', { lat: 30.3753, lon: 69.3451 }],
+  ['Cambodia', { lat: 12.5657, lon: 104.991 }],
+  ['Tajikistan', { lat: 38.861, lon: 71.2761 }],
+  ['Turkmenistan', { lat: 38.9697, lon: 59.5563 }],
+  ['Uzbekistan', { lat: 41.3775, lon: 64.5853 }]
 ]);
 
 const COUNTRY_ALIASES: ReadonlyArray<CountryAlias> = [
@@ -197,6 +232,10 @@ export function inferGeoFromTitle(
   return buildFallbackCountryGeo(fallbackCountry);
 }
 
+export function inferGeoFromCountry(country: string): GeoInference {
+  return buildCountryGeo(country);
+}
+
 export function inferGeoFromArticleSignals(params: {
   title: string;
   source?: string;
@@ -259,6 +298,10 @@ function buildCountryGeo(country: string): GeoInference {
   const centroid = COUNTRY_CENTROIDS.get(country);
   if (centroid) {
     return { lat: centroid.lat, lon: centroid.lon, locationName: country, country };
+  }
+  const hub = HUBS.find((item) => item.country === country);
+  if (hub) {
+    return { lat: hub.lat, lon: hub.lon, locationName: country, country };
   }
   return { locationName: country, country };
 }

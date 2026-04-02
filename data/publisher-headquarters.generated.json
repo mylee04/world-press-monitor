@@ -1,0 +1,1019 @@
+[
+  {
+    "country": "Australia",
+    "publisher": "Australian Broadcasting Corporation",
+    "city": "Sydney",
+    "region": "Sydney",
+    "lat": -33.8678,
+    "lon": 151.21,
+    "label": "Australian Broadcasting Corporation HQ"
+  },
+  {
+    "country": "Australia",
+    "publisher": "SBS",
+    "city": "Sydney",
+    "region": "Sydney",
+    "lat": -33.8678,
+    "lon": 151.21,
+    "label": "SBS HQ"
+  },
+  {
+    "country": "Denmark",
+    "publisher": "Altinget",
+    "city": "Copenhagen",
+    "region": "Copenhagen",
+    "lat": 55.6761,
+    "lon": 12.5689,
+    "label": "Altinget HQ"
+  },
+  {
+    "country": "Denmark",
+    "publisher": "Copenhagen Post",
+    "city": "Copenhagen",
+    "region": "Copenhagen",
+    "lat": 55.6761,
+    "lon": 12.5689,
+    "label": "Copenhagen Post HQ"
+  },
+  {
+    "country": "Denmark",
+    "publisher": "DR",
+    "city": "DR Byen",
+    "region": "DR Byen",
+    "lat": 55.658,
+    "lon": 12.591,
+    "label": "DR HQ"
+  },
+  {
+    "country": "Denmark",
+    "publisher": "Ekstra Bladet",
+    "city": "Copenhagen",
+    "region": "Copenhagen",
+    "lat": 55.6761,
+    "lon": 12.5689,
+    "label": "Ekstra Bladet HQ"
+  },
+  {
+    "country": "Denmark",
+    "publisher": "Frihedsbrevet",
+    "city": "Frihedsbrevet",
+    "region": "Frihedsbrevet",
+    "lat": 55.6761,
+    "lon": 12.574,
+    "label": "Frihedsbrevet HQ"
+  },
+  {
+    "country": "Denmark",
+    "publisher": "Fyens",
+    "city": "Odense",
+    "region": "Odense",
+    "lat": 55.4,
+    "lon": 10.3833,
+    "label": "Fyens HQ"
+  },
+  {
+    "country": "Denmark",
+    "publisher": "Information",
+    "city": "Copenhagen",
+    "region": "Copenhagen",
+    "lat": 55.6761,
+    "lon": 12.5689,
+    "label": "Information HQ"
+  },
+  {
+    "country": "Denmark",
+    "publisher": "Ingenioren",
+    "city": "Copenhagen",
+    "region": "Copenhagen",
+    "lat": 55.6761,
+    "lon": 12.5689,
+    "label": "Ingenioren HQ"
+  },
+  {
+    "country": "Denmark",
+    "publisher": "Jyllands-Posten",
+    "city": "Aarhus",
+    "region": "Viby",
+    "lat": 56.125,
+    "lon": 10.1611,
+    "label": "Jyllands-Posten HQ"
+  },
+  {
+    "country": "Denmark",
+    "publisher": "Maskinbladet",
+    "city": "Maskinbladet",
+    "region": "Maskinbladet",
+    "lat": 56.1297,
+    "lon": 9.0236,
+    "label": "Maskinbladet HQ"
+  },
+  {
+    "country": "Denmark",
+    "publisher": "Politiken",
+    "city": "Copenhagen",
+    "region": "Copenhagen",
+    "lat": 55.6761,
+    "lon": 12.5689,
+    "label": "Politiken HQ"
+  },
+  {
+    "country": "Finland",
+    "publisher": "Aamulehti",
+    "city": "Tampere",
+    "region": "Tampere",
+    "lat": 61.4981,
+    "lon": 23.76,
+    "label": "Aamulehti HQ"
+  },
+  {
+    "country": "Finland",
+    "publisher": "Yle",
+    "city": "Helsinki",
+    "region": "Länsi-Pasila",
+    "lat": 60.2,
+    "lon": 24.9167,
+    "label": "Yle HQ"
+  },
+  {
+    "country": "France",
+    "publisher": "20 Minutes",
+    "city": "Levallois-Perret",
+    "region": "Levallois-Perret",
+    "lat": 48.8933,
+    "lon": 2.2878,
+    "label": "20 Minutes HQ"
+  },
+  {
+    "country": "France",
+    "publisher": "CNEWS",
+    "city": "Boulogne-Billancourt",
+    "region": "Boulogne-Billancourt",
+    "lat": 48.8353,
+    "lon": 2.2414,
+    "label": "CNEWS HQ"
+  },
+  {
+    "country": "France",
+    "publisher": "Disclose",
+    "city": "Le Pré-Saint-Gervais",
+    "region": "Le Pré-Saint-Gervais",
+    "lat": 48.885,
+    "lon": 2.4039,
+    "label": "Disclose HQ"
+  },
+  {
+    "country": "France",
+    "publisher": "France Info",
+    "city": "Paris",
+    "region": "Paris",
+    "lat": 48.8567,
+    "lon": 2.3522,
+    "label": "France Info HQ"
+  },
+  {
+    "country": "France",
+    "publisher": "Jeune Afrique",
+    "city": "Paris",
+    "region": "Paris",
+    "lat": 48.8567,
+    "lon": 2.3522,
+    "label": "Jeune Afrique HQ"
+  },
+  {
+    "country": "France",
+    "publisher": "L'Équipe",
+    "city": "Boulogne-Billancourt",
+    "region": "Boulogne-Billancourt",
+    "lat": 48.8353,
+    "lon": 2.2414,
+    "label": "L'Équipe HQ"
+  },
+  {
+    "country": "France",
+    "publisher": "La Dépêche",
+    "city": "Toulouse",
+    "region": "Toulouse",
+    "lat": 43.6044,
+    "lon": 1.4433,
+    "label": "La Dépêche HQ"
+  },
+  {
+    "country": "France",
+    "publisher": "Le Dauphiné Libéré",
+    "city": "Grenoble",
+    "region": "Grenoble",
+    "lat": 45.1869,
+    "lon": 5.7264,
+    "label": "Le Dauphiné Libéré HQ"
+  },
+  {
+    "country": "France",
+    "publisher": "Le Figaro",
+    "city": "Paris",
+    "region": "9th arrondissement of Paris",
+    "lat": 48.8783,
+    "lon": 2.337,
+    "label": "Le Figaro HQ"
+  },
+  {
+    "country": "France",
+    "publisher": "Le JDD",
+    "city": "Paris",
+    "region": "Paris",
+    "lat": 48.8567,
+    "lon": 2.3522,
+    "label": "Le JDD HQ"
+  },
+  {
+    "country": "France",
+    "publisher": "Le Monde",
+    "city": "Paris",
+    "region": "avenue Pierre-Mendès-France",
+    "lat": 48.8405,
+    "lon": 2.3687,
+    "label": "Le Monde HQ"
+  },
+  {
+    "country": "France",
+    "publisher": "Le Monde diplomatique",
+    "city": "Paris",
+    "region": "Paris",
+    "lat": 48.8567,
+    "lon": 2.3522,
+    "label": "Le Monde diplomatique HQ"
+  },
+  {
+    "country": "France",
+    "publisher": "Le Point",
+    "city": "Paris",
+    "region": "Paris",
+    "lat": 48.8567,
+    "lon": 2.3522,
+    "label": "Le Point HQ"
+  },
+  {
+    "country": "France",
+    "publisher": "Le Progrès",
+    "city": "Lyon",
+    "region": "Lyon",
+    "lat": 45.7675,
+    "lon": 4.835,
+    "label": "Le Progrès HQ"
+  },
+  {
+    "country": "France",
+    "publisher": "Le Télégramme",
+    "city": "Morlaix",
+    "region": "Morlaix",
+    "lat": 48.5775,
+    "lon": -3.8278,
+    "label": "Le Télégramme HQ"
+  },
+  {
+    "country": "Germany",
+    "publisher": "Augsburger Allgemeine",
+    "city": "Augsburg",
+    "region": "Augsburg",
+    "lat": 48.3689,
+    "lon": 10.8978,
+    "label": "Augsburger Allgemeine HQ"
+  },
+  {
+    "country": "Germany",
+    "publisher": "Berliner Morgenpost",
+    "city": "Berlin",
+    "region": "Berlin",
+    "lat": 52.5167,
+    "lon": 13.3833,
+    "label": "Berliner Morgenpost HQ"
+  },
+  {
+    "country": "Germany",
+    "publisher": "Berliner Zeitung",
+    "city": "Berlin",
+    "region": "Berlin",
+    "lat": 52.5167,
+    "lon": 13.3833,
+    "label": "Berliner Zeitung HQ"
+  },
+  {
+    "country": "Germany",
+    "publisher": "Der Spiegel",
+    "city": "Hamburg",
+    "region": "Hamburg",
+    "lat": 53.55,
+    "lon": 10,
+    "label": "Der Spiegel HQ"
+  },
+  {
+    "country": "Germany",
+    "publisher": "Die Zeit",
+    "city": "Hamburg",
+    "region": "Hamburg",
+    "lat": 53.55,
+    "lon": 10,
+    "label": "Die Zeit HQ"
+  },
+  {
+    "country": "Germany",
+    "publisher": "Frankfurter Allgemeine",
+    "city": "Frankfurt",
+    "region": "Frankfurt",
+    "lat": 50.1106,
+    "lon": 8.6822,
+    "label": "Frankfurter Allgemeine HQ"
+  },
+  {
+    "country": "Germany",
+    "publisher": "Frankfurter Rundschau",
+    "city": "Frankfurt",
+    "region": "Frankfurt",
+    "lat": 50.1106,
+    "lon": 8.6822,
+    "label": "Frankfurter Rundschau HQ"
+  },
+  {
+    "country": "Germany",
+    "publisher": "Handelsblatt",
+    "city": "Düsseldorf",
+    "region": "Düsseldorf",
+    "lat": 51.2256,
+    "lon": 6.7767,
+    "label": "Handelsblatt HQ"
+  },
+  {
+    "country": "Germany",
+    "publisher": "kicker",
+    "city": "Nuremberg",
+    "region": "Nuremberg",
+    "lat": 49.4539,
+    "lon": 11.0775,
+    "label": "kicker HQ"
+  },
+  {
+    "country": "Germany",
+    "publisher": "Manager Magazin",
+    "city": "Hamburg",
+    "region": "Hamburg",
+    "lat": 53.55,
+    "lon": 10,
+    "label": "Manager Magazin HQ"
+  },
+  {
+    "country": "Germany",
+    "publisher": "n-tv",
+    "city": "Cologne",
+    "region": "Cologne",
+    "lat": 50.9422,
+    "lon": 6.9578,
+    "label": "n-tv HQ"
+  },
+  {
+    "country": "Germany",
+    "publisher": "RTL.de",
+    "city": "Cologne",
+    "region": "Cologne",
+    "lat": 50.9422,
+    "lon": 6.9578,
+    "label": "RTL.de HQ"
+  },
+  {
+    "country": "Germany",
+    "publisher": "Suddeutsche Zeitung",
+    "city": "Munich",
+    "region": "Munich",
+    "lat": 48.1375,
+    "lon": 11.575,
+    "label": "Suddeutsche Zeitung HQ"
+  },
+  {
+    "country": "Germany",
+    "publisher": "TAG24",
+    "city": "Dresden",
+    "region": "Dresden",
+    "lat": 51.0493,
+    "lon": 13.7381,
+    "label": "TAG24 HQ"
+  },
+  {
+    "country": "Germany",
+    "publisher": "Tagesschau",
+    "city": "Hamburg",
+    "region": "Hamburg",
+    "lat": 53.55,
+    "lon": 10,
+    "label": "Tagesschau HQ"
+  },
+  {
+    "country": "Germany",
+    "publisher": "Tagesspiegel",
+    "city": "Berlin",
+    "region": "Berlin",
+    "lat": 52.5167,
+    "lon": 13.3833,
+    "label": "Tagesspiegel HQ"
+  },
+  {
+    "country": "Germany",
+    "publisher": "WirtschaftsWoche",
+    "city": "Düsseldorf",
+    "region": "Düsseldorf",
+    "lat": 51.2256,
+    "lon": 6.7767,
+    "label": "WirtschaftsWoche HQ"
+  },
+  {
+    "country": "Indonesia",
+    "publisher": "CNN Indonesia",
+    "city": "Jakarta",
+    "region": "Mampang Prapatan",
+    "lat": -6.2518,
+    "lon": 106.8181,
+    "label": "CNN Indonesia HQ"
+  },
+  {
+    "country": "Ireland",
+    "publisher": "Irish Examiner",
+    "city": "Cork",
+    "region": "Cork",
+    "lat": 51.9,
+    "lon": -8.4731,
+    "label": "Irish Examiner HQ"
+  },
+  {
+    "country": "Italy",
+    "publisher": "Adnkronos",
+    "city": "Rome",
+    "region": "Rome",
+    "lat": 41.8931,
+    "lon": 12.4828,
+    "label": "Adnkronos HQ"
+  },
+  {
+    "country": "Italy",
+    "publisher": "ANSA",
+    "city": "Rome",
+    "region": "Rome",
+    "lat": 41.8931,
+    "lon": 12.4828,
+    "label": "ANSA HQ"
+  },
+  {
+    "country": "Italy",
+    "publisher": "Corriere della Sera",
+    "city": "Milan",
+    "region": "Milan",
+    "lat": 45.4669,
+    "lon": 9.19,
+    "label": "Corriere della Sera HQ"
+  },
+  {
+    "country": "Italy",
+    "publisher": "Il Messaggero",
+    "city": "Rome",
+    "region": "Select Hotel",
+    "lat": 41.9029,
+    "lon": 12.486,
+    "label": "Il Messaggero HQ"
+  },
+  {
+    "country": "Italy",
+    "publisher": "Il Sole 24 Ore",
+    "city": "Milan",
+    "region": "Milan",
+    "lat": 45.4669,
+    "lon": 9.19,
+    "label": "Il Sole 24 Ore HQ"
+  },
+  {
+    "country": "Italy",
+    "publisher": "la Repubblica",
+    "city": "Rome",
+    "region": "Rome",
+    "lat": 41.8931,
+    "lon": 12.4828,
+    "label": "la Repubblica HQ"
+  },
+  {
+    "country": "Italy",
+    "publisher": "La Stampa",
+    "city": "Turin",
+    "region": "Turin",
+    "lat": 45.0792,
+    "lon": 7.6761,
+    "label": "La Stampa HQ"
+  },
+  {
+    "country": "Japan",
+    "publisher": "NHK",
+    "city": "Tokyo",
+    "region": "Jinnan",
+    "lat": 35.6648,
+    "lon": 139.6992,
+    "label": "NHK HQ"
+  },
+  {
+    "country": "Japan",
+    "publisher": "Nikkei",
+    "city": "Tokyo",
+    "region": "Tokyo",
+    "lat": 35.6894,
+    "lon": 139.6917,
+    "label": "Nikkei HQ"
+  },
+  {
+    "country": "Japan",
+    "publisher": "Yahoo",
+    "city": "Tokyo",
+    "region": "Midtown Tower",
+    "lat": 35.6664,
+    "lon": 139.7317,
+    "label": "Yahoo HQ"
+  },
+  {
+    "country": "Mexico",
+    "publisher": "El Financiero",
+    "city": "Mexico City",
+    "region": "Miguel Hidalgo",
+    "lat": 19.4067,
+    "lon": -99.1911,
+    "label": "El Financiero HQ"
+  },
+  {
+    "country": "Mexico",
+    "publisher": "El Universal",
+    "city": "Mexico City",
+    "region": "Mexico City",
+    "lat": 19.3538,
+    "lon": -99.1359,
+    "label": "El Universal HQ"
+  },
+  {
+    "country": "Mexico",
+    "publisher": "Milenio",
+    "city": "Monterrey",
+    "region": "Monterrey",
+    "lat": 25.6844,
+    "lon": -100.3181,
+    "label": "Milenio HQ"
+  },
+  {
+    "country": "Netherlands",
+    "publisher": "AT5",
+    "city": "Amsterdam",
+    "region": "Amsterdam",
+    "lat": 52.3667,
+    "lon": 4.8833,
+    "label": "AT5 HQ"
+  },
+  {
+    "country": "Netherlands",
+    "publisher": "BNNVARA",
+    "city": "Hilversum",
+    "region": "Hilversum",
+    "lat": 52.23,
+    "lon": 5.18,
+    "label": "BNNVARA HQ"
+  },
+  {
+    "country": "Netherlands",
+    "publisher": "De Telegraaf",
+    "city": "Amsterdam",
+    "region": "Amsterdam",
+    "lat": 52.3667,
+    "lon": 4.8833,
+    "label": "De Telegraaf HQ"
+  },
+  {
+    "country": "Netherlands",
+    "publisher": "DVHN",
+    "city": "Groningen",
+    "region": "Groningen",
+    "lat": 53.2189,
+    "lon": 6.5675,
+    "label": "DVHN HQ"
+  },
+  {
+    "country": "Netherlands",
+    "publisher": "NOS",
+    "city": "Hilversum",
+    "region": "Hilversum",
+    "lat": 52.23,
+    "lon": 5.18,
+    "label": "NOS HQ"
+  },
+  {
+    "country": "Netherlands",
+    "publisher": "NRC",
+    "city": "Amsterdam",
+    "region": "Amsterdam",
+    "lat": 52.3667,
+    "lon": 4.8833,
+    "label": "NRC HQ"
+  },
+  {
+    "country": "Netherlands",
+    "publisher": "Omroep Gelderland",
+    "city": "Arnhem",
+    "region": "Arnhem",
+    "lat": 51.9833,
+    "lon": 5.9167,
+    "label": "Omroep Gelderland HQ"
+  },
+  {
+    "country": "Netherlands",
+    "publisher": "Omroep West",
+    "city": "The Hague",
+    "region": "The Hague",
+    "lat": 52.08,
+    "lon": 4.31,
+    "label": "Omroep West HQ"
+  },
+  {
+    "country": "Netherlands",
+    "publisher": "Rijnmond",
+    "city": "Rotterdam",
+    "region": "Rotterdam",
+    "lat": 51.92,
+    "lon": 4.48,
+    "label": "Rijnmond HQ"
+  },
+  {
+    "country": "Netherlands",
+    "publisher": "RTV Drenthe",
+    "city": "Assen",
+    "region": "Beilerstraat 30",
+    "lat": 52.9899,
+    "lon": 6.5576,
+    "label": "RTV Drenthe HQ"
+  },
+  {
+    "country": "Norway",
+    "publisher": "Adresseavisen",
+    "city": "Trondheim",
+    "region": "Trondheim",
+    "lat": 63.44,
+    "lon": 10.4,
+    "label": "Adresseavisen HQ"
+  },
+  {
+    "country": "Norway",
+    "publisher": "Aftenposten",
+    "city": "Oslo",
+    "region": "Oslo",
+    "lat": 59.9133,
+    "lon": 10.7389,
+    "label": "Aftenposten HQ"
+  },
+  {
+    "country": "Norway",
+    "publisher": "Agderposten",
+    "city": "Arendal",
+    "region": "Arendal",
+    "lat": 58.4667,
+    "lon": 8.7667,
+    "label": "Agderposten HQ"
+  },
+  {
+    "country": "Norway",
+    "publisher": "Altaposten",
+    "city": "Alta",
+    "region": "Alta",
+    "lat": 69.9767,
+    "lon": 23.2958,
+    "label": "Altaposten HQ"
+  },
+  {
+    "country": "Norway",
+    "publisher": "Bergens Tidende",
+    "city": "Bergen",
+    "region": "Bergen",
+    "lat": 60.3925,
+    "lon": 5.3233,
+    "label": "Bergens Tidende HQ"
+  },
+  {
+    "country": "Norway",
+    "publisher": "Dagbladet",
+    "city": "Oslo",
+    "region": "Hasle",
+    "lat": 59.9242,
+    "lon": 10.7914,
+    "label": "Dagbladet HQ"
+  },
+  {
+    "country": "Norway",
+    "publisher": "Dagsavisen",
+    "city": "Oslo",
+    "region": "Oslo",
+    "lat": 59.9133,
+    "lon": 10.7389,
+    "label": "Dagsavisen HQ"
+  },
+  {
+    "country": "Norway",
+    "publisher": "Fædrelandsvennen",
+    "city": "Kristiansand",
+    "region": "Kristiansand",
+    "lat": 58.1467,
+    "lon": 7.9956,
+    "label": "Fædrelandsvennen HQ"
+  },
+  {
+    "country": "Norway",
+    "publisher": "Finansavisen",
+    "city": "Oslo",
+    "region": "Oslo",
+    "lat": 59.9133,
+    "lon": 10.7389,
+    "label": "Finansavisen HQ"
+  },
+  {
+    "country": "Norway",
+    "publisher": "Hallingdølen",
+    "city": "Ål",
+    "region": "Ål",
+    "lat": 60.6756,
+    "lon": 8.5769,
+    "label": "Hallingdølen HQ"
+  },
+  {
+    "country": "Norway",
+    "publisher": "Harstad Tidende",
+    "city": "Harstad",
+    "region": "Harstad",
+    "lat": 68.7989,
+    "lon": 16.5314,
+    "label": "Harstad Tidende HQ"
+  },
+  {
+    "country": "Norway",
+    "publisher": "iTromso",
+    "city": "Tromsø",
+    "region": "Tromsø Municipality",
+    "lat": 69.6496,
+    "lon": 18.957,
+    "label": "iTromso HQ"
+  },
+  {
+    "country": "Norway",
+    "publisher": "Lister24",
+    "city": "Farsund",
+    "region": "Farsund Municipality",
+    "lat": 58.0828,
+    "lon": 6.7528,
+    "label": "Lister24 HQ"
+  },
+  {
+    "country": "Norway",
+    "publisher": "Nettavisen",
+    "city": "Oslo",
+    "region": "Oslo",
+    "lat": 59.9133,
+    "lon": 10.7389,
+    "label": "Nettavisen HQ"
+  },
+  {
+    "country": "Norway",
+    "publisher": "NRK",
+    "city": "NRK Marienlyst",
+    "region": "NRK Marienlyst",
+    "lat": 59.935,
+    "lon": 10.7175,
+    "label": "NRK HQ"
+  },
+  {
+    "country": "Norway",
+    "publisher": "Romsdals Budstikke",
+    "city": "Molde",
+    "region": "Molde Municipality",
+    "lat": 62.7333,
+    "lon": 7.1833,
+    "label": "Romsdals Budstikke HQ"
+  },
+  {
+    "country": "Norway",
+    "publisher": "Stavanger Aftenblad",
+    "city": "Stavanger",
+    "region": "Stavanger",
+    "lat": 58.97,
+    "lon": 5.7314,
+    "label": "Stavanger Aftenblad HQ"
+  },
+  {
+    "country": "Norway",
+    "publisher": "TV2",
+    "city": "Bergen",
+    "region": "Bergen",
+    "lat": 60.3925,
+    "lon": 5.3233,
+    "label": "TV2 HQ"
+  },
+  {
+    "country": "Norway",
+    "publisher": "VG",
+    "city": "Oslo",
+    "region": "Oslo",
+    "lat": 59.9133,
+    "lon": 10.7389,
+    "label": "VG HQ"
+  },
+  {
+    "country": "South Korea",
+    "publisher": "Hankyoreh",
+    "city": "Mapo District",
+    "region": "Mapo District",
+    "lat": 37.5638,
+    "lon": 126.9084,
+    "label": "Hankyoreh HQ"
+  },
+  {
+    "country": "South Korea",
+    "publisher": "Seoul Broadcasting System",
+    "city": "Seoul",
+    "region": "Seoul",
+    "lat": 37.56,
+    "lon": 126.99,
+    "label": "Seoul Broadcasting System HQ"
+  },
+  {
+    "country": "South Korea",
+    "publisher": "The Korea Economic Daily",
+    "city": "Jung District",
+    "region": "Jung District",
+    "lat": 37.5559,
+    "lon": 126.9703,
+    "label": "The Korea Economic Daily HQ"
+  },
+  {
+    "country": "United Kingdom",
+    "publisher": "BBC",
+    "city": "London",
+    "region": "London",
+    "lat": 51.5072,
+    "lon": -0.1275,
+    "label": "BBC HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Arizona Republic",
+    "city": "Phoenix",
+    "region": "Phoenix",
+    "lat": 33.4483,
+    "lon": -112.0739,
+    "label": "Arizona Republic HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Associated Press",
+    "city": "New York City",
+    "region": "New York City",
+    "lat": 40.7128,
+    "lon": -74.0061,
+    "label": "Associated Press HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Austin American-Statesman",
+    "city": "Austin",
+    "region": "Austin",
+    "lat": 30.3,
+    "lon": -97.7333,
+    "label": "Austin American-Statesman HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Axios",
+    "city": "Arlington",
+    "region": "Arlington County",
+    "lat": 38.8803,
+    "lon": -77.1083,
+    "label": "Axios HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Baltimore Sun",
+    "city": "Baltimore",
+    "region": "Baltimore",
+    "lat": 39.2864,
+    "lon": -76.615,
+    "label": "Baltimore Sun HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Billboard",
+    "city": "New York City",
+    "region": "New York City",
+    "lat": 40.7128,
+    "lon": -74.0061,
+    "label": "Billboard HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Bloomberg",
+    "city": "New York City",
+    "region": "731 Lexington Avenue",
+    "lat": 40.7618,
+    "lon": -73.968,
+    "label": "Bloomberg HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Boston Globe",
+    "city": "Boston",
+    "region": "Boston",
+    "lat": 42.3603,
+    "lon": -71.0578,
+    "label": "Boston Globe HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Business Insider",
+    "city": "New York City",
+    "region": "New York City",
+    "lat": 40.7128,
+    "lon": -74.0061,
+    "label": "Business Insider HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "CBS News",
+    "city": "New York City",
+    "region": "CBS Broadcast Center",
+    "lat": 40.7692,
+    "lon": -73.99,
+    "label": "CBS News HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Chicago Tribune",
+    "city": "Chicago",
+    "region": "Tribune Tower",
+    "lat": 41.8904,
+    "lon": -87.6237,
+    "label": "Chicago Tribune HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "CNN",
+    "city": "Atlanta",
+    "region": "CNN Center",
+    "lat": 33.7582,
+    "lon": -84.3944,
+    "label": "CNN HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Fox News",
+    "city": "New York City",
+    "region": "New York City",
+    "lat": 40.7128,
+    "lon": -74.0061,
+    "label": "Fox News HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "LA Times",
+    "city": "Los Angeles",
+    "region": "Los Angeles",
+    "lat": 34.0522,
+    "lon": -118.2437,
+    "label": "LA Times HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "NBC News",
+    "city": "New York City",
+    "region": "New York City",
+    "lat": 40.7128,
+    "lon": -74.0061,
+    "label": "NBC News HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "NPR",
+    "city": "Washington, D.C.",
+    "region": "Washington, D.C.",
+    "lat": 38.895,
+    "lon": -77.0367,
+    "label": "NPR HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Politico",
+    "city": "Arlington",
+    "region": "Arlington County",
+    "lat": 38.8803,
+    "lon": -77.1083,
+    "label": "Politico HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Washington Post",
+    "city": "Washington, D.C.",
+    "region": "Washington, D.C.",
+    "lat": 38.895,
+    "lon": -77.0367,
+    "label": "Washington Post HQ"
+  }
+]

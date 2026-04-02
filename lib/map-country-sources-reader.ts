@@ -1,6 +1,4 @@
-import 'server-only';
-
-import { inferGeoFromTitle } from '@/lib/geo';
+import { inferGeoFromCountry } from '@/lib/geo';
 import {
   readDailyBenchmarkCountsForCountry,
   readHourlyCountsForCountry,
@@ -86,8 +84,10 @@ export async function loadMapCountrySources(
       continue;
     }
 
-    const coord = inferSourceCoordinate(displaySource, country);
     const publisherInfo = resolvePublisherInfo(displaySource, country);
+    const coord = inferSourceCoordinate(displaySource, country, {
+      publisher: publisherInfo.publisher,
+    });
     bySource.set(sourceKey, {
       sourceId: buildMapSourceId(country, displaySource),
       source: displaySource,
@@ -115,7 +115,7 @@ export async function loadMapCountrySources(
   const sourceRows: MapSourceMetricRow[] = [...bySource.values()]
     .sort((a, b) => b.windows[selectedWindow].published - a.windows[selectedWindow].published || a.source.localeCompare(b.source));
 
-  const center = inferGeoFromTitle(country, country);
+  const center = inferGeoFromCountry(country);
   const hourlyRows = await readHourlyCountsForCountry(country);
   const dailyRows = await readDailyBenchmarkCountsForCountry(country);
 

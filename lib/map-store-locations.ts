@@ -1,7 +1,6 @@
-import 'server-only';
-
 import { createHash } from 'node:crypto';
-import { inferGeoFromTitle } from '@/lib/geo';
+import { inferGeoFromCountry, inferGeoFromTitle } from '@/lib/geo';
+import { resolvePublisherHeadquarters } from '@/lib/publisher-headquarters';
 import { resolveSourceHeadquarters } from '@/lib/source-headquarters';
 
 function hashNumber(value: string): number {
@@ -35,6 +34,8 @@ const PRIMARY_MEDIA_HUBS = new Map<string, { name: string; lat: number; lon: num
   ['Taiwan', { name: 'Taipei', lat: 25.033, lon: 121.5654 }],
   ['Vietnam', { name: 'Hanoi', lat: 21.0278, lon: 105.8342 }],
   ['Singapore', { name: 'Singapore', lat: 1.3521, lon: 103.8198 }],
+  ['Italy', { name: 'Rome', lat: 41.9028, lon: 12.4964 }],
+  ['Russia', { name: 'Moscow', lat: 55.7558, lon: 37.6173 }],
   ['United Kingdom', { name: 'London', lat: 51.5072, lon: -0.1276 }],
   ['France', { name: 'Paris', lat: 48.8566, lon: 2.3522 }],
   ['Belgium', { name: 'Brussels', lat: 50.8503, lon: 4.3517 }],
@@ -68,7 +69,11 @@ function withStableJitter(
   };
 }
 
-export function inferSourceCoordinate(source: string, country: string): {
+export function inferSourceCoordinate(
+  source: string,
+  country: string,
+  options?: { publisher?: string | null }
+): {
   lat: number;
   lon: number;
   city: string | null;
@@ -83,6 +88,23 @@ export function inferSourceCoordinate(source: string, country: string): {
       lon: jittered.lon,
       city: headquarters.city,
       region: headquarters.region,
+      locationKind: 'headquarters',
+    };
+  }
+
+  const publisherHeadquarters = resolvePublisherHeadquarters(options?.publisher, country);
+  if (publisherHeadquarters) {
+    const jittered = withStableJitter(
+      publisherHeadquarters.lat,
+      publisherHeadquarters.lon,
+      `publisher-hq:${country}:${options?.publisher}:${source}`,
+      HEADQUARTERS_JITTER
+    );
+    return {
+      lat: jittered.lat,
+      lon: jittered.lon,
+      city: publisherHeadquarters.city,
+      region: publisherHeadquarters.region,
       locationKind: 'headquarters',
     };
   }
@@ -109,7 +131,7 @@ export function inferSourceCoordinate(source: string, country: string): {
     };
   }
 
-  const fallback = inferGeoFromTitle(country, country);
+  const fallback = inferGeoFromCountry(country);
   const hub = PRIMARY_MEDIA_HUBS.get(country);
   if (hub) {
     const jittered = withStableJitter(hub.lat, hub.lon, `${country}:${source}`, CITY_JITTER);
