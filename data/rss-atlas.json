@@ -6283,6 +6283,66 @@
           "name": "Estadão - Sitemap Index by Day",
           "sitemapUrl": "https://www.estadao.com.br/arc/outboundfeeds/sitemap-index-by-day/?outputType=xml",
           "enabled": true
+        },
+        {
+          "name": "Jovem Pan",
+          "url": "https://www.jovempan.com.br/feed/"
+        },
+        {
+          "name": "Brasil de Fato",
+          "url": "https://www.brasildefato.com.br/feed"
+        },
+        {
+          "name": "JOTA",
+          "url": "https://www.jota.info/feed"
+        },
+        {
+          "name": "O Antagonista",
+          "url": "https://oantagonista.com.br/feed/"
+        },
+        {
+          "name": "Terra",
+          "url": "https://www.terra.com.br/rss.xml"
+        },
+        {
+          "name": "Terra Noticias",
+          "url": "https://www.terra.com.br/noticias/rss.xml"
+        },
+        {
+          "name": "Olhar Digital",
+          "url": "https://olhardigital.com.br/feed/"
+        },
+        {
+          "name": "Superinteressante",
+          "url": "https://www.super.abril.com.br/feed/"
+        },
+        {
+          "name": "Bnews",
+          "url": "https://www.bnews.com.br/feed/"
+        },
+        {
+          "name": "UOL Esporte",
+          "url": "https://rss.uol.com.br/feed/esporte.xml"
+        },
+        {
+          "name": "UOL Tecnologia",
+          "url": "https://rss.uol.com.br/feed/tecnologia.xml"
+        },
+        {
+          "name": "CNN Brasil - News Sitemap",
+          "sitemapUrl": "https://www.cnnbrasil.com.br/sitemap-news.xml"
+        },
+        {
+          "name": "CNN Brasil - Sitemap Index",
+          "sitemapUrl": "https://www.cnnbrasil.com.br/sitemap_index.xml"
+        },
+        {
+          "name": "ConJur",
+          "url": "https://www.conjur.com.br/rss.xml"
+        },
+        {
+          "name": "ND Mais",
+          "url": "https://ndmais.com.br/feed/"
         }
       ]
     },
