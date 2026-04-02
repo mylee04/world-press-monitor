@@ -10,6 +10,8 @@ STATE_DIR="${WPR_STATE_DIR:-${WPM_STATE_DIR:-${PROJECT_ROOT}/.wpr-state}}"
 LOCK_DIR="${STATE_DIR}/ingest-hourly.lock"
 LOCK_PID_FILE="${LOCK_DIR}/pid"
 LOCK_STARTED_FILE="${LOCK_DIR}/started_at_utc"
+INGEST_MAX_RUNTIME_SECONDS="${WPR_INGEST_MAX_RUNTIME_SECONDS:-${WPM_INGEST_MAX_RUNTIME_SECONDS:-5400}}"
+INGEST_TIMEOUT_GRACE_SECONDS="${WPR_INGEST_TIMEOUT_GRACE_SECONDS:-${WPM_INGEST_TIMEOUT_GRACE_SECONDS:-60}}"
 
 # shellcheck disable=SC1091
 source "${SCRIPT_DIR}/load-local-env.sh"
@@ -28,6 +30,12 @@ export PATH="${PATH}:/opt/homebrew/bin:/usr/local/bin"
 
 log_utc() {
   printf '[%s] %s\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')" "$1"
+}
+
+find_timeout_command() {
+  command -v gtimeout >/dev/null 2>&1 && command -v gtimeout && return 0
+  command -v timeout >/dev/null 2>&1 && command -v timeout && return 0
+  return 1
 }
 
 release_lock() {
@@ -107,6 +115,34 @@ fi
 
 export INGEST_OUTLET_CHUNK_SIZE="${INGEST_OUTLET_CHUNK_SIZE:-20000}"
 
+run_hourly_ingest() {
+  local timeout_cmd=""
+  local exit_code=0
+
+  if [ "${INGEST_MAX_RUNTIME_SECONDS}" -le 0 ]; then
+    printf 'Timeout: disabled (INGEST_MAX_RUNTIME_SECONDS<=0)\n'
+    "${RUNNER_COMMAND[@]}"
+    return 0
+  fi
+
+  timeout_cmd="$(find_timeout_command || true)"
+  if [ -z "${timeout_cmd}" ]; then
+    printf 'Timeout: disabled (timeout binary not found)\n'
+    "${RUNNER_COMMAND[@]}"
+    return 0
+  fi
+
+  printf 'Timeout: %ss (grace %ss) via %s\n' "${INGEST_MAX_RUNTIME_SECONDS}" "${INGEST_TIMEOUT_GRACE_SECONDS}" "${timeout_cmd}"
+  set +e
+  "${timeout_cmd}" --signal=TERM --kill-after="${INGEST_TIMEOUT_GRACE_SECONDS}s" "${INGEST_MAX_RUNTIME_SECONDS}s" "${RUNNER_COMMAND[@]}"
+  exit_code=$?
+  set -e
+  if [ "${exit_code}" -eq 124 ] || [ "${exit_code}" -eq 137 ]; then
+    printf '[%s] ERROR: hourly ingest exceeded timeout (%ss) and was terminated\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')" "${INGEST_MAX_RUNTIME_SECONDS}"
+  fi
+  return "${exit_code}"
+}
+
 run_post_ingest_hooks() {
   if [ "${WPR_POST_INGEST_REPORTS:-${WPM_POST_INGEST_REPORTS:-1}}" = "0" ]; then
     printf '[%s] Post-ingest hooks disabled via WPR_POST_INGEST_REPORTS=0\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
@@ -129,7 +165,7 @@ run_post_ingest_hooks() {
   printf 'Project: %s\n' "${PROJECT_ROOT}"
   printf 'Env file: %s\n' "${WPR_ENV_FILE_SOURCE:-${WPM_ENV_FILE_SOURCE:-inline-defaults}}"
   printf 'Command: %s\n' "${RUNNER_COMMAND[*]}"
-  "${RUNNER_COMMAND[@]}"
+  run_hourly_ingest
 } >>"${LOG_FILE}" 2>&1
 
 run_post_ingest_hooks >>"${LOG_FILE}" 2>&1
