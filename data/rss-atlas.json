@@ -10421,6 +10421,14 @@
           "sitemapUrl": "https://www.tagesanzeiger.ch/sitemaps/news.xml"
         },
         {
+          "name": "24 heures - News Sitemap",
+          "sitemapUrl": "https://www.24heures.ch/sitemaps/news.xml"
+        },
+        {
+          "name": "Tribune de Geneve - News Sitemap",
+          "sitemapUrl": "https://www.tdg.ch/sitemaps/news.xml"
+        },
+        {
           "name": "Swissinfo (Business - EN)",
           "url": "https://www.swissinfo.ch/eng/business/feed",
           "status": null,
@@ -10609,6 +10617,22 @@
           "enabled": false
         },
         {
+          "name": "Le Matin - News Sitemap",
+          "sitemapUrl": "https://www.lematin.ch/sitemaps/fr/news.xml"
+        },
+        {
+          "name": "Der Bund - News Sitemap",
+          "sitemapUrl": "https://www.derbund.ch/sitemaps/news.xml"
+        },
+        {
+          "name": "Berner Zeitung - News Sitemap",
+          "sitemapUrl": "https://www.bernerzeitung.ch/sitemaps/news.xml"
+        },
+        {
+          "name": "Basler Zeitung - News Sitemap",
+          "sitemapUrl": "https://www.bazonline.ch/sitemaps/news.xml"
+        },
+        {
           "name": "Nau.ch - News Sitemap",
           "sitemapUrl": "https://www.nau.ch/sitemap"
         },
@@ -10696,7 +10720,12 @@
         },
         {
           "name": "Moneycab",
-          "url": "https://www.moneycab.com/feed/"
+          "url": "https://www.moneycab.com/feed/",
+          "sitemapUrl": "https://www.moneycab.com/sitemap.xml"
+        },
+        {
+          "name": "Bilan - News Sitemap",
+          "sitemapUrl": "https://www.bilan.ch/sitemaps/news.xml"
         },
         {
           "name": "persoenlich.com",
@@ -10782,22 +10811,6 @@
         {
           "name": "Watson - Google News Sitemap",
           "sitemapUrl": "https://www.watson.ch/api/2.0/feed/googlesitemap.xml"
-        },
-        {
-          "name": "24 heures - News Sitemap",
-          "sitemapUrl": "https://www.24heures.ch/sitemaps/news.xml"
-        },
-        {
-          "name": "Berner Zeitung - News Sitemap",
-          "sitemapUrl": "https://www.bernerzeitung.ch/sitemaps/news.xml"
-        },
-        {
-          "name": "Basler Zeitung - News Sitemap",
-          "sitemapUrl": "https://www.bazonline.ch/sitemaps/news.xml"
-        },
-        {
-          "name": "Tribune de Geneve - News Sitemap",
-          "sitemapUrl": "https://www.tdg.ch/sitemaps/news.xml"
         }
       ]
     },
