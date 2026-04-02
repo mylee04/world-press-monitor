@@ -5387,6 +5387,83 @@
           "valid": "needs verification"
         },
         {
+          "name": "Daily Hive - News Sitemap",
+          "sitemapUrl": "https://dailyhive.com/news-sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Vancouver Is Awesome",
+          "url": "https://www.vancouverisawesome.com/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "The Hub - Sitemap Index",
+          "sitemapUrl": "https://thehub.ca/sitemap_index.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "The Logic - Sitemap Index",
+          "sitemapUrl": "https://thelogic.co/sitemap_index.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Castanet Most Recent",
+          "url": "https://www.castanet.net/rss/mostrecent.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Narcity",
+          "url": "https://www.narcity.com/feed",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "MobileSyrup",
+          "url": "https://mobilesyrup.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "BetaKit",
+          "url": "https://betakit.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Curiocity",
+          "url": "https://curiocity.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "NOW Toronto",
+          "url": "https://nowtoronto.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "The Peak",
+          "url": "https://the-peak.ca/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
           "name": "The Recorder",
           "url": "https://www.recorder.ca/feed/"
         }
