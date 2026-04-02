@@ -23561,10 +23561,52 @@
         },
         {
           "name": "VE.lt - News Sitemap",
-          "url": null,
+          "url": "https://ve.lt/rss",
           "sitemapUrl": "https://www.ve.lt/sitemap_news.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Delfi EN",
+          "sitemapUrl": "https://www.delfi.lt/en/sitemap/latest.xml",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "JP.lt",
+          "url": "https://jp.lt/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Anyksta",
+          "url": "https://www.anyksta.lt/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Banga",
+          "url": "https://gargzdai.lt/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Suvalkietis",
+          "url": "https://www.suvalkietis.lt/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Alkas",
+          "url": "https://alkas.lt/feed/",
+          "status": "NEW",
+          "checkedDate": "04/02/2026",
           "valid": "valid"
         },
         {
