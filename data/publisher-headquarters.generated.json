@@ -2295,6 +2295,105 @@
     "label": "Xinhua HQ"
   },
   {
+    "country": "Colombia",
+    "publisher": "Blu Radio",
+    "city": "Bogota",
+    "region": "Bogota",
+    "lat": 4.711,
+    "lon": -74.0721,
+    "label": "Blu Radio HQ"
+  },
+  {
+    "country": "Colombia",
+    "publisher": "Caracol Radio",
+    "city": "Bogota",
+    "region": "Bogota",
+    "lat": 4.711,
+    "lon": -74.0721,
+    "label": "Caracol Radio HQ"
+  },
+  {
+    "country": "Colombia",
+    "publisher": "El Colombiano",
+    "city": "Medellin",
+    "region": "Antioquia",
+    "lat": 6.2442,
+    "lon": -75.5812,
+    "label": "El Colombiano HQ"
+  },
+  {
+    "country": "Colombia",
+    "publisher": "El Espectador",
+    "city": "Bogota",
+    "region": "Bogota",
+    "lat": 4.711,
+    "lon": -74.0721,
+    "label": "El Espectador HQ"
+  },
+  {
+    "country": "Colombia",
+    "publisher": "El Heraldo",
+    "city": "Barranquilla",
+    "region": "Atlantico",
+    "lat": 10.9639,
+    "lon": -74.7964,
+    "label": "El Heraldo HQ"
+  },
+  {
+    "country": "Colombia",
+    "publisher": "El Pais",
+    "city": "Cali",
+    "region": "Valle del Cauca",
+    "lat": 3.4516,
+    "lon": -76.532,
+    "label": "El Pais HQ"
+  },
+  {
+    "country": "Colombia",
+    "publisher": "El Tiempo",
+    "city": "Bogota",
+    "region": "Bogota",
+    "lat": 4.711,
+    "lon": -74.0721,
+    "label": "El Tiempo HQ"
+  },
+  {
+    "country": "Colombia",
+    "publisher": "InSight Crime",
+    "city": "Bogota",
+    "region": "Bogota",
+    "lat": 4.711,
+    "lon": -74.0721,
+    "label": "InSight Crime HQ"
+  },
+  {
+    "country": "Colombia",
+    "publisher": "La República",
+    "city": "Bogota",
+    "region": "Bogota",
+    "lat": 4.711,
+    "lon": -74.0721,
+    "label": "La República HQ"
+  },
+  {
+    "country": "Colombia",
+    "publisher": "Portafolio",
+    "city": "Bogota",
+    "region": "Bogota",
+    "lat": 4.711,
+    "lon": -74.0721,
+    "label": "Portafolio HQ"
+  },
+  {
+    "country": "Colombia",
+    "publisher": "Semana",
+    "city": "Bogota",
+    "region": "Bogota",
+    "lat": 4.711,
+    "lon": -74.0721,
+    "label": "Semana HQ"
+  },
+  {
     "country": "Croatia",
     "publisher": "057info",
     "city": "Zadar",
@@ -2784,9 +2883,9 @@
     "country": "Denmark",
     "publisher": "Altinget",
     "city": "Copenhagen",
-    "region": "Copenhagen",
+    "region": "Capital Region",
     "lat": 55.6761,
-    "lon": 12.5689,
+    "lon": 12.5683,
     "label": "Altinget HQ"
   },
   {
@@ -2811,9 +2910,9 @@
     "country": "Denmark",
     "publisher": "Copenhagen Post",
     "city": "Copenhagen",
-    "region": "Copenhagen",
+    "region": "Capital Region",
     "lat": 55.6761,
-    "lon": 12.5689,
+    "lon": 12.5683,
     "label": "Copenhagen Post HQ"
   },
   {
@@ -2838,9 +2937,9 @@
     "country": "Denmark",
     "publisher": "Ekstra Bladet",
     "city": "Copenhagen",
-    "region": "Copenhagen",
+    "region": "Capital Region",
     "lat": 55.6761,
-    "lon": 12.5689,
+    "lon": 12.5683,
     "label": "Ekstra Bladet HQ"
   },
   {
@@ -2864,19 +2963,19 @@
   {
     "country": "Denmark",
     "publisher": "Frihedsbrevet",
-    "city": "Frihedsbrevet",
-    "region": "Frihedsbrevet",
+    "city": "Copenhagen",
+    "region": "Capital Region",
     "lat": 55.6761,
-    "lon": 12.574,
+    "lon": 12.5683,
     "label": "Frihedsbrevet HQ"
   },
   {
     "country": "Denmark",
     "publisher": "Fyens",
     "city": "Odense",
-    "region": "Odense",
-    "lat": 55.4,
-    "lon": 10.3833,
+    "region": "Southern Denmark",
+    "lat": 55.4038,
+    "lon": 10.4024,
     "label": "Fyens HQ"
   },
   {
@@ -2896,6 +2995,15 @@
     "lat": 55.6761,
     "lon": 12.5689,
     "label": "Ingenioren HQ"
+  },
+  {
+    "country": "Denmark",
+    "publisher": "Ingeniøren",
+    "city": "Copenhagen",
+    "region": "Capital Region",
+    "lat": 55.6761,
+    "lon": 12.5683,
+    "label": "Ingeniøren HQ"
   },
   {
     "country": "Denmark",
@@ -2937,18 +3045,18 @@
     "country": "Denmark",
     "publisher": "Kristeligt Dagblad",
     "city": "Copenhagen",
-    "region": "Copenhagen",
+    "region": "Capital Region",
     "lat": 55.6761,
-    "lon": 12.5689,
+    "lon": 12.5683,
     "label": "Kristeligt Dagblad HQ"
   },
   {
     "country": "Denmark",
     "publisher": "Maskinbladet",
-    "city": "Maskinbladet",
-    "region": "Maskinbladet",
-    "lat": 56.1297,
-    "lon": 9.0236,
+    "city": "Copenhagen",
+    "region": "Capital Region",
+    "lat": 55.6761,
+    "lon": 12.5683,
     "label": "Maskinbladet HQ"
   },
   {
@@ -4977,6 +5085,42 @@
     "label": "Viva HQ"
   },
   {
+    "country": "Iran",
+    "publisher": "IFP News",
+    "city": "Tehran",
+    "region": "Tehran",
+    "lat": 35.6892,
+    "lon": 51.389,
+    "label": "IFP News HQ"
+  },
+  {
+    "country": "Iran",
+    "publisher": "Khabar Online",
+    "city": "Tehran",
+    "region": "Tehran",
+    "lat": 35.6892,
+    "lon": 51.389,
+    "label": "Khabar Online HQ"
+  },
+  {
+    "country": "Iran",
+    "publisher": "Mehr News",
+    "city": "Tehran",
+    "region": "Tehran",
+    "lat": 35.6892,
+    "lon": 51.389,
+    "label": "Mehr News HQ"
+  },
+  {
+    "country": "Iran",
+    "publisher": "Tasnim",
+    "city": "Tehran",
+    "region": "Tehran",
+    "lat": 35.6892,
+    "lon": 51.389,
+    "label": "Tasnim HQ"
+  },
+  {
     "country": "Ireland",
     "publisher": "Agriland",
     "city": "Dublin",
@@ -6001,6 +6145,87 @@
     "lat": 56.9496,
     "lon": 24.1052,
     "label": "TVNET HQ"
+  },
+  {
+    "country": "Luxembourg",
+    "publisher": "Contacto",
+    "city": "Luxembourg City",
+    "region": "Luxembourg",
+    "lat": 49.6116,
+    "lon": 6.1319,
+    "label": "Contacto HQ"
+  },
+  {
+    "country": "Luxembourg",
+    "publisher": "Delano",
+    "city": "Luxembourg City",
+    "region": "Luxembourg",
+    "lat": 49.6116,
+    "lon": 6.1319,
+    "label": "Delano HQ"
+  },
+  {
+    "country": "Luxembourg",
+    "publisher": "L'essentiel",
+    "city": "Luxembourg City",
+    "region": "Luxembourg",
+    "lat": 49.6116,
+    "lon": 6.1319,
+    "label": "L'essentiel HQ"
+  },
+  {
+    "country": "Luxembourg",
+    "publisher": "Luxembourg Times",
+    "city": "Luxembourg City",
+    "region": "Luxembourg",
+    "lat": 49.6116,
+    "lon": 6.1319,
+    "label": "Luxembourg Times HQ"
+  },
+  {
+    "country": "Luxembourg",
+    "publisher": "Luxemburger Wort",
+    "city": "Luxembourg City",
+    "region": "Luxembourg",
+    "lat": 49.6116,
+    "lon": 6.1319,
+    "label": "Luxemburger Wort HQ"
+  },
+  {
+    "country": "Luxembourg",
+    "publisher": "Luxtoday",
+    "city": "Luxembourg City",
+    "region": "Luxembourg",
+    "lat": 49.6116,
+    "lon": 6.1319,
+    "label": "Luxtoday HQ"
+  },
+  {
+    "country": "Luxembourg",
+    "publisher": "Paperjam",
+    "city": "Luxembourg City",
+    "region": "Luxembourg",
+    "lat": 49.6116,
+    "lon": 6.1319,
+    "label": "Paperjam HQ"
+  },
+  {
+    "country": "Luxembourg",
+    "publisher": "RTL Luxembourg",
+    "city": "Luxembourg City",
+    "region": "Luxembourg",
+    "lat": 49.6116,
+    "lon": 6.1319,
+    "label": "RTL Luxembourg HQ"
+  },
+  {
+    "country": "Luxembourg",
+    "publisher": "Virgule",
+    "city": "Luxembourg City",
+    "region": "Luxembourg",
+    "lat": 49.6116,
+    "lon": 6.1319,
+    "label": "Virgule HQ"
   },
   {
     "country": "Malaysia",
@@ -7236,12 +7461,183 @@
     "label": "Waikato Business News HQ"
   },
   {
+    "country": "Nigeria",
+    "publisher": "Blueprint Nigeria",
+    "city": "Abuja",
+    "region": "FCT",
+    "lat": 9.0765,
+    "lon": 7.3986,
+    "label": "Blueprint Nigeria HQ"
+  },
+  {
+    "country": "Nigeria",
+    "publisher": "BusinessDay Nigeria",
+    "city": "Lagos",
+    "region": "Lagos",
+    "lat": 6.5244,
+    "lon": 3.3792,
+    "label": "BusinessDay Nigeria HQ"
+  },
+  {
+    "country": "Nigeria",
+    "publisher": "Channels TV",
+    "city": "Lagos",
+    "region": "Lagos",
+    "lat": 6.5244,
+    "lon": 3.3792,
+    "label": "Channels TV HQ"
+  },
+  {
+    "country": "Nigeria",
+    "publisher": "Daily Post Nigeria",
+    "city": "Lagos",
+    "region": "Lagos",
+    "lat": 6.5244,
+    "lon": 3.3792,
+    "label": "Daily Post Nigeria HQ"
+  },
+  {
+    "country": "Nigeria",
+    "publisher": "Daily Trust",
+    "city": "Abuja",
+    "region": "FCT",
+    "lat": 9.0765,
+    "lon": 7.3986,
+    "label": "Daily Trust HQ"
+  },
+  {
+    "country": "Nigeria",
+    "publisher": "Independent Nigeria",
+    "city": "Lagos",
+    "region": "Lagos",
+    "lat": 6.5244,
+    "lon": 3.3792,
+    "label": "Independent Nigeria HQ"
+  },
+  {
+    "country": "Nigeria",
+    "publisher": "Leadership Nigeria",
+    "city": "Abuja",
+    "region": "FCT",
+    "lat": 9.0765,
+    "lon": 7.3986,
+    "label": "Leadership Nigeria HQ"
+  },
+  {
+    "country": "Nigeria",
+    "publisher": "Nigerian Eye",
+    "city": "Lagos",
+    "region": "Lagos",
+    "lat": 6.5244,
+    "lon": 3.3792,
+    "label": "Nigerian Eye HQ"
+  },
+  {
+    "country": "Nigeria",
+    "publisher": "People's Gazette",
+    "city": "Abuja",
+    "region": "FCT",
+    "lat": 9.0765,
+    "lon": 7.3986,
+    "label": "People's Gazette HQ"
+  },
+  {
+    "country": "Nigeria",
+    "publisher": "PM News Nigeria",
+    "city": "Lagos",
+    "region": "Lagos",
+    "lat": 6.5244,
+    "lon": 3.3792,
+    "label": "PM News Nigeria HQ"
+  },
+  {
+    "country": "Nigeria",
+    "publisher": "Premium Times Nigeria",
+    "city": "Abuja",
+    "region": "FCT",
+    "lat": 9.0765,
+    "lon": 7.3986,
+    "label": "Premium Times Nigeria HQ"
+  },
+  {
+    "country": "Nigeria",
+    "publisher": "Punch Nigeria",
+    "city": "Lagos",
+    "region": "Lagos",
+    "lat": 6.5244,
+    "lon": 3.3792,
+    "label": "Punch Nigeria HQ"
+  },
+  {
+    "country": "Nigeria",
+    "publisher": "Ripples Nigeria",
+    "city": "Lagos",
+    "region": "Lagos",
+    "lat": 6.5244,
+    "lon": 3.3792,
+    "label": "Ripples Nigeria HQ"
+  },
+  {
+    "country": "Nigeria",
+    "publisher": "Sahara Reporters",
+    "city": "Lagos",
+    "region": "Lagos",
+    "lat": 6.5244,
+    "lon": 3.3792,
+    "label": "Sahara Reporters HQ"
+  },
+  {
+    "country": "Nigeria",
+    "publisher": "TechCabal",
+    "city": "Lagos",
+    "region": "Lagos",
+    "lat": 6.5244,
+    "lon": 3.3792,
+    "label": "TechCabal HQ"
+  },
+  {
+    "country": "Nigeria",
+    "publisher": "TheCable",
+    "city": "Lagos",
+    "region": "Lagos",
+    "lat": 6.5244,
+    "lon": 3.3792,
+    "label": "TheCable HQ"
+  },
+  {
+    "country": "Nigeria",
+    "publisher": "THISDAY Live",
+    "city": "Lagos",
+    "region": "Lagos",
+    "lat": 6.5244,
+    "lon": 3.3792,
+    "label": "THISDAY Live HQ"
+  },
+  {
+    "country": "Nigeria",
+    "publisher": "Vanguard Nigeria",
+    "city": "Lagos",
+    "region": "Lagos",
+    "lat": 6.5244,
+    "lon": 3.3792,
+    "label": "Vanguard Nigeria HQ"
+  },
+  {
+    "country": "Norway",
+    "publisher": "ABC Nyheter",
+    "city": "Oslo",
+    "region": "Oslo",
+    "lat": 59.9139,
+    "lon": 10.7522,
+    "label": "ABC Nyheter HQ"
+  },
+  {
     "country": "Norway",
     "publisher": "Adresseavisen",
     "city": "Trondheim",
-    "region": "Trondheim",
-    "lat": 63.44,
-    "lon": 10.4,
+    "region": "Trondelag",
+    "lat": 63.4305,
+    "lon": 10.3951,
     "label": "Adresseavisen HQ"
   },
   {
@@ -7257,27 +7653,36 @@
     "country": "Norway",
     "publisher": "Agderposten",
     "city": "Arendal",
-    "region": "Arendal",
-    "lat": 58.4667,
-    "lon": 8.7667,
+    "region": "Agder",
+    "lat": 58.461,
+    "lon": 8.7725,
     "label": "Agderposten HQ"
   },
   {
     "country": "Norway",
     "publisher": "Altaposten",
     "city": "Alta",
-    "region": "Alta",
-    "lat": 69.9767,
-    "lon": 23.2958,
+    "region": "Finnmark",
+    "lat": 69.9689,
+    "lon": 23.2717,
     "label": "Altaposten HQ"
+  },
+  {
+    "country": "Norway",
+    "publisher": "Avisa ST",
+    "city": "Orkanger",
+    "region": "Trondelag",
+    "lat": 63.2999,
+    "lon": 9.8467,
+    "label": "Avisa ST HQ"
   },
   {
     "country": "Norway",
     "publisher": "Bergens Tidende",
     "city": "Bergen",
-    "region": "Bergen",
-    "lat": 60.3925,
-    "lon": 5.3233,
+    "region": "Vestland",
+    "lat": 60.3913,
+    "lon": 5.3221,
     "label": "Bergens Tidende HQ"
   },
   {
@@ -7291,6 +7696,15 @@
   },
   {
     "country": "Norway",
+    "publisher": "Dagen",
+    "city": "Bergen",
+    "region": "Vestland",
+    "lat": 60.3913,
+    "lon": 5.3221,
+    "label": "Dagen HQ"
+  },
+  {
+    "country": "Norway",
     "publisher": "Dagsavisen",
     "city": "Oslo",
     "region": "Oslo",
@@ -7300,9 +7714,18 @@
   },
   {
     "country": "Norway",
+    "publisher": "E24",
+    "city": "Oslo",
+    "region": "Oslo",
+    "lat": 59.9139,
+    "lon": 10.7522,
+    "label": "E24 HQ"
+  },
+  {
+    "country": "Norway",
     "publisher": "Fædrelandsvennen",
     "city": "Kristiansand",
-    "region": "Kristiansand",
+    "region": "Agder",
     "lat": 58.1467,
     "lon": 7.9956,
     "label": "Fædrelandsvennen HQ"
@@ -7318,38 +7741,101 @@
   },
   {
     "country": "Norway",
+    "publisher": "Folkebladet",
+    "city": "Finnsnes",
+    "region": "Troms",
+    "lat": 69.2296,
+    "lon": 17.9811,
+    "label": "Folkebladet HQ"
+  },
+  {
+    "country": "Norway",
+    "publisher": "Fosna-Folket",
+    "city": "Brekstad",
+    "region": "Trondelag",
+    "lat": 63.6864,
+    "lon": 9.6654,
+    "label": "Fosna-Folket HQ"
+  },
+  {
+    "country": "Norway",
+    "publisher": "Framtid i Nord",
+    "city": "Storslett",
+    "region": "Troms",
+    "lat": 69.7678,
+    "lon": 21.0256,
+    "label": "Framtid i Nord HQ"
+  },
+  {
+    "country": "Norway",
     "publisher": "Hallingdølen",
-    "city": "Ål",
-    "region": "Ål",
-    "lat": 60.6756,
-    "lon": 8.5769,
+    "city": "Aal",
+    "region": "Buskerud",
+    "lat": 60.6306,
+    "lon": 8.561,
     "label": "Hallingdølen HQ"
   },
   {
     "country": "Norway",
     "publisher": "Harstad Tidende",
     "city": "Harstad",
-    "region": "Harstad",
-    "lat": 68.7989,
-    "lon": 16.5314,
+    "region": "Troms",
+    "lat": 68.7983,
+    "lon": 16.5417,
     "label": "Harstad Tidende HQ"
   },
   {
     "country": "Norway",
+    "publisher": "Innherred",
+    "city": "Levanger",
+    "region": "Trondelag",
+    "lat": 63.7464,
+    "lon": 11.2996,
+    "label": "Innherred HQ"
+  },
+  {
+    "country": "Norway",
     "publisher": "iTromso",
-    "city": "Tromsø",
-    "region": "Tromsø Municipality",
-    "lat": 69.6496,
-    "lon": 18.957,
+    "city": "Tromso",
+    "region": "Troms",
+    "lat": 69.6492,
+    "lon": 18.9553,
     "label": "iTromso HQ"
+  },
+  {
+    "country": "Norway",
+    "publisher": "Kampanje",
+    "city": "Oslo",
+    "region": "Oslo",
+    "lat": 59.9139,
+    "lon": 10.7522,
+    "label": "Kampanje HQ"
+  },
+  {
+    "country": "Norway",
+    "publisher": "Khrono",
+    "city": "Oslo",
+    "region": "Oslo",
+    "lat": 59.9139,
+    "lon": 10.7522,
+    "label": "Khrono HQ"
+  },
+  {
+    "country": "Norway",
+    "publisher": "Kommunal Rapport",
+    "city": "Oslo",
+    "region": "Oslo",
+    "lat": 59.9139,
+    "lon": 10.7522,
+    "label": "Kommunal Rapport HQ"
   },
   {
     "country": "Norway",
     "publisher": "Lister24",
     "city": "Farsund",
-    "region": "Farsund Municipality",
-    "lat": 58.0828,
-    "lon": 6.7528,
+    "region": "Agder",
+    "lat": 58.0948,
+    "lon": 6.8047,
     "label": "Lister24 HQ"
   },
   {
@@ -7374,19 +7860,46 @@
     "country": "Norway",
     "publisher": "Romsdals Budstikke",
     "city": "Molde",
-    "region": "Molde Municipality",
-    "lat": 62.7333,
-    "lon": 7.1833,
+    "region": "More og Romsdal",
+    "lat": 62.7375,
+    "lon": 7.1591,
     "label": "Romsdals Budstikke HQ"
   },
   {
     "country": "Norway",
     "publisher": "Stavanger Aftenblad",
     "city": "Stavanger",
-    "region": "Stavanger",
+    "region": "Rogaland",
     "lat": 58.97,
-    "lon": 5.7314,
+    "lon": 5.7331,
     "label": "Stavanger Aftenblad HQ"
+  },
+  {
+    "country": "Norway",
+    "publisher": "Sunnhordland",
+    "city": "Stord",
+    "region": "Vestland",
+    "lat": 59.7805,
+    "lon": 5.4996,
+    "label": "Sunnhordland HQ"
+  },
+  {
+    "country": "Norway",
+    "publisher": "Sunnmorsposten",
+    "city": "Alesund",
+    "region": "More og Romsdal",
+    "lat": 62.4722,
+    "lon": 6.1495,
+    "label": "Sunnmorsposten HQ"
+  },
+  {
+    "country": "Norway",
+    "publisher": "Teknisk Ukeblad",
+    "city": "Oslo",
+    "region": "Oslo",
+    "lat": 59.9139,
+    "lon": 10.7522,
+    "label": "Teknisk Ukeblad HQ"
   },
   {
     "country": "Norway",
@@ -7399,12 +7912,75 @@
   },
   {
     "country": "Norway",
+    "publisher": "Varden",
+    "city": "Skien",
+    "region": "Telemark",
+    "lat": 59.2096,
+    "lon": 9.609,
+    "label": "Varden HQ"
+  },
+  {
+    "country": "Norway",
+    "publisher": "Vårt Land",
+    "city": "Oslo",
+    "region": "Oslo",
+    "lat": 59.9139,
+    "lon": 10.7522,
+    "label": "Vårt Land HQ"
+  },
+  {
+    "country": "Norway",
     "publisher": "VG",
     "city": "Oslo",
     "region": "Oslo",
     "lat": 59.9133,
     "lon": 10.7389,
     "label": "VG HQ"
+  },
+  {
+    "country": "Norway",
+    "publisher": "VOL",
+    "city": "Sortland",
+    "region": "Nordland",
+    "lat": 68.6957,
+    "lon": 15.4117,
+    "label": "VOL HQ"
+  },
+  {
+    "country": "Oman",
+    "publisher": "Muscat Daily",
+    "city": "Muscat",
+    "region": "Muscat",
+    "lat": 23.588,
+    "lon": 58.3829,
+    "label": "Muscat Daily HQ"
+  },
+  {
+    "country": "Oman",
+    "publisher": "Oman Observer",
+    "city": "Muscat",
+    "region": "Muscat",
+    "lat": 23.588,
+    "lon": 58.3829,
+    "label": "Oman Observer HQ"
+  },
+  {
+    "country": "Oman",
+    "publisher": "The Arabian Stories",
+    "city": "Muscat",
+    "region": "Muscat",
+    "lat": 23.588,
+    "lon": 58.3829,
+    "label": "The Arabian Stories HQ"
+  },
+  {
+    "country": "Oman",
+    "publisher": "Times of Oman",
+    "city": "Muscat",
+    "region": "Muscat",
+    "lat": 23.588,
+    "lon": 58.3829,
+    "label": "Times of Oman HQ"
   },
   {
     "country": "Philippines",
@@ -8521,6 +9097,105 @@
     "lat": 44.4268,
     "lon": 26.1025,
     "label": "Ziare.com HQ"
+  },
+  {
+    "country": "Saudi Arabia",
+    "publisher": "Ajel",
+    "city": "Riyadh",
+    "region": "Riyadh",
+    "lat": 24.7136,
+    "lon": 46.6753,
+    "label": "Ajel HQ"
+  },
+  {
+    "country": "Saudi Arabia",
+    "publisher": "Al Bilad Daily",
+    "city": "Jeddah",
+    "region": "Makkah",
+    "lat": 21.4858,
+    "lon": 39.1925,
+    "label": "Al Bilad Daily HQ"
+  },
+  {
+    "country": "Saudi Arabia",
+    "publisher": "Al Eqtisadiah",
+    "city": "Riyadh",
+    "region": "Riyadh",
+    "lat": 24.7136,
+    "lon": 46.6753,
+    "label": "Al Eqtisadiah HQ"
+  },
+  {
+    "country": "Saudi Arabia",
+    "publisher": "Al Jazirah",
+    "city": "Riyadh",
+    "region": "Riyadh",
+    "lat": 24.7136,
+    "lon": 46.6753,
+    "label": "Al Jazirah HQ"
+  },
+  {
+    "country": "Saudi Arabia",
+    "publisher": "Al Madina",
+    "city": "Jeddah",
+    "region": "Makkah",
+    "lat": 21.4858,
+    "lon": 39.1925,
+    "label": "Al Madina HQ"
+  },
+  {
+    "country": "Saudi Arabia",
+    "publisher": "Arab News",
+    "city": "Jeddah",
+    "region": "Makkah",
+    "lat": 21.4858,
+    "lon": 39.1925,
+    "label": "Arab News HQ"
+  },
+  {
+    "country": "Saudi Arabia",
+    "publisher": "Makkah Newspaper",
+    "city": "Jeddah",
+    "region": "Makkah",
+    "lat": 21.4858,
+    "lon": 39.1925,
+    "label": "Makkah Newspaper HQ"
+  },
+  {
+    "country": "Saudi Arabia",
+    "publisher": "Okaz",
+    "city": "Jeddah",
+    "region": "Makkah",
+    "lat": 21.4858,
+    "lon": 39.1925,
+    "label": "Okaz HQ"
+  },
+  {
+    "country": "Saudi Arabia",
+    "publisher": "Sabq",
+    "city": "Riyadh",
+    "region": "Riyadh",
+    "lat": 24.7136,
+    "lon": 46.6753,
+    "label": "Sabq HQ"
+  },
+  {
+    "country": "Saudi Arabia",
+    "publisher": "Saudi Gazette",
+    "city": "Jeddah",
+    "region": "Makkah",
+    "lat": 21.4858,
+    "lon": 39.1925,
+    "label": "Saudi Gazette HQ"
+  },
+  {
+    "country": "Saudi Arabia",
+    "publisher": "Saudi Press Agency",
+    "city": "Riyadh",
+    "region": "Riyadh",
+    "lat": 24.7136,
+    "lon": 46.6753,
+    "label": "Saudi Press Agency HQ"
   },
   {
     "country": "Serbia",
@@ -10116,6 +10791,159 @@
     "label": "Youth Daily News HQ"
   },
   {
+    "country": "Thailand",
+    "publisher": "Bangkok Insight",
+    "city": "Bangkok",
+    "region": "Bangkok",
+    "lat": 13.7563,
+    "lon": 100.5018,
+    "label": "Bangkok Insight HQ"
+  },
+  {
+    "country": "Thailand",
+    "publisher": "Bangkok Post",
+    "city": "Bangkok",
+    "region": "Bangkok",
+    "lat": 13.7563,
+    "lon": 100.5018,
+    "label": "Bangkok Post HQ"
+  },
+  {
+    "country": "Thailand",
+    "publisher": "Hello! Thailand",
+    "city": "Bangkok",
+    "region": "Bangkok",
+    "lat": 13.7563,
+    "lon": 100.5018,
+    "label": "Hello! Thailand HQ"
+  },
+  {
+    "country": "Thailand",
+    "publisher": "InfoQuest",
+    "city": "Bangkok",
+    "region": "Bangkok",
+    "lat": 13.7563,
+    "lon": 100.5018,
+    "label": "InfoQuest HQ"
+  },
+  {
+    "country": "Thailand",
+    "publisher": "Komchadluek",
+    "city": "Bangkok",
+    "region": "Bangkok",
+    "lat": 13.7563,
+    "lon": 100.5018,
+    "label": "Komchadluek HQ"
+  },
+  {
+    "country": "Thailand",
+    "publisher": "Nation Thailand",
+    "city": "Bangkok",
+    "region": "Bangkok",
+    "lat": 13.7563,
+    "lon": 100.5018,
+    "label": "Nation Thailand HQ"
+  },
+  {
+    "country": "Thailand",
+    "publisher": "Novosti Phuketa",
+    "city": "Phuket",
+    "region": "Phuket",
+    "lat": 7.8804,
+    "lon": 98.3923,
+    "label": "Novosti Phuketa HQ"
+  },
+  {
+    "country": "Thailand",
+    "publisher": "Post Today",
+    "city": "Bangkok",
+    "region": "Bangkok",
+    "lat": 13.7563,
+    "lon": 100.5018,
+    "label": "Post Today HQ"
+  },
+  {
+    "country": "Thailand",
+    "publisher": "PPTVHD36",
+    "city": "Bangkok",
+    "region": "Bangkok",
+    "lat": 13.7563,
+    "lon": 100.5018,
+    "label": "PPTVHD36 HQ"
+  },
+  {
+    "country": "Thailand",
+    "publisher": "Prachatai English",
+    "city": "Bangkok",
+    "region": "Bangkok",
+    "lat": 13.7563,
+    "lon": 100.5018,
+    "label": "Prachatai English HQ"
+  },
+  {
+    "country": "Thailand",
+    "publisher": "Prestige Thailand",
+    "city": "Bangkok",
+    "region": "Bangkok",
+    "lat": 13.7563,
+    "lon": 100.5018,
+    "label": "Prestige Thailand HQ"
+  },
+  {
+    "country": "Thailand",
+    "publisher": "Thai Post",
+    "city": "Bangkok",
+    "region": "Bangkok",
+    "lat": 13.7563,
+    "lon": 100.5018,
+    "label": "Thai Post HQ"
+  },
+  {
+    "country": "Thailand",
+    "publisher": "Thansettakij",
+    "city": "Bangkok",
+    "region": "Bangkok",
+    "lat": 13.7563,
+    "lon": 100.5018,
+    "label": "Thansettakij HQ"
+  },
+  {
+    "country": "Thailand",
+    "publisher": "The Phuket News",
+    "city": "Phuket",
+    "region": "Phuket",
+    "lat": 7.8804,
+    "lon": 98.3923,
+    "label": "The Phuket News HQ"
+  },
+  {
+    "country": "Thailand",
+    "publisher": "The Standard",
+    "city": "Bangkok",
+    "region": "Bangkok",
+    "lat": 13.7563,
+    "lon": 100.5018,
+    "label": "The Standard HQ"
+  },
+  {
+    "country": "Thailand",
+    "publisher": "The Thaiger",
+    "city": "Phuket",
+    "region": "Phuket",
+    "lat": 7.8804,
+    "lon": 98.3923,
+    "label": "The Thaiger HQ"
+  },
+  {
+    "country": "Thailand",
+    "publisher": "Workpoint Today",
+    "city": "Bangkok",
+    "region": "Bangkok",
+    "lat": 13.7563,
+    "lon": 100.5018,
+    "label": "Workpoint Today HQ"
+  },
+  {
     "country": "Turkey",
     "publisher": "Ahaber",
     "city": "Istanbul",
@@ -10447,6 +11275,105 @@
     "lat": 50.4501,
     "lon": 30.5234,
     "label": "UNN HQ"
+  },
+  {
+    "country": "United Arab Emirates",
+    "publisher": "Al Ittihad",
+    "city": "Abu Dhabi",
+    "region": "Abu Dhabi",
+    "lat": 24.4539,
+    "lon": 54.3773,
+    "label": "Al Ittihad HQ"
+  },
+  {
+    "country": "United Arab Emirates",
+    "publisher": "Al Khaleej",
+    "city": "Sharjah",
+    "region": "Sharjah",
+    "lat": 25.3463,
+    "lon": 55.4209,
+    "label": "Al Khaleej HQ"
+  },
+  {
+    "country": "United Arab Emirates",
+    "publisher": "Albayan",
+    "city": "Dubai",
+    "region": "Dubai",
+    "lat": 25.2048,
+    "lon": 55.2708,
+    "label": "Albayan HQ"
+  },
+  {
+    "country": "United Arab Emirates",
+    "publisher": "Arabian Business",
+    "city": "Dubai",
+    "region": "Dubai",
+    "lat": 25.2048,
+    "lon": 55.2708,
+    "label": "Arabian Business HQ"
+  },
+  {
+    "country": "United Arab Emirates",
+    "publisher": "Economy Middle East",
+    "city": "Dubai",
+    "region": "Dubai",
+    "lat": 25.2048,
+    "lon": 55.2708,
+    "label": "Economy Middle East HQ"
+  },
+  {
+    "country": "United Arab Emirates",
+    "publisher": "Emarat Al Youm",
+    "city": "Dubai",
+    "region": "Dubai",
+    "lat": 25.2048,
+    "lon": 55.2708,
+    "label": "Emarat Al Youm HQ"
+  },
+  {
+    "country": "United Arab Emirates",
+    "publisher": "Emirates 24/7",
+    "city": "Dubai",
+    "region": "Dubai",
+    "lat": 25.2048,
+    "lon": 55.2708,
+    "label": "Emirates 24/7 HQ"
+  },
+  {
+    "country": "United Arab Emirates",
+    "publisher": "Gulf Business",
+    "city": "Dubai",
+    "region": "Dubai",
+    "lat": 25.2048,
+    "lon": 55.2708,
+    "label": "Gulf Business HQ"
+  },
+  {
+    "country": "United Arab Emirates",
+    "publisher": "Gulf News",
+    "city": "Dubai",
+    "region": "Dubai",
+    "lat": 25.2048,
+    "lon": 55.2708,
+    "label": "Gulf News HQ"
+  },
+  {
+    "country": "United Arab Emirates",
+    "publisher": "Khaleej Times",
+    "city": "Dubai",
+    "region": "Dubai",
+    "lat": 25.2048,
+    "lon": 55.2708,
+    "label": "Khaleej Times HQ"
+  },
+  {
+    "country": "United Arab Emirates",
+    "publisher": "The National",
+    "city": "Abu Dhabi",
+    "region": "Abu Dhabi",
+    "lat": 24.4539,
+    "lon": 54.3773,
+    "label": "The National HQ"
   },
   {
     "country": "United Kingdom",
