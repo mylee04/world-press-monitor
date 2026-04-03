@@ -102,6 +102,19 @@ const COUNTRY_SOURCES_REFRESH_MS = 30 * 60 * 1000;
 const SOURCE_DETAIL_CACHE_STALE_MS = 10 * 60 * 1000;
 const SOURCE_DETAIL_REFRESH_MS = 15 * 60 * 1000;
 
+const PORTAL_CONFIG_ERROR_MESSAGES = new Set([
+  'Customer API base URL is not configured on the portal server.',
+  'Internal API token is not configured on the portal server.',
+]);
+
+function mapUserFacingError(error: string): string {
+  const normalized = error.trim();
+  if (PORTAL_CONFIG_ERROR_MESSAGES.has(normalized)) {
+    return 'Map metrics data is currently unavailable. Please try again later.';
+  }
+  return normalized;
+}
+
 type CountryViewport = {
   scale: number;
   tx: number;
@@ -2077,8 +2090,8 @@ export function MapView() {
         sourcesState.error,
         worldState.error,
       ]
+        .map((error) => (error ? mapUserFacingError(error) : ''))
         .filter((value): value is string => Boolean(value))
-        .map((error) => error.trim())
     )
   );
 
