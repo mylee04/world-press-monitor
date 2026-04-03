@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto';
 import { inferGeoFromTitle, inferGeoFromCountry } from '@/lib/geo';
+import { resolveForeignOperatedSource } from '@/lib/map-foreign-operated';
 import { resolvePublisherHeadquarters } from '@/lib/publisher-headquarters';
 import { resolveSourceHeadquarters } from '@/lib/source-headquarters';
 
@@ -78,7 +79,10 @@ export function inferSourceCoordinate(
   lon: number;
   city: string | null;
   region: string | null;
-  locationKind: 'headquarters' | 'inferred-city' | 'hub' | 'country-fallback';
+  locationKind: 'headquarters' | 'inferred-city' | 'hub' | 'foreign-operated' | 'country-fallback';
+  corporateCountry?: string | null;
+  corporateRegion?: string | null;
+  corporateCity?: string | null;
 } {
   const headquarters = resolveSourceHeadquarters(source, country);
   if (headquarters) {
@@ -112,23 +116,46 @@ export function inferSourceCoordinate(
   const inferred = inferGeoFromTitle(source, country);
   if (typeof inferred.lat === 'number' && typeof inferred.lon === 'number') {
     const usedCountryFallback = !inferred.locationName || inferred.locationName === country;
-    if (usedCountryFallback) {
-      const hub = PRIMARY_MEDIA_HUBS.get(country);
-      if (hub) {
-        const jittered = withStableJitter(hub.lat, hub.lon, `${country}:${source}`, CITY_JITTER);
-        return { ...jittered, city: hub.name, region: hub.name, locationKind: 'hub' };
-      }
-      const jittered = withStableJitter(inferred.lat, inferred.lon, `${country}:${source}`, COUNTRY_JITTER);
-      return { ...jittered, city: null, region: null, locationKind: 'country-fallback' };
+    if (!usedCountryFallback) {
+      const jittered = withStableJitter(inferred.lat, inferred.lon, `${country}:${source}`, CITY_JITTER);
+      return {
+        lat: jittered.lat,
+        lon: jittered.lon,
+        city: inferred.locationName || null,
+        region: inferred.locationName || null,
+        locationKind: 'inferred-city',
+      };
     }
-    const jittered = withStableJitter(inferred.lat, inferred.lon, `${country}:${source}`, CITY_JITTER);
+  }
+
+  const foreignOperated = resolveForeignOperatedSource(source, country, options?.publisher);
+  if (foreignOperated) {
+    const jittered = withStableJitter(
+      foreignOperated.corporateLat,
+      foreignOperated.corporateLon,
+      `foreign-operated:${country}:${options?.publisher}:${source}`,
+      HEADQUARTERS_JITTER
+    );
     return {
       lat: jittered.lat,
       lon: jittered.lon,
-      city: inferred.locationName || null,
-      region: inferred.locationName || null,
-      locationKind: 'inferred-city',
+      city: null,
+      region: null,
+      locationKind: 'foreign-operated',
+      corporateCountry: foreignOperated.corporateCountry,
+      corporateRegion: foreignOperated.corporateRegion,
+      corporateCity: foreignOperated.corporateCity,
     };
+  }
+
+  if (typeof inferred.lat === 'number' && typeof inferred.lon === 'number') {
+    const hub = PRIMARY_MEDIA_HUBS.get(country);
+    if (hub) {
+      const jittered = withStableJitter(hub.lat, hub.lon, `${country}:${source}`, CITY_JITTER);
+      return { ...jittered, city: hub.name, region: hub.name, locationKind: 'hub' };
+    }
+    const jittered = withStableJitter(inferred.lat, inferred.lon, `${country}:${source}`, COUNTRY_JITTER);
+    return { ...jittered, city: null, region: null, locationKind: 'country-fallback' };
   }
 
   const fallback = inferGeoFromCountry(country);

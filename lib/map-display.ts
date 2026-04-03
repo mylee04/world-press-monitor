@@ -81,8 +81,9 @@ export function sourceMethodLabel(value: MapSourceMetricRow['method']): string {
 export function sourceLocationKindLabel(
   value: MapSourceMetricRow['locationKind'] | MapSourceDetailResponse['locationKind']
 ): string {
-  if (value === 'headquarters') return 'HQ';
+  if (value === 'headquarters') return 'In-country HQ';
   if (value === 'inferred-city') return 'Inferred city';
   if (value === 'hub') return 'City hub';
-  return 'Country fallback';
+  if (value === 'foreign-operated') return 'Foreign-operated';
+  return 'National fallback';
 }

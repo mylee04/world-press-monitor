@@ -690,8 +690,8 @@ export function deriveTopRegionsFromSources(items: MapSourceMetricRow[], country
   const byRegion = new Map<string, { count: number; sources: number; unmapped: boolean }>();
   for (const item of items) {
     if (!isSourceWindowActive(item, window)) continue;
-    const unmapped = item.locationKind === 'country-fallback';
-    const name = unmapped ? 'Unmapped / National' : item.city || item.region || country;
+    const unmapped = item.locationKind === 'country-fallback' || item.locationKind === 'foreign-operated';
+    const name = item.locationKind === 'foreign-operated' ? 'Foreign-operated' : unmapped ? 'Unmapped / National' : item.city || item.region || country;
     const current = byRegion.get(name) || { count: 0, sources: 0, unmapped: false };
     current.count += getSourceWindowMetrics(item, window).published;
     current.sources += 1;
@@ -715,8 +715,8 @@ export function deriveTopDegradedRegionsFromSources(
   const byRegion = new Map<string, { degradedSources: number; sources: number; pub24h: number; degradedPub24h: number; unmapped: boolean }>();
   for (const item of items) {
     if (!isSourceWindowActive(item, window)) continue;
-    const unmapped = item.locationKind === 'country-fallback';
-    const name = unmapped ? 'Unmapped / National' : item.city || item.region || country;
+    const unmapped = item.locationKind === 'country-fallback' || item.locationKind === 'foreign-operated';
+    const name = item.locationKind === 'foreign-operated' ? 'Foreign-operated' : unmapped ? 'Unmapped / National' : item.city || item.region || country;
     const current = byRegion.get(name) || {
       degradedSources: 0,
       sources: 0,

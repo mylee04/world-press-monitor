@@ -19,7 +19,10 @@ import type { MapSourceDetailResponse } from '@/lib/map-types';
 
 export async function loadMapSourceDetail(sourceName: string): Promise<MapSourceDetailResponse | null> {
   const { countryHint, source: normalizedSource } = parseMapSourceId(sourceName);
-  const rows = await readRecentSourceMetrics(`coalesce(nullif(trim(e.source), ''), '') <> ''`);
+  const [rows, healthBySource] = await Promise.all([
+    readRecentSourceMetrics(`coalesce(nullif(trim(e.source), ''), '') <> ''`),
+    readLatestHealthBySource(),
+  ]);
   const matchingRows = rows.filter((row) => {
     if (!matchesDisplaySource(row.source, normalizedSource)) return false;
     if (!countryHint) return true;
@@ -31,7 +34,6 @@ export async function loadMapSourceDetail(sourceName: string): Promise<MapSource
   const rawSourceNames = [...new Set(matchingRows.map((row) => row.source))];
   const meta = getSourceMeta(normalizedSource);
   const method = classifySourceMethod(meta);
-  const healthBySource = await readLatestHealthBySource();
   const healthRow = healthBySource.get(normalizeSourceKey(normalizedSource));
   const publisherInfo = resolvePublisherInfo(normalizedSource, country);
   const coord = inferSourceCoordinate(normalizedSource, country, {
@@ -61,6 +63,9 @@ export async function loadMapSourceDetail(sourceName: string): Promise<MapSource
     region: coord.region,
     city: coord.city,
     locationKind: coord.locationKind,
+    corporateCountry: coord.corporateCountry || null,
+    corporateRegion: coord.corporateRegion || null,
+    corporateCity: coord.corporateCity || null,
     lat: coord.lat,
     lon: coord.lon,
     method,

@@ -76,6 +76,42 @@ function degradedShare(row: MapCountryMetricRow, window: MapMetricWindow): numbe
   return metrics.degradedSources / metrics.activeSources;
 }
 
+function formatPlace(city: string | null, region: string | null, country?: string | null): string {
+  const parts: string[] = [];
+  if (city) parts.push(city);
+  if (region && region !== city) parts.push(region);
+  if (country && country !== region && country !== city) parts.push(country);
+  return parts.length > 0 ? parts.join(', ') : 'n/a';
+}
+
+function operatingLocationLabel(sourceDetail: MapSourceDetailResponse): string {
+  if (sourceDetail.locationKind === 'foreign-operated') return 'No in-country operating point';
+  if (sourceDetail.locationKind === 'country-fallback') return 'National / Unmapped';
+  return sourceDetail.city || sourceDetail.region || sourceDetail.country;
+}
+
+function corporateHqLabel(sourceDetail: MapSourceDetailResponse): string {
+  if (sourceDetail.corporateCountry) {
+    return formatPlace(sourceDetail.corporateCity, sourceDetail.corporateRegion, sourceDetail.corporateCountry);
+  }
+  if (sourceDetail.locationKind === 'headquarters') {
+    return formatPlace(sourceDetail.city, sourceDetail.region, sourceDetail.country);
+  }
+  return 'n/a';
+}
+
+function mapUserFacingError(error: string): string {
+  const normalized = error.trim();
+  const normalizedKey = normalized.toLowerCase();
+  if (
+    normalizedKey === 'customer api base url is not configured on the portal server.' ||
+    normalizedKey === 'internal api token is not configured on the portal server.'
+  ) {
+    return 'Map metrics data is currently unavailable. Please try again later.';
+  }
+  return normalized;
+}
+
 function renderPanelHead(props: MapDetailDrawerProps): ReactNode {
   const {
     mapMode,
@@ -193,9 +229,9 @@ export function MapDetailDrawer(props: MapDetailDrawerProps) {
               <span>click a market to drill down</span>
             </div>
             <div className="map-list">
-              {selectedPublisher.countries.slice(0, 10).map((item) => (
+              {selectedPublisher.countries.slice(0, 10).map((item, index) => (
                 <button
-                  key={item.country}
+                  key={`${item.country}-${index}`}
                   type="button"
                   className="map-list-row"
                   onClick={() => onFocusCountry(item.country)}
@@ -225,9 +261,9 @@ export function MapDetailDrawer(props: MapDetailDrawerProps) {
               <span>sorted by degraded share</span>
             </div>
             <div className="map-list">
-              {topDegradedCountries.slice(0, 8).map((item) => (
+              {topDegradedCountries.slice(0, 8).map((item, index) => (
                 <button
-                  key={item.country}
+                  key={`${item.country}-${index}`}
                   type="button"
                   className="map-list-row"
                   onClick={() => onFocusCountry(item.country)}
@@ -252,11 +288,11 @@ export function MapDetailDrawer(props: MapDetailDrawerProps) {
           {mapMode === 'health'
             ? 'Choose a country, then click a city or region bubble. The drawer will prioritize degraded sources and show source-level health detail.'
             : mapMode === 'publishers'
-              ? 'Choose a country from the selected publisher footprint, then click a city or region bubble to inspect sources from that network.'
+                ? 'Choose a country from the selected publisher footprint, then click a city or region bubble to inspect sources from that network.'
               : compactHint && !selectedCountry
                 ? 'Choose a country, then click a city or region bubble to inspect sources.'
                 : compactHint && selectedCountry
-                  ? 'Click a city or region bubble to inspect sources. National fallback sources stay in the country panel and are not plotted on the map.'
+                  ? 'Click a city or region bubble to inspect sources. National fallback and foreign-operated sources stay in the country panel and are not plotted on the map.'
                   : 'Choose a country, then click a city or region bubble. The drawer will list sources in that area, and from there you can open full source detail.'}
         </div>
       ) : !selectedSource && selectedCluster ? (
@@ -317,10 +353,11 @@ export function MapDetailDrawer(props: MapDetailDrawerProps) {
           <div className="map-detail-meta">
             <div><span>Publisher</span><strong>{sourceDetail.publisher || sourceDetail.source}</strong></div>
             <div><span>Publisher Confidence</span><strong>{publisherConfidenceLabel(sourceDetail.publisherConfidence)}</strong></div>
-            <div><span>Country</span><strong>{sourceDetail.country}</strong></div>
+            <div><span>Market Country</span><strong>{sourceDetail.country}</strong></div>
             <div><span>Method</span><strong>{sourceMethodLabel(sourceDetail.method)}</strong></div>
-            <div><span>Location</span><strong>{sourceDetail.region || sourceDetail.city || 'National'}</strong></div>
-            <div><span>Coordinate</span><strong>{sourceLocationKindLabel(sourceDetail.locationKind)}</strong></div>
+            <div><span>Operating Location</span><strong>{operatingLocationLabel(sourceDetail)}</strong></div>
+            <div><span>Corporate HQ</span><strong>{corporateHqLabel(sourceDetail)}</strong></div>
+            <div><span>Location Basis</span><strong>{sourceLocationKindLabel(sourceDetail.locationKind)}</strong></div>
           </div>
 
           <div className="map-detail-tab-row" role="tablist" aria-label="Source detail sections">
@@ -403,7 +440,7 @@ export function MapDetailDrawer(props: MapDetailDrawerProps) {
           </div>
         </div>
       ) : sourceDetailError ? (
-        <div className="panel danger">{sourceDetailError}</div>
+        <div className="panel danger">{mapUserFacingError(sourceDetailError)}</div>
       ) : (
         <div className="panel muted">Source detail is unavailable.</div>
       )}

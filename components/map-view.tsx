@@ -102,14 +102,13 @@ const COUNTRY_SOURCES_REFRESH_MS = 30 * 60 * 1000;
 const SOURCE_DETAIL_CACHE_STALE_MS = 10 * 60 * 1000;
 const SOURCE_DETAIL_REFRESH_MS = 15 * 60 * 1000;
 
-const PORTAL_CONFIG_ERROR_MESSAGES = new Set([
-  'Customer API base URL is not configured on the portal server.',
-  'Internal API token is not configured on the portal server.',
-]);
-
 function mapUserFacingError(error: string): string {
   const normalized = error.trim();
-  if (PORTAL_CONFIG_ERROR_MESSAGES.has(normalized)) {
+  const normalizedKey = normalized.toLowerCase();
+  if (
+    normalizedKey === 'customer api base url is not configured on the portal server.' ||
+    normalizedKey === 'internal api token is not configured on the portal server.'
+  ) {
     return 'Map metrics data is currently unavailable. Please try again later.';
   }
   return normalized;
@@ -506,6 +505,115 @@ function buildNonOverlappingLabels<T extends { x: number; y: number }>(
   return accepted;
 }
 
+type PlacedClusterLabel = {
+  cluster: CountrySourceCluster;
+  point: { x: number; y: number };
+  x: number;
+  y: number;
+  anchor: 'start' | 'end';
+  width: number;
+};
+
+const COUNTRY_LABEL_MIN_WIDTH = 58;
+const COUNTRY_LABEL_MAX_WIDTH = 220;
+const COUNTRY_LABEL_LINE_HEIGHT = 20;
+const COUNTRY_LABEL_TEXT_OFFSET = 12;
+const COUNTRY_LABEL_COLLISION_PAD = 10;
+
+function estimateCountryLabelWidth(text: string): number {
+  return Math.min(COUNTRY_LABEL_MAX_WIDTH, Math.max(COUNTRY_LABEL_MIN_WIDTH, Math.round(text.length * 7.4 + 18)));
+}
+
+function rectsOverlap(
+  a: { left: number; right: number; top: number; bottom: number },
+  b: { left: number; right: number; top: number; bottom: number },
+  padding = 0
+): boolean {
+  return !(
+    a.right + padding <= b.left ||
+    a.left - padding >= b.right ||
+    a.bottom + padding <= b.top ||
+    a.top - padding >= b.bottom
+  );
+}
+
+function buildCountryPlaneLabels(
+  clusters: CountrySourceCluster[],
+  window: MapMetricWindow,
+  safeInsets: CountrySafeInsets
+): PlacedClusterLabel[] {
+  const frame = {
+    minX: safeInsets.left + 12,
+    maxX: GLOBE_WIDTH - safeInsets.right - 12,
+    minY: safeInsets.top + 12,
+    maxY: GLOBE_HEIGHT - safeInsets.bottom - 12,
+  };
+  const centerX = (frame.minX + frame.maxX) / 2;
+  const centerY = (frame.minY + frame.maxY) / 2;
+  const occupied: Array<{ left: number; right: number; top: number; bottom: number }> = [];
+  const placed: PlacedClusterLabel[] = [];
+
+  const candidates = [...clusters]
+    .sort((a, b) => getClusterWindowPublished(b, window) - getClusterWindowPublished(a, window))
+    .slice(0, 8)
+    .map((cluster) => {
+      const text = cluster.sourceCount > 1 ? `${cluster.name} (${cluster.sourceCount})` : cluster.name;
+      return {
+        cluster,
+        point: cluster.point,
+        text,
+        width: estimateCountryLabelWidth(text),
+      };
+    });
+
+  for (const item of candidates) {
+    const preferRight = item.point.x < centerX;
+    const preferBelow = item.point.y < centerY;
+    const verticalOffsets = preferBelow ? [12, 24, -10, -22] : [-10, -22, 12, 24];
+    const horizontalSides = preferRight ? ['right', 'left'] : ['left', 'right'];
+    let chosen: PlacedClusterLabel | null = null;
+
+    for (const side of horizontalSides) {
+      for (const dy of verticalOffsets) {
+        const anchor = side === 'right' ? 'start' : 'end';
+        const x = round(item.point.x + (side === 'right' ? COUNTRY_LABEL_TEXT_OFFSET : -COUNTRY_LABEL_TEXT_OFFSET), 2);
+        const y = round(item.point.y + dy, 2);
+        const left = anchor === 'start' ? x : x - item.width;
+        const right = anchor === 'start' ? x + item.width : x;
+        const top = y - COUNTRY_LABEL_LINE_HEIGHT + 4;
+        const bottom = y + 4;
+
+        if (left < frame.minX || right > frame.maxX || top < frame.minY || bottom > frame.maxY) {
+          continue;
+        }
+
+        const collides = occupied.some((rect) => rectsOverlap(rect, { left, right, top, bottom }, COUNTRY_LABEL_COLLISION_PAD));
+        if (collides) {
+          continue;
+        }
+
+        chosen = {
+          cluster: item.cluster,
+          point: item.point,
+          x,
+          y,
+          anchor,
+          width: item.width,
+        };
+        occupied.push({ left, right, top, bottom });
+        break;
+      }
+      if (chosen) break;
+    }
+
+    if (chosen) {
+      placed.push(chosen);
+    }
+  }
+
+  return placed;
+}
+
 function mergeHealthStatus(values: MapSourceMetricRow['health'][]): MapSourceMetricRow['health'] {
   if (values.includes('failing')) return 'failing';
   if (values.includes('degraded')) return 'degraded';
@@ -707,8 +815,8 @@ function deriveTopRegionsFromSources(items: MapSourceMetricRow[], country: strin
   const byRegion = new Map<string, { count: number; sources: number; unmapped: boolean }>();
   for (const item of items) {
     if (!isSourceWindowActive(item, window)) continue;
-    const unmapped = item.locationKind === 'country-fallback';
-    const name = unmapped ? 'Unmapped / National' : item.city || item.region || country;
+    const unmapped = item.locationKind === 'country-fallback' || item.locationKind === 'foreign-operated';
+    const name = item.locationKind === 'foreign-operated' ? 'Foreign-operated' : unmapped ? 'Unmapped / National' : item.city || item.region || country;
     const current = byRegion.get(name) || { count: 0, sources: 0, unmapped: false };
     current.count += getSourceWindowMetrics(item, window).published;
     current.sources += 1;
@@ -727,8 +835,8 @@ function deriveTopDegradedRegionsFromSources(items: MapSourceMetricRow[], countr
   const byRegion = new Map<string, { degradedSources: number; sources: number; pub24h: number; degradedPub24h: number; unmapped: boolean }>();
   for (const item of items) {
     if (!isSourceWindowActive(item, window)) continue;
-    const unmapped = item.locationKind === 'country-fallback';
-    const name = unmapped ? 'Unmapped / National' : item.city || item.region || country;
+    const unmapped = item.locationKind === 'country-fallback' || item.locationKind === 'foreign-operated';
+    const name = item.locationKind === 'foreign-operated' ? 'Foreign-operated' : unmapped ? 'Unmapped / National' : item.city || item.region || country;
     const current = byRegion.get(name) || {
       degradedSources: 0,
       sources: 0,
@@ -1174,19 +1282,8 @@ function CountryPlaneSvg({
   const clusters = useMemo(() => buildCountrySourceClusters(projected, window), [projected, window]);
 
   const clusterLabels = useMemo(() => {
-    return buildNonOverlappingLabels(
-      [...clusters]
-        .sort((a, b) => getClusterWindowPublished(b, window) - getClusterWindowPublished(a, window))
-        .slice(0, 8)
-        .map((cluster) => ({
-          cluster,
-          point: cluster.point,
-          x: round(cluster.point.x + 12, 2),
-          y: round(cluster.point.y - 10, 2),
-        })),
-      76
-    );
-  }, [clusters, window]);
+    return buildCountryPlaneLabels(clusters, window, safeInsets);
+  }, [clusters, safeInsets, window]);
 
   const contentBounds = useMemo(() => {
     const fallback = {
@@ -1443,10 +1540,17 @@ function CountryPlaneSvg({
       })}
 
       {layers.labels
-        ? clusterLabels.map(({ cluster, point, x, y }) => (
+        ? clusterLabels.map(({ cluster, point, x, y, anchor }) => (
             <g key={`${cluster.id}-label`} style={{ pointerEvents: 'none' }}>
-              <line x1={point.x} y1={point.y} x2={x - 6} y2={y - 4} stroke="rgba(170, 232, 255, 0.24)" strokeWidth={1 / viewport.scale} />
-              <text x={x} y={y} className="map-source-label">
+              <line
+                x1={point.x}
+                y1={point.y}
+                x2={anchor === 'start' ? x - 6 : x + 6}
+                y2={y - 4}
+                stroke="rgba(170, 232, 255, 0.24)"
+                strokeWidth={1 / viewport.scale}
+              />
+              <text x={x} y={y} textAnchor={anchor} className="map-source-label">
                 {cluster.sourceCount > 1 ? `${cluster.name} (${cluster.sourceCount})` : cluster.name}
               </text>
             </g>
@@ -1541,6 +1645,9 @@ export function MapView() {
       source: selectedSource.source,
       publisher: selectedSource.publisher,
       publisherConfidence: selectedSource.publisherConfidence,
+      corporateCountry: null,
+      corporateRegion: null,
+      corporateCity: null,
       country: selectedSource.country,
       region: selectedSource.region,
       city: selectedSource.city,
@@ -1812,17 +1919,29 @@ export function MapView() {
     return items.filter((item) => (item.publisher || item.source) === selectedPublisher.publisher);
   }, [mapMode, selectedPublisher, sourcesState.data]);
   const mappedCountrySources = useMemo(
-    () => displayedCountrySources.filter((item) => item.locationKind !== 'country-fallback'),
+    () => displayedCountrySources.filter((item) => item.locationKind !== 'country-fallback' && item.locationKind !== 'foreign-operated'),
     [displayedCountrySources]
   );
   const selectedCountryFallbackSummary = useMemo(() => {
-    const fallbackSources = displayedCountrySources.filter(
-      (item) => item.locationKind === 'country-fallback' && isSourceWindowActive(item, mapWindow)
-    );
-    if (fallbackSources.length === 0) return null;
+    const activeSources = displayedCountrySources.filter((item) => isSourceWindowActive(item, mapWindow));
+    const fallbackSources = activeSources.filter((item) => item.locationKind === 'country-fallback');
+    const foreignOperatedSources = activeSources.filter((item) => item.locationKind === 'foreign-operated');
+    if (fallbackSources.length === 0 && foreignOperatedSources.length === 0) return null;
     return {
-      sourceCount: fallbackSources.length,
-      published: fallbackSources.reduce((sum, item) => sum + getSourceWindowMetrics(item, mapWindow).published, 0),
+      fallback:
+        fallbackSources.length > 0
+          ? {
+              sourceCount: fallbackSources.length,
+              published: fallbackSources.reduce((sum, item) => sum + getSourceWindowMetrics(item, mapWindow).published, 0),
+            }
+          : null,
+      foreignOperated:
+        foreignOperatedSources.length > 0
+          ? {
+              sourceCount: foreignOperatedSources.length,
+              published: foreignOperatedSources.reduce((sum, item) => sum + getSourceWindowMetrics(item, mapWindow).published, 0),
+            }
+          : null,
     };
   }, [displayedCountrySources, mapWindow]);
 
@@ -2094,6 +2213,7 @@ export function MapView() {
         .filter((value): value is string => Boolean(value))
     )
   );
+  const sourceDetailError = sourceDetailState.error ? mapUserFacingError(sourceDetailState.error) : null;
 
   const countryZoomLabel = `${countryViewport.scale.toFixed(1)}x Zoom`;
   const stageLegendItems = !selectedCountry ? getStageLegendItems(mapMode) : [];
@@ -2285,7 +2405,7 @@ export function MapView() {
             detailAccessLocked={detailAccessLocked}
             sourceDetail={sourceDetail}
             sourceDetailLoading={sourceDetailState.loading}
-            sourceDetailError={sourceDetailState.error}
+            sourceDetailError={sourceDetailError}
             selectedClusterSourcesDisplay={selectedClusterSourcesDisplay}
             topDegradedCountries={topDegradedCountries}
             healthTotals={healthTotals}

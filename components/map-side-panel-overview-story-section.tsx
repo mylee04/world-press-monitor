@@ -12,8 +12,14 @@ type OverviewStorySectionProps = {
   mapProvenanceNote: string;
   selectedCountry: MapCountryMetricRow | null;
   selectedCountryFallbackSummary: {
-    sourceCount: number;
-    published: number;
+    fallback: {
+      sourceCount: number;
+      published: number;
+    } | null;
+    foreignOperated: {
+      sourceCount: number;
+      published: number;
+    } | null;
   } | null;
   selectedCountrySummaryDisplay: MapSidePanelCountrySummaryDisplay;
   selectedPublisher: MapPublisherMetricRow | null;
@@ -41,10 +47,16 @@ export function OverviewStorySection({
           {selectedCountry.country} has {formatNumber(selectedCountrySummaryDisplay.published)} published items across{' '}
           {formatNumber(selectedCountrySummaryDisplay.activeSources)} active sources in the last {activeWindowDescriptor}.
         </strong>
-        {selectedCountryFallbackSummary ? (
+        {selectedCountryFallbackSummary?.fallback ? (
           <span>
-            National fallback: {formatNumber(selectedCountryFallbackSummary.sourceCount)} sources ·{' '}
-            {formatNumber(selectedCountryFallbackSummary.published)} published kept off-map.
+            Unmapped domestic: {formatNumber(selectedCountryFallbackSummary.fallback.sourceCount)} sources ·{' '}
+            {formatNumber(selectedCountryFallbackSummary.fallback.published)} published kept off-map.
+          </span>
+        ) : null}
+        {selectedCountryFallbackSummary?.foreignOperated ? (
+          <span>
+            Foreign-operated: {formatNumber(selectedCountryFallbackSummary.foreignOperated.sourceCount)} sources ·{' '}
+            {formatNumber(selectedCountryFallbackSummary.foreignOperated.published)} published kept off-map.
           </span>
         ) : null}
         <div className="map-story-metrics">

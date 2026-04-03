@@ -458,6 +458,27 @@ body:has(.map-page-root) main {
   transform: translateX(-50%);
   flex-wrap: wrap;
   justify-content: center;
+  width: min(100%, calc(100% - (2 * var(--map-panel-offset))));
+  padding: 0 var(--map-panel-offset);
+  box-sizing: border-box;
+}
+
+.map-floating-toolbar.is-country .map-toolbar-chip,
+.map-floating-toolbar.is-country .button,
+.map-floating-toolbar.is-country .map-toolbar-button {
+  min-height: 29px;
+  padding: 0 10px;
+  font-size: 0.82rem;
+  line-height: 1.1;
+}
+
+.map-floating-toolbar.is-country {
+  gap: 7px;
+}
+
+.map-floating-toolbar.is-country .map-search-shell {
+  width: 100%;
+  min-width: min(240px, 60vw);
 }
 
 .map-stage-legend {
@@ -525,6 +546,10 @@ body:has(.map-page-root) main {
   text-align: center;
   white-space: nowrap;
   box-shadow: 0 12px 36px rgba(1, 8, 18, 0.32);
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .map-toolbar-button {
@@ -904,6 +929,27 @@ body:has(.map-page-root) main {
   min-width: 0;
 }
 
+.map-detail-drawer.is-country-view .map-panel-head {
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.map-detail-drawer.is-country-view .map-panel-head > :first-child {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.map-detail-drawer.is-country-view .map-status-pill {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .map-panel-head h2,
 .map-panel-head h3 {
   margin: 6px 0 0;
@@ -937,6 +983,9 @@ body:has(.map-page-root) main {
   word-break: keep-all;
   overflow-wrap: break-word;
   hyphens: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .map-side-panel .section-head span,
@@ -944,11 +993,13 @@ body:has(.map-page-root) main {
   min-width: 0;
   text-align: right;
   line-height: 1.25;
-  white-space: normal;
+  white-space: nowrap;
   font-size: 0.78rem;
   word-break: keep-all;
   overflow-wrap: break-word;
   hyphens: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .map-status-pill {
@@ -958,14 +1009,18 @@ body:has(.map-page-root) main {
   flex: 0 0 auto;
   box-sizing: border-box;
   padding: 8px 12px;
+  min-width: 0;
   border-radius: 999px;
   font-size: 0.82rem;
+  max-width: 100%;
   border: 1px solid rgba(120, 199, 255, 0.18);
   background: rgba(12, 22, 40, 0.88);
   color: #c4ecff;
   line-height: 1.1;
   text-align: center;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .map-status-pill.globe {
@@ -1084,6 +1139,10 @@ body:has(.map-page-root) main {
   font-size: 0.84rem;
   line-height: 1.1;
   text-align: center;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .map-mode-chip.active {
@@ -1108,6 +1167,10 @@ body:has(.map-page-root) main {
   font-size: 0.84rem;
   line-height: 1.1;
   text-align: center;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
@@ -1125,6 +1188,11 @@ body:has(.map-page-root) main {
   background: rgba(8, 16, 30, 0.42);
   color: rgba(143, 189, 214, 0.82);
   font-size: 0.78rem;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .map-tab-chip-secondary.active {
@@ -1316,6 +1384,10 @@ body:has(.map-page-root) main {
   margin-top: 3px;
   font-size: 0.98rem;
   line-height: 1.12;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .map-side-panel.is-country-view .map-panel-block {
@@ -1330,7 +1402,8 @@ body:has(.map-page-root) main {
 }
 
 .map-side-panel.is-country-view .map-list-row {
-  width: calc(100% - 14px);
+  min-width: 0;
+  width: 100%;
   justify-self: start;
   grid-template-columns: minmax(0, 1fr) minmax(36px, max-content);
   align-items: start;
@@ -1338,21 +1411,27 @@ body:has(.map-page-root) main {
   padding: 7px 14px 7px 10px;
 }
 
+.map-detail-drawer.is-country-view .map-list-row {
+  min-width: 0;
+}
+
 .map-side-panel.is-country-view .map-list-row strong {
   font-size: 0.77rem;
   line-height: 1.28;
-  white-space: normal;
-  word-break: keep-all;
-  overflow-wrap: break-word;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   hyphens: none;
 }
 
 .map-side-panel.is-country-view .map-list-row span {
   font-size: 0.72rem;
   line-height: 1.32;
-  white-space: normal;
-  word-break: keep-all;
-  overflow-wrap: break-word;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   hyphens: none;
 }
 
@@ -1442,18 +1521,28 @@ body:has(.map-page-root) main {
   border-radius: 14px;
   border: 1px solid rgba(120, 199, 255, 0.1);
   background: rgba(11, 19, 34, 0.72);
+  min-width: 0;
+  overflow: hidden;
 }
 
 .map-story-metrics span {
   display: block;
   font-size: 0.72rem;
   color: #8fb6ca;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .map-story-metrics strong {
   display: block;
   margin-top: 4px;
   font-size: 0.98rem;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .map-list,
@@ -1465,6 +1554,8 @@ body:has(.map-page-root) main {
 .map-list-row,
 .map-headline-row {
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
   box-sizing: border-box;
   padding: 9px 11px;
   border-radius: 14px;
@@ -1571,6 +1662,14 @@ body:has(.map-page-root) main {
   min-width: 0;
 }
 
+.map-list-row .map-list-copy strong,
+.map-list-row .map-list-copy span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .map-side-panel.is-country-view .map-list-copy,
 .map-detail-drawer.is-country-view .map-list-copy {
   gap: 3px;
@@ -1589,6 +1688,9 @@ body:has(.map-page-root) main {
   padding-left: 8px;
   align-self: start;
   line-height: 1.12;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .map-headline-row {
@@ -1610,6 +1712,9 @@ body:has(.map-page-root) main {
   line-height: 1.1;
   text-align: center;
   white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .map-inline-note {
@@ -1673,6 +1778,10 @@ body:has(.map-page-root) main {
   color: #8fbdd6;
   line-height: 1.1;
   text-align: center;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .map-detail-tab.active {
@@ -1751,16 +1860,35 @@ body:has(.map-page-root) main {
 
 .map-detail-drawer.is-country-view .map-detail-meta {
   gap: 10px;
+  grid-template-columns: 1fr;
 }
 
 .map-detail-drawer.is-country-view .section-head {
-  grid-template-columns: minmax(0, 1fr);
-  gap: 4px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(68px, max-content);
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  gap: 8px;
+  align-items: center;
   padding-right: 0;
 }
 
 .map-detail-drawer.is-country-view .section-head span {
   text-align: left;
+}
+
+.map-detail-drawer.is-country-view .section-head h3,
+.map-detail-drawer.is-country-view .section-head span,
+.map-detail-drawer.is-country-view .map-inline-action {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.map-detail-drawer.is-country-view .section-head span {
+  white-space: nowrap;
 }
 
 .map-detail-drawer.is-country-view .map-source-detail,
@@ -1774,10 +1902,20 @@ body:has(.map-page-root) main {
   padding: 10px 12px;
 }
 
+.map-detail-drawer.is-country-view .map-health-grid div,
+.map-detail-drawer.is-country-view .map-detail-meta div {
+  min-width: 0;
+  overflow: hidden;
+}
+
 .map-detail-drawer.is-country-view .map-detail-meta span,
 .map-detail-drawer.is-country-view .map-health-grid span {
   font-size: 0.68rem;
   line-height: 1.22;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .map-detail-drawer.is-country-view .map-detail-meta strong,
@@ -1785,8 +1923,10 @@ body:has(.map-page-root) main {
   margin-top: 4px;
   font-size: 0.85rem;
   line-height: 1.32;
-  word-break: keep-all;
-  overflow-wrap: break-word;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   hyphens: none;
 }
 
@@ -1840,29 +1980,43 @@ body:has(.map-page-root) main {
   margin-top: 4px;
   font-size: 0.96rem;
   line-height: 1.12;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .map-detail-drawer.is-country-view .map-list-row {
   align-items: start;
   gap: 10px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   padding: 7px 10px;
+  grid-template-columns: minmax(0, 1fr) minmax(44px, max-content);
 }
 
 .map-detail-drawer.is-country-view .map-list-row strong {
   font-size: 0.77rem;
   line-height: 1.28;
-  white-space: normal;
-  word-break: keep-all;
-  overflow-wrap: break-word;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-break: normal;
+  overflow-wrap: normal;
   hyphens: none;
 }
 
 .map-detail-drawer.is-country-view .map-list-row span {
   font-size: 0.72rem;
   line-height: 1.32;
-  white-space: normal;
-  word-break: keep-all;
-  overflow-wrap: break-word;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-break: normal;
+  overflow-wrap: normal;
   hyphens: none;
 }
 
@@ -1870,6 +2024,20 @@ body:has(.map-page-root) main {
   min-height: 28px;
   padding: 0 10px;
   font-size: 0.74rem;
+  width: fit-content;
+  max-width: 100%;
+  min-width: 0;
+  justify-self: end;
+  margin-left: 8px;
+}
+
+.map-detail-drawer.is-country-view .map-stat-grid {
+  grid-template-columns: 1fr;
+}
+
+.map-detail-drawer.is-country-view .map-detail-meta div {
+  min-width: 0;
+  overflow: hidden;
 }
 
 .map-endpoint-list {

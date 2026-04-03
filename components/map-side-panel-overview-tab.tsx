@@ -43,8 +43,14 @@ type MapSidePanelOverviewTabProps = {
   selectedCountryTopPublishers: MapSidePanelRankedCount[];
   selectedCountryTopSourceRows: MapSourceMetricRow[];
   selectedCountryFallbackSummary: {
-    sourceCount: number;
-    published: number;
+    fallback: {
+      sourceCount: number;
+      published: number;
+    } | null;
+    foreignOperated: {
+      sourceCount: number;
+      published: number;
+    } | null;
   } | null;
   derivedTopDegradedRegions: MapSidePanelDegradedRegion[];
   derivedTopDegradedSources: MapSourceMetricRow[];

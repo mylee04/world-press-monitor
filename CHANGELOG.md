@@ -6,6 +6,16 @@
 
 ## Unreleased
 
+### [87070e0] fix(map): hide internal portal config errors from public map errors
+- Commit: 87070e054459478a75b1a229cf423cb4f22bca37
+- Date: 2026-04-03 14:28:02 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	components/map-view.tsx
+  - Git stat:
+  - components/map-view.tsx | 15 ++++++++++++++-
+  -  1 file changed, 14 insertions(+), 1 deletion(-)
+
 ### [d87d756] Make dashboard and benchmark public and sanitize summary headline fields
 - Commit: d87d7568a8e49d9deafdc61fa4f417985d66fbf4
 - Date: 2026-04-03 11:13:11 -0500

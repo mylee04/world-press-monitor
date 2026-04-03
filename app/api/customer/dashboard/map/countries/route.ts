@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PUBLIC_MAP_RESPONSE_CACHE_CONTROL } from '@/lib/dashboard-cache-control';
+import { readMapCountryMetrics } from '@/lib/map-store';
 import { normalizeMapMetricWindow } from '@/lib/map-store-windows';
-import { proxyPortalServerApiRequest } from '@/lib/customer-portal';
 
 export const runtime = 'nodejs';
 
@@ -9,8 +9,11 @@ export async function GET(request: NextRequest) {
   try {
     const window = normalizeMapMetricWindow(request.nextUrl.searchParams.get('window'));
     request.nextUrl.searchParams.set('window', window);
-    return proxyPortalServerApiRequest(request, '/api/map/countries', {
-      cacheControl: PUBLIC_MAP_RESPONSE_CACHE_CONTROL,
+
+    const payload = await readMapCountryMetrics(window);
+    return NextResponse.json(payload, {
+      status: 200,
+      headers: { 'Cache-Control': PUBLIC_MAP_RESPONSE_CACHE_CONTROL, 'X-Data-Source': 'local-fallback' },
     });
   } catch (error: unknown) {
     return NextResponse.json(

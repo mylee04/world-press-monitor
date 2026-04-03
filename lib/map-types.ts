@@ -1,6 +1,7 @@
 export type MapMetricWindow = '1h' | '24h' | '7d';
 export type MapStorageMode = 'postgres' | 'snapshot';
 export type MapPublisherConfidence = 'high' | 'medium' | 'low';
+export type MapSourceLocationKind = 'headquarters' | 'inferred-city' | 'hub' | 'foreign-operated' | 'country-fallback';
 
 export type MapCountryWindowMetrics = {
   published: number;
@@ -112,7 +113,7 @@ export type MapSourceMetricRow = {
   country: string;
   region: string | null;
   city: string | null;
-  locationKind: 'headquarters' | 'inferred-city' | 'hub' | 'country-fallback';
+  locationKind: MapSourceLocationKind;
   lat: number;
   lon: number;
   pub24h: number;
@@ -160,7 +161,10 @@ export type MapSourceDetailResponse = {
   country: string;
   region: string | null;
   city: string | null;
-  locationKind: 'headquarters' | 'inferred-city' | 'hub' | 'country-fallback';
+  locationKind: MapSourceLocationKind;
+  corporateCountry: string | null;
+  corporateRegion: string | null;
+  corporateCity: string | null;
   lat: number;
   lon: number;
   method: 'rss' | 'sitemap' | 'rss+sitemap';

@@ -35,8 +35,10 @@ export async function loadMapCountrySources(
   window: MapMetricWindow
 ): Promise<MapCountrySourcesResponse> {
   const selectedWindow = normalizeMapMetricWindow(window);
-  const rows = await readWindowedSourceMetrics(selectedWindow, `coalesce(nullif(trim(source), ''), '') <> ''`);
-  const healthBySource = await readLatestHealthBySource();
+  const [rows, healthBySource] = await Promise.all([
+    readWindowedSourceMetrics(selectedWindow, `coalesce(nullif(trim(source), ''), '') <> ''`),
+    readLatestHealthBySource(),
+  ]);
   const bySource = new Map<string, MapSourceMetricRow>();
   const rawCoreSourceNames = new Set<string>();
 
@@ -121,8 +123,12 @@ export async function loadMapCountrySources(
 
   const center = inferGeoFromCountry(country);
   const coreSourceNames = [...rawCoreSourceNames];
-  const hourlyRows = coreSourceNames.length > 0 ? await readHourlyCountsForSource(coreSourceNames, country) : [];
-  const dailyRows = coreSourceNames.length > 0 ? await readDailyBenchmarkCountsForSource(coreSourceNames, country) : [];
+  const [hourlyRows, dailyRows] = coreSourceNames.length > 0
+    ? await Promise.all([
+        readHourlyCountsForSource(coreSourceNames, country),
+        readDailyBenchmarkCountsForSource(coreSourceNames, country),
+      ])
+    : [[], []];
 
   return {
     generatedAt: new Date().toISOString(),
@@ -147,10 +153,15 @@ export async function loadMapCountrySources(
     ),
     topRegions: rankTopRegions(
       sourceRows.map((row) => ({
-        name: row.locationKind === 'country-fallback' ? 'Unmapped / National' : buildAreaLabel(row),
+        name:
+          row.locationKind === 'foreign-operated'
+            ? 'Foreign-operated'
+            : row.locationKind === 'country-fallback'
+              ? 'Unmapped / National'
+              : buildAreaLabel(row),
         count: row.windows[selectedWindow].published,
         sources: 1,
-        unmapped: row.locationKind === 'country-fallback',
+        unmapped: row.locationKind === 'country-fallback' || row.locationKind === 'foreign-operated',
       })),
       8
     ),

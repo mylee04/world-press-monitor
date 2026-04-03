@@ -34,9 +34,16 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
                   </div>
                   <nav>
                     {navItems.map((item) => (
-                      <Link href={item.href} key={item.href}>
-                        {item.label}
-                      </Link>
+                      item.href === '/map/' ? (
+                        // Hard-navigate to the map so stale country query state cannot survive.
+                        <a href={item.href} key={item.href}>
+                          {item.label}
+                        </a>
+                      ) : (
+                        <Link href={item.href} key={item.href}>
+                          {item.label}
+                        </Link>
+                      )
                     ))}
                   </nav>
                 </header>

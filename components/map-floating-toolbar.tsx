@@ -67,19 +67,6 @@ export function MapFloatingToolbar({
           <button type="button" className="map-toolbar-chip map-toolbar-button" onClick={onResetZoom}>
             Reset Zoom
           </button>
-          <MapSearchBox
-            searchOpen={searchOpen}
-            searchQuery={searchQuery}
-            searchMode="countries"
-            searchResults={searchResults}
-            countriesLoading={countriesLoading}
-            publishersLoading={publishersLoading}
-            searchInputRef={searchInputRef}
-            onSearchOpen={onSearchOpen}
-            onSearchClose={onSearchClose}
-            onSearchChange={onSearchChange}
-            onCommitSearchResult={onCommitSearchResult}
-          />
         </>
       ) : (
         <>

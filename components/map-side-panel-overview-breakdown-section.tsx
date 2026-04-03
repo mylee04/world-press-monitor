@@ -99,8 +99,13 @@ export function OverviewBreakdownSection({
 
       {!selectedCountry && mapMode === 'countries' ? (
         <div className="map-list">
-          {topCountries.map((item) => (
-            <button key={item.country} type="button" className="map-list-row" onClick={() => onFocusCountryName(item.country)}>
+          {topCountries.map((item, index) => (
+            <button
+              key={`${item.country}-${index}`}
+              type="button"
+              className="map-list-row"
+              onClick={() => onFocusCountryName(item.country)}
+            >
               <strong>{item.country}</strong>
               <span>{formatNumber(getCountryWindowMetrics(item, mapWindow).published)}</span>
             </button>
@@ -111,9 +116,9 @@ export function OverviewBreakdownSection({
       {!selectedCountry && mapMode === 'publishers' ? (
         <>
           <div className="map-list">
-            {comparisonPublishers.map((item) => (
+            {comparisonPublishers.map((item, index) => (
               <button
-                key={item.publisher}
+                key={`${item.publisher}-${index}`}
                 type="button"
                 className="map-list-row"
                 onClick={() => onSelectPublisher(item)}
@@ -136,9 +141,9 @@ export function OverviewBreakdownSection({
                 <span>{activeWindowDescriptor} footprint</span>
               </div>
               <div className="map-list">
-                {selectedPublisher.countries.slice(0, 10).map((item) => (
+                {selectedPublisher.countries.slice(0, 10).map((item, index) => (
                   <button
-                    key={item.country}
+                    key={`${item.country}-${index}`}
                     type="button"
                     className="map-list-row"
                     onClick={() => onFocusCountryName(item.country)}
@@ -158,9 +163,9 @@ export function OverviewBreakdownSection({
 
       {!selectedCountry && mapMode === 'health' ? (
         <div className="map-list">
-          {topDegradedCountries.map((item) => (
+          {topDegradedCountries.map((item, index) => (
             <button
-              key={item.country}
+              key={`${item.country}-${index}`}
               type="button"
               className="map-list-row"
               onClick={() => onFocusCountryName(item.country)}
@@ -185,8 +190,8 @@ export function OverviewBreakdownSection({
             {(mapMode === 'publishers'
               ? [{ name: selectedPublisher?.publisher || 'Selected Publisher', count: selectedCountrySummaryDisplay.published }]
               : selectedCountryTopPublishers
-            ).map((item) => (
-              <div key={item.name} className="map-list-row static">
+            ).map((item, index) => (
+              <div key={`${item.name}-${index}`} className="map-list-row static">
                 <strong>{item.name}</strong>
                 <span>{formatNumber(item.count)}</span>
               </div>
@@ -200,8 +205,8 @@ export function OverviewBreakdownSection({
               </div>
               <div className="map-list">
                 {mapMode === 'health'
-                  ? derivedTopDegradedRegions.map((item) => (
-                      <div key={item.name} className="map-list-row static">
+                  ? derivedTopDegradedRegions.map((item, index) => (
+                      <div key={`${item.name}-${index}`} className="map-list-row static">
                         <div className="map-list-copy">
                           <strong>{item.name}</strong>
                           <span>{formatNumber(item.degradedSources)} degraded · {formatNumber(item.sources)} total</span>
@@ -209,8 +214,8 @@ export function OverviewBreakdownSection({
                         <span>{round(item.degradedShare * 100, 1)}%</span>
                       </div>
                     ))
-                  : selectedCountryTopRegionsDisplay.map((item) => (
-                      <div key={item.name} className="map-list-row static">
+                  : selectedCountryTopRegionsDisplay.map((item, index) => (
+                      <div key={`${item.name}-${index}`} className="map-list-row static">
                         <div className="map-list-copy">
                           <strong>{item.name}</strong>
                           <span>{formatNumber(item.sources)} sources</span>
@@ -229,8 +234,13 @@ export function OverviewBreakdownSection({
               </div>
               <div className="map-list">
                 {mapMode === 'health'
-                  ? derivedTopDegradedSources.map((item) => (
-                      <button key={item.sourceId} type="button" className="map-list-row" onClick={() => onSelectSource(item)}>
+                  ? derivedTopDegradedSources.map((item, index) => (
+                      <button
+                        key={`${item.sourceId}-${index}`}
+                        type="button"
+                        className="map-list-row"
+                        onClick={() => onSelectSource(item)}
+                      >
                         <div className="map-list-copy">
                           <strong>{item.source}</strong>
                           <span>{item.health} · {item.region || item.city || item.country}</span>
@@ -238,8 +248,13 @@ export function OverviewBreakdownSection({
                         <span>{formatNumber(getSourceWindowMetrics(item, mapWindow).published)}</span>
                       </button>
                     ))
-                  : selectedCountryTopSourceRows.map((item) => (
-                      <button key={item.sourceId} type="button" className="map-list-row" onClick={() => onSelectSource(item)}>
+                  : selectedCountryTopSourceRows.map((item, index) => (
+                      <button
+                        key={`${item.sourceId}-${index}`}
+                        type="button"
+                        className="map-list-row"
+                        onClick={() => onSelectSource(item)}
+                      >
                         <div className="map-list-copy">
                           <strong>{item.source}</strong>
                           <span>

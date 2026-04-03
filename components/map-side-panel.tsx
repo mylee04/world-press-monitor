@@ -47,8 +47,14 @@ type MapSidePanelProps = {
   selectedCountryTopPublishers: MapSidePanelRankedCount[];
   selectedCountryTopSourceRows: MapSourceMetricRow[];
   selectedCountryFallbackSummary: {
-    sourceCount: number;
-    published: number;
+    fallback: {
+      sourceCount: number;
+      published: number;
+    } | null;
+    foreignOperated: {
+      sourceCount: number;
+      published: number;
+    } | null;
   } | null;
   derivedTopDegradedRegions: MapSidePanelDegradedRegion[];
   derivedTopDegradedSources: MapSourceMetricRow[];
@@ -80,6 +86,18 @@ const MAP_WINDOW_SELECT_LABELS: Record<MapMetricWindow, string> = {
   '24h': 'Rolling 24 hours',
   '7d': 'Rolling 7 days',
 };
+
+function mapUserFacingError(error: string): string {
+  const normalized = error.trim();
+  const normalizedKey = normalized.toLowerCase();
+  if (
+    normalizedKey === 'customer api base url is not configured on the portal server.' ||
+    normalizedKey === 'internal api token is not configured on the portal server.'
+  ) {
+    return 'Map metrics data is currently unavailable. Please try again later.';
+  }
+  return normalized;
+}
 
 export function MapSidePanel({
   mapMode,
@@ -124,6 +142,14 @@ export function MapSidePanel({
   onSelectPublisher,
   onSelectSource,
 }: MapSidePanelProps) {
+  const visibleErrors = Array.from(
+    new Set(
+      errors
+        .map((error) => mapUserFacingError(error))
+        .filter((value): value is string => Boolean(value))
+    )
+  );
+
   return (
     <aside className={`map-side-panel ${selectedCountry ? 'is-country-view' : ''}`}>
       <div className="map-panel-head">
@@ -278,7 +304,7 @@ export function MapSidePanel({
       </div>
 
       {loading ? <div className="panel muted">Loading map metrics...</div> : null}
-      {Array.from(new Set(errors)).map((error, index) => (
+      {visibleErrors.map((error, index) => (
         <div key={`${error}-${index}`} className="panel danger">
           {error}
         </div>

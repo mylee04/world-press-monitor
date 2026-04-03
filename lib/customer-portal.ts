@@ -23,6 +23,11 @@ function buildAuthorizationHeader(token: string): string {
   return /^bearer\s+/i.test(token) ? token : `Bearer ${token}`;
 }
 
+function normalizeHostValue(value: string): string {
+  const normalized = value.trim().replace(/\/+$/, '');
+  return normalized || '';
+}
+
 function getPortalServerApiToken(): string {
   return (
     process.env.WORLDPRESSRADAR_API_TOKEN ||
@@ -51,16 +56,107 @@ function getCookieOptions(maxAge = SESSION_MAX_AGE_SECONDS) {
 }
 
 export function getCustomerNewsApiBaseUrl(): string {
-  return (
+  const explicitBaseUrl = (
     process.env.WORLDPRESSRADAR_API_BASE_URL ||
     process.env.NEWS_API_BASE_URL ||
     process.env.NEXT_PUBLIC_NEWS_API_BASE_URL ||
     ''
-  ).trim().replace(/\/+$/, '');
+  ).trim();
+  if (explicitBaseUrl) {
+    return explicitBaseUrl.replace(/\/+$/, '');
+  }
+
+  const newsApiHost = normalizeHostValue(
+    process.env.NEWS_API_HOST || process.env.HOST || process.env.NEXT_PUBLIC_NEWS_API_HOST || ''
+  );
+  if (!newsApiHost) {
+    return '';
+  }
+
+  const newsApiPort = (process.env.NEWS_API_PORT || process.env.NEXT_PUBLIC_NEWS_API_PORT || '').trim();
+  const hostWithPort = newsApiPort
+    ? `${newsApiHost.includes(':') ? newsApiHost : `${newsApiHost}:${newsApiPort}`}`
+    : newsApiHost;
+  const normalizedHost = hostWithPort === '0.0.0.0' || hostWithPort.startsWith('0.0.0.0:')
+    ? hostWithPort.replace(/^0\.0\.0\.0/, '127.0.0.1')
+    : hostWithPort;
+  if (/^https?:\/\//i.test(normalizedHost)) {
+    return normalizedHost.replace(/\/+$/, '');
+  }
+  return `http://${normalizedHost}`.replace(/\/+$/, '');
 }
+
+const PORTAL_CONFIG_ERROR_MESSAGES = new Set(
+  [
+    'Customer API base URL is not configured on the portal server.',
+    'Internal API token is not configured on the portal server.',
+  ].map((message) => message.trim().toLowerCase())
+);
 
 export function hasPortalServerApiProxyConfig(): boolean {
   return Boolean(getCustomerNewsApiBaseUrl() && getPortalServerApiToken());
+}
+
+export function isPortalConfigErrorMessage(message: string): boolean {
+  return PORTAL_CONFIG_ERROR_MESSAGES.has(message.trim().toLowerCase());
+}
+
+export async function shouldUseLocalFallbackForPortalResponse(response: NextResponse): Promise<boolean> {
+  if (response.status === 404) {
+    return false;
+  }
+
+  const isRetryableStatus =
+    response.status >= 500 || response.status === 401 || response.status === 403 || response.status === 502 || response.status === 503;
+
+  if (!isRetryableStatus) {
+    return false;
+  }
+
+  const clone = response.clone();
+  let rawPayload = '';
+  try {
+    rawPayload = await clone.text();
+  } catch {
+    return true;
+  }
+
+  if (!rawPayload) {
+    return true;
+  }
+
+  const normalizedPayload = rawPayload.trim();
+  try {
+    const parsed = JSON.parse(normalizedPayload) as
+      | {
+          message?: string;
+          error?: string;
+        }
+      | string
+      | unknown;
+
+    if (typeof parsed === 'string') {
+      return isPortalConfigErrorMessage(parsed);
+    }
+
+    if (parsed && typeof parsed === 'object') {
+      const payloadMessage = typeof (parsed as { message?: unknown }).message === 'string'
+        ? ((parsed as { message?: string }).message ?? '')
+        : '';
+      const payloadError = typeof (parsed as { error?: unknown }).error === 'string'
+        ? ((parsed as { error?: string }).error ?? '')
+        : '';
+      if (isPortalConfigErrorMessage(payloadMessage) || isPortalConfigErrorMessage(payloadError)) {
+        return true;
+      }
+    }
+  } catch {
+    if (isPortalConfigErrorMessage(normalizedPayload)) {
+      return true;
+    }
+  }
+
+  return true;
 }
 
 export async function readCustomerPortalSession(): Promise<CustomerPortalSession> {
