@@ -35,7 +35,7 @@ export async function loadMapCountrySources(
   window: MapMetricWindow
 ): Promise<MapCountrySourcesResponse> {
   const selectedWindow = normalizeMapMetricWindow(window);
-  const rows = await readWindowedSourceMetrics(selectedWindow, `coalesce(nullif(trim(e.source), ''), '') <> ''`);
+  const rows = await readWindowedSourceMetrics(selectedWindow, `coalesce(nullif(trim(source), ''), '') <> ''`);
   const healthBySource = await readLatestHealthBySource();
   const bySource = new Map<string, MapSourceMetricRow>();
   const rawCoreSourceNames = new Set<string>();

@@ -145,29 +145,38 @@ export async function readWindowedSourceMetrics(
           ${whereSql ? `and ${whereSql}` : ''}
         group by 1, 2
       ),
-      snapshot as (
+      snapshot_7d as (
         select
           country,
           source,
-          coalesce(sum(hourly_published_count), 0)::text as pub_1h,
-          coalesce(sum(published_count), 0)::text as pub_24h,
           coalesce(sum(published_count), 0)::text as pub_7d,
-          coalesce(sum(hourly_fresh_count), 0)::text as fresh_1h,
-          coalesce(sum(fresh_count), 0)::text as fresh_24h,
           coalesce(sum(fresh_count), 0)::text as fresh_7d,
-          coalesce(sum(hourly_late_count), 0)::text as late_1h,
-          coalesce(sum(late_count), 0)::text as late_24h,
           coalesce(sum(late_count), 0)::text as late_7d,
-          coalesce(sum(hourly_inserted_count), 0)::text as first_seen_1h,
-          coalesce(sum(inserted_count), 0)::text as first_seen_24h,
           coalesce(sum(inserted_count), 0)::text as first_seen_7d
         from country_benchmark_source_daily s
         where s.day_bucket >= current_date - interval '6 days'
+          and s.metric_version = 'v1'
         group by 1, 2
       )
-      select * from recent
-      union all
-      select * from snapshot
+      select
+        coalesce(recent.country, snapshot_7d.country) as country,
+        coalesce(recent.source, snapshot_7d.source) as source,
+        coalesce(recent.pub_1h, '0') as pub_1h,
+        coalesce(recent.pub_24h, '0') as pub_24h,
+        coalesce(snapshot_7d.pub_7d, recent.pub_7d, '0') as pub_7d,
+        coalesce(recent.fresh_1h, '0') as fresh_1h,
+        coalesce(recent.fresh_24h, '0') as fresh_24h,
+        coalesce(snapshot_7d.fresh_7d, recent.fresh_7d, '0') as fresh_7d,
+        coalesce(recent.late_1h, '0') as late_1h,
+        coalesce(recent.late_24h, '0') as late_24h,
+        coalesce(snapshot_7d.late_7d, recent.late_7d, '0') as late_7d,
+        coalesce(recent.first_seen_1h, '0') as first_seen_1h,
+        coalesce(recent.first_seen_24h, '0') as first_seen_24h,
+        coalesce(snapshot_7d.first_seen_7d, recent.first_seen_7d, '0') as first_seen_7d
+      from recent
+      full outer join snapshot_7d
+        on snapshot_7d.country is not distinct from recent.country
+       and snapshot_7d.source = recent.source
       `,
       params
     );
@@ -384,6 +393,7 @@ export async function readDailyBenchmarkCountsForSource(
       sum(published_count)::text as published_count
     from country_benchmark_source_daily
     where source = any($1::text[])
+      and metric_version = 'v1'
       ${countryHint ? `and country = $2` : ''}
     group by day_bucket
     order by day_bucket desc
