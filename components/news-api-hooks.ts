@@ -130,15 +130,15 @@ function buildNewsApiQueryUrl(path: string, query?: NewsApiQuery): string | null
 }
 
 export function useNewsApiFilters(): JsonState<NewsApiFiltersResponse> {
-  const { hasToken, isReady, apiConfigured } = useCustomerAccess();
+  const { isReady, apiConfigured } = useCustomerAccess();
   const url = useMemo(() => buildNewsApiUrl('/api/filters'), []);
-  return useRemoteJsonResource<NewsApiFiltersResponse>(isReady && apiConfigured && hasToken ? url : null);
+  return useRemoteJsonResource<NewsApiFiltersResponse>(isReady && apiConfigured ? url : null);
 }
 
 export function useNewsApiDashboardSummary(): JsonState<NewsApiDashboardSummaryResponse> {
-  const { hasToken, isReady, apiConfigured } = useCustomerAccess();
+  const { isReady, apiConfigured } = useCustomerAccess();
   const url = useMemo(() => buildNewsApiUrl('/api/dashboard/summary'), []);
-  return useRemoteJsonResource<NewsApiDashboardSummaryResponse>(isReady && apiConfigured && hasToken ? url : null);
+  return useRemoteJsonResource<NewsApiDashboardSummaryResponse>(isReady && apiConfigured ? url : null);
 }
 
 export function useNewsApiNews(query: NewsApiQuery): JsonState<NewsApiResponse> {
@@ -149,11 +149,7 @@ export function useNewsApiNews(query: NewsApiQuery): JsonState<NewsApiResponse> 
 }
 
 export function useCountryBenchmark(): JsonState<CountryBenchmarkResponse> {
-  const { hasToken, isReady } = useCustomerAccess();
+  const { isReady } = useCustomerAccess();
   const url = useMemo(() => '/api/customer/dashboard/benchmark', []);
-  return useRemoteJson<CountryBenchmarkResponse>(
-    isReady && hasToken ? url : null,
-    undefined,
-    { cacheMode: 'session' }
-  );
+  return useRemoteJson<CountryBenchmarkResponse>(isReady ? url : null, undefined, { cacheMode: 'session' });
 }

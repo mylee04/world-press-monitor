@@ -8,7 +8,6 @@ import { NEWS_SECTION_ORDER } from '@/lib/article-taxonomy';
 import {
   getTaxonomyLocaleLabel,
   getTopLevelTaxonomyLabel,
-  getTopLevelTaxonomyListLabel,
   getTopicLabel,
   mapSectionToTopLevelTaxonomy,
   TAXONOMY_TOP_LEVEL_ORDER,
@@ -51,7 +50,7 @@ function renderRelativeTime(value: string | null | undefined): string {
 }
 
 export function DashboardView() {
-  const { hasToken, isReady, apiConfigured } = useCustomerAccess();
+  const { isReady, apiConfigured } = useCustomerAccess();
   const { mode: taxonomyLocaleMode, browserLocale, resolvedLocale, setMode: setTaxonomyLocaleMode } = useTaxonomyLocalePreference();
   const summaryState = useNewsApiDashboardSummary();
   const summary = summaryState.data?.storage === 'postgres' ? summaryState.data : null;
@@ -60,7 +59,7 @@ export function DashboardView() {
     return (
       <CustomerAccessPanel
         title="Portal API Not Configured"
-        description="This customer portal requires a server-side World Press Radar API base URL before authenticated article access can work."
+        description="This customer portal requires a server-side World Press Radar API base URL before dashboard data can load."
       />
     );
   }
@@ -69,21 +68,16 @@ export function DashboardView() {
     return <div className="panel muted">Checking customer access...</div>;
   }
 
-  if (!hasToken) {
-    return <CustomerAccessPanel />;
-  }
-
   if (summaryState.loading && !summary) {
     return <div className="panel muted">Loading live dashboard summary...</div>;
   }
 
   if (summaryState.error) {
     return (
-      <CustomerAccessPanel
-        title="Customer Token Required"
-        description="The live dashboard only loads for customers with a valid API token or API key."
-        error={summaryState.error}
-      />
+      <section className="panel danger">
+        <h2>Dashboard data unavailable</h2>
+        <p>{summaryState.error}</p>
+      </section>
     );
   }
 
@@ -110,16 +104,8 @@ export function DashboardView() {
                 count: Number(item?.count || 0),
               }))
             : [],
-          headlines: Array.isArray(summary.preview.headlines)
-            ? summary.preview.headlines.map((article) => ({
-                ...article,
-                sections: Array.isArray(article?.sections) ? article.sections : [],
-                topics: Array.isArray(article?.topics) ? article.topics : [],
-                sourceCategories: Array.isArray(article?.sourceCategories) ? article.sourceCategories : [],
-              }))
-            : [],
         }
-      : { articleCount: 0, topCountries: [], headlines: [] };
+      : { articleCount: 0, topCountries: [] };
   const sectionRollup = NEWS_SECTION_ORDER.map((section) => ({
     key: section,
     count: Number(sectionTotals[section as keyof typeof sectionTotals] || 0),
@@ -175,10 +161,10 @@ export function DashboardView() {
     <div className="page-stack">
       <section className="hero-panel">
         <div className="eyebrow">Customer Dashboard</div>
-        <h1>Live article coverage by top-level category, topic, country, and UTC publication date.</h1>
+        <h1>Live coverage metrics by top-level category, topic, country, and UTC publication date.</h1>
         <p>
-          This dashboard reads live counts and preview headlines from the authenticated customer API.
-          Anonymous visitors do not receive article data or customer-only views.
+          This dashboard uses live platform metrics for aggregate coverage views only.
+          Raw article titles and source rows are not exposed here.
         </p>
         <div className="hero-note">
           <strong>Live refresh:</strong> updated {renderRelativeTime(summary.generatedAt)} from the live database.
@@ -330,30 +316,6 @@ export function DashboardView() {
         ) : (
           <div className="muted">Detailed topic leaders are still warming up.</div>
         )}
-      </section>
-
-      <section className="panel">
-        <div className="section-head">
-          <h2>Recent headlines</h2>
-          <span>{preview.headlines.length > 0 ? `Preview date · ${summary.previewDate || '-'} UTC` : 'Waiting for live rows'}</span>
-        </div>
-        <div className="headline-list">
-          {preview.headlines.map((article) => (
-            <a className="headline-card" key={article.id} href={article.url} rel="noreferrer" target="_blank">
-              <small>
-                {article.country || 'Unknown'} · {article.sourceDisplay || article.source} · {getTopLevelTaxonomyLabel(mapSectionToTopLevelTaxonomy(article.primarySection), resolvedLocale)}
-              </small>
-              <strong>{article.title}</strong>
-              <small>
-                {article.topics.length > 0
-                  ? `Topics · ${article.topics.map((topic) => getTopicLabel(topic, resolvedLocale)).join(', ')}`
-                  : `Categories · ${getTopLevelTaxonomyListLabel(article.sections, resolvedLocale, 'general_other')}`}
-              </small>
-              <span>{article.snippet || 'Snippet unavailable in customer API preview.'}</span>
-            </a>
-          ))}
-          {preview.headlines.length === 0 ? <div className="muted">No recent headlines available yet.</div> : null}
-        </div>
       </section>
     </div>
   );

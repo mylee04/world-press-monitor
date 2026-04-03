@@ -12,7 +12,7 @@ type CustomerAccessPanelProps = {
 
 export function CustomerAccessPanel({
   title = 'Customer Access Required',
-  description = 'Dashboard counts, benchmark views, and restricted customer data require a valid API token or API key.',
+  description = 'Dashboard counts and benchmark views are public. A valid API token or API key unlocks private map and source detail features.',
   error = null,
 }: CustomerAccessPanelProps) {
   const { hasToken, apiConfigured, savePending, authError, saveToken, clearToken } = useCustomerAccess();
@@ -50,13 +50,13 @@ export function CustomerAccessPanel({
       <section className="panel">
         <div className="section-head">
           <h2>Token</h2>
-          <span>{hasToken ? 'Stored in secure portal session' : 'Required before data loads'}</span>
+          <span>{hasToken ? 'Stored in secure portal session' : 'Optional for private access'}</span>
         </div>
         {effectiveError ? <div className="danger-banner">{effectiveError}</div> : null}
         <label>
           <span>API token or API key</span>
           <input
-            placeholder="Paste customer token"
+            placeholder="Paste customer token (optional)"
             type="password"
             value={draftToken}
             onChange={(event) => setDraftToken(event.target.value)}
@@ -78,7 +78,7 @@ export function CustomerAccessPanel({
           <Link href="/benchmark/">Open Benchmark</Link>
         </div>
         <div className="muted">
-          A valid token unlocks restricted dashboard, benchmark, and export features.
+          A valid token unlocks private map country/source drill-down and source-level detail views.
         </div>
       </section>
     </div>

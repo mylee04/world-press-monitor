@@ -6,23 +6,55 @@
 
 ## Unreleased
 
-### [33a02c0] docs: simplify README and decouple RSS health output
-- Commit: 33a02c0f2d041eac456a7afed36d3327aa702b35
-- Date: 2026-04-03 11:04:30 -0500
+### [d87d756] Make dashboard and benchmark public and sanitize summary headline fields
+- Commit: d87d7568a8e49d9deafdc61fa4f417985d66fbf4
+- Date: 2026-04-03 11:13:11 -0500
 - Author: Kevinlee49
   - Changed files:
-    - M	README.md
-    - M	audits/readme_network_precheck_latest.json
-    - M	audits/readme_rss_health_latest.json
-    - M	scripts/export-rss-atlas.ts
-    - M	scripts/verify-readme-rss.ts
+    - M	CHANGELOG.md
+    - M	app/access/page.tsx
+    - M	app/api/customer/dashboard/benchmark/route.ts
+    - M	app/api/customer/dashboard/summary/route.ts
+    - M	app/api/customer/filters/route.ts
+    - M	components/benchmark-view.tsx
+    - M	components/customer-access-panel.tsx
+    - M	components/dashboard-view.tsx
+    - M	components/news-api-hooks.ts
   - Git stat:
-  - README.md                                  |  5041 +----
-  -  audits/readme_network_precheck_latest.json |    24 +-
-  -  audits/readme_rss_health_latest.json       | 27720 +++++++++++++++++----------
-  -  scripts/export-rss-atlas.ts                |   108 +-
-  -  scripts/verify-readme-rss.ts               |    16 +-
-  -  5 files changed, 17499 insertions(+), 15410 deletions(-)
+  - CHANGELOG.md                                  | 34 ++++++++------
+  -  app/access/page.tsx                           |  2 +-
+  -  app/api/customer/dashboard/benchmark/route.ts | 16 +------
+  -  app/api/customer/dashboard/summary/route.ts   | 65 ++++++++++++++++++++++++++-
+  -  app/api/customer/filters/route.ts             |  4 +-
+  -  components/benchmark-view.tsx                 | 12 +----
+  -  components/customer-access-panel.tsx          |  8 ++--
+  -  components/dashboard-view.tsx                 | 58 +++++-------------------
+  -  components/news-api-hooks.ts                  | 16 +++----
+  -  9 files changed, 109 insertions(+), 106 deletions(-)
+
+### [e0b6bb9] Make dashboard and benchmark public and sanitize summary headline fields
+- Commit: e0b6bb9d36d37bd7f4e161949a3067b9a3c7517f
+- Date: 2026-04-03 11:13:11 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	app/access/page.tsx
+    - M	app/api/customer/dashboard/benchmark/route.ts
+    - M	app/api/customer/dashboard/summary/route.ts
+    - M	app/api/customer/filters/route.ts
+    - M	components/benchmark-view.tsx
+    - M	components/customer-access-panel.tsx
+    - M	components/dashboard-view.tsx
+    - M	components/news-api-hooks.ts
+  - Git stat:
+  - app/access/page.tsx                           |  2 +-
+  -  app/api/customer/dashboard/benchmark/route.ts | 16 +------
+  -  app/api/customer/dashboard/summary/route.ts   | 65 ++++++++++++++++++++++++++-
+  -  app/api/customer/filters/route.ts             |  4 +-
+  -  components/benchmark-view.tsx                 | 12 +----
+  -  components/customer-access-panel.tsx          |  8 ++--
+  -  components/dashboard-view.tsx                 | 58 +++++-------------------
+  -  components/news-api-hooks.ts                  | 16 +++----
+  -  8 files changed, 89 insertions(+), 92 deletions(-)
 
 ### [a4868ef] fix(map): harden back-to-globe reset URL/state sync
 - Commit: a4868efde99f5db0e173821df267af845600a055

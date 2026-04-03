@@ -1,7 +1,6 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { CustomerAccessPanel } from '@/components/customer-access-panel';
 import { useCustomerAccess } from '@/components/customer-access-provider';
 import { BENCHMARK_COLUMN_HELP, HelpTooltipLabel } from '@/components/help-tooltip-label';
 import { useCountryBenchmark } from '@/components/news-api-hooks';
@@ -219,7 +218,7 @@ function getSpotlightRows(rows: CountryBenchmarkCountryRow[], period: BenchmarkP
 }
 
 export function BenchmarkView() {
-  const { hasToken, isReady } = useCustomerAccess();
+  const { isReady } = useCustomerAccess();
   const benchmarkState = useCountryBenchmark();
   const benchmark = benchmarkState.data?.storage === 'postgres' ? benchmarkState.data : null;
   const [period, setPeriod] = useState<BenchmarkPeriod>('hourly');
@@ -239,15 +238,6 @@ export function BenchmarkView() {
 
   if (!isReady) {
     return <div className="panel muted">Checking customer access...</div>;
-  }
-
-  if (!hasToken) {
-    return (
-      <CustomerAccessPanel
-        title="Benchmark Access Required"
-        description="Country benchmark tables are available only inside an authenticated customer session."
-      />
-    );
   }
 
   if (benchmarkState.loading && !benchmark) {
