@@ -1624,6 +1624,328 @@ const PUBLISHER_RULES: PublisherRule[] = [
     countries: ['France'],
     exact: ['Le Point'],
   },
+  {
+    publisher: 'CGTN',
+    countries: ['China'],
+    exact: ['CGTN'],
+    prefixes: ['CGTN -'],
+  },
+  {
+    publisher: 'China Daily',
+    countries: ['China'],
+    exact: ['China Daily'],
+    prefixes: ['China Daily -'],
+  },
+  {
+    publisher: 'Caixin Global',
+    countries: ['China'],
+    exact: ['Caixin Global'],
+  },
+  {
+    publisher: 'am730',
+    countries: ['China'],
+    exact: ['am730'],
+  },
+  {
+    publisher: 'Hespress',
+    countries: ['Morocco'],
+    exact: ['Hespress', 'Hespress EN', 'Hesport'],
+  },
+  {
+    publisher: 'Barlamane',
+    countries: ['Morocco'],
+    exact: ['Barlamane', 'Barlamane Sport', 'Barlamantoday'],
+  },
+  {
+    publisher: 'Le Matin',
+    countries: ['Morocco'],
+    prefixes: ['Le Matin'],
+  },
+  {
+    publisher: 'Challenge',
+    countries: ['Morocco'],
+    exact: ['Challenge'],
+  },
+  {
+    publisher: 'La Vie Eco',
+    countries: ['Morocco'],
+    exact: ['La Vie Eco'],
+  },
+  {
+    publisher: 'Le Desk',
+    countries: ['Morocco'],
+    exact: ['Le Desk'],
+  },
+  {
+    publisher: 'Akhbarona',
+    countries: ['Morocco'],
+    exact: ['Akhbarona'],
+  },
+  {
+    publisher: 'Actu Maroc',
+    countries: ['Morocco'],
+    exact: ['Actu Maroc'],
+  },
+  {
+    publisher: 'Assahifa',
+    countries: ['Morocco'],
+    exact: ['Assahifa'],
+  },
+  {
+    publisher: 'Bladi',
+    countries: ['Morocco'],
+    exact: ['Bladi'],
+  },
+  {
+    publisher: 'Agriland',
+    countries: ['Ireland'],
+    exact: ['Agriland'],
+  },
+  {
+    publisher: 'Newstalk',
+    countries: ['Ireland'],
+    exact: ['Newstalk'],
+  },
+  {
+    publisher: 'Silicon Republic',
+    countries: ['Ireland'],
+    exact: ['Silicon Republic'],
+  },
+  {
+    publisher: 'The Currency',
+    countries: ['Ireland'],
+    exact: ['The Currency'],
+  },
+  {
+    publisher: 'The42',
+    countries: ['Ireland'],
+    exact: ['The42'],
+  },
+  {
+    publisher: 'Irish News',
+    countries: ['Ireland'],
+    exact: ['Irish News'],
+  },
+  {
+    publisher: 'Belfast Telegraph',
+    countries: ['Ireland'],
+    exact: ['Belfast Telegraph'],
+  },
+  {
+    publisher: 'Irish Tech News',
+    countries: ['Ireland'],
+    exact: ['Irish Tech News'],
+  },
+  {
+    publisher: 'Clare FM',
+    countries: ['Ireland'],
+    exact: ['Clare FM'],
+  },
+  {
+    publisher: 'Highland Radio',
+    countries: ['Ireland'],
+    exact: ['Highland Radio'],
+  },
+  {
+    publisher: 'Derry Journal',
+    countries: ['Ireland'],
+    exact: ['Derry Journal'],
+  },
+  {
+    publisher: 'Derry Now',
+    countries: ['Ireland'],
+    exact: ['Derry Now'],
+  },
+  {
+    publisher: 'Donegal Live',
+    countries: ['Ireland'],
+    exact: ['Donegal Live'],
+  },
+  {
+    publisher: 'Dundalk Democrat',
+    countries: ['Ireland'],
+    exact: ['Dundalk Democrat'],
+  },
+  {
+    publisher: 'B&T',
+    countries: ['Australia'],
+    exact: ['B&T'],
+  },
+  {
+    publisher: 'Drive',
+    countries: ['Australia'],
+    exact: ['Drive'],
+  },
+  {
+    publisher: 'Inside Retail',
+    countries: ['Australia'],
+    exact: ['Inside Retail'],
+  },
+  {
+    publisher: 'iTnews',
+    countries: ['Australia'],
+    exact: ['iTnews'],
+  },
+  {
+    publisher: 'Crikey',
+    countries: ['Australia'],
+    exact: ['Crikey'],
+  },
+  {
+    publisher: 'Canberra Weekly',
+    countries: ['Australia'],
+    exact: ['Canberra Weekly'],
+  },
+  {
+    publisher: 'Canberra Daily',
+    countries: ['Australia'],
+    exact: ['Canberra Daily'],
+  },
+  {
+    publisher: 'ChannelLife Australia',
+    countries: ['Australia'],
+    exact: ['ChannelLife Australia'],
+  },
+  {
+    publisher: 'Glam Adelaide',
+    countries: ['Australia'],
+    exact: ['Glam Adelaide'],
+  },
+  {
+    publisher: 'Hospitality Magazine',
+    countries: ['Australia'],
+    exact: ['Hospitality Magazine'],
+  },
+  {
+    publisher: 'Australian FinTech',
+    countries: ['Australia'],
+    exact: ['Australian FinTech'],
+  },
+  {
+    publisher: 'Dynamic Business',
+    countries: ['Australia'],
+    exact: ['Dynamic Business'],
+  },
+  {
+    publisher: 'Eco Voice',
+    countries: ['Australia'],
+    exact: ['Eco Voice'],
+  },
+  {
+    publisher: 'City Hub',
+    countries: ['Australia'],
+    exact: ['City Hub'],
+  },
+  {
+    publisher: 'InDaily SA',
+    countries: ['Australia'],
+    exact: ['InDaily SA'],
+  },
+  {
+    publisher: 'InDaily QLD',
+    countries: ['Australia'],
+    exact: ['InDaily QLD'],
+  },
+  {
+    publisher: 'HuffPost',
+    countries: ['United States'],
+    exact: ['HuffPost'],
+  },
+  {
+    publisher: 'CNET',
+    countries: ['United States'],
+    exact: ['CNET'],
+  },
+  {
+    publisher: 'ZDNet',
+    countries: ['United States'],
+    exact: ['ZDNet'],
+  },
+  {
+    publisher: 'Ars Technica',
+    countries: ['United States'],
+    exact: ['Ars Technica'],
+  },
+  {
+    publisher: 'The Hill',
+    countries: ['United States'],
+    exact: ['The Hill'],
+  },
+  {
+    publisher: 'The Atlantic',
+    countries: ['United States'],
+    exact: ['The Atlantic'],
+  },
+  {
+    publisher: 'The New Yorker',
+    countries: ['United States'],
+    exact: ['The New Yorker'],
+  },
+  {
+    publisher: 'New York Post',
+    countries: ['United States'],
+    exact: ['New York Post'],
+  },
+  {
+    publisher: 'Seattle Times',
+    countries: ['United States'],
+    exact: ['Seattle Times'],
+  },
+  {
+    publisher: 'Denver Post',
+    countries: ['United States'],
+    exact: ['Denver Post'],
+  },
+  {
+    publisher: 'San Jose Mercury News',
+    countries: ['United States'],
+    exact: ['San Jose Mercury News'],
+  },
+  {
+    publisher: 'Dallas Morning News',
+    countries: ['United States'],
+    exact: ['Dallas Morning News'],
+  },
+  {
+    publisher: 'Engadget',
+    countries: ['United States'],
+    exact: ['Engadget'],
+  },
+  {
+    publisher: 'CoinDesk',
+    countries: ['United States'],
+    exact: ['CoinDesk'],
+  },
+  {
+    publisher: 'Decrypt',
+    countries: ['United States'],
+    exact: ['Decrypt'],
+  },
+  {
+    publisher: 'Deadline',
+    countries: ['United States'],
+    exact: ['Deadline'],
+  },
+  {
+    publisher: 'Defense News',
+    countries: ['United States'],
+    exact: ['Defense News'],
+  },
+  {
+    publisher: 'Defense One',
+    countries: ['United States'],
+    exact: ['Defense One'],
+  },
+  {
+    publisher: 'Dark Reading',
+    countries: ['United States'],
+    exact: ['Dark Reading'],
+  },
+  {
+    publisher: 'Breitbart',
+    countries: ['United States'],
+    exact: ['Breitbart'],
+  },
 ];
 
 function resolveRuleMatch(source: string, country: string, rule: PublisherRule): PublisherMatchType | null {
