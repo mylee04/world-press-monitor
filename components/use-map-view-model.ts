@@ -90,6 +90,7 @@ export function useMapViewModel() {
   const [interactionPaused, setInteractionPaused] = useState(false);
   const [sceneOrigin, setSceneOrigin] = useState<{ x: number; y: number }>({ x: 56, y: 52 });
   const [layers, setLayers] = useState<MapLayerState>(DEFAULT_MAP_LAYERS);
+  const clearCountrySelectionRef = useRef(false);
   const localPreviewEnabled = process.env.NODE_ENV !== 'production';
   const detailAccessEnabled = localPreviewEnabled || (isReady && hasToken);
   const detailAccessChecking = !localPreviewEnabled && !isReady;
@@ -284,6 +285,11 @@ export function useMapViewModel() {
         setSelectedSource(null);
         setCountryViewport(DEFAULT_COUNTRY_VIEWPORT);
       }
+      clearCountrySelectionRef.current = false;
+      return;
+    }
+
+    if (clearCountrySelectionRef.current) {
       return;
     }
 
@@ -608,6 +614,7 @@ export function useMapViewModel() {
   }
 
   function resetToGlobe() {
+    clearCountrySelectionRef.current = true;
     setSceneOrigin({ x: 50, y: 52 });
     setSelectedCountry(null);
     setSelectedCluster(null);
