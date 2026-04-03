@@ -19,12 +19,39 @@
   },
   {
     "country": "Australia",
+    "publisher": "Australian Mining",
+    "city": "Sydney",
+    "region": "Sydney",
+    "lat": -33.8688,
+    "lon": 151.2093,
+    "label": "Australian Mining HQ"
+  },
+  {
+    "country": "Australia",
     "publisher": "B&T",
     "city": "Sydney",
     "region": "Sydney",
     "lat": -33.8688,
     "lon": 151.2093,
     "label": "B&T HQ"
+  },
+  {
+    "country": "Australia",
+    "publisher": "Border Watch",
+    "city": "Mount Gambier",
+    "region": "Mount Gambier",
+    "lat": -37.829,
+    "lon": 140.7829,
+    "label": "Border Watch HQ"
+  },
+  {
+    "country": "Australia",
+    "publisher": "Byron Shire Echo",
+    "city": "Byron Bay",
+    "region": "Byron Bay",
+    "lat": -28.6474,
+    "lon": 153.602,
+    "label": "Byron Shire Echo HQ"
   },
   {
     "country": "Australia",
@@ -100,6 +127,24 @@
   },
   {
     "country": "Australia",
+    "publisher": "Farm Weekly",
+    "city": "Perth",
+    "region": "Perth",
+    "lat": -31.9523,
+    "lon": 115.8613,
+    "label": "Farm Weekly HQ"
+  },
+  {
+    "country": "Australia",
+    "publisher": "Geraldton Guardian",
+    "city": "Geraldton",
+    "region": "Geraldton",
+    "lat": -28.7774,
+    "lon": 114.6146,
+    "label": "Geraldton Guardian HQ"
+  },
+  {
+    "country": "Australia",
     "publisher": "Glam Adelaide",
     "city": "Adelaide",
     "region": "Adelaide",
@@ -145,6 +190,132 @@
   },
   {
     "country": "Australia",
+    "publisher": "iTnews",
+    "city": "Sydney",
+    "region": "Sydney",
+    "lat": -33.8688,
+    "lon": 151.2093,
+    "label": "iTnews HQ"
+  },
+  {
+    "country": "Australia",
+    "publisher": "Kalgoorlie Miner",
+    "city": "Kalgoorlie",
+    "region": "Kalgoorlie",
+    "lat": -30.7489,
+    "lon": 121.465,
+    "label": "Kalgoorlie Miner HQ"
+  },
+  {
+    "country": "Australia",
+    "publisher": "MacroBusiness",
+    "city": "Melbourne",
+    "region": "Melbourne",
+    "lat": -37.8136,
+    "lon": 144.9631,
+    "label": "MacroBusiness HQ"
+  },
+  {
+    "country": "Australia",
+    "publisher": "Mediaweek",
+    "city": "Sydney",
+    "region": "Sydney",
+    "lat": -33.8688,
+    "lon": 151.2093,
+    "label": "Mediaweek HQ"
+  },
+  {
+    "country": "Australia",
+    "publisher": "Michael West",
+    "city": "Sydney",
+    "region": "Sydney",
+    "lat": -33.8688,
+    "lon": 151.2093,
+    "label": "Michael West HQ"
+  },
+  {
+    "country": "Australia",
+    "publisher": "Mumbrella",
+    "city": "Sydney",
+    "region": "Sydney",
+    "lat": -33.8688,
+    "lon": 151.2093,
+    "label": "Mumbrella HQ"
+  },
+  {
+    "country": "Australia",
+    "publisher": "Murray Pioneer",
+    "city": "Renmark",
+    "region": "Renmark",
+    "lat": -34.1747,
+    "lon": 140.7469,
+    "label": "Murray Pioneer HQ"
+  },
+  {
+    "country": "Australia",
+    "publisher": "Newcastle Weekly",
+    "city": "Newcastle",
+    "region": "Newcastle",
+    "lat": -32.9283,
+    "lon": 151.7817,
+    "label": "Newcastle Weekly HQ"
+  },
+  {
+    "country": "Australia",
+    "publisher": "Port Lincoln Times",
+    "city": "Port Lincoln",
+    "region": "Port Lincoln",
+    "lat": -34.7209,
+    "lon": 135.8575,
+    "label": "Port Lincoln Times HQ"
+  },
+  {
+    "country": "Australia",
+    "publisher": "Region Canberra",
+    "city": "Canberra",
+    "region": "Canberra",
+    "lat": -35.2809,
+    "lon": 149.13,
+    "label": "Region Canberra HQ"
+  },
+  {
+    "country": "Australia",
+    "publisher": "Region Illawarra",
+    "city": "Wollongong",
+    "region": "Wollongong",
+    "lat": -34.4278,
+    "lon": 150.8931,
+    "label": "Region Illawarra HQ"
+  },
+  {
+    "country": "Australia",
+    "publisher": "Region Riverina",
+    "city": "Wagga Wagga",
+    "region": "Wagga Wagga",
+    "lat": -35.1082,
+    "lon": 147.3598,
+    "label": "Region Riverina HQ"
+  },
+  {
+    "country": "Australia",
+    "publisher": "RenewEconomy",
+    "city": "Canberra",
+    "region": "Canberra",
+    "lat": -35.2809,
+    "lon": 149.13,
+    "label": "RenewEconomy HQ"
+  },
+  {
+    "country": "Australia",
+    "publisher": "RetailBiz",
+    "city": "Sydney",
+    "region": "Sydney",
+    "lat": -33.8688,
+    "lon": 151.2093,
+    "label": "RetailBiz HQ"
+  },
+  {
+    "country": "Australia",
     "publisher": "SBS",
     "city": "Sydney",
     "region": "Sydney",
@@ -154,21 +325,111 @@
   },
   {
     "country": "Australia",
-    "publisher": "iTnews",
+    "publisher": "Sky News Australia",
     "city": "Sydney",
     "region": "Sydney",
     "lat": -33.8688,
     "lon": 151.2093,
-    "label": "iTnews HQ"
+    "label": "Sky News Australia HQ"
+  },
+  {
+    "country": "Australia",
+    "publisher": "SmartCompany",
+    "city": "Sydney",
+    "region": "Sydney",
+    "lat": -33.8688,
+    "lon": 151.2093,
+    "label": "SmartCompany HQ"
+  },
+  {
+    "country": "Australia",
+    "publisher": "Startup Daily",
+    "city": "Sydney",
+    "region": "Sydney",
+    "lat": -33.8688,
+    "lon": 151.2093,
+    "label": "Startup Daily HQ"
+  },
+  {
+    "country": "Australia",
+    "publisher": "Sunraysia Daily",
+    "city": "Mildura",
+    "region": "Mildura",
+    "lat": -34.1855,
+    "lon": 142.1625,
+    "label": "Sunraysia Daily HQ"
+  },
+  {
+    "country": "Australia",
+    "publisher": "The Conversation AU",
+    "city": "Melbourne",
+    "region": "Melbourne",
+    "lat": -37.8136,
+    "lon": 144.9631,
+    "label": "The Conversation AU HQ"
+  },
+  {
+    "country": "Australia",
+    "publisher": "The Mandarin",
+    "city": "Canberra",
+    "region": "Canberra",
+    "lat": -35.2809,
+    "lon": 149.13,
+    "label": "The Mandarin HQ"
+  },
+  {
+    "country": "Australia",
+    "publisher": "The New Daily",
+    "city": "Melbourne",
+    "region": "Melbourne",
+    "lat": -37.8136,
+    "lon": 144.9631,
+    "label": "The New Daily HQ"
+  },
+  {
+    "country": "Australia",
+    "publisher": "Western Weekender",
+    "city": "Penrith",
+    "region": "Penrith",
+    "lat": -33.7506,
+    "lon": 150.6942,
+    "label": "Western Weekender HQ"
+  },
+  {
+    "country": "Australia",
+    "publisher": "WhichCar",
+    "city": "Melbourne",
+    "region": "Melbourne",
+    "lat": -37.8136,
+    "lon": 144.9631,
+    "label": "WhichCar HQ"
+  },
+  {
+    "country": "Australia",
+    "publisher": "Women's Agenda",
+    "city": "Sydney",
+    "region": "Sydney",
+    "lat": -33.8688,
+    "lon": 151.2093,
+    "label": "Women's Agenda HQ"
+  },
+  {
+    "country": "Australia",
+    "publisher": "Yahoo",
+    "city": "Sydney",
+    "region": "Sydney",
+    "lat": -33.8688,
+    "lon": 151.2093,
+    "label": "Yahoo Australia HQ"
   },
   {
     "country": "China",
-    "publisher": "CGTN",
-    "city": "Beijing",
-    "region": "Beijing",
-    "lat": 39.9042,
-    "lon": 116.4074,
-    "label": "CGTN HQ"
+    "publisher": "am730",
+    "city": "Hong Kong",
+    "region": "Hong Kong",
+    "lat": 22.3193,
+    "lon": 114.1694,
+    "label": "am730 HQ"
   },
   {
     "country": "China",
@@ -181,6 +442,15 @@
   },
   {
     "country": "China",
+    "publisher": "CGTN",
+    "city": "Beijing",
+    "region": "Beijing",
+    "lat": 39.9042,
+    "lon": 116.4074,
+    "label": "CGTN HQ"
+  },
+  {
+    "country": "China",
     "publisher": "China Daily",
     "city": "Beijing",
     "region": "Beijing",
@@ -190,12 +460,111 @@
   },
   {
     "country": "China",
-    "publisher": "am730",
+    "publisher": "China News Service",
+    "city": "Beijing",
+    "region": "Beijing",
+    "lat": 39.9042,
+    "lon": 116.4074,
+    "label": "China News Service HQ"
+  },
+  {
+    "country": "China",
+    "publisher": "HK01",
     "city": "Hong Kong",
     "region": "Hong Kong",
     "lat": 22.3193,
     "lon": 114.1694,
-    "label": "am730 HQ"
+    "label": "HK01 HQ"
+  },
+  {
+    "country": "China",
+    "publisher": "Initium",
+    "city": "Hong Kong",
+    "region": "Hong Kong",
+    "lat": 22.3193,
+    "lon": 114.1694,
+    "label": "Initium HQ"
+  },
+  {
+    "country": "China",
+    "publisher": "Ming Pao",
+    "city": "Hong Kong",
+    "region": "Hong Kong",
+    "lat": 22.3193,
+    "lon": 114.1694,
+    "label": "Ming Pao HQ"
+  },
+  {
+    "country": "China",
+    "publisher": "People China",
+    "city": "Beijing",
+    "region": "Beijing",
+    "lat": 39.9042,
+    "lon": 116.4074,
+    "label": "People China HQ"
+  },
+  {
+    "country": "China",
+    "publisher": "People.cn",
+    "city": "Beijing",
+    "region": "Beijing",
+    "lat": 39.9042,
+    "lon": 116.4074,
+    "label": "People.cn HQ"
+  },
+  {
+    "country": "China",
+    "publisher": "RTHK",
+    "city": "Hong Kong",
+    "region": "Hong Kong",
+    "lat": 22.3193,
+    "lon": 114.1694,
+    "label": "RTHK HQ"
+  },
+  {
+    "country": "China",
+    "publisher": "Sina News",
+    "city": "Beijing",
+    "region": "Beijing",
+    "lat": 39.9042,
+    "lon": 116.4074,
+    "label": "Sina News HQ"
+  },
+  {
+    "country": "China",
+    "publisher": "South China Morning Post",
+    "city": "Hong Kong",
+    "region": "Hong Kong",
+    "lat": 22.3193,
+    "lon": 114.1694,
+    "label": "South China Morning Post HQ"
+  },
+  {
+    "country": "China",
+    "publisher": "TechNode",
+    "city": "Beijing",
+    "region": "Beijing",
+    "lat": 39.9042,
+    "lon": 116.4074,
+    "label": "TechNode HQ"
+  },
+  {
+    "country": "China",
+    "publisher": "The Standard",
+    "city": "Hong Kong",
+    "region": "Hong Kong",
+    "lat": 22.3193,
+    "lon": 114.1694,
+    "label": "The Standard HQ"
+  },
+  {
+    "country": "China",
+    "publisher": "Xinhua",
+    "city": "Beijing",
+    "region": "Beijing",
+    "lat": 39.9042,
+    "lon": 116.4074,
+    "label": "Xinhua HQ"
   },
   {
     "country": "Denmark",
@@ -523,12 +892,30 @@
   },
   {
     "country": "Germany",
+    "publisher": "kicker",
+    "city": "Nuremberg",
+    "region": "Nuremberg",
+    "lat": 49.4539,
+    "lon": 11.0775,
+    "label": "kicker HQ"
+  },
+  {
+    "country": "Germany",
     "publisher": "Manager Magazin",
     "city": "Hamburg",
     "region": "Hamburg",
     "lat": 53.55,
     "lon": 10,
     "label": "Manager Magazin HQ"
+  },
+  {
+    "country": "Germany",
+    "publisher": "n-tv",
+    "city": "Cologne",
+    "region": "Cologne",
+    "lat": 50.9422,
+    "lon": 6.9578,
+    "label": "n-tv HQ"
   },
   {
     "country": "Germany",
@@ -583,24 +970,6 @@
     "lat": 51.2256,
     "lon": 6.7767,
     "label": "WirtschaftsWoche HQ"
-  },
-  {
-    "country": "Germany",
-    "publisher": "kicker",
-    "city": "Nuremberg",
-    "region": "Nuremberg",
-    "lat": 49.4539,
-    "lon": 11.0775,
-    "label": "kicker HQ"
-  },
-  {
-    "country": "Germany",
-    "publisher": "n-tv",
-    "city": "Cologne",
-    "region": "Cologne",
-    "lat": 50.9422,
-    "lon": 6.9578,
-    "label": "n-tv HQ"
   },
   {
     "country": "Hungary",
@@ -703,12 +1072,57 @@
   },
   {
     "country": "Ireland",
+    "publisher": "Business Plus",
+    "city": "Dublin",
+    "region": "Dublin",
+    "lat": 53.3498,
+    "lon": -6.2603,
+    "label": "Business Plus HQ"
+  },
+  {
+    "country": "Ireland",
+    "publisher": "Clare Champion",
+    "city": "Ennis",
+    "region": "Ennis",
+    "lat": 52.8463,
+    "lon": -8.9863,
+    "label": "Clare Champion HQ"
+  },
+  {
+    "country": "Ireland",
+    "publisher": "Clare Echo",
+    "city": "Ennis",
+    "region": "Ennis",
+    "lat": 52.8463,
+    "lon": -8.9863,
+    "label": "Clare Echo HQ"
+  },
+  {
+    "country": "Ireland",
     "publisher": "Clare FM",
     "city": "Ennis",
     "region": "County Clare",
     "lat": 52.8471,
     "lon": -8.9862,
     "label": "Clare FM HQ"
+  },
+  {
+    "country": "Ireland",
+    "publisher": "Connacht Tribune",
+    "city": "Galway",
+    "region": "Galway",
+    "lat": 53.2707,
+    "lon": -9.0568,
+    "label": "Connacht Tribune HQ"
+  },
+  {
+    "country": "Ireland",
+    "publisher": "Cork Safety Alerts",
+    "city": "Cork",
+    "region": "Cork",
+    "lat": 51.8985,
+    "lon": -8.4756,
+    "label": "Cork Safety Alerts HQ"
   },
   {
     "country": "Ireland",
@@ -730,6 +1144,15 @@
   },
   {
     "country": "Ireland",
+    "publisher": "Donegal Daily",
+    "city": "Letterkenny",
+    "region": "Letterkenny",
+    "lat": 54.9503,
+    "lon": -7.734,
+    "label": "Donegal Daily HQ"
+  },
+  {
+    "country": "Ireland",
     "publisher": "Donegal Live",
     "city": "Letterkenny",
     "region": "Donegal",
@@ -739,12 +1162,39 @@
   },
   {
     "country": "Ireland",
+    "publisher": "Donegal News",
+    "city": "Letterkenny",
+    "region": "Letterkenny",
+    "lat": 54.9503,
+    "lon": -7.734,
+    "label": "Donegal News HQ"
+  },
+  {
+    "country": "Ireland",
     "publisher": "Dundalk Democrat",
     "city": "Dundalk",
     "region": "Louth",
     "lat": 54.0007,
     "lon": -6.405,
     "label": "Dundalk Democrat HQ"
+  },
+  {
+    "country": "Ireland",
+    "publisher": "Echo Live",
+    "city": "Cork",
+    "region": "Cork",
+    "lat": 51.8985,
+    "lon": -8.4756,
+    "label": "Echo Live HQ"
+  },
+  {
+    "country": "Ireland",
+    "publisher": "Galway Daily",
+    "city": "Galway",
+    "region": "Galway",
+    "lat": 53.2707,
+    "lon": -9.0568,
+    "label": "Galway Daily HQ"
   },
   {
     "country": "Ireland",
@@ -784,12 +1234,111 @@
   },
   {
     "country": "Ireland",
+    "publisher": "KildareNow",
+    "city": "Naas",
+    "region": "Naas",
+    "lat": 53.2159,
+    "lon": -6.6669,
+    "label": "KildareNow HQ"
+  },
+  {
+    "country": "Ireland",
+    "publisher": "Kilkenny People",
+    "city": "Kilkenny",
+    "region": "Kilkenny",
+    "lat": 52.6541,
+    "lon": -7.2448,
+    "label": "Kilkenny People HQ"
+  },
+  {
+    "country": "Ireland",
+    "publisher": "Leinster Leader",
+    "city": "Naas",
+    "region": "Naas",
+    "lat": 53.2159,
+    "lon": -6.6669,
+    "label": "Leinster Leader HQ"
+  },
+  {
+    "country": "Ireland",
+    "publisher": "Leitrim Observer",
+    "city": "Carrick-on-Shannon",
+    "region": "Carrick-on-Shannon",
+    "lat": 53.9469,
+    "lon": -8.0901,
+    "label": "Leitrim Observer HQ"
+  },
+  {
+    "country": "Ireland",
+    "publisher": "Limerick Leader",
+    "city": "Limerick",
+    "region": "Limerick",
+    "lat": 52.6638,
+    "lon": -8.6267,
+    "label": "Limerick Leader HQ"
+  },
+  {
+    "country": "Ireland",
+    "publisher": "Limerick Post",
+    "city": "Limerick",
+    "region": "Limerick",
+    "lat": 52.6638,
+    "lon": -8.6267,
+    "label": "Limerick Post HQ"
+  },
+  {
+    "country": "Ireland",
+    "publisher": "Longford Leader",
+    "city": "Longford",
+    "region": "Longford",
+    "lat": 53.727,
+    "lon": -7.793,
+    "label": "Longford Leader HQ"
+  },
+  {
+    "country": "Ireland",
+    "publisher": "Mayo News",
+    "city": "Castlebar",
+    "region": "Castlebar",
+    "lat": 53.8567,
+    "lon": -9.2979,
+    "label": "Mayo News HQ"
+  },
+  {
+    "country": "Ireland",
     "publisher": "Newstalk",
     "city": "Dublin",
     "region": "Dublin",
     "lat": 53.3498,
     "lon": -6.2603,
     "label": "Newstalk HQ"
+  },
+  {
+    "country": "Ireland",
+    "publisher": "Off The Ball",
+    "city": "Dublin",
+    "region": "Dublin",
+    "lat": 53.3498,
+    "lon": -6.2603,
+    "label": "Off The Ball HQ"
+  },
+  {
+    "country": "Ireland",
+    "publisher": "Offaly Live",
+    "city": "Tullamore",
+    "region": "Tullamore",
+    "lat": 53.2739,
+    "lon": -7.4889,
+    "label": "Offaly Live HQ"
+  },
+  {
+    "country": "Ireland",
+    "publisher": "Roscommon People",
+    "city": "Roscommon",
+    "region": "Roscommon",
+    "lat": 53.6279,
+    "lon": -8.1893,
+    "label": "Roscommon People HQ"
   },
   {
     "country": "Ireland",
@@ -802,12 +1351,39 @@
   },
   {
     "country": "Ireland",
+    "publisher": "The Avondhu",
+    "city": "Fermoy",
+    "region": "Fermoy",
+    "lat": 52.1368,
+    "lon": -8.2753,
+    "label": "The Avondhu HQ"
+  },
+  {
+    "country": "Ireland",
     "publisher": "The Currency",
     "city": "Dublin",
     "region": "Dublin",
     "lat": 53.3498,
     "lon": -6.2603,
     "label": "The Currency HQ"
+  },
+  {
+    "country": "Ireland",
+    "publisher": "The Irish Catholic",
+    "city": "Dublin",
+    "region": "Dublin",
+    "lat": 53.3498,
+    "lon": -6.2603,
+    "label": "The Irish Catholic HQ"
+  },
+  {
+    "country": "Ireland",
+    "publisher": "The Liberal",
+    "city": "Cork",
+    "region": "Cork",
+    "lat": 51.8985,
+    "lon": -8.4756,
+    "label": "The Liberal HQ"
   },
   {
     "country": "Ireland",
@@ -819,13 +1395,31 @@
     "label": "The42 HQ"
   },
   {
-    "country": "Italy",
-    "publisher": "ANSA",
-    "city": "Rome",
-    "region": "Rome",
-    "lat": 41.8931,
-    "lon": 12.4828,
-    "label": "ANSA HQ"
+    "country": "Ireland",
+    "publisher": "Tipperary Live",
+    "city": "Clonmel",
+    "region": "Clonmel",
+    "lat": 52.355,
+    "lon": -7.7038,
+    "label": "Tipperary Live HQ"
+  },
+  {
+    "country": "Ireland",
+    "publisher": "Waterford Live",
+    "city": "Waterford",
+    "region": "Waterford",
+    "lat": 52.2593,
+    "lon": -7.1101,
+    "label": "Waterford Live HQ"
+  },
+  {
+    "country": "Ireland",
+    "publisher": "West Cork People",
+    "city": "Clonakilty",
+    "region": "Clonakilty",
+    "lat": 51.623,
+    "lon": -8.8872,
+    "label": "West Cork People HQ"
   },
   {
     "country": "Italy",
@@ -835,6 +1429,15 @@
     "lat": 41.8931,
     "lon": 12.4828,
     "label": "Adnkronos HQ"
+  },
+  {
+    "country": "Italy",
+    "publisher": "ANSA",
+    "city": "Rome",
+    "region": "Rome",
+    "lat": 41.8931,
+    "lon": 12.4828,
+    "label": "ANSA HQ"
   },
   {
     "country": "Italy",
@@ -865,21 +1468,21 @@
   },
   {
     "country": "Italy",
-    "publisher": "La Stampa",
-    "city": "Turin",
-    "region": "Turin",
-    "lat": 45.0792,
-    "lon": 7.6761,
-    "label": "La Stampa HQ"
-  },
-  {
-    "country": "Italy",
     "publisher": "la Repubblica",
     "city": "Rome",
     "region": "Rome",
     "lat": 41.8931,
     "lon": 12.4828,
     "label": "la Repubblica HQ"
+  },
+  {
+    "country": "Italy",
+    "publisher": "La Stampa",
+    "city": "Turin",
+    "region": "Turin",
+    "lat": 45.0792,
+    "lon": 7.6761,
+    "label": "La Stampa HQ"
   },
   {
     "country": "Japan",
@@ -937,6 +1540,15 @@
   },
   {
     "country": "Morocco",
+    "publisher": "Achkayen",
+    "city": "Rabat",
+    "region": "Rabat",
+    "lat": 34.0209,
+    "lon": -6.8416,
+    "label": "Achkayen HQ"
+  },
+  {
+    "country": "Morocco",
     "publisher": "Actu Maroc",
     "city": "Casablanca",
     "region": "Casablanca",
@@ -955,12 +1567,48 @@
   },
   {
     "country": "Morocco",
+    "publisher": "Alomk Sport",
+    "city": "Casablanca",
+    "region": "Casablanca",
+    "lat": 33.5731,
+    "lon": -7.5898,
+    "label": "Alomk Sport HQ"
+  },
+  {
+    "country": "Morocco",
+    "publisher": "Anfas Press",
+    "city": "Casablanca",
+    "region": "Casablanca",
+    "lat": 33.5731,
+    "lon": -7.5898,
+    "label": "Anfas Press HQ"
+  },
+  {
+    "country": "Morocco",
     "publisher": "Assahifa",
     "city": "Rabat",
     "region": "Rabat",
     "lat": 34.0209,
     "lon": -6.8416,
     "label": "Assahifa HQ"
+  },
+  {
+    "country": "Morocco",
+    "publisher": "Aujourdhui Le Maroc",
+    "city": "Casablanca",
+    "region": "Casablanca",
+    "lat": 33.5731,
+    "lon": -7.5898,
+    "label": "Aujourdhui Le Maroc HQ"
+  },
+  {
+    "country": "Morocco",
+    "publisher": "Awras",
+    "city": "Casablanca",
+    "region": "Casablanca",
+    "lat": 33.5731,
+    "lon": -7.5898,
+    "label": "Awras HQ"
   },
   {
     "country": "Morocco",
@@ -973,12 +1621,30 @@
   },
   {
     "country": "Morocco",
+    "publisher": "Belpresse",
+    "city": "Casablanca",
+    "region": "Casablanca",
+    "lat": 33.5731,
+    "lon": -7.5898,
+    "label": "Belpresse HQ"
+  },
+  {
+    "country": "Morocco",
     "publisher": "Bladi",
     "city": "Casablanca",
     "region": "Casablanca",
     "lat": 33.5731,
     "lon": -7.5898,
     "label": "Bladi HQ"
+  },
+  {
+    "country": "Morocco",
+    "publisher": "Cawalisse",
+    "city": "Casablanca",
+    "region": "Casablanca",
+    "lat": 33.5731,
+    "lon": -7.5898,
+    "label": "Cawalisse HQ"
   },
   {
     "country": "Morocco",
@@ -1000,12 +1666,48 @@
   },
   {
     "country": "Morocco",
+    "publisher": "Kech24",
+    "city": "Marrakesh",
+    "region": "Marrakesh",
+    "lat": 31.6295,
+    "lon": -7.9811,
+    "label": "Kech24 HQ"
+  },
+  {
+    "country": "Morocco",
     "publisher": "La Vie Eco",
     "city": "Casablanca",
     "region": "Casablanca",
     "lat": 33.5731,
     "lon": -7.5898,
     "label": "La Vie Eco HQ"
+  },
+  {
+    "country": "Morocco",
+    "publisher": "Lakome2",
+    "city": "Casablanca",
+    "region": "Casablanca",
+    "lat": 33.5731,
+    "lon": -7.5898,
+    "label": "Lakome2 HQ"
+  },
+  {
+    "country": "Morocco",
+    "publisher": "Le Canard Libere",
+    "city": "Rabat",
+    "region": "Rabat",
+    "lat": 34.0209,
+    "lon": -6.8416,
+    "label": "Le Canard Libere HQ"
+  },
+  {
+    "country": "Morocco",
+    "publisher": "Le Collimateur",
+    "city": "Rabat",
+    "region": "Rabat",
+    "lat": 34.0209,
+    "lon": -6.8416,
+    "label": "Le Collimateur HQ"
   },
   {
     "country": "Morocco",
@@ -1024,6 +1726,132 @@
     "lat": 33.5731,
     "lon": -7.5898,
     "label": "Le Matin HQ"
+  },
+  {
+    "country": "Morocco",
+    "publisher": "Le Reporter",
+    "city": "Casablanca",
+    "region": "Casablanca",
+    "lat": 33.5731,
+    "lon": -7.5898,
+    "label": "Le Reporter HQ"
+  },
+  {
+    "country": "Morocco",
+    "publisher": "Le Site info",
+    "city": "Casablanca",
+    "region": "Casablanca",
+    "lat": 33.5731,
+    "lon": -7.5898,
+    "label": "Le Site info HQ"
+  },
+  {
+    "country": "Morocco",
+    "publisher": "Le12",
+    "city": "Rabat",
+    "region": "Rabat",
+    "lat": 34.0209,
+    "lon": -6.8416,
+    "label": "Le12 HQ"
+  },
+  {
+    "country": "Morocco",
+    "publisher": "LeBrief",
+    "city": "Casablanca",
+    "region": "Casablanca",
+    "lat": 33.5731,
+    "lon": -7.5898,
+    "label": "LeBrief HQ"
+  },
+  {
+    "country": "Morocco",
+    "publisher": "LesEco",
+    "city": "Casablanca",
+    "region": "Casablanca",
+    "lat": 33.5731,
+    "lon": -7.5898,
+    "label": "LesEco HQ"
+  },
+  {
+    "country": "Morocco",
+    "publisher": "LObservateur",
+    "city": "Casablanca",
+    "region": "Casablanca",
+    "lat": 33.5731,
+    "lon": -7.5898,
+    "label": "LObservateur HQ"
+  },
+  {
+    "country": "Morocco",
+    "publisher": "Machahid24",
+    "city": "Casablanca",
+    "region": "Casablanca",
+    "lat": 33.5731,
+    "lon": -7.5898,
+    "label": "Machahid24 HQ"
+  },
+  {
+    "country": "Morocco",
+    "publisher": "Madar21",
+    "city": "Rabat",
+    "region": "Rabat",
+    "lat": 34.0209,
+    "lon": -6.8416,
+    "label": "Madar21 HQ"
+  },
+  {
+    "country": "Morocco",
+    "publisher": "Marrakech Al Yaoum",
+    "city": "Marrakesh",
+    "region": "Marrakesh",
+    "lat": 31.6295,
+    "lon": -7.9811,
+    "label": "Marrakech Al Yaoum HQ"
+  },
+  {
+    "country": "Morocco",
+    "publisher": "Marrakechalaan",
+    "city": "Marrakesh",
+    "region": "Marrakesh",
+    "lat": 31.6295,
+    "lon": -7.9811,
+    "label": "Marrakechalaan HQ"
+  },
+  {
+    "country": "Morocco",
+    "publisher": "Medias24",
+    "city": "Casablanca",
+    "region": "Casablanca",
+    "lat": 33.5731,
+    "lon": -7.5898,
+    "label": "Medias24 HQ"
+  },
+  {
+    "country": "Morocco",
+    "publisher": "Morocco World News",
+    "city": "Rabat",
+    "region": "Rabat",
+    "lat": 34.0209,
+    "lon": -6.8416,
+    "label": "Morocco World News HQ"
+  },
+  {
+    "country": "Morocco",
+    "publisher": "TelQuel",
+    "city": "Casablanca",
+    "region": "Casablanca",
+    "lat": 33.5731,
+    "lon": -7.5898,
+    "label": "TelQuel HQ"
+  },
+  {
+    "country": "Morocco",
+    "publisher": "Yabiladi",
+    "city": "Casablanca",
+    "region": "Casablanca",
+    "lat": 33.5731,
+    "lon": -7.5898,
+    "label": "Yabiladi HQ"
   },
   {
     "country": "Netherlands",
@@ -1045,21 +1873,21 @@
   },
   {
     "country": "Netherlands",
-    "publisher": "DVHN",
-    "city": "Groningen",
-    "region": "Groningen",
-    "lat": 53.2189,
-    "lon": 6.5675,
-    "label": "DVHN HQ"
-  },
-  {
-    "country": "Netherlands",
     "publisher": "De Telegraaf",
     "city": "Amsterdam",
     "region": "Amsterdam",
     "lat": 52.3667,
     "lon": 4.8833,
     "label": "De Telegraaf HQ"
+  },
+  {
+    "country": "Netherlands",
+    "publisher": "DVHN",
+    "city": "Groningen",
+    "region": "Groningen",
+    "lat": 53.2189,
+    "lon": 6.5675,
+    "label": "DVHN HQ"
   },
   {
     "country": "Netherlands",
@@ -1099,21 +1927,21 @@
   },
   {
     "country": "Netherlands",
-    "publisher": "RTV Drenthe",
-    "city": "Assen",
-    "region": "Beilerstraat 30",
-    "lat": 52.9899,
-    "lon": 6.5576,
-    "label": "RTV Drenthe HQ"
-  },
-  {
-    "country": "Netherlands",
     "publisher": "Rijnmond",
     "city": "Rotterdam",
     "region": "Rotterdam",
     "lat": 51.92,
     "lon": 4.48,
     "label": "Rijnmond HQ"
+  },
+  {
+    "country": "Netherlands",
+    "publisher": "RTV Drenthe",
+    "city": "Assen",
+    "region": "Beilerstraat 30",
+    "lat": 52.9899,
+    "lon": 6.5576,
+    "label": "RTV Drenthe HQ"
   },
   {
     "country": "New Zealand",
@@ -1216,21 +2044,21 @@
   },
   {
     "country": "Norway",
-    "publisher": "Finansavisen",
-    "city": "Oslo",
-    "region": "Oslo",
-    "lat": 59.9133,
-    "lon": 10.7389,
-    "label": "Finansavisen HQ"
-  },
-  {
-    "country": "Norway",
     "publisher": "Fædrelandsvennen",
     "city": "Kristiansand",
     "region": "Kristiansand",
     "lat": 58.1467,
     "lon": 7.9956,
     "label": "Fædrelandsvennen HQ"
+  },
+  {
+    "country": "Norway",
+    "publisher": "Finansavisen",
+    "city": "Oslo",
+    "region": "Oslo",
+    "lat": 59.9133,
+    "lon": 10.7389,
+    "label": "Finansavisen HQ"
   },
   {
     "country": "Norway",
@@ -1252,6 +2080,15 @@
   },
   {
     "country": "Norway",
+    "publisher": "iTromso",
+    "city": "Tromsø",
+    "region": "Tromsø Municipality",
+    "lat": 69.6496,
+    "lon": 18.957,
+    "label": "iTromso HQ"
+  },
+  {
+    "country": "Norway",
     "publisher": "Lister24",
     "city": "Farsund",
     "region": "Farsund Municipality",
@@ -1261,21 +2098,21 @@
   },
   {
     "country": "Norway",
-    "publisher": "NRK",
-    "city": "NRK Marienlyst",
-    "region": "NRK Marienlyst",
-    "lat": 59.935,
-    "lon": 10.7175,
-    "label": "NRK HQ"
-  },
-  {
-    "country": "Norway",
     "publisher": "Nettavisen",
     "city": "Oslo",
     "region": "Oslo",
     "lat": 59.9133,
     "lon": 10.7389,
     "label": "Nettavisen HQ"
+  },
+  {
+    "country": "Norway",
+    "publisher": "NRK",
+    "city": "NRK Marienlyst",
+    "region": "NRK Marienlyst",
+    "lat": 59.935,
+    "lon": 10.7175,
+    "label": "NRK HQ"
   },
   {
     "country": "Norway",
@@ -1312,15 +2149,6 @@
     "lat": 59.9133,
     "lon": 10.7389,
     "label": "VG HQ"
-  },
-  {
-    "country": "Norway",
-    "publisher": "iTromso",
-    "city": "Tromsø",
-    "region": "Tromsø Municipality",
-    "lat": 69.6496,
-    "lon": 18.957,
-    "label": "iTromso HQ"
   },
   {
     "country": "Romania",
@@ -1459,6 +2287,24 @@
   },
   {
     "country": "United States",
+    "publisher": "Airline Geeks",
+    "city": "Washington, D.C.",
+    "region": "Washington, D.C.",
+    "lat": 38.9072,
+    "lon": -77.0369,
+    "label": "Airline Geeks HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Arizona Daily Star",
+    "city": "Tucson",
+    "region": "Tucson",
+    "lat": 32.2226,
+    "lon": -110.9747,
+    "label": "Arizona Daily Star HQ"
+  },
+  {
+    "country": "United States",
     "publisher": "Arizona Republic",
     "city": "Phoenix",
     "region": "Phoenix",
@@ -1477,6 +2323,15 @@
   },
   {
     "country": "United States",
+    "publisher": "Asbury Park Press",
+    "city": "Asbury Park",
+    "region": "Asbury Park",
+    "lat": 40.2204,
+    "lon": -74.0121,
+    "label": "Asbury Park Press HQ"
+  },
+  {
+    "country": "United States",
     "publisher": "Associated Press",
     "city": "New York City",
     "region": "New York City",
@@ -1492,6 +2347,24 @@
     "lat": 30.3,
     "lon": -97.7333,
     "label": "Austin American-Statesman HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Aviation Pros",
+    "city": "Fort Atkinson",
+    "region": "Fort Atkinson",
+    "lat": 42.9289,
+    "lon": -88.8371,
+    "label": "Aviation Pros HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Aviation Week",
+    "city": "New York City",
+    "region": "New York City",
+    "lat": 40.7128,
+    "lon": -74.006,
+    "label": "Aviation Week HQ"
   },
   {
     "country": "United States",
@@ -1519,6 +2392,15 @@
     "lat": 40.7128,
     "lon": -74.0061,
     "label": "Billboard HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Blockworks",
+    "city": "New York City",
+    "region": "New York City",
+    "lat": 40.7128,
+    "lon": -74.006,
+    "label": "Blockworks HQ"
   },
   {
     "country": "United States",
@@ -1558,12 +2440,39 @@
   },
   {
     "country": "United States",
+    "publisher": "BuzzFeed News",
+    "city": "New York City",
+    "region": "New York City",
+    "lat": 40.7128,
+    "lon": -74.006,
+    "label": "BuzzFeed News HQ"
+  },
+  {
+    "country": "United States",
     "publisher": "CBS News",
     "city": "New York City",
     "region": "CBS Broadcast Center",
     "lat": 40.7692,
     "lon": -73.99,
     "label": "CBS News HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Chicago Tribune",
+    "city": "Chicago",
+    "region": "Tribune Tower",
+    "lat": 41.8904,
+    "lon": -87.6237,
+    "label": "Chicago Tribune HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Cincinnati Enquirer",
+    "city": "Cincinnati",
+    "region": "Cincinnati",
+    "lat": 39.1031,
+    "lon": -84.512,
+    "label": "Cincinnati Enquirer HQ"
   },
   {
     "country": "United States",
@@ -1585,21 +2494,39 @@
   },
   {
     "country": "United States",
-    "publisher": "Chicago Tribune",
-    "city": "Chicago",
-    "region": "Tribune Tower",
-    "lat": 41.8904,
-    "lon": -87.6237,
-    "label": "Chicago Tribune HQ"
-  },
-  {
-    "country": "United States",
     "publisher": "CoinDesk",
     "city": "New York City",
     "region": "New York City",
     "lat": 40.7128,
     "lon": -74.006,
     "label": "CoinDesk HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Cointelegraph",
+    "city": "New York City",
+    "region": "New York City",
+    "lat": 40.7128,
+    "lon": -74.006,
+    "label": "Cointelegraph HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Courier Journal",
+    "city": "Louisville",
+    "region": "Louisville",
+    "lat": 38.2527,
+    "lon": -85.7585,
+    "label": "Courier Journal HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Crunchbase News",
+    "city": "San Francisco",
+    "region": "San Francisco",
+    "lat": 37.7749,
+    "lon": -122.4194,
+    "label": "Crunchbase News HQ"
   },
   {
     "country": "United States",
@@ -1666,12 +2593,57 @@
   },
   {
     "country": "United States",
+    "publisher": "Des Moines Register",
+    "city": "Des Moines",
+    "region": "Des Moines",
+    "lat": 41.5868,
+    "lon": -93.625,
+    "label": "Des Moines Register HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Detroit Free Press",
+    "city": "Detroit",
+    "region": "Detroit",
+    "lat": 42.3314,
+    "lon": -83.0458,
+    "label": "Detroit Free Press HQ"
+  },
+  {
+    "country": "United States",
     "publisher": "Engadget",
     "city": "New York City",
     "region": "New York City",
     "lat": 40.7128,
     "lon": -74.006,
     "label": "Engadget HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Fast Company",
+    "city": "New York City",
+    "region": "New York City",
+    "lat": 40.7128,
+    "lon": -74.006,
+    "label": "Fast Company HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Forbes",
+    "city": "New York City",
+    "region": "New York City",
+    "lat": 40.7128,
+    "lon": -74.006,
+    "label": "Forbes HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Fortune",
+    "city": "New York City",
+    "region": "New York City",
+    "lat": 40.7128,
+    "lon": -74.006,
+    "label": "Fortune HQ"
   },
   {
     "country": "United States",
@@ -1684,12 +2656,39 @@
   },
   {
     "country": "United States",
+    "publisher": "Gizmodo",
+    "city": "New York City",
+    "region": "New York City",
+    "lat": 40.7128,
+    "lon": -74.006,
+    "label": "Gizmodo HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Houston Chronicle",
+    "city": "Houston",
+    "region": "Houston",
+    "lat": 29.7604,
+    "lon": -95.3698,
+    "label": "Houston Chronicle HQ"
+  },
+  {
+    "country": "United States",
     "publisher": "HuffPost",
     "city": "New York City",
     "region": "New York City",
     "lat": 40.7128,
     "lon": -74.006,
     "label": "HuffPost HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "IndyStar",
+    "city": "Indianapolis",
+    "region": "Indianapolis",
+    "lat": 39.7684,
+    "lon": -86.1581,
+    "label": "IndyStar HQ"
   },
   {
     "country": "United States",
@@ -1702,21 +2701,57 @@
   },
   {
     "country": "United States",
+    "publisher": "Las Vegas Review-Journal",
+    "city": "Las Vegas",
+    "region": "Las Vegas",
+    "lat": 36.1699,
+    "lon": -115.1398,
+    "label": "Las Vegas Review-Journal HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "MarketWatch",
+    "city": "New York City",
+    "region": "New York City",
+    "lat": 40.7128,
+    "lon": -74.006,
+    "label": "MarketWatch HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Mashable",
+    "city": "New York City",
+    "region": "New York City",
+    "lat": 40.7128,
+    "lon": -74.006,
+    "label": "Mashable HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Milwaukee Journal Sentinel",
+    "city": "Milwaukee",
+    "region": "Milwaukee",
+    "lat": 43.0389,
+    "lon": -87.9065,
+    "label": "Milwaukee Journal Sentinel HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "National Review",
+    "city": "New York City",
+    "region": "New York City",
+    "lat": 40.7128,
+    "lon": -74.006,
+    "label": "National Review HQ"
+  },
+  {
+    "country": "United States",
     "publisher": "NBC News",
     "city": "New York City",
     "region": "New York City",
     "lat": 40.7128,
     "lon": -74.0061,
     "label": "NBC News HQ"
-  },
-  {
-    "country": "United States",
-    "publisher": "NPR",
-    "city": "Washington, D.C.",
-    "region": "Washington, D.C.",
-    "lat": 38.895,
-    "lon": -77.0367,
-    "label": "NPR HQ"
   },
   {
     "country": "United States",
@@ -1729,12 +2764,66 @@
   },
   {
     "country": "United States",
+    "publisher": "Newsday",
+    "city": "Melville",
+    "region": "Melville",
+    "lat": 40.7934,
+    "lon": -73.4151,
+    "label": "Newsday HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "NPR",
+    "city": "Washington, D.C.",
+    "region": "Washington, D.C.",
+    "lat": 38.895,
+    "lon": -77.0367,
+    "label": "NPR HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "OregonLive",
+    "city": "Portland",
+    "region": "Portland",
+    "lat": 45.5152,
+    "lon": -122.6784,
+    "label": "OregonLive HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Orlando Sentinel",
+    "city": "Orlando",
+    "region": "Orlando",
+    "lat": 28.5383,
+    "lon": -81.3792,
+    "label": "Orlando Sentinel HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Palm Beach Post",
+    "city": "West Palm Beach",
+    "region": "West Palm Beach",
+    "lat": 26.7153,
+    "lon": -80.0534,
+    "label": "Palm Beach Post HQ"
+  },
+  {
+    "country": "United States",
     "publisher": "Politico",
     "city": "Arlington",
     "region": "Arlington County",
     "lat": 38.8803,
     "lon": -77.1083,
     "label": "Politico HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "San Diego Union-Tribune",
+    "city": "San Diego",
+    "region": "San Diego",
+    "lat": 32.7157,
+    "lon": -117.1611,
+    "label": "San Diego Union-Tribune HQ"
   },
   {
     "country": "United States",
@@ -1756,12 +2845,30 @@
   },
   {
     "country": "United States",
+    "publisher": "Slate",
+    "city": "Washington, D.C.",
+    "region": "Washington, D.C.",
+    "lat": 38.9072,
+    "lon": -77.0369,
+    "label": "Slate HQ"
+  },
+  {
+    "country": "United States",
     "publisher": "The Atlantic",
     "city": "Washington, D.C.",
     "region": "Washington, D.C.",
     "lat": 38.9072,
     "lon": -77.0369,
     "label": "The Atlantic HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "The Columbus Dispatch",
+    "city": "Columbus",
+    "region": "Columbus",
+    "lat": 39.9612,
+    "lon": -82.9988,
+    "label": "The Columbus Dispatch HQ"
   },
   {
     "country": "United States",
@@ -1783,12 +2890,57 @@
   },
   {
     "country": "United States",
+    "publisher": "The Oklahoman",
+    "city": "Oklahoma City",
+    "region": "Oklahoma City",
+    "lat": 35.4676,
+    "lon": -97.5164,
+    "label": "The Oklahoman HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "The Philadelphia Inquirer",
+    "city": "Philadelphia",
+    "region": "Philadelphia",
+    "lat": 39.9526,
+    "lon": -75.1652,
+    "label": "The Philadelphia Inquirer HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "The Tennessean",
+    "city": "Nashville",
+    "region": "Nashville",
+    "lat": 36.1627,
+    "lon": -86.7816,
+    "label": "The Tennessean HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "VentureBeat",
+    "city": "San Francisco",
+    "region": "San Francisco",
+    "lat": 37.7749,
+    "lon": -122.4194,
+    "label": "VentureBeat HQ"
+  },
+  {
+    "country": "United States",
     "publisher": "Washington Post",
     "city": "Washington, D.C.",
     "region": "Washington, D.C.",
     "lat": 38.895,
     "lon": -77.0367,
     "label": "Washington Post HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Wired",
+    "city": "San Francisco",
+    "region": "San Francisco",
+    "lat": 37.7749,
+    "lon": -122.4194,
+    "label": "Wired HQ"
   },
   {
     "country": "United States",

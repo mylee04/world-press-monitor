@@ -1946,6 +1946,670 @@ const PUBLISHER_RULES: PublisherRule[] = [
     countries: ['United States'],
     exact: ['Breitbart'],
   },
+  {
+    publisher: 'People.cn',
+    countries: ['China'],
+    exact: ['People.cn'],
+    prefixes: ['People.cn -'],
+  },
+  {
+    publisher: 'China News Service',
+    countries: ['China'],
+    exact: ['China News Service'],
+    prefixes: ['China News Service -'],
+  },
+  {
+    publisher: 'South China Morning Post',
+    countries: ['China'],
+    exact: ['South China Morning Post'],
+  },
+  {
+    publisher: 'Initium',
+    countries: ['China'],
+    exact: ['Initium'],
+  },
+  {
+    publisher: 'TechNode',
+    countries: ['China'],
+    exact: ['TechNode'],
+  },
+  {
+    publisher: 'RTHK',
+    countries: ['China'],
+    exact: ['RTHK'],
+  },
+  {
+    publisher: 'Xinhua',
+    countries: ['China'],
+    exact: ['Xinhua'],
+  },
+  {
+    publisher: 'HK01',
+    countries: ['China'],
+    exact: ['HK01'],
+    prefixes: ['HK01 -'],
+  },
+  {
+    publisher: 'The Standard',
+    countries: ['China'],
+    exact: ['The Standard'],
+    prefixes: ['The Standard -'],
+  },
+  {
+    publisher: 'Ming Pao',
+    countries: ['China'],
+    exact: ['Ming Pao'],
+  },
+  {
+    publisher: 'Sina News',
+    countries: ['China'],
+    exact: ['Sina News', 'Sina News (General Breaking News)'],
+  },
+  {
+    publisher: 'People China',
+    countries: ['China'],
+    exact: ['People China'],
+  },
+  {
+    publisher: 'China Daily',
+    countries: ['China'],
+    exact: ['China Daily English'],
+  },
+  {
+    publisher: 'Le Site info',
+    countries: ['Morocco'],
+    exact: ['Le Site info'],
+  },
+  {
+    publisher: 'Yabiladi',
+    countries: ['Morocco'],
+    exact: ['Yabiladi', 'Yabiladi EN'],
+  },
+  {
+    publisher: 'Medias24',
+    countries: ['Morocco'],
+    exact: ['Medias24'],
+  },
+  {
+    publisher: 'Morocco World News',
+    countries: ['Morocco'],
+    exact: ['Morocco World News'],
+  },
+  {
+    publisher: 'Aujourdhui Le Maroc',
+    countries: ['Morocco'],
+    exact: ['Aujourdhui Le Maroc'],
+  },
+  {
+    publisher: 'LesEco',
+    countries: ['Morocco'],
+    exact: ['LesEco'],
+  },
+  {
+    publisher: 'LeBrief',
+    countries: ['Morocco'],
+    exact: ['LeBrief'],
+  },
+  {
+    publisher: 'TelQuel',
+    countries: ['Morocco'],
+    exact: ['TelQuel'],
+  },
+  {
+    publisher: 'Le Reporter',
+    countries: ['Morocco'],
+    exact: ['Le Reporter'],
+  },
+  {
+    publisher: 'Lakome2',
+    countries: ['Morocco'],
+    exact: ['Lakome2'],
+  },
+  {
+    publisher: 'Kech24',
+    countries: ['Morocco'],
+    exact: ['Kech24'],
+  },
+  {
+    publisher: 'Le12',
+    countries: ['Morocco'],
+    exact: ['Le12'],
+  },
+  {
+    publisher: 'Belpresse',
+    countries: ['Morocco'],
+    exact: ['Belpresse'],
+  },
+  {
+    publisher: 'Alomk Sport',
+    countries: ['Morocco'],
+    exact: ['Alomk Sport'],
+  },
+  {
+    publisher: 'Anfas Press',
+    countries: ['Morocco'],
+    exact: ['Anfas Press'],
+  },
+  {
+    publisher: 'LObservateur',
+    countries: ['Morocco'],
+    exact: ['LObservateur'],
+  },
+  {
+    publisher: 'Madar21',
+    countries: ['Morocco'],
+    exact: ['Madar21'],
+  },
+  {
+    publisher: 'Achkayen',
+    countries: ['Morocco'],
+    exact: ['Achkayen'],
+  },
+  {
+    publisher: 'Marrakech Al Yaoum',
+    countries: ['Morocco'],
+    exact: ['Marrakech Al Yaoum'],
+  },
+  {
+    publisher: 'Marrakechalaan',
+    countries: ['Morocco'],
+    exact: ['Marrakechalaan'],
+  },
+  {
+    publisher: 'Le Collimateur',
+    countries: ['Morocco'],
+    exact: ['Le Collimateur'],
+  },
+  {
+    publisher: 'Machahid24',
+    countries: ['Morocco'],
+    exact: ['Machahid24'],
+  },
+  {
+    publisher: 'Awras',
+    countries: ['Morocco'],
+    exact: ['Awras'],
+  },
+  {
+    publisher: 'Cawalisse',
+    countries: ['Morocco'],
+    exact: ['Cawalisse'],
+  },
+  {
+    publisher: 'Le Canard Libere',
+    countries: ['Morocco'],
+    exact: ['Le Canard Libere'],
+  },
+  {
+    publisher: 'Irish Legal News',
+    countries: ['Ireland'],
+    exact: ['Irish Legal News'],
+  },
+  {
+    publisher: 'Leinster Leader',
+    countries: ['Ireland'],
+    exact: ['Leinster Leader'],
+  },
+  {
+    publisher: 'Limerick Leader',
+    countries: ['Ireland'],
+    exact: ['Limerick Leader'],
+  },
+  {
+    publisher: 'The Sun Ireland',
+    countries: ['Ireland'],
+    exact: ['The Sun Ireland'],
+  },
+  {
+    publisher: 'Off The Ball',
+    countries: ['Ireland'],
+    exact: ['Off The Ball'],
+  },
+  {
+    publisher: 'Business Plus',
+    countries: ['Ireland'],
+    exact: ['Business Plus'],
+  },
+  {
+    publisher: 'Irish Post',
+    countries: ['Ireland'],
+    exact: ['Irish Post'],
+  },
+  {
+    publisher: 'Donegal Daily',
+    countries: ['Ireland'],
+    exact: ['Donegal Daily'],
+  },
+  {
+    publisher: 'Clare Echo',
+    countries: ['Ireland'],
+    exact: ['Clare Echo'],
+  },
+  {
+    publisher: 'Echo Live',
+    countries: ['Ireland'],
+    exact: ['Echo Live'],
+  },
+  {
+    publisher: 'IrishCentral',
+    countries: ['Ireland'],
+    exact: ['IrishCentral'],
+  },
+  {
+    publisher: 'Connacht Tribune',
+    countries: ['Ireland'],
+    exact: ['Connacht Tribune'],
+  },
+  {
+    publisher: 'Limerick Post',
+    countries: ['Ireland'],
+    exact: ['Limerick Post'],
+  },
+  {
+    publisher: 'Mayo News',
+    countries: ['Ireland'],
+    exact: ['Mayo News'],
+  },
+  {
+    publisher: 'Kilkenny People',
+    countries: ['Ireland'],
+    exact: ['Kilkenny People'],
+  },
+  {
+    publisher: 'Longford Leader',
+    countries: ['Ireland'],
+    exact: ['Longford Leader'],
+  },
+  {
+    publisher: 'Leitrim Observer',
+    countries: ['Ireland'],
+    exact: ['Leitrim Observer'],
+  },
+  {
+    publisher: 'Waterford Live',
+    countries: ['Ireland'],
+    exact: ['Waterford Live'],
+  },
+  {
+    publisher: 'Tipperary Live',
+    countries: ['Ireland'],
+    exact: ['Tipperary Live'],
+  },
+  {
+    publisher: 'Clare Champion',
+    countries: ['Ireland'],
+    exact: ['Clare Champion'],
+  },
+  {
+    publisher: 'Donegal News',
+    countries: ['Ireland'],
+    exact: ['Donegal News'],
+  },
+  {
+    publisher: 'The Irish Catholic',
+    countries: ['Ireland'],
+    exact: ['The Irish Catholic'],
+  },
+  {
+    publisher: 'West Cork People',
+    countries: ['Ireland'],
+    exact: ['West Cork People'],
+  },
+  {
+    publisher: 'The Liberal',
+    countries: ['Ireland'],
+    exact: ['The Liberal'],
+  },
+  {
+    publisher: 'Galway Daily',
+    countries: ['Ireland'],
+    exact: ['Galway Daily'],
+  },
+  {
+    publisher: 'The Avondhu',
+    countries: ['Ireland'],
+    exact: ['The Avondhu'],
+  },
+  {
+    publisher: 'KildareNow',
+    countries: ['Ireland'],
+    exact: ['KildareNow'],
+  },
+  {
+    publisher: 'Offaly Live',
+    countries: ['Ireland'],
+    exact: ['Offaly Live'],
+  },
+  {
+    publisher: 'Cork Safety Alerts',
+    countries: ['Ireland'],
+    exact: ['Cork Safety Alerts'],
+  },
+  {
+    publisher: 'Roscommon People',
+    countries: ['Ireland'],
+    exact: ['Roscommon People'],
+  },
+  {
+    publisher: 'RenewEconomy',
+    countries: ['Australia'],
+    exact: ['RenewEconomy', 'RenewEconomy (호주 신재생/전력망 1위)'],
+  },
+  {
+    publisher: 'Australian Mining',
+    countries: ['Australia'],
+    exact: ['Australian Mining', 'Australian Mining (광물/리튬)'],
+  },
+  {
+    publisher: 'MacroBusiness',
+    countries: ['Australia'],
+    exact: ['MacroBusiness', 'MacroBusiness (매크로/부동산 심층분석)'],
+  },
+  {
+    publisher: 'SmartCompany',
+    countries: ['Australia'],
+    exact: ['SmartCompany', 'SmartCompany (스타트업/비즈니스)'],
+  },
+  {
+    publisher: 'Startup Daily',
+    countries: ['Australia'],
+    exact: ['Startup Daily', 'Startup Daily (테크)'],
+  },
+  {
+    publisher: 'The Conversation AU',
+    countries: ['Australia'],
+    exact: ['The Conversation AU', 'The Conversation AU (오피니언/정책)'],
+  },
+  {
+    publisher: 'The Mandarin',
+    countries: ['Australia'],
+    exact: ['The Mandarin'],
+  },
+  {
+    publisher: 'Sky News Australia',
+    countries: ['Australia'],
+    exact: ['Sky News - Sitemap Index'],
+  },
+  {
+    publisher: 'Farm Weekly',
+    countries: ['Australia'],
+    exact: ['Farm Weekly'],
+  },
+  {
+    publisher: 'The New Daily',
+    countries: ['Australia'],
+    exact: ['The New Daily'],
+  },
+  {
+    publisher: 'Region Canberra',
+    countries: ['Australia'],
+    exact: ['Region Canberra'],
+  },
+  {
+    publisher: 'Byron Shire Echo',
+    countries: ['Australia'],
+    exact: ['Byron Shire Echo'],
+  },
+  {
+    publisher: 'Western Weekender',
+    countries: ['Australia'],
+    exact: ['Western Weekender'],
+  },
+  {
+    publisher: 'Michael West',
+    countries: ['Australia'],
+    exact: ['Michael West'],
+  },
+  {
+    publisher: 'Region Riverina',
+    countries: ['Australia'],
+    exact: ['Region Riverina'],
+  },
+  {
+    publisher: 'Region Illawarra',
+    countries: ['Australia'],
+    exact: ['Region Illawarra'],
+  },
+  {
+    publisher: 'Newcastle Weekly',
+    countries: ['Australia'],
+    exact: ['Newcastle Weekly'],
+  },
+  {
+    publisher: 'Sunraysia Daily',
+    countries: ['Australia'],
+    exact: ['Sunraysia Daily'],
+  },
+  {
+    publisher: 'Murray Pioneer',
+    countries: ['Australia'],
+    exact: ['Murray Pioneer'],
+  },
+  {
+    publisher: 'Port Lincoln Times',
+    countries: ['Australia'],
+    exact: ['Port Lincoln Times'],
+  },
+  {
+    publisher: 'Border Watch',
+    countries: ['Australia'],
+    exact: ['Border Watch'],
+  },
+  {
+    publisher: 'Geraldton Guardian',
+    countries: ['Australia'],
+    exact: ['Geraldton Guardian'],
+  },
+  {
+    publisher: 'Kalgoorlie Miner',
+    countries: ['Australia'],
+    exact: ['Kalgoorlie Miner'],
+  },
+  {
+    publisher: 'Mumbrella',
+    countries: ['Australia'],
+    exact: ['Mumbrella'],
+  },
+  {
+    publisher: 'Mediaweek',
+    countries: ['Australia'],
+    exact: ['Mediaweek'],
+  },
+  {
+    publisher: 'WhichCar',
+    countries: ['Australia'],
+    exact: ['WhichCar'],
+  },
+  {
+    publisher: 'RetailBiz',
+    countries: ['Australia'],
+    exact: ['RetailBiz'],
+  },
+  {
+    publisher: "Women's Agenda",
+    countries: ['Australia'],
+    exact: ["Women's Agenda"],
+  },
+  {
+    publisher: 'BuzzFeed News',
+    countries: ['United States'],
+    exact: ['BuzzFeed News'],
+  },
+  {
+    publisher: 'Forbes',
+    countries: ['United States'],
+    exact: ['Forbes'],
+  },
+  {
+    publisher: 'Fortune',
+    countries: ['United States'],
+    exact: ['Fortune'],
+  },
+  {
+    publisher: 'MarketWatch',
+    countries: ['United States'],
+    exact: ['MarketWatch'],
+  },
+  {
+    publisher: 'Fast Company',
+    countries: ['United States'],
+    exact: ['Fast Company'],
+  },
+  {
+    publisher: 'Wired',
+    countries: ['United States'],
+    exact: ['Wired'],
+  },
+  {
+    publisher: 'VentureBeat',
+    countries: ['United States'],
+    exact: ['VentureBeat'],
+  },
+  {
+    publisher: 'Mashable',
+    countries: ['United States'],
+    exact: ['Mashable'],
+  },
+  {
+    publisher: 'Gizmodo',
+    countries: ['United States'],
+    exact: ['Gizmodo'],
+  },
+  {
+    publisher: 'National Review',
+    countries: ['United States'],
+    exact: ['National Review'],
+  },
+  {
+    publisher: 'Slate',
+    countries: ['United States'],
+    exact: ['Slate'],
+  },
+  {
+    publisher: 'Las Vegas Review-Journal',
+    countries: ['United States'],
+    exact: ['Las Vegas Review-Journal'],
+  },
+  {
+    publisher: 'San Diego Union-Tribune',
+    countries: ['United States'],
+    exact: ['San Diego Union-Tribune'],
+  },
+  {
+    publisher: 'Houston Chronicle',
+    countries: ['United States'],
+    exact: ['Houston Chronicle'],
+  },
+  {
+    publisher: 'The Philadelphia Inquirer',
+    countries: ['United States'],
+    exact: ['The Philadelphia Inquirer'],
+  },
+  {
+    publisher: 'OregonLive',
+    countries: ['United States'],
+    exact: ['OregonLive'],
+  },
+  {
+    publisher: 'Newsday',
+    countries: ['United States'],
+    exact: ['Newsday'],
+  },
+  {
+    publisher: 'Orlando Sentinel',
+    countries: ['United States'],
+    exact: ['Orlando Sentinel'],
+  },
+  {
+    publisher: 'Detroit Free Press',
+    countries: ['United States'],
+    exact: ['Detroit Free Press'],
+  },
+  {
+    publisher: 'Milwaukee Journal Sentinel',
+    countries: ['United States'],
+    exact: ['Milwaukee Journal Sentinel'],
+  },
+  {
+    publisher: 'The Tennessean',
+    countries: ['United States'],
+    exact: ['The Tennessean'],
+  },
+  {
+    publisher: 'IndyStar',
+    countries: ['United States'],
+    exact: ['IndyStar'],
+  },
+  {
+    publisher: 'The Columbus Dispatch',
+    countries: ['United States'],
+    exact: ['The Columbus Dispatch'],
+  },
+  {
+    publisher: 'Cincinnati Enquirer',
+    countries: ['United States'],
+    exact: ['Cincinnati Enquirer'],
+  },
+  {
+    publisher: 'Des Moines Register',
+    countries: ['United States'],
+    exact: ['Des Moines Register'],
+  },
+  {
+    publisher: 'Palm Beach Post',
+    countries: ['United States'],
+    exact: ['Palm Beach Post'],
+  },
+  {
+    publisher: 'The Oklahoman',
+    countries: ['United States'],
+    exact: ['The Oklahoman'],
+  },
+  {
+    publisher: 'Asbury Park Press',
+    countries: ['United States'],
+    exact: ['Asbury Park Press'],
+  },
+  {
+    publisher: 'Courier Journal',
+    countries: ['United States'],
+    exact: ['Courier Journal'],
+  },
+  {
+    publisher: 'Aviation Week',
+    countries: ['United States'],
+    exact: ['Aviation Week'],
+  },
+  {
+    publisher: 'Blockworks',
+    countries: ['United States'],
+    exact: ['Blockworks'],
+  },
+  {
+    publisher: 'Cointelegraph',
+    countries: ['United States'],
+    exact: ['Cointelegraph'],
+  },
+  {
+    publisher: 'Crunchbase News',
+    countries: ['United States'],
+    exact: ['Crunchbase News'],
+  },
+  {
+    publisher: 'Arizona Daily Star',
+    countries: ['United States'],
+    exact: ['Arizona Daily Star'],
+  },
+  {
+    publisher: 'Airline Geeks',
+    countries: ['United States'],
+    exact: ['Airline Geeks'],
+  },
+  {
+    publisher: 'Aviation Pros',
+    countries: ['United States'],
+    exact: ['Aviation Pros'],
+  },
 ];
 
 function resolveRuleMatch(source: string, country: string, rule: PublisherRule): PublisherMatchType | null {
