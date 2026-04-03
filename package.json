@@ -69,6 +69,7 @@
     "benchmark:build": "bun scripts/build-country-benchmark-snapshots.ts",
     "benchmark:build:daily": "bun scripts/build-country-benchmark-snapshots.ts --mode=daily",
     "benchmark:build:hourly": "bun scripts/build-country-benchmark-snapshots.ts --mode=hourly",
+    "map:snapshots:build": "bun scripts/build-map-snapshots.ts",
     "benchmark:parity": "bun scripts/validate-country-benchmark-parity.ts",
     "benchmark:parity:daily": "bun scripts/validate-country-benchmark-parity.ts --mode=daily",
     "benchmark:parity:hourly": "bun scripts/validate-country-benchmark-parity.ts --mode=hourly",

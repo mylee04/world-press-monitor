@@ -1,8 +1,12 @@
 import 'server-only';
 
-import { loadMapCountryMetrics } from '@/lib/map-country-metrics-reader';
+import { buildMapCountryMetricsPayload } from '@/lib/map-country-metrics-builder';
 import { loadMapCountrySources } from '@/lib/map-country-sources-reader';
-import { loadMapPublishers } from '@/lib/map-publishers-reader';
+import { buildMapPublishersPayload } from '@/lib/map-publishers-builder';
+import {
+  readMapCountryMetricsSnapshot,
+  readMapPublishersSnapshot,
+} from '@/lib/map-snapshot-store';
 import { loadMapSourceDetail } from '@/lib/map-source-detail-reader';
 import {
   DEFAULT_MAP_WINDOW,
@@ -30,22 +34,50 @@ let mapPublishersCache = new Map<MapMetricWindow, TimedCacheEntry<MapPublishersR
 const mapCountrySourcesCache = new Map<string, TimedCacheEntry<MapCountrySourcesResponse>>();
 const mapSourceDetailCache = new Map<string, TimedCacheEntry<MapSourceDetailResponse | null>>();
 
-export async function readMapCountryMetrics(window: MapMetricWindow = DEFAULT_MAP_WINDOW): Promise<MapCountryMetricsResponse> {
-  const selectedWindow = normalizeMapMetricWindow(window);
-  const cached = readTimedCache(mapCountryMetricsCache.get(selectedWindow));
-  if (cached) return cached;
-  const payload = await loadMapCountryMetrics(selectedWindow);
-  mapCountryMetricsCache.set(selectedWindow, writeTimedCache(payload, MAP_COUNTRY_METRICS_CACHE_MS));
+async function readSnapshotBackedMapPayload<T extends { storage: 'postgres' | 'snapshot'; generatedAt: string }>(params: {
+  window: MapMetricWindow;
+  cache: Map<MapMetricWindow, TimedCacheEntry<T>>;
+  ttlMs: number;
+  readSnapshot: (window: MapMetricWindow) => Promise<T | null>;
+  buildPayload: (window: MapMetricWindow) => Promise<T>;
+}): Promise<T> {
+  const selectedWindow = normalizeMapMetricWindow(params.window);
+  const latestSnapshot = await params.readSnapshot(selectedWindow);
+  const cached = readTimedCache(params.cache.get(selectedWindow));
+
+  if (latestSnapshot) {
+    if (cached && cached.storage === 'snapshot' && cached.generatedAt === latestSnapshot.generatedAt) {
+      return cached;
+    }
+    params.cache.set(selectedWindow, writeTimedCache(latestSnapshot, params.ttlMs));
+    return latestSnapshot;
+  }
+
+  if (cached && cached.storage !== 'snapshot') return cached;
+
+  const payload = await params.buildPayload(selectedWindow);
+  params.cache.set(selectedWindow, writeTimedCache(payload, params.ttlMs));
   return payload;
 }
 
+export async function readMapCountryMetrics(window: MapMetricWindow = DEFAULT_MAP_WINDOW): Promise<MapCountryMetricsResponse> {
+  return readSnapshotBackedMapPayload({
+    window,
+    cache: mapCountryMetricsCache,
+    ttlMs: MAP_COUNTRY_METRICS_CACHE_MS,
+    readSnapshot: readMapCountryMetricsSnapshot,
+    buildPayload: buildMapCountryMetricsPayload,
+  });
+}
+
 export async function readMapPublishers(window: MapMetricWindow = DEFAULT_MAP_WINDOW): Promise<MapPublishersResponse> {
-  const selectedWindow = normalizeMapMetricWindow(window);
-  const cached = readTimedCache(mapPublishersCache.get(selectedWindow));
-  if (cached) return cached;
-  const payload = await loadMapPublishers(selectedWindow);
-  mapPublishersCache.set(selectedWindow, writeTimedCache(payload, MAP_PUBLISHERS_CACHE_MS));
-  return payload;
+  return readSnapshotBackedMapPayload({
+    window,
+    cache: mapPublishersCache,
+    ttlMs: MAP_PUBLISHERS_CACHE_MS,
+    readSnapshot: readMapPublishersSnapshot,
+    buildPayload: buildMapPublishersPayload,
+  });
 }
 
 export async function readMapCountrySources(

@@ -23,6 +23,14 @@ function buildAuthorizationHeader(token: string): string {
   return /^bearer\s+/i.test(token) ? token : `Bearer ${token}`;
 }
 
+function getPortalServerApiToken(): string {
+  return (
+    process.env.WORLDPRESSRADAR_API_TOKEN ||
+    process.env.NEWS_API_TOKEN ||
+    ''
+  ).trim();
+}
+
 function buildPortalUpstreamHeaders(token: string): HeadersInit {
   return {
     Accept: 'application/json',
@@ -64,6 +72,10 @@ export async function readCustomerPortalSession(): Promise<CustomerPortalSession
   };
 }
 
+export function hasPortalServerApiProxyConfig(): boolean {
+  return Boolean(getCustomerNewsApiBaseUrl() && getPortalServerApiToken());
+}
+
 function copyProxyHeaders(sourceHeaders: Headers): Headers {
   const headers = new Headers();
   const passthrough = [
@@ -82,6 +94,12 @@ function copyProxyHeaders(sourceHeaders: Headers): Headers {
   }
 
   headers.set('cache-control', 'no-store');
+  return headers;
+}
+
+function buildPortalProxyHeaders(sourceHeaders: Headers, cacheControlOverride?: string): Headers {
+  const headers = copyProxyHeaders(sourceHeaders);
+  headers.set('cache-control', cacheControlOverride || 'no-store');
   return headers;
 }
 
@@ -204,7 +222,7 @@ export async function proxyCustomerApiRequest(
 
   const response = new NextResponse(upstreamResponse.body, {
     status: upstreamResponse.status,
-    headers: copyProxyHeaders(upstreamResponse.headers),
+    headers: buildPortalProxyHeaders(upstreamResponse.headers),
   });
 
   if (upstreamResponse.status === 401 || upstreamResponse.status === 403) {
@@ -212,4 +230,59 @@ export async function proxyCustomerApiRequest(
   }
 
   return response;
+}
+
+export async function proxyPortalServerApiRequest(
+  request: NextRequest,
+  upstreamPath: string,
+  options?: {
+    cacheControl?: string;
+  }
+): Promise<NextResponse> {
+  const apiBaseUrl = getCustomerNewsApiBaseUrl();
+  const token = getPortalServerApiToken();
+
+  if (!apiBaseUrl) {
+    return NextResponse.json(
+      {
+        error: 'portal_misconfigured',
+        message: 'Customer API base URL is not configured on the portal server.',
+      },
+      { status: 503, headers: { 'Cache-Control': 'no-store' } }
+    );
+  }
+
+  if (!token) {
+    return NextResponse.json(
+      {
+        error: 'portal_misconfigured',
+        message: 'Internal API token is not configured on the portal server.',
+      },
+      { status: 503, headers: { 'Cache-Control': 'no-store' } }
+    );
+  }
+
+  const upstreamUrl = new URL(upstreamPath, apiBaseUrl);
+  upstreamUrl.search = request.nextUrl.searchParams.toString();
+
+  let upstreamResponse: Response;
+  try {
+    upstreamResponse = await fetch(upstreamUrl, {
+      cache: 'no-store',
+      headers: buildPortalUpstreamHeaders(token),
+    });
+  } catch (error: unknown) {
+    return NextResponse.json(
+      {
+        error: 'upstream_unavailable',
+        message: error instanceof Error ? error.message : 'Upstream request failed.',
+      },
+      { status: 502, headers: { 'Cache-Control': 'no-store' } }
+    );
+  }
+
+  return new NextResponse(upstreamResponse.body, {
+    status: upstreamResponse.status,
+    headers: buildPortalProxyHeaders(upstreamResponse.headers, options?.cacheControl),
+  });
 }

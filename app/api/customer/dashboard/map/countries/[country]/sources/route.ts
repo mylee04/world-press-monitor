@@ -1,22 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { readCustomerPortalSession } from '@/lib/customer-portal';
+import { PUBLIC_MAP_RESPONSE_CACHE_CONTROL } from '@/lib/dashboard-cache-control';
+import { hasPortalServerApiProxyConfig, proxyPortalServerApiRequest } from '@/lib/customer-portal';
 import { normalizeMapMetricWindow, readMapCountrySources } from '@/lib/map-store';
 
 export const runtime = 'nodejs';
-
-function allowLocalPreview(): boolean {
-  return process.env.NODE_ENV !== 'production';
-}
+export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest, context: { params: Promise<{ country: string }> }) {
-  const session = await readCustomerPortalSession();
-  if (!allowLocalPreview() && !session.hasToken) {
-    return NextResponse.json(
-      { message: 'A valid customer session is required.' },
-      { status: 401, headers: { 'Cache-Control': 'no-store' } }
-    );
-  }
-
   try {
     const params = await context.params;
     const country = decodeURIComponent(params.country || '').trim();
@@ -27,8 +17,14 @@ export async function GET(request: NextRequest, context: { params: Promise<{ cou
       );
     }
     const window = normalizeMapMetricWindow(request.nextUrl.searchParams.get('window'));
-    const payload = await readMapCountrySources(country, window);
-    return NextResponse.json(payload, { headers: { 'Cache-Control': 'no-store' } });
+    if (process.env.NODE_ENV !== 'production' && !hasPortalServerApiProxyConfig()) {
+      const payload = await readMapCountrySources(country, window);
+      return NextResponse.json(payload, { headers: { 'Cache-Control': PUBLIC_MAP_RESPONSE_CACHE_CONTROL } });
+    }
+    request.nextUrl.searchParams.set('window', window);
+    return proxyPortalServerApiRequest(request, `/api/map/countries/${encodeURIComponent(country)}/sources`, {
+      cacheControl: PUBLIC_MAP_RESPONSE_CACHE_CONTROL,
+    });
   } catch (error: unknown) {
     return NextResponse.json(
       { message: error instanceof Error ? error.message : 'Failed to load country sources.' },
