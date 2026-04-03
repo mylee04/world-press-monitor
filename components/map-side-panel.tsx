@@ -278,7 +278,7 @@ export function MapSidePanel({
       </div>
 
       {loading ? <div className="panel muted">Loading map metrics...</div> : null}
-      {errors.map((error, index) => (
+      {Array.from(new Set(errors)).map((error, index) => (
         <div key={`${error}-${index}`} className="panel danger">
           {error}
         </div>
