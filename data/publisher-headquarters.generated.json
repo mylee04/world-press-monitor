@@ -423,6 +423,195 @@
     "label": "Yahoo Australia HQ"
   },
   {
+    "country": "Bulgaria",
+    "publisher": "24 Chasa",
+    "city": "Sofia",
+    "region": "Sofia",
+    "lat": 42.6977,
+    "lon": 23.3219,
+    "label": "24 Chasa HQ"
+  },
+  {
+    "country": "Bulgaria",
+    "publisher": "24 Media Regional",
+    "city": "Sofia",
+    "region": "Sofia",
+    "lat": 42.6977,
+    "lon": 23.3219,
+    "label": "24 Media Regional HQ"
+  },
+  {
+    "country": "Bulgaria",
+    "publisher": "Actualno",
+    "city": "Sofia",
+    "region": "Sofia",
+    "lat": 42.6977,
+    "lon": 23.3219,
+    "label": "Actualno HQ"
+  },
+  {
+    "country": "Bulgaria",
+    "publisher": "Blitz",
+    "city": "Sofia",
+    "region": "Sofia",
+    "lat": 42.6977,
+    "lon": 23.3219,
+    "label": "Blitz HQ"
+  },
+  {
+    "country": "Bulgaria",
+    "publisher": "BNR",
+    "city": "Sofia",
+    "region": "Sofia",
+    "lat": 42.6977,
+    "lon": 23.3219,
+    "label": "BNR HQ"
+  },
+  {
+    "country": "Bulgaria",
+    "publisher": "BNT News",
+    "city": "Sofia",
+    "region": "Sofia",
+    "lat": 42.6977,
+    "lon": 23.3219,
+    "label": "BNT News HQ"
+  },
+  {
+    "country": "Bulgaria",
+    "publisher": "Capital",
+    "city": "Sofia",
+    "region": "Sofia",
+    "lat": 42.6977,
+    "lon": 23.3219,
+    "label": "Capital HQ"
+  },
+  {
+    "country": "Bulgaria",
+    "publisher": "Club Z",
+    "city": "Sofia",
+    "region": "Sofia",
+    "lat": 42.6977,
+    "lon": 23.3219,
+    "label": "Club Z HQ"
+  },
+  {
+    "country": "Bulgaria",
+    "publisher": "Darik News",
+    "city": "Sofia",
+    "region": "Sofia",
+    "lat": 42.6977,
+    "lon": 23.3219,
+    "label": "Darik News HQ"
+  },
+  {
+    "country": "Bulgaria",
+    "publisher": "Dir.bg",
+    "city": "Sofia",
+    "region": "Sofia",
+    "lat": 42.6977,
+    "lon": 23.3219,
+    "label": "Dir.bg HQ"
+  },
+  {
+    "country": "Bulgaria",
+    "publisher": "Dnevnik",
+    "city": "Sofia",
+    "region": "Sofia",
+    "lat": 42.6977,
+    "lon": 23.3219,
+    "label": "Dnevnik HQ"
+  },
+  {
+    "country": "Bulgaria",
+    "publisher": "Fakti",
+    "city": "Sofia",
+    "region": "Sofia",
+    "lat": 42.6977,
+    "lon": 23.3219,
+    "label": "Fakti HQ"
+  },
+  {
+    "country": "Bulgaria",
+    "publisher": "Focus News",
+    "city": "Sofia",
+    "region": "Sofia",
+    "lat": 42.6977,
+    "lon": 23.3219,
+    "label": "Focus News HQ"
+  },
+  {
+    "country": "Bulgaria",
+    "publisher": "Investor Media Group",
+    "city": "Sofia",
+    "region": "Sofia",
+    "lat": 42.6977,
+    "lon": 23.3219,
+    "label": "Investor Media Group HQ"
+  },
+  {
+    "country": "Bulgaria",
+    "publisher": "Marica",
+    "city": "Plovdiv",
+    "region": "Plovdiv",
+    "lat": 42.1354,
+    "lon": 24.7453,
+    "label": "Marica HQ"
+  },
+  {
+    "country": "Bulgaria",
+    "publisher": "Mediapool",
+    "city": "Sofia",
+    "region": "Sofia",
+    "lat": 42.6977,
+    "lon": 23.3219,
+    "label": "Mediapool HQ"
+  },
+  {
+    "country": "Bulgaria",
+    "publisher": "NOVA Bulgaria",
+    "city": "Sofia",
+    "region": "Sofia",
+    "lat": 42.6977,
+    "lon": 23.3219,
+    "label": "NOVA Bulgaria HQ"
+  },
+  {
+    "country": "Bulgaria",
+    "publisher": "Novinite",
+    "city": "Sofia",
+    "region": "Sofia",
+    "lat": 42.6977,
+    "lon": 23.3219,
+    "label": "Novinite HQ"
+  },
+  {
+    "country": "Bulgaria",
+    "publisher": "Novsport",
+    "city": "Sofia",
+    "region": "Sofia",
+    "lat": 42.6977,
+    "lon": 23.3219,
+    "label": "Novsport HQ"
+  },
+  {
+    "country": "Bulgaria",
+    "publisher": "SEGA",
+    "city": "Sofia",
+    "region": "Sofia",
+    "lat": 42.6977,
+    "lon": 23.3219,
+    "label": "SEGA HQ"
+  },
+  {
+    "country": "Bulgaria",
+    "publisher": "StandartNews",
+    "city": "Sofia",
+    "region": "Sofia",
+    "lat": 42.6977,
+    "lon": 23.3219,
+    "label": "StandartNews HQ"
+  },
+  {
     "country": "China",
     "publisher": "am730",
     "city": "Hong Kong",
@@ -577,12 +766,39 @@
   },
   {
     "country": "Denmark",
+    "publisher": "Arbejderen",
+    "city": "Copenhagen",
+    "region": "Copenhagen",
+    "lat": 55.6761,
+    "lon": 12.5689,
+    "label": "Arbejderen HQ"
+  },
+  {
+    "country": "Denmark",
+    "publisher": "Avisen Danmark",
+    "city": "Copenhagen",
+    "region": "Copenhagen",
+    "lat": 55.6761,
+    "lon": 12.5689,
+    "label": "Avisen Danmark HQ"
+  },
+  {
+    "country": "Denmark",
     "publisher": "Copenhagen Post",
     "city": "Copenhagen",
     "region": "Copenhagen",
     "lat": 55.6761,
     "lon": 12.5689,
     "label": "Copenhagen Post HQ"
+  },
+  {
+    "country": "Denmark",
+    "publisher": "Dagens Byggeri",
+    "city": "Copenhagen",
+    "region": "Copenhagen",
+    "lat": 55.6761,
+    "lon": 12.5689,
+    "label": "Dagens Byggeri HQ"
   },
   {
     "country": "Denmark",
@@ -601,6 +817,24 @@
     "lat": 55.6761,
     "lon": 12.5689,
     "label": "Ekstra Bladet HQ"
+  },
+  {
+    "country": "Denmark",
+    "publisher": "Fagbladet 3F",
+    "city": "Copenhagen",
+    "region": "Copenhagen",
+    "lat": 55.6761,
+    "lon": 12.5689,
+    "label": "Fagbladet 3F HQ"
+  },
+  {
+    "country": "Denmark",
+    "publisher": "Folketidende",
+    "city": "Nykøbing Falster",
+    "region": "Falster",
+    "lat": 54.7691,
+    "lon": 11.8743,
+    "label": "Folketidende HQ"
   },
   {
     "country": "Denmark",
@@ -640,12 +874,48 @@
   },
   {
     "country": "Denmark",
+    "publisher": "Input",
+    "city": "Copenhagen",
+    "region": "Copenhagen",
+    "lat": 55.6761,
+    "lon": 12.5689,
+    "label": "Input HQ"
+  },
+  {
+    "country": "Denmark",
+    "publisher": "Journalisten",
+    "city": "Copenhagen",
+    "region": "Copenhagen",
+    "lat": 55.6761,
+    "lon": 12.5689,
+    "label": "Journalisten HQ"
+  },
+  {
+    "country": "Denmark",
     "publisher": "Jyllands-Posten",
     "city": "Aarhus",
     "region": "Viby",
     "lat": 56.125,
     "lon": 10.1611,
     "label": "Jyllands-Posten HQ"
+  },
+  {
+    "country": "Denmark",
+    "publisher": "Jysk Fynske Medier",
+    "city": "Vejle",
+    "region": "Vejle",
+    "lat": 55.7093,
+    "lon": 9.5357,
+    "label": "Jysk Fynske Medier HQ"
+  },
+  {
+    "country": "Denmark",
+    "publisher": "Kristeligt Dagblad",
+    "city": "Copenhagen",
+    "region": "Copenhagen",
+    "lat": 55.6761,
+    "lon": 12.5689,
+    "label": "Kristeligt Dagblad HQ"
   },
   {
     "country": "Denmark",
@@ -658,12 +928,93 @@
   },
   {
     "country": "Denmark",
+    "publisher": "Migog",
+    "city": "Copenhagen",
+    "region": "Copenhagen",
+    "lat": 55.6761,
+    "lon": 12.5689,
+    "label": "Migog HQ"
+  },
+  {
+    "country": "Denmark",
+    "publisher": "Mobilsiden",
+    "city": "Copenhagen",
+    "region": "Copenhagen",
+    "lat": 55.6761,
+    "lon": 12.5689,
+    "label": "Mobilsiden HQ"
+  },
+  {
+    "country": "Denmark",
+    "publisher": "Pio",
+    "city": "Copenhagen",
+    "region": "Copenhagen",
+    "lat": 55.6761,
+    "lon": 12.5689,
+    "label": "Pio HQ"
+  },
+  {
+    "country": "Denmark",
     "publisher": "Politiken",
     "city": "Copenhagen",
     "region": "Copenhagen",
     "lat": 55.6761,
     "lon": 12.5689,
     "label": "Politiken HQ"
+  },
+  {
+    "country": "Denmark",
+    "publisher": "Sjællandske Medier",
+    "city": "Næstved",
+    "region": "Zealand",
+    "lat": 55.2298,
+    "lon": 11.7609,
+    "label": "Sjællandske Medier HQ"
+  },
+  {
+    "country": "Denmark",
+    "publisher": "Soundvenue",
+    "city": "Copenhagen",
+    "region": "Copenhagen",
+    "lat": 55.6761,
+    "lon": 12.5689,
+    "label": "Soundvenue HQ"
+  },
+  {
+    "country": "Denmark",
+    "publisher": "Stiften Media",
+    "city": "Aarhus",
+    "region": "Aarhus",
+    "lat": 56.1629,
+    "lon": 10.2039,
+    "label": "Stiften Media HQ"
+  },
+  {
+    "country": "Denmark",
+    "publisher": "TV 2 Regionerne",
+    "city": "Odense",
+    "region": "Odense",
+    "lat": 55.4038,
+    "lon": 10.4024,
+    "label": "TV 2 Regionerne HQ"
+  },
+  {
+    "country": "Denmark",
+    "publisher": "Version2",
+    "city": "Copenhagen",
+    "region": "Copenhagen",
+    "lat": 55.6761,
+    "lon": 12.5689,
+    "label": "Version2 HQ"
+  },
+  {
+    "country": "Denmark",
+    "publisher": "Weekendavisen",
+    "city": "Copenhagen",
+    "region": "Copenhagen",
+    "lat": 55.6761,
+    "lon": 12.5689,
+    "label": "Weekendavisen HQ"
   },
   {
     "country": "Estonia",
@@ -1872,6 +2223,195 @@
     "label": "Yahoo HQ"
   },
   {
+    "country": "Malaysia",
+    "publisher": "Astro Awani",
+    "city": "Kuala Lumpur",
+    "region": "Kuala Lumpur",
+    "lat": 3.139,
+    "lon": 101.6869,
+    "label": "Astro Awani HQ"
+  },
+  {
+    "country": "Malaysia",
+    "publisher": "Bernama",
+    "city": "Kuala Lumpur",
+    "region": "Kuala Lumpur",
+    "lat": 3.139,
+    "lon": 101.6869,
+    "label": "Bernama HQ"
+  },
+  {
+    "country": "Malaysia",
+    "publisher": "BH",
+    "city": "Kuala Lumpur",
+    "region": "Kuala Lumpur",
+    "lat": 3.139,
+    "lon": 101.6869,
+    "label": "BH HQ"
+  },
+  {
+    "country": "Malaysia",
+    "publisher": "BusinessToday",
+    "city": "Kuala Lumpur",
+    "region": "Kuala Lumpur",
+    "lat": 3.139,
+    "lon": 101.6869,
+    "label": "BusinessToday HQ"
+  },
+  {
+    "country": "Malaysia",
+    "publisher": "DayakDaily",
+    "city": "Kuching",
+    "region": "Sarawak",
+    "lat": 1.5533,
+    "lon": 110.3592,
+    "label": "DayakDaily HQ"
+  },
+  {
+    "country": "Malaysia",
+    "publisher": "Focus Malaysia",
+    "city": "Kuala Lumpur",
+    "region": "Kuala Lumpur",
+    "lat": 3.139,
+    "lon": 101.6869,
+    "label": "Focus Malaysia HQ"
+  },
+  {
+    "country": "Malaysia",
+    "publisher": "Free Malaysia Today",
+    "city": "Petaling Jaya",
+    "region": "Selangor",
+    "lat": 3.1073,
+    "lon": 101.6067,
+    "label": "Free Malaysia Today HQ"
+  },
+  {
+    "country": "Malaysia",
+    "publisher": "HMetro",
+    "city": "Kuala Lumpur",
+    "region": "Kuala Lumpur",
+    "lat": 3.139,
+    "lon": 101.6869,
+    "label": "HMetro HQ"
+  },
+  {
+    "country": "Malaysia",
+    "publisher": "Kosmo",
+    "city": "Kuala Lumpur",
+    "region": "Kuala Lumpur",
+    "lat": 3.139,
+    "lon": 101.6869,
+    "label": "Kosmo HQ"
+  },
+  {
+    "country": "Malaysia",
+    "publisher": "Malay Mail",
+    "city": "Kuala Lumpur",
+    "region": "Kuala Lumpur",
+    "lat": 3.139,
+    "lon": 101.6869,
+    "label": "Malay Mail HQ"
+  },
+  {
+    "country": "Malaysia",
+    "publisher": "Malaysiakini",
+    "city": "Petaling Jaya",
+    "region": "Selangor",
+    "lat": 3.1073,
+    "lon": 101.6067,
+    "label": "Malaysiakini HQ"
+  },
+  {
+    "country": "Malaysia",
+    "publisher": "MalaysiaNow",
+    "city": "Kuala Lumpur",
+    "region": "Kuala Lumpur",
+    "lat": 3.139,
+    "lon": 101.6869,
+    "label": "MalaysiaNow HQ"
+  },
+  {
+    "country": "Malaysia",
+    "publisher": "NST",
+    "city": "Kuala Lumpur",
+    "region": "Kuala Lumpur",
+    "lat": 3.139,
+    "lon": 101.6869,
+    "label": "NST HQ"
+  },
+  {
+    "country": "Malaysia",
+    "publisher": "Sarawak Tribune",
+    "city": "Kuching",
+    "region": "Sarawak",
+    "lat": 1.5533,
+    "lon": 110.3592,
+    "label": "Sarawak Tribune HQ"
+  },
+  {
+    "country": "Malaysia",
+    "publisher": "Scoop",
+    "city": "Kuala Lumpur",
+    "region": "Kuala Lumpur",
+    "lat": 3.139,
+    "lon": 101.6869,
+    "label": "Scoop HQ"
+  },
+  {
+    "country": "Malaysia",
+    "publisher": "The Borneo Post",
+    "city": "Kuching",
+    "region": "Sarawak",
+    "lat": 1.5533,
+    "lon": 110.3592,
+    "label": "The Borneo Post HQ"
+  },
+  {
+    "country": "Malaysia",
+    "publisher": "The Rakyat Post",
+    "city": "Kuala Lumpur",
+    "region": "Kuala Lumpur",
+    "lat": 3.139,
+    "lon": 101.6869,
+    "label": "The Rakyat Post HQ"
+  },
+  {
+    "country": "Malaysia",
+    "publisher": "The Star",
+    "city": "Petaling Jaya",
+    "region": "Selangor",
+    "lat": 3.1073,
+    "lon": 101.6067,
+    "label": "The Star HQ"
+  },
+  {
+    "country": "Malaysia",
+    "publisher": "The Sun",
+    "city": "Petaling Jaya",
+    "region": "Selangor",
+    "lat": 3.1073,
+    "lon": 101.6067,
+    "label": "The Sun HQ"
+  },
+  {
+    "country": "Malaysia",
+    "publisher": "The Vibes",
+    "city": "Kuala Lumpur",
+    "region": "Kuala Lumpur",
+    "lat": 3.139,
+    "lon": 101.6869,
+    "label": "The Vibes HQ"
+  },
+  {
+    "country": "Malaysia",
+    "publisher": "Utusan Malaysia",
+    "city": "Kuala Lumpur",
+    "region": "Kuala Lumpur",
+    "lat": 3.139,
+    "lon": 101.6869,
+    "label": "Utusan Malaysia HQ"
+  },
+  {
     "country": "Mexico",
     "publisher": "El Financiero",
     "city": "Mexico City",
@@ -2592,6 +3132,465 @@
     "label": "VG HQ"
   },
   {
+    "country": "Poland",
+    "publisher": "Agora",
+    "city": "Warsaw",
+    "region": "Warsaw",
+    "lat": 52.2297,
+    "lon": 21.0122,
+    "label": "Agora HQ"
+  },
+  {
+    "country": "Poland",
+    "publisher": "Bankier.pl",
+    "city": "Białystok",
+    "region": "Podlaskie",
+    "lat": 53.1325,
+    "lon": 23.1688,
+    "label": "Bankier.pl HQ"
+  },
+  {
+    "country": "Poland",
+    "publisher": "Business Insider Polska",
+    "city": "Warsaw",
+    "region": "Warsaw",
+    "lat": 52.2297,
+    "lon": 21.0122,
+    "label": "Business Insider Polska HQ"
+  },
+  {
+    "country": "Poland",
+    "publisher": "DoRzeczy",
+    "city": "Warsaw",
+    "region": "Warsaw",
+    "lat": 52.2297,
+    "lon": 21.0122,
+    "label": "DoRzeczy HQ"
+  },
+  {
+    "country": "Poland",
+    "publisher": "Dziennik.pl",
+    "city": "Warsaw",
+    "region": "Warsaw",
+    "lat": 52.2297,
+    "lon": 21.0122,
+    "label": "Dziennik.pl HQ"
+  },
+  {
+    "country": "Poland",
+    "publisher": "Fakt",
+    "city": "Warsaw",
+    "region": "Warsaw",
+    "lat": 52.2297,
+    "lon": 21.0122,
+    "label": "Fakt HQ"
+  },
+  {
+    "country": "Poland",
+    "publisher": "Forsal",
+    "city": "Warsaw",
+    "region": "Warsaw",
+    "lat": 52.2297,
+    "lon": 21.0122,
+    "label": "Forsal HQ"
+  },
+  {
+    "country": "Poland",
+    "publisher": "Interia",
+    "city": "Kraków",
+    "region": "Lesser Poland",
+    "lat": 50.0647,
+    "lon": 19.945,
+    "label": "Interia HQ"
+  },
+  {
+    "country": "Poland",
+    "publisher": "Money.pl",
+    "city": "Wrocław",
+    "region": "Lower Silesia",
+    "lat": 51.1079,
+    "lon": 17.0385,
+    "label": "Money.pl HQ"
+  },
+  {
+    "country": "Poland",
+    "publisher": "Newsweek Polska",
+    "city": "Warsaw",
+    "region": "Warsaw",
+    "lat": 52.2297,
+    "lon": 21.0122,
+    "label": "Newsweek Polska HQ"
+  },
+  {
+    "country": "Poland",
+    "publisher": "Niezalezna",
+    "city": "Warsaw",
+    "region": "Warsaw",
+    "lat": 52.2297,
+    "lon": 21.0122,
+    "label": "Niezalezna HQ"
+  },
+  {
+    "country": "Poland",
+    "publisher": "OKO.press",
+    "city": "Warsaw",
+    "region": "Warsaw",
+    "lat": 52.2297,
+    "lon": 21.0122,
+    "label": "OKO.press HQ"
+  },
+  {
+    "country": "Poland",
+    "publisher": "Onet",
+    "city": "Warsaw",
+    "region": "Warsaw",
+    "lat": 52.2297,
+    "lon": 21.0122,
+    "label": "Onet HQ"
+  },
+  {
+    "country": "Poland",
+    "publisher": "PAP",
+    "city": "Warsaw",
+    "region": "Warsaw",
+    "lat": 52.2297,
+    "lon": 21.0122,
+    "label": "PAP HQ"
+  },
+  {
+    "country": "Poland",
+    "publisher": "Polityka",
+    "city": "Warsaw",
+    "region": "Warsaw",
+    "lat": 52.2297,
+    "lon": 21.0122,
+    "label": "Polityka HQ"
+  },
+  {
+    "country": "Poland",
+    "publisher": "Polsat News",
+    "city": "Warsaw",
+    "region": "Warsaw",
+    "lat": 52.2297,
+    "lon": 21.0122,
+    "label": "Polsat News HQ"
+  },
+  {
+    "country": "Poland",
+    "publisher": "PolskieRadio24",
+    "city": "Warsaw",
+    "region": "Warsaw",
+    "lat": 52.2297,
+    "lon": 21.0122,
+    "label": "PolskieRadio24 HQ"
+  },
+  {
+    "country": "Poland",
+    "publisher": "Puls Biznesu",
+    "city": "Warsaw",
+    "region": "Warsaw",
+    "lat": 52.2297,
+    "lon": 21.0122,
+    "label": "Puls Biznesu HQ"
+  },
+  {
+    "country": "Poland",
+    "publisher": "Radio Zet",
+    "city": "Warsaw",
+    "region": "Warsaw",
+    "lat": 52.2297,
+    "lon": 21.0122,
+    "label": "Radio Zet HQ"
+  },
+  {
+    "country": "Poland",
+    "publisher": "RMF24",
+    "city": "Kraków",
+    "region": "Lesser Poland",
+    "lat": 50.0647,
+    "lon": 19.945,
+    "label": "RMF24 HQ"
+  },
+  {
+    "country": "Poland",
+    "publisher": "Rynek Zdrowia",
+    "city": "Katowice",
+    "region": "Silesia",
+    "lat": 50.2649,
+    "lon": 19.0238,
+    "label": "Rynek Zdrowia HQ"
+  },
+  {
+    "country": "Poland",
+    "publisher": "Rzeczpospolita",
+    "city": "Warsaw",
+    "region": "Warsaw",
+    "lat": 52.2297,
+    "lon": 21.0122,
+    "label": "Rzeczpospolita HQ"
+  },
+  {
+    "country": "Poland",
+    "publisher": "SE.pl",
+    "city": "Warsaw",
+    "region": "Warsaw",
+    "lat": 52.2297,
+    "lon": 21.0122,
+    "label": "SE.pl HQ"
+  },
+  {
+    "country": "Poland",
+    "publisher": "Telewizja Polska",
+    "city": "Warsaw",
+    "region": "Warsaw",
+    "lat": 52.2297,
+    "lon": 21.0122,
+    "label": "Telewizja Polska HQ"
+  },
+  {
+    "country": "Poland",
+    "publisher": "TV Republika",
+    "city": "Warsaw",
+    "region": "Warsaw",
+    "lat": 52.2297,
+    "lon": 21.0122,
+    "label": "TV Republika HQ"
+  },
+  {
+    "country": "Poland",
+    "publisher": "TVN24",
+    "city": "Warsaw",
+    "region": "Warsaw",
+    "lat": 52.2297,
+    "lon": 21.0122,
+    "label": "TVN24 HQ"
+  },
+  {
+    "country": "Poland",
+    "publisher": "wGospodarce",
+    "city": "Warsaw",
+    "region": "Warsaw",
+    "lat": 52.2297,
+    "lon": 21.0122,
+    "label": "wGospodarce HQ"
+  },
+  {
+    "country": "Poland",
+    "publisher": "Wirtualna Polska",
+    "city": "Warsaw",
+    "region": "Warsaw",
+    "lat": 52.2297,
+    "lon": 21.0122,
+    "label": "Wirtualna Polska HQ"
+  },
+  {
+    "country": "Poland",
+    "publisher": "wPolityce",
+    "city": "Warsaw",
+    "region": "Warsaw",
+    "lat": 52.2297,
+    "lon": 21.0122,
+    "label": "wPolityce HQ"
+  },
+  {
+    "country": "Poland",
+    "publisher": "Wprost",
+    "city": "Warsaw",
+    "region": "Warsaw",
+    "lat": 52.2297,
+    "lon": 21.0122,
+    "label": "Wprost HQ"
+  },
+  {
+    "country": "Portugal",
+    "publisher": "24 Notícias",
+    "city": "Lisbon",
+    "region": "Lisbon",
+    "lat": 38.7223,
+    "lon": -9.1393,
+    "label": "24 Notícias HQ"
+  },
+  {
+    "country": "Portugal",
+    "publisher": "A Bola",
+    "city": "Lisbon",
+    "region": "Lisbon",
+    "lat": 38.7223,
+    "lon": -9.1393,
+    "label": "A Bola HQ"
+  },
+  {
+    "country": "Portugal",
+    "publisher": "CNN Portugal",
+    "city": "Lisbon",
+    "region": "Lisbon",
+    "lat": 38.7223,
+    "lon": -9.1393,
+    "label": "CNN Portugal HQ"
+  },
+  {
+    "country": "Portugal",
+    "publisher": "Correio da Manhã",
+    "city": "Lisbon",
+    "region": "Lisbon",
+    "lat": 38.7223,
+    "lon": -9.1393,
+    "label": "Correio da Manhã HQ"
+  },
+  {
+    "country": "Portugal",
+    "publisher": "Diário de Notícias",
+    "city": "Lisbon",
+    "region": "Lisbon",
+    "lat": 38.7223,
+    "lon": -9.1393,
+    "label": "Diário de Notícias HQ"
+  },
+  {
+    "country": "Portugal",
+    "publisher": "Dinheiro Vivo",
+    "city": "Lisbon",
+    "region": "Lisbon",
+    "lat": 38.7223,
+    "lon": -9.1393,
+    "label": "Dinheiro Vivo HQ"
+  },
+  {
+    "country": "Portugal",
+    "publisher": "ECO",
+    "city": "Lisbon",
+    "region": "Lisbon",
+    "lat": 38.7223,
+    "lon": -9.1393,
+    "label": "ECO HQ"
+  },
+  {
+    "country": "Portugal",
+    "publisher": "Executive Digest",
+    "city": "Lisbon",
+    "region": "Lisbon",
+    "lat": 38.7223,
+    "lon": -9.1393,
+    "label": "Executive Digest HQ"
+  },
+  {
+    "country": "Portugal",
+    "publisher": "Expresso",
+    "city": "Lisbon",
+    "region": "Lisbon",
+    "lat": 38.7223,
+    "lon": -9.1393,
+    "label": "Expresso HQ"
+  },
+  {
+    "country": "Portugal",
+    "publisher": "Jornal de Negócios",
+    "city": "Lisbon",
+    "region": "Lisbon",
+    "lat": 38.7223,
+    "lon": -9.1393,
+    "label": "Jornal de Negócios HQ"
+  },
+  {
+    "country": "Portugal",
+    "publisher": "Jornal Económico",
+    "city": "Lisbon",
+    "region": "Lisbon",
+    "lat": 38.7223,
+    "lon": -9.1393,
+    "label": "Jornal Económico HQ"
+  },
+  {
+    "country": "Portugal",
+    "publisher": "NiT",
+    "city": "Lisbon",
+    "region": "Lisbon",
+    "lat": 38.7223,
+    "lon": -9.1393,
+    "label": "NiT HQ"
+  },
+  {
+    "country": "Portugal",
+    "publisher": "Noticias ao Minuto",
+    "city": "Porto",
+    "region": "Porto",
+    "lat": 41.1579,
+    "lon": -8.6291,
+    "label": "Noticias ao Minuto HQ"
+  },
+  {
+    "country": "Portugal",
+    "publisher": "Observador",
+    "city": "Lisbon",
+    "region": "Lisbon",
+    "lat": 38.7223,
+    "lon": -9.1393,
+    "label": "Observador HQ"
+  },
+  {
+    "country": "Portugal",
+    "publisher": "Público",
+    "city": "Lisbon",
+    "region": "Lisbon",
+    "lat": 38.7223,
+    "lon": -9.1393,
+    "label": "Público HQ"
+  },
+  {
+    "country": "Portugal",
+    "publisher": "Record",
+    "city": "Lisbon",
+    "region": "Lisbon",
+    "lat": 38.7223,
+    "lon": -9.1393,
+    "label": "Record HQ"
+  },
+  {
+    "country": "Portugal",
+    "publisher": "RTP",
+    "city": "Lisbon",
+    "region": "Lisbon",
+    "lat": 38.7223,
+    "lon": -9.1393,
+    "label": "RTP HQ"
+  },
+  {
+    "country": "Portugal",
+    "publisher": "SAPO",
+    "city": "Aveiro",
+    "region": "Aveiro",
+    "lat": 40.6405,
+    "lon": -8.6538,
+    "label": "SAPO HQ"
+  },
+  {
+    "country": "Portugal",
+    "publisher": "SIC Notícias",
+    "city": "Lisbon",
+    "region": "Lisbon",
+    "lat": 38.7223,
+    "lon": -9.1393,
+    "label": "SIC Notícias HQ"
+  },
+  {
+    "country": "Portugal",
+    "publisher": "Sol",
+    "city": "Lisbon",
+    "region": "Lisbon",
+    "lat": 38.7223,
+    "lon": -9.1393,
+    "label": "Sol HQ"
+  },
+  {
+    "country": "Portugal",
+    "publisher": "Visao",
+    "city": "Lisbon",
+    "region": "Lisbon",
+    "lat": 38.7223,
+    "lon": -9.1393,
+    "label": "Visao HQ"
+  },
+  {
     "country": "Romania",
     "publisher": "Adevărul",
     "city": "Bucharest",
@@ -2599,6 +3598,60 @@
     "lat": 44.4809,
     "lon": 26.0712,
     "label": "Adevărul HQ"
+  },
+  {
+    "country": "Romania",
+    "publisher": "Aktual24",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "Aktual24 HQ"
+  },
+  {
+    "country": "Romania",
+    "publisher": "Antena 3",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "Antena 3 HQ"
+  },
+  {
+    "country": "Romania",
+    "publisher": "B1TV",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "B1TV HQ"
+  },
+  {
+    "country": "Romania",
+    "publisher": "B365",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "B365 HQ"
+  },
+  {
+    "country": "Romania",
+    "publisher": "Business Magazin",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "Business Magazin HQ"
+  },
+  {
+    "country": "Romania",
+    "publisher": "Cancan",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "Cancan HQ"
   },
   {
     "country": "Romania",
@@ -2611,12 +3664,57 @@
   },
   {
     "country": "Romania",
+    "publisher": "Click",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "Click HQ"
+  },
+  {
+    "country": "Romania",
     "publisher": "Cotidianul",
     "city": "Bucharest",
     "region": "Bucharest",
     "lat": 44.4134,
     "lon": 26.0978,
     "label": "Cotidianul HQ"
+  },
+  {
+    "country": "Romania",
+    "publisher": "Curs de Guvernare",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "Curs de Guvernare HQ"
+  },
+  {
+    "country": "Romania",
+    "publisher": "DCNews",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "DCNews HQ"
+  },
+  {
+    "country": "Romania",
+    "publisher": "Descopera",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "Descopera HQ"
+  },
+  {
+    "country": "Romania",
+    "publisher": "Digi Sport",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "Digi Sport HQ"
   },
   {
     "country": "Romania",
@@ -2629,12 +3727,75 @@
   },
   {
     "country": "Romania",
+    "publisher": "Economedia",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "Economedia HQ"
+  },
+  {
+    "country": "Romania",
+    "publisher": "Economica",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "Economica HQ"
+  },
+  {
+    "country": "Romania",
     "publisher": "EVZ",
     "city": "Bucharest",
     "region": "Bucharest",
     "lat": 44.4268,
     "lon": 26.1025,
     "label": "EVZ HQ"
+  },
+  {
+    "country": "Romania",
+    "publisher": "Fanatik",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "Fanatik HQ"
+  },
+  {
+    "country": "Romania",
+    "publisher": "G4Media",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "G4Media HQ"
+  },
+  {
+    "country": "Romania",
+    "publisher": "Gandul",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "Gandul HQ"
+  },
+  {
+    "country": "Romania",
+    "publisher": "Go4it",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "Go4it HQ"
+  },
+  {
+    "country": "Romania",
+    "publisher": "GSP",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "GSP HQ"
   },
   {
     "country": "Romania",
@@ -2647,6 +3808,24 @@
   },
   {
     "country": "Romania",
+    "publisher": "Impact",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "Impact HQ"
+  },
+  {
+    "country": "Romania",
+    "publisher": "Libertatea",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "Libertatea HQ"
+  },
+  {
+    "country": "Romania",
     "publisher": "Mediafax",
     "city": "Bucharest",
     "region": "Bucharest",
@@ -2656,12 +3835,642 @@
   },
   {
     "country": "Romania",
+    "publisher": "Monitorul de Cluj",
+    "city": "Cluj-Napoca",
+    "region": "Cluj",
+    "lat": 46.7712,
+    "lon": 23.6236,
+    "label": "Monitorul de Cluj HQ"
+  },
+  {
+    "country": "Romania",
+    "publisher": "News.ro",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "News.ro HQ"
+  },
+  {
+    "country": "Romania",
+    "publisher": "Newsweek Romania",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "Newsweek Romania HQ"
+  },
+  {
+    "country": "Romania",
+    "publisher": "Observator News",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "Observator News HQ"
+  },
+  {
+    "country": "Romania",
+    "publisher": "Playtech",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "Playtech HQ"
+  },
+  {
+    "country": "Romania",
+    "publisher": "Profit.ro",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "Profit.ro HQ"
+  },
+  {
+    "country": "Romania",
+    "publisher": "ProSport",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "ProSport HQ"
+  },
+  {
+    "country": "Romania",
+    "publisher": "PS News",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "PS News HQ"
+  },
+  {
+    "country": "Romania",
+    "publisher": "Puterea",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "Puterea HQ"
+  },
+  {
+    "country": "Romania",
+    "publisher": "Republica",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "Republica HQ"
+  },
+  {
+    "country": "Romania",
+    "publisher": "Romania Insider",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "Romania Insider HQ"
+  },
+  {
+    "country": "Romania",
+    "publisher": "Romania TV",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "Romania TV HQ"
+  },
+  {
+    "country": "Romania",
+    "publisher": "Sport.ro",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "Sport.ro HQ"
+  },
+  {
+    "country": "Romania",
+    "publisher": "SpotMedia",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "SpotMedia HQ"
+  },
+  {
+    "country": "Romania",
+    "publisher": "Spynews",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "Spynews HQ"
+  },
+  {
+    "country": "Romania",
+    "publisher": "StartupCafe",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "StartupCafe HQ"
+  },
+  {
+    "country": "Romania",
+    "publisher": "StiriDiaspora",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "StiriDiaspora HQ"
+  },
+  {
+    "country": "Romania",
+    "publisher": "Stirile Kanal D",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "Stirile Kanal D HQ"
+  },
+  {
+    "country": "Romania",
+    "publisher": "Stirile ProTV",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "Stirile ProTV HQ"
+  },
+  {
+    "country": "Romania",
     "publisher": "Stiripesurse",
     "city": "Bucharest",
     "region": "Bucharest",
     "lat": 44.4268,
     "lon": 26.1025,
     "label": "Stiripesurse HQ"
+  },
+  {
+    "country": "Romania",
+    "publisher": "Turnul Sfatului",
+    "city": "Sibiu",
+    "region": "Sibiu",
+    "lat": 45.7983,
+    "lon": 24.1256,
+    "label": "Turnul Sfatului HQ"
+  },
+  {
+    "country": "Romania",
+    "publisher": "ZF",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "ZF HQ"
+  },
+  {
+    "country": "Romania",
+    "publisher": "Ziare.com",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "Ziare.com HQ"
+  },
+  {
+    "country": "Serbia",
+    "publisher": "021.rs",
+    "city": "Novi Sad",
+    "region": "Vojvodina",
+    "lat": 45.2671,
+    "lon": 19.8335,
+    "label": "021.rs HQ"
+  },
+  {
+    "country": "Serbia",
+    "publisher": "Alo",
+    "city": "Belgrade",
+    "region": "Belgrade",
+    "lat": 44.7866,
+    "lon": 20.4489,
+    "label": "Alo HQ"
+  },
+  {
+    "country": "Serbia",
+    "publisher": "B92",
+    "city": "Belgrade",
+    "region": "Belgrade",
+    "lat": 44.7866,
+    "lon": 20.4489,
+    "label": "B92 HQ"
+  },
+  {
+    "country": "Serbia",
+    "publisher": "Beta",
+    "city": "Belgrade",
+    "region": "Belgrade",
+    "lat": 44.7866,
+    "lon": 20.4489,
+    "label": "Beta HQ"
+  },
+  {
+    "country": "Serbia",
+    "publisher": "Blic",
+    "city": "Belgrade",
+    "region": "Belgrade",
+    "lat": 44.7866,
+    "lon": 20.4489,
+    "label": "Blic HQ"
+  },
+  {
+    "country": "Serbia",
+    "publisher": "Danas",
+    "city": "Belgrade",
+    "region": "Belgrade",
+    "lat": 44.7866,
+    "lon": 20.4489,
+    "label": "Danas HQ"
+  },
+  {
+    "country": "Serbia",
+    "publisher": "Dnevnik.rs",
+    "city": "Novi Sad",
+    "region": "Vojvodina",
+    "lat": 45.2671,
+    "lon": 19.8335,
+    "label": "Dnevnik.rs HQ"
+  },
+  {
+    "country": "Serbia",
+    "publisher": "Euronews Serbia",
+    "city": "Belgrade",
+    "region": "Belgrade",
+    "lat": 44.7866,
+    "lon": 20.4489,
+    "label": "Euronews Serbia HQ"
+  },
+  {
+    "country": "Serbia",
+    "publisher": "Informer",
+    "city": "Belgrade",
+    "region": "Belgrade",
+    "lat": 44.7866,
+    "lon": 20.4489,
+    "label": "Informer HQ"
+  },
+  {
+    "country": "Serbia",
+    "publisher": "Kurir",
+    "city": "Belgrade",
+    "region": "Belgrade",
+    "lat": 44.7866,
+    "lon": 20.4489,
+    "label": "Kurir HQ"
+  },
+  {
+    "country": "Serbia",
+    "publisher": "Mondo",
+    "city": "Belgrade",
+    "region": "Belgrade",
+    "lat": 44.7866,
+    "lon": 20.4489,
+    "label": "Mondo HQ"
+  },
+  {
+    "country": "Serbia",
+    "publisher": "N1 Serbia",
+    "city": "Belgrade",
+    "region": "Belgrade",
+    "lat": 44.7866,
+    "lon": 20.4489,
+    "label": "N1 Serbia HQ"
+  },
+  {
+    "country": "Serbia",
+    "publisher": "NIN",
+    "city": "Belgrade",
+    "region": "Belgrade",
+    "lat": 44.7866,
+    "lon": 20.4489,
+    "label": "NIN HQ"
+  },
+  {
+    "country": "Serbia",
+    "publisher": "Nova Ekonomija",
+    "city": "Belgrade",
+    "region": "Belgrade",
+    "lat": 44.7866,
+    "lon": 20.4489,
+    "label": "Nova Ekonomija HQ"
+  },
+  {
+    "country": "Serbia",
+    "publisher": "Nova.rs",
+    "city": "Belgrade",
+    "region": "Belgrade",
+    "lat": 44.7866,
+    "lon": 20.4489,
+    "label": "Nova.rs HQ"
+  },
+  {
+    "country": "Serbia",
+    "publisher": "Novosti",
+    "city": "Belgrade",
+    "region": "Belgrade",
+    "lat": 44.7866,
+    "lon": 20.4489,
+    "label": "Novosti HQ"
+  },
+  {
+    "country": "Serbia",
+    "publisher": "Politika",
+    "city": "Belgrade",
+    "region": "Belgrade",
+    "lat": 44.7866,
+    "lon": 20.4489,
+    "label": "Politika HQ"
+  },
+  {
+    "country": "Serbia",
+    "publisher": "Republika",
+    "city": "Belgrade",
+    "region": "Belgrade",
+    "lat": 44.7866,
+    "lon": 20.4489,
+    "label": "Republika HQ"
+  },
+  {
+    "country": "Serbia",
+    "publisher": "RTS",
+    "city": "Belgrade",
+    "region": "Belgrade",
+    "lat": 44.7866,
+    "lon": 20.4489,
+    "label": "RTS HQ"
+  },
+  {
+    "country": "Serbia",
+    "publisher": "Srbija Danas",
+    "city": "Belgrade",
+    "region": "Belgrade",
+    "lat": 44.7866,
+    "lon": 20.4489,
+    "label": "Srbija Danas HQ"
+  },
+  {
+    "country": "Serbia",
+    "publisher": "Tanjug",
+    "city": "Belgrade",
+    "region": "Belgrade",
+    "lat": 44.7866,
+    "lon": 20.4489,
+    "label": "Tanjug HQ"
+  },
+  {
+    "country": "Serbia",
+    "publisher": "Telegraf",
+    "city": "Belgrade",
+    "region": "Belgrade",
+    "lat": 44.7866,
+    "lon": 20.4489,
+    "label": "Telegraf HQ"
+  },
+  {
+    "country": "Serbia",
+    "publisher": "Vreme",
+    "city": "Belgrade",
+    "region": "Belgrade",
+    "lat": 44.7866,
+    "lon": 20.4489,
+    "label": "Vreme HQ"
+  },
+  {
+    "country": "Slovakia",
+    "publisher": "Aktuality.sk",
+    "city": "Bratislava",
+    "region": "Bratislava",
+    "lat": 48.1486,
+    "lon": 17.1077,
+    "label": "Aktuality.sk HQ"
+  },
+  {
+    "country": "Slovakia",
+    "publisher": "Bystricoviny",
+    "city": "Banská Bystrica",
+    "region": "Banská Bystrica",
+    "lat": 48.7363,
+    "lon": 19.1462,
+    "label": "Bystricoviny HQ"
+  },
+  {
+    "country": "Slovakia",
+    "publisher": "Dennik N",
+    "city": "Bratislava",
+    "region": "Bratislava",
+    "lat": 48.1486,
+    "lon": 17.1077,
+    "label": "Dennik N HQ"
+  },
+  {
+    "country": "Slovakia",
+    "publisher": "Dobré noviny",
+    "city": "Bratislava",
+    "region": "Bratislava",
+    "lat": 48.1486,
+    "lon": 17.1077,
+    "label": "Dobré noviny HQ"
+  },
+  {
+    "country": "Slovakia",
+    "publisher": "EMEFKA",
+    "city": "Bratislava",
+    "region": "Bratislava",
+    "lat": 48.1486,
+    "lon": 17.1077,
+    "label": "EMEFKA HQ"
+  },
+  {
+    "country": "Slovakia",
+    "publisher": "Hlavné správy",
+    "city": "Bratislava",
+    "region": "Bratislava",
+    "lat": 48.1486,
+    "lon": 17.1077,
+    "label": "Hlavné správy HQ"
+  },
+  {
+    "country": "Slovakia",
+    "publisher": "HNonline",
+    "city": "Bratislava",
+    "region": "Bratislava",
+    "lat": 48.1486,
+    "lon": 17.1077,
+    "label": "HNonline HQ"
+  },
+  {
+    "country": "Slovakia",
+    "publisher": "Novy Cas",
+    "city": "Bratislava",
+    "region": "Bratislava",
+    "lat": 48.1486,
+    "lon": 17.1077,
+    "label": "Novy Cas HQ"
+  },
+  {
+    "country": "Slovakia",
+    "publisher": "Pluska",
+    "city": "Bratislava",
+    "region": "Bratislava",
+    "lat": 48.1486,
+    "lon": 17.1077,
+    "label": "Pluska HQ"
+  },
+  {
+    "country": "Slovakia",
+    "publisher": "Postoj",
+    "city": "Bratislava",
+    "region": "Bratislava",
+    "lat": 48.1486,
+    "lon": 17.1077,
+    "label": "Postoj HQ"
+  },
+  {
+    "country": "Slovakia",
+    "publisher": "Pravda",
+    "city": "Bratislava",
+    "region": "Bratislava",
+    "lat": 48.1486,
+    "lon": 17.1077,
+    "label": "Pravda HQ"
+  },
+  {
+    "country": "Slovakia",
+    "publisher": "Refresher Slovakia",
+    "city": "Bratislava",
+    "region": "Bratislava",
+    "lat": 48.1486,
+    "lon": 17.1077,
+    "label": "Refresher Slovakia HQ"
+  },
+  {
+    "country": "Slovakia",
+    "publisher": "SME",
+    "city": "Bratislava",
+    "region": "Bratislava",
+    "lat": 48.1486,
+    "lon": 17.1077,
+    "label": "SME HQ"
+  },
+  {
+    "country": "Slovakia",
+    "publisher": "Sportnet",
+    "city": "Bratislava",
+    "region": "Bratislava",
+    "lat": 48.1486,
+    "lon": 17.1077,
+    "label": "Sportnet HQ"
+  },
+  {
+    "country": "Slovakia",
+    "publisher": "Štandard",
+    "city": "Bratislava",
+    "region": "Bratislava",
+    "lat": 48.1486,
+    "lon": 17.1077,
+    "label": "Štandard HQ"
+  },
+  {
+    "country": "Slovakia",
+    "publisher": "Startitup",
+    "city": "Bratislava",
+    "region": "Bratislava",
+    "lat": 48.1486,
+    "lon": 17.1077,
+    "label": "Startitup HQ"
+  },
+  {
+    "country": "Slovakia",
+    "publisher": "TA3",
+    "city": "Bratislava",
+    "region": "Bratislava",
+    "lat": 48.1486,
+    "lon": 17.1077,
+    "label": "TA3 HQ"
+  },
+  {
+    "country": "Slovakia",
+    "publisher": "Techbyte",
+    "city": "Bratislava",
+    "region": "Bratislava",
+    "lat": 48.1486,
+    "lon": 17.1077,
+    "label": "Techbyte HQ"
+  },
+  {
+    "country": "Slovakia",
+    "publisher": "Teraz.sk",
+    "city": "Bratislava",
+    "region": "Bratislava",
+    "lat": 48.1486,
+    "lon": 17.1077,
+    "label": "Teraz.sk HQ"
+  },
+  {
+    "country": "Slovakia",
+    "publisher": "Topky",
+    "city": "Bratislava",
+    "region": "Bratislava",
+    "lat": 48.1486,
+    "lon": 17.1077,
+    "label": "Topky HQ"
+  },
+  {
+    "country": "Slovakia",
+    "publisher": "Touchit",
+    "city": "Bratislava",
+    "region": "Bratislava",
+    "lat": 48.1486,
+    "lon": 17.1077,
+    "label": "Touchit HQ"
+  },
+  {
+    "country": "Slovakia",
+    "publisher": "Trend",
+    "city": "Bratislava",
+    "region": "Bratislava",
+    "lat": 48.1486,
+    "lon": 17.1077,
+    "label": "Trend HQ"
+  },
+  {
+    "country": "Slovakia",
+    "publisher": "TVNoviny.sk",
+    "city": "Bratislava",
+    "region": "Bratislava",
+    "lat": 48.1486,
+    "lon": 17.1077,
+    "label": "TVNoviny.sk HQ"
+  },
+  {
+    "country": "Slovakia",
+    "publisher": "Vosveteit",
+    "city": "Bratislava",
+    "region": "Bratislava",
+    "lat": 48.1486,
+    "lon": 17.1077,
+    "label": "Vosveteit HQ"
+  },
+  {
+    "country": "Slovakia",
+    "publisher": "Webnoviny",
+    "city": "Bratislava",
+    "region": "Bratislava",
+    "lat": 48.1486,
+    "lon": 17.1077,
+    "label": "Webnoviny HQ"
   },
   {
     "country": "South Korea",
@@ -2689,6 +4498,177 @@
     "lat": 37.5559,
     "lon": 126.9703,
     "label": "The Korea Economic Daily HQ"
+  },
+  {
+    "country": "Spain",
+    "publisher": "20 Minutos",
+    "city": "Madrid",
+    "region": "Madrid",
+    "lat": 40.4168,
+    "lon": -3.7038,
+    "label": "20 Minutos HQ"
+  },
+  {
+    "country": "Spain",
+    "publisher": "ABC.es",
+    "city": "Madrid",
+    "region": "Madrid",
+    "lat": 40.4168,
+    "lon": -3.7038,
+    "label": "ABC.es HQ"
+  },
+  {
+    "country": "Spain",
+    "publisher": "Cinco Días",
+    "city": "Madrid",
+    "region": "Madrid",
+    "lat": 40.4168,
+    "lon": -3.7038,
+    "label": "Cinco Días HQ"
+  },
+  {
+    "country": "Spain",
+    "publisher": "COPE",
+    "city": "Madrid",
+    "region": "Madrid",
+    "lat": 40.4168,
+    "lon": -3.7038,
+    "label": "COPE HQ"
+  },
+  {
+    "country": "Spain",
+    "publisher": "El Confidencial",
+    "city": "Madrid",
+    "region": "Madrid",
+    "lat": 40.4168,
+    "lon": -3.7038,
+    "label": "El Confidencial HQ"
+  },
+  {
+    "country": "Spain",
+    "publisher": "El Correo",
+    "city": "Bilbao",
+    "region": "Biscay",
+    "lat": 43.263,
+    "lon": -2.935,
+    "label": "El Correo HQ"
+  },
+  {
+    "country": "Spain",
+    "publisher": "El Español",
+    "city": "Madrid",
+    "region": "Madrid",
+    "lat": 40.4168,
+    "lon": -3.7038,
+    "label": "El Español HQ"
+  },
+  {
+    "country": "Spain",
+    "publisher": "El Mundo",
+    "city": "Madrid",
+    "region": "Madrid",
+    "lat": 40.4168,
+    "lon": -3.7038,
+    "label": "El Mundo HQ"
+  },
+  {
+    "country": "Spain",
+    "publisher": "El País",
+    "city": "Madrid",
+    "region": "Madrid",
+    "lat": 40.4168,
+    "lon": -3.7038,
+    "label": "El País HQ"
+  },
+  {
+    "country": "Spain",
+    "publisher": "El Periódico",
+    "city": "Barcelona",
+    "region": "Barcelona",
+    "lat": 41.3874,
+    "lon": 2.1686,
+    "label": "El Periódico HQ"
+  },
+  {
+    "country": "Spain",
+    "publisher": "eldiario.es",
+    "city": "Madrid",
+    "region": "Madrid",
+    "lat": 40.4168,
+    "lon": -3.7038,
+    "label": "eldiario.es HQ"
+  },
+  {
+    "country": "Spain",
+    "publisher": "Europa Press",
+    "city": "Madrid",
+    "region": "Madrid",
+    "lat": 40.4168,
+    "lon": -3.7038,
+    "label": "Europa Press HQ"
+  },
+  {
+    "country": "Spain",
+    "publisher": "Expansión",
+    "city": "Madrid",
+    "region": "Madrid",
+    "lat": 40.4168,
+    "lon": -3.7038,
+    "label": "Expansión HQ"
+  },
+  {
+    "country": "Spain",
+    "publisher": "La Razón",
+    "city": "Madrid",
+    "region": "Madrid",
+    "lat": 40.4168,
+    "lon": -3.7038,
+    "label": "La Razón HQ"
+  },
+  {
+    "country": "Spain",
+    "publisher": "La Vanguardia",
+    "city": "Barcelona",
+    "region": "Barcelona",
+    "lat": 41.3874,
+    "lon": 2.1686,
+    "label": "La Vanguardia HQ"
+  },
+  {
+    "country": "Spain",
+    "publisher": "OKdiario",
+    "city": "Madrid",
+    "region": "Madrid",
+    "lat": 40.4168,
+    "lon": -3.7038,
+    "label": "OKdiario HQ"
+  },
+  {
+    "country": "Spain",
+    "publisher": "RTVE",
+    "city": "Madrid",
+    "region": "Madrid",
+    "lat": 40.4168,
+    "lon": -3.7038,
+    "label": "RTVE HQ"
+  },
+  {
+    "country": "Spain",
+    "publisher": "The Local Spain",
+    "city": "Madrid",
+    "region": "Madrid",
+    "lat": 40.4168,
+    "lon": -3.7038,
+    "label": "The Local Spain HQ"
+  },
+  {
+    "country": "Spain",
+    "publisher": "Vozpópuli",
+    "city": "Madrid",
+    "region": "Madrid",
+    "lat": 40.4168,
+    "lon": -3.7038,
+    "label": "Vozpópuli HQ"
   },
   {
     "country": "Sweden",
@@ -3913,5 +5893,248 @@
     "lat": 40.7128,
     "lon": -74.006,
     "label": "ZDNet HQ"
+  },
+  {
+    "country": "Vietnam",
+    "publisher": "An Ninh Thu Do",
+    "city": "Hanoi",
+    "region": "Hanoi",
+    "lat": 21.0278,
+    "lon": 105.8342,
+    "label": "An Ninh Thu Do HQ"
+  },
+  {
+    "country": "Vietnam",
+    "publisher": "Bao Chinh Phu",
+    "city": "Hanoi",
+    "region": "Hanoi",
+    "lat": 21.0278,
+    "lon": 105.8342,
+    "label": "Bao Chinh Phu HQ"
+  },
+  {
+    "country": "Vietnam",
+    "publisher": "Bao Phap Luat",
+    "city": "Hanoi",
+    "region": "Hanoi",
+    "lat": 21.0278,
+    "lon": 105.8342,
+    "label": "Bao Phap Luat HQ"
+  },
+  {
+    "country": "Vietnam",
+    "publisher": "Bao Tin Tuc",
+    "city": "Hanoi",
+    "region": "Hanoi",
+    "lat": 21.0278,
+    "lon": 105.8342,
+    "label": "Bao Tin Tuc HQ"
+  },
+  {
+    "country": "Vietnam",
+    "publisher": "Cong Thuong",
+    "city": "Hanoi",
+    "region": "Hanoi",
+    "lat": 21.0278,
+    "lon": 105.8342,
+    "label": "Cong Thuong HQ"
+  },
+  {
+    "country": "Vietnam",
+    "publisher": "Dai Doan Ket",
+    "city": "Hanoi",
+    "region": "Hanoi",
+    "lat": 21.0278,
+    "lon": 105.8342,
+    "label": "Dai Doan Ket HQ"
+  },
+  {
+    "country": "Vietnam",
+    "publisher": "Dan Tri",
+    "city": "Hanoi",
+    "region": "Hanoi",
+    "lat": 21.0278,
+    "lon": 105.8342,
+    "label": "Dan Tri HQ"
+  },
+  {
+    "country": "Vietnam",
+    "publisher": "Nguoi Lao Dong",
+    "city": "Ho Chi Minh City",
+    "region": "Ho Chi Minh City",
+    "lat": 10.8231,
+    "lon": 106.6297,
+    "label": "Nguoi Lao Dong HQ"
+  },
+  {
+    "country": "Vietnam",
+    "publisher": "Nhan Dan",
+    "city": "Hanoi",
+    "region": "Hanoi",
+    "lat": 21.0278,
+    "lon": 105.8342,
+    "label": "Nhan Dan HQ"
+  },
+  {
+    "country": "Vietnam",
+    "publisher": "Nong Nghiep Moi Truong",
+    "city": "Hanoi",
+    "region": "Hanoi",
+    "lat": 21.0278,
+    "lon": 105.8342,
+    "label": "Nong Nghiep Moi Truong HQ"
+  },
+  {
+    "country": "Vietnam",
+    "publisher": "PLO",
+    "city": "Ho Chi Minh City",
+    "region": "Ho Chi Minh City",
+    "lat": 10.8231,
+    "lon": 106.6297,
+    "label": "PLO HQ"
+  },
+  {
+    "country": "Vietnam",
+    "publisher": "QDND",
+    "city": "Hanoi",
+    "region": "Hanoi",
+    "lat": 21.0278,
+    "lon": 105.8342,
+    "label": "QDND HQ"
+  },
+  {
+    "country": "Vietnam",
+    "publisher": "SGGP",
+    "city": "Ho Chi Minh City",
+    "region": "Ho Chi Minh City",
+    "lat": 10.8231,
+    "lon": 106.6297,
+    "label": "SGGP HQ"
+  },
+  {
+    "country": "Vietnam",
+    "publisher": "Suc Khoe & Doi Song",
+    "city": "Hanoi",
+    "region": "Hanoi",
+    "lat": 21.0278,
+    "lon": 105.8342,
+    "label": "Suc Khoe & Doi Song HQ"
+  },
+  {
+    "country": "Vietnam",
+    "publisher": "Thanh Nien",
+    "city": "Ho Chi Minh City",
+    "region": "Ho Chi Minh City",
+    "lat": 10.8231,
+    "lon": 106.6297,
+    "label": "Thanh Nien HQ"
+  },
+  {
+    "country": "Vietnam",
+    "publisher": "Tien Phong",
+    "city": "Hanoi",
+    "region": "Hanoi",
+    "lat": 21.0278,
+    "lon": 105.8342,
+    "label": "Tien Phong HQ"
+  },
+  {
+    "country": "Vietnam",
+    "publisher": "Vietnam News",
+    "city": "Hanoi",
+    "region": "Hanoi",
+    "lat": 21.0278,
+    "lon": 105.8342,
+    "label": "Vietnam News HQ"
+  },
+  {
+    "country": "Vietnam",
+    "publisher": "VietnamBiz",
+    "city": "Hanoi",
+    "region": "Hanoi",
+    "lat": 21.0278,
+    "lon": 105.8342,
+    "label": "VietnamBiz HQ"
+  },
+  {
+    "country": "Vietnam",
+    "publisher": "VietnamFinance",
+    "city": "Hanoi",
+    "region": "Hanoi",
+    "lat": 21.0278,
+    "lon": 105.8342,
+    "label": "VietnamFinance HQ"
+  },
+  {
+    "country": "Vietnam",
+    "publisher": "VietnamNet",
+    "city": "Hanoi",
+    "region": "Hanoi",
+    "lat": 21.0278,
+    "lon": 105.8342,
+    "label": "VietnamNet HQ"
+  },
+  {
+    "country": "Vietnam",
+    "publisher": "VietnamPlus",
+    "city": "Hanoi",
+    "region": "Hanoi",
+    "lat": 21.0278,
+    "lon": 105.8342,
+    "label": "VietnamPlus HQ"
+  },
+  {
+    "country": "Vietnam",
+    "publisher": "VietTimes",
+    "city": "Hanoi",
+    "region": "Hanoi",
+    "lat": 21.0278,
+    "lon": 105.8342,
+    "label": "VietTimes HQ"
+  },
+  {
+    "country": "Vietnam",
+    "publisher": "VnEconomy",
+    "city": "Hanoi",
+    "region": "Hanoi",
+    "lat": 21.0278,
+    "lon": 105.8342,
+    "label": "VnEconomy HQ"
+  },
+  {
+    "country": "Vietnam",
+    "publisher": "VnExpress",
+    "city": "Hanoi",
+    "region": "Hanoi",
+    "lat": 21.0278,
+    "lon": 105.8342,
+    "label": "VnExpress HQ"
+  },
+  {
+    "country": "Vietnam",
+    "publisher": "VOV",
+    "city": "Hanoi",
+    "region": "Hanoi",
+    "lat": 21.0278,
+    "lon": 105.8342,
+    "label": "VOV HQ"
+  },
+  {
+    "country": "Vietnam",
+    "publisher": "VTV",
+    "city": "Hanoi",
+    "region": "Hanoi",
+    "lat": 21.0278,
+    "lon": 105.8342,
+    "label": "VTV HQ"
+  },
+  {
+    "country": "Vietnam",
+    "publisher": "Znews",
+    "city": "Ho Chi Minh City",
+    "region": "Ho Chi Minh City",
+    "lat": 10.8231,
+    "lon": 106.6297,
+    "label": "Znews HQ"
   }
 ]
