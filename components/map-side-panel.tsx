@@ -278,8 +278,10 @@ export function MapSidePanel({
       </div>
 
       {loading ? <div className="panel muted">Loading map metrics...</div> : null}
-      {errors.map((error) => (
-        <div key={error} className="panel danger">{error}</div>
+      {errors.map((error, index) => (
+        <div key={`${error}-${index}`} className="panel danger">
+          {error}
+        </div>
       ))}
     </aside>
   );
