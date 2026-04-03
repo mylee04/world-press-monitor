@@ -158,6 +158,10 @@ function normalizeCountryName(value: string): string {
     .trim();
 }
 
+function sameCountryViewport(a: CountryViewport, b: CountryViewport): boolean {
+  return Math.abs(a.scale - b.scale) < 0.0001 && Math.abs(a.tx - b.tx) < 0.01 && Math.abs(a.ty - b.ty) < 0.01;
+}
+
 function degToRad(value: number): number {
   return (value * Math.PI) / 180;
 }
@@ -1233,6 +1237,12 @@ function CountryPlaneSvg({
       ty: round(ty, 2),
     };
   }
+
+  useEffect(() => {
+    const clamped = clampViewport(viewport);
+    if (sameCountryViewport(clamped, viewport)) return;
+    onViewportChange(clamped);
+  }, [viewport, safeInsets, contentBounds, onViewportChange]);
 
   function applyViewport(next: CountryViewport) {
     onViewportChange(clampViewport(next));
