@@ -2682,6 +2682,195 @@
     "label": "Tras las Huellas Digital HQ"
   },
   {
+    "country": "Egypt",
+    "publisher": "Ahl Masr",
+    "city": "Cairo",
+    "region": "Cairo",
+    "lat": 30.0444,
+    "lon": 31.2357,
+    "label": "Ahl Masr HQ"
+  },
+  {
+    "country": "Egypt",
+    "publisher": "Al Mal",
+    "city": "Cairo",
+    "region": "Cairo",
+    "lat": 30.0444,
+    "lon": 31.2357,
+    "label": "Al Mal HQ"
+  },
+  {
+    "country": "Egypt",
+    "publisher": "Al Masry Al Youm",
+    "city": "Cairo",
+    "region": "Cairo",
+    "lat": 30.0444,
+    "lon": 31.2357,
+    "label": "Al Masry Al Youm HQ"
+  },
+  {
+    "country": "Egypt",
+    "publisher": "Al Wafd",
+    "city": "Cairo",
+    "region": "Cairo",
+    "lat": 30.0444,
+    "lon": 31.2357,
+    "label": "Al Wafd HQ"
+  },
+  {
+    "country": "Egypt",
+    "publisher": "Alborsa News",
+    "city": "Cairo",
+    "region": "Cairo",
+    "lat": 30.0444,
+    "lon": 31.2357,
+    "label": "Alborsa News HQ"
+  },
+  {
+    "country": "Egypt",
+    "publisher": "Amwal Al Ghad",
+    "city": "Cairo",
+    "region": "Cairo",
+    "lat": 30.0444,
+    "lon": 31.2357,
+    "label": "Amwal Al Ghad HQ"
+  },
+  {
+    "country": "Egypt",
+    "publisher": "Btolat",
+    "city": "Cairo",
+    "region": "Cairo",
+    "lat": 30.0444,
+    "lon": 31.2357,
+    "label": "Btolat HQ"
+  },
+  {
+    "country": "Egypt",
+    "publisher": "Cairo24",
+    "city": "Cairo",
+    "region": "Cairo",
+    "lat": 30.0444,
+    "lon": 31.2357,
+    "label": "Cairo24 HQ"
+  },
+  {
+    "country": "Egypt",
+    "publisher": "Daily News Egypt",
+    "city": "Cairo",
+    "region": "Cairo",
+    "lat": 30.0444,
+    "lon": 31.2357,
+    "label": "Daily News Egypt HQ"
+  },
+  {
+    "country": "Egypt",
+    "publisher": "Dostor",
+    "city": "Cairo",
+    "region": "Cairo",
+    "lat": 30.0444,
+    "lon": 31.2357,
+    "label": "Dostor HQ"
+  },
+  {
+    "country": "Egypt",
+    "publisher": "Economy Plus",
+    "city": "Cairo",
+    "region": "Cairo",
+    "lat": 30.0444,
+    "lon": 31.2357,
+    "label": "Economy Plus HQ"
+  },
+  {
+    "country": "Egypt",
+    "publisher": "Egypt Independent",
+    "city": "Cairo",
+    "region": "Cairo",
+    "lat": 30.0444,
+    "lon": 31.2357,
+    "label": "Egypt Independent HQ"
+  },
+  {
+    "country": "Egypt",
+    "publisher": "Egyptian Gazette",
+    "city": "Cairo",
+    "region": "Cairo",
+    "lat": 30.0444,
+    "lon": 31.2357,
+    "label": "Egyptian Gazette HQ"
+  },
+  {
+    "country": "Egypt",
+    "publisher": "El Balad",
+    "city": "Cairo",
+    "region": "Cairo",
+    "lat": 30.0444,
+    "lon": 31.2357,
+    "label": "El Balad HQ"
+  },
+  {
+    "country": "Egypt",
+    "publisher": "El Watan",
+    "city": "Cairo",
+    "region": "Cairo",
+    "lat": 30.0444,
+    "lon": 31.2357,
+    "label": "El Watan HQ"
+  },
+  {
+    "country": "Egypt",
+    "publisher": "EnterpriseAM Egypt",
+    "city": "Cairo",
+    "region": "Cairo",
+    "lat": 30.0444,
+    "lon": 31.2357,
+    "label": "EnterpriseAM Egypt HQ"
+  },
+  {
+    "country": "Egypt",
+    "publisher": "FilGoal",
+    "city": "Cairo",
+    "region": "Cairo",
+    "lat": 30.0444,
+    "lon": 31.2357,
+    "label": "FilGoal HQ"
+  },
+  {
+    "country": "Egypt",
+    "publisher": "SEE News",
+    "city": "Cairo",
+    "region": "Cairo",
+    "lat": 30.0444,
+    "lon": 31.2357,
+    "label": "SEE News HQ"
+  },
+  {
+    "country": "Egypt",
+    "publisher": "Shorouk",
+    "city": "Cairo",
+    "region": "Cairo",
+    "lat": 30.0444,
+    "lon": 31.2357,
+    "label": "Shorouk HQ"
+  },
+  {
+    "country": "Egypt",
+    "publisher": "Veto",
+    "city": "Cairo",
+    "region": "Cairo",
+    "lat": 30.0444,
+    "lon": 31.2357,
+    "label": "Veto HQ"
+  },
+  {
+    "country": "Egypt",
+    "publisher": "Yallakora",
+    "city": "Cairo",
+    "region": "Cairo",
+    "lat": 30.0444,
+    "lon": 31.2357,
+    "label": "Yallakora HQ"
+  },
+  {
     "country": "Estonia",
     "publisher": "Äripäev",
     "city": "Tallinn",
@@ -3346,6 +3535,213 @@
     "lat": 51.2256,
     "lon": 6.7767,
     "label": "WirtschaftsWoche HQ"
+  },
+  {
+    "country": "Greece",
+    "publisher": "Capital.gr",
+    "city": "Athens",
+    "region": "Attica",
+    "lat": 37.9838,
+    "lon": 23.7275,
+    "label": "Capital.gr HQ"
+  },
+  {
+    "country": "Greece",
+    "publisher": "CNN Greece",
+    "city": "Athens",
+    "region": "Attica",
+    "lat": 37.9838,
+    "lon": 23.7275,
+    "label": "CNN Greece HQ"
+  },
+  {
+    "country": "Greece",
+    "publisher": "Documento",
+    "city": "Athens",
+    "region": "Attica",
+    "lat": 37.9838,
+    "lon": 23.7275,
+    "label": "Documento HQ"
+  },
+  {
+    "country": "Greece",
+    "publisher": "Enikos",
+    "city": "Athens",
+    "region": "Attica",
+    "lat": 37.9838,
+    "lon": 23.7275,
+    "label": "Enikos HQ"
+  },
+  {
+    "country": "Greece",
+    "publisher": "Ethnos",
+    "city": "Athens",
+    "region": "Attica",
+    "lat": 37.9838,
+    "lon": 23.7275,
+    "label": "Ethnos HQ"
+  },
+  {
+    "country": "Greece",
+    "publisher": "Gazzetta",
+    "city": "Athens",
+    "region": "Attica",
+    "lat": 37.9838,
+    "lon": 23.7275,
+    "label": "Gazzetta HQ"
+  },
+  {
+    "country": "Greece",
+    "publisher": "iefimerida",
+    "city": "Athens",
+    "region": "Attica",
+    "lat": 37.9838,
+    "lon": 23.7275,
+    "label": "iefimerida HQ"
+  },
+  {
+    "country": "Greece",
+    "publisher": "In.gr",
+    "city": "Athens",
+    "region": "Attica",
+    "lat": 37.9838,
+    "lon": 23.7275,
+    "label": "In.gr HQ"
+  },
+  {
+    "country": "Greece",
+    "publisher": "Kathimerini",
+    "city": "Athens",
+    "region": "Attica",
+    "lat": 37.9838,
+    "lon": 23.7275,
+    "label": "Kathimerini HQ"
+  },
+  {
+    "country": "Greece",
+    "publisher": "Liberal",
+    "city": "Athens",
+    "region": "Attica",
+    "lat": 37.9838,
+    "lon": 23.7275,
+    "label": "Liberal HQ"
+  },
+  {
+    "country": "Greece",
+    "publisher": "Mononews",
+    "city": "Athens",
+    "region": "Attica",
+    "lat": 37.9838,
+    "lon": 23.7275,
+    "label": "Mononews HQ"
+  },
+  {
+    "country": "Greece",
+    "publisher": "Naftemporiki",
+    "city": "Athens",
+    "region": "Attica",
+    "lat": 37.9838,
+    "lon": 23.7275,
+    "label": "Naftemporiki HQ"
+  },
+  {
+    "country": "Greece",
+    "publisher": "News247",
+    "city": "Athens",
+    "region": "Attica",
+    "lat": 37.9838,
+    "lon": 23.7275,
+    "label": "News247 HQ"
+  },
+  {
+    "country": "Greece",
+    "publisher": "Newsbeast",
+    "city": "Athens",
+    "region": "Attica",
+    "lat": 37.9838,
+    "lon": 23.7275,
+    "label": "Newsbeast HQ"
+  },
+  {
+    "country": "Greece",
+    "publisher": "Newsbomb",
+    "city": "Athens",
+    "region": "Attica",
+    "lat": 37.9838,
+    "lon": 23.7275,
+    "label": "Newsbomb HQ"
+  },
+  {
+    "country": "Greece",
+    "publisher": "Newsit",
+    "city": "Athens",
+    "region": "Attica",
+    "lat": 37.9838,
+    "lon": 23.7275,
+    "label": "Newsit HQ"
+  },
+  {
+    "country": "Greece",
+    "publisher": "Parapolitika",
+    "city": "Athens",
+    "region": "Attica",
+    "lat": 37.9838,
+    "lon": 23.7275,
+    "label": "Parapolitika HQ"
+  },
+  {
+    "country": "Greece",
+    "publisher": "Powergame",
+    "city": "Athens",
+    "region": "Attica",
+    "lat": 37.9838,
+    "lon": 23.7275,
+    "label": "Powergame HQ"
+  },
+  {
+    "country": "Greece",
+    "publisher": "Proto Thema",
+    "city": "Athens",
+    "region": "Attica",
+    "lat": 37.9838,
+    "lon": 23.7275,
+    "label": "Proto Thema HQ"
+  },
+  {
+    "country": "Greece",
+    "publisher": "SKAI",
+    "city": "Athens",
+    "region": "Attica",
+    "lat": 37.9838,
+    "lon": 23.7275,
+    "label": "SKAI HQ"
+  },
+  {
+    "country": "Greece",
+    "publisher": "Ta Nea",
+    "city": "Athens",
+    "region": "Attica",
+    "lat": 37.9838,
+    "lon": 23.7275,
+    "label": "Ta Nea HQ"
+  },
+  {
+    "country": "Greece",
+    "publisher": "To Vima",
+    "city": "Athens",
+    "region": "Attica",
+    "lat": 37.9838,
+    "lon": 23.7275,
+    "label": "To Vima HQ"
+  },
+  {
+    "country": "Greece",
+    "publisher": "Zougla",
+    "city": "Athens",
+    "region": "Attica",
+    "lat": 37.9838,
+    "lon": 23.7275,
+    "label": "Zougla HQ"
   },
   {
     "country": "Hungary",
@@ -4354,6 +4750,123 @@
     "lat": 35.6664,
     "lon": 139.7317,
     "label": "Yahoo HQ"
+  },
+  {
+    "country": "Latvia",
+    "publisher": "Apollo",
+    "city": "Riga",
+    "region": "Riga",
+    "lat": 56.9496,
+    "lon": 24.1052,
+    "label": "Apollo HQ"
+  },
+  {
+    "country": "Latvia",
+    "publisher": "BB.lv",
+    "city": "Riga",
+    "region": "Riga",
+    "lat": 56.9496,
+    "lon": 24.1052,
+    "label": "BB.lv HQ"
+  },
+  {
+    "country": "Latvia",
+    "publisher": "Delfi Latvia",
+    "city": "Riga",
+    "region": "Riga",
+    "lat": 56.9496,
+    "lon": 24.1052,
+    "label": "Delfi Latvia HQ"
+  },
+  {
+    "country": "Latvia",
+    "publisher": "Diena",
+    "city": "Riga",
+    "region": "Riga",
+    "lat": 56.9496,
+    "lon": 24.1052,
+    "label": "Diena HQ"
+  },
+  {
+    "country": "Latvia",
+    "publisher": "Gorod.lv",
+    "city": "Daugavpils",
+    "region": "Latgale",
+    "lat": 55.8747,
+    "lon": 26.5362,
+    "label": "Gorod.lv HQ"
+  },
+  {
+    "country": "Latvia",
+    "publisher": "Jauns.lv",
+    "city": "Riga",
+    "region": "Riga",
+    "lat": 56.9496,
+    "lon": 24.1052,
+    "label": "Jauns.lv HQ"
+  },
+  {
+    "country": "Latvia",
+    "publisher": "LA.LV",
+    "city": "Riga",
+    "region": "Riga",
+    "lat": 56.9496,
+    "lon": 24.1052,
+    "label": "LA.LV HQ"
+  },
+  {
+    "country": "Latvia",
+    "publisher": "LSM",
+    "city": "Riga",
+    "region": "Riga",
+    "lat": 56.9496,
+    "lon": 24.1052,
+    "label": "LSM HQ"
+  },
+  {
+    "country": "Latvia",
+    "publisher": "Mixnews Latvia",
+    "city": "Riga",
+    "region": "Riga",
+    "lat": 56.9496,
+    "lon": 24.1052,
+    "label": "Mixnews Latvia HQ"
+  },
+  {
+    "country": "Latvia",
+    "publisher": "NRA",
+    "city": "Riga",
+    "region": "Riga",
+    "lat": 56.9496,
+    "lon": 24.1052,
+    "label": "NRA HQ"
+  },
+  {
+    "country": "Latvia",
+    "publisher": "Sportacentrs",
+    "city": "Riga",
+    "region": "Riga",
+    "lat": 56.9496,
+    "lon": 24.1052,
+    "label": "Sportacentrs HQ"
+  },
+  {
+    "country": "Latvia",
+    "publisher": "TV3 Latvia",
+    "city": "Riga",
+    "region": "Riga",
+    "lat": 56.9496,
+    "lon": 24.1052,
+    "label": "TV3 Latvia HQ"
+  },
+  {
+    "country": "Latvia",
+    "publisher": "TVNET",
+    "city": "Riga",
+    "region": "Riga",
+    "lat": 56.9496,
+    "lon": 24.1052,
+    "label": "TVNET HQ"
   },
   {
     "country": "Malaysia",
@@ -6606,6 +7119,285 @@
     "label": "Webnoviny HQ"
   },
   {
+    "country": "Slovenia",
+    "publisher": "24ur",
+    "city": "Ljubljana",
+    "region": "Ljubljana",
+    "lat": 46.0569,
+    "lon": 14.5058,
+    "label": "24ur HQ"
+  },
+  {
+    "country": "Slovenia",
+    "publisher": "Delo",
+    "city": "Ljubljana",
+    "region": "Ljubljana",
+    "lat": 46.0569,
+    "lon": 14.5058,
+    "label": "Delo HQ"
+  },
+  {
+    "country": "Slovenia",
+    "publisher": "Dnevnik",
+    "city": "Ljubljana",
+    "region": "Ljubljana",
+    "lat": 46.0569,
+    "lon": 14.5058,
+    "label": "Dnevnik HQ"
+  },
+  {
+    "country": "Slovenia",
+    "publisher": "Domovina",
+    "city": "Ljubljana",
+    "region": "Ljubljana",
+    "lat": 46.0569,
+    "lon": 14.5058,
+    "label": "Domovina HQ"
+  },
+  {
+    "country": "Slovenia",
+    "publisher": "Finance",
+    "city": "Ljubljana",
+    "region": "Ljubljana",
+    "lat": 46.0569,
+    "lon": 14.5058,
+    "label": "Finance HQ"
+  },
+  {
+    "country": "Slovenia",
+    "publisher": "N1 Slovenia",
+    "city": "Ljubljana",
+    "region": "Ljubljana",
+    "lat": 46.0569,
+    "lon": 14.5058,
+    "label": "N1 Slovenia HQ"
+  },
+  {
+    "country": "Slovenia",
+    "publisher": "Nova24TV",
+    "city": "Ljubljana",
+    "region": "Ljubljana",
+    "lat": 46.0569,
+    "lon": 14.5058,
+    "label": "Nova24TV HQ"
+  },
+  {
+    "country": "Slovenia",
+    "publisher": "Primorske",
+    "city": "Koper",
+    "region": "Coastal-Karst",
+    "lat": 45.5481,
+    "lon": 13.7302,
+    "label": "Primorske HQ"
+  },
+  {
+    "country": "Slovenia",
+    "publisher": "RTVSLO",
+    "city": "Ljubljana",
+    "region": "Ljubljana",
+    "lat": 46.0569,
+    "lon": 14.5058,
+    "label": "RTVSLO HQ"
+  },
+  {
+    "country": "Slovenia",
+    "publisher": "Siol",
+    "city": "Ljubljana",
+    "region": "Ljubljana",
+    "lat": 46.0569,
+    "lon": 14.5058,
+    "label": "Siol HQ"
+  },
+  {
+    "country": "Slovenia",
+    "publisher": "Slovenske novice",
+    "city": "Ljubljana",
+    "region": "Ljubljana",
+    "lat": 46.0569,
+    "lon": 14.5058,
+    "label": "Slovenske novice HQ"
+  },
+  {
+    "country": "Slovenia",
+    "publisher": "STA",
+    "city": "Ljubljana",
+    "region": "Ljubljana",
+    "lat": 46.0569,
+    "lon": 14.5058,
+    "label": "STA HQ"
+  },
+  {
+    "country": "Slovenia",
+    "publisher": "Zurnal24",
+    "city": "Ljubljana",
+    "region": "Ljubljana",
+    "lat": 46.0569,
+    "lon": 14.5058,
+    "label": "Zurnal24 HQ"
+  },
+  {
+    "country": "South Africa",
+    "publisher": "BizNews",
+    "city": "Johannesburg",
+    "region": "Gauteng",
+    "lat": -26.2041,
+    "lon": 28.0473,
+    "label": "BizNews HQ"
+  },
+  {
+    "country": "South Africa",
+    "publisher": "Business Day",
+    "city": "Johannesburg",
+    "region": "Gauteng",
+    "lat": -26.2041,
+    "lon": 28.0473,
+    "label": "Business Day HQ"
+  },
+  {
+    "country": "South Africa",
+    "publisher": "Daily Dispatch",
+    "city": "East London",
+    "region": "Eastern Cape",
+    "lat": -33.0153,
+    "lon": 27.9116,
+    "label": "Daily Dispatch HQ"
+  },
+  {
+    "country": "South Africa",
+    "publisher": "Daily Maverick",
+    "city": "Johannesburg",
+    "region": "Gauteng",
+    "lat": -26.2041,
+    "lon": 28.0473,
+    "label": "Daily Maverick HQ"
+  },
+  {
+    "country": "South Africa",
+    "publisher": "eNCA",
+    "city": "Johannesburg",
+    "region": "Gauteng",
+    "lat": -26.2041,
+    "lon": 28.0473,
+    "label": "eNCA HQ"
+  },
+  {
+    "country": "South Africa",
+    "publisher": "EWN",
+    "city": "Johannesburg",
+    "region": "Gauteng",
+    "lat": -26.2041,
+    "lon": 28.0473,
+    "label": "EWN HQ"
+  },
+  {
+    "country": "South Africa",
+    "publisher": "IOL",
+    "city": "Cape Town",
+    "region": "Western Cape",
+    "lat": -33.9249,
+    "lon": 18.4241,
+    "label": "IOL HQ"
+  },
+  {
+    "country": "South Africa",
+    "publisher": "Mail & Guardian",
+    "city": "Johannesburg",
+    "region": "Gauteng",
+    "lat": -26.2041,
+    "lon": 28.0473,
+    "label": "Mail & Guardian HQ"
+  },
+  {
+    "country": "South Africa",
+    "publisher": "Moneyweb",
+    "city": "Johannesburg",
+    "region": "Gauteng",
+    "lat": -26.2041,
+    "lon": 28.0473,
+    "label": "Moneyweb HQ"
+  },
+  {
+    "country": "South Africa",
+    "publisher": "News24",
+    "city": "Cape Town",
+    "region": "Western Cape",
+    "lat": -33.9249,
+    "lon": 18.4241,
+    "label": "News24 HQ"
+  },
+  {
+    "country": "South Africa",
+    "publisher": "SABC News",
+    "city": "Johannesburg",
+    "region": "Gauteng",
+    "lat": -26.2041,
+    "lon": 28.0473,
+    "label": "SABC News HQ"
+  },
+  {
+    "country": "South Africa",
+    "publisher": "Sowetan",
+    "city": "Johannesburg",
+    "region": "Gauteng",
+    "lat": -26.2041,
+    "lon": 28.0473,
+    "label": "Sowetan HQ"
+  },
+  {
+    "country": "South Africa",
+    "publisher": "Sunday World",
+    "city": "Johannesburg",
+    "region": "Gauteng",
+    "lat": -26.2041,
+    "lon": 28.0473,
+    "label": "Sunday World HQ"
+  },
+  {
+    "country": "South Africa",
+    "publisher": "TechCentral",
+    "city": "Johannesburg",
+    "region": "Gauteng",
+    "lat": -26.2041,
+    "lon": 28.0473,
+    "label": "TechCentral HQ"
+  },
+  {
+    "country": "South Africa",
+    "publisher": "The Citizen",
+    "city": "Johannesburg",
+    "region": "Gauteng",
+    "lat": -26.2041,
+    "lon": 28.0473,
+    "label": "The Citizen HQ"
+  },
+  {
+    "country": "South Africa",
+    "publisher": "The Herald",
+    "city": "Gqeberha",
+    "region": "Eastern Cape",
+    "lat": -33.9608,
+    "lon": 25.6022,
+    "label": "The Herald HQ"
+  },
+  {
+    "country": "South Africa",
+    "publisher": "The South African",
+    "city": "Cape Town",
+    "region": "Western Cape",
+    "lat": -33.9249,
+    "lon": 18.4241,
+    "label": "The South African HQ"
+  },
+  {
+    "country": "South Africa",
+    "publisher": "TimesLIVE",
+    "city": "Johannesburg",
+    "region": "Gauteng",
+    "lat": -26.2041,
+    "lon": 28.0473,
+    "label": "TimesLIVE HQ"
+  },
+  {
     "country": "South Korea",
     "publisher": "Hankyoreh",
     "city": "Mapo District",
@@ -8773,6 +9565,213 @@
     "lat": 40.7128,
     "lon": -74.006,
     "label": "ZDNet HQ"
+  },
+  {
+    "country": "Uruguay",
+    "publisher": "180 Uruguay",
+    "city": "Montevideo",
+    "region": "Montevideo",
+    "lat": -34.9011,
+    "lon": -56.1645,
+    "label": "180 Uruguay HQ"
+  },
+  {
+    "country": "Uruguay",
+    "publisher": "970 Universal",
+    "city": "Montevideo",
+    "region": "Montevideo",
+    "lat": -34.9011,
+    "lon": -56.1645,
+    "label": "970 Universal HQ"
+  },
+  {
+    "country": "Uruguay",
+    "publisher": "Brecha",
+    "city": "Montevideo",
+    "region": "Montevideo",
+    "lat": -34.9011,
+    "lon": -56.1645,
+    "label": "Brecha HQ"
+  },
+  {
+    "country": "Uruguay",
+    "publisher": "Búsqueda",
+    "city": "Montevideo",
+    "region": "Montevideo",
+    "lat": -34.9011,
+    "lon": -56.1645,
+    "label": "Búsqueda HQ"
+  },
+  {
+    "country": "Uruguay",
+    "publisher": "Canal 10 Uruguay",
+    "city": "Montevideo",
+    "region": "Montevideo",
+    "lat": -34.9011,
+    "lon": -56.1645,
+    "label": "Canal 10 Uruguay HQ"
+  },
+  {
+    "country": "Uruguay",
+    "publisher": "Caras y Caretas",
+    "city": "Montevideo",
+    "region": "Montevideo",
+    "lat": -34.9011,
+    "lon": -56.1645,
+    "label": "Caras y Caretas HQ"
+  },
+  {
+    "country": "Uruguay",
+    "publisher": "Carmelo Portal",
+    "city": "Carmelo",
+    "region": "Colonia",
+    "lat": -34.0002,
+    "lon": -58.2843,
+    "label": "Carmelo Portal HQ"
+  },
+  {
+    "country": "Uruguay",
+    "publisher": "El Acontecer",
+    "city": "Durazno",
+    "region": "Durazno",
+    "lat": -33.3806,
+    "lon": -56.5236,
+    "label": "El Acontecer HQ"
+  },
+  {
+    "country": "Uruguay",
+    "publisher": "El Bocón",
+    "city": "Montevideo",
+    "region": "Montevideo",
+    "lat": -34.9011,
+    "lon": -56.1645,
+    "label": "El Bocón HQ"
+  },
+  {
+    "country": "Uruguay",
+    "publisher": "El Popular",
+    "city": "Montevideo",
+    "region": "Montevideo",
+    "lat": -34.9011,
+    "lon": -56.1645,
+    "label": "El Popular HQ"
+  },
+  {
+    "country": "Uruguay",
+    "publisher": "El Telégrafo",
+    "city": "Paysandu",
+    "region": "Paysandu",
+    "lat": -32.3214,
+    "lon": -58.0756,
+    "label": "El Telégrafo HQ"
+  },
+  {
+    "country": "Uruguay",
+    "publisher": "Grupo R Multimedio",
+    "city": "Montevideo",
+    "region": "Montevideo",
+    "lat": -34.9011,
+    "lon": -56.1645,
+    "label": "Grupo R Multimedio HQ"
+  },
+  {
+    "country": "Uruguay",
+    "publisher": "La Diaria",
+    "city": "Montevideo",
+    "region": "Montevideo",
+    "lat": -34.9011,
+    "lon": -56.1645,
+    "label": "La Diaria HQ"
+  },
+  {
+    "country": "Uruguay",
+    "publisher": "La Mañana",
+    "city": "Montevideo",
+    "region": "Montevideo",
+    "lat": -34.9011,
+    "lon": -56.1645,
+    "label": "La Mañana HQ"
+  },
+  {
+    "country": "Uruguay",
+    "publisher": "LR21",
+    "city": "Montevideo",
+    "region": "Montevideo",
+    "lat": -34.9011,
+    "lon": -56.1645,
+    "label": "LR21 HQ"
+  },
+  {
+    "country": "Uruguay",
+    "publisher": "Radio Carve",
+    "city": "Montevideo",
+    "region": "Montevideo",
+    "lat": -34.9011,
+    "lon": -56.1645,
+    "label": "Radio Carve HQ"
+  },
+  {
+    "country": "Uruguay",
+    "publisher": "San José Ahora",
+    "city": "San José de Mayo",
+    "region": "San José",
+    "lat": -34.3375,
+    "lon": -56.7136,
+    "label": "San José Ahora HQ"
+  },
+  {
+    "country": "Uruguay",
+    "publisher": "Sarandí 690",
+    "city": "Montevideo",
+    "region": "Montevideo",
+    "lat": -34.9011,
+    "lon": -56.1645,
+    "label": "Sarandí 690 HQ"
+  },
+  {
+    "country": "Uruguay",
+    "publisher": "Teledoce",
+    "city": "Montevideo",
+    "region": "Montevideo",
+    "lat": -34.9011,
+    "lon": -56.1645,
+    "label": "Teledoce HQ"
+  },
+  {
+    "country": "Uruguay",
+    "publisher": "Telemundo Uruguay",
+    "city": "Montevideo",
+    "region": "Montevideo",
+    "lat": -34.9011,
+    "lon": -56.1645,
+    "label": "Telemundo Uruguay HQ"
+  },
+  {
+    "country": "Uruguay",
+    "publisher": "Telenoche",
+    "city": "Montevideo",
+    "region": "Montevideo",
+    "lat": -34.9011,
+    "lon": -56.1645,
+    "label": "Telenoche HQ"
+  },
+  {
+    "country": "Uruguay",
+    "publisher": "Tenfield",
+    "city": "Montevideo",
+    "region": "Montevideo",
+    "lat": -34.9011,
+    "lon": -56.1645,
+    "label": "Tenfield HQ"
+  },
+  {
+    "country": "Uruguay",
+    "publisher": "Uypress",
+    "city": "Montevideo",
+    "region": "Montevideo",
+    "lat": -34.9011,
+    "lon": -56.1645,
+    "label": "Uypress HQ"
   },
   {
     "country": "Vietnam",
