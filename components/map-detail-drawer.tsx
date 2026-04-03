@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import type { ReactNode } from 'react';
 import {
   formatNumber,
@@ -46,6 +47,7 @@ type MapDetailDrawerProps = {
   selectedPublisher: MapPublisherMetricRow | null;
   selectedPublisherWindowMetrics: MapPublisherMetricRow['windows'][MapMetricWindow] | null;
   selectedPublisherReliability: number;
+  detailAccessLocked: boolean;
   sourceDetail: MapSourceDetailResponse | null;
   sourceDetailLoading: boolean;
   sourceDetailError: string | null;
@@ -136,6 +138,7 @@ export function MapDetailDrawer(props: MapDetailDrawerProps) {
     selectedPublisher,
     selectedPublisherWindowMetrics,
     selectedPublisherReliability,
+    detailAccessLocked,
     sourceDetail,
     sourceDetailLoading,
     sourceDetailError,
@@ -238,6 +241,11 @@ export function MapDetailDrawer(props: MapDetailDrawerProps) {
               ))}
             </div>
           </div>
+        </div>
+      ) : selectedCountry && detailAccessLocked ? (
+        <div className="panel muted">
+          {selectedCountry.country} source and regional detail is locked until you add a customer token.{' '}
+          <Link href="/access/">Open Access</Link>
         </div>
       ) : !selectedSource && !selectedCluster ? (
         <div className="panel muted">

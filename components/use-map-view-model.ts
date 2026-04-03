@@ -2,6 +2,7 @@
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCustomerAccess } from '@/components/customer-access-provider';
 import {
   clamp,
   COUNTRY_ALIASES,
@@ -67,6 +68,7 @@ import type {
 } from '@/lib/map-types';
 
 export function useMapViewModel() {
+  const { hasToken, isReady } = useCustomerAccess();
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -88,6 +90,10 @@ export function useMapViewModel() {
   const [interactionPaused, setInteractionPaused] = useState(false);
   const [sceneOrigin, setSceneOrigin] = useState<{ x: number; y: number }>({ x: 56, y: 52 });
   const [layers, setLayers] = useState<MapLayerState>(DEFAULT_MAP_LAYERS);
+  const localPreviewEnabled = process.env.NODE_ENV !== 'production';
+  const detailAccessEnabled = localPreviewEnabled || (isReady && hasToken);
+  const detailAccessChecking = !localPreviewEnabled && !isReady;
+  const detailAccessLocked = !localPreviewEnabled && isReady && !hasToken;
 
   const countriesState = useRemoteJson<MapCountryMetricsResponse>(
     `/api/customer/dashboard/map/countries?window=${mapWindow}`,
@@ -105,12 +111,16 @@ export function useMapViewModel() {
   });
   const countryName = selectedCountry?.country || null;
   const sourcesState = useRemoteJson<MapCountrySourcesResponse>(
-    countryName ? `/api/customer/dashboard/map/countries/${encodeURIComponent(countryName)}/sources?window=${mapWindow}` : null,
+    detailAccessEnabled && countryName
+      ? `/api/customer/dashboard/map/countries/${encodeURIComponent(countryName)}/sources?window=${mapWindow}`
+      : null,
     undefined,
     { cacheMode: 'session' }
   );
   const sourceDetailState = useRemoteJson<MapSourceDetailResponse>(
-    selectedSource?.sourceId ? `/api/customer/dashboard/map/sources/${encodeURIComponent(selectedSource.sourceId)}` : null,
+    detailAccessEnabled && selectedSource?.sourceId
+      ? `/api/customer/dashboard/map/sources/${encodeURIComponent(selectedSource.sourceId)}`
+      : null,
     undefined,
     { cacheMode: 'session' }
   );
@@ -124,7 +134,7 @@ export function useMapViewModel() {
   const selectedCountryHourly = selectedCountry ? sourcesState.data?.hourly24h || [] : [];
   const selectedCountryDaily = selectedCountry ? sourcesState.data?.daily7d || [] : [];
   const sourceDetailFallback = useMemo<MapSourceDetailResponse | null>(() => {
-    if (!selectedSource) return null;
+    if (!detailAccessEnabled || !selectedSource) return null;
     return {
       generatedAt:
         sourcesState.data?.generatedAt ||
@@ -159,7 +169,7 @@ export function useMapViewModel() {
       },
       hourly24h: [],
     };
-  }, [selectedSource, sourcesState.data?.generatedAt, countriesState.data?.generatedAt, publishersState.data?.generatedAt]);
+  }, [detailAccessEnabled, selectedSource, sourcesState.data?.generatedAt, countriesState.data?.generatedAt, publishersState.data?.generatedAt]);
   const sourceDetail = sourceDetailState.data || sourceDetailFallback;
   const sceneMode = selectedCountry ? 'country' : 'globe';
   const globeRotationLon = useIdleRotation(motionEnabled && !selectedCountry && !interactionPaused);
@@ -518,6 +528,19 @@ export function useMapViewModel() {
   }, [mapMode, selectedCluster]);
 
   useEffect(() => {
+    if (detailAccessEnabled) return;
+    if (selectedCluster) {
+      setSelectedCluster(null);
+    }
+    if (selectedSource) {
+      setSelectedSource(null);
+    }
+    if (detailTab !== 'metrics') {
+      setDetailTab('metrics');
+    }
+  }, [detailAccessEnabled, selectedCluster, selectedSource, detailTab]);
+
+  useEffect(() => {
     setDetailTab('metrics');
   }, [selectedSource?.sourceId]);
 
@@ -791,6 +814,8 @@ export function useMapViewModel() {
       sourcesDataReady: Boolean(sourcesState.data),
       sourcesLoading: sourcesState.loading,
       sourcesError: sourcesState.error,
+      detailAccessChecking,
+      detailAccessLocked,
       globeCountries,
       globeRotationLon,
       publisherFocusActive,
@@ -824,6 +849,7 @@ export function useMapViewModel() {
       selectedCountry,
       countryDataReady,
       detailSelectionActive,
+      detailAccessLocked,
       selectedPublisher,
       selectedPublisherWindowMetrics,
       totals,
@@ -869,6 +895,7 @@ export function useMapViewModel() {
       selectedPublisher,
       selectedPublisherWindowMetrics,
       selectedPublisherReliability,
+      detailAccessLocked,
       sourceDetail,
       sourceDetailLoading: sourceDetailState.loading,
       sourceDetailError: sourceDetailState.error,

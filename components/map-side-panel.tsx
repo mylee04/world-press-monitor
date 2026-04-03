@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import {
   MAP_WINDOW_OPTIONS,
   type LeftTab,
@@ -30,6 +31,7 @@ type MapSidePanelProps = {
   selectedCountry: MapCountryMetricRow | null;
   countryDataReady: boolean;
   detailSelectionActive: boolean;
+  detailAccessLocked: boolean;
   selectedPublisher: MapPublisherMetricRow | null;
   selectedPublisherWindowMetrics: MapPublisherMetricRow['windows'][MapMetricWindow] | null;
   totals: MapCountryMetricsResponse['totals'] | null;
@@ -86,6 +88,7 @@ export function MapSidePanel({
   selectedCountry,
   countryDataReady,
   detailSelectionActive,
+  detailAccessLocked,
   selectedPublisher,
   selectedPublisherWindowMetrics,
   totals,
@@ -216,6 +219,15 @@ export function MapSidePanel({
           >
             Display
           </button>
+        </div>
+      ) : null}
+
+      {detailAccessLocked ? (
+        <div className="panel muted">
+          {selectedCountry
+            ? `${selectedCountry.country} regional and source drill-down is available after you add a customer token.`
+            : 'Map overview is public. Add a customer token to unlock country, region, and source drill-down.'}{' '}
+          <Link href="/access/">Open Access</Link>
         </div>
       ) : null}
 

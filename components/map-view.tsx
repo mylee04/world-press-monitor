@@ -67,7 +67,23 @@ export function MapView() {
               }
             >
               {stage.selectedCountry ? (
-                stage.sourcesDataReady ? (
+                stage.detailAccessChecking ? (
+                  <div className="map-country-transition">
+                    <div className="map-country-transition-card">
+                      <div className="eyebrow">Customer Access</div>
+                      <strong>Checking drill-down access</strong>
+                      <span>Loading your customer session before opening regional source detail.</span>
+                    </div>
+                  </div>
+                ) : stage.detailAccessLocked ? (
+                  <div className="map-country-transition">
+                    <div className="map-country-transition-card">
+                      <div className="eyebrow">Source Drill-down Locked</div>
+                      <strong>{stage.selectedCountry.country} regional source map requires customer access</strong>
+                      <span>Map overview is public. Add a customer token to inspect region bubbles and source detail.</span>
+                    </div>
+                  </div>
+                ) : stage.sourcesDataReady ? (
                   <CountryPlaneSvg
                     country={stage.selectedCountry}
                     world={stage.world}

@@ -59,6 +59,10 @@ export function getCustomerNewsApiBaseUrl(): string {
   ).trim().replace(/\/+$/, '');
 }
 
+export function hasPortalServerApiProxyConfig(): boolean {
+  return Boolean(getCustomerNewsApiBaseUrl() && getPortalServerApiToken());
+}
+
 export async function readCustomerPortalSession(): Promise<CustomerPortalSession> {
   const cookieStore = await cookies();
   const token = normalizeToken(cookieStore.get(CUSTOMER_PORTAL_TOKEN_COOKIE)?.value);

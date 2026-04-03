@@ -79,7 +79,7 @@ Without a valid token:
 
 - the dashboard does not load article counts
 - the benchmark does not load customer-only benchmark views
-- the map does not load customer-only article detail and live overlays
+- the map overview remains available, but customer-only article detail and live overlays do not load
 - anonymous article browsing is blocked
 
 This keeps the UI fast, avoids multi-hundred-megabyte JSON downloads, and lets the product scale beyond the old public export cap.

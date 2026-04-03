@@ -1,13 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PUBLIC_MAP_RESPONSE_CACHE_CONTROL } from '@/lib/dashboard-cache-control';
-import { proxyPortalServerApiRequest } from '@/lib/customer-portal';
-import { normalizeMapMetricWindow } from '@/lib/map-store-windows';
+import { hasPortalServerApiProxyConfig, proxyPortalServerApiRequest } from '@/lib/customer-portal';
+import { normalizeMapMetricWindow, readMapCountryMetrics } from '@/lib/map-store';
 
 export const runtime = 'nodejs';
 
 export async function GET(request: NextRequest) {
   try {
     const window = normalizeMapMetricWindow(request.nextUrl.searchParams.get('window'));
+    if (process.env.NODE_ENV !== 'production' && !hasPortalServerApiProxyConfig()) {
+      const payload = await readMapCountryMetrics(window);
+      return NextResponse.json(payload, { headers: { 'Cache-Control': PUBLIC_MAP_RESPONSE_CACHE_CONTROL } });
+    }
     request.nextUrl.searchParams.set('window', window);
     return proxyPortalServerApiRequest(request, '/api/map/countries', {
       cacheControl: PUBLIC_MAP_RESPONSE_CACHE_CONTROL,
