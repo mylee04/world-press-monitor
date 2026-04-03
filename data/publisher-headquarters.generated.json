@@ -406,6 +406,15 @@
   },
   {
     "country": "Australia",
+    "publisher": "Elite Agent",
+    "city": "Sydney",
+    "region": "New South Wales",
+    "lat": -33.8688,
+    "lon": 151.2093,
+    "label": "Elite Agent HQ"
+  },
+  {
+    "country": "Australia",
     "publisher": "Farm Weekly",
     "city": "Perth",
     "region": "Perth",
@@ -586,6 +595,15 @@
   },
   {
     "country": "Australia",
+    "publisher": "Retail World Magazine",
+    "city": "Sydney",
+    "region": "New South Wales",
+    "lat": -33.8688,
+    "lon": 151.2093,
+    "label": "Retail World Magazine HQ"
+  },
+  {
+    "country": "Australia",
     "publisher": "RetailBiz",
     "city": "Sydney",
     "region": "Sydney",
@@ -601,6 +619,15 @@
     "lat": -33.8678,
     "lon": 151.21,
     "label": "SBS HQ"
+  },
+  {
+    "country": "Australia",
+    "publisher": "SecurityBrief Australia",
+    "city": "Sydney",
+    "region": "New South Wales",
+    "lat": -33.8688,
+    "lon": 151.2093,
+    "label": "SecurityBrief Australia HQ"
   },
   {
     "country": "Australia",
@@ -646,6 +673,15 @@
     "lat": -37.8136,
     "lon": 144.9631,
     "label": "The Conversation AU HQ"
+  },
+  {
+    "country": "Australia",
+    "publisher": "The Greek Herald",
+    "city": "Sydney",
+    "region": "New South Wales",
+    "lat": -33.8688,
+    "lon": 151.2093,
+    "label": "The Greek Herald HQ"
   },
   {
     "country": "Australia",
@@ -3438,6 +3474,24 @@
     "label": "Tras las Huellas Digital HQ"
   },
   {
+    "country": "Ecuador",
+    "publisher": "El Universo",
+    "city": "Guayaquil",
+    "region": "Guayas",
+    "lat": -2.1709,
+    "lon": -79.9224,
+    "label": "El Universo HQ"
+  },
+  {
+    "country": "Ecuador",
+    "publisher": "Primicias",
+    "city": "Quito",
+    "region": "Pichincha",
+    "lat": -0.1807,
+    "lon": -78.4678,
+    "label": "Primicias HQ"
+  },
+  {
     "country": "Egypt",
     "publisher": "Ahl Masr",
     "city": "Cairo",
@@ -4006,12 +4060,57 @@
   },
   {
     "country": "France",
+    "publisher": "01Net",
+    "city": "Paris",
+    "region": "Ile-de-France",
+    "lat": 48.8566,
+    "lon": 2.3522,
+    "label": "01Net HQ"
+  },
+  {
+    "country": "France",
     "publisher": "20 Minutes",
     "city": "Levallois-Perret",
     "region": "Levallois-Perret",
     "lat": 48.8933,
     "lon": 2.2878,
     "label": "20 Minutes HQ"
+  },
+  {
+    "country": "France",
+    "publisher": "Actu.fr",
+    "city": "Rennes",
+    "region": "Brittany",
+    "lat": 48.1173,
+    "lon": -1.6778,
+    "label": "Actu.fr HQ"
+  },
+  {
+    "country": "France",
+    "publisher": "BFM Business",
+    "city": "Paris",
+    "region": "Ile-de-France",
+    "lat": 48.8566,
+    "lon": 2.3522,
+    "label": "BFM Business HQ"
+  },
+  {
+    "country": "France",
+    "publisher": "Challenges",
+    "city": "Paris",
+    "region": "Ile-de-France",
+    "lat": 48.8566,
+    "lon": 2.3522,
+    "label": "Challenges HQ"
+  },
+  {
+    "country": "France",
+    "publisher": "Clubic",
+    "city": "Paris",
+    "region": "Ile-de-France",
+    "lat": 48.8566,
+    "lon": 2.3522,
+    "label": "Clubic HQ"
   },
   {
     "country": "France",
@@ -4024,12 +4123,30 @@
   },
   {
     "country": "France",
+    "publisher": "Dernières Nouvelles d'Alsace",
+    "city": "Strasbourg",
+    "region": "Grand Est",
+    "lat": 48.5734,
+    "lon": 7.7521,
+    "label": "Dernières Nouvelles d'Alsace HQ"
+  },
+  {
+    "country": "France",
     "publisher": "Disclose",
     "city": "Le Pré-Saint-Gervais",
     "region": "Le Pré-Saint-Gervais",
     "lat": 48.885,
     "lon": 2.4039,
     "label": "Disclose HQ"
+  },
+  {
+    "country": "France",
+    "publisher": "Euronews",
+    "city": "Lyon",
+    "region": "Auvergne-Rhone-Alpes",
+    "lat": 45.764,
+    "lon": 4.8357,
+    "label": "Euronews HQ"
   },
   {
     "country": "France",
@@ -4042,6 +4159,24 @@
   },
   {
     "country": "France",
+    "publisher": "France Today",
+    "city": "Paris",
+    "region": "Ile-de-France",
+    "lat": 48.8566,
+    "lon": 2.3522,
+    "label": "France Today HQ"
+  },
+  {
+    "country": "France",
+    "publisher": "FrenchDailyNews",
+    "city": "Paris",
+    "region": "Ile-de-France",
+    "lat": 48.8566,
+    "lon": 2.3522,
+    "label": "FrenchDailyNews HQ"
+  },
+  {
+    "country": "France",
     "publisher": "Jeune Afrique",
     "city": "Paris",
     "region": "Paris",
@@ -4051,12 +4186,57 @@
   },
   {
     "country": "France",
+    "publisher": "Journal du Geek",
+    "city": "Paris",
+    "region": "Ile-de-France",
+    "lat": 48.8566,
+    "lon": 2.3522,
+    "label": "Journal du Geek HQ"
+  },
+  {
+    "country": "France",
     "publisher": "L'Équipe",
     "city": "Boulogne-Billancourt",
     "region": "Boulogne-Billancourt",
     "lat": 48.8353,
     "lon": 2.2414,
     "label": "L'Équipe HQ"
+  },
+  {
+    "country": "France",
+    "publisher": "L'Est Républicain",
+    "city": "Nancy",
+    "region": "Grand Est",
+    "lat": 48.6921,
+    "lon": 6.1844,
+    "label": "L'Est Républicain HQ"
+  },
+  {
+    "country": "France",
+    "publisher": "L'Express",
+    "city": "Paris",
+    "region": "Ile-de-France",
+    "lat": 48.8566,
+    "lon": 2.3522,
+    "label": "L'Express HQ"
+  },
+  {
+    "country": "France",
+    "publisher": "L'Obs",
+    "city": "Paris",
+    "region": "Ile-de-France",
+    "lat": 48.8566,
+    "lon": 2.3522,
+    "label": "L'Obs HQ"
+  },
+  {
+    "country": "France",
+    "publisher": "La Croix",
+    "city": "Paris",
+    "region": "Ile-de-France",
+    "lat": 48.8566,
+    "lon": 2.3522,
+    "label": "La Croix HQ"
   },
   {
     "country": "France",
@@ -4114,6 +4294,15 @@
   },
   {
     "country": "France",
+    "publisher": "Le Parisien",
+    "city": "Paris",
+    "region": "Ile-de-France",
+    "lat": 48.8566,
+    "lon": 2.3522,
+    "label": "Le Parisien HQ"
+  },
+  {
+    "country": "France",
     "publisher": "Le Point",
     "city": "Paris",
     "region": "Paris",
@@ -4138,6 +4327,123 @@
     "lat": 48.5775,
     "lon": -3.8278,
     "label": "Le Télégramme HQ"
+  },
+  {
+    "country": "France",
+    "publisher": "Libération",
+    "city": "Paris",
+    "region": "Ile-de-France",
+    "lat": 48.8566,
+    "lon": 2.3522,
+    "label": "Libération HQ"
+  },
+  {
+    "country": "France",
+    "publisher": "Mediacités",
+    "city": "Lyon",
+    "region": "Auvergne-Rhone-Alpes",
+    "lat": 45.764,
+    "lon": 4.8357,
+    "label": "Mediacités HQ"
+  },
+  {
+    "country": "France",
+    "publisher": "Mediapart",
+    "city": "Paris",
+    "region": "Ile-de-France",
+    "lat": 48.8566,
+    "lon": 2.3522,
+    "label": "Mediapart HQ"
+  },
+  {
+    "country": "France",
+    "publisher": "Midi Libre",
+    "city": "Montpellier",
+    "region": "Occitanie",
+    "lat": 43.6108,
+    "lon": 3.8767,
+    "label": "Midi Libre HQ"
+  },
+  {
+    "country": "France",
+    "publisher": "Nice-Matin",
+    "city": "Nice",
+    "region": "Provence-Alpes-Cote d'Azur",
+    "lat": 43.7102,
+    "lon": 7.262,
+    "label": "Nice-Matin HQ"
+  },
+  {
+    "country": "France",
+    "publisher": "Numerama",
+    "city": "Paris",
+    "region": "Ile-de-France",
+    "lat": 48.8566,
+    "lon": 2.3522,
+    "label": "Numerama HQ"
+  },
+  {
+    "country": "France",
+    "publisher": "Ouest-France",
+    "city": "Rennes",
+    "region": "Brittany",
+    "lat": 48.1173,
+    "lon": -1.6778,
+    "label": "Ouest-France HQ"
+  },
+  {
+    "country": "France",
+    "publisher": "Presse Citron",
+    "city": "Paris",
+    "region": "Ile-de-France",
+    "lat": 48.8566,
+    "lon": 2.3522,
+    "label": "Presse Citron HQ"
+  },
+  {
+    "country": "France",
+    "publisher": "Siècle Digital",
+    "city": "Paris",
+    "region": "Ile-de-France",
+    "lat": 48.8566,
+    "lon": 2.3522,
+    "label": "Siècle Digital HQ"
+  },
+  {
+    "country": "France",
+    "publisher": "StreetPress",
+    "city": "Paris",
+    "region": "Ile-de-France",
+    "lat": 48.8566,
+    "lon": 2.3522,
+    "label": "StreetPress HQ"
+  },
+  {
+    "country": "France",
+    "publisher": "Sud Ouest",
+    "city": "Bordeaux",
+    "region": "Nouvelle-Aquitaine",
+    "lat": 44.8378,
+    "lon": -0.5792,
+    "label": "Sud Ouest HQ"
+  },
+  {
+    "country": "France",
+    "publisher": "TF1 Info",
+    "city": "Boulogne-Billancourt",
+    "region": "Ile-de-France",
+    "lat": 48.8397,
+    "lon": 2.2399,
+    "label": "TF1 Info HQ"
+  },
+  {
+    "country": "France",
+    "publisher": "The Local France",
+    "city": "Paris",
+    "region": "Ile-de-France",
+    "lat": 48.8566,
+    "lon": 2.3522,
+    "label": "The Local France HQ"
   },
   {
     "country": "Germany",
@@ -4177,12 +4483,30 @@
   },
   {
     "country": "Germany",
+    "publisher": "Deutsche Welle",
+    "city": "Bonn",
+    "region": "North Rhine-Westphalia",
+    "lat": 50.7374,
+    "lon": 7.0982,
+    "label": "Deutsche Welle HQ"
+  },
+  {
+    "country": "Germany",
     "publisher": "Die Zeit",
     "city": "Hamburg",
     "region": "Hamburg",
-    "lat": 53.55,
-    "lon": 10,
+    "lat": 53.5511,
+    "lon": 9.9937,
     "label": "Die Zeit HQ"
+  },
+  {
+    "country": "Germany",
+    "publisher": "Focus",
+    "city": "Munich",
+    "region": "Bavaria",
+    "lat": 48.1351,
+    "lon": 11.582,
+    "label": "Focus HQ"
   },
   {
     "country": "Germany",
@@ -4213,6 +4537,15 @@
   },
   {
     "country": "Germany",
+    "publisher": "Heise",
+    "city": "Hanover",
+    "region": "Lower Saxony",
+    "lat": 52.3759,
+    "lon": 9.732,
+    "label": "Heise HQ"
+  },
+  {
+    "country": "Germany",
     "publisher": "kicker",
     "city": "Nuremberg",
     "region": "Nuremberg",
@@ -4228,6 +4561,15 @@
     "lat": 53.55,
     "lon": 10,
     "label": "Manager Magazin HQ"
+  },
+  {
+    "country": "Germany",
+    "publisher": "Merkur",
+    "city": "Munich",
+    "region": "Bavaria",
+    "lat": 48.1351,
+    "lon": 11.582,
+    "label": "Merkur HQ"
   },
   {
     "country": "Germany",
@@ -4282,6 +4624,15 @@
     "lat": 52.5167,
     "lon": 13.3833,
     "label": "Tagesspiegel HQ"
+  },
+  {
+    "country": "Germany",
+    "publisher": "tz",
+    "city": "Munich",
+    "region": "Bavaria",
+    "lat": 48.1351,
+    "lon": 11.582,
+    "label": "tz HQ"
   },
   {
     "country": "Germany",
@@ -4528,6 +4879,24 @@
   },
   {
     "country": "Hungary",
+    "publisher": "Alfahir",
+    "city": "Budapest",
+    "region": "Budapest",
+    "lat": 47.4979,
+    "lon": 19.0402,
+    "label": "Alfahir HQ"
+  },
+  {
+    "country": "Hungary",
+    "publisher": "Átlátszó",
+    "city": "Budapest",
+    "region": "Budapest",
+    "lat": 47.4979,
+    "lon": 19.0402,
+    "label": "Átlátszó HQ"
+  },
+  {
+    "country": "Hungary",
     "publisher": "ATV",
     "city": "Budapest",
     "region": "Budapest",
@@ -4564,6 +4933,15 @@
   },
   {
     "country": "Hungary",
+    "publisher": "HelloMagyar",
+    "city": "Budapest",
+    "region": "Budapest",
+    "lat": 47.4979,
+    "lon": 19.0402,
+    "label": "HelloMagyar HQ"
+  },
+  {
+    "country": "Hungary",
     "publisher": "Hungary Today",
     "city": "Budapest",
     "region": "Budapest",
@@ -4579,6 +4957,15 @@
     "lat": 47.4983,
     "lon": 19.0408,
     "label": "HVG HQ"
+  },
+  {
+    "country": "Hungary",
+    "publisher": "HWSW",
+    "city": "Budapest",
+    "region": "Budapest",
+    "lat": 47.4979,
+    "lon": 19.0402,
+    "label": "HWSW HQ"
   },
   {
     "country": "Hungary",
@@ -4600,6 +4987,15 @@
   },
   {
     "country": "Hungary",
+    "publisher": "Kultura.hu",
+    "city": "Budapest",
+    "region": "Budapest",
+    "lat": 47.4979,
+    "lon": 19.0402,
+    "label": "Kultura.hu HQ"
+  },
+  {
+    "country": "Hungary",
     "publisher": "Magyar Hang",
     "city": "Budapest",
     "region": "Budapest",
@@ -4615,6 +5011,15 @@
     "lat": 47.4979,
     "lon": 19.0402,
     "label": "Magyar Hirlap HQ"
+  },
+  {
+    "country": "Hungary",
+    "publisher": "Magyar Narancs",
+    "city": "Budapest",
+    "region": "Budapest",
+    "lat": 47.4979,
+    "lon": 19.0402,
+    "label": "Magyar Narancs HQ"
   },
   {
     "country": "Hungary",
@@ -4636,6 +5041,15 @@
   },
   {
     "country": "Hungary",
+    "publisher": "Media1",
+    "city": "Budapest",
+    "region": "Budapest",
+    "lat": 47.4979,
+    "lon": 19.0402,
+    "label": "Media1 HQ"
+  },
+  {
+    "country": "Hungary",
     "publisher": "Mfor",
     "city": "Budapest",
     "region": "Budapest",
@@ -4654,6 +5068,15 @@
   },
   {
     "country": "Hungary",
+    "publisher": "Neokohn",
+    "city": "Budapest",
+    "region": "Budapest",
+    "lat": 47.4979,
+    "lon": 19.0402,
+    "label": "Neokohn HQ"
+  },
+  {
+    "country": "Hungary",
     "publisher": "Népszava",
     "city": "Budapest",
     "region": "Budapest",
@@ -4669,6 +5092,15 @@
     "lat": 47.4979,
     "lon": 19.0402,
     "label": "Novekedes HQ"
+  },
+  {
+    "country": "Hungary",
+    "publisher": "Nuus",
+    "city": "Budapest",
+    "region": "Budapest",
+    "lat": 47.4979,
+    "lon": 19.0402,
+    "label": "Nuus HQ"
   },
   {
     "country": "Hungary",
@@ -4705,6 +5137,24 @@
     "lat": 47.4979,
     "lon": 19.0402,
     "label": "Privatbankar HQ"
+  },
+  {
+    "country": "Hungary",
+    "publisher": "Qubit",
+    "city": "Budapest",
+    "region": "Budapest",
+    "lat": 47.4979,
+    "lon": 19.0402,
+    "label": "Qubit HQ"
+  },
+  {
+    "country": "Hungary",
+    "publisher": "Ripost",
+    "city": "Budapest",
+    "region": "Budapest",
+    "lat": 47.4979,
+    "lon": 19.0402,
+    "label": "Ripost HQ"
   },
   {
     "country": "Hungary",
@@ -5059,6 +5509,24 @@
   },
   {
     "country": "Indonesia",
+    "publisher": "Bisnis Indonesia",
+    "city": "Jakarta",
+    "region": "Jakarta",
+    "lat": -6.2088,
+    "lon": 106.8456,
+    "label": "Bisnis Indonesia HQ"
+  },
+  {
+    "country": "Indonesia",
+    "publisher": "CNBC Indonesia",
+    "city": "Jakarta",
+    "region": "Jakarta",
+    "lat": -6.2088,
+    "lon": 106.8456,
+    "label": "CNBC Indonesia HQ"
+  },
+  {
+    "country": "Indonesia",
     "publisher": "CNN Indonesia",
     "city": "Jakarta",
     "region": "Mampang Prapatan",
@@ -5068,12 +5536,93 @@
   },
   {
     "country": "Indonesia",
+    "publisher": "Detik",
+    "city": "Jakarta",
+    "region": "Jakarta",
+    "lat": -6.2088,
+    "lon": 106.8456,
+    "label": "Detik HQ"
+  },
+  {
+    "country": "Indonesia",
+    "publisher": "Kapanlagi",
+    "city": "Jakarta",
+    "region": "Jakarta",
+    "lat": -6.2088,
+    "lon": 106.8456,
+    "label": "Kapanlagi HQ"
+  },
+  {
+    "country": "Indonesia",
+    "publisher": "Kompas",
+    "city": "Jakarta",
+    "region": "Jakarta",
+    "lat": -6.2088,
+    "lon": 106.8456,
+    "label": "Kompas HQ"
+  },
+  {
+    "country": "Indonesia",
     "publisher": "Kontan",
     "city": "South Jakarta",
     "region": "South Jakarta",
     "lat": -6.25,
     "lon": 106.8,
     "label": "Kontan HQ"
+  },
+  {
+    "country": "Indonesia",
+    "publisher": "Liputan6",
+    "city": "Jakarta",
+    "region": "Jakarta",
+    "lat": -6.2088,
+    "lon": 106.8456,
+    "label": "Liputan6 HQ"
+  },
+  {
+    "country": "Indonesia",
+    "publisher": "Merdeka",
+    "city": "Jakarta",
+    "region": "Jakarta",
+    "lat": -6.2088,
+    "lon": 106.8456,
+    "label": "Merdeka HQ"
+  },
+  {
+    "country": "Indonesia",
+    "publisher": "Republika",
+    "city": "Jakarta",
+    "region": "Jakarta",
+    "lat": -6.2088,
+    "lon": 106.8456,
+    "label": "Republika HQ"
+  },
+  {
+    "country": "Indonesia",
+    "publisher": "RM.ID",
+    "city": "Jakarta",
+    "region": "Jakarta",
+    "lat": -6.2088,
+    "lon": 106.8456,
+    "label": "RM.ID HQ"
+  },
+  {
+    "country": "Indonesia",
+    "publisher": "Suara.com",
+    "city": "Jakarta",
+    "region": "Jakarta",
+    "lat": -6.2088,
+    "lon": 106.8456,
+    "label": "Suara.com HQ"
+  },
+  {
+    "country": "Indonesia",
+    "publisher": "Tempo",
+    "city": "Jakarta",
+    "region": "Jakarta",
+    "lat": -6.2088,
+    "lon": 106.8456,
+    "label": "Tempo HQ"
   },
   {
     "country": "Indonesia",
@@ -5128,6 +5677,24 @@
     "lat": 53.3498,
     "lon": -6.2603,
     "label": "Agriland HQ"
+  },
+  {
+    "country": "Ireland",
+    "publisher": "Armagh I",
+    "city": "Armagh",
+    "region": "Northern Ireland",
+    "lat": 54.3499,
+    "lon": -6.6528,
+    "label": "Armagh I HQ"
+  },
+  {
+    "country": "Ireland",
+    "publisher": "Beat 102 103",
+    "city": "Waterford",
+    "region": "Munster",
+    "lat": 52.2593,
+    "lon": -7.1101,
+    "label": "Beat 102 103 HQ"
   },
   {
     "country": "Ireland",
@@ -5239,6 +5806,24 @@
   },
   {
     "country": "Ireland",
+    "publisher": "Dublin Gazette",
+    "city": "Dublin",
+    "region": "Leinster",
+    "lat": 53.3498,
+    "lon": -6.2603,
+    "label": "Dublin Gazette HQ"
+  },
+  {
+    "country": "Ireland",
+    "publisher": "Dublin People",
+    "city": "Dublin",
+    "region": "Leinster",
+    "lat": 53.3498,
+    "lon": -6.2603,
+    "label": "Dublin People HQ"
+  },
+  {
+    "country": "Ireland",
     "publisher": "Dundalk Democrat",
     "city": "Dundalk",
     "region": "Louth",
@@ -5284,6 +5869,15 @@
   },
   {
     "country": "Ireland",
+    "publisher": "Irish Legal News",
+    "city": "Belfast",
+    "region": "Northern Ireland",
+    "lat": 54.5973,
+    "lon": -5.9301,
+    "label": "Irish Legal News HQ"
+  },
+  {
+    "country": "Ireland",
     "publisher": "Irish News",
     "city": "Belfast",
     "region": "Belfast",
@@ -5317,6 +5911,15 @@
     "lat": 52.6541,
     "lon": -7.2448,
     "label": "Kilkenny People HQ"
+  },
+  {
+    "country": "Ireland",
+    "publisher": "Laois Today",
+    "city": "Portlaoise",
+    "region": "Leinster",
+    "lat": 53.0344,
+    "lon": -7.2998,
+    "label": "Laois Today HQ"
   },
   {
     "country": "Ireland",
@@ -5419,6 +6022,15 @@
   },
   {
     "country": "Ireland",
+    "publisher": "TechCentral",
+    "city": "Dublin",
+    "region": "Leinster",
+    "lat": 53.3498,
+    "lon": -6.2603,
+    "label": "TechCentral HQ"
+  },
+  {
+    "country": "Ireland",
     "publisher": "The Avondhu",
     "city": "Fermoy",
     "region": "Fermoy",
@@ -5455,12 +6067,30 @@
   },
   {
     "country": "Ireland",
+    "publisher": "The Sun Ireland",
+    "city": "Dublin",
+    "region": "Leinster",
+    "lat": 53.3498,
+    "lon": -6.2603,
+    "label": "The Sun Ireland HQ"
+  },
+  {
+    "country": "Ireland",
     "publisher": "The42",
     "city": "Dublin",
     "region": "Dublin",
     "lat": 53.3498,
     "lon": -6.2603,
     "label": "The42 HQ"
+  },
+  {
+    "country": "Ireland",
+    "publisher": "TheCork.ie",
+    "city": "Cork",
+    "region": "Munster",
+    "lat": 51.8985,
+    "lon": -8.4756,
+    "label": "TheCork.ie HQ"
   },
   {
     "country": "Ireland",
@@ -5488,6 +6118,96 @@
     "lat": 51.623,
     "lon": -8.8872,
     "label": "West Cork People HQ"
+  },
+  {
+    "country": "Ireland",
+    "publisher": "Wexford Weekly",
+    "city": "Wexford",
+    "region": "Leinster",
+    "lat": 52.3369,
+    "lon": -6.4633,
+    "label": "Wexford Weekly HQ"
+  },
+  {
+    "country": "Israel",
+    "publisher": "Bechadrei Haredim",
+    "city": "Bnei Brak",
+    "region": "Tel Aviv",
+    "lat": 32.0836,
+    "lon": 34.8338,
+    "label": "Bechadrei Haredim HQ"
+  },
+  {
+    "country": "Israel",
+    "publisher": "Bizportal",
+    "city": "Ramat Gan",
+    "region": "Tel Aviv",
+    "lat": 32.0684,
+    "lon": 34.8248,
+    "label": "Bizportal HQ"
+  },
+  {
+    "country": "Israel",
+    "publisher": "ICE",
+    "city": "Tel Aviv",
+    "region": "Tel Aviv",
+    "lat": 32.0853,
+    "lon": 34.7818,
+    "label": "ICE HQ"
+  },
+  {
+    "country": "Israel",
+    "publisher": "JDN",
+    "city": "Bnei Brak",
+    "region": "Tel Aviv",
+    "lat": 32.0836,
+    "lon": 34.8338,
+    "label": "JDN HQ"
+  },
+  {
+    "country": "Israel",
+    "publisher": "Kikar HaShabbat",
+    "city": "Jerusalem",
+    "region": "Jerusalem",
+    "lat": 31.7683,
+    "lon": 35.2137,
+    "label": "Kikar HaShabbat HQ"
+  },
+  {
+    "country": "Israel",
+    "publisher": "Kipa",
+    "city": "Jerusalem",
+    "region": "Jerusalem",
+    "lat": 31.7683,
+    "lon": 35.2137,
+    "label": "Kipa HQ"
+  },
+  {
+    "country": "Israel",
+    "publisher": "MivzakLive",
+    "city": "Tel Aviv",
+    "region": "Tel Aviv",
+    "lat": 32.0853,
+    "lon": 34.7818,
+    "label": "MivzakLive HQ"
+  },
+  {
+    "country": "Israel",
+    "publisher": "Srugim",
+    "city": "Jerusalem",
+    "region": "Jerusalem",
+    "lat": 31.7683,
+    "lon": 35.2137,
+    "label": "Srugim HQ"
+  },
+  {
+    "country": "Israel",
+    "publisher": "Ynetnews",
+    "city": "Tel Aviv",
+    "region": "Tel Aviv",
+    "lat": 32.0853,
+    "lon": 34.7818,
+    "label": "Ynetnews HQ"
   },
   {
     "country": "Italy",
@@ -6147,6 +6867,141 @@
     "label": "TVNET HQ"
   },
   {
+    "country": "Lithuania",
+    "publisher": "15min",
+    "city": "Vilnius",
+    "region": "Vilnius",
+    "lat": 54.6872,
+    "lon": 25.2797,
+    "label": "15min HQ"
+  },
+  {
+    "country": "Lithuania",
+    "publisher": "AeroTime",
+    "city": "Vilnius",
+    "region": "Vilnius",
+    "lat": 54.6872,
+    "lon": 25.2797,
+    "label": "AeroTime HQ"
+  },
+  {
+    "country": "Lithuania",
+    "publisher": "Alkas",
+    "city": "Vilnius",
+    "region": "Vilnius",
+    "lat": 54.6872,
+    "lon": 25.2797,
+    "label": "Alkas HQ"
+  },
+  {
+    "country": "Lithuania",
+    "publisher": "Anyksta",
+    "city": "Anyksciai",
+    "region": "Utena",
+    "lat": 55.525,
+    "lon": 25.1026,
+    "label": "Anyksta HQ"
+  },
+  {
+    "country": "Lithuania",
+    "publisher": "Banga",
+    "city": "Gargzdai",
+    "region": "Klaipeda",
+    "lat": 55.7095,
+    "lon": 21.3944,
+    "label": "Banga HQ"
+  },
+  {
+    "country": "Lithuania",
+    "publisher": "Bernardinai",
+    "city": "Vilnius",
+    "region": "Vilnius",
+    "lat": 54.6872,
+    "lon": 25.2797,
+    "label": "Bernardinai HQ"
+  },
+  {
+    "country": "Lithuania",
+    "publisher": "Delfi",
+    "city": "Vilnius",
+    "region": "Vilnius",
+    "lat": 54.6872,
+    "lon": 25.2797,
+    "label": "Delfi HQ"
+  },
+  {
+    "country": "Lithuania",
+    "publisher": "Diena",
+    "city": "Kaunas",
+    "region": "Kaunas",
+    "lat": 54.8985,
+    "lon": 23.9036,
+    "label": "Diena HQ"
+  },
+  {
+    "country": "Lithuania",
+    "publisher": "JP.lt",
+    "city": "Panevezys",
+    "region": "Panevezys",
+    "lat": 55.7348,
+    "lon": 24.3575,
+    "label": "JP.lt HQ"
+  },
+  {
+    "country": "Lithuania",
+    "publisher": "Kauno Diena",
+    "city": "Kaunas",
+    "region": "Kaunas",
+    "lat": 54.8985,
+    "lon": 23.9036,
+    "label": "Kauno Diena HQ"
+  },
+  {
+    "country": "Lithuania",
+    "publisher": "LRT",
+    "city": "Vilnius",
+    "region": "Vilnius",
+    "lat": 54.6872,
+    "lon": 25.2797,
+    "label": "LRT HQ"
+  },
+  {
+    "country": "Lithuania",
+    "publisher": "Lrytas",
+    "city": "Vilnius",
+    "region": "Vilnius",
+    "lat": 54.6872,
+    "lon": 25.2797,
+    "label": "Lrytas HQ"
+  },
+  {
+    "country": "Lithuania",
+    "publisher": "Suvalkietis",
+    "city": "Marijampole",
+    "region": "Marijampole",
+    "lat": 54.5599,
+    "lon": 23.3541,
+    "label": "Suvalkietis HQ"
+  },
+  {
+    "country": "Lithuania",
+    "publisher": "VE.lt",
+    "city": "Klaipeda",
+    "region": "Klaipeda",
+    "lat": 55.7033,
+    "lon": 21.1443,
+    "label": "VE.lt HQ"
+  },
+  {
+    "country": "Lithuania",
+    "publisher": "Verslo žinios",
+    "city": "Vilnius",
+    "region": "Vilnius",
+    "lat": 54.6872,
+    "lon": 25.2797,
+    "label": "Verslo žinios HQ"
+  },
+  {
     "country": "Luxembourg",
     "publisher": "Contacto",
     "city": "Luxembourg City",
@@ -6418,12 +7273,57 @@
   },
   {
     "country": "Mexico",
+    "publisher": "Animal Político",
+    "city": "Mexico City",
+    "region": "Mexico City",
+    "lat": 19.4326,
+    "lon": -99.1332,
+    "label": "Animal Político HQ"
+  },
+  {
+    "country": "Mexico",
+    "publisher": "Aristegui Noticias",
+    "city": "Mexico City",
+    "region": "Mexico City",
+    "lat": 19.4326,
+    "lon": -99.1332,
+    "label": "Aristegui Noticias HQ"
+  },
+  {
+    "country": "Mexico",
+    "publisher": "Contralínea",
+    "city": "Mexico City",
+    "region": "Mexico City",
+    "lat": 19.4326,
+    "lon": -99.1332,
+    "label": "Contralínea HQ"
+  },
+  {
+    "country": "Mexico",
     "publisher": "El Financiero",
     "city": "Mexico City",
     "region": "Miguel Hidalgo",
     "lat": 19.4067,
     "lon": -99.1911,
     "label": "El Financiero HQ"
+  },
+  {
+    "country": "Mexico",
+    "publisher": "El Heraldo de México",
+    "city": "Mexico City",
+    "region": "Mexico City",
+    "lat": 19.4326,
+    "lon": -99.1332,
+    "label": "El Heraldo de México HQ"
+  },
+  {
+    "country": "Mexico",
+    "publisher": "El Sol de México",
+    "city": "Mexico City",
+    "region": "Mexico City",
+    "lat": 19.4326,
+    "lon": -99.1332,
+    "label": "El Sol de México HQ"
   },
   {
     "country": "Mexico",
@@ -6436,12 +7336,84 @@
   },
   {
     "country": "Mexico",
+    "publisher": "Energía a Debate",
+    "city": "Mexico City",
+    "region": "Mexico City",
+    "lat": 19.4326,
+    "lon": -99.1332,
+    "label": "Energía a Debate HQ"
+  },
+  {
+    "country": "Mexico",
+    "publisher": "Expansión",
+    "city": "Mexico City",
+    "region": "Mexico City",
+    "lat": 19.4326,
+    "lon": -99.1332,
+    "label": "Expansión HQ"
+  },
+  {
+    "country": "Mexico",
+    "publisher": "Forbes México",
+    "city": "Mexico City",
+    "region": "Mexico City",
+    "lat": 19.4326,
+    "lon": -99.1332,
+    "label": "Forbes México HQ"
+  },
+  {
+    "country": "Mexico",
     "publisher": "Milenio",
     "city": "Monterrey",
     "region": "Monterrey",
     "lat": 25.6844,
     "lon": -100.3181,
     "label": "Milenio HQ"
+  },
+  {
+    "country": "Mexico",
+    "publisher": "N+MÁS",
+    "city": "Mexico City",
+    "region": "Mexico City",
+    "lat": 19.4326,
+    "lon": -99.1332,
+    "label": "N+MÁS HQ"
+  },
+  {
+    "country": "Mexico",
+    "publisher": "SDP Noticias",
+    "city": "Mexico City",
+    "region": "Mexico City",
+    "lat": 19.4326,
+    "lon": -99.1332,
+    "label": "SDP Noticias HQ"
+  },
+  {
+    "country": "Mexico",
+    "publisher": "Sopitas",
+    "city": "Mexico City",
+    "region": "Mexico City",
+    "lat": 19.4326,
+    "lon": -99.1332,
+    "label": "Sopitas HQ"
+  },
+  {
+    "country": "Mexico",
+    "publisher": "UnoTV",
+    "city": "Mexico City",
+    "region": "Mexico City",
+    "lat": 19.4326,
+    "lon": -99.1332,
+    "label": "UnoTV HQ"
+  },
+  {
+    "country": "Mexico",
+    "publisher": "Xataka México",
+    "city": "Mexico City",
+    "region": "Mexico City",
+    "lat": 19.4326,
+    "lon": -99.1332,
+    "label": "Xataka México HQ"
   },
   {
     "country": "Morocco",
@@ -8319,7 +9291,7 @@
     "country": "Poland",
     "publisher": "Rzeczpospolita",
     "city": "Warsaw",
-    "region": "Warsaw",
+    "region": "Masovian",
     "lat": 52.2297,
     "lon": 21.0122,
     "label": "Rzeczpospolita HQ"
@@ -9055,6 +10027,15 @@
   },
   {
     "country": "Romania",
+    "publisher": "Știrile Kanal D",
+    "city": "Bucharest",
+    "region": "Bucharest",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "label": "Știrile Kanal D HQ"
+  },
+  {
+    "country": "Romania",
     "publisher": "Stirile ProTV",
     "city": "Bucharest",
     "region": "Bucharest",
@@ -9403,6 +10384,87 @@
     "lat": 44.7866,
     "lon": 20.4489,
     "label": "Vreme HQ"
+  },
+  {
+    "country": "Singapore",
+    "publisher": "8days",
+    "city": "Singapore",
+    "region": "Singapore",
+    "lat": 1.3521,
+    "lon": 103.8198,
+    "label": "8days HQ"
+  },
+  {
+    "country": "Singapore",
+    "publisher": "EdgeProp Singapore",
+    "city": "Singapore",
+    "region": "Singapore",
+    "lat": 1.3521,
+    "lon": 103.8198,
+    "label": "EdgeProp Singapore HQ"
+  },
+  {
+    "country": "Singapore",
+    "publisher": "HardwareZone",
+    "city": "Singapore",
+    "region": "Singapore",
+    "lat": 1.3521,
+    "lon": 103.8198,
+    "label": "HardwareZone HQ"
+  },
+  {
+    "country": "Singapore",
+    "publisher": "Mothership",
+    "city": "Singapore",
+    "region": "Singapore",
+    "lat": 1.3521,
+    "lon": 103.8198,
+    "label": "Mothership HQ"
+  },
+  {
+    "country": "Singapore",
+    "publisher": "MustShareNews",
+    "city": "Singapore",
+    "region": "Singapore",
+    "lat": 1.3521,
+    "lon": 103.8198,
+    "label": "MustShareNews HQ"
+  },
+  {
+    "country": "Singapore",
+    "publisher": "Singapore Business Review",
+    "city": "Singapore",
+    "region": "Singapore",
+    "lat": 1.3521,
+    "lon": 103.8198,
+    "label": "Singapore Business Review HQ"
+  },
+  {
+    "country": "Singapore",
+    "publisher": "Tech in Asia",
+    "city": "Singapore",
+    "region": "Singapore",
+    "lat": 1.3521,
+    "lon": 103.8198,
+    "label": "Tech in Asia HQ"
+  },
+  {
+    "country": "Singapore",
+    "publisher": "The Independent Singapore",
+    "city": "Singapore",
+    "region": "Singapore",
+    "lat": 1.3521,
+    "lon": 103.8198,
+    "label": "The Independent Singapore HQ"
+  },
+  {
+    "country": "Singapore",
+    "publisher": "Vulcan Post",
+    "city": "Singapore",
+    "region": "Singapore",
+    "lat": 1.3521,
+    "lon": 103.8198,
+    "label": "Vulcan Post HQ"
   },
   {
     "country": "Slovakia",
@@ -9910,12 +10972,84 @@
   },
   {
     "country": "South Korea",
+    "publisher": "Aju News",
+    "city": "Seoul",
+    "region": "Seoul",
+    "lat": 37.5665,
+    "lon": 126.978,
+    "label": "Aju News HQ"
+  },
+  {
+    "country": "South Korea",
+    "publisher": "Chosun Ilbo",
+    "city": "Seoul",
+    "region": "Seoul",
+    "lat": 37.5665,
+    "lon": 126.978,
+    "label": "Chosun Ilbo HQ"
+  },
+  {
+    "country": "South Korea",
+    "publisher": "Daily NK",
+    "city": "Seoul",
+    "region": "Seoul",
+    "lat": 37.5665,
+    "lon": 126.978,
+    "label": "Daily NK HQ"
+  },
+  {
+    "country": "South Korea",
+    "publisher": "Dong-A Ilbo",
+    "city": "Seoul",
+    "region": "Seoul",
+    "lat": 37.5665,
+    "lon": 126.978,
+    "label": "Dong-A Ilbo HQ"
+  },
+  {
+    "country": "South Korea",
     "publisher": "Hankyoreh",
     "city": "Mapo District",
     "region": "Mapo District",
     "lat": 37.5638,
     "lon": 126.9084,
     "label": "Hankyoreh HQ"
+  },
+  {
+    "country": "South Korea",
+    "publisher": "JoongAng Group",
+    "city": "Seoul",
+    "region": "Seoul",
+    "lat": 37.5665,
+    "lon": 126.978,
+    "label": "JoongAng Group HQ"
+  },
+  {
+    "country": "South Korea",
+    "publisher": "Korean Broadcasting System",
+    "city": "Seoul",
+    "region": "Seoul",
+    "lat": 37.5665,
+    "lon": 126.978,
+    "label": "Korean Broadcasting System HQ"
+  },
+  {
+    "country": "South Korea",
+    "publisher": "Kyunghyang Shinmun",
+    "city": "Seoul",
+    "region": "Seoul",
+    "lat": 37.5665,
+    "lon": 126.978,
+    "label": "Kyunghyang Shinmun HQ"
+  },
+  {
+    "country": "South Korea",
+    "publisher": "Newsis",
+    "city": "Seoul",
+    "region": "Seoul",
+    "lat": 37.5665,
+    "lon": 126.978,
+    "label": "Newsis HQ"
   },
   {
     "country": "South Korea",
@@ -9928,12 +11062,39 @@
   },
   {
     "country": "South Korea",
+    "publisher": "Seoul Newspaper",
+    "city": "Seoul",
+    "region": "Seoul",
+    "lat": 37.5665,
+    "lon": 126.978,
+    "label": "Seoul Newspaper HQ"
+  },
+  {
+    "country": "South Korea",
     "publisher": "The Korea Economic Daily",
     "city": "Jung District",
     "region": "Jung District",
     "lat": 37.5559,
     "lon": 126.9703,
     "label": "The Korea Economic Daily HQ"
+  },
+  {
+    "country": "South Korea",
+    "publisher": "The Korea Herald",
+    "city": "Seoul",
+    "region": "Seoul",
+    "lat": 37.5665,
+    "lon": 126.978,
+    "label": "The Korea Herald HQ"
+  },
+  {
+    "country": "South Korea",
+    "publisher": "The Korea Times",
+    "city": "Seoul",
+    "region": "Seoul",
+    "lat": 37.5665,
+    "lon": 126.978,
+    "label": "The Korea Times HQ"
   },
   {
     "country": "Spain",
@@ -9957,7 +11118,7 @@
     "country": "Spain",
     "publisher": "Cinco Días",
     "city": "Madrid",
-    "region": "Madrid",
+    "region": "Community of Madrid",
     "lat": 40.4168,
     "lon": -3.7038,
     "label": "Cinco Días HQ"
@@ -10047,7 +11208,7 @@
     "country": "Spain",
     "publisher": "Expansión",
     "city": "Madrid",
-    "region": "Madrid",
+    "region": "Community of Madrid",
     "lat": 40.4168,
     "lon": -3.7038,
     "label": "Expansión HQ"
@@ -10101,7 +11262,7 @@
     "country": "Spain",
     "publisher": "Vozpópuli",
     "city": "Madrid",
-    "region": "Madrid",
+    "region": "Community of Madrid",
     "lat": 40.4168,
     "lon": -3.7038,
     "label": "Vozpópuli HQ"
@@ -10114,6 +11275,24 @@
     "lat": 59.3293,
     "lon": 18.0686,
     "label": "Aftonbladet HQ"
+  },
+  {
+    "country": "Sweden",
+    "publisher": "Allehanda",
+    "city": "Ornskoldsvik",
+    "region": "Vasternorrland",
+    "lat": 63.2909,
+    "lon": 18.7153,
+    "label": "Allehanda HQ"
+  },
+  {
+    "country": "Sweden",
+    "publisher": "Arbetarbladet",
+    "city": "Gavle",
+    "region": "Gavleborg",
+    "lat": 60.6749,
+    "lon": 17.1413,
+    "label": "Arbetarbladet HQ"
   },
   {
     "country": "Sweden",
@@ -10171,6 +11350,15 @@
   },
   {
     "country": "Sweden",
+    "publisher": "Gefle Dagblad",
+    "city": "Gavle",
+    "region": "Gavleborg",
+    "lat": 60.6749,
+    "lon": 17.1413,
+    "label": "Gefle Dagblad HQ"
+  },
+  {
+    "country": "Sweden",
     "publisher": "Gota Media",
     "city": "Kalmar",
     "region": "Kalmar",
@@ -10186,6 +11374,24 @@
     "lat": 57.7089,
     "lon": 11.9746,
     "label": "Göteborgs-Posten HQ"
+  },
+  {
+    "country": "Sweden",
+    "publisher": "Jönköpings-Posten",
+    "city": "Jonkoping",
+    "region": "Jonkoping",
+    "lat": 57.7826,
+    "lon": 14.1618,
+    "label": "Jönköpings-Posten HQ"
+  },
+  {
+    "country": "Sweden",
+    "publisher": "Länstidningen Södertälje",
+    "city": "Sodertalje",
+    "region": "Stockholm",
+    "lat": 59.1955,
+    "lon": 17.6253,
+    "label": "Länstidningen Södertälje HQ"
   },
   {
     "country": "Sweden",
@@ -10216,6 +11422,15 @@
   },
   {
     "country": "Sweden",
+    "publisher": "Norrtälje Tidning",
+    "city": "Norrtalje",
+    "region": "Stockholm",
+    "lat": 59.758,
+    "lon": 18.705,
+    "label": "Norrtälje Tidning HQ"
+  },
+  {
+    "country": "Sweden",
     "publisher": "NTM",
     "city": "Norrkoping",
     "region": "Norrkoping",
@@ -10243,6 +11458,15 @@
   },
   {
     "country": "Sweden",
+    "publisher": "Östersunds-Posten",
+    "city": "Ostersund",
+    "region": "Jamtland",
+    "lat": 63.1792,
+    "lon": 14.6357,
+    "label": "Östersunds-Posten HQ"
+  },
+  {
+    "country": "Sweden",
     "publisher": "Privata Affärer",
     "city": "Stockholm",
     "region": "Stockholm",
@@ -10261,12 +11485,48 @@
   },
   {
     "country": "Sweden",
+    "publisher": "Skånska Dagbladet",
+    "city": "Malmo",
+    "region": "Skane",
+    "lat": 55.605,
+    "lon": 13.0038,
+    "label": "Skånska Dagbladet HQ"
+  },
+  {
+    "country": "Sweden",
+    "publisher": "Skaraborgs Allehanda",
+    "city": "Skovde",
+    "region": "Vastra Gotaland",
+    "lat": 58.3913,
+    "lon": 13.8451,
+    "label": "Skaraborgs Allehanda HQ"
+  },
+  {
+    "country": "Sweden",
+    "publisher": "Skövde Nyheter",
+    "city": "Skovde",
+    "region": "Vastra Gotaland",
+    "lat": 58.3913,
+    "lon": 13.8451,
+    "label": "Skövde Nyheter HQ"
+  },
+  {
+    "country": "Sweden",
     "publisher": "Stampen Media",
     "city": "Gothenburg",
     "region": "Gothenburg",
     "lat": 57.7089,
     "lon": 11.9746,
     "label": "Stampen Media HQ"
+  },
+  {
+    "country": "Sweden",
+    "publisher": "Sundsvalls Tidning",
+    "city": "Sundsvall",
+    "region": "Vasternorrland",
+    "lat": 62.3908,
+    "lon": 17.3069,
+    "label": "Sundsvalls Tidning HQ"
   },
   {
     "country": "Sweden",
@@ -10324,12 +11584,30 @@
   },
   {
     "country": "Sweden",
+    "publisher": "Värnamo Nyheter",
+    "city": "Varnamo",
+    "region": "Jonkoping",
+    "lat": 57.186,
+    "lon": 14.0404,
+    "label": "Värnamo Nyheter HQ"
+  },
+  {
+    "country": "Sweden",
     "publisher": "Västerbottens-Kuriren",
     "city": "Umea",
     "region": "Umea",
     "lat": 63.8258,
     "lon": 20.263,
     "label": "Västerbottens-Kuriren HQ"
+  },
+  {
+    "country": "Sweden",
+    "publisher": "VLT",
+    "city": "Vasteras",
+    "region": "Vastmanland",
+    "lat": 59.6099,
+    "lon": 16.5448,
+    "label": "VLT HQ"
   },
   {
     "country": "Switzerland",
@@ -12187,6 +13465,15 @@
   },
   {
     "country": "United States",
+    "publisher": "One Mile at a Time",
+    "city": "Miami",
+    "region": "Florida",
+    "lat": 25.7617,
+    "lon": -80.1918,
+    "label": "One Mile at a Time HQ"
+  },
+  {
+    "country": "United States",
     "publisher": "OregonLive",
     "city": "Portland",
     "region": "Portland",
@@ -12484,6 +13771,15 @@
   },
   {
     "country": "United States",
+    "publisher": "View from the Wing",
+    "city": "Dallas",
+    "region": "Texas",
+    "lat": 32.7767,
+    "lon": -96.797,
+    "label": "View from the Wing HQ"
+  },
+  {
+    "country": "United States",
     "publisher": "War on the Rocks",
     "city": "Washington, D.C.",
     "region": "Washington, D.C.",
@@ -12754,6 +14050,15 @@
   },
   {
     "country": "Vietnam",
+    "publisher": "Báo Pháp Luật",
+    "city": "Ho Chi Minh City",
+    "region": "Ho Chi Minh City",
+    "lat": 10.8231,
+    "lon": 106.6297,
+    "label": "Báo Pháp Luật HQ"
+  },
+  {
+    "country": "Vietnam",
     "publisher": "Bao Tin Tuc",
     "city": "Hanoi",
     "region": "Hanoi",
@@ -12868,6 +14173,15 @@
     "lat": 21.0278,
     "lon": 105.8342,
     "label": "Tien Phong HQ"
+  },
+  {
+    "country": "Vietnam",
+    "publisher": "Tuoi Tre",
+    "city": "Ho Chi Minh City",
+    "region": "Ho Chi Minh City",
+    "lat": 10.8231,
+    "lon": 106.6297,
+    "label": "Tuoi Tre HQ"
   },
   {
     "country": "Vietnam",
