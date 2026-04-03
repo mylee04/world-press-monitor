@@ -612,6 +612,600 @@
     "label": "StandartNews HQ"
   },
   {
+    "country": "Canada",
+    "publisher": "BetaKit",
+    "city": "Toronto",
+    "region": "Ontario",
+    "lat": 43.6532,
+    "lon": -79.3832,
+    "label": "BetaKit HQ"
+  },
+  {
+    "country": "Canada",
+    "publisher": "Business in Vancouver",
+    "city": "Vancouver",
+    "region": "British Columbia",
+    "lat": 49.2827,
+    "lon": -123.1207,
+    "label": "Business in Vancouver HQ"
+  },
+  {
+    "country": "Canada",
+    "publisher": "Castanet",
+    "city": "Kelowna",
+    "region": "British Columbia",
+    "lat": 49.888,
+    "lon": -119.496,
+    "label": "Castanet HQ"
+  },
+  {
+    "country": "Canada",
+    "publisher": "CHEK News",
+    "city": "Victoria",
+    "region": "British Columbia",
+    "lat": 48.4284,
+    "lon": -123.3656,
+    "label": "CHEK News HQ"
+  },
+  {
+    "country": "Canada",
+    "publisher": "Curiocity",
+    "city": "Toronto",
+    "region": "Ontario",
+    "lat": 43.6532,
+    "lon": -79.3832,
+    "label": "Curiocity HQ"
+  },
+  {
+    "country": "Canada",
+    "publisher": "Daily Hive",
+    "city": "Vancouver",
+    "region": "British Columbia",
+    "lat": 49.2827,
+    "lon": -123.1207,
+    "label": "Daily Hive HQ"
+  },
+  {
+    "country": "Canada",
+    "publisher": "Edmonton Sun",
+    "city": "Edmonton",
+    "region": "Alberta",
+    "lat": 53.5461,
+    "lon": -113.4938,
+    "label": "Edmonton Sun HQ"
+  },
+  {
+    "country": "Canada",
+    "publisher": "La Presse",
+    "city": "Montreal",
+    "region": "Quebec",
+    "lat": 45.5017,
+    "lon": -73.5673,
+    "label": "La Presse HQ"
+  },
+  {
+    "country": "Canada",
+    "publisher": "La Tribune",
+    "city": "Sherbrooke",
+    "region": "Quebec",
+    "lat": 45.4042,
+    "lon": -71.8929,
+    "label": "La Tribune HQ"
+  },
+  {
+    "country": "Canada",
+    "publisher": "La Voix de l'Est",
+    "city": "Granby",
+    "region": "Quebec",
+    "lat": 45.4034,
+    "lon": -72.7248,
+    "label": "La Voix de l'Est HQ"
+  },
+  {
+    "country": "Canada",
+    "publisher": "Le Devoir",
+    "city": "Montreal",
+    "region": "Quebec",
+    "lat": 45.5017,
+    "lon": -73.5673,
+    "label": "Le Devoir HQ"
+  },
+  {
+    "country": "Canada",
+    "publisher": "Le Droit",
+    "city": "Ottawa",
+    "region": "Ontario",
+    "lat": 45.4215,
+    "lon": -75.6972,
+    "label": "Le Droit HQ"
+  },
+  {
+    "country": "Canada",
+    "publisher": "Le Nouvelliste",
+    "city": "Trois-Rivières",
+    "region": "Quebec",
+    "lat": 46.343,
+    "lon": -72.543,
+    "label": "Le Nouvelliste HQ"
+  },
+  {
+    "country": "Canada",
+    "publisher": "Le Quotidien",
+    "city": "Saguenay",
+    "region": "Quebec",
+    "lat": 48.4284,
+    "lon": -71.0686,
+    "label": "Le Quotidien HQ"
+  },
+  {
+    "country": "Canada",
+    "publisher": "Le Soleil",
+    "city": "Quebec City",
+    "region": "Quebec",
+    "lat": 46.8139,
+    "lon": -71.208,
+    "label": "Le Soleil HQ"
+  },
+  {
+    "country": "Canada",
+    "publisher": "MobileSyrup",
+    "city": "Toronto",
+    "region": "Ontario",
+    "lat": 43.6532,
+    "lon": -79.3832,
+    "label": "MobileSyrup HQ"
+  },
+  {
+    "country": "Canada",
+    "publisher": "Narcity",
+    "city": "Montreal",
+    "region": "Quebec",
+    "lat": 45.5017,
+    "lon": -73.5673,
+    "label": "Narcity HQ"
+  },
+  {
+    "country": "Canada",
+    "publisher": "NOW Toronto",
+    "city": "Toronto",
+    "region": "Ontario",
+    "lat": 43.6532,
+    "lon": -79.3832,
+    "label": "NOW Toronto HQ"
+  },
+  {
+    "country": "Canada",
+    "publisher": "Prince Albert Daily Herald",
+    "city": "Prince Albert",
+    "region": "Saskatchewan",
+    "lat": 53.2033,
+    "lon": -105.7531,
+    "label": "Prince Albert Daily Herald HQ"
+  },
+  {
+    "country": "Canada",
+    "publisher": "rabble.ca",
+    "city": "Toronto",
+    "region": "Ontario",
+    "lat": 43.6532,
+    "lon": -79.3832,
+    "label": "rabble.ca HQ"
+  },
+  {
+    "country": "Canada",
+    "publisher": "Simcoe Reformer",
+    "city": "Simcoe",
+    "region": "Ontario",
+    "lat": 42.8358,
+    "lon": -80.3048,
+    "label": "Simcoe Reformer HQ"
+  },
+  {
+    "country": "Canada",
+    "publisher": "Sunny South News",
+    "city": "Coaldale",
+    "region": "Alberta",
+    "lat": 49.7283,
+    "lon": -112.6185,
+    "label": "Sunny South News HQ"
+  },
+  {
+    "country": "Canada",
+    "publisher": "The Afro News",
+    "city": "Vancouver",
+    "region": "British Columbia",
+    "lat": 49.2827,
+    "lon": -123.1207,
+    "label": "The Afro News HQ"
+  },
+  {
+    "country": "Canada",
+    "publisher": "The Georgia Straight",
+    "city": "Vancouver",
+    "region": "British Columbia",
+    "lat": 49.2827,
+    "lon": -123.1207,
+    "label": "The Georgia Straight HQ"
+  },
+  {
+    "country": "Canada",
+    "publisher": "The Hub",
+    "city": "Toronto",
+    "region": "Ontario",
+    "lat": 43.6532,
+    "lon": -79.3832,
+    "label": "The Hub HQ"
+  },
+  {
+    "country": "Canada",
+    "publisher": "The Logic",
+    "city": "Toronto",
+    "region": "Ontario",
+    "lat": 43.6532,
+    "lon": -79.3832,
+    "label": "The Logic HQ"
+  },
+  {
+    "country": "Canada",
+    "publisher": "The Peak",
+    "city": "Burnaby",
+    "region": "British Columbia",
+    "lat": 49.2488,
+    "lon": -122.9805,
+    "label": "The Peak HQ"
+  },
+  {
+    "country": "Canada",
+    "publisher": "The Recorder",
+    "city": "Kitchener",
+    "region": "Ontario",
+    "lat": 43.4516,
+    "lon": -80.4925,
+    "label": "The Recorder HQ"
+  },
+  {
+    "country": "Canada",
+    "publisher": "The Tyee",
+    "city": "Vancouver",
+    "region": "British Columbia",
+    "lat": 49.2827,
+    "lon": -123.1207,
+    "label": "The Tyee HQ"
+  },
+  {
+    "country": "Canada",
+    "publisher": "Vancouver Is Awesome",
+    "city": "Vancouver",
+    "region": "British Columbia",
+    "lat": 49.2827,
+    "lon": -123.1207,
+    "label": "Vancouver Is Awesome HQ"
+  },
+  {
+    "country": "Canada",
+    "publisher": "Winnipeg Free Press",
+    "city": "Winnipeg",
+    "region": "Manitoba",
+    "lat": 49.8951,
+    "lon": -97.1384,
+    "label": "Winnipeg Free Press HQ"
+  },
+  {
+    "country": "Canada",
+    "publisher": "Woodstock Sentinel-Review",
+    "city": "Woodstock",
+    "region": "Ontario",
+    "lat": 43.1315,
+    "lon": -80.7477,
+    "label": "Woodstock Sentinel-Review HQ"
+  },
+  {
+    "country": "Canada",
+    "publisher": "YGK News",
+    "city": "Kingston",
+    "region": "Ontario",
+    "lat": 44.2312,
+    "lon": -76.486,
+    "label": "YGK News HQ"
+  },
+  {
+    "country": "Chile",
+    "publisher": "ADN Radio",
+    "city": "Santiago",
+    "region": "Santiago Metropolitan",
+    "lat": -33.4489,
+    "lon": -70.6693,
+    "label": "ADN Radio HQ"
+  },
+  {
+    "country": "Chile",
+    "publisher": "Cambio21",
+    "city": "Santiago",
+    "region": "Santiago Metropolitan",
+    "lat": -33.4489,
+    "lon": -70.6693,
+    "label": "Cambio21 HQ"
+  },
+  {
+    "country": "Chile",
+    "publisher": "Chilevisión Noticias",
+    "city": "Santiago",
+    "region": "Santiago Metropolitan",
+    "lat": -33.4489,
+    "lon": -70.6693,
+    "label": "Chilevisión Noticias HQ"
+  },
+  {
+    "country": "Chile",
+    "publisher": "CIPER Chile",
+    "city": "Santiago",
+    "region": "Santiago Metropolitan",
+    "lat": -33.4489,
+    "lon": -70.6693,
+    "label": "CIPER Chile HQ"
+  },
+  {
+    "country": "Chile",
+    "publisher": "CNN Chile",
+    "city": "Santiago",
+    "region": "Santiago Metropolitan",
+    "lat": -33.4489,
+    "lon": -70.6693,
+    "label": "CNN Chile HQ"
+  },
+  {
+    "country": "Chile",
+    "publisher": "Concierto",
+    "city": "Santiago",
+    "region": "Santiago Metropolitan",
+    "lat": -33.4489,
+    "lon": -70.6693,
+    "label": "Concierto HQ"
+  },
+  {
+    "country": "Chile",
+    "publisher": "Diario Constitucional",
+    "city": "Santiago",
+    "region": "Santiago Metropolitan",
+    "lat": -33.4489,
+    "lon": -70.6693,
+    "label": "Diario Constitucional HQ"
+  },
+  {
+    "country": "Chile",
+    "publisher": "Diario El Centro",
+    "city": "Talca",
+    "region": "Maule",
+    "lat": -35.4264,
+    "lon": -71.6554,
+    "label": "Diario El Centro HQ"
+  },
+  {
+    "country": "Chile",
+    "publisher": "Diario Financiero",
+    "city": "Santiago",
+    "region": "Santiago Metropolitan",
+    "lat": -33.4489,
+    "lon": -70.6693,
+    "label": "Diario Financiero HQ"
+  },
+  {
+    "country": "Chile",
+    "publisher": "Diario Talca",
+    "city": "Talca",
+    "region": "Maule",
+    "lat": -35.4264,
+    "lon": -71.6554,
+    "label": "Diario Talca HQ"
+  },
+  {
+    "country": "Chile",
+    "publisher": "El Ciudadano",
+    "city": "Santiago",
+    "region": "Santiago Metropolitan",
+    "lat": -33.4489,
+    "lon": -70.6693,
+    "label": "El Ciudadano HQ"
+  },
+  {
+    "country": "Chile",
+    "publisher": "El Desconcierto",
+    "city": "Santiago",
+    "region": "Santiago Metropolitan",
+    "lat": -33.4489,
+    "lon": -70.6693,
+    "label": "El Desconcierto HQ"
+  },
+  {
+    "country": "Chile",
+    "publisher": "El Dínamo",
+    "city": "Santiago",
+    "region": "Santiago Metropolitan",
+    "lat": -33.4489,
+    "lon": -70.6693,
+    "label": "El Dínamo HQ"
+  },
+  {
+    "country": "Chile",
+    "publisher": "El Insular",
+    "city": "Castro",
+    "region": "Los Lagos",
+    "lat": -42.4817,
+    "lon": -73.7626,
+    "label": "El Insular HQ"
+  },
+  {
+    "country": "Chile",
+    "publisher": "El Mostrador",
+    "city": "Santiago",
+    "region": "Santiago Metropolitan",
+    "lat": -33.4489,
+    "lon": -70.6693,
+    "label": "El Mostrador HQ"
+  },
+  {
+    "country": "Chile",
+    "publisher": "El Pingüino",
+    "city": "Punta Arenas",
+    "region": "Magallanes",
+    "lat": -53.1638,
+    "lon": -70.9171,
+    "label": "El Pingüino HQ"
+  },
+  {
+    "country": "Chile",
+    "publisher": "El Rancagüino",
+    "city": "Rancagua",
+    "region": "O'Higgins",
+    "lat": -34.1708,
+    "lon": -70.7444,
+    "label": "El Rancagüino HQ"
+  },
+  {
+    "country": "Chile",
+    "publisher": "El Siglo",
+    "city": "Santiago",
+    "region": "Santiago Metropolitan",
+    "lat": -33.4489,
+    "lon": -70.6693,
+    "label": "El Siglo HQ"
+  },
+  {
+    "country": "Chile",
+    "publisher": "Ex-Ante",
+    "city": "Santiago",
+    "region": "Santiago Metropolitan",
+    "lat": -33.4489,
+    "lon": -70.6693,
+    "label": "Ex-Ante HQ"
+  },
+  {
+    "country": "Chile",
+    "publisher": "Fast Check CL",
+    "city": "Santiago",
+    "region": "Santiago Metropolitan",
+    "lat": -33.4489,
+    "lon": -70.6693,
+    "label": "Fast Check CL HQ"
+  },
+  {
+    "country": "Chile",
+    "publisher": "Futuro",
+    "city": "Santiago",
+    "region": "Santiago Metropolitan",
+    "lat": -33.4489,
+    "lon": -70.6693,
+    "label": "Futuro HQ"
+  },
+  {
+    "country": "Chile",
+    "publisher": "Interferencia",
+    "city": "Santiago",
+    "region": "Santiago Metropolitan",
+    "lat": -33.4489,
+    "lon": -70.6693,
+    "label": "Interferencia HQ"
+  },
+  {
+    "country": "Chile",
+    "publisher": "La Cuarta",
+    "city": "Santiago",
+    "region": "Santiago Metropolitan",
+    "lat": -33.4489,
+    "lon": -70.6693,
+    "label": "La Cuarta HQ"
+  },
+  {
+    "country": "Chile",
+    "publisher": "La Discusión",
+    "city": "Chillán",
+    "region": "Ñuble",
+    "lat": -36.6067,
+    "lon": -72.1034,
+    "label": "La Discusión HQ"
+  },
+  {
+    "country": "Chile",
+    "publisher": "La Nación Chile",
+    "city": "Santiago",
+    "region": "Santiago Metropolitan",
+    "lat": -33.4489,
+    "lon": -70.6693,
+    "label": "La Nación Chile HQ"
+  },
+  {
+    "country": "Chile",
+    "publisher": "La Prensa Austral",
+    "city": "Punta Arenas",
+    "region": "Magallanes",
+    "lat": -53.1638,
+    "lon": -70.9171,
+    "label": "La Prensa Austral HQ"
+  },
+  {
+    "country": "Chile",
+    "publisher": "Pauta",
+    "city": "Santiago",
+    "region": "Santiago Metropolitan",
+    "lat": -33.4489,
+    "lon": -70.6693,
+    "label": "Pauta HQ"
+  },
+  {
+    "country": "Chile",
+    "publisher": "Publimetro Chile",
+    "city": "Santiago",
+    "region": "Santiago Metropolitan",
+    "lat": -33.4489,
+    "lon": -70.6693,
+    "label": "Publimetro Chile HQ"
+  },
+  {
+    "country": "Chile",
+    "publisher": "Radio Agricultura",
+    "city": "Santiago",
+    "region": "Santiago Metropolitan",
+    "lat": -33.4489,
+    "lon": -70.6693,
+    "label": "Radio Agricultura HQ"
+  },
+  {
+    "country": "Chile",
+    "publisher": "Radio Universidad de Chile",
+    "city": "Santiago",
+    "region": "Santiago Metropolitan",
+    "lat": -33.4489,
+    "lon": -70.6693,
+    "label": "Radio Universidad de Chile HQ"
+  },
+  {
+    "country": "Chile",
+    "publisher": "Rock&Pop",
+    "city": "Santiago",
+    "region": "Santiago Metropolitan",
+    "lat": -33.4489,
+    "lon": -70.6693,
+    "label": "Rock&Pop HQ"
+  },
+  {
+    "country": "Chile",
+    "publisher": "The Clinic",
+    "city": "Santiago",
+    "region": "Santiago Metropolitan",
+    "lat": -33.4489,
+    "lon": -70.6693,
+    "label": "The Clinic HQ"
+  },
+  {
+    "country": "Chile",
+    "publisher": "The Santiago Times",
+    "city": "Santiago",
+    "region": "Santiago Metropolitan",
+    "lat": -33.4489,
+    "lon": -70.6693,
+    "label": "The Santiago Times HQ"
+  },
+  {
     "country": "China",
     "publisher": "am730",
     "city": "Hong Kong",
@@ -1684,6 +2278,15 @@
   },
   {
     "country": "Hungary",
+    "publisher": "24.hu",
+    "city": "Budapest",
+    "region": "Budapest",
+    "lat": 47.4979,
+    "lon": 19.0402,
+    "label": "24.hu HQ"
+  },
+  {
+    "country": "Hungary",
     "publisher": "444.hu",
     "city": "Budapest",
     "region": "Budapest",
@@ -1693,12 +2296,57 @@
   },
   {
     "country": "Hungary",
+    "publisher": "Agrarszektor",
+    "city": "Budapest",
+    "region": "Budapest",
+    "lat": 47.4979,
+    "lon": 19.0402,
+    "label": "Agrarszektor HQ"
+  },
+  {
+    "country": "Hungary",
+    "publisher": "ATV",
+    "city": "Budapest",
+    "region": "Budapest",
+    "lat": 47.4979,
+    "lon": 19.0402,
+    "label": "ATV HQ"
+  },
+  {
+    "country": "Hungary",
     "publisher": "Blikk",
     "city": "Budapest",
     "region": "Budapest",
     "lat": 47.4983,
     "lon": 19.0408,
     "label": "Blikk HQ"
+  },
+  {
+    "country": "Hungary",
+    "publisher": "Economx",
+    "city": "Budapest",
+    "region": "Budapest",
+    "lat": 47.4979,
+    "lon": 19.0402,
+    "label": "Economx HQ"
+  },
+  {
+    "country": "Hungary",
+    "publisher": "Forbes Hungary",
+    "city": "Budapest",
+    "region": "Budapest",
+    "lat": 47.4979,
+    "lon": 19.0402,
+    "label": "Forbes Hungary HQ"
+  },
+  {
+    "country": "Hungary",
+    "publisher": "Hungary Today",
+    "city": "Budapest",
+    "region": "Budapest",
+    "lat": 47.4979,
+    "lon": 19.0402,
+    "label": "Hungary Today HQ"
   },
   {
     "country": "Hungary",
@@ -1726,6 +2374,420 @@
     "lat": 47.4979,
     "lon": 19.0402,
     "label": "Infostart HQ"
+  },
+  {
+    "country": "Hungary",
+    "publisher": "Magyar Hang",
+    "city": "Budapest",
+    "region": "Budapest",
+    "lat": 47.4979,
+    "lon": 19.0402,
+    "label": "Magyar Hang HQ"
+  },
+  {
+    "country": "Hungary",
+    "publisher": "Magyar Hirlap",
+    "city": "Budapest",
+    "region": "Budapest",
+    "lat": 47.4979,
+    "lon": 19.0402,
+    "label": "Magyar Hirlap HQ"
+  },
+  {
+    "country": "Hungary",
+    "publisher": "Magyar Nemzet",
+    "city": "Budapest",
+    "region": "Budapest",
+    "lat": 47.4979,
+    "lon": 19.0402,
+    "label": "Magyar Nemzet HQ"
+  },
+  {
+    "country": "Hungary",
+    "publisher": "Mandiner",
+    "city": "Budapest",
+    "region": "Budapest",
+    "lat": 47.4979,
+    "lon": 19.0402,
+    "label": "Mandiner HQ"
+  },
+  {
+    "country": "Hungary",
+    "publisher": "Mfor",
+    "city": "Budapest",
+    "region": "Budapest",
+    "lat": 47.4979,
+    "lon": 19.0402,
+    "label": "Mfor HQ"
+  },
+  {
+    "country": "Hungary",
+    "publisher": "Nemzeti Sport",
+    "city": "Budapest",
+    "region": "Budapest",
+    "lat": 47.4979,
+    "lon": 19.0402,
+    "label": "Nemzeti Sport HQ"
+  },
+  {
+    "country": "Hungary",
+    "publisher": "Népszava",
+    "city": "Budapest",
+    "region": "Budapest",
+    "lat": 47.4979,
+    "lon": 19.0402,
+    "label": "Népszava HQ"
+  },
+  {
+    "country": "Hungary",
+    "publisher": "Novekedes",
+    "city": "Budapest",
+    "region": "Budapest",
+    "lat": 47.4979,
+    "lon": 19.0402,
+    "label": "Novekedes HQ"
+  },
+  {
+    "country": "Hungary",
+    "publisher": "Origo",
+    "city": "Budapest",
+    "region": "Budapest",
+    "lat": 47.4979,
+    "lon": 19.0402,
+    "label": "Origo HQ"
+  },
+  {
+    "country": "Hungary",
+    "publisher": "Pénzcentrum",
+    "city": "Budapest",
+    "region": "Budapest",
+    "lat": 47.4979,
+    "lon": 19.0402,
+    "label": "Pénzcentrum HQ"
+  },
+  {
+    "country": "Hungary",
+    "publisher": "Portfolio",
+    "city": "Budapest",
+    "region": "Budapest",
+    "lat": 47.4979,
+    "lon": 19.0402,
+    "label": "Portfolio HQ"
+  },
+  {
+    "country": "Hungary",
+    "publisher": "Privatbankar",
+    "city": "Budapest",
+    "region": "Budapest",
+    "lat": 47.4979,
+    "lon": 19.0402,
+    "label": "Privatbankar HQ"
+  },
+  {
+    "country": "Hungary",
+    "publisher": "Telex",
+    "city": "Budapest",
+    "region": "Budapest",
+    "lat": 47.4979,
+    "lon": 19.0402,
+    "label": "Telex HQ"
+  },
+  {
+    "country": "Hungary",
+    "publisher": "Tenyek",
+    "city": "Budapest",
+    "region": "Budapest",
+    "lat": 47.4979,
+    "lon": 19.0402,
+    "label": "Tenyek HQ"
+  },
+  {
+    "country": "Hungary",
+    "publisher": "Tozsdeforum",
+    "city": "Budapest",
+    "region": "Budapest",
+    "lat": 47.4979,
+    "lon": 19.0402,
+    "label": "Tozsdeforum HQ"
+  },
+  {
+    "country": "Hungary",
+    "publisher": "VG.hu",
+    "city": "Budapest",
+    "region": "Budapest",
+    "lat": 47.4979,
+    "lon": 19.0402,
+    "label": "VG.hu HQ"
+  },
+  {
+    "country": "India",
+    "publisher": "ABP News",
+    "city": "Noida",
+    "region": "Uttar Pradesh",
+    "lat": 28.5355,
+    "lon": 77.391,
+    "label": "ABP News HQ"
+  },
+  {
+    "country": "India",
+    "publisher": "Amar Ujala",
+    "city": "Noida",
+    "region": "Uttar Pradesh",
+    "lat": 28.5355,
+    "lon": 77.391,
+    "label": "Amar Ujala HQ"
+  },
+  {
+    "country": "India",
+    "publisher": "Chandigarh City News",
+    "city": "Chandigarh",
+    "region": "Chandigarh",
+    "lat": 30.7333,
+    "lon": 76.7794,
+    "label": "Chandigarh City News HQ"
+  },
+  {
+    "country": "India",
+    "publisher": "Chandigarh Metro",
+    "city": "Chandigarh",
+    "region": "Chandigarh",
+    "lat": 30.7333,
+    "lon": 76.7794,
+    "label": "Chandigarh Metro HQ"
+  },
+  {
+    "country": "India",
+    "publisher": "Deccan Herald",
+    "city": "Bengaluru",
+    "region": "Karnataka",
+    "lat": 12.9716,
+    "lon": 77.5946,
+    "label": "Deccan Herald HQ"
+  },
+  {
+    "country": "India",
+    "publisher": "DNA India",
+    "city": "Mumbai",
+    "region": "Maharashtra",
+    "lat": 19.076,
+    "lon": 72.8777,
+    "label": "DNA India HQ"
+  },
+  {
+    "country": "India",
+    "publisher": "Firstpost",
+    "city": "Mumbai",
+    "region": "Maharashtra",
+    "lat": 19.076,
+    "lon": 72.8777,
+    "label": "Firstpost HQ"
+  },
+  {
+    "country": "India",
+    "publisher": "Hindustan Times",
+    "city": "New Delhi",
+    "region": "Delhi",
+    "lat": 28.6139,
+    "lon": 77.209,
+    "label": "Hindustan Times HQ"
+  },
+  {
+    "country": "India",
+    "publisher": "Inc42",
+    "city": "Noida",
+    "region": "Uttar Pradesh",
+    "lat": 28.5355,
+    "lon": 77.391,
+    "label": "Inc42 HQ"
+  },
+  {
+    "country": "India",
+    "publisher": "India Today",
+    "city": "Noida",
+    "region": "Uttar Pradesh",
+    "lat": 28.5355,
+    "lon": 77.391,
+    "label": "India Today HQ"
+  },
+  {
+    "country": "India",
+    "publisher": "IndiaVision",
+    "city": "Kozhikode",
+    "region": "Kerala",
+    "lat": 11.2588,
+    "lon": 75.7804,
+    "label": "IndiaVision HQ"
+  },
+  {
+    "country": "India",
+    "publisher": "Livemint",
+    "city": "New Delhi",
+    "region": "Delhi",
+    "lat": 28.6139,
+    "lon": 77.209,
+    "label": "Livemint HQ"
+  },
+  {
+    "country": "India",
+    "publisher": "NDTV",
+    "city": "New Delhi",
+    "region": "Delhi",
+    "lat": 28.6139,
+    "lon": 77.209,
+    "label": "NDTV HQ"
+  },
+  {
+    "country": "India",
+    "publisher": "News Today",
+    "city": "Chennai",
+    "region": "Tamil Nadu",
+    "lat": 13.0827,
+    "lon": 80.2707,
+    "label": "News Today HQ"
+  },
+  {
+    "country": "India",
+    "publisher": "Odishabarta",
+    "city": "Bhubaneswar",
+    "region": "Odisha",
+    "lat": 20.2961,
+    "lon": 85.8245,
+    "label": "Odishabarta HQ"
+  },
+  {
+    "country": "India",
+    "publisher": "OpIndia",
+    "city": "Noida",
+    "region": "Uttar Pradesh",
+    "lat": 28.5355,
+    "lon": 77.391,
+    "label": "OpIndia HQ"
+  },
+  {
+    "country": "India",
+    "publisher": "OrissaPOST",
+    "city": "Bhubaneswar",
+    "region": "Odisha",
+    "lat": 20.2961,
+    "lon": 85.8245,
+    "label": "OrissaPOST HQ"
+  },
+  {
+    "country": "India",
+    "publisher": "Scroll.in",
+    "city": "Mumbai",
+    "region": "Maharashtra",
+    "lat": 19.076,
+    "lon": 72.8777,
+    "label": "Scroll.in HQ"
+  },
+  {
+    "country": "India",
+    "publisher": "Star of Mysore",
+    "city": "Mysuru",
+    "region": "Karnataka",
+    "lat": 12.2958,
+    "lon": 76.6394,
+    "label": "Star of Mysore HQ"
+  },
+  {
+    "country": "India",
+    "publisher": "Storify News",
+    "city": "New Delhi",
+    "region": "Delhi",
+    "lat": 28.6139,
+    "lon": 77.209,
+    "label": "Storify News HQ"
+  },
+  {
+    "country": "India",
+    "publisher": "TechGenYZ",
+    "city": "Kolkata",
+    "region": "West Bengal",
+    "lat": 22.5726,
+    "lon": 88.3639,
+    "label": "TechGenYZ HQ"
+  },
+  {
+    "country": "India",
+    "publisher": "Telangana Today",
+    "city": "Hyderabad",
+    "region": "Telangana",
+    "lat": 17.385,
+    "lon": 78.4867,
+    "label": "Telangana Today HQ"
+  },
+  {
+    "country": "India",
+    "publisher": "The Hindu",
+    "city": "Chennai",
+    "region": "Tamil Nadu",
+    "lat": 13.0827,
+    "lon": 80.2707,
+    "label": "The Hindu HQ"
+  },
+  {
+    "country": "India",
+    "publisher": "The India Bizz",
+    "city": "New Delhi",
+    "region": "Delhi",
+    "lat": 28.6139,
+    "lon": 77.209,
+    "label": "The India Bizz HQ"
+  },
+  {
+    "country": "India",
+    "publisher": "The Indian Express",
+    "city": "New Delhi",
+    "region": "Delhi",
+    "lat": 28.6139,
+    "lon": 77.209,
+    "label": "The Indian Express HQ"
+  },
+  {
+    "country": "India",
+    "publisher": "The Quint",
+    "city": "Noida",
+    "region": "Uttar Pradesh",
+    "lat": 28.5355,
+    "lon": 77.391,
+    "label": "The Quint HQ"
+  },
+  {
+    "country": "India",
+    "publisher": "The Times of Bengal",
+    "city": "Kolkata",
+    "region": "West Bengal",
+    "lat": 22.5726,
+    "lon": 88.3639,
+    "label": "The Times of Bengal HQ"
+  },
+  {
+    "country": "India",
+    "publisher": "The Times of India",
+    "city": "Mumbai",
+    "region": "Maharashtra",
+    "lat": 19.076,
+    "lon": 72.8777,
+    "label": "The Times of India HQ"
+  },
+  {
+    "country": "India",
+    "publisher": "ThePrint",
+    "city": "New Delhi",
+    "region": "Delhi",
+    "lat": 28.6139,
+    "lon": 77.209,
+    "label": "ThePrint HQ"
+  },
+  {
+    "country": "India",
+    "publisher": "WYM News",
+    "city": "Mysuru",
+    "region": "Karnataka",
+    "lat": 12.2958,
+    "lon": 76.6394,
+    "label": "WYM News HQ"
   },
   {
     "country": "Indonesia",
@@ -4894,6 +5956,276 @@
     "lat": 63.8258,
     "lon": 20.263,
     "label": "Västerbottens-Kuriren HQ"
+  },
+  {
+    "country": "Switzerland",
+    "publisher": "24 heures",
+    "city": "Lausanne",
+    "region": "Vaud",
+    "lat": 46.5197,
+    "lon": 6.6323,
+    "label": "24 heures HQ"
+  },
+  {
+    "country": "Switzerland",
+    "publisher": "Basler Zeitung",
+    "city": "Basel",
+    "region": "Basel-Stadt",
+    "lat": 47.5596,
+    "lon": 7.5886,
+    "label": "Basler Zeitung HQ"
+  },
+  {
+    "country": "Switzerland",
+    "publisher": "Berner Zeitung",
+    "city": "Bern",
+    "region": "Bern",
+    "lat": 46.948,
+    "lon": 7.4474,
+    "label": "Berner Zeitung HQ"
+  },
+  {
+    "country": "Switzerland",
+    "publisher": "Bilan",
+    "city": "Lausanne",
+    "region": "Vaud",
+    "lat": 46.5197,
+    "lon": 6.6323,
+    "label": "Bilan HQ"
+  },
+  {
+    "country": "Switzerland",
+    "publisher": "Bilanz",
+    "city": "Zurich",
+    "region": "Zurich",
+    "lat": 47.3769,
+    "lon": 8.5417,
+    "label": "Bilanz HQ"
+  },
+  {
+    "country": "Switzerland",
+    "publisher": "Blue News",
+    "city": "Zurich",
+    "region": "Zurich",
+    "lat": 47.3769,
+    "lon": 8.5417,
+    "label": "Blue News HQ"
+  },
+  {
+    "country": "Switzerland",
+    "publisher": "Bote der Urschweiz",
+    "city": "Schwyz",
+    "region": "Schwyz",
+    "lat": 47.0207,
+    "lon": 8.6541,
+    "label": "Bote der Urschweiz HQ"
+  },
+  {
+    "country": "Switzerland",
+    "publisher": "Cash.ch",
+    "city": "Zurich",
+    "region": "Zurich",
+    "lat": 47.3769,
+    "lon": 8.5417,
+    "label": "Cash.ch HQ"
+  },
+  {
+    "country": "Switzerland",
+    "publisher": "Corriere del Ticino",
+    "city": "Lugano",
+    "region": "Ticino",
+    "lat": 46.0037,
+    "lon": 8.9511,
+    "label": "Corriere del Ticino HQ"
+  },
+  {
+    "country": "Switzerland",
+    "publisher": "Der Bund",
+    "city": "Bern",
+    "region": "Bern",
+    "lat": 46.948,
+    "lon": 7.4474,
+    "label": "Der Bund HQ"
+  },
+  {
+    "country": "Switzerland",
+    "publisher": "Finews.ch",
+    "city": "Zurich",
+    "region": "Zurich",
+    "lat": 47.3769,
+    "lon": 8.5417,
+    "label": "Finews.ch HQ"
+  },
+  {
+    "country": "Switzerland",
+    "publisher": "Frapp",
+    "city": "Fribourg",
+    "region": "Fribourg",
+    "lat": 46.8065,
+    "lon": 7.161,
+    "label": "Frapp HQ"
+  },
+  {
+    "country": "Switzerland",
+    "publisher": "Handelszeitung",
+    "city": "Zurich",
+    "region": "Zurich",
+    "lat": 47.3769,
+    "lon": 8.5417,
+    "label": "Handelszeitung HQ"
+  },
+  {
+    "country": "Switzerland",
+    "publisher": "Inside Paradeplatz",
+    "city": "Zurich",
+    "region": "Zurich",
+    "lat": 47.3769,
+    "lon": 8.5417,
+    "label": "Inside Paradeplatz HQ"
+  },
+  {
+    "country": "Switzerland",
+    "publisher": "laRegione",
+    "city": "Bellinzona",
+    "region": "Ticino",
+    "lat": 46.1952,
+    "lon": 9.0238,
+    "label": "laRegione HQ"
+  },
+  {
+    "country": "Switzerland",
+    "publisher": "Le News",
+    "city": "Geneva",
+    "region": "Geneva",
+    "lat": 46.2044,
+    "lon": 6.1432,
+    "label": "Le News HQ"
+  },
+  {
+    "country": "Switzerland",
+    "publisher": "LFM la radio",
+    "city": "Lausanne",
+    "region": "Vaud",
+    "lat": 46.5197,
+    "lon": 6.6323,
+    "label": "LFM la radio HQ"
+  },
+  {
+    "country": "Switzerland",
+    "publisher": "Moneycab",
+    "city": "Zurich",
+    "region": "Zurich",
+    "lat": 47.3769,
+    "lon": 8.5417,
+    "label": "Moneycab HQ"
+  },
+  {
+    "country": "Switzerland",
+    "publisher": "Nau.ch",
+    "city": "Bern",
+    "region": "Bern",
+    "lat": 46.948,
+    "lon": 7.4474,
+    "label": "Nau.ch HQ"
+  },
+  {
+    "country": "Switzerland",
+    "publisher": "persoenlich.com",
+    "city": "Zurich",
+    "region": "Zurich",
+    "lat": 47.3769,
+    "lon": 8.5417,
+    "label": "persoenlich.com HQ"
+  },
+  {
+    "country": "Switzerland",
+    "publisher": "Radio Lac",
+    "city": "Geneva",
+    "region": "Geneva",
+    "lat": 46.2044,
+    "lon": 6.1432,
+    "label": "Radio Lac HQ"
+  },
+  {
+    "country": "Switzerland",
+    "publisher": "RSI",
+    "city": "Lugano",
+    "region": "Ticino",
+    "lat": 46.0037,
+    "lon": 8.9511,
+    "label": "RSI HQ"
+  },
+  {
+    "country": "Switzerland",
+    "publisher": "Tages-Anzeiger",
+    "city": "Zurich",
+    "region": "Zurich",
+    "lat": 47.3769,
+    "lon": 8.5417,
+    "label": "Tages-Anzeiger HQ"
+  },
+  {
+    "country": "Switzerland",
+    "publisher": "Tele1",
+    "city": "Lucerne",
+    "region": "Lucerne",
+    "lat": 47.0502,
+    "lon": 8.3093,
+    "label": "Tele1 HQ"
+  },
+  {
+    "country": "Switzerland",
+    "publisher": "TeleBärn",
+    "city": "Bern",
+    "region": "Bern",
+    "lat": 46.948,
+    "lon": 7.4474,
+    "label": "TeleBärn HQ"
+  },
+  {
+    "country": "Switzerland",
+    "publisher": "TeleM1",
+    "city": "Aarau",
+    "region": "Aargau",
+    "lat": 47.3925,
+    "lon": 8.0442,
+    "label": "TeleM1 HQ"
+  },
+  {
+    "country": "Switzerland",
+    "publisher": "TeleZuri",
+    "city": "Zurich",
+    "region": "Zurich",
+    "lat": 47.3769,
+    "lon": 8.5417,
+    "label": "TeleZuri HQ"
+  },
+  {
+    "country": "Switzerland",
+    "publisher": "The Local Switzerland",
+    "city": "Zurich",
+    "region": "Zurich",
+    "lat": 47.3769,
+    "lon": 8.5417,
+    "label": "The Local Switzerland HQ"
+  },
+  {
+    "country": "Switzerland",
+    "publisher": "Ticinonline",
+    "city": "Lugano",
+    "region": "Ticino",
+    "lat": 46.0037,
+    "lon": 8.9511,
+    "label": "Ticinonline HQ"
+  },
+  {
+    "country": "Switzerland",
+    "publisher": "zentralplus",
+    "city": "Lucerne",
+    "region": "Lucerne",
+    "lat": 47.0502,
+    "lon": 8.3093,
+    "label": "zentralplus HQ"
   },
   {
     "country": "Taiwan",
