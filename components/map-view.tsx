@@ -2069,12 +2069,19 @@ export function MapView() {
     setSearchOpen(false);
   }, [mapMode, selectedCountry?.country]);
 
-  const panelErrors = [
-    countriesState.error,
-    publishersState.error,
-    sourcesState.error,
-    worldState.error,
-  ].filter((value): value is string => Boolean(value));
+  const panelErrors = Array.from(
+    new Set(
+      [
+        countriesState.error,
+        publishersState.error,
+        sourcesState.error,
+        worldState.error,
+      ]
+        .filter((value): value is string => Boolean(value))
+        .map((error) => error.trim())
+    )
+  );
+
   const countryZoomLabel = `${countryViewport.scale.toFixed(1)}x Zoom`;
   const stageLegendItems = !selectedCountry ? getStageLegendItems(mapMode) : [];
   const compactDetailHint = !selectedCountry && !selectedSource && !selectedCluster && mapMode === 'countries';
