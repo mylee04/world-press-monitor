@@ -591,6 +591,20 @@ export function useMapViewModel() {
     setSelectedSource(null);
     setCountryViewport(DEFAULT_COUNTRY_VIEWPORT);
     setLeftTab('overview');
+    const targetQuery = buildMapQueryString({
+      mode: mapMode,
+      window: mapWindow,
+      country: null,
+      publisher: mapMode === 'publishers' ? selectedPublisher?.publisher || null : null,
+      source: null,
+      leftTab: 'overview',
+      detailTab,
+      benchmarkOpen: false,
+      layers,
+    });
+    const targetUrl = targetQuery ? `${pathname}?${targetQuery}` : pathname;
+    window.history.replaceState(window.history.state, '', targetUrl);
+    router.replace(targetUrl, { scroll: false });
   }
 
   function zoomCountry(direction: 1 | -1) {

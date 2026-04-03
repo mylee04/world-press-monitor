@@ -362,9 +362,32 @@ export async function readHourlyCountsForSource(sourceNames: string[], countryHi
     where source = any($1::text[])
       and publication_datetime >= now() - interval '24 hours'
       and coalesce(nullif(trim(title_quality), ''), 'ok') <> 'suspect'
-      ${countryHint ? `and country = $2` : ''}
+      ${countryHint ? `and coalesce(nullif(trim(source_country), ''), nullif(trim(country), '')) = $2` : ''}
     group by 1
     order by 1 asc
+    `,
+    countryHint ? [sourceNames, countryHint] : [sourceNames]
+  );
+  return result.rows;
+}
+
+export async function readDailyBenchmarkCountsForSource(
+  sourceNames: string[],
+  countryHint?: string | null
+): Promise<Array<{ day_bucket: string; published_count: string }>> {
+  if (sourceNames.length === 0) return [];
+  const db = getPool();
+  const result = await db.query<{ day_bucket: string; published_count: string }>(
+    `
+    select
+      day_bucket::text,
+      sum(published_count)::text as published_count
+    from country_benchmark_source_daily
+    where source = any($1::text[])
+      ${countryHint ? `and country = $2` : ''}
+    group by day_bucket
+    order by day_bucket desc
+    limit 7
     `,
     countryHint ? [sourceNames, countryHint] : [sourceNames]
   );

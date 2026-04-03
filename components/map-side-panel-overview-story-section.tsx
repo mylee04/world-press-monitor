@@ -91,7 +91,7 @@ export function OverviewStorySection({
             ? `Country bubbles show where the selected publisher is active across borders and how much output each market generated in the last ${activeWindowDescriptor}.`
             : mapMode === 'health'
               ? `Country bubbles are colored by degraded-source share and sized by active source count in the last ${activeWindowDescriptor}.`
-              : `Country bubbles are sized by ${activeWindowDescriptor} publishing volume and color-shift on freshness and late share.`}
+              : `Country bubbles are sized by core publishing volume in the last ${activeWindowDescriptor} and color-shift on freshness and late share.`}
         </span>
         <span>
           {latestMapUpdatedLabel

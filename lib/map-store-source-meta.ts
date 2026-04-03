@@ -8,6 +8,7 @@ type AtlasFeed = {
   name?: string;
   url?: string | null;
   sitemapUrl?: string | null;
+  distributionClass?: SourceDistributionClass;
 };
 
 type AtlasCountry = {
@@ -20,6 +21,8 @@ type AtlasFile = {
   countries?: AtlasCountry[];
 };
 
+export type SourceDistributionClass = 'publisher' | 'portal';
+
 export type SourceMethodMeta = {
   country: string;
   countryCode: string | null;
@@ -29,6 +32,7 @@ export type SourceMethodMeta = {
   sitemapUrl: string | null;
   hasRss: boolean;
   hasSitemap: boolean;
+  distributionClass: SourceDistributionClass;
 };
 
 let atlasSourceMetaCache: Map<string, SourceMethodMeta> | null = null;
@@ -64,6 +68,15 @@ export function matchesDisplaySource(rawSource: string, displaySource: string): 
 
 function getAtlasPath(): string {
   return path.join(process.cwd(), 'data', 'rss-atlas.json');
+}
+
+function mergeDistributionClass(
+  current: SourceDistributionClass | undefined,
+  next: SourceDistributionClass | undefined
+): SourceDistributionClass {
+  if (current === 'publisher') return 'publisher';
+  if (next !== 'portal') return 'publisher';
+  return 'portal';
 }
 
 function loadAtlasSourceMeta(): {
@@ -103,6 +116,7 @@ function loadAtlasSourceMeta(): {
         sitemapUrl: current?.sitemapUrl || feed.sitemapUrl || null,
         hasRss: Boolean(current?.rssUrl || feed.url || null),
         hasSitemap: Boolean(current?.sitemapUrl || feed.sitemapUrl || null),
+        distributionClass: mergeDistributionClass(current?.distributionClass, feed.distributionClass),
       };
       sourceMeta.set(key, next);
       sourceMeta.set(normalizeSourceKey(rawName), next);
@@ -128,6 +142,10 @@ export function classifySourceMethod(meta: SourceMethodMeta | null): 'rss' | 'si
   if (meta?.hasRss && meta?.hasSitemap) return 'rss+sitemap';
   if (meta?.hasSitemap) return 'sitemap';
   return 'rss';
+}
+
+export function classifySourceDistribution(meta: SourceMethodMeta | null): SourceDistributionClass {
+  return meta?.distributionClass === 'portal' ? 'portal' : 'publisher';
 }
 
 export function resolveSourceCountry(source: string, fallbackCountry?: string | null): string | null {

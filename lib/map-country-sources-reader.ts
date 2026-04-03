@@ -1,7 +1,7 @@
 import { inferGeoFromCountry } from '@/lib/geo';
 import {
-  readDailyBenchmarkCountsForCountry,
-  readHourlyCountsForCountry,
+  readDailyBenchmarkCountsForSource,
+  readHourlyCountsForSource,
   readLatestHealthBySource,
   readWindowedSourceMetrics,
   normalizeHealthStatus,
@@ -14,6 +14,7 @@ import {
 } from '@/lib/map-store-locations';
 import {
   buildMapSourceId,
+  classifySourceDistribution,
   classifySourceMethod,
   getCountryCode,
   getSourceMeta,
@@ -37,6 +38,7 @@ export async function loadMapCountrySources(
   const rows = await readWindowedSourceMetrics(selectedWindow, `coalesce(nullif(trim(e.source), ''), '') <> ''`);
   const healthBySource = await readLatestHealthBySource();
   const bySource = new Map<string, MapSourceMetricRow>();
+  const rawCoreSourceNames = new Set<string>();
 
   for (const row of rows) {
     const sourceCountry = resolveSourceCountry(row.source, row.country);
@@ -45,6 +47,8 @@ export async function loadMapCountrySources(
     const displaySource = buildDisplaySourceName(row.source);
     const sourceKey = normalizeSourceKey(displaySource);
     const meta = getSourceMeta(row.source);
+    if (classifySourceDistribution(meta) === 'portal') continue;
+    rawCoreSourceNames.add(row.source);
     const method = classifySourceMethod(meta);
     const health = normalizeHealthStatus(healthBySource.get(normalizeSourceKey(row.source)));
     const windows = {
@@ -116,8 +120,9 @@ export async function loadMapCountrySources(
     .sort((a, b) => b.windows[selectedWindow].published - a.windows[selectedWindow].published || a.source.localeCompare(b.source));
 
   const center = inferGeoFromCountry(country);
-  const hourlyRows = await readHourlyCountsForCountry(country);
-  const dailyRows = await readDailyBenchmarkCountsForCountry(country);
+  const coreSourceNames = [...rawCoreSourceNames];
+  const hourlyRows = coreSourceNames.length > 0 ? await readHourlyCountsForSource(coreSourceNames, country) : [];
+  const dailyRows = coreSourceNames.length > 0 ? await readDailyBenchmarkCountsForSource(coreSourceNames, country) : [];
 
   return {
     generatedAt: new Date().toISOString(),

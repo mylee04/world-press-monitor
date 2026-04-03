@@ -6,6 +6,7 @@ import {
 } from '@/lib/map-store-db';
 import { rankTopCounts } from '@/lib/map-store-locations';
 import {
+  classifySourceDistribution,
   getCountryCode,
   getSourceMeta,
   normalizeSourceKey,
@@ -43,8 +44,9 @@ export async function buildMapCountryMetricsPayload(selectedWindow: MapMetricWin
     const country = resolveSourceCountry(row.source, row.country);
     if (!country) continue;
     const displaySource = buildDisplaySourceName(row.source);
-    const sourceKey = `${country}::${normalizeSourceKey(displaySource)}`;
     const meta = getSourceMeta(row.source);
+    if (classifySourceDistribution(meta) === 'portal') continue;
+    const sourceKey = `${country}::${normalizeSourceKey(displaySource)}`;
     const health = normalizeHealthStatus(healthBySource.get(normalizeSourceKey(row.source)));
     const current = byCountrySource.get(sourceKey) || {
       country,
