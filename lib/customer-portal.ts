@@ -72,10 +72,6 @@ export async function readCustomerPortalSession(): Promise<CustomerPortalSession
   };
 }
 
-export function hasPortalServerApiProxyConfig(): boolean {
-  return Boolean(getCustomerNewsApiBaseUrl() && getPortalServerApiToken());
-}
-
 function copyProxyHeaders(sourceHeaders: Headers): Headers {
   const headers = new Headers();
   const passthrough = [
