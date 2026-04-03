@@ -666,6 +666,60 @@
     "label": "Politiken HQ"
   },
   {
+    "country": "Estonia",
+    "publisher": "Äripäev",
+    "city": "Tallinn",
+    "region": "Tallinn",
+    "lat": 59.437,
+    "lon": 24.7536,
+    "label": "Äripäev HQ"
+  },
+  {
+    "country": "Estonia",
+    "publisher": "Delfi Meedia",
+    "city": "Tallinn",
+    "region": "Tallinn",
+    "lat": 59.437,
+    "lon": 24.7536,
+    "label": "Delfi Meedia HQ"
+  },
+  {
+    "country": "Estonia",
+    "publisher": "ERR",
+    "city": "Tallinn",
+    "region": "Tallinn",
+    "lat": 59.437,
+    "lon": 24.7536,
+    "label": "ERR HQ"
+  },
+  {
+    "country": "Estonia",
+    "publisher": "Geenius",
+    "city": "Tallinn",
+    "region": "Tallinn",
+    "lat": 59.437,
+    "lon": 24.7536,
+    "label": "Geenius HQ"
+  },
+  {
+    "country": "Estonia",
+    "publisher": "Ohtuleht",
+    "city": "Tallinn",
+    "region": "Tallinn",
+    "lat": 59.437,
+    "lon": 24.7536,
+    "label": "Ohtuleht HQ"
+  },
+  {
+    "country": "Estonia",
+    "publisher": "Postimees Grupp",
+    "city": "Tallinn",
+    "region": "Tallinn",
+    "lat": 59.437,
+    "lon": 24.7536,
+    "label": "Postimees Grupp HQ"
+  },
+  {
     "country": "Finland",
     "publisher": "Aamulehti",
     "city": "Tampere",
@@ -673,6 +727,312 @@
     "lat": 61.4981,
     "lon": 23.76,
     "label": "Aamulehti HQ"
+  },
+  {
+    "country": "Finland",
+    "publisher": "Arvopaperi",
+    "city": "Helsinki",
+    "region": "Helsinki",
+    "lat": 60.1699,
+    "lon": 24.9384,
+    "label": "Arvopaperi HQ"
+  },
+  {
+    "country": "Finland",
+    "publisher": "Demokraatti",
+    "city": "Helsinki",
+    "region": "Helsinki",
+    "lat": 60.1699,
+    "lon": 24.9384,
+    "label": "Demokraatti HQ"
+  },
+  {
+    "country": "Finland",
+    "publisher": "ESS",
+    "city": "Lahti",
+    "region": "Lahti",
+    "lat": 60.9827,
+    "lon": 25.6615,
+    "label": "ESS HQ"
+  },
+  {
+    "country": "Finland",
+    "publisher": "Hameen Sanomat",
+    "city": "Hameenlinna",
+    "region": "Hameenlinna",
+    "lat": 60.995,
+    "lon": 24.4643,
+    "label": "Hameen Sanomat HQ"
+  },
+  {
+    "country": "Finland",
+    "publisher": "HBL",
+    "city": "Helsinki",
+    "region": "Helsinki",
+    "lat": 60.1699,
+    "lon": 24.9384,
+    "label": "HBL HQ"
+  },
+  {
+    "country": "Finland",
+    "publisher": "Helsingin Sanomat",
+    "city": "Helsinki",
+    "region": "Helsinki",
+    "lat": 60.1699,
+    "lon": 24.9384,
+    "label": "Helsingin Sanomat HQ"
+  },
+  {
+    "country": "Finland",
+    "publisher": "Ilta-Sanomat",
+    "city": "Helsinki",
+    "region": "Helsinki",
+    "lat": 60.1699,
+    "lon": 24.9384,
+    "label": "Ilta-Sanomat HQ"
+  },
+  {
+    "country": "Finland",
+    "publisher": "Iltalehti",
+    "city": "Helsinki",
+    "region": "Helsinki",
+    "lat": 60.1699,
+    "lon": 24.9384,
+    "label": "Iltalehti HQ"
+  },
+  {
+    "country": "Finland",
+    "publisher": "Kaleva",
+    "city": "Oulu",
+    "region": "Oulu",
+    "lat": 65.0121,
+    "lon": 25.4651,
+    "label": "Kaleva HQ"
+  },
+  {
+    "country": "Finland",
+    "publisher": "Karjalainen",
+    "city": "Joensuu",
+    "region": "Joensuu",
+    "lat": 62.601,
+    "lon": 29.7636,
+    "label": "Karjalainen HQ"
+  },
+  {
+    "country": "Finland",
+    "publisher": "Keskipohjanmaa",
+    "city": "Kokkola",
+    "region": "Kokkola",
+    "lat": 63.8385,
+    "lon": 23.1307,
+    "label": "Keskipohjanmaa HQ"
+  },
+  {
+    "country": "Finland",
+    "publisher": "Keskisuomalainen",
+    "city": "Jyvaskyla",
+    "region": "Jyvaskyla",
+    "lat": 62.2426,
+    "lon": 25.7473,
+    "label": "Keskisuomalainen HQ"
+  },
+  {
+    "country": "Finland",
+    "publisher": "Kotimaa",
+    "city": "Helsinki",
+    "region": "Helsinki",
+    "lat": 60.1699,
+    "lon": 24.9384,
+    "label": "Kotimaa HQ"
+  },
+  {
+    "country": "Finland",
+    "publisher": "Kouvolan Sanomat",
+    "city": "Kouvola",
+    "region": "Kouvola",
+    "lat": 60.8681,
+    "lon": 26.7042,
+    "label": "Kouvolan Sanomat HQ"
+  },
+  {
+    "country": "Finland",
+    "publisher": "KSML",
+    "city": "Jyvaskyla",
+    "region": "Jyvaskyla",
+    "lat": 62.2426,
+    "lon": 25.7473,
+    "label": "KSML HQ"
+  },
+  {
+    "country": "Finland",
+    "publisher": "Lapin Kansa",
+    "city": "Rovaniemi",
+    "region": "Rovaniemi",
+    "lat": 66.5039,
+    "lon": 25.7294,
+    "label": "Lapin Kansa HQ"
+  },
+  {
+    "country": "Finland",
+    "publisher": "Maaseudun Tulevaisuus",
+    "city": "Helsinki",
+    "region": "Helsinki",
+    "lat": 60.1699,
+    "lon": 24.9384,
+    "label": "Maaseudun Tulevaisuus HQ"
+  },
+  {
+    "country": "Finland",
+    "publisher": "Mikrobitti",
+    "city": "Helsinki",
+    "region": "Helsinki",
+    "lat": 60.1699,
+    "lon": 24.9384,
+    "label": "Mikrobitti HQ"
+  },
+  {
+    "country": "Finland",
+    "publisher": "MTV Uutiset",
+    "city": "Helsinki",
+    "region": "Helsinki",
+    "lat": 60.1699,
+    "lon": 24.9384,
+    "label": "MTV Uutiset HQ"
+  },
+  {
+    "country": "Finland",
+    "publisher": "Nya Aland",
+    "city": "Mariehamn",
+    "region": "Mariehamn",
+    "lat": 60.0973,
+    "lon": 19.9348,
+    "label": "Nya Aland HQ"
+  },
+  {
+    "country": "Finland",
+    "publisher": "Osterbottens Tidning",
+    "city": "Jakobstad",
+    "region": "Jakobstad",
+    "lat": 63.6749,
+    "lon": 22.7026,
+    "label": "Osterbottens Tidning HQ"
+  },
+  {
+    "country": "Finland",
+    "publisher": "Ostnyland",
+    "city": "Porvoo",
+    "region": "Porvoo",
+    "lat": 60.3923,
+    "lon": 25.6651,
+    "label": "Ostnyland HQ"
+  },
+  {
+    "country": "Finland",
+    "publisher": "Satakunnan Kansa",
+    "city": "Pori",
+    "region": "Pori",
+    "lat": 61.4851,
+    "lon": 21.7974,
+    "label": "Satakunnan Kansa HQ"
+  },
+  {
+    "country": "Finland",
+    "publisher": "Seiska",
+    "city": "Helsinki",
+    "region": "Helsinki",
+    "lat": 60.1699,
+    "lon": 24.9384,
+    "label": "Seiska HQ"
+  },
+  {
+    "country": "Finland",
+    "publisher": "Suomen Kuvalehti",
+    "city": "Helsinki",
+    "region": "Helsinki",
+    "lat": 60.1699,
+    "lon": 24.9384,
+    "label": "Suomen Kuvalehti HQ"
+  },
+  {
+    "country": "Finland",
+    "publisher": "Suomenmaa",
+    "city": "Helsinki",
+    "region": "Helsinki",
+    "lat": 60.1699,
+    "lon": 24.9384,
+    "label": "Suomenmaa HQ"
+  },
+  {
+    "country": "Finland",
+    "publisher": "Sydin",
+    "city": "Kristinestad",
+    "region": "Kristinestad",
+    "lat": 62.2743,
+    "lon": 21.3759,
+    "label": "Sydin HQ"
+  },
+  {
+    "country": "Finland",
+    "publisher": "Talouselama",
+    "city": "Helsinki",
+    "region": "Helsinki",
+    "lat": 60.1699,
+    "lon": 24.9384,
+    "label": "Talouselama HQ"
+  },
+  {
+    "country": "Finland",
+    "publisher": "Tekniikka & Talous",
+    "city": "Helsinki",
+    "region": "Helsinki",
+    "lat": 60.1699,
+    "lon": 24.9384,
+    "label": "Tekniikka & Talous HQ"
+  },
+  {
+    "country": "Finland",
+    "publisher": "Tivi",
+    "city": "Helsinki",
+    "region": "Helsinki",
+    "lat": 60.1699,
+    "lon": 24.9384,
+    "label": "Tivi HQ"
+  },
+  {
+    "country": "Finland",
+    "publisher": "Turun Sanomat",
+    "city": "Turku",
+    "region": "Turku",
+    "lat": 60.4518,
+    "lon": 22.2666,
+    "label": "Turun Sanomat HQ"
+  },
+  {
+    "country": "Finland",
+    "publisher": "Uusi Suomi",
+    "city": "Helsinki",
+    "region": "Helsinki",
+    "lat": 60.1699,
+    "lon": 24.9384,
+    "label": "Uusi Suomi HQ"
+  },
+  {
+    "country": "Finland",
+    "publisher": "Vasabladet",
+    "city": "Vaasa",
+    "region": "Vaasa",
+    "lat": 63.0951,
+    "lon": 21.6165,
+    "label": "Vasabladet HQ"
+  },
+  {
+    "country": "Finland",
+    "publisher": "Verkkouutiset",
+    "city": "Helsinki",
+    "region": "Helsinki",
+    "lat": 60.1699,
+    "lon": 24.9384,
+    "label": "Verkkouutiset HQ"
   },
   {
     "country": "Finland",
@@ -1963,6 +2323,42 @@
   },
   {
     "country": "New Zealand",
+    "publisher": "BusinessDesk",
+    "city": "Auckland",
+    "region": "Auckland",
+    "lat": -36.8509,
+    "lon": 174.7645,
+    "label": "BusinessDesk HQ"
+  },
+  {
+    "country": "New Zealand",
+    "publisher": "Gisborne Herald",
+    "city": "Gisborne",
+    "region": "Gisborne",
+    "lat": -38.6623,
+    "lon": 178.0176,
+    "label": "Gisborne Herald HQ"
+  },
+  {
+    "country": "New Zealand",
+    "publisher": "Newsroom",
+    "city": "Auckland",
+    "region": "Auckland",
+    "lat": -36.8509,
+    "lon": 174.7645,
+    "label": "Newsroom HQ"
+  },
+  {
+    "country": "New Zealand",
+    "publisher": "Newstalk ZB",
+    "city": "Auckland",
+    "region": "Auckland",
+    "lat": -36.8509,
+    "lon": 174.7645,
+    "label": "Newstalk ZB HQ"
+  },
+  {
+    "country": "New Zealand",
     "publisher": "NZ Herald",
     "city": "Auckland",
     "region": "Auckland",
@@ -1972,12 +2368,57 @@
   },
   {
     "country": "New Zealand",
+    "publisher": "NZME",
+    "city": "Auckland",
+    "region": "Auckland",
+    "lat": -36.8509,
+    "lon": 174.7645,
+    "label": "NZME HQ"
+  },
+  {
+    "country": "New Zealand",
     "publisher": "RNZ",
     "city": "Wellington",
     "region": "Wellington",
     "lat": -41.2865,
     "lon": 174.7762,
     "label": "RNZ HQ"
+  },
+  {
+    "country": "New Zealand",
+    "publisher": "Stuff",
+    "city": "Wellington",
+    "region": "Wellington",
+    "lat": -41.2866,
+    "lon": 174.7756,
+    "label": "Stuff HQ"
+  },
+  {
+    "country": "New Zealand",
+    "publisher": "The Country",
+    "city": "Auckland",
+    "region": "Auckland",
+    "lat": -36.8509,
+    "lon": 174.7645,
+    "label": "The Country HQ"
+  },
+  {
+    "country": "New Zealand",
+    "publisher": "The Listener",
+    "city": "Auckland",
+    "region": "Auckland",
+    "lat": -36.8509,
+    "lon": 174.7645,
+    "label": "The Listener HQ"
+  },
+  {
+    "country": "New Zealand",
+    "publisher": "The Spinoff",
+    "city": "Auckland",
+    "region": "Auckland",
+    "lat": -36.8509,
+    "lon": 174.7645,
+    "label": "The Spinoff HQ"
   },
   {
     "country": "Norway",
@@ -2250,6 +2691,231 @@
     "label": "The Korea Economic Daily HQ"
   },
   {
+    "country": "Sweden",
+    "publisher": "Aftonbladet",
+    "city": "Stockholm",
+    "region": "Stockholm",
+    "lat": 59.3293,
+    "lon": 18.0686,
+    "label": "Aftonbladet HQ"
+  },
+  {
+    "country": "Sweden",
+    "publisher": "Bonnier News Local",
+    "city": "Stockholm",
+    "region": "Stockholm",
+    "lat": 59.3293,
+    "lon": 18.0686,
+    "label": "Bonnier News Local HQ"
+  },
+  {
+    "country": "Sweden",
+    "publisher": "Breakit",
+    "city": "Stockholm",
+    "region": "Stockholm",
+    "lat": 59.3293,
+    "lon": 18.0686,
+    "label": "Breakit HQ"
+  },
+  {
+    "country": "Sweden",
+    "publisher": "Dagens Industri",
+    "city": "Stockholm",
+    "region": "Stockholm",
+    "lat": 59.3293,
+    "lon": 18.0686,
+    "label": "Dagens Industri HQ"
+  },
+  {
+    "country": "Sweden",
+    "publisher": "Dagens Nyheter",
+    "city": "Stockholm",
+    "region": "Stockholm",
+    "lat": 59.3293,
+    "lon": 18.0686,
+    "label": "Dagens Nyheter HQ"
+  },
+  {
+    "country": "Sweden",
+    "publisher": "Expressen",
+    "city": "Stockholm",
+    "region": "Stockholm",
+    "lat": 59.3293,
+    "lon": 18.0686,
+    "label": "Expressen HQ"
+  },
+  {
+    "country": "Sweden",
+    "publisher": "Folkbladet",
+    "city": "Umea",
+    "region": "Umea",
+    "lat": 63.8258,
+    "lon": 20.263,
+    "label": "Folkbladet HQ"
+  },
+  {
+    "country": "Sweden",
+    "publisher": "Gota Media",
+    "city": "Kalmar",
+    "region": "Kalmar",
+    "lat": 56.6634,
+    "lon": 16.3568,
+    "label": "Gota Media HQ"
+  },
+  {
+    "country": "Sweden",
+    "publisher": "Göteborgs-Posten",
+    "city": "Gothenburg",
+    "region": "Gothenburg",
+    "lat": 57.7089,
+    "lon": 11.9746,
+    "label": "Göteborgs-Posten HQ"
+  },
+  {
+    "country": "Sweden",
+    "publisher": "Nerikes Allehanda",
+    "city": "Orebro",
+    "region": "Orebro",
+    "lat": 59.2753,
+    "lon": 15.2134,
+    "label": "Nerikes Allehanda HQ"
+  },
+  {
+    "country": "Sweden",
+    "publisher": "Norra Skåne",
+    "city": "Hassleholm",
+    "region": "Hassleholm",
+    "lat": 56.159,
+    "lon": 13.7668,
+    "label": "Norra Skåne HQ"
+  },
+  {
+    "country": "Sweden",
+    "publisher": "Norran",
+    "city": "Skelleftea",
+    "region": "Skelleftea",
+    "lat": 64.7502,
+    "lon": 20.9509,
+    "label": "Norran HQ"
+  },
+  {
+    "country": "Sweden",
+    "publisher": "NTM",
+    "city": "Norrkoping",
+    "region": "Norrkoping",
+    "lat": 58.5877,
+    "lon": 16.1924,
+    "label": "NTM HQ"
+  },
+  {
+    "country": "Sweden",
+    "publisher": "NWT Media",
+    "city": "Karlstad",
+    "region": "Karlstad",
+    "lat": 59.3793,
+    "lon": 13.5036,
+    "label": "NWT Media HQ"
+  },
+  {
+    "country": "Sweden",
+    "publisher": "Ny Teknik",
+    "city": "Stockholm",
+    "region": "Stockholm",
+    "lat": 59.3293,
+    "lon": 18.0686,
+    "label": "Ny Teknik HQ"
+  },
+  {
+    "country": "Sweden",
+    "publisher": "Privata Affärer",
+    "city": "Stockholm",
+    "region": "Stockholm",
+    "lat": 59.3293,
+    "lon": 18.0686,
+    "label": "Privata Affärer HQ"
+  },
+  {
+    "country": "Sweden",
+    "publisher": "Proletären",
+    "city": "Gothenburg",
+    "region": "Gothenburg",
+    "lat": 57.7089,
+    "lon": 11.9746,
+    "label": "Proletären HQ"
+  },
+  {
+    "country": "Sweden",
+    "publisher": "Stampen Media",
+    "city": "Gothenburg",
+    "region": "Gothenburg",
+    "lat": 57.7089,
+    "lon": 11.9746,
+    "label": "Stampen Media HQ"
+  },
+  {
+    "country": "Sweden",
+    "publisher": "Svenska Dagbladet",
+    "city": "Stockholm",
+    "region": "Stockholm",
+    "lat": 59.3293,
+    "lon": 18.0686,
+    "label": "Svenska Dagbladet HQ"
+  },
+  {
+    "country": "Sweden",
+    "publisher": "Sveriges Radio",
+    "city": "Stockholm",
+    "region": "Stockholm",
+    "lat": 59.3293,
+    "lon": 18.0686,
+    "label": "Sveriges Radio HQ"
+  },
+  {
+    "country": "Sweden",
+    "publisher": "SVT",
+    "city": "Stockholm",
+    "region": "Stockholm",
+    "lat": 59.3293,
+    "lon": 18.0686,
+    "label": "SVT HQ"
+  },
+  {
+    "country": "Sweden",
+    "publisher": "Sydsvenskan",
+    "city": "Malmo",
+    "region": "Malmo",
+    "lat": 55.60498,
+    "lon": 13.0038,
+    "label": "Sydsvenskan HQ"
+  },
+  {
+    "country": "Sweden",
+    "publisher": "The Local Sweden",
+    "city": "Stockholm",
+    "region": "Stockholm",
+    "lat": 59.3293,
+    "lon": 18.0686,
+    "label": "The Local Sweden HQ"
+  },
+  {
+    "country": "Sweden",
+    "publisher": "TV4",
+    "city": "Stockholm",
+    "region": "Stockholm",
+    "lat": 59.3293,
+    "lon": 18.0686,
+    "label": "TV4 HQ"
+  },
+  {
+    "country": "Sweden",
+    "publisher": "Västerbottens-Kuriren",
+    "city": "Umea",
+    "region": "Umea",
+    "lat": 63.8258,
+    "lon": 20.263,
+    "label": "Västerbottens-Kuriren HQ"
+  },
+  {
     "country": "Taiwan",
     "publisher": "Business Today",
     "city": "Taipei",
@@ -2512,6 +3178,15 @@
   },
   {
     "country": "United States",
+    "publisher": "Condé Nast",
+    "city": "New York City",
+    "region": "New York City",
+    "lat": 40.7128,
+    "lon": -74.006,
+    "label": "Conde Nast HQ"
+  },
+  {
+    "country": "United States",
     "publisher": "Courier Journal",
     "city": "Louisville",
     "region": "Louisville",
@@ -2620,6 +3295,15 @@
   },
   {
     "country": "United States",
+    "publisher": "ESPN",
+    "city": "Bristol",
+    "region": "Connecticut",
+    "lat": 41.6718,
+    "lon": -72.9493,
+    "label": "ESPN HQ"
+  },
+  {
+    "country": "United States",
     "publisher": "Fast Company",
     "city": "New York City",
     "region": "New York City",
@@ -2635,6 +3319,24 @@
     "lat": 40.7128,
     "lon": -74.006,
     "label": "Forbes HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Foreign Affairs",
+    "city": "New York City",
+    "region": "New York City",
+    "lat": 40.7128,
+    "lon": -74.006,
+    "label": "Foreign Affairs HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Foreign Policy",
+    "city": "Washington, D.C.",
+    "region": "Washington, D.C.",
+    "lat": 38.9072,
+    "lon": -77.0369,
+    "label": "Foreign Policy HQ"
   },
   {
     "country": "United States",
@@ -2656,12 +3358,48 @@
   },
   {
     "country": "United States",
+    "publisher": "Gannett",
+    "city": "New York City",
+    "region": "New York City",
+    "lat": 40.7128,
+    "lon": -74.006,
+    "label": "Gannett HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "gCaptain",
+    "city": "Houston",
+    "region": "Texas",
+    "lat": 29.7604,
+    "lon": -95.3698,
+    "label": "gCaptain HQ"
+  },
+  {
+    "country": "United States",
     "publisher": "Gizmodo",
     "city": "New York City",
     "region": "New York City",
     "lat": 40.7128,
     "lon": -74.006,
     "label": "Gizmodo HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Hearst Magazines",
+    "city": "New York City",
+    "region": "New York City",
+    "lat": 40.7128,
+    "lon": -74.006,
+    "label": "Hearst Magazines HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Honolulu Star-Advertiser",
+    "city": "Honolulu",
+    "region": "Hawaii",
+    "lat": 21.3069,
+    "lon": -157.8583,
+    "label": "Honolulu Star-Advertiser HQ"
   },
   {
     "country": "United States",
@@ -2689,6 +3427,24 @@
     "lat": 39.7684,
     "lon": -86.1581,
     "label": "IndyStar HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Jacobin",
+    "city": "New York City",
+    "region": "New York City",
+    "lat": 40.7128,
+    "lon": -74.006,
+    "label": "Jacobin HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "KrebsOnSecurity",
+    "city": "Washington, D.C.",
+    "region": "Washington, D.C.",
+    "lat": 38.9072,
+    "lon": -77.0369,
+    "label": "KrebsOnSecurity HQ"
   },
   {
     "country": "United States",
@@ -2728,12 +3484,39 @@
   },
   {
     "country": "United States",
+    "publisher": "Military Times",
+    "city": "Vienna",
+    "region": "Virginia",
+    "lat": 38.9012,
+    "lon": -77.2653,
+    "label": "Military Times HQ"
+  },
+  {
+    "country": "United States",
     "publisher": "Milwaukee Journal Sentinel",
     "city": "Milwaukee",
     "region": "Milwaukee",
     "lat": 43.0389,
     "lon": -87.9065,
     "label": "Milwaukee Journal Sentinel HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "MIT Technology Review",
+    "city": "Cambridge",
+    "region": "Massachusetts",
+    "lat": 42.3736,
+    "lon": -71.1097,
+    "label": "MIT Technology Review HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Mother Jones",
+    "city": "San Francisco",
+    "region": "California",
+    "lat": 37.7749,
+    "lon": -122.4194,
+    "label": "Mother Jones HQ"
   },
   {
     "country": "United States",
@@ -2773,6 +3556,24 @@
   },
   {
     "country": "United States",
+    "publisher": "NewsNation",
+    "city": "Chicago",
+    "region": "Illinois",
+    "lat": 41.8781,
+    "lon": -87.6298,
+    "label": "NewsNation HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Newsweek",
+    "city": "New York City",
+    "region": "New York City",
+    "lat": 40.7128,
+    "lon": -74.006,
+    "label": "Newsweek HQ"
+  },
+  {
+    "country": "United States",
     "publisher": "NPR",
     "city": "Washington, D.C.",
     "region": "Washington, D.C.",
@@ -2809,12 +3610,66 @@
   },
   {
     "country": "United States",
+    "publisher": "PBS NewsHour",
+    "city": "Arlington",
+    "region": "Virginia",
+    "lat": 38.8816,
+    "lon": -77.091,
+    "label": "PBS NewsHour HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Penske Media",
+    "city": "Los Angeles",
+    "region": "California",
+    "lat": 34.0522,
+    "lon": -118.2437,
+    "label": "Penske Media HQ"
+  },
+  {
+    "country": "United States",
     "publisher": "Politico",
     "city": "Arlington",
     "region": "Arlington County",
     "lat": 38.8803,
     "lon": -77.1083,
     "label": "Politico HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Press Herald",
+    "city": "Portland",
+    "region": "Maine",
+    "lat": 43.6591,
+    "lon": -70.2568,
+    "label": "Press Herald HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "ProPublica",
+    "city": "New York City",
+    "region": "New York City",
+    "lat": 40.7128,
+    "lon": -74.006,
+    "label": "ProPublica HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Quartz",
+    "city": "New York City",
+    "region": "New York City",
+    "lat": 40.7128,
+    "lon": -74.006,
+    "label": "Quartz HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Reason",
+    "city": "Los Angeles",
+    "region": "California",
+    "lat": 34.0522,
+    "lon": -118.2437,
+    "label": "Reason HQ"
   },
   {
     "country": "United States",
@@ -2836,6 +3691,24 @@
   },
   {
     "country": "United States",
+    "publisher": "ScienceDaily",
+    "city": "Rockville",
+    "region": "Maryland",
+    "lat": 39.0839,
+    "lon": -77.1528,
+    "label": "ScienceDaily HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Scripps News",
+    "city": "Cincinnati",
+    "region": "Ohio",
+    "lat": 39.1031,
+    "lon": -84.512,
+    "label": "Scripps News HQ"
+  },
+  {
+    "country": "United States",
     "publisher": "Seattle Times",
     "city": "Seattle",
     "region": "Seattle",
@@ -2851,6 +3724,24 @@
     "lat": 38.9072,
     "lon": -77.0369,
     "label": "Slate HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Space.com",
+    "city": "New York City",
+    "region": "New York City",
+    "lat": 40.7128,
+    "lon": -74.006,
+    "label": "Space.com HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "TechCrunch",
+    "city": "San Francisco",
+    "region": "California",
+    "lat": 37.7749,
+    "lon": -122.4194,
+    "label": "TechCrunch HQ"
   },
   {
     "country": "United States",
@@ -2872,12 +3763,39 @@
   },
   {
     "country": "United States",
+    "publisher": "The Diplomat",
+    "city": "Washington, D.C.",
+    "region": "Washington, D.C.",
+    "lat": 38.9072,
+    "lon": -77.0369,
+    "label": "The Diplomat HQ"
+  },
+  {
+    "country": "United States",
     "publisher": "The Hill",
     "city": "Washington, D.C.",
     "region": "Washington, D.C.",
     "lat": 38.9072,
     "lon": -77.0369,
     "label": "The Hill HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "The Intercept",
+    "city": "New York City",
+    "region": "New York City",
+    "lat": 40.7128,
+    "lon": -74.006,
+    "label": "The Intercept HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "The New Stack",
+    "city": "New York City",
+    "region": "New York City",
+    "lat": 40.7128,
+    "lon": -74.006,
+    "label": "The New Stack HQ"
   },
   {
     "country": "United States",
@@ -2908,6 +3826,15 @@
   },
   {
     "country": "United States",
+    "publisher": "The Points Guy",
+    "city": "New York City",
+    "region": "New York City",
+    "lat": 40.7128,
+    "lon": -74.006,
+    "label": "The Points Guy HQ"
+  },
+  {
+    "country": "United States",
     "publisher": "The Tennessean",
     "city": "Nashville",
     "region": "Nashville",
@@ -2917,12 +3844,48 @@
   },
   {
     "country": "United States",
+    "publisher": "The Verge",
+    "city": "New York City",
+    "region": "New York City",
+    "lat": 40.7128,
+    "lon": -74.006,
+    "label": "The Verge HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Time",
+    "city": "New York City",
+    "region": "New York City",
+    "lat": 40.7128,
+    "lon": -74.006,
+    "label": "Time HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "Tulsa World",
+    "city": "Tulsa",
+    "region": "Oklahoma",
+    "lat": 36.154,
+    "lon": -95.9928,
+    "label": "Tulsa World HQ"
+  },
+  {
+    "country": "United States",
     "publisher": "VentureBeat",
     "city": "San Francisco",
     "region": "San Francisco",
     "lat": 37.7749,
     "lon": -122.4194,
     "label": "VentureBeat HQ"
+  },
+  {
+    "country": "United States",
+    "publisher": "War on the Rocks",
+    "city": "Washington, D.C.",
+    "region": "Washington, D.C.",
+    "lat": 38.9072,
+    "lon": -77.0369,
+    "label": "War on the Rocks HQ"
   },
   {
     "country": "United States",
