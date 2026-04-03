@@ -6,6 +6,24 @@
 
 ## Unreleased
 
+### [33a02c0] docs: simplify README and decouple RSS health output
+- Commit: 33a02c0f2d041eac456a7afed36d3327aa702b35
+- Date: 2026-04-03 11:04:30 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	README.md
+    - M	audits/readme_network_precheck_latest.json
+    - M	audits/readme_rss_health_latest.json
+    - M	scripts/export-rss-atlas.ts
+    - M	scripts/verify-readme-rss.ts
+  - Git stat:
+  - README.md                                  |  5041 +----
+  -  audits/readme_network_precheck_latest.json |    24 +-
+  -  audits/readme_rss_health_latest.json       | 27720 +++++++++++++++++----------
+  -  scripts/export-rss-atlas.ts                |   108 +-
+  -  scripts/verify-readme-rss.ts               |    16 +-
+  -  5 files changed, 17499 insertions(+), 15410 deletions(-)
+
 ### [a4868ef] fix(map): harden back-to-globe reset URL/state sync
 - Commit: a4868efde99f5db0e173821df267af845600a055
 - Date: 2026-04-03 10:11:37 -0500
