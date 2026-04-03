@@ -123,11 +123,11 @@ function formatCompactInteger(value: number): string {
 
 function formatCountryMetricsLine(row: CountryMetrics): string {
   const freshSegment =
-    row.freshLast24h !== row.publishedLast24h
+    row.freshLast24h !== row.publishedLast24hExtended
       ? `  F: ${formatCompactInteger(row.freshLast24h)}`
       : '';
 
-  return `${row.country}  P: ${formatCompactInteger(row.publishedLast24h)}${freshSegment}  L: ${formatCompactInteger(row.lateLast24h)} (${formatPercent(row.lateShare)})  1h: ${formatCompactInteger(row.insertedLast1h)}`;
+  return `${row.country}  P: ${formatCompactInteger(row.publishedLast24hExtended)}${freshSegment}  L: ${formatCompactInteger(row.lateLast24h)} (${formatPercent(row.lateShare)})  1h: ${formatCompactInteger(row.insertedLast1h)}`;
 }
 
 function pickWebhookUrl(): string {
@@ -522,7 +522,7 @@ async function main(): Promise<void> {
 
     const header = [
       `📰 News Volume by Country (${new Date().toISOString()})`,
-      `24h  P: ${totalPublished24h.toLocaleString()}  F: ${totalFresh24h.toLocaleString()}  L: ${totalLate24h.toLocaleString()}  |  1h: ${totalInserted1h.toLocaleString()}`,
+      `24h  P: ${totalPublished24hExtended.toLocaleString()}  F: ${totalFresh24h.toLocaleString()}  L: ${totalLate24h.toLocaleString()}  |  1h: ${totalInserted1h.toLocaleString()}`,
       `First-seen 24h: ${totalInserted24h.toLocaleString()}  |  Late share: ${formatPercent(totalLateShare)}`,
       `Late-heavy: ${lateHeavyCountries.join(', ') || 'none'}`,
       `Domestic top ${selectedDomesticRows.length}: ${domesticSummary || 'none'}`,

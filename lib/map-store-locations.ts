@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { inferGeoFromTitle } from '@/lib/geo';
+import { inferGeoFromTitle, inferGeoFromCountry } from '@/lib/geo';
 import { resolvePublisherHeadquarters } from '@/lib/publisher-headquarters';
 import { resolveSourceHeadquarters } from '@/lib/source-headquarters';
 

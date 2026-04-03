@@ -4,6 +4,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import type { CSSProperties, PointerEvent as ReactPointerEvent, WheelEvent as ReactWheelEvent } from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { geoGraticule10, geoMercator, geoOrthographic, geoPath } from 'd3-geo';
+import { useCustomerAccess } from '@/components/customer-access-provider';
 import { MapDetailDrawer } from '@/components/map-detail-drawer';
 import { MapFloatingToolbar } from '@/components/map-floating-toolbar';
 import { HelpTooltipLabel } from '@/components/help-tooltip-label';
@@ -1433,6 +1434,7 @@ export function MapView() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const { hasToken, isReady } = useCustomerAccess();
   const searchInputRef = useRef<HTMLInputElement | null>(null);
   const [mapMode, setMapMode] = useState<MapMode>('countries');
   const [mapWindow, setMapWindow] = useState<MapMetricWindow>('24h');
@@ -1449,6 +1451,9 @@ export function MapView() {
   const [interactionPaused, setInteractionPaused] = useState(false);
   const [sceneOrigin, setSceneOrigin] = useState<{ x: number; y: number }>({ x: 56, y: 52 });
   const [layers, setLayers] = useState<MapLayerState>(DEFAULT_MAP_LAYERS);
+  const localPreviewEnabled = process.env.NODE_ENV !== 'production';
+  const detailAccessEnabled = localPreviewEnabled || (isReady && hasToken);
+  const detailAccessLocked = !localPreviewEnabled && isReady && !hasToken;
   const countriesState = useRemoteJson<MapCountryMetricsResponse>(
     `/api/customer/dashboard/map/countries?window=${mapWindow}`,
     undefined,
@@ -1465,12 +1470,16 @@ export function MapView() {
   });
   const countryName = selectedCountry?.country || null;
   const sourcesState = useRemoteJson<MapCountrySourcesResponse>(
-    countryName ? `/api/customer/dashboard/map/countries/${encodeURIComponent(countryName)}/sources?window=${mapWindow}` : null,
+    detailAccessEnabled && countryName
+      ? `/api/customer/dashboard/map/countries/${encodeURIComponent(countryName)}/sources?window=${mapWindow}`
+      : null,
     undefined,
     { cacheMode: 'session' }
   );
   const sourceDetailState = useRemoteJson<MapSourceDetailResponse>(
-    selectedSource?.sourceId ? `/api/customer/dashboard/map/sources/${encodeURIComponent(selectedSource.sourceId)}` : null,
+    detailAccessEnabled && selectedSource?.sourceId
+      ? `/api/customer/dashboard/map/sources/${encodeURIComponent(selectedSource.sourceId)}`
+      : null,
     undefined,
     { cacheMode: 'session' }
   );
@@ -1484,6 +1493,7 @@ export function MapView() {
   const selectedCountryHourly = selectedCountry ? sourcesState.data?.hourly24h || [] : [];
   const selectedCountryDaily = selectedCountry ? sourcesState.data?.daily7d || [] : [];
   const sourceDetailFallback = useMemo<MapSourceDetailResponse | null>(() => {
+    if (!detailAccessEnabled || !selectedSource) return null;
     if (!selectedSource) return null;
     return {
       generatedAt:
@@ -1881,6 +1891,19 @@ export function MapView() {
   }, [displayedCountrySources, selectedSource]);
 
   useEffect(() => {
+    if (detailAccessEnabled) return;
+    if (selectedCluster) {
+      setSelectedCluster(null);
+    }
+    if (selectedSource) {
+      setSelectedSource(null);
+    }
+    if (detailTab !== 'metrics') {
+      setDetailTab('metrics');
+    }
+  }, [detailAccessEnabled, selectedCluster, selectedSource, detailTab]);
+
+  useEffect(() => {
     if (!selectedCluster) return;
     if (displayedCountrySources.some((item) => selectedCluster.sources.some((source) => source.sourceId === item.sourceId))) return;
     setSelectedCluster(null);
@@ -1931,6 +1954,29 @@ export function MapView() {
     setSelectedSource(null);
     setCountryViewport(DEFAULT_COUNTRY_VIEWPORT);
     setLeftTab('overview');
+  }
+
+  function zoomCountry(direction: 1 | -1) {
+    if (!selectedCountry) return;
+    const targetScale = clamp(
+      countryViewport.scale * (direction > 0 ? COUNTRY_ZOOM_STEP : 1 / COUNTRY_ZOOM_STEP),
+      COUNTRY_ZOOM_MIN,
+      COUNTRY_ZOOM_MAX
+    );
+    if (Math.abs(targetScale - countryViewport.scale) < 0.0001) return;
+
+    const frameWidth = GLOBE_WIDTH - countrySafeInsets.left - countrySafeInsets.right;
+    const frameHeight = GLOBE_HEIGHT - countrySafeInsets.top - countrySafeInsets.bottom;
+    const centerX = countrySafeInsets.left + frameWidth / 2;
+    const centerY = countrySafeInsets.top + frameHeight / 2;
+    const worldX = (centerX - countryViewport.tx) / countryViewport.scale;
+    const worldY = (centerY - countryViewport.ty) / countryViewport.scale;
+
+    setCountryViewport({
+      scale: targetScale,
+      tx: round(centerX - worldX * targetScale, 2),
+      ty: round(centerY - worldY * targetScale, 2),
+    });
   }
 
   function commitSearchResult(result: MapSearchResult) {
@@ -2020,6 +2066,8 @@ export function MapView() {
               publishersLoading={publishersState.loading}
               searchInputRef={searchInputRef}
               onResetToGlobe={resetToGlobe}
+              onZoomOut={() => zoomCountry(-1)}
+              onZoomIn={() => zoomCountry(1)}
               onResetZoom={() => setCountryViewport(DEFAULT_COUNTRY_VIEWPORT)}
               onToggleMotion={() => setMotionEnabled((current) => !current)}
               onSearchOpen={() => setSearchOpen(true)}
@@ -2110,6 +2158,7 @@ export function MapView() {
             selectedCountry={selectedCountry}
             countryDataReady={Boolean(selectedCountry && sourcesState.data)}
             detailSelectionActive={Boolean(selectedCluster || selectedSource)}
+            detailAccessLocked={detailAccessLocked}
             selectedPublisher={selectedPublisher}
             selectedPublisherWindowMetrics={selectedPublisherWindowMetrics}
             totals={totals}
@@ -2170,6 +2219,7 @@ export function MapView() {
             selectedPublisher={selectedPublisher}
             selectedPublisherWindowMetrics={selectedPublisherWindowMetrics}
             selectedPublisherReliability={selectedPublisherReliability}
+            detailAccessLocked={detailAccessLocked}
             sourceDetail={sourceDetail}
             sourceDetailLoading={sourceDetailState.loading}
             sourceDetailError={sourceDetailState.error}

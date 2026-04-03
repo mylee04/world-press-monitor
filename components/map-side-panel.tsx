@@ -31,6 +31,7 @@ type MapSidePanelProps = {
   selectedCountry: MapCountryMetricRow | null;
   countryDataReady: boolean;
   detailSelectionActive: boolean;
+  detailAccessLocked: boolean;
   selectedPublisher: MapPublisherMetricRow | null;
   selectedPublisherWindowMetrics: MapPublisherMetricRow['windows'][MapMetricWindow] | null;
   totals: MapCountryMetricsResponse['totals'] | null;
@@ -87,6 +88,7 @@ export function MapSidePanel({
   selectedCountry,
   countryDataReady,
   detailSelectionActive,
+  detailAccessLocked,
   selectedPublisher,
   selectedPublisherWindowMetrics,
   totals,

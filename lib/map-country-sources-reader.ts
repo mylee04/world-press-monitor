@@ -1,4 +1,4 @@
-import { inferGeoFromTitle } from '@/lib/geo';
+import { inferGeoFromCountry } from '@/lib/geo';
 import {
   readDailyBenchmarkCountsForSource,
   readHourlyCountsForSource,
