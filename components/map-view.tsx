@@ -1455,6 +1455,7 @@ export function MapView() {
   const [interactionPaused, setInteractionPaused] = useState(false);
   const [sceneOrigin, setSceneOrigin] = useState<{ x: number; y: number }>({ x: 56, y: 52 });
   const [layers, setLayers] = useState<MapLayerState>(DEFAULT_MAP_LAYERS);
+  const clearCountrySelectionRef = useRef(false);
   const localPreviewEnabled = process.env.NODE_ENV !== 'production';
   const detailAccessEnabled = localPreviewEnabled || (isReady && hasToken);
   const detailAccessLocked = !localPreviewEnabled && isReady && !hasToken;
@@ -1657,6 +1658,11 @@ export function MapView() {
         setSelectedSource(null);
         setCountryViewport(DEFAULT_COUNTRY_VIEWPORT);
       }
+      clearCountrySelectionRef.current = false;
+      return;
+    }
+
+    if (clearCountrySelectionRef.current) {
       return;
     }
 
@@ -1672,7 +1678,7 @@ export function MapView() {
     setSelectedCluster(null);
     setSelectedSource(null);
     setCountryViewport(DEFAULT_COUNTRY_VIEWPORT);
-  }, [searchParams, countriesState.data, countryLookup, globeRotationLon]);
+  }, [urlCountry, countriesState.data, desiredCountryMatch, selectedCountry, globeRotationLon]);
 
   useEffect(() => {
     if (mapMode !== 'publishers' || !publishersState.data) return;
@@ -1939,12 +1945,27 @@ export function MapView() {
   }
 
   function resetToGlobe() {
+    clearCountrySelectionRef.current = true;
     setSceneOrigin({ x: 50, y: 52 });
     setSelectedCountry(null);
     setSelectedCluster(null);
     setSelectedSource(null);
     setCountryViewport(DEFAULT_COUNTRY_VIEWPORT);
     setLeftTab('overview');
+    const targetQuery = buildMapQueryString({
+      mode: mapMode,
+      window: mapWindow,
+      country: null,
+      publisher: mapMode === 'publishers' ? selectedPublisher?.publisher || null : null,
+      source: null,
+      leftTab: 'overview',
+      detailTab,
+      benchmarkOpen: false,
+      layers,
+    });
+    const targetUrl = targetQuery ? `${pathname}?${targetQuery}` : pathname;
+    window.history.replaceState(window.history.state, '', targetUrl);
+    router.replace(targetUrl, { scroll: false });
   }
 
   function focusCluster(cluster: CountrySourceCluster) {

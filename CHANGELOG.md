@@ -6,6 +6,28 @@
 
 ## Unreleased
 
+### [a4868ef] fix(map): harden back-to-globe reset URL/state sync
+- Commit: a4868efde99f5db0e173821df267af845600a055
+- Date: 2026-04-03 10:11:37 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	CHANGELOG.md
+    - M	components/map-view.tsx
+  - Git stat:
+  - CHANGELOG.md            | 10 ++++++++++
+  -  components/map-view.tsx | 23 ++++++++++++++++++++++-
+  -  2 files changed, 32 insertions(+), 1 deletion(-)
+
+### [4131b6d] fix(map): harden back-to-globe reset URL/state sync
+- Commit: 4131b6dceb8082529b8fd5cec32ddc3fded71bb7
+- Date: 2026-04-03 10:11:37 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	components/map-view.tsx
+  - Git stat:
+  - components/map-view.tsx | 23 ++++++++++++++++++++++-
+  -  1 file changed, 22 insertions(+), 1 deletion(-)
+
 ### [7c47df1] fix(map): tune country detail zoom and cache freshness
 - Commit: 7c47df1e4bc9426ae4636660c4c287711f2e0754
 - Date: 2026-04-03 09:49:31 -0500
