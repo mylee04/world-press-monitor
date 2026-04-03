@@ -1,22 +1,15 @@
-import { readFileSync, writeFileSync } from 'node:fs';
+#!/usr/bin/env bun
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-
-const README_PATH = resolve(process.cwd(), 'README.md');
-const OUTPUT_PATH = resolve(process.cwd(), 'data/rss-atlas.json');
-
-const SECTION_HEADER = /^###\s+(.+?)\s+\(([^)]+)\)$/;
-const TABLE_HEADER = /^\|No\.\|Outlet\|RSS URL\|HTTP Status\|Checked Date\|Valid\?\|Ingested 24h\|$/;
-const TABLE_SEPARATOR = /^\|---\|---\|---\|---\|---\|---\|---:?\|$/;
-const TABLE_ROW = /^(\d+)\|([^|]+)\|([^|]+)\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|?$/;
-const CHECKED_DATE_LINE = /^- Last checked:\s*(\d{2}\/\d{2}\/\d{4})/;
 
 type AtlasFeed = {
   name: string;
   url: string | null;
-  status: string | null;
-  checkedDate: string | null;
-  valid: string | null;
-  row: number;
+  status?: string | null;
+  checkedDate?: string | null;
+  valid?: string | null;
+  row?: number;
+  enabled?: boolean;
 };
 
 type AtlasCountry = {
@@ -32,63 +25,42 @@ type Atlas = {
   countries: AtlasCountry[];
 };
 
-const source = readFileSync(README_PATH, 'utf8').split(/\r?\n/);
+const ATLAS_PATH = resolve(process.cwd(), 'data/rss-atlas.json');
+const OUTPUT_PATH = resolve(process.cwd(), 'audits/rss_atlas_latest.json');
 
-const found = source.find((line) => CHECKED_DATE_LINE.test(line));
-const lastChecked = found ? (found.match(CHECKED_DATE_LINE)?.[1] || 'unknown') : 'unknown';
+function main(): void {
+  const raw = readFileSync(ATLAS_PATH, 'utf8');
+  const atlas = JSON.parse(raw) as Atlas;
 
-const countries: AtlasCountry[] = [];
-
-for (let i = 0; i < source.length; i += 1) {
-  const headingMatch = source[i].match(SECTION_HEADER);
-  if (!headingMatch) continue;
-
-  const countryName = headingMatch[1].trim();
-  const countryCode = headingMatch[2].trim();
-  if (!TABLE_HEADER.test((source[i + 1] || '').trim())) continue;
-  if (!TABLE_SEPARATOR.test((source[i + 2] || '').trim())) continue;
-
-  const feeds: AtlasFeed[] = [];
-  let j = i + 3;
-  while (j < source.length && /^\d+\|/.test(source[j])) {
-    const rowMatch = source[j].match(TABLE_ROW);
-    if (rowMatch) {
-      const row = Number.parseInt(rowMatch[1], 10);
-      const name = rowMatch[2].trim();
-      const rawUrl = rowMatch[3].trim();
-      const status = rowMatch[4].trim() || null;
-      const checkedDate = rowMatch[5].trim() || null;
-      const valid = rowMatch[6].trim() || null;
-      const extracted = rawUrl.replace(/^<([^>]+)>$/, '$1').trim();
-      const isNoSource = /^N\/A$/i.test(extracted) || extracted.length === 0;
-
-      feeds.push({
-        name,
-        url: isNoSource ? null : extracted,
-        status,
-        checkedDate,
-        valid,
-        row,
-      });
-    }
-    j += 1;
+  if (!Array.isArray(atlas.countries)) {
+    throw new Error(`Invalid atlas format in ${ATLAS_PATH}`);
   }
 
-  countries.push({
-    name: countryName,
-    code: countryCode,
-    feeds,
-  });
+  const payload = {
+    exportedAt: new Date().toISOString(),
+    atlasFile: ATLAS_PATH,
+    version: atlas.version,
+    generatedAt: atlas.generatedAt,
+    lastChecked: atlas.lastChecked,
+    countries: atlas.countries.length,
+    feeds: atlas.countries.reduce((total, country) => total + country.feeds.length, 0),
+    noSourceFeeds: atlas.countries.reduce(
+      (total, country) => total + country.feeds.filter((feed) => !feed.url).length,
+      0
+    ),
+    disabledFeeds: atlas.countries.reduce(
+      (total, country) => total + country.feeds.filter((feed) => feed.enabled === false).length,
+      0
+    ),
+    atlas,
+  };
 
-  i = j - 1;
+  mkdirSync(resolve(process.cwd(), 'audits'), { recursive: true });
+  writeFileSync(OUTPUT_PATH, `${JSON.stringify(payload, null, 2)}\n`, 'utf8');
+
+  console.log(
+    `wrote ${OUTPUT_PATH} with ${payload.countries} countries and ${payload.feeds} feeds`
+  );
 }
 
-const payload: Atlas = {
-  version: 1,
-  generatedAt: new Date().toISOString(),
-  lastChecked,
-  countries,
-};
-
-writeFileSync(OUTPUT_PATH, `${JSON.stringify(payload, null, 2)}\n`, 'utf8');
-console.log(`wrote data/rss-atlas.json with ${countries.length} countries and ${countries.reduce((acc, country) => acc + country.feeds.length, 0)} feeds`);
+main();

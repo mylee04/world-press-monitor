@@ -121,9 +121,6 @@ async function main(): Promise<void> {
       process.exit(2);
     }
   }
-  const source = readFileSync(README_PATH, 'utf8');
-  const sourceLines = source.split(/\r?\n/);
-
   const tasks = buildCheckTasks(atlas);
   const results = await verifyEndpoints(tasks);
   const invalidResults = results.filter((result) => !result.valid);
@@ -176,17 +173,6 @@ async function main(): Promise<void> {
     return;
   }
 
-  const preface = getReadmePreface(sourceLines, summaryCounts, results, atlas, recoveredFeedKeys, feedIngestionSummary);
-  const updatedSections = renderCountrySections(
-    atlas,
-    resultMap,
-    recoveredFeedKeys,
-    ONLY_VALID_IN_README,
-    feedIngestionSummary
-  );
-  const updatedReadme = `${updateHeaderCheckedDate(preface)}\n${updatedSections.join('\n')}\n`;
-  writeFileSync(README_PATH, updatedReadme, 'utf8');
-
   const stamp = NOW.toISOString().slice(0, 10);
   const reportPath = resolve(OUTPUT_DIR, `readme_rss_health_${stamp}.json`);
   const latestPath = resolve(OUTPUT_DIR, 'readme_rss_health_latest.json');
@@ -218,7 +204,7 @@ async function main(): Promise<void> {
   } else {
     console.log(`Failure reasons: none`);
   }
-  console.log(`Wrote README: ${README_PATH}`);
+  console.log(`README left unchanged: ${README_PATH}`);
   console.log(`Wrote report: ${reportPath}`);
 }
 

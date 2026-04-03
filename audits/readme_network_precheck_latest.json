@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-04-01T14:29:42.755Z",
-  "sampleUrl": "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml",
-  "sampleHost": "rss.nytimes.com",
+  "generatedAt": "2026-04-03T15:44:36.689Z",
+  "sampleUrl": "https://feeds.a.dj.com/rss/RSSWorldNews.xml",
+  "sampleHost": "feeds.a.dj.com",
   "checks": {
     "sampleDnsGetent": {
       "ok": false,
-      "host": "rss.nytimes.com",
+      "host": "feeds.a.dj.com",
       "ips": [],
       "raw": "",
       "error": "SKIPPED_DARWIN",
@@ -13,11 +13,11 @@
     },
     "sampleDnsNode": {
       "ok": true,
-      "host": "rss.nytimes.com",
+      "host": "feeds.a.dj.com",
       "ips": [
-        "151.101.129.164"
+        "18.154.219.24"
       ],
-      "raw": "151.101.129.164",
+      "raw": "18.154.219.24",
       "error": "",
       "skipped": false
     },
@@ -33,9 +33,9 @@
       "ok": true,
       "host": "www.google.com",
       "ips": [
-        "142.251.157.119"
+        "142.251.156.119"
       ],
-      "raw": "142.251.157.119",
+      "raw": "142.251.156.119",
       "error": "",
       "skipped": false
     },
@@ -46,8 +46,8 @@
     },
     "curlResolve": {
       "ok": true,
-      "host": "rss.nytimes.com",
-      "ip": "151.101.129.164",
+      "host": "feeds.a.dj.com",
+      "ip": "18.154.219.24",
       "status": 200,
       "outputLine": "HTTP/2 200",
       "reason": ""
@@ -55,7 +55,7 @@
     "googleCurlResolve": {
       "ok": true,
       "host": "www.google.com",
-      "ip": "142.251.157.119",
+      "ip": "142.251.156.119",
       "status": 200,
       "outputLine": "HTTP/2 200",
       "reason": ""
