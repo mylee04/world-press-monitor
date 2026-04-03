@@ -1263,6 +1263,367 @@ const PUBLISHER_RULES: PublisherRule[] = [
     countries: ['Israel'],
     prefixes: ['Israel Hayom -'],
   },
+  {
+    publisher: '1News',
+    countries: ['New Zealand'],
+    exact: ['1News'],
+  },
+  {
+    publisher: 'RNZ',
+    countries: ['New Zealand'],
+    prefixes: ['RNZ -'],
+  },
+  {
+    publisher: 'NZ Herald',
+    countries: ['New Zealand'],
+    prefixes: ['NZ Herald -'],
+  },
+  {
+    publisher: 'Newsroom',
+    countries: ['New Zealand'],
+    exact: ['Newsroom'],
+  },
+  {
+    publisher: 'The Spinoff',
+    countries: ['New Zealand'],
+    exact: ['The Spinoff'],
+  },
+  {
+    publisher: 'Newstalk ZB',
+    countries: ['New Zealand'],
+    exact: ['Newstalk ZB'],
+  },
+  {
+    publisher: 'CNN Indonesia',
+    countries: ['Indonesia'],
+    exact: ['CNN Indonesia'],
+  },
+  {
+    publisher: 'MetroTV News',
+    countries: ['Indonesia'],
+    exact: ['MetroTV News'],
+  },
+  {
+    publisher: 'CNA',
+    countries: ['Taiwan'],
+    exact: ['CNA', 'CNA (Central News Agency)'],
+    prefixes: ['CNA '],
+  },
+  {
+    publisher: 'Mirror Media',
+    countries: ['Taiwan'],
+    exact: ['Mirror Media'],
+  },
+  {
+    publisher: 'Business Today',
+    countries: ['Taiwan'],
+    exact: ['Business Today'],
+  },
+  {
+    publisher: '444.hu',
+    countries: ['Hungary'],
+    exact: ['444.hu'],
+  },
+  {
+    publisher: 'HVG',
+    countries: ['Hungary'],
+    exact: ['HVG'],
+  },
+  {
+    publisher: 'Index.hu',
+    countries: ['Hungary'],
+    exact: ['Index.hu'],
+  },
+  {
+    publisher: 'Blikk',
+    countries: ['Hungary'],
+    exact: ['Blikk'],
+  },
+  {
+    publisher: 'Infostart',
+    countries: ['Hungary'],
+    prefixes: ['Infostart -'],
+  },
+  {
+    publisher: 'Adevărul',
+    countries: ['Romania'],
+    exact: ['Adevărul'],
+  },
+  {
+    publisher: 'HotNews',
+    countries: ['Romania'],
+    exact: ['HotNews'],
+  },
+  {
+    publisher: 'Stiripesurse',
+    countries: ['Romania'],
+    exact: ['Stiripesurse'],
+  },
+  {
+    publisher: 'EVZ',
+    countries: ['Romania'],
+    exact: ['EVZ'],
+  },
+  {
+    publisher: 'Capital',
+    countries: ['Romania'],
+    exact: ['Capital'],
+  },
+  {
+    publisher: 'Digi24',
+    countries: ['Romania'],
+    exact: ['Digi24'],
+  },
+  {
+    publisher: 'Mediafax',
+    countries: ['Romania'],
+    exact: ['Mediafax'],
+  },
+  {
+    publisher: 'Cotidianul',
+    countries: ['Romania'],
+    exact: ['Cotidianul'],
+  },
+  {
+    publisher: 'Der Spiegel',
+    countries: ['Germany'],
+    exact: ['Der Spiegel'],
+  },
+  {
+    publisher: 'La Libre',
+    countries: ['Belgium'],
+    exact: ['La Libre'],
+  },
+  {
+    publisher: '20 Minutos',
+    countries: ['Spain'],
+    exact: ['20 Minutos'],
+  },
+  {
+    publisher: 'El Universal',
+    countries: ['Mexico'],
+    exact: ['El Universal'],
+  },
+  {
+    publisher: 'El Financiero',
+    countries: ['Mexico'],
+    exact: ['El Financiero'],
+  },
+  {
+    publisher: 'Emol',
+    countries: ['Chile'],
+    exact: ['Emol'],
+  },
+  {
+    publisher: 'Hart van Nederland',
+    countries: ['Netherlands'],
+    exact: ['Hart van Nederland'],
+  },
+  {
+    publisher: 'NRC',
+    countries: ['Netherlands'],
+    exact: ['NRC'],
+  },
+  {
+    publisher: 'CNEWS',
+    countries: ['France'],
+    exact: ['CNEWS'],
+  },
+  {
+    publisher: 'BFM TV',
+    countries: ['France'],
+    exact: ['BFM TV'],
+  },
+  {
+    publisher: 'Le Télégramme',
+    countries: ['France'],
+    exact: ['Le Télégramme'],
+  },
+  {
+    publisher: 'Le Monde',
+    countries: ['France'],
+    exact: ['Le Monde'],
+  },
+  {
+    publisher: 'Watson',
+    countries: ['Switzerland'],
+    exact: ['Watson'],
+  },
+  {
+    publisher: 'TRT Haber',
+    countries: ['Turkey'],
+    exact: ['TRT Haber'],
+  },
+  {
+    publisher: 'Nation TV',
+    countries: ['Thailand'],
+    exact: ['Nation TV'],
+  },
+  {
+    publisher: 'Nachrichten.at',
+    countries: ['Austria'],
+    exact: ['Nachrichten.at'],
+  },
+  {
+    publisher: 'Vesti',
+    countries: ['Bulgaria'],
+    exact: ['Vesti'],
+  },
+  {
+    publisher: 'Blesk',
+    countries: ['Czech Republic'],
+    exact: ['Blesk'],
+  },
+  {
+    publisher: 'TN Nova',
+    countries: ['Czech Republic'],
+    exact: ['TN Nova'],
+  },
+  {
+    publisher: 'Delfi Lithuania',
+    countries: ['Lithuania'],
+    exact: ['Delfi Lithuania'],
+  },
+  {
+    publisher: 'TV3 Lithuania',
+    countries: ['Lithuania'],
+    exact: ['TV3 Lithuania'],
+  },
+  {
+    publisher: 'Irish Examiner',
+    countries: ['Ireland'],
+    exact: ['Irish Examiner'],
+  },
+  {
+    publisher: 'Aamulehti',
+    countries: ['Finland'],
+    exact: ['Aamulehti'],
+  },
+  {
+    publisher: 'Business Insider',
+    countries: ['United States'],
+    exact: ['Business Insider'],
+  },
+  {
+    publisher: 'Axios',
+    countries: ['United States'],
+    exact: ['Axios'],
+  },
+  {
+    publisher: 'Boston Globe',
+    countries: ['United States'],
+    exact: ['Boston Globe'],
+  },
+  {
+    publisher: 'Chicago Tribune',
+    countries: ['United States'],
+    exact: ['Chicago Tribune'],
+  },
+  {
+    publisher: 'Baltimore Sun',
+    countries: ['United States'],
+    exact: ['Baltimore Sun'],
+  },
+  {
+    publisher: 'Arizona Republic',
+    countries: ['United States'],
+    exact: ['Arizona Republic'],
+  },
+  {
+    publisher: 'Austin American-Statesman',
+    countries: ['United States'],
+    exact: ['Austin American-Statesman'],
+  },
+  {
+    publisher: 'Billboard',
+    countries: ['United States'],
+    exact: ['Billboard'],
+  },
+  {
+    publisher: 'Bloomberg',
+    countries: ['United States'],
+    exact: ['Bloomberg'],
+  },
+  {
+    publisher: 'Manager Magazin',
+    countries: ['Germany'],
+    exact: ['Manager Magazin'],
+  },
+  {
+    publisher: 'WirtschaftsWoche',
+    countries: ['Germany'],
+    exact: ['WirtschaftsWoche'],
+  },
+  {
+    publisher: 'RTL.de',
+    countries: ['Germany'],
+    exact: ['RTL.de'],
+  },
+  {
+    publisher: 'TAG24',
+    countries: ['Germany'],
+    exact: ['TAG24'],
+  },
+  {
+    publisher: 'Frankfurter Rundschau',
+    countries: ['Germany'],
+    exact: ['Frankfurter Rundschau'],
+  },
+  {
+    publisher: 'Berliner Morgenpost',
+    countries: ['Germany'],
+    exact: ['Berliner Morgenpost'],
+  },
+  {
+    publisher: 'Berliner Zeitung',
+    countries: ['Germany'],
+    exact: ['Berliner Zeitung'],
+  },
+  {
+    publisher: 'kicker',
+    countries: ['Germany'],
+    exact: ['kicker'],
+  },
+  {
+    publisher: 'n-tv',
+    countries: ['Germany'],
+    exact: ['n-tv'],
+  },
+  {
+    publisher: 'Augsburger Allgemeine',
+    countries: ['Germany'],
+    exact: ['Augsburger Allgemeine'],
+  },
+  {
+    publisher: 'La Dépêche',
+    countries: ['France'],
+    exact: ['La Dépêche'],
+  },
+  {
+    publisher: 'Le Progrès',
+    countries: ['France'],
+    exact: ['Le Progrès'],
+  },
+  {
+    publisher: 'Le JDD',
+    countries: ['France'],
+    exact: ['Le JDD'],
+  },
+  {
+    publisher: 'Le Dauphiné Libéré',
+    countries: ['France'],
+    exact: ['Le Dauphiné Libéré'],
+  },
+  {
+    publisher: 'Disclose',
+    countries: ['France'],
+    exact: ['Disclose'],
+  },
+  {
+    publisher: 'Le Point',
+    countries: ['France'],
+    exact: ['Le Point'],
+  },
 ];
 
 function resolveRuleMatch(source: string, country: string, rule: PublisherRule): PublisherMatchType | null {
