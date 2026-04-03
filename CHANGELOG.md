@@ -6,6 +6,66 @@
 
 ## Unreleased
 
+### [3f2490c] Refine map routing and label layout
+- Commit: 3f2490c8da541915f61ef398cd37320830a99dcc
+- Date: 2026-04-03 17:57:32 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	CHANGELOG.md
+    - M	app/api/customer/dashboard/map/countries/[country]/sources/route.ts
+    - M	app/api/customer/dashboard/map/countries/route.ts
+    - M	app/api/customer/dashboard/map/publishers/route.ts
+    - M	app/api/customer/dashboard/map/sources/[sourceId]/route.ts
+    - M	app/globals.css
+    - M	app/layout.tsx
+    - M	components/map-detail-drawer.tsx
+    - M	components/map-floating-toolbar.tsx
+    - M	components/map-side-panel-overview-breakdown-section.tsx
+    - M	components/map-side-panel-overview-story-section.tsx
+    - M	components/map-side-panel-overview-tab.tsx
+    - M	components/map-side-panel.tsx
+    - M	components/map-stage-utils.ts
+    - M	components/map-view.tsx
+    - M	components/use-map-view-model.ts
+    - M	lib/customer-portal.ts
+    - M	lib/map-country-sources-reader.ts
+    - M	lib/map-display.ts
+    - A	lib/map-foreign-operated.ts
+    - M	lib/map-source-detail-reader.ts
+    - M	lib/map-store-locations.ts
+    - M	lib/map-types.ts
+    - M	lib/publisher-groups.ts
+    - M	lib/publisher-headquarters.ts
+    - M	lib/source-headquarters.ts
+  - Git stat:
+  - CHANGELOG.md                                       |   10 +
+  -  .../map/countries/[country]/sources/route.ts       |    9 +-
+  -  app/api/customer/dashboard/map/countries/route.ts  |    9 +-
+  -  app/api/customer/dashboard/map/publishers/route.ts |    9 +-
+  -  .../dashboard/map/sources/[sourceId]/route.ts      |   15 +-
+  -  app/globals.css                                    |  204 +-
+  -  app/layout.tsx                                     |   13 +-
+  -  components/map-detail-drawer.tsx                   |   57 +-
+  -  components/map-floating-toolbar.tsx                |   13 -
+  -  .../map-side-panel-overview-breakdown-section.tsx  |   51 +-
+  -  .../map-side-panel-overview-story-section.tsx      |   22 +-
+  -  components/map-side-panel-overview-tab.tsx         |   10 +-
+  -  components/map-side-panel.tsx                      |   32 +-
+  -  components/map-stage-utils.ts                      |    8 +-
+  -  components/map-view.tsx                            |  188 +-
+  -  components/use-map-view-model.ts                   |    3 +
+  -  lib/customer-portal.ts                             |  100 +-
+  -  lib/map-country-sources-reader.ts                  |   23 +-
+  -  lib/map-display.ts                                 |    5 +-
+  -  lib/map-foreign-operated.ts                        |  197 +
+  -  lib/map-source-detail-reader.ts                    |    9 +-
+  -  lib/map-store-locations.ts                         |   53 +-
+  -  lib/map-types.ts                                   |    8 +-
+  -  lib/publisher-groups.ts                            |  169 +
+  -  lib/publisher-headquarters.ts                      | 9963 ++++++++++++++++++++
+  -  lib/source-headquarters.ts                         | 1255 +++
+  -  26 files changed, 12286 insertions(+), 149 deletions(-)
+
 ### [87070e0] fix(map): hide internal portal config errors from public map errors
 - Commit: 87070e054459478a75b1a229cf423cb4f22bca37
 - Date: 2026-04-03 14:28:02 -0500
