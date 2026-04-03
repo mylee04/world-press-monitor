@@ -143,6 +143,7 @@ const COUNTRY_CENTROIDS = new Map<string, { lat: number; lon: number }>([
   ['Myanmar', { lat: 21.9162, lon: 95.956 }],
   ['Nepal', { lat: 28.3949, lon: 84.124 }],
   ['New Zealand', { lat: -40.9006, lon: 174.886 }],
+  ['Morocco', { lat: 31.7917, lon: -7.0926 }],
   ['Pakistan', { lat: 30.3753, lon: 69.3451 }],
   ['Cambodia', { lat: 12.5657, lon: 104.991 }],
   ['Tajikistan', { lat: 38.861, lon: 71.2761 }],

@@ -1,4 +1,4 @@
-import { inferGeoFromTitle } from '@/lib/geo';
+import { inferGeoFromCountry } from '@/lib/geo';
 import {
   readLatestHealthBySource,
   readWindowedSourceMetrics,
@@ -79,7 +79,7 @@ export async function buildMapCountryMetricsPayload(selectedWindow: MapMetricWin
 
   for (const row of byCountrySource.values()) {
     const country = row.country;
-    const geo = inferGeoFromTitle(country, country);
+    const geo = inferGeoFromCountry(country);
 
     const current = countries.get(country) || {
       country,
