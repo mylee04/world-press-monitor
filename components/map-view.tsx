@@ -82,21 +82,25 @@ type CountrySafeInsets = {
 };
 
 const COUNTRY_SAFE_INSETS_EXPANDED: CountrySafeInsets = {
-  left: 300,
-  right: 286,
+  left: 396,
+  right: 366,
   top: 96,
   bottom: 96,
 };
 
 const COUNTRY_SAFE_INSETS_COMPACT: CountrySafeInsets = {
-  left: 300,
-  right: 188,
+  left: 396,
+  right: 278,
   top: 96,
   bottom: 96,
 };
-const COUNTRY_ZOOM_MIN = 1;
+const COUNTRY_ZOOM_MIN = 0.85;
 const COUNTRY_ZOOM_MAX = 8;
 const COUNTRY_ZOOM_STEP = 1.18;
+const COUNTRY_SOURCES_CACHE_STALE_MS = 15 * 60 * 1000;
+const COUNTRY_SOURCES_REFRESH_MS = 30 * 60 * 1000;
+const SOURCE_DETAIL_CACHE_STALE_MS = 10 * 60 * 1000;
+const SOURCE_DETAIL_REFRESH_MS = 15 * 60 * 1000;
 
 type CountryViewport = {
   scale: number;
@@ -1473,15 +1477,23 @@ export function MapView() {
     detailAccessEnabled && countryName
       ? `/api/customer/dashboard/map/countries/${encodeURIComponent(countryName)}/sources?window=${mapWindow}`
       : null,
-    undefined,
-    { cacheMode: 'session' }
+    COUNTRY_SOURCES_REFRESH_MS,
+    {
+      cacheMode: 'session',
+      staleMs: COUNTRY_SOURCES_CACHE_STALE_MS,
+      requestCache: 'force-cache',
+    }
   );
   const sourceDetailState = useRemoteJson<MapSourceDetailResponse>(
     detailAccessEnabled && selectedSource?.sourceId
       ? `/api/customer/dashboard/map/sources/${encodeURIComponent(selectedSource.sourceId)}`
       : null,
-    undefined,
-    { cacheMode: 'session' }
+    SOURCE_DETAIL_REFRESH_MS,
+    {
+      cacheMode: 'session',
+      staleMs: SOURCE_DETAIL_CACHE_STALE_MS,
+      requestCache: 'force-cache',
+    }
   );
 
   const totals = countriesState.data?.totals || null;

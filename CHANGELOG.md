@@ -6,6 +6,32 @@
 
 ## Unreleased
 
+### [7c47df1] fix(map): tune country detail zoom and cache freshness
+- Commit: 7c47df1e4bc9426ae4636660c4c287711f2e0754
+- Date: 2026-04-03 09:49:31 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	CHANGELOG.md
+    - M	components/map-stage-utils.ts
+    - M	components/map-view.tsx
+  - Git stat:
+  - CHANGELOG.md                  | 12 ++++++++++++
+  -  components/map-stage-utils.ts |  8 ++++----
+  -  components/map-view.tsx       | 30 +++++++++++++++++++++---------
+  -  3 files changed, 37 insertions(+), 13 deletions(-)
+
+### [0422d2e] fix(map): tune country detail zoom and cache freshness
+- Commit: 0422d2efd21afb4a16facfa81eb607de830740d5
+- Date: 2026-04-03 09:49:31 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	components/map-stage-utils.ts
+    - M	components/map-view.tsx
+  - Git stat:
+  - components/map-stage-utils.ts |  8 ++++----
+  -  components/map-view.tsx       | 30 +++++++++++++++++++++---------
+  -  2 files changed, 25 insertions(+), 13 deletions(-)
+
 ### [f4f8671] Update changelog for taxonomy recovery
 - Commit: f4f86718eac0799c8d879762d0ae97a8baef4083
 - Date: 2026-04-01 12:08:32 -0500
