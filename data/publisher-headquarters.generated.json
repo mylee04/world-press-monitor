@@ -702,6 +702,186 @@
     "label": "Yahoo Australia HQ"
   },
   {
+    "country": "Austria",
+    "publisher": "BVZ",
+    "city": "Eisenstadt",
+    "region": "Burgenland",
+    "lat": 47.8457,
+    "lon": 16.5233,
+    "label": "BVZ HQ"
+  },
+  {
+    "country": "Austria",
+    "publisher": "exxpress",
+    "city": "Vienna",
+    "region": "Vienna",
+    "lat": 48.2082,
+    "lon": 16.3738,
+    "label": "exxpress HQ"
+  },
+  {
+    "country": "Austria",
+    "publisher": "Falter",
+    "city": "Vienna",
+    "region": "Vienna",
+    "lat": 48.2082,
+    "lon": 16.3738,
+    "label": "Falter HQ"
+  },
+  {
+    "country": "Austria",
+    "publisher": "Finanzen.at",
+    "city": "Vienna",
+    "region": "Vienna",
+    "lat": 48.2082,
+    "lon": 16.3738,
+    "label": "Finanzen.at HQ"
+  },
+  {
+    "country": "Austria",
+    "publisher": "futurezone",
+    "city": "Vienna",
+    "region": "Vienna",
+    "lat": 48.2082,
+    "lon": 16.3738,
+    "label": "futurezone HQ"
+  },
+  {
+    "country": "Austria",
+    "publisher": "JOYN News",
+    "city": "Vienna",
+    "region": "Vienna",
+    "lat": 48.2082,
+    "lon": 16.3738,
+    "label": "JOYN News HQ"
+  },
+  {
+    "country": "Austria",
+    "publisher": "Kronen Zeitung",
+    "city": "Vienna",
+    "region": "Vienna",
+    "lat": 48.2082,
+    "lon": 16.3738,
+    "label": "Kronen Zeitung HQ"
+  },
+  {
+    "country": "Austria",
+    "publisher": "medianet",
+    "city": "Vienna",
+    "region": "Vienna",
+    "lat": 48.2082,
+    "lon": 16.3738,
+    "label": "medianet HQ"
+  },
+  {
+    "country": "Austria",
+    "publisher": "MeinBezirk",
+    "city": "Graz",
+    "region": "Styria",
+    "lat": 47.0707,
+    "lon": 15.4395,
+    "label": "MeinBezirk HQ"
+  },
+  {
+    "country": "Austria",
+    "publisher": "Neue Donau",
+    "city": "Vienna",
+    "region": "Vienna",
+    "lat": 48.2082,
+    "lon": 16.3738,
+    "label": "Neue Donau HQ"
+  },
+  {
+    "country": "Austria",
+    "publisher": "news.at",
+    "city": "Vienna",
+    "region": "Vienna",
+    "lat": 48.2082,
+    "lon": 16.3738,
+    "label": "news.at HQ"
+  },
+  {
+    "country": "Austria",
+    "publisher": "NÖN",
+    "city": "St. Polten",
+    "region": "Lower Austria",
+    "lat": 48.2047,
+    "lon": 15.6256,
+    "label": "NÖN HQ"
+  },
+  {
+    "country": "Austria",
+    "publisher": "OE24",
+    "city": "Vienna",
+    "region": "Vienna",
+    "lat": 48.2082,
+    "lon": 16.3738,
+    "label": "OE24 HQ"
+  },
+  {
+    "country": "Austria",
+    "publisher": "OR Nachrichten",
+    "city": "Vienna",
+    "region": "Vienna",
+    "lat": 48.2082,
+    "lon": 16.3738,
+    "label": "OR Nachrichten HQ"
+  },
+  {
+    "country": "Austria",
+    "publisher": "Salzburg24",
+    "city": "Salzburg",
+    "region": "Salzburg",
+    "lat": 47.8095,
+    "lon": 13.055,
+    "label": "Salzburg24 HQ"
+  },
+  {
+    "country": "Austria",
+    "publisher": "Salzburger Nachrichten",
+    "city": "Salzburg",
+    "region": "Salzburg",
+    "lat": 47.8095,
+    "lon": 13.055,
+    "label": "Salzburger Nachrichten HQ"
+  },
+  {
+    "country": "Austria",
+    "publisher": "Tips",
+    "city": "Linz",
+    "region": "Upper Austria",
+    "lat": 48.3069,
+    "lon": 14.2858,
+    "label": "Tips HQ"
+  },
+  {
+    "country": "Austria",
+    "publisher": "Tiroler Tageszeitung",
+    "city": "Innsbruck",
+    "region": "Tyrol",
+    "lat": 47.2692,
+    "lon": 11.4041,
+    "label": "Tiroler Tageszeitung HQ"
+  },
+  {
+    "country": "Austria",
+    "publisher": "Vienna Online",
+    "city": "Vienna",
+    "region": "Vienna",
+    "lat": 48.2082,
+    "lon": 16.3738,
+    "label": "Vienna Online HQ"
+  },
+  {
+    "country": "Austria",
+    "publisher": "Wiener Zeitung",
+    "city": "Vienna",
+    "region": "Vienna",
+    "lat": 48.2082,
+    "lon": 16.3738,
+    "label": "Wiener Zeitung HQ"
+  },
+  {
     "country": "Brazil",
     "publisher": "Agência Pública",
     "city": "Sao Paulo",
@@ -2131,6 +2311,204 @@
     "lat": 45.815,
     "lon": 15.9819,
     "label": "Zagrebancija HQ"
+  },
+  {
+    "country": "Czech Republic",
+    "publisher": "Alarm",
+    "city": "Prague",
+    "region": "Prague",
+    "lat": 50.0755,
+    "lon": 14.4378,
+    "label": "Alarm HQ"
+  },
+  {
+    "country": "Czech Republic",
+    "publisher": "Auto.cz",
+    "city": "Prague",
+    "region": "Prague",
+    "lat": 50.0755,
+    "lon": 14.4378,
+    "label": "Auto.cz HQ"
+  },
+  {
+    "country": "Czech Republic",
+    "publisher": "AutoRevue",
+    "city": "Prague",
+    "region": "Prague",
+    "lat": 50.0755,
+    "lon": 14.4378,
+    "label": "AutoRevue HQ"
+  },
+  {
+    "country": "Czech Republic",
+    "publisher": "Česká justice",
+    "city": "Prague",
+    "region": "Prague",
+    "lat": 50.0755,
+    "lon": 14.4378,
+    "label": "Česká justice HQ"
+  },
+  {
+    "country": "Czech Republic",
+    "publisher": "České noviny",
+    "city": "Prague",
+    "region": "Prague",
+    "lat": 50.0755,
+    "lon": 14.4378,
+    "label": "České noviny HQ"
+  },
+  {
+    "country": "Czech Republic",
+    "publisher": "CzechCrunch",
+    "city": "Prague",
+    "region": "Prague",
+    "lat": 50.0755,
+    "lon": 14.4378,
+    "label": "CzechCrunch HQ"
+  },
+  {
+    "country": "Czech Republic",
+    "publisher": "Denik N",
+    "city": "Prague",
+    "region": "Prague",
+    "lat": 50.0755,
+    "lon": 14.4378,
+    "label": "Denik N HQ"
+  },
+  {
+    "country": "Czech Republic",
+    "publisher": "Echo24",
+    "city": "Prague",
+    "region": "Prague",
+    "lat": 50.0755,
+    "lon": 14.4378,
+    "label": "Echo24 HQ"
+  },
+  {
+    "country": "Czech Republic",
+    "publisher": "Extra.cz",
+    "city": "Prague",
+    "region": "Prague",
+    "lat": 50.0755,
+    "lon": 14.4378,
+    "label": "Extra.cz HQ"
+  },
+  {
+    "country": "Czech Republic",
+    "publisher": "Forum24",
+    "city": "Prague",
+    "region": "Prague",
+    "lat": 50.0755,
+    "lon": 14.4378,
+    "label": "Forum24 HQ"
+  },
+  {
+    "country": "Czech Republic",
+    "publisher": "HlídacíPes",
+    "city": "Prague",
+    "region": "Prague",
+    "lat": 50.0755,
+    "lon": 14.4378,
+    "label": "HlídacíPes HQ"
+  },
+  {
+    "country": "Czech Republic",
+    "publisher": "Info.cz",
+    "city": "Prague",
+    "region": "Prague",
+    "lat": 50.0755,
+    "lon": 14.4378,
+    "label": "Info.cz HQ"
+  },
+  {
+    "country": "Czech Republic",
+    "publisher": "Lupa.cz",
+    "city": "Prague",
+    "region": "Prague",
+    "lat": 50.0755,
+    "lon": 14.4378,
+    "label": "Lupa.cz HQ"
+  },
+  {
+    "country": "Czech Republic",
+    "publisher": "Mesec",
+    "city": "Prague",
+    "region": "Prague",
+    "lat": 50.0755,
+    "lon": 14.4378,
+    "label": "Mesec HQ"
+  },
+  {
+    "country": "Czech Republic",
+    "publisher": "ParlamentniListy",
+    "city": "Prague",
+    "region": "Prague",
+    "lat": 50.0755,
+    "lon": 14.4378,
+    "label": "ParlamentniListy HQ"
+  },
+  {
+    "country": "Czech Republic",
+    "publisher": "Podnikatel",
+    "city": "Prague",
+    "region": "Prague",
+    "lat": 50.0755,
+    "lon": 14.4378,
+    "label": "Podnikatel HQ"
+  },
+  {
+    "country": "Czech Republic",
+    "publisher": "Refresher CZ",
+    "city": "Prague",
+    "region": "Prague",
+    "lat": 50.0755,
+    "lon": 14.4378,
+    "label": "Refresher CZ HQ"
+  },
+  {
+    "country": "Czech Republic",
+    "publisher": "Romea",
+    "city": "Prague",
+    "region": "Prague",
+    "lat": 50.0755,
+    "lon": 14.4378,
+    "label": "Romea HQ"
+  },
+  {
+    "country": "Czech Republic",
+    "publisher": "Super.cz",
+    "city": "Prague",
+    "region": "Prague",
+    "lat": 50.0755,
+    "lon": 14.4378,
+    "label": "Super.cz HQ"
+  },
+  {
+    "country": "Czech Republic",
+    "publisher": "Tyden.cz",
+    "city": "Prague",
+    "region": "Prague",
+    "lat": 50.0755,
+    "lon": 14.4378,
+    "label": "Tyden.cz HQ"
+  },
+  {
+    "country": "Czech Republic",
+    "publisher": "Vitalia",
+    "city": "Prague",
+    "region": "Prague",
+    "lat": 50.0755,
+    "lon": 14.4378,
+    "label": "Vitalia HQ"
+  },
+  {
+    "country": "Czech Republic",
+    "publisher": "Zive.cz",
+    "city": "Prague",
+    "region": "Prague",
+    "lat": 50.0755,
+    "lon": 14.4378,
+    "label": "Zive.cz HQ"
   },
   {
     "country": "Denmark",
@@ -4672,12 +5050,39 @@
   },
   {
     "country": "Italy",
+    "publisher": "Affaritaliani",
+    "city": "Milan",
+    "region": "Lombardy",
+    "lat": 45.4642,
+    "lon": 9.19,
+    "label": "Affaritaliani HQ"
+  },
+  {
+    "country": "Italy",
+    "publisher": "Alto Adige",
+    "city": "Bolzano",
+    "region": "Trentino-Alto Adige",
+    "lat": 46.4983,
+    "lon": 11.3548,
+    "label": "Alto Adige HQ"
+  },
+  {
+    "country": "Italy",
     "publisher": "ANSA",
     "city": "Rome",
     "region": "Rome",
     "lat": 41.8931,
     "lon": 12.4828,
     "label": "ANSA HQ"
+  },
+  {
+    "country": "Italy",
+    "publisher": "Calcio e Finanza",
+    "city": "Milan",
+    "region": "Lombardy",
+    "lat": 45.4642,
+    "lon": 9.19,
+    "label": "Calcio e Finanza HQ"
   },
   {
     "country": "Italy",
@@ -4690,6 +5095,69 @@
   },
   {
     "country": "Italy",
+    "publisher": "Florence Daily News",
+    "city": "Florence",
+    "region": "Tuscany",
+    "lat": 43.7696,
+    "lon": 11.2558,
+    "label": "Florence Daily News HQ"
+  },
+  {
+    "country": "Italy",
+    "publisher": "FormulaPassion",
+    "city": "Modena",
+    "region": "Emilia-Romagna",
+    "lat": 44.6471,
+    "lon": 10.9252,
+    "label": "FormulaPassion HQ"
+  },
+  {
+    "country": "Italy",
+    "publisher": "HDblog",
+    "city": "Milan",
+    "region": "Lombardy",
+    "lat": 45.4642,
+    "lon": 9.19,
+    "label": "HDblog HQ"
+  },
+  {
+    "country": "Italy",
+    "publisher": "Il Fatto Quotidiano",
+    "city": "Rome",
+    "region": "Lazio",
+    "lat": 41.9028,
+    "lon": 12.4964,
+    "label": "Il Fatto Quotidiano HQ"
+  },
+  {
+    "country": "Italy",
+    "publisher": "Il Giorno",
+    "city": "Milan",
+    "region": "Lombardy",
+    "lat": 45.4642,
+    "lon": 9.19,
+    "label": "Il Giorno HQ"
+  },
+  {
+    "country": "Italy",
+    "publisher": "Il Manifesto",
+    "city": "Rome",
+    "region": "Lazio",
+    "lat": 41.9028,
+    "lon": 12.4964,
+    "label": "Il Manifesto HQ"
+  },
+  {
+    "country": "Italy",
+    "publisher": "Il Mattino",
+    "city": "Naples",
+    "region": "Campania",
+    "lat": 40.8518,
+    "lon": 14.2681,
+    "label": "Il Mattino HQ"
+  },
+  {
+    "country": "Italy",
     "publisher": "Il Messaggero",
     "city": "Rome",
     "region": "Select Hotel",
@@ -4699,12 +5167,57 @@
   },
   {
     "country": "Italy",
+    "publisher": "Il Resto del Carlino",
+    "city": "Bologna",
+    "region": "Emilia-Romagna",
+    "lat": 44.4949,
+    "lon": 11.3426,
+    "label": "Il Resto del Carlino HQ"
+  },
+  {
+    "country": "Italy",
     "publisher": "Il Sole 24 Ore",
     "city": "Milan",
     "region": "Milan",
     "lat": 45.4669,
     "lon": 9.19,
     "label": "Il Sole 24 Ore HQ"
+  },
+  {
+    "country": "Italy",
+    "publisher": "IL Tempo",
+    "city": "Rome",
+    "region": "Lazio",
+    "lat": 41.9028,
+    "lon": 12.4964,
+    "label": "IL Tempo HQ"
+  },
+  {
+    "country": "Italy",
+    "publisher": "Italia a Tavola",
+    "city": "Bergamo",
+    "region": "Lombardy",
+    "lat": 45.6983,
+    "lon": 9.6773,
+    "label": "Italia a Tavola HQ"
+  },
+  {
+    "country": "Italy",
+    "publisher": "la Città di Salerno",
+    "city": "Salerno",
+    "region": "Campania",
+    "lat": 40.6824,
+    "lon": 14.7681,
+    "label": "la Città di Salerno HQ"
+  },
+  {
+    "country": "Italy",
+    "publisher": "La Gazzetta dello Sport",
+    "city": "Milan",
+    "region": "Lombardy",
+    "lat": 45.4642,
+    "lon": 9.19,
+    "label": "La Gazzetta dello Sport HQ"
   },
   {
     "country": "Italy",
@@ -4723,6 +5236,231 @@
     "lat": 45.0792,
     "lon": 7.6761,
     "label": "La Stampa HQ"
+  },
+  {
+    "country": "Italy",
+    "publisher": "Leggo",
+    "city": "Rome",
+    "region": "Lazio",
+    "lat": 41.9028,
+    "lon": 12.4964,
+    "label": "Leggo HQ"
+  },
+  {
+    "country": "Italy",
+    "publisher": "Libero Quotidiano",
+    "city": "Milan",
+    "region": "Lombardy",
+    "lat": 45.4642,
+    "lon": 9.19,
+    "label": "Libero Quotidiano HQ"
+  },
+  {
+    "country": "Italy",
+    "publisher": "Money.it",
+    "city": "Rome",
+    "region": "Lazio",
+    "lat": 41.9028,
+    "lon": 12.4964,
+    "label": "Money.it HQ"
+  },
+  {
+    "country": "Italy",
+    "publisher": "Notizie Geopolitiche",
+    "city": "Rome",
+    "region": "Lazio",
+    "lat": 41.9028,
+    "lon": 12.4964,
+    "label": "Notizie Geopolitiche HQ"
+  },
+  {
+    "country": "Italy",
+    "publisher": "Open",
+    "city": "Milan",
+    "region": "Lombardy",
+    "lat": 45.4642,
+    "lon": 9.19,
+    "label": "Open HQ"
+  },
+  {
+    "country": "Italy",
+    "publisher": "QuiFinanza",
+    "city": "Milan",
+    "region": "Lombardy",
+    "lat": 45.4642,
+    "lon": 9.19,
+    "label": "QuiFinanza HQ"
+  },
+  {
+    "country": "Italy",
+    "publisher": "Quotidiano.net",
+    "city": "Bologna",
+    "region": "Emilia-Romagna",
+    "lat": 44.4949,
+    "lon": 11.3426,
+    "label": "Quotidiano.net HQ"
+  },
+  {
+    "country": "Italy",
+    "publisher": "Today Network",
+    "city": "Rome",
+    "region": "Lazio",
+    "lat": 41.9028,
+    "lon": 12.4964,
+    "label": "Today Network HQ"
+  },
+  {
+    "country": "Italy",
+    "publisher": "TuttoMercatoWeb",
+    "city": "Florence",
+    "region": "Tuscany",
+    "lat": 43.7696,
+    "lon": 11.2558,
+    "label": "TuttoMercatoWeb HQ"
+  },
+  {
+    "country": "Italy",
+    "publisher": "Wanted in Rome",
+    "city": "Rome",
+    "region": "Lazio",
+    "lat": 41.9028,
+    "lon": 12.4964,
+    "label": "Wanted in Rome HQ"
+  },
+  {
+    "country": "Italy",
+    "publisher": "Wired Italia",
+    "city": "Milan",
+    "region": "Lombardy",
+    "lat": 45.4642,
+    "lon": 9.19,
+    "label": "Wired Italia HQ"
+  },
+  {
+    "country": "Japan",
+    "publisher": "Asahi Shimbun",
+    "city": "Tokyo",
+    "region": "Tokyo",
+    "lat": 35.6762,
+    "lon": 139.6503,
+    "label": "Asahi Shimbun HQ"
+  },
+  {
+    "country": "Japan",
+    "publisher": "ASCII.jp",
+    "city": "Tokyo",
+    "region": "Tokyo",
+    "lat": 35.6762,
+    "lon": 139.6503,
+    "label": "ASCII.jp HQ"
+  },
+  {
+    "country": "Japan",
+    "publisher": "Automotive Ten-Navi",
+    "city": "Tokyo",
+    "region": "Tokyo",
+    "lat": 35.6762,
+    "lon": 139.6503,
+    "label": "Automotive Ten-Navi HQ"
+  },
+  {
+    "country": "Japan",
+    "publisher": "Business Insider Japan",
+    "city": "Tokyo",
+    "region": "Tokyo",
+    "lat": 35.6762,
+    "lon": 139.6503,
+    "label": "Business Insider Japan HQ"
+  },
+  {
+    "country": "Japan",
+    "publisher": "Chunichi",
+    "city": "Nagoya",
+    "region": "Aichi",
+    "lat": 35.1815,
+    "lon": 136.9066,
+    "label": "Chunichi HQ"
+  },
+  {
+    "country": "Japan",
+    "publisher": "Diamond Online",
+    "city": "Tokyo",
+    "region": "Tokyo",
+    "lat": 35.6762,
+    "lon": 139.6503,
+    "label": "Diamond Online HQ"
+  },
+  {
+    "country": "Japan",
+    "publisher": "FNN Prime",
+    "city": "Tokyo",
+    "region": "Tokyo",
+    "lat": 35.6762,
+    "lon": 139.6503,
+    "label": "FNN Prime HQ"
+  },
+  {
+    "country": "Japan",
+    "publisher": "GIGAZINE",
+    "city": "Osaka",
+    "region": "Osaka",
+    "lat": 34.6937,
+    "lon": 135.5023,
+    "label": "GIGAZINE HQ"
+  },
+  {
+    "country": "Japan",
+    "publisher": "Gizmodo Japan",
+    "city": "Tokyo",
+    "region": "Tokyo",
+    "lat": 35.6762,
+    "lon": 139.6503,
+    "label": "Gizmodo Japan HQ"
+  },
+  {
+    "country": "Japan",
+    "publisher": "Goo News",
+    "city": "Tokyo",
+    "region": "Tokyo",
+    "lat": 35.6762,
+    "lon": 139.6503,
+    "label": "Goo News HQ"
+  },
+  {
+    "country": "Japan",
+    "publisher": "JBpress",
+    "city": "Tokyo",
+    "region": "Tokyo",
+    "lat": 35.6762,
+    "lon": 139.6503,
+    "label": "JBpress HQ"
+  },
+  {
+    "country": "Japan",
+    "publisher": "Jiji Press",
+    "city": "Tokyo",
+    "region": "Tokyo",
+    "lat": 35.6762,
+    "lon": 139.6503,
+    "label": "Jiji Press HQ"
+  },
+  {
+    "country": "Japan",
+    "publisher": "Kyodo News",
+    "city": "Tokyo",
+    "region": "Tokyo",
+    "lat": 35.6762,
+    "lon": 139.6503,
+    "label": "Kyodo News HQ"
+  },
+  {
+    "country": "Japan",
+    "publisher": "Livedoor News",
+    "city": "Tokyo",
+    "region": "Tokyo",
+    "lat": 35.6762,
+    "lon": 139.6503,
+    "label": "Livedoor News HQ"
   },
   {
     "country": "Japan",
@@ -4744,12 +5482,102 @@
   },
   {
     "country": "Japan",
+    "publisher": "Nippon",
+    "city": "Tokyo",
+    "region": "Tokyo",
+    "lat": 35.6762,
+    "lon": 139.6503,
+    "label": "Nippon HQ"
+  },
+  {
+    "country": "Japan",
+    "publisher": "Nippon Television",
+    "city": "Tokyo",
+    "region": "Tokyo",
+    "lat": 35.6762,
+    "lon": 139.6503,
+    "label": "Nippon Television HQ"
+  },
+  {
+    "country": "Japan",
+    "publisher": "Qiita",
+    "city": "Tokyo",
+    "region": "Tokyo",
+    "lat": 35.6762,
+    "lon": 139.6503,
+    "label": "Qiita HQ"
+  },
+  {
+    "country": "Japan",
+    "publisher": "Sankei",
+    "city": "Tokyo",
+    "region": "Tokyo",
+    "lat": 35.6762,
+    "lon": 139.6503,
+    "label": "Sankei HQ"
+  },
+  {
+    "country": "Japan",
+    "publisher": "Smart Japan",
+    "city": "Tokyo",
+    "region": "Tokyo",
+    "lat": 35.6762,
+    "lon": 139.6503,
+    "label": "Smart Japan HQ"
+  },
+  {
+    "country": "Japan",
+    "publisher": "TBS News DIG",
+    "city": "Tokyo",
+    "region": "Tokyo",
+    "lat": 35.6762,
+    "lon": 139.6503,
+    "label": "TBS News DIG HQ"
+  },
+  {
+    "country": "Japan",
+    "publisher": "The Japan Times",
+    "city": "Tokyo",
+    "region": "Tokyo",
+    "lat": 35.6762,
+    "lon": 139.6503,
+    "label": "The Japan Times HQ"
+  },
+  {
+    "country": "Japan",
+    "publisher": "Tokyo Sports",
+    "city": "Tokyo",
+    "region": "Tokyo",
+    "lat": 35.6762,
+    "lon": 139.6503,
+    "label": "Tokyo Sports HQ"
+  },
+  {
+    "country": "Japan",
     "publisher": "Yahoo",
     "city": "Tokyo",
     "region": "Midtown Tower",
     "lat": 35.6664,
     "lon": 139.7317,
     "label": "Yahoo HQ"
+  },
+  {
+    "country": "Japan",
+    "publisher": "Yomiuri Shimbun",
+    "city": "Tokyo",
+    "region": "Tokyo",
+    "lat": 35.6762,
+    "lon": 139.6503,
+    "label": "Yomiuri Shimbun HQ"
+  },
+  {
+    "country": "Japan",
+    "publisher": "Zenn",
+    "city": "Tokyo",
+    "region": "Tokyo",
+    "lat": 35.6762,
+    "lon": 139.6503,
+    "label": "Zenn HQ"
   },
   {
     "country": "Latvia",
@@ -5401,12 +6229,39 @@
   },
   {
     "country": "Netherlands",
+    "publisher": "1Zwolle",
+    "city": "Zwolle",
+    "region": "Overijssel",
+    "lat": 52.5168,
+    "lon": 6.083,
+    "label": "1Zwolle HQ"
+  },
+  {
+    "country": "Netherlands",
     "publisher": "AT5",
     "city": "Amsterdam",
-    "region": "Amsterdam",
-    "lat": 52.3667,
-    "lon": 4.8833,
+    "region": "North Holland",
+    "lat": 52.3676,
+    "lon": 4.9041,
     "label": "AT5 HQ"
+  },
+  {
+    "country": "Netherlands",
+    "publisher": "Autoblog",
+    "city": "Amsterdam",
+    "region": "North Holland",
+    "lat": 52.3676,
+    "lon": 4.9041,
+    "label": "Autoblog HQ"
+  },
+  {
+    "country": "Netherlands",
+    "publisher": "AutoWeek",
+    "city": "Amsterdam",
+    "region": "North Holland",
+    "lat": 52.3676,
+    "lon": 4.9041,
+    "label": "AutoWeek HQ"
   },
   {
     "country": "Netherlands",
@@ -5419,6 +6274,15 @@
   },
   {
     "country": "Netherlands",
+    "publisher": "Bright",
+    "city": "Amsterdam",
+    "region": "North Holland",
+    "lat": 52.3676,
+    "lon": 4.9041,
+    "label": "Bright HQ"
+  },
+  {
+    "country": "Netherlands",
     "publisher": "De Telegraaf",
     "city": "Amsterdam",
     "region": "Amsterdam",
@@ -5428,12 +6292,93 @@
   },
   {
     "country": "Netherlands",
+    "publisher": "De Westkrant",
+    "city": "Groningen",
+    "region": "Groningen",
+    "lat": 53.2194,
+    "lon": 6.5665,
+    "label": "De Westkrant HQ"
+  },
+  {
+    "country": "Netherlands",
+    "publisher": "Dordt Centraal",
+    "city": "Dordrecht",
+    "region": "South Holland",
+    "lat": 51.8133,
+    "lon": 4.6901,
+    "label": "Dordt Centraal HQ"
+  },
+  {
+    "country": "Netherlands",
     "publisher": "DVHN",
     "city": "Groningen",
     "region": "Groningen",
-    "lat": 53.2189,
-    "lon": 6.5675,
+    "lat": 53.2194,
+    "lon": 6.5665,
     "label": "DVHN HQ"
+  },
+  {
+    "country": "Netherlands",
+    "publisher": "EW Magazine",
+    "city": "Amsterdam",
+    "region": "North Holland",
+    "lat": 52.3676,
+    "lon": 4.9041,
+    "label": "EW Magazine HQ"
+  },
+  {
+    "country": "Netherlands",
+    "publisher": "FCUpdate",
+    "city": "The Hague",
+    "region": "South Holland",
+    "lat": 52.0705,
+    "lon": 4.3007,
+    "label": "FCUpdate HQ"
+  },
+  {
+    "country": "Netherlands",
+    "publisher": "Joop",
+    "city": "Hilversum",
+    "region": "North Holland",
+    "lat": 52.2292,
+    "lon": 5.1669,
+    "label": "Joop HQ"
+  },
+  {
+    "country": "Netherlands",
+    "publisher": "LC",
+    "city": "Leeuwarden",
+    "region": "Friesland",
+    "lat": 53.2012,
+    "lon": 5.7999,
+    "label": "LC HQ"
+  },
+  {
+    "country": "Netherlands",
+    "publisher": "Metro Nieuws",
+    "city": "Amsterdam",
+    "region": "North Holland",
+    "lat": 52.3676,
+    "lon": 4.9041,
+    "label": "Metro Nieuws HQ"
+  },
+  {
+    "country": "Netherlands",
+    "publisher": "NH Nieuws",
+    "city": "Haarlem",
+    "region": "North Holland",
+    "lat": 52.3874,
+    "lon": 4.6462,
+    "label": "NH Nieuws HQ"
+  },
+  {
+    "country": "Netherlands",
+    "publisher": "Nieuws.nl",
+    "city": "Amsterdam",
+    "region": "North Holland",
+    "lat": 52.3676,
+    "lon": 4.9041,
+    "label": "Nieuws.nl HQ"
   },
   {
     "country": "Netherlands",
@@ -5455,12 +6400,39 @@
   },
   {
     "country": "Netherlands",
+    "publisher": "Omroep Almere",
+    "city": "Almere",
+    "region": "Flevoland",
+    "lat": 52.3508,
+    "lon": 5.2647,
+    "label": "Omroep Almere HQ"
+  },
+  {
+    "country": "Netherlands",
+    "publisher": "Omroep Delft",
+    "city": "Delft",
+    "region": "South Holland",
+    "lat": 52.0116,
+    "lon": 4.3571,
+    "label": "Omroep Delft HQ"
+  },
+  {
+    "country": "Netherlands",
     "publisher": "Omroep Gelderland",
     "city": "Arnhem",
     "region": "Arnhem",
     "lat": 51.9833,
     "lon": 5.9167,
     "label": "Omroep Gelderland HQ"
+  },
+  {
+    "country": "Netherlands",
+    "publisher": "Omroep Tilburg",
+    "city": "Tilburg",
+    "region": "North Brabant",
+    "lat": 51.5555,
+    "lon": 5.0913,
+    "label": "Omroep Tilburg HQ"
   },
   {
     "country": "Netherlands",
@@ -5473,11 +6445,29 @@
   },
   {
     "country": "Netherlands",
+    "publisher": "Open Rotterdam",
+    "city": "Rotterdam",
+    "region": "South Holland",
+    "lat": 51.9244,
+    "lon": 4.4777,
+    "label": "Open Rotterdam HQ"
+  },
+  {
+    "country": "Netherlands",
+    "publisher": "Reformatorisch Dagblad",
+    "city": "Apeldoorn",
+    "region": "Gelderland",
+    "lat": 52.2112,
+    "lon": 5.9699,
+    "label": "Reformatorisch Dagblad HQ"
+  },
+  {
+    "country": "Netherlands",
     "publisher": "Rijnmond",
     "city": "Rotterdam",
-    "region": "Rotterdam",
-    "lat": 51.92,
-    "lon": 4.48,
+    "region": "South Holland",
+    "lat": 51.9244,
+    "lon": 4.4777,
     "label": "Rijnmond HQ"
   },
   {
@@ -5488,6 +6478,105 @@
     "lat": 52.9899,
     "lon": 6.5576,
     "label": "RTV Drenthe HQ"
+  },
+  {
+    "country": "Netherlands",
+    "publisher": "RTV Focus Zwolle",
+    "city": "Zwolle",
+    "region": "Overijssel",
+    "lat": 52.5168,
+    "lon": 6.083,
+    "label": "RTV Focus Zwolle HQ"
+  },
+  {
+    "country": "Netherlands",
+    "publisher": "RTV NOF",
+    "city": "Dokkum",
+    "region": "Friesland",
+    "lat": 53.3236,
+    "lon": 5.9967,
+    "label": "RTV NOF HQ"
+  },
+  {
+    "country": "Netherlands",
+    "publisher": "RTV Papendrecht",
+    "city": "Papendrecht",
+    "region": "South Holland",
+    "lat": 51.8317,
+    "lon": 4.6875,
+    "label": "RTV Papendrecht HQ"
+  },
+  {
+    "country": "Netherlands",
+    "publisher": "Salland1",
+    "city": "Raalte",
+    "region": "Overijssel",
+    "lat": 52.3858,
+    "lon": 6.2756,
+    "label": "Salland1 HQ"
+  },
+  {
+    "country": "Netherlands",
+    "publisher": "Sleutelstad",
+    "city": "Leiden",
+    "region": "South Holland",
+    "lat": 52.1601,
+    "lon": 4.497,
+    "label": "Sleutelstad HQ"
+  },
+  {
+    "country": "Netherlands",
+    "publisher": "Unity.NU",
+    "city": "Leiden",
+    "region": "South Holland",
+    "lat": 52.1601,
+    "lon": 4.497,
+    "label": "Unity.NU HQ"
+  },
+  {
+    "country": "Netherlands",
+    "publisher": "VI",
+    "city": "Amsterdam",
+    "region": "North Holland",
+    "lat": 52.3676,
+    "lon": 4.9041,
+    "label": "VI HQ"
+  },
+  {
+    "country": "Netherlands",
+    "publisher": "VoetbalPrimeur",
+    "city": "Amsterdam",
+    "region": "North Holland",
+    "lat": 52.3676,
+    "lon": 4.9041,
+    "label": "VoetbalPrimeur HQ"
+  },
+  {
+    "country": "Netherlands",
+    "publisher": "WEEFF",
+    "city": "Hoorn",
+    "region": "North Holland",
+    "lat": 52.6425,
+    "lon": 5.0597,
+    "label": "WEEFF HQ"
+  },
+  {
+    "country": "Netherlands",
+    "publisher": "WNL",
+    "city": "Hilversum",
+    "region": "North Holland",
+    "lat": 52.2292,
+    "lon": 5.1669,
+    "label": "WNL HQ"
+  },
+  {
+    "country": "Netherlands",
+    "publisher": "Zembla",
+    "city": "Hilversum",
+    "region": "North Holland",
+    "lat": 52.2292,
+    "lon": 5.1669,
+    "label": "Zembla HQ"
   },
   {
     "country": "New Zealand",
@@ -5518,12 +6607,111 @@
   },
   {
     "country": "New Zealand",
+    "publisher": "ChannelLife NZ",
+    "city": "Auckland",
+    "region": "Auckland",
+    "lat": -36.8509,
+    "lon": 174.7645,
+    "label": "ChannelLife NZ HQ"
+  },
+  {
+    "country": "New Zealand",
+    "publisher": "Chris Lynch Media",
+    "city": "Christchurch",
+    "region": "Canterbury",
+    "lat": -43.5321,
+    "lon": 172.6362,
+    "label": "Chris Lynch Media HQ"
+  },
+  {
+    "country": "New Zealand",
+    "publisher": "Computerworld NZ",
+    "city": "Auckland",
+    "region": "Auckland",
+    "lat": -36.8509,
+    "lon": 174.7645,
+    "label": "Computerworld NZ HQ"
+  },
+  {
+    "country": "New Zealand",
+    "publisher": "Crux",
+    "city": "Queenstown",
+    "region": "Otago",
+    "lat": -45.0312,
+    "lon": 168.6626,
+    "label": "Crux HQ"
+  },
+  {
+    "country": "New Zealand",
+    "publisher": "Farmers Weekly",
+    "city": "Auckland",
+    "region": "Auckland",
+    "lat": -36.8509,
+    "lon": 174.7645,
+    "label": "Farmers Weekly HQ"
+  },
+  {
+    "country": "New Zealand",
     "publisher": "Gisborne Herald",
     "city": "Gisborne",
     "region": "Gisborne",
     "lat": -38.6623,
     "lon": 178.0176,
     "label": "Gisborne Herald HQ"
+  },
+  {
+    "country": "New Zealand",
+    "publisher": "Hospitality Business",
+    "city": "Auckland",
+    "region": "Auckland",
+    "lat": -36.8509,
+    "lon": 174.7645,
+    "label": "Hospitality Business HQ"
+  },
+  {
+    "country": "New Zealand",
+    "publisher": "Inside Government NZ",
+    "city": "Wellington",
+    "region": "Wellington",
+    "lat": -41.2866,
+    "lon": 174.7756,
+    "label": "Inside Government NZ HQ"
+  },
+  {
+    "country": "New Zealand",
+    "publisher": "interest.co.nz",
+    "city": "Wellington",
+    "region": "Wellington",
+    "lat": -41.2866,
+    "lon": 174.7756,
+    "label": "interest.co.nz HQ"
+  },
+  {
+    "country": "New Zealand",
+    "publisher": "IT Brief NZ",
+    "city": "Auckland",
+    "region": "Auckland",
+    "lat": -36.8509,
+    "lon": 174.7645,
+    "label": "IT Brief NZ HQ"
+  },
+  {
+    "country": "New Zealand",
+    "publisher": "KiwiBlog",
+    "city": "Wellington",
+    "region": "Wellington",
+    "lat": -41.2866,
+    "lon": 174.7756,
+    "label": "KiwiBlog HQ"
+  },
+  {
+    "country": "New Zealand",
+    "publisher": "Local Matters",
+    "city": "Auckland",
+    "region": "Auckland",
+    "lat": -36.8509,
+    "lon": 174.7645,
+    "label": "Local Matters HQ"
   },
   {
     "country": "New Zealand",
@@ -5545,12 +6733,39 @@
   },
   {
     "country": "New Zealand",
+    "publisher": "NZ Doctor",
+    "city": "Auckland",
+    "region": "Auckland",
+    "lat": -36.8509,
+    "lon": 174.7645,
+    "label": "NZ Doctor HQ"
+  },
+  {
+    "country": "New Zealand",
     "publisher": "NZ Herald",
     "city": "Auckland",
     "region": "Auckland",
     "lat": -36.8485,
     "lon": 174.7633,
     "label": "NZ Herald HQ"
+  },
+  {
+    "country": "New Zealand",
+    "publisher": "NZBusiness",
+    "city": "Auckland",
+    "region": "Auckland",
+    "lat": -36.8509,
+    "lon": 174.7645,
+    "label": "NZBusiness HQ"
+  },
+  {
+    "country": "New Zealand",
+    "publisher": "NZCPR",
+    "city": "Wellington",
+    "region": "Wellington",
+    "lat": -41.2866,
+    "lon": 174.7756,
+    "label": "NZCPR HQ"
   },
   {
     "country": "New Zealand",
@@ -5563,12 +6778,57 @@
   },
   {
     "country": "New Zealand",
+    "publisher": "Otago Daily Times",
+    "city": "Dunedin",
+    "region": "Otago",
+    "lat": -45.8788,
+    "lon": 170.5028,
+    "label": "Otago Daily Times HQ"
+  },
+  {
+    "country": "New Zealand",
+    "publisher": "Regional News",
+    "city": "Auckland",
+    "region": "Auckland",
+    "lat": -36.8509,
+    "lon": 174.7645,
+    "label": "Regional News HQ"
+  },
+  {
+    "country": "New Zealand",
+    "publisher": "Reseller News",
+    "city": "Auckland",
+    "region": "Auckland",
+    "lat": -36.8509,
+    "lon": 174.7645,
+    "label": "Reseller News HQ"
+  },
+  {
+    "country": "New Zealand",
     "publisher": "RNZ",
     "city": "Wellington",
     "region": "Wellington",
     "lat": -41.2865,
     "lon": 174.7762,
     "label": "RNZ HQ"
+  },
+  {
+    "country": "New Zealand",
+    "publisher": "Scoop",
+    "city": "Wellington",
+    "region": "Wellington",
+    "lat": -41.2866,
+    "lon": 174.7756,
+    "label": "Scoop HQ"
+  },
+  {
+    "country": "New Zealand",
+    "publisher": "SecurityBrief NZ",
+    "city": "Auckland",
+    "region": "Auckland",
+    "lat": -36.8509,
+    "lon": 174.7645,
+    "label": "SecurityBrief NZ HQ"
   },
   {
     "country": "New Zealand",
@@ -5581,12 +6841,39 @@
   },
   {
     "country": "New Zealand",
+    "publisher": "Te Ao Maori News",
+    "city": "Auckland",
+    "region": "Auckland",
+    "lat": -36.8509,
+    "lon": 174.7645,
+    "label": "Te Ao Maori News HQ"
+  },
+  {
+    "country": "New Zealand",
+    "publisher": "TechDay NZ",
+    "city": "Auckland",
+    "region": "Auckland",
+    "lat": -36.8509,
+    "lon": 174.7645,
+    "label": "TechDay NZ HQ"
+  },
+  {
+    "country": "New Zealand",
     "publisher": "The Country",
     "city": "Auckland",
     "region": "Auckland",
     "lat": -36.8509,
     "lon": 174.7645,
     "label": "The Country HQ"
+  },
+  {
+    "country": "New Zealand",
+    "publisher": "The Daily Blog",
+    "city": "Auckland",
+    "region": "Auckland",
+    "lat": -36.8509,
+    "lon": 174.7645,
+    "label": "The Daily Blog HQ"
   },
   {
     "country": "New Zealand",
@@ -5599,12 +6886,48 @@
   },
   {
     "country": "New Zealand",
+    "publisher": "The Platform",
+    "city": "Auckland",
+    "region": "Auckland",
+    "lat": -36.8509,
+    "lon": 174.7645,
+    "label": "The Platform HQ"
+  },
+  {
+    "country": "New Zealand",
     "publisher": "The Spinoff",
     "city": "Auckland",
     "region": "Auckland",
     "lat": -36.8509,
     "lon": 174.7645,
     "label": "The Spinoff HQ"
+  },
+  {
+    "country": "New Zealand",
+    "publisher": "Voxy",
+    "city": "Auckland",
+    "region": "Auckland",
+    "lat": -36.8509,
+    "lon": 174.7645,
+    "label": "Voxy HQ"
+  },
+  {
+    "country": "New Zealand",
+    "publisher": "Waatea News",
+    "city": "Auckland",
+    "region": "Auckland",
+    "lat": -36.8509,
+    "lon": 174.7645,
+    "label": "Waatea News HQ"
+  },
+  {
+    "country": "New Zealand",
+    "publisher": "Waikato Business News",
+    "city": "Hamilton",
+    "region": "Waikato",
+    "lat": -37.787,
+    "lon": 175.2793,
+    "label": "Waikato Business News HQ"
   },
   {
     "country": "Norway",
