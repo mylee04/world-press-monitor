@@ -1,5 +1,284 @@
 [
   {
+    "country": "Argentina",
+    "publisher": "A24",
+    "city": "Buenos Aires",
+    "region": "Buenos Aires",
+    "lat": -34.6037,
+    "lon": -58.3816,
+    "label": "A24 HQ"
+  },
+  {
+    "country": "Argentina",
+    "publisher": "BAE Negocios",
+    "city": "Buenos Aires",
+    "region": "Buenos Aires",
+    "lat": -34.6037,
+    "lon": -58.3816,
+    "label": "BAE Negocios HQ"
+  },
+  {
+    "country": "Argentina",
+    "publisher": "Border Periodismo",
+    "city": "Buenos Aires",
+    "region": "Buenos Aires",
+    "lat": -34.6037,
+    "lon": -58.3816,
+    "label": "Border Periodismo HQ"
+  },
+  {
+    "country": "Argentina",
+    "publisher": "Buenos Aires Times",
+    "city": "Buenos Aires",
+    "region": "Buenos Aires",
+    "lat": -34.6037,
+    "lon": -58.3816,
+    "label": "Buenos Aires Times HQ"
+  },
+  {
+    "country": "Argentina",
+    "publisher": "Canal 26",
+    "city": "Buenos Aires",
+    "region": "Buenos Aires",
+    "lat": -34.6037,
+    "lon": -58.3816,
+    "label": "Canal 26 HQ"
+  },
+  {
+    "country": "Argentina",
+    "publisher": "Chequeado",
+    "city": "Buenos Aires",
+    "region": "Buenos Aires",
+    "lat": -34.6037,
+    "lon": -58.3816,
+    "label": "Chequeado HQ"
+  },
+  {
+    "country": "Argentina",
+    "publisher": "Crónica",
+    "city": "Buenos Aires",
+    "region": "Buenos Aires",
+    "lat": -34.6037,
+    "lon": -58.3816,
+    "label": "Crónica HQ"
+  },
+  {
+    "country": "Argentina",
+    "publisher": "Data Diario",
+    "city": "Buenos Aires",
+    "region": "Buenos Aires",
+    "lat": -34.6037,
+    "lon": -58.3816,
+    "label": "Data Diario HQ"
+  },
+  {
+    "country": "Argentina",
+    "publisher": "Diario Registrado",
+    "city": "Buenos Aires",
+    "region": "Buenos Aires",
+    "lat": -34.6037,
+    "lon": -58.3816,
+    "label": "Diario Registrado HQ"
+  },
+  {
+    "country": "Argentina",
+    "publisher": "Econojournal",
+    "city": "Buenos Aires",
+    "region": "Buenos Aires",
+    "lat": -34.6037,
+    "lon": -58.3816,
+    "label": "Econojournal HQ"
+  },
+  {
+    "country": "Argentina",
+    "publisher": "El Destape",
+    "city": "Buenos Aires",
+    "region": "Buenos Aires",
+    "lat": -34.6037,
+    "lon": -58.3816,
+    "label": "El Destape HQ"
+  },
+  {
+    "country": "Argentina",
+    "publisher": "El Diario Paraná",
+    "city": "Parana",
+    "region": "Entre Rios",
+    "lat": -31.7319,
+    "lon": -60.5238,
+    "label": "El Diario Paraná HQ"
+  },
+  {
+    "country": "Argentina",
+    "publisher": "El Economista",
+    "city": "Buenos Aires",
+    "region": "Buenos Aires",
+    "lat": -34.6037,
+    "lon": -58.3816,
+    "label": "El Economista HQ"
+  },
+  {
+    "country": "Argentina",
+    "publisher": "El Inversor Energético",
+    "city": "Buenos Aires",
+    "region": "Buenos Aires",
+    "lat": -34.6037,
+    "lon": -58.3816,
+    "label": "El Inversor Energético HQ"
+  },
+  {
+    "country": "Argentina",
+    "publisher": "El Tribuno",
+    "city": "Salta",
+    "region": "Salta",
+    "lat": -24.7829,
+    "lon": -65.4232,
+    "label": "El Tribuno HQ"
+  },
+  {
+    "country": "Argentina",
+    "publisher": "Jujuy al Día",
+    "city": "San Salvador de Jujuy",
+    "region": "Jujuy",
+    "lat": -24.1858,
+    "lon": -65.2995,
+    "label": "Jujuy al Día HQ"
+  },
+  {
+    "country": "Argentina",
+    "publisher": "La Capital",
+    "city": "Rosario",
+    "region": "Santa Fe",
+    "lat": -32.9442,
+    "lon": -60.6505,
+    "label": "La Capital HQ"
+  },
+  {
+    "country": "Argentina",
+    "publisher": "La Gaceta Tucumán",
+    "city": "San Miguel de Tucuman",
+    "region": "Tucuman",
+    "lat": -26.8083,
+    "lon": -65.2176,
+    "label": "La Gaceta Tucumán HQ"
+  },
+  {
+    "country": "Argentina",
+    "publisher": "La Opinión Rafaela",
+    "city": "Rafaela",
+    "region": "Santa Fe",
+    "lat": -31.2503,
+    "lon": -61.4867,
+    "label": "La Opinión Rafaela HQ"
+  },
+  {
+    "country": "Argentina",
+    "publisher": "La Voz",
+    "city": "Cordoba",
+    "region": "Cordoba",
+    "lat": -31.4201,
+    "lon": -64.1888,
+    "label": "La Voz HQ"
+  },
+  {
+    "country": "Argentina",
+    "publisher": "Los Andes",
+    "city": "Mendoza",
+    "region": "Mendoza",
+    "lat": -32.8895,
+    "lon": -68.8458,
+    "label": "Los Andes HQ"
+  },
+  {
+    "country": "Argentina",
+    "publisher": "MercoPress",
+    "city": "Buenos Aires",
+    "region": "Buenos Aires",
+    "lat": -34.6037,
+    "lon": -58.3816,
+    "label": "MercoPress HQ"
+  },
+  {
+    "country": "Argentina",
+    "publisher": "Minutouno",
+    "city": "Buenos Aires",
+    "region": "Buenos Aires",
+    "lat": -34.6037,
+    "lon": -58.3816,
+    "label": "Minutouno HQ"
+  },
+  {
+    "country": "Argentina",
+    "publisher": "Misiones Online",
+    "city": "Posadas",
+    "region": "Misiones",
+    "lat": -27.3621,
+    "lon": -55.9009,
+    "label": "Misiones Online HQ"
+  },
+  {
+    "country": "Argentina",
+    "publisher": "Perfil",
+    "city": "Buenos Aires",
+    "region": "Buenos Aires",
+    "lat": -34.6037,
+    "lon": -58.3816,
+    "label": "Perfil HQ"
+  },
+  {
+    "country": "Argentina",
+    "publisher": "Primera Edición",
+    "city": "Posadas",
+    "region": "Misiones",
+    "lat": -27.3621,
+    "lon": -55.9009,
+    "label": "Primera Edición HQ"
+  },
+  {
+    "country": "Argentina",
+    "publisher": "Río Negro",
+    "city": "General Roca",
+    "region": "Rio Negro",
+    "lat": -39.0333,
+    "lon": -67.5833,
+    "label": "Río Negro HQ"
+  },
+  {
+    "country": "Argentina",
+    "publisher": "Rosario3",
+    "city": "Rosario",
+    "region": "Santa Fe",
+    "lat": -32.9442,
+    "lon": -60.6505,
+    "label": "Rosario3 HQ"
+  },
+  {
+    "country": "Argentina",
+    "publisher": "Surtidores",
+    "city": "Buenos Aires",
+    "region": "Buenos Aires",
+    "lat": -34.6037,
+    "lon": -58.3816,
+    "label": "Surtidores HQ"
+  },
+  {
+    "country": "Argentina",
+    "publisher": "TecnoGeek",
+    "city": "Buenos Aires",
+    "region": "Buenos Aires",
+    "lat": -34.6037,
+    "lon": -58.3816,
+    "label": "TecnoGeek HQ"
+  },
+  {
+    "country": "Argentina",
+    "publisher": "Urgente24",
+    "city": "Buenos Aires",
+    "region": "Buenos Aires",
+    "lat": -34.6037,
+    "lon": -58.3816,
+    "label": "Urgente24 HQ"
+  },
+  {
     "country": "Australia",
     "publisher": "Australian Broadcasting Corporation",
     "city": "Sydney",
@@ -421,6 +700,222 @@
     "lat": -33.8688,
     "lon": 151.2093,
     "label": "Yahoo Australia HQ"
+  },
+  {
+    "country": "Brazil",
+    "publisher": "Agência Pública",
+    "city": "Sao Paulo",
+    "region": "Sao Paulo",
+    "lat": -23.5505,
+    "lon": -46.6333,
+    "label": "Agência Pública HQ"
+  },
+  {
+    "country": "Brazil",
+    "publisher": "Bnews",
+    "city": "Salvador",
+    "region": "Bahia",
+    "lat": -12.9777,
+    "lon": -38.5016,
+    "label": "Bnews HQ"
+  },
+  {
+    "country": "Brazil",
+    "publisher": "Brasil de Fato",
+    "city": "Sao Paulo",
+    "region": "Sao Paulo",
+    "lat": -23.5505,
+    "lon": -46.6333,
+    "label": "Brasil de Fato HQ"
+  },
+  {
+    "country": "Brazil",
+    "publisher": "Canaltech",
+    "city": "Sao Paulo",
+    "region": "Sao Paulo",
+    "lat": -23.5505,
+    "lon": -46.6333,
+    "label": "Canaltech HQ"
+  },
+  {
+    "country": "Brazil",
+    "publisher": "CartaCapital",
+    "city": "Sao Paulo",
+    "region": "Sao Paulo",
+    "lat": -23.5505,
+    "lon": -46.6333,
+    "label": "CartaCapital HQ"
+  },
+  {
+    "country": "Brazil",
+    "publisher": "CNN Brasil",
+    "city": "Sao Paulo",
+    "region": "Sao Paulo",
+    "lat": -23.5505,
+    "lon": -46.6333,
+    "label": "CNN Brasil HQ"
+  },
+  {
+    "country": "Brazil",
+    "publisher": "ConJur",
+    "city": "Sao Paulo",
+    "region": "Sao Paulo",
+    "lat": -23.5505,
+    "lon": -46.6333,
+    "label": "ConJur HQ"
+  },
+  {
+    "country": "Brazil",
+    "publisher": "Correio Braziliense",
+    "city": "Brasilia",
+    "region": "Federal District",
+    "lat": -15.7939,
+    "lon": -47.8828,
+    "label": "Correio Braziliense HQ"
+  },
+  {
+    "country": "Brazil",
+    "publisher": "Estado de Minas",
+    "city": "Belo Horizonte",
+    "region": "Minas Gerais",
+    "lat": -19.9167,
+    "lon": -43.9345,
+    "label": "Estado de Minas HQ"
+  },
+  {
+    "country": "Brazil",
+    "publisher": "Forbes Brazil",
+    "city": "Sao Paulo",
+    "region": "Sao Paulo",
+    "lat": -23.5505,
+    "lon": -46.6333,
+    "label": "Forbes Brazil HQ"
+  },
+  {
+    "country": "Brazil",
+    "publisher": "InfoMoney",
+    "city": "Sao Paulo",
+    "region": "Sao Paulo",
+    "lat": -23.5505,
+    "lon": -46.6333,
+    "label": "InfoMoney HQ"
+  },
+  {
+    "country": "Brazil",
+    "publisher": "JOTA",
+    "city": "Brasilia",
+    "region": "Federal District",
+    "lat": -15.7939,
+    "lon": -47.8828,
+    "label": "JOTA HQ"
+  },
+  {
+    "country": "Brazil",
+    "publisher": "Jovem Pan",
+    "city": "Sao Paulo",
+    "region": "Sao Paulo",
+    "lat": -23.5505,
+    "lon": -46.6333,
+    "label": "Jovem Pan HQ"
+  },
+  {
+    "country": "Brazil",
+    "publisher": "Metropoles",
+    "city": "Brasilia",
+    "region": "Federal District",
+    "lat": -15.7939,
+    "lon": -47.8828,
+    "label": "Metropoles HQ"
+  },
+  {
+    "country": "Brazil",
+    "publisher": "ND Mais",
+    "city": "Florianopolis",
+    "region": "Santa Catarina",
+    "lat": -27.5949,
+    "lon": -48.5482,
+    "label": "ND Mais HQ"
+  },
+  {
+    "country": "Brazil",
+    "publisher": "Nexo Jornal",
+    "city": "Sao Paulo",
+    "region": "Sao Paulo",
+    "lat": -23.5505,
+    "lon": -46.6333,
+    "label": "Nexo Jornal HQ"
+  },
+  {
+    "country": "Brazil",
+    "publisher": "O Antagonista",
+    "city": "Sao Paulo",
+    "region": "Sao Paulo",
+    "lat": -23.5505,
+    "lon": -46.6333,
+    "label": "O Antagonista HQ"
+  },
+  {
+    "country": "Brazil",
+    "publisher": "O Globo",
+    "city": "Rio de Janeiro",
+    "region": "Rio de Janeiro",
+    "lat": -22.9068,
+    "lon": -43.1729,
+    "label": "O Globo HQ"
+  },
+  {
+    "country": "Brazil",
+    "publisher": "Olhar Digital",
+    "city": "Sao Paulo",
+    "region": "Sao Paulo",
+    "lat": -23.5505,
+    "lon": -46.6333,
+    "label": "Olhar Digital HQ"
+  },
+  {
+    "country": "Brazil",
+    "publisher": "Poder360",
+    "city": "Brasilia",
+    "region": "Federal District",
+    "lat": -15.7939,
+    "lon": -47.8828,
+    "label": "Poder360 HQ"
+  },
+  {
+    "country": "Brazil",
+    "publisher": "Superinteressante",
+    "city": "Sao Paulo",
+    "region": "Sao Paulo",
+    "lat": -23.5505,
+    "lon": -46.6333,
+    "label": "Superinteressante HQ"
+  },
+  {
+    "country": "Brazil",
+    "publisher": "Terra",
+    "city": "Sao Paulo",
+    "region": "Sao Paulo",
+    "lat": -23.5505,
+    "lon": -46.6333,
+    "label": "Terra HQ"
+  },
+  {
+    "country": "Brazil",
+    "publisher": "Valor Econômico",
+    "city": "Sao Paulo",
+    "region": "Sao Paulo",
+    "lat": -23.5505,
+    "lon": -46.6333,
+    "label": "Valor Econômico HQ"
+  },
+  {
+    "country": "Brazil",
+    "publisher": "Veja",
+    "city": "Sao Paulo",
+    "region": "Sao Paulo",
+    "lat": -23.5505,
+    "lon": -46.6333,
+    "label": "Veja HQ"
   },
   {
     "country": "Bulgaria",
@@ -1350,6 +1845,294 @@
     "label": "Xinhua HQ"
   },
   {
+    "country": "Croatia",
+    "publisher": "057info",
+    "city": "Zadar",
+    "region": "Zadar",
+    "lat": 44.1194,
+    "lon": 15.2314,
+    "label": "057info HQ"
+  },
+  {
+    "country": "Croatia",
+    "publisher": "24sata",
+    "city": "Zagreb",
+    "region": "Zagreb",
+    "lat": 45.815,
+    "lon": 15.9819,
+    "label": "24sata HQ"
+  },
+  {
+    "country": "Croatia",
+    "publisher": "Bug",
+    "city": "Zagreb",
+    "region": "Zagreb",
+    "lat": 45.815,
+    "lon": 15.9819,
+    "label": "Bug HQ"
+  },
+  {
+    "country": "Croatia",
+    "publisher": "Croatia Week",
+    "city": "Zagreb",
+    "region": "Zagreb",
+    "lat": 45.815,
+    "lon": 15.9819,
+    "label": "Croatia Week HQ"
+  },
+  {
+    "country": "Croatia",
+    "publisher": "Dalmacija Danas",
+    "city": "Split",
+    "region": "Split-Dalmatia",
+    "lat": 43.5081,
+    "lon": 16.4402,
+    "label": "Dalmacija Danas HQ"
+  },
+  {
+    "country": "Croatia",
+    "publisher": "Dnevnik.hr",
+    "city": "Zagreb",
+    "region": "Zagreb",
+    "lat": 45.815,
+    "lon": 15.9819,
+    "label": "Dnevnik.hr HQ"
+  },
+  {
+    "country": "Croatia",
+    "publisher": "Dnevno",
+    "city": "Zagreb",
+    "region": "Zagreb",
+    "lat": 45.815,
+    "lon": 15.9819,
+    "label": "Dnevno HQ"
+  },
+  {
+    "country": "Croatia",
+    "publisher": "DubrovnikNet",
+    "city": "Dubrovnik",
+    "region": "Dubrovnik-Neretva",
+    "lat": 42.6507,
+    "lon": 18.0944,
+    "label": "DubrovnikNet HQ"
+  },
+  {
+    "country": "Croatia",
+    "publisher": "eMedjimurje",
+    "city": "Cakovec",
+    "region": "Medimurje",
+    "lat": 46.3844,
+    "lon": 16.4339,
+    "label": "eMedjimurje HQ"
+  },
+  {
+    "country": "Croatia",
+    "publisher": "Glas Istre",
+    "city": "Pula",
+    "region": "Istria",
+    "lat": 44.8666,
+    "lon": 13.8496,
+    "label": "Glas Istre HQ"
+  },
+  {
+    "country": "Croatia",
+    "publisher": "Glas Slavonije",
+    "city": "Osijek",
+    "region": "Osijek-Baranja",
+    "lat": 45.554,
+    "lon": 18.6955,
+    "label": "Glas Slavonije HQ"
+  },
+  {
+    "country": "Croatia",
+    "publisher": "HRT Vijesti",
+    "city": "Zagreb",
+    "region": "Zagreb",
+    "lat": 45.815,
+    "lon": 15.9819,
+    "label": "HRT Vijesti HQ"
+  },
+  {
+    "country": "Croatia",
+    "publisher": "Index.hr",
+    "city": "Zagreb",
+    "region": "Zagreb",
+    "lat": 45.815,
+    "lon": 15.9819,
+    "label": "Index.hr HQ"
+  },
+  {
+    "country": "Croatia",
+    "publisher": "Jutarnji list",
+    "city": "Zagreb",
+    "region": "Zagreb",
+    "lat": 45.815,
+    "lon": 15.9819,
+    "label": "Jutarnji list HQ"
+  },
+  {
+    "country": "Croatia",
+    "publisher": "Klikaj",
+    "city": "Koprivnica",
+    "region": "Koprivnica-Krizevci",
+    "lat": 46.1628,
+    "lon": 16.827,
+    "label": "Klikaj HQ"
+  },
+  {
+    "country": "Croatia",
+    "publisher": "Lika online",
+    "city": "Gospic",
+    "region": "Lika-Senj",
+    "lat": 44.5469,
+    "lon": 15.3749,
+    "label": "Lika online HQ"
+  },
+  {
+    "country": "Croatia",
+    "publisher": "Morski",
+    "city": "Split",
+    "region": "Split-Dalmatia",
+    "lat": 43.5081,
+    "lon": 16.4402,
+    "label": "Morski HQ"
+  },
+  {
+    "country": "Croatia",
+    "publisher": "N1 Hrvatska",
+    "city": "Zagreb",
+    "region": "Zagreb",
+    "lat": 45.815,
+    "lon": 15.9819,
+    "label": "N1 Hrvatska HQ"
+  },
+  {
+    "country": "Croatia",
+    "publisher": "Nacional",
+    "city": "Zagreb",
+    "region": "Zagreb",
+    "lat": 45.815,
+    "lon": 15.9819,
+    "label": "Nacional HQ"
+  },
+  {
+    "country": "Croatia",
+    "publisher": "Net.hr",
+    "city": "Zagreb",
+    "region": "Zagreb",
+    "lat": 45.815,
+    "lon": 15.9819,
+    "label": "Net.hr HQ"
+  },
+  {
+    "country": "Croatia",
+    "publisher": "Novi List",
+    "city": "Rijeka",
+    "region": "Primorje-Gorski Kotar",
+    "lat": 45.3271,
+    "lon": 14.4422,
+    "label": "Novi List HQ"
+  },
+  {
+    "country": "Croatia",
+    "publisher": "Podravski",
+    "city": "Koprivnica",
+    "region": "Koprivnica-Krizevci",
+    "lat": 46.1628,
+    "lon": 16.827,
+    "label": "Podravski HQ"
+  },
+  {
+    "country": "Croatia",
+    "publisher": "Poslovni dnevnik",
+    "city": "Zagreb",
+    "region": "Zagreb",
+    "lat": 45.815,
+    "lon": 15.9819,
+    "label": "Poslovni dnevnik HQ"
+  },
+  {
+    "country": "Croatia",
+    "publisher": "Rijeka Danas",
+    "city": "Rijeka",
+    "region": "Primorje-Gorski Kotar",
+    "lat": 45.3271,
+    "lon": 14.4422,
+    "label": "Rijeka Danas HQ"
+  },
+  {
+    "country": "Croatia",
+    "publisher": "RTL Hrvatska",
+    "city": "Zagreb",
+    "region": "Zagreb",
+    "lat": 45.815,
+    "lon": 15.9819,
+    "label": "RTL Hrvatska HQ"
+  },
+  {
+    "country": "Croatia",
+    "publisher": "SiB",
+    "city": "Osijek",
+    "region": "Osijek-Baranja",
+    "lat": 45.554,
+    "lon": 18.6955,
+    "label": "SiB HQ"
+  },
+  {
+    "country": "Croatia",
+    "publisher": "Slobodna Dalmacija",
+    "city": "Split",
+    "region": "Split-Dalmatia",
+    "lat": 43.5081,
+    "lon": 16.4402,
+    "label": "Slobodna Dalmacija HQ"
+  },
+  {
+    "country": "Croatia",
+    "publisher": "Telegram.hr",
+    "city": "Zagreb",
+    "region": "Zagreb",
+    "lat": 45.815,
+    "lon": 15.9819,
+    "label": "Telegram.hr HQ"
+  },
+  {
+    "country": "Croatia",
+    "publisher": "Tportal",
+    "city": "Zagreb",
+    "region": "Zagreb",
+    "lat": 45.815,
+    "lon": 15.9819,
+    "label": "Tportal HQ"
+  },
+  {
+    "country": "Croatia",
+    "publisher": "Vecernji list",
+    "city": "Zagreb",
+    "region": "Zagreb",
+    "lat": 45.815,
+    "lon": 15.9819,
+    "label": "Vecernji list HQ"
+  },
+  {
+    "country": "Croatia",
+    "publisher": "Zadarski list",
+    "city": "Zadar",
+    "region": "Zadar",
+    "lat": 44.1194,
+    "lon": 15.2314,
+    "label": "Zadarski list HQ"
+  },
+  {
+    "country": "Croatia",
+    "publisher": "Zagrebancija",
+    "city": "Zagreb",
+    "region": "Zagreb",
+    "lat": 45.815,
+    "lon": 15.9819,
+    "label": "Zagrebancija HQ"
+  },
+  {
     "country": "Denmark",
     "publisher": "Altinget",
     "city": "Copenhagen",
@@ -1609,6 +2392,294 @@
     "lat": 55.6761,
     "lon": 12.5689,
     "label": "Weekendavisen HQ"
+  },
+  {
+    "country": "Dominican Republic",
+    "publisher": "7 Días",
+    "city": "Santo Domingo",
+    "region": "National District",
+    "lat": 18.4861,
+    "lon": -69.9312,
+    "label": "7 Días HQ"
+  },
+  {
+    "country": "Dominican Republic",
+    "publisher": "Barriga Verde",
+    "city": "San Juan de la Maguana",
+    "region": "San Juan",
+    "lat": 18.807,
+    "lon": -71.2294,
+    "label": "Barriga Verde HQ"
+  },
+  {
+    "country": "Dominican Republic",
+    "publisher": "Bávaro News",
+    "city": "Punta Cana",
+    "region": "La Altagracia",
+    "lat": 18.5601,
+    "lon": -68.3725,
+    "label": "Bávaro News HQ"
+  },
+  {
+    "country": "Dominican Republic",
+    "publisher": "CDN",
+    "city": "Santo Domingo",
+    "region": "National District",
+    "lat": 18.4861,
+    "lon": -69.9312,
+    "label": "CDN HQ"
+  },
+  {
+    "country": "Dominican Republic",
+    "publisher": "Ciudad Oriental",
+    "city": "Santo Domingo Este",
+    "region": "Santo Domingo",
+    "lat": 18.5109,
+    "lon": -69.8571,
+    "label": "Ciudad Oriental HQ"
+  },
+  {
+    "country": "Dominican Republic",
+    "publisher": "Costa Verde DR",
+    "city": "Puerto Plata",
+    "region": "Puerto Plata",
+    "lat": 19.7934,
+    "lon": -70.6884,
+    "label": "Costa Verde DR HQ"
+  },
+  {
+    "country": "Dominican Republic",
+    "publisher": "Diario 55",
+    "city": "Santiago de los Caballeros",
+    "region": "Santiago",
+    "lat": 19.4517,
+    "lon": -70.697,
+    "label": "Diario 55 HQ"
+  },
+  {
+    "country": "Dominican Republic",
+    "publisher": "Diario Azua",
+    "city": "Azua",
+    "region": "Azua",
+    "lat": 18.4532,
+    "lon": -70.7349,
+    "label": "Diario Azua HQ"
+  },
+  {
+    "country": "Dominican Republic",
+    "publisher": "Diario Digital RD",
+    "city": "Santo Domingo",
+    "region": "National District",
+    "lat": 18.4861,
+    "lon": -69.9312,
+    "label": "Diario Digital RD HQ"
+  },
+  {
+    "country": "Dominican Republic",
+    "publisher": "Diario Puerto Plata",
+    "city": "Puerto Plata",
+    "region": "Puerto Plata",
+    "lat": 19.7934,
+    "lon": -70.6884,
+    "label": "Diario Puerto Plata HQ"
+  },
+  {
+    "country": "Dominican Republic",
+    "publisher": "DominicanosHoy",
+    "city": "Santo Domingo",
+    "region": "National District",
+    "lat": 18.4861,
+    "lon": -69.9312,
+    "label": "DominicanosHoy HQ"
+  },
+  {
+    "country": "Dominican Republic",
+    "publisher": "El Caribe",
+    "city": "Santo Domingo",
+    "region": "National District",
+    "lat": 18.4861,
+    "lon": -69.9312,
+    "label": "El Caribe HQ"
+  },
+  {
+    "country": "Dominican Republic",
+    "publisher": "El Día",
+    "city": "Santo Domingo",
+    "region": "National District",
+    "lat": 18.4861,
+    "lon": -69.9312,
+    "label": "El Día HQ"
+  },
+  {
+    "country": "Dominican Republic",
+    "publisher": "El Dinero",
+    "city": "Santo Domingo",
+    "region": "National District",
+    "lat": 18.4861,
+    "lon": -69.9312,
+    "label": "El Dinero HQ"
+  },
+  {
+    "country": "Dominican Republic",
+    "publisher": "El Jacaguero",
+    "city": "Santiago de los Caballeros",
+    "region": "Santiago",
+    "lat": 19.4517,
+    "lon": -70.697,
+    "label": "El Jacaguero HQ"
+  },
+  {
+    "country": "Dominican Republic",
+    "publisher": "El Jaya",
+    "city": "San Francisco de Macoris",
+    "region": "Duarte",
+    "lat": 19.3002,
+    "lon": -70.2526,
+    "label": "El Jaya HQ"
+  },
+  {
+    "country": "Dominican Republic",
+    "publisher": "El Nacional",
+    "city": "Santo Domingo",
+    "region": "National District",
+    "lat": 18.4861,
+    "lon": -69.9312,
+    "label": "El Nacional HQ"
+  },
+  {
+    "country": "Dominican Republic",
+    "publisher": "El Nuevo Diario",
+    "city": "Santo Domingo",
+    "region": "National District",
+    "lat": 18.4861,
+    "lon": -69.9312,
+    "label": "El Nuevo Diario HQ"
+  },
+  {
+    "country": "Dominican Republic",
+    "publisher": "El Pregonero RD",
+    "city": "Santo Domingo",
+    "region": "National District",
+    "lat": 18.4861,
+    "lon": -69.9312,
+    "label": "El Pregonero RD HQ"
+  },
+  {
+    "country": "Dominican Republic",
+    "publisher": "El Sol de Santiago",
+    "city": "Santiago de los Caballeros",
+    "region": "Santiago",
+    "lat": 19.4517,
+    "lon": -70.697,
+    "label": "El Sol de Santiago HQ"
+  },
+  {
+    "country": "Dominican Republic",
+    "publisher": "EnSegundos",
+    "city": "Santo Domingo",
+    "region": "National District",
+    "lat": 18.4861,
+    "lon": -69.9312,
+    "label": "EnSegundos HQ"
+  },
+  {
+    "country": "Dominican Republic",
+    "publisher": "La Información",
+    "city": "Santiago de los Caballeros",
+    "region": "Santiago",
+    "lat": 19.4517,
+    "lon": -70.697,
+    "label": "La Información HQ"
+  },
+  {
+    "country": "Dominican Republic",
+    "publisher": "N Digital",
+    "city": "Santo Domingo",
+    "region": "National District",
+    "lat": 18.4861,
+    "lon": -69.9312,
+    "label": "N Digital HQ"
+  },
+  {
+    "country": "Dominican Republic",
+    "publisher": "Noticia.do",
+    "city": "Santiago de los Caballeros",
+    "region": "Santiago",
+    "lat": 19.4517,
+    "lon": -70.697,
+    "label": "Noticia.do HQ"
+  },
+  {
+    "country": "Dominican Republic",
+    "publisher": "Noticiario Barahona",
+    "city": "Barahona",
+    "region": "Barahona",
+    "lat": 18.2085,
+    "lon": -71.1009,
+    "label": "Noticiario Barahona HQ"
+  },
+  {
+    "country": "Dominican Republic",
+    "publisher": "Noticias SIN",
+    "city": "Santo Domingo",
+    "region": "National District",
+    "lat": 18.4861,
+    "lon": -69.9312,
+    "label": "Noticias SIN HQ"
+  },
+  {
+    "country": "Dominican Republic",
+    "publisher": "Panorama",
+    "city": "Santo Domingo",
+    "region": "National District",
+    "lat": 18.4861,
+    "lon": -69.9312,
+    "label": "Panorama HQ"
+  },
+  {
+    "country": "Dominican Republic",
+    "publisher": "Remolacha",
+    "city": "Santo Domingo",
+    "region": "National District",
+    "lat": 18.4861,
+    "lon": -69.9312,
+    "label": "Remolacha HQ"
+  },
+  {
+    "country": "Dominican Republic",
+    "publisher": "Roberto Cavada",
+    "city": "Santo Domingo",
+    "region": "National District",
+    "lat": 18.4861,
+    "lon": -69.9312,
+    "label": "Roberto Cavada HQ"
+  },
+  {
+    "country": "Dominican Republic",
+    "publisher": "Telenoticias",
+    "city": "Santo Domingo",
+    "region": "National District",
+    "lat": 18.4861,
+    "lon": -69.9312,
+    "label": "Telenoticias HQ"
+  },
+  {
+    "country": "Dominican Republic",
+    "publisher": "Teleuniverso",
+    "city": "Santiago de los Caballeros",
+    "region": "Santiago",
+    "lat": 19.4517,
+    "lon": -70.697,
+    "label": "Teleuniverso HQ"
+  },
+  {
+    "country": "Dominican Republic",
+    "publisher": "Tras las Huellas Digital",
+    "city": "Santo Domingo",
+    "region": "National District",
+    "lat": 18.4861,
+    "lon": -69.9312,
+    "label": "Tras las Huellas Digital HQ"
   },
   {
     "country": "Estonia",
@@ -6247,12 +7318,318 @@
   },
   {
     "country": "Taiwan",
+    "publisher": "CTS News",
+    "city": "Taipei",
+    "region": "Taipei",
+    "lat": 25.033,
+    "lon": 121.5654,
+    "label": "CTS News HQ"
+  },
+  {
+    "country": "Taiwan",
+    "publisher": "CTWant",
+    "city": "Taipei",
+    "region": "Taipei",
+    "lat": 25.033,
+    "lon": 121.5654,
+    "label": "CTWant HQ"
+  },
+  {
+    "country": "Taiwan",
+    "publisher": "EBC News",
+    "city": "Taipei",
+    "region": "Taipei",
+    "lat": 25.033,
+    "lon": 121.5654,
+    "label": "EBC News HQ"
+  },
+  {
+    "country": "Taiwan",
+    "publisher": "ETtoday",
+    "city": "Taipei",
+    "region": "Taipei",
+    "lat": 25.033,
+    "lon": 121.5654,
+    "label": "ETtoday HQ"
+  },
+  {
+    "country": "Taiwan",
+    "publisher": "Formosa Reporter",
+    "city": "Taipei",
+    "region": "Taipei",
+    "lat": 25.033,
+    "lon": 121.5654,
+    "label": "Formosa Reporter HQ"
+  },
+  {
+    "country": "Taiwan",
+    "publisher": "Liberty Times",
+    "city": "Taipei",
+    "region": "Taipei",
+    "lat": 25.033,
+    "lon": 121.5654,
+    "label": "Liberty Times HQ"
+  },
+  {
+    "country": "Taiwan",
     "publisher": "Mirror Media",
     "city": "Taipei",
     "region": "Taipei",
     "lat": 25.0375,
     "lon": 121.5625,
     "label": "Mirror Media HQ"
+  },
+  {
+    "country": "Taiwan",
+    "publisher": "Newtalk",
+    "city": "Taipei",
+    "region": "Taipei",
+    "lat": 25.033,
+    "lon": 121.5654,
+    "label": "Newtalk HQ"
+  },
+  {
+    "country": "Taiwan",
+    "publisher": "Nownews",
+    "city": "Taipei",
+    "region": "Taipei",
+    "lat": 25.033,
+    "lon": 121.5654,
+    "label": "Nownews HQ"
+  },
+  {
+    "country": "Taiwan",
+    "publisher": "People News Taiwan",
+    "city": "Taipei",
+    "region": "Taipei",
+    "lat": 25.033,
+    "lon": 121.5654,
+    "label": "People News Taiwan HQ"
+  },
+  {
+    "country": "Taiwan",
+    "publisher": "PTS News",
+    "city": "Taipei",
+    "region": "Taipei",
+    "lat": 25.033,
+    "lon": 121.5654,
+    "label": "PTS News HQ"
+  },
+  {
+    "country": "Taiwan",
+    "publisher": "SETN",
+    "city": "Taipei",
+    "region": "Taipei",
+    "lat": 25.033,
+    "lon": 121.5654,
+    "label": "SETN HQ"
+  },
+  {
+    "country": "Taiwan",
+    "publisher": "Storm Media",
+    "city": "Taipei",
+    "region": "Taipei",
+    "lat": 25.033,
+    "lon": 121.5654,
+    "label": "Storm Media HQ"
+  },
+  {
+    "country": "Taiwan",
+    "publisher": "Taipei Times",
+    "city": "Taipei",
+    "region": "Taipei",
+    "lat": 25.033,
+    "lon": 121.5654,
+    "label": "Taipei Times HQ"
+  },
+  {
+    "country": "Taiwan",
+    "publisher": "TechNews Taiwan",
+    "city": "Taipei",
+    "region": "Taipei",
+    "lat": 25.033,
+    "lon": 121.5654,
+    "label": "TechNews Taiwan HQ"
+  },
+  {
+    "country": "Taiwan",
+    "publisher": "The Reporter",
+    "city": "Taipei",
+    "region": "Taipei",
+    "lat": 25.033,
+    "lon": 121.5654,
+    "label": "The Reporter HQ"
+  },
+  {
+    "country": "Taiwan",
+    "publisher": "TVBS",
+    "city": "Taipei",
+    "region": "Taipei",
+    "lat": 25.033,
+    "lon": 121.5654,
+    "label": "TVBS HQ"
+  },
+  {
+    "country": "Taiwan",
+    "publisher": "UDN",
+    "city": "Taipei",
+    "region": "Taipei",
+    "lat": 25.033,
+    "lon": 121.5654,
+    "label": "UDN HQ"
+  },
+  {
+    "country": "Taiwan",
+    "publisher": "Youth Daily News",
+    "city": "Taipei",
+    "region": "Taipei",
+    "lat": 25.033,
+    "lon": 121.5654,
+    "label": "Youth Daily News HQ"
+  },
+  {
+    "country": "Turkey",
+    "publisher": "Ahaber",
+    "city": "Istanbul",
+    "region": "Istanbul",
+    "lat": 41.0082,
+    "lon": 28.9784,
+    "label": "Ahaber HQ"
+  },
+  {
+    "country": "Turkey",
+    "publisher": "Aksam",
+    "city": "Istanbul",
+    "region": "Istanbul",
+    "lat": 41.0082,
+    "lon": 28.9784,
+    "label": "Aksam HQ"
+  },
+  {
+    "country": "Turkey",
+    "publisher": "Bloomberg HT",
+    "city": "Istanbul",
+    "region": "Istanbul",
+    "lat": 41.0082,
+    "lon": 28.9784,
+    "label": "Bloomberg HT HQ"
+  },
+  {
+    "country": "Turkey",
+    "publisher": "Cumhuriyet",
+    "city": "Istanbul",
+    "region": "Istanbul",
+    "lat": 41.0082,
+    "lon": 28.9784,
+    "label": "Cumhuriyet HQ"
+  },
+  {
+    "country": "Turkey",
+    "publisher": "Dünya",
+    "city": "Istanbul",
+    "region": "Istanbul",
+    "lat": 41.0082,
+    "lon": 28.9784,
+    "label": "Dünya HQ"
+  },
+  {
+    "country": "Turkey",
+    "publisher": "Ensonhaber",
+    "city": "Istanbul",
+    "region": "Istanbul",
+    "lat": 41.0082,
+    "lon": 28.9784,
+    "label": "Ensonhaber HQ"
+  },
+  {
+    "country": "Turkey",
+    "publisher": "Habertürk",
+    "city": "Istanbul",
+    "region": "Istanbul",
+    "lat": 41.0082,
+    "lon": 28.9784,
+    "label": "Habertürk HQ"
+  },
+  {
+    "country": "Turkey",
+    "publisher": "Karar",
+    "city": "Istanbul",
+    "region": "Istanbul",
+    "lat": 41.0082,
+    "lon": 28.9784,
+    "label": "Karar HQ"
+  },
+  {
+    "country": "Turkey",
+    "publisher": "Mynet",
+    "city": "Istanbul",
+    "region": "Istanbul",
+    "lat": 41.0082,
+    "lon": 28.9784,
+    "label": "Mynet HQ"
+  },
+  {
+    "country": "Turkey",
+    "publisher": "NTV",
+    "city": "Istanbul",
+    "region": "Istanbul",
+    "lat": 41.0082,
+    "lon": 28.9784,
+    "label": "NTV HQ"
+  },
+  {
+    "country": "Turkey",
+    "publisher": "Sözcü",
+    "city": "Istanbul",
+    "region": "Istanbul",
+    "lat": 41.0082,
+    "lon": 28.9784,
+    "label": "Sözcü HQ"
+  },
+  {
+    "country": "Turkey",
+    "publisher": "T24",
+    "city": "Istanbul",
+    "region": "Istanbul",
+    "lat": 41.0082,
+    "lon": 28.9784,
+    "label": "T24 HQ"
+  },
+  {
+    "country": "Turkey",
+    "publisher": "TGRT Haber",
+    "city": "Istanbul",
+    "region": "Istanbul",
+    "lat": 41.0082,
+    "lon": 28.9784,
+    "label": "TGRT Haber HQ"
+  },
+  {
+    "country": "Turkey",
+    "publisher": "TRT Haber",
+    "city": "Ankara",
+    "region": "Ankara",
+    "lat": 39.9334,
+    "lon": 32.8597,
+    "label": "TRT Haber HQ"
+  },
+  {
+    "country": "Turkey",
+    "publisher": "Webtekno",
+    "city": "Istanbul",
+    "region": "Istanbul",
+    "lat": 41.0082,
+    "lon": 28.9784,
+    "label": "Webtekno HQ"
+  },
+  {
+    "country": "Turkey",
+    "publisher": "Yeni Şafak",
+    "city": "Istanbul",
+    "region": "Istanbul",
+    "lat": 41.0082,
+    "lon": 28.9784,
+    "label": "Yeni Şafak HQ"
   },
   {
     "country": "United Kingdom",
@@ -6262,6 +7639,177 @@
     "lat": 51.5072,
     "lon": -0.1275,
     "label": "BBC HQ"
+  },
+  {
+    "country": "United Kingdom",
+    "publisher": "Birmingham Live",
+    "city": "Birmingham",
+    "region": "England",
+    "lat": 52.4862,
+    "lon": -1.8904,
+    "label": "Birmingham Live HQ"
+  },
+  {
+    "country": "United Kingdom",
+    "publisher": "ChronicleLive",
+    "city": "Newcastle upon Tyne",
+    "region": "England",
+    "lat": 54.9783,
+    "lon": -1.6178,
+    "label": "ChronicleLive HQ"
+  },
+  {
+    "country": "United Kingdom",
+    "publisher": "City A.M.",
+    "city": "London",
+    "region": "England",
+    "lat": 51.5072,
+    "lon": -0.1276,
+    "label": "City A.M. HQ"
+  },
+  {
+    "country": "United Kingdom",
+    "publisher": "Daily Record",
+    "city": "Glasgow",
+    "region": "Scotland",
+    "lat": 55.8642,
+    "lon": -4.2518,
+    "label": "Daily Record HQ"
+  },
+  {
+    "country": "United Kingdom",
+    "publisher": "Daily Star",
+    "city": "London",
+    "region": "England",
+    "lat": 51.5072,
+    "lon": -0.1276,
+    "label": "Daily Star HQ"
+  },
+  {
+    "country": "United Kingdom",
+    "publisher": "Evening Standard",
+    "city": "London",
+    "region": "England",
+    "lat": 51.5072,
+    "lon": -0.1276,
+    "label": "Evening Standard HQ"
+  },
+  {
+    "country": "United Kingdom",
+    "publisher": "ExaminerLive",
+    "city": "Huddersfield",
+    "region": "England",
+    "lat": 53.6458,
+    "lon": -1.785,
+    "label": "ExaminerLive HQ"
+  },
+  {
+    "country": "United Kingdom",
+    "publisher": "Financial Times",
+    "city": "London",
+    "region": "England",
+    "lat": 51.5072,
+    "lon": -0.1276,
+    "label": "Financial Times HQ"
+  },
+  {
+    "country": "United Kingdom",
+    "publisher": "FlightGlobal",
+    "city": "London",
+    "region": "England",
+    "lat": 51.5072,
+    "lon": -0.1276,
+    "label": "FlightGlobal HQ"
+  },
+  {
+    "country": "United Kingdom",
+    "publisher": "iNews",
+    "city": "London",
+    "region": "England",
+    "lat": 51.5072,
+    "lon": -0.1276,
+    "label": "iNews HQ"
+  },
+  {
+    "country": "United Kingdom",
+    "publisher": "Liverpool Echo",
+    "city": "Liverpool",
+    "region": "England",
+    "lat": 53.4084,
+    "lon": -2.9916,
+    "label": "Liverpool Echo HQ"
+  },
+  {
+    "country": "United Kingdom",
+    "publisher": "MyLondon",
+    "city": "London",
+    "region": "England",
+    "lat": 51.5072,
+    "lon": -0.1276,
+    "label": "MyLondon HQ"
+  },
+  {
+    "country": "United Kingdom",
+    "publisher": "Nature News",
+    "city": "London",
+    "region": "England",
+    "lat": 51.5072,
+    "lon": -0.1276,
+    "label": "Nature News HQ"
+  },
+  {
+    "country": "United Kingdom",
+    "publisher": "Simple Flying",
+    "city": "London",
+    "region": "England",
+    "lat": 51.5072,
+    "lon": -0.1276,
+    "label": "Simple Flying HQ"
+  },
+  {
+    "country": "United Kingdom",
+    "publisher": "Sky News",
+    "city": "London",
+    "region": "England",
+    "lat": 51.5072,
+    "lon": -0.1276,
+    "label": "Sky News HQ"
+  },
+  {
+    "country": "United Kingdom",
+    "publisher": "The Guardian",
+    "city": "London",
+    "region": "England",
+    "lat": 51.5072,
+    "lon": -0.1276,
+    "label": "The Guardian HQ"
+  },
+  {
+    "country": "United Kingdom",
+    "publisher": "The Independent",
+    "city": "London",
+    "region": "England",
+    "lat": 51.5072,
+    "lon": -0.1276,
+    "label": "The Independent HQ"
+  },
+  {
+    "country": "United Kingdom",
+    "publisher": "The Telegraph",
+    "city": "London",
+    "region": "England",
+    "lat": 51.5072,
+    "lon": -0.1276,
+    "label": "The Telegraph HQ"
+  },
+  {
+    "country": "United Kingdom",
+    "publisher": "WalesOnline",
+    "city": "Cardiff",
+    "region": "Wales",
+    "lat": 51.4816,
+    "lon": -3.1791,
+    "label": "WalesOnline HQ"
   },
   {
     "country": "United States",
