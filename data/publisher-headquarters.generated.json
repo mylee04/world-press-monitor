@@ -882,6 +882,276 @@
     "label": "Wiener Zeitung HQ"
   },
   {
+    "country": "Bahrain",
+    "publisher": "24x7 News Bahrain",
+    "city": "Manama",
+    "region": "Capital",
+    "lat": 26.2235,
+    "lon": 50.5876,
+    "label": "24x7 News Bahrain HQ"
+  },
+  {
+    "country": "Bahrain",
+    "publisher": "Al Bilad Press",
+    "city": "Manama",
+    "region": "Capital",
+    "lat": 26.2235,
+    "lon": 50.5876,
+    "label": "Al Bilad Press HQ"
+  },
+  {
+    "country": "Bahrain",
+    "publisher": "Al Watan Bahrain",
+    "city": "Manama",
+    "region": "Capital",
+    "lat": 26.2235,
+    "lon": 50.5876,
+    "label": "Al Watan Bahrain HQ"
+  },
+  {
+    "country": "Bahrain",
+    "publisher": "Bahrain Confidential",
+    "city": "Manama",
+    "region": "Capital",
+    "lat": 26.2235,
+    "lon": 50.5876,
+    "label": "Bahrain Confidential HQ"
+  },
+  {
+    "country": "Bahrain",
+    "publisher": "Bahrain Mirror",
+    "city": "Manama",
+    "region": "Capital",
+    "lat": 26.2235,
+    "lon": 50.5876,
+    "label": "Bahrain Mirror HQ"
+  },
+  {
+    "country": "Bahrain",
+    "publisher": "Bahrain This Week",
+    "city": "Manama",
+    "region": "Capital",
+    "lat": 26.2235,
+    "lon": 50.5876,
+    "label": "Bahrain This Week HQ"
+  },
+  {
+    "country": "Bahrain",
+    "publisher": "Biz Bahrain",
+    "city": "Manama",
+    "region": "Capital",
+    "lat": 26.2235,
+    "lon": 50.5876,
+    "label": "Biz Bahrain HQ"
+  },
+  {
+    "country": "Bahrain",
+    "publisher": "Gulf Insider",
+    "city": "Manama",
+    "region": "Capital",
+    "lat": 26.2235,
+    "lon": 50.5876,
+    "label": "Gulf Insider HQ"
+  },
+  {
+    "country": "Bahrain",
+    "publisher": "LocalBH",
+    "city": "Manama",
+    "region": "Capital",
+    "lat": 26.2235,
+    "lon": 50.5876,
+    "label": "LocalBH HQ"
+  },
+  {
+    "country": "Belgium",
+    "publisher": "Brussels Morning",
+    "city": "Brussels",
+    "region": "Brussels-Capital",
+    "lat": 50.8503,
+    "lon": 4.3517,
+    "label": "Brussels Morning HQ"
+  },
+  {
+    "country": "Belgium",
+    "publisher": "Brussels Times",
+    "city": "Brussels",
+    "region": "Brussels-Capital",
+    "lat": 50.8503,
+    "lon": 4.3517,
+    "label": "Brussels Times HQ"
+  },
+  {
+    "country": "Belgium",
+    "publisher": "Bruzz",
+    "city": "Brussels",
+    "region": "Brussels-Capital",
+    "lat": 50.8503,
+    "lon": 4.3517,
+    "label": "Bruzz HQ"
+  },
+  {
+    "country": "Belgium",
+    "publisher": "Business AM",
+    "city": "Antwerp",
+    "region": "Antwerp",
+    "lat": 51.2194,
+    "lon": 4.4025,
+    "label": "Business AM HQ"
+  },
+  {
+    "country": "Belgium",
+    "publisher": "BX1",
+    "city": "Brussels",
+    "region": "Brussels-Capital",
+    "lat": 50.8503,
+    "lon": 4.3517,
+    "label": "BX1 HQ"
+  },
+  {
+    "country": "Belgium",
+    "publisher": "City of Brussels",
+    "city": "Brussels",
+    "region": "Brussels-Capital",
+    "lat": 50.8503,
+    "lon": 4.3517,
+    "label": "City of Brussels HQ"
+  },
+  {
+    "country": "Belgium",
+    "publisher": "DataNews",
+    "city": "Roeselare",
+    "region": "West Flanders",
+    "lat": 50.9499,
+    "lon": 3.1223,
+    "label": "DataNews HQ"
+  },
+  {
+    "country": "Belgium",
+    "publisher": "Kanaal Z",
+    "city": "Brussels",
+    "region": "Brussels-Capital",
+    "lat": 50.8503,
+    "lon": 4.3517,
+    "label": "Kanaal Z HQ"
+  },
+  {
+    "country": "Belgium",
+    "publisher": "Knack",
+    "city": "Roeselare",
+    "region": "West Flanders",
+    "lat": 50.9499,
+    "lon": 3.1223,
+    "label": "Knack HQ"
+  },
+  {
+    "country": "Belgium",
+    "publisher": "L'Avenir",
+    "city": "Namur",
+    "region": "Namur",
+    "lat": 50.4674,
+    "lon": 4.8718,
+    "label": "L'Avenir HQ"
+  },
+  {
+    "country": "Belgium",
+    "publisher": "L'Echo",
+    "city": "Brussels",
+    "region": "Brussels-Capital",
+    "lat": 50.8503,
+    "lon": 4.3517,
+    "label": "L'Echo HQ"
+  },
+  {
+    "country": "Belgium",
+    "publisher": "La Dernière Heure",
+    "city": "Brussels",
+    "region": "Brussels-Capital",
+    "lat": 50.8503,
+    "lon": 4.3517,
+    "label": "La Dernière Heure HQ"
+  },
+  {
+    "country": "Belgium",
+    "publisher": "Le Soir",
+    "city": "Brussels",
+    "region": "Brussels-Capital",
+    "lat": 50.8503,
+    "lon": 4.3517,
+    "label": "Le Soir HQ"
+  },
+  {
+    "country": "Belgium",
+    "publisher": "Le Vif",
+    "city": "Roeselare",
+    "region": "West Flanders",
+    "lat": 50.9499,
+    "lon": 3.1223,
+    "label": "Le Vif HQ"
+  },
+  {
+    "country": "Belgium",
+    "publisher": "Made in",
+    "city": "Antwerp",
+    "region": "Antwerp",
+    "lat": 51.2194,
+    "lon": 4.4025,
+    "label": "Made in HQ"
+  },
+  {
+    "country": "Belgium",
+    "publisher": "Newsmonkey",
+    "city": "Antwerp",
+    "region": "Antwerp",
+    "lat": 51.2194,
+    "lon": 4.4025,
+    "label": "Newsmonkey HQ"
+  },
+  {
+    "country": "Belgium",
+    "publisher": "RTL",
+    "city": "Brussels",
+    "region": "Brussels-Capital",
+    "lat": 50.8503,
+    "lon": 4.3517,
+    "label": "RTL HQ"
+  },
+  {
+    "country": "Belgium",
+    "publisher": "Sudinfo",
+    "city": "Brussels",
+    "region": "Brussels-Capital",
+    "lat": 50.8503,
+    "lon": 4.3517,
+    "label": "Sudinfo HQ"
+  },
+  {
+    "country": "Belgium",
+    "publisher": "The Bulletin",
+    "city": "Brussels",
+    "region": "Brussels-Capital",
+    "lat": 50.8503,
+    "lon": 4.3517,
+    "label": "The Bulletin HQ"
+  },
+  {
+    "country": "Belgium",
+    "publisher": "Trends",
+    "city": "Roeselare",
+    "region": "West Flanders",
+    "lat": 50.9499,
+    "lon": 3.1223,
+    "label": "Trends HQ"
+  },
+  {
+    "country": "Belgium",
+    "publisher": "Trends Tendance",
+    "city": "Roeselare",
+    "region": "West Flanders",
+    "lat": 50.9499,
+    "lon": 3.1223,
+    "label": "Trends Tendance HQ"
+  },
+  {
     "country": "Brazil",
     "publisher": "Agência Pública",
     "city": "Sao Paulo",
@@ -4365,6 +4635,42 @@
     "label": "VG.hu HQ"
   },
   {
+    "country": "Iceland",
+    "publisher": "DV",
+    "city": "Reykjavik",
+    "region": "Capital Region",
+    "lat": 64.1466,
+    "lon": -21.9426,
+    "label": "DV HQ"
+  },
+  {
+    "country": "Iceland",
+    "publisher": "MBL",
+    "city": "Reykjavik",
+    "region": "Capital Region",
+    "lat": 64.1466,
+    "lon": -21.9426,
+    "label": "MBL HQ"
+  },
+  {
+    "country": "Iceland",
+    "publisher": "RUV",
+    "city": "Reykjavik",
+    "region": "Capital Region",
+    "lat": 64.1466,
+    "lon": -21.9426,
+    "label": "RUV HQ"
+  },
+  {
+    "country": "Iceland",
+    "publisher": "Visir",
+    "city": "Reykjavik",
+    "region": "Capital Region",
+    "lat": 64.1466,
+    "lon": -21.9426,
+    "label": "Visir HQ"
+  },
+  {
     "country": "India",
     "publisher": "ABP News",
     "city": "Noida",
@@ -7101,6 +7407,150 @@
     "label": "VG HQ"
   },
   {
+    "country": "Philippines",
+    "publisher": "Bilyonaryo",
+    "city": "Makati",
+    "region": "Metro Manila",
+    "lat": 14.5547,
+    "lon": 121.0244,
+    "label": "Bilyonaryo HQ"
+  },
+  {
+    "country": "Philippines",
+    "publisher": "Bohol Chronicle",
+    "city": "Tagbilaran",
+    "region": "Bohol",
+    "lat": 9.6496,
+    "lon": 123.8552,
+    "label": "Bohol Chronicle HQ"
+  },
+  {
+    "country": "Philippines",
+    "publisher": "Bulatlat",
+    "city": "Quezon City",
+    "region": "Metro Manila",
+    "lat": 14.676,
+    "lon": 121.0437,
+    "label": "Bulatlat HQ"
+  },
+  {
+    "country": "Philippines",
+    "publisher": "Daily Guardian",
+    "city": "Iloilo City",
+    "region": "Iloilo",
+    "lat": 10.7202,
+    "lon": 122.5621,
+    "label": "Daily Guardian HQ"
+  },
+  {
+    "country": "Philippines",
+    "publisher": "Davao Today",
+    "city": "Davao City",
+    "region": "Davao del Sur",
+    "lat": 7.1907,
+    "lon": 125.4553,
+    "label": "Davao Today HQ"
+  },
+  {
+    "country": "Philippines",
+    "publisher": "EDGE Davao",
+    "city": "Davao City",
+    "region": "Davao del Sur",
+    "lat": 7.1907,
+    "lon": 125.4553,
+    "label": "EDGE Davao HQ"
+  },
+  {
+    "country": "Philippines",
+    "publisher": "Journal News",
+    "city": "Manila",
+    "region": "Metro Manila",
+    "lat": 14.5995,
+    "lon": 120.9842,
+    "label": "Journal News HQ"
+  },
+  {
+    "country": "Philippines",
+    "publisher": "Manila Today",
+    "city": "Manila",
+    "region": "Metro Manila",
+    "lat": 14.5995,
+    "lon": 120.9842,
+    "label": "Manila Today HQ"
+  },
+  {
+    "country": "Philippines",
+    "publisher": "Mindanao Gold Star Daily",
+    "city": "Cagayan de Oro",
+    "region": "Misamis Oriental",
+    "lat": 8.4542,
+    "lon": 124.6319,
+    "label": "Mindanao Gold Star Daily HQ"
+  },
+  {
+    "country": "Philippines",
+    "publisher": "Mindanao Times",
+    "city": "Davao City",
+    "region": "Davao del Sur",
+    "lat": 7.1907,
+    "lon": 125.4553,
+    "label": "Mindanao Times HQ"
+  },
+  {
+    "country": "Philippines",
+    "publisher": "Newsbytes",
+    "city": "Quezon City",
+    "region": "Metro Manila",
+    "lat": 14.676,
+    "lon": 121.0437,
+    "label": "Newsbytes HQ"
+  },
+  {
+    "country": "Philippines",
+    "publisher": "Palawan News",
+    "city": "Puerto Princesa",
+    "region": "Palawan",
+    "lat": 9.7392,
+    "lon": 118.7353,
+    "label": "Palawan News HQ"
+  },
+  {
+    "country": "Philippines",
+    "publisher": "Panay News",
+    "city": "Iloilo City",
+    "region": "Iloilo",
+    "lat": 10.7202,
+    "lon": 122.5621,
+    "label": "Panay News HQ"
+  },
+  {
+    "country": "Philippines",
+    "publisher": "Politiko",
+    "city": "Quezon City",
+    "region": "Metro Manila",
+    "lat": 14.676,
+    "lon": 121.0437,
+    "label": "Politiko HQ"
+  },
+  {
+    "country": "Philippines",
+    "publisher": "Tempo",
+    "city": "Manila",
+    "region": "Metro Manila",
+    "lat": 14.5995,
+    "lon": 120.9842,
+    "label": "Tempo HQ"
+  },
+  {
+    "country": "Philippines",
+    "publisher": "Tiebreaker Times",
+    "city": "Pasig",
+    "region": "Metro Manila",
+    "lat": 14.5764,
+    "lon": 121.0851,
+    "label": "Tiebreaker Times HQ"
+  },
+  {
     "country": "Poland",
     "publisher": "Agora",
     "city": "Warsaw",
@@ -7558,6 +8008,69 @@
     "lat": 38.7223,
     "lon": -9.1393,
     "label": "Visao HQ"
+  },
+  {
+    "country": "Qatar",
+    "publisher": "Al Jazeera",
+    "city": "Doha",
+    "region": "Doha",
+    "lat": 25.2854,
+    "lon": 51.531,
+    "label": "Al Jazeera HQ"
+  },
+  {
+    "country": "Qatar",
+    "publisher": "Doha News",
+    "city": "Doha",
+    "region": "Doha",
+    "lat": 25.2854,
+    "lon": 51.531,
+    "label": "Doha News HQ"
+  },
+  {
+    "country": "Qatar",
+    "publisher": "Gulf Times",
+    "city": "Doha",
+    "region": "Doha",
+    "lat": 25.2854,
+    "lon": 51.531,
+    "label": "Gulf Times HQ"
+  },
+  {
+    "country": "Qatar",
+    "publisher": "Qatar Living",
+    "city": "Doha",
+    "region": "Doha",
+    "lat": 25.2854,
+    "lon": 51.531,
+    "label": "Qatar Living HQ"
+  },
+  {
+    "country": "Qatar",
+    "publisher": "Qatar Tribune",
+    "city": "Doha",
+    "region": "Doha",
+    "lat": 25.2854,
+    "lon": 51.531,
+    "label": "Qatar Tribune HQ"
+  },
+  {
+    "country": "Qatar",
+    "publisher": "QNA",
+    "city": "Doha",
+    "region": "Doha",
+    "lat": 25.2854,
+    "lon": 51.531,
+    "label": "QNA HQ"
+  },
+  {
+    "country": "Qatar",
+    "publisher": "The Peninsula Qatar",
+    "city": "Doha",
+    "region": "Doha",
+    "lat": 25.2854,
+    "lon": 51.531,
+    "label": "The Peninsula Qatar HQ"
   },
   {
     "country": "Romania",
@@ -9745,6 +10258,195 @@
     "lat": 41.0082,
     "lon": 28.9784,
     "label": "Yeni Şafak HQ"
+  },
+  {
+    "country": "Ukraine",
+    "publisher": "24tv.ua",
+    "city": "Lviv",
+    "region": "Lviv",
+    "lat": 49.8397,
+    "lon": 24.0297,
+    "label": "24tv.ua HQ"
+  },
+  {
+    "country": "Ukraine",
+    "publisher": "Babel",
+    "city": "Kyiv",
+    "region": "Kyiv",
+    "lat": 50.4501,
+    "lon": 30.5234,
+    "label": "Babel HQ"
+  },
+  {
+    "country": "Ukraine",
+    "publisher": "Censor.net",
+    "city": "Kyiv",
+    "region": "Kyiv",
+    "lat": 50.4501,
+    "lon": 30.5234,
+    "label": "Censor.net HQ"
+  },
+  {
+    "country": "Ukraine",
+    "publisher": "Espreso",
+    "city": "Kyiv",
+    "region": "Kyiv",
+    "lat": 50.4501,
+    "lon": 30.5234,
+    "label": "Espreso HQ"
+  },
+  {
+    "country": "Ukraine",
+    "publisher": "European Pravda",
+    "city": "Kyiv",
+    "region": "Kyiv",
+    "lat": 50.4501,
+    "lon": 30.5234,
+    "label": "European Pravda HQ"
+  },
+  {
+    "country": "Ukraine",
+    "publisher": "Focus",
+    "city": "Kyiv",
+    "region": "Kyiv",
+    "lat": 50.4501,
+    "lon": 30.5234,
+    "label": "Focus HQ"
+  },
+  {
+    "country": "Ukraine",
+    "publisher": "Gazeta.ua",
+    "city": "Kyiv",
+    "region": "Kyiv",
+    "lat": 50.4501,
+    "lon": 30.5234,
+    "label": "Gazeta.ua HQ"
+  },
+  {
+    "country": "Ukraine",
+    "publisher": "Hromadske",
+    "city": "Kyiv",
+    "region": "Kyiv",
+    "lat": 50.4501,
+    "lon": 30.5234,
+    "label": "Hromadske HQ"
+  },
+  {
+    "country": "Ukraine",
+    "publisher": "Interfax-Ukraine",
+    "city": "Kyiv",
+    "region": "Kyiv",
+    "lat": 50.4501,
+    "lon": 30.5234,
+    "label": "Interfax-Ukraine HQ"
+  },
+  {
+    "country": "Ukraine",
+    "publisher": "Kyiv Independent",
+    "city": "Kyiv",
+    "region": "Kyiv",
+    "lat": 50.4501,
+    "lon": 30.5234,
+    "label": "Kyiv Independent HQ"
+  },
+  {
+    "country": "Ukraine",
+    "publisher": "Kyiv Post",
+    "city": "Kyiv",
+    "region": "Kyiv",
+    "lat": 50.4501,
+    "lon": 30.5234,
+    "label": "Kyiv Post HQ"
+  },
+  {
+    "country": "Ukraine",
+    "publisher": "LB.ua",
+    "city": "Kyiv",
+    "region": "Kyiv",
+    "lat": 50.4501,
+    "lon": 30.5234,
+    "label": "LB.ua HQ"
+  },
+  {
+    "country": "Ukraine",
+    "publisher": "Liga.net",
+    "city": "Kyiv",
+    "region": "Kyiv",
+    "lat": 50.4501,
+    "lon": 30.5234,
+    "label": "Liga.net HQ"
+  },
+  {
+    "country": "Ukraine",
+    "publisher": "NV",
+    "city": "Kyiv",
+    "region": "Kyiv",
+    "lat": 50.4501,
+    "lon": 30.5234,
+    "label": "NV HQ"
+  },
+  {
+    "country": "Ukraine",
+    "publisher": "Obozrevatel",
+    "city": "Kyiv",
+    "region": "Kyiv",
+    "lat": 50.4501,
+    "lon": 30.5234,
+    "label": "Obozrevatel HQ"
+  },
+  {
+    "country": "Ukraine",
+    "publisher": "RBC Ukraine",
+    "city": "Kyiv",
+    "region": "Kyiv",
+    "lat": 50.4501,
+    "lon": 30.5234,
+    "label": "RBC Ukraine HQ"
+  },
+  {
+    "country": "Ukraine",
+    "publisher": "TSN",
+    "city": "Kyiv",
+    "region": "Kyiv",
+    "lat": 50.4501,
+    "lon": 30.5234,
+    "label": "TSN HQ"
+  },
+  {
+    "country": "Ukraine",
+    "publisher": "Ukrainska Pravda",
+    "city": "Kyiv",
+    "region": "Kyiv",
+    "lat": 50.4501,
+    "lon": 30.5234,
+    "label": "Ukrainska Pravda HQ"
+  },
+  {
+    "country": "Ukraine",
+    "publisher": "Ukrinform",
+    "city": "Kyiv",
+    "region": "Kyiv",
+    "lat": 50.4501,
+    "lon": 30.5234,
+    "label": "Ukrinform HQ"
+  },
+  {
+    "country": "Ukraine",
+    "publisher": "UNIAN",
+    "city": "Kyiv",
+    "region": "Kyiv",
+    "lat": 50.4501,
+    "lon": 30.5234,
+    "label": "UNIAN HQ"
+  },
+  {
+    "country": "Ukraine",
+    "publisher": "UNN",
+    "city": "Kyiv",
+    "region": "Kyiv",
+    "lat": 50.4501,
+    "lon": 30.5234,
+    "label": "UNN HQ"
   },
   {
     "country": "United Kingdom",
