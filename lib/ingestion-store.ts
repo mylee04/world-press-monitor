@@ -1,4 +1,5 @@
 import { Pool } from 'pg';
+import { resolveDatabaseUrl } from '@/lib/database-url';
 import type {
   NewsItem,
   NewsSection,
@@ -166,11 +167,15 @@ function getPool(): Pool | null {
     poolDisabledReason = 'pool_failed';
     return null;
   }
-  const url = process.env.DATABASE_URL?.trim();
-  if (!url) {
+
+  let url = '';
+  try {
+    url = resolveDatabaseUrl();
+  } catch {
     poolDisabledReason = 'missing_database_url';
     return null;
   }
+
   try {
     pool = new Pool({ connectionString: url });
     poolDisabledReason = 'ok';

@@ -21,6 +21,7 @@ import {
   normalizeSourceKey,
   resolveSourceCountry,
 } from '@/lib/map-store-source-meta';
+import { readMapCountrySourcesSnapshot } from '@/lib/map-snapshot-store';
 import { MAP_WINDOWS, normalizeMapMetricWindow } from '@/lib/map-store-windows';
 import { resolvePublisherInfo } from '@/lib/publisher-groups';
 import { buildDisplaySourceName } from '@/lib/source-display';
@@ -30,7 +31,38 @@ import type {
   MapSourceMetricRow,
 } from '@/lib/map-types';
 
-export async function loadMapCountrySources(
+function buildEmptyMapCountrySourcesPayload(
+  country: string,
+  window: MapMetricWindow
+): MapCountrySourcesResponse {
+  const center = inferGeoFromCountry(country);
+  const normalizedCountry = country.trim();
+  return {
+    generatedAt: new Date().toISOString(),
+    country: normalizedCountry,
+    countryCode: getCountryCode(normalizedCountry),
+    window: normalizeMapMetricWindow(window),
+    center: {
+      lat: center.lat || 0,
+      lon: center.lon || 0,
+    },
+    summary: {
+      pub24h: 0,
+      pub1h: 0,
+      activeSources24h: 0,
+      rssSources24h: 0,
+      sitemapSources24h: 0,
+    },
+    topSources: [],
+    topPublishers: [],
+    topRegions: [],
+    hourly24h: [],
+    daily7d: [],
+    sources: [],
+  };
+}
+
+export async function buildMapCountrySourcesPayload(
   country: string,
   window: MapMetricWindow
 ): Promise<MapCountrySourcesResponse> {
@@ -179,30 +211,22 @@ export async function loadMapCountrySources(
       sources: sourceRows,
     };
   } catch {
-    const center = inferGeoFromCountry(country);
-    const normalizedCountry = country.trim();
-    return {
-      generatedAt: new Date().toISOString(),
-      country: normalizedCountry,
-      countryCode: getCountryCode(normalizedCountry),
-      window: normalizeMapMetricWindow(window),
-      center: {
-        lat: center.lat || 0,
-        lon: center.lon || 0,
-      },
-      summary: {
-        pub24h: 0,
-        pub1h: 0,
-        activeSources24h: 0,
-        rssSources24h: 0,
-        sitemapSources24h: 0,
-      },
-      topSources: [],
-      topPublishers: [],
-      topRegions: [],
-      hourly24h: [],
-      daily7d: [],
-      sources: [],
-    };
+    return buildEmptyMapCountrySourcesPayload(country, window);
+  }
+}
+
+export async function loadMapCountrySources(
+  country: string,
+  window: MapMetricWindow
+): Promise<MapCountrySourcesResponse> {
+  const normalizedCountry = country.trim();
+  const selectedWindow = normalizeMapMetricWindow(window);
+
+  try {
+    const snapshot = await readMapCountrySourcesSnapshot(normalizedCountry, selectedWindow);
+    if (snapshot) return snapshot;
+    return await buildMapCountrySourcesPayload(normalizedCountry, selectedWindow);
+  } catch {
+    return buildEmptyMapCountrySourcesPayload(normalizedCountry, selectedWindow);
   }
 }

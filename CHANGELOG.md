@@ -6,6 +6,18 @@
 
 ## Unreleased
 
+### [206f97f] chore(ci): add preflight typecheck script and workflow
+- Commit: 206f97fcacedf763d1d942bb405d5157417fdda5
+- Date: 2026-04-03 23:57:44 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - A	.github/workflows/preflight-typecheck.yml
+    - M	package.json
+  - Git stat:
+  - .github/workflows/preflight-typecheck.yml | 28 ++++++++++++++++++++++++++++
+  -  package.json                              |  2 ++
+  -  2 files changed, 30 insertions(+)
+
 ### [bdea3bc] chore: sync changelog and benchmark snapshot state
 - Commit: bdea3bc31c49423b520ee07dff3ae6ae7bd2d77d
 - Date: 2026-04-03 23:54:04 -0500
