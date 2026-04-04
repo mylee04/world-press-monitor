@@ -94,7 +94,7 @@ function buildDisabledSummaryResponse(reason?: string): DashboardSummaryPayload 
 export async function GET(request: NextRequest) {
   const snapshot = await readDashboardSummarySnapshot();
   if (snapshot && typeof snapshot === 'object') {
-    return buildSummaryResponse(snapshot as DashboardSummaryPayload, { 'X-Data-Source': 'snapshot-fallback' });
+    return buildSummaryResponse(snapshot as unknown as DashboardSummaryPayload, { 'X-Data-Source': 'snapshot-fallback' });
   }
 
   const upstream = await proxyPortalServerApiRequest(request, '/api/dashboard/summary', {
