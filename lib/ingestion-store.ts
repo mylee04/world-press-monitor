@@ -101,9 +101,9 @@ const newsApiMaxFutureMinutes = (() => {
 })();
 const dashboardTopicDisplayLimit = (() => {
   const rawValue = process.env.NEWS_API_DASHBOARD_TOPIC_DISPLAY_LIMIT;
-  if (!rawValue) return 10;
+  if (!rawValue) return 30;
   const parsed = Number.parseInt(rawValue, 10);
-  if (!Number.isFinite(parsed) || parsed < 3 || parsed > 30) return 10;
+  if (!Number.isFinite(parsed) || parsed < 3 || parsed > 30) return 30;
   return parsed;
 })();
 const dashboardSourceCategoryDisplayLimit = (() => {

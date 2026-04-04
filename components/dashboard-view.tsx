@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { CustomerAccessPanel } from '@/components/customer-access-panel';
 import { useCustomerAccess } from '@/components/customer-access-provider';
 import { useNewsApiDashboardSummary } from '@/components/news-api-hooks';
@@ -78,6 +79,7 @@ export function DashboardView() {
   const { isReady, apiConfigured } = useCustomerAccess();
   const { mode: taxonomyLocaleMode, browserLocale, resolvedLocale, setMode: setTaxonomyLocaleMode } = useTaxonomyLocalePreference();
   const summaryState = useNewsApiDashboardSummary();
+  const [expandedTopicGroups, setExpandedTopicGroups] = useState<Record<string, boolean>>({});
   const summary = summaryState.data?.storage === 'postgres' ? summaryState.data : null;
   const disabledReason =
     summaryState.data && summaryState.data.storage !== 'postgres'
@@ -187,7 +189,7 @@ export function DashboardView() {
       articleCount,
       topics,
     };
-  }).filter((group) => group.group !== 'general_other' && group.topics.length > 0);
+  }).filter((group) => group.group !== 'general_other' && group.articleCount > 0);
 
   return (
     <div className="page-stack dashboard-page-root">
@@ -306,32 +308,71 @@ export function DashboardView() {
 
       <section className="panel">
         <div className="section-head">
-          <h2>Top normalized topics by category</h2>
+          <h2>Topic distribution by category</h2>
           <span>
             {totals.rowsWindow.toLocaleString()} articles across the full {windowDays}d window
           </span>
         </div>
         <p className="muted" style={{ marginBottom: 12 }}>
-          Topic leaders are grouped under the top-level product category so related sections such as Technology + Science or Culture + Entertainment read together.
-          Category totals are full article totals, while topic rows below are non-additive leader counts: one article can carry multiple topics and low-signal tails are hidden.
+          Each article is assigned to one primary topic inside its product category.
+          By default this shows the top 15 topics and rolls the rest into Other, so the visible rows still explain the full category total.
+          Other includes the long tail, unassigned stories, and legacy topic values that do not match the current category taxonomy.
         </p>
         {groupedTopicGroups.length > 0 ? (
           <div className="topic-group-grid">
             {groupedTopicGroups.map((group) => (
-              <article className="topic-group" key={group.group}>
-                <div className="topic-group-head">
-                  <strong>{getTopLevelTaxonomyLabel(group.group, resolvedLocale)}</strong>
-                  <small>{group.articleCount.toLocaleString()} articles</small>
-                </div>
-                <div className="topic-pill-row">
-                  {group.topics.map((item) => (
-                    <span className="topic-pill" key={`${group.group}-${item.topic}`}>
-                      <strong>{getTopicLabel(item.topic, resolvedLocale)}</strong>
-                      <small>{item.count.toLocaleString()}</small>
-                    </span>
-                  ))}
-                </div>
-              </article>
+              (() => {
+                const isExpanded = Boolean(expandedTopicGroups[group.group]);
+                const visibleLimit = isExpanded ? 30 : 15;
+                const visibleTopics = group.topics.slice(0, visibleLimit);
+                const visibleCount = visibleTopics.reduce((sum, item) => sum + item.count, 0);
+                const otherCount = Math.max(0, group.articleCount - visibleCount);
+                const hasMoreTopics = group.topics.length > 15;
+
+                return (
+                  <article className="topic-group" key={group.group}>
+                    <div className="topic-group-head">
+                      <strong>{getTopLevelTaxonomyLabel(group.group, resolvedLocale)}</strong>
+                      <small>{group.articleCount.toLocaleString()} articles</small>
+                    </div>
+                    <div className="stat-list">
+                      {visibleTopics.map((item) => {
+                        const share = group.articleCount > 0 ? (item.count / group.articleCount) * 100 : 0;
+                        return (
+                          <div className="stat-row" key={`${group.group}-${item.topic}`}>
+                            <span>
+                              {getTopicLabel(item.topic, resolvedLocale)}
+                              <small style={{ display: 'block' }}>{share.toFixed(1)}%</small>
+                            </span>
+                            <strong>{item.count.toLocaleString()}</strong>
+                          </div>
+                        );
+                      })}
+                      {otherCount > 0 ? (
+                        <div className="stat-row" key={`${group.group}-other`}>
+                          <span>
+                            Other
+                            <small style={{ display: 'block' }}>
+                              {group.articleCount > 0 ? ((otherCount / group.articleCount) * 100).toFixed(1) : '0.0'}%
+                            </small>
+                          </span>
+                          <strong>{otherCount.toLocaleString()}</strong>
+                        </div>
+                      ) : null}
+                    </div>
+                    {hasMoreTopics ? (
+                      <button
+                        type="button"
+                        className="button"
+                        style={{ marginTop: 12 }}
+                        onClick={() => setExpandedTopicGroups((current) => ({ ...current, [group.group]: !isExpanded }))}
+                      >
+                        {isExpanded ? 'Show fewer topics' : `Show more topics (${Math.min(group.topics.length, 30).toLocaleString()} total)`}
+                      </button>
+                    ) : null}
+                  </article>
+                );
+              })()
             ))}
           </div>
         ) : (

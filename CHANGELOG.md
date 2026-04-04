@@ -6,6 +6,26 @@
 
 ## Unreleased
 
+### [a5dd232] Refine dashboard and benchmark snapshot metrics
+- Commit: a5dd2324a18b6f2f3d35b242644e0282e215d72f
+- Date: 2026-04-04 09:26:08 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	CHANGELOG.md
+    - M	components/benchmark-view.tsx
+    - M	components/dashboard-view.tsx
+    - M	data/country-benchmark.snapshot.json
+    - M	data/dashboard-summary.snapshot.json
+    - M	lib/news-dashboard-store.ts
+  - Git stat:
+  - CHANGELOG.md                         |  48 ++++++++++++++
+  -  components/benchmark-view.tsx        |  23 ++++---
+  -  components/dashboard-view.tsx        |  74 +++++++++------------
+  -  data/country-benchmark.snapshot.json |   2 +-
+  -  data/dashboard-summary.snapshot.json |   2 +-
+  -  lib/news-dashboard-store.ts          | 122 +++++++++++++----------------------
+  -  6 files changed, 138 insertions(+), 133 deletions(-)
+
 ### [6355674] Fix customer snapshot-backed dashboard and map data
 - Commit: 635567431d13442593ec22b6d66822020d4e7cbc
 - Date: 2026-04-04 09:07:06 -0500

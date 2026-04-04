@@ -2,7 +2,7 @@ import type { Pool } from 'pg';
 import type { NewsSection } from '@/lib/types';
 import { decodeHtmlEntities, looksLikeLowSignalArticleTitle, normalizeArticleTitle, normalizeHtmlText, normalizeReadableArticleTitle } from '@/lib/html-entities';
 import { buildDisplaySourceName } from '@/lib/source-display';
-import { buildArticleTaxonomy, NEWS_SECTION_ORDER, normalizeSourceCategories } from '@/lib/article-taxonomy';
+import { buildArticleTaxonomy, isTopicAllowedForSection, NEWS_SECTION_ORDER, normalizeSourceCategories } from '@/lib/article-taxonomy';
 import { truncatePersistedText } from '@/lib/news-write-helpers';
 
 type NewsApiReadRow = {
@@ -224,18 +224,18 @@ async function readDashboardTopicGroupsForWindow(
   db: Pool,
   deps: DashboardDeps,
   windowDays: number,
-  maxFutureMinutes: number
+  maxFutureMinutes: number,
+  asOfIso: string
 ): Promise<NewsApiDashboardTopicGroupItem[]> {
-  const minTopicCount = 10;
   const result = await db.query<NewsApiDashboardTopicCountRow>(
     `
     with windowed as (
       select
         coalesce(nullif(trim(primary_section), ''), nullif(trim(section), ''), 'others') as section,
-        coalesce(topics, '{}'::text[]) as topics
+        nullif(trim(primary_topic), '') as primary_topic
       from news_articles
-      where publication_datetime >= now() - ($1::int * interval '1 day')
-        and publication_datetime <= now() + ($2::int * interval '1 minute')
+      where publication_datetime >= $4::timestamptz - ($1::int * interval '1 day')
+        and publication_datetime <= $4::timestamptz + ($2::int * interval '1 minute')
         and ${deps.customerVisibleTitleQualitySql}
     ),
     section_counts as (
@@ -246,22 +246,15 @@ async function readDashboardTopicGroupsForWindow(
       where section <> 'others'
       group by 1
     ),
-    expanded_topics as (
-      select
-        section,
-        unnest(topics) as topic
-      from windowed
-      where section <> 'others'
-        and cardinality(topics) > 0
-    ),
     topic_counts as (
       select
         section,
-        topic,
+        primary_topic as topic,
         count(*)::text as count
-      from expanded_topics
+      from windowed
+      where section <> 'others'
+        and primary_topic is not null
       group by 1, 2
-      having count(*) >= $4
     ),
     ranked as (
       select
@@ -284,20 +277,22 @@ async function readDashboardTopicGroupsForWindow(
     from ranked
     where rn <= $3
     `,
-    [windowDays, maxFutureMinutes, deps.dashboardTopicDisplayLimit, minTopicCount]
+    [windowDays, maxFutureMinutes, deps.dashboardTopicDisplayLimit, asOfIso]
   );
 
   const groupsBySection = new Map<string, NewsApiDashboardTopicGroupItem>();
   for (const row of result.rows) {
     const section = deps.normalizeStoredSectionValue(row.section);
     if (section === 'others') continue;
+    const topic = (row.topic || '').trim().toLowerCase();
+    if (!isTopicAllowedForSection(section, topic)) continue;
     const current = groupsBySection.get(section) || {
       section,
       articleCount: Number(row.article_count) || 0,
       topics: [],
     };
     current.topics.push({
-      topic: row.topic,
+      topic,
       count: Number(row.count) || 0,
     });
     groupsBySection.set(section, current);
@@ -313,7 +308,8 @@ async function readDashboardSourceCategoryCoverageForWindow(
   db: Pool,
   deps: DashboardDeps,
   windowDays: number,
-  maxFutureMinutes: number
+  maxFutureMinutes: number,
+  asOfIso: string
 ) {
   const [coverageResult, topCategoriesResult] = await Promise.all([
     db.query<NewsApiDashboardSourceCategoryCoverageRow>(
@@ -321,8 +317,8 @@ async function readDashboardSourceCategoryCoverageForWindow(
       with windowed as (
         select coalesce(feed_categories, '{}'::text[]) as feed_categories
         from news_articles
-        where publication_datetime >= now() - ($1::int * interval '1 day')
-          and publication_datetime <= now() + ($2::int * interval '1 minute')
+        where publication_datetime >= $3::timestamptz - ($1::int * interval '1 day')
+          and publication_datetime <= $3::timestamptz + ($2::int * interval '1 minute')
           and ${deps.customerVisibleTitleQualitySql}
       ),
       expanded as (
@@ -335,15 +331,15 @@ async function readDashboardSourceCategoryCoverageForWindow(
         (select count(*)::text from windowed where cardinality(feed_categories) = 0) as uncategorized_articles,
         (select count(distinct category)::text from expanded) as distinct_categories
       `,
-      [windowDays, maxFutureMinutes]
+      [windowDays, maxFutureMinutes, asOfIso]
     ),
     db.query<NewsApiDashboardSourceCategoryCountRow>(
       `
       with windowed as (
         select unnest(feed_categories) as category
         from news_articles
-        where publication_datetime >= now() - ($1::int * interval '1 day')
-          and publication_datetime <= now() + ($2::int * interval '1 minute')
+        where publication_datetime >= $4::timestamptz - ($1::int * interval '1 day')
+          and publication_datetime <= $4::timestamptz + ($2::int * interval '1 minute')
           and cardinality(feed_categories) > 0
           and ${deps.customerVisibleTitleQualitySql}
       )
@@ -355,7 +351,7 @@ async function readDashboardSourceCategoryCoverageForWindow(
       order by count(*) desc, category asc
       limit $3
       `,
-      [windowDays, maxFutureMinutes, deps.dashboardSourceCategoryDisplayLimit]
+      [windowDays, maxFutureMinutes, deps.dashboardSourceCategoryDisplayLimit, asOfIso]
     ),
   ]);
 
@@ -440,31 +436,32 @@ export async function readNewsDashboardSummaryWithDeps(
   const maxFutureMinutes = options?.maxFutureHours == null
     ? deps.newsApiMaxFutureMinutes
     : Math.max(0, Math.min(168 * 60, Math.floor(options.maxFutureHours * 60)));
+  const asOfIso = new Date().toISOString();
 
   const [totalsResult, checkedSourcesResult, sectionTotalsResult, dateResult, recentDatesResult, topicGroupRows, sourceCategoryCoverage] = await Promise.all([
     db.query<NewsApiSummaryTotalsRow>(
       `
       select
         count(*)::text as rows_window,
-        count(*) filter (where created_at >= now() - ($2::int * interval '1 hour'))::text as inserted_24h,
-        count(*) filter (where publication_datetime >= now() - ($2::int * interval '1 hour'))::text as published_24h,
+        count(*) filter (where created_at >= $4::timestamptz - ($2::int * interval '1 hour'))::text as inserted_24h,
+        count(*) filter (where publication_datetime >= $4::timestamptz - ($2::int * interval '1 hour'))::text as published_24h,
         max(created_at)::text as generated_at
       from news_articles
-      where publication_datetime >= now() - ($1::int * interval '1 day')
-        and publication_datetime <= now() + ($3::int * interval '1 minute')
+      where publication_datetime >= $4::timestamptz - ($1::int * interval '1 day')
+        and publication_datetime <= $4::timestamptz + ($3::int * interval '1 minute')
         and ${deps.customerVisibleTitleQualitySql}
       `,
-      [windowDays, latestHours, maxFutureMinutes]
+      [windowDays, latestHours, maxFutureMinutes, asOfIso]
     ),
     db.query<NewsApiCheckedSourcesRow>(
       `
       select count(distinct coalesce(country, 'Global') || '|' || source)::text as checked_sources_24h
       from rss_health_status
-      where ran_at >= now() - ($1::int * interval '1 hour')
+      where ran_at >= $2::timestamptz - ($1::int * interval '1 hour')
         and runner = 'worker'
         and attempted
       `,
-      [latestHours]
+      [latestHours, asOfIso]
     ),
     db.query<NewsApiSectionTotalRow>(
       `
@@ -472,24 +469,24 @@ export async function readNewsDashboardSummaryWithDeps(
         coalesce(nullif(trim(primary_section), ''), nullif(trim(section), ''), 'others') as section,
         count(*)::text as count
       from news_articles
-      where publication_datetime >= now() - ($1::int * interval '1 day')
-        and publication_datetime <= now() + ($2::int * interval '1 minute')
+      where publication_datetime >= $3::timestamptz - ($1::int * interval '1 day')
+        and publication_datetime <= $3::timestamptz + ($2::int * interval '1 minute')
         and ${deps.customerVisibleTitleQualitySql}
       group by 1
       `,
-      [windowDays, maxFutureMinutes]
+      [windowDays, maxFutureMinutes, asOfIso]
     ),
     db.query<NewsApiDateRow>(
       `
       with windowed as (
         select
           case
-            when publication_datetime > now() + ($2::int * interval '1 minute') then created_at
+            when publication_datetime > $3::timestamptz + ($2::int * interval '1 minute') then created_at
             else publication_datetime
           end as normalized_publication_datetime
         from news_articles
-        where publication_datetime >= now() - ($1::int * interval '1 day')
-          and publication_datetime <= now() + ($2::int * interval '1 minute')
+        where publication_datetime >= $3::timestamptz - ($1::int * interval '1 day')
+          and publication_datetime <= $3::timestamptz + ($2::int * interval '1 minute')
           and ${deps.customerVisibleTitleQualitySql}
       ),
       dates as (
@@ -498,22 +495,22 @@ export async function readNewsDashboardSummaryWithDeps(
       )
       select
         max(date)::text as latest_date,
-        coalesce(max(date) filter (where date < (now() at time zone 'UTC')::date), max(date))::text as preview_date
+        coalesce(max(date) filter (where date < ($3::timestamptz at time zone 'UTC')::date), max(date))::text as preview_date
       from dates
       `,
-      [windowDays, maxFutureMinutes]
+      [windowDays, maxFutureMinutes, asOfIso]
     ),
     db.query<NewsApiDateCountRow>(
       `
       with windowed as (
         select
           case
-            when publication_datetime > now() + ($2::int * interval '1 minute') then created_at
+            when publication_datetime > $3::timestamptz + ($2::int * interval '1 minute') then created_at
             else publication_datetime
           end as normalized_publication_datetime
         from news_articles
-        where publication_datetime >= now() - ($1::int * interval '1 day')
-          and publication_datetime <= now() + ($2::int * interval '1 minute')
+        where publication_datetime >= $3::timestamptz - ($1::int * interval '1 day')
+          and publication_datetime <= $3::timestamptz + ($2::int * interval '1 minute')
           and ${deps.customerVisibleTitleQualitySql}
       )
       select
@@ -524,10 +521,10 @@ export async function readNewsDashboardSummaryWithDeps(
       order by 1 desc
       limit 7
       `,
-      [windowDays, maxFutureMinutes]
+      [windowDays, maxFutureMinutes, asOfIso]
     ),
-    readDashboardTopicGroupsForWindow(db, deps, windowDays, maxFutureMinutes),
-    readDashboardSourceCategoryCoverageForWindow(db, deps, windowDays, maxFutureMinutes),
+    readDashboardTopicGroupsForWindow(db, deps, windowDays, maxFutureMinutes, asOfIso),
+    readDashboardSourceCategoryCoverageForWindow(db, deps, windowDays, maxFutureMinutes, asOfIso),
   ]);
 
   const dateRow = dateResult.rows[0];
@@ -547,14 +544,14 @@ export async function readNewsDashboardSummaryWithDeps(
           coalesce(country, 'Global') as country,
           count(*)::text as count
         from news_articles
-        where publication_datetime >= now() - ($1::int * interval '1 hour')
-          and publication_datetime <= now() + ($2::int * interval '1 minute')
+        where publication_datetime >= $4::timestamptz - ($1::int * interval '1 hour')
+          and publication_datetime <= $4::timestamptz + ($2::int * interval '1 minute')
           and ${deps.customerVisibleTitleQualitySql}
         group by 1
         order by count(*) desc, country asc
         limit $3
         `,
-        [latestHours, maxFutureMinutes, topCountriesLimit]
+        [latestHours, maxFutureMinutes, topCountriesLimit, asOfIso]
       ),
       db.query<NewsApiReadRow>(
         `
@@ -577,23 +574,23 @@ export async function readNewsDashboardSummaryWithDeps(
           updated_at,
           max(created_at) over() as generated_at
         from news_articles
-        where publication_datetime >= now() - ($1::int * interval '1 hour')
-          and publication_datetime <= now() + ($2::int * interval '1 minute')
+        where publication_datetime >= $4::timestamptz - ($1::int * interval '1 hour')
+          and publication_datetime <= $4::timestamptz + ($2::int * interval '1 minute')
           and ${deps.customerVisibleTitleQualitySql}
         order by publication_datetime desc, created_at desc
         limit $3
         `,
-        [latestHours, maxFutureMinutes, previewLimit]
+        [latestHours, maxFutureMinutes, previewLimit, asOfIso]
       ),
       db.query<{ count: string }>(
         `
         select count(*)::text as count
         from news_articles
-        where publication_datetime >= now() - ($1::int * interval '1 hour')
-          and publication_datetime <= now() + ($2::int * interval '1 minute')
+        where publication_datetime >= $3::timestamptz - ($1::int * interval '1 hour')
+          and publication_datetime <= $3::timestamptz + ($2::int * interval '1 minute')
           and ${deps.customerVisibleTitleQualitySql}
         `,
-        [latestHours, maxFutureMinutes]
+        [latestHours, maxFutureMinutes, asOfIso]
       ),
     ]);
 

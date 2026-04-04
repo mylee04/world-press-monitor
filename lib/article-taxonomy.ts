@@ -67,6 +67,12 @@ const rx = (pattern: string): RegExp => new RegExp(pattern, 'iu');
 
 const SECTION_TOPIC_RULES: Partial<Record<NewsSection, readonly TopicRule[]>> = {
   world: [
+    { topic: 'border disputes', patterns: [rx('border dispute|territorial dispute|maritime dispute|sovereignty claim|demarcation|island dispute')] },
+    { topic: 'sanctions / trade', patterns: [rx('sanctions?|tariffs?|trade war|export control|export ban|embargo|blacklist')] },
+    { topic: 'humanitarian aid', patterns: [rx('humanitarian|aid convoy|relief effort|food aid|medical aid|rescue mission|evacuation')] },
+    { topic: 'international courts', patterns: [rx('icc\\b|icj\\b|international court|tribunal|arbitration court|human rights court')] },
+    { topic: 'espionage / sabotage', patterns: [rx('espionage|spy ring|counterintelligence|sabotage|intelligence service')] },
+    { topic: 'maritime security', patterns: [rx('tanker|shipping lane|strait of|canal traffic|merchant vessel|coast guard')] },
     { topic: 'diplomacy', patterns: [rx('diplomac|summit|treaty|embassy|foreign minister|bilateral|delegation|consul')] },
     { topic: 'migration', patterns: [rx('migration|migrant|refugee|asylum|border crossing|deportation|diaspora')] },
     { topic: 'disasters', patterns: [rx('earthquake|flood|wildfire|storm|hurricane|typhoon|landslide|disaster|eruption')] },
@@ -74,6 +80,14 @@ const SECTION_TOPIC_RULES: Partial<Record<NewsSection, readonly TopicRule[]>> = 
     { topic: 'crime / security', patterns: [rx('kidnap|murder|police raid|organized crime|smuggling|terror alert|security alert')] },
   ],
   politics: [
+    { topic: 'legislation', patterns: [rx('bill\\b|draft law|lawmakers?|parliament vote|senate vote|house vote|legislation')] },
+    { topic: 'budget / taxes', patterns: [rx('budget|spending bill|appropriation|tax reform|tax cut|tax hike|fiscal package')] },
+    { topic: 'cabinet / appointments', patterns: [rx('cabinet reshuffle|nominee|confirmed by senate|appointed as|minister designate|chief of staff')] },
+    { topic: 'corruption / ethics', patterns: [rx('corruption|bribery|graft|ethics probe|conflict of interest|embezzlement')] },
+    { topic: 'constitutional reform', patterns: [rx('constitution|constitutional reform|constitutional amendment|term limits|charter reform')] },
+    { topic: 'immigration policy', patterns: [rx('immigration policy|border policy|asylum policy|visa rules|deportation policy')] },
+    { topic: 'local government', patterns: [rx('mayor\\b|city council|governor\\b|state legislature|provincial government|municipal')] },
+    { topic: 'executive power', patterns: [rx('executive order|presidential decree|prime minister office|presidency|white house')] },
     { topic: 'elections', patterns: [rx('election|ballot|polls?\\b|campaign|primary race|runoff|vote count|referendum')] },
     { topic: 'government policy', patterns: [rx('cabinet|parliament|congress|senate|minister|ministry|bill\\b|lawmakers?|executive order|regulation')] },
     { topic: 'courts / justice', patterns: [rx('court|judge|lawsuit|trial|verdict|prosecutor|supreme court|indictment|appeal')] },
@@ -81,6 +95,12 @@ const SECTION_TOPIC_RULES: Partial<Record<NewsSection, readonly TopicRule[]>> = 
     { topic: 'protests', patterns: [rx('protest|demonstration|march\\b|rally\\b|strike\\b|sit-in|activists?')] },
   ],
   conflicts: [
+    { topic: 'military exercises', patterns: [rx('military exercise|war games|live fire drill|drills?\\b|joint exercise')] },
+    { topic: 'naval operations', patterns: [rx('warship|frigate|destroyer|submarine|carrier strike|naval patrol|navy\\b')] },
+    { topic: 'cyber warfare', patterns: [rx('cyberattack|cyber war|electronic warfare|jamming|hacked military')] },
+    { topic: 'militias / insurgency', patterns: [rx('militia|insurgent|rebel group|guerrilla|paramilitary')] },
+    { topic: 'civilian casualties', patterns: [rx('civilian deaths|civilian casualties|wounded civilians|children killed|aid workers killed')] },
+    { topic: 'occupied territories', patterns: [rx('occupation|occupied territory|checkpoint|settlement expansion|buffer zone|demilitarized zone')] },
     { topic: 'airstrikes / missiles', patterns: [rx('airstrike|missile|rocket fire|drone strike|bombing|shelling')] },
     { topic: 'ground operations', patterns: [rx('troops?|offensive|frontline|artillery|incursion|clashes?|battlefield')] },
     { topic: 'ceasefire / talks', patterns: [rx('ceasefire|truce|peace talks|negotiation|mediat|de-escalation')] },
@@ -88,6 +108,13 @@ const SECTION_TOPIC_RULES: Partial<Record<NewsSection, readonly TopicRule[]>> = 
     { topic: 'defense / weapons', patterns: [rx('defense|military aid|weapons?|arms deal|warplane|navy|munitions')] },
   ],
   business: [
+    { topic: 'trade / tariffs', patterns: [rx('trade deal|trade talks|trade surplus|trade deficit|tariffs?|export ban|imports?\\b|exports?\\b')] },
+    { topic: 'supply chains', patterns: [rx('supply chain|container rates|shipping costs|inventory glut|logistics bottleneck')] },
+    { topic: 'labor / employment', patterns: [rx('layoffs?|job cuts|wages?\\b|labor union|hiring spree|employment data|payrolls?')] },
+    { topic: 'manufacturing', patterns: [rx('factory|manufacturing|industrial output|plant closure|production line|industrial production')] },
+    { topic: 'commodities', patterns: [rx('commodity|copper|gold\\b|silver\\b|wheat|corn|soybeans|iron ore|nickel|lithium')] },
+    { topic: 'tourism / hospitality', patterns: [rx('tourism|hotel occupancy|resort|hospitality|travel demand|visitor arrivals')] },
+    { topic: 'agriculture / agribusiness', patterns: [rx('harvest|crop yields|agribusiness|farmer protests|livestock|grain exports')] },
     { topic: 'markets', patterns: [rx('\\bmarkets?\\b|stocks?\\b|equities|shares?\\b|nasdaq|dow jones|s&p\\b|index futures|bourse|trading|mercados?|bolsa|mercado bursatil')] },
     { topic: 'economy', patterns: [rx('econom(y|ic)|economia|economico|inflation|gdp\\b|macroeconom|recession|jobs report|unemployment|consumer prices|fiscal|central bank')] },
     { topic: 'banking / fintech', patterns: [rx('banking|bank\\b|banco\\b|lender|fintech|finanzas?|payments?|pagos?|pagamentos|digital wallet|credit card|loans?\\b|credito|insurer')] },
@@ -99,6 +126,13 @@ const SECTION_TOPIC_RULES: Partial<Record<NewsSection, readonly TopicRule[]>> = 
     { topic: 'crypto', patterns: [rx('crypto|criptom|bitcoin|ethereum|token\\b|blockchain|web3|stablecoin')] },
   ],
   tech: [
+    { topic: 'robotics / automation', patterns: [rx('robotics|robot\\b|automation|industrial robot|humanoid robot')] },
+    { topic: 'developer tools', patterns: [rx('developer tool|open source|github\\b|programming language|framework|api platform')] },
+    { topic: 'internet policy', patterns: [rx('content moderation|net neutrality|digital services act|platform regulation|privacy law|antitrust probe')] },
+    { topic: 'ar / vr', patterns: [rx('virtual reality|augmented reality|mixed reality|vr headset|ar glasses|spatial computing')] },
+    { topic: 'autonomous vehicles', patterns: [rx('self driving|autonomous vehicle|driverless|robotaxi|autopilot')] },
+    { topic: 'quantum', patterns: [rx('quantum computing|qubit|quantum processor|quantum network')] },
+    { topic: 'data centers', patterns: [rx('data center|server farm|compute cluster|cloud region|gpu cluster')] },
     { topic: 'ai', patterns: [rx('\\bai\\b|\\bia\\b|artificial intelligence|inteligencia artificial|machine learning|llm\\b|chatbot|generative ai|openai|anthropic')] },
     { topic: 'gadgets', patterns: [rx('smartphone|iphone|android phone|tablet|laptop|wearable|smartwatch|camera|gadget')] },
     { topic: 'cybersecurity', patterns: [rx('cyber|ciberseguridad|hack(ed|ing)?|ransomware|malware|phishing|data breach|zero-day|infosec')] },
@@ -125,8 +159,18 @@ const SECTION_TOPIC_RULES: Partial<Record<NewsSection, readonly TopicRule[]>> = 
     { topic: 'winter sports', patterns: [rx('skiing|snowboard|biathlon|figure skating|speed skating|curling')] },
     { topic: 'snooker', patterns: [rx('snooker')] },
     { topic: 'esports', patterns: [rx('esports?|e-sports')] },
+    { topic: 'rugby', patterns: [rx('rugby|six nations|super rugby|rugby championship')] },
+    { topic: 'athletics / track', patterns: [rx('athletics|track and field|sprinter|marathon|diamond league')] },
+    { topic: 'cycling', patterns: [rx('cycling|cyclist|tour de france|giro d italia|vuelta')] },
+    { topic: 'swimming', patterns: [rx('swimming|swimmer|freestyle final|backstroke|butterfly')] },
   ],
   health: [
+    { topic: 'infectious disease', patterns: [rx('outbreak|virus|flu\\b|measles|cholera|dengue|tuberculosis|infection rates')] },
+    { topic: 'health policy', patterns: [rx('health ministry|health funding|insurance reform|medicaid|nhs\\b|public health agency')] },
+    { topic: 'reproductive health', patterns: [rx('abortion|maternal health|fertility|ivf\\b|contraception|prenatal')] },
+    { topic: 'medical research', patterns: [rx('medical research|journal study|trial results|peer reviewed|researchers found')] },
+    { topic: 'aging / seniors', patterns: [rx('aging population|elder care|nursing home|alzheimer|dementia|senior care')] },
+    { topic: 'disability / rehab', patterns: [rx('disability|rehabilitation|physical therapy|assistive technology|prosthetic')] },
     { topic: 'public health', patterns: [rx('outbreak|pandemic|epidemic|vaccin|virus|disease control|who\\b|cdc\\b|infection')] },
     { topic: 'healthcare', patterns: [rx('hospital|clinic|healthcare|medical care|nursing|medicare|insurance plan|surgery')] },
     { topic: 'mental health', patterns: [rx('mental health|depression|anxiety|suicide prevention|therapy|addiction')] },
@@ -134,12 +178,20 @@ const SECTION_TOPIC_RULES: Partial<Record<NewsSection, readonly TopicRule[]>> = 
     { topic: 'nutrition / fitness', patterns: [rx('nutrition|diet\\b|obesity|fitness|exercise|wellness|protein\\b')] },
   ],
   entertainment: [
+    { topic: 'streaming', patterns: [rx('streaming service|streamer\\b|disney\\+|hbo max|prime video|binge watching')] },
+    { topic: 'animation / anime', patterns: [rx('anime|animation|animated film|animated series|manga adaptation')] },
+    { topic: 'festivals / live events', patterns: [rx('festival|fan convention|comic con|premiere event|live show')] },
+    { topic: 'radio / podcasts', patterns: [rx('podcast|radio show|audio series|broadcast host')] },
     { topic: 'film / tv', patterns: [rx('film\\b|movie|cinema|television|tv series|streaming|netflix|box office')] },
     { topic: 'music', patterns: [rx('music|album|single\\b|concert|tour dates|festival|billboard charts')] },
     { topic: 'celebrities', patterns: [rx('celebrit|actor|actress|star couple|influencer|royal family')] },
     { topic: 'awards', patterns: [rx('oscars?|emmys?|grammys?|bafta|cannes|golden globes')] },
   ],
   lifestyle: [
+    { topic: 'parenting', patterns: [rx('parenting|childcare|co parenting|school run|raising children')] },
+    { topic: 'pets / animals', patterns: [rx('pets?\\b|dog show|cat\\b|veterinary|animal care|pet adoption')] },
+    { topic: 'careers / worklife', patterns: [rx('remote work|work life balance|office culture|career advice|burnout')] },
+    { topic: 'outdoors / adventure', patterns: [rx('camping|hiking|outdoor adventure|backpacking|trail guide|surf trip')] },
     { topic: 'fashion / beauty', patterns: [rx('fashion|beauty|makeup|skincare|jewelry|runway|designer')] },
     { topic: 'travel', patterns: [rx('travel|tourism|vacation|holiday guide|hotel|destination|cruise')] },
     { topic: 'food / drink', patterns: [rx('food\\b|recipe|restaurant|chef\\b|wine\\b|coffee\\b|cocktail')] },
@@ -147,24 +199,47 @@ const SECTION_TOPIC_RULES: Partial<Record<NewsSection, readonly TopicRule[]>> = 
     { topic: 'relationships / family', patterns: [rx('dating|wedding|marriage|parenting|family life|relationships?')] },
   ],
   arts: [
+    { topic: 'photography', patterns: [rx('photography|photographer|photo exhibit|photojournalism')] },
+    { topic: 'heritage / preservation', patterns: [rx('heritage site|restoration project|unesco\\b|preservation effort')] },
+    { topic: 'auctions / collectibles', patterns: [rx('auction house|collectible|memorabilia|record sale|rare manuscript')] },
+    { topic: 'comics / manga', patterns: [rx('comic book|graphic novel|manga\\b|comic con')] },
     { topic: 'visual art', patterns: [rx('gallery|museum|exhibit|exhibition|painting|sculpture|art fair')] },
     { topic: 'books / literature', patterns: [rx('book\\b|novel|literature|author\\b|poetry|publishing')] },
     { topic: 'theater / dance', patterns: [rx('theatre|theater|stage play|ballet|opera|dance company')] },
     { topic: 'architecture / design', patterns: [rx('architecture|architect|design week|urban design')] },
   ],
   science: [
+    { topic: 'climate science', patterns: [rx('climate study|atmospheric research|ice core|weather model|warming trend')] },
+    { topic: 'earth science', patterns: [rx('geology|earth science|seismic study|tectonic|volcanology')] },
+    { topic: 'neuroscience', patterns: [rx('neuroscience|brain study|neural pathway|cognitive science')] },
+    { topic: 'chemistry / materials', patterns: [rx('chemistry|material science|battery chemistry|polymer|catalyst')] },
+    { topic: 'ocean science', patterns: [rx('oceanography|marine science|deep sea|coral reef study|ocean current')] },
     { topic: 'space / astronomy', patterns: [rx('space\\b|astronomy|telescope|planet|galaxy|asteroid|astronaut')] },
     { topic: 'biology / medicine', patterns: [rx('genetic|genome|biology|species\\b|cell study|medical research')] },
     { topic: 'archaeology / history', patterns: [rx('archaeolog|fossil|ancient|excavation|artifact|paleontolog')] },
     { topic: 'physics / energy', patterns: [rx('physics|quantum|particle|fusion\\b|nuclear research|material science')] },
   ],
   climate: [
+    { topic: 'pollution / air quality', patterns: [rx('pollution|air quality|smog|toxic spill|microplastics|contamination')] },
+    { topic: 'water scarcity', patterns: [rx('water scarcity|water shortage|reservoir levels|desalination|drought restrictions')] },
+    { topic: 'biodiversity / wildlife', patterns: [rx('wildlife|species loss|endangered|habitat loss|poaching|ecosystem')] },
+    { topic: 'waste / recycling', patterns: [rx('recycling|landfill|waste management|plastic waste|circular economy')] },
+    { topic: 'climate finance', patterns: [rx('carbon market|green finance|adaptation finance|loss and damage|sustainability bond')] },
+    { topic: 'food systems', patterns: [rx('food system|regenerative agriculture|soil health|methane from cattle|sustainable farming')] },
     { topic: 'extreme weather', patterns: [rx('heatwave|wildfire|flood|storm|hurricane|typhoon|drought|extreme weather')] },
     { topic: 'energy transition', patterns: [rx('renewable|solar|wind\\b|battery|electric vehicle|energy transition|grid\\b')] },
     { topic: 'emissions / policy', patterns: [rx('carbon|emissions?|net zero|climate policy|cop\\d+|decarbon')] },
     { topic: 'conservation', patterns: [rx('conservation|biodiversity|deforestation|marine life|forest protection|oceans?')] },
   ],
 };
+
+export function isTopicAllowedForSection(section: string | null | undefined, topic: string | null | undefined): boolean {
+  const normalizedTopic = (topic || '').trim().toLowerCase();
+  if (!normalizedTopic) return false;
+  const normalizedSection = normalizeNewsSection(section);
+  const rules = SECTION_TOPIC_RULES[normalizedSection] || [];
+  return rules.some((rule) => rule.topic === normalizedTopic);
+}
 
 export function normalizeNewsSection(value: string | null | undefined): NewsSection {
   const normalized = (value || '').trim().toLowerCase();
