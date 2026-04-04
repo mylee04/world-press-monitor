@@ -6,6 +6,202 @@
 
 ## Unreleased
 
+### [bdea3bc] chore: sync changelog and benchmark snapshot state
+- Commit: bdea3bc31c49423b520ee07dff3ae6ae7bd2d77d
+- Date: 2026-04-03 23:54:04 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	CHANGELOG.md
+    - M	data/country-benchmark.snapshot.json
+  - Git stat:
+  - CHANGELOG.md                         | 184 +++++++++++++++++++++++++++++++++++
+  -  data/country-benchmark.snapshot.json |   2 +-
+  -  2 files changed, 185 insertions(+), 1 deletion(-)
+
+### [2c7863b] Fix dashboard summary and country source fallback
+- Commit: 2c7863b5e1b3e8cb23eb3d8165d390d5287a24e6
+- Date: 2026-04-03 23:53:24 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	app/api/customer/dashboard/map/countries/[country]/sources/route.ts
+    - M	app/api/customer/dashboard/summary/route.ts
+  - Git stat:
+  - .../map/countries/[country]/sources/route.ts          | 19 ++++++++++++++++---
+  -  app/api/customer/dashboard/summary/route.ts           |  9 ++++++++-
+  -  2 files changed, 24 insertions(+), 4 deletions(-)
+
+### [f24d2a6] Capture dashboard summary upstream failure body
+- Commit: f24d2a6e877b894abcad42117b2782537a47e478
+- Date: 2026-04-03 23:41:36 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	app/api/customer/dashboard/summary/route.ts
+  - Git stat:
+  - app/api/customer/dashboard/summary/route.ts | 32 ++++++++++++++++++++++++++++-
+  -  1 file changed, 31 insertions(+), 1 deletion(-)
+
+### [cfb23e9] Use snapshot fallback on dashboard summary portal failure
+- Commit: cfb23e9d89e0181cef816df381ac7909ef6df532
+- Date: 2026-04-03 23:41:23 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	app/api/customer/dashboard/summary/route.ts
+    - M	components/dashboard-view.tsx
+  - Git stat:
+  - app/api/customer/dashboard/summary/route.ts | 12 ++++++++++++
+  -  components/dashboard-view.tsx               |  4 ++++
+  -  2 files changed, 16 insertions(+)
+
+### [54a82be] Normalize not_initialized summary reason for dashboard API
+- Commit: 54a82bea8ec18eedefcdbe1e783ded5d7e0cbcad
+- Date: 2026-04-03 23:37:46 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	app/api/customer/dashboard/summary/route.ts
+  - Git stat:
+  - app/api/customer/dashboard/summary/route.ts | 5 +++++
+  -  1 file changed, 5 insertions(+)
+
+### [8e16fc3] Avoid serving disabled snapshot reason on dashboard summary failure
+- Commit: 8e16fc3358e19084fee11110b45b9d701762621f
+- Date: 2026-04-03 23:37:35 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	app/api/customer/dashboard/summary/route.ts
+  - Git stat:
+  - app/api/customer/dashboard/summary/route.ts | 14 --------------
+  -  1 file changed, 14 deletions(-)
+
+### [80ef5cc] Fix dashboard summary fallback and unavailable message
+- Commit: 80ef5ccdc6f194905133b64006e57a1fe252732e
+- Date: 2026-04-03 23:33:50 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	app/api/customer/dashboard/summary/route.ts
+    - M	components/dashboard-view.tsx
+  - Git stat:
+  - app/api/customer/dashboard/summary/route.ts | 16 +++++++++++++++-
+  -  components/dashboard-view.tsx               | 23 ++++++++++++++++++++++-
+  -  2 files changed, 37 insertions(+), 2 deletions(-)
+
+### [1af07cd] Extend map aggregation endpoints to 15s portal upstream timeout
+- Commit: 1af07cdf30d0d5a2c0643469e0414e62b17077da
+- Date: 2026-04-03 23:30:32 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	app/api/customer/dashboard/map/countries/route.ts
+    - M	app/api/customer/dashboard/map/publishers/route.ts
+  - Git stat:
+  - app/api/customer/dashboard/map/countries/route.ts  | 1 +
+  -  app/api/customer/dashboard/map/publishers/route.ts | 1 +
+  -  2 files changed, 2 insertions(+)
+
+### [0de70ac] Increase portal upstream timeout and extend map country/source detail timeouts
+- Commit: 0de70acc2a5a8136a61962c03b64c508ba8b2a4d
+- Date: 2026-04-03 23:30:19 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	app/api/customer/dashboard/map/countries/[country]/sources/route.ts
+    - M	app/api/customer/dashboard/map/sources/[sourceId]/route.ts
+    - M	lib/customer-portal.ts
+  - Git stat:
+  - .../customer/dashboard/map/countries/[country]/sources/route.ts    | 1 +
+  -  app/api/customer/dashboard/map/sources/[sourceId]/route.ts         | 1 +
+  -  lib/customer-portal.ts                                             | 7 +++++--
+  -  3 files changed, 7 insertions(+), 2 deletions(-)
+
+### [9e5d5de] Fix map local snapshot empty fallback to upstream
+- Commit: 9e5d5de4e7a3d05b158e88a9bd0aeb859c30f629
+- Date: 2026-04-03 23:23:43 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	app/api/customer/dashboard/map/countries/route.ts
+    - M	app/api/customer/dashboard/map/publishers/route.ts
+  - Git stat:
+  - app/api/customer/dashboard/map/countries/route.ts  | 5 ++++-
+  -  app/api/customer/dashboard/map/publishers/route.ts | 5 ++++-
+  -  2 files changed, 8 insertions(+), 2 deletions(-)
+
+### [28212fc] fix: cast dashboard snapshot payload via unknown for typing
+- Commit: 28212fc30716893f9eb5401af735b62ede993b85
+- Date: 2026-04-03 23:20:50 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	app/api/customer/dashboard/summary/route.ts
+  - Git stat:
+  - app/api/customer/dashboard/summary/route.ts | 2 +-
+  -  1 file changed, 1 insertion(+), 1 deletion(-)
+
+### [50c9376] fix: add headlines to dashboard summary preview type
+- Commit: 50c937613f16ca8341bda35091ac43d1d764546c
+- Date: 2026-04-03 23:19:58 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	app/api/customer/dashboard/summary/route.ts
+  - Git stat:
+  - app/api/customer/dashboard/summary/route.ts | 1 +
+  -  1 file changed, 1 insertion(+)
+
+### [1733959] chore: use local snapshot fallback for dashboard/map APIs
+- Commit: 1733959a857a2410e7a20e5fe136c9f7324eba99
+- Date: 2026-04-03 23:16:27 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	CHANGELOG.md
+    - M	app/api/customer/dashboard/benchmark/route.ts
+    - M	app/api/customer/dashboard/map/countries/[country]/sources/route.ts
+    - M	app/api/customer/dashboard/map/countries/route.ts
+    - M	app/api/customer/dashboard/map/publishers/route.ts
+    - M	app/api/customer/dashboard/map/sources/[sourceId]/route.ts
+    - M	app/api/customer/dashboard/summary/route.ts
+    - M	components/benchmark-view.tsx
+    - M	components/dashboard-view.tsx
+    - A	data/country-benchmark.snapshot.json
+    - A	data/dashboard-summary.snapshot.json
+    - M	lib/benchmark-store-queries.ts
+    - M	lib/benchmark-store-shaping.ts
+    - M	lib/benchmark-store.ts
+    - A	lib/customer-dashboard-snapshot-store.ts
+    - M	lib/customer-portal.ts
+    - M	lib/map-country-metrics-reader.ts
+    - M	lib/map-country-sources-reader.ts
+    - M	lib/map-publishers-reader.ts
+    - M	lib/map-source-detail-reader.ts
+    - M	lib/map-store.ts
+    - M	package.json
+    - M	scripts/api-news.ts
+    - A	scripts/build-customer-dashboard-snapshots.ts
+    - M	scripts/run-ingest-hourly-local.sh
+    - M	scripts/run-ingest-hourly.sh
+  - Git stat:
+  - CHANGELOG.md                                       |  10 +
+  -  app/api/customer/dashboard/benchmark/route.ts      |  41 ++-
+  -  .../map/countries/[country]/sources/route.ts       |  23 +-
+  -  app/api/customer/dashboard/map/countries/route.ts  |  23 +-
+  -  app/api/customer/dashboard/map/publishers/route.ts |  23 +-
+  -  .../dashboard/map/sources/[sourceId]/route.ts      |  26 +-
+  -  app/api/customer/dashboard/summary/route.ts        |  77 +++++-
+  -  components/benchmark-view.tsx                      |   2 +-
+  -  components/dashboard-view.tsx                      |  10 +-
+  -  data/country-benchmark.snapshot.json               |   1 +
+  -  data/dashboard-summary.snapshot.json               |   1 +
+  -  lib/benchmark-store-queries.ts                     |   2 -
+  -  lib/benchmark-store-shaping.ts                     |   2 -
+  -  lib/benchmark-store.ts                             |   2 -
+  -  lib/customer-dashboard-snapshot-store.ts           |  25 ++
+  -  lib/customer-portal.ts                             |   2 +-
+  -  lib/map-country-metrics-reader.ts                  |  27 +-
+  -  lib/map-country-sources-reader.ts                  | 296 +++++++++++----------
+  -  lib/map-publishers-reader.ts                       |  19 +-
+  -  lib/map-source-detail-reader.ts                    | 144 +++++-----
+  -  lib/map-store.ts                                   |  66 ++++-
+  -  package.json                                       |   1 +
+  -  scripts/api-news.ts                                |  15 ++
+  -  scripts/build-customer-dashboard-snapshots.ts      | 159 +++++++++++
+  -  scripts/run-ingest-hourly-local.sh                 |   9 +-
+  -  scripts/run-ingest-hourly.sh                       |   8 +
+  -  26 files changed, 683 insertions(+), 331 deletions(-)
+
 ### [0b243b7] docs(changelog): append portal fix entry
 - Commit: 0b243b76a309660d764f6aa298db5b0ad44ff8f9
 - Date: 2026-04-03 21:54:22 -0500
