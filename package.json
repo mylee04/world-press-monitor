@@ -16,6 +16,8 @@
     "build": "bun scripts/postprocess-customer-build.ts",
     "vercel-build": "bun scripts/postprocess-customer-build.ts",
     "typecheck": "tsc --noEmit",
+    "preflight": "bun run typecheck",
+    "preflight:ci": "bun run typecheck && bun run verify:customer-build",
     "verify:customer-build": "bun scripts/verify-customer-build.ts",
     "smoke:customer-portal": "bun scripts/customer-portal-smoke.ts",
     "web:dev": "next dev",
