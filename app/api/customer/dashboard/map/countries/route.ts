@@ -12,7 +12,10 @@ export async function GET(request: NextRequest) {
     request.nextUrl.searchParams.set('window', window);
 
     const localPayload = await readMapCountryMetrics(window);
-    if (localPayload.storage === 'snapshot' || localPayload.countries.length > 0) {
+    const hasLocalSnapshotData = localPayload.storage === 'snapshot' && localPayload.countries.length > 0;
+    const hasPostgresData = localPayload.storage !== 'snapshot';
+
+    if (hasPostgresData || hasLocalSnapshotData) {
       return NextResponse.json(localPayload, {
         status: 200,
         headers: { 'Cache-Control': PUBLIC_MAP_RESPONSE_CACHE_CONTROL, 'X-Data-Source': 'local-fallback' },
