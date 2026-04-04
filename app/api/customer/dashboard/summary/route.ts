@@ -28,9 +28,14 @@ type DashboardSummaryPayload = {
 function sanitizeDashboardSummary(payload: DashboardSummaryPayload): DashboardSummaryPayload {
   const preview = payload.preview && typeof payload.preview === 'object' ? payload.preview : {};
   const topCountries = Array.isArray(preview.topCountries) ? preview.topCountries : [];
+  const rawReason = typeof payload.reason === 'string' ? payload.reason.trim() : '';
+  const normalizedReason = rawReason === 'not_initialized' || rawReason === 'missing_database_url'
+    ? 'Dashboard data is initializing. Please try again shortly.'
+    : rawReason;
 
   const sanitized = {
     ...payload,
+    reason: normalizedReason || payload.reason,
     preview: {
       articleCount: Number(preview.articleCount || 0),
       topCountries: topCountries.map((item) => ({
