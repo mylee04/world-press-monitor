@@ -70,6 +70,23 @@ function round(value: number, digits = 1): number {
   return Math.round(value * precision) / precision;
 }
 
+function formatHourlyTickLabel(hour: string): string {
+  const date = new Date(hour);
+  if (Number.isNaN(date.getTime())) {
+    return hour;
+  }
+  return date.toLocaleTimeString([], {
+    hour: '2-digit',
+    hour12: false,
+  });
+}
+
+function buildHourlyAxisTicks(maxCount: number): number[] {
+  const top = Math.max(maxCount, 1);
+  const middle = top <= 1 ? 1 : Math.ceil(top / 2);
+  return [...new Set([top, middle, 0])].sort((a, b) => b - a);
+}
+
 function degradedShare(row: MapCountryMetricRow, window: MapMetricWindow): number {
   const metrics = row.windows[window];
   if (metrics.activeSources <= 0) return 0;
@@ -338,7 +355,7 @@ export function MapDetailDrawer(props: MapDetailDrawerProps) {
       ) : sourceDetailLoading && !sourceDetail ? (
         <div className="panel muted">Loading source detail...</div>
       ) : sourceDetail ? (
-        <div className="map-source-detail">
+        <div className="map-source-detail map-source-detail--source">
           {selectedCluster ? (
             <div className="map-panel-block compact">
               <div className="section-head">
@@ -350,14 +367,35 @@ export function MapDetailDrawer(props: MapDetailDrawerProps) {
             </div>
           ) : null}
 
-          <div className="map-detail-meta">
-            <div><span>Publisher</span><strong>{sourceDetail.publisher || sourceDetail.source}</strong></div>
-            <div><span>Publisher Confidence</span><strong>{publisherConfidenceLabel(sourceDetail.publisherConfidence)}</strong></div>
-            <div><span>Market Country</span><strong>{sourceDetail.country}</strong></div>
-            <div><span>Method</span><strong>{sourceMethodLabel(sourceDetail.method)}</strong></div>
-            <div><span>Operating Location</span><strong>{operatingLocationLabel(sourceDetail)}</strong></div>
-            <div><span>Corporate HQ</span><strong>{corporateHqLabel(sourceDetail)}</strong></div>
-            <div><span>Location Basis</span><strong>{sourceLocationKindLabel(sourceDetail.locationKind)}</strong></div>
+          <div className="map-detail-meta map-detail-meta--source">
+            <div className="map-detail-meta-card" title={sourceDetail.publisher || sourceDetail.source}>
+              <span>Publisher</span>
+              <strong>{sourceDetail.publisher || sourceDetail.source}</strong>
+            </div>
+            <div className="map-detail-meta-card" title={publisherConfidenceLabel(sourceDetail.publisherConfidence)}>
+              <span>Publisher Confidence</span>
+              <strong>{publisherConfidenceLabel(sourceDetail.publisherConfidence)}</strong>
+            </div>
+            <div className="map-detail-meta-card" title={sourceDetail.country}>
+              <span>Market Country</span>
+              <strong>{sourceDetail.country}</strong>
+            </div>
+            <div className="map-detail-meta-card" title={sourceMethodLabel(sourceDetail.method)}>
+              <span>Method</span>
+              <strong>{sourceMethodLabel(sourceDetail.method)}</strong>
+            </div>
+            <div className="map-detail-meta-card" title={operatingLocationLabel(sourceDetail)}>
+              <span>Operating Location</span>
+              <strong>{operatingLocationLabel(sourceDetail)}</strong>
+            </div>
+            <div className="map-detail-meta-card" title={corporateHqLabel(sourceDetail)}>
+              <span>Corporate HQ</span>
+              <strong>{corporateHqLabel(sourceDetail)}</strong>
+            </div>
+            <div className="map-detail-meta-card" title={sourceLocationKindLabel(sourceDetail.locationKind)}>
+              <span>Location Basis</span>
+              <strong>{sourceLocationKindLabel(sourceDetail.locationKind)}</strong>
+            </div>
           </div>
 
           <div className="map-detail-tab-row" role="tablist" aria-label="Source detail sections">
@@ -408,17 +446,61 @@ export function MapDetailDrawer(props: MapDetailDrawerProps) {
                     <h3>Hourly Output</h3>
                     <span>Last 24 hours</span>
                   </div>
-                  <div className="mini-bars">
-                    {sourceDetail.hourly24h.length > 0 ? sourceDetail.hourly24h.map((item) => {
-                      const max = Math.max(...sourceDetail.hourly24h.map((hour) => hour.count), 1);
-                      const height = Math.max(8, Math.round((item.count / max) * 84));
-                      return (
-                        <div key={item.hour} className="mini-bar-col" title={`${item.hour}: ${item.count}`}>
-                          <div className="mini-bar" style={{ height }} />
+                  {sourceDetail.hourly24h.length > 0 ? (() => {
+                    const maxCount = Math.max(...sourceDetail.hourly24h.map((hour) => hour.count), 0);
+                    const scaleMax = Math.max(maxCount, 1);
+                    const yAxisTicks = buildHourlyAxisTicks(maxCount);
+                    return (
+                      <div className="detail-hourly-chart-shell">
+                        <div className="detail-hourly-axis-meta">
+                          <span>Y: published items</span>
+                          <span>X: hour</span>
                         </div>
-                      );
-                    }) : <span className="muted">No hourly data yet.</span>}
-                  </div>
+                        <div className="detail-hourly-chart">
+                          <div className="detail-hourly-y-axis" aria-hidden="true">
+                            {yAxisTicks.map((tick) => (
+                              <span key={tick}>{formatNumber(tick)}</span>
+                            ))}
+                          </div>
+                          <div className="detail-hourly-plot-wrap">
+                            <div className="detail-hourly-plot">
+                              <div className="detail-hourly-guides" aria-hidden="true">
+                                {yAxisTicks.map((tick) => (
+                                  <span key={tick} className="detail-hourly-guide" />
+                                ))}
+                              </div>
+                              <div className="detail-hourly-bars">
+                                {sourceDetail.hourly24h.map((item) => {
+                                  const heightPercent =
+                                    maxCount <= 0 ? 0 : Math.max((item.count / scaleMax) * 100, item.count > 0 ? 6 : 0);
+                                  const tickLabel = formatHourlyTickLabel(item.hour);
+                                  return (
+                                    <div key={item.hour} className="detail-hourly-bar-col" title={`${tickLabel}: ${formatNumber(item.count)}`}>
+                                      <div className="detail-hourly-bar" style={{ height: `${heightPercent}%` }} />
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                            <div className="detail-hourly-x-axis" aria-hidden="true">
+                              {sourceDetail.hourly24h.map((item, index) => {
+                                const showTick =
+                                  sourceDetail.hourly24h.length <= 8 ||
+                                  index === 0 ||
+                                  index === sourceDetail.hourly24h.length - 1 ||
+                                  index % 6 === 0;
+                                return (
+                                  <span key={item.hour} className="detail-hourly-x-tick">
+                                    {showTick ? formatHourlyTickLabel(item.hour) : ''}
+                                  </span>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })() : <span className="muted">No hourly data yet.</span>}
                 </div>
               </>
             ) : null}

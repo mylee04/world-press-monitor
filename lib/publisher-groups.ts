@@ -4075,6 +4075,7 @@ const PUBLISHER_RULES: PublisherRule[] = [
   { publisher: 'UOL', countries: ['Brazil'], prefixes: ['UOL '] },
   { publisher: 'Sözcü', countries: ['Turkey'], prefixes: ['Sözcü'] },
   { publisher: 'ADN40', countries: ['Mexico'], prefixes: ['ADN40'] },
+  { publisher: 'ISNA', countries: ['Iran'], prefixes: ['ISNA (EN) -'] },
 ];
 
 function resolveRuleMatch(source: string, country: string, rule: PublisherRule): PublisherMatchType | null {
