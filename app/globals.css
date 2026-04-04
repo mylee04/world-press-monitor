@@ -256,7 +256,11 @@ label span,
 }
 
 html:has(.map-page-root),
-body:has(.map-page-root) {
+body:has(.map-page-root),
+html:has(.dashboard-page-root),
+body:has(.dashboard-page-root),
+html:has(.benchmark-page-root),
+body:has(.benchmark-page-root) {
   color-scheme: dark;
   background:
     radial-gradient(circle at top left, rgba(32, 90, 173, 0.2), transparent 28%),
@@ -264,7 +268,9 @@ body:has(.map-page-root) {
     linear-gradient(180deg, #040812 0%, #02050b 100%);
 }
 
-body:has(.map-page-root) {
+body:has(.map-page-root),
+body:has(.dashboard-page-root),
+body:has(.benchmark-page-root) {
   --bg: #040812;
   --paper: rgba(8, 14, 26, 0.88);
   --paper-strong: rgba(11, 19, 34, 0.92);
@@ -294,7 +300,9 @@ body:has(.map-page-root) .app-shell {
   gap: 12px;
 }
 
-body:has(.map-page-root) .site-header {
+body:has(.map-page-root) .site-header,
+body:has(.dashboard-page-root) .site-header,
+body:has(.benchmark-page-root) .site-header {
   display: flex;
   margin: 0;
   border-color: rgba(120, 199, 255, 0.14);
@@ -302,21 +310,29 @@ body:has(.map-page-root) .site-header {
   box-shadow: 0 22px 46px rgba(2, 8, 22, 0.34);
 }
 
-body:has(.map-page-root) .site-header p {
+body:has(.map-page-root) .site-header p,
+body:has(.dashboard-page-root) .site-header p,
+body:has(.benchmark-page-root) .site-header p {
   color: #9cbfd6;
 }
 
-body:has(.map-page-root) .brand-kicker {
+body:has(.map-page-root) .brand-kicker,
+body:has(.dashboard-page-root) .brand-kicker,
+body:has(.benchmark-page-root) .brand-kicker {
   color: #7fe3ff;
 }
 
-body:has(.map-page-root) .site-header nav a {
+body:has(.map-page-root) .site-header nav a,
+body:has(.dashboard-page-root) .site-header nav a,
+body:has(.benchmark-page-root) .site-header nav a {
   border-color: rgba(120, 199, 255, 0.14);
   background: rgba(11, 19, 34, 0.74);
   color: #d8f4ff;
 }
 
-body:has(.map-page-root) .site-header nav a:hover {
+body:has(.map-page-root) .site-header nav a:hover,
+body:has(.dashboard-page-root) .site-header nav a:hover,
+body:has(.benchmark-page-root) .site-header nav a:hover {
   text-decoration: none;
   border-color: rgba(120, 199, 255, 0.26);
   background: rgba(15, 29, 50, 0.9);
@@ -1369,9 +1385,21 @@ body:has(.map-page-root) main {
 }
 
 .map-side-panel.is-country-view .section-head {
-  grid-template-columns: minmax(0, 1fr) minmax(72px, 104px);
-  gap: 10px;
-  padding-right: 18px;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: 6px;
+  padding-right: 0;
+}
+
+.map-side-panel.is-country-view .section-head h3,
+.map-side-panel.is-country-view .section-head span {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+}
+
+.map-side-panel.is-country-view .section-head span {
+  text-align: left;
 }
 
 .map-side-panel.is-country-view .map-stat-grid {
@@ -1407,6 +1435,14 @@ body:has(.map-page-root) main {
   margin-top: 10px;
   padding: 12px 13px;
   gap: 4px;
+}
+
+.map-side-panel.is-country-view .map-story-metrics span,
+.map-side-panel.is-country-view .map-story-metrics strong {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  overflow-wrap: anywhere;
 }
 
 .map-side-panel.is-country-view .map-list-row {
@@ -1926,8 +1962,10 @@ body:has(.map-page-root) main {
 
 .map-side-panel.is-country-view .map-list-row .map-list-copy strong,
 .map-side-panel.is-country-view .map-list-row .map-list-copy span,
+.map-side-panel.is-country-view .map-list-row > strong:first-child,
 .map-detail-drawer.is-country-view .map-list-row .map-list-copy strong,
-.map-detail-drawer.is-country-view .map-list-row .map-list-copy span {
+.map-detail-drawer.is-country-view .map-list-row .map-list-copy span,
+.map-detail-drawer.is-country-view .map-list-row > strong:first-child {
   white-space: normal;
   overflow: visible;
   text-overflow: clip;
@@ -2176,6 +2214,12 @@ body:has(.map-page-root) main {
   margin-bottom: 8px;
 }
 
+.map-side-panel.is-country-view .map-trend-summary {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
 .map-trend-summary span {
   color: #9cb7ca;
   font-size: 0.77rem;
@@ -2184,6 +2228,12 @@ body:has(.map-page-root) main {
 .map-trend-summary strong {
   color: #eff9ff;
   font-size: 0.84rem;
+}
+
+.map-side-panel.is-country-view .map-trend-summary span,
+.map-side-panel.is-country-view .map-trend-summary strong {
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .mini-bar-col {

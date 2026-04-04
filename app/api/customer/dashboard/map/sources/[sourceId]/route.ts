@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PUBLIC_MAP_RESPONSE_CACHE_CONTROL } from '@/lib/dashboard-cache-control';
+import { proxyPortalServerApiRequest, shouldUseLocalFallbackForPortalResponse } from '@/lib/customer-portal';
 import { readMapSourceDetail } from '@/lib/map-store';
 
 export const runtime = 'nodejs';
@@ -14,6 +15,16 @@ export async function GET(request: NextRequest, context: { params: Promise<{ sou
         { message: 'Source id is required.' },
         { status: 400, headers: { 'Cache-Control': 'no-store' } }
       );
+    }
+
+    const upstream = await proxyPortalServerApiRequest(request, `/api/map/sources/${encodeURIComponent(sourceId)}`, {
+      cacheControl: PUBLIC_MAP_RESPONSE_CACHE_CONTROL,
+    });
+    if (upstream.ok) {
+      return upstream;
+    }
+    if (!(await shouldUseLocalFallbackForPortalResponse(upstream))) {
+      return upstream;
     }
 
     const payload = await readMapSourceDetail(sourceId);

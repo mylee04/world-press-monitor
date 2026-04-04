@@ -221,6 +221,10 @@ export function BenchmarkView() {
   const { isReady } = useCustomerAccess();
   const benchmarkState = useCountryBenchmark();
   const benchmark = benchmarkState.data?.storage === 'postgres' ? benchmarkState.data : null;
+  const disabledReason =
+    benchmarkState.data && benchmarkState.data.storage !== 'postgres'
+      ? benchmarkState.data.reason || 'Benchmark snapshots are unavailable.'
+      : null;
   const [period, setPeriod] = useState<BenchmarkPeriod>('hourly');
   const [showAllRows, setShowAllRows] = useState(false);
 
@@ -237,16 +241,16 @@ export function BenchmarkView() {
   const spotlights = useMemo(() => getSpotlightRows(rankedRows, period), [rankedRows, period]);
 
   if (!isReady) {
-    return <div className="panel muted">Checking customer access...</div>;
+    return <div className="page-stack benchmark-page-root"><div className="panel muted">Checking customer access...</div></div>;
   }
 
   if (benchmarkState.loading && !benchmark) {
-    return <div className="panel muted">Loading country benchmark snapshots...</div>;
+    return <div className="page-stack benchmark-page-root"><div className="panel muted">Loading country benchmark snapshots...</div></div>;
   }
 
   if (benchmarkState.error) {
     return (
-      <div className="page-stack">
+      <div className="page-stack benchmark-page-root">
         <section className="panel danger">
           <div className="section-head">
             <h2>Benchmark unavailable</h2>
@@ -259,11 +263,11 @@ export function BenchmarkView() {
   }
 
   if (!benchmark) {
-    return <div className="panel danger">No benchmark snapshot is available yet.</div>;
+    return <div className="page-stack benchmark-page-root"><div className="panel danger">{disabledReason || 'No benchmark snapshot is available yet.'}</div></div>;
   }
 
   return (
-    <div className="page-stack">
+    <div className="page-stack benchmark-page-root">
       <section className="hero-panel benchmark-hero">
         <div className="eyebrow">Country Benchmark</div>
         <h1>Observed country-level news publishing benchmark from local snapshot tables.</h1>

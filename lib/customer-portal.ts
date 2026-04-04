@@ -6,6 +6,14 @@ import { NextRequest, NextResponse } from 'next/server';
 export const CUSTOMER_PORTAL_TOKEN_COOKIE = 'wpr_customer_token';
 
 const SESSION_MAX_AGE_SECONDS = 60 * 60 * 24 * 30;
+const PORTAL_PROXY_TIMEOUT_MS = (() => {
+  const raw = process.env.WPR_UPSTREAM_TIMEOUT_MS || process.env.NEWS_API_TIMEOUT_MS || '';
+  const parsed = Number.parseInt(raw, 10);
+  if (Number.isFinite(parsed) && parsed > 0) {
+    return Math.max(3_000, Math.min(30_000, parsed));
+  }
+  return 15_000;
+})();
 
 type CustomerPortalSession = {
   apiBaseUrl: string;
@@ -43,6 +51,25 @@ function buildPortalUpstreamHeaders(token: string): HeadersInit {
     // Cloudflare blocks some server-originated requests without a browser-like user agent.
     'User-Agent': 'WorldPressRadarPortal/1.0 (+https://app.worldpressradar.com)',
   };
+}
+
+function buildPortalTimeoutMessage(timeoutMs: number): string {
+  return `Upstream request timed out after ${Math.round(timeoutMs / 1000)}s.`;
+}
+
+async function fetchPortalUpstream(input: string | URL, init: RequestInit, timeoutMs = PORTAL_PROXY_TIMEOUT_MS): Promise<Response> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(input, { ...init, signal: controller.signal });
+  } catch (error: unknown) {
+    if (error instanceof Error && error.name === 'AbortError') {
+      throw new Error(buildPortalTimeoutMessage(timeoutMs));
+    }
+    throw error;
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 function getCookieOptions(maxAge = SESSION_MAX_AGE_SECONDS) {
@@ -237,7 +264,7 @@ export async function validateCustomerPortalToken(token: string): Promise<{
   url.searchParams.set('limit', '1');
 
   try {
-    const response = await fetch(url, {
+    const response = await fetchPortalUpstream(url, {
       cache: 'no-store',
       headers: buildPortalUpstreamHeaders(normalizedToken),
     });
@@ -302,7 +329,7 @@ export async function proxyCustomerApiRequest(
 
   let upstreamResponse: Response;
   try {
-    upstreamResponse = await fetch(upstreamUrl, {
+    upstreamResponse = await fetchPortalUpstream(upstreamUrl, {
       cache: 'no-store',
       headers: buildPortalUpstreamHeaders(session.token),
     });
@@ -363,7 +390,7 @@ export async function proxyPortalServerApiRequest(
 
   let upstreamResponse: Response;
   try {
-    upstreamResponse = await fetch(upstreamUrl, {
+    upstreamResponse = await fetchPortalUpstream(upstreamUrl, {
       cache: 'no-store',
       headers: buildPortalUpstreamHeaders(token),
     });

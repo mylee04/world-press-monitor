@@ -5,6 +5,7 @@ import {
   type NewsApiItem
 } from '@/lib/news-api-store';
 import { PUBLIC_MAP_RESPONSE_CACHE_CONTROL } from '@/lib/dashboard-cache-control';
+import { readCountryBenchmark } from '@/lib/benchmark-store';
 import { checkNewsDatabaseHealth } from '@/lib/ingestion-store';
 import { loadMapCountryMetrics } from '@/lib/map-country-metrics-reader';
 import { loadMapCountrySources } from '@/lib/map-country-sources-reader';
@@ -1409,7 +1410,7 @@ function sendHtmlResponse(req: IncomingMessage, res: ServerResponse, response: {
 const port = Number(process.env.NEWS_API_PORT || '4100');
 const host = process.env.NEWS_API_HOST || '0.0.0.0';
 const apiDocPaths = new Set(['/openapi.json', '/docs', '/playground', '/ui']);
-const publicReadPaths = new Set(['/api/news', '/api/filters', '/api/dashboard/summary']);
+const publicReadPaths = new Set(['/api/news', '/api/filters', '/api/dashboard/summary', '/api/dashboard/benchmark']);
 
 const server = createServer(async (req: IncomingMessage, res: ServerResponse) => {
   const requestStart = Date.now();
@@ -1905,6 +1906,29 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
           {
             error: 'internal_error',
             message: 'Failed to read dashboard summary.'
+          } satisfies ApiError,
+          500
+        ),
+        rateLimitDecision
+      );
+    }
+    return;
+  }
+
+  if (path === '/api/dashboard/benchmark') {
+    try {
+      const response = jsonResponse(await readCountryBenchmark(), 200);
+      response.headers['cache-control'] = PUBLIC_MAP_RESPONSE_CACHE_CONTROL;
+      sendJsonResponse(req, res, response, rateLimitDecision);
+    } catch (error) {
+      console.error('[api-news] dashboard benchmark request failed', error);
+      sendJsonResponse(
+        req,
+        res,
+        jsonResponse(
+          {
+            error: 'internal_error',
+            message: 'Failed to load country benchmark.'
           } satisfies ApiError,
           500
         ),

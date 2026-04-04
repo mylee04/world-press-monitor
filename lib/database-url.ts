@@ -5,6 +5,11 @@ const DEFAULT_WPR_PG_PORT = '5432';
 const DEFAULT_DATABASE_URL_PREFIX = 'postgresql://postgres:postgres@127.0.0.1:';
 let localEnvLoaded = false;
 
+function isTruthy(value: string | null | undefined): boolean {
+  const normalized = (value || '').trim().toLowerCase();
+  return normalized === '1' || normalized === 'true' || normalized === 'yes' || normalized === 'on';
+}
+
 function stripWrappingQuotes(value: string): string {
   const trimmed = value.trim();
   if (
@@ -73,5 +78,11 @@ export function resolveDatabaseUrl(): string {
   ensureLocalDatabaseEnv();
   const configured = process.env.DATABASE_URL?.trim();
   if (configured) return configured;
+  const allowImplicitLocalFallback = isTruthy(process.env.WPR_ALLOW_LOCAL_DB_FALLBACK)
+    || isTruthy(process.env.WPM_ALLOW_LOCAL_DB_FALLBACK)
+    || (!(process.env.VERCEL || '').trim() && process.env.NODE_ENV !== 'production');
+  if (!allowImplicitLocalFallback) {
+    throw new Error('DATABASE_URL is not configured on the portal server.');
+  }
   return getDefaultDatabaseUrl();
 }

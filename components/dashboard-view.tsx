@@ -54,35 +54,43 @@ export function DashboardView() {
   const { mode: taxonomyLocaleMode, browserLocale, resolvedLocale, setMode: setTaxonomyLocaleMode } = useTaxonomyLocalePreference();
   const summaryState = useNewsApiDashboardSummary();
   const summary = summaryState.data?.storage === 'postgres' ? summaryState.data : null;
+  const disabledReason =
+    summaryState.data && summaryState.data.storage !== 'postgres'
+      ? summaryState.data.reason || 'Dashboard summary is unavailable.'
+      : null;
 
   if (!apiConfigured && isReady) {
     return (
-      <CustomerAccessPanel
-        title="Portal API Not Configured"
-        description="This customer portal requires a server-side World Press Radar API base URL before dashboard data can load."
-      />
+      <div className="page-stack dashboard-page-root">
+        <CustomerAccessPanel
+          title="Portal API Not Configured"
+          description="This customer portal requires a server-side World Press Radar API base URL before dashboard data can load."
+        />
+      </div>
     );
   }
 
   if (!isReady) {
-    return <div className="panel muted">Checking customer access...</div>;
+    return <div className="page-stack dashboard-page-root"><div className="panel muted">Checking customer access...</div></div>;
   }
 
   if (summaryState.loading && !summary) {
-    return <div className="panel muted">Loading live dashboard summary...</div>;
+    return <div className="page-stack dashboard-page-root"><div className="panel muted">Loading live dashboard summary...</div></div>;
   }
 
   if (summaryState.error) {
     return (
-      <section className="panel danger">
-        <h2>Dashboard data unavailable</h2>
-        <p>{summaryState.error}</p>
-      </section>
+      <div className="page-stack dashboard-page-root">
+        <section className="panel danger">
+          <h2>Dashboard data unavailable</h2>
+          <p>{summaryState.error}</p>
+        </section>
+      </div>
     );
   }
 
   if (!summary) {
-    return <div className="panel danger">Dashboard summary is unavailable.</div>;
+    return <div className="page-stack dashboard-page-root"><div className="panel danger">{disabledReason || 'Dashboard summary is unavailable.'}</div></div>;
   }
 
   const totals = {
@@ -158,7 +166,7 @@ export function DashboardView() {
   }).filter((group) => group.group !== 'general_other' && group.topics.length > 0);
 
   return (
-    <div className="page-stack">
+    <div className="page-stack dashboard-page-root">
       <section className="hero-panel">
         <div className="eyebrow">Customer Dashboard</div>
         <h1>Live coverage metrics by top-level category, topic, country, and UTC publication date.</h1>
