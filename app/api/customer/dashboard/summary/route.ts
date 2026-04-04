@@ -153,11 +153,11 @@ export async function GET(request: NextRequest) {
   const upstreamMessage = await readUpstreamFailureMessage(upstream);
   const reason = `Dashboard summary unavailable from portal: ${upstream.status}` +
     (upstreamMessage ? ` (${upstreamMessage.slice(0, 200)})` : '');
-  if (snapshot && typeof snapshot === 'object') {
+  if (snapshotPayload && typeof snapshotPayload === 'object') {
     return buildSummaryResponse(
       {
-        ...(snapshot as DashboardSummaryPayload),
-        reason: snapshot.reason || reason,
+        ...(snapshotPayload as unknown as DashboardSummaryPayload),
+        reason: snapshotPayload.reason || reason,
       },
       {
         'X-Data-Source': 'disabled-snapshot-fallback',
