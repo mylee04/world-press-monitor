@@ -25,6 +25,34 @@ type DashboardSummaryPayload = {
   [key: string]: unknown;
 };
 
+async function readUpstreamFailureMessage(upstream: Response): Promise<string | undefined> {
+  try {
+    const rawPayload = await upstream.text();
+    if (!rawPayload) {
+      return undefined;
+    }
+
+    const normalizedPayload = rawPayload.trim();
+    try {
+      const parsed = JSON.parse(normalizedPayload) as {
+        message?: string;
+        error?: string;
+      };
+      if (typeof parsed?.message === 'string' && parsed.message) {
+        return parsed.message.trim();
+      }
+      if (typeof parsed?.error === 'string' && parsed.error) {
+        return parsed.error.trim();
+      }
+    } catch {
+      return normalizedPayload;
+    }
+    return normalizedPayload;
+  } catch {
+    return undefined;
+  }
+}
+
 function sanitizeDashboardSummary(payload: DashboardSummaryPayload): DashboardSummaryPayload {
   const preview = payload.preview && typeof payload.preview === 'object' ? payload.preview : {};
   const topCountries = Array.isArray(preview.topCountries) ? preview.topCountries : [];
@@ -114,7 +142,9 @@ export async function GET(request: NextRequest) {
     return upstream;
   }
 
-  const reason = `Dashboard summary unavailable from portal: ${upstream.status}`;
+  const upstreamMessage = await readUpstreamFailureMessage(upstream);
+  const reason = `Dashboard summary unavailable from portal: ${upstream.status}` +
+    (upstreamMessage ? ` (${upstreamMessage.slice(0, 200)})` : '');
   if (snapshot && typeof snapshot === 'object') {
     return buildSummaryResponse(
       {
