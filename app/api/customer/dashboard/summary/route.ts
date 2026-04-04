@@ -25,6 +25,12 @@ type DashboardSummaryPayload = {
   [key: string]: unknown;
 };
 
+const DASHBOARD_SUMMARY_UPSTREAM_TIMEOUT_MS = 15_000;
+
+function isUsableDashboardSummarySnapshot(payload: DashboardSummaryPayload | null | undefined): boolean {
+  return Boolean(payload && payload.storage === 'postgres');
+}
+
 async function readUpstreamFailureMessage(upstream: Response): Promise<string | undefined> {
   try {
     const rawPayload = await upstream.text();
@@ -126,12 +132,13 @@ function buildDisabledSummaryResponse(reason?: string): DashboardSummaryPayload 
 
 export async function GET(request: NextRequest) {
   const snapshot = await readDashboardSummarySnapshot();
-  if (snapshot && typeof snapshot === 'object' && snapshot.storage === 'postgres') {
+  if (isUsableDashboardSummarySnapshot(snapshot as DashboardSummaryPayload | undefined)) {
     return buildSummaryResponse(snapshot as unknown as DashboardSummaryPayload, { 'X-Data-Source': 'snapshot-fallback' });
   }
 
   const upstream = await proxyPortalServerApiRequest(request, '/api/dashboard/summary', {
     cacheControl: PUBLIC_MAP_RESPONSE_CACHE_CONTROL,
+    timeoutMs: DASHBOARD_SUMMARY_UPSTREAM_TIMEOUT_MS,
   });
 
   if (upstream.ok) {

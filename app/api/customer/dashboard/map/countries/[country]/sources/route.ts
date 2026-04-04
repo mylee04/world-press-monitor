@@ -6,6 +6,7 @@ import { normalizeMapMetricWindow } from '@/lib/map-store-windows';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
+const COUNTRY_SOURCES_UPSTREAM_TIMEOUT_MS = 15_000;
 
 export async function GET(request: NextRequest, context: { params: Promise<{ country: string }> }) {
   try {
@@ -22,7 +23,11 @@ export async function GET(request: NextRequest, context: { params: Promise<{ cou
     request.nextUrl.searchParams.set('window', window);
 
     const localPayload = await readMapCountrySources(country, window);
-    if (localPayload.sources.length > 0 || localPayload.summary.activeSources24h > 0) {
+    const hasSourceData =
+      localPayload.summary.activeSources24h > 0 ||
+      localPayload.sources.length > 0;
+
+    if (hasSourceData) {
       return NextResponse.json(localPayload, {
         status: 200,
         headers: { 'Cache-Control': PUBLIC_MAP_RESPONSE_CACHE_CONTROL, 'X-Data-Source': 'local-fallback' },
@@ -31,9 +36,17 @@ export async function GET(request: NextRequest, context: { params: Promise<{ cou
 
     const upstream = await proxyPortalServerApiRequest(request, `/api/map/countries/${encodeURIComponent(country)}/sources`, {
       cacheControl: PUBLIC_MAP_RESPONSE_CACHE_CONTROL,
-      timeoutMs: 15_000,
+      timeoutMs: COUNTRY_SOURCES_UPSTREAM_TIMEOUT_MS,
     });
-    return upstream;
+
+    if (upstream.ok) {
+      return upstream;
+    }
+
+    return NextResponse.json(localPayload, {
+      status: 200,
+      headers: { 'Cache-Control': PUBLIC_MAP_RESPONSE_CACHE_CONTROL, 'X-Data-Source': 'local-fallback' },
+    });
   } catch (error: unknown) {
     return NextResponse.json(
       { message: error instanceof Error ? error.message : 'Failed to load country sources.' },
