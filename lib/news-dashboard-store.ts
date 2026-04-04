@@ -498,7 +498,7 @@ export async function readNewsDashboardSummaryWithDeps(
       )
       select
         max(date)::text as latest_date,
-        coalesce(max(date) filter (where date <= (now() at time zone 'UTC')::date), max(date))::text as preview_date
+        coalesce(max(date) filter (where date < (now() at time zone 'UTC')::date), max(date))::text as preview_date
       from dates
       `,
       [windowDays, maxFutureMinutes]
@@ -539,71 +539,61 @@ export async function readNewsDashboardSummaryWithDeps(
   let previewHeadlines: NewsApiDashboardHeadlineItem[] = [];
   const topicSampleSize = Number(totalsResult.rows[0]?.rows_window || 0);
 
-  if (previewDate) {
-    const [countryCountsResult, headlinesResult] = await Promise.all([
+  if (latestHours > 0) {
+    const [countryCountsResult, headlinesResult, countResult] = await Promise.all([
       db.query<NewsApiCountryCountRow>(
         `
-        with windowed as (
-          select
-            coalesce(country, 'Global') as country,
-            case
-              when publication_datetime > now() + ($2::int * interval '1 minute') then created_at
-              else publication_datetime
-            end as normalized_publication_datetime
-          from news_articles
-          where publication_datetime >= now() - ($1::int * interval '1 day')
-            and publication_datetime <= now() + ($2::int * interval '1 minute')
-            and ${deps.customerVisibleTitleQualitySql}
-        )
-        select country, count(*)::text as count
-        from windowed
-        where (normalized_publication_datetime at time zone 'UTC')::date = $3::date
+        select
+          coalesce(country, 'Global') as country,
+          count(*)::text as count
+        from news_articles
+        where publication_datetime >= now() - ($1::int * interval '1 hour')
+          and publication_datetime <= now() + ($2::int * interval '1 minute')
+          and ${deps.customerVisibleTitleQualitySql}
         group by 1
         order by count(*) desc, country asc
-        limit $4
+        limit $3
         `,
-        [windowDays, maxFutureMinutes, previewDate, topCountriesLimit]
+        [latestHours, maxFutureMinutes, topCountriesLimit]
       ),
       db.query<NewsApiReadRow>(
         `
-        with windowed as (
-          select
-            external_id as id,
-            source,
-            title_original as title,
-            null::text as snippet_original,
-            url,
-            country,
-            language,
-            coalesce(section, 'others') as section,
-            primary_section,
-            sections_normalized,
-            feed_categories,
-            primary_topic,
-            topics,
-            publication_datetime,
-            created_at,
-            updated_at,
-            max(created_at) over() as generated_at,
-            case
-              when publication_datetime > now() + ($2::int * interval '1 minute') then created_at
-              else publication_datetime
-            end as normalized_publication_datetime
-          from news_articles
-          where publication_datetime >= now() - ($1::int * interval '1 day')
-            and publication_datetime <= now() + ($2::int * interval '1 minute')
-            and ${deps.customerVisibleTitleQualitySql}
-        )
         select
-          id, source, title, snippet_original, url, country, language, section, primary_section,
-          sections_normalized, feed_categories, primary_topic, topics, publication_datetime, created_at,
-          updated_at, generated_at
-        from windowed
-        where (normalized_publication_datetime at time zone 'UTC')::date = $3::date
-        order by normalized_publication_datetime desc, created_at desc
-        limit $4
+          external_id as id,
+          source,
+          title_original as title,
+          null::text as snippet_original,
+          url,
+          country,
+          language,
+          coalesce(section, 'others') as section,
+          primary_section,
+          sections_normalized,
+          feed_categories,
+          primary_topic,
+          topics,
+          publication_datetime,
+          created_at,
+          updated_at,
+          max(created_at) over() as generated_at
+        from news_articles
+        where publication_datetime >= now() - ($1::int * interval '1 hour')
+          and publication_datetime <= now() + ($2::int * interval '1 minute')
+          and ${deps.customerVisibleTitleQualitySql}
+        order by publication_datetime desc, created_at desc
+        limit $3
         `,
-        [windowDays, maxFutureMinutes, previewDate, previewLimit]
+        [latestHours, maxFutureMinutes, previewLimit]
+      ),
+      db.query<{ count: string }>(
+        `
+        select count(*)::text as count
+        from news_articles
+        where publication_datetime >= now() - ($1::int * interval '1 hour')
+          and publication_datetime <= now() + ($2::int * interval '1 minute')
+          and ${deps.customerVisibleTitleQualitySql}
+        `,
+        [latestHours, maxFutureMinutes]
       ),
     ]);
 
@@ -611,26 +601,6 @@ export async function readNewsDashboardSummaryWithDeps(
       country: row.country,
       count: Number(row.count) || 0,
     }));
-
-    const countResult = await db.query<{ count: string }>(
-      `
-      with windowed as (
-        select
-          case
-            when publication_datetime > now() + ($2::int * interval '1 minute') then created_at
-            else publication_datetime
-          end as normalized_publication_datetime
-        from news_articles
-        where publication_datetime >= now() - ($1::int * interval '1 day')
-          and publication_datetime <= now() + ($2::int * interval '1 minute')
-          and ${deps.customerVisibleTitleQualitySql}
-      )
-      select count(*)::text as count
-      from windowed
-      where (normalized_publication_datetime at time zone 'UTC')::date = $3::date
-      `,
-      [windowDays, maxFutureMinutes, previewDate]
-    );
     previewArticleCount = Number(countResult.rows[0]?.count || 0);
 
     previewHeadlines = headlinesResult.rows

@@ -272,11 +272,15 @@ export function BenchmarkView() {
         <div className="eyebrow">Country Benchmark</div>
         <h1>Observed country-level news publishing benchmark from hourly customer snapshots.</h1>
         <p>
-          This view is snapshot-based, keyed by <code>source_country</code>, and should be read as observed publishing output rather than an official national total.
+          This view is snapshot-based, keyed by <code>source_country</code>, and should be read as a comparative country ranking lens rather than a live operations dashboard or an official national total.
         </p>
         <div className="hero-note">
           <strong>Snapshot freshness:</strong> hourly snapshot {formatRelative(benchmark.hourly?.generatedAt)}.
           Daily snapshot bucket {benchmark.daily?.bucket || '-'} (completed UTC day, generated {formatDateTimeShort(benchmark.daily?.generatedAt)}).
+        </div>
+        <div className="hero-note">
+          <strong>Role split:</strong> use Dashboard for current rolling 24-hour operational output and category mix.
+          Use Benchmark for cross-country comparison across hourly, daily, weekly, and monthly lenses.
         </div>
         <div className="hero-note">
           <strong>Weekly buckets:</strong> month-local 7-day slices labeled like {`"March 2026 Week 1"`}. Monthly buckets roll up the full calendar month.
@@ -290,19 +294,14 @@ export function BenchmarkView() {
           <small>Countries with at least one benchmark row</small>
         </article>
         <article className="metric-card">
-          <span>Published 24h</span>
-          <strong>{benchmark.totals.hourlyPublished24h.toLocaleString()}</strong>
-          <small>Latest rolling 24-hour observed output</small>
+          <span>Hourly comparison lens</span>
+          <strong>{formatBucketLabel(benchmark.hourly)}</strong>
+          <small>{benchmark.hourly ? `${formatDateTime(benchmark.hourly.windowStart)} to ${formatDateTime(benchmark.hourly.windowEnd)}` : 'No hourly snapshot'}</small>
         </article>
         <article className="metric-card">
-          <span>Fresh 24h</span>
-          <strong>{benchmark.totals.hourlyFresh24h.toLocaleString()}</strong>
-          <small>Published and first-seen within the same 24-hour window</small>
-        </article>
-        <article className="metric-card">
-          <span>Inserted 24h</span>
-          <strong>{benchmark.totals.hourlyInserted24h.toLocaleString()}</strong>
-          <small>Rows first stored in the latest rolling 24 hours</small>
+          <span>Comparison periods</span>
+          <strong>4</strong>
+          <small>Hourly, daily, weekly, and monthly country ranking lenses</small>
         </article>
         <article className="metric-card">
           <span>Latest daily bucket (UTC)</span>

@@ -126,7 +126,6 @@ export function DashboardView() {
   };
   const windowDays = Number(summary.windowDays || 31);
   const sectionTotals = summary.sectionTotals && typeof summary.sectionTotals === 'object' ? summary.sectionTotals : {};
-  const recentDates = Array.isArray(summary.recentDates) ? summary.recentDates : [];
   const preview =
     summary.preview && typeof summary.preview === 'object'
       ? {
@@ -194,7 +193,7 @@ export function DashboardView() {
     <div className="page-stack dashboard-page-root">
       <section className="hero-panel">
         <div className="eyebrow">Customer Dashboard</div>
-        <h1>Hourly snapshot coverage metrics by top-level category, topic, country, and UTC publication date.</h1>
+        <h1>Hourly snapshot operational coverage across rolling output, top countries, category mix, and topic structure.</h1>
         <p>
           This dashboard uses hourly customer snapshots for aggregate coverage views only.
           Raw article titles and source rows are not exposed here.
@@ -203,12 +202,22 @@ export function DashboardView() {
           <strong>Snapshot freshness:</strong> updated {renderRelativeTime(summary.generatedAt)} from the latest hourly snapshot.
           Metrics may lag the source database by up to 1 hour.
         </div>
+        <div className="hero-note">
+          Dashboard tracks the current rolling 24-hour window.
+          Benchmark is reserved for fixed-period cross-country comparison across hourly, daily, weekly, and monthly lenses.
+        </div>
         <div className="hero-actions">
           <label style={{ minWidth: 220 }}>
             <span>Category language</span>
             <select
               value={taxonomyLocaleMode}
               onChange={(event) => setTaxonomyLocaleMode(event.target.value as TaxonomyLocaleMode)}
+              style={{
+                background: 'rgba(11, 19, 34, 0.88)',
+                color: '#f4fbff',
+                border: '1px solid rgba(120, 199, 255, 0.18)',
+                boxShadow: 'inset 0 0 0 1px rgba(120, 199, 255, 0.08)',
+              }}
             >
               <option value="auto">{getTaxonomyLocaleLabel('auto', browserLocale)}</option>
               <option value="en">{getTaxonomyLocaleLabel('en', browserLocale)}</option>
@@ -235,14 +244,14 @@ export function DashboardView() {
           <small>Articles currently available in the rolling 31-day view</small>
         </article>
         <article className="metric-card">
-          <span>Added in last 24h</span>
+          <span>Snapshot ingestion in last 24h</span>
           <strong>{totals.inserted24h.toLocaleString()}</strong>
           <small>Articles inserted by the ingestion pipeline in the last 24 hours</small>
         </article>
         <article className="metric-card">
           <span>Published in last 24h</span>
           <strong>{totals.published24h.toLocaleString()}</strong>
-          <small>Articles whose publication time falls within the latest rolling day</small>
+          <small>Articles whose publication time falls within the latest rolling 24-hour window</small>
         </article>
         <article className="metric-card">
           <span>Sources checked in last 24h</span>
@@ -251,44 +260,23 @@ export function DashboardView() {
         </article>
       </section>
 
-      <section className="grid-two">
-        <article className="panel">
-          <div className="section-head">
-            <h2>Top countries on latest UTC publication date</h2>
-            <span>{summary.previewDate ? `${summary.previewDate} · ${preview.articleCount.toLocaleString()} articles` : 'No data'}</span>
-          </div>
-          <div className="stat-list">
-            {preview.topCountries.length > 0 ? (
-              preview.topCountries.map((item) => (
-                <div className="stat-row" key={item.country}>
-                  <span>{item.country}</span>
-                  <strong>{item.count.toLocaleString()}</strong>
-                </div>
-              ))
-            ) : (
-              <div className="muted">No preview country counts available yet.</div>
-            )}
-          </div>
-        </article>
-
-        <article className="panel">
-          <div className="section-head">
-            <h2>Recent UTC date counts</h2>
-            <span>{recentDates.length} dates</span>
-          </div>
-          <div className="stat-list">
-            {recentDates.length > 0 ? (
-              recentDates.map((item) => (
-                <div className="stat-row" key={item.date}>
-                  <span>{item.date}</span>
-                  <strong>{item.count.toLocaleString()}</strong>
-                </div>
-              ))
-            ) : (
-              <div className="muted">No recent date rollup available yet.</div>
-            )}
-          </div>
-        </article>
+      <section className="panel">
+        <div className="section-head">
+          <h2>Top countries in rolling 24h</h2>
+          <span>{preview.articleCount.toLocaleString()} published</span>
+        </div>
+        <div className="stat-list">
+          {preview.topCountries.length > 0 ? (
+            preview.topCountries.map((item) => (
+              <div className="stat-row" key={item.country}>
+                <span>{item.country}</span>
+                <strong>{item.count.toLocaleString()}</strong>
+              </div>
+            ))
+          ) : (
+            <div className="muted">No rolling 24-hour country counts available yet.</div>
+          )}
+        </div>
       </section>
 
       <section className="panel">
@@ -325,7 +313,7 @@ export function DashboardView() {
         </div>
         <p className="muted" style={{ marginBottom: 12 }}>
           Topic leaders are grouped under the top-level product category so related sections such as Technology + Science or Culture + Entertainment read together.
-          Low-signal tails are hidden so the panel reflects material themes instead of one-off noise.
+          Category totals are full article totals, while topic rows below are non-additive leader counts: one article can carry multiple topics and low-signal tails are hidden.
         </p>
         {groupedTopicGroups.length > 0 ? (
           <div className="topic-group-grid">

@@ -6,6 +6,54 @@
 
 ## Unreleased
 
+### [6355674] Fix customer snapshot-backed dashboard and map data
+- Commit: 635567431d13442593ec22b6d66822020d4e7cbc
+- Date: 2026-04-04 09:07:06 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	CHANGELOG.md
+    - M	app/api/customer/dashboard/map/countries/[country]/sources/route.ts
+    - M	app/api/customer/dashboard/map/countries/route.ts
+    - M	app/api/customer/dashboard/map/publishers/route.ts
+    - M	data/country-benchmark.snapshot.json
+    - M	data/dashboard-summary.snapshot.json
+    - A	data/map-country-metrics.snapshot.1h.json
+    - A	data/map-country-metrics.snapshot.24h.json
+    - A	data/map-country-metrics.snapshot.7d.json
+    - A	data/map-country-sources.snapshot.1h.json
+    - A	data/map-country-sources.snapshot.24h.json
+    - A	data/map-country-sources.snapshot.7d.json
+    - A	data/map-publishers.snapshot.1h.json
+    - A	data/map-publishers.snapshot.24h.json
+    - A	data/map-publishers.snapshot.7d.json
+    - A	lib/customer-map-snapshot-store.ts
+    - M	lib/ingestion-store.ts
+    - M	lib/map-country-sources-reader.ts
+    - M	lib/map-snapshot-store.ts
+    - M	scripts/build-map-snapshots.ts
+  - Git stat:
+  - CHANGELOG.md                                       | 12 +++
+  -  .../map/countries/[country]/sources/route.ts       | 12 +++
+  -  app/api/customer/dashboard/map/countries/route.ts  |  9 +++
+  -  app/api/customer/dashboard/map/publishers/route.ts |  9 +++
+  -  data/country-benchmark.snapshot.json               |  2 +-
+  -  data/dashboard-summary.snapshot.json               |  2 +-
+  -  data/map-country-metrics.snapshot.1h.json          |  1 +
+  -  data/map-country-metrics.snapshot.24h.json         |  1 +
+  -  data/map-country-metrics.snapshot.7d.json          |  1 +
+  -  data/map-country-sources.snapshot.1h.json          |  1 +
+  -  data/map-country-sources.snapshot.24h.json         |  1 +
+  -  data/map-country-sources.snapshot.7d.json          |  1 +
+  -  data/map-publishers.snapshot.1h.json               |  1 +
+  -  data/map-publishers.snapshot.24h.json              |  1 +
+  -  data/map-publishers.snapshot.7d.json               |  1 +
+  -  lib/customer-map-snapshot-store.ts                 | 54 ++++++++++++++
+  -  lib/ingestion-store.ts                             |  9 ++-
+  -  lib/map-country-sources-reader.ts                  | 76 ++++++++++++-------
+  -  lib/map-snapshot-store.ts                          | 87 +++++++++++++++++++++-
+  -  scripts/build-map-snapshots.ts                     | 36 ++++++++-
+  -  20 files changed, 284 insertions(+), 33 deletions(-)
+
 ### [206f97f] chore(ci): add preflight typecheck script and workflow
 - Commit: 206f97fcacedf763d1d942bb405d5157417fdda5
 - Date: 2026-04-03 23:57:44 -0500
