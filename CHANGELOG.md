@@ -6,6 +6,36 @@
 
 ## Unreleased
 
+### [699231c] fix(portal): proxy map and benchmark routes
+- Commit: 699231ce6d24ff0666c3b19c38a0c6d4dd7fe789
+- Date: 2026-04-03 21:49:07 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	app/api/customer/dashboard/benchmark/route.ts
+    - M	app/api/customer/dashboard/map/countries/[country]/sources/route.ts
+    - M	app/api/customer/dashboard/map/countries/route.ts
+    - M	app/api/customer/dashboard/map/publishers/route.ts
+    - M	app/api/customer/dashboard/map/sources/[sourceId]/route.ts
+    - M	app/globals.css
+    - M	components/benchmark-view.tsx
+    - M	components/dashboard-view.tsx
+    - M	lib/customer-portal.ts
+    - M	lib/database-url.ts
+    - M	scripts/api-news.ts
+  - Git stat:
+  - app/api/customer/dashboard/benchmark/route.ts      | 40 +++++++++---
+  -  .../map/countries/[country]/sources/route.ts       | 11 ++++
+  -  app/api/customer/dashboard/map/countries/route.ts  | 11 ++++
+  -  app/api/customer/dashboard/map/publishers/route.ts | 11 ++++
+  -  .../dashboard/map/sources/[sourceId]/route.ts      | 11 ++++
+  -  app/globals.css                                    | 72 ++++++++++++++++++----
+  -  components/benchmark-view.tsx                      | 14 +++--
+  -  components/dashboard-view.tsx                      | 32 ++++++----
+  -  lib/customer-portal.ts                             | 33 +++++++++-
+  -  lib/database-url.ts                                | 11 ++++
+  -  scripts/api-news.ts                                | 26 +++++++-
+  -  11 files changed, 233 insertions(+), 39 deletions(-)
+
 ### [3f2490c] Refine map routing and label layout
 - Commit: 3f2490c8da541915f61ef398cd37320830a99dcc
 - Date: 2026-04-03 17:57:32 -0500
