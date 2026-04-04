@@ -12,7 +12,7 @@ const PORTAL_PROXY_TIMEOUT_MS = (() => {
   if (Number.isFinite(parsed) && parsed > 0) {
     return Math.max(3_000, Math.min(30_000, parsed));
   }
-  return 15_000;
+  return 3_000;
 })();
 
 type CustomerPortalSession = {

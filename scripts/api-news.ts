@@ -6,6 +6,7 @@ import {
 } from '@/lib/news-api-store';
 import { PUBLIC_MAP_RESPONSE_CACHE_CONTROL } from '@/lib/dashboard-cache-control';
 import { readCountryBenchmark } from '@/lib/benchmark-store';
+import { readCountryBenchmarkSnapshot, readDashboardSummarySnapshot } from '@/lib/customer-dashboard-snapshot-store';
 import { checkNewsDatabaseHealth } from '@/lib/ingestion-store';
 import { loadMapCountryMetrics } from '@/lib/map-country-metrics-reader';
 import { loadMapCountrySources } from '@/lib/map-country-sources-reader';
@@ -1815,6 +1816,12 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
 
   if (path === '/api/dashboard/summary') {
     try {
+      const summarySnapshot = await readDashboardSummarySnapshot();
+      if (summarySnapshot) {
+        sendJsonResponse(req, res, jsonResponse(summarySnapshot, 200), rateLimitDecision);
+        return;
+      }
+
       const windowDays = parseIntParam(url.searchParams.get('window_days'), 31, 1, 90);
       const latestHours = parseIntParam(url.searchParams.get('latest_hours'), 24, 1, 720);
       const previewLimit = parseIntParam(url.searchParams.get('preview_limit'), 8, 1, 20);
@@ -1917,6 +1924,14 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
 
   if (path === '/api/dashboard/benchmark') {
     try {
+      const benchmarkSnapshot = await readCountryBenchmarkSnapshot();
+      if (benchmarkSnapshot) {
+        const response = jsonResponse(benchmarkSnapshot, 200);
+        response.headers['cache-control'] = PUBLIC_MAP_RESPONSE_CACHE_CONTROL;
+        sendJsonResponse(req, res, response, rateLimitDecision);
+        return;
+      }
+
       const response = jsonResponse(await readCountryBenchmark(), 200);
       response.headers['cache-control'] = PUBLIC_MAP_RESPONSE_CACHE_CONTROL;
       sendJsonResponse(req, res, response, rateLimitDecision);

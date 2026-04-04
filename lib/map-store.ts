@@ -9,6 +9,7 @@ import {
 } from '@/lib/map-snapshot-store';
 import { loadMapSourceDetail } from '@/lib/map-source-detail-reader';
 import {
+  buildCountryWindowRecord,
   DEFAULT_MAP_WINDOW,
   normalizeMapMetricWindow,
   readTimedCache,
@@ -60,24 +61,61 @@ async function readSnapshotBackedMapPayload<T extends { storage: 'postgres' | 's
   return payload;
 }
 
-export async function readMapCountryMetrics(window: MapMetricWindow = DEFAULT_MAP_WINDOW): Promise<MapCountryMetricsResponse> {
-  return readSnapshotBackedMapPayload({
+function buildEmptyMapCountryWindows() {
+  return buildCountryWindowRecord({});
+}
+
+function buildEmptyMapCountryMetricsPayload(window: MapMetricWindow): MapCountryMetricsResponse {
+  return {
+    generatedAt: new Date().toISOString(),
+    storage: 'snapshot',
     window,
-    cache: mapCountryMetricsCache,
-    ttlMs: MAP_COUNTRY_METRICS_CACHE_MS,
-    readSnapshot: readMapCountryMetricsSnapshot,
-    buildPayload: buildMapCountryMetricsPayload,
-  });
+    totals: {
+      countries: 0,
+      pub24h: 0,
+      pub1h: 0,
+      activeSources24h: 0,
+      windows: buildEmptyMapCountryWindows(),
+    },
+    countries: [],
+  };
+}
+
+function buildEmptyMapPublishersPayload(window: MapMetricWindow): MapPublishersResponse {
+  return {
+    generatedAt: new Date().toISOString(),
+    storage: 'snapshot',
+    window,
+    publishers: [],
+  };
+}
+
+export async function readMapCountryMetrics(window: MapMetricWindow = DEFAULT_MAP_WINDOW): Promise<MapCountryMetricsResponse> {
+  try {
+    return await readSnapshotBackedMapPayload({
+      window,
+      cache: mapCountryMetricsCache,
+      ttlMs: MAP_COUNTRY_METRICS_CACHE_MS,
+      readSnapshot: readMapCountryMetricsSnapshot,
+      buildPayload: buildMapCountryMetricsPayload,
+    });
+  } catch {
+    return buildEmptyMapCountryMetricsPayload(normalizeMapMetricWindow(window));
+  }
 }
 
 export async function readMapPublishers(window: MapMetricWindow = DEFAULT_MAP_WINDOW): Promise<MapPublishersResponse> {
-  return readSnapshotBackedMapPayload({
-    window,
-    cache: mapPublishersCache,
-    ttlMs: MAP_PUBLISHERS_CACHE_MS,
-    readSnapshot: readMapPublishersSnapshot,
-    buildPayload: buildMapPublishersPayload,
-  });
+  try {
+    return await readSnapshotBackedMapPayload({
+      window,
+      cache: mapPublishersCache,
+      ttlMs: MAP_PUBLISHERS_CACHE_MS,
+      readSnapshot: readMapPublishersSnapshot,
+      buildPayload: buildMapPublishersPayload,
+    });
+  } catch {
+    return buildEmptyMapPublishersPayload(normalizeMapMetricWindow(window));
+  }
 }
 
 export async function readMapCountrySources(

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PUBLIC_MAP_RESPONSE_CACHE_CONTROL } from '@/lib/dashboard-cache-control';
-import { proxyPortalServerApiRequest, shouldUseLocalFallbackForPortalResponse } from '@/lib/customer-portal';
+import { proxyPortalServerApiRequest } from '@/lib/customer-portal';
 import { readMapCountrySources } from '@/lib/map-store';
 import { normalizeMapMetricWindow } from '@/lib/map-store-windows';
 
@@ -21,21 +21,18 @@ export async function GET(request: NextRequest, context: { params: Promise<{ cou
     const window = normalizeMapMetricWindow(request.nextUrl.searchParams.get('window'));
     request.nextUrl.searchParams.set('window', window);
 
+    const localPayload = await readMapCountrySources(country, window);
+    if (localPayload.sources.length > 0 || localPayload.summary.activeSources24h > 0) {
+      return NextResponse.json(localPayload, {
+        status: 200,
+        headers: { 'Cache-Control': PUBLIC_MAP_RESPONSE_CACHE_CONTROL, 'X-Data-Source': 'local-fallback' },
+      });
+    }
+
     const upstream = await proxyPortalServerApiRequest(request, `/api/map/countries/${encodeURIComponent(country)}/sources`, {
       cacheControl: PUBLIC_MAP_RESPONSE_CACHE_CONTROL,
     });
-    if (upstream.ok) {
-      return upstream;
-    }
-    if (!(await shouldUseLocalFallbackForPortalResponse(upstream))) {
-      return upstream;
-    }
-
-    const payload = await readMapCountrySources(country, window);
-    return NextResponse.json(payload, {
-      status: 200,
-      headers: { 'Cache-Control': PUBLIC_MAP_RESPONSE_CACHE_CONTROL, 'X-Data-Source': 'local-fallback' },
-    });
+    return upstream;
   } catch (error: unknown) {
     return NextResponse.json(
       { message: error instanceof Error ? error.message : 'Failed to load country sources.' },

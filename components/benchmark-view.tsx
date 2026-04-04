@@ -270,7 +270,7 @@ export function BenchmarkView() {
     <div className="page-stack benchmark-page-root">
       <section className="hero-panel benchmark-hero">
         <div className="eyebrow">Country Benchmark</div>
-        <h1>Observed country-level news publishing benchmark from local snapshot tables.</h1>
+        <h1>Observed country-level news publishing benchmark from hourly customer snapshots.</h1>
         <p>
           This view is snapshot-based, keyed by <code>source_country</code>, and should be read as observed publishing output rather than an official national total.
         </p>

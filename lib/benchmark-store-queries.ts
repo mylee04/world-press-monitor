@@ -1,5 +1,3 @@
-import 'server-only';
-
 import { Pool } from 'pg';
 import { resolveDatabaseUrl } from '@/lib/database-url';
 import type { CountryBenchmarkWindow } from '@/lib/benchmark-types';

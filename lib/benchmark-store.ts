@@ -1,5 +1,3 @@
-import 'server-only';
-
 import type { CountryBenchmarkResponse } from '@/lib/benchmark-types';
 import {
   readAggregateDailyCountryRows,

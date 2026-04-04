@@ -6,6 +6,16 @@
 
 ## Unreleased
 
+### [0b243b7] docs(changelog): append portal fix entry
+- Commit: 0b243b76a309660d764f6aa298db5b0ad44ff8f9
+- Date: 2026-04-03 21:54:22 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	CHANGELOG.md
+  - Git stat:
+  - CHANGELOG.md | 30 ++++++++++++++++++++++++++++++
+  -  1 file changed, 30 insertions(+)
+
 ### [699231c] fix(portal): proxy map and benchmark routes
 - Commit: 699231ce6d24ff0666c3b19c38a0c6d4dd7fe789
 - Date: 2026-04-03 21:49:07 -0500

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PUBLIC_MAP_RESPONSE_CACHE_CONTROL } from '@/lib/dashboard-cache-control';
-import { proxyPortalServerApiRequest, shouldUseLocalFallbackForPortalResponse } from '@/lib/customer-portal';
+import { proxyPortalServerApiRequest } from '@/lib/customer-portal';
 import { readMapSourceDetail } from '@/lib/map-store';
 
 export const runtime = 'nodejs';
@@ -17,27 +17,21 @@ export async function GET(request: NextRequest, context: { params: Promise<{ sou
       );
     }
 
+    const localPayload = await readMapSourceDetail(sourceId);
+    if (localPayload) {
+      return NextResponse.json(localPayload, {
+        status: 200,
+        headers: { 'Cache-Control': PUBLIC_MAP_RESPONSE_CACHE_CONTROL, 'X-Data-Source': 'local-fallback' },
+      });
+    }
+
     const upstream = await proxyPortalServerApiRequest(request, `/api/map/sources/${encodeURIComponent(sourceId)}`, {
       cacheControl: PUBLIC_MAP_RESPONSE_CACHE_CONTROL,
     });
     if (upstream.ok) {
       return upstream;
     }
-    if (!(await shouldUseLocalFallbackForPortalResponse(upstream))) {
-      return upstream;
-    }
-
-    const payload = await readMapSourceDetail(sourceId);
-    if (!payload) {
-      return NextResponse.json(
-        { message: 'Source not found.' },
-        { status: 404, headers: { 'Cache-Control': 'no-store' } }
-      );
-    }
-    return NextResponse.json(payload, {
-      status: 200,
-      headers: { 'Cache-Control': PUBLIC_MAP_RESPONSE_CACHE_CONTROL, 'X-Data-Source': 'local-fallback' },
-    });
+    return upstream;
   } catch (error: unknown) {
     return NextResponse.json(
       { message: error instanceof Error ? error.message : 'Failed to load source detail.' },

@@ -169,14 +169,14 @@ export function DashboardView() {
     <div className="page-stack dashboard-page-root">
       <section className="hero-panel">
         <div className="eyebrow">Customer Dashboard</div>
-        <h1>Live coverage metrics by top-level category, topic, country, and UTC publication date.</h1>
+        <h1>Hourly snapshot coverage metrics by top-level category, topic, country, and UTC publication date.</h1>
         <p>
-          This dashboard uses live platform metrics for aggregate coverage views only.
+          This dashboard uses hourly customer snapshots for aggregate coverage views only.
           Raw article titles and source rows are not exposed here.
         </p>
         <div className="hero-note">
-          <strong>Live refresh:</strong> updated {renderRelativeTime(summary.generatedAt)} from the live database.
-          Coverage metrics reflect the current rolling window from PostgreSQL.
+          <strong>Snapshot freshness:</strong> updated {renderRelativeTime(summary.generatedAt)} from the latest hourly snapshot.
+          Metrics may lag the source database by up to 1 hour.
         </div>
         <div className="hero-actions">
           <label style={{ minWidth: 220 }}>
@@ -200,7 +200,7 @@ export function DashboardView() {
 
       <section className="metric-grid">
         <article className="metric-card">
-          <span>Latest refresh</span>
+          <span>Latest snapshot</span>
           <strong>{renderGeneratedAt(summary.generatedAt)}</strong>
           <small>{renderRelativeTime(summary.generatedAt)}</small>
         </article>
