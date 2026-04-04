@@ -132,8 +132,9 @@ function buildDisabledSummaryResponse(reason?: string): DashboardSummaryPayload 
 
 export async function GET(request: NextRequest) {
   const snapshot = await readDashboardSummarySnapshot();
-  if (isUsableDashboardSummarySnapshot(snapshot as DashboardSummaryPayload | undefined)) {
-    return buildSummaryResponse(snapshot as unknown as DashboardSummaryPayload, { 'X-Data-Source': 'snapshot-fallback' });
+  const snapshotPayload = snapshot as unknown as DashboardSummaryPayload | null | undefined;
+  if (isUsableDashboardSummarySnapshot(snapshotPayload)) {
+    return buildSummaryResponse(snapshotPayload as DashboardSummaryPayload, { 'X-Data-Source': 'snapshot-fallback' });
   }
 
   const upstream = await proxyPortalServerApiRequest(request, '/api/dashboard/summary', {
