@@ -12,7 +12,7 @@ const PORTAL_PROXY_TIMEOUT_MS = (() => {
   if (Number.isFinite(parsed) && parsed > 0) {
     return Math.max(3_000, Math.min(30_000, parsed));
   }
-  return 3_000;
+  return 10_000;
 })();
 
 type CustomerPortalSession = {
@@ -360,6 +360,7 @@ export async function proxyPortalServerApiRequest(
   upstreamPath: string,
   options?: {
     cacheControl?: string;
+    timeoutMs?: number;
   }
 ): Promise<NextResponse> {
   const apiBaseUrl = getCustomerNewsApiBaseUrl();
@@ -393,7 +394,9 @@ export async function proxyPortalServerApiRequest(
     upstreamResponse = await fetchPortalUpstream(upstreamUrl, {
       cache: 'no-store',
       headers: buildPortalUpstreamHeaders(token),
-    });
+    },
+    options?.timeoutMs
+    );
   } catch (error: unknown) {
     return NextResponse.json(
       {

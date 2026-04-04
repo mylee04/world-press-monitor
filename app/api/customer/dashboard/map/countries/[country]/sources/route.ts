@@ -31,6 +31,7 @@ export async function GET(request: NextRequest, context: { params: Promise<{ cou
 
     const upstream = await proxyPortalServerApiRequest(request, `/api/map/countries/${encodeURIComponent(country)}/sources`, {
       cacheControl: PUBLIC_MAP_RESPONSE_CACHE_CONTROL,
+      timeoutMs: 15_000,
     });
     return upstream;
   } catch (error: unknown) {

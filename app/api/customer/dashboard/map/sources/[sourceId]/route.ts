@@ -27,6 +27,7 @@ export async function GET(request: NextRequest, context: { params: Promise<{ sou
 
     const upstream = await proxyPortalServerApiRequest(request, `/api/map/sources/${encodeURIComponent(sourceId)}`, {
       cacheControl: PUBLIC_MAP_RESPONSE_CACHE_CONTROL,
+      timeoutMs: 15_000,
     });
     if (upstream.ok) {
       return upstream;
