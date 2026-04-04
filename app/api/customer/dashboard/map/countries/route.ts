@@ -24,6 +24,7 @@ export async function GET(request: NextRequest) {
 
     const upstream = await proxyPortalServerApiRequest(request, '/api/map/countries', {
       cacheControl: PUBLIC_MAP_RESPONSE_CACHE_CONTROL,
+      timeoutMs: 15_000,
     });
     return upstream;
   } catch (error: unknown) {
