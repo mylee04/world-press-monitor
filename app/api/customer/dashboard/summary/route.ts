@@ -115,6 +115,18 @@ export async function GET(request: NextRequest) {
   }
 
   const reason = `Dashboard summary unavailable from portal: ${upstream.status}`;
+  if (snapshot && typeof snapshot === 'object') {
+    return buildSummaryResponse(
+      {
+        ...(snapshot as DashboardSummaryPayload),
+        reason: snapshot.reason || reason,
+      },
+      {
+        'X-Data-Source': 'disabled-snapshot-fallback',
+      }
+    );
+  }
+
   return buildSummaryResponse(
     buildDisabledSummaryResponse(reason),
     {

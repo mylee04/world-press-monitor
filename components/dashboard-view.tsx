@@ -67,6 +67,10 @@ function getDisabledSummaryMessage(reason?: string): string {
     return 'Dashboard snapshot is waiting for database configuration.';
   }
 
+  if (normalizedReason.startsWith('Dashboard summary unavailable from portal:')) {
+    return 'Dashboard summary service is temporarily unavailable. Please try again shortly.';
+  }
+
   return reason;
 }
 
