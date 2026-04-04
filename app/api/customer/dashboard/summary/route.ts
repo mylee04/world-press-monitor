@@ -19,6 +19,7 @@ type DashboardSummaryPayload = {
   preview?: {
     articleCount?: number;
     topCountries?: Array<{ country: string; countryCode: string | null; count: number }>;
+    headlines?: unknown[];
   };
   reason?: string;
   [key: string]: unknown;
