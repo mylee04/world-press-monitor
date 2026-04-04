@@ -49,6 +49,27 @@ function renderRelativeTime(value: string | null | undefined): string {
   return `${Math.abs(diffDays)} day${Math.abs(diffDays) === 1 ? '' : 's'} ${diffDays >= 0 ? 'ago' : 'ahead'}`;
 }
 
+function getDisabledSummaryMessage(reason?: string): string {
+  if (!reason) {
+    return 'Dashboard summary is unavailable.';
+  }
+
+  const normalizedReason = reason.trim();
+  if (!normalizedReason) {
+    return 'Dashboard summary is unavailable.';
+  }
+
+  if (normalizedReason === 'not_initialized') {
+    return 'Dashboard snapshot is not initialized yet. Please check the latest deployment and try again.';
+  }
+
+  if (normalizedReason === 'missing_database_url') {
+    return 'Dashboard snapshot is waiting for database configuration.';
+  }
+
+  return reason;
+}
+
 export function DashboardView() {
   const { isReady, apiConfigured } = useCustomerAccess();
   const { mode: taxonomyLocaleMode, browserLocale, resolvedLocale, setMode: setTaxonomyLocaleMode } = useTaxonomyLocalePreference();
@@ -56,7 +77,7 @@ export function DashboardView() {
   const summary = summaryState.data?.storage === 'postgres' ? summaryState.data : null;
   const disabledReason =
     summaryState.data && summaryState.data.storage !== 'postgres'
-      ? summaryState.data.reason || 'Dashboard summary is unavailable.'
+      ? getDisabledSummaryMessage(summaryState.data.reason)
       : null;
 
   if (!apiConfigured && isReady) {
