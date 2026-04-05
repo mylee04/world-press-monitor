@@ -247,6 +247,51 @@ label span,
   color: var(--muted);
 }
 
+.benchmark-metric-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.benchmark-metric-grid .metric-card {
+  min-width: 0;
+  padding: 18px 20px;
+}
+
+.benchmark-metric-grid .metric-card > span:first-child {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.92rem;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.benchmark-metric-grid .metric-card strong {
+  margin-top: 12px;
+  font-size: clamp(1.28rem, 1.9vw, 1.68rem);
+  line-height: 1.16;
+  text-wrap: balance;
+}
+
+.benchmark-metric-grid .metric-card small {
+  margin-top: 10px;
+  max-width: 28ch;
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
+.benchmark-metric-grid .help-label {
+  white-space: nowrap;
+}
+
+.benchmark-metric-grid .metric-card--generated strong {
+  font-size: clamp(1.02rem, 1.35vw, 1.24rem);
+  line-height: 1.28;
+}
+
+.benchmark-metric-grid .metric-card--generated small {
+  font-size: 0.9rem;
+}
+
 .danger {
   color: var(--danger);
 }
@@ -3242,7 +3287,17 @@ th {
     font-size: 1rem;
   }
 
+  .benchmark-metric-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .metric-card--wide {
     grid-column: span 1;
+  }
+}
+
+@media (max-width: 720px) {
+  .benchmark-metric-grid {
+    grid-template-columns: 1fr;
   }
 }

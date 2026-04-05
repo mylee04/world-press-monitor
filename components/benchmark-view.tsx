@@ -71,7 +71,39 @@ function formatLateShare(late: number, inserted: number): string {
 
 function formatBucketLabel(value: { bucket: string; label?: string | null } | null | undefined): string {
   if (!value) return '-';
-  return value.label || value.bucket || '-';
+  if (value.label) return value.label;
+  const bucket = value.bucket || '';
+  if (!bucket) return '-';
+  if (/^\d{4}-\d{2}-\d{2}$/.test(bucket)) {
+    const date = new Date(`${bucket}T00:00:00Z`);
+    if (!Number.isNaN(date.getTime())) {
+      try {
+        return new Intl.DateTimeFormat('en-US', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+          timeZone: 'UTC',
+        }).format(date);
+      } catch {
+        return bucket;
+      }
+    }
+  }
+  const date = new Date(bucket);
+  if (!Number.isNaN(date.getTime())) {
+    try {
+      return new Intl.DateTimeFormat('en-US', {
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        timeZone: 'UTC',
+        timeZoneName: 'short',
+      }).format(date);
+    } catch {
+      return bucket;
+    }
+  }
+  return bucket;
 }
 
 function formatDateTimeShort(value: string | null | undefined): string {
@@ -275,50 +307,46 @@ export function BenchmarkView() {
           This view is snapshot-based, keyed by <code>source_country</code>, and should be read as a comparative country ranking lens rather than a live operations dashboard or an official national total.
         </p>
         <div className="hero-note">
-          <strong>Snapshot freshness:</strong> hourly snapshot {formatRelative(benchmark.hourly?.generatedAt)}.
-          Daily snapshot bucket {benchmark.daily?.bucket || '-'} (completed UTC day, generated {formatDateTimeShort(benchmark.daily?.generatedAt)}).
+          <HelpTooltipLabel label="Snapshot freshness" description={BENCHMARK_COLUMN_HELP.benchmarkSnapshotFreshness} />{' '}
+          Hourly {formatRelative(benchmark.hourly?.generatedAt)}. Daily bucket {formatBucketLabel(benchmark.daily)}. Generated {formatDateTimeShort(benchmark.daily?.generatedAt)}.
         </div>
         <div className="hero-note">
-          <strong>Role split:</strong> use Dashboard for current rolling 24-hour operational output and category mix.
-          Use Benchmark for cross-country comparison across hourly, daily, weekly, and monthly lenses.
-        </div>
-        <div className="hero-note">
-          <strong>Weekly buckets:</strong> month-local 7-day slices labeled like {`"March 2026 Week 1"`}. Monthly buckets roll up the full calendar month.
+          <HelpTooltipLabel label="Role split" description={BENCHMARK_COLUMN_HELP.benchmarkRoleSplit} />{' '}
+          Dashboard = rolling 24h operations. Benchmark = fixed-period country comparison.
         </div>
       </section>
 
-      <section className="metric-grid">
+      <section className="metric-grid benchmark-metric-grid">
         <article className="metric-card">
-          <span>Countries tracked</span>
-          <strong>{benchmark.totals.countries.toLocaleString()}</strong>
-          <small>Countries with at least one benchmark row</small>
+          <span>Countries</span>
+          <strong>{benchmark.countries.length.toLocaleString()}</strong>
         </article>
         <article className="metric-card">
-          <span>Hourly comparison lens</span>
+          <span><HelpTooltipLabel label="Hourly lens" description={BENCHMARK_COLUMN_HELP.benchmarkHourlyLens} /></span>
           <strong>{formatBucketLabel(benchmark.hourly)}</strong>
-          <small>{benchmark.hourly ? `${formatDateTime(benchmark.hourly.windowStart)} to ${formatDateTime(benchmark.hourly.windowEnd)}` : 'No hourly snapshot'}</small>
+          <small>{benchmark.hourly ? `${formatDateTime(benchmark.hourly.windowStart)} to ${formatDateTime(benchmark.hourly.windowEnd)}` : 'No snapshot'}</small>
         </article>
         <article className="metric-card">
-          <span>Comparison periods</span>
-          <strong>4</strong>
-          <small>Hourly, daily, weekly, and monthly country ranking lenses</small>
+          <span><HelpTooltipLabel label="Periods" description={BENCHMARK_COLUMN_HELP.benchmarkComparisonPeriods} /></span>
+          <strong>4 lenses</strong>
+          <small>24h · day · week · month</small>
         </article>
         <article className="metric-card">
-          <span>Latest daily bucket (UTC)</span>
+          <span><HelpTooltipLabel label="Daily (UTC)" description={BENCHMARK_COLUMN_HELP.benchmarkDailyBucket} /></span>
           <strong>{formatBucketLabel(benchmark.daily)}</strong>
-          <small>{benchmark.daily ? `${benchmark.totals.dailyPublishedCount.toLocaleString()} published` : 'No daily snapshot'}</small>
+          <small>{benchmark.daily ? `${benchmark.totals.dailyPublishedCount.toLocaleString()} published` : 'No snapshot'}</small>
         </article>
-        <article className="metric-card metric-card--wide">
-          <span>Latest weekly bucket</span>
+        <article className="metric-card">
+          <span>Week bucket</span>
           <strong>{formatBucketLabel(benchmark.weekly)}</strong>
-          <small>{benchmark.weekly ? `${benchmark.totals.weeklyPublishedCount.toLocaleString()} published` : 'No weekly snapshot'}</small>
+          <small>{benchmark.weekly ? `${benchmark.totals.weeklyPublishedCount.toLocaleString()} published` : 'No snapshot'}</small>
         </article>
-        <article className="metric-card metric-card--wide">
-          <span>Latest monthly bucket</span>
+        <article className="metric-card">
+          <span>Month bucket</span>
           <strong>{formatBucketLabel(benchmark.monthly)}</strong>
-          <small>{benchmark.monthly ? `${benchmark.totals.monthlyPublishedCount.toLocaleString()} published` : 'No monthly snapshot'}</small>
+          <small>{benchmark.monthly ? `${benchmark.totals.monthlyPublishedCount.toLocaleString()} published` : 'No snapshot'}</small>
         </article>
-        <article className="metric-card metric-card--wide metric-card--generated">
+        <article className="metric-card metric-card--generated">
           <span>Generated</span>
           <strong>{formatDateTime(benchmark.generatedAt)}</strong>
           <small>{formatRelative(benchmark.generatedAt)}</small>
@@ -338,12 +366,12 @@ export function BenchmarkView() {
             <summary className="details-summary benchmark-bucket-summary">
               <div>
                 <div className="benchmark-bucket-title">Hourly snapshot</div>
-                <div className="benchmark-bucket-copy">{benchmark.hourly?.bucket || '-'}</div>
+                <div className="benchmark-bucket-copy">{formatBucketLabel(benchmark.hourly)}</div>
               </div>
               <span className="benchmark-bucket-toggle" aria-hidden="true" />
             </summary>
             <div className="link-list benchmark-bucket-body">
-              <div><strong>Hourly bucket:</strong> {benchmark.hourly?.bucket || '-'}</div>
+              <div><strong>Hourly bucket:</strong> {formatBucketLabel(benchmark.hourly)}</div>
               <div><strong>Hourly window:</strong> {benchmark.hourly ? `${formatDateTime(benchmark.hourly.windowStart)} to ${formatDateTime(benchmark.hourly.windowEnd)}` : '-'}</div>
               <div><strong>Hourly metric version:</strong> {benchmark.hourly?.metricVersion || '-'}</div>
               <div><strong>Hourly atlas version:</strong> {benchmark.hourly?.atlasVersion || '-'}</div>
