@@ -229,6 +229,135 @@ const SOURCE_SECTION_OVERRIDES: readonly SourceSectionOverride[] = [
     sourcePattern: /cebu daily news/,
     titlePattern: /beach|summer escape|vacation|travel|touris|park beach|resort/,
   },
+  {
+    section: 'tech',
+    sourcePattern: /infobae/,
+    pathnamePattern: /^tecno\//,
+  },
+  {
+    section: 'business',
+    sourcePattern: /infobae/,
+    pathnamePattern: /^(economia|negocios)\//,
+  },
+  {
+    section: 'politics',
+    sourcePattern: /infobae/,
+    pathnamePattern: /^politica\//,
+  },
+  {
+    section: 'sports',
+    sourcePattern: /infobae/,
+    pathnamePattern: /^(deportes?|copa-america|mundial-de-clubes)\//,
+  },
+  {
+    section: 'entertainment',
+    sourcePattern: /infobae/,
+    pathnamePattern: /^teleshow\//,
+  },
+  {
+    section: 'arts',
+    sourcePattern: /infobae/,
+    pathnamePattern: /^cultura\//,
+  },
+  {
+    section: 'health',
+    sourcePattern: /infobae/,
+    pathnamePattern: /^salud\//,
+  },
+  {
+    section: 'others',
+    sourcePattern: /infobae/,
+  },
+  {
+    section: 'others',
+    sourcePattern: /people\.cn/,
+  },
+  {
+    section: 'others',
+    sourcePattern: /bbc news - sitemap index/,
+    pathnamePattern: /^news\/articles\//,
+  },
+  {
+    section: 'others',
+    sourcePattern: /bbc news - sitemap index/,
+    pathnamePattern: /^news\/videos\//,
+  },
+  {
+    section: 'others',
+    sourcePattern: /bbc news - sitemap index/,
+    pathnamePattern: /^(?:arabic|serbian|tamil|hindi|urdu|gujarati|ukrainian|marathi|somali|hausa|persian|japanese|mundo|afrique)\//,
+  },
+  {
+    section: 'business',
+    sourcePattern: /tass/,
+    pathnamePattern: /^ekonomika\//,
+  },
+  {
+    section: 'conflicts',
+    sourcePattern: /tass/,
+    pathnamePattern: /^armiya-i-opk\//,
+  },
+  {
+    section: 'others',
+    sourcePattern: /tass/,
+    pathnamePattern: /^(proisshestviya|obschestvo)\//,
+  },
+  {
+    section: 'others',
+    sourcePattern: /tass/,
+  },
+  {
+    section: 'others',
+    sourcePattern: /liberty times 地方/,
+  },
+  {
+    section: 'business',
+    sourcePattern: /la stampa/,
+    pathnamePattern: /^motori\//,
+  },
+  {
+    section: 'world',
+    sourcePattern: /la stampa/,
+    pathnamePattern: /^esteri\//,
+  },
+  {
+    section: 'others',
+    sourcePattern: /la stampa/,
+  },
+  {
+    section: 'sports',
+    sourcePattern: /il messaggero/,
+    pathnamePattern: /^sport\//,
+  },
+  {
+    section: 'entertainment',
+    sourcePattern: /il messaggero/,
+    pathnamePattern: /^persone\//,
+  },
+  {
+    section: 'lifestyle',
+    sourcePattern: /il messaggero/,
+    pathnamePattern: /^alimentazione\//,
+  },
+  {
+    section: 'others',
+    sourcePattern: /il messaggero/,
+    pathnamePattern: /^(video|fotogallery|roma)\//,
+  },
+  {
+    section: 'others',
+    sourcePattern: /il messaggero/,
+  },
+  {
+    section: 'others',
+    sourcePattern: /rainews/,
+    pathnamePattern: /^(video|tgr)\//,
+  },
+  {
+    section: 'others',
+    sourcePattern: /rainews/,
+    titlePattern: /sintesi della partita|campo della|serie c|serie b|nel centro storico|morto lo scrittore/,
+  },
 ];
 
 function matches(pattern: RegExp | undefined, value: string): boolean {

@@ -941,6 +941,7 @@ export interface NewsApiDashboardHeadline {
 export interface NewsApiDashboardTopicGroup {
   section: string;
   articleCount: number;
+  unassignedCount: number;
   topics: Array<{
     topic: string;
     count: number;

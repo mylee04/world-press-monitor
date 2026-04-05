@@ -1,7 +1,8 @@
 #!/usr/bin/env bun
 
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { Client } from 'pg';
 import { resolveDatabaseUrl as resolveAppDatabaseUrl } from '@/lib/database-url';
 
@@ -60,6 +61,8 @@ type AuditReport = {
     visibleTopTopicCount: number;
   };
 };
+
+const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
 
 const DEFAULT_DAYS = 31;
 const DEFAULT_TOP_TOPICS = 15;
@@ -385,7 +388,7 @@ async function main() {
       summary,
     };
 
-    const outputDir = resolve(import.meta.dir, '..', 'audits');
+    const outputDir = resolve(SCRIPT_DIR, '..', 'audits');
     mkdirSync(outputDir, { recursive: true });
 
     const stamp = report.generatedAt.replace(/[:]/g, '').replace(/\.\d{3}Z$/, 'Z');

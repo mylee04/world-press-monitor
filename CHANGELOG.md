@@ -6,6 +6,44 @@
 
 ## Unreleased
 
+### [c3d5b2a] Improve taxonomy candidates and targeted overrides
+- Commit: c3d5b2a0bcd3783e0e643205ab9b7931f439cb81
+- Date: 2026-04-05 15:33:05 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	CHANGELOG.md
+    - M	components/dashboard-view.tsx
+    - M	data/country-benchmark.snapshot.json
+    - M	data/dashboard-summary.snapshot.json
+    - A	docs/secondary-taxonomy-design.md
+    - M	lib/article-section-context.ts
+    - M	lib/article-taxonomy.ts
+    - M	lib/ingestion-store-persistence.ts
+    - M	lib/ingestion-store.ts
+    - M	lib/news-api.ts
+    - M	lib/news-dashboard-store.ts
+    - M	lib/news-write-helpers.ts
+    - A	lib/source-taxonomy-overrides.ts
+    - M	scripts/backfill-article-topics.ts
+    - A	scripts/build-dashboard-topic-audit.ts
+  - Git stat:
+  - CHANGELOG.md                           |  28 +++
+  -  components/dashboard-view.tsx          |  25 +-
+  -  data/country-benchmark.snapshot.json   |   2 +-
+  -  data/dashboard-summary.snapshot.json   |   2 +-
+  -  docs/secondary-taxonomy-design.md      | 299 +++++++++++++++++++++++
+  -  lib/article-section-context.ts         |  46 +++-
+  -  lib/article-taxonomy.ts                | 161 +++++++++++--
+  -  lib/ingestion-store-persistence.ts     |  12 +-
+  -  lib/ingestion-store.ts                 |   8 +-
+  -  lib/news-api.ts                        |   1 +
+  -  lib/news-dashboard-store.ts            |  32 ++-
+  -  lib/news-write-helpers.ts              |   9 +
+  -  lib/source-taxonomy-overrides.ts       | 248 +++++++++++++++++++
+  -  scripts/backfill-article-topics.ts     |  29 ++-
+  -  scripts/build-dashboard-topic-audit.ts | 418 +++++++++++++++++++++++++++++++++
+  -  15 files changed, 1263 insertions(+), 57 deletions(-)
+
 ### [9ebc3f6] Tighten benchmark meta cards
 - Commit: 9ebc3f667c32ef0106a2c6b9a610c600ee3036fd
 - Date: 2026-04-04 20:18:49 -0500
