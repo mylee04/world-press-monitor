@@ -67,6 +67,7 @@ export interface NewsApiDashboardItem extends NewsApiItem {
 export interface NewsApiDashboardTopicGroup {
   section: string;
   articleCount: number;
+  unassignedCount: number;
   topics: Array<{
     topic: string;
     count: number;

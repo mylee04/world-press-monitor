@@ -146,9 +146,9 @@ export async function persistNewsArticlesWithDeps(
     const values: unknown[] = [];
     const parts: string[] = [];
     group.forEach((row, i) => {
-      const base = i * 25;
+      const base = i * 28;
       parts.push(
-        `($${base + 1}::text,$${base + 2}::text,least($${base + 3}::timestamptz, now()),$${base + 4}::text,$${base + 5}::text,$${base + 6}::text[],$${base + 7}::text[],$${base + 8}::text,$${base + 9}::text[],$${base + 10}::timestamptz,$${base + 11}::timestamptz,$${base + 12}::text,$${base + 13}::text,$${base + 14}::text,$${base + 15}::timestamptz,$${base + 16}::text,$${base + 17}::text,$${base + 18}::timestamptz,$${base + 19}::timestamptz,$${base + 20}::text,$${base + 21}::text,$${base + 22}::text,$${base + 23}::text,$${base + 24}::text,$${base + 25}::text,now(),now())`
+        `($${base + 1}::text,$${base + 2}::text,least($${base + 3}::timestamptz, now()),$${base + 4}::text,$${base + 5}::text,$${base + 6}::text[],$${base + 7}::text[],$${base + 8}::text,$${base + 9}::text[],$${base + 10}::timestamptz,$${base + 11}::timestamptz,$${base + 12}::jsonb,$${base + 13}::jsonb,$${base + 14}::text,$${base + 15}::text,$${base + 16}::text,$${base + 17}::text,$${base + 18}::timestamptz,$${base + 19}::text,$${base + 20}::text,$${base + 21}::timestamptz,$${base + 22}::timestamptz,$${base + 23}::text,$${base + 24}::text,$${base + 25}::text,$${base + 26}::text,$${base + 27}::text,$${base + 28}::text,now(),now())`
       );
       values.push(
         row.externalId,
@@ -162,6 +162,9 @@ export async function persistNewsArticlesWithDeps(
         row.topics,
         new Date().toISOString(),
         new Date().toISOString(),
+        row.sectionCandidates,
+        row.topicCandidates,
+        row.taxonomyVersion,
         row.titleOriginal,
         row.titleQuality,
         row.titleQualityReason,
@@ -183,7 +186,7 @@ export async function persistNewsArticlesWithDeps(
       db,
       `
       insert into news_articles (
-        external_id, stable_id, publication_datetime, section, primary_section, sections_normalized, feed_categories, primary_topic, topics, topics_derived_at, taxonomy_derived_at, title_original, title_quality, title_quality_reason, title_quality_checked_at, title_repair_status, title_repair_source, title_repair_attempted_at, title_repaired_at, snippet_original,
+        external_id, stable_id, publication_datetime, section, primary_section, sections_normalized, feed_categories, primary_topic, topics, topics_derived_at, taxonomy_derived_at, section_candidates, topic_candidates, taxonomy_version, title_original, title_quality, title_quality_reason, title_quality_checked_at, title_repair_status, title_repair_source, title_repair_attempted_at, title_repaired_at, snippet_original,
         country, source_country, url, source, language, created_at, updated_at
       ) values ${parts.join(',')}
       on conflict (external_id) do update set
@@ -222,6 +225,9 @@ export async function persistNewsArticlesWithDeps(
         ),
         topics_derived_at = now(),
         taxonomy_derived_at = now(),
+        section_candidates = coalesce(excluded.section_candidates, news_articles.section_candidates),
+        topic_candidates = coalesce(excluded.topic_candidates, news_articles.topic_candidates),
+        taxonomy_version = coalesce(excluded.taxonomy_version, news_articles.taxonomy_version),
         title_original = case
           when coalesce(nullif(trim(news_articles.title_quality), ''), 'ok') in ('ok', 'recovered')
             and coalesce(nullif(trim(excluded.title_quality), ''), 'ok') = 'suspect'

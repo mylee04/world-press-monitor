@@ -6,6 +6,34 @@
 
 ## Unreleased
 
+### [9ebc3f6] Tighten benchmark meta cards
+- Commit: 9ebc3f667c32ef0106a2c6b9a610c600ee3036fd
+- Date: 2026-04-04 20:18:49 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	app/globals.css
+    - M	components/benchmark-view.tsx
+    - M	components/help-tooltip-label.tsx
+  - Git stat:
+  - app/globals.css                   | 55 +++++++++++++++++++++++++
+  -  components/benchmark-view.tsx     | 84 ++++++++++++++++++++++++++-------------
+  -  components/help-tooltip-label.tsx |  5 +++
+  -  3 files changed, 116 insertions(+), 28 deletions(-)
+
+### [358f64b] Refresh snapshots after 31-day topic backfill
+- Commit: 358f64b0526af46e5092d291382856cd1234f918
+- Date: 2026-04-04 19:51:35 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	CHANGELOG.md
+    - M	data/country-benchmark.snapshot.json
+    - M	data/dashboard-summary.snapshot.json
+  - Git stat:
+  - CHANGELOG.md                         | 22 ++++++++++++++++++++++
+  -  data/country-benchmark.snapshot.json |  2 +-
+  -  data/dashboard-summary.snapshot.json |  2 +-
+  -  3 files changed, 24 insertions(+), 2 deletions(-)
+
 ### [a9587cf] Expand dashboard topic taxonomy and align snapshots
 - Commit: a9587cfd9458d68eac9499c35ef53137d0595794
 - Date: 2026-04-04 11:51:43 -0500

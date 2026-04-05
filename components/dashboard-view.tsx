@@ -160,6 +160,7 @@ export function DashboardView() {
         .map((group) => ({
           ...group,
           articleCount: Number(group?.articleCount || 0),
+          unassignedCount: Number(group?.unassignedCount || 0),
           topics: Array.isArray(group?.topics)
             ? group.topics.map((item) => ({
                 ...item,
@@ -167,13 +168,14 @@ export function DashboardView() {
               }))
             : [],
         }))
-        .filter((group) => group.topics.length > 0)
+        .filter((group) => group.articleCount > 0)
     : [];
   const groupedTopicGroups = TAXONOMY_TOP_LEVEL_ORDER.map((group) => {
     const sectionGroups = topicGroups.filter((item) => mapSectionToTopLevelTaxonomy(item.section) === group);
     const articleCount = sectionRollup
       .filter((item) => mapSectionToTopLevelTaxonomy(item.key) === group)
       .reduce((sum, item) => sum + item.count, 0);
+    const unassignedCount = sectionGroups.reduce((sum, item) => sum + item.unassignedCount, 0);
     const topicCounts = new Map<string, number>();
     for (const sectionGroup of sectionGroups) {
       for (const topic of sectionGroup.topics) {
@@ -182,11 +184,11 @@ export function DashboardView() {
     }
     const topics = [...topicCounts.entries()]
       .map(([topic, count]) => ({ topic, count }))
-      .sort((a, b) => b.count - a.count || a.topic.localeCompare(b.topic))
-      .slice(0, 10);
+      .sort((a, b) => b.count - a.count || a.topic.localeCompare(b.topic));
     return {
       group,
       articleCount,
+      unassignedCount,
       topics,
     };
   }).filter((group) => group.group !== 'general_other' && group.articleCount > 0);
@@ -315,8 +317,8 @@ export function DashboardView() {
         </div>
         <p className="muted" style={{ marginBottom: 12 }}>
           Each article is assigned to one primary topic inside its product category.
-          By default this shows the top 15 topics and rolls the rest into Other, so the visible rows still explain the full category total.
-          Other includes the long tail, unassigned stories, and legacy topic values that do not match the current category taxonomy.
+          By default this shows the top 15 topics, surfaces Unassigned separately, and rolls the remaining long tail into Other so the visible rows still explain the full category total.
+          Other now means hidden tail topics plus legacy topic values that do not match the current category taxonomy.
         </p>
         {groupedTopicGroups.length > 0 ? (
           <div className="topic-group-grid">
@@ -326,7 +328,7 @@ export function DashboardView() {
                 const visibleLimit = isExpanded ? 30 : 15;
                 const visibleTopics = group.topics.slice(0, visibleLimit);
                 const visibleCount = visibleTopics.reduce((sum, item) => sum + item.count, 0);
-                const otherCount = Math.max(0, group.articleCount - visibleCount);
+                const otherCount = Math.max(0, group.articleCount - visibleCount - group.unassignedCount);
                 const hasMoreTopics = group.topics.length > 15;
 
                 return (
@@ -348,6 +350,17 @@ export function DashboardView() {
                           </div>
                         );
                       })}
+                      {group.unassignedCount > 0 ? (
+                        <div className="stat-row" key={`${group.group}-unassigned`}>
+                          <span>
+                            Unassigned
+                            <small style={{ display: 'block' }}>
+                              {group.articleCount > 0 ? ((group.unassignedCount / group.articleCount) * 100).toFixed(1) : '0.0'}%
+                            </small>
+                          </span>
+                          <strong>{group.unassignedCount.toLocaleString()}</strong>
+                        </div>
+                      ) : null}
                       {otherCount > 0 ? (
                         <div className="stat-row" key={`${group.group}-other`}>
                           <span>

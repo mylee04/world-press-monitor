@@ -1,4 +1,5 @@
 import type { NewsSection } from '@/lib/types';
+import { classifySectionBySourceOverride } from '@/lib/source-taxonomy-overrides';
 
 export type ArticleSectionContext = {
   source: string;
@@ -166,11 +167,11 @@ const CATEGORY_SECTION_MAP: Record<string, NewsSection> = {
   salute: 'health',
   tecnologia: 'tech',
   scienza: 'science',
-  사회: 'world',
-  사회일반: 'world',
-  社会: 'world',
-  社會: 'world',
-  society: 'world',
+  사회: 'others',
+  사회일반: 'others',
+  社会: 'others',
+  社會: 'others',
+  society: 'others',
   debat: 'politics',
   erhverv: 'business',
   kultur: 'arts',
@@ -283,6 +284,18 @@ const CATEGORY_SECTION_MAP: Record<string, NewsSection> = {
   '\u0643\u062a\u0627\u0628\u0020\u0639\u0645\u0648\u0646': 'politics',
   '\u0e02\u0e48\u0e32\u0e27\u0e2d\u0e31\u0e1b\u0e40\u0e14\u0e15': 'world',
   '\u0e20\u0e39\u0e21\u0e34\u0e20\u0e32\u0e04': 'world',
+  cronaca: 'others',
+  video: 'others',
+  editoriale: 'politics',
+  'cosa fare': 'lifestyle',
+  meteo: 'climate',
+  cities: 'others',
+  legal: 'politics',
+  'opinión': 'politics',
+  지방: 'others',
+  지방일반: 'others',
+  수도권: 'others',
+  경기북부: 'others',
 };
 
 const SECTION_HINT_TERMS: ReadonlyArray<readonly [NewsSection, readonly string[]]> = [
@@ -495,6 +508,24 @@ export function classifySectionByStructuredHints(source: string, url: string): N
   return 'others';
 }
 
+export function classifyExplicitSourceOverride(context: ArticleSectionContext): NewsSection | null {
+  const source = (context.source || '').toLowerCase();
+  const title = (context.title || '').toLowerCase();
+  const url = (context.url || '').toLowerCase();
+  const hintText = buildArticleHintText(context.source || '', context.url || '');
+  const { hostname, pathname, search } = parseArticleUrl(context.url || '');
+
+  return classifySectionBySourceOverride({
+    source,
+    title,
+    url,
+    hintText,
+    hostname,
+    pathname,
+    search,
+  });
+}
+
 export function classifySectionBySourceFallback(context: ArticleSectionContext): NewsSection {
   const source = (context.source || '').toLowerCase();
   const title = (context.title || '').toLowerCase();
@@ -504,6 +535,11 @@ export function classifySectionBySourceFallback(context: ArticleSectionContext):
 
   if (looksLikeConflictSignal(`${context.title || ''} ${hintText}`)) {
     return 'conflicts';
+  }
+
+  const sourceOverrideSection = classifyExplicitSourceOverride(context);
+  if (sourceOverrideSection) {
+    return sourceOverrideSection;
   }
 
   const pathSection = classifySectionByPath(pathname, hintText);

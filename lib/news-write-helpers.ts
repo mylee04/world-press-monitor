@@ -40,6 +40,9 @@ export type NewsArticlePersistable = {
   feedCategories: string[];
   primaryTopic: string | null;
   topics: string[];
+  sectionCandidates: string;
+  topicCandidates: string;
+  taxonomyVersion: string;
   url: string;
   source: string;
   language: string | null;
@@ -134,6 +137,9 @@ export function preferPersistedArticleRow(
     sectionsNormalized: [...new Set([...secondary.sectionsNormalized, ...preferred.sectionsNormalized])] as NewsSection[],
     feedCategories: [...new Set([...secondary.feedCategories, ...preferred.feedCategories])],
     topics: [...new Set([...secondary.topics, ...preferred.topics])],
+    sectionCandidates: preferred.sectionCandidates || secondary.sectionCandidates,
+    topicCandidates: preferred.topicCandidates || secondary.topicCandidates,
+    taxonomyVersion: preferred.taxonomyVersion || secondary.taxonomyVersion,
     snippetOriginal: preferred.snippetOriginal || secondary.snippetOriginal,
     titleOriginal: preferredIsSuspect && secondaryHasBetterTitle ? secondary.titleOriginal : preferred.titleOriginal,
     titleQuality: preferredIsSuspect && secondaryHasBetterTitle ? secondary.titleQuality : preferred.titleQuality,
@@ -217,6 +223,9 @@ export async function toNewsArticlePersistable(
     feedCategories,
     primaryTopic: taxonomy.primaryTopic,
     topics: taxonomy.topics,
+    sectionCandidates: JSON.stringify(taxonomy.sectionCandidates),
+    topicCandidates: JSON.stringify(taxonomy.topicCandidates),
+    taxonomyVersion: taxonomy.taxonomyVersion,
     titleOriginal,
     titleQuality,
     titleQualityReason,

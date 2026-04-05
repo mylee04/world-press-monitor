@@ -36,6 +36,9 @@ type TopicUpdateRow = {
   sectionsNormalized: string[];
   primaryTopic: string | null;
   topics: string[];
+  sectionCandidates: string;
+  topicCandidates: string;
+  taxonomyVersion: string;
 };
 
 const DEFAULT_DAYS = 31;
@@ -221,6 +224,9 @@ function classifyTopicRow(row: CandidateDetailRow): TopicUpdateRow {
     sectionsNormalized: taxonomy.sections,
     primaryTopic: taxonomy.primaryTopic,
     topics: taxonomy.topics,
+    sectionCandidates: JSON.stringify(taxonomy.sectionCandidates),
+    topicCandidates: JSON.stringify(taxonomy.topicCandidates),
+    taxonomyVersion: taxonomy.taxonomyVersion,
   };
 }
 
@@ -231,21 +237,33 @@ async function applyTopicUpdates(client: Client, rows: TopicUpdateRow[]): Promis
     const values: unknown[] = [];
     const parts: string[] = [];
     group.forEach((row, index) => {
-      const base = index * 5;
-      parts.push(`($${base + 1}::text, $${base + 2}::text, $${base + 3}::text[], $${base + 4}::text, $${base + 5}::text[])`);
-      values.push(row.externalId, row.primarySection, row.sectionsNormalized, row.primaryTopic, row.topics);
+      const base = index * 8;
+      parts.push(`($${base + 1}::text, $${base + 2}::text, $${base + 3}::text[], $${base + 4}::text, $${base + 5}::text[], $${base + 6}::jsonb, $${base + 7}::jsonb, $${base + 8}::text)`);
+      values.push(
+        row.externalId,
+        row.primarySection,
+        row.sectionsNormalized,
+        row.primaryTopic,
+        row.topics,
+        row.sectionCandidates,
+        row.topicCandidates,
+        row.taxonomyVersion,
+      );
     });
     const result = await client.query(
       `
       with incoming as (
         select *
-        from (values ${parts.join(',')}) as t(external_id, primary_section, sections_normalized, primary_topic, topics)
+        from (values ${parts.join(',')}) as t(external_id, primary_section, sections_normalized, primary_topic, topics, section_candidates, topic_candidates, taxonomy_version)
       )
       update news_articles as n
       set primary_section = incoming.primary_section,
           sections_normalized = coalesce(incoming.sections_normalized, array['others']::text[]),
           primary_topic = incoming.primary_topic,
           topics = coalesce(incoming.topics, '{}'::text[]),
+          section_candidates = incoming.section_candidates,
+          topic_candidates = incoming.topic_candidates,
+          taxonomy_version = incoming.taxonomy_version,
           topics_derived_at = now(),
           taxonomy_derived_at = now(),
           updated_at = now()
@@ -275,6 +293,9 @@ async function main() {
     alter table news_articles add column if not exists topics text[] not null default '{}';
     alter table news_articles add column if not exists topics_derived_at timestamptz null;
     alter table news_articles add column if not exists taxonomy_derived_at timestamptz null;
+    alter table news_articles add column if not exists section_candidates jsonb null;
+    alter table news_articles add column if not exists topic_candidates jsonb null;
+    alter table news_articles add column if not exists taxonomy_version text null;
     create index if not exists idx_news_articles_primary_section on news_articles(primary_section);
     create index if not exists idx_news_articles_sections_normalized on news_articles using gin(sections_normalized);
     create index if not exists idx_news_articles_primary_topic on news_articles(primary_topic);

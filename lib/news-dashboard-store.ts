@@ -59,6 +59,7 @@ type NewsApiCountryCountRow = {
 type NewsApiDashboardTopicCountRow = {
   section: string;
   article_count: string;
+  unassigned_count: string;
   topic: string;
   count: string;
 };
@@ -96,6 +97,7 @@ type NewsApiDashboardHeadlineItem = {
 type NewsApiDashboardTopicGroupItem = {
   section: string;
   articleCount: number;
+  unassignedCount: number;
   topics: Array<{ topic: string; count: number }>;
 };
 
@@ -241,7 +243,8 @@ async function readDashboardTopicGroupsForWindow(
     section_counts as (
       select
         section,
-        count(*)::text as article_count
+        count(*)::text as article_count,
+        count(*) filter (where primary_topic is null)::text as unassigned_count
       from windowed
       where section <> 'others'
       group by 1
@@ -270,12 +273,16 @@ async function readDashboardTopicGroupsForWindow(
       join section_counts using (section)
     )
     select
-      section,
-      article_count,
-      topic,
-      count
-    from ranked
-    where rn <= $3
+      section_counts.section,
+      section_counts.article_count,
+      section_counts.unassigned_count,
+      ranked.topic,
+      ranked.count
+    from section_counts
+    left join ranked
+      on ranked.section = section_counts.section
+     and ranked.rn <= $3
+    order by section_counts.section asc, ranked.rn asc nulls last
     `,
     [windowDays, maxFutureMinutes, deps.dashboardTopicDisplayLimit, asOfIso]
   );
@@ -289,12 +296,15 @@ async function readDashboardTopicGroupsForWindow(
     const current = groupsBySection.get(section) || {
       section,
       articleCount: Number(row.article_count) || 0,
+      unassignedCount: Number(row.unassigned_count) || 0,
       topics: [],
     };
-    current.topics.push({
-      topic,
-      count: Number(row.count) || 0,
-    });
+    if (topic && isTopicAllowedForSection(section, topic)) {
+      current.topics.push({
+        topic,
+        count: Number(row.count) || 0,
+      });
+    }
     groupsBySection.set(section, current);
   }
 

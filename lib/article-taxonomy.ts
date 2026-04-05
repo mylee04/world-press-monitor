@@ -1,6 +1,7 @@
 import type { NewsSection } from '@/lib/types';
 import {
   buildArticleHintText,
+  classifyExplicitSourceOverride,
   classifySectionBySourceFallback,
   classifySectionByStructuredHints,
   deriveSectionFromContext,
@@ -56,6 +57,22 @@ export type ArticleTaxonomy = {
   sourceCategories: string[];
   primaryTopic: string | null;
   topics: string[];
+  sectionCandidates: ArticleTaxonomySectionCandidate[];
+  topicCandidates: ArticleTaxonomyTopicCandidate[];
+  taxonomyVersion: string;
+};
+
+export type ArticleTaxonomySectionCandidate = {
+  label: NewsSection;
+  score: number;
+  reasons: string[];
+};
+
+export type ArticleTaxonomyTopicCandidate = {
+  section: NewsSection;
+  label: string;
+  score: number;
+  reasons: string[];
 };
 
 type TopicRule = {
@@ -73,13 +90,16 @@ const SECTION_TOPIC_RULES: Partial<Record<NewsSection, readonly TopicRule[]>> = 
     { topic: 'international courts', patterns: [rx('icc\\b|icj\\b|international court|tribunal|arbitration court|human rights court')] },
     { topic: 'espionage / sabotage', patterns: [rx('espionage|spy ring|counterintelligence|sabotage|intelligence service')] },
     { topic: 'maritime security', patterns: [rx('tanker|shipping lane|strait of|canal traffic|merchant vessel|coast guard')] },
+    { topic: 'regional tensions', patterns: [rx('iran|israel|gaza|tehran|kuwait|ukraine|middle east|asia barat|medio oriente|medioriente|piloto americano|american pilot|invasor')] },
     { topic: 'diplomacy', patterns: [rx('diplomac|summit|treaty|embassy|foreign minister|bilateral|delegation|consul')] },
     { topic: 'migration', patterns: [rx('migration|migrant|refugee|asylum|border crossing|deportation|diaspora')] },
     { topic: 'disasters', patterns: [rx('earthquake|flood|wildfire|storm|hurricane|typhoon|landslide|disaster|eruption')] },
     { topic: 'aviation / transport', patterns: [rx('aviation|airline|airport|flight|railway|train crash|shipping|ferry|port')] },
     { topic: 'crime / security', patterns: [rx('kidnap|murder|police raid|organized crime|smuggling|terror alert|security alert')] },
+    { topic: 'international affairs', patterns: [rx('\\bworld\\b|international|internacional|mundo|dunya|gundem|nyheter|в мире|мир\\b|國際|国际|world news|global affairs')] },
   ],
   politics: [
+    { topic: 'political news', patterns: [rx('politics|politica|politik|politique|politika|polityka|politische|政治|политика|정치|سياسة|chinh tri')] },
     { topic: 'legislation', patterns: [rx('bill\\b|draft law|lawmakers?|parliament vote|senate vote|house vote|legislation')] },
     { topic: 'budget / taxes', patterns: [rx('budget|spending bill|appropriation|tax reform|tax cut|tax hike|fiscal package')] },
     { topic: 'cabinet / appointments', patterns: [rx('cabinet reshuffle|nominee|confirmed by senate|appointed as|minister designate|chief of staff')] },
@@ -89,22 +109,24 @@ const SECTION_TOPIC_RULES: Partial<Record<NewsSection, readonly TopicRule[]>> = 
     { topic: 'local government', patterns: [rx('mayor\\b|city council|governor\\b|state legislature|provincial government|municipal')] },
     { topic: 'executive power', patterns: [rx('executive order|presidential decree|prime minister office|presidency|white house')] },
     { topic: 'elections', patterns: [rx('election|ballot|polls?\\b|campaign|primary race|runoff|vote count|referendum')] },
-    { topic: 'government policy', patterns: [rx('cabinet|parliament|congress|senate|minister|ministry|bill\\b|lawmakers?|executive order|regulation')] },
+    { topic: 'government policy', patterns: [rx('cabinet|parliament|congress|senate|minister|ministry|bill\\b|lawmakers?|executive order|regulation|president|prime minister|government|administration|quoc hoi|國會|국회')] },
     { topic: 'courts / justice', patterns: [rx('court|judge|lawsuit|trial|verdict|prosecutor|supreme court|indictment|appeal')] },
     { topic: 'diplomacy', patterns: [rx('summit|treaty|foreign policy|embassy|diplomat|sanctions|peace talks')] },
     { topic: 'protests', patterns: [rx('protest|demonstration|march\\b|rally\\b|strike\\b|sit-in|activists?')] },
   ],
   conflicts: [
     { topic: 'military exercises', patterns: [rx('military exercise|war games|live fire drill|drills?\\b|joint exercise')] },
+    { topic: 'military incidents', patterns: [rx('fighter jet|f-15|pilot|crew member|search operation|rescue operation|downed aircraft|military crash')] },
     { topic: 'naval operations', patterns: [rx('warship|frigate|destroyer|submarine|carrier strike|naval patrol|navy\\b')] },
     { topic: 'cyber warfare', patterns: [rx('cyberattack|cyber war|electronic warfare|jamming|hacked military')] },
     { topic: 'militias / insurgency', patterns: [rx('militia|insurgent|rebel group|guerrilla|paramilitary')] },
     { topic: 'civilian casualties', patterns: [rx('civilian deaths|civilian casualties|wounded civilians|children killed|aid workers killed')] },
     { topic: 'occupied territories', patterns: [rx('occupation|occupied territory|checkpoint|settlement expansion|buffer zone|demilitarized zone')] },
-    { topic: 'airstrikes / missiles', patterns: [rx('airstrike|missile|rocket fire|drone strike|bombing|shelling')] },
+    { topic: 'airstrikes / missiles', patterns: [rx('airstrike|missile|rocket fire|drone strike|bombing|shelling|bombarde|ataque|attack|saldiri|serangan|misseis|drones?')] },
     { topic: 'ground operations', patterns: [rx('troops?|offensive|frontline|artillery|incursion|clashes?|battlefield')] },
     { topic: 'ceasefire / talks', patterns: [rx('ceasefire|truce|peace talks|negotiation|mediat|de-escalation')] },
     { topic: 'hostages / prisoners', patterns: [rx('hostage|detainee|prisoner exchange|captives?|release talks')] },
+    { topic: 'war / tensions', patterns: [rx('war\\b|guerra|conflict|konflik|middle east|medio oriente|asia barat|iran|israel|gaza|tehran|ukraine')] },
     { topic: 'defense / weapons', patterns: [rx('defense|military aid|weapons?|arms deal|warplane|navy|munitions')] },
   ],
   business: [
@@ -126,14 +148,16 @@ const SECTION_TOPIC_RULES: Partial<Record<NewsSection, readonly TopicRule[]>> = 
     { topic: 'crypto', patterns: [rx('crypto|criptom|bitcoin|ethereum|token\\b|blockchain|web3|stablecoin')] },
   ],
   tech: [
+    { topic: 'general technology', patterns: [rx('technology|tech\\b|high tech|tecnologia|teknologi|科技|technology news|innovacion digital')] },
     { topic: 'robotics / automation', patterns: [rx('robotics|robot\\b|automation|industrial robot|humanoid robot')] },
+    { topic: 'mobility tech', patterns: [rx('head up display|\\bhud\\b|dashcam|driver assist|connected car|vehicle safety|traffic signal|automotive tech|car tech|radar da psp|radares|sinais h46|sinais h47')] },
     { topic: 'developer tools', patterns: [rx('developer tool|open source|github\\b|programming language|framework|api platform')] },
     { topic: 'internet policy', patterns: [rx('content moderation|net neutrality|digital services act|platform regulation|privacy law|antitrust probe')] },
     { topic: 'ar / vr', patterns: [rx('virtual reality|augmented reality|mixed reality|vr headset|ar glasses|spatial computing')] },
     { topic: 'autonomous vehicles', patterns: [rx('self driving|autonomous vehicle|driverless|robotaxi|autopilot')] },
     { topic: 'quantum', patterns: [rx('quantum computing|qubit|quantum processor|quantum network')] },
     { topic: 'data centers', patterns: [rx('data center|server farm|compute cluster|cloud region|gpu cluster')] },
-    { topic: 'ai', patterns: [rx('\\bai\\b|\\bia\\b|artificial intelligence|inteligencia artificial|machine learning|llm\\b|chatbot|generative ai|openai|anthropic')] },
+    { topic: 'ai', patterns: [rx('\\bai\\b|\\bia\\b|artificial intelligence|inteligencia artificial|machine learning|llm\\b|chatbot|generative ai|openai|anthropic|인공지능')] },
     { topic: 'gadgets', patterns: [rx('smartphone|iphone|android phone|tablet|laptop|wearable|smartwatch|camera|gadget')] },
     { topic: 'cybersecurity', patterns: [rx('cyber|ciberseguridad|hack(ed|ing)?|ransomware|malware|phishing|data breach|zero-day|infosec')] },
     { topic: 'software / cloud', patterns: [rx('software|app\\b|saas|cloud computing|developer tool|operating system|browser|database|nube')] },
@@ -220,18 +244,22 @@ const SECTION_TOPIC_RULES: Partial<Record<NewsSection, readonly TopicRule[]>> = 
     { topic: 'physics / energy', patterns: [rx('physics|quantum|particle|fusion\\b|nuclear research|material science')] },
   ],
   climate: [
-    { topic: 'pollution / air quality', patterns: [rx('pollution|air quality|smog|toxic spill|microplastics|contamination')] },
+    { topic: 'weather / forecasts', patterns: [rx('weather|forecast|pronostico|meteo|meteorolog|clima|heavy rain|strong winds|rain warning|lluvias?|พยากรณ์อากาศ|ฝนตกหนัก')] },
+    { topic: 'fires / smoke', patterns: [rx('fire\\b|incendi|wildfire|yangin|smoke|blaze|burning building')] },
+    { topic: 'pollution / air quality', patterns: [rx('pollution|air quality|smog|toxic spill|microplastics|contamination|คุณภาพอากาศ')] },
     { topic: 'water scarcity', patterns: [rx('water scarcity|water shortage|reservoir levels|desalination|drought restrictions')] },
     { topic: 'biodiversity / wildlife', patterns: [rx('wildlife|species loss|endangered|habitat loss|poaching|ecosystem')] },
     { topic: 'waste / recycling', patterns: [rx('recycling|landfill|waste management|plastic waste|circular economy')] },
     { topic: 'climate finance', patterns: [rx('carbon market|green finance|adaptation finance|loss and damage|sustainability bond')] },
     { topic: 'food systems', patterns: [rx('food system|regenerative agriculture|soil health|methane from cattle|sustainable farming')] },
-    { topic: 'extreme weather', patterns: [rx('heatwave|wildfire|flood|storm|hurricane|typhoon|drought|extreme weather')] },
+    { topic: 'extreme weather', patterns: [rx('heatwave|wildfire|flood|storm|hurricane|typhoon|drought|extreme weather|weather warning|strong wind|downpour')] },
     { topic: 'energy transition', patterns: [rx('renewable|solar|wind\\b|battery|electric vehicle|energy transition|grid\\b')] },
     { topic: 'emissions / policy', patterns: [rx('carbon|emissions?|net zero|climate policy|cop\\d+|decarbon')] },
     { topic: 'conservation', patterns: [rx('conservation|biodiversity|deforestation|marine life|forest protection|oceans?')] },
   ],
 };
+
+const TAXONOMY_VERSION = 'candidates-v1';
 
 export function isTopicAllowedForSection(section: string | null | undefined, topic: string | null | undefined): boolean {
   const normalizedTopic = (topic || '').trim().toLowerCase();
@@ -283,9 +311,21 @@ export function buildArticleTaxonomy(input: ArticleTaxonomyInput): ArticleTaxono
     ? classifySectionByKeyword(`${title} ${snippet}`, 'others').section
     : 'others';
   const hintKeywordSection = hintText ? classifySectionByKeyword(hintText, 'others').section : 'others';
+  const explicitSourceOverrideSection = source || url ? classifyExplicitSourceOverride({ source, url, title }) : null;
   const structuredHintSection = source || url ? classifySectionByStructuredHints(source, url) : 'others';
   const sourceFallbackSection = source || url ? classifySectionBySourceFallback({ source, url, title }) : 'others';
   const contextSection = source || url ? deriveSectionFromContext({ source, url, title }) : 'others';
+  const sectionCandidates = buildSectionCandidates({
+    storedSection,
+    explicitSourceOverrideSection,
+    feedCategorySections,
+    titleSection,
+    textSection,
+    structuredHintSection,
+    hintKeywordSection,
+    sourceFallbackSection,
+    contextSection,
+  });
   const derivedSection = pickFirstMeaningfulSection([
     ...feedCategorySections,
     titleSection,
@@ -296,14 +336,15 @@ export function buildArticleTaxonomy(input: ArticleTaxonomyInput): ArticleTaxono
     contextSection,
   ]);
 
-  let primarySection = pickFirstMeaningfulSection(feedCategorySections);
-  if (primarySection === 'others' && derivedSection !== 'others') {
+  let primarySection = explicitSourceOverrideSection || pickFirstMeaningfulSection(feedCategorySections);
+  if (!explicitSourceOverrideSection && primarySection === 'others' && derivedSection !== 'others') {
     primarySection = derivedSection;
   }
-  if (primarySection === 'others' && storedSection !== 'others') {
+  if (!explicitSourceOverrideSection && primarySection === 'others' && storedSection !== 'others') {
     primarySection = storedSection;
   }
   if (
+    !explicitSourceOverrideSection &&
     primarySection !== derivedSection &&
     derivedSection !== 'others' &&
     (primarySection === 'arts' || primarySection === 'entertainment' || primarySection === 'lifestyle' || primarySection === 'others')
@@ -317,6 +358,7 @@ export function buildArticleTaxonomy(input: ArticleTaxonomyInput): ArticleTaxono
     ...feedCategorySections,
     titleSection,
     textSection,
+    explicitSourceOverrideSection || 'others',
     structuredHintSection,
     hintKeywordSection,
     sourceFallbackSection,
@@ -325,7 +367,7 @@ export function buildArticleTaxonomy(input: ArticleTaxonomyInput): ArticleTaxono
     pushSection(sections, section);
   }
 
-  if (sections.length > 1) {
+  if (sections.length > 1 && primarySection !== 'others') {
     const othersIndex = sections.indexOf('others');
     if (othersIndex >= 0) sections.splice(othersIndex, 1);
   }
@@ -334,20 +376,21 @@ export function buildArticleTaxonomy(input: ArticleTaxonomyInput): ArticleTaxono
     sections.push('others');
   }
 
-  const topicSection = primarySection === 'others'
+  const topicSection = explicitSourceOverrideSection === 'others'
+    ? 'others'
+    : primarySection === 'others'
     ? pickFirstMeaningfulSection(sections)
     : primarySection;
-  const topics = topicSection === 'others'
+  const topicSignalText = buildTopicSignalText([
+    ...sourceCategories,
+    title,
+    snippet,
+    url,
+  ]);
+  const topicCandidates = topicSection === 'others'
     ? []
-    : classifyDetailedTopics(
-      topicSection,
-      buildTopicSignalText([
-        ...sourceCategories,
-        title,
-        snippet,
-        url,
-      ])
-    );
+    : classifyDetailedTopicCandidates(topicSection, topicSignalText);
+  const topics = topicCandidates.map((candidate) => candidate.label);
 
   return {
     primarySection,
@@ -355,6 +398,9 @@ export function buildArticleTaxonomy(input: ArticleTaxonomyInput): ArticleTaxono
     sourceCategories,
     primaryTopic: topics[0] || null,
     topics,
+    sectionCandidates,
+    topicCandidates,
+    taxonomyVersion: TAXONOMY_VERSION,
   };
 }
 
@@ -395,15 +441,80 @@ function normalizeTopicSignal(value: string): string {
     .trim();
 }
 
-function classifyDetailedTopics(section: NewsSection, signalText: string): string[] {
-  if (!signalText) return [];
-  const rules = SECTION_TOPIC_RULES[section] || [];
-  const topics: string[] = [];
+function buildSectionCandidates(input: {
+  storedSection: NewsSection;
+  explicitSourceOverrideSection: NewsSection | null;
+  feedCategorySections: NewsSection[];
+  titleSection: NewsSection;
+  textSection: NewsSection;
+  structuredHintSection: NewsSection;
+  hintKeywordSection: NewsSection;
+  sourceFallbackSection: NewsSection;
+  contextSection: NewsSection;
+}): ArticleTaxonomySectionCandidate[] {
+  const candidates = new Map<NewsSection, { score: number; reasons: Set<string> }>();
 
-  for (const rule of rules) {
-    if (!rule.patterns.some((pattern) => pattern.test(signalText))) continue;
-    topics.push(rule.topic);
+  const add = (label: NewsSection, score: number, reason: string) => {
+    if (!label) return;
+    if (label === 'others' && reason !== 'source_override') return;
+    const current = candidates.get(label) || { score: 0, reasons: new Set<string>() };
+    current.score = Math.min(1, Number((current.score + score).toFixed(3)));
+    if (reason) current.reasons.add(reason);
+    candidates.set(label, current);
+  };
+
+  if (input.explicitSourceOverrideSection) {
+    add(input.explicitSourceOverrideSection, 0.95, 'source_override');
   }
 
-  return topics;
+  for (const section of input.feedCategorySections) {
+    add(section, 0.55, 'feed_category');
+  }
+
+  add(input.titleSection, 0.35, 'title_keyword');
+  add(input.textSection, 0.2, 'snippet_keyword');
+  add(input.structuredHintSection, 0.45, 'structured_hint');
+  add(input.hintKeywordSection, 0.25, 'hint_keyword');
+  add(input.sourceFallbackSection, 0.5, 'source_fallback');
+  add(input.contextSection, 0.3, 'context');
+  add(input.storedSection, 0.1, 'stored_section');
+
+  const rows = [...candidates.entries()]
+    .map(([label, entry]) => ({
+      label,
+      score: Number(entry.score.toFixed(2)),
+      reasons: [...entry.reasons].sort(),
+    }))
+    .sort((left, right) => right.score - left.score || NEWS_SECTION_ORDER.indexOf(left.label) - NEWS_SECTION_ORDER.indexOf(right.label));
+
+  if (rows.length > 0) {
+    return rows;
+  }
+
+  return [
+    {
+      label: 'others',
+      score: 1,
+      reasons: ['fallback:others'],
+    },
+  ];
+}
+
+function classifyDetailedTopicCandidates(section: NewsSection, signalText: string): ArticleTaxonomyTopicCandidate[] {
+  if (!signalText) return [];
+  const rules = SECTION_TOPIC_RULES[section] || [];
+  const topics: ArticleTaxonomyTopicCandidate[] = [];
+
+  for (const rule of rules) {
+    const matchedCount = rule.patterns.reduce((count, pattern) => (pattern.test(signalText) ? count + 1 : count), 0);
+    if (matchedCount <= 0) continue;
+    topics.push({
+      section,
+      label: rule.topic,
+      score: Math.min(1, Number((0.6 + Math.max(0, matchedCount - 1) * 0.15).toFixed(2))),
+      reasons: ['topic_rule_match'],
+    });
+  }
+
+  return topics.sort((left, right) => right.score - left.score || left.label.localeCompare(right.label));
 }

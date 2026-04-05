@@ -389,7 +389,10 @@ create table if not exists news_articles (
       primary_topic text null,
       topics text[] not null default '{}',
       topics_derived_at timestamptz null,
-      taxonomy_derived_at timestamptz null
+      taxonomy_derived_at timestamptz null,
+      section_candidates jsonb null,
+      topic_candidates jsonb null,
+      taxonomy_version text null
     );
     alter table news_articles add column if not exists updated_at timestamptz not null default now();
     alter table news_articles add column if not exists feed_categories text[] not null default '{}';
@@ -407,6 +410,9 @@ create table if not exists news_articles (
     alter table news_articles add column if not exists topics text[] not null default '{}';
     alter table news_articles add column if not exists topics_derived_at timestamptz null;
     alter table news_articles add column if not exists taxonomy_derived_at timestamptz null;
+    alter table news_articles add column if not exists section_candidates jsonb null;
+    alter table news_articles add column if not exists topic_candidates jsonb null;
+    alter table news_articles add column if not exists taxonomy_version text null;
     alter table news_articles add column if not exists source_country text null;
     create index if not exists idx_news_articles_created_at on news_articles(created_at desc);
     create index if not exists idx_news_articles_updated_at on news_articles(updated_at desc);
