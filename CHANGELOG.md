@@ -6,6 +6,28 @@
 
 ## Unreleased
 
+### [a9587cf] Expand dashboard topic taxonomy and align snapshots
+- Commit: a9587cfd9458d68eac9499c35ef53137d0595794
+- Date: 2026-04-04 11:51:43 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	CHANGELOG.md
+    - M	components/dashboard-view.tsx
+    - M	data/country-benchmark.snapshot.json
+    - M	data/dashboard-summary.snapshot.json
+    - M	lib/article-taxonomy.ts
+    - M	lib/ingestion-store.ts
+    - M	lib/news-dashboard-store.ts
+  - Git stat:
+  - CHANGELOG.md                         |  20 +++++++
+  -  components/dashboard-view.tsx        |  77 +++++++++++++++++++------
+  -  data/country-benchmark.snapshot.json |   2 +-
+  -  data/dashboard-summary.snapshot.json |   2 +-
+  -  lib/article-taxonomy.ts              |  75 ++++++++++++++++++++++++
+  -  lib/ingestion-store.ts               |   4 +-
+  -  lib/news-dashboard-store.ts          | 109 +++++++++++++++++------------------
+  -  7 files changed, 211 insertions(+), 78 deletions(-)
+
 ### [a5dd232] Refine dashboard and benchmark snapshot metrics
 - Commit: a5dd2324a18b6f2f3d35b242644e0282e215d72f
 - Date: 2026-04-04 09:26:08 -0500
