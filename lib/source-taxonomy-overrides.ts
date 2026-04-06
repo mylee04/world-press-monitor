@@ -20,7 +20,7 @@ type SourceSectionOverride = {
 };
 
 const SOURCE_SECTION_OVERRIDES: readonly SourceSectionOverride[] = [
-  { section: 'world', sourcePattern: /bbc news - sitemap index/, pathnamePattern: /^\/news\// },
+  { section: 'world', sourcePattern: /bbc news - sitemap index/, pathnamePattern: /^\/news\/world\// },
   { section: 'science', sourcePattern: /bbc news - sitemap index/, titlePattern: /science|scientists?|research|study finds|telescope|astronomy|fossil/ },
   { section: 'health', sourcePattern: /bbc news - sitemap index/, titlePattern: /health|doctor|hospital|disease|nhs|medical|medicine/ },
   { section: 'arts', sourcePattern: /bbc news - sitemap index/, titlePattern: /art|artist|museum|exhibition|novel|book|literature/ },
@@ -232,37 +232,37 @@ const SOURCE_SECTION_OVERRIDES: readonly SourceSectionOverride[] = [
   {
     section: 'tech',
     sourcePattern: /infobae/,
-    pathnamePattern: /^tecno\//,
+    pathnamePattern: /^\/tecno\//,
   },
   {
     section: 'business',
     sourcePattern: /infobae/,
-    pathnamePattern: /^(economia|negocios)\//,
+    pathnamePattern: /^\/(?:economia|negocios)\//,
   },
   {
     section: 'politics',
     sourcePattern: /infobae/,
-    pathnamePattern: /^politica\//,
+    pathnamePattern: /^\/politica\//,
   },
   {
     section: 'sports',
     sourcePattern: /infobae/,
-    pathnamePattern: /^(deportes?|copa-america|mundial-de-clubes)\//,
+    pathnamePattern: /^\/(?:deportes?|copa-america|mundial-de-clubes)\//,
   },
   {
     section: 'entertainment',
     sourcePattern: /infobae/,
-    pathnamePattern: /^teleshow\//,
+    pathnamePattern: /^\/teleshow\//,
   },
   {
     section: 'arts',
     sourcePattern: /infobae/,
-    pathnamePattern: /^cultura\//,
+    pathnamePattern: /^\/cultura\//,
   },
   {
     section: 'health',
     sourcePattern: /infobae/,
-    pathnamePattern: /^salud\//,
+    pathnamePattern: /^\/salud\//,
   },
   {
     section: 'others',
@@ -275,32 +275,32 @@ const SOURCE_SECTION_OVERRIDES: readonly SourceSectionOverride[] = [
   {
     section: 'others',
     sourcePattern: /bbc news - sitemap index/,
-    pathnamePattern: /^news\/articles\//,
+    pathnamePattern: /^\/news\/articles\//,
   },
   {
     section: 'others',
     sourcePattern: /bbc news - sitemap index/,
-    pathnamePattern: /^news\/videos\//,
+    pathnamePattern: /^\/news\/videos\//,
   },
   {
     section: 'others',
     sourcePattern: /bbc news - sitemap index/,
-    pathnamePattern: /^(?:arabic|serbian|tamil|hindi|urdu|gujarati|ukrainian|marathi|somali|hausa|persian|japanese|mundo|afrique)\//,
+    pathnamePattern: /^\/(?:arabic|serbian|tamil|hindi|urdu|gujarati|ukrainian|marathi|somali|hausa|persian|japanese|mundo|afrique)\//,
   },
   {
     section: 'business',
     sourcePattern: /tass/,
-    pathnamePattern: /^ekonomika\//,
+    pathnamePattern: /^\/ekonomika\//,
   },
   {
     section: 'conflicts',
     sourcePattern: /tass/,
-    pathnamePattern: /^armiya-i-opk\//,
+    pathnamePattern: /^\/armiya-i-opk\//,
   },
   {
     section: 'others',
     sourcePattern: /tass/,
-    pathnamePattern: /^(proisshestviya|obschestvo)\//,
+    pathnamePattern: /^\/(?:proisshestviya|obschestvo)\//,
   },
   {
     section: 'others',
@@ -351,12 +351,586 @@ const SOURCE_SECTION_OVERRIDES: readonly SourceSectionOverride[] = [
   {
     section: 'others',
     sourcePattern: /rainews/,
-    pathnamePattern: /^(video|tgr)\//,
+    pathnamePattern: /^\/(?:video|tgr|articoli)\//,
   },
   {
     section: 'others',
     sourcePattern: /rainews/,
     titlePattern: /sintesi della partita|campo della|serie c|serie b|nel centro storico|morto lo scrittore/,
+  },
+  {
+    section: 'others',
+    sourcePattern: /mirror media - externals news sitemap/,
+    pathnamePattern: /^\/external\//,
+  },
+  {
+    section: 'business',
+    sourcePattern: /welt/,
+    pathnamePattern: /^\/finanzen\//,
+  },
+  {
+    section: 'politics',
+    sourcePattern: /welt/,
+    pathnamePattern: /^\/politik\//,
+  },
+  {
+    section: 'arts',
+    sourcePattern: /welt/,
+    pathnamePattern: /^\/feuilleton\//,
+  },
+  {
+    section: 'others',
+    sourcePattern: /welt/,
+    pathnamePattern: /^\/(?:regionales|newsticker)\//,
+  },
+  {
+    section: 'others',
+    sourcePattern: /welt/,
+  },
+  {
+    section: 'sports',
+    sourcePattern: /nownews/,
+    titlePattern: /勇士|雷霆|洋基|MLB|NBA|季後賽|西區第一|中鋒|阻攻王|村上宗隆|棒球|籃球|足球|球員|教練|聯盟/,
+  },
+  {
+    section: 'entertainment',
+    sourcePattern: /nownews/,
+    titlePattern: /高雄吃辦桌|粉絲|演唱會|影集|電影|戲劇|歌手|藝人|綜藝/,
+  },
+  {
+    section: 'business',
+    sourcePattern: /nownews/,
+    titlePattern: /ETF|股價|台股|財報|投資|市場|經濟|央行/,
+  },
+  {
+    section: 'others',
+    sourcePattern: /nownews/,
+  },
+  {
+    section: 'politics',
+    sourcePattern: /die zeit/,
+    pathnamePattern: /^\/politik\//,
+  },
+  {
+    section: 'business',
+    sourcePattern: /die zeit/,
+    pathnamePattern: /^\/wirtschaft\//,
+  },
+  {
+    section: 'arts',
+    sourcePattern: /die zeit/,
+    pathnamePattern: /^\/feuilleton\//,
+  },
+  {
+    section: 'others',
+    sourcePattern: /die zeit/,
+    pathnamePattern: /^\/(?:news|gesellschaft|zeit-magazin)\//,
+  },
+  {
+    section: 'others',
+    sourcePattern: /die zeit/,
+  },
+  {
+    section: 'conflicts',
+    sourcePattern: /ria novosti/,
+    titlePattern: /армия|беспилот|дрон|удар|всу|атака|ракет|военн|пво|фронт/,
+  },
+  {
+    section: 'business',
+    sourcePattern: /ria novosti/,
+    titlePattern: /экономик|нефт|газ|рубл|банк|рынк|инвестиц/,
+  },
+  {
+    section: 'sports',
+    sourcePattern: /ria novosti/,
+    titlePattern: /алкарас|барселона|матч|футбол|хоккей|теннис|лига/,
+  },
+  {
+    section: 'others',
+    sourcePattern: /ria novosti/,
+  },
+  {
+    section: 'conflicts',
+    sourcePattern: /ukrainska pravda/,
+    pathnamePattern: /^\/(?:eng\/|rus\/)?news\//,
+    titlePattern: /attack|missile|drone|strike|front|war|air raid|росія|рф|обстріл|дрон|ракет|війн|фронт/,
+  },
+  {
+    section: 'politics',
+    sourcePattern: /ukrainska pravda/,
+    pathnamePattern: /^\/(?:eng\/|rus\/)?news\//,
+    titlePattern: /government|parliament|cabinet|president|rada|уряд|рада|президент|кабмін/,
+  },
+  {
+    section: 'others',
+    sourcePattern: /ukrainska pravda/,
+    pathnamePattern: /^\/(?:eng\/|rus\/)?(?:news|articles|columns|projects)\//,
+  },
+  {
+    section: 'tech',
+    sourcePattern: /abc\.es/,
+    pathnamePattern: /^\/favorito\/electronica\//,
+  },
+  {
+    section: 'business',
+    sourcePattern: /abc\.es/,
+    pathnamePattern: /^\/motor\//,
+  },
+  {
+    section: 'health',
+    sourcePattern: /abc\.es/,
+    pathnamePattern: /^\/salud\//,
+  },
+  {
+    section: 'lifestyle',
+    sourcePattern: /abc\.es/,
+    pathnamePattern: /^\/viajar\//,
+  },
+  {
+    section: 'others',
+    sourcePattern: /abc\.es/,
+    pathnamePattern: /^\/(?:espana|sevilla|queplan|favorito\/hogar)\//,
+  },
+  {
+    section: 'others',
+    sourcePattern: /abc\.es/,
+  },
+  {
+    section: 'entertainment',
+    sourcePattern: /조선닷컴/,
+    pathnamePattern: /^\/english\/kpop-culture-en\//,
+  },
+  {
+    section: 'business',
+    sourcePattern: /조선닷컴/,
+    pathnamePattern: /^\/english\/(?:industry-en|market-money-en)\//,
+  },
+  {
+    section: 'world',
+    sourcePattern: /조선닷컴/,
+    pathnamePattern: /^\/english\/world-en\//,
+  },
+  {
+    section: 'others',
+    sourcePattern: /조선닷컴/,
+    pathnamePattern: /^\/english\/national-en\//,
+  },
+  {
+    section: 'business',
+    sourcePattern: /조선닷컴/,
+    pathnamePattern: /^\/economy\/(?:industry-company|economy_general|stock-finance|smb-venture)\//,
+  },
+  {
+    section: 'science',
+    sourcePattern: /조선닷컴/,
+    pathnamePattern: /^\/economy\/science\//,
+  },
+  {
+    section: 'others',
+    sourcePattern: /조선닷컴/,
+    pathnamePattern: /^\/special\//,
+  },
+  {
+    section: 'world',
+    sourcePattern: /toronto star/,
+    pathnamePattern: /^\/news\/world\//,
+  },
+  {
+    section: 'sports',
+    sourcePattern: /toronto star/,
+    pathnamePattern: /^\/sports\//,
+  },
+  {
+    section: 'entertainment',
+    sourcePattern: /toronto star/,
+    pathnamePattern: /^\/entertainment\//,
+  },
+  {
+    section: 'lifestyle',
+    sourcePattern: /toronto star/,
+    pathnamePattern: /^\/life\//,
+  },
+  {
+    section: 'others',
+    sourcePattern: /toronto star/,
+    pathnamePattern: /^\/news\/gta\//,
+  },
+  {
+    section: 'world',
+    sourcePattern: /noticias ao minuto - país/,
+    pathnamePattern: /^\/mundo\//,
+  },
+  {
+    section: 'business',
+    sourcePattern: /noticias ao minuto - país/,
+    pathnamePattern: /^\/economia\//,
+  },
+  {
+    section: 'sports',
+    sourcePattern: /noticias ao minuto - país/,
+    pathnamePattern: /^\/desporto\//,
+  },
+  {
+    section: 'others',
+    sourcePattern: /noticias ao minuto - país/,
+    pathnamePattern: /^\/pais\//,
+  },
+  {
+    section: 'world',
+    sourcePattern: /lrytas/,
+    pathnamePattern: /^\/pasaulis\//,
+  },
+  {
+    section: 'conflicts',
+    sourcePattern: /lrytas/,
+    pathnamePattern: /^\/pasaulis\/konfliktai-ir-saugumas\//,
+  },
+  {
+    section: 'sports',
+    sourcePattern: /lrytas/,
+    pathnamePattern: /^\/sportas\//,
+  },
+  {
+    section: 'business',
+    sourcePattern: /lrytas/,
+    pathnamePattern: /^\/verslas\//,
+  },
+  {
+    section: 'health',
+    sourcePattern: /lrytas/,
+    pathnamePattern: /^\/sveikata\//,
+  },
+  {
+    section: 'entertainment',
+    sourcePattern: /lrytas/,
+    pathnamePattern: /^\/zmones\//,
+  },
+  {
+    section: 'lifestyle',
+    sourcePattern: /lrytas/,
+    pathnamePattern: /^\/gyvenimo-budas\//,
+  },
+  {
+    section: 'others',
+    sourcePattern: /lrytas/,
+    pathnamePattern: /^\/lietuvosdiena\//,
+  },
+  {
+    section: 'entertainment',
+    sourcePattern: /tgcom24/,
+    pathnamePattern: /^\/televisione\//,
+  },
+  {
+    section: 'lifestyle',
+    sourcePattern: /tgcom24/,
+    pathnamePattern: /^\/lifestyle\//,
+  },
+  {
+    section: 'entertainment',
+    sourcePattern: /tgcom24/,
+    pathnamePattern: /^\/people\//,
+  },
+  {
+    section: 'others',
+    sourcePattern: /tgcom24/,
+    pathnamePattern: /^\/(?:video|cronaca|tgcomlab|speciale)\//,
+  },
+  {
+    section: 'others',
+    sourcePattern: /tgcom24/,
+  },
+  {
+    section: 'sports',
+    sourcePattern: /abema times/,
+    titlePattern: /サッカー|日本代表|w杯|world cup|mlb|nba|ボクシング|格闘技|jリーグ|野球|バルサ|鈴木彩艶/,
+  },
+  {
+    section: 'entertainment',
+    sourcePattern: /abema times/,
+    titlePattern: /恋愛|元AKB|女優|ドラマ|映画|歌手|芸能|アイドル|結婚/,
+  },
+  {
+    section: 'others',
+    sourcePattern: /abema times/,
+  },
+  {
+    section: 'climate',
+    sourcePattern: /setn/,
+    titlePattern: /颱風|熱帶擾動|豪雨|大雨|天氣|氣象|地震/,
+  },
+  {
+    section: 'sports',
+    sourcePattern: /setn/,
+    titlePattern: /MLB|NBA|道奇|傷兵名單|球員|季後賽|勇士|雷霆|洋基|棒球|籃球/,
+  },
+  {
+    section: 'politics',
+    sourcePattern: /setn/,
+    titlePattern: /白營|國民黨|民眾黨|高虹安|李貞秀|政治|安全感|內鬥|立委|總統/,
+  },
+  {
+    section: 'entertainment',
+    sourcePattern: /setn/,
+    titlePattern: /人設崩壞|停更5年|藝人|歌手|戲劇|演員|粉絲/,
+  },
+  {
+    section: 'lifestyle',
+    sourcePattern: /setn/,
+    titlePattern: /連假怎麼過|成人行程|旅遊|美食|戀愛/,
+  },
+  {
+    section: 'others',
+    sourcePattern: /setn/,
+  },
+  {
+    section: 'climate',
+    sourcePattern: /yonhap \(en\)/,
+    titlePattern: /날씨|최저기온|맑음|폭염|호우|태풍|weather|temperature/,
+  },
+  {
+    section: 'conflicts',
+    sourcePattern: /yonhap \(en\)/,
+    titlePattern: /군용 항공기|유해 찾기|military|aircraft|유해|한미|북한|missile|drone/,
+  },
+  {
+    section: 'politics',
+    sourcePattern: /yonhap \(en\)/,
+    titlePattern: /인권|시행계획|정부|장관|대통령|국회|정책/,
+  },
+  {
+    section: 'health',
+    sourcePattern: /yonhap \(en\)/,
+    titlePattern: /건강법|심장|보건|의료|병원|health/,
+  },
+  {
+    section: 'others',
+    sourcePattern: /yonhap \(en\)/,
+  },
+  {
+    section: 'others',
+    sourcePattern: /yomiuri/,
+    pathnamePattern: /^\/local\//,
+  },
+  {
+    section: 'politics',
+    sourcePattern: /yomiuri/,
+    pathnamePattern: /^\/column\//,
+  },
+  {
+    section: 'others',
+    sourcePattern: /yomiuri/,
+    pathnamePattern: /^\/kyoiku\//,
+  },
+  {
+    section: 'others',
+    sourcePattern: /actu\.fr/,
+  },
+  {
+    section: 'others',
+    sourcePattern: /n-tv/,
+    pathnamePattern: /^\/regionales\//,
+  },
+  {
+    section: 'others',
+    sourcePattern: /sankei/,
+  },
+  {
+    section: 'business',
+    sourcePattern: /rossiyskaya gazeta/,
+    titlePattern: /эконом|нефт|газ|рынк|банк|деньг|производств/,
+  },
+  {
+    section: 'health',
+    sourcePattern: /rossiyskaya gazeta/,
+    titlePattern: /аллерг|пыльц|здоров|болезн|поллиноз/,
+  },
+  {
+    section: 'climate',
+    sourcePattern: /rossiyskaya gazeta/,
+    titlePattern: /заморозк|погод|заповедник|природ|томатов|огород|теплиц/,
+  },
+  {
+    section: 'others',
+    sourcePattern: /rossiyskaya gazeta/,
+  },
+  {
+    section: 'health',
+    sourcePattern: /ansa - sitemap index|^ansa\b/,
+    pathnamePattern: /^\/canale_saluteebenessere\//,
+  },
+  {
+    section: 'lifestyle',
+    sourcePattern: /ansa - sitemap index|^ansa\b/,
+    pathnamePattern: /^\/canale_terraegusto\//,
+  },
+  {
+    section: 'climate',
+    sourcePattern: /ansa - sitemap index|^ansa\b/,
+    pathnamePattern: /^\/ansa2030\//,
+  },
+  {
+    section: 'politics',
+    sourcePattern: /ansa - sitemap index|^ansa\b/,
+    pathnamePattern: /^\/canale_legalita_scuola\//,
+  },
+  {
+    section: 'others',
+    sourcePattern: /ansa - sitemap index|^ansa\b/,
+    pathnamePattern: /^\/sito\/videogallery\//,
+  },
+  {
+    section: 'world',
+    sourcePattern: /ansa - sitemap index|^ansa\b/,
+    pathnamePattern: /^\/(?:ansamed|ansamednew|nuova_europa)\//,
+  },
+  {
+    section: 'lifestyle',
+    sourcePattern: /ansa - sitemap index|^ansa\b/,
+    pathnamePattern: /^\/canale_viaggi\//,
+  },
+  {
+    section: 'sports',
+    sourcePattern: /le télégramme/,
+    pathnamePattern: /^\/sports\//,
+  },
+  {
+    section: 'others',
+    sourcePattern: /le télégramme/,
+  },
+  {
+    section: 'others',
+    sourcePattern: /il giorno/,
+    pathnamePattern: /^\/[^/]+\/cronaca\//,
+  },
+  {
+    section: 'politics',
+    sourcePattern: /il giorno/,
+    pathnamePattern: /^\/editoriale\//,
+  },
+  {
+    section: 'entertainment',
+    sourcePattern: /kapanlagi/,
+    pathnamePattern: /^\/(?:foto\/berita-foto|showbiz)\//,
+  },
+  {
+    section: 'lifestyle',
+    sourcePattern: /kapanlagi/,
+    titlePattern: /lebaran|parfum|olahraga|meal prep|rumah|hangat|sopan|libur/,
+  },
+  {
+    section: 'others',
+    sourcePattern: /irish examiner/,
+    pathnamePattern: /^\/news\/(?:munster|courtandcrime)\//,
+  },
+  {
+    section: 'conflicts',
+    sourcePattern: /irish examiner/,
+    titlePattern: /maritime security|naval|warship|drone|missile/,
+  },
+  {
+    section: 'sports',
+    sourcePattern: /irish examiner/,
+    pathnamePattern: /^\/sport\//,
+  },
+  {
+    section: 'arts',
+    sourcePattern: /irish examiner/,
+    pathnamePattern: /^\/lifestyle\/artsandculture\//,
+  },
+  {
+    section: 'business',
+    sourcePattern: /irish examiner/,
+    pathnamePattern: /^\/business\//,
+  },
+  {
+    section: 'politics',
+    sourcePattern: /irish examiner/,
+    pathnamePattern: /^\/news\/politics\//,
+  },
+  {
+    section: 'world',
+    sourcePattern: /the hindu/,
+    pathnamePattern: /^\/news\/international\//,
+  },
+  {
+    section: 'science',
+    sourcePattern: /the hindu/,
+    pathnamePattern: /^\/sci-tech\/science\//,
+  },
+  {
+    section: 'others',
+    sourcePattern: /the hindu/,
+    pathnamePattern: /^\/news\/(?:cities|national)\//,
+  },
+  {
+    section: 'politics',
+    sourcePattern: /the hindu/,
+    pathnamePattern: /^\/(?:opinion|elections)\//,
+  },
+  {
+    section: 'health',
+    sourcePattern: /the hindu/,
+    pathnamePattern: /^\/videos\//,
+  },
+  {
+    section: 'others',
+    sourcePattern: /blue news/,
+    pathnamePattern: /^\/it\/attualita\//,
+  },
+  {
+    section: 'sports',
+    sourcePattern: /blue news/,
+    pathnamePattern: /^\/it\/sport/,
+  },
+  {
+    section: 'entertainment',
+    sourcePattern: /blue news/,
+    pathnamePattern: /^\/it\/spettacolo\//,
+  },
+  {
+    section: 'tech',
+    sourcePattern: /blue news/,
+    pathnamePattern: /^\/it\/digitale-lifestyle\//,
+  },
+  {
+    section: 'others',
+    sourcePattern: /blue news/,
+    pathnamePattern: /^\/it\/index/,
+  },
+  {
+    section: 'others',
+    sourcePattern: /la repubblica/,
+    pathnamePattern: /^\/cronaca\//,
+  },
+  {
+    section: 'world',
+    sourcePattern: /la repubblica/,
+    pathnamePattern: /^\/esteri\//,
+  },
+  {
+    section: 'sports',
+    sourcePattern: /la repubblica/,
+    pathnamePattern: /^\/sport\//,
+  },
+  {
+    section: 'business',
+    sourcePattern: /la repubblica/,
+    pathnamePattern: /^\/motori\//,
+  },
+  {
+    section: 'politics',
+    sourcePattern: /la repubblica/,
+    pathnamePattern: /^\/commenti\//,
+  },
+  {
+    section: 'arts',
+    sourcePattern: /la repubblica/,
+    pathnamePattern: /^\/cultura\//,
+  },
+  {
+    section: 'entertainment',
+    sourcePattern: /la repubblica/,
+    pathnamePattern: /^\/spettacoli\//,
   },
 ];
 

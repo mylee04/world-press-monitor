@@ -6,6 +6,22 @@
 
 ## Unreleased
 
+### [dfa552e] Fix Vercel typecheck and extend source overrides
+- Commit: dfa552e031ea1339ea9b9bea38777e477ea3ee58
+- Date: 2026-04-05 17:55:59 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	CHANGELOG.md
+    - M	lib/ingestion-store.ts
+    - M	lib/source-taxonomy-overrides.ts
+    - M	scripts/build-dashboard-topic-audit.ts
+  - Git stat:
+  - CHANGELOG.md                           |  38 ++++++++++
+  -  lib/ingestion-store.ts                 |   1 +
+  -  lib/source-taxonomy-overrides.ts       | 129 +++++++++++++++++++++++++++++++++
+  -  scripts/build-dashboard-topic-audit.ts |   7 +-
+  -  4 files changed, 173 insertions(+), 2 deletions(-)
+
 ### [c3d5b2a] Improve taxonomy candidates and targeted overrides
 - Commit: c3d5b2a0bcd3783e0e643205ab9b7931f439cb81
 - Date: 2026-04-05 15:33:05 -0500

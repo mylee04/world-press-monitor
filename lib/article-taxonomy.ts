@@ -126,7 +126,7 @@ const SECTION_TOPIC_RULES: Partial<Record<NewsSection, readonly TopicRule[]>> = 
     { topic: 'ground operations', patterns: [rx('troops?|offensive|frontline|artillery|incursion|clashes?|battlefield')] },
     { topic: 'ceasefire / talks', patterns: [rx('ceasefire|truce|peace talks|negotiation|mediat|de-escalation')] },
     { topic: 'hostages / prisoners', patterns: [rx('hostage|detainee|prisoner exchange|captives?|release talks')] },
-    { topic: 'war / tensions', patterns: [rx('war\\b|guerra|conflict|konflik|middle east|medio oriente|asia barat|iran|israel|gaza|tehran|ukraine')] },
+    { topic: 'war / tensions', patterns: [rx('war\\b|guerra|conflict|konflik|middle east|medio oriente|asia barat|iran|israel|gaza|tehran|ukraine|войн|конфликт|военн|спецоперац|армия|боевые действия|обстрел')] },
     { topic: 'defense / weapons', patterns: [rx('defense|military aid|weapons?|arms deal|warplane|navy|munitions')] },
   ],
   business: [
@@ -148,7 +148,7 @@ const SECTION_TOPIC_RULES: Partial<Record<NewsSection, readonly TopicRule[]>> = 
     { topic: 'crypto', patterns: [rx('crypto|criptom|bitcoin|ethereum|token\\b|blockchain|web3|stablecoin')] },
   ],
   tech: [
-    { topic: 'general technology', patterns: [rx('technology|tech\\b|high tech|tecnologia|teknologi|科技|technology news|innovacion digital')] },
+    { topic: 'general technology', patterns: [rx('technology|tech\\b|high tech|tecnologia|tecnología|teknologi|digitale|digitales|digitais|digital\\b|科技|technology news|innovacion digital|innovazione digitale|tecnologia digital')] },
     { topic: 'robotics / automation', patterns: [rx('robotics|robot\\b|automation|industrial robot|humanoid robot')] },
     { topic: 'mobility tech', patterns: [rx('head up display|\\bhud\\b|dashcam|driver assist|connected car|vehicle safety|traffic signal|automotive tech|car tech|radar da psp|radares|sinais h46|sinais h47')] },
     { topic: 'developer tools', patterns: [rx('developer tool|open source|github\\b|programming language|framework|api platform')] },
@@ -259,12 +259,29 @@ const SECTION_TOPIC_RULES: Partial<Record<NewsSection, readonly TopicRule[]>> = 
   ],
 };
 
-const TAXONOMY_VERSION = 'candidates-v1';
+const TAXONOMY_VERSION = 'candidates-v3';
+
+const OTHERS_RECOVERY_THRESHOLDS: Partial<Record<NewsSection, number>> = {
+  tech: 0.7,
+  business: 0.65,
+  conflicts: 0.65,
+  sports: 0.65,
+};
+
+const RECOVERED_SECTION_TOPIC_FALLBACKS: Partial<Record<NewsSection, string>> = {
+  tech: 'general technology',
+  business: 'business news',
+  conflicts: 'war / tensions',
+  sports: 'sports news',
+};
 
 export function isTopicAllowedForSection(section: string | null | undefined, topic: string | null | undefined): boolean {
   const normalizedTopic = (topic || '').trim().toLowerCase();
   if (!normalizedTopic) return false;
   const normalizedSection = normalizeNewsSection(section);
+  if (RECOVERED_SECTION_TOPIC_FALLBACKS[normalizedSection] === normalizedTopic) {
+    return true;
+  }
   const rules = SECTION_TOPIC_RULES[normalizedSection] || [];
   return rules.some((rule) => rule.topic === normalizedTopic);
 }
@@ -326,6 +343,9 @@ export function buildArticleTaxonomy(input: ArticleTaxonomyInput): ArticleTaxono
     sourceFallbackSection,
     contextSection,
   });
+  const recoveredSectionFromOthers = explicitSourceOverrideSection === 'others'
+    ? pickRecoveredSectionFromOthers(sectionCandidates)
+    : null;
   const derivedSection = pickFirstMeaningfulSection([
     ...feedCategorySections,
     titleSection,
@@ -337,19 +357,23 @@ export function buildArticleTaxonomy(input: ArticleTaxonomyInput): ArticleTaxono
   ]);
 
   let primarySection = explicitSourceOverrideSection || pickFirstMeaningfulSection(feedCategorySections);
-  if (!explicitSourceOverrideSection && primarySection === 'others' && derivedSection !== 'others') {
-    primarySection = derivedSection;
-  }
-  if (!explicitSourceOverrideSection && primarySection === 'others' && storedSection !== 'others') {
-    primarySection = storedSection;
-  }
-  if (
-    !explicitSourceOverrideSection &&
-    primarySection !== derivedSection &&
-    derivedSection !== 'others' &&
-    (primarySection === 'arts' || primarySection === 'entertainment' || primarySection === 'lifestyle' || primarySection === 'others')
-  ) {
-    primarySection = derivedSection;
+  if (recoveredSectionFromOthers) {
+    primarySection = recoveredSectionFromOthers;
+  } else {
+    if (!explicitSourceOverrideSection && primarySection === 'others' && derivedSection !== 'others') {
+      primarySection = derivedSection;
+    }
+    if (!explicitSourceOverrideSection && primarySection === 'others' && storedSection !== 'others') {
+      primarySection = storedSection;
+    }
+    if (
+      !explicitSourceOverrideSection &&
+      primarySection !== derivedSection &&
+      derivedSection !== 'others' &&
+      (primarySection === 'arts' || primarySection === 'entertainment' || primarySection === 'lifestyle' || primarySection === 'others')
+    ) {
+      primarySection = derivedSection;
+    }
   }
 
   const sections: NewsSection[] = [];
@@ -376,7 +400,9 @@ export function buildArticleTaxonomy(input: ArticleTaxonomyInput): ArticleTaxono
     sections.push('others');
   }
 
-  const topicSection = explicitSourceOverrideSection === 'others'
+  const topicSection = recoveredSectionFromOthers
+    ? recoveredSectionFromOthers
+    : explicitSourceOverrideSection === 'others'
     ? 'others'
     : primarySection === 'others'
     ? pickFirstMeaningfulSection(sections)
@@ -387,9 +413,12 @@ export function buildArticleTaxonomy(input: ArticleTaxonomyInput): ArticleTaxono
     snippet,
     url,
   ]);
-  const topicCandidates = topicSection === 'others'
+  let topicCandidates = topicSection === 'others'
     ? []
     : classifyDetailedTopicCandidates(topicSection, topicSignalText);
+  if (recoveredSectionFromOthers && topicCandidates.length === 0) {
+    topicCandidates = buildRecoveredTopicFallbackCandidates(recoveredSectionFromOthers);
+  }
   const topics = topicCandidates.map((candidate) => candidate.label);
 
   return {
@@ -496,6 +525,33 @@ function buildSectionCandidates(input: {
       label: 'others',
       score: 1,
       reasons: ['fallback:others'],
+    },
+  ];
+}
+
+function pickRecoveredSectionFromOthers(
+  candidates: ReadonlyArray<ArticleTaxonomySectionCandidate>
+): NewsSection | null {
+  for (const candidate of candidates) {
+    if (candidate.label === 'others') continue;
+    const threshold = OTHERS_RECOVERY_THRESHOLDS[candidate.label];
+    if (threshold == null) continue;
+    if (candidate.score >= threshold) {
+      return candidate.label;
+    }
+  }
+  return null;
+}
+
+function buildRecoveredTopicFallbackCandidates(section: NewsSection): ArticleTaxonomyTopicCandidate[] {
+  const fallback = RECOVERED_SECTION_TOPIC_FALLBACKS[section];
+  if (!fallback) return [];
+  return [
+    {
+      section,
+      label: fallback,
+      score: 0.55,
+      reasons: ['recovered_section_fallback'],
     },
   ];
 }
