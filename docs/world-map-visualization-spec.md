@@ -318,7 +318,7 @@ Optional future layers:
 
 These routes should be authenticated unless the team explicitly decides to expose public summaries.
 
-### 10.1 `GET /api/customer/dashboard/map/countries`
+### 10.1 `GET /api/customer/map/countries`
 
 Purpose:
 
@@ -346,7 +346,7 @@ type CountryMapRow = {
 };
 ```
 
-### 10.2 `GET /api/customer/dashboard/map/countries/:country/sources`
+### 10.2 `GET /api/customer/map/countries/:country/sources`
 
 Purpose:
 
@@ -375,7 +375,7 @@ type CountrySourceMapRow = {
 };
 ```
 
-### 10.3 `GET /api/customer/dashboard/map/sources/:sourceId`
+### 10.3 `GET /api/customer/map/sources/:sourceId`
 
 Purpose:
 
@@ -417,7 +417,7 @@ type SourceDetailResponse = {
 };
 ```
 
-### 10.4 `GET /api/customer/dashboard/map/publishers`
+### 10.4 `GET /api/customer/map/publishers`
 
 Purpose:
 
@@ -584,7 +584,7 @@ Acceptance criteria:
 
 #### B1. Build country aggregate route
 
-- create `/api/customer/dashboard/map/countries`
+- create `/api/customer/map/countries`
 - aggregate last 1h, 24h, 7d metrics
 - join country centroids
 - include source counts and health counts
@@ -596,7 +596,7 @@ Acceptance criteria:
 
 #### B2. Build country source route
 
-- create `/api/customer/dashboard/map/countries/:country/sources`
+- create `/api/customer/map/countries/:country/sources`
 - aggregate source-level metrics
 - include method and health
 - return representative coordinates
@@ -607,7 +607,7 @@ Acceptance criteria:
 
 #### B3. Build source detail route
 
-- create `/api/customer/dashboard/map/sources/:sourceId`
+- create `/api/customer/map/sources/:sourceId`
 - return source metadata
 - return hourly series
 - return latest article preview
@@ -618,7 +618,7 @@ Acceptance criteria:
 
 #### B4. Build publisher footprint route
 
-- create `/api/customer/dashboard/map/publishers`
+- create `/api/customer/map/publishers`
 - aggregate country and source counts by publisher
 - support filtering by country, method, health
 
@@ -958,7 +958,7 @@ Status:
 
 Implementation tasks:
 
-- build `GET /api/customer/dashboard/map/publishers`
+- build `GET /api/customer/map/publishers`
 - aggregate by publisher:
   - `pub24h`
   - `pub1h`
@@ -1018,10 +1018,10 @@ Current progress:
 
 ```txt
 app/map/page.tsx
-app/api/customer/dashboard/map/countries/route.ts
-app/api/customer/dashboard/map/publishers/route.ts
-app/api/customer/dashboard/map/countries/[country]/sources/route.ts
-app/api/customer/dashboard/map/sources/[sourceId]/route.ts
+app/api/customer/map/countries/route.ts
+app/api/customer/map/publishers/route.ts
+app/api/customer/map/countries/[country]/sources/route.ts
+app/api/customer/map/sources/[sourceId]/route.ts
 components/map/world-press-map-page.tsx
 components/map/world-globe-view.tsx
 components/map/country-map-view.tsx

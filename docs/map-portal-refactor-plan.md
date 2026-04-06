@@ -39,10 +39,10 @@ These files belong to the real refactor and should be reintroduced in a clean br
 
 - `lib/customer-portal.ts`
 - `lib/dashboard-cache-control.ts`
-- `app/api/customer/dashboard/map/countries/route.ts`
-- `app/api/customer/dashboard/map/countries/[country]/sources/route.ts`
-- `app/api/customer/dashboard/map/publishers/route.ts`
-- `app/api/customer/dashboard/map/sources/[sourceId]/route.ts`
+- `app/api/customer/map/countries/route.ts`
+- `app/api/customer/map/countries/[country]/sources/route.ts`
+- `app/api/customer/map/publishers/route.ts`
+- `app/api/customer/map/sources/[sourceId]/route.ts`
 - `scripts/api-news.ts`
 
 Intent:
@@ -74,7 +74,7 @@ Intent:
 
 These are adjacent to the refactor but should be reviewed as a second pass rather than blindly cherry-picked.
 
-- `app/api/customer/dashboard/benchmark/route.ts`
+- `app/api/customer/benchmark/route.ts`
 - `components/benchmark-view.tsx`
 - `components/news-api-hooks.ts`
 - `lib/benchmark-store.ts`
@@ -189,10 +189,10 @@ Success criteria:
 ### Phase 3. Move portal map routes to proxy-first behavior
 
 - `lib/customer-portal.ts`
-- `app/api/customer/dashboard/map/countries/route.ts`
-- `app/api/customer/dashboard/map/countries/[country]/sources/route.ts`
-- `app/api/customer/dashboard/map/publishers/route.ts`
-- `app/api/customer/dashboard/map/sources/[sourceId]/route.ts`
+- `app/api/customer/map/countries/route.ts`
+- `app/api/customer/map/countries/[country]/sources/route.ts`
+- `app/api/customer/map/publishers/route.ts`
+- `app/api/customer/map/sources/[sourceId]/route.ts`
 - `scripts/api-news.ts`
 
 Success criteria:
@@ -214,7 +214,7 @@ Success criteria:
 
 ### Phase 5. Optional portal hardening follow-up
 
-- `app/api/customer/dashboard/benchmark/route.ts`
+- `app/api/customer/benchmark/route.ts`
 - `components/benchmark-view.tsx`
 - `components/news-api-hooks.ts`
 - `lib/benchmark-store.ts`
