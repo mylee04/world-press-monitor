@@ -140,6 +140,16 @@ const SOURCE_SECTION_OVERRIDES: readonly SourceSectionOverride[] = [
     titlePattern: /ai|인공지능|데이터센터|클라우드|플랫폼|앱|모바일|마이크로소프트|ms와|디지털|테크|생성형/,
   },
   {
+    section: 'health',
+    sourcePattern: /newsis/,
+    titlePattern: /건강|의료|병원|환자|백신|질환|감염|치료|의사|수술/,
+  },
+  {
+    section: 'entertainment',
+    sourcePattern: /newsis/,
+    titlePattern: /배우|가수|영화|드라마|예능|앨범|공연|팬미팅|방송|연예/,
+  },
+  {
     section: 'others',
     sourcePattern: /newsis/,
     titlePattern: /화재|사고|완진|병원|선로|역서|공원|지연|교통|구조|실종/,
@@ -299,6 +309,36 @@ const SOURCE_SECTION_OVERRIDES: readonly SourceSectionOverride[] = [
     sourcePattern: /infobae/,
   },
   {
+    section: 'politics',
+    sourcePattern: /people\.cn/,
+    titlePattern: /总书记|国务院|中央|两会|人大|政协|外交部|政府|省委|书记|市长|选举|政治/,
+  },
+  {
+    section: 'business',
+    sourcePattern: /people\.cn/,
+    titlePattern: /经济|财经|企业|金融|市场|股市|贸易|关税|投资/,
+  },
+  {
+    section: 'tech',
+    sourcePattern: /people\.cn/,
+    titlePattern: /科技|人工智能|AI|芯片|半导体|互联网|数字|数据中心/,
+  },
+  {
+    section: 'health',
+    sourcePattern: /people\.cn/,
+    titlePattern: /健康|医院|医生|医疗|疫苗|疾病|手术|患者/,
+  },
+  {
+    section: 'sports',
+    sourcePattern: /people\.cn/,
+    titlePattern: /体育|比赛|联赛|篮球|足球|网球|球员|教练/,
+  },
+  {
+    section: 'entertainment',
+    sourcePattern: /people\.cn/,
+    titlePattern: /娱乐|电影|电视剧|明星|演出|综艺|歌手|演员/,
+  },
+  {
     section: 'others',
     sourcePattern: /people\.cn/,
   },
@@ -444,6 +484,11 @@ const SOURCE_SECTION_OVERRIDES: readonly SourceSectionOverride[] = [
     titlePattern: /颱風|地震|暴雨|高溫|天氣|豪雨|空氣品質|空品/,
   },
   {
+    section: 'politics',
+    sourcePattern: /mirror media - externals news sitemap/,
+    titlePattern: /總統|立院|立法院|政院|選舉|罷免|國民黨|民進黨|民眾黨|市長/,
+  },
+  {
     section: 'others',
     sourcePattern: /mirror media - externals news sitemap/,
     pathnamePattern: /^\/external\//,
@@ -539,6 +584,11 @@ const SOURCE_SECTION_OVERRIDES: readonly SourceSectionOverride[] = [
     section: 'politics',
     sourcePattern: /ria novosti/,
     titlePattern: /мид|правительств|президент|министр|парламент|госдум|совфед|переговор|дипломат/,
+  },
+  {
+    section: 'health',
+    sourcePattern: /ria novosti/,
+    titlePattern: /здоров|болезн|врач|медицин|больниц|вакцин|пациент/,
   },
   {
     section: 'others',
@@ -821,13 +871,48 @@ const SOURCE_SECTION_OVERRIDES: readonly SourceSectionOverride[] = [
     sourcePattern: /actu\.fr/,
   },
   {
+    section: 'politics',
+    sourcePattern: /actu\.fr/,
+    titlePattern: /municipales|élection|politique|maire|gouvernement|assemblée|sénat|député|préfet/,
+  },
+  {
+    section: 'health',
+    sourcePattern: /actu\.fr/,
+    titlePattern: /santé|hôpital|médecin|maladie|virus|grippe|vaccin|soins/,
+  },
+  {
     section: 'others',
     sourcePattern: /n-tv/,
     pathnamePattern: /^\/regionales\//,
   },
   {
+    section: 'politics',
+    sourcePattern: /sankei/,
+    titlePattern: /首相|政府|与党|野党|衆院|参院|選挙|知事|市長|官房長官/,
+  },
+  {
+    section: 'business',
+    sourcePattern: /sankei/,
+    titlePattern: /決算|株価|市場|日経平均|企業|円相場|経済|関税/,
+  },
+  {
+    section: 'entertainment',
+    sourcePattern: /sankei/,
+    titlePattern: /映画|ドラマ|俳優|女優|歌手|芸能|テレビ|ライブ/,
+  },
+  {
+    section: 'health',
+    sourcePattern: /sankei/,
+    titlePattern: /病院|健康|医療|ワクチン|感染|医師|患者/,
+  },
+  {
     section: 'others',
     sourcePattern: /sankei/,
+  },
+  {
+    section: 'politics',
+    sourcePattern: /rossiyskaya gazeta/,
+    titlePattern: /президент|правительств|министр|госдум|совфед|мид|губернатор/,
   },
   {
     section: 'business',
@@ -887,6 +972,11 @@ const SOURCE_SECTION_OVERRIDES: readonly SourceSectionOverride[] = [
     section: 'sports',
     sourcePattern: /le télégramme/,
     pathnamePattern: /^\/sports\//,
+  },
+  {
+    section: 'politics',
+    sourcePattern: /le télégramme/,
+    titlePattern: /politique|élection|maire|gouvernement|assemblée|sénat|député|municipales/,
   },
   {
     section: 'others',

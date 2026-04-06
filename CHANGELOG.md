@@ -6,6 +6,20 @@
 
 ## Unreleased
 
+### [aa2eea1] Refresh snapshots after full taxonomy backfill
+- Commit: aa2eea1fcc538649ecf6eeb1436dad76e6d0fafb
+- Date: 2026-04-06 08:19:31 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	CHANGELOG.md
+    - M	data/country-benchmark.snapshot.json
+    - M	data/dashboard-summary.snapshot.json
+  - Git stat:
+  - CHANGELOG.md                         | 18 ++++++++++++++++++
+  -  data/country-benchmark.snapshot.json |  2 +-
+  -  data/dashboard-summary.snapshot.json |  2 +-
+  -  3 files changed, 20 insertions(+), 2 deletions(-)
+
 ### [57e7c0e] Refine taxonomy recovery and world source overrides
 - Commit: 57e7c0ece451025cfdc563f8080726a778a86cf5
 - Date: 2026-04-05 23:11:33 -0500

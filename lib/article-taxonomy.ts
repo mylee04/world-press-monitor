@@ -9,6 +9,7 @@ import {
 } from '@/lib/article-section-context';
 import { looksLikeLowSignalArticleTitle, normalizeArticleTitle } from '@/lib/html-entities';
 import { classifySectionByKeyword } from '@/lib/keyword-classifier';
+import { classifySectionBySourceProfile } from '@/lib/source-section-profiles';
 
 const VALID_NEWS_SECTIONS: ReadonlySet<NewsSection> = new Set<NewsSection>([
   'world',
@@ -259,7 +260,7 @@ const SECTION_TOPIC_RULES: Partial<Record<NewsSection, readonly TopicRule[]>> = 
   ],
 };
 
-const TAXONOMY_VERSION = 'candidates-v4';
+const TAXONOMY_VERSION = 'candidates-v5';
 
 const OTHERS_RECOVERY_THRESHOLDS: Partial<Record<NewsSection, number>> = {
   tech: 0.7,
@@ -329,12 +330,16 @@ export function buildArticleTaxonomy(input: ArticleTaxonomyInput): ArticleTaxono
     : 'others';
   const hintKeywordSection = hintText ? classifySectionByKeyword(hintText, 'others').section : 'others';
   const explicitSourceOverrideSection = source || url ? classifyExplicitSourceOverride({ source, url, title }) : null;
+  const sourceProfileSection = source || url
+    ? classifySectionBySourceProfile({ source, url, title, sourceCategories })
+    : null;
   const structuredHintSection = source || url ? classifySectionByStructuredHints(source, url) : 'others';
   const sourceFallbackSection = source || url ? classifySectionBySourceFallback({ source, url, title }) : 'others';
   const contextSection = source || url ? deriveSectionFromContext({ source, url, title }) : 'others';
   const sectionCandidates = buildSectionCandidates({
     storedSection,
     explicitSourceOverrideSection,
+    sourceProfileSection,
     feedCategorySections,
     titleSection,
     textSection,
@@ -347,6 +352,7 @@ export function buildArticleTaxonomy(input: ArticleTaxonomyInput): ArticleTaxono
     ? pickRecoveredSectionFromOthers(sectionCandidates)
     : null;
   const derivedSection = pickFirstMeaningfulSection([
+    sourceProfileSection || 'others',
     ...feedCategorySections,
     titleSection,
     textSection,
@@ -356,18 +362,19 @@ export function buildArticleTaxonomy(input: ArticleTaxonomyInput): ArticleTaxono
     contextSection,
   ]);
 
-  let primarySection = explicitSourceOverrideSection || pickFirstMeaningfulSection(feedCategorySections);
+  let primarySection = explicitSourceOverrideSection || sourceProfileSection || pickFirstMeaningfulSection(feedCategorySections);
   if (recoveredSectionFromOthers) {
     primarySection = recoveredSectionFromOthers;
   } else {
-    if (!explicitSourceOverrideSection && primarySection === 'others' && derivedSection !== 'others') {
+    if (!explicitSourceOverrideSection && !sourceProfileSection && primarySection === 'others' && derivedSection !== 'others') {
       primarySection = derivedSection;
     }
-    if (!explicitSourceOverrideSection && primarySection === 'others' && storedSection !== 'others') {
+    if (!explicitSourceOverrideSection && !sourceProfileSection && primarySection === 'others' && storedSection !== 'others') {
       primarySection = storedSection;
     }
     if (
       !explicitSourceOverrideSection &&
+      !sourceProfileSection &&
       primarySection !== derivedSection &&
       derivedSection !== 'others' &&
       (primarySection === 'arts' || primarySection === 'entertainment' || primarySection === 'lifestyle' || primarySection === 'others')
@@ -383,6 +390,7 @@ export function buildArticleTaxonomy(input: ArticleTaxonomyInput): ArticleTaxono
     titleSection,
     textSection,
     explicitSourceOverrideSection || 'others',
+    sourceProfileSection || 'others',
     structuredHintSection,
     hintKeywordSection,
     sourceFallbackSection,
@@ -473,6 +481,7 @@ function normalizeTopicSignal(value: string): string {
 function buildSectionCandidates(input: {
   storedSection: NewsSection;
   explicitSourceOverrideSection: NewsSection | null;
+  sourceProfileSection: NewsSection | null;
   feedCategorySections: NewsSection[];
   titleSection: NewsSection;
   textSection: NewsSection;
@@ -494,6 +503,10 @@ function buildSectionCandidates(input: {
 
   if (input.explicitSourceOverrideSection) {
     add(input.explicitSourceOverrideSection, 0.95, 'source_override');
+  }
+
+  if (input.sourceProfileSection) {
+    add(input.sourceProfileSection, 0.85, 'source_profile');
   }
 
   for (const section of input.feedCategorySections) {
