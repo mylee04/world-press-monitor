@@ -6,6 +6,24 @@
 
 ## Unreleased
 
+### [57e7c0e] Refine taxonomy recovery and world source overrides
+- Commit: 57e7c0ece451025cfdc563f8080726a778a86cf5
+- Date: 2026-04-05 23:11:33 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	CHANGELOG.md
+    - M	data/country-benchmark.snapshot.json
+    - M	data/dashboard-summary.snapshot.json
+    - M	lib/article-taxonomy.ts
+    - M	lib/source-taxonomy-overrides.ts
+  - Git stat:
+  - CHANGELOG.md                         | 20 ++++++++
+  -  data/country-benchmark.snapshot.json |  2 +-
+  -  data/dashboard-summary.snapshot.json |  2 +-
+  -  lib/article-taxonomy.ts              |  6 +--
+  -  lib/source-taxonomy-overrides.ts     | 95 ++++++++++++++++++++++++++++++++++++
+  -  5 files changed, 120 insertions(+), 5 deletions(-)
+
 ### [9379897] Improve taxonomy recovery and add others audit
 - Commit: 937989745f8273af4e96e885ca5fa53fe6a13861
 - Date: 2026-04-05 22:17:41 -0500
