@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server';
-import { PUBLIC_MAP_RESPONSE_CACHE_CONTROL } from '@/lib/dashboard-cache-control';
+import { buildPublicSnapshotCacheHeaders, PUBLIC_MAP_RESPONSE_CACHE_CONTROL } from '@/lib/dashboard-cache-control';
 import { readDashboardSummarySnapshot } from '@/lib/customer-dashboard-snapshot-store';
 import { proxyPortalServerApiRequest } from '@/lib/customer-portal';
 
@@ -89,11 +89,10 @@ function buildSummaryResponse(payload: DashboardSummaryPayload, headers?: Record
   const sanitizedPayload = sanitizeDashboardSummary(payload);
   return new Response(JSON.stringify(sanitizedPayload), {
     status: 200,
-    headers: {
+    headers: buildPublicSnapshotCacheHeaders({
       'content-type': 'application/json',
-      'Cache-Control': PUBLIC_MAP_RESPONSE_CACHE_CONTROL,
       ...(headers || {}),
-    },
+    }),
   });
 }
 
@@ -139,6 +138,7 @@ export async function GET(request: NextRequest) {
 
   const upstream = await proxyPortalServerApiRequest(request, '/api/dashboard/summary', {
     cacheControl: PUBLIC_MAP_RESPONSE_CACHE_CONTROL,
+    responseHeaders: buildPublicSnapshotCacheHeaders(),
     timeoutMs: DASHBOARD_SUMMARY_UPSTREAM_TIMEOUT_MS,
   });
 

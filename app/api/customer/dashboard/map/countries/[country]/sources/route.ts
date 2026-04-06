@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { readMapCountrySourcesFileSnapshot } from '@/lib/customer-map-snapshot-store';
-import { PUBLIC_MAP_RESPONSE_CACHE_CONTROL } from '@/lib/dashboard-cache-control';
+import { buildPublicSnapshotCacheHeaders, PUBLIC_MAP_RESPONSE_CACHE_CONTROL } from '@/lib/dashboard-cache-control';
 import { proxyPortalServerApiRequest } from '@/lib/customer-portal';
 import { readMapCountrySources } from '@/lib/map-store';
 import { normalizeMapMetricWindow } from '@/lib/map-store-windows';
@@ -30,7 +30,7 @@ export async function GET(request: NextRequest, context: { params: Promise<{ cou
     if (fileSnapshot && hasFileSnapshotData) {
       return NextResponse.json(fileSnapshot, {
         status: 200,
-        headers: { 'Cache-Control': PUBLIC_MAP_RESPONSE_CACHE_CONTROL, 'X-Data-Source': 'snapshot-file' },
+        headers: buildPublicSnapshotCacheHeaders({ 'X-Data-Source': 'snapshot-file' }),
       });
     }
 
@@ -42,12 +42,13 @@ export async function GET(request: NextRequest, context: { params: Promise<{ cou
     if (hasSourceData) {
       return NextResponse.json(localPayload, {
         status: 200,
-        headers: { 'Cache-Control': PUBLIC_MAP_RESPONSE_CACHE_CONTROL, 'X-Data-Source': 'local-fallback' },
+        headers: buildPublicSnapshotCacheHeaders({ 'X-Data-Source': 'local-fallback' }),
       });
     }
 
     const upstream = await proxyPortalServerApiRequest(request, `/api/map/countries/${encodeURIComponent(country)}/sources`, {
       cacheControl: PUBLIC_MAP_RESPONSE_CACHE_CONTROL,
+      responseHeaders: buildPublicSnapshotCacheHeaders(),
       timeoutMs: COUNTRY_SOURCES_UPSTREAM_TIMEOUT_MS,
     });
 
@@ -57,7 +58,7 @@ export async function GET(request: NextRequest, context: { params: Promise<{ cou
 
     return NextResponse.json(localPayload, {
       status: 200,
-      headers: { 'Cache-Control': PUBLIC_MAP_RESPONSE_CACHE_CONTROL, 'X-Data-Source': 'local-fallback' },
+      headers: buildPublicSnapshotCacheHeaders({ 'X-Data-Source': 'local-fallback' }),
     });
   } catch (error: unknown) {
     return NextResponse.json(

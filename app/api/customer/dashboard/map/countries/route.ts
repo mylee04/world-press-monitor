@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { readMapCountryMetricsFileSnapshot } from '@/lib/customer-map-snapshot-store';
-import { PUBLIC_MAP_RESPONSE_CACHE_CONTROL } from '@/lib/dashboard-cache-control';
+import { buildPublicSnapshotCacheHeaders, PUBLIC_MAP_RESPONSE_CACHE_CONTROL } from '@/lib/dashboard-cache-control';
 import { proxyPortalServerApiRequest } from '@/lib/customer-portal';
 import { readMapCountryMetrics } from '@/lib/map-store';
 import { normalizeMapMetricWindow } from '@/lib/map-store-windows';
@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
     if (fileSnapshot && fileSnapshot.countries.length > 0) {
       return NextResponse.json(fileSnapshot, {
         status: 200,
-        headers: { 'Cache-Control': PUBLIC_MAP_RESPONSE_CACHE_CONTROL, 'X-Data-Source': 'snapshot-file' },
+        headers: buildPublicSnapshotCacheHeaders({ 'X-Data-Source': 'snapshot-file' }),
       });
     }
 
@@ -27,12 +27,13 @@ export async function GET(request: NextRequest) {
     if (hasPostgresData || hasLocalSnapshotData) {
       return NextResponse.json(localPayload, {
         status: 200,
-        headers: { 'Cache-Control': PUBLIC_MAP_RESPONSE_CACHE_CONTROL, 'X-Data-Source': 'local-fallback' },
+        headers: buildPublicSnapshotCacheHeaders({ 'X-Data-Source': 'local-fallback' }),
       });
     }
 
     const upstream = await proxyPortalServerApiRequest(request, '/api/map/countries', {
       cacheControl: PUBLIC_MAP_RESPONSE_CACHE_CONTROL,
+      responseHeaders: buildPublicSnapshotCacheHeaders(),
       timeoutMs: 15_000,
     });
     return upstream;

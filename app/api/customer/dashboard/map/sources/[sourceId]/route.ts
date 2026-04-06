@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { PUBLIC_MAP_RESPONSE_CACHE_CONTROL } from '@/lib/dashboard-cache-control';
+import { buildPublicSnapshotCacheHeaders, PUBLIC_MAP_RESPONSE_CACHE_CONTROL } from '@/lib/dashboard-cache-control';
 import { proxyPortalServerApiRequest } from '@/lib/customer-portal';
 import { readMapSourceDetail } from '@/lib/map-store';
 
@@ -21,12 +21,13 @@ export async function GET(request: NextRequest, context: { params: Promise<{ sou
     if (localPayload) {
       return NextResponse.json(localPayload, {
         status: 200,
-        headers: { 'Cache-Control': PUBLIC_MAP_RESPONSE_CACHE_CONTROL, 'X-Data-Source': 'local-fallback' },
+        headers: buildPublicSnapshotCacheHeaders({ 'X-Data-Source': 'local-fallback' }),
       });
     }
 
     const upstream = await proxyPortalServerApiRequest(request, `/api/map/sources/${encodeURIComponent(sourceId)}`, {
       cacheControl: PUBLIC_MAP_RESPONSE_CACHE_CONTROL,
+      responseHeaders: buildPublicSnapshotCacheHeaders(),
       timeoutMs: 15_000,
     });
     if (upstream.ok) {

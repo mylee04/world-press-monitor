@@ -204,6 +204,8 @@ function copyProxyHeaders(sourceHeaders: Headers): Headers {
   const passthrough = [
     'content-type',
     'cache-control',
+    'cdn-cache-control',
+    'vercel-cdn-cache-control',
     'x-ratelimit-limit',
     'x-ratelimit-remaining',
     'retry-after',
@@ -220,9 +222,11 @@ function copyProxyHeaders(sourceHeaders: Headers): Headers {
   return headers;
 }
 
-function buildPortalProxyHeaders(sourceHeaders: Headers, cacheControlOverride?: string): Headers {
+function buildPortalProxyHeaders(sourceHeaders: Headers, headerOverrides?: Record<string, string>): Headers {
   const headers = copyProxyHeaders(sourceHeaders);
-  headers.set('cache-control', cacheControlOverride || 'no-store');
+  for (const [key, value] of Object.entries(headerOverrides || {})) {
+    headers.set(key, value);
+  }
   return headers;
 }
 
@@ -360,6 +364,7 @@ export async function proxyPortalServerApiRequest(
   upstreamPath: string,
   options?: {
     cacheControl?: string;
+    responseHeaders?: Record<string, string>;
     timeoutMs?: number;
   }
 ): Promise<NextResponse> {
@@ -409,6 +414,9 @@ export async function proxyPortalServerApiRequest(
 
   return new NextResponse(upstreamResponse.body, {
     status: upstreamResponse.status,
-    headers: buildPortalProxyHeaders(upstreamResponse.headers, options?.cacheControl),
+    headers: buildPortalProxyHeaders(
+      upstreamResponse.headers,
+      options?.responseHeaders || (options?.cacheControl ? { 'Cache-Control': options.cacheControl } : undefined)
+    ),
   });
 }
