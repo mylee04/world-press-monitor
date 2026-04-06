@@ -150,6 +150,6 @@ export function useNewsApiNews(query: NewsApiQuery): JsonState<NewsApiResponse> 
 
 export function useCountryBenchmark(): JsonState<CountryBenchmarkResponse> {
   const { isReady } = useCustomerAccess();
-  const url = useMemo(() => '/api/customer/dashboard/benchmark', []);
+  const url = useMemo(() => '/api/customer/benchmark', []);
   return useRemoteJson<CountryBenchmarkResponse>(isReady ? url : null, undefined, { cacheMode: 'session' });
 }

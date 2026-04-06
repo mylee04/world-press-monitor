@@ -97,12 +97,12 @@ export function useMapViewModel() {
   const detailAccessLocked = !localPreviewEnabled && isReady && !hasToken;
 
   const countriesState = useRemoteJson<MapCountryMetricsResponse>(
-    `/api/customer/dashboard/map/countries?window=${mapWindow}`,
+    `/api/customer/map/countries?window=${mapWindow}`,
     undefined,
     { cacheMode: 'session' }
   );
   const publishersState = useRemoteJson<MapPublishersResponse>(
-    `/api/customer/dashboard/map/publishers?window=${mapWindow}`,
+    `/api/customer/map/publishers?window=${mapWindow}`,
     undefined,
     { cacheMode: 'session' }
   );
@@ -113,14 +113,14 @@ export function useMapViewModel() {
   const countryName = selectedCountry?.country || null;
   const sourcesState = useRemoteJson<MapCountrySourcesResponse>(
     detailAccessEnabled && countryName
-      ? `/api/customer/dashboard/map/countries/${encodeURIComponent(countryName)}/sources?window=${mapWindow}`
+      ? `/api/customer/map/countries/${encodeURIComponent(countryName)}/sources?window=${mapWindow}`
       : null,
     undefined,
     { cacheMode: 'session' }
   );
   const sourceDetailState = useRemoteJson<MapSourceDetailResponse>(
     detailAccessEnabled && selectedSource?.sourceId
-      ? `/api/customer/dashboard/map/sources/${encodeURIComponent(selectedSource.sourceId)}`
+      ? `/api/customer/map/sources/${encodeURIComponent(selectedSource.sourceId)}`
       : null,
     undefined,
     { cacheMode: 'session' }

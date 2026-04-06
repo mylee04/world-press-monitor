@@ -1587,12 +1587,12 @@ export function MapView() {
   const detailAccessEnabled = localPreviewEnabled || (isReady && hasToken);
   const detailAccessLocked = !localPreviewEnabled && isReady && !hasToken;
   const countriesState = useRemoteJson<MapCountryMetricsResponse>(
-    `/api/customer/dashboard/map/countries?window=${mapWindow}`,
+    `/api/customer/map/countries?window=${mapWindow}`,
     undefined,
     { cacheMode: 'session' }
   );
   const publishersState = useRemoteJson<MapPublishersResponse>(
-    `/api/customer/dashboard/map/publishers?window=${mapWindow}`,
+    `/api/customer/map/publishers?window=${mapWindow}`,
     undefined,
     { cacheMode: 'session' }
   );
@@ -1603,7 +1603,7 @@ export function MapView() {
   const countryName = selectedCountry?.country || null;
   const sourcesState = useRemoteJson<MapCountrySourcesResponse>(
     detailAccessEnabled && countryName
-      ? `/api/customer/dashboard/map/countries/${encodeURIComponent(countryName)}/sources?window=${mapWindow}`
+      ? `/api/customer/map/countries/${encodeURIComponent(countryName)}/sources?window=${mapWindow}`
       : null,
     COUNTRY_SOURCES_REFRESH_MS,
     {
@@ -1614,7 +1614,7 @@ export function MapView() {
   );
   const sourceDetailState = useRemoteJson<MapSourceDetailResponse>(
     detailAccessEnabled && selectedSource?.sourceId
-      ? `/api/customer/dashboard/map/sources/${encodeURIComponent(selectedSource.sourceId)}`
+      ? `/api/customer/map/sources/${encodeURIComponent(selectedSource.sourceId)}`
       : null,
     SOURCE_DETAIL_REFRESH_MS,
     {
