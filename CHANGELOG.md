@@ -6,6 +6,26 @@
 
 ## Unreleased
 
+### [d6566b5] Add source section profiles for world cleanup
+- Commit: d6566b5138f1f7e0985a87f817135e9c5d9fe6f7
+- Date: 2026-04-06 12:44:57 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	CHANGELOG.md
+    - M	data/country-benchmark.snapshot.json
+    - M	data/dashboard-summary.snapshot.json
+    - M	lib/article-taxonomy.ts
+    - A	lib/source-section-profiles.ts
+    - M	lib/source-taxonomy-overrides.ts
+  - Git stat:
+  - CHANGELOG.md                         |  14 +++
+  -  data/country-benchmark.snapshot.json |   2 +-
+  -  data/dashboard-summary.snapshot.json |   2 +-
+  -  lib/article-taxonomy.ts              |  21 +++-
+  -  lib/source-section-profiles.ts       | 216 +++++++++++++++++++++++++++++++++++
+  -  lib/source-taxonomy-overrides.ts     |  90 +++++++++++++++
+  -  6 files changed, 339 insertions(+), 6 deletions(-)
+
 ### [aa2eea1] Refresh snapshots after full taxonomy backfill
 - Commit: aa2eea1fcc538649ecf6eeb1436dad76e6d0fafb
 - Date: 2026-04-06 08:19:31 -0500

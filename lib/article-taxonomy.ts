@@ -131,6 +131,7 @@ const SECTION_TOPIC_RULES: Partial<Record<NewsSection, readonly TopicRule[]>> = 
     { topic: 'defense / weapons', patterns: [rx('defense|military aid|weapons?|arms deal|warplane|navy|munitions')] },
   ],
   business: [
+    { topic: 'general business', patterns: [rx('business|economy|economia|economía|economia e negocios|ekonomi|財經|财经|경제|ビジネス|경제와 산업|экономика и бизнес|business news')] },
     { topic: 'trade / tariffs', patterns: [rx('trade deal|trade talks|trade surplus|trade deficit|tariffs?|export ban|imports?\\b|exports?\\b')] },
     { topic: 'supply chains', patterns: [rx('supply chain|container rates|shipping costs|inventory glut|logistics bottleneck')] },
     { topic: 'labor / employment', patterns: [rx('layoffs?|job cuts|wages?\\b|labor union|hiring spree|employment data|payrolls?')] },
@@ -190,6 +191,7 @@ const SECTION_TOPIC_RULES: Partial<Record<NewsSection, readonly TopicRule[]>> = 
     { topic: 'swimming', patterns: [rx('swimming|swimmer|freestyle final|backstroke|butterfly')] },
   ],
   health: [
+    { topic: 'general health', patterns: [rx('health|salud|saude|saúde|sant[eé]|salute|wellness|건강|의료|здоровье|health news')] },
     { topic: 'infectious disease', patterns: [rx('outbreak|virus|flu\\b|measles|cholera|dengue|tuberculosis|infection rates')] },
     { topic: 'health policy', patterns: [rx('health ministry|health funding|insurance reform|medicaid|nhs\\b|public health agency')] },
     { topic: 'reproductive health', patterns: [rx('abortion|maternal health|fertility|ivf\\b|contraception|prenatal')] },
@@ -203,6 +205,7 @@ const SECTION_TOPIC_RULES: Partial<Record<NewsSection, readonly TopicRule[]>> = 
     { topic: 'nutrition / fitness', patterns: [rx('nutrition|diet\\b|obesity|fitness|exercise|wellness|protein\\b')] },
   ],
   entertainment: [
+    { topic: 'general entertainment', patterns: [rx('entertainment|showbiz|espect[aá]culos|娛樂|娱乐|연예|芸能|diversión|famosos|entertainment news')] },
     { topic: 'streaming', patterns: [rx('streaming service|streamer\\b|disney\\+|hbo max|prime video|binge watching')] },
     { topic: 'animation / anime', patterns: [rx('anime|animation|animated film|animated series|manga adaptation')] },
     { topic: 'festivals / live events', patterns: [rx('festival|fan convention|comic con|premiere event|live show')] },
@@ -274,6 +277,8 @@ const RECOVERED_SECTION_TOPIC_FALLBACKS: Partial<Record<NewsSection, string>> = 
   business: 'general business',
   conflicts: 'war / tensions',
   sports: 'general sports',
+  health: 'general health',
+  entertainment: 'general entertainment',
 };
 
 export function isTopicAllowedForSection(section: string | null | undefined, topic: string | null | undefined): boolean {
