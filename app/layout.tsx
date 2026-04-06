@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
+import { Analytics } from '@vercel/analytics/next';
 import { CustomerAccessProvider } from '@/components/customer-access-provider';
 import { PublicationTimeProvider } from '@/components/publication-time-provider';
 import { TaxonomyLocaleProvider } from '@/components/taxonomy-locale-provider';
@@ -49,6 +50,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
                 </header>
                 <main>{children}</main>
               </div>
+              <Analytics />
             </PublicationTimeProvider>
           </TaxonomyLocaleProvider>
         </CustomerAccessProvider>
