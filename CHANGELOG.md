@@ -6,6 +6,26 @@
 
 ## Unreleased
 
+### [9379897] Improve taxonomy recovery and add others audit
+- Commit: 937989745f8273af4e96e885ca5fa53fe6a13861
+- Date: 2026-04-05 22:17:41 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	CHANGELOG.md
+    - M	data/country-benchmark.snapshot.json
+    - M	data/dashboard-summary.snapshot.json
+    - M	lib/article-taxonomy.ts
+    - M	lib/source-taxonomy-overrides.ts
+    - A	scripts/build-dashboard-others-audit.ts
+  - Git stat:
+  - CHANGELOG.md                            |  16 +
+  -  data/country-benchmark.snapshot.json    |   2 +-
+  -  data/dashboard-summary.snapshot.json    |   2 +-
+  -  lib/article-taxonomy.ts                 |  92 ++++-
+  -  lib/source-taxonomy-overrides.ts        | 604 +++++++++++++++++++++++++++++++-
+  -  scripts/build-dashboard-others-audit.ts | 457 ++++++++++++++++++++++++
+  -  6 files changed, 1138 insertions(+), 35 deletions(-)
+
 ### [dfa552e] Fix Vercel typecheck and extend source overrides
 - Commit: dfa552e031ea1339ea9b9bea38777e477ea3ee58
 - Date: 2026-04-05 17:55:59 -0500

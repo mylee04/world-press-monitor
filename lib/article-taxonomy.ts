@@ -259,7 +259,7 @@ const SECTION_TOPIC_RULES: Partial<Record<NewsSection, readonly TopicRule[]>> = 
   ],
 };
 
-const TAXONOMY_VERSION = 'candidates-v3';
+const TAXONOMY_VERSION = 'candidates-v4';
 
 const OTHERS_RECOVERY_THRESHOLDS: Partial<Record<NewsSection, number>> = {
   tech: 0.7,
@@ -270,9 +270,9 @@ const OTHERS_RECOVERY_THRESHOLDS: Partial<Record<NewsSection, number>> = {
 
 const RECOVERED_SECTION_TOPIC_FALLBACKS: Partial<Record<NewsSection, string>> = {
   tech: 'general technology',
-  business: 'business news',
+  business: 'general business',
   conflicts: 'war / tensions',
-  sports: 'sports news',
+  sports: 'general sports',
 };
 
 export function isTopicAllowedForSection(section: string | null | undefined, topic: string | null | undefined): boolean {

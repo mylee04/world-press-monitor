@@ -110,6 +110,11 @@ const SOURCE_SECTION_OVERRIDES: readonly SourceSectionOverride[] = [
     titlePattern: /棒球|籃球|足球|中職|日職|MLB|NBA|球員|教練|冠軍|聯賽|大谷/,
   },
   {
+    section: 'health',
+    sourcePattern: /yahoo taiwan/,
+    titlePattern: /健康|醫療|醫院|醫師|新生兒|血液|血型|飲食|減重|癌症|病患|疫苗/,
+  },
+  {
     section: 'others',
     sourcePattern: /yahoo taiwan/,
   },
@@ -128,6 +133,11 @@ const SOURCE_SECTION_OVERRIDES: readonly SourceSectionOverride[] = [
     section: 'business',
     sourcePattern: /newsis/,
     titlePattern: /산업|주가|증시|코스피|코스닥|기업|반도체|배터리|수출|경제|금융/,
+  },
+  {
+    section: 'tech',
+    sourcePattern: /newsis/,
+    titlePattern: /ai|인공지능|데이터센터|클라우드|플랫폼|앱|모바일|마이크로소프트|ms와|디지털|테크|생성형/,
   },
   {
     section: 'others',
@@ -265,6 +275,26 @@ const SOURCE_SECTION_OVERRIDES: readonly SourceSectionOverride[] = [
     pathnamePattern: /^\/salud\//,
   },
   {
+    section: 'politics',
+    sourcePattern: /infobae/,
+    titlePattern: /president|presidenta|senado|congreso|ministro|gobierno|elecciones|alcalde|diputad|fiscal|onpe|constitucion|parlamento/,
+  },
+  {
+    section: 'business',
+    sourcePattern: /infobae/,
+    titlePattern: /economia|economica|inflacion|impuestos|inversion|mercado|bolsa|dolar|banco|empresa|vivienda|financier|tarifas/,
+  },
+  {
+    section: 'conflicts',
+    sourcePattern: /infobae/,
+    titlePattern: /iran|israel|gaza|ataque|bombardeo|misil|drone|ejercito|militar|guerra|explosion|helicopteros/,
+  },
+  {
+    section: 'health',
+    sourcePattern: /infobae/,
+    titlePattern: /salud|hospital|medic|enfermedad|transfusion|recien nacido|cucarachas|nutric|vacuna|sangre/,
+  },
+  {
     section: 'others',
     sourcePattern: /infobae/,
   },
@@ -278,6 +308,26 @@ const SOURCE_SECTION_OVERRIDES: readonly SourceSectionOverride[] = [
     pathnamePattern: /^\/news\/articles\//,
   },
   {
+    section: 'tech',
+    sourcePattern: /bbc news - sitemap index/,
+    titlePattern: /ai|artificial intelligence|technology|tech|digital|robot|chip|semiconductor|software|data center|cyber/,
+  },
+  {
+    section: 'conflicts',
+    sourcePattern: /bbc news - sitemap index/,
+    titlePattern: /iran|israel|gaza|missile|drone|airstrike|war|troops|military|ceasefire/,
+  },
+  {
+    section: 'business',
+    sourcePattern: /bbc news - sitemap index/,
+    titlePattern: /economy|business|markets|stocks|inflation|trade|tariff|bank|housing|mortgage/,
+  },
+  {
+    section: 'politics',
+    sourcePattern: /bbc news - sitemap index/,
+    titlePattern: /president|prime minister|parliament|election|government|minister|policy|court/,
+  },
+  {
     section: 'others',
     sourcePattern: /bbc news - sitemap index/,
     pathnamePattern: /^\/news\/videos\//,
@@ -288,9 +338,24 @@ const SOURCE_SECTION_OVERRIDES: readonly SourceSectionOverride[] = [
     pathnamePattern: /^\/(?:arabic|serbian|tamil|hindi|urdu|gujarati|ukrainian|marathi|somali|hausa|persian|japanese|mundo|afrique)\//,
   },
   {
+    section: 'world',
+    sourcePattern: /tass/,
+    pathnamePattern: /^\/mezhdunarodnaya-panorama\//,
+  },
+  {
+    section: 'politics',
+    sourcePattern: /tass/,
+    pathnamePattern: /^\/politika\//,
+  },
+  {
     section: 'business',
     sourcePattern: /tass/,
     pathnamePattern: /^\/ekonomika\//,
+  },
+  {
+    section: 'sports',
+    sourcePattern: /tass/,
+    pathnamePattern: /^\/sport\//,
   },
   {
     section: 'conflicts',
@@ -359,6 +424,26 @@ const SOURCE_SECTION_OVERRIDES: readonly SourceSectionOverride[] = [
     titlePattern: /sintesi della partita|campo della|serie c|serie b|nel centro storico|morto lo scrittore/,
   },
   {
+    section: 'business',
+    sourcePattern: /mirror media - externals news sitemap/,
+    titlePattern: /台股|股市|財報|投資|經濟|房市|央行|關稅|ETF|市場/,
+  },
+  {
+    section: 'entertainment',
+    sourcePattern: /mirror media - externals news sitemap/,
+    titlePattern: /演唱會|影集|電影|歌手|藝人|票房|綜藝|偶像/,
+  },
+  {
+    section: 'health',
+    sourcePattern: /mirror media - externals news sitemap/,
+    titlePattern: /健康|醫療|醫院|醫師|新生兒|血液|病患|疫苗/,
+  },
+  {
+    section: 'climate',
+    sourcePattern: /mirror media - externals news sitemap/,
+    titlePattern: /颱風|地震|暴雨|高溫|天氣|豪雨|空氣品質|空品/,
+  },
+  {
     section: 'others',
     sourcePattern: /mirror media - externals news sitemap/,
     pathnamePattern: /^\/external\//,
@@ -377,6 +462,11 @@ const SOURCE_SECTION_OVERRIDES: readonly SourceSectionOverride[] = [
     section: 'arts',
     sourcePattern: /welt/,
     pathnamePattern: /^\/feuilleton\//,
+  },
+  {
+    section: 'sports',
+    sourcePattern: /welt/,
+    pathnamePattern: /^\/sport\//,
   },
   {
     section: 'others',
@@ -444,6 +534,11 @@ const SOURCE_SECTION_OVERRIDES: readonly SourceSectionOverride[] = [
     section: 'sports',
     sourcePattern: /ria novosti/,
     titlePattern: /алкарас|барселона|матч|футбол|хоккей|теннис|лига/,
+  },
+  {
+    section: 'politics',
+    sourcePattern: /ria novosti/,
+    titlePattern: /мид|правительств|президент|министр|парламент|госдум|совфед|переговор|дипломат/,
   },
   {
     section: 'others',
