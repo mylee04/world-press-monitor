@@ -491,7 +491,6 @@
         },
         {
           "name": "Chicago Tribune",
-          "url": "https://chicagotribune.com/feed",
           "sitemapUrl": "https://www.chicagotribune.com/sitemap.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/18/2026",
@@ -508,7 +507,6 @@
         },
         {
           "name": "Denver Post",
-          "url": "https://denverpost.com/feed",
           "sitemapUrl": "https://www.denverpost.com/sitemap.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/18/2026",
@@ -517,7 +515,6 @@
         },
         {
           "name": "San Jose Mercury News",
-          "url": "https://mercurynews.com/feed",
           "sitemapUrl": "https://www.mercurynews.com/sitemap.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/18/2026",
@@ -534,7 +531,6 @@
         },
         {
           "name": "San Diego Union-Tribune",
-          "url": "https://sandiegouniontribune.com/feed",
           "sitemapUrl": "https://www.sandiegouniontribune.com/sitemap.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/18/2026",
@@ -688,7 +684,7 @@
         },
         {
           "name": "Variety",
-          "url": "https://variety.com/feed",
+          "url": "https://variety.com/feed/",
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/18/2026",
           "valid": "needs verification",
@@ -997,7 +993,6 @@
         },
         {
           "name": "Aviation Pros",
-          "url": "https://www.aviationpros.com/rss",
           "sitemapUrl": "https://www.aviationpros.com/sitemap-google-news.xml"
         },
         {
@@ -1016,15 +1011,16 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/18/2026",
           "valid": "needs verification",
-          "row": 1
+          "row": 1,
+          "enabled": false
         },
         {
           "name": "TechNode",
-          "url": "https://technode.com/feed",
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/18/2026",
           "valid": "needs verification",
-          "row": 2
+          "row": 2,
+          "sitemapUrl": "https://technode.com/news-sitemap.xml"
         },
         {
           "name": "South China Morning Post",
@@ -1057,7 +1053,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 6
+          "row": 6,
+          "enabled": false
         },
         {
           "name": "China Daily English",
@@ -1065,7 +1062,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 7
+          "row": 7,
+          "enabled": false
         },
         {
           "name": "China Daily - China",
@@ -1073,7 +1071,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 8
+          "row": 8,
+          "enabled": false
         },
         {
           "name": "China Daily - BizChina",
@@ -1081,7 +1080,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 9
+          "row": 9,
+          "enabled": false
         },
         {
           "name": "China Daily - Opinion",
@@ -1089,7 +1089,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 10
+          "row": 10,
+          "enabled": false
         },
         {
           "name": "China Daily - Sports",
@@ -1097,7 +1098,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 11
+          "row": 11,
+          "enabled": false
         },
         {
           "name": "China Daily - Entertainment",
@@ -1105,7 +1107,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 12
+          "row": 12,
+          "enabled": false
         },
         {
           "name": "China Daily - Lifestyle",
@@ -1113,7 +1116,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 13
+          "row": 13,
+          "enabled": false
         },
         {
           "name": "China Daily - Photos",
@@ -1121,7 +1125,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 14
+          "row": 14,
+          "enabled": false
         },
         {
           "name": "China Daily - China Daily (main)",
@@ -1129,7 +1134,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 15
+          "row": 15,
+          "enabled": false
         },
         {
           "name": "China Daily - HK Edition",
@@ -1137,7 +1143,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 16
+          "row": 16,
+          "enabled": false
         },
         {
           "name": "China Daily - USA (kindle)",
@@ -1154,7 +1161,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 18
+          "row": 18,
+          "enabled": false
         },
         {
           "name": "People.cn - Politics",
@@ -2514,7 +2522,7 @@
         },
         {
           "name": "Tagesspiegel",
-          "url": "https://www.tagesspiegel.de/contentexport/feed/",
+          "url": "https://www.tagesspiegel.de/contentexport/feed",
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
@@ -2873,7 +2881,7 @@
         },
         {
           "name": "Storify News",
-          "url": "https://www.storifynews.com/feed",
+          "url": "https://www.storifynews.com/feed/",
           "status": null,
           "checkedDate": null,
           "valid": null,
@@ -2897,7 +2905,7 @@
         },
         {
           "name": "The Times of Bengal",
-          "url": "https://thetimesofbengal.com/feed",
+          "url": "https://www.thetimesofbengal.com/feed/",
           "status": null,
           "checkedDate": null,
           "valid": null,
@@ -2922,7 +2930,7 @@
         },
         {
           "name": "Chandigarh Metro",
-          "url": "https://chandigarhmetro.com/feed",
+          "url": "https://chandigarhmetro.com/feed/",
           "status": null,
           "checkedDate": null,
           "valid": null,
@@ -2978,7 +2986,7 @@
         },
         {
           "name": "OrissaPOST",
-          "url": "https://www.orissapost.com/feed",
+          "url": "https://www.orissapost.com/feed/",
           "status": null,
           "checkedDate": null,
           "valid": null,
@@ -2995,7 +3003,7 @@
         },
         {
           "name": "TechGenYZ",
-          "url": "https://techgenyz.com/feed",
+          "url": "https://techgenyz.com/feed/",
           "status": null,
           "checkedDate": null,
           "valid": null,
@@ -3091,7 +3099,6 @@
       "feeds": [
         {
           "name": "Financial Times - World",
-          "url": "https://www.ft.com/rss/world",
           "status": "ERR",
           "checkedDate": "02/18/2026",
           "valid": "invalid",
@@ -3100,7 +3107,6 @@
         },
         {
           "name": "Financial Times - Energy",
-          "url": "https://www.ft.com/rss/companies/energy",
           "status": "ERR",
           "checkedDate": "02/18/2026",
           "valid": "invalid",
@@ -4363,7 +4369,6 @@
         },
         {
           "name": "Calgary Herald",
-          "url": "https://calgaryherald.com/feed/atom",
           "status": null,
           "checkedDate": null,
           "valid": null,
@@ -4520,7 +4525,8 @@
           "status": null,
           "checkedDate": null,
           "valid": null,
-          "row": 27
+          "row": 27,
+          "enabled": false
         },
         {
           "name": "The Afro News",
@@ -4528,7 +4534,8 @@
           "status": null,
           "checkedDate": null,
           "valid": null,
-          "row": 28
+          "row": 28,
+          "enabled": false
         },
         {
           "name": "CTV News - Top Stories",
@@ -5030,7 +5037,7 @@
         },
         {
           "name": "CBC BC",
-          "url": "https://www.cbc.ca/cmlink/rss-canada-britishcolumbia",
+          "url": "https://www.cbc.ca/webfeed/rss/rss-canada-britishcolumbia",
           "status": "NEW",
           "checkedDate": "03/18/2026",
           "valid": "valid"
@@ -5044,7 +5051,7 @@
         },
         {
           "name": "CBC Montreal",
-          "url": "https://www.cbc.ca/cmlink/rss-canada-montreal",
+          "url": "https://www.cbc.ca/webfeed/rss/rss-canada-montreal",
           "status": "NEW",
           "checkedDate": "03/18/2026",
           "valid": "valid"
@@ -5310,7 +5317,7 @@
         },
         {
           "name": "Winnipeg Free Press",
-          "url": "https://www.winnipegfreepress.com/feed/",
+          "url": "https://www.winnipegfreepress.com/feed",
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/24/2026",
           "valid": "needs verification"
@@ -5471,7 +5478,7 @@
         },
         {
           "name": "The Recorder",
-          "url": "https://www.recorder.ca/feed/"
+          "url": "https://www.recorder.ca/feed"
         }
       ]
     },
@@ -5715,7 +5722,7 @@
         },
         {
           "name": "Daily NK (EN)",
-          "url": "https://www.dailynk.com/english/feed",
+          "url": "https://www.dailynk.com/english/feed/",
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
@@ -6197,7 +6204,7 @@
         },
         {
           "name": "CartaCapital",
-          "url": "https://www.cartacapital.com.br/feed",
+          "url": "https://www.cartacapital.com.br/feed/",
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
@@ -7019,11 +7026,11 @@
         },
         {
           "name": "Geelong Advertiser",
-          "url": "https://www.geelongadvertiser.com.au/rss",
           "status": "NEW",
           "checkedDate": "03/16/2026",
           "valid": "valid",
-          "row": 59
+          "row": 59,
+          "sitemapUrl": "https://www.geelongadvertiser.com.au/news-sitemap.xml"
         },
         {
           "name": "News.com.au - Sitemap Index",
@@ -7063,7 +7070,6 @@
         },
         {
           "name": "Cairns Post",
-          "url": "https://www.cairnspost.com.au/rss",
           "sitemapUrl": "https://www.cairnspost.com.au/sitemap.xml",
           "status": "NEW",
           "checkedDate": "03/30/2026",
@@ -8262,7 +8268,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 11
+          "row": 11,
+          "enabled": false
         },
         {
           "name": "Aristegui En Vivo - Programas completos",
@@ -8270,7 +8277,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 12
+          "row": 12,
+          "enabled": false
         },
         {
           "name": "Aristegui En Vivo - Entrevistas completas",
@@ -8287,7 +8295,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 14
+          "row": 14,
+          "enabled": false
         },
         {
           "name": "Aristegui En Vivo - Investigaciones especiales",
@@ -8295,7 +8304,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 15
+          "row": 15,
+          "enabled": false
         },
         {
           "name": "Aristegui En Vivo - Enlaces en vivo",
@@ -8303,7 +8313,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 16
+          "row": 16,
+          "enabled": false
         },
         {
           "name": "Aristegui En Vivo - Titulares del día",
@@ -8311,7 +8322,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 17
+          "row": 17,
+          "enabled": false
         },
         {
           "name": "Aristegui En Vivo - Deportes",
@@ -8319,7 +8331,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 18
+          "row": 18,
+          "enabled": false
         },
         {
           "name": "Aristegui En Vivo - Dinero y Economía",
@@ -8327,7 +8340,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 19
+          "row": 19,
+          "enabled": false
         },
         {
           "name": "Aristegui En Vivo - Niñonautas",
@@ -8335,7 +8349,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 20
+          "row": 20,
+          "enabled": false
         },
         {
           "name": "Aristegui En Vivo - Las plumas de la serpiente",
@@ -8343,7 +8358,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 21
+          "row": 21,
+          "enabled": false
         },
         {
           "name": "El Economista - Top Noticias (멕시코 경제 1위)",
@@ -10499,7 +10515,7 @@
         },
         {
           "name": "Omroep Delft",
-          "url": "https://omroepdelft.nl/feed/"
+          "url": "https://www.omroepdelft.nl/feed/"
         },
         {
           "name": "Open Rotterdam",
@@ -11084,7 +11100,7 @@
         },
         {
           "name": "Blick (Swiss #1 Popular Daily - German)",
-          "url": "https://www.blick.ch/rss.xml"
+          "sitemapUrl": "https://www.blick.ch/news.xml"
         },
         {
           "name": "Blick - News Sitemap",
@@ -13885,7 +13901,6 @@
         },
         {
           "name": "Brussels Times",
-          "url": "https://www.brusselstimes.com/rss-feed",
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
@@ -14135,7 +14150,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 30
+          "row": 30,
+          "enabled": false
         },
         {
           "name": "Sanook - Daily News",
@@ -14175,7 +14191,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 35
+          "row": 35,
+          "enabled": false
         },
         {
           "name": "Sanook - Tech (News)",
@@ -14324,7 +14341,8 @@
         },
         {
           "name": "Sanook Economy (Portal Economy)",
-          "url": "https://rssfeeds.sanook.com/rss/feeds/sanook/news.economic.xml"
+          "url": "https://rssfeeds.sanook.com/rss/feeds/sanook/news.economic.xml",
+          "enabled": false
         },
         {
           "name": "Bangkok Biz News (Economy)",
@@ -15398,7 +15416,6 @@
         },
         {
           "name": "TN",
-          "url": "https://tn.com.ar/rss.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
@@ -15533,7 +15550,7 @@
         },
         {
           "name": "Border Periodismo",
-          "url": "https://borderperiodismo.com/feed/",
+          "url": "https://www.borderperiodismo.com/feed/",
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
@@ -15949,7 +15966,7 @@
         },
         {
           "name": "El Siglo",
-          "url": "https://elsiglo.cl/feed",
+          "url": "https://elsiglo.cl/feed/",
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
@@ -15974,12 +15991,11 @@
         },
         {
           "name": "El Desconcierto",
-          "url": "https://eldesconcierto.cl/feeds/rss.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
           "row": 11,
-          "sitemapUrl": "https://eldesconcierto.cl/sitemap_index.xml"
+          "sitemapUrl": "https://eldesconcierto.cl/feeds/sitemap-news.xml"
         },
         {
           "name": "La Prensa Austral",
@@ -16175,7 +16191,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 46
+          "row": 46,
+          "enabled": false
         },
         {
           "name": "Cooperativa - Fútbol",
@@ -16199,7 +16216,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 49
+          "row": 49,
+          "enabled": false
         },
         {
           "name": "Cooperativa - Sociedad",
@@ -16207,7 +16225,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 50
+          "row": 50,
+          "enabled": false
         },
         {
           "name": "Cooperativa - Sociedad (all)",
@@ -16257,7 +16276,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 51
+          "row": 51,
+          "enabled": false
         },
         {
           "name": "Cooperativa - Genética (88frases)",
@@ -16265,7 +16285,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 60
+          "row": 60,
+          "enabled": false
         },
         {
           "name": "Cooperativa - Oftalmología (Sociedad)",
@@ -16273,7 +16294,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 52
+          "row": 52,
+          "enabled": false
         },
         {
           "name": "Cooperativa - Donald Trump",
@@ -16305,7 +16327,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 56
+          "row": 56,
+          "enabled": false
         },
         {
           "name": "Cooperativa - Música (오디오)",
@@ -16313,7 +16336,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 57
+          "row": 57,
+          "enabled": false
         },
         {
           "name": "Cooperativa - Venezuela (오디오)",
@@ -17199,7 +17223,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 5
+          "row": 5,
+          "enabled": false
         },
         {
           "name": "El Observador - Café y Negocios",
@@ -17279,7 +17304,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 15
+          "row": 15,
+          "enabled": false
         },
         {
           "name": "El Observador - Selección",
@@ -17319,7 +17345,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 20
+          "row": 20,
+          "enabled": false
         },
         {
           "name": "El Observador - Motor",
@@ -17515,7 +17542,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 38
+          "row": 38,
+          "enabled": false
         },
         {
           "name": "Subrayado - Política",
@@ -17547,7 +17575,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 42
+          "row": 42,
+          "enabled": false
         },
         {
           "name": "Subrayado - Tecnología e Internet",
@@ -17555,7 +17584,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 43
+          "row": 43,
+          "enabled": false
         },
         {
           "name": "Subrayado - Deportes",
@@ -17575,15 +17605,18 @@
         },
         {
           "name": "Subrayado - Fútbol Uruguayo",
-          "url": "https://www.subrayado.com.uy/rss/pages/futbol-uruguayo.xml"
+          "url": "https://www.subrayado.com.uy/rss/pages/futbol-uruguayo.xml",
+          "enabled": false
         },
         {
           "name": "Subrayado - Fútbol Internacional",
-          "url": "https://www.subrayado.com.uy/rss/pages/futbol-internacional.xml"
+          "url": "https://www.subrayado.com.uy/rss/pages/futbol-internacional.xml",
+          "enabled": false
         },
         {
           "name": "Subrayado - Turf",
-          "url": "https://www.subrayado.com.uy/rss/pages/turf.xml"
+          "url": "https://www.subrayado.com.uy/rss/pages/turf.xml",
+          "enabled": false
         },
         {
           "name": "Subrayado - Empresariales",
@@ -17591,11 +17624,13 @@
         },
         {
           "name": "Subrayado - Curiosidades",
-          "url": "https://www.subrayado.com.uy/rss/pages/curiosidades.xml"
+          "url": "https://www.subrayado.com.uy/rss/pages/curiosidades.xml",
+          "enabled": false
         },
         {
           "name": "Subrayado - Cultura",
-          "url": "https://www.subrayado.com.uy/rss/pages/cultura.xml"
+          "url": "https://www.subrayado.com.uy/rss/pages/cultura.xml",
+          "enabled": false
         },
         {
           "name": "Subrayado - Show",
@@ -18179,7 +18214,6 @@
         },
         {
           "name": "Kronen Zeitung",
-          "url": "https://www.krone.at/rss.xml",
           "sitemapUrl": "https://www.krone.at/google-news-sitemap.xml"
         },
         {
@@ -18196,17 +18230,14 @@
         },
         {
           "name": "OE24",
-          "url": "https://www.oe24.at/news/rss",
           "sitemapUrl": "https://www.oe24.at/sitemap-news.xml"
         },
         {
           "name": "OR Nachrichten",
-          "url": "https://www.nachrichten.at/news/rss.xml",
           "sitemapUrl": "https://www.nachrichten.at/google-news.sitemap.xml"
         },
         {
           "name": "Vienna Online",
-          "url": "https://www.vienna.at/news/feed",
           "sitemapUrl": "https://www.vienna.at/sitemap-news.xml"
         },
         {
@@ -18336,7 +18367,6 @@
         },
         {
           "name": "BVZ",
-          "url": "https://www.bvz.at/xml/rss",
           "sitemapUrl": "https://www.bvz.at/sitemapnews.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/01/2026",
@@ -19112,7 +19142,6 @@
         },
         {
           "name": "VG - Forsiden",
-          "url": "https://www.vg.no/rss/feed/forsiden/",
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
@@ -19311,7 +19340,8 @@
         {
           "name": "Teknisk Ukeblad (Tech/Energy/Marine)",
           "url": "https://www.tu.no/feed",
-          "sitemapUrl": "https://www.tu.no/sitemap.xml"
+          "sitemapUrl": "https://www.tu.no/sitemap.xml",
+          "enabled": false
         },
         {
           "name": "E24 Energi (Energy/Marine Industry)",
@@ -20045,7 +20075,7 @@
         },
         {
           "name": "Silicon Republic",
-          "url": "https://www.siliconrepublic.com/feed",
+          "url": "https://www.siliconrepublic.com/feed/",
           "status": "NEW",
           "checkedDate": "03/16/2026",
           "valid": "valid",
@@ -20093,7 +20123,7 @@
         },
         {
           "name": "Belfast Telegraph",
-          "url": "https://www.belfasttelegraph.co.uk/rss",
+          "url": "https://www.belfasttelegraph.co.uk/rss/",
           "status": "NEW",
           "checkedDate": "03/16/2026",
           "valid": "valid",
@@ -22751,10 +22781,10 @@
         },
         {
           "name": "Prima COOL",
-          "url": "https://cool.iprima.cz/rss",
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/02/2026",
-          "valid": "valid"
+          "valid": "valid",
+          "sitemapUrl": "https://cool.iprima.cz/sitemap-google-news.xml"
         },
         {
           "name": "Prima Zoom",
@@ -23051,7 +23081,7 @@
         },
         {
           "name": "Romania Insider",
-          "url": "https://www.romania-insider.com/feed/",
+          "url": "https://www.romania-insider.com/feed",
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/24/2026",
           "valid": "needs verification"
@@ -25327,7 +25357,7 @@
       "feeds": [
         {
           "name": "Egypt Independent",
-          "url": "https://egyptindependent.com/feed/"
+          "url": "https://www.egyptindependent.com/feed/"
         },
         {
           "name": "Egyptian Gazette",
@@ -25556,7 +25586,7 @@
         },
         {
           "name": "Premium Times Nigeria",
-          "url": "https://www.premiumtimesng.com/feed"
+          "sitemapUrl": "https://www.premiumtimesng.com/news-sitemap.xml"
         },
         {
           "name": "Daily Trust",
@@ -26342,7 +26372,7 @@
         },
         {
           "name": "Times of Oman",
-          "url": "https://timesofoman.com/feed/"
+          "url": "https://timesofoman.com/feed"
         },
         {
           "name": "The Arabian Stories",
@@ -26372,7 +26402,6 @@
         },
         {
           "name": "El Espectador",
-          "url": "https://www.elespectador.com/arc/outboundfeeds/rss/?outputType=xml",
           "sitemapUrl": "https://www.elespectador.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
         },
         {
