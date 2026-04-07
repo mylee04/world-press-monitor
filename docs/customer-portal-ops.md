@@ -27,8 +27,11 @@ Runtime naming defaults:
 Set on Vercel for `app.worldpressradar.com`:
 
 - `NEXT_PUBLIC_NEWS_API_BASE_URL=https://api.worldpressradar.com`
+- `WPR_INTERNAL_API_BASE_URL=https://portal-api.worldpressradar.com` (optional, server-only upstream path for portal proxy)
 
 Do not point the production web app at a temporary tunnel URL.
+If the public API hostname sits behind stricter Cloudflare rules, keep browser-facing traffic on
+`api.worldpressradar.com` and let the portal server use `WPR_INTERNAL_API_BASE_URL` instead.
 
 ## API env
 

@@ -36,6 +36,35 @@ function normalizeHostValue(value: string): string {
   return normalized || '';
 }
 
+function resolveExplicitApiBaseUrl(...values: Array<string | null | undefined>): string {
+  for (const value of values) {
+    const normalized = normalizeHostValue(value || '');
+    if (normalized) {
+      return normalized;
+    }
+  }
+  return '';
+}
+
+function resolveApiBaseUrlFromHostEnv(hostValue: string, portValue: string): string {
+  const newsApiHost = normalizeHostValue(hostValue);
+  if (!newsApiHost) {
+    return '';
+  }
+
+  const newsApiPort = portValue.trim();
+  const hostWithPort = newsApiPort
+    ? `${newsApiHost.includes(':') ? newsApiHost : `${newsApiHost}:${newsApiPort}`}`
+    : newsApiHost;
+  const normalizedHost = hostWithPort === '0.0.0.0' || hostWithPort.startsWith('0.0.0.0:')
+    ? hostWithPort.replace(/^0\.0\.0\.0/, '127.0.0.1')
+    : hostWithPort;
+  if (/^https?:\/\//i.test(normalizedHost)) {
+    return normalizedHost.replace(/\/+$/, '');
+  }
+  return `http://${normalizedHost}`.replace(/\/+$/, '');
+}
+
 function getPortalServerApiToken(): string {
   return (
     process.env.WORLDPRESSRADAR_API_TOKEN ||
@@ -100,34 +129,32 @@ function getCookieOptions(maxAge = SESSION_MAX_AGE_SECONDS) {
 }
 
 export function getCustomerNewsApiBaseUrl(): string {
-  const explicitBaseUrl = (
+  const explicitBaseUrl = resolveExplicitApiBaseUrl(
     process.env.WORLDPRESSRADAR_API_BASE_URL ||
-    process.env.NEWS_API_BASE_URL ||
-    process.env.NEXT_PUBLIC_NEWS_API_BASE_URL ||
-    ''
-  ).trim();
-  if (explicitBaseUrl) {
-    return explicitBaseUrl.replace(/\/+$/, '');
-  }
-
-  const newsApiHost = normalizeHostValue(
-    process.env.NEWS_API_HOST || process.env.HOST || process.env.NEXT_PUBLIC_NEWS_API_HOST || ''
+    process.env.NEWS_API_BASE_URL,
+    process.env.NEXT_PUBLIC_NEWS_API_BASE_URL
   );
-  if (!newsApiHost) {
-    return '';
+  if (explicitBaseUrl) {
+    return explicitBaseUrl;
   }
 
-  const newsApiPort = (process.env.NEWS_API_PORT || process.env.NEXT_PUBLIC_NEWS_API_PORT || '').trim();
-  const hostWithPort = newsApiPort
-    ? `${newsApiHost.includes(':') ? newsApiHost : `${newsApiHost}:${newsApiPort}`}`
-    : newsApiHost;
-  const normalizedHost = hostWithPort === '0.0.0.0' || hostWithPort.startsWith('0.0.0.0:')
-    ? hostWithPort.replace(/^0\.0\.0\.0/, '127.0.0.1')
-    : hostWithPort;
-  if (/^https?:\/\//i.test(normalizedHost)) {
-    return normalizedHost.replace(/\/+$/, '');
+  return resolveApiBaseUrlFromHostEnv(
+    process.env.NEWS_API_HOST || process.env.HOST || process.env.NEXT_PUBLIC_NEWS_API_HOST || '',
+    process.env.NEWS_API_PORT || process.env.NEXT_PUBLIC_NEWS_API_PORT || ''
+  );
+}
+
+export function getPortalServerApiBaseUrl(): string {
+  const internalBaseUrl = resolveExplicitApiBaseUrl(
+    process.env.WPR_INTERNAL_API_BASE_URL,
+    process.env.WORLDPRESSRADAR_INTERNAL_API_BASE_URL,
+    process.env.NEWS_API_INTERNAL_BASE_URL
+  );
+  if (internalBaseUrl) {
+    return internalBaseUrl;
   }
-  return `http://${normalizedHost}`.replace(/\/+$/, '');
+
+  return getCustomerNewsApiBaseUrl();
 }
 
 const PORTAL_CONFIG_ERROR_MESSAGES = new Set(
@@ -138,7 +165,7 @@ const PORTAL_CONFIG_ERROR_MESSAGES = new Set(
 );
 
 export function hasPortalServerApiProxyConfig(): boolean {
-  return Boolean(getCustomerNewsApiBaseUrl() && getPortalServerApiToken());
+  return Boolean(getPortalServerApiBaseUrl() && getPortalServerApiToken());
 }
 
 export function isPortalConfigErrorMessage(message: string): boolean {
@@ -206,7 +233,7 @@ export async function shouldUseLocalFallbackForPortalResponse(response: NextResp
 export async function readCustomerPortalSession(): Promise<CustomerPortalSession> {
   const cookieStore = await cookies();
   const token = normalizeToken(cookieStore.get(CUSTOMER_PORTAL_TOKEN_COOKIE)?.value);
-  const apiBaseUrl = getCustomerNewsApiBaseUrl();
+  const apiBaseUrl = getPortalServerApiBaseUrl();
 
   return {
     apiBaseUrl,
@@ -263,7 +290,7 @@ export async function validateCustomerPortalToken(token: string): Promise<{
   message?: string;
 }> {
   const normalizedToken = normalizeToken(token);
-  const apiBaseUrl = getCustomerNewsApiBaseUrl();
+  const apiBaseUrl = getPortalServerApiBaseUrl();
 
   if (!apiBaseUrl) {
     return {
@@ -385,7 +412,7 @@ export async function proxyPortalServerApiRequest(
     timeoutMs?: number;
   }
 ): Promise<NextResponse> {
-  const apiBaseUrl = getCustomerNewsApiBaseUrl();
+  const apiBaseUrl = getPortalServerApiBaseUrl();
   const token = getPortalServerApiToken();
 
   if (!apiBaseUrl) {
