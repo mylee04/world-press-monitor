@@ -6,7 +6,6 @@ import {
 } from '@/lib/news-api-store';
 import { PUBLIC_MAP_RESPONSE_CACHE_CONTROL } from '@/lib/dashboard-cache-control';
 import { readCountryBenchmark } from '@/lib/benchmark-store';
-import { readCountryBenchmarkSnapshot, readDashboardSummarySnapshot } from '@/lib/customer-dashboard-snapshot-store';
 import { checkNewsDatabaseHealth } from '@/lib/ingestion-store';
 import { loadMapCountryMetrics } from '@/lib/map-country-metrics-reader';
 import { loadMapCountrySources } from '@/lib/map-country-sources-reader';
@@ -1815,39 +1814,33 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
   }
 
   if (path === '/api/dashboard/summary') {
+    const windowDays = parseIntParam(url.searchParams.get('window_days'), 31, 1, 90);
+    const latestHours = parseIntParam(url.searchParams.get('latest_hours'), 24, 1, 720);
+    const previewLimit = parseIntParam(url.searchParams.get('preview_limit'), 8, 1, 20);
+    const topCountriesLimit = parseIntParam(url.searchParams.get('top_countries_limit'), 6, 1, 20);
+    const maxFutureHoursParam = url.searchParams.get('max_future_hours');
+    const maxFutureHours = maxFutureHoursParam == null
+      ? undefined
+      : parseIntParam(maxFutureHoursParam, 0, 0, 168);
+    const cacheKey = JSON.stringify({
+      windowDays,
+      latestHours,
+      previewLimit,
+      topCountriesLimit,
+      maxFutureHours: maxFutureHours ?? 'default'
+    });
+    const now = Date.now();
+
+    if (
+      dashboardSummaryCache
+      && dashboardSummaryCache.cacheKey === cacheKey
+      && now - dashboardSummaryCache.timestamp < dashboardSummaryCacheTtlMs
+    ) {
+      sendJsonResponse(req, res, jsonResponse(dashboardSummaryCache.payload, 200), rateLimitDecision);
+      return;
+    }
+
     try {
-      const summarySnapshot = await readDashboardSummarySnapshot();
-      if (summarySnapshot) {
-        sendJsonResponse(req, res, jsonResponse(summarySnapshot, 200), rateLimitDecision);
-        return;
-      }
-
-      const windowDays = parseIntParam(url.searchParams.get('window_days'), 31, 1, 90);
-      const latestHours = parseIntParam(url.searchParams.get('latest_hours'), 24, 1, 720);
-      const previewLimit = parseIntParam(url.searchParams.get('preview_limit'), 8, 1, 20);
-      const topCountriesLimit = parseIntParam(url.searchParams.get('top_countries_limit'), 6, 1, 20);
-      const maxFutureHoursParam = url.searchParams.get('max_future_hours');
-      const maxFutureHours = maxFutureHoursParam == null
-        ? undefined
-        : parseIntParam(maxFutureHoursParam, 0, 0, 168);
-      const cacheKey = JSON.stringify({
-        windowDays,
-        latestHours,
-        previewLimit,
-        topCountriesLimit,
-        maxFutureHours: maxFutureHours ?? 'default'
-      });
-      const now = Date.now();
-
-      if (
-        dashboardSummaryCache
-        && dashboardSummaryCache.cacheKey === cacheKey
-        && now - dashboardSummaryCache.timestamp < dashboardSummaryCacheTtlMs
-      ) {
-        sendJsonResponse(req, res, jsonResponse(dashboardSummaryCache.payload, 200), rateLimitDecision);
-        return;
-      }
-
       const summary = await readNewsDashboardSummary({
         windowDays,
         latestHours,
@@ -1924,14 +1917,6 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
 
   if (path === '/api/dashboard/benchmark') {
     try {
-      const benchmarkSnapshot = await readCountryBenchmarkSnapshot();
-      if (benchmarkSnapshot) {
-        const response = jsonResponse(benchmarkSnapshot, 200);
-        response.headers['cache-control'] = PUBLIC_MAP_RESPONSE_CACHE_CONTROL;
-        sendJsonResponse(req, res, response, rateLimitDecision);
-        return;
-      }
-
       const response = jsonResponse(await readCountryBenchmark(), 200);
       response.headers['cache-control'] = PUBLIC_MAP_RESPONSE_CACHE_CONTROL;
       sendJsonResponse(req, res, response, rateLimitDecision);
