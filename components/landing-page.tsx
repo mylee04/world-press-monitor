@@ -1,4 +1,7 @@
+import { headers } from 'next/headers';
 import Link from 'next/link';
+import { readDashboardSummarySnapshot } from '@/lib/customer-dashboard-snapshot-store';
+import type { NewsApiDashboardSummaryResponse } from '@/lib/news-api';
 import styles from '@/components/landing-page.module.css';
 
 const signalClusters = [
@@ -6,30 +9,72 @@ const signalClusters = [
   { id: 'west-mid', position: 'westMid', bars: 5, delayStep: 0.22, widthOffset: 8 },
   { id: 'east-mid', position: 'eastMid', bars: 4, delayStep: 0.26, widthOffset: 14 },
   { id: 'south-east', position: 'southEast', bars: 5, delayStep: 0.24, widthOffset: 6 },
-];
+] as const;
 
-const metricItems = [
-  { value: '24/7', label: 'Continuous signal watch' },
-  { value: '190+', label: 'Country and territory lenses' },
-  { value: '4X', label: 'Views across dashboard, benchmark, map, and access' },
-];
-
-const capabilityCards = [
+const ctaItems = [
   {
-    title: 'Signal-first dashboard',
-    description: 'Track rolling article volume, section mix, and top-country drift without exposing raw source rows.',
+    href: '/dashboard/',
+    label: 'Enter The Feed',
+    previewPosition: 'previewLeft',
+    previewEyebrow: 'Dashboard',
+    previewTitle: 'Topic Distribution',
+    previewImageSrc: '/landing/cta-dashboard-preview.png',
+    previewImageAlt: 'Dashboard topic distribution preview',
+    previewImagePosition: 'center top',
   },
   {
-    title: 'Benchmark windows',
-    description: 'Move from hourly pulse to fixed-period comparisons when a region starts to break from baseline.',
+    href: '/map/',
+    label: 'Watch The Map',
+    previewPosition: 'previewRight',
+    previewEyebrow: 'Map',
+    previewTitle: 'World Publishing Pulse',
+    previewImageSrc: '/landing/cta-map-preview.png',
+    previewImageAlt: 'World publishing pulse map preview',
+    previewImagePosition: '54% top',
   },
-  {
-    title: 'Controlled source access',
-    description: 'Keep private map drill-down and source detail views gated behind customer token access.',
-  },
-];
+] as const;
 
-export function LandingPage() {
+async function getLandingMetricItems() {
+  const summary = await readDashboardSummarySnapshot();
+  const snapshotInserted24h = summary?.storage === 'postgres' ? summary.totals.inserted24h : 0;
+
+  let inserted24h = snapshotInserted24h;
+
+  try {
+    const requestHeaders = await headers();
+    const host = requestHeaders.get('x-forwarded-host') || requestHeaders.get('host');
+    if (host) {
+      const protocol =
+        requestHeaders.get('x-forwarded-proto') ||
+        (host.includes('localhost') || host.includes('127.0.0.1') ? 'http' : 'https');
+      const response = await fetch(`${protocol}://${host}/api/customer/dashboard/summary/`, {
+        cache: 'no-store',
+      });
+
+      if (response.ok) {
+        const payload = (await response.json()) as NewsApiDashboardSummaryResponse;
+        if (payload?.storage === 'postgres') {
+          inserted24h = payload.totals.inserted24h;
+        }
+      }
+    }
+  } catch {
+    inserted24h = snapshotInserted24h;
+  }
+
+  return [
+    { value: '71', label: 'Countries Under Watch' },
+    { value: '4,005', label: 'Global Newsrooms' },
+    {
+      value: inserted24h > 0 ? inserted24h.toLocaleString() : '24/7',
+      label: inserted24h > 0 ? 'Processed In 24h' : 'Continuous Signal Watch',
+    },
+  ];
+}
+
+export async function LandingPage() {
+  const metricItems = await getLandingMetricItems();
+
   return (
     <div className={`page-stack landing-page-root ${styles.root}`}>
       <section className={styles.hero}>
@@ -58,16 +103,35 @@ export function LandingPage() {
 
         <div className={styles.heroContent}>
           <div className="eyebrow">World Press Radar</div>
-          <h1>High-signal monitoring for the world&apos;s newsrooms.</h1>
-          <p>
-            WPR can absolutely carry this kind of cinematic interface. The moving red blocks here are built as
-            lightweight CSS signal bursts, so they appear, intensify, and fade across the canvas without adding heavy
-            browser overhead.
-          </p>
+          <h1>
+            <span className={styles.headlineLine}>See the world break,</span>
+            <span className={styles.headlineLine}>in real time.</span>
+          </h1>
+          <p>Track pressure shifts across global newsrooms before the narrative settles.</p>
           <div className={styles.heroActions}>
-            <Link href="/dashboard/">Open Dashboard</Link>
-            <Link href="/map/">Launch Map</Link>
-            <Link href="/benchmark/">Compare Benchmarks</Link>
+            {ctaItems.map((item, index) => (
+              <div className={`${styles.ctaItem} ${styles[item.previewPosition]}`} key={item.label}>
+                <Link href={item.href} className={index === 0 ? styles.primaryCta : undefined}>
+                  {item.label}
+                </Link>
+                <div className={styles.ctaPreview} aria-hidden="true">
+                  <div className={styles.ctaPreviewHeader}>
+                    <span className={styles.ctaPreviewEyebrow}>{item.previewEyebrow}</span>
+                    <strong className={styles.ctaPreviewTitle}>{item.previewTitle}</strong>
+                  </div>
+                  <div className={styles.ctaPreviewFrame}>
+                    <img
+                      src={item.previewImageSrc}
+                      alt={item.previewImageAlt}
+                      width={1040}
+                      height={640}
+                      className={styles.ctaPreviewImage}
+                      style={{ objectPosition: item.previewImagePosition }}
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
           <div className={styles.metricRail}>
             {metricItems.map((item) => (
@@ -78,16 +142,6 @@ export function LandingPage() {
             ))}
           </div>
         </div>
-      </section>
-
-      <section className={styles.capabilityGrid}>
-        {capabilityCards.map((card) => (
-          <article className={styles.capabilityCard} key={card.title}>
-            <span className={styles.cardKicker}>Core Surface</span>
-            <h2>{card.title}</h2>
-            <p>{card.description}</p>
-          </article>
-        ))}
       </section>
     </div>
   );

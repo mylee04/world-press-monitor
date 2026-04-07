@@ -404,6 +404,33 @@ body:has(.map-page-root) main {
 
 body:has(.landing-page-root) .app-shell {
   width: min(1400px, calc(100vw - 32px));
+  padding-top: 0;
+}
+
+body:has(.landing-page-root) .landing-page-root {
+  margin-top: 0;
+}
+
+body:has(.landing-page-root) .site-header {
+  position: fixed;
+  top: 14px;
+  left: 50%;
+  width: min(1400px, calc(100vw - 32px));
+  z-index: 60;
+  transform: translate(-50%, calc(-100% - 18px));
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    transform 220ms ease,
+    opacity 220ms ease;
+}
+
+body.landing-header-mode.landing-header-visible .site-header {
+  transform: translate(-50%, 0);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
 .map-page-root {
@@ -3283,6 +3310,15 @@ th {
   .app-shell {
     width: min(100vw - 18px, 1180px);
     padding-top: 12px;
+  }
+
+  body:has(.landing-page-root) .app-shell,
+  body:has(.landing-page-root) .site-header {
+    width: min(100vw - 18px, 1400px);
+  }
+
+  body:has(.landing-page-root) .site-header {
+    top: 12px;
   }
 
   .site-header {
