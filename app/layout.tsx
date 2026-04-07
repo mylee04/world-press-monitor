@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 import { Analytics } from '@vercel/analytics/next';
 import { CustomerAccessProvider } from '@/components/customer-access-provider';
 import { PublicationTimeProvider } from '@/components/publication-time-provider';
+import { SiteHeaderVisibilityController } from '@/components/site-header-visibility-controller';
 import { TaxonomyLocaleProvider } from '@/components/taxonomy-locale-provider';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import './globals.css';
@@ -14,10 +15,10 @@ export const metadata: Metadata = {
 };
 
 const navItems = [
-  { href: '/', label: 'Dashboard' },
+  { href: '/', label: 'Home' },
+  { href: '/dashboard/', label: 'Dashboard' },
   { href: '/benchmark/', label: 'Benchmark' },
   { href: '/map/', label: 'Map' },
-  { href: '/access/', label: 'Access' },
 ];
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
@@ -27,6 +28,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         <CustomerAccessProvider>
           <TaxonomyLocaleProvider>
             <PublicationTimeProvider>
+              <SiteHeaderVisibilityController />
               <div className="app-shell">
                 <header className="site-header">
                   <div>

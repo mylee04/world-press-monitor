@@ -9,7 +9,11 @@ load_local_env
 
 LOG_DIR="${WPR_LOG_DIR:-${WPM_LOG_DIR:-${PROJECT_ROOT}/logs}}"
 LOG_FILE="${LOG_DIR}/rss-health-daily-local.log"
-RUNNER_COMMAND=(bun run rss:health:daily)
+RUNNER_COMMAND=(bun scripts/rss-health-daily.ts --no-discord)
+AUTO_REPAIR_COMMAND=(bun scripts/rss-auto-repair.ts --apply)
+HARD_403_BACKLOG_COMMAND=(bun scripts/rss-hard-403-backlog.ts --days=30)
+STALE_WATCHLIST_COMMAND=(bun scripts/rss-stale-watchlist.ts)
+DAILY_DISCORD_COMMAND=(bun scripts/rss-ops-daily-discord.ts)
 PRIMARY_WORKTREE="${WPR_PRIMARY_WORKTREE:-${WPM_PRIMARY_WORKTREE:-}}"
 
 TIMEZONE="${RSS_HEALTH_TZ:-America/Chicago}"
@@ -39,6 +43,14 @@ sync_primary_worktree_outputs() {
   for artifact in \
     "${PROJECT_ROOT}/audits/readme_rss_health_latest.json" \
     "${PROJECT_ROOT}/audits/readme_network_precheck_latest.json" \
+    "${PROJECT_ROOT}/audits/rss_auto_repair_candidates_latest.json" \
+    "${PROJECT_ROOT}/audits/rss_auto_repair_candidates_latest.md" \
+    "${PROJECT_ROOT}/audits/rss_hard_403_backlog_latest.json" \
+    "${PROJECT_ROOT}/audits/rss_hard_403_backlog_latest.md" \
+    "${PROJECT_ROOT}/audits/rss_stale_watchlist_latest.json" \
+    "${PROJECT_ROOT}/audits/rss_stale_watchlist_latest.md" \
+    "${PROJECT_ROOT}/audits/rss_safe_disable_now_latest.json" \
+    "${PROJECT_ROOT}/audits/rss_safe_disable_now_latest.md" \
     "${PROJECT_ROOT}/data/rss-catalog.csv" \
     "${PROJECT_ROOT}/data/rss-catalog.opml"; do
     if [ -f "${artifact}" ]; then
@@ -63,8 +75,18 @@ sync_primary_worktree_outputs() {
   printf '\n[%s] Start daily RSS health pipeline (local postgres)\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
   printf 'Project: %s\n' "${PROJECT_ROOT}"
   printf 'Env file: %s\n' "${WPR_ENV_FILE_SOURCE:-${WPM_ENV_FILE_SOURCE:-inline-defaults}}"
-  printf 'Command: %s\n' "${RUNNER_COMMAND[*]}"
+  printf 'Health command: %s\n' "${RUNNER_COMMAND[*]}"
+  printf 'Auto-repair command: %s\n' "${AUTO_REPAIR_COMMAND[*]}"
+  printf '403 backlog command: %s\n' "${HARD_403_BACKLOG_COMMAND[*]}"
+  printf 'Stale watchlist command: %s\n' "${STALE_WATCHLIST_COMMAND[*]}"
+  printf 'Daily Discord command: %s\n' "${DAILY_DISCORD_COMMAND[*]}"
   "${RUNNER_COMMAND[@]}"
+  "${AUTO_REPAIR_COMMAND[@]}"
+  "${HARD_403_BACKLOG_COMMAND[@]}"
+  "${STALE_WATCHLIST_COMMAND[@]}"
+  if ! "${DAILY_DISCORD_COMMAND[@]}"; then
+    printf '[%s] WARN: rss ops daily discord hook failed\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
+  fi
 } >>"${LOG_FILE}" 2>&1
 
 sync_primary_worktree_outputs >>"${LOG_FILE}" 2>&1

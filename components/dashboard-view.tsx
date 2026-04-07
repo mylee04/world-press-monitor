@@ -1,8 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { CustomerAccessPanel } from '@/components/customer-access-panel';
-import { useCustomerAccess } from '@/components/customer-access-provider';
 import { useNewsApiDashboardSummary } from '@/components/news-api-hooks';
 import { useTaxonomyLocalePreference } from '@/components/taxonomy-locale-provider';
 import { NEWS_SECTION_ORDER } from '@/lib/article-taxonomy';
@@ -76,7 +74,6 @@ function getDisabledSummaryMessage(reason?: string): string {
 }
 
 export function DashboardView() {
-  const { isReady, apiConfigured } = useCustomerAccess();
   const { mode: taxonomyLocaleMode, browserLocale, resolvedLocale, setMode: setTaxonomyLocaleMode } = useTaxonomyLocalePreference();
   const summaryState = useNewsApiDashboardSummary();
   const [expandedTopicGroups, setExpandedTopicGroups] = useState<Record<string, boolean>>({});
@@ -85,21 +82,6 @@ export function DashboardView() {
     summaryState.data && summaryState.data.storage !== 'postgres'
       ? getDisabledSummaryMessage(summaryState.data.reason)
       : null;
-
-  if (!apiConfigured && isReady) {
-    return (
-      <div className="page-stack dashboard-page-root">
-        <CustomerAccessPanel
-          title="Portal API Not Configured"
-          description="This customer portal requires a server-side World Press Radar API base URL before dashboard data can load."
-        />
-      </div>
-    );
-  }
-
-  if (!isReady) {
-    return <div className="page-stack dashboard-page-root"><div className="panel muted">Checking customer access...</div></div>;
-  }
 
   if (summaryState.loading && !summary) {
     return <div className="page-stack dashboard-page-root"><div className="panel muted">Loading live dashboard summary...</div></div>;
