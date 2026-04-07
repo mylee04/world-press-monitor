@@ -21,6 +21,9 @@ type SourceSectionOverride = {
 
 const SOURCE_SECTION_OVERRIDES: readonly SourceSectionOverride[] = [
   { section: 'world', sourcePattern: /bbc news - sitemap index/, pathnamePattern: /^\/news\/world\// },
+  { section: 'sports', sourcePattern: /bbc news - sitemap index/, pathnamePattern: /^\/sport\// },
+  { section: 'others', sourcePattern: /bbc news - sitemap index/, pathnamePattern: /^\/news\/videos\// },
+  { section: 'others', sourcePattern: /bbc news - sitemap index/, pathnamePattern: /^\/[^/]+\/bhidio\// },
   { section: 'science', sourcePattern: /bbc news - sitemap index/, titlePattern: /science|scientists?|research|study finds|telescope|astronomy|fossil/ },
   { section: 'health', sourcePattern: /bbc news - sitemap index/, titlePattern: /health|doctor|hospital|disease|nhs|medical|medicine/ },
   { section: 'arts', sourcePattern: /bbc news - sitemap index/, titlePattern: /art|artist|museum|exhibition|novel|book|literature/ },
@@ -74,6 +77,31 @@ const SOURCE_SECTION_OVERRIDES: readonly SourceSectionOverride[] = [
   { section: 'others', sourcePattern: /the indian express/, pathnamePattern: /^\/article\/(?:cities|city|education|mumbai|pune|delhi|chandigarh)\// },
   { section: 'world', sourcePattern: /the indian express/, pathnamePattern: /^\/article\/india\// },
 
+  { section: 'lifestyle', sourcePattern: /proto thema/, pathnamePattern: /^\/marie-claire\// },
+
+  { section: 'health', sourcePattern: /leggo/, pathnamePattern: /^\/tecnologia\//, titlePattern: /tumore|colon|ipnosi|operat|anestesia|malattia|paziente/ },
+  { section: 'others', sourcePattern: /leggo/, pathnamePattern: /^\/italia\// },
+
+  { section: 'tech', sourcePattern: /il tempo/, pathnamePattern: /^\/sport\/motori\// },
+  { section: 'business', sourcePattern: /il tempo/, pathnamePattern: /^\/attualita\//, titlePattern: /smart working|pmi|lavoro da casa|nuove regole|legge/ },
+  { section: 'others', sourcePattern: /il tempo/, pathnamePattern: /^\/attualita\// },
+
+  { section: 'world', sourcePattern: /delfi lithuania/, pathnamePattern: /^\/naujienos\/uzsienyje\// },
+  { section: 'politics', sourcePattern: /delfi lithuania/, pathnamePattern: /^\/naujienos\/lietuvoje\// },
+
+  { section: 'tech', sourcePattern: /liputan6/, pathnamePattern: /^\/tekno\// },
+  { section: 'business', sourcePattern: /liputan6/, pathnamePattern: /^\/saham\// },
+  { section: 'world', sourcePattern: /liputan6/, pathnamePattern: /^\/global\// },
+  { section: 'lifestyle', sourcePattern: /liputan6/, pathnamePattern: /^\/(?:hot|islami|citizen6)\// },
+
+  { section: 'tech', sourcePattern: /biobiochile/, pathnamePattern: /^\/noticias\/corporativo\/efecto-china\/efecto-china-ciencia-y-tecnologia\// },
+  { section: 'business', sourcePattern: /biobiochile/, pathnamePattern: /^\/noticias\/servicios\/toma-nota\// },
+  { section: 'politics', sourcePattern: /biobiochile/, pathnamePattern: /^\/noticias\/pais\/presidente-kast\// },
+  { section: 'others', sourcePattern: /biobiochile/, pathnamePattern: /^\/noticias\/(?:pais|nacional)\// },
+
+  { section: 'tech', sourcePattern: /cooperativa/, pathnamePattern: /^\/noticias\/corporativo\/efecto-china\/efecto-china-ciencia-y-tecnologia\// },
+  { section: 'others', sourcePattern: /cooperativa/, pathnamePattern: /^\/noticias\/pais\// },
+
   {
     section: 'politics',
     sourcePattern: /yahoo taiwan/,
@@ -113,6 +141,26 @@ const SOURCE_SECTION_OVERRIDES: readonly SourceSectionOverride[] = [
     section: 'health',
     sourcePattern: /yahoo taiwan/,
     titlePattern: /健康|醫療|醫院|醫師|新生兒|血液|血型|飲食|減重|癌症|病患|疫苗/,
+  },
+  {
+    section: 'entertainment',
+    sourcePattern: /setn/,
+    titlePattern: /娛樂星聞|娛樂影劇|星聞|藝人|歌手|演唱會|影劇|偶像|八點檔|戲劇|新歌|專輯/,
+  },
+  {
+    section: 'politics',
+    sourcePattern: /actu\.fr|actu\.fr - news sitemap/,
+    titlePattern: /municipales? 2026|politique|maire|député|sénat|assemblée|gouvernement|ministre/,
+  },
+  {
+    section: 'health',
+    sourcePattern: /abc\.es|abc\.es - sitemap/,
+    titlePattern: /salud|hospital|m[eé]dic|c[aá]ncer|vacuna|paciente|enfermedad|sanidad/,
+  },
+  {
+    section: 'health',
+    sourcePattern: /mirror media/,
+    titlePattern: /健康|醫療|醫師|癌症|病患|疫苗|飲食|減重|醫院/,
   },
   {
     section: 'others',

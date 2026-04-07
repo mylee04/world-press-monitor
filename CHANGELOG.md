@@ -6,6 +6,124 @@
 
 ## Unreleased
 
+### [1049dc0] Add Vercel Web Analytics
+- Commit: 1049dc0343e0017384e90c2a9f2a3517af700eb7
+- Date: 2026-04-06 16:41:57 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	app/layout.tsx
+    - M	package-lock.json
+    - M	package.json
+  - Git stat:
+  - app/layout.tsx    |  2 ++
+  -  package-lock.json | 40 ++++++++++++++++++++++++++++++++++++++++
+  -  package.json      |  1 +
+  -  3 files changed, 43 insertions(+)
+
+### [9e6fad5] Update docs for customer API paths
+- Commit: 9e6fad55079a93cddb34b7064239e7dd36fc51c5
+- Date: 2026-04-06 15:35:44 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	docs/map-portal-refactor-plan.md
+    - M	docs/world-map-visualization-spec.md
+  - Git stat:
+  - docs/map-portal-refactor-plan.md     | 20 ++++++++++----------
+  -  docs/world-map-visualization-spec.md | 26 +++++++++++++-------------
+  -  2 files changed, 23 insertions(+), 23 deletions(-)
+
+### [2311be6] Remove legacy dashboard benchmark and map routes
+- Commit: 2311be687d850318fd0b48e9b7537192431e6841
+- Date: 2026-04-06 15:23:38 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	app/api/customer/benchmark/route.ts
+    - D	app/api/customer/dashboard/benchmark/route.ts
+    - D	app/api/customer/dashboard/map/countries/[country]/sources/route.ts
+    - D	app/api/customer/dashboard/map/countries/route.ts
+    - D	app/api/customer/dashboard/map/publishers/route.ts
+    - D	app/api/customer/dashboard/map/sources/[sourceId]/route.ts
+    - M	app/api/customer/map/countries/[country]/sources/route.ts
+    - M	app/api/customer/map/countries/route.ts
+    - M	app/api/customer/map/publishers/route.ts
+    - M	app/api/customer/map/sources/[sourceId]/route.ts
+  - Git stat:
+  - app/api/customer/benchmark/route.ts                | 31 +++++++++-
+  -  app/api/customer/dashboard/benchmark/route.ts      | 32 ----------
+  -  .../map/countries/[country]/sources/route.ts       | 69 ----------------------
+  -  app/api/customer/dashboard/map/countries/route.ts  | 46 ---------------
+  -  app/api/customer/dashboard/map/publishers/route.ts | 46 ---------------
+  -  .../dashboard/map/sources/[sourceId]/route.ts      | 43 --------------
+  -  .../map/countries/[country]/sources/route.ts       | 67 ++++++++++++++++++++-
+  -  app/api/customer/map/countries/route.ts            | 45 +++++++++++++-
+  -  app/api/customer/map/publishers/route.ts           | 45 +++++++++++++-
+  -  app/api/customer/map/sources/[sourceId]/route.ts   | 41 ++++++++++++-
+  -  10 files changed, 214 insertions(+), 251 deletions(-)
+
+### [420760f] Refactor customer benchmark and map API paths
+- Commit: 420760fdb07ac1318e9a9c632e1587d917acf348
+- Date: 2026-04-06 15:18:13 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - A	app/api/customer/benchmark/route.ts
+    - A	app/api/customer/map/countries/[country]/sources/route.ts
+    - A	app/api/customer/map/countries/route.ts
+    - A	app/api/customer/map/publishers/route.ts
+    - A	app/api/customer/map/sources/[sourceId]/route.ts
+    - M	components/map-view.tsx
+    - M	components/news-api-hooks.ts
+    - M	components/use-map-view-model.ts
+  - Git stat:
+  - app/api/customer/benchmark/route.ts                       | 7 +++++++
+  -  app/api/customer/map/countries/[country]/sources/route.ts | 8 ++++++++
+  -  app/api/customer/map/countries/route.ts                   | 7 +++++++
+  -  app/api/customer/map/publishers/route.ts                  | 7 +++++++
+  -  app/api/customer/map/sources/[sourceId]/route.ts          | 8 ++++++++
+  -  components/map-view.tsx                                   | 8 ++++----
+  -  components/news-api-hooks.ts                              | 2 +-
+  -  components/use-map-view-model.ts                          | 8 ++++----
+  -  8 files changed, 46 insertions(+), 9 deletions(-)
+
+### [7241a03] Split snapshot cache headers for CDN layers
+- Commit: 7241a03fec1121081ef7a78ab25e37dfd26bfdaa
+- Date: 2026-04-06 15:00:55 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	app/api/customer/dashboard/benchmark/route.ts
+    - M	app/api/customer/dashboard/map/countries/[country]/sources/route.ts
+    - M	app/api/customer/dashboard/map/countries/route.ts
+    - M	app/api/customer/dashboard/map/publishers/route.ts
+    - M	app/api/customer/dashboard/map/sources/[sourceId]/route.ts
+    - M	app/api/customer/dashboard/summary/route.ts
+    - M	lib/customer-portal.ts
+    - M	lib/dashboard-cache-control.ts
+  - Git stat:
+  - app/api/customer/dashboard/benchmark/route.ts              | 13 ++++++-------
+  -  .../dashboard/map/countries/[country]/sources/route.ts     |  9 +++++----
+  -  app/api/customer/dashboard/map/countries/route.ts          |  7 ++++---
+  -  app/api/customer/dashboard/map/publishers/route.ts         |  7 ++++---
+  -  app/api/customer/dashboard/map/sources/[sourceId]/route.ts |  5 +++--
+  -  app/api/customer/dashboard/summary/route.ts                |  8 ++++----
+  -  lib/customer-portal.ts                                     | 14 +++++++++++---
+  -  lib/dashboard-cache-control.ts                             | 13 ++++++++++++-
+  -  8 files changed, 49 insertions(+), 27 deletions(-)
+
+### [dab3f4f] Improve generic topic recovery
+- Commit: dab3f4f3ff4f1fc83fb6f036c8521c92064d3b30
+- Date: 2026-04-06 14:23:00 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	CHANGELOG.md
+    - M	data/country-benchmark.snapshot.json
+    - M	data/dashboard-summary.snapshot.json
+    - M	lib/article-taxonomy.ts
+  - Git stat:
+  - CHANGELOG.md                         | 20 ++++++++++++++++++++
+  -  data/country-benchmark.snapshot.json |  2 +-
+  -  data/dashboard-summary.snapshot.json |  2 +-
+  -  lib/article-taxonomy.ts              |  5 +++++
+  -  4 files changed, 27 insertions(+), 2 deletions(-)
+
 ### [d6566b5] Add source section profiles for world cleanup
 - Commit: d6566b5138f1f7e0985a87f817135e9c5d9fe6f7
 - Date: 2026-04-06 12:44:57 -0500

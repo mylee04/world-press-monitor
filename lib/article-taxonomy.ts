@@ -266,13 +266,17 @@ const SECTION_TOPIC_RULES: Partial<Record<NewsSection, readonly TopicRule[]>> = 
 const TAXONOMY_VERSION = 'candidates-v5';
 
 const OTHERS_RECOVERY_THRESHOLDS: Partial<Record<NewsSection, number>> = {
+  politics: 0.7,
   tech: 0.7,
   business: 0.65,
   conflicts: 0.65,
   sports: 0.65,
+  health: 0.65,
+  entertainment: 0.65,
 };
 
 const RECOVERED_SECTION_TOPIC_FALLBACKS: Partial<Record<NewsSection, string>> = {
+  politics: 'political news',
   tech: 'general technology',
   business: 'general business',
   conflicts: 'war / tensions',
