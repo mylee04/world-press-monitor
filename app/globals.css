@@ -308,6 +308,8 @@ label span,
 
 html:has(.map-page-root),
 body:has(.map-page-root),
+html:has(.landing-page-root),
+body:has(.landing-page-root),
 html:has(.dashboard-page-root),
 body:has(.dashboard-page-root),
 html:has(.benchmark-page-root),
@@ -320,6 +322,7 @@ body:has(.benchmark-page-root) {
 }
 
 body:has(.map-page-root),
+body:has(.landing-page-root),
 body:has(.dashboard-page-root),
 body:has(.benchmark-page-root) {
   --bg: #040812;
@@ -352,6 +355,7 @@ body:has(.map-page-root) .app-shell {
 }
 
 body:has(.map-page-root) .site-header,
+body:has(.landing-page-root) .site-header,
 body:has(.dashboard-page-root) .site-header,
 body:has(.benchmark-page-root) .site-header {
   display: flex;
@@ -362,18 +366,21 @@ body:has(.benchmark-page-root) .site-header {
 }
 
 body:has(.map-page-root) .site-header p,
+body:has(.landing-page-root) .site-header p,
 body:has(.dashboard-page-root) .site-header p,
 body:has(.benchmark-page-root) .site-header p {
   color: #9cbfd6;
 }
 
 body:has(.map-page-root) .brand-kicker,
+body:has(.landing-page-root) .brand-kicker,
 body:has(.dashboard-page-root) .brand-kicker,
 body:has(.benchmark-page-root) .brand-kicker {
   color: #7fe3ff;
 }
 
 body:has(.map-page-root) .site-header nav a,
+body:has(.landing-page-root) .site-header nav a,
 body:has(.dashboard-page-root) .site-header nav a,
 body:has(.benchmark-page-root) .site-header nav a {
   border-color: rgba(120, 199, 255, 0.14);
@@ -382,6 +389,7 @@ body:has(.benchmark-page-root) .site-header nav a {
 }
 
 body:has(.map-page-root) .site-header nav a:hover,
+body:has(.landing-page-root) .site-header nav a:hover,
 body:has(.dashboard-page-root) .site-header nav a:hover,
 body:has(.benchmark-page-root) .site-header nav a:hover {
   text-decoration: none;
@@ -392,6 +400,10 @@ body:has(.benchmark-page-root) .site-header nav a:hover {
 body:has(.map-page-root) main {
   min-height: auto;
   overflow: visible;
+}
+
+body:has(.landing-page-root) .app-shell {
+  width: min(1400px, calc(100vw - 32px));
 }
 
 .map-page-root {

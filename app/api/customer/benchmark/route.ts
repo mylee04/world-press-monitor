@@ -1,32 +1,59 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { buildDisabledCountryBenchmarkResponse } from '@/lib/benchmark-store-shaping';
+import type { CountryBenchmarkResponse } from '@/lib/benchmark-types';
 import { readCountryBenchmarkSnapshot } from '@/lib/customer-dashboard-snapshot-store';
 import { buildPublicSnapshotCacheHeaders, PUBLIC_MAP_RESPONSE_CACHE_CONTROL } from '@/lib/dashboard-cache-control';
-import { proxyPortalServerApiRequest } from '@/lib/customer-portal';
+import { proxyPortalServerApiRequest, shouldUseLocalFallbackForPortalResponse } from '@/lib/customer-portal';
 
 export const runtime = 'nodejs';
 
+function isUsableCountryBenchmarkSnapshot(payload: CountryBenchmarkResponse | null | undefined): payload is CountryBenchmarkResponse {
+  return Boolean(payload && payload.storage === 'postgres' && Array.isArray(payload.countries) && payload.countries.length > 0);
+}
+
+function buildBenchmarkResponse(payload: CountryBenchmarkResponse, source: 'upstream' | 'snapshot-fallback' | 'disabled-fallback' | 'disabled-snapshot-fallback') {
+  return NextResponse.json(payload, {
+    headers: buildPublicSnapshotCacheHeaders({
+      'X-Data-Source': source,
+    }),
+  });
+}
+
 export async function GET(request: NextRequest) {
   const snapshot = await readCountryBenchmarkSnapshot();
-  if (snapshot) {
-    return NextResponse.json(snapshot, {
-      headers: buildPublicSnapshotCacheHeaders({
-        'X-Data-Source': 'snapshot-fallback',
-      }),
-    });
-  }
-
   const upstream = await proxyPortalServerApiRequest(request, '/api/dashboard/benchmark', {
     cacheControl: PUBLIC_MAP_RESPONSE_CACHE_CONTROL,
     responseHeaders: buildPublicSnapshotCacheHeaders(),
   });
+
   if (upstream.ok) {
+    const payload = (await upstream.clone().json().catch(() => null)) as CountryBenchmarkResponse | null;
+    if (isUsableCountryBenchmarkSnapshot(payload)) {
+      return buildBenchmarkResponse(payload, 'upstream');
+    }
+
+    if (isUsableCountryBenchmarkSnapshot(snapshot)) {
+      return buildBenchmarkResponse(snapshot, 'snapshot-fallback');
+    }
+
+    if (payload && typeof payload === 'object') {
+      return buildBenchmarkResponse(payload, 'upstream');
+    }
+
     return upstream;
   }
 
-  return NextResponse.json(buildDisabledCountryBenchmarkResponse(), {
-    headers: buildPublicSnapshotCacheHeaders({
-      'X-Data-Source': 'disabled-fallback',
-    }),
-  });
+  const shouldUseSnapshotFallback = await shouldUseLocalFallbackForPortalResponse(upstream);
+  if (shouldUseSnapshotFallback && snapshot) {
+    return buildBenchmarkResponse(
+      snapshot,
+      isUsableCountryBenchmarkSnapshot(snapshot) ? 'snapshot-fallback' : 'disabled-snapshot-fallback'
+    );
+  }
+
+  if (!shouldUseSnapshotFallback) {
+    return upstream;
+  }
+
+  return buildBenchmarkResponse(buildDisabledCountryBenchmarkResponse(), 'disabled-fallback');
 }

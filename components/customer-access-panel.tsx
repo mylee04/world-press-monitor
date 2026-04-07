@@ -74,7 +74,7 @@ export function CustomerAccessPanel({
           <button className="button" type="button" onClick={() => void clearToken()} disabled={!hasToken || savePending}>
             Clear token
           </button>
-          <Link href="/">Go to Dashboard</Link>
+          <Link href="/dashboard/">Go to Dashboard</Link>
           <Link href="/benchmark/">Open Benchmark</Link>
         </div>
         <div className="muted">
