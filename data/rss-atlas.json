@@ -14004,6 +14004,48 @@
           "valid": "valid"
         },
         {
+          "name": "VRT NWS Buitenland",
+          "url": "https://www.vrt.be/vrtnws/nl.rss.articles.buitenland.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "VRT NWS Cultuur",
+          "url": "https://www.vrt.be/vrtnws/nl.rss.articles.cultuur.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "VRT NWS Wetenschap",
+          "url": "https://www.vrt.be/vrtnws/nl.rss.articles.wetenschap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "VRT NWS Justitie",
+          "url": "https://www.vrt.be/vrtnws/nl.rss.articles.justitie.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Apache",
+          "url": "https://www.apache.be/feed/artikels",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "L-Post",
+          "url": "https://lpost.be/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
           "name": "BX1",
           "url": "https://bx1.be/feed/"
         }
