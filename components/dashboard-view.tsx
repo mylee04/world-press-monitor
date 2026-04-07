@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useNewsApiDashboardSummary } from '@/components/news-api-hooks';
 import { useTaxonomyLocalePreference } from '@/components/taxonomy-locale-provider';
 import { NEWS_SECTION_ORDER } from '@/lib/article-taxonomy';
+import type { DashboardDataSource, NewsApiDashboardSummaryResponse } from '@/lib/news-api';
 import {
   getTaxonomyLocaleLabel,
   getTopLevelTaxonomyLabel,
@@ -71,6 +72,35 @@ function getDisabledSummaryMessage(reason?: string): string {
   }
 
   return reason;
+}
+
+function getSummarySourceLabel(source?: DashboardDataSource): string {
+  if (source === 'upstream') return 'Live portal';
+  if (source === 'snapshot-fallback') return 'Snapshot fallback';
+  if (source === 'disabled-snapshot-fallback') return 'Disabled snapshot fallback';
+  if (source === 'disabled-fallback') return 'Disabled fallback';
+  return 'Unknown source';
+}
+
+function getSummarySourceMessage(summary: NewsApiDashboardSummaryResponse): string {
+  if (summary.dataSource === 'upstream') {
+    return 'Using the live portal API. Metrics may lag the source database by up to 1 hour.';
+  }
+
+  const reason = summary.reason?.trim() || '';
+  if (/timed out after/i.test(reason)) {
+    return 'Using the bundled fallback snapshot because the live portal timed out.';
+  }
+
+  if (reason.startsWith('Dashboard summary unavailable from portal:')) {
+    return 'Using the bundled fallback snapshot because the live portal is temporarily unavailable.';
+  }
+
+  if (summary.dataSource === 'snapshot-fallback') {
+    return 'Using the bundled fallback snapshot because live portal data is unavailable right now.';
+  }
+
+  return 'Using fallback dashboard data.';
 }
 
 export function DashboardView() {
@@ -181,12 +211,15 @@ export function DashboardView() {
         <div className="eyebrow">Customer Dashboard</div>
         <h1>Hourly snapshot coverage across rolling output, top countries, category mix, and topic structure.</h1>
         <p>
-          This dashboard uses hourly customer snapshots for aggregate coverage views only.
+          This dashboard shows aggregate coverage views only.
           Raw article titles and source rows are not exposed here.
         </p>
         <div className="hero-note">
-          <strong>Snapshot freshness:</strong> updated {renderRelativeTime(summary.generatedAt)} from the latest hourly snapshot.
-          Metrics may lag the source database by up to 1 hour.
+          <strong>{summary.dataSource === 'upstream' ? 'Live freshness:' : 'Fallback freshness:'}</strong>{' '}
+          updated {renderRelativeTime(summary.generatedAt)}. {getSummarySourceMessage(summary)}
+        </div>
+        <div className="hero-note">
+          <strong>Current source:</strong> {getSummarySourceLabel(summary.dataSource)}.
         </div>
         <div className="hero-note">
           Dashboard tracks the current rolling 24-hour window.

@@ -1,3 +1,5 @@
+import type { DashboardDataSource } from '@/lib/news-api';
+
 export type CountryBenchmarkWindow = {
   bucket: string;
   label?: string | null;
@@ -49,6 +51,7 @@ export type CountryBenchmarkCountryRow = {
 
 export type CountryBenchmarkResponse = {
   storage: 'postgres' | 'disabled';
+  dataSource?: DashboardDataSource;
   generatedAt: string | null;
   totals: {
     countries: number;
