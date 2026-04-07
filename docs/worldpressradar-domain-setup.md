@@ -181,10 +181,14 @@ In Vercel project settings:
 
 ```bash
 NEXT_PUBLIC_NEWS_API_BASE_URL=https://api.worldpressradar.com
+WPR_INTERNAL_API_BASE_URL=https://portal-api.worldpressradar.com
 ```
 
 4. Apply to `Production`
 5. Redeploy production
+
+Use `WPR_INTERNAL_API_BASE_URL` only for the server-side portal proxy. Browser traffic should stay on
+`https://api.worldpressradar.com`.
 
 ## Part 4. API production env checklist
 
