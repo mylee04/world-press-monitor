@@ -163,6 +163,63 @@ const SOURCE_SECTION_OVERRIDES: readonly SourceSectionOverride[] = [
     titlePattern: /健康|醫療|醫師|癌症|病患|疫苗|飲食|減重|醫院/,
   },
   {
+    section: 'entertainment',
+    sourcePattern: /ntv - news sitemap/,
+    titlePattern: /映画|ドラマ|俳優|女優|歌手|芸能|ライブ|アイドル|アニメ|声優|音楽|結婚|離婚/,
+  },
+  {
+    section: 'entertainment',
+    sourcePattern: /oricon/,
+  },
+  {
+    section: 'entertainment',
+    sourcePattern: /kapanlagi/,
+  },
+  {
+    section: 'entertainment',
+    sourcePattern: /rtl nieuws/,
+    titlePattern: /showbizz|film|serie|acteur|actrice|muziek|album|festival|songfestival/,
+  },
+  {
+    section: 'entertainment',
+    sourcePattern: /kurir|telegraf|informer/,
+    titlePattern: /glum|pevač|pevačica|film|serij|zvezd|estrad|koncert|muzik|glumica|showbiz/,
+  },
+  {
+    section: 'entertainment',
+    sourcePattern: /조선닷컴/,
+    titlePattern: /배우|가수|영화|드라마|예능|방송|연예|공연|앨범|콘서트/,
+  },
+  {
+    section: 'health',
+    sourcePattern: /n\+más/,
+    titlePattern: /salud|m[eé]dic|hospital|enfermedad|vacuna|paciente|bienestar|virus|c[aá]ncer/,
+  },
+  {
+    section: 'health',
+    sourcePattern: /suc khoe & doi song/,
+  },
+  {
+    section: 'health',
+    sourcePattern: /g1 globo/,
+    titlePattern: /sa[uú]de|m[eé]dic|hospital|vacina|doen[cç]a|paciente|bem-estar|c[aâ]ncer/,
+  },
+  {
+    section: 'health',
+    sourcePattern: /milenio/,
+    titlePattern: /salud|m[eé]dic|hospital|vacuna|c[aá]ncer|enfermedad|paciente|bienestar/,
+  },
+  {
+    section: 'health',
+    sourcePattern: /the hindu/,
+    titlePattern: /health|hospital|medical|doctor|disease|wellness|cancer|patient/,
+  },
+  {
+    section: 'health',
+    sourcePattern: /o globo/,
+    titlePattern: /sa[uú]de|m[eé]dic|hospital|vacina|doen[cç]a|paciente|bem-estar|c[aâ]ncer/,
+  },
+  {
     section: 'others',
     sourcePattern: /yahoo taiwan/,
   },

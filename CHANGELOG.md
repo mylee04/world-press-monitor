@@ -6,6 +6,24 @@
 
 ## Unreleased
 
+### [107725a] Recover politics, entertainment, and health sections
+- Commit: 107725a689f4f7a122e2337f6dd7ee1f34a0eb6b
+- Date: 2026-04-06 19:55:02 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	CHANGELOG.md
+    - M	data/country-benchmark.snapshot.json
+    - M	data/dashboard-summary.snapshot.json
+    - M	lib/article-taxonomy.ts
+    - M	lib/source-taxonomy-overrides.ts
+  - Git stat:
+  - CHANGELOG.md                         | 118 +++++++++++++++++++++++++++++++++++
+  -  data/country-benchmark.snapshot.json |   2 +-
+  -  data/dashboard-summary.snapshot.json |   2 +-
+  -  lib/article-taxonomy.ts              |   4 ++
+  -  lib/source-taxonomy-overrides.ts     |  48 ++++++++++++++
+  -  5 files changed, 172 insertions(+), 2 deletions(-)
+
 ### [1049dc0] Add Vercel Web Analytics
 - Commit: 1049dc0343e0017384e90c2a9f2a3517af700eb7
 - Date: 2026-04-06 16:41:57 -0500
