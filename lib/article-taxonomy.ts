@@ -216,6 +216,7 @@ const SECTION_TOPIC_RULES: Partial<Record<NewsSection, readonly TopicRule[]>> = 
     { topic: 'awards', patterns: [rx('oscars?|emmys?|grammys?|bafta|cannes|golden globes')] },
   ],
   lifestyle: [
+    { topic: 'general lifestyle', patterns: [rx('lifestyle|vida|estilo de vida|生活|라이프|라이프스타일|gaya hidup|생활|暮らし|생활정보')] },
     { topic: 'parenting', patterns: [rx('parenting|childcare|co parenting|school run|raising children')] },
     { topic: 'pets / animals', patterns: [rx('pets?\\b|dog show|cat\\b|veterinary|animal care|pet adoption')] },
     { topic: 'careers / worklife', patterns: [rx('remote work|work life balance|office culture|career advice|burnout')] },
@@ -227,6 +228,7 @@ const SECTION_TOPIC_RULES: Partial<Record<NewsSection, readonly TopicRule[]>> = 
     { topic: 'relationships / family', patterns: [rx('dating|wedding|marriage|parenting|family life|relationships?')] },
   ],
   arts: [
+    { topic: 'general arts', patterns: [rx('culture|cultura|arts?|문화|예술|艺术|藝術|kultur|культура|cultur[ae]')] },
     { topic: 'photography', patterns: [rx('photography|photographer|photo exhibit|photojournalism')] },
     { topic: 'heritage / preservation', patterns: [rx('heritage site|restoration project|unesco\\b|preservation effort')] },
     { topic: 'auctions / collectibles', patterns: [rx('auction house|collectible|memorabilia|record sale|rare manuscript')] },
@@ -263,7 +265,7 @@ const SECTION_TOPIC_RULES: Partial<Record<NewsSection, readonly TopicRule[]>> = 
   ],
 };
 
-const TAXONOMY_VERSION = 'candidates-v5';
+const TAXONOMY_VERSION = 'candidates-v6';
 
 const OTHERS_RECOVERY_THRESHOLDS: Partial<Record<NewsSection, number>> = {
   politics: 0.7,
@@ -273,6 +275,8 @@ const OTHERS_RECOVERY_THRESHOLDS: Partial<Record<NewsSection, number>> = {
   sports: 0.65,
   health: 0.65,
   entertainment: 0.65,
+  arts: 0.6,
+  lifestyle: 0.55,
 };
 
 const RECOVERED_SECTION_TOPIC_FALLBACKS: Partial<Record<NewsSection, string>> = {
@@ -283,6 +287,8 @@ const RECOVERED_SECTION_TOPIC_FALLBACKS: Partial<Record<NewsSection, string>> = 
   sports: 'general sports',
   health: 'general health',
   entertainment: 'general entertainment',
+  arts: 'general arts',
+  lifestyle: 'general lifestyle',
 };
 
 export function isTopicAllowedForSection(section: string | null | undefined, topic: string | null | undefined): boolean {

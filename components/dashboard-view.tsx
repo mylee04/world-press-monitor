@@ -197,7 +197,7 @@ export function DashboardView() {
     <div className="page-stack dashboard-page-root">
       <section className="hero-panel">
         <div className="eyebrow">Customer Dashboard</div>
-        <h1>Hourly snapshot operational coverage across rolling output, top countries, category mix, and topic structure.</h1>
+        <h1>Hourly snapshot coverage across rolling output, top countries, category mix, and topic structure.</h1>
         <p>
           This dashboard uses hourly customer snapshots for aggregate coverage views only.
           Raw article titles and source rows are not exposed here.

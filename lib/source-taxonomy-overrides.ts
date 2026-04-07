@@ -163,6 +163,56 @@ const SOURCE_SECTION_OVERRIDES: readonly SourceSectionOverride[] = [
     titlePattern: /健康|醫療|醫師|癌症|病患|疫苗|飲食|減重|醫院/,
   },
   {
+    section: 'lifestyle',
+    sourcePattern: /yahoo taiwan/,
+    titlePattern: /旅遊|旅行|美食|食譜|穿搭|時尚|居家|裝潢|親子|婚姻|戀愛|寵物|開箱|生活/,
+  },
+  {
+    section: 'arts',
+    sourcePattern: /infobae/,
+    titlePattern: /cultura|arte|artista|museo|exposici[oó]n|literatura|libro|novela|teatro|fotograf/i,
+  },
+  {
+    section: 'arts',
+    sourcePattern: /tass \(tass russian main\)|^tass\b/,
+    titlePattern: /культур|искусств|музе|театр|книг|литератур|выставк|художник/,
+  },
+  {
+    section: 'arts',
+    sourcePattern: /actu\.fr|actu\.fr - news sitemap/,
+    titlePattern: /culture|exposition|mus[eé]e|th[eé][aâ]tre|livre|roman|auteur|concert|festival/,
+  },
+  {
+    section: 'arts',
+    sourcePattern: /le t[eé]l[eé]gramme/,
+    titlePattern: /culture|festival|concert|mus[eé]e|exposition|th[eé][aâ]tre|livre|roman/,
+  },
+  {
+    section: 'arts',
+    sourcePattern: /abc\.es|abc\.es - sitemap/,
+    titlePattern: /cultura|arte|museo|exposici[oó]n|teatro|libro|novela|fotograf/i,
+  },
+  {
+    section: 'arts',
+    sourcePattern: /welt/,
+    titlePattern: /kultur|museum|ausstellung|roman|buch|literatur|kunst|theater/,
+  },
+  {
+    section: 'arts',
+    sourcePattern: /newsis/,
+    titlePattern: /전시|미술|예술|박물관|미술관|문학|작가|소설|사진전|공연예술/,
+  },
+  {
+    section: 'lifestyle',
+    sourcePattern: /nownews/,
+    titlePattern: /旅遊|美食|穿搭|時尚|居家|戀愛|寵物|生活|親子/,
+  },
+  {
+    section: 'lifestyle',
+    sourcePattern: /newsis/,
+    titlePattern: /패션|뷰티|여행|맛집|레시피|반려동물|인테리어|가족|연애|라이프/,
+  },
+  {
     section: 'entertainment',
     sourcePattern: /ntv - news sitemap/,
     titlePattern: /映画|ドラマ|俳優|女優|歌手|芸能|ライブ|アイドル|アニメ|声優|音楽|結婚|離婚/,
