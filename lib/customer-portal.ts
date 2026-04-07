@@ -57,6 +57,23 @@ function buildPortalTimeoutMessage(timeoutMs: number): string {
   return `Upstream request timed out after ${Math.round(timeoutMs / 1000)}s.`;
 }
 
+function logPortalServerProxy(
+  level: 'info' | 'warn' | 'error',
+  details: {
+    portalPath: string;
+    upstreamPath: string;
+    upstreamOrigin: string;
+    timeoutMs: number;
+    durationMs?: number;
+    status?: number;
+    ok?: boolean;
+    error?: string;
+  }
+) {
+  const logger = level === 'error' ? console.error : level === 'warn' ? console.warn : console.info;
+  logger('[portal-proxy] upstream request', details);
+}
+
 async function fetchPortalUpstream(input: string | URL, init: RequestInit, timeoutMs = PORTAL_PROXY_TIMEOUT_MS): Promise<Response> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
@@ -393,6 +410,8 @@ export async function proxyPortalServerApiRequest(
 
   const upstreamUrl = new URL(upstreamPath, apiBaseUrl);
   upstreamUrl.search = request.nextUrl.searchParams.toString();
+  const timeoutMs = options?.timeoutMs ?? PORTAL_PROXY_TIMEOUT_MS;
+  const requestStartedAt = Date.now();
 
   let upstreamResponse: Response;
   try {
@@ -400,9 +419,17 @@ export async function proxyPortalServerApiRequest(
       cache: 'no-store',
       headers: buildPortalUpstreamHeaders(token),
     },
-    options?.timeoutMs
+    timeoutMs
     );
   } catch (error: unknown) {
+    logPortalServerProxy('error', {
+      portalPath: request.nextUrl.pathname,
+      upstreamPath: upstreamUrl.pathname,
+      upstreamOrigin: upstreamUrl.origin,
+      timeoutMs,
+      durationMs: Date.now() - requestStartedAt,
+      error: error instanceof Error ? error.message : 'Upstream request failed.',
+    });
     return NextResponse.json(
       {
         error: 'upstream_unavailable',
@@ -411,6 +438,18 @@ export async function proxyPortalServerApiRequest(
       { status: 502, headers: { 'Cache-Control': 'no-store' } }
     );
   }
+
+  const durationMs = Date.now() - requestStartedAt;
+  const shouldWarn = !upstreamResponse.ok || durationMs >= Math.min(timeoutMs, 5_000);
+  logPortalServerProxy(shouldWarn ? 'warn' : 'info', {
+    portalPath: request.nextUrl.pathname,
+    upstreamPath: upstreamUrl.pathname,
+    upstreamOrigin: upstreamUrl.origin,
+    timeoutMs,
+    durationMs,
+    status: upstreamResponse.status,
+    ok: upstreamResponse.ok,
+  });
 
   return new NextResponse(upstreamResponse.body, {
     status: upstreamResponse.status,
