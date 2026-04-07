@@ -2,6 +2,7 @@ import { NextRequest } from 'next/server';
 import { buildPublicSnapshotCacheHeaders, PUBLIC_MAP_RESPONSE_CACHE_CONTROL } from '@/lib/dashboard-cache-control';
 import { readDashboardSummarySnapshot } from '@/lib/customer-dashboard-snapshot-store';
 import { proxyPortalServerApiRequest, shouldUseLocalFallbackForPortalResponse } from '@/lib/customer-portal';
+import type { DashboardDataSource } from '@/lib/news-api';
 
 type DashboardSummaryPayload = {
   storage?: 'postgres' | 'disabled';
@@ -25,7 +26,7 @@ type DashboardSummaryPayload = {
   [key: string]: unknown;
 };
 
-const DASHBOARD_SUMMARY_UPSTREAM_TIMEOUT_MS = 15_000;
+const DASHBOARD_SUMMARY_UPSTREAM_TIMEOUT_MS = 30_000;
 
 function isUsableDashboardSummarySnapshot(payload: DashboardSummaryPayload | null | undefined): payload is DashboardSummaryPayload {
   return Boolean(payload && payload.storage === 'postgres');
@@ -89,12 +90,17 @@ function sanitizeDashboardSummary(payload: DashboardSummaryPayload): DashboardSu
 
 export const runtime = 'nodejs';
 
-function buildSummaryResponse(payload: DashboardSummaryPayload, headers?: Record<string, string>) {
+function buildSummaryResponse(
+  payload: DashboardSummaryPayload,
+  source: DashboardDataSource,
+  headers?: Record<string, string>
+) {
   const sanitizedPayload = sanitizeDashboardSummary(payload);
   return new Response(JSON.stringify(sanitizedPayload), {
     status: 200,
     headers: buildPublicSnapshotCacheHeaders({
       'content-type': 'application/json',
+      'X-Data-Source': source,
       ...(headers || {}),
     }),
   });
@@ -146,15 +152,15 @@ export async function GET(request: NextRequest) {
   if (upstream.ok) {
     const payload = (await upstream.clone().json().catch(() => null)) as DashboardSummaryPayload | null;
     if (isUsableDashboardSummarySnapshot(payload)) {
-      return buildSummaryResponse(payload, { 'X-Data-Source': 'upstream' });
+      return buildSummaryResponse({ ...payload, dataSource: 'upstream' }, 'upstream');
     }
 
     if (isUsableDashboardSummarySnapshot(snapshotPayload)) {
-      return buildSummaryResponse(snapshotPayload, { 'X-Data-Source': 'snapshot-fallback' });
+      return buildSummaryResponse({ ...snapshotPayload, dataSource: 'snapshot-fallback' }, 'snapshot-fallback');
     }
 
     if (hasAnyDashboardSummaryPayload(payload)) {
-      return buildSummaryResponse(payload, { 'X-Data-Source': 'upstream' });
+      return buildSummaryResponse(Object.assign({}, payload, { dataSource: 'upstream' as const }), 'upstream');
     }
 
     return upstream;
@@ -167,12 +173,11 @@ export async function GET(request: NextRequest) {
   if (shouldUseSnapshotFallback && hasAnyDashboardSummaryPayload(snapshotPayload)) {
     return buildSummaryResponse(
       {
-        ...snapshotPayload,
+        ...(hasAnyDashboardSummaryPayload(snapshotPayload) ? snapshotPayload : {}),
+        dataSource: isUsableDashboardSummarySnapshot(snapshotPayload) ? 'snapshot-fallback' : 'disabled-snapshot-fallback',
         reason: snapshotPayload.reason || reason,
       },
-      {
-        'X-Data-Source': isUsableDashboardSummarySnapshot(snapshotPayload) ? 'snapshot-fallback' : 'disabled-snapshot-fallback',
-      }
+      isUsableDashboardSummarySnapshot(snapshotPayload) ? 'snapshot-fallback' : 'disabled-snapshot-fallback'
     );
   }
 
@@ -181,9 +186,10 @@ export async function GET(request: NextRequest) {
   }
 
   return buildSummaryResponse(
-    buildDisabledSummaryResponse(reason),
     {
-      'X-Data-Source': 'disabled-fallback',
-    }
+      ...buildDisabledSummaryResponse(reason),
+      dataSource: 'disabled-fallback',
+    },
+    'disabled-fallback'
   );
 }

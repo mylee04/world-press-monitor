@@ -3,16 +3,18 @@ import { buildDisabledCountryBenchmarkResponse } from '@/lib/benchmark-store-sha
 import type { CountryBenchmarkResponse } from '@/lib/benchmark-types';
 import { readCountryBenchmarkSnapshot } from '@/lib/customer-dashboard-snapshot-store';
 import { buildPublicSnapshotCacheHeaders, PUBLIC_MAP_RESPONSE_CACHE_CONTROL } from '@/lib/dashboard-cache-control';
+import type { DashboardDataSource } from '@/lib/news-api';
 import { proxyPortalServerApiRequest, shouldUseLocalFallbackForPortalResponse } from '@/lib/customer-portal';
 
 export const runtime = 'nodejs';
+const DASHBOARD_BENCHMARK_UPSTREAM_TIMEOUT_MS = 30_000;
 
 function isUsableCountryBenchmarkSnapshot(payload: CountryBenchmarkResponse | null | undefined): payload is CountryBenchmarkResponse {
   return Boolean(payload && payload.storage === 'postgres' && Array.isArray(payload.countries) && payload.countries.length > 0);
 }
 
-function buildBenchmarkResponse(payload: CountryBenchmarkResponse, source: 'upstream' | 'snapshot-fallback' | 'disabled-fallback' | 'disabled-snapshot-fallback') {
-  return NextResponse.json(payload, {
+function buildBenchmarkResponse(payload: CountryBenchmarkResponse, source: DashboardDataSource) {
+  return NextResponse.json({ ...payload, dataSource: source }, {
     headers: buildPublicSnapshotCacheHeaders({
       'X-Data-Source': source,
     }),
@@ -24,6 +26,7 @@ export async function GET(request: NextRequest) {
   const upstream = await proxyPortalServerApiRequest(request, '/api/dashboard/benchmark', {
     cacheControl: PUBLIC_MAP_RESPONSE_CACHE_CONTROL,
     responseHeaders: buildPublicSnapshotCacheHeaders(),
+    timeoutMs: DASHBOARD_BENCHMARK_UPSTREAM_TIMEOUT_MS,
   });
 
   if (upstream.ok) {

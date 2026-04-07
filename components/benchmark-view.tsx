@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import { useCustomerAccess } from '@/components/customer-access-provider';
 import { BENCHMARK_COLUMN_HELP, HelpTooltipLabel } from '@/components/help-tooltip-label';
 import { useCountryBenchmark } from '@/components/news-api-hooks';
+import type { DashboardDataSource } from '@/lib/news-api';
 import type { CountryBenchmarkCountryRow, CountryBenchmarkResponse, CountryBenchmarkWindow } from '@/lib/benchmark-types';
 
 type BenchmarkPeriod = 'hourly' | 'daily' | 'weekly' | 'monthly';
@@ -108,6 +109,31 @@ function formatBucketLabel(value: { bucket: string; label?: string | null } | nu
 
 function formatDateTimeShort(value: string | null | undefined): string {
   return formatDateTime(value);
+}
+
+function getBenchmarkSourceLabel(source?: DashboardDataSource): string {
+  if (source === 'upstream') return 'Live portal';
+  if (source === 'snapshot-fallback') return 'Snapshot fallback';
+  if (source === 'disabled-snapshot-fallback') return 'Disabled snapshot fallback';
+  if (source === 'disabled-fallback') return 'Disabled fallback';
+  return 'Unknown source';
+}
+
+function getBenchmarkSourceMessage(benchmark: CountryBenchmarkResponse): string {
+  if (benchmark.dataSource === 'upstream') {
+    return 'Using the live portal benchmark payload.';
+  }
+
+  const reason = benchmark.reason?.trim() || '';
+  if (/timed out after/i.test(reason)) {
+    return 'Using the bundled fallback benchmark because the live portal timed out.';
+  }
+
+  if (benchmark.dataSource === 'snapshot-fallback') {
+    return 'Using the bundled fallback benchmark because live portal data is unavailable right now.';
+  }
+
+  return 'Using fallback benchmark data.';
 }
 
 function getPeriodWindow(benchmark: CountryBenchmarkResponse, period: BenchmarkPeriod): CountryBenchmarkWindow | null {
@@ -304,6 +330,9 @@ export function BenchmarkView() {
         <div className="hero-note">
           <HelpTooltipLabel label="Snapshot freshness" description={BENCHMARK_COLUMN_HELP.benchmarkSnapshotFreshness} />{' '}
           Hourly {formatRelative(benchmark.hourly?.generatedAt)}. Daily bucket {formatBucketLabel(benchmark.daily)}. Generated {formatDateTimeShort(benchmark.daily?.generatedAt)}.
+        </div>
+        <div className="hero-note">
+          <strong>Current source:</strong> {getBenchmarkSourceLabel(benchmark.dataSource)}. {getBenchmarkSourceMessage(benchmark)}
         </div>
         <div className="hero-note">
           <HelpTooltipLabel label="Role split" description={BENCHMARK_COLUMN_HELP.benchmarkRoleSplit} />{' '}

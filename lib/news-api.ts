@@ -1,3 +1,9 @@
+export type DashboardDataSource =
+  | 'upstream'
+  | 'snapshot-fallback'
+  | 'disabled-fallback'
+  | 'disabled-snapshot-fallback';
+
 export interface NewsApiItem {
   id: string;
   source: string;
@@ -81,6 +87,7 @@ export interface NewsApiDashboardSourceCategoryCount {
 
 export interface NewsApiDashboardSummaryResponse {
   storage: 'postgres' | 'disabled';
+  dataSource?: DashboardDataSource;
   generatedAt: string | null;
   windowDays: number;
   latestHours: number;
