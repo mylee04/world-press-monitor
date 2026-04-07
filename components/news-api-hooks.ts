@@ -136,9 +136,8 @@ export function useNewsApiFilters(): JsonState<NewsApiFiltersResponse> {
 }
 
 export function useNewsApiDashboardSummary(): JsonState<NewsApiDashboardSummaryResponse> {
-  const { isReady, apiConfigured } = useCustomerAccess();
   const url = useMemo(() => buildNewsApiUrl('/api/dashboard/summary'), []);
-  return useRemoteJsonResource<NewsApiDashboardSummaryResponse>(isReady && apiConfigured ? url : null);
+  return useRemoteJsonResource<NewsApiDashboardSummaryResponse>(url);
 }
 
 export function useNewsApiNews(query: NewsApiQuery): JsonState<NewsApiResponse> {
@@ -149,7 +148,6 @@ export function useNewsApiNews(query: NewsApiQuery): JsonState<NewsApiResponse> 
 }
 
 export function useCountryBenchmark(): JsonState<CountryBenchmarkResponse> {
-  const { isReady } = useCustomerAccess();
   const url = useMemo(() => '/api/customer/benchmark', []);
-  return useRemoteJson<CountryBenchmarkResponse>(isReady ? url : null, undefined, { cacheMode: 'session' });
+  return useRemoteJson<CountryBenchmarkResponse>(url, undefined, { cacheMode: 'session' });
 }

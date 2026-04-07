@@ -250,7 +250,6 @@ function getSpotlightRows(rows: CountryBenchmarkCountryRow[], period: BenchmarkP
 }
 
 export function BenchmarkView() {
-  const { isReady } = useCustomerAccess();
   const benchmarkState = useCountryBenchmark();
   const benchmark = benchmarkState.data?.storage === 'postgres' ? benchmarkState.data : null;
   const disabledReason =
@@ -271,10 +270,6 @@ export function BenchmarkView() {
   }, [benchmark, period]);
   const visibleRows = showAllRows ? rankedRows : rankedRows.slice(0, 25);
   const spotlights = useMemo(() => getSpotlightRows(rankedRows, period), [rankedRows, period]);
-
-  if (!isReady) {
-    return <div className="page-stack benchmark-page-root"><div className="panel muted">Checking customer access...</div></div>;
-  }
 
   if (benchmarkState.loading && !benchmark) {
     return <div className="page-stack benchmark-page-root"><div className="panel muted">Loading country benchmark snapshots...</div></div>;
