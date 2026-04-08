@@ -432,8 +432,8 @@ export function MapDetailDrawer(props: MapDetailDrawerProps) {
                     <strong>{formatNumber(sourceDetail.metrics.pub1h)}</strong>
                   </article>
                   <article className="map-stat-card">
-                    <span>Fresh 24h</span>
-                    <strong>{formatNumber(sourceDetail.metrics.fresh24h)}</strong>
+                    <span>Ingested 24h</span>
+                    <strong>{formatNumber(sourceDetail.metrics.firstSeen24h)}</strong>
                   </article>
                   <article className="map-stat-card">
                     <span>Late 24h</span>
