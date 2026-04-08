@@ -607,6 +607,7 @@ body.landing-header-mode.landing-header-visible .site-header {
 }
 
 .map-stage-legend-item {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -620,6 +621,11 @@ body.landing-header-mode.landing-header-visible .site-header {
   color: #dff5ff;
   box-shadow: 0 10px 24px rgba(1, 8, 18, 0.22);
   font-size: 0.86rem;
+}
+
+.map-stage-legend-item:hover,
+.map-stage-legend-item:focus-within {
+  z-index: 2;
 }
 
 .map-stage-legend-item .help-label {
