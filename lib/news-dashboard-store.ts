@@ -551,7 +551,7 @@ export async function readNewsDashboardSummaryWithDeps(
       db.query<NewsApiCountryCountRow>(
         `
         select
-          coalesce(country, 'Global') as country,
+          coalesce(nullif(trim(source_country), ''), coalesce(country, 'Global')) as country,
           count(*)::text as count
         from news_articles
         where publication_datetime >= $4::timestamptz - ($1::int * interval '1 hour')

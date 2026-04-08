@@ -37,6 +37,19 @@ type WorkerSummary = {
       cacheHits: number;
       budgetSkipped: number;
     };
+    selection: {
+      mode: 'all' | 'chunk' | 'hybrid';
+      reason: string;
+      dbBacked: boolean;
+      headOutlets: number;
+      longTailOutlets: number;
+      longTailSelected: number;
+      headWindowHours: number | null;
+      headMinArticles: number | null;
+      headMaxOutlets: number | null;
+      rotationHours: number | null;
+      rotationBucket: number | null;
+    };
     mergedItemsBySource: Array<{
       source: string;
       count: number;
@@ -83,6 +96,7 @@ export function buildWorkerSummary(params: {
   persistedDiagnostics: number;
   fallbackSummary: WorkerSummary['worker']['fallback'];
   articleMetaCategorySummary: WorkerSummary['worker']['articleMetaCategory'];
+  selectionSummary: WorkerSummary['worker']['selection'];
 }): WorkerSummary {
   const counts = summarizeEndpointResults(params.diagnostics);
   return {
@@ -109,6 +123,7 @@ export function buildWorkerSummary(params: {
       diagnosticsPersisted: params.persistedDiagnostics,
       fallback: params.fallbackSummary,
       articleMetaCategory: params.articleMetaCategorySummary,
+      selection: params.selectionSummary,
       mergedItemsBySource: buildSourceCounts(params.mergedItems),
     },
   };
@@ -129,6 +144,7 @@ export function formatWorkerSummaryLog(params: {
   failingKeysSize: number;
   fallbackSummary: WorkerSummary['worker']['fallback'];
   articleMetaCategorySummary: WorkerSummary['worker']['articleMetaCategory'];
+  selectionSummary: WorkerSummary['worker']['selection'];
   methodStats: Record<'rss' | 'sitemap', { attempted: number; ok: number; fail: number }>;
   mergedCount: number;
   persistedArticles: number;
@@ -140,11 +156,15 @@ export function formatWorkerSummaryLog(params: {
     .slice(0, 5)
     .map(({ source, count }) => `${source}:${count}`)
     .join(', ');
+  const selectionSummary = params.selectionSummary.mode === 'hybrid'
+    ? `selection=hybrid(${params.selectionSummary.reason}) head=${params.selectionSummary.headOutlets} long_tail=${params.selectionSummary.longTailOutlets} long_tail_selected=${params.selectionSummary.longTailSelected} rotation=${(params.selectionSummary.rotationBucket ?? 0) + 1}/${params.selectionSummary.rotationHours ?? 1}`
+    : `selection=${params.selectionSummary.mode}(${params.selectionSummary.reason})`;
   return (
     `[ingest-worker] outlets=${params.selectedCount}/${params.sourceFilteredOutletsCount}/${params.countryFilteredOutletsCount}/${params.allOutletsCount} endpoints=${params.attempted} ok=${params.ok} failed=${params.failed} ` +
     `country_filter=${params.countryFilter ? params.countryFilter.join('|') : 'ALL'} ` +
     `source_filter=${params.sourceFilter ? params.sourceFilter.join('|') : 'ALL'} ` +
     `backfill=${params.backfillLabel} ` +
+    `${selectionSummary} ` +
     `explicit_sitemap_parallel=${params.explicitSitemapParallel ? 'on' : 'off'} ` +
     `backoff_skipped_total=${params.failingKeysSize} backoff_skipped=[rss=${params.fallbackSummary.rssBackoffSkipped}, sitemap=${params.fallbackSummary.sitemapBackoffSkipped}] ` +
     `sitemap_policy_disabled=${params.fallbackSummary.sitemapPolicyDisabled} ` +

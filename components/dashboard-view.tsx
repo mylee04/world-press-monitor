@@ -281,9 +281,12 @@ export function DashboardView() {
 
       <section className="panel">
         <div className="section-head">
-          <h2>Top countries in rolling 24h</h2>
+          <h2>Top publisher countries in rolling 24h</h2>
           <span>{preview.articleCount.toLocaleString()} published</span>
         </div>
+        <p className="muted" style={{ marginBottom: 12 }}>
+          Ranked by publisher country when available, falling back to the article country only when source-country metadata is missing.
+        </p>
         <div className="stat-list">
           {preview.topCountries.length > 0 ? (
             preview.topCountries.map((item) => (
