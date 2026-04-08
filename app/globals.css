@@ -1049,6 +1049,31 @@ body.landing-header-mode.landing-header-visible .site-header {
   min-width: 0;
 }
 
+.map-detail-drawer:not(.is-country-view) .map-panel-head h2 {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  overflow-wrap: anywhere;
+  line-height: 1.08;
+}
+
+.map-detail-drawer:not(.is-country-view) .section-head {
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: 4px;
+}
+
+.map-detail-drawer:not(.is-country-view) .section-head h3,
+.map-detail-drawer:not(.is-country-view) .section-head span {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+}
+
+.map-detail-drawer:not(.is-country-view) .section-head span {
+  text-align: left;
+}
+
 .map-detail-drawer.is-country-view .map-panel-head {
   flex-wrap: wrap;
   gap: 8px;

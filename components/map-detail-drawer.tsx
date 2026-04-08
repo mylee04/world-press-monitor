@@ -275,7 +275,7 @@ export function MapDetailDrawer(props: MapDetailDrawerProps) {
           <div className="map-panel-block compact">
             <div className="section-head">
               <h3>Most Degraded Countries</h3>
-              <span>sorted by degraded share</span>
+              <span>sorted by degraded count</span>
             </div>
             <div className="map-list">
               {topDegradedCountries.slice(0, 8).map((item, index) => (

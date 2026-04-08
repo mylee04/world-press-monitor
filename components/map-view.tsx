@@ -880,7 +880,7 @@ function deriveTopDegradedCountries(items: MapCountryMetricRow[], window: MapMet
     .sort((a, b) => {
       const aShare = itemDegradedShare(a, window);
       const bShare = itemDegradedShare(b, window);
-      return bShare - aShare || b.windows[window].degradedSources - a.windows[window].degradedSources || a.country.localeCompare(b.country);
+      return b.windows[window].degradedSources - a.windows[window].degradedSources || bShare - aShare || a.country.localeCompare(b.country);
     })
     .slice(0, limit);
 }

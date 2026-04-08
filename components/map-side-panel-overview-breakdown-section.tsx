@@ -92,7 +92,7 @@ export function OverviewBreakdownSection({
             : mapMode === 'publishers'
               ? `${activeWindowDescriptor} network output`
               : mapMode === 'health'
-                ? 'degraded share and count'
+                ? 'degraded count, then share'
                 : `${activeWindowDescriptor} core country output`}
         </span>
       </div>
