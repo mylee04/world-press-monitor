@@ -13257,6 +13257,13 @@
           "row": 34
         },
         {
+          "name": "PAP Biznes",
+          "url": "https://biznes.pap.pl/rss",
+          "status": "NEW",
+          "checkedDate": "04/08/2026",
+          "valid": "needs verification"
+        },
+        {
           "name": "Onet Wiadomości (Top Portal News)",
           "url": "https://wiadomosci.onet.pl/.feed"
         },
@@ -13336,6 +13343,13 @@
         {
           "name": "Wyborcza - Najnowsze",
           "url": "https://wyborcza.pl/pub/rss/najnowsze_wyborcza.xml"
+        },
+        {
+          "name": "Tok FM - Sitemap Index",
+          "sitemapUrl": "https://www.tokfm.pl/esi/block/seo/sitemap/2/0",
+          "status": "NEW",
+          "checkedDate": "04/08/2026",
+          "valid": "needs verification"
         },
         {
           "name": "Gość Niedzielny - Aktualności",
