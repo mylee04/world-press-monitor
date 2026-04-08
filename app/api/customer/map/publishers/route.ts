@@ -1,11 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { readMapPublishersFileSnapshot } from '@/lib/customer-map-snapshot-store';
 import { buildPublicSnapshotCacheHeaders, PUBLIC_MAP_RESPONSE_CACHE_CONTROL } from '@/lib/dashboard-cache-control';
-import { proxyPortalServerApiRequest } from '@/lib/customer-portal';
+import { proxyPortalServerApiRequest, shouldUseLocalFallbackForPortalResponse } from '@/lib/customer-portal';
 import { readMapPublishers } from '@/lib/map-store';
+import type { MapPublishersResponse } from '@/lib/map-types';
 import { normalizeMapMetricWindow } from '@/lib/map-store-windows';
 
 export const runtime = 'nodejs';
+const MAP_PUBLISHERS_UPSTREAM_TIMEOUT_MS = 30_000;
+
+function hasPublisherMetrics(payload: MapPublishersResponse | null | undefined): payload is MapPublishersResponse {
+  return Boolean(payload && Array.isArray(payload.publishers) && payload.publishers.length > 0);
+}
 
 export async function GET(request: NextRequest) {
   try {
@@ -13,29 +19,58 @@ export async function GET(request: NextRequest) {
     request.nextUrl.searchParams.set('window', window);
 
     const fileSnapshot = await readMapPublishersFileSnapshot(window);
-    if (fileSnapshot && fileSnapshot.publishers.length > 0) {
+    const localPayload = await readMapPublishers(window);
+    const upstream = await proxyPortalServerApiRequest(request, '/api/map/publishers', {
+      cacheControl: PUBLIC_MAP_RESPONSE_CACHE_CONTROL,
+      responseHeaders: buildPublicSnapshotCacheHeaders(),
+      timeoutMs: MAP_PUBLISHERS_UPSTREAM_TIMEOUT_MS,
+    });
+
+    if (upstream.ok) {
+      const payload = (await upstream.clone().json().catch(() => null)) as MapPublishersResponse | null;
+      if (hasPublisherMetrics(payload)) {
+        return NextResponse.json(payload, {
+          status: 200,
+          headers: buildPublicSnapshotCacheHeaders({ 'X-Data-Source': 'upstream' }),
+        });
+      }
+
+      if (hasPublisherMetrics(fileSnapshot)) {
+        return NextResponse.json(fileSnapshot, {
+          status: 200,
+          headers: buildPublicSnapshotCacheHeaders({ 'X-Data-Source': 'snapshot-file' }),
+        });
+      }
+
+      if (hasPublisherMetrics(localPayload)) {
+        return NextResponse.json(localPayload, {
+          status: 200,
+          headers: buildPublicSnapshotCacheHeaders({ 'X-Data-Source': 'local-fallback' }),
+        });
+      }
+
+      return upstream;
+    }
+
+    const shouldUseSnapshotFallback = await shouldUseLocalFallbackForPortalResponse(upstream);
+    if (!shouldUseSnapshotFallback) {
+      return upstream;
+    }
+
+    if (hasPublisherMetrics(fileSnapshot)) {
       return NextResponse.json(fileSnapshot, {
         status: 200,
         headers: buildPublicSnapshotCacheHeaders({ 'X-Data-Source': 'snapshot-file' }),
       });
     }
 
-    const localPayload = await readMapPublishers(window);
-    const hasLocalSnapshotData = localPayload.storage === 'snapshot' && localPayload.publishers.length > 0;
-    const hasPostgresData = localPayload.storage !== 'snapshot';
-
-    if (hasPostgresData || hasLocalSnapshotData) {
+    if (hasPublisherMetrics(localPayload)) {
       return NextResponse.json(localPayload, {
         status: 200,
         headers: buildPublicSnapshotCacheHeaders({ 'X-Data-Source': 'local-fallback' }),
       });
     }
 
-    const upstream = await proxyPortalServerApiRequest(request, '/api/map/publishers', {
-      cacheControl: PUBLIC_MAP_RESPONSE_CACHE_CONTROL,
-      responseHeaders: buildPublicSnapshotCacheHeaders(),
-      timeoutMs: 15_000,
-    });
     return upstream;
   } catch (error: unknown) {
     return NextResponse.json(

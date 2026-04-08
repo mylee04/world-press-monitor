@@ -1,13 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { readMapCountrySourcesFileSnapshot } from '@/lib/customer-map-snapshot-store';
 import { buildPublicSnapshotCacheHeaders, PUBLIC_MAP_RESPONSE_CACHE_CONTROL } from '@/lib/dashboard-cache-control';
-import { proxyPortalServerApiRequest } from '@/lib/customer-portal';
+import { proxyPortalServerApiRequest, shouldUseLocalFallbackForPortalResponse } from '@/lib/customer-portal';
 import { readMapCountrySources } from '@/lib/map-store';
+import type { MapCountrySourcesResponse } from '@/lib/map-types';
 import { normalizeMapMetricWindow } from '@/lib/map-store-windows';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
-const COUNTRY_SOURCES_UPSTREAM_TIMEOUT_MS = 15_000;
+const COUNTRY_SOURCES_UPSTREAM_TIMEOUT_MS = 30_000;
+
+function hasCountrySourceData(payload: MapCountrySourcesResponse | null | undefined): payload is MapCountrySourcesResponse {
+  return Boolean(
+    payload &&
+    (((payload.summary?.activeSources24h || 0) > 0) || (Array.isArray(payload.sources) && payload.sources.length > 0))
+  );
+}
 
 export async function GET(request: NextRequest, context: { params: Promise<{ country: string }> }) {
   try {
@@ -24,28 +32,7 @@ export async function GET(request: NextRequest, context: { params: Promise<{ cou
     request.nextUrl.searchParams.set('window', window);
 
     const fileSnapshot = await readMapCountrySourcesFileSnapshot(country, window);
-    const hasFileSnapshotData =
-      (fileSnapshot?.summary.activeSources24h || 0) > 0 ||
-      (fileSnapshot?.sources.length || 0) > 0;
-    if (fileSnapshot && hasFileSnapshotData) {
-      return NextResponse.json(fileSnapshot, {
-        status: 200,
-        headers: buildPublicSnapshotCacheHeaders({ 'X-Data-Source': 'snapshot-file' }),
-      });
-    }
-
     const localPayload = await readMapCountrySources(country, window);
-    const hasSourceData =
-      localPayload.summary.activeSources24h > 0 ||
-      localPayload.sources.length > 0;
-
-    if (hasSourceData) {
-      return NextResponse.json(localPayload, {
-        status: 200,
-        headers: buildPublicSnapshotCacheHeaders({ 'X-Data-Source': 'local-fallback' }),
-      });
-    }
-
     const upstream = await proxyPortalServerApiRequest(request, `/api/map/countries/${encodeURIComponent(country)}/sources`, {
       cacheControl: PUBLIC_MAP_RESPONSE_CACHE_CONTROL,
       responseHeaders: buildPublicSnapshotCacheHeaders(),
@@ -53,13 +40,51 @@ export async function GET(request: NextRequest, context: { params: Promise<{ cou
     });
 
     if (upstream.ok) {
+      const payload = (await upstream.clone().json().catch(() => null)) as MapCountrySourcesResponse | null;
+      if (hasCountrySourceData(payload)) {
+        return NextResponse.json(payload, {
+          status: 200,
+          headers: buildPublicSnapshotCacheHeaders({ 'X-Data-Source': 'upstream' }),
+        });
+      }
+
+      if (hasCountrySourceData(fileSnapshot)) {
+        return NextResponse.json(fileSnapshot, {
+          status: 200,
+          headers: buildPublicSnapshotCacheHeaders({ 'X-Data-Source': 'snapshot-file' }),
+        });
+      }
+
+      if (hasCountrySourceData(localPayload)) {
+        return NextResponse.json(localPayload, {
+          status: 200,
+          headers: buildPublicSnapshotCacheHeaders({ 'X-Data-Source': 'local-fallback' }),
+        });
+      }
+
       return upstream;
     }
 
-    return NextResponse.json(localPayload, {
-      status: 200,
-      headers: buildPublicSnapshotCacheHeaders({ 'X-Data-Source': 'local-fallback' }),
-    });
+    const shouldUseSnapshotFallback = await shouldUseLocalFallbackForPortalResponse(upstream);
+    if (!shouldUseSnapshotFallback) {
+      return upstream;
+    }
+
+    if (hasCountrySourceData(fileSnapshot)) {
+      return NextResponse.json(fileSnapshot, {
+        status: 200,
+        headers: buildPublicSnapshotCacheHeaders({ 'X-Data-Source': 'snapshot-file' }),
+      });
+    }
+
+    if (hasCountrySourceData(localPayload)) {
+      return NextResponse.json(localPayload, {
+        status: 200,
+        headers: buildPublicSnapshotCacheHeaders({ 'X-Data-Source': 'local-fallback' }),
+      });
+    }
+
+    return upstream;
   } catch (error: unknown) {
     return NextResponse.json(
       { message: error instanceof Error ? error.message : 'Failed to load country sources.' },
