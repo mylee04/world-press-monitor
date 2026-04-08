@@ -55,6 +55,27 @@ export function pickOutletChunk(
   return { selected, nextOffset, offset };
 }
 
+function stableBucketForValue(value: string, bucketCount: number): number {
+  if (bucketCount <= 1) return 0;
+  let hash = 2166136261;
+  for (let i = 0; i < value.length; i += 1) {
+    hash ^= value.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
+  }
+  return (hash >>> 0) % bucketCount;
+}
+
+export function pickStableOutletBucket(
+  all: OutletFeed[],
+  bucketCount: number,
+  bucketIndex: number
+): OutletFeed[] {
+  if (bucketCount <= 1) return all;
+  const normalizedBucketCount = Math.max(1, Math.floor(bucketCount));
+  const normalizedBucketIndex = ((Math.floor(bucketIndex) % normalizedBucketCount) + normalizedBucketCount) % normalizedBucketCount;
+  return all.filter((outlet) => stableBucketForValue(outlet.id, normalizedBucketCount) === normalizedBucketIndex);
+}
+
 export function filterItemsForPersistence(params: {
   items: NewsItem[];
   lastPublicationAt: string | null;
