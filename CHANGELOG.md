@@ -6,6 +6,28 @@
 
 ## Unreleased
 
+### [6af4c68] Automate RSS follow-up remediation and WAF triage
+- Commit: 6af4c681e903309e5928a64da9b3377ffc76fb89
+- Date: 2026-04-07 23:43:16 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	data/rss-atlas.json
+    - M	package.json
+    - A	scripts/rss-followup-remediation.ts
+    - M	scripts/rss-hard-403-backlog.ts
+    - M	scripts/rss-ops-daily-discord.ts
+    - A	scripts/rss-waf-pattern-triage.ts
+    - M	scripts/run-rss-health-daily-local.sh
+  - Git stat:
+  - data/rss-atlas.json                   |  54 ++-----
+  -  package.json                          |   2 +
+  -  scripts/rss-followup-remediation.ts   | 296 ++++++++++++++++++++++++++++++++++
+  -  scripts/rss-hard-403-backlog.ts       |  36 +++++
+  -  scripts/rss-ops-daily-discord.ts      |  23 ++-
+  -  scripts/rss-waf-pattern-triage.ts     | 200 +++++++++++++++++++++++
+  -  scripts/run-rss-health-daily-local.sh |  13 ++
+  -  7 files changed, 578 insertions(+), 46 deletions(-)
+
 ### [5b78e62] Improve health and entertainment topic recovery
 - Commit: 5b78e629fff4bb2c8ee96f264c3b20c4dee57e70
 - Date: 2026-04-06 21:39:28 -0500
