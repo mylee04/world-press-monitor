@@ -2297,6 +2297,60 @@
           "name": "AFP BB News",
           "url": "https://feeds.afpbb.com/afpbb/news/all",
           "enabled": false
+        },
+        {
+          "name": "ASCII.jp",
+          "url": "https://ascii.jp/rss.xml",
+          "language": "ja",
+          "tier": "primary"
+        },
+        {
+          "name": "Impress Watch",
+          "url": "https://www.watch.impress.co.jp/data/rss/1.0/ipw/feed.rdf",
+          "language": "ja",
+          "tier": "primary"
+        },
+        {
+          "name": "GAME Watch",
+          "url": "https://game.watch.impress.co.jp/data/rss/1.0/gmw/feed.rdf",
+          "language": "ja",
+          "tier": "primary"
+        },
+        {
+          "name": "AV Watch",
+          "url": "https://av.watch.impress.co.jp/data/rss/1.0/avw/feed.rdf",
+          "language": "ja",
+          "tier": "primary"
+        },
+        {
+          "name": "Internet Watch",
+          "url": "https://internet.watch.impress.co.jp/data/rss/1.0/iw/feed.rdf",
+          "language": "ja",
+          "tier": "primary"
+        },
+        {
+          "name": "JBpress",
+          "url": "https://jbpress.ismedia.jp/list/feed/rss",
+          "language": "ja",
+          "tier": "primary"
+        },
+        {
+          "name": "MarkeZine",
+          "url": "https://markezine.jp/rss/new/20/index.xml",
+          "language": "ja",
+          "tier": "primary"
+        },
+        {
+          "name": "EnterpriseZine",
+          "url": "https://enterprisezine.jp/rss/new/20/index.xml",
+          "language": "ja",
+          "tier": "primary"
+        },
+        {
+          "name": "CodeZine",
+          "url": "https://codezine.jp/rss/new/20/index.xml",
+          "language": "ja",
+          "tier": "primary"
         }
       ]
     },
@@ -3090,6 +3144,48 @@
           "name": "Inc42",
           "url": "https://inc42.com/feed/",
           "sitemapUrl": "https://inc42.com/news-sitemap.xml"
+        },
+        {
+          "name": "Moneycontrol",
+          "url": "https://www.moneycontrol.com/rss/latestnews.xml",
+          "language": "en",
+          "tier": "primary"
+        },
+        {
+          "name": "The Siasat Daily",
+          "url": "https://www.siasat.com/feed/",
+          "language": "en",
+          "tier": "primary"
+        },
+        {
+          "name": "Medianama",
+          "url": "https://www.medianama.com/feed/",
+          "language": "en",
+          "tier": "primary"
+        },
+        {
+          "name": "YourStory",
+          "url": "https://yourstory.com/feed",
+          "language": "en",
+          "tier": "primary"
+        },
+        {
+          "name": "TelecomTalk",
+          "url": "https://telecomtalk.info/feed/",
+          "language": "en",
+          "tier": "primary"
+        },
+        {
+          "name": "Medical Dialogues",
+          "url": "https://medicaldialogues.in/feed",
+          "language": "en",
+          "tier": "primary"
+        },
+        {
+          "name": "The Better India",
+          "url": "https://www.thebetterindia.com/feed/",
+          "language": "en",
+          "tier": "primary"
         }
       ]
     },
@@ -23526,6 +23622,78 @@
           "status": "NEW",
           "checkedDate": "03/20/2026",
           "valid": "valid"
+        },
+        {
+          "name": "The Press Project",
+          "url": "https://thepressproject.gr/feed/",
+          "language": "el",
+          "tier": "primary"
+        },
+        {
+          "name": "Topontiki",
+          "url": "https://www.topontiki.gr/feed/",
+          "language": "el",
+          "tier": "primary"
+        },
+        {
+          "name": "Insider Greece",
+          "url": "https://www.insider.gr/rss",
+          "language": "el",
+          "tier": "primary"
+        },
+        {
+          "name": "Fortune Greece",
+          "url": "https://www.fortunegreece.com/feed/",
+          "language": "el",
+          "tier": "primary"
+        },
+        {
+          "name": "Techblog",
+          "url": "https://techblog.gr/feed/",
+          "language": "el",
+          "tier": "primary"
+        },
+        {
+          "name": "Newmoney",
+          "url": "https://www.newmoney.gr/feed/",
+          "language": "el",
+          "tier": "primary"
+        },
+        {
+          "name": "OT.gr",
+          "url": "https://www.ot.gr/feed/",
+          "language": "el",
+          "tier": "primary"
+        },
+        {
+          "name": "Mononews",
+          "url": "https://www.mononews.gr/feed",
+          "language": "el",
+          "tier": "primary"
+        },
+        {
+          "name": "Dikastiko",
+          "url": "https://www.dikastiko.gr/feed/",
+          "language": "el",
+          "tier": "primary"
+        },
+        {
+          "name": "Oneman",
+          "url": "https://www.oneman.gr/feed/",
+          "language": "el",
+          "tier": "primary"
+        },
+        {
+          "name": "DailyPharmaNews",
+          "url": "https://dailypharmanews.gr/feed/",
+          "language": "el",
+          "tier": "primary"
+        },
+        {
+          "name": "To Vima International",
+          "url": "https://www.tovima.com/feed/",
+          "language": "en",
+          "tier": "primary"
         }
       ]
     },
