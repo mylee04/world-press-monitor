@@ -13370,6 +13370,14 @@
           "sitemapUrl": "https://www.di.se/sitemap-news.xml"
         },
         {
+          "name": "Dagens Samhalle",
+          "url": "https://www.dagenssamhalle.se/rss.xml"
+        },
+        {
+          "name": "Dagens PS",
+          "url": "https://www.dagensps.se/feed/"
+        },
+        {
           "name": "SVT Nyheter",
           "url": "https://www.svt.se/nyheter/rss.xml",
           "status": "⏩ OFFICIAL",
@@ -13542,6 +13550,10 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 38
+        },
+        {
+          "name": "Arbetet",
+          "url": "https://arbetet.se/feed/"
         },
         {
           "name": "Sveriges Radio - Ekot nyhetssändning (pod)",
@@ -20945,6 +20957,10 @@
           "sitemapUrl": "https://observador.pt/wp-sitemap.xml"
         },
         {
+          "name": "RTP Noticias",
+          "url": "https://www.rtp.pt/noticias/rss"
+        },
+        {
           "name": "ECO",
           "url": "https://eco.sapo.pt/feed/",
           "sitemapUrl": "https://eco.sapo.pt/sitemap-news.xml"
@@ -21048,6 +21064,22 @@
         {
           "name": "Visao",
           "url": "https://visao.pt/feed/"
+        },
+        {
+          "name": "Sul Informacao",
+          "url": "https://www.sulinformacao.pt/feed/"
+        },
+        {
+          "name": "Postal do Algarve",
+          "url": "https://postal.pt/feed/"
+        },
+        {
+          "name": "O Minho",
+          "url": "https://ominho.pt/feed/"
+        },
+        {
+          "name": "MadreMedia",
+          "url": "https://madremedia.pt/feed/"
         },
         {
           "name": "NiT",
@@ -26021,6 +26053,10 @@
           "url": "https://www.mbl.is/feeds/ferdalog/"
         },
         {
+          "name": "Reykjavik Grapevine",
+          "url": "https://grapevine.is/feed/"
+        },
+        {
           "name": "Visir - News",
           "url": "https://www.visir.is/rss/frettir"
         },
@@ -26618,16 +26654,6 @@
       ]
     },
     {
-      "name": "Malaysia",
-      "code": "MY",
-      "feeds": []
-    },
-    {
-      "name": "Philippines",
-      "code": "PH",
-      "feeds": []
-    },
-    {
       "name": "South Africa",
       "code": "ZA",
       "feeds": [
@@ -26757,7 +26783,12 @@
     {
       "name": "Bahrain",
       "code": "BH",
-      "feeds": []
+      "feeds": [
+        {
+          "name": "Gulf Insider Bahrain",
+          "url": "https://www.gulf-insider.com/feed/"
+        }
+      ]
     },
     {
       "name": "Qatar",
@@ -27039,6 +27070,10 @@
         {
           "name": "El Universo",
           "url": "https://www.eluniverso.com/arc/outboundfeeds/rss/category/noticias/?outputType=xml"
+        },
+        {
+          "name": "El Comercio Ecuador",
+          "url": "https://www.elcomercio.com/feed/"
         }
       ]
     },
@@ -27784,6 +27819,14 @@
           "url": "https://baochinhphu.vn/home.rss"
         },
         {
+          "name": "Bao Dau Tu",
+          "sitemapUrl": "https://baodautu.vn/sitemap.xml"
+        },
+        {
+          "name": "Bao Xay Dung",
+          "url": "https://baoxaydung.vn/rss/home.rss"
+        },
+        {
           "name": "VnEconomy - Google News Sitemap",
           "sitemapUrl": "https://vneconomy.vn/sitemap/google-news.xml"
         },
@@ -27802,6 +27845,10 @@
         {
           "name": "Znews - Sitemap News",
           "sitemapUrl": "https://znews.vn/sitemap/sitemap-news.xml"
+        },
+        {
+          "name": "VTC News - Sitemap",
+          "sitemapUrl": "https://vtcnews.vn/sitemap-news.xml"
         },
         {
           "name": "Nhan Dan",
@@ -27848,12 +27895,40 @@
           "sitemapUrl": "https://vietnamfinance.vn/sitemap.xml"
         },
         {
+          "name": "Vietnam Investment Review - Sitemap",
+          "sitemapUrl": "https://vir.com.vn/sitemap.xml"
+        },
+        {
           "name": "Bao Phap Luat - Latest Articles",
           "sitemapUrl": "https://baophapluat.vn/sitemaps/latest-articles.xml"
         },
         {
           "name": "QDND - Top 300 Sitemap",
           "sitemapUrl": "https://www.qdnd.vn/sitemaps/0/top300article.xml"
+        }
+      ]
+    },
+    {
+      "name": "Mongolia",
+      "code": "MN",
+      "feeds": [
+        {
+          "name": "ikon Mongolia",
+          "url": "https://ikon.mn/rss"
+        }
+      ]
+    },
+    {
+      "name": "Pakistan",
+      "code": "PK",
+      "feeds": [
+        {
+          "name": "Pakistan Dawn",
+          "url": "https://www.dawn.com/feeds/home"
+        },
+        {
+          "name": "Geo.tv",
+          "url": "https://www.geo.tv/rss/1/1"
         }
       ]
     }
