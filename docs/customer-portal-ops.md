@@ -45,6 +45,23 @@ Set on the API host for `api.worldpressradar.com`:
 - `NEWS_API_TOKEN`
 - `NEWS_API_TOKEN_POLICIES`
 
+## Snapshot artifact policy
+
+Customer dashboard snapshot files under `data/` are fallback artifacts, not the primary data source.
+Live upstream/Postgres responses should be preferred whenever they are available.
+
+Commit policy:
+
+- do commit snapshot builder and fallback logic changes
+- do not commit regenerated snapshot JSON by default
+- only commit snapshot JSON when you explicitly need a repo-tracked fallback payload for deploy/bootstrap/recovery
+- if the change is only a fresh `generatedAt` or other rolling timestamp update, leave it out of the commit
+
+Operational rule:
+
+- continue generating snapshots at runtime for fallback use
+- treat tracked snapshot files as optional recovery artifacts, not required release content
+
 ## Token model
 
 - `NEWS_API_TOKEN`: internal admin token for docs/playground and operational checks
