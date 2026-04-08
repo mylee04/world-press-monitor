@@ -1,7 +1,9 @@
-import { writeFile } from 'node:fs/promises';
-import path from 'node:path';
 import { readCountryBenchmark } from '@/lib/benchmark-store';
 import { buildDisabledCountryBenchmarkResponse } from '@/lib/benchmark-store-shaping';
+import {
+  writeCountryBenchmarkSnapshot,
+  writeDashboardSummarySnapshot,
+} from '@/lib/customer-dashboard-snapshot-store';
 import { readNewsDashboardSummary } from '@/lib/ingestion-store';
 import type { NewsApiDashboardSummaryResponse } from '@/lib/news-api';
 
@@ -74,8 +76,6 @@ function buildDisabledDashboardSummarySnapshot(reason: string | undefined): Summ
 }
 
 async function main() {
-  const summaryPath = path.join(process.cwd(), 'data', 'dashboard-summary.snapshot.json');
-  const benchmarkPath = path.join(process.cwd(), 'data', 'country-benchmark.snapshot.json');
   const result: Record<string, unknown> = {};
   let failed = false;
 
@@ -85,27 +85,27 @@ async function main() {
       ? normalizeDashboardSummarySnapshot(summary)
       : buildDisabledDashboardSummarySnapshot(summary.reason);
 
-    await writeFile(summaryPath, JSON.stringify(snapshot));
+    await writeDashboardSummarySnapshot(snapshot);
     result.summary = {
       storage: snapshot.storage,
       generatedAt: snapshot.generatedAt,
       rowsWindow: snapshot.totals.rowsWindow,
       previewDate: snapshot.previewDate,
       reason: snapshot.reason,
-      path: summaryPath,
+      pathsWritten: 'dashboard summary snapshot targets',
     };
   } catch (error: unknown) {
     failed = true;
     const reason = error instanceof Error ? error.message : 'Failed to build dashboard summary snapshot.';
     const snapshot = buildDisabledDashboardSummarySnapshot(reason);
-    await writeFile(summaryPath, JSON.stringify(snapshot));
+    await writeDashboardSummarySnapshot(snapshot);
     result.summary = {
       storage: snapshot.storage,
       generatedAt: snapshot.generatedAt,
       rowsWindow: snapshot.totals.rowsWindow,
       previewDate: snapshot.previewDate,
       reason: snapshot.reason,
-      path: summaryPath,
+      pathsWritten: 'dashboard summary snapshot targets',
     };
     result.summaryError = reason;
   }
@@ -120,14 +120,14 @@ async function main() {
       benchmarkSnapshot.reason = benchmark.reason;
     }
 
-    await writeFile(benchmarkPath, JSON.stringify(benchmarkSnapshot));
+    await writeCountryBenchmarkSnapshot(benchmarkSnapshot);
     result.benchmark = {
       storage: benchmarkSnapshot.storage,
       generatedAt: benchmarkSnapshot.generatedAt,
       countries: benchmarkSnapshot.totals.countries,
       hourlyPublished24h: benchmarkSnapshot.totals.hourlyPublished24h,
       reason: benchmarkSnapshot.reason,
-      path: benchmarkPath,
+      pathsWritten: 'country benchmark snapshot targets',
     };
   } catch (error: unknown) {
     failed = true;
@@ -135,14 +135,14 @@ async function main() {
     const benchmarkSnapshot = buildDisabledCountryBenchmarkResponse();
     benchmarkSnapshot.reason = reason;
 
-    await writeFile(benchmarkPath, JSON.stringify(benchmarkSnapshot));
+    await writeCountryBenchmarkSnapshot(benchmarkSnapshot);
     result.benchmark = {
       storage: benchmarkSnapshot.storage,
       generatedAt: benchmarkSnapshot.generatedAt,
       countries: benchmarkSnapshot.totals.countries,
       hourlyPublished24h: benchmarkSnapshot.totals.hourlyPublished24h,
       reason: benchmarkSnapshot.reason,
-      path: benchmarkPath,
+      pathsWritten: 'country benchmark snapshot targets',
     };
     result.benchmarkError = reason;
   }

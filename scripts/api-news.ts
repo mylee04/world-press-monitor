@@ -6,6 +6,14 @@ import {
 } from '@/lib/news-api-store';
 import { PUBLIC_MAP_RESPONSE_CACHE_CONTROL } from '@/lib/dashboard-cache-control';
 import { readCountryBenchmark } from '@/lib/benchmark-store';
+import {
+  isFreshCountryBenchmarkSnapshot,
+  isFreshDashboardSummarySnapshot,
+  readCountryBenchmarkSnapshot,
+  readDashboardSummarySnapshot,
+  resolveCountryBenchmarkSnapshotMaxAgeMs,
+  resolveDashboardSummarySnapshotMaxAgeMs,
+} from '@/lib/customer-dashboard-snapshot-store';
 import { checkNewsDatabaseHealth } from '@/lib/ingestion-store';
 import { loadMapCountryMetrics } from '@/lib/map-country-metrics-reader';
 import { loadMapCountrySources } from '@/lib/map-country-sources-reader';
@@ -761,6 +769,8 @@ const dashboardSummaryCacheTtlMs = Math.max(
   5_000,
   (Number(process.env.NEWS_API_DASHBOARD_CACHE_TTL_SECONDS || '60') || 60) * 1_000
 );
+const dashboardSummarySnapshotMaxAgeMs = resolveDashboardSummarySnapshotMaxAgeMs();
+const countryBenchmarkSnapshotMaxAgeMs = resolveCountryBenchmarkSnapshotMaxAgeMs();
 type FilterCacheEntry = {
   payload: NewsApiFiltersResponse;
   timestamp: number;
@@ -772,6 +782,22 @@ type DashboardSummaryCacheEntry = {
   timestamp: number;
 };
 let dashboardSummaryCache: DashboardSummaryCacheEntry | null = null;
+
+function isDefaultDashboardSummaryRequest(params: {
+  windowDays: number;
+  latestHours: number;
+  previewLimit: number;
+  topCountriesLimit: number;
+  maxFutureHours?: number;
+}): boolean {
+  return (
+    params.windowDays === 31
+    && params.latestHours === 24
+    && params.previewLimit === 8
+    && params.topCountriesLimit === 6
+    && params.maxFutureHours == null
+  );
+}
 
 const docsHtml = `
 <!doctype html>
@@ -1830,6 +1856,14 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
       maxFutureHours: maxFutureHours ?? 'default'
     });
     const now = Date.now();
+    const shouldUseSnapshotCache = isDefaultDashboardSummaryRequest({
+      windowDays,
+      latestHours,
+      previewLimit,
+      topCountriesLimit,
+      maxFutureHours,
+    });
+    const summarySnapshot = shouldUseSnapshotCache ? await readDashboardSummarySnapshot() : null;
 
     if (
       dashboardSummaryCache
@@ -1837,6 +1871,16 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
       && now - dashboardSummaryCache.timestamp < dashboardSummaryCacheTtlMs
     ) {
       sendJsonResponse(req, res, jsonResponse(dashboardSummaryCache.payload, 200), rateLimitDecision);
+      return;
+    }
+
+    if (shouldUseSnapshotCache && isFreshDashboardSummarySnapshot(summarySnapshot, dashboardSummarySnapshotMaxAgeMs)) {
+      dashboardSummaryCache = {
+        cacheKey,
+        payload: summarySnapshot,
+        timestamp: now
+      };
+      sendJsonResponse(req, res, jsonResponse(summarySnapshot, 200), rateLimitDecision);
       return;
     }
 
@@ -1850,6 +1894,11 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
       });
 
       if (summary.storage === 'disabled') {
+        if (shouldUseSnapshotCache && summarySnapshot && summarySnapshot.storage === 'postgres') {
+          console.warn('[api-news] serving stale dashboard summary snapshot after disabled live summary');
+          sendJsonResponse(req, res, jsonResponse(summarySnapshot, 200), rateLimitDecision);
+          return;
+        }
         const errorPayload: ApiError = {
           error: 'storage_unavailable',
           message: summary.reason || 'News storage is not available.'
@@ -1899,6 +1948,11 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
       sendJsonResponse(req, res, jsonResponse(response, 200), rateLimitDecision);
     } catch (error) {
       console.error('[api-news] dashboard summary request failed', error);
+      if (shouldUseSnapshotCache && summarySnapshot && summarySnapshot.storage === 'postgres') {
+        console.warn('[api-news] serving stale dashboard summary snapshot after live summary failure');
+        sendJsonResponse(req, res, jsonResponse(summarySnapshot, 200), rateLimitDecision);
+        return;
+      }
       sendJsonResponse(
         req,
         res,
@@ -1916,12 +1970,27 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
   }
 
   if (path === '/api/dashboard/benchmark') {
+    const benchmarkSnapshot = await readCountryBenchmarkSnapshot();
+    if (isFreshCountryBenchmarkSnapshot(benchmarkSnapshot, countryBenchmarkSnapshotMaxAgeMs)) {
+      const response = jsonResponse(benchmarkSnapshot, 200);
+      response.headers['cache-control'] = PUBLIC_MAP_RESPONSE_CACHE_CONTROL;
+      sendJsonResponse(req, res, response, rateLimitDecision);
+      return;
+    }
+
     try {
       const response = jsonResponse(await readCountryBenchmark(), 200);
       response.headers['cache-control'] = PUBLIC_MAP_RESPONSE_CACHE_CONTROL;
       sendJsonResponse(req, res, response, rateLimitDecision);
     } catch (error) {
       console.error('[api-news] dashboard benchmark request failed', error);
+      if (benchmarkSnapshot) {
+        console.warn('[api-news] serving stale country benchmark snapshot after live benchmark failure');
+        const response = jsonResponse(benchmarkSnapshot, 200);
+        response.headers['cache-control'] = PUBLIC_MAP_RESPONSE_CACHE_CONTROL;
+        sendJsonResponse(req, res, response, rateLimitDecision);
+        return;
+      }
       sendJsonResponse(
         req,
         res,
