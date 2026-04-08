@@ -19,6 +19,7 @@ const navItems = [
   { href: '/dashboard/', label: 'Dashboard' },
   { href: '/benchmark/', label: 'Benchmark' },
   { href: '/map/', label: 'Map' },
+  { href: '/contact/', label: 'Contact' },
 ];
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
