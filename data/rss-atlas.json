@@ -6969,9 +6969,10 @@
           "category": "politics",
           "tier": 2,
           "status": "⏩ OFFICIAL",
-          "checkedDate": null,
+          "checkedDate": "04/08/2026",
           "valid": "needs verification",
-          "row": 37
+          "row": 37,
+          "sitemapUrl": "https://theconversation.com/au/sitemap_news.xml"
         },
         {
           "name": "AFR (Financial Review)",
@@ -7032,6 +7033,21 @@
         {
           "name": "Crikey",
           "url": "https://www.crikey.com.au/feed/"
+        },
+        {
+          "name": "The Saturday Paper - Sitemap",
+          "sitemapUrl": "https://www.thesaturdaypaper.com.au/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/08/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Pedestrian.TV",
+          "url": "https://www.pedestrian.tv/feed/",
+          "sitemapUrl": "https://www.pedestrian.tv/sitemap_index.xml",
+          "status": "NEW",
+          "checkedDate": "04/08/2026",
+          "valid": "needs verification"
         },
         {
           "name": "The Mandarin",
@@ -7323,6 +7339,14 @@
           "checkedDate": "03/16/2026",
           "valid": "valid",
           "row": 63
+        },
+        {
+          "name": "SBS NITV - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.sbs.com.au/nitv/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/08/2026",
+          "valid": "needs verification"
         },
         {
           "name": "Cairns Post",
@@ -10570,6 +10594,13 @@
           "url": "https://www.rtvutrecht.nl/rss/nieuws.xml"
         },
         {
+          "name": "RTV Utrecht - Sitemap",
+          "sitemapUrl": "https://www.rtvutrecht.nl/sitemap/sitemap.xml.gz",
+          "status": "NEW",
+          "checkedDate": "04/08/2026",
+          "valid": "needs verification"
+        },
+        {
           "name": "GLD - Index",
           "url": "https://www.gld.nl/rss/index.xml"
         },
@@ -10594,12 +10625,26 @@
           "url": "https://www.rtvdrenthe.nl/rss/home"
         },
         {
+          "name": "RTV Drenthe - Sitemap",
+          "sitemapUrl": "https://www.rtvdrenthe.nl/sitemap/sitemap.xml.gz",
+          "status": "NEW",
+          "checkedDate": "04/08/2026",
+          "valid": "needs verification"
+        },
+        {
           "name": "RTV Noord - Index",
           "url": "https://www.rtvnoord.nl/rss/index.xml"
         },
         {
           "name": "L1 Nieuws - Home",
           "url": "https://www.l1nieuws.nl/rss/home"
+        },
+        {
+          "name": "De Limburger",
+          "sitemapUrl": "https://www.limburger.nl/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/08/2026",
+          "valid": "needs verification"
         },
         {
           "name": "Omroep Zeeland - Index",
@@ -12935,12 +12980,11 @@
         },
         {
           "name": "TVN24",
-          "url": "https://tvn24.pl/tvnmeteo.xml",
+          "url": "https://tvn24.pl/najwazniejsze.xml",
           "status": "⏩ OFFICIAL",
-          "checkedDate": null,
-          "valid": "needs verification",
-          "row": 3,
-          "enabled": false
+          "checkedDate": "04/08/2026",
+          "valid": "valid",
+          "row": 3
         },
         {
           "name": "Fakt",
@@ -13223,6 +13267,8 @@
         {
           "name": "TVN24 Biznes (TVN24 Business)",
           "url": "https://tvn24.pl/biznes.xml",
+          "checkedDate": "04/08/2026",
+          "valid": "invalid",
           "enabled": false
         },
         {
@@ -13240,8 +13286,10 @@
         },
         {
           "name": "Rzeczpospolita (Economy/Politics)",
-          "url": "https://www.rp.pl/rss/all",
-          "enabled": false
+          "url": "https://www.rp.pl/rss_main",
+          "status": "NEW",
+          "checkedDate": "04/08/2026",
+          "valid": "valid"
         },
         {
           "name": "Gazeta.pl (Top Portal News)",
@@ -13286,12 +13334,23 @@
           "sitemapUrl": "https://www.rp.pl/sitemaps/news-sitemap.xml"
         },
         {
-          "name": "Rzeczpospolita - RSS Main",
-          "url": "https://www.rp.pl/rss_main"
-        },
-        {
           "name": "Wyborcza - Najnowsze",
           "url": "https://wyborcza.pl/pub/rss/najnowsze_wyborcza.xml"
+        },
+        {
+          "name": "Gość Niedzielny - Aktualności",
+          "url": "https://www.gosc.pl/rss/rtr/c7a21.Aktualnosci-z-Gosciem-Niedzielnym",
+          "sitemapUrl": "https://www.gosc.pl/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/08/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Niedziela",
+          "url": "https://www.niedziela.pl/rss",
+          "status": "NEW",
+          "checkedDate": "04/08/2026",
+          "valid": "needs verification"
         },
         {
           "name": "Wiadomosci WP - Aktualnosci",
@@ -27107,6 +27166,86 @@
           "status": "NEW",
           "checkedDate": "03/31/2026",
           "valid": "valid"
+        }
+      ]
+    },
+    {
+      "name": "El Salvador",
+      "code": "SV",
+      "feeds": [
+        {
+          "name": "El Diario de Hoy",
+          "url": "https://www.elsalvador.com/feed/",
+          "sitemapUrl": "https://www.elsalvador.com/sitemap.xml"
+        },
+        {
+          "name": "Diario El Salvador",
+          "url": "https://diarioelsalvador.com/feed/"
+        },
+        {
+          "name": "Diario Co Latino",
+          "url": "https://www.diariocolatino.com/feed/",
+          "sitemapUrl": "https://www.diariocolatino.com/sitemap.xml"
+        },
+        {
+          "name": "El Blog",
+          "url": "https://elblog.com/feed/"
+        },
+        {
+          "name": "La Pagina",
+          "url": "https://lapagina.com.sv/feed/"
+        },
+        {
+          "name": "ContraPunto",
+          "url": "https://www.contrapunto.com.sv/feed/",
+          "sitemapUrl": "https://www.contrapunto.com.sv/sitemap.xml"
+        },
+        {
+          "name": "Revista Factum",
+          "url": "https://www.revistafactum.com/feed/",
+          "sitemapUrl": "https://www.revistafactum.com/sitemap.xml"
+        },
+        {
+          "name": "Dinero.com.sv",
+          "url": "https://dinero.com.sv/feed/",
+          "sitemapUrl": "https://dinero.com.sv/sitemap.xml"
+        },
+        {
+          "name": "TCS Ahora",
+          "url": "https://www.tcsahora.com/feed/"
+        },
+        {
+          "name": "Diario La Huella",
+          "url": "https://diariolahuella.com/feed/"
+        },
+        {
+          "name": "YSUCA",
+          "url": "https://ysuca.org.sv/feed/"
+        },
+        {
+          "name": "Focos",
+          "url": "https://focostv.com/feed/",
+          "sitemapUrl": "https://focostv.com/sitemap.xml"
+        },
+        {
+          "name": "Voz Publica",
+          "url": "https://vozpublica.net/feed/",
+          "sitemapUrl": "https://vozpublica.net/sitemap.xml"
+        },
+        {
+          "name": "GatoEncerrado",
+          "url": "https://gatoencerrado.news/feed/",
+          "sitemapUrl": "https://gatoencerrado.news/sitemap.xml"
+        },
+        {
+          "name": "Cronio",
+          "url": "https://cronio.sv/feed/",
+          "sitemapUrl": "https://cronio.sv/sitemap.xml"
+        },
+        {
+          "name": "YSKL",
+          "url": "https://radioyskl.com/feed/",
+          "sitemapUrl": "https://radioyskl.com/sitemap.xml"
         }
       ]
     },
