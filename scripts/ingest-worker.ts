@@ -653,6 +653,11 @@ type CountryFilter = {
 
 type EndpointMethod = 'rss' | 'sitemap';
 
+type SourceFilter = {
+  display: string[];
+  normalized: Set<string>;
+};
+
 type MethodFilter = {
   display: EndpointMethod[];
   allowed: Set<EndpointMethod>;
@@ -709,6 +714,58 @@ function countryMatchesFilter(country: string | undefined, filter: CountryFilter
 }
 
 const COUNTRY_FILTER = parseCountryFilter(process.argv.slice(2), process.env.INGEST_COUNTRIES);
+
+function parseSourceFilter(argv: string[], envValue: string | undefined): SourceFilter | null {
+  const values: string[] = [];
+
+  const pushCsv = (raw: string | undefined): void => {
+    if (!raw) return;
+    raw
+      .split(',')
+      .map((part) => part.trim())
+      .filter((part) => part.length > 0)
+      .forEach((part) => values.push(part));
+  };
+
+  pushCsv(envValue);
+  pushCsv(process.env.INGEST_SOURCE);
+  for (let i = 0; i < argv.length; i += 1) {
+    const token = argv[i];
+    if (token.startsWith('--sources=')) {
+      pushCsv(token.slice('--sources='.length));
+      continue;
+    }
+    if (token === '--sources') {
+      pushCsv(argv[i + 1]);
+      i += 1;
+      continue;
+    }
+    if (token.startsWith('--source=')) {
+      pushCsv(token.slice('--source='.length));
+      continue;
+    }
+    if (token === '--source') {
+      pushCsv(argv[i + 1]);
+      i += 1;
+      continue;
+    }
+  }
+
+  if (values.length === 0) return null;
+  const dedupedDisplay = [...new Set(values.map((value) => value.trim()).filter((value) => value.length > 0))];
+  if (dedupedDisplay.length === 0) return null;
+  return {
+    display: dedupedDisplay,
+    normalized: new Set(dedupedDisplay.map((value) => normalizeText(value))),
+  };
+}
+
+function sourceMatchesFilter(source: string | undefined, filter: SourceFilter | null): boolean {
+  if (!filter) return true;
+  return filter.normalized.has(normalizeText(source || ''));
+}
+
+const SOURCE_FILTER = parseSourceFilter(process.argv.slice(2), process.env.INGEST_SOURCES);
 
 function parseMethodFilter(argv: string[], envValue: string | undefined): MethodFilter | null {
   const values: string[] = [];
@@ -2594,7 +2651,8 @@ async function runOnce(): Promise<void> {
 
   const allOutlets = loadAtlasOutlets();
   const countryFilteredOutlets = allOutlets.filter((outlet) => countryMatchesFilter(outlet.country, COUNTRY_FILTER));
-  const { selected, nextOffset, offset } = pickOutletChunk(countryFilteredOutlets, OUTLET_CHUNK_SIZE, STATE_FILE);
+  const sourceFilteredOutlets = countryFilteredOutlets.filter((outlet) => sourceMatchesFilter(outlet.name, SOURCE_FILTER));
+  const { selected, nextOffset, offset } = pickOutletChunk(sourceFilteredOutlets, OUTLET_CHUNK_SIZE, STATE_FILE);
   const { endpointLookup, dedupedEndpoints, rssEndpoints, allSitemapEndpoints } = buildEndpointRuns(
     selected,
     methodMatchesFilter,
@@ -2940,10 +2998,12 @@ async function runOnce(): Promise<void> {
     started,
     allOutletsCount: allOutlets.length,
     countryFilteredOutletsCount: countryFilteredOutlets.length,
+    sourceFilteredOutletsCount: sourceFilteredOutlets.length,
     selectedCount: selected.length,
     offset,
     nextOffset,
     countryFilter: COUNTRY_FILTER?.display || null,
+    sourceFilter: SOURCE_FILTER?.display || null,
     methodFilter: METHOD_FILTER?.display || null,
     diagnostics,
     mergedItems: merged,
@@ -2961,11 +3021,13 @@ async function runOnce(): Promise<void> {
   console.log(formatWorkerSummaryLog({
     selectedCount: selected.length,
     countryFilteredOutletsCount: countryFilteredOutlets.length,
+    sourceFilteredOutletsCount: sourceFilteredOutlets.length,
     allOutletsCount: allOutlets.length,
     attempted: counts.attempted,
     ok: counts.ok,
     failed: counts.failed,
     countryFilter: COUNTRY_FILTER?.display || null,
+    sourceFilter: SOURCE_FILTER?.display || null,
     backfillLabel: BACKFILL_WINDOW ? `${BACKFILL_WINDOW.from}..${BACKFILL_WINDOW.to}` : 'off',
     explicitSitemapParallel: ENABLE_EXPLICIT_SITEMAP_PARALLEL,
     failingKeysSize: failingKeys.size,
@@ -2976,6 +3038,7 @@ async function runOnce(): Promise<void> {
     persistedArticles: persistedNewsArticles.persisted,
     elapsedMs: summary.elapsedMs,
     missingPublishedAtPersisted: persistedMissingPublishedAt.persisted,
+    mergedItemsBySource: summary.worker.mergedItemsBySource,
   }));
 }
 
@@ -2983,6 +3046,9 @@ async function main(): Promise<void> {
   const once = process.argv.includes('--once');
   if (COUNTRY_FILTER) {
     console.log(`[ingest-worker] country filter enabled: ${COUNTRY_FILTER.display.join(', ')}`);
+  }
+  if (SOURCE_FILTER) {
+    console.log(`[ingest-worker] source filter enabled: ${SOURCE_FILTER.display.join(', ')}`);
   }
   if (METHOD_FILTER) {
     console.log(`[ingest-worker] method filter enabled: ${METHOD_FILTER.display.join(', ')}`);

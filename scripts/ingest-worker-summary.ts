@@ -8,10 +8,12 @@ type WorkerSummary = {
   worker: {
     outletsTotal: number;
     outletsAfterCountryFilter: number;
+    outletsAfterSourceFilter: number;
     outletsSelected: number;
     outletOffset: number;
     nextOutletOffset: number;
     countryFilter: string[] | null;
+    sourceFilter: string[] | null;
     methodFilter: ('rss' | 'sitemap')[] | null;
     endpointsAttempted: number;
     endpointsOk: number;
@@ -35,8 +37,26 @@ type WorkerSummary = {
       cacheHits: number;
       budgetSkipped: number;
     };
+    mergedItemsBySource: Array<{
+      source: string;
+      count: number;
+    }>;
   };
 };
+
+function buildSourceCounts(items: NewsItem[]): Array<{ source: string; count: number }> {
+  const counts = new Map<string, number>();
+  for (const item of items) {
+    const source = (item.source || '').trim() || '(unknown)';
+    counts.set(source, (counts.get(source) || 0) + 1);
+  }
+  return [...counts.entries()]
+    .sort((a, b) => {
+      if (b[1] !== a[1]) return b[1] - a[1];
+      return a[0].localeCompare(b[0]);
+    })
+    .map(([source, count]) => ({ source, count }));
+}
 
 export function summarizeEndpointResults(results: Array<{ attempted: boolean; ok: boolean }>) {
   const attempted = results.filter((d) => d.attempted).length;
@@ -49,10 +69,12 @@ export function buildWorkerSummary(params: {
   started: number;
   allOutletsCount: number;
   countryFilteredOutletsCount: number;
+  sourceFilteredOutletsCount: number;
   selectedCount: number;
   offset: number;
   nextOffset: number;
   countryFilter: string[] | null;
+  sourceFilter: string[] | null;
   methodFilter: ('rss' | 'sitemap')[] | null;
   diagnostics: IngestionEndpointRun[];
   mergedItems: NewsItem[];
@@ -69,10 +91,12 @@ export function buildWorkerSummary(params: {
     worker: {
       outletsTotal: params.allOutletsCount,
       outletsAfterCountryFilter: params.countryFilteredOutletsCount,
+      outletsAfterSourceFilter: params.sourceFilteredOutletsCount,
       outletsSelected: params.selectedCount,
       outletOffset: params.offset,
       nextOutletOffset: params.nextOffset,
       countryFilter: params.countryFilter,
+      sourceFilter: params.sourceFilter,
       methodFilter: params.methodFilter,
       endpointsAttempted: counts.attempted,
       endpointsOk: counts.ok,
@@ -85,6 +109,7 @@ export function buildWorkerSummary(params: {
       diagnosticsPersisted: params.persistedDiagnostics,
       fallback: params.fallbackSummary,
       articleMetaCategory: params.articleMetaCategorySummary,
+      mergedItemsBySource: buildSourceCounts(params.mergedItems),
     },
   };
 }
@@ -92,11 +117,13 @@ export function buildWorkerSummary(params: {
 export function formatWorkerSummaryLog(params: {
   selectedCount: number;
   countryFilteredOutletsCount: number;
+  sourceFilteredOutletsCount: number;
   allOutletsCount: number;
   attempted: number;
   ok: number;
   failed: number;
   countryFilter: string[] | null;
+  sourceFilter: string[] | null;
   backfillLabel: string;
   explicitSitemapParallel: boolean;
   failingKeysSize: number;
@@ -107,10 +134,16 @@ export function formatWorkerSummaryLog(params: {
   persistedArticles: number;
   elapsedMs: number;
   missingPublishedAtPersisted: number;
+  mergedItemsBySource: Array<{ source: string; count: number }>;
 }): string {
+  const topSourceSummary = params.mergedItemsBySource
+    .slice(0, 5)
+    .map(({ source, count }) => `${source}:${count}`)
+    .join(', ');
   return (
-    `[ingest-worker] outlets=${params.selectedCount}/${params.countryFilteredOutletsCount}/${params.allOutletsCount} endpoints=${params.attempted} ok=${params.ok} failed=${params.failed} ` +
+    `[ingest-worker] outlets=${params.selectedCount}/${params.sourceFilteredOutletsCount}/${params.countryFilteredOutletsCount}/${params.allOutletsCount} endpoints=${params.attempted} ok=${params.ok} failed=${params.failed} ` +
     `country_filter=${params.countryFilter ? params.countryFilter.join('|') : 'ALL'} ` +
+    `source_filter=${params.sourceFilter ? params.sourceFilter.join('|') : 'ALL'} ` +
     `backfill=${params.backfillLabel} ` +
     `explicit_sitemap_parallel=${params.explicitSitemapParallel ? 'on' : 'off'} ` +
     `backoff_skipped_total=${params.failingKeysSize} backoff_skipped=[rss=${params.fallbackSummary.rssBackoffSkipped}, sitemap=${params.fallbackSummary.sitemapBackoffSkipped}] ` +
@@ -119,6 +152,7 @@ export function formatWorkerSummaryLog(params: {
     `method_stats= [rss attempted=${params.methodStats.rss.attempted}, ok=${params.methodStats.rss.ok}, fail=${params.methodStats.rss.fail}(${formatPercent(params.methodStats.rss.fail, params.methodStats.rss.attempted)}%); ` +
     `[sitemap attempted=${params.methodStats.sitemap.attempted}, ok=${params.methodStats.sitemap.ok}, fail=${params.methodStats.sitemap.fail}(${formatPercent(params.methodStats.sitemap.fail, params.methodStats.sitemap.attempted)}%)] ` +
     `sitemapFallback=${params.fallbackSummary.rssSitemapFallbackSuccess}/${params.fallbackSummary.rssSitemapFallbackAttempts} skipped=${params.fallbackSummary.rssSitemapFallbackSkipped} unique=${params.mergedCount} persisted=${params.persistedArticles} newsArticles=${params.persistedArticles} elapsedMs=${params.elapsedMs}` +
+    ` top_sources=[${topSourceSummary}]` +
     ` missingPublishedAtPersisted=${params.missingPublishedAtPersisted}`
   );
 }
