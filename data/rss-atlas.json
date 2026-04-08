@@ -3019,7 +3019,7 @@
         },
         {
           "name": "Star of Mysore",
-          "url": "https://starofmysore.com/feed",
+          "url": "https://starofmysore.com/feed/",
           "status": null,
           "checkedDate": null,
           "valid": null,
@@ -3906,7 +3906,6 @@
         },
         {
           "name": "Jeune Afrique",
-          "url": "https://www.jeuneafrique.com/feed/",
           "sitemapUrl": "https://www.jeuneafrique.com/sitemap-googlenews.xml"
         }
       ]
@@ -6030,15 +6029,6 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 48
-        },
-        {
-          "name": "Yonhap Korea - News Sitemap 6",
-          "sitemapUrl": "https://www.yna.co.kr/news-sitemap6.xml",
-          "status": null,
-          "checkedDate": null,
-          "valid": "needs verification",
-          "row": 49,
-          "enabled": false
         }
       ]
     },
@@ -6563,14 +6553,6 @@
           "valid": "needs verification"
         },
         {
-          "name": "Brisbane Times - News Sitemap",
-          "sitemapUrl": "https://www.brisbanetimes.com.au/sitemaps/news/brands/brisbanetimes",
-          "status": "⏩ OFFICIAL",
-          "checkedDate": "03/31/2026",
-          "valid": "invalid",
-          "enabled": false
-        },
-        {
           "name": "WAtoday",
           "url": "https://www.watoday.com.au/rss/feed.xml",
           "status": "⏩ OFFICIAL",
@@ -6607,14 +6589,6 @@
           "valid": "needs verification"
         },
         {
-          "name": "WAtoday - News Sitemap",
-          "sitemapUrl": "https://www.watoday.com.au/sitemaps/news/brands/watoday",
-          "status": "⏩ OFFICIAL",
-          "checkedDate": "03/31/2026",
-          "valid": "invalid",
-          "enabled": false
-        },
-        {
           "name": "Canberra Times",
           "url": "https://www.canberratimes.com.au/rss.xml",
           "sitemapUrl": "https://www.canberratimes.com.au/sitemap-news.xml",
@@ -6638,14 +6612,6 @@
           "checkedDate": null,
           "valid": "needs verification",
           "row": 29,
-          "enabled": false
-        },
-        {
-          "name": "The Australian - News Sitemap",
-          "sitemapUrl": "https://www.theaustralian.com.au/news-sitemap.xml",
-          "status": "NEW",
-          "checkedDate": "03/30/2026",
-          "valid": "invalid",
           "enabled": false
         },
         {
@@ -7053,7 +7019,7 @@
         {
           "name": "SBS News - English Sitemap",
           "url": null,
-          "sitemapUrl": "https://www.sbs.com.au/news/english/sitemap.xml",
+          "sitemapUrl": "https://www.sbs.com.au/sitemap.xml",
           "status": "NEW",
           "checkedDate": "03/16/2026",
           "valid": "valid",
@@ -8705,11 +8671,11 @@
         },
         {
           "name": "Kapanlagi",
-          "url": "https://www.kapanlagi.com/feed/",
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 15
+          "row": 15,
+          "sitemapUrl": "https://www.kapanlagi.com/sitemap/selebriti/sitemap_news.xml"
         },
         {
           "name": "Antara TV",
@@ -16463,7 +16429,7 @@
         },
         {
           "name": "Diario Talca",
-          "url": "https://www.diariotalca.cl/feed/",
+          "url": "https://diariotalca.cl/feed/",
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
@@ -20066,7 +20032,7 @@
         },
         {
           "name": "Independent.ie - Business",
-          "url": "https://www.independent.ie/rss/section/business/",
+          "url": "https://www.independent.ie/rss/section/business",
           "status": "NEW",
           "checkedDate": "03/16/2026",
           "valid": "valid",
@@ -20434,7 +20400,7 @@
         },
         {
           "name": "Independent.ie - Clare",
-          "url": "https://www.independent.ie/rss/section/c3822c5d-48bc-4f56-9f4b-b076010a2da0/",
+          "url": "https://www.independent.ie/rss/section/c3822c5d-48bc-4f56-9f4b-b076010a2da0",
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/30/2026",
           "valid": "valid",
@@ -20458,7 +20424,7 @@
         },
         {
           "name": "Independent.ie - Kerryman",
-          "url": "https://www.independent.ie/rss/section/f26f027f-1420-42b9-8bdf-bcafbf9e4b18/",
+          "url": "https://www.independent.ie/rss/section/f26f027f-1420-42b9-8bdf-bcafbf9e4b18",
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/30/2026",
           "valid": "valid",
@@ -26377,7 +26343,7 @@
         },
         {
           "name": "BizNews",
-          "url": "https://www.biznews.com/stories.rss"
+          "sitemapUrl": "https://www.biznews.com/sitemap/news_sitemap.xml"
         },
         {
           "name": "Daily Maverick - News Sitemap",
@@ -26885,7 +26851,7 @@
         },
         {
           "name": "The Borneo Post - Sitemap",
-          "sitemapUrl": "https://www.theborneopost.com/sitemap.xml"
+          "sitemapUrl": "https://www.theborneopost.com/wp-sitemap.xml"
         },
         {
           "name": "The Sun - Sitemap Index",

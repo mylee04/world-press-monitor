@@ -13,6 +13,9 @@ RUNNER_COMMAND=(bun scripts/rss-health-daily.ts --no-discord)
 AUTO_REPAIR_COMMAND=(bun scripts/rss-auto-repair.ts --apply)
 HARD_403_BACKLOG_COMMAND=(bun scripts/rss-hard-403-backlog.ts --days=30)
 STALE_WATCHLIST_COMMAND=(bun scripts/rss-stale-watchlist.ts)
+FOLLOWUP_REMEDIATION_COMMAND=(bun scripts/rss-followup-remediation.ts)
+HARD_403_BACKLOG_REFRESH_COMMAND=(bun scripts/rss-hard-403-backlog.ts --days=30)
+WAF_PATTERN_TRIAGE_COMMAND=(bun scripts/rss-waf-pattern-triage.ts)
 DAILY_DISCORD_COMMAND=(bun scripts/rss-ops-daily-discord.ts)
 PRIMARY_WORKTREE="${WPR_PRIMARY_WORKTREE:-${WPM_PRIMARY_WORKTREE:-}}"
 
@@ -51,6 +54,10 @@ sync_primary_worktree_outputs() {
     "${PROJECT_ROOT}/audits/rss_stale_watchlist_latest.md" \
     "${PROJECT_ROOT}/audits/rss_safe_disable_now_latest.json" \
     "${PROJECT_ROOT}/audits/rss_safe_disable_now_latest.md" \
+    "${PROJECT_ROOT}/audits/rss_followup_remediation_latest.json" \
+    "${PROJECT_ROOT}/audits/rss_followup_remediation_latest.md" \
+    "${PROJECT_ROOT}/audits/rss_waf_pattern_triage_latest.json" \
+    "${PROJECT_ROOT}/audits/rss_waf_pattern_triage_latest.md" \
     "${PROJECT_ROOT}/data/rss-catalog.csv" \
     "${PROJECT_ROOT}/data/rss-catalog.opml"; do
     if [ -f "${artifact}" ]; then
@@ -79,11 +86,17 @@ sync_primary_worktree_outputs() {
   printf 'Auto-repair command: %s\n' "${AUTO_REPAIR_COMMAND[*]}"
   printf '403 backlog command: %s\n' "${HARD_403_BACKLOG_COMMAND[*]}"
   printf 'Stale watchlist command: %s\n' "${STALE_WATCHLIST_COMMAND[*]}"
+  printf 'Follow-up remediation command: %s\n' "${FOLLOWUP_REMEDIATION_COMMAND[*]}"
+  printf '403 backlog refresh command: %s\n' "${HARD_403_BACKLOG_REFRESH_COMMAND[*]}"
+  printf 'WAF pattern triage command: %s\n' "${WAF_PATTERN_TRIAGE_COMMAND[*]}"
   printf 'Daily Discord command: %s\n' "${DAILY_DISCORD_COMMAND[*]}"
   "${RUNNER_COMMAND[@]}"
   "${AUTO_REPAIR_COMMAND[@]}"
   "${HARD_403_BACKLOG_COMMAND[@]}"
   "${STALE_WATCHLIST_COMMAND[@]}"
+  "${FOLLOWUP_REMEDIATION_COMMAND[@]}"
+  "${HARD_403_BACKLOG_REFRESH_COMMAND[@]}"
+  "${WAF_PATTERN_TRIAGE_COMMAND[@]}"
   if ! "${DAILY_DISCORD_COMMAND[@]}"; then
     printf '[%s] WARN: rss ops daily discord hook failed\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
   fi

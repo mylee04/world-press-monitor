@@ -35,6 +35,8 @@
     "rss:auto-repair:report": "bun scripts/rss-auto-repair.ts",
     "rss:auto-repair:apply": "bun scripts/rss-auto-repair.ts --apply",
     "rss:hard-403:backlog": "bun scripts/rss-hard-403-backlog.ts",
+    "rss:followup-remediation": "bun scripts/rss-followup-remediation.ts",
+    "rss:waf-pattern-triage": "bun scripts/rss-waf-pattern-triage.ts",
     "rss:health:once": "bun scripts/rss-health-daily.ts",
     "rss:health:daily": "bun scripts/rss-health-daily.ts",
     "rss:health:cron:run": "bash scripts/run-rss-health-daily.sh",

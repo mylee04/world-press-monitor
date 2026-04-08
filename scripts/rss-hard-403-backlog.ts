@@ -117,6 +117,31 @@ function getAtlasUrl(atlas: Atlas, country: string, source: string, method: stri
   return feed.url || null;
 }
 
+function normalizeUrl(value: string | null | undefined): string | null {
+  if (!value) return null;
+  try {
+    const url = new URL(value);
+    url.hash = '';
+    return url.toString();
+  } catch {
+    return value.trim() || null;
+  }
+}
+
+function buildActiveAtlasUrlSet(atlas: Atlas): Set<string> {
+  const urls = new Set<string>();
+  for (const country of atlas.countries) {
+    for (const feed of country.feeds || []) {
+      if (feed.enabled === false) continue;
+      const rssKey = normalizeUrl(feed.url);
+      const sitemapKey = normalizeUrl(feed.sitemapUrl);
+      if (rssKey) urls.add(`rss|||${country.name}|||${rssKey}`);
+      if (sitemapKey) urls.add(`sitemap|||${country.name}|||${sitemapKey}`);
+    }
+  }
+  return urls;
+}
+
 function tryParseUrl(value: string): URL | null {
   try {
     return new URL(value);
@@ -169,6 +194,7 @@ async function loadRows(pool: Pool, options: CliOptions): Promise<Row[]> {
 function buildBacklog(rows: Row[], atlas: Atlas): BacklogItem[] {
   const latestSuccessByKey = new Map<string, Row>();
   const latestFailureRows: Row[] = [];
+  const activeAtlasUrls = buildActiveAtlasUrlSet(atlas);
 
   for (const row of rows) {
     const key = `${row.country}|||${row.source}|||${row.method}`;
@@ -225,6 +251,16 @@ function buildBacklog(rows: Row[], atlas: Atlas): BacklogItem[] {
       action,
       rationale,
     };
+  }).filter((item) => {
+    if (item.action !== 'CANONICAL_SWAP_CANDIDATE' || !item.latestSuccessUrl) return true;
+
+    const normalizedAtlasUrl = normalizeUrl(item.atlasUrl);
+    const normalizedSuccessUrl = normalizeUrl(item.latestSuccessUrl);
+    if (!normalizedSuccessUrl) return true;
+    if (normalizedAtlasUrl === normalizedSuccessUrl) return false;
+
+    const representedElsewhere = activeAtlasUrls.has(`${item.method}|||${item.country}|||${normalizedSuccessUrl}`);
+    return !representedElsewhere;
   });
 
   backlog.sort((a, b) => {
