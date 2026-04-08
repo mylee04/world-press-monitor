@@ -25984,6 +25984,11 @@
           "url": "https://novaator.err.ee/rss"
         },
         {
+          "name": "ERR English",
+          "url": "https://news.err.ee/rss",
+          "sitemapUrl": "https://news.err.ee/sitemap"
+        },
+        {
           "name": "Delfi Estonia",
           "sitemapUrl": "https://www.delfi.ee/sitemap/index.xml"
         },
@@ -26102,6 +26107,58 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/30/2026",
           "valid": "valid"
+        },
+        {
+          "name": "Toostusuudised",
+          "url": "https://www.toostusuudised.ee/rss"
+        },
+        {
+          "name": "Pollumajandus",
+          "url": "https://www.pollumajandus.ee/rss"
+        },
+        {
+          "name": "Finantsuudised",
+          "url": "https://www.finantsuudised.ee/rss"
+        },
+        {
+          "name": "ITuudised",
+          "url": "https://www.ituudised.ee/rss"
+        },
+        {
+          "name": "Kinnisvarauudised",
+          "url": "https://www.kinnisvarauudised.ee/rss"
+        },
+        {
+          "name": "Raamatupidaja",
+          "url": "https://www.raamatupidaja.ee/rss"
+        },
+        {
+          "name": "Logistikauudised",
+          "url": "https://www.logistikauudised.ee/rss"
+        },
+        {
+          "name": "Ehitusuudised",
+          "url": "https://www.ehitusuudised.ee/rss"
+        },
+        {
+          "name": "Kaubandus",
+          "url": "https://www.kaubandus.ee/rss"
+        },
+        {
+          "name": "Palgauudised",
+          "url": "https://www.palgauudised.ee/rss"
+        },
+        {
+          "name": "Personaliuudised",
+          "url": "https://www.personaliuudised.ee/rss"
+        },
+        {
+          "name": "Meditsiiniuudised",
+          "url": "https://www.meditsiiniuudised.ee/rss"
+        },
+        {
+          "name": "BestMarketing",
+          "url": "https://www.bestmarketing.ee/rss"
         },
         {
           "name": "DV.ee",
