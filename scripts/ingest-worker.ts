@@ -458,10 +458,23 @@ function parseSitemapIndex(xml: string, baseUrl: string | null = null): string[]
 }
 
 function normalizeHtmlListingPublishedAt(value: string): string | undefined {
+  const isoCandidate = value.trim();
+  if (/^20\d{2}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/.test(isoCandidate)) {
+    const normalized = new Date(isoCandidate);
+    if (!Number.isNaN(normalized.getTime())) {
+      return normalized.toISOString();
+    }
+  }
   const match = value.match(/(20\d{2})[.\-/](\d{2})[.\-/](\d{2})/);
   if (!match) return undefined;
   const [, year, month, day] = match;
   return `${year}-${month}-${day}T12:00:00.000Z`;
+}
+
+function normalizeBloombergTvPublishedAt(value: string): string | undefined {
+  const match = value.trim().match(/^(20\d{2}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2})$/);
+  if (!match) return normalizeHtmlListingPublishedAt(value);
+  return `${match[1]}T${match[2]}+08:00`;
 }
 
 function parseUbLifeHomepageRows(pageUrl: string, html: string): Array<{
@@ -503,6 +516,88 @@ function parseHtmlListingRows(pageUrl: string, html: string): Array<{
     return [];
   }
   return [];
+}
+
+async function fetchGogoHomepageRows(pageUrl: string, html: string): Promise<Array<{
+  title: string;
+  description?: string;
+  link: string;
+  publishedAt?: string;
+}>> {
+  const rows: Array<{ title: string; description?: string; link: string; publishedAt?: string }> = [];
+  const seen = new Set<string>();
+  const articlePaths = Array.from(new Set(Array.from(html.matchAll(/href="(\/r\/[^"]+)"/gi)).map((match) => match[1] || '')))
+    .filter(Boolean)
+    .slice(0, 12);
+  for (const rawPath of articlePaths) {
+    try {
+      const link = new URL(rawPath, pageUrl).toString();
+      if (seen.has(link)) continue;
+      const response = await fetchWithRetryFeed(link);
+      if (!response.ok) continue;
+      const responseBody = await readResponseBody(response);
+      const articleHtml = responseBody.body;
+      const titleMatch = articleHtml.match(/<title>([\s\S]{5,260}?)<\/title>/i);
+      const publishedAtMatch = articleHtml.match(/(20\d{2}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+Z0-9:-]*)/);
+      const title = normalizeHtmlText(titleMatch?.[1] || '');
+      const publishedAt = normalizeHtmlListingPublishedAt(publishedAtMatch?.[1] || '');
+      if (!title || !publishedAt) continue;
+      seen.add(link);
+      rows.push({ title, link, publishedAt });
+      if (rows.length >= 10) break;
+    } catch {
+      continue;
+    }
+  }
+  return rows;
+}
+
+async function fetchBloombergTvMongoliaRows(pageUrl: string): Promise<Array<{
+  title: string;
+  description?: string;
+  link: string;
+  publishedAt?: string;
+}>> {
+  const rows: Array<{ title: string; description?: string; link: string; publishedAt?: string }> = [];
+  const seen = new Set<string>();
+  const endpoints = [
+    '/api/public/news/topfeatured',
+    '/api/public/news/featured',
+    '/api/public/news/leftlatestnews',
+    '/api/public/news/leftFeaturedNews',
+    '/api/public/news/bodyMiddleNews'
+  ];
+  for (const endpoint of endpoints) {
+    try {
+      const url = new URL(endpoint, pageUrl).toString();
+      const response = await fetchWithRetryFeed(url);
+      if (!response.ok) continue;
+      const responseBody = await readResponseBody(response);
+      const payload = JSON.parse(responseBody.body);
+      const items = endpoint.endsWith('/bodyMiddleNews')
+        ? (Array.isArray(payload)
+          ? payload.flatMap((entry) => Array.isArray(entry?.news) ? entry.news : [])
+          : [])
+        : (Array.isArray(payload) ? payload : []);
+      for (const item of items) {
+        const slug = typeof item?.slug === 'string' ? item.slug.trim() : '';
+        const title = normalizeHtmlText(typeof item?.title === 'string' ? item.title : '');
+        const description = normalizeHtmlText(typeof item?.description === 'string' ? item.description : '');
+        const publishedAt = normalizeBloombergTvPublishedAt(typeof item?.createdAt === 'string' ? item.createdAt : '');
+        if (!slug || !title || !publishedAt) continue;
+        const link = new URL(`/news/${slug}`, pageUrl).toString();
+        if (seen.has(link)) continue;
+        seen.add(link);
+        rows.push({ title, description: description || undefined, link, publishedAt });
+        if (rows.length >= SITEMAP_ITEM_LIMIT) {
+          return rows;
+        }
+      }
+    } catch {
+      continue;
+    }
+  }
+  return rows;
 }
 
 type ParsedSitemapResult = ReturnType<typeof parseSitemapWithStats>;
@@ -2569,9 +2664,27 @@ async function fetchSitemapCandidate(
     }
 
     const xml = responseBody.body;
-    const htmlRows = responseContentType.includes('html') || sniffedType === 'html'
-      ? parseHtmlListingRows(sitemapUrl, xml)
-      : [];
+    let htmlRows: Array<{
+      title: string;
+      description?: string;
+      link: string;
+      publishedAt?: string;
+    }> = [];
+    if (responseContentType.includes('html') || sniffedType === 'html') {
+      htmlRows = parseHtmlListingRows(sitemapUrl, xml);
+      if (htmlRows.length === 0) {
+        try {
+          const host = new URL(sitemapUrl).hostname.replace(/^www\./, '').toLowerCase();
+          if (host === 'gogo.mn') {
+            htmlRows = await fetchGogoHomepageRows(sitemapUrl, xml);
+          } else if (host === 'bloombergtv.mn') {
+            htmlRows = await fetchBloombergTvMongoliaRows(sitemapUrl);
+          }
+        } catch {
+          htmlRows = htmlRows;
+        }
+      }
+    }
     if (htmlRows.length > 0) {
       const items = await mapParsedItems(
         outlet,
