@@ -42,19 +42,28 @@ function resolveSnapshotGeneratedAt(snapshot: { generatedAt?: string | null } | 
   return Number.isFinite(timestamp) ? timestamp : null;
 }
 
-async function readJsonSnapshot<T>(filePaths: string[]): Promise<T | null> {
+async function readJsonSnapshot<T extends { generatedAt?: string | null }>(filePaths: string[]): Promise<T | null> {
+  let latestSnapshot: T | null = null;
+  let latestGeneratedAt: number | null = null;
   for (const filePath of filePaths) {
     try {
       const raw = await readFile(filePath, 'utf8');
       const parsed = JSON.parse(raw) as T | null;
       if (parsed && typeof parsed === 'object') {
-        return parsed;
+        const generatedAt = resolveSnapshotGeneratedAt(parsed);
+        if (
+          !latestSnapshot
+          || (generatedAt != null && (latestGeneratedAt == null || generatedAt > latestGeneratedAt))
+        ) {
+          latestSnapshot = parsed;
+          latestGeneratedAt = generatedAt;
+        }
       }
     } catch {
       continue;
     }
   }
-  return null;
+  return latestSnapshot;
 }
 
 function cloneBundledSnapshot<T>(payload: T | null | undefined): T | null {
