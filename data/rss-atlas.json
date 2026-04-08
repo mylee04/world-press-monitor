@@ -3413,6 +3413,78 @@
           "name": "Nature News",
           "url": "https://feeds.nature.com/nature/rss/current",
           "sitemapUrl": "https://www.nature.com/latest-news/sitemap.xml"
+        },
+        {
+          "name": "New Statesman",
+          "url": "https://www.newstatesman.com/feed",
+          "language": "en",
+          "tier": "primary"
+        },
+        {
+          "name": "The Register",
+          "url": "https://www.theregister.com/headlines.atom",
+          "language": "en",
+          "tier": "primary"
+        },
+        {
+          "name": "Politics.co.uk",
+          "url": "https://www.politics.co.uk/feed/",
+          "language": "en",
+          "tier": "primary"
+        },
+        {
+          "name": "BusinessCloud",
+          "url": "https://businesscloud.co.uk/feed/",
+          "language": "en",
+          "tier": "primary"
+        },
+        {
+          "name": "The Scotsman",
+          "url": "https://www.scotsman.com/rss",
+          "language": "en",
+          "tier": "primary"
+        },
+        {
+          "name": "Belfast Telegraph",
+          "url": "https://www.belfasttelegraph.co.uk/rss",
+          "language": "en",
+          "tier": "primary"
+        },
+        {
+          "name": "Computer Weekly",
+          "url": "https://www.computerweekly.com/rss/All-Computer-Weekly-content.xml",
+          "language": "en",
+          "tier": "primary"
+        },
+        {
+          "name": "UKTN",
+          "url": "https://www.uktech.news/feed",
+          "language": "en",
+          "tier": "primary"
+        },
+        {
+          "name": "Byline Times",
+          "url": "https://bylinetimes.com/feed/",
+          "language": "en",
+          "tier": "primary"
+        },
+        {
+          "name": "The National Wales",
+          "url": "https://nation.cymru/feed/",
+          "language": "en",
+          "tier": "primary"
+        },
+        {
+          "name": "Shropshire Star",
+          "url": "https://www.shropshirestar.com/rss/",
+          "language": "en",
+          "tier": "primary"
+        },
+        {
+          "name": "LondonWorld",
+          "url": "https://www.londonworld.com/rss",
+          "language": "en",
+          "tier": "primary"
         }
       ]
     },
@@ -3908,6 +3980,72 @@
           "name": "Jeune Afrique",
           "url": "https://www.jeuneafrique.com/feed/",
           "sitemapUrl": "https://www.jeuneafrique.com/sitemap-googlenews.xml"
+        },
+        {
+          "name": "Le Journal du Dimanche",
+          "url": "https://www.lejdd.fr/rss.xml",
+          "language": "fr",
+          "tier": "primary"
+        },
+        {
+          "name": "Lyon Capitale",
+          "url": "https://www.lyoncapitale.fr/feed",
+          "language": "fr",
+          "tier": "primary"
+        },
+        {
+          "name": "Challenges",
+          "url": "https://www.challenges.fr/rss.xml",
+          "language": "fr",
+          "tier": "primary"
+        },
+        {
+          "name": "Capital",
+          "url": "https://www.capital.fr/rss",
+          "language": "fr",
+          "tier": "primary"
+        },
+        {
+          "name": "01net",
+          "url": "https://www.01net.com/rss/actualites/",
+          "language": "fr",
+          "tier": "primary"
+        },
+        {
+          "name": "Maddyness",
+          "url": "https://www.maddyness.com/feed/",
+          "language": "fr",
+          "tier": "primary"
+        },
+        {
+          "name": "Rue89 Strasbourg",
+          "url": "https://www.rue89strasbourg.com/feed/",
+          "language": "fr",
+          "tier": "primary"
+        },
+        {
+          "name": "Marsactu",
+          "url": "https://marsactu.fr/feed/",
+          "language": "fr",
+          "tier": "primary"
+        },
+        {
+          "name": "France Bleu",
+          "url": "https://www.francebleu.fr/rss/a-la-une.xml",
+          "language": "fr",
+          "tier": "primary"
+        },
+        {
+          "name": "Sciences et Avenir",
+          "url": "https://www.sciencesetavenir.fr/rss.xml",
+          "language": "fr",
+          "tier": "primary"
+        },
+        {
+          "name": "Les Numériques",
+          "url": "https://www.lesnumeriques.com/rss.xml",
+          "language": "fr",
+          "tier": "primary"
         }
       ]
     },
@@ -4310,6 +4448,62 @@
         {
           "name": "Quotidiano.net - Day Sitemap",
           "sitemapUrl": "https://www.quotidiano.net/feedservice/sitemap/generic/qn/2026/day/sitemap.xml"
+        },
+        {
+          "name": "RomaToday",
+          "url": "https://www.romatoday.it/rss"
+        },
+        {
+          "name": "NapoliToday",
+          "url": "https://www.napolitoday.it/rss"
+        },
+        {
+          "name": "TorinoToday",
+          "url": "https://www.torinotoday.it/rss"
+        },
+        {
+          "name": "BolognaToday",
+          "url": "https://www.bolognatoday.it/rss"
+        },
+        {
+          "name": "PalermoToday",
+          "url": "https://www.palermotoday.it/rss"
+        },
+        {
+          "name": "BariToday",
+          "url": "https://www.baritoday.it/rss"
+        },
+        {
+          "name": "GenovaToday",
+          "url": "https://www.genovatoday.it/rss"
+        },
+        {
+          "name": "PisaToday",
+          "url": "https://www.pisatoday.it/rss"
+        },
+        {
+          "name": "PadovaOggi",
+          "url": "https://www.padovaoggi.it/rss"
+        },
+        {
+          "name": "VeronaSera",
+          "url": "https://www.veronasera.it/rss"
+        },
+        {
+          "name": "MessinaToday",
+          "url": "https://www.messinatoday.it/rss"
+        },
+        {
+          "name": "LeccePrima",
+          "url": "https://www.lecceprima.it/rss"
+        },
+        {
+          "name": "Sky TG24",
+          "url": "https://tg24.sky.it/rss/tg24.xml"
+        },
+        {
+          "name": "Corriere dello Sport",
+          "url": "https://www.corrieredellosport.it/rss/home.xml"
         }
       ]
     },
@@ -8101,6 +8295,30 @@
         {
           "name": "eldiario.es - Google News Sitemap",
           "sitemapUrl": "https://www.eldiario.es/sitemap_google_news_25b87.xml"
+        },
+        {
+          "name": "El Independiente",
+          "url": "https://www.elindependiente.com/feed/"
+        },
+        {
+          "name": "Faro de Vigo",
+          "url": "https://www.farodevigo.es/rss/"
+        },
+        {
+          "name": "Diario de Sevilla",
+          "url": "https://www.diariodesevilla.es/rss/"
+        },
+        {
+          "name": "Mundo Deportivo",
+          "url": "https://www.mundodeportivo.com/rss/home.xml"
+        },
+        {
+          "name": "Nació Digital",
+          "url": "https://naciodigital.cat/rss/portada.xml"
+        },
+        {
+          "name": "El Confidencial Digital",
+          "url": "https://www.elconfidencialdigital.com/rss/"
         }
       ]
     },
