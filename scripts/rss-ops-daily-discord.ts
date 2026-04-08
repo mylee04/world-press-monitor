@@ -49,11 +49,21 @@ type StaleWatchlistReport = {
   };
 };
 
+type FollowupRemediationReport = {
+  generatedAt?: string;
+  summary?: {
+    canonicalApplied?: number;
+    canonicalSkipped?: number;
+    duplicateSitemapsRemoved?: number;
+  };
+};
+
 const HEALTH_PATH = resolve(process.cwd(), 'audits/readme_rss_health_latest.json');
 const AUTO_REPAIR_PATH = resolve(process.cwd(), 'audits/rss_auto_repair_candidates_latest.json');
 const HARD_403_PATH = resolve(process.cwd(), 'audits/rss_hard_403_backlog_latest.json');
 const STALE_PATH = resolve(process.cwd(), 'audits/rss_stale_watchlist_latest.json');
 const SAFE_DISABLE_PATH = resolve(process.cwd(), 'audits/rss_safe_disable_now_latest.json');
+const FOLLOWUP_REMEDIATION_PATH = resolve(process.cwd(), 'audits/rss_followup_remediation_latest.json');
 
 const WEBHOOK_ENV_KEYS = [
   'RSS_OPS_DAILY_DISCORD_WEBHOOK_URL',
@@ -105,7 +115,8 @@ function buildDescription(
   health: HealthReport | null,
   autoRepair: AutoRepairReport | null,
   hard403: Hard403BacklogReport | null,
-  stale: StaleWatchlistReport | null
+  stale: StaleWatchlistReport | null,
+  followup: FollowupRemediationReport | null
 ): string {
   const lines: string[] = [];
 
@@ -150,6 +161,12 @@ function buildDescription(
     lines.push('stale: 결과 없음');
   }
 
+  if (followup?.summary) {
+    lines.push(
+      `후속정리: canonical 적용 ${followup.summary.canonicalApplied ?? 0} / canonical 보류 ${followup.summary.canonicalSkipped ?? 0} / duplicate 제거 ${followup.summary.duplicateSitemapsRemoved ?? 0}`
+    );
+  }
+
   return lines.join('\n');
 }
 
@@ -184,9 +201,11 @@ async function main(): Promise<void> {
   const hard403 = readJsonIfExists<Hard403BacklogReport>(HARD_403_PATH);
   const stale = readJsonIfExists<StaleWatchlistReport>(STALE_PATH);
   const safeDisable = readJsonIfExists<{ total?: number }>(SAFE_DISABLE_PATH);
+  const followup = readJsonIfExists<FollowupRemediationReport>(FOLLOWUP_REMEDIATION_PATH);
 
-  const description = buildDescription(health, autoRepair, hard403, stale);
+  const description = buildDescription(health, autoRepair, hard403, stale, followup);
   const timestamp =
+    followup?.generatedAt ||
     stale?.generatedAt ||
     hard403?.generatedAt ||
     autoRepair?.generatedAt ||
