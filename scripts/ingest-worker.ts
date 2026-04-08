@@ -457,6 +457,54 @@ function parseSitemapIndex(xml: string, baseUrl: string | null = null): string[]
     .map((entry) => entry.loc);
 }
 
+function normalizeHtmlListingPublishedAt(value: string): string | undefined {
+  const match = value.match(/(20\d{2})[.\-/](\d{2})[.\-/](\d{2})/);
+  if (!match) return undefined;
+  const [, year, month, day] = match;
+  return `${year}-${month}-${day}T12:00:00.000Z`;
+}
+
+function parseUbLifeHomepageRows(pageUrl: string, html: string): Array<{
+  title: string;
+  description?: string;
+  link: string;
+  publishedAt?: string;
+}> {
+  const rows: Array<{ title: string; description?: string; link: string; publishedAt?: string }> = [];
+  const seen = new Set<string>();
+  const pattern = /<a[^>]+href="(\/p\/[^"]+)"[\s\S]{0,2500}?<h2[^>]*>([\s\S]{10,240}?)<\/h2>[\s\S]{0,1200}?(?:<p[^>]*>([\s\S]{0,400}?)<\/p>[\s\S]{0,800}?)?<time[^>]*>(20\d{2}[.\-/]\d{2}[.\-/]\d{2})<\/time>/gi;
+  for (const match of html.matchAll(pattern)) {
+    const rawLink = match[1] || '';
+    const title = normalizeHtmlText(match[2] || '');
+    const description = normalizeHtmlText(match[3] || '');
+    const publishedAt = normalizeHtmlListingPublishedAt(match[4] || '');
+    if (!rawLink || !title || !publishedAt) continue;
+    const link = new URL(rawLink, pageUrl).toString();
+    if (seen.has(link)) continue;
+    seen.add(link);
+    rows.push({ title, description: description || undefined, link, publishedAt });
+    if (rows.length >= SITEMAP_ITEM_LIMIT) break;
+  }
+  return rows;
+}
+
+function parseHtmlListingRows(pageUrl: string, html: string): Array<{
+  title: string;
+  description?: string;
+  link: string;
+  publishedAt?: string;
+}> {
+  try {
+    const host = new URL(pageUrl).hostname.replace(/^www\./, '').toLowerCase();
+    if (host === 'ub.life') {
+      return parseUbLifeHomepageRows(pageUrl, html);
+    }
+  } catch {
+    return [];
+  }
+  return [];
+}
+
 type ParsedSitemapResult = ReturnType<typeof parseSitemapWithStats>;
 
 const ONE_DAY_MS = 24 * 60 * 60 * 1000;
@@ -2521,6 +2569,51 @@ async function fetchSitemapCandidate(
     }
 
     const xml = responseBody.body;
+    const htmlRows = responseContentType.includes('html') || sniffedType === 'html'
+      ? parseHtmlListingRows(sitemapUrl, xml)
+      : [];
+    if (htmlRows.length > 0) {
+      const items = await mapParsedItems(
+        outlet,
+        htmlRows,
+        fallbackPublishedAt,
+        'sitemap',
+        onMissingPublishedAtCandidate
+      );
+      const newestItem = latestItemPublishedAt(items);
+      return {
+        items,
+        run: {
+          outletId: outlet.id,
+          source: outlet.name,
+          country,
+          method: 'sitemap',
+          attempted: true,
+          circuitOpen: false,
+          ok: true,
+          statusCode: 200,
+          parsedCount: items.length,
+          fetchedCount: htmlRows.length,
+          parsedLimit: SITEMAP_ITEM_LIMIT,
+          sampleCapped: items.length >= SITEMAP_ITEM_LIMIT,
+          recent24h: items.length,
+          missingTitleCount: 0,
+          missingSummaryCount: 0,
+          missingPublishedAtCount: 0,
+          missingLinkCount: 0,
+          requestedUrl: sitemapUrl,
+          finalUrl: response.url || sitemapUrl,
+          contentType: responseContentType,
+          responseMs,
+          sniffedType,
+          parsedOk: true,
+          failureStage: undefined,
+          healthClassification: 'success',
+          newestItemPublishedAt: newestItem,
+        },
+        fallbackUsed: 'none',
+      };
+    }
     const parsed = await parseSitemapXmlRecursively(sitemapUrl, xml);
 
     if (!parsed || parsed.stats.validCount === 0) {

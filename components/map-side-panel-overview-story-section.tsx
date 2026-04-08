@@ -83,7 +83,7 @@ export function OverviewStorySection({
 
   if (!selectedCountry && mapMode === 'publishers' && selectedPublisher && selectedPublisherWindowMetrics) {
     return (
-      <div className="map-story-card">
+      <div className="map-story-card is-compact-copy">
         <div className="eyebrow">Publisher Footprint</div>
         <strong>
           {selectedPublisher.publisher} is active across {formatNumber(selectedPublisherWindowMetrics.activeCountries)} countries and{' '}
@@ -103,7 +103,7 @@ export function OverviewStorySection({
 
   if (!selectedCountry) {
     return (
-      <div className="map-story-card">
+      <div className={`map-story-card ${mapMode === 'health' ? 'is-compact-copy' : ''}`}>
         <div className="eyebrow">
           {mapMode === 'health'
               ? 'Health Overlay'

@@ -8960,6 +8960,58 @@
           "checkedDate": "03/16/2026",
           "valid": "valid",
           "row": 68
+        },
+        {
+          "name": "Diario de Yucatan",
+          "url": "https://www.yucatan.com.mx/feed"
+        },
+        {
+          "name": "Vanguardia MX",
+          "url": "https://vanguardia.com.mx/rss.xml"
+        },
+        {
+          "name": "Quadratin Mexico",
+          "url": "https://www.quadratin.com.mx/feed/"
+        },
+        {
+          "name": "El CEO Mexico",
+          "url": "https://elceo.com/feed/"
+        },
+        {
+          "name": "El Sol de Puebla",
+          "url": "https://www.elsoldepuebla.com.mx/rss"
+        },
+        {
+          "name": "El Sol de Toluca",
+          "url": "https://www.elsoldetoluca.com.mx/rss"
+        },
+        {
+          "name": "El Sol de Morelia",
+          "url": "https://www.elsoldemorelia.com.mx/rss"
+        },
+        {
+          "name": "El Sol de Tijuana",
+          "url": "https://www.elsoldetijuana.com.mx/rss"
+        },
+        {
+          "name": "El Occidental",
+          "url": "https://www.eloccidental.com.mx/rss"
+        },
+        {
+          "name": "El Sudcaliforniano",
+          "url": "https://www.elsudcaliforniano.com.mx/rss"
+        },
+        {
+          "name": "El Sol de Hermosillo",
+          "url": "https://www.elsoldehermosillo.com.mx/rss"
+        },
+        {
+          "name": "El Sol de Leon",
+          "url": "https://www.elsoldeleon.com.mx/rss"
+        },
+        {
+          "name": "El Sol de San Luis",
+          "url": "https://www.elsoldesanluis.com.mx/rss"
         }
       ]
     },
@@ -27915,6 +27967,10 @@
         {
           "name": "ikon Mongolia",
           "url": "https://ikon.mn/rss"
+        },
+        {
+          "name": "UB Life Mongolia",
+          "sitemapUrl": "https://ub.life/"
         }
       ]
     },

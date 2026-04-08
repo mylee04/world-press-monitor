@@ -1602,6 +1602,22 @@ body.landing-header-mode.landing-header-visible .site-header {
   line-height: 1.45;
 }
 
+.map-story-card.is-compact-copy strong {
+  font-size: 0.84rem;
+  line-height: 1.28;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  hyphens: none;
+}
+
+.map-story-card.is-compact-copy span {
+  font-size: 0.73rem;
+  line-height: 1.36;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  hyphens: none;
+}
+
 .map-side-panel.is-country-view .map-story-card strong,
 .map-detail-drawer.is-country-view .map-story-card strong {
   font-size: 0.84rem;
