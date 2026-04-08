@@ -19734,6 +19734,134 @@
         {
           "name": "Fædrelandsvennen",
           "url": "https://www.fvn.no/rss"
+        },
+        {
+          "name": "Dagens Næringsliv",
+          "url": "https://services.dn.no/api/feed/rss/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Morgenbladet",
+          "url": "https://www.morgenbladet.no/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "ITavisen",
+          "url": "https://itavisen.no/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Altinget",
+          "url": "https://www.altinget.no/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Bergensavisen",
+          "url": "https://www.ba.no/service/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Nordlys",
+          "url": "https://www.nordlys.no/service/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Telemarksavisa",
+          "url": "https://www.ta.no/service/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Drammens Tidende",
+          "url": "https://www.dt.no/service/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Fredriksstad Blad",
+          "url": "https://www.f-b.no/service/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Romerikes Blad",
+          "url": "https://www.rb.no/service/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Oppland Arbeiderblad",
+          "url": "https://www.oa.no/service/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Sandefjords Blad",
+          "url": "https://www.sb.no/service/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Budstikka",
+          "url": "https://www.budstikka.no/service/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Rett24",
+          "url": "https://www.rett24.no/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Digi",
+          "url": "https://www.digi.no/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Filter Nyheter",
+          "url": "https://www.filternyheter.no/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "IntraFish - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.intrafish.no/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Europower - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.europower.no/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
         }
       ]
     },
@@ -21266,6 +21394,46 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/02/2026",
           "valid": "valid"
+        },
+        {
+          "name": "MigogEsbjerg",
+          "url": "https://migogesbjerg.dk/feed/"
+        },
+        {
+          "name": "Computerworld",
+          "url": "https://www.computerworld.dk/rss/all"
+        },
+        {
+          "name": "The Local Denmark",
+          "url": "https://feeds.thelocal.com/rss/builder/dk"
+        },
+        {
+          "name": "Globalnyt",
+          "url": "https://globalnyt.dk/feed/"
+        },
+        {
+          "name": "OLFI",
+          "url": "https://olfi.dk/feed/"
+        },
+        {
+          "name": "Kommunen",
+          "url": "https://www.kommunen.dk/feed/"
+        },
+        {
+          "name": "Folkeskolen",
+          "url": "https://www.folkeskolen.dk/feed/"
+        },
+        {
+          "name": "Sofart",
+          "url": "https://www.soefart.dk/xml/rss2/articles"
+        },
+        {
+          "name": "Meremobil",
+          "url": "https://meremobil.dk/feed/"
+        },
+        {
+          "name": "Recordere",
+          "url": "https://www.recordere.dk/feed/"
         }
       ]
     },
@@ -22826,6 +22994,181 @@
           "url": "https://www.autorevue.cz/rss",
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Mediář",
+          "url": "https://www.mediar.cz/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Root.cz",
+          "url": "https://www.root.cz/rss/clanky/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Proženy.cz",
+          "url": "https://www.prozeny.cz/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Garáž.cz",
+          "url": "https://www.garaz.cz/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Pražská Drbna",
+          "url": "https://www.prazskadrbna.cz/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Brněnská Drbna",
+          "url": "https://www.brnenskadrbna.cz/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Ostravská Drbna",
+          "url": "https://ostravska.drbna.cz/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Budějcká Drbna",
+          "url": "https://budejcka.drbna.cz/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Liberecká Drbna",
+          "url": "https://liberecka.drbna.cz/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Hanácká Drbna",
+          "url": "https://hanacka.drbna.cz/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Jižní Čechy Teď",
+          "url": "https://www.jcted.cz/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Cnews.cz",
+          "url": "https://www.cnews.cz/rss/clanky/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Zdroják",
+          "url": "https://www.zdrojak.cz/rss/clanky/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Autobible",
+          "url": "https://www.autobible.euro.cz/rss/clanky/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Karlovarská Drbna",
+          "url": "https://karlovarska.drbna.cz/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Plzeňská Drbna",
+          "url": "https://plzenska.drbna.cz/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Hradecká Drbna",
+          "url": "https://hradecka.drbna.cz/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Jihlavská Drbna",
+          "url": "https://jihlavska.drbna.cz/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Respekt",
+          "url": "https://www.respekt.cz/api/rss?type=articles&unlocked=1",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Radio Prague International",
+          "url": "https://english.radio.cz/rcz-rss/en",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Euro.cz",
+          "url": "https://www.euro.cz/rss/clanky/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Expats.cz",
+          "url": "https://www.expats.cz/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Prague Morning",
+          "url": "https://praguemorning.cz/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Brno Daily",
+          "url": "https://brnodaily.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "MAM",
+          "url": "https://mam.cz/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/07/2026",
           "valid": "valid"
         }
       ]
