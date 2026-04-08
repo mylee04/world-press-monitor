@@ -1,5 +1,5 @@
 import { formatNumber } from '@/lib/map-display';
-import type { MapCountryMetricRow, MapPublisherMetricRow } from '@/lib/map-types';
+import type { MapCountryMetricRow, MapMetricWindow, MapPublisherMetricRow } from '@/lib/map-types';
 import type { MapMode } from '@/lib/map-view-state';
 import type { MapSidePanelCountrySummaryDisplay } from '@/components/map-side-panel-types';
 
@@ -23,6 +23,7 @@ type OverviewStorySectionProps = {
   } | null;
   selectedCountrySummaryDisplay: MapSidePanelCountrySummaryDisplay;
   selectedPublisher: MapPublisherMetricRow | null;
+  selectedPublisherWindowMetrics: MapPublisherMetricRow['windows'][MapMetricWindow] | null;
 };
 
 export function OverviewStorySection({
@@ -36,9 +37,8 @@ export function OverviewStorySection({
   selectedCountryFallbackSummary,
   selectedCountrySummaryDisplay,
   selectedPublisher,
+  selectedPublisherWindowMetrics,
 }: OverviewStorySectionProps) {
-  const publisherComparisonMode = !selectedCountry && mapMode === 'publishers' && Boolean(selectedPublisher);
-
   if (selectedCountry && countryDataReady) {
     return (
       <div className="map-story-card">
@@ -81,27 +81,41 @@ export function OverviewStorySection({
     );
   }
 
-  if (!selectedCountry && !publisherComparisonMode) {
+  if (!selectedCountry && mapMode === 'publishers' && selectedPublisher && selectedPublisherWindowMetrics) {
+    return (
+      <div className="map-story-card">
+        <div className="eyebrow">Publisher Footprint</div>
+        <strong>
+          {selectedPublisher.publisher} is active across {formatNumber(selectedPublisherWindowMetrics.activeCountries)} countries and{' '}
+          {formatNumber(selectedPublisherWindowMetrics.activeSources)} active sources in the last {activeWindowDescriptor}.
+        </strong>
+        <span>
+          Country bubbles show where the selected publisher is active across borders and how much output each market generated in the last {activeWindowDescriptor}.
+        </span>
+        <span>
+          {latestMapUpdatedLabel
+            ? `${mapProvenanceLabel} · ${mapProvenanceNote} · last updated ${latestMapUpdatedLabel}`
+            : `${mapProvenanceLabel} · ${mapProvenanceNote}`}
+        </span>
+      </div>
+    );
+  }
+
+  if (!selectedCountry) {
     return (
       <div className="map-story-card">
         <div className="eyebrow">
-          {mapMode === 'publishers'
-            ? 'Publisher Footprint'
-            : mapMode === 'health'
+          {mapMode === 'health'
               ? 'Health Overlay'
               : 'World Publishing Pulse'}
         </div>
         <strong>
-          {mapMode === 'publishers'
-            ? `${selectedPublisher?.publisher || 'Publisher'} country footprint`
-            : mapMode === 'health'
+          {mapMode === 'health'
               ? 'Country health globe'
               : 'Country publishing globe'}
         </strong>
         <span>
-          {mapMode === 'publishers'
-            ? `Country bubbles show where the selected publisher is active across borders and how much output each market generated in the last ${activeWindowDescriptor}.`
-            : mapMode === 'health'
+          {mapMode === 'health'
               ? `Country bubbles are colored by degraded-source share and sized by active source count in the last ${activeWindowDescriptor}.`
               : `Country bubbles are sized by core publishing volume in the last ${activeWindowDescriptor} and color-shift on freshness and late share.`}
         </span>

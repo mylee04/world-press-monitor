@@ -53,8 +53,8 @@ export function OverviewStatsSection({
           <strong>{formatNumber(totalWindowMetrics?.published || 0)}</strong>
         </article>
         <article className="map-stat-card">
-          <span>{mapWindow === '1h' ? 'Fresh 1h' : `Fresh ${activeWindowDescriptor}`}</span>
-          <strong>{formatNumber(totalWindowMetrics?.fresh || 0)}</strong>
+          <span>{mapWindow === '1h' ? 'Ingested 1h' : `Ingested ${activeWindowDescriptor}`}</span>
+          <strong>{formatNumber(totalWindowMetrics?.firstSeen || 0)}</strong>
         </article>
         <article className="map-stat-card">
           <span>Countries</span>

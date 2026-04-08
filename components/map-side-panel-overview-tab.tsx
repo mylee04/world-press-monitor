@@ -135,6 +135,7 @@ export function MapSidePanelOverviewTab({
         selectedCountryFallbackSummary={selectedCountryFallbackSummary}
         selectedCountrySummaryDisplay={selectedCountrySummaryDisplay}
         selectedPublisher={selectedPublisher}
+        selectedPublisherWindowMetrics={selectedPublisherWindowMetrics}
       />
 
       <OverviewHighlightsSection

@@ -1685,7 +1685,11 @@ export function MapView() {
     sourceDetailState.data?.generatedAt ? Date.parse(sourceDetailState.data.generatedAt) : 0
   ) || null;
   const latestMapUpdatedLabel = latestMapUpdatedAt
-    ? new Date(latestMapUpdatedAt).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })
+    ? `${new Date(latestMapUpdatedAt).toLocaleTimeString([], {
+        hour: 'numeric',
+        minute: '2-digit',
+        timeZoneName: 'short',
+      })} (local time)`
     : null;
   const activeWindowDescriptor = mapWindowDescriptor(mapWindow);
   const totalWindowMetrics = totals?.windows[mapWindow] || null;
