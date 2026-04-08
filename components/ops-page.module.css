@@ -1,0 +1,488 @@
+.root {
+  margin-top: 24px;
+  gap: 20px;
+}
+
+.hero {
+  display: grid;
+  gap: 18px;
+  padding: 28px;
+  border: 1px solid rgba(120, 199, 255, 0.14);
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at top left, rgba(32, 90, 173, 0.16), transparent 28%),
+    linear-gradient(180deg, rgba(8, 14, 26, 0.94) 0%, rgba(4, 8, 18, 0.96) 100%);
+  box-shadow: 0 24px 60px rgba(2, 8, 22, 0.34);
+}
+
+.heroTop {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.heroCopy {
+  display: grid;
+  gap: 10px;
+}
+
+.heroCopy h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+}
+
+.heroCopy p {
+  margin: 0;
+  max-width: 64ch;
+  color: var(--muted);
+}
+
+.logoutButton,
+.loginButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 16px;
+  border: 1px solid rgba(120, 199, 255, 0.16);
+  border-radius: 999px;
+  background: rgba(11, 19, 34, 0.82);
+  color: #e7f6ff;
+}
+
+.logoutButton:hover,
+.loginButton:hover {
+  text-decoration: none;
+  background: rgba(16, 28, 48, 0.94);
+}
+
+.statusGrid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.statusCard {
+  display: grid;
+  gap: 10px;
+  min-height: 156px;
+  padding: 20px;
+  border: 1px solid rgba(120, 199, 255, 0.12);
+  border-radius: 24px;
+  background: rgba(11, 19, 34, 0.88);
+}
+
+.statusLabel {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border: 1px solid rgba(120, 199, 255, 0.12);
+  border-radius: 999px;
+  background: rgba(127, 227, 255, 0.08);
+  color: #d8f4ff;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.statusOk {
+  color: #9fffd1;
+}
+
+.statusWarn {
+  color: #ffd27d;
+}
+
+.statusCard strong {
+  font-size: 1.95rem;
+  line-height: 1;
+}
+
+.statusCard p,
+.statusCard small {
+  margin: 0;
+  color: var(--muted);
+}
+
+.detailGrid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.detailPanel {
+  display: grid;
+  gap: 14px;
+  padding: 22px;
+  border: 1px solid rgba(120, 199, 255, 0.12);
+  border-radius: 26px;
+  background: rgba(8, 14, 26, 0.88);
+}
+
+.detailPanel h2 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.detailMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(120, 199, 255, 0.12);
+  background: rgba(127, 227, 255, 0.08);
+  color: #d8f4ff;
+  font-size: 0.82rem;
+}
+
+.statList {
+  display: grid;
+  gap: 10px;
+}
+
+.statRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(120, 199, 255, 0.08);
+}
+
+.statRow:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.statRow span {
+  color: var(--muted);
+}
+
+.topCountryList {
+  display: grid;
+  gap: 10px;
+}
+
+.topCountryRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+}
+
+.topCountryRow strong {
+  font-size: 1rem;
+}
+
+.topCountryRow span {
+  color: var(--muted);
+}
+
+.loginShell {
+  display: grid;
+  gap: 18px;
+  max-width: 560px;
+  margin: 48px auto 0;
+  padding: 28px;
+  border: 1px solid rgba(120, 199, 255, 0.14);
+  border-radius: 28px;
+  background: rgba(8, 14, 26, 0.9);
+  box-shadow: 0 24px 60px rgba(2, 8, 22, 0.34);
+}
+
+.loginShell h1 {
+  margin: 0;
+  font-size: clamp(1.9rem, 3vw, 2.6rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.loginShell p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.loginForm {
+  display: grid;
+  gap: 14px;
+}
+
+.loginForm label {
+  display: grid;
+  gap: 8px;
+  color: #d8f4ff;
+  font-size: 0.9rem;
+}
+
+.loginForm input {
+  min-height: 48px;
+  padding: 0 14px;
+  border: 1px solid rgba(120, 199, 255, 0.16);
+  border-radius: 16px;
+  background: rgba(4, 8, 18, 0.9);
+  color: #f7fbff;
+}
+
+.errorText {
+  color: #ff9d9d;
+  font-size: 0.92rem;
+}
+
+.mutedText {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.explorerSection {
+  display: grid;
+  gap: 16px;
+}
+
+.explorerHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.explorerHeader h2,
+.panelHeader h3 {
+  margin: 0;
+}
+
+.explorerHeader p,
+.panelHeader p,
+.categoryCard p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.explorerGrid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.explorerPanel {
+  display: grid;
+  gap: 14px;
+  padding: 22px;
+  border: 1px solid rgba(120, 199, 255, 0.12);
+  border-radius: 26px;
+  background: rgba(8, 14, 26, 0.88);
+  min-width: 0;
+}
+
+.widePanel {
+  grid-column: 1 / -1;
+}
+
+.panelHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.controlRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.control,
+.searchInput {
+  min-height: 42px;
+  padding: 0 14px;
+  border: 1px solid rgba(120, 199, 255, 0.16);
+  border-radius: 14px;
+  background: rgba(4, 8, 18, 0.9);
+  color: #f7fbff;
+}
+
+.control {
+  min-width: 140px;
+}
+
+.searchInput {
+  width: 100%;
+}
+
+.tableWrap {
+  overflow-x: auto;
+  border: 1px solid rgba(120, 199, 255, 0.08);
+  border-radius: 18px;
+  background: rgba(4, 8, 18, 0.72);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 640px;
+}
+
+.table thead th {
+  padding: 12px 14px;
+  text-align: left;
+  color: #a9c7db;
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(120, 199, 255, 0.08);
+}
+
+.table tbody td {
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(120, 199, 255, 0.06);
+  vertical-align: top;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.table tbody tr {
+  cursor: pointer;
+}
+
+.table tbody tr:hover {
+  background: rgba(127, 227, 255, 0.04);
+}
+
+.table tbody td strong,
+.categoryTop strong {
+  display: block;
+}
+
+.table tbody td span,
+.categoryMeta span {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.activeRow {
+  background: rgba(127, 227, 255, 0.08);
+}
+
+.categoryList {
+  display: grid;
+  gap: 12px;
+}
+
+.categoryCard {
+  display: grid;
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid rgba(120, 199, 255, 0.08);
+  border-radius: 18px;
+  background: rgba(4, 8, 18, 0.72);
+}
+
+.categoryTop,
+.categoryMeta,
+.summaryRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.summaryRow {
+  justify-content: flex-start;
+}
+
+.bucketStrip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(82px, 1fr));
+  gap: 10px;
+}
+
+.bucketCard {
+  display: grid;
+  gap: 4px;
+  padding: 12px;
+  border: 1px solid rgba(120, 199, 255, 0.08);
+  border-radius: 16px;
+  background: rgba(4, 8, 18, 0.72);
+}
+
+.bucketCard strong {
+  font-size: 0.94rem;
+}
+
+.bucketCard span {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.emptyState {
+  padding: 18px;
+  border: 1px dashed rgba(120, 199, 255, 0.16);
+  border-radius: 16px;
+  color: var(--muted);
+  background: rgba(4, 8, 18, 0.52);
+}
+
+.healthPill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(120, 199, 255, 0.12);
+  font-size: 0.82rem;
+  text-transform: capitalize;
+}
+
+.healthPill[data-health='healthy'] {
+  color: #9fffd1;
+  background: rgba(27, 74, 55, 0.24);
+}
+
+.healthPill[data-health='warning'],
+.healthPill[data-health='unknown'] {
+  color: #ffd27d;
+  background: rgba(91, 60, 20, 0.24);
+}
+
+.healthPill[data-health='degraded'],
+.healthPill[data-health='failing'] {
+  color: #ff9d9d;
+  background: rgba(88, 24, 34, 0.24);
+}
+
+@media (max-width: 720px) {
+  .hero,
+  .loginShell {
+    padding: 22px;
+  }
+
+  .heroTop {
+    flex-direction: column;
+  }
+
+  .explorerGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .panelHeader,
+  .explorerHeader {
+    flex-direction: column;
+  }
+
+  .widePanel {
+    grid-column: auto;
+  }
+}
