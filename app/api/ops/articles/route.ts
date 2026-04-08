@@ -71,6 +71,8 @@ export async function GET(request: NextRequest) {
         storage: result.storage,
         generatedAt: result.generatedAt,
         total: result.totalCount,
+        totalIsEstimate: result.totalCountIsEstimate,
+        hasMore: result.hasMore,
         params: {
           limit,
           offset,

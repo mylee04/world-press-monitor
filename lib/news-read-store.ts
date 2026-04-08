@@ -29,6 +29,8 @@ type NewsApiReadResult = {
   reason?: string;
   generatedAt: string | null;
   totalCount: number;
+  totalCountIsEstimate?: boolean;
+  hasMore?: boolean;
   items: NewsApiItem[];
 };
 
@@ -64,8 +66,11 @@ type NewsApiReadRow = {
   publication_datetime: string;
   created_at: string;
   updated_at: string;
+};
+
+type NewsApiReadMetaRow = {
   generated_at: string | null;
-  total_count?: string | null;
+  total_count: string | null;
 };
 
 type ReadStoreDeps = {
@@ -137,6 +142,31 @@ function mapRowToNewsApiItem(row: NewsApiReadRow, deps: Pick<ReadStoreDeps, 'api
     createdAt: row.created_at,
     updatedAt: row.updated_at
   };
+}
+
+async function readNewsApiMetaWithTimeout(
+  db: Pool,
+  text: string,
+  values: unknown[],
+  timeoutMs: number,
+): Promise<NewsApiReadMetaRow | null> {
+  const client = await db.connect();
+  try {
+    await client.query('begin');
+    await client.query(`set local statement_timeout = '${Math.max(250, Math.floor(timeoutMs))}ms'`);
+    const result = await client.query<NewsApiReadMetaRow>(text, values);
+    await client.query('commit');
+    return result.rows[0] || null;
+  } catch {
+    try {
+      await client.query('rollback');
+    } catch {
+      // Ignore rollback errors after statement timeout.
+    }
+    return null;
+  } finally {
+    client.release();
+  }
 }
 
 export async function readNewsArticlesForApiWithDeps(
@@ -264,14 +294,13 @@ export async function readNewsArticlesForApiWithDeps(
     where 1 = 1
     ${whereClauses.join('\n    ')}`;
 
-  params.push(limit);
-  const limitIndex = params.length;
-  params.push(offset);
-  const offsetIndex = params.length;
+  const rowParams = [...params, limit + 1, offset];
+  const rowLimitIndex = rowParams.length - 1;
+  const rowOffsetIndex = rowParams.length;
 
-  const result = await db.query<NewsApiReadRow>(
-    `
-    with filtered as (
+  const [rowResult, metaResult] = await Promise.all([
+    db.query<NewsApiReadRow>(
+      `
       select
         e.external_id as id,
         e.source,
@@ -291,25 +320,48 @@ export async function readNewsArticlesForApiWithDeps(
         e.updated_at
       from news_articles e
       ${whereSql}
-    )
-    select
-      filtered.*,
-      max(filtered.created_at) over() as generated_at,
-      count(*) over()::text as total_count
-    from filtered
-    order by filtered.publication_datetime desc, filtered.created_at desc
-    limit $${limitIndex} offset $${offsetIndex}
-    `,
-    params
-  );
+      order by ${normalizedPublicationSql} desc, e.created_at desc
+      limit $${rowLimitIndex} offset $${rowOffsetIndex}
+      `,
+      rowParams
+    ),
+    readNewsApiMetaWithTimeout(
+      db,
+      `
+        select
+          max(e.created_at) as generated_at,
+          count(*)::text as total_count
+        from news_articles e
+        ${whereSql}
+      `,
+      params,
+      1500,
+    ),
+  ]);
 
-  const items = result.rows.map((row) => mapRowToNewsApiItem(row, deps));
-  const totalCount = result.rows[0]?.total_count ? Number(result.rows[0].total_count) : 0;
+  const hasMore = rowResult.rows.length > limit;
+  const visibleRows = hasMore ? rowResult.rows.slice(0, limit) : rowResult.rows;
+  const items = visibleRows.map((row) => mapRowToNewsApiItem(row, deps));
+  const fallbackGeneratedAt = visibleRows.reduce<string | null>((latest, row) => {
+    if (!row.created_at) return latest;
+    if (!latest) return row.created_at;
+    return new Date(row.created_at).getTime() > new Date(latest).getTime() ? row.created_at : latest;
+  }, null);
+  const metaRow = metaResult || null;
+  const totalCount = metaRow?.total_count
+    ? Number(metaRow.total_count)
+    : offset + visibleRows.length + (hasMore ? 1 : 0);
 
   return {
     storage: 'postgres',
     totalCount,
-    generatedAt: result.rows[0]?.generated_at ? new Date(result.rows[0].generated_at).toISOString() : null,
+    totalCountIsEstimate: !metaRow,
+    hasMore,
+    generatedAt: metaRow?.generated_at
+      ? new Date(metaRow.generated_at).toISOString()
+      : fallbackGeneratedAt
+        ? new Date(fallbackGeneratedAt).toISOString()
+        : null,
     items,
   };
 }

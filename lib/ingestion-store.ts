@@ -59,7 +59,19 @@ export type { MissingPublishedAtCandidate, NewsArticleFeedCategoryBackfill };
 let pool: Pool | null = null;
 let poolFailed = false;
 let schemaReady = false;
+let schemaReadyPromise: Promise<void> | null = null;
 let poolDisabledReason = 'not_initialized';
+
+const REQUIRED_NEWS_SCHEMA_TABLES = [
+  'news_articles',
+  'rss_health_status',
+  'ingest_feed_watermarks_v2',
+  'ingest_ops_hourly',
+  'country_benchmark_hourly',
+  'country_benchmark_daily',
+  'map_country_metrics_snapshots',
+  'map_publishers_snapshots',
+] as const;
 
 const INGEST_SITEMAP_POLICY_TABLE = 'ingest_sitemap_policy_v2';
 
@@ -270,7 +282,28 @@ async function ensureSchema(): Promise<void> {
   if (schemaReady) return;
   const db = getPool();
   if (!db) return;
-  await db.query(`
+  if (schemaReadyPromise) {
+    await schemaReadyPromise;
+    return;
+  }
+
+  schemaReadyPromise = (async () => {
+    const existingTables = await db.query<{ table_name: string }>(
+      `
+        select table_name
+        from information_schema.tables
+        where table_schema = 'public'
+          and table_name = any($1::text[])
+      `,
+      [[...REQUIRED_NEWS_SCHEMA_TABLES]]
+    );
+
+    if (existingTables.rows.length === REQUIRED_NEWS_SCHEMA_TABLES.length) {
+      schemaReady = true;
+      return;
+    }
+
+    await db.query(`
     do $$
     begin
       if exists (
@@ -706,7 +739,14 @@ create table if not exists news_articles (
     drop table if exists ingested_articles;
 
     `);
-  schemaReady = true;
+    schemaReady = true;
+  })()
+    .catch((error) => {
+      schemaReadyPromise = null;
+      throw error;
+    });
+
+  await schemaReadyPromise;
 }
 
 async function executeIngestionQuery(db: Pool, queryText: string, values: unknown[], label: string): Promise<void> {
@@ -905,6 +945,8 @@ export interface NewsApiReadResult {
   reason?: string;
   generatedAt: string | null;
   totalCount: number;
+  totalCountIsEstimate?: boolean;
+  hasMore?: boolean;
   items: NewsApiItem[];
 }
 

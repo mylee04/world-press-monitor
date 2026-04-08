@@ -27,6 +27,8 @@ export interface NewsApiResponse {
   storage: 'postgres' | 'disabled';
   generatedAt: string | null;
   total: number;
+  totalIsEstimate?: boolean;
+  hasMore?: boolean;
   params: {
     limit: number;
     offset: number;

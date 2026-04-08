@@ -126,15 +126,17 @@ type PaginationProps = {
   limit: number;
   total: number;
   currentCount: number;
+  hasMore?: boolean;
+  totalIsEstimate?: boolean;
   onPrev: () => void;
   onNext: () => void;
 };
 
-function PaginationRow({ offset, limit, total, currentCount, onPrev, onNext }: PaginationProps) {
+function PaginationRow({ offset, limit, total, currentCount, hasMore, totalIsEstimate, onPrev, onNext }: PaginationProps) {
   const rangeStart = total > 0 ? offset + 1 : 0;
   const rangeEnd = total > 0 ? offset + currentCount : 0;
   const hasPrev = offset > 0;
-  const hasNext = offset + limit < total;
+  const hasNext = typeof hasMore === 'boolean' ? hasMore : offset + limit < total;
 
   return (
     <div className={styles.paginationRow}>
@@ -142,7 +144,7 @@ function PaginationRow({ offset, limit, total, currentCount, onPrev, onNext }: P
         Previous
       </button>
       <span className={styles.pageMeta}>
-        {rangeStart > 0 ? `${rangeStart}-${rangeEnd}` : '0'} of {formatInt(total)}
+        {rangeStart > 0 ? `${rangeStart}-${rangeEnd}` : '0'} of {formatInt(total)}{totalIsEstimate ? '+' : ''}
       </span>
       <button className={styles.pageButton} type="button" onClick={onNext} disabled={!hasNext}>
         Next
@@ -713,14 +715,16 @@ export function OpsExplorer() {
                 </table>
               </div>
 
-              <PaginationRow
-                offset={articleOffset}
-                limit={Number(articleLimit)}
-                total={articlePayload?.total || 0}
-                currentCount={articleRows.length}
-                onPrev={() => setArticleOffset((current) => Math.max(0, current - Number(articleLimit)))}
-                onNext={() => setArticleOffset((current) => current + Number(articleLimit))}
-              />
+            <PaginationRow
+              offset={articleOffset}
+              limit={Number(articleLimit)}
+              total={articlePayload?.total || 0}
+              currentCount={articleRows.length}
+              hasMore={articlePayload?.hasMore}
+              totalIsEstimate={articlePayload?.totalIsEstimate}
+              onPrev={() => setArticleOffset((current) => Math.max(0, current - Number(articleLimit)))}
+              onNext={() => setArticleOffset((current) => current + Number(articleLimit))}
+            />
             </>
           ) : null}
         </article>
