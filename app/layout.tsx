@@ -38,8 +38,8 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
                   </div>
                   <nav>
                     {navItems.map((item) => (
-                      item.href === '/map/' ? (
-                        // Hard-navigate to the map so stale country query state cannot survive.
+                      item.href === '/' || item.href === '/map/' ? (
+                        // Hard-navigate for Home/Map so client router state cannot trap navigation.
                         <a href={item.href} key={item.href}>
                           {item.label}
                         </a>
