@@ -111,15 +111,6 @@ export default async function OpsPage() {
     })(),
   ]);
 
-  const defaultCountry =
-    mapCountries?.countries
-      ?.slice()
-      .sort((left, right) => right.pub24h - left.pub24h || left.country.localeCompare(right.country))[0]
-      ?.country
-    || benchmark?.countries?.slice().sort((left, right) => right.hourlyPublished24h - left.hourlyPublished24h || left.country.localeCompare(right.country))[0]?.country
-    || summary?.preview.topCountries?.[0]?.country
-    || null;
-
   return (
     <div className={`page-stack ops-page-root ${styles.root}`}>
       <section className={styles.hero}>
@@ -263,12 +254,7 @@ export default async function OpsPage() {
         </article>
       </section>
 
-      <OpsExplorer
-        summary={summary}
-        benchmark={benchmark}
-        mapCountries={mapCountries}
-        defaultCountry={defaultCountry}
-      />
+      <OpsExplorer />
     </div>
   );
 }

@@ -249,6 +249,30 @@
   gap: 16px;
 }
 
+.tabBar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tabButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid rgba(120, 199, 255, 0.14);
+  border-radius: 999px;
+  background: rgba(4, 8, 18, 0.82);
+  color: #cfeeff;
+}
+
+.tabButtonActive {
+  background: rgba(127, 227, 255, 0.14);
+  border-color: rgba(120, 199, 255, 0.28);
+  color: #f7fbff;
+}
+
 .explorerHeader {
   display: flex;
   justify-content: space-between;
@@ -366,10 +390,6 @@
 
 .table tbody tr:last-child td {
   border-bottom: 0;
-}
-
-.table tbody tr {
-  cursor: pointer;
 }
 
 .table tbody tr:hover {
