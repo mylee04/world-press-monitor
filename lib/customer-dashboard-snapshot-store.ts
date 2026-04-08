@@ -1,5 +1,7 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
+import bundledCountryBenchmarkSnapshot from '@/data/country-benchmark.snapshot.json';
+import bundledDashboardSummarySnapshot from '@/data/dashboard-summary.snapshot.json';
 import type { CountryBenchmarkResponse } from '@/lib/benchmark-types';
 import type { NewsApiDashboardSummaryResponse } from '@/lib/news-api';
 
@@ -55,6 +57,13 @@ async function readJsonSnapshot<T>(filePaths: string[]): Promise<T | null> {
   return null;
 }
 
+function cloneBundledSnapshot<T>(payload: T | null | undefined): T | null {
+  if (!payload || typeof payload !== 'object') {
+    return null;
+  }
+  return JSON.parse(JSON.stringify(payload)) as T;
+}
+
 async function writeJsonSnapshot<T>(filePaths: string[], payload: T): Promise<void> {
   const raw = JSON.stringify(payload);
   await Promise.all(filePaths.map(async (filePath) => {
@@ -64,11 +73,17 @@ async function writeJsonSnapshot<T>(filePaths: string[], payload: T): Promise<vo
 }
 
 export async function readDashboardSummarySnapshot(): Promise<NewsApiDashboardSummaryResponse | null> {
-  return readJsonSnapshot<NewsApiDashboardSummaryResponse>(getSnapshotPaths(DASHBOARD_SUMMARY_SNAPSHOT_FILENAME));
+  return (await readJsonSnapshot<NewsApiDashboardSummaryResponse>(getSnapshotPaths(DASHBOARD_SUMMARY_SNAPSHOT_FILENAME)))
+    ?? cloneBundledSnapshot<NewsApiDashboardSummaryResponse>(
+      bundledDashboardSummarySnapshot as unknown as NewsApiDashboardSummaryResponse
+    );
 }
 
 export async function readCountryBenchmarkSnapshot(): Promise<CountryBenchmarkResponse | null> {
-  return readJsonSnapshot<CountryBenchmarkResponse>(getSnapshotPaths(COUNTRY_BENCHMARK_SNAPSHOT_FILENAME));
+  return (await readJsonSnapshot<CountryBenchmarkResponse>(getSnapshotPaths(COUNTRY_BENCHMARK_SNAPSHOT_FILENAME)))
+    ?? cloneBundledSnapshot<CountryBenchmarkResponse>(
+      bundledCountryBenchmarkSnapshot as unknown as CountryBenchmarkResponse
+    );
 }
 
 export async function writeDashboardSummarySnapshot(snapshot: NewsApiDashboardSummaryResponse): Promise<void> {
