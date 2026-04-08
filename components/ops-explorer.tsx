@@ -2,9 +2,21 @@
 
 import { useDeferredValue, useEffect, useState } from 'react';
 import styles from '@/components/ops-page.module.css';
-import type { CountryBenchmarkResponse, CountryBenchmarkCountryRow } from '@/lib/benchmark-types';
-import type { MapCountryMetricsResponse, MapCountryMetricRow, MapCountrySourcesResponse, MapMetricWindow, MapSourceMetricRow } from '@/lib/map-types';
-import type { NewsApiDashboardSummaryResponse, NewsApiDashboardTopicGroup } from '@/lib/news-api';
+import type { CountryBenchmarkResponse } from '@/lib/benchmark-types';
+import type {
+  MapCountryMetricRow,
+  MapCountryMetricsResponse,
+  MapCountrySourcesResponse,
+  MapMetricWindow,
+  MapSourceMetricRow,
+} from '@/lib/map-types';
+import type {
+  NewsApiDashboardSummaryResponse,
+  NewsApiDashboardTopicGroup,
+  NewsApiFiltersResponse,
+  NewsApiItem,
+  NewsApiResponse,
+} from '@/lib/news-api';
 
 type OpsExplorerProps = {
   summary: NewsApiDashboardSummaryResponse | null;
@@ -17,6 +29,8 @@ type CountryLens = 'hourly' | 'daily' | 'weekly' | 'monthly';
 type CountrySortKey = 'published' | 'inserted' | 'activeSources' | 'lateShare' | 'lateCount';
 type CategorySortKey = 'articleCount' | 'unassignedCount' | 'topicCount';
 type SourceSortKey = 'published' | 'firstSeen' | 'late' | 'health' | 'name';
+type ArticleSortKey = 'publicationDatetime' | 'createdAt' | 'updatedAt' | 'source' | 'country' | 'category';
+type SortDirection = 'asc' | 'desc';
 
 type CountryExplorerRow = {
   country: string;
@@ -42,6 +56,13 @@ const SOURCE_WINDOW_LABELS: Record<MapMetricWindow, string> = {
   '7d': '7d',
 };
 
+const ARTICLE_WINDOW_OPTIONS = [
+  { label: '6h', value: '6' },
+  { label: '24h', value: '24' },
+  { label: '72h', value: '72' },
+  { label: '7d', value: '168' },
+];
+
 function formatInt(value: number | null | undefined): string {
   if (typeof value !== 'number' || !Number.isFinite(value)) return '0';
   return value.toLocaleString();
@@ -52,11 +73,31 @@ function formatPercent(value: number | null | undefined): string {
   return `${(value * 100).toFixed(1)}%`;
 }
 
+function formatDateTime(value: string | null | undefined): string {
+  if (!value) return 'Unavailable';
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) return value;
+  return new Intl.DateTimeFormat('en-US', {
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+  }).format(parsed);
+}
+
 function extractDomain(row: MapSourceMetricRow): string {
   const candidate = row.rssUrl || row.sitemapUrl;
   if (!candidate) return 'No domain';
   try {
     return new URL(candidate).hostname.replace(/^www\./, '');
+  } catch {
+    return 'No domain';
+  }
+}
+
+function extractArticleDomain(row: NewsApiItem): string {
+  try {
+    return new URL(row.url).hostname.replace(/^www\./, '');
   } catch {
     return 'No domain';
   }
@@ -76,6 +117,24 @@ function toHealthRank(status: MapSourceMetricRow['health']): number {
     default:
       return 0;
   }
+}
+
+function toIsoFromLocalInput(value: string): string | null {
+  const trimmed = value.trim();
+  if (!trimmed) return null;
+  const parsed = new Date(trimmed);
+  if (Number.isNaN(parsed.getTime())) return null;
+  return parsed.toISOString();
+}
+
+function normalizeText(value: string | null | undefined): string {
+  return (value || '').trim().toLowerCase();
+}
+
+function parseDateValue(value: string | null | undefined): number {
+  if (!value) return 0;
+  const parsed = Date.parse(value);
+  return Number.isFinite(parsed) ? parsed : 0;
 }
 
 function buildCountryRows(
@@ -159,6 +218,26 @@ function renderCategoryTopics(group: NewsApiDashboardTopicGroup): string {
     .join(' · ');
 }
 
+function compareArticleRows(left: NewsApiItem, right: NewsApiItem, sortKey: ArticleSortKey): number {
+  switch (sortKey) {
+    case 'createdAt':
+      return parseDateValue(right.createdAt) - parseDateValue(left.createdAt);
+    case 'updatedAt':
+      return parseDateValue(right.updatedAt) - parseDateValue(left.updatedAt);
+    case 'source':
+      return normalizeText(left.sourceDisplay || left.source).localeCompare(normalizeText(right.sourceDisplay || right.source));
+    case 'country':
+      return normalizeText(left.country).localeCompare(normalizeText(right.country));
+    case 'category':
+      return normalizeText(left.primarySection || left.sections[0] || '').localeCompare(
+        normalizeText(right.primarySection || right.sections[0] || '')
+      );
+    case 'publicationDatetime':
+    default:
+      return parseDateValue(right.publicationDatetime) - parseDateValue(left.publicationDatetime);
+  }
+}
+
 export function OpsExplorer({ summary, benchmark, mapCountries, defaultCountry }: OpsExplorerProps) {
   const [countryLens, setCountryLens] = useState<CountryLens>('hourly');
   const [countrySort, setCountrySort] = useState<CountrySortKey>('published');
@@ -177,6 +256,26 @@ export function OpsExplorer({ summary, benchmark, mapCountries, defaultCountry }
   const [sourcePayload, setSourcePayload] = useState<MapCountrySourcesResponse | null>(null);
   const [sourceLoading, setSourceLoading] = useState(false);
   const [sourceError, setSourceError] = useState<string | null>(null);
+
+  const [articleFilters, setArticleFilters] = useState<NewsApiFiltersResponse['filters'] | null>(null);
+  const [articlePayload, setArticlePayload] = useState<NewsApiResponse | null>(null);
+  const [articleLoading, setArticleLoading] = useState(false);
+  const [articleError, setArticleError] = useState<string | null>(null);
+  const [articleWindowHours, setArticleWindowHours] = useState('24');
+  const [articleCountry, setArticleCountry] = useState('');
+  const [articleSection, setArticleSection] = useState('');
+  const [articleQuery, setArticleQuery] = useState('');
+  const deferredArticleQuery = useDeferredValue(articleQuery);
+  const [articleSourceSearch, setArticleSourceSearch] = useState('');
+  const deferredArticleSourceSearch = useDeferredValue(articleSourceSearch);
+  const [articlePublicationFrom, setArticlePublicationFrom] = useState('');
+  const [articlePublicationTo, setArticlePublicationTo] = useState('');
+  const deferredArticlePublicationFrom = useDeferredValue(articlePublicationFrom);
+  const deferredArticlePublicationTo = useDeferredValue(articlePublicationTo);
+  const [articleSort, setArticleSort] = useState<ArticleSortKey>('publicationDatetime');
+  const [articleDirection, setArticleDirection] = useState<SortDirection>('desc');
+  const [articleLimit, setArticleLimit] = useState('50');
+  const [articleOffset, setArticleOffset] = useState(0);
 
   const countryRows = buildCountryRows(benchmark, mapCountries, countryLens)
     .filter((row) => {
@@ -208,6 +307,107 @@ export function OpsExplorer({ summary, benchmark, mapCountries, defaultCountry }
       }
       return right.articleCount - left.articleCount || left.section.localeCompare(right.section);
     });
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    fetch('/api/ops/article-filters/', {
+      cache: 'no-store',
+      signal: controller.signal,
+    })
+      .then(async (response) => {
+        if (!response.ok) {
+          const payload = (await response.json().catch(() => null)) as { message?: string } | null;
+          throw new Error(payload?.message || 'Failed to load article filters.');
+        }
+        return (await response.json()) as NewsApiFiltersResponse;
+      })
+      .then((payload) => {
+        setArticleFilters(payload.filters);
+      })
+      .catch(() => {
+        if (!controller.signal.aborted) {
+          setArticleFilters({ countries: [], languages: [], sections: [], sources: [] });
+        }
+      });
+
+    return () => controller.abort();
+  }, []);
+
+  useEffect(() => {
+    setArticleOffset(0);
+  }, [
+    articleWindowHours,
+    articleCountry,
+    articleSection,
+    deferredArticleQuery,
+    deferredArticlePublicationFrom,
+    deferredArticlePublicationTo,
+    articleSort,
+    articleDirection,
+    articleLimit,
+  ]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    const params = new URLSearchParams({
+      hours: articleWindowHours,
+      limit: articleLimit,
+      offset: String(articleOffset),
+      sort: articleSort,
+      direction: articleDirection,
+    });
+
+    if (articleCountry) params.set('countries', articleCountry);
+    if (articleSection) params.set('sections', articleSection);
+    if (deferredArticleQuery.trim()) params.set('q', deferredArticleQuery.trim());
+
+    const publicationFromIso = toIsoFromLocalInput(deferredArticlePublicationFrom);
+    const publicationToIso = toIsoFromLocalInput(deferredArticlePublicationTo);
+    if (publicationFromIso) params.set('publicationFrom', publicationFromIso);
+    if (publicationToIso) params.set('publicationTo', publicationToIso);
+
+    setArticleLoading(true);
+    setArticleError(null);
+
+    fetch(`/api/ops/articles/?${params.toString()}`, {
+      cache: 'no-store',
+      signal: controller.signal,
+    })
+      .then(async (response) => {
+        if (!response.ok) {
+          const payload = (await response.json().catch(() => null)) as { message?: string } | null;
+          throw new Error(payload?.message || 'Failed to load article rows.');
+        }
+        return (await response.json()) as NewsApiResponse;
+      })
+      .then((payload) => {
+        setArticlePayload(payload);
+      })
+      .catch((error: unknown) => {
+        if (controller.signal.aborted) return;
+        setArticlePayload(null);
+        setArticleError(error instanceof Error ? error.message : 'Failed to load article rows.');
+      })
+      .finally(() => {
+        if (!controller.signal.aborted) {
+          setArticleLoading(false);
+        }
+      });
+
+    return () => controller.abort();
+  }, [
+    articleWindowHours,
+    articleCountry,
+    articleSection,
+    deferredArticleQuery,
+    deferredArticlePublicationFrom,
+    deferredArticlePublicationTo,
+    articleSort,
+    articleDirection,
+    articleLimit,
+    articleOffset,
+  ]);
 
   useEffect(() => {
     if (!selectedCountry) {
@@ -253,6 +453,24 @@ export function OpsExplorer({ summary, benchmark, mapCountries, defaultCountry }
     return () => controller.abort();
   }, [selectedCountry, sourceWindow]);
 
+  const articleRows = (articlePayload?.items || [])
+    .filter((row) => {
+      const query = deferredArticleSourceSearch.trim().toLowerCase();
+      if (!query) return true;
+      return (
+        row.source.toLowerCase().includes(query)
+        || row.sourceDisplay.toLowerCase().includes(query)
+        || extractArticleDomain(row).toLowerCase().includes(query)
+      );
+    })
+    .sort((left, right) => {
+      const base = compareArticleRows(left, right, articleSort);
+      if (base !== 0) return articleDirection === 'asc' ? -base : base;
+      const fallback = parseDateValue(right.publicationDatetime) - parseDateValue(left.publicationDatetime);
+      if (fallback !== 0) return fallback;
+      return normalizeText(left.title).localeCompare(normalizeText(right.title));
+    });
+
   const sourceRows = (sourcePayload?.sources || [])
     .filter((row) => {
       const query = deferredSourceSearch.trim().toLowerCase();
@@ -275,18 +493,197 @@ export function OpsExplorer({ summary, benchmark, mapCountries, defaultCountry }
     });
 
   const timeBuckets = sourceWindow === '7d' ? (sourcePayload?.daily7d || []) : (sourcePayload?.hourly24h || []);
+  const articleRangeStart = articlePayload && articlePayload.total > 0 ? articleOffset + 1 : 0;
+  const articleRangeEnd = articlePayload ? articleOffset + articleRows.length : 0;
+  const articleHasPrev = articleOffset > 0;
+  const articleHasNext = Boolean(articlePayload && articleOffset + Number(articleLimit) < articlePayload.total);
 
   return (
     <section className={styles.explorerSection}>
       <div className={styles.explorerHeader}>
         <div>
           <div className="eyebrow">Private Explorer</div>
-          <h2>Filter real coverage by country, category, and source.</h2>
-          <p>Use this panel to inspect country scale, category mix, and source-domain behavior without exposing it in the public product.</p>
+          <h2>Inspect raw article rows, country scale, and source behavior.</h2>
+          <p>Use this panel to inspect real article titles, publish times, categories, countries, and source-domain behavior without exposing anything in the public product.</p>
         </div>
       </div>
 
       <div className={styles.explorerGrid}>
+        <article className={`${styles.explorerPanel} ${styles.widePanel}`}>
+          <div className={styles.panelHeader}>
+            <div>
+              <h3>Articles</h3>
+              <p>Raw article rows with country, category, source, and publication-time filtering.</p>
+            </div>
+            <div className={styles.controlRow}>
+              <select className={styles.control} value={articleWindowHours} onChange={(event) => setArticleWindowHours(event.target.value)}>
+                {ARTICLE_WINDOW_OPTIONS.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    Window {option.label}
+                  </option>
+                ))}
+              </select>
+              <select className={styles.control} value={articleCountry} onChange={(event) => setArticleCountry(event.target.value)}>
+                <option value="">All countries</option>
+                {(articleFilters?.countries || []).map((country) => (
+                  <option key={country} value={country}>
+                    {country}
+                  </option>
+                ))}
+              </select>
+              <select className={styles.control} value={articleSection} onChange={(event) => setArticleSection(event.target.value)}>
+                <option value="">All categories</option>
+                {(articleFilters?.sections || []).map((section) => (
+                  <option key={section} value={section}>
+                    {section}
+                  </option>
+                ))}
+              </select>
+              <select className={styles.control} value={articleSort} onChange={(event) => setArticleSort(event.target.value as ArticleSortKey)}>
+                <option value="publicationDatetime">Sort by publication</option>
+                <option value="createdAt">Sort by ingested</option>
+                <option value="updatedAt">Sort by updated</option>
+                <option value="source">Sort by source</option>
+                <option value="country">Sort by country</option>
+                <option value="category">Sort by category</option>
+              </select>
+              <select className={styles.control} value={articleDirection} onChange={(event) => setArticleDirection(event.target.value as SortDirection)}>
+                <option value="desc">Newest / Z-A first</option>
+                <option value="asc">Oldest / A-Z first</option>
+              </select>
+              <select className={styles.control} value={articleLimit} onChange={(event) => setArticleLimit(event.target.value)}>
+                <option value="50">50 rows</option>
+                <option value="100">100 rows</option>
+                <option value="200">200 rows</option>
+              </select>
+            </div>
+          </div>
+
+          <div className={styles.articleFiltersGrid}>
+            <input
+              className={styles.searchInput}
+              type="search"
+              value={articleQuery}
+              onChange={(event) => setArticleQuery(event.target.value)}
+              placeholder="Search title, snippet, keyword"
+            />
+            <input
+              className={styles.searchInput}
+              type="search"
+              value={articleSourceSearch}
+              onChange={(event) => setArticleSourceSearch(event.target.value)}
+              placeholder="Filter current rows by source or domain"
+            />
+            <input
+              className={styles.searchInput}
+              type="datetime-local"
+              value={articlePublicationFrom}
+              onChange={(event) => setArticlePublicationFrom(event.target.value)}
+              aria-label="Published after"
+            />
+            <input
+              className={styles.searchInput}
+              type="datetime-local"
+              value={articlePublicationTo}
+              onChange={(event) => setArticlePublicationTo(event.target.value)}
+              aria-label="Published before"
+            />
+          </div>
+
+          <div className={styles.summaryRow}>
+            <span className={styles.chip}>{articlePayload?.storage || 'unknown'}</span>
+            <span className={styles.chip}>{formatInt(articlePayload?.total)} total rows</span>
+            <span className={styles.chip}>
+              {articleRangeStart > 0 ? `${articleRangeStart}-${articleRangeEnd}` : '0'} visible
+            </span>
+            <span className={styles.chip}>{formatDateTime(articlePayload?.generatedAt)}</span>
+          </div>
+
+          {articleLoading ? <div className={styles.emptyState}>Loading article explorer…</div> : null}
+          {articleError ? <div className={styles.emptyState}>{articleError}</div> : null}
+
+          {!articleLoading && !articleError ? (
+            <>
+              <div className={styles.tableWrap}>
+                <table className={styles.table}>
+                  <thead>
+                    <tr>
+                      <th>Published</th>
+                      <th>Ingested</th>
+                      <th>Country</th>
+                      <th>Source</th>
+                      <th>Category</th>
+                      <th>Title</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {articleRows.length === 0 ? (
+                      <tr>
+                        <td colSpan={6}>
+                          <div className={styles.emptyInline}>No article rows matched these filters.</div>
+                        </td>
+                      </tr>
+                    ) : (
+                      articleRows.map((row) => (
+                        <tr key={row.id}>
+                          <td>
+                            <strong>{formatDateTime(row.publicationDatetime)}</strong>
+                            <span>{row.language || 'Unknown language'}</span>
+                          </td>
+                          <td>
+                            <strong>{formatDateTime(row.createdAt)}</strong>
+                            <span>{formatDateTime(row.updatedAt)}</span>
+                          </td>
+                          <td>
+                            <strong>{row.country || 'Unknown'}</strong>
+                            <span>{extractArticleDomain(row)}</span>
+                          </td>
+                          <td>
+                            <strong>{row.sourceDisplay || row.source}</strong>
+                            <span>{row.source}</span>
+                          </td>
+                          <td>
+                            <strong>{row.primarySection || row.sections[0] || 'Unassigned'}</strong>
+                            <span>{row.primaryTopic || row.topics[0] || 'No topic'}</span>
+                          </td>
+                          <td>
+                            <a className={styles.articleLink} href={row.url} target="_blank" rel="noreferrer">
+                              {row.title}
+                            </a>
+                            <span>{row.snippet || 'No snippet'}</span>
+                          </td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
+
+              <div className={styles.paginationRow}>
+                <button
+                  className={styles.pageButton}
+                  type="button"
+                  onClick={() => setArticleOffset((current) => Math.max(0, current - Number(articleLimit)))}
+                  disabled={!articleHasPrev}
+                >
+                  Previous
+                </button>
+                <span className={styles.pageMeta}>
+                  {articleRangeStart > 0 ? `${articleRangeStart}-${articleRangeEnd}` : '0'} of {formatInt(articlePayload?.total)}
+                </span>
+                <button
+                  className={styles.pageButton}
+                  type="button"
+                  onClick={() => setArticleOffset((current) => current + Number(articleLimit))}
+                  disabled={!articleHasNext}
+                >
+                  Next
+                </button>
+              </div>
+            </>
+          ) : null}
+        </article>
+
         <article className={styles.explorerPanel}>
           <div className={styles.panelHeader}>
             <div>
@@ -395,7 +792,19 @@ export function OpsExplorer({ summary, benchmark, mapCountries, defaultCountry }
             </div>
             <div className={styles.controlRow}>
               <select className={styles.control} value={selectedCountry} onChange={(event) => setSelectedCountry(event.target.value)}>
-                {(countryRows.length ? countryRows : [{ country: defaultCountry || '', countryCode: null, published: 0, inserted: 0, activeSources: 0, lateCount: 0, lateShare: 0, firstSeen24h: 0 }])
+                {(countryRows.length
+                  ? countryRows
+                  : [{
+                      country: defaultCountry || '',
+                      countryCode: null,
+                      published: 0,
+                      inserted: 0,
+                      activeSources: 0,
+                      lateCount: 0,
+                      lateShare: 0,
+                      firstSeen24h: 0,
+                    }]
+                )
                   .filter((row) => row.country)
                   .map((row) => (
                     <option key={row.country} value={row.country}>

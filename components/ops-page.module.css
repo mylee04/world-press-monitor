@@ -301,6 +301,12 @@
   gap: 10px;
 }
 
+.articleFiltersGrid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
 .control,
 .searchInput {
   min-height: 42px;
@@ -317,6 +323,16 @@
 
 .searchInput {
   width: 100%;
+}
+
+.articleLink {
+  color: #e7f6ff;
+  font-weight: 650;
+}
+
+.articleLink:hover {
+  color: #9edfff;
+  text-decoration: none;
 }
 
 .tableWrap {
@@ -435,6 +451,39 @@
   background: rgba(4, 8, 18, 0.52);
 }
 
+.emptyInline {
+  color: var(--muted);
+}
+
+.paginationRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.pageButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid rgba(120, 199, 255, 0.14);
+  border-radius: 999px;
+  background: rgba(4, 8, 18, 0.9);
+  color: #e7f6ff;
+}
+
+.pageButton:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.pageMeta {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
 .healthPill {
   display: inline-flex;
   align-items: center;
@@ -474,6 +523,10 @@
   }
 
   .explorerGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .articleFiltersGrid {
     grid-template-columns: 1fr;
   }
 
