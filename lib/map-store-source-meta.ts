@@ -146,6 +146,22 @@ export function classifySourceDistribution(meta: SourceMethodMeta | null): Sourc
   return meta?.distributionClass === 'portal' ? 'portal' : 'publisher';
 }
 
+export function isDirectPublisherSource(meta: SourceMethodMeta | null): boolean {
+  if (!meta) return true;
+  return meta.distributionClass !== 'portal';
+}
+
+export function resolvePublisherCountryForSource(
+  sourceCountry: string | null | undefined,
+  source: string,
+  articleCountry?: string | null
+): string | null {
+  const normalizedSourceCountry = (sourceCountry || '').trim();
+  if (normalizedSourceCountry) return normalizedSourceCountry;
+  const meta = getSourceMeta(source);
+  return meta?.country || articleCountry || null;
+}
+
 export function resolveSourceCountry(source: string, fallbackCountry?: string | null): string | null {
   const meta = getSourceMeta(source);
   return meta?.country || fallbackCountry || null;

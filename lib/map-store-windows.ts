@@ -15,6 +15,8 @@ export type TimedCacheEntry<T> = {
 };
 
 export type SourceMetricWindowSqlRow = {
+  source_country: string | null;
+  article_country: string | null;
   country: string | null;
   source: string;
   pub_1h: string;

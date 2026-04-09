@@ -48,6 +48,8 @@ type AtlasCatalog = {
 type AtlasMetadata = {
   values: Set<string>;
   activeCountryCount: number;
+  configuredCountryRows: number;
+  duplicateCountryNames: string[];
   canonicalCountries: string[];
   canonicalCountryByValue: Map<string, string>;
   sourceCountryByName: Map<string, string>;
@@ -210,6 +212,8 @@ function loadAtlasMetadata(filePath: string): AtlasMetadata {
       return {
         values: new Set(),
         activeCountryCount: 0,
+        configuredCountryRows: 0,
+        duplicateCountryNames: [],
         canonicalCountries: [],
         canonicalCountryByValue: new Map(),
         sourceCountryByName: new Map(),
@@ -227,12 +231,14 @@ function loadAtlasMetadata(filePath: string): AtlasMetadata {
     const sourceCountryByNormalizedName = new Map<string, string>();
     const sourceDistributionClassByName = new Map<string, DistributionClass>();
     const sourceDistributionClassByNormalizedName = new Map<string, DistributionClass>();
+    const countryNameCounts = new Map<string, number>();
 
     for (const country of parsed.countries) {
       const hasName = typeof country?.name === 'string' && country.name.trim().length > 0;
       const hasCode = typeof country?.code === 'string' && country.code.trim().length > 0;
       if (hasName) {
         const normalizedName = normalizeCountryValue(country.name);
+        countryNameCounts.set(country.name.trim(), (countryNameCounts.get(country.name.trim()) || 0) + 1);
         filterValues.add(normalizedName);
         countedCountries.add(normalizedName);
         canonicalCountryByValue.set(normalizedName, country.name.trim());
@@ -261,6 +267,11 @@ function loadAtlasMetadata(filePath: string): AtlasMetadata {
     return {
       values: filterValues,
       activeCountryCount: countedCountries.size,
+      configuredCountryRows: parsed.countries.length,
+      duplicateCountryNames: [...countryNameCounts.entries()]
+        .filter(([, count]) => count > 1)
+        .map(([name]) => name)
+        .sort((left, right) => left.localeCompare(right)),
       canonicalCountries: [...canonicalCountries].sort((left, right) => left.localeCompare(right)),
       canonicalCountryByValue,
       sourceCountryByName,
@@ -275,6 +286,8 @@ function loadAtlasMetadata(filePath: string): AtlasMetadata {
     return {
       values: new Set(),
       activeCountryCount: 0,
+      configuredCountryRows: 0,
+      duplicateCountryNames: [],
       canonicalCountries: [],
       canonicalCountryByValue: new Map(),
       sourceCountryByName: new Map(),
@@ -291,6 +304,8 @@ function buildAtlasMetadata(): AtlasMetadata {
     return {
       values: explicitActive,
       activeCountryCount: explicitActive.size,
+      configuredCountryRows: explicitActive.size,
+      duplicateCountryNames: [],
       canonicalCountries: [],
       canonicalCountryByValue: new Map(),
       sourceCountryByName: new Map(),
@@ -307,6 +322,8 @@ function buildAtlasMetadata(): AtlasMetadata {
   return {
     values: new Set(),
     activeCountryCount: 0,
+    configuredCountryRows: 0,
+    duplicateCountryNames: [],
     canonicalCountries: [],
     canonicalCountryByValue: new Map(),
     sourceCountryByName: new Map(),
@@ -522,29 +539,38 @@ async function main(): Promise<void> {
       .sort((left, right) => right.lateShare - left.lateShare || right.lateLast24h - left.lateLast24h)
       .slice(0, 5)
       .map((row) => `${row.country} ${formatPercent(row.lateShare)}`);
+    const topPublisherSummary = filteredRows
+      .slice(0, parseDomesticTopCountriesLimit(topCountries))
+      .map((row) => `${row.country} ${row.publishedLast24hCore.toLocaleString()}`)
+      .join(', ');
     const coverageSummary = selectedCoverageRows
       .map((row) => `${row.country} ${row.publishedLast24hCore.toLocaleString()}`)
       .join(', ');
 
-    const scopeLabel =
-      atlasMetadata.activeCountryCount > 0
-        ? `Countries in scope: ${filteredRows.length}`
-        : `Countries in scope: ${publisherByCountry.size}`;
+    const scopeLabel = `Countries with data: ${filteredRows.length}`;
     const configuredScopeLabel =
-      atlasMetadata.activeCountryCount > 0 && atlasMetadata.activeCountryCount !== filteredRows.length
-        ? `Configured scope countries: ${atlasMetadata.activeCountryCount}`
+      atlasMetadata.activeCountryCount > 0
+        ? `Configured atlas countries: ${atlasMetadata.activeCountryCount.toLocaleString()} unique${atlasMetadata.configuredCountryRows > atlasMetadata.activeCountryCount ? ` (${atlasMetadata.configuredCountryRows.toLocaleString()} rows)` : ''}`
+        : '';
+    const duplicateScopeLabel =
+      atlasMetadata.duplicateCountryNames.length > 0
+        ? `Atlas duplicate country rows: ${atlasMetadata.duplicateCountryNames.join(', ')}`
         : '';
 
     const header = [
       `📰 Publisher-Country News Volume (${new Date().toISOString()})`,
-      `24h  P: ${totalPublished24hExtended.toLocaleString()}  F: ${totalFresh24h.toLocaleString()}  L: ${totalLate24h.toLocaleString()}  |  1h: ${totalInserted1h.toLocaleString()}`,
-      `First-seen 24h: ${totalInserted24h.toLocaleString()}  |  Late share: ${formatPercent(totalLateShare)}`,
+      'Source: news_articles',
+      `published24h_core ${totalPublished24hCore.toLocaleString()} / published24h_portal ${totalPublished24hPortal.toLocaleString()} / published24h_extended ${totalPublished24hExtended.toLocaleString()} / fresh24h ${totalFresh24h.toLocaleString()} / late24h ${totalLate24h.toLocaleString()} / firstSeen1h ${totalInserted1h.toLocaleString()}`,
+      `Supporting: firstSeen24h ${totalInserted24h.toLocaleString()} / Late share of firstSeen24h ${formatPercent(totalLateShare)}`,
       `Late-heavy: ${lateHeavyCountries.join(', ') || 'none'}`,
-      `Coverage hotspots: ${coverageSummary || 'none'}`,
+      `Top publisher countries by published24h_core: ${topPublisherSummary || 'none'}`,
+      `Coverage hotspots by article country: ${coverageSummary || 'none'}`,
       scopeLabel,
       configuredScopeLabel,
+      duplicateScopeLabel,
       unexpectedCountries.size > 0 ? `Unexpected: ${[...unexpectedCountries].join(', ')}` : '',
-      `Legend: rows rank publisher country; hotspots rank article country. P: pub24h, F: fresh24h if different, L: late24h (share), 1h: first-seen`,
+      'Country semantics: rows rank publisher country (source_country -> atlas outlet country fallback -> article country); hotspots rank article country',
+      'Legend: row fields use P=published24h_extended, F=fresh24h if different, L=late24h (share), 1h=firstSeen1h',
       selectedRows.length > 0 ? '' : 'No records in news_articles.'
     ]
       .filter((line) => line.length > 0)

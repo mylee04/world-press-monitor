@@ -54,18 +54,17 @@ async function main(): Promise<void> {
     console.log(`[map-snapshots] build start window=${window} metricVersion=${metricVersion}`);
 
     const sourceMetricsStartedAt = Date.now();
-    const [countryScopedMetricRows, sourceScopedMetricRows, healthBySource] = await Promise.all([
-      readWindowedSourceMetrics(window, `coalesce(nullif(trim(country), ''), '') <> ''`),
+    const [sourceMetricRows, healthBySource] = await Promise.all([
       readWindowedSourceMetrics(window, `coalesce(nullif(trim(source), ''), '') <> ''`),
       readLatestHealthBySource(),
     ]);
     console.log(
-      `[map-snapshots] source metrics loaded window=${window} countryRows=${countryScopedMetricRows.length} sourceRows=${sourceScopedMetricRows.length} healthRows=${healthBySource.size} elapsedMs=${Date.now() - sourceMetricsStartedAt}`
+      `[map-snapshots] source metrics loaded window=${window} sourceRows=${sourceMetricRows.length} healthRows=${healthBySource.size} elapsedMs=${Date.now() - sourceMetricsStartedAt}`
     );
 
     const countriesStartedAt = Date.now();
     const countries = await buildMapCountryMetricsPayload(window, {
-      metricRows: countryScopedMetricRows,
+      metricRows: sourceMetricRows,
       healthBySource,
     });
     await writeMapCountryMetricsSnapshot(countries, metricVersion);
@@ -79,7 +78,7 @@ async function main(): Promise<void> {
     for (const country of countries.countries) {
       const countryStartedAt = Date.now();
       const countrySources = await buildMapCountrySourcesPayload(country.country, window, {
-        metricRows: sourceScopedMetricRows,
+        metricRows: sourceMetricRows,
         healthBySource,
       });
       await writeMapCountrySourcesSnapshot(countrySources, metricVersion);
@@ -95,7 +94,7 @@ async function main(): Promise<void> {
 
     const publishersStartedAt = Date.now();
     const publishers = await buildMapPublishersPayload(window, {
-      metricRows: countryScopedMetricRows,
+      metricRows: sourceMetricRows,
       healthBySource,
     });
     await writeMapPublishersSnapshot(publishers, metricVersion);

@@ -14,7 +14,7 @@ STATE_DIR="${WPR_STATE_DIR:-${WPM_STATE_DIR:-${PROJECT_ROOT}/.wpr-state}}"
 LOCK_DIR="${STATE_DIR}/ingest-hourly.lock"
 LOCK_PID_FILE="${LOCK_DIR}/pid"
 LOCK_STARTED_FILE="${LOCK_DIR}/started_at_utc"
-INGEST_MAX_RUNTIME_SECONDS="${WPR_INGEST_MAX_RUNTIME_SECONDS:-${WPM_INGEST_MAX_RUNTIME_SECONDS:-5400}}"
+INGEST_MAX_RUNTIME_SECONDS="${WPR_INGEST_MAX_RUNTIME_SECONDS:-${WPM_INGEST_MAX_RUNTIME_SECONDS:-6600}}"
 INGEST_TIMEOUT_GRACE_SECONDS="${WPR_INGEST_TIMEOUT_GRACE_SECONDS:-${WPM_INGEST_TIMEOUT_GRACE_SECONDS:-60}}"
 
 unset PGHOST PGPORT PGUSER PGPASSWORD PGDATABASE PGSSLROOTCERT PGSSLCERT PGSSLKEY PGPASSFILE PGSSLMODE
@@ -36,6 +36,23 @@ find_timeout_command() {
   command -v gtimeout >/dev/null 2>&1 && command -v gtimeout && return 0
   command -v timeout >/dev/null 2>&1 && command -v timeout && return 0
   return 1
+}
+
+find_other_hourly_wrapper_pid() {
+  ps -axo pid=,ppid=,command= | awk -v self="$$" -v parent="${PPID:-0}" -v script_path="${SCRIPT_DIR}/run-ingest-hourly-local.sh" '
+    {
+      pid=$1
+      $1=""
+      $2=""
+      sub(/^[[:space:]]+/, "", $0)
+    }
+    $0 == ("bash " script_path) || $0 == ("/bin/bash " script_path) {
+      if (pid != self && pid != parent) {
+        print pid
+        exit 0
+      }
+    }
+  '
 }
 
 release_lock() {
@@ -104,6 +121,12 @@ acquire_single_flight_lock() {
 }
 
 if ! acquire_single_flight_lock; then
+  exit 0
+fi
+
+if OTHER_HOURLY_WRAPPER_PID="$(find_other_hourly_wrapper_pid)" && [ -n "${OTHER_HOURLY_WRAPPER_PID}" ]; then
+  log_utc "SKIP: another hourly ingest launcher is already active (pid=${OTHER_HOURLY_WRAPPER_PID})." >>"${LOG_FILE}"
+  send_skip_notice "${OTHER_HOURLY_WRAPPER_PID}" "process-scan"
   exit 0
 fi
 
@@ -190,6 +213,14 @@ run_post_ingest_hooks() {
 
   printf '[%s] Trigger post-ingest hourly reports\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
 
+  if ! bash "${SCRIPT_DIR}/run-news-country-discord-report.sh"; then
+    printf '[%s] WARN: news-country discord hook failed\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
+  fi
+
+  if ! bash "${SCRIPT_DIR}/run-ingest-ops-hourly.sh"; then
+    printf '[%s] WARN: ingest-ops hourly hook failed\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
+  fi
+
   if ! bun run benchmark:build; then
     printf '[%s] WARN: benchmark snapshot table build hook failed\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
   fi
@@ -200,14 +231,6 @@ run_post_ingest_hooks() {
 
   if ! bun run customer:dashboard:snapshots:build; then
     printf '[%s] WARN: customer dashboard snapshot build hook failed\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
-  fi
-
-  if ! bash "${SCRIPT_DIR}/run-news-country-discord-report.sh"; then
-    printf '[%s] WARN: news-country discord hook failed\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
-  fi
-
-  if ! bash "${SCRIPT_DIR}/run-ingest-ops-hourly.sh"; then
-    printf '[%s] WARN: ingest-ops hourly hook failed\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
   fi
 }
 

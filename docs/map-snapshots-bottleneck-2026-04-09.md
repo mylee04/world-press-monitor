@@ -7,7 +7,7 @@
 At roughly 72 countries, the pre-fix structure caused repeated full-window reads for every snapshot phase:
 
 - before: `readWindowedSourceMetrics()` about 74 times per window, `readLatestHealthBySource()` about 74 times per window
-- after: `readWindowedSourceMetrics()` 2 times per window, `readLatestHealthBySource()` 1 time per window
+- after: `readWindowedSourceMetrics()` 1 time per window, `readLatestHealthBySource()` 1 time per window
 
 ## Bottleneck
 

@@ -43,6 +43,7 @@ sync_runtime_repo() {
 
   rsync -a --delete \
     --exclude '.git' \
+    --exclude '.env*.local' \
     --exclude 'node_modules' \
     --exclude 'logs' \
     --exclude 'postgres' \

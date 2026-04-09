@@ -7,8 +7,10 @@ import {
 } from '@/lib/map-store-db';
 import {
   getCountryCode,
+  getSourceMeta,
+  isDirectPublisherSource,
   normalizeSourceKey,
-  resolveSourceCountry,
+  resolvePublisherCountryForSource,
 } from '@/lib/map-store-source-meta';
 import {
   addPublisherConfidenceVote,
@@ -43,7 +45,7 @@ export async function buildMapPublishersPayload(
 ): Promise<MapPublishersResponse> {
   const metricRows = options.metricRows ?? await readWindowedSourceMetrics(
     selectedWindow,
-    `coalesce(nullif(trim(country), ''), '') <> ''`
+    `coalesce(nullif(trim(source), ''), '') <> ''`
   );
   const healthBySource = options.healthBySource ?? await readLatestHealthBySource();
   const byPublisherCountry = new Map<string, {
@@ -61,7 +63,9 @@ export async function buildMapPublishersPayload(
   }>();
 
   for (const row of metricRows) {
-    const country = resolveSourceCountry(row.source, row.country);
+    const meta = getSourceMeta(row.source);
+    if (!isDirectPublisherSource(meta)) continue;
+    const country = resolvePublisherCountryForSource(row.source_country, row.source, row.article_country);
     if (!country) continue;
     const source = buildDisplaySourceName(row.source);
     const publisherInfo = resolvePublisherInfo(source, country);
