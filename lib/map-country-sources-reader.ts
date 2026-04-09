@@ -5,6 +5,7 @@ import {
   readLatestHealthBySource,
   readWindowedSourceMetrics,
   normalizeHealthStatus,
+  type HealthSqlRow,
 } from '@/lib/map-store-db';
 import {
   buildAreaLabel,
@@ -22,7 +23,7 @@ import {
   resolvePublisherCountryForSource,
 } from '@/lib/map-store-source-meta';
 import { readMapCountrySourcesSnapshot } from '@/lib/map-snapshot-store';
-import { MAP_WINDOWS, normalizeMapMetricWindow } from '@/lib/map-store-windows';
+import { MAP_WINDOWS, normalizeMapMetricWindow, type SourceMetricWindowSqlRow } from '@/lib/map-store-windows';
 import { resolvePublisherInfo } from '@/lib/publisher-groups';
 import { buildDisplaySourceName } from '@/lib/source-display';
 import type {
@@ -30,6 +31,11 @@ import type {
   MapCountrySourcesResponse,
   MapSourceMetricRow,
 } from '@/lib/map-types';
+
+type MapCountrySourcesBuildOptions = {
+  metricRows?: SourceMetricWindowSqlRow[];
+  healthBySource?: Map<string, HealthSqlRow>;
+};
 
 function buildEmptyMapCountrySourcesPayload(
   country: string,
@@ -64,13 +70,18 @@ function buildEmptyMapCountrySourcesPayload(
 
 export async function buildMapCountrySourcesPayload(
   country: string,
-  window: MapMetricWindow
+  window: MapMetricWindow,
+  options: MapCountrySourcesBuildOptions = {}
 ): Promise<MapCountrySourcesResponse> {
   try {
     const selectedWindow = normalizeMapMetricWindow(window);
     const [rows, healthBySource] = await Promise.all([
-      readWindowedSourceMetrics(selectedWindow, `coalesce(nullif(trim(source), ''), '') <> ''`),
-      readLatestHealthBySource(),
+      options.metricRows
+        ? Promise.resolve(options.metricRows)
+        : readWindowedSourceMetrics(selectedWindow, `coalesce(nullif(trim(source), ''), '') <> ''`),
+      options.healthBySource
+        ? Promise.resolve(options.healthBySource)
+        : readLatestHealthBySource(),
     ]);
     const bySource = new Map<string, MapSourceMetricRow>();
     const rawCoreSourceNames = new Set<string>();

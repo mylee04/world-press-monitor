@@ -3,6 +3,7 @@ import {
   readLatestHealthBySource,
   readWindowedSourceMetrics,
   normalizeHealthStatus,
+  type HealthSqlRow,
 } from '@/lib/map-store-db';
 import {
   getCountryCode,
@@ -22,6 +23,7 @@ import {
   MAP_WINDOWS,
   mergePublisherConfidenceVotes,
   resolvePublisherConfidence,
+  type SourceMetricWindowSqlRow,
   type PublisherConfidenceVotes,
   type PublisherWindowAccumulator,
 } from '@/lib/map-store-windows';
@@ -32,9 +34,20 @@ import type {
   MapPublishersResponse,
 } from '@/lib/map-types';
 
-export async function buildMapPublishersPayload(selectedWindow: MapMetricWindow): Promise<MapPublishersResponse> {
-  const metricRows = await readWindowedSourceMetrics(selectedWindow, `coalesce(nullif(trim(source), ''), '') <> ''`);
-  const healthBySource = await readLatestHealthBySource();
+type MapPublishersBuildOptions = {
+  metricRows?: SourceMetricWindowSqlRow[];
+  healthBySource?: Map<string, HealthSqlRow>;
+};
+
+export async function buildMapPublishersPayload(
+  selectedWindow: MapMetricWindow,
+  options: MapPublishersBuildOptions = {}
+): Promise<MapPublishersResponse> {
+  const metricRows = options.metricRows ?? await readWindowedSourceMetrics(
+    selectedWindow,
+    `coalesce(nullif(trim(source), ''), '') <> ''`
+  );
+  const healthBySource = options.healthBySource ?? await readLatestHealthBySource();
   const byPublisherCountry = new Map<string, {
     publisher: string;
     country: string;

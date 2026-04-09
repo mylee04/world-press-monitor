@@ -3,6 +3,7 @@ import {
   readLatestHealthBySource,
   readWindowedSourceMetrics,
   normalizeHealthStatus,
+  type HealthSqlRow,
 } from '@/lib/map-store-db';
 import { rankTopCounts } from '@/lib/map-store-locations';
 import {
@@ -18,6 +19,7 @@ import {
   emptyCountryWindowAccumulator,
   isCountryWindowActive,
   MAP_WINDOWS,
+  type SourceMetricWindowSqlRow,
   type CountryWindowAccumulator,
 } from '@/lib/map-store-windows';
 import { resolvePublisherName } from '@/lib/publisher-groups';
@@ -28,9 +30,20 @@ import type {
   MapCountryMetricRow,
 } from '@/lib/map-types';
 
-export async function buildMapCountryMetricsPayload(selectedWindow: MapMetricWindow): Promise<MapCountryMetricsResponse> {
-  const metricRows = await readWindowedSourceMetrics(selectedWindow, `coalesce(nullif(trim(source), ''), '') <> ''`);
-  const healthBySource = await readLatestHealthBySource();
+type MapCountryMetricsBuildOptions = {
+  metricRows?: SourceMetricWindowSqlRow[];
+  healthBySource?: Map<string, HealthSqlRow>;
+};
+
+export async function buildMapCountryMetricsPayload(
+  selectedWindow: MapMetricWindow,
+  options: MapCountryMetricsBuildOptions = {}
+): Promise<MapCountryMetricsResponse> {
+  const metricRows = options.metricRows ?? await readWindowedSourceMetrics(
+    selectedWindow,
+    `coalesce(nullif(trim(source), ''), '') <> ''`
+  );
+  const healthBySource = options.healthBySource ?? await readLatestHealthBySource();
   const byCountrySource = new Map<string, {
     country: string;
     source: string;
