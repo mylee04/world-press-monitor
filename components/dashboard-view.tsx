@@ -285,7 +285,7 @@ export function DashboardView() {
           <span>{preview.articleCount.toLocaleString()} direct published</span>
         </div>
         <p className="muted" style={{ marginBottom: 12 }}>
-          Ranked by publisher country when available, falling back to the article country only when source-country metadata is missing. Portal-classified feeds are excluded from this ranking.
+          Ranked by publisher country when available, falling back to the article country only when source-country metadata is missing. Portal-classified feeds and sitemap-only sources are excluded from this ranking.
         </p>
         <div className="stat-list">
           {preview.topCountries.length > 0 ? (

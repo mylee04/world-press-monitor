@@ -1,7 +1,7 @@
 import type { Pool } from 'pg';
 import type { NewsSection } from '@/lib/types';
 import { decodeHtmlEntities, looksLikeLowSignalArticleTitle, normalizeArticleTitle, normalizeHtmlText, normalizeReadableArticleTitle } from '@/lib/html-entities';
-import { classifySourceDistribution, getSourceMeta } from '@/lib/map-store-source-meta';
+import { getSourceMeta, isDirectPublisherSource } from '@/lib/map-store-source-meta';
 import { buildDisplaySourceName } from '@/lib/source-display';
 import { buildArticleTaxonomy, isTopicAllowedForSection, NEWS_SECTION_ORDER, normalizeSourceCategories } from '@/lib/article-taxonomy';
 import { truncatePersistedText } from '@/lib/news-write-helpers';
@@ -600,8 +600,8 @@ export async function readNewsDashboardSummaryWithDeps(
     let directArticleCount = 0;
 
     for (const row of countryCountsResult.rows) {
-      const distribution = classifySourceDistribution(getSourceMeta(row.source));
-      if (distribution === 'portal') continue;
+      const meta = getSourceMeta(row.source);
+      if (!isDirectPublisherSource(meta)) continue;
       const count = Number(row.count) || 0;
       if (count <= 0) continue;
       directArticleCount += count;
