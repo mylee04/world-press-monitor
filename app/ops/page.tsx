@@ -227,7 +227,7 @@ export default async function OpsPage() {
               <strong>{formatInt(mapCountries?.totals?.activeSources24h)}</strong>
             </div>
             <div className={styles.statRow}>
-              <span>Countries</span>
+              <span>Active countries</span>
               <strong>{formatInt(mapCountries?.totals?.countries)}</strong>
             </div>
             <div className={styles.statRow}>

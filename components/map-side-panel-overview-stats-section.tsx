@@ -57,7 +57,7 @@ export function OverviewStatsSection({
           <strong>{formatNumber(totalWindowMetrics?.firstSeen || 0)}</strong>
         </article>
         <article className="map-stat-card">
-          <span>Countries</span>
+          <span>Active Countries</span>
           <strong>{formatNumber(totals.countries)}</strong>
         </article>
         <article className="map-stat-card">
@@ -76,7 +76,7 @@ export function OverviewStatsSection({
           <strong>{formatNumber(selectedPublisherWindowMetrics.published)}</strong>
         </article>
         <article className="map-stat-card">
-          <span>Countries</span>
+          <span>Active Countries</span>
           <strong>{formatNumber(selectedPublisherWindowMetrics.activeCountries)}</strong>
         </article>
         <article className="map-stat-card">
@@ -107,7 +107,7 @@ export function OverviewStatsSection({
           <strong>{formatNumber(healthTotals.countriesWithIssues)}</strong>
         </article>
         <article className="map-stat-card">
-          <span>Countries</span>
+          <span>Active Countries</span>
           <strong>{formatNumber(totals?.countries || 0)}</strong>
         </article>
       </div>
