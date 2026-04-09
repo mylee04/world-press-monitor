@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { readDashboardSummarySnapshot } from '@/lib/customer-dashboard-snapshot-store';
 import type { NewsApiDashboardSummaryResponse } from '@/lib/news-api';
 import styles from '@/components/landing-page.module.css';
+import rssAtlas from '@/rss-atlas.json';
 
 const signalClusters = [
   { id: 'north-west', position: 'northWest', bars: 4, delayStep: 0.28, widthOffset: 0 },
@@ -37,6 +38,10 @@ const ctaItems = [
 async function getLandingMetricItems() {
   const summary = await readDashboardSummarySnapshot();
   const snapshotInserted24h = summary?.storage === 'postgres' ? summary.totals.inserted24h : 0;
+  const atlasCountries = Array.isArray(rssAtlas.countries) ? rssAtlas.countries.length : 0;
+  const atlasNewsrooms = Array.isArray(rssAtlas.countries)
+    ? rssAtlas.countries.reduce((total, country) => total + (Array.isArray(country.feeds) ? country.feeds.length : 0), 0)
+    : 0;
 
   let inserted24h = snapshotInserted24h;
 
@@ -63,11 +68,11 @@ async function getLandingMetricItems() {
   }
 
   return [
-    { value: '71', label: 'Countries Under Watch' },
-    { value: '4,005', label: 'Global Newsrooms' },
+    { value: atlasCountries.toLocaleString(), label: 'Countries Under Watch' },
+    { value: atlasNewsrooms.toLocaleString(), label: 'Global Newsrooms' },
     {
       value: inserted24h > 0 ? inserted24h.toLocaleString() : '24/7',
-      label: inserted24h > 0 ? 'Processed In 24h' : 'Continuous Signal Watch',
+      label: inserted24h > 0 ? 'Snapshot ingestion in last 24h' : 'Continuous Signal Watch',
     },
   ];
 }
