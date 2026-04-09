@@ -508,7 +508,7 @@ export function useMapViewModel() {
         kind: 'publisher',
         key: `publisher:${item.publisher}`,
         title: item.publisher,
-        subtitle: `${formatNumber(getPublisherWindowMetrics(item, mapWindow).published)} published · ${formatNumber(getPublisherWindowMetrics(item, mapWindow).activeCountries)} countries · ${publisherConfidenceLabel(item.publisherConfidence)}`,
+        subtitle: `${formatNumber(getPublisherWindowMetrics(item, mapWindow).published)} published · ${formatNumber(getPublisherWindowMetrics(item, mapWindow).activeCountries)} active countries · ${publisherConfidenceLabel(item.publisherConfidence)}`,
         publisher: item,
       }));
     }

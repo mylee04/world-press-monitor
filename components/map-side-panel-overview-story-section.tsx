@@ -86,7 +86,7 @@ export function OverviewStorySection({
       <div className="map-story-card is-compact-copy">
         <div className="eyebrow">Publisher Footprint</div>
         <strong>
-          {selectedPublisher.publisher} is active across {formatNumber(selectedPublisherWindowMetrics.activeCountries)} countries and{' '}
+          {selectedPublisher.publisher} has activity across {formatNumber(selectedPublisherWindowMetrics.activeCountries)} active countries and{' '}
           {formatNumber(selectedPublisherWindowMetrics.activeSources)} active sources in the last {activeWindowDescriptor}.
         </strong>
         <span>

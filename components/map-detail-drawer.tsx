@@ -169,7 +169,7 @@ function renderPanelHead(props: MapDetailDrawerProps): ReactNode {
         </div>
       ) : null}
       {!sourceDetail && selectedCluster ? <div className="map-status-pill globe">{selectedCluster.sourceCount} sources</div> : null}
-      {!selectedCountry && mapMode === 'publishers' && selectedPublisher && selectedPublisherWindowMetrics ? <div className="map-status-pill globe">{selectedPublisherWindowMetrics.activeCountries} countries</div> : null}
+      {!selectedCountry && mapMode === 'publishers' && selectedPublisher && selectedPublisherWindowMetrics ? <div className="map-status-pill globe">{selectedPublisherWindowMetrics.activeCountries} active countries</div> : null}
       {!selectedCountry && mapMode === 'publishers' && selectedPublisher ? (
         <div className={`map-status-pill confidence-${selectedPublisher.publisherConfidence}`}>
           {publisherConfidenceLabel(selectedPublisher.publisherConfidence)}
@@ -216,7 +216,7 @@ export function MapDetailDrawer(props: MapDetailDrawerProps) {
             <div><span>Publisher</span><strong>{selectedPublisher.publisher}</strong></div>
             <div><span>Grouping Confidence</span><strong>{publisherConfidenceLabel(selectedPublisher.publisherConfidence)}</strong></div>
             <div><span>{activeWindowDescriptor} Output</span><strong>{formatNumber(selectedPublisherWindowMetrics.published)}</strong></div>
-            <div><span>Countries</span><strong>{formatNumber(selectedPublisherWindowMetrics.activeCountries)}</strong></div>
+            <div><span>Active Countries</span><strong>{formatNumber(selectedPublisherWindowMetrics.activeCountries)}</strong></div>
             <div><span>Active Sources</span><strong>{formatNumber(selectedPublisherWindowMetrics.activeSources)}</strong></div>
             <div><span>Reliability</span><strong>{round(selectedPublisherReliability * 100, 1)}%</strong></div>
           </div>
