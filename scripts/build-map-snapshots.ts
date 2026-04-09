@@ -5,6 +5,7 @@ import path from 'node:path';
 import { buildMapCountryMetricsPayload } from '@/lib/map-country-metrics-builder';
 import { buildMapCountrySourcesPayload } from '@/lib/map-country-sources-reader';
 import { buildMapPublishersPayload } from '@/lib/map-publishers-builder';
+import { readLatestHealthBySource, readWindowedSourceMetrics } from '@/lib/map-store-db';
 import {
   writeMapCountryMetricsSnapshot,
   writeMapCountrySourcesSnapshot,
@@ -52,26 +53,56 @@ async function main(): Promise<void> {
     const startedAt = Date.now();
     console.log(`[map-snapshots] build start window=${window} metricVersion=${metricVersion}`);
 
-    const countries = await buildMapCountryMetricsPayload(window);
+    const sourceMetricsStartedAt = Date.now();
+    const [countryScopedMetricRows, sourceScopedMetricRows, healthBySource] = await Promise.all([
+      readWindowedSourceMetrics(window, `coalesce(nullif(trim(country), ''), '') <> ''`),
+      readWindowedSourceMetrics(window, `coalesce(nullif(trim(source), ''), '') <> ''`),
+      readLatestHealthBySource(),
+    ]);
+    console.log(
+      `[map-snapshots] source metrics loaded window=${window} countryRows=${countryScopedMetricRows.length} sourceRows=${sourceScopedMetricRows.length} healthRows=${healthBySource.size} elapsedMs=${Date.now() - sourceMetricsStartedAt}`
+    );
+
+    const countriesStartedAt = Date.now();
+    const countries = await buildMapCountryMetricsPayload(window, {
+      metricRows: countryScopedMetricRows,
+      healthBySource,
+    });
     await writeMapCountryMetricsSnapshot(countries, metricVersion);
     await writeFile(getMapCountryMetricsSnapshotPath(window), JSON.stringify(countries));
-    console.log(`[map-snapshots] countries written window=${window} rows=${countries.countries.length}`);
+    console.log(
+      `[map-snapshots] countries written window=${window} rows=${countries.countries.length} elapsedMs=${Date.now() - countriesStartedAt}`
+    );
 
     const countrySourcesSnapshot: Record<string, MapCountrySourcesResponse> = {};
+    const countrySourcesStartedAt = Date.now();
     for (const country of countries.countries) {
-      const countrySources = await buildMapCountrySourcesPayload(country.country, window);
+      const countryStartedAt = Date.now();
+      const countrySources = await buildMapCountrySourcesPayload(country.country, window, {
+        metricRows: sourceScopedMetricRows,
+        healthBySource,
+      });
       await writeMapCountrySourcesSnapshot(countrySources, metricVersion);
       countrySourcesSnapshot[country.country] = countrySources;
       console.log(
-        `[map-snapshots] country sources written window=${window} country=${country.country} rows=${countrySources.sources.length}`
+        `[map-snapshots] country sources written window=${window} country=${country.country} rows=${countrySources.sources.length} elapsedMs=${Date.now() - countryStartedAt}`
       );
     }
     await writeFile(getMapCountrySourcesSnapshotPath(window), JSON.stringify(countrySourcesSnapshot));
+    console.log(
+      `[map-snapshots] country sources snapshot written window=${window} countries=${countries.countries.length} elapsedMs=${Date.now() - countrySourcesStartedAt}`
+    );
 
-    const publishers = await buildMapPublishersPayload(window);
+    const publishersStartedAt = Date.now();
+    const publishers = await buildMapPublishersPayload(window, {
+      metricRows: countryScopedMetricRows,
+      healthBySource,
+    });
     await writeMapPublishersSnapshot(publishers, metricVersion);
     await writeFile(getMapPublishersSnapshotPath(window), JSON.stringify(publishers));
-    console.log(`[map-snapshots] publishers written window=${window} rows=${publishers.publishers.length}`);
+    console.log(
+      `[map-snapshots] publishers written window=${window} rows=${publishers.publishers.length} elapsedMs=${Date.now() - publishersStartedAt}`
+    );
 
     console.log(`[map-snapshots] build done window=${window} elapsedMs=${Date.now() - startedAt}`);
   }
