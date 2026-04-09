@@ -9,6 +9,8 @@ import {
 import type { MapMetricWindow } from '@/lib/map-types';
 
 export type SourceMetricSqlRow = {
+  source_country: string | null;
+  article_country: string | null;
   country: string | null;
   source: string;
   pub24h: string;
@@ -60,7 +62,9 @@ export async function readRecentSourceMetrics(whereSql?: string, params: unknown
   const result = await db.query<SourceMetricSqlRow>(
     `
     select
-      e.country,
+      nullif(trim(e.source_country), '') as source_country,
+      nullif(trim(e.country), '') as article_country,
+      coalesce(nullif(trim(e.source_country), ''), nullif(trim(e.country), '')) as country,
       e.source,
       count(*) filter (where e.publication_datetime >= now() - interval '24 hours')::text as pub24h,
       count(*) filter (where e.publication_datetime >= now() - interval '1 hour')::text as pub1h,
@@ -80,7 +84,7 @@ export async function readRecentSourceMetrics(whereSql?: string, params: unknown
     )
       and coalesce(nullif(trim(e.title_quality), ''), 'ok') <> 'suspect'
       ${whereSql ? `and ${whereSql}` : ''}
-    group by e.country, e.source
+    group by 1, 2, 3, e.source
     having count(*) filter (where e.publication_datetime >= now() - interval '24 hours') > 0
         or count(*) filter (where e.created_at >= now() - interval '24 hours') > 0
     `,
@@ -101,6 +105,8 @@ export async function readWindowedSourceMetrics(
     const result = await db.query<SourceMetricWindowSqlRow>(
       `
       select
+        nullif(trim(source_country), '') as source_country,
+        nullif(trim(country), '') as article_country,
         coalesce(nullif(trim(source_country), ''), nullif(trim(country), '')) as country,
         source,
         count(*) filter (where publication_datetime >= now() - interval '1 hour')::text as pub_1h,
@@ -140,7 +146,7 @@ export async function readWindowedSourceMetrics(
       )
         and coalesce(nullif(trim(title_quality), ''), 'ok') <> 'suspect'
         ${whereSql ? `and ${whereSql}` : ''}
-      group by 1, 2
+      group by 1, 2, 3, 4
       `,
       params
     );
@@ -151,7 +157,9 @@ export async function readWindowedSourceMetrics(
     const result = await db.query<SourceMetricWindowSqlRow>(
       `
       select
-        e.country,
+        nullif(trim(e.source_country), '') as source_country,
+        nullif(trim(e.country), '') as article_country,
+        coalesce(nullif(trim(e.source_country), ''), nullif(trim(e.country), '')) as country,
         e.source,
         count(*) filter (where e.publication_datetime >= now() - interval '1 hour')::text as pub_1h,
         '0'::text as pub_24h,
@@ -178,7 +186,7 @@ export async function readWindowedSourceMetrics(
       )
         and coalesce(nullif(trim(e.title_quality), ''), 'ok') <> 'suspect'
         ${whereSql ? `and ${whereSql}` : ''}
-      group by e.country, e.source
+      group by 1, 2, 3, e.source
       having count(*) filter (where e.publication_datetime >= now() - interval '1 hour') > 0
           or count(*) filter (where e.created_at >= now() - interval '1 hour') > 0
       `,
@@ -190,7 +198,9 @@ export async function readWindowedSourceMetrics(
   const result = await db.query<SourceMetricWindowSqlRow>(
     `
     select
-      e.country,
+      nullif(trim(e.source_country), '') as source_country,
+      nullif(trim(e.country), '') as article_country,
+      coalesce(nullif(trim(e.source_country), ''), nullif(trim(e.country), '')) as country,
       e.source,
       count(*) filter (where e.publication_datetime >= now() - interval '1 hour')::text as pub_1h,
       count(*) filter (where e.publication_datetime >= now() - interval '24 hours')::text as pub_24h,
@@ -223,7 +233,7 @@ export async function readWindowedSourceMetrics(
     )
       and coalesce(nullif(trim(e.title_quality), ''), 'ok') <> 'suspect'
       ${whereSql ? `and ${whereSql}` : ''}
-    group by e.country, e.source
+    group by 1, 2, 3, e.source
     having count(*) filter (where e.publication_datetime >= now() - interval '24 hours') > 0
         or count(*) filter (where e.created_at >= now() - interval '24 hours') > 0
     `,

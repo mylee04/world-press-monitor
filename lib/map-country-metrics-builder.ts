@@ -8,8 +8,9 @@ import { rankTopCounts } from '@/lib/map-store-locations';
 import {
   getCountryCode,
   getSourceMeta,
+  isDirectPublisherSource,
   normalizeSourceKey,
-  resolveSourceCountry,
+  resolvePublisherCountryForSource,
 } from '@/lib/map-store-source-meta';
 import {
   buildCountryWindowRecord,
@@ -28,7 +29,7 @@ import type {
 } from '@/lib/map-types';
 
 export async function buildMapCountryMetricsPayload(selectedWindow: MapMetricWindow): Promise<MapCountryMetricsResponse> {
-  const metricRows = await readWindowedSourceMetrics(selectedWindow, `coalesce(nullif(trim(country), ''), '') <> ''`);
+  const metricRows = await readWindowedSourceMetrics(selectedWindow, `coalesce(nullif(trim(source), ''), '') <> ''`);
   const healthBySource = await readLatestHealthBySource();
   const byCountrySource = new Map<string, {
     country: string;
@@ -40,11 +41,12 @@ export async function buildMapCountryMetricsPayload(selectedWindow: MapMetricWin
   }>();
 
   for (const row of metricRows) {
-    const country = resolveSourceCountry(row.source, row.country);
+    const meta = getSourceMeta(row.source);
+    if (!isDirectPublisherSource(meta)) continue;
+    const country = resolvePublisherCountryForSource(row.source_country, row.source, row.article_country);
     if (!country) continue;
     const displaySource = buildDisplaySourceName(row.source);
     const sourceKey = `${country}::${normalizeSourceKey(displaySource)}`;
-    const meta = getSourceMeta(row.source);
     const health = normalizeHealthStatus(healthBySource.get(normalizeSourceKey(row.source)));
     const current = byCountrySource.get(sourceKey) || {
       country,

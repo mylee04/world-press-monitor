@@ -19,7 +19,7 @@ import {
   getCountryCode,
   getSourceMeta,
   normalizeSourceKey,
-  resolveSourceCountry,
+  resolvePublisherCountryForSource,
 } from '@/lib/map-store-source-meta';
 import { readMapCountrySourcesSnapshot } from '@/lib/map-snapshot-store';
 import { MAP_WINDOWS, normalizeMapMetricWindow } from '@/lib/map-store-windows';
@@ -76,7 +76,7 @@ export async function buildMapCountrySourcesPayload(
     const rawCoreSourceNames = new Set<string>();
 
     for (const row of rows) {
-      const sourceCountry = resolveSourceCountry(row.source, row.country);
+      const sourceCountry = resolvePublisherCountryForSource(row.source_country, row.source, row.article_country);
       if (sourceCountry !== country) continue;
 
       const displaySource = buildDisplaySourceName(row.source);

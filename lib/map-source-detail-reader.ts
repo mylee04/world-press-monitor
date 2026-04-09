@@ -12,7 +12,7 @@ import {
   matchesDisplaySource,
   normalizeSourceKey,
   parseMapSourceId,
-  resolveSourceCountry,
+  resolvePublisherCountryForSource,
 } from '@/lib/map-store-source-meta';
 import { resolvePublisherInfo } from '@/lib/publisher-groups';
 import type { MapSourceDetailResponse } from '@/lib/map-types';
@@ -27,11 +27,14 @@ export async function loadMapSourceDetail(sourceName: string): Promise<MapSource
     const matchingRows = rows.filter((row) => {
       if (!matchesDisplaySource(row.source, normalizedSource)) return false;
       if (!countryHint) return true;
-      return resolveSourceCountry(row.source, row.country) === countryHint;
+      return resolvePublisherCountryForSource(row.source_country, row.source, row.article_country) === countryHint;
     });
     if (matchingRows.length === 0) return null;
 
-    const country = countryHint || resolveSourceCountry(matchingRows[0].source, matchingRows[0].country) || 'Unknown';
+    const country =
+      countryHint
+      || resolvePublisherCountryForSource(matchingRows[0].source_country, matchingRows[0].source, matchingRows[0].article_country)
+      || 'Unknown';
     const rawSourceNames = [...new Set(matchingRows.map((row) => row.source))];
     const meta = getSourceMeta(normalizedSource);
     const method = classifySourceMethod(meta);
