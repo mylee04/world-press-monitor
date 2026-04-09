@@ -6,6 +6,28 @@
 
 ## Unreleased
 
+### [aba92ba] [codex] Clarify active country labels on map
+- Commit: aba92ba725011c49c746a9d8598ca4d2448b8a77
+- Date: 2026-04-09 00:49:50 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	app/ops/page.tsx
+    - M	components/map-detail-drawer.tsx
+    - M	components/map-side-panel-overview-breakdown-section.tsx
+    - M	components/map-side-panel-overview-stats-section.tsx
+    - M	components/map-side-panel-overview-story-section.tsx
+    - M	components/map-view.tsx
+    - M	components/use-map-view-model.ts
+  - Git stat:
+  - app/ops/page.tsx                                         | 2 +-
+  -  components/map-detail-drawer.tsx                         | 4 ++--
+  -  components/map-side-panel-overview-breakdown-section.tsx | 2 +-
+  -  components/map-side-panel-overview-stats-section.tsx     | 6 +++---
+  -  components/map-side-panel-overview-story-section.tsx     | 2 +-
+  -  components/map-view.tsx                                  | 2 +-
+  -  components/use-map-view-model.ts                         | 2 +-
+  -  7 files changed, 10 insertions(+), 10 deletions(-)
+
 ### [6af4c68] Automate RSS follow-up remediation and WAF triage
 - Commit: 6af4c681e903309e5928a64da9b3377ffc76fb89
 - Date: 2026-04-07 23:43:16 -0500
