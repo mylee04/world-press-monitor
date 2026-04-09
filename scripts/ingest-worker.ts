@@ -28,8 +28,9 @@ import {
   ensureWorkerAuditsDir,
   filterItemsForPersistence,
   pickOutletChunk,
-  pickStableOutletBucket,
+  pickStableOutletBucketChunk,
   writeWorkerState,
+  writeHybridBucketState,
   type BackfillWindow,
 } from './ingest-worker-support';
 import {
@@ -109,6 +110,14 @@ const HYBRID_HEAD_MAX_OUTLETS = Math.max(
 const HYBRID_LONG_TAIL_ROTATION_HOURS = Math.max(
   2,
   Math.min(24, Number.parseInt(process.env.INGEST_LONG_TAIL_ROTATION_HOURS || '4', 10) || 4)
+);
+const HYBRID_MAX_OUTLETS_PER_RUN = Math.max(
+  100,
+  Math.min(5000, Number.parseInt(process.env.INGEST_HYBRID_MAX_OUTLETS || '900', 10) || 900)
+);
+const HYBRID_MIN_LONG_TAIL_OUTLETS_PER_RUN = Math.max(
+  0,
+  Math.min(2000, Number.parseInt(process.env.INGEST_HYBRID_MIN_LONG_TAIL_OUTLETS || '200', 10) || 200)
 );
 const ATLAS_PATH = process.env.ATLAS_PATH || resolve(process.cwd(), 'data/rss-atlas.json');
 const STATE_FILE = resolve(process.cwd(), 'audits/ingest-worker-state.json');
@@ -265,6 +274,12 @@ type OutletSelectionSummary = {
   headMaxOutlets: number | null;
   rotationHours: number | null;
   rotationBucket: number | null;
+  longTailBucketOffset: number | null;
+  longTailBucketNextOffset: number | null;
+  longTailBucketSize: number | null;
+  maxOutletsPerRun: number | null;
+  reservedLongTailOutlets: number | null;
+  budgetCapped: boolean;
 };
 
 function buildSourceCountryKey(source: string, country: string): string {
@@ -302,6 +317,12 @@ async function selectOutletsForRun(
     headMaxOutlets: null,
     rotationHours: null,
     rotationBucket: null,
+    longTailBucketOffset: null,
+    longTailBucketNextOffset: null,
+    longTailBucketSize: null,
+    maxOutletsPerRun: null,
+    reservedLongTailOutlets: null,
+    budgetCapped: false,
   };
 
   const shouldApplyHybrid =
@@ -340,34 +361,49 @@ async function selectOutletsForRun(
     }))
     .sort(compareOutletByPriority);
 
-  const headOutletIds = new Set(
-    rankedOutlets
-      .filter((entry) => entry.articleCount >= HYBRID_HEAD_MIN_ARTICLES)
-      .slice(0, HYBRID_HEAD_MAX_OUTLETS)
-      .map((entry) => entry.outlet.id)
-  );
-  const longTailOutlets = sourceFilteredOutlets.filter((outlet) => !headOutletIds.has(outlet.id));
+  const headCandidates = rankedOutlets.filter((entry) => entry.articleCount >= HYBRID_HEAD_MIN_ARTICLES);
+  const longTailOutlets = rankedOutlets.filter((entry) => entry.articleCount < HYBRID_HEAD_MIN_ARTICLES).map((entry) => entry.outlet);
   const rotationBucket = Math.floor(nowMs / (60 * 60 * 1000)) % HYBRID_LONG_TAIL_ROTATION_HOURS;
-  const selectedLongTailOutlets = pickStableOutletBucket(
+  const longTailSelection = pickStableOutletBucketChunk(
     longTailOutlets,
     HYBRID_LONG_TAIL_ROTATION_HOURS,
-    rotationBucket
+    rotationBucket,
+    HYBRID_MAX_OUTLETS_PER_RUN,
+    STATE_FILE
   );
+  const reservedLongTailOutlets = Math.min(HYBRID_MIN_LONG_TAIL_OUTLETS_PER_RUN, HYBRID_MAX_OUTLETS_PER_RUN);
+  const headSelectionBudget = longTailSelection.total > 0
+    ? Math.max(0, HYBRID_MAX_OUTLETS_PER_RUN - Math.min(reservedLongTailOutlets, longTailSelection.total))
+    : HYBRID_MAX_OUTLETS_PER_RUN;
+  const selectedHeadOutlets = headCandidates
+    .slice(0, Math.min(HYBRID_HEAD_MAX_OUTLETS, headSelectionBudget))
+    .map((entry) => entry.outlet);
+  const remainingBudget = Math.max(0, HYBRID_MAX_OUTLETS_PER_RUN - selectedHeadOutlets.length);
+  const selectedLongTailOutlets = remainingBudget >= longTailSelection.selected.length
+    ? longTailSelection.selected
+    : longTailSelection.selected.slice(0, remainingBudget);
+  const headOutletIds = new Set(selectedHeadOutlets.map((outlet) => outlet.id));
   const selectedOutletIds = new Set([
     ...headOutletIds,
     ...selectedLongTailOutlets.map((outlet) => outlet.id),
   ]);
   const selected = sourceFilteredOutlets.filter((outlet) => selectedOutletIds.has(outlet.id));
+  const selectedLongTailNextOffset =
+    longTailSelection.total === 0
+      ? 0
+      : (longTailSelection.offset + selectedLongTailOutlets.length) % longTailSelection.total;
+  const budgetCapped = selectedHeadOutlets.length < Math.min(headCandidates.length, HYBRID_HEAD_MAX_OUTLETS)
+    || selectedLongTailOutlets.length < longTailSelection.total;
 
   return {
     selected,
-    offset: rotationBucket,
-    nextOffset: (rotationBucket + 1) % HYBRID_LONG_TAIL_ROTATION_HOURS,
+    offset: longTailSelection.offset,
+    nextOffset: selectedLongTailNextOffset,
     selectionSummary: {
       mode: 'hybrid',
       reason: '24h_volume_plus_4h_rotation',
       dbBacked: true,
-      headOutlets: headOutletIds.size,
+      headOutlets: selectedHeadOutlets.length,
       longTailOutlets: longTailOutlets.length,
       longTailSelected: selectedLongTailOutlets.length,
       headWindowHours: HYBRID_HEAD_WINDOW_HOURS,
@@ -375,6 +411,12 @@ async function selectOutletsForRun(
       headMaxOutlets: HYBRID_HEAD_MAX_OUTLETS,
       rotationHours: HYBRID_LONG_TAIL_ROTATION_HOURS,
       rotationBucket,
+      longTailBucketOffset: longTailSelection.offset,
+      longTailBucketNextOffset: selectedLongTailNextOffset,
+      longTailBucketSize: longTailSelection.total,
+      maxOutletsPerRun: HYBRID_MAX_OUTLETS_PER_RUN,
+      reservedLongTailOutlets,
+      budgetCapped,
     },
   };
 }
@@ -600,149 +642,6 @@ function parseSitemapIndex(xml: string, baseUrl: string | null = null): string[]
   return entries
     .slice(0, SITEMAP_INDEX_CHILDREN_LIMIT)
     .map((entry) => entry.loc);
-}
-
-function normalizeHtmlListingPublishedAt(value: string): string | undefined {
-  const isoCandidate = value.trim();
-  if (/^20\d{2}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/.test(isoCandidate)) {
-    const normalized = new Date(isoCandidate);
-    if (!Number.isNaN(normalized.getTime())) {
-      return normalized.toISOString();
-    }
-  }
-  const match = value.match(/(20\d{2})[.\-/](\d{2})[.\-/](\d{2})/);
-  if (!match) return undefined;
-  const [, year, month, day] = match;
-  return `${year}-${month}-${day}T12:00:00.000Z`;
-}
-
-function normalizeBloombergTvPublishedAt(value: string): string | undefined {
-  const match = value.trim().match(/^(20\d{2}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2})$/);
-  if (!match) return normalizeHtmlListingPublishedAt(value);
-  return `${match[1]}T${match[2]}+08:00`;
-}
-
-function parseUbLifeHomepageRows(pageUrl: string, html: string): Array<{
-  title: string;
-  description?: string;
-  link: string;
-  publishedAt?: string;
-}> {
-  const rows: Array<{ title: string; description?: string; link: string; publishedAt?: string }> = [];
-  const seen = new Set<string>();
-  const pattern = /<a[^>]+href="(\/p\/[^"]+)"[\s\S]{0,2500}?<h2[^>]*>([\s\S]{10,240}?)<\/h2>[\s\S]{0,1200}?(?:<p[^>]*>([\s\S]{0,400}?)<\/p>[\s\S]{0,800}?)?<time[^>]*>(20\d{2}[.\-/]\d{2}[.\-/]\d{2})<\/time>/gi;
-  for (const match of html.matchAll(pattern)) {
-    const rawLink = match[1] || '';
-    const title = normalizeHtmlText(match[2] || '');
-    const description = normalizeHtmlText(match[3] || '');
-    const publishedAt = normalizeHtmlListingPublishedAt(match[4] || '');
-    if (!rawLink || !title || !publishedAt) continue;
-    const link = new URL(rawLink, pageUrl).toString();
-    if (seen.has(link)) continue;
-    seen.add(link);
-    rows.push({ title, description: description || undefined, link, publishedAt });
-    if (rows.length >= SITEMAP_ITEM_LIMIT) break;
-  }
-  return rows;
-}
-
-function parseHtmlListingRows(pageUrl: string, html: string): Array<{
-  title: string;
-  description?: string;
-  link: string;
-  publishedAt?: string;
-}> {
-  try {
-    const host = new URL(pageUrl).hostname.replace(/^www\./, '').toLowerCase();
-    if (host === 'ub.life') {
-      return parseUbLifeHomepageRows(pageUrl, html);
-    }
-  } catch {
-    return [];
-  }
-  return [];
-}
-
-async function fetchGogoHomepageRows(pageUrl: string, html: string): Promise<Array<{
-  title: string;
-  description?: string;
-  link: string;
-  publishedAt?: string;
-}>> {
-  const rows: Array<{ title: string; description?: string; link: string; publishedAt?: string }> = [];
-  const seen = new Set<string>();
-  const articlePaths = Array.from(new Set(Array.from(html.matchAll(/href="(\/r\/[^"]+)"/gi)).map((match) => match[1] || '')))
-    .filter(Boolean)
-    .slice(0, 12);
-  for (const rawPath of articlePaths) {
-    try {
-      const link = new URL(rawPath, pageUrl).toString();
-      if (seen.has(link)) continue;
-      const response = await fetchWithRetryFeed(link);
-      if (!response.ok) continue;
-      const responseBody = await readResponseBody(response);
-      const articleHtml = responseBody.body;
-      const titleMatch = articleHtml.match(/<title>([\s\S]{5,260}?)<\/title>/i);
-      const publishedAtMatch = articleHtml.match(/(20\d{2}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+Z0-9:-]*)/);
-      const title = normalizeHtmlText(titleMatch?.[1] || '');
-      const publishedAt = normalizeHtmlListingPublishedAt(publishedAtMatch?.[1] || '');
-      if (!title || !publishedAt) continue;
-      seen.add(link);
-      rows.push({ title, link, publishedAt });
-      if (rows.length >= 10) break;
-    } catch {
-      continue;
-    }
-  }
-  return rows;
-}
-
-async function fetchBloombergTvMongoliaRows(pageUrl: string): Promise<Array<{
-  title: string;
-  description?: string;
-  link: string;
-  publishedAt?: string;
-}>> {
-  const rows: Array<{ title: string; description?: string; link: string; publishedAt?: string }> = [];
-  const seen = new Set<string>();
-  const endpoints = [
-    '/api/public/news/topfeatured',
-    '/api/public/news/featured',
-    '/api/public/news/leftlatestnews',
-    '/api/public/news/leftFeaturedNews',
-    '/api/public/news/bodyMiddleNews'
-  ];
-  for (const endpoint of endpoints) {
-    try {
-      const url = new URL(endpoint, pageUrl).toString();
-      const response = await fetchWithRetryFeed(url);
-      if (!response.ok) continue;
-      const responseBody = await readResponseBody(response);
-      const payload = JSON.parse(responseBody.body);
-      const items = endpoint.endsWith('/bodyMiddleNews')
-        ? (Array.isArray(payload)
-          ? payload.flatMap((entry) => Array.isArray(entry?.news) ? entry.news : [])
-          : [])
-        : (Array.isArray(payload) ? payload : []);
-      for (const item of items) {
-        const slug = typeof item?.slug === 'string' ? item.slug.trim() : '';
-        const title = normalizeHtmlText(typeof item?.title === 'string' ? item.title : '');
-        const description = normalizeHtmlText(typeof item?.description === 'string' ? item.description : '');
-        const publishedAt = normalizeBloombergTvPublishedAt(typeof item?.createdAt === 'string' ? item.createdAt : '');
-        if (!slug || !title || !publishedAt) continue;
-        const link = new URL(`/news/${slug}`, pageUrl).toString();
-        if (seen.has(link)) continue;
-        seen.add(link);
-        rows.push({ title, description: description || undefined, link, publishedAt });
-        if (rows.length >= SITEMAP_ITEM_LIMIT) {
-          return rows;
-        }
-      }
-    } catch {
-      continue;
-    }
-  }
-  return rows;
 }
 
 type ParsedSitemapResult = ReturnType<typeof parseSitemapWithStats>;
@@ -2809,69 +2708,6 @@ async function fetchSitemapCandidate(
     }
 
     const xml = responseBody.body;
-    let htmlRows: Array<{
-      title: string;
-      description?: string;
-      link: string;
-      publishedAt?: string;
-    }> = [];
-    if (responseContentType.includes('html') || sniffedType === 'html') {
-      htmlRows = parseHtmlListingRows(sitemapUrl, xml);
-      if (htmlRows.length === 0) {
-        try {
-          const host = new URL(sitemapUrl).hostname.replace(/^www\./, '').toLowerCase();
-          if (host === 'gogo.mn') {
-            htmlRows = await fetchGogoHomepageRows(sitemapUrl, xml);
-          } else if (host === 'bloombergtv.mn') {
-            htmlRows = await fetchBloombergTvMongoliaRows(sitemapUrl);
-          }
-        } catch {
-          htmlRows = htmlRows;
-        }
-      }
-    }
-    if (htmlRows.length > 0) {
-      const items = await mapParsedItems(
-        outlet,
-        htmlRows,
-        fallbackPublishedAt,
-        'sitemap',
-        onMissingPublishedAtCandidate
-      );
-      const newestItem = latestItemPublishedAt(items);
-      return {
-        items,
-        run: {
-          outletId: outlet.id,
-          source: outlet.name,
-          country,
-          method: 'sitemap',
-          attempted: true,
-          circuitOpen: false,
-          ok: true,
-          statusCode: 200,
-          parsedCount: items.length,
-          fetchedCount: htmlRows.length,
-          parsedLimit: SITEMAP_ITEM_LIMIT,
-          sampleCapped: items.length >= SITEMAP_ITEM_LIMIT,
-          recent24h: items.length,
-          missingTitleCount: 0,
-          missingSummaryCount: 0,
-          missingPublishedAtCount: 0,
-          missingLinkCount: 0,
-          requestedUrl: sitemapUrl,
-          finalUrl: response.url || sitemapUrl,
-          contentType: responseContentType,
-          responseMs,
-          sniffedType,
-          parsedOk: true,
-          failureStage: undefined,
-          healthClassification: 'success',
-          newestItemPublishedAt: newestItem,
-        },
-        fallbackUsed: 'none',
-      };
-    }
     const parsed = await parseSitemapXmlRecursively(sitemapUrl, xml);
 
     if (!parsed || parsed.stats.validCount === 0) {
@@ -3369,6 +3205,21 @@ async function runOnce(): Promise<void> {
   writeFileSync(SUMMARY_FILE, JSON.stringify(summary, null, 2), 'utf8');
   if (!BACKFILL_WINDOW && selectionSummary.mode === 'chunk') {
     writeWorkerState(STATE_FILE, { offset: nextOffset, updatedAt: summary.generatedAt }, process.cwd());
+  }
+  if (
+    !BACKFILL_WINDOW
+    && selectionSummary.mode === 'hybrid'
+    && selectionSummary.rotationHours
+    && selectionSummary.rotationBucket !== null
+  ) {
+    writeHybridBucketState(
+      STATE_FILE,
+      selectionSummary.rotationHours,
+      selectionSummary.rotationBucket,
+      nextOffset,
+      summary.generatedAt,
+      process.cwd()
+    );
   }
   console.log(formatWorkerSummaryLog({
     selectedCount: selected.length,

@@ -281,11 +281,11 @@ export function DashboardView() {
 
       <section className="panel">
         <div className="section-head">
-          <h2>Top publisher countries in rolling 24h</h2>
-          <span>{preview.articleCount.toLocaleString()} published</span>
+          <h2>Top direct publisher countries in rolling 24h</h2>
+          <span>{preview.articleCount.toLocaleString()} direct published</span>
         </div>
         <p className="muted" style={{ marginBottom: 12 }}>
-          Ranked by publisher country when available, falling back to the article country only when source-country metadata is missing.
+          Ranked by publisher country when available, falling back to the article country only when source-country metadata is missing. Portal-classified feeds are excluded from this ranking.
         </p>
         <div className="stat-list">
           {preview.topCountries.length > 0 ? (

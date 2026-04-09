@@ -1,6 +1,7 @@
 import type { Pool } from 'pg';
 import type { NewsSection } from '@/lib/types';
 import { decodeHtmlEntities, looksLikeLowSignalArticleTitle, normalizeArticleTitle, normalizeHtmlText, normalizeReadableArticleTitle } from '@/lib/html-entities';
+import { classifySourceDistribution, getSourceMeta } from '@/lib/map-store-source-meta';
 import { buildDisplaySourceName } from '@/lib/source-display';
 import { buildArticleTaxonomy, isTopicAllowedForSection, NEWS_SECTION_ORDER, normalizeSourceCategories } from '@/lib/article-taxonomy';
 import { truncatePersistedText } from '@/lib/news-write-helpers';
@@ -53,6 +54,7 @@ type NewsApiDateCountRow = {
 
 type NewsApiCountryCountRow = {
   country: string | null;
+  source: string;
   count: string;
 };
 
@@ -547,21 +549,21 @@ export async function readNewsDashboardSummaryWithDeps(
   const topicSampleSize = Number(totalsResult.rows[0]?.rows_window || 0);
 
   if (latestHours > 0) {
-    const [countryCountsResult, headlinesResult, countResult] = await Promise.all([
+    const [countryCountsResult, headlinesResult] = await Promise.all([
       db.query<NewsApiCountryCountRow>(
         `
         select
           coalesce(nullif(trim(source_country), ''), coalesce(country, 'Global')) as country,
+          source,
           count(*)::text as count
         from news_articles
-        where publication_datetime >= $4::timestamptz - ($1::int * interval '1 hour')
-          and publication_datetime <= $4::timestamptz + ($2::int * interval '1 minute')
+        where publication_datetime >= $3::timestamptz - ($1::int * interval '1 hour')
+          and publication_datetime <= $3::timestamptz + ($2::int * interval '1 minute')
           and ${deps.customerVisibleTitleQualitySql}
-        group by 1
-        order by count(*) desc, country asc
-        limit $3
+        group by 1, 2
+        order by count(*) desc, country asc, source asc
         `,
-        [latestHours, maxFutureMinutes, topCountriesLimit, asOfIso]
+        [latestHours, maxFutureMinutes, asOfIso]
       ),
       db.query<NewsApiReadRow>(
         `
@@ -592,23 +594,36 @@ export async function readNewsDashboardSummaryWithDeps(
         `,
         [latestHours, maxFutureMinutes, previewLimit, asOfIso]
       ),
-      db.query<{ count: string }>(
-        `
-        select count(*)::text as count
-        from news_articles
-        where publication_datetime >= $3::timestamptz - ($1::int * interval '1 hour')
-          and publication_datetime <= $3::timestamptz + ($2::int * interval '1 minute')
-          and ${deps.customerVisibleTitleQualitySql}
-        `,
-        [latestHours, maxFutureMinutes, asOfIso]
-      ),
     ]);
 
-    previewTopCountries = countryCountsResult.rows.map((row) => ({
-      country: row.country,
-      count: Number(row.count) || 0,
-    }));
-    previewArticleCount = Number(countResult.rows[0]?.count || 0);
+    const countryCountMap = new Map<string, { country: string | null; count: number }>();
+    let directArticleCount = 0;
+
+    for (const row of countryCountsResult.rows) {
+      const distribution = classifySourceDistribution(getSourceMeta(row.source));
+      if (distribution === 'portal') continue;
+      const count = Number(row.count) || 0;
+      if (count <= 0) continue;
+      directArticleCount += count;
+      const key = row.country || 'Global';
+      const current = countryCountMap.get(key);
+      if (current) {
+        current.count += count;
+      } else {
+        countryCountMap.set(key, {
+          country: row.country,
+          count,
+        });
+      }
+    }
+
+    previewTopCountries = Array.from(countryCountMap.values())
+      .sort((left, right) => {
+        if (right.count !== left.count) return right.count - left.count;
+        return (left.country || '').localeCompare(right.country || '');
+      })
+      .slice(0, topCountriesLimit);
+    previewArticleCount = directArticleCount;
 
     previewHeadlines = headlinesResult.rows
       .map((row) => mapRowToDisplayNewsApiItem(row, deps))

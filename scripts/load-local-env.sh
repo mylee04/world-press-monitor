@@ -28,6 +28,48 @@ mirror_prefixed_env() {
   fi
 }
 
+prefer_default_prefixed_env() {
+  local preferred_key=$1
+  local legacy_key=$2
+  local default_value="${3:-}"
+  local current_value="${!preferred_key:-}"
+
+  if [ -z "${current_value}" ] && [ -n "${default_value}" ]; then
+    current_value="${default_value}"
+  fi
+  if [ -z "${current_value}" ]; then
+    current_value="${!legacy_key:-}"
+  fi
+
+  if [ -n "${current_value}" ]; then
+    export "${preferred_key}=${current_value}"
+    export "${legacy_key}=${current_value}"
+  fi
+}
+
+default_wpr_runtime_root() {
+  local project_root="${WPR_PROJECT_ROOT:-${PWD}}"
+  if [ "$(basename "${project_root}")" = "repo" ]; then
+    local parent_dir
+    parent_dir="$(cd "${project_root}/.." && pwd)"
+    if [ "$(basename "${parent_dir}")" = "world-press-radar" ]; then
+      printf '%s\n' "${parent_dir}"
+      return 0
+    fi
+  fi
+  printf '%s\n' "${HOME}/srv/world-press-radar"
+}
+
+default_wpr_log_dir() {
+  local runtime_root_default="$1"
+  local project_root="${WPR_PROJECT_ROOT:-${PWD}}"
+  if [ "$(basename "${project_root}")" = "repo" ] && [ "$(basename "$(cd "${project_root}/.." && pwd)")" = "world-press-radar" ]; then
+    printf '%s\n' "${runtime_root_default}/logs"
+    return 0
+  fi
+  printf '%s\n' "${project_root}/logs"
+}
+
 pick_env_files() {
   local preferred_env_file="${WPR_ENV_FILE:-${WPM_ENV_FILE:-}}"
   if [ -n "${preferred_env_file}" ] && [ -f "${preferred_env_file}" ]; then
@@ -83,18 +125,27 @@ EOF
     export WPM_ENV_FILE_SOURCE=""
   fi
 
+  local runtime_root_default runtime_repo_default runtime_log_dir_default log_dir_default state_dir_default launchd_dir_default pgdata_dir_default
+  runtime_root_default="$(default_wpr_runtime_root)"
+  prefer_default_prefixed_env "WPR_RUNTIME_ROOT" "WPM_RUNTIME_ROOT" "${runtime_root_default}"
+  runtime_repo_default="${WPR_RUNTIME_ROOT}/repo"
+  runtime_log_dir_default="${WPR_RUNTIME_ROOT}/logs"
+  pgdata_dir_default="${WPR_RUNTIME_ROOT}/postgres"
+  log_dir_default="$(default_wpr_log_dir "${WPR_RUNTIME_ROOT}")"
+  state_dir_default="${WPR_PROJECT_ROOT}/.wpr-state"
+  launchd_dir_default="${HOME}/Library/LaunchAgents"
+
   mirror_prefixed_env "WPR_ENV_FILE" "WPM_ENV_FILE"
   mirror_prefixed_env "WPR_PG_PORT" "WPM_PG_PORT" "5432"
   mirror_prefixed_env "WPR_DATABASE_NAME" "WPM_DATABASE_NAME" "wpr"
-  mirror_prefixed_env "WPR_PGDATA_DIR" "WPM_PGDATA_DIR"
-  mirror_prefixed_env "WPR_LOG_DIR" "WPM_LOG_DIR"
+  prefer_default_prefixed_env "WPR_PGDATA_DIR" "WPM_PGDATA_DIR" "${pgdata_dir_default}"
+  prefer_default_prefixed_env "WPR_RUNTIME_REPO" "WPM_RUNTIME_REPO" "${runtime_repo_default}"
+  prefer_default_prefixed_env "WPR_RUNTIME_LOG_DIR" "WPM_RUNTIME_LOG_DIR" "${runtime_log_dir_default}"
+  prefer_default_prefixed_env "WPR_LOG_DIR" "WPM_LOG_DIR" "${log_dir_default}"
   mirror_prefixed_env "WPR_PRIMARY_WORKTREE" "WPM_PRIMARY_WORKTREE"
-  mirror_prefixed_env "WPR_STATE_DIR" "WPM_STATE_DIR"
+  prefer_default_prefixed_env "WPR_STATE_DIR" "WPM_STATE_DIR" "${state_dir_default}"
   mirror_prefixed_env "WPR_POST_INGEST_REPORTS" "WPM_POST_INGEST_REPORTS"
-  mirror_prefixed_env "WPR_RUNTIME_ROOT" "WPM_RUNTIME_ROOT"
-  mirror_prefixed_env "WPR_RUNTIME_REPO" "WPM_RUNTIME_REPO"
-  mirror_prefixed_env "WPR_RUNTIME_LOG_DIR" "WPM_RUNTIME_LOG_DIR"
-  mirror_prefixed_env "WPR_LAUNCHD_DIR" "WPM_LAUNCHD_DIR"
+  prefer_default_prefixed_env "WPR_LAUNCHD_DIR" "WPM_LAUNCHD_DIR" "${launchd_dir_default}"
   mirror_prefixed_env "WPR_PUBLIC_API_HEALTH_URL" "WPM_PUBLIC_API_HEALTH_URL"
   mirror_prefixed_env "WPR_LOCAL_API_HEALTH_URL" "WPM_LOCAL_API_HEALTH_URL"
   mirror_prefixed_env "WPR_HOURLY_DISCORD_WEBHOOK" "WPM_HOURLY_DISCORD_WEBHOOK"

@@ -5,6 +5,7 @@ import type { NewsItem, OutletFeed } from '../lib/types';
 export type WorkerState = {
   offset: number;
   updatedAt: string;
+  hybridBucketOffsets?: Record<string, { offset: number; updatedAt: string }>;
 };
 
 export type BackfillWindow = {
@@ -20,23 +21,55 @@ export function ensureWorkerAuditsDir(cwd: string): void {
   mkdirSync(resolve(cwd, 'audits'), { recursive: true });
 }
 
-export function readWorkerState(stateFile: string, totalOutlets: number): WorkerState {
+function readWorkerStateRaw(stateFile: string): WorkerState {
   try {
     const raw = readFileSync(stateFile, 'utf8');
     const json = JSON.parse(raw) as WorkerState;
-    const offset = Number.isFinite(json.offset) ? Math.max(0, Math.floor(json.offset)) : 0;
     return {
-      offset: totalOutlets > 0 ? offset % totalOutlets : 0,
+      offset: Number.isFinite(json.offset) ? Math.max(0, Math.floor(json.offset)) : 0,
       updatedAt: json.updatedAt || new Date(0).toISOString(),
+      hybridBucketOffsets:
+        json.hybridBucketOffsets && typeof json.hybridBucketOffsets === 'object'
+          ? Object.fromEntries(
+              Object.entries(json.hybridBucketOffsets).map(([bucketKey, bucketState]) => [
+                bucketKey,
+                {
+                  offset: Number.isFinite(bucketState.offset) ? Math.max(0, Math.floor(bucketState.offset)) : 0,
+                  updatedAt: bucketState.updatedAt || new Date(0).toISOString(),
+                },
+              ])
+            )
+          : undefined,
     };
   } catch {
     return { offset: 0, updatedAt: new Date(0).toISOString() };
   }
 }
 
+export function readWorkerState(stateFile: string, totalOutlets: number): WorkerState {
+  const state = readWorkerStateRaw(stateFile);
+  return {
+    ...state,
+    offset: totalOutlets > 0 ? state.offset % totalOutlets : 0,
+  };
+}
+
 export function writeWorkerState(stateFile: string, state: WorkerState, cwd: string): void {
   ensureWorkerAuditsDir(cwd);
-  writeFileSync(stateFile, JSON.stringify(state, null, 2), 'utf8');
+  const existingState = readWorkerStateRaw(stateFile);
+  writeFileSync(
+    stateFile,
+    JSON.stringify(
+      {
+        offset: Number.isFinite(state.offset) ? Math.max(0, Math.floor(state.offset)) : existingState.offset,
+        updatedAt: state.updatedAt || existingState.updatedAt,
+        hybridBucketOffsets: state.hybridBucketOffsets ?? existingState.hybridBucketOffsets,
+      },
+      null,
+      2
+    ),
+    'utf8'
+  );
 }
 
 export function pickOutletChunk(
@@ -74,6 +107,66 @@ export function pickStableOutletBucket(
   const normalizedBucketCount = Math.max(1, Math.floor(bucketCount));
   const normalizedBucketIndex = ((Math.floor(bucketIndex) % normalizedBucketCount) + normalizedBucketCount) % normalizedBucketCount;
   return all.filter((outlet) => stableBucketForValue(outlet.id, normalizedBucketCount) === normalizedBucketIndex);
+}
+
+function buildHybridBucketKey(bucketCount: number, bucketIndex: number): string {
+  const normalizedBucketCount = Math.max(1, Math.floor(bucketCount));
+  const normalizedBucketIndex = ((Math.floor(bucketIndex) % normalizedBucketCount) + normalizedBucketCount) % normalizedBucketCount;
+  return `${normalizedBucketCount}:${normalizedBucketIndex}`;
+}
+
+export function pickStableOutletBucketChunk(
+  all: OutletFeed[],
+  bucketCount: number,
+  bucketIndex: number,
+  chunkSize: number,
+  stateFile: string
+): { selected: OutletFeed[]; nextOffset: number; offset: number; total: number } {
+  const bucketedOutlets = pickStableOutletBucket(all, bucketCount, bucketIndex)
+    .slice()
+    .sort((left, right) => left.id.localeCompare(right.id));
+  if (bucketedOutlets.length === 0) {
+    return { selected: [], nextOffset: 0, offset: 0, total: 0 };
+  }
+
+  const state = readWorkerStateRaw(stateFile);
+  const bucketKey = buildHybridBucketKey(bucketCount, bucketIndex);
+  const rawOffset = state.hybridBucketOffsets?.[bucketKey]?.offset || 0;
+  const offset = rawOffset % bucketedOutlets.length;
+  if (chunkSize >= bucketedOutlets.length) {
+    return { selected: bucketedOutlets, nextOffset: 0, offset, total: bucketedOutlets.length };
+  }
+
+  const normalizedChunkSize = Math.max(0, Math.min(bucketedOutlets.length, Math.floor(chunkSize)));
+  const selected = Array.from({ length: normalizedChunkSize }, (_, index) => bucketedOutlets[(offset + index) % bucketedOutlets.length]);
+  const nextOffset = (offset + selected.length) % bucketedOutlets.length;
+  return { selected, nextOffset, offset, total: bucketedOutlets.length };
+}
+
+export function writeHybridBucketState(
+  stateFile: string,
+  bucketCount: number,
+  bucketIndex: number,
+  offset: number,
+  updatedAt: string,
+  cwd: string
+): void {
+  const existingState = readWorkerStateRaw(stateFile);
+  const bucketKey = buildHybridBucketKey(bucketCount, bucketIndex);
+  writeWorkerState(
+    stateFile,
+    {
+      ...existingState,
+      hybridBucketOffsets: {
+        ...(existingState.hybridBucketOffsets || {}),
+        [bucketKey]: {
+          offset: Math.max(0, Math.floor(offset)),
+          updatedAt,
+        },
+      },
+    },
+    cwd
+  );
 }
 
 export function filterItemsForPersistence(params: {
