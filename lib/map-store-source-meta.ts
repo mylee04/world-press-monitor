@@ -148,8 +148,7 @@ export function classifySourceDistribution(meta: SourceMethodMeta | null): Sourc
 
 export function isDirectPublisherSource(meta: SourceMethodMeta | null): boolean {
   if (!meta) return true;
-  if (meta.distributionClass === 'portal') return false;
-  return meta.hasRss;
+  return meta.distributionClass !== 'portal';
 }
 
 export function resolveSourceCountry(source: string, fallbackCountry?: string | null): string | null {
