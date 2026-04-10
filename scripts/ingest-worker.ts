@@ -117,7 +117,7 @@ const HYBRID_MAX_OUTLETS_PER_RUN = Math.max(
 );
 const HYBRID_MIN_LONG_TAIL_OUTLETS_PER_RUN = Math.max(
   0,
-  Math.min(2000, Number.parseInt(process.env.INGEST_HYBRID_MIN_LONG_TAIL_OUTLETS || '800', 10) || 800)
+  Math.min(2000, Number.parseInt(process.env.INGEST_HYBRID_MIN_LONG_TAIL_OUTLETS || '900', 10) || 900)
 );
 const ATLAS_PATH = process.env.ATLAS_PATH || resolve(process.cwd(), 'data/rss-atlas.json');
 const STATE_FILE = resolve(process.cwd(), 'audits/ingest-worker-state.json');
@@ -370,15 +370,8 @@ async function selectOutletsForRun(
   const reservedLongTailOutlets = hasLongTailOutlets
     ? Math.min(HYBRID_MIN_LONG_TAIL_OUTLETS_PER_RUN, HYBRID_MAX_OUTLETS_PER_RUN)
     : 0;
-  const headSelectionBudget = hasLongTailOutlets
-    ? Math.max(0, HYBRID_MAX_OUTLETS_PER_RUN - reservedLongTailOutlets)
-    : HYBRID_MAX_OUTLETS_PER_RUN;
-  const selectedHeadOutlets = headCandidates
-    .slice(0, Math.min(HYBRID_HEAD_MAX_OUTLETS, headSelectionBudget))
-    .map((entry) => entry.outlet);
-  const remainingBudget = hasLongTailOutlets
-    ? Math.max(0, Math.min(HYBRID_MAX_OUTLETS_PER_RUN - selectedHeadOutlets.length, reservedLongTailOutlets))
-    : Math.max(0, HYBRID_MAX_OUTLETS_PER_RUN - selectedHeadOutlets.length);
+  const selectedHeadOutlets = headCandidates.map((entry) => entry.outlet);
+  const remainingBudget = hasLongTailOutlets ? reservedLongTailOutlets : 0;
   const longTailSelection = hasLongTailOutlets && remainingBudget > 0
     ? pickStableOutletBucketChunkNoWrap(
       longTailOutlets,
