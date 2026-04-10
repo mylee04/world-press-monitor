@@ -28,8 +28,8 @@ export type MapCountryMetricRow = {
   firstSeen24h: number;
   lateShare: number;
   activeSources24h: number;
-  configuredSources24h: number;
-  checkedSources24h: number;
+  configuredSources24h: number | null;
+  checkedSources24h: number | null;
   rssSources24h: number;
   sitemapSources24h: number;
   healthySources24h: number;
@@ -47,8 +47,8 @@ export type MapCountryMetricsResponse = {
     countries: number;
     pub24h: number;
     pub1h: number;
-    configuredSources24h: number;
-    checkedSources24h: number;
+    configuredSources24h: number | null;
+    checkedSources24h: number | null;
     activeSources24h: number;
     windows: Record<MapMetricWindow, MapCountryWindowMetrics>;
   };
