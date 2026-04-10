@@ -484,10 +484,21 @@
         {
           "name": "New York Post",
           "url": "https://nypost.com/feed",
+          "sitemapUrl": "https://nypost.com/news-sitemap.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/18/2026",
           "valid": "needs verification",
           "row": 64
+        },
+        {
+          "name": "New York Post - US News",
+          "url": "https://nypost.com/us-news/feed/",
+          "schedulingSource": "New York Post"
+        },
+        {
+          "name": "New York Post - World News",
+          "url": "https://nypost.com/world-news/feed/",
+          "schedulingSource": "New York Post"
         },
         {
           "name": "Chicago Tribune",
@@ -1356,6 +1367,26 @@
           "checkedDate": "03/15/2026",
           "valid": "needs verification",
           "row": 33
+        },
+        {
+          "name": "China News Service - Society",
+          "url": "https://www.chinanews.com.cn/rss/society.xml"
+        },
+        {
+          "name": "China News Service - Life",
+          "url": "https://www.chinanews.com.cn/rss/life.xml"
+        },
+        {
+          "name": "China News Service - Health",
+          "url": "https://www.chinanews.com.cn/rss/jk.xml"
+        },
+        {
+          "name": "China News Service - Culture",
+          "url": "https://www.chinanews.com.cn/rss/culture.xml"
+        },
+        {
+          "name": "China News Service - Sports",
+          "url": "https://www.chinanews.com.cn/rss/sports.xml"
         },
         {
           "name": "People.cn - News Sitemap Index",
@@ -4412,7 +4443,8 @@
         },
         {
           "name": "Il Resto del Carlino",
-          "url": "https://www.ilrestodelcarlino.it/rss"
+          "url": "https://www.ilrestodelcarlino.it/rss",
+          "sitemapUrl": "https://www.ilrestodelcarlino.it/feedservice/sitemap/generic/rdc/2026/day/sitemap.xml"
         },
         {
           "name": "la Repubblica - News Sitemap",
@@ -5977,6 +6009,38 @@
           "row": 2
         },
         {
+          "name": "Donga Ilbo - Politics",
+          "url": "https://rss.donga.com/politics.xml"
+        },
+        {
+          "name": "Donga Ilbo - Economy",
+          "url": "https://rss.donga.com/economy.xml"
+        },
+        {
+          "name": "Donga Ilbo - International",
+          "url": "https://rss.donga.com/international.xml"
+        },
+        {
+          "name": "Donga Ilbo - National",
+          "url": "https://rss.donga.com/national.xml"
+        },
+        {
+          "name": "Donga Ilbo - Editorials",
+          "url": "https://rss.donga.com/editorials.xml"
+        },
+        {
+          "name": "Donga Ilbo - Science",
+          "url": "https://rss.donga.com/science.xml"
+        },
+        {
+          "name": "Donga Ilbo - Culture",
+          "url": "https://rss.donga.com/culture.xml"
+        },
+        {
+          "name": "Donga Ilbo - Sports",
+          "url": "https://rss.donga.com/sports.xml"
+        },
+        {
           "name": "Seoul Newspaper",
           "url": "https://www.seoul.co.kr/xml/rss/rss_top.xml",
           "status": null,
@@ -5987,6 +6051,7 @@
         {
           "name": "Newsis",
           "url": "https://www.newsis.com/RSS/sokbo.xml",
+          "sitemapUrl": "https://www.newsis.com/newsis_news_google.xml",
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
@@ -6020,6 +6085,7 @@
         {
           "name": "Korea Times (RSS directory)",
           "url": "https://feed.koreatimes.co.kr/k/allnews.xml",
+          "sitemapUrl": "https://www.koreatimes.co.kr/sitemap/news.xml",
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
@@ -6409,6 +6475,10 @@
           "row": 11
         },
         {
+          "name": "Veja - Ultimas Noticias",
+          "url": "https://veja.abril.com.br/ultimas-noticias/rss"
+        },
+        {
           "name": "Folha - Poder (정치)",
           "url": "https://feeds.folha.uol.com.br/poder/rss091.xml",
           "status": null,
@@ -6529,7 +6599,8 @@
         },
         {
           "name": "Exame (Business/Economy Magazine)",
-          "url": "https://exame.com/feed/"
+          "url": "https://exame.com/feed/",
+          "sitemapUrl": "https://exame.com/sitemap.xml"
         },
         {
           "name": "Valor Econômico (Financial Daily)",
@@ -6594,6 +6665,21 @@
           "url": "https://oantagonista.com.br/feed/"
         },
         {
+          "name": "O Antagonista - Brasil",
+          "url": "https://oantagonista.com.br/brasil/feed/",
+          "schedulingSource": "O Antagonista"
+        },
+        {
+          "name": "O Antagonista - Mundo",
+          "url": "https://oantagonista.com.br/mundo/feed/",
+          "schedulingSource": "O Antagonista"
+        },
+        {
+          "name": "O Antagonista - Economia",
+          "url": "https://oantagonista.com.br/economia/feed/",
+          "schedulingSource": "O Antagonista"
+        },
+        {
           "name": "Terra",
           "url": "https://www.terra.com.br/rss.xml"
         },
@@ -6635,7 +6721,8 @@
         },
         {
           "name": "ND Mais",
-          "url": "https://ndmais.com.br/feed/"
+          "url": "https://ndmais.com.br/feed/",
+          "sitemapUrl": "https://ndmais.com.br/news-sitemap.xml"
         }
       ]
     },
@@ -8049,6 +8136,31 @@
           "valid": "valid"
         },
         {
+          "name": "La Razón - Internacional",
+          "url": "https://www.larazon.es/internacional/?outputType=xml",
+          "schedulingSource": "La Razón"
+        },
+        {
+          "name": "La Razón - Economía",
+          "url": "https://www.larazon.es/economia/?outputType=xml",
+          "schedulingSource": "La Razón"
+        },
+        {
+          "name": "La Razón - Deportes",
+          "url": "https://www.larazon.es/deportes/?outputType=xml",
+          "schedulingSource": "La Razón"
+        },
+        {
+          "name": "La Razón - Tecnología",
+          "url": "https://www.larazon.es/tecnologia/?outputType=xml",
+          "schedulingSource": "La Razón"
+        },
+        {
+          "name": "La Razón - España",
+          "url": "https://www.larazon.es/espana/?outputType=xml",
+          "schedulingSource": "La Razón"
+        },
+        {
           "name": "El Periodico",
           "url": "https://www.elperiodico.com/es/rss/rss_portada.xml",
           "status": "⏩ OFFICIAL",
@@ -8995,7 +9107,8 @@
         },
         {
           "name": "Quadratin Mexico",
-          "url": "https://www.quadratin.com.mx/feed/"
+          "url": "https://www.quadratin.com.mx/feed/",
+          "sitemapUrl": "https://www.quadratin.com.mx/sitemap.xml"
         },
         {
           "name": "El CEO Mexico",
@@ -9046,6 +9159,7 @@
         {
           "name": "Republika",
           "url": "https://www.republika.co.id/rss",
+          "sitemapUrl": "https://republika.co.id/files/xml/sitemap.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
@@ -9073,7 +9187,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 18
+          "row": 18,
+          "enabled": false
         },
         {
           "name": "Sindonews",
@@ -9325,12 +9440,20 @@
           "row": 53
         },
         {
+          "name": "ANTARA - Dunia (Internasional)",
+          "url": "https://www.antaranews.com/rss/dunia-internasional.xml"
+        },
+        {
           "name": "ANTARA - Tekno",
           "url": "https://www.antaranews.com/rss/tekno.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
           "row": 54
+        },
+        {
+          "name": "ANTARA - Video",
+          "url": "https://www.antaranews.com/rss/video.xml"
         },
         {
           "name": "RM.ID - Semua berita",
@@ -9810,7 +9933,8 @@
           "status": "NEW",
           "checkedDate": "04/02/2026",
           "valid": "valid",
-          "row": 22
+          "row": 22,
+          "enabled": false
         },
         {
           "name": "Le Matin - Hi-Tech",
@@ -11814,6 +11938,7 @@
         {
           "name": "Aksam",
           "url": "https://www.aksam.com.tr/rss",
+          "sitemapUrl": "https://www.aksam.com.tr/sitemaps/posts-2026-04.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
@@ -12292,6 +12417,7 @@
         {
           "name": "Al Jazirah",
           "url": "https://www.aljazeera.net/rss",
+          "sitemapUrl": "https://www.aljazeera.net/sitemaps/article-new/09-04-2026.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
@@ -17084,7 +17210,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 10
+          "row": 10,
+          "enabled": false
         },
         {
           "name": "Diario Libre - Edición USA",
@@ -23201,7 +23328,8 @@
           "status": "NEW",
           "checkedDate": "03/16/2026",
           "valid": "valid",
-          "row": 241
+          "row": 241,
+          "enabled": false
         },
         {
           "name": "Blesk - Elections Sitemap",
@@ -23755,6 +23883,7 @@
         {
           "name": "Topontiki",
           "url": "https://www.topontiki.gr/feed/",
+          "sitemapUrl": "https://www.topontiki.gr/sitemapgk.xml",
           "language": "el",
           "tier": "primary"
         },
@@ -25097,6 +25226,16 @@
           "checkedDate": "03/16/2026",
           "valid": "valid",
           "row": 2
+        },
+        {
+          "name": "Tportal - Vijesti",
+          "url": "https://www.tportal.hr/rss-vijesti.xml",
+          "schedulingSource": "Tportal"
+        },
+        {
+          "name": "Tportal - Sport",
+          "url": "https://www.tportal.hr/rss-sport.xml",
+          "schedulingSource": "Tportal"
         },
         {
           "name": "Telegram.hr",
@@ -26535,7 +26674,8 @@
         },
         {
           "name": "Blueprint Nigeria",
-          "url": "https://blueprint.ng/feed/"
+          "url": "https://blueprint.ng/feed/",
+          "sitemapUrl": "https://blueprint.ng/news-sitemap.xml"
         },
         {
           "name": "Daily Post Nigeria",
@@ -27796,7 +27936,8 @@
         },
         {
           "name": "Daily Tribune - Feed",
-          "url": "https://tribune.net.ph/feed/"
+          "url": "https://tribune.net.ph/feed/",
+          "sitemapUrl": "https://tribune.net.ph/sitemap.xml"
         },
         {
           "name": "The Manila Times - News Feed",

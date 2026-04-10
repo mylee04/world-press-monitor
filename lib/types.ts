@@ -34,6 +34,7 @@ export type NewsTitleRepairSource = 'article_page' | 'background';
 export interface OutletFeed {
   id: string;
   name: string;
+  schedulingSource?: string;
   tier: OutletTier;
   section: NewsSection;
   categories: SourceCategory[];
