@@ -126,7 +126,7 @@ export function OverviewBreakdownSection({
                 <div className="map-list-copy">
                   <strong>{item.publisher}</strong>
                   <span>
-                    {formatNumber(getPublisherWindowMetrics(item, mapWindow).activeCountries)} countries ·{' '}
+                    {formatNumber(getPublisherWindowMetrics(item, mapWindow).activeCountries)} active countries ·{' '}
                     {publisherConfidenceLabel(item.publisherConfidence)}
                   </span>
                 </div>
