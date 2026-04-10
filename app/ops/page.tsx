@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { cookies, headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { OpsExplorer } from '@/components/ops-explorer';
+import { OpsLocalTimestamp } from '@/components/ops-local-timestamp';
 import styles from '@/components/ops-page.module.css';
 import type { CountryBenchmarkResponse } from '@/lib/benchmark-types';
 import type { MapCountryMetricsResponse } from '@/lib/map-types';
@@ -47,16 +48,6 @@ async function fetchJson<T>(url: string, init?: RequestInit): Promise<T | null> 
   } catch {
     return null;
   }
-}
-
-function formatDateTime(value: string | null | undefined): string {
-  if (!value) return 'Unavailable';
-  const parsed = new Date(value);
-  if (Number.isNaN(parsed.getTime())) return value;
-  return new Intl.DateTimeFormat('en-US', {
-    dateStyle: 'medium',
-    timeStyle: 'short',
-  }).format(parsed);
 }
 
 function formatAge(value: string | null | undefined): string {
@@ -143,21 +134,21 @@ export default async function OpsPage() {
             <span className={styles.statusLabel}>Dashboard</span>
             <strong>{formatAge(summary?.generatedAt)}</strong>
             <p>{summary?.dataSource || summary?.storage || 'Unavailable'}</p>
-            <small>{formatDateTime(summary?.generatedAt)}</small>
+            <small><OpsLocalTimestamp value={summary?.generatedAt} /></small>
           </article>
 
           <article className={styles.statusCard}>
             <span className={styles.statusLabel}>Benchmark</span>
             <strong>{formatAge(benchmark?.generatedAt)}</strong>
             <p>{benchmark?.dataSource || 'Unavailable'}</p>
-            <small>{formatDateTime(benchmark?.generatedAt)}</small>
+            <small><OpsLocalTimestamp value={benchmark?.generatedAt} /></small>
           </article>
 
           <article className={styles.statusCard}>
             <span className={styles.statusLabel}>Map 24h</span>
             <strong>{formatAge(mapCountries?.generatedAt)}</strong>
             <p>{mapCountries?.storage || 'Unavailable'}</p>
-            <small>{formatDateTime(mapCountries?.generatedAt)}</small>
+            <small><OpsLocalTimestamp value={mapCountries?.generatedAt} /></small>
           </article>
         </div>
       </section>
@@ -167,7 +158,7 @@ export default async function OpsPage() {
           <h2>Dashboard Summary</h2>
           <div className={styles.detailMeta}>
             <span className={styles.chip}>{summary?.dataSource || summary?.storage || 'unknown'}</span>
-            <span className={styles.chip}>{formatDateTime(summary?.generatedAt)}</span>
+            <span className={styles.chip}><OpsLocalTimestamp value={summary?.generatedAt} /></span>
           </div>
           <div className={styles.statList}>
             <div className={styles.statRow}>
@@ -179,7 +170,7 @@ export default async function OpsPage() {
               <strong>{formatInt(summary?.totals.published24h)}</strong>
             </div>
             <div className={styles.statRow}>
-              <span>Sources checked 24h</span>
+              <span>Checked sources 24h</span>
               <strong>{formatInt(summary?.totals.checkedSources24h)}</strong>
             </div>
             <div className={styles.statRow}>
@@ -193,7 +184,7 @@ export default async function OpsPage() {
           <h2>Benchmark Window</h2>
           <div className={styles.detailMeta}>
             <span className={styles.chip}>{benchmark?.dataSource || 'unknown'}</span>
-            <span className={styles.chip}>{formatDateTime(benchmark?.generatedAt)}</span>
+            <span className={styles.chip}><OpsLocalTimestamp value={benchmark?.generatedAt} /></span>
           </div>
           <div className={styles.statList}>
             <div className={styles.statRow}>
@@ -215,7 +206,7 @@ export default async function OpsPage() {
           <h2>Map Snapshot</h2>
           <div className={styles.detailMeta}>
             <span className={styles.chip}>{mapCountries?.storage || 'unknown'}</span>
-            <span className={styles.chip}>{formatDateTime(mapCountries?.generatedAt)}</span>
+            <span className={styles.chip}><OpsLocalTimestamp value={mapCountries?.generatedAt} /></span>
           </div>
           <div className={styles.statList}>
             <div className={styles.statRow}>
@@ -223,11 +214,11 @@ export default async function OpsPage() {
               <strong>{formatInt(mapCountries?.totals?.pub24h)}</strong>
             </div>
             <div className={styles.statRow}>
-              <span>Active sources 24h</span>
+              <span>Active map sources 24h</span>
               <strong>{formatInt(mapCountries?.totals?.activeSources24h)}</strong>
             </div>
             <div className={styles.statRow}>
-              <span>Countries</span>
+              <span>Active countries</span>
               <strong>{formatInt(mapCountries?.totals?.countries)}</strong>
             </div>
             <div className={styles.statRow}>
@@ -241,7 +232,7 @@ export default async function OpsPage() {
           <h2>Top Countries</h2>
           <div className={styles.detailMeta}>
             <span className={styles.chip}>{formatInt(summary?.preview.articleCount)} articles</span>
-            <span className={styles.chip}>{summary?.latestDate || 'No date'}</span>
+            <span className={styles.chip}><OpsLocalTimestamp value={summary?.latestDate} fallback="No date" /></span>
           </div>
           <div className={styles.topCountryList}>
             {(summary?.preview.topCountries || []).slice(0, 6).map((country) => (
