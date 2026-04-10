@@ -144,6 +144,8 @@ export type MapCountrySourcesResponse = {
   summary: {
     pub24h: number;
     pub1h: number;
+    configuredSources24h: number | null;
+    checkedSources24h: number | null;
     activeSources24h: number;
     rssSources24h: number;
     sitemapSources24h: number;
