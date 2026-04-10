@@ -7,7 +7,8 @@ import type {
   MapSourceMetricRow,
 } from '@/lib/map-types';
 
-export function formatNumber(value: number): string {
+export function formatNumber(value: number | null | undefined): string {
+  if (typeof value !== 'number' || !Number.isFinite(value)) return '0';
   return value.toLocaleString();
 }
 
