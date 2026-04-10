@@ -48,6 +48,7 @@ const ctaItems = [
 async function getLandingMetricItems() {
   const summary = await readDashboardSummarySnapshot();
   const snapshotInserted24h = summary?.storage === 'postgres' ? summary.totals.inserted24h : 0;
+<<<<<<< HEAD
   const atlasCountriesList = Array.isArray(rssAtlas.countries) ? rssAtlas.countries : [];
   const atlasCountries = atlasCountriesList.length;
   const atlasNewsrooms = atlasCountriesList.reduce((total: number, country: AtlasCountry) => {

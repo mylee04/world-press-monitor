@@ -9,7 +9,7 @@ import type { MapCountryMetricsResponse } from '@/lib/map-types';
 import type { NewsApiDashboardSummaryResponse } from '@/lib/news-api';
 import { isValidOpsSessionToken, OPS_LOGIN_PATH, OPS_SESSION_COOKIE } from '@/lib/ops-auth';
 import { buildDisplaySourceName } from '@/lib/source-display';
-import rssAtlas from '@/rss-atlas.json';
+import rssAtlas from '@/data/rss-atlas.json';
 
 type ApiHealthResponse = {
   status: string;
