@@ -20,6 +20,11 @@ export type SourceMetricSqlRow = {
   first_seen_24h: string;
 };
 
+export type IngestCheckedSourceSqlRow = {
+  country: string | null;
+  source: string;
+};
+
 export type HealthSqlRow = {
   source: string;
   method: string;
@@ -331,6 +336,28 @@ export async function readHourlyCountsForCountry(country: string): Promise<Hourl
     `,
     [country]
   );
+  return result.rows;
+}
+
+export async function readCheckedSourcesByCountry(hours = 24): Promise<IngestCheckedSourceSqlRow[]> {
+  const windowHours = Math.max(1, Math.min(24 * 30, Math.floor(hours)));
+  const db = getPool();
+  const result = await db.query<IngestCheckedSourceSqlRow>(
+    `
+    select
+      nullif(trim(country), '') as country,
+      nullif(trim(source), '') as source
+    from ingest_ops_hourly
+    where hour_bucket >= now() - ($1::int * interval '1 hour')
+      and runner = 'worker'
+      and attempted_runs > 0
+      and source is not null
+      and nullif(trim(source), '') is not null
+    group by 1, 2
+    `,
+    [windowHours]
+  );
+
   return result.rows;
 }
 

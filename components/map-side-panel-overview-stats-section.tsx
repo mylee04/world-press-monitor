@@ -27,6 +27,29 @@ type OverviewStatsSectionProps = {
   totalWindowMetrics: MapCountryMetricsResponse['totals']['windows'][MapMetricWindow] | null;
 };
 
+const SOURCE_COVERAGE_WARNING_THRESHOLD = 0.2;
+
+function isLowCoverage(configured: number, checked: number): boolean {
+  return configured > 0 && checked / configured <= SOURCE_COVERAGE_WARNING_THRESHOLD;
+}
+
+function formatSourceCoverageSourceStats(configured: number, checked: number): string {
+  if (configured <= 0) return '-';
+  return `${formatNumber(checked)} of ${formatNumber(configured)} checked`;
+}
+
+function sourceCoveragePercent(configured: number, checked: number): string {
+  if (configured <= 0) {
+    return '-';
+  }
+
+  return `${round((checked / configured) * 100, 1)}%`;
+}
+
+function isSourceCoverageWarning(configured: number, checked: number): boolean {
+  return isLowCoverage(configured, checked);
+}
+
 export function OverviewStatsSection({
   activeWindowDescriptor,
   countryDataReady,
@@ -44,6 +67,18 @@ export function OverviewStatsSection({
   const selectedCountryLateShare = selectedCountrySummaryDisplay.firstSeen > 0
     ? selectedCountrySummaryDisplay.late / selectedCountrySummaryDisplay.firstSeen
     : 0;
+  const selectedCountryCoverageClass = selectedCountry && isSourceCoverageWarning(
+    selectedCountry.configuredSources24h,
+    selectedCountry.checkedSources24h
+  )
+    ? 'is-low-coverage'
+    : '';
+  const totalCoverageClass = totals && isSourceCoverageWarning(
+    totals.configuredSources24h,
+    totals.checkedSources24h
+  )
+    ? 'is-low-coverage'
+    : '';
 
   if (!selectedCountry && mapMode === 'countries' && totals) {
     return (
@@ -59,6 +94,23 @@ export function OverviewStatsSection({
         <article className="map-stat-card">
           <span>Active Countries</span>
           <strong>{formatNumber(totals.countries)}</strong>
+        </article>
+        <article className="map-stat-card">
+          <span>Configured Sources</span>
+          <strong>{formatNumber(totals.configuredSources24h)}</strong>
+        </article>
+        <article className="map-stat-card">
+          <span>Checked Sources 24h</span>
+          <strong>{formatNumber(totals.checkedSources24h)}</strong>
+        </article>
+        <article className={`map-stat-card ${totalCoverageClass}`}>
+          <span>Checked Coverage (24h)</span>
+          <strong>{sourceCoveragePercent(totals.configuredSources24h, totals.checkedSources24h)}</strong>
+          <span className="map-stat-alert-label">
+            {isLowCoverage(totals.configuredSources24h, totals.checkedSources24h)
+              ? `Low coverage · ${formatSourceCoverageSourceStats(totals.configuredSources24h, totals.checkedSources24h)}`
+              : formatSourceCoverageSourceStats(totals.configuredSources24h, totals.checkedSources24h)}
+          </span>
         </article>
         <article className="map-stat-card">
           <span>Active Sources</span>
@@ -124,6 +176,28 @@ export function OverviewStatsSection({
         <article className="map-stat-card">
           <span>Published 1h</span>
           <strong>{formatNumber(selectedCountryLivePublished)}</strong>
+        </article>
+        <article className="map-stat-card">
+          <span>Configured Sources</span>
+          <strong>{formatNumber(selectedCountry.configuredSources24h)}</strong>
+        </article>
+        <article className="map-stat-card">
+          <span>Checked Sources 24h</span>
+          <strong>{formatNumber(selectedCountry.checkedSources24h)}</strong>
+        </article>
+        <article className={`map-stat-card ${selectedCountryCoverageClass}`}>
+          <span>Checked Coverage (24h)</span>
+          <strong>
+            {sourceCoveragePercent(selectedCountry.configuredSources24h, selectedCountry.checkedSources24h)}
+          </strong>
+          <span className="map-stat-alert-label">
+            {isLowCoverage(selectedCountry.configuredSources24h, selectedCountry.checkedSources24h)
+              ? `Low coverage · ${formatSourceCoverageSourceStats(
+                  selectedCountry.configuredSources24h,
+                  selectedCountry.checkedSources24h
+                )}`
+              : formatSourceCoverageSourceStats(selectedCountry.configuredSources24h, selectedCountry.checkedSources24h)}
+          </span>
         </article>
         <article className="map-stat-card">
           <span>Active Sources</span>

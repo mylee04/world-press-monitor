@@ -2,12 +2,14 @@ import { inferGeoFromTitle } from '@/lib/geo';
 import {
   readLatestHealthBySource,
   readWindowedSourceMetrics,
+  readCheckedSourcesByCountry,
   normalizeHealthStatus,
   type HealthSqlRow,
 } from '@/lib/map-store-db';
 import { rankTopCounts } from '@/lib/map-store-locations';
 import {
   getCountryCode,
+  getConfiguredDirectSourceCountByCountry,
   getSourceMeta,
   isDirectPublisherSource,
   normalizeSourceKey,
@@ -33,6 +35,7 @@ import type {
 type MapCountryMetricsBuildOptions = {
   metricRows?: SourceMetricWindowSqlRow[];
   healthBySource?: Map<string, HealthSqlRow>;
+  checkedRows?: Array<{ country: string | null; source: string }>;
 };
 
 export async function buildMapCountryMetricsPayload(
@@ -44,6 +47,21 @@ export async function buildMapCountryMetricsPayload(
     `coalesce(nullif(trim(source), ''), '') <> ''`
   );
   const healthBySource = options.healthBySource ?? await readLatestHealthBySource();
+  const checkedRows = options.checkedRows
+    ?? await readCheckedSourcesByCountry(24);
+  const checkedSourcesByCountry = new Map<string, Set<string>>();
+  for (const row of checkedRows) {
+    const meta = getSourceMeta(row.source);
+    if (!isDirectPublisherSource(meta)) continue;
+    const country = resolvePublisherCountryForSource(row.country, row.source);
+    if (!country) continue;
+    const current = checkedSourcesByCountry.get(country) ?? new Set<string>();
+    const normalizedSource = normalizeSourceKey(row.source);
+    if (normalizedSource) {
+      current.add(normalizedSource);
+      checkedSourcesByCountry.set(country, current);
+    }
+  }
   const byCountrySource = new Map<string, {
     country: string;
     source: string;
@@ -107,6 +125,8 @@ export async function buildMapCountryMetricsPayload(
       late24h: 0,
       firstSeen24h: 0,
       activeSources24h: 0,
+      configuredSources24h: getConfiguredDirectSourceCountByCountry(country),
+      checkedSources24h: checkedSourcesByCountry.get(country)?.size || 0,
       rssSources24h: 0,
       sitemapSources24h: 0,
       healthySources24h: 0,
@@ -177,6 +197,8 @@ export async function buildMapCountryMetricsPayload(
         firstSeen24h: row.firstSeen24h,
         lateShare: row.firstSeen24h > 0 ? row.late24h / row.firstSeen24h : 0,
         activeSources24h: row.activeSources24h,
+        configuredSources24h: row.configuredSources24h,
+        checkedSources24h: row.checkedSources24h,
         rssSources24h: row.rssSources24h,
         sitemapSources24h: row.sitemapSources24h,
         healthySources24h: row.healthySources24h,
@@ -218,6 +240,8 @@ export async function buildMapCountryMetricsPayload(
       countries: rows.length,
       pub24h: rows.reduce((sum, row) => sum + row.pub24h, 0),
       pub1h: rows.reduce((sum, row) => sum + row.pub1h, 0),
+      configuredSources24h: rows.reduce((sum, row) => sum + row.configuredSources24h, 0),
+      checkedSources24h: rows.reduce((sum, row) => sum + row.checkedSources24h, 0),
       activeSources24h: rows.reduce((sum, row) => sum + row.activeSources24h, 0),
       windows: buildCountryWindowRecord(totalWindowsAcc),
     },

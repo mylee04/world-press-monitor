@@ -35,6 +35,7 @@ export type SourceMethodMeta = {
 
 let atlasSourceMetaCache: Map<string, SourceMethodMeta> | null = null;
 let atlasCountryCodeCache: Map<string, string | null> | null = null;
+let atlasConfiguredSourcesByCountryCache: Map<string, number> | null = null;
 
 export function normalizeSourceKey(value: string): string {
   return buildDisplaySourceName(value || '').trim().toLowerCase();
@@ -80,11 +81,13 @@ function mergeDistributionClass(
 function loadAtlasSourceMeta(): {
   sourceMeta: Map<string, SourceMethodMeta>;
   countryCodes: Map<string, string | null>;
+  configuredSourcesByCountry: Map<string, number>;
 } {
-  if (atlasSourceMetaCache && atlasCountryCodeCache) {
+  if (atlasSourceMetaCache && atlasCountryCodeCache && atlasConfiguredSourcesByCountryCache) {
     return {
       sourceMeta: atlasSourceMetaCache,
       countryCodes: atlasCountryCodeCache,
+      configuredSourcesByCountry: atlasConfiguredSourcesByCountryCache,
     };
   }
 
@@ -92,6 +95,7 @@ function loadAtlasSourceMeta(): {
   const parsed = JSON.parse(raw) as AtlasFile;
   const sourceMeta = new Map<string, SourceMethodMeta>();
   const countryCodes = new Map<string, string | null>();
+  const configuredSourcesByCountry = new Map<string, Set<string>>();
 
   for (const country of parsed.countries || []) {
     const countryName = (country.name || '').trim();
@@ -102,6 +106,15 @@ function loadAtlasSourceMeta(): {
     for (const feed of country.feeds || []) {
       const rawName = (feed.name || '').trim();
       if (!rawName) continue;
+      const isPortal = feed.distributionClass === 'portal';
+      const normalizedSource = normalizeSourceKey(rawName);
+
+      if (!isPortal) {
+        const configuredSet = configuredSourcesByCountry.get(countryName) || new Set<string>();
+        configuredSet.add(normalizedSource);
+        configuredSourcesByCountry.set(countryName, configuredSet);
+      }
+
       const displaySource = buildDisplaySourceName(rawName);
       const key = normalizeSourceKey(displaySource);
       const current = sourceMeta.get(key);
@@ -121,14 +134,34 @@ function loadAtlasSourceMeta(): {
     }
   }
 
+  const configuredSourceCounts = new Map<string, number>();
+  for (const [countryName, values] of configuredSourcesByCountry.entries()) {
+    configuredSourceCounts.set(countryName, values.size);
+  }
+
   atlasSourceMetaCache = sourceMeta;
   atlasCountryCodeCache = countryCodes;
-  return { sourceMeta, countryCodes };
+  atlasConfiguredSourcesByCountryCache = configuredSourceCounts;
+  return { sourceMeta, countryCodes, configuredSourcesByCountry: configuredSourceCounts };
 }
 
 export function getCountryCode(country: string): string | null {
   const { countryCodes } = loadAtlasSourceMeta();
   return countryCodes.get(country) || null;
+}
+
+export function getConfiguredDirectSourceCountByCountry(country: string): number {
+  const { configuredSourcesByCountry } = loadAtlasSourceMeta();
+  return configuredSourcesByCountry.get(country) || 0;
+}
+
+export function getConfiguredDirectSourcesTotal(): number {
+  const { configuredSourcesByCountry } = loadAtlasSourceMeta();
+  let total = 0;
+  for (const count of configuredSourcesByCountry.values()) {
+    total += count;
+  }
+  return total;
 }
 
 export function getSourceMeta(source: string): SourceMethodMeta | null {

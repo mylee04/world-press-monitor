@@ -1237,6 +1237,40 @@ body.landing-header-mode.landing-header-visible .site-header {
   color: #f4fbff;
 }
 
+.map-stat-card.is-low-coverage {
+  border-color: rgba(255, 140, 123, 0.44);
+  background: rgba(60, 20, 28, 0.64);
+}
+
+.map-stat-alert-label {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 8px;
+  padding: 3px 7px;
+  border-radius: 999px;
+  border: 1px solid rgba(248, 113, 113, 0.4);
+  background: rgba(248, 113, 113, 0.12);
+  color: #ffb5b0;
+  font-size: 0.7rem;
+  line-height: 1.12;
+  letter-spacing: 0.02em;
+}
+
+.map-list-copy .map-list-low-coverage-label {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 8px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  border: 1px solid rgba(248, 113, 113, 0.4);
+  background: rgba(248, 113, 113, 0.12);
+  color: #ffb5b0;
+  font-size: 0.7rem;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  vertical-align: middle;
+}
+
 .map-panel-block {
   margin-top: 18px;
   padding-top: 18px;
@@ -1828,6 +1862,11 @@ body.landing-header-mode.landing-header-visible .site-header {
 
 .map-list-row.static {
   cursor: default;
+}
+
+.map-list-row.is-low-coverage {
+  border-color: rgba(255, 140, 123, 0.56);
+  background: rgba(58, 21, 29, 0.68);
 }
 
 .map-list-row.selected {

@@ -1,6 +1,5 @@
 import {
   formatNumber,
-  getCountryWindowMetrics,
   getPublisherCountryWindowMetrics,
   getPublisherWindowMetrics,
   getSourceWindowMetrics,
@@ -42,6 +41,26 @@ type OverviewBreakdownSectionProps = {
   topDegradedCountries: MapCountryMetricRow[];
   topPublishers: MapPublisherMetricRow[];
 };
+
+const SOURCE_COVERAGE_WARNING_THRESHOLD = 0.2;
+
+function isLowCoverage(configured: number, checked: number): boolean {
+  return configured > 0 && checked / configured <= SOURCE_COVERAGE_WARNING_THRESHOLD;
+}
+
+function isSourceCoverageWarning(configured: number, checked: number): boolean {
+  return isLowCoverage(configured, checked);
+}
+
+function formatSourceCoverage(configured: number, checked: number): string {
+  if (configured <= 0) return '-';
+  return `${round((checked / configured) * 100, 1)}%`;
+}
+
+function formatCoverageStats(configured: number, checked: number): string {
+  if (configured <= 0) return '-';
+  return `${formatNumber(checked)} of ${formatNumber(configured)} checked`;
+}
 
 export function OverviewBreakdownSection({
   activeWindowDescriptor,
@@ -103,11 +122,24 @@ export function OverviewBreakdownSection({
             <button
               key={`${item.country}-${index}`}
               type="button"
-              className="map-list-row"
+              className={`map-list-row ${isSourceCoverageWarning(item.configuredSources24h, item.checkedSources24h) ? 'is-low-coverage' : ''}`}
               onClick={() => onFocusCountryName(item.country)}
             >
-              <strong>{item.country}</strong>
-              <span>{formatNumber(getCountryWindowMetrics(item, mapWindow).published)}</span>
+              <div className="map-list-copy">
+                <strong>{item.country}</strong>
+                <span>
+                  {formatNumber(item.configuredSources24h)} configured · {formatNumber(item.checkedSources24h)} checked ·{' '}
+                  {formatNumber(item.activeSources24h)} active
+                </span>
+                <span>
+                  Checked coverage {formatSourceCoverage(item.configuredSources24h, item.checkedSources24h)} ·{' '}
+                  {formatCoverageStats(item.configuredSources24h, item.checkedSources24h)}
+                  {isSourceCoverageWarning(item.configuredSources24h, item.checkedSources24h) ? (
+                    <span className="map-list-low-coverage-label">Low coverage</span>
+                  ) : null}
+                </span>
+              </div>
+              <span>{formatNumber(item.windows[mapWindow].published)}</span>
             </button>
           ))}
         </div>

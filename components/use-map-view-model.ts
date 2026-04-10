@@ -370,6 +370,8 @@ export function useMapViewModel() {
       firstSeen24h: 0,
       lateShare: 0,
       activeSources24h: countryRow.activeSources24h,
+      configuredSources24h: 0,
+      checkedSources24h: 0,
       rssSources24h: 0,
       sitemapSources24h: 0,
       healthySources24h: countryRow.healthySources24h,

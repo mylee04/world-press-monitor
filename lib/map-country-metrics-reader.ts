@@ -14,6 +14,8 @@ function buildEmptyMapCountryMetricsPayload(window: MapMetricWindow): MapCountry
       countries: 0,
       pub24h: 0,
       pub1h: 0,
+      configuredSources24h: 0,
+      checkedSources24h: 0,
       activeSources24h: 0,
       windows: buildCountryWindowRecord({}),
     },
