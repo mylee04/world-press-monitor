@@ -8,6 +8,7 @@ import type { CountryBenchmarkResponse } from '@/lib/benchmark-types';
 import type { MapCountryMetricsResponse } from '@/lib/map-types';
 import type { NewsApiDashboardSummaryResponse } from '@/lib/news-api';
 import { isValidOpsSessionToken, OPS_LOGIN_PATH, OPS_SESSION_COOKIE } from '@/lib/ops-auth';
+import rssAtlas from '@/rss-atlas.json';
 
 type ApiHealthResponse = {
   status: string;
@@ -73,6 +74,24 @@ function formatInt(value: number | null | undefined): string {
 function formatPercent(value: number | null | undefined): string {
   if (typeof value !== 'number' || !Number.isFinite(value)) return 'Unavailable';
   return `${(value * 100).toFixed(1)}%`;
+}
+
+function getAtlasSourceCount(): number {
+  const atlas = rssAtlas as { countries?: Array<{ feeds?: Array<{ distributionClass?: string }> }> } | undefined;
+  if (!atlas || !Array.isArray(atlas.countries)) {
+    return 0;
+  }
+
+  return atlas.countries.reduce((total, country) => {
+    const feeds = Array.isArray(country?.feeds) ? country.feeds : [];
+    return total + feeds.length;
+  }, 0);
+}
+
+function formatSourceCount(count: number | undefined | null, total: number): string {
+  if (typeof count !== 'number' || !Number.isFinite(count)) return 'Unavailable';
+  if (!Number.isFinite(total) || total <= 0) return formatInt(count);
+  return `${formatInt(count)} out of ${formatInt(total)}`;
 }
 
 export default async function OpsPage() {
@@ -171,7 +190,7 @@ export default async function OpsPage() {
             </div>
             <div className={styles.statRow}>
               <span>Checked sources 24h</span>
-              <strong>{formatInt(summary?.totals.checkedSources24h)}</strong>
+              <strong>{formatSourceCount(summary?.totals.checkedSources24h, getAtlasSourceCount())}</strong>
             </div>
             <div className={styles.statRow}>
               <span>31d rows window</span>
