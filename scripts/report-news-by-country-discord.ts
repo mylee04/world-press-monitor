@@ -126,10 +126,10 @@ function formatCompactInteger(value: number): string {
 function formatCountryMetricsLine(row: CountryMetrics): string {
   const freshSegment =
     row.freshLast24h !== row.publishedLast24hExtended
-      ? `  F: ${formatCompactInteger(row.freshLast24h)}`
+      ? `  Fresh: ${formatCompactInteger(row.freshLast24h)}`
       : '';
 
-  return `${row.country}  P: ${formatCompactInteger(row.publishedLast24hExtended)}${freshSegment}  L: ${formatCompactInteger(row.lateLast24h)} (${formatPercent(row.lateShare)})  1h: ${formatCompactInteger(row.insertedLast1h)}`;
+  return `${row.country}  Published: ${formatCompactInteger(row.publishedLast24hExtended)}${freshSegment}  Late: ${formatCompactInteger(row.lateLast24h)} (${formatPercent(row.lateShare)})  1h seen: ${formatCompactInteger(row.insertedLast1h)}`;
 }
 
 function pickWebhookUrl(): string {
@@ -547,7 +547,6 @@ async function main(): Promise<void> {
       .map((row) => `${row.country} ${row.publishedLast24hCore.toLocaleString()}`)
       .join(', ');
 
-    const scopeLabel = `Countries with data: ${filteredRows.length}`;
     const configuredScopeLabel =
       atlasMetadata.activeCountryCount > 0
         ? `Configured atlas countries: ${atlasMetadata.activeCountryCount.toLocaleString()} unique${atlasMetadata.configuredCountryRows > atlasMetadata.activeCountryCount ? ` (${atlasMetadata.configuredCountryRows.toLocaleString()} rows)` : ''}`
@@ -560,17 +559,21 @@ async function main(): Promise<void> {
     const header = [
       `📰 Publisher-Country News Volume (${new Date().toISOString()})`,
       'Source: news_articles',
-      `published24h_core ${totalPublished24hCore.toLocaleString()} / published24h_portal ${totalPublished24hPortal.toLocaleString()} / published24h_extended ${totalPublished24hExtended.toLocaleString()} / fresh24h ${totalFresh24h.toLocaleString()} / late24h ${totalLate24h.toLocaleString()} / firstSeen1h ${totalInserted1h.toLocaleString()}`,
-      `Supporting: firstSeen24h ${totalInserted24h.toLocaleString()} / Late share of firstSeen24h ${formatPercent(totalLateShare)}`,
+      '24h totals:',
+      `Inserted 24h (dashboard-style / first seen): ${totalInserted24h.toLocaleString()}`,
+      `Published 24h core (map-style / direct publishers only): ${totalPublished24hCore.toLocaleString()}`,
+      `Published 24h portal only: ${totalPublished24hPortal.toLocaleString()}`,
+      `Published 24h extended (benchmark-style / core + portal): ${totalPublished24hExtended.toLocaleString()}`,
+      `Fresh 24h: ${totalFresh24h.toLocaleString()} / Late 24h: ${totalLate24h.toLocaleString()} (${formatPercent(totalLateShare)} of inserted 24h) / First-seen 1h: ${totalInserted1h.toLocaleString()}`,
       `Late-heavy: ${lateHeavyCountries.join(', ') || 'none'}`,
-      `Top publisher countries by published24h_core: ${topPublisherSummary || 'none'}`,
-      `Coverage hotspots by article country: ${coverageSummary || 'none'}`,
-      scopeLabel,
+      `Top publisher countries by core published 24h: ${topPublisherSummary || 'none'}`,
+      `Coverage hotspots by article country (core published 24h): ${coverageSummary || 'none'}`,
+      `Publisher-country rows with data: ${filteredRows.length}`,
       configuredScopeLabel,
       duplicateScopeLabel,
       unexpectedCountries.size > 0 ? `Unexpected: ${[...unexpectedCountries].join(', ')}` : '',
-      'Country semantics: rows rank publisher country (source_country -> atlas outlet country fallback -> article country); hotspots rank article country',
-      'Legend: row fields use P=published24h_extended, F=fresh24h if different, L=late24h (share), 1h=firstSeen1h',
+      'Country semantics: rows rank publisher country (source_country -> atlas outlet country fallback -> article country). Hotspots rank article country.',
+      'Row legend: Published = extended published24h (core + portal). Fresh appears only when different. Late share is measured against inserted 24h. 1h seen = first-seen 1h.',
       selectedRows.length > 0 ? '' : 'No records in news_articles.'
     ]
       .filter((line) => line.length > 0)
