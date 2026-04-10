@@ -28,7 +28,7 @@ import {
   ensureWorkerAuditsDir,
   filterItemsForPersistence,
   pickOutletChunk,
-  pickStableOutletBucketChunk,
+  pickStableOutletBucketChunkNoWrap,
   writeWorkerState,
   writeHybridBucketState,
   type BackfillWindow,
@@ -380,7 +380,7 @@ async function selectOutletsForRun(
     ? Math.max(0, Math.min(HYBRID_MAX_OUTLETS_PER_RUN - selectedHeadOutlets.length, reservedLongTailOutlets))
     : Math.max(0, HYBRID_MAX_OUTLETS_PER_RUN - selectedHeadOutlets.length);
   const longTailSelection = hasLongTailOutlets && remainingBudget > 0
-    ? pickStableOutletBucketChunk(
+    ? pickStableOutletBucketChunkNoWrap(
       longTailOutlets,
       longTailBucketCount,
       longTailBucket,
@@ -413,7 +413,7 @@ async function selectOutletsForRun(
     nextOffset: selectedLongTailNextOffset,
     selectionSummary: {
       mode: 'hybrid',
-      reason: '24h_volume_plus_4h_rotation',
+      reason: '24h_volume_plus_long_tail_sequential',
       dbBacked: true,
       headOutlets: selectedHeadOutlets.length,
       longTailOutlets: longTailOutlets.length,

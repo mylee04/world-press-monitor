@@ -143,6 +143,31 @@ export function pickStableOutletBucketChunk(
   return { selected, nextOffset, offset, total: bucketedOutlets.length };
 }
 
+export function pickStableOutletBucketChunkNoWrap(
+  all: OutletFeed[],
+  bucketCount: number,
+  bucketIndex: number,
+  chunkSize: number,
+  stateFile: string
+): { selected: OutletFeed[]; nextOffset: number; offset: number; total: number } {
+  const bucketedOutlets = pickStableOutletBucket(all, bucketCount, bucketIndex)
+    .slice()
+    .sort((left, right) => left.id.localeCompare(right.id));
+  if (bucketedOutlets.length === 0) {
+    return { selected: [], nextOffset: 0, offset: 0, total: 0 };
+  }
+
+  const state = readWorkerStateRaw(stateFile);
+  const bucketKey = buildHybridBucketKey(bucketCount, bucketIndex);
+  const rawOffset = state.hybridBucketOffsets?.[bucketKey]?.offset || 0;
+  const offset = rawOffset % bucketedOutlets.length;
+  const remainingInCycle = Math.max(0, bucketedOutlets.length - offset);
+  const normalizedChunkSize = Math.max(0, Math.min(remainingInCycle, Math.floor(chunkSize)));
+  const selected = Array.from({ length: normalizedChunkSize }, (_, index) => bucketedOutlets[offset + index]);
+  const nextOffset = offset + normalizedChunkSize === bucketedOutlets.length ? 0 : offset + normalizedChunkSize;
+  return { selected, nextOffset, offset, total: bucketedOutlets.length };
+}
+
 export function writeHybridBucketState(
   stateFile: string,
   bucketCount: number,
