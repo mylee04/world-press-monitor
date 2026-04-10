@@ -364,7 +364,8 @@ async function selectOutletsForRun(
 
   const headCandidates = rankedOutlets.filter((entry) => entry.articleCount >= HYBRID_HEAD_MIN_ARTICLES);
   const longTailOutlets = rankedOutlets.filter((entry) => entry.articleCount < HYBRID_HEAD_MIN_ARTICLES).map((entry) => entry.outlet);
-  const rotationBucket = Math.floor(nowMs / (60 * 60 * 1000)) % HYBRID_LONG_TAIL_ROTATION_HOURS;
+  const longTailBucketCount = 1;
+  const longTailBucket = 0;
   const hasLongTailOutlets = longTailOutlets.length > 0;
   const reservedLongTailOutlets = hasLongTailOutlets
     ? Math.min(HYBRID_MIN_LONG_TAIL_OUTLETS_PER_RUN, HYBRID_MAX_OUTLETS_PER_RUN)
@@ -375,12 +376,14 @@ async function selectOutletsForRun(
   const selectedHeadOutlets = headCandidates
     .slice(0, Math.min(HYBRID_HEAD_MAX_OUTLETS, headSelectionBudget))
     .map((entry) => entry.outlet);
-  const remainingBudget = Math.max(0, HYBRID_MAX_OUTLETS_PER_RUN - selectedHeadOutlets.length);
+  const remainingBudget = hasLongTailOutlets
+    ? Math.max(0, Math.min(HYBRID_MAX_OUTLETS_PER_RUN - selectedHeadOutlets.length, reservedLongTailOutlets))
+    : Math.max(0, HYBRID_MAX_OUTLETS_PER_RUN - selectedHeadOutlets.length);
   const longTailSelection = hasLongTailOutlets && remainingBudget > 0
     ? pickStableOutletBucketChunk(
       longTailOutlets,
-      HYBRID_LONG_TAIL_ROTATION_HOURS,
-      rotationBucket,
+      longTailBucketCount,
+      longTailBucket,
       remainingBudget,
       STATE_FILE
     )
@@ -418,8 +421,8 @@ async function selectOutletsForRun(
       headWindowHours: HYBRID_HEAD_WINDOW_HOURS,
       headMinArticles: HYBRID_HEAD_MIN_ARTICLES,
       headMaxOutlets: HYBRID_HEAD_MAX_OUTLETS,
-      rotationHours: HYBRID_LONG_TAIL_ROTATION_HOURS,
-      rotationBucket,
+      rotationHours: longTailBucketCount,
+      rotationBucket: longTailBucket,
       longTailBucketOffset: longTailSelection.offset,
       longTailBucketNextOffset: selectedLongTailNextOffset,
       longTailBucketSize: longTailSelection.total,
