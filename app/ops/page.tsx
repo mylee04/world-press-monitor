@@ -186,17 +186,20 @@ export default async function OpsPage() {
             <span className={styles.chip}>{summary?.dataSource || summary?.storage || 'unknown'}</span>
             <span className={styles.chip}><OpsLocalTimestamp value={summary?.generatedAt} /></span>
           </div>
+          <p className={styles.detailNote}>
+            Canonical rolling 24h totals from customer-visible <code>news_articles</code>.
+          </p>
           <div className={styles.statList}>
             <div className={styles.statRow}>
-              <span>Inserted 24h</span>
+              <span>Global inserted 24h</span>
               <strong>{formatInt(summary?.totals.inserted24h)}</strong>
             </div>
             <div className={styles.statRow}>
-              <span>Published 24h</span>
+              <span>Global published 24h</span>
               <strong>{formatInt(summary?.totals.published24h)}</strong>
             </div>
             <div className={styles.statRow}>
-              <span>Checked sources 24h</span>
+              <span>Worker-checked sources 24h</span>
               <strong>{formatSourceCount(summary?.totals.checkedSources24h, getAtlasSourceCount())}</strong>
             </div>
             <div className={styles.statRow}>
@@ -212,17 +215,20 @@ export default async function OpsPage() {
             <span className={styles.chip}>{benchmark?.dataSource || 'unknown'}</span>
             <span className={styles.chip}><OpsLocalTimestamp value={benchmark?.generatedAt} /></span>
           </div>
+          <p className={styles.detailNote}>
+            Country-ranked hourly snapshot totals. This is a benchmark lens, not the canonical product total.
+          </p>
           <div className={styles.statList}>
             <div className={styles.statRow}>
-              <span>Countries</span>
+              <span>Configured benchmark countries</span>
               <strong>{formatInt(benchmark?.totals?.countries)}</strong>
             </div>
             <div className={styles.statRow}>
-              <span>Hourly published 24h</span>
+              <span>Country-snapshot published 24h</span>
               <strong>{formatInt(benchmark?.totals?.hourlyPublished24h)}</strong>
             </div>
             <div className={styles.statRow}>
-              <span>Hourly inserted 24h</span>
+              <span>Country-snapshot inserted 24h</span>
               <strong>{formatInt(benchmark?.totals?.hourlyInserted24h)}</strong>
             </div>
           </div>
@@ -234,21 +240,24 @@ export default async function OpsPage() {
             <span className={styles.chip}>{mapCountries?.storage || 'unknown'}</span>
             <span className={styles.chip}><OpsLocalTimestamp value={mapCountries?.generatedAt} /></span>
           </div>
+          <p className={styles.detailNote}>
+            Direct-publisher map subset only. Portal-classified and off-map sources are excluded here.
+          </p>
           <div className={styles.statList}>
             <div className={styles.statRow}>
-              <span>Published 24h</span>
+              <span>Mapped direct-publisher published 24h</span>
               <strong>{formatInt(mapCountries?.totals?.pub24h)}</strong>
             </div>
             <div className={styles.statRow}>
-              <span>Active map sources 24h</span>
+              <span>Mapped active sources 24h</span>
               <strong>{formatInt(mapCountries?.totals?.activeSources24h)}</strong>
             </div>
             <div className={styles.statRow}>
-              <span>Active countries</span>
+              <span>Mapped active countries</span>
               <strong>{formatInt(mapCountries?.totals?.countries)}</strong>
             </div>
             <div className={styles.statRow}>
-              <span>Late share 24h</span>
+              <span>Mapped late share 24h</span>
               <strong>{formatPercent(mapCountries?.totals?.windows?.['24h']?.lateShare)}</strong>
             </div>
           </div>

@@ -135,6 +135,17 @@
   gap: 8px;
 }
 
+.detailNote {
+  margin: -2px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.detailNote code {
+  font-size: 0.84rem;
+}
+
 .chip {
   display: inline-flex;
   align-items: center;
