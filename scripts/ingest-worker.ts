@@ -105,7 +105,7 @@ const HYBRID_HEAD_MIN_ARTICLES = Math.max(
 );
 const HYBRID_HEAD_MAX_OUTLETS = Math.max(
   10,
-  Math.min(5000, Number.parseInt(process.env.INGEST_HEAD_MAX_OUTLETS || '800', 10) || 800)
+  Math.min(5000, Number.parseInt(process.env.INGEST_HEAD_MAX_OUTLETS || '2000', 10) || 2000)
 );
 const HYBRID_LONG_TAIL_ROTATION_HOURS = Math.max(
   2,
@@ -113,11 +113,11 @@ const HYBRID_LONG_TAIL_ROTATION_HOURS = Math.max(
 );
 const HYBRID_MAX_OUTLETS_PER_RUN = Math.max(
   100,
-  Math.min(5000, Number.parseInt(process.env.INGEST_HYBRID_MAX_OUTLETS || '900', 10) || 900)
+  Math.min(5000, Number.parseInt(process.env.INGEST_HYBRID_MAX_OUTLETS || '1500', 10) || 1500)
 );
 const HYBRID_MIN_LONG_TAIL_OUTLETS_PER_RUN = Math.max(
   0,
-  Math.min(2000, Number.parseInt(process.env.INGEST_HYBRID_MIN_LONG_TAIL_OUTLETS || '200', 10) || 200)
+  Math.min(2000, Number.parseInt(process.env.INGEST_HYBRID_MIN_LONG_TAIL_OUTLETS || '800', 10) || 800)
 );
 const ATLAS_PATH = process.env.ATLAS_PATH || resolve(process.cwd(), 'data/rss-atlas.json');
 const STATE_FILE = resolve(process.cwd(), 'audits/ingest-worker-state.json');
@@ -202,6 +202,7 @@ type AtlasFeed = {
   name: string;
   url: string | null;
   sitemapUrl?: string;
+  schedulingSource?: string;
   category?: string | null;
   tier?: number | null;
   language?: string | null;
@@ -357,31 +358,39 @@ async function selectOutletsForRun(
   const rankedOutlets = sourceFilteredOutlets
     .map((outlet) => ({
       outlet,
-      articleCount: recentCountByOutlet.get(buildSourceCountryKey(outlet.name, outlet.country)) || 0,
+      articleCount: recentCountByOutlet.get(buildSourceCountryKey(outlet.schedulingSource || outlet.name, outlet.country)) || 0,
     }))
     .sort(compareOutletByPriority);
 
   const headCandidates = rankedOutlets.filter((entry) => entry.articleCount >= HYBRID_HEAD_MIN_ARTICLES);
   const longTailOutlets = rankedOutlets.filter((entry) => entry.articleCount < HYBRID_HEAD_MIN_ARTICLES).map((entry) => entry.outlet);
   const rotationBucket = Math.floor(nowMs / (60 * 60 * 1000)) % HYBRID_LONG_TAIL_ROTATION_HOURS;
-  const longTailSelection = pickStableOutletBucketChunk(
-    longTailOutlets,
-    HYBRID_LONG_TAIL_ROTATION_HOURS,
-    rotationBucket,
-    HYBRID_MAX_OUTLETS_PER_RUN,
-    STATE_FILE
-  );
-  const reservedLongTailOutlets = Math.min(HYBRID_MIN_LONG_TAIL_OUTLETS_PER_RUN, HYBRID_MAX_OUTLETS_PER_RUN);
-  const headSelectionBudget = longTailSelection.total > 0
-    ? Math.max(0, HYBRID_MAX_OUTLETS_PER_RUN - Math.min(reservedLongTailOutlets, longTailSelection.total))
+  const hasLongTailOutlets = longTailOutlets.length > 0;
+  const reservedLongTailOutlets = hasLongTailOutlets
+    ? Math.min(HYBRID_MIN_LONG_TAIL_OUTLETS_PER_RUN, HYBRID_MAX_OUTLETS_PER_RUN)
+    : 0;
+  const headSelectionBudget = hasLongTailOutlets
+    ? Math.max(0, HYBRID_MAX_OUTLETS_PER_RUN - reservedLongTailOutlets)
     : HYBRID_MAX_OUTLETS_PER_RUN;
   const selectedHeadOutlets = headCandidates
     .slice(0, Math.min(HYBRID_HEAD_MAX_OUTLETS, headSelectionBudget))
     .map((entry) => entry.outlet);
   const remainingBudget = Math.max(0, HYBRID_MAX_OUTLETS_PER_RUN - selectedHeadOutlets.length);
-  const selectedLongTailOutlets = remainingBudget >= longTailSelection.selected.length
-    ? longTailSelection.selected
-    : longTailSelection.selected.slice(0, remainingBudget);
+  const longTailSelection = hasLongTailOutlets && remainingBudget > 0
+    ? pickStableOutletBucketChunk(
+      longTailOutlets,
+      HYBRID_LONG_TAIL_ROTATION_HOURS,
+      rotationBucket,
+      remainingBudget,
+      STATE_FILE
+    )
+    : {
+        selected: [],
+        nextOffset: 0,
+        offset: 0,
+        total: 0,
+      };
+  const selectedLongTailOutlets = longTailSelection.selected;
   const headOutletIds = new Set(selectedHeadOutlets.map((outlet) => outlet.id));
   const selectedOutletIds = new Set([
     ...headOutletIds,
@@ -475,6 +484,10 @@ function loadAtlasOutlets(): OutletFeed[] {
       })
         .map((feed) => ({
           name: feed.name || 'Unknown source',
+          schedulingSource:
+            typeof feed.schedulingSource === 'string' && feed.schedulingSource.trim().length > 0
+              ? feed.schedulingSource.trim()
+              : undefined,
           category: typeof feed.category === 'string' ? feed.category.trim() : undefined,
           tier: feed.tier,
           language: typeof feed.language === 'string' ? feed.language.trim() : undefined,
@@ -494,6 +507,7 @@ function loadAtlasOutlets(): OutletFeed[] {
           return {
             id: makeOutletId(countryName, feed.name, feed.rssUrl || feed.explicitSitemapUrl || feed.name),
             name: feed.name,
+            schedulingSource: feed.schedulingSource,
             tier: coerceOutletTier(feed.tier),
             section,
             categories: ['global'],
