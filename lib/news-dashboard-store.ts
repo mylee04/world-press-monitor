@@ -33,8 +33,8 @@ type NewsApiSummaryTotalsRow = {
   generated_at: string | null;
 };
 
-type NewsApiCheckedSourcesRow = {
-  checked_sources_24h: string;
+type NewsApiCheckedSourceNameRow = {
+  source: string;
 };
 
 type NewsApiSectionTotalRow = {
@@ -465,9 +465,9 @@ export async function readNewsDashboardSummaryWithDeps(
       `,
       [windowDays, latestHours, maxFutureMinutes, asOfIso]
     ),
-    db.query<NewsApiCheckedSourcesRow>(
+    db.query<NewsApiCheckedSourceNameRow>(
       `
-      select count(distinct coalesce(country, 'Global') || '|' || source)::text as checked_sources_24h
+      select distinct nullif(trim(source), '')::text as source
       from rss_health_status
       where ran_at >= $2::timestamptz - ($1::int * interval '1 hour')
         and runner = 'worker'
@@ -538,6 +538,14 @@ export async function readNewsDashboardSummaryWithDeps(
     readDashboardTopicGroupsForWindow(db, deps, windowDays, maxFutureMinutes, asOfIso),
     readDashboardSourceCategoryCoverageForWindow(db, deps, windowDays, maxFutureMinutes, asOfIso),
   ]);
+
+  const checkedSourceNames = checkedSourcesResult.rows
+    .map((row) => getSourceMeta(row.source))
+    .map((meta) => meta?.source)
+    .filter((source): source is string => Boolean(source))
+    .map((source) => buildDisplaySourceName(source).toLowerCase());
+
+  const checkedSources24h = new Set<string>(checkedSourceNames).size;
 
   const dateRow = dateResult.rows[0];
   const previewDate = dateRow?.preview_date || null;
@@ -641,7 +649,7 @@ export async function readNewsDashboardSummaryWithDeps(
       rowsWindow: Number(totalsResult.rows[0]?.rows_window || 0),
       inserted24h: Number(totalsResult.rows[0]?.inserted_24h || 0),
       published24h: Number(totalsResult.rows[0]?.published_24h || 0),
-      checkedSources24h: Number(checkedSourcesResult.rows[0]?.checked_sources_24h || 0),
+      checkedSources24h,
     },
     sectionTotals: Object.fromEntries(
       sectionTotalsResult.rows.reduce<Array<[NewsSection, number]>>((acc, row) => {

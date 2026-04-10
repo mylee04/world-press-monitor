@@ -8,6 +8,7 @@ import type { CountryBenchmarkResponse } from '@/lib/benchmark-types';
 import type { MapCountryMetricsResponse } from '@/lib/map-types';
 import type { NewsApiDashboardSummaryResponse } from '@/lib/news-api';
 import { isValidOpsSessionToken, OPS_LOGIN_PATH, OPS_SESSION_COOKIE } from '@/lib/ops-auth';
+import { buildDisplaySourceName } from '@/lib/source-display';
 import rssAtlas from '@/rss-atlas.json';
 
 type ApiHealthResponse = {
@@ -77,15 +78,21 @@ function formatPercent(value: number | null | undefined): string {
 }
 
 function getAtlasSourceCount(): number {
-  const atlas = rssAtlas as { countries?: Array<{ feeds?: Array<{ distributionClass?: string }> }> } | undefined;
+  const atlas = rssAtlas as { countries?: Array<{ feeds?: Array<{ name?: string; distributionClass?: string }> }> } | undefined;
   if (!atlas || !Array.isArray(atlas.countries)) {
     return 0;
   }
 
-  return atlas.countries.reduce((total, country) => {
+  const seen = new Set<string>();
+  for (const country of atlas.countries) {
     const feeds = Array.isArray(country?.feeds) ? country.feeds : [];
-    return total + feeds.length;
-  }, 0);
+    for (const feed of feeds) {
+      const name = (feed?.name || '').trim();
+      if (!name) continue;
+      seen.add(buildDisplaySourceName(name).toLowerCase());
+    }
+  }
+  return seen.size;
 }
 
 function formatSourceCount(count: number | undefined | null, total: number): string {
