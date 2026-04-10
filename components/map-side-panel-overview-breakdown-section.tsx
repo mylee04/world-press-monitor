@@ -44,21 +44,31 @@ type OverviewBreakdownSectionProps = {
 
 const SOURCE_COVERAGE_WARNING_THRESHOLD = 0.2;
 
-function isLowCoverage(configured: number, checked: number): boolean {
+function hasCoverageValue(value: number | null | undefined): value is number {
+  return typeof value === 'number' && Number.isFinite(value);
+}
+
+function formatCoverageValue(value: number | null | undefined): string {
+  return hasCoverageValue(value) ? formatNumber(value) : '-';
+}
+
+function isLowCoverage(configured: number | null | undefined, checked: number | null | undefined): boolean {
+  if (!hasCoverageValue(configured) || !hasCoverageValue(checked)) return false;
   return configured > 0 && checked / configured <= SOURCE_COVERAGE_WARNING_THRESHOLD;
 }
 
-function isSourceCoverageWarning(configured: number, checked: number): boolean {
+function isSourceCoverageWarning(configured: number | null | undefined, checked: number | null | undefined): boolean {
   return isLowCoverage(configured, checked);
 }
 
-function formatSourceCoverage(configured: number, checked: number): string {
-  if (configured <= 0) return '-';
+function formatSourceCoverage(configured: number | null | undefined, checked: number | null | undefined): string {
+  if (!hasCoverageValue(configured) || !hasCoverageValue(checked) || configured <= 0) return '-';
   return `${round((checked / configured) * 100, 1)}%`;
 }
 
-function formatCoverageStats(configured: number, checked: number): string {
-  if (configured <= 0) return '-';
+function formatCoverageStats(configured: number | null | undefined, checked: number | null | undefined): string {
+  if (!hasCoverageValue(configured) || configured <= 0) return 'Configured unavailable';
+  if (!hasCoverageValue(checked)) return `${formatNumber(configured)} configured · checked unavailable`;
   return `${formatNumber(checked)} of ${formatNumber(configured)} checked`;
 }
 
@@ -128,7 +138,7 @@ export function OverviewBreakdownSection({
               <div className="map-list-copy">
                 <strong>{item.country}</strong>
                 <span>
-                  {formatNumber(item.configuredSources24h)} configured · {formatNumber(item.checkedSources24h)} checked ·{' '}
+                  {formatCoverageValue(item.configuredSources24h)} configured · {formatCoverageValue(item.checkedSources24h)} checked ·{' '}
                   {formatNumber(item.activeSources24h)} active
                 </span>
                 <span>
