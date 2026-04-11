@@ -1608,9 +1608,7 @@ export function MapView() {
       : null,
     COUNTRY_SOURCES_REFRESH_MS,
     {
-      cacheMode: 'session',
-      staleMs: COUNTRY_SOURCES_CACHE_STALE_MS,
-      requestCache: 'force-cache',
+      cacheMode: 'none',
     }
   );
   const sourceDetailState = useRemoteJson<MapSourceDetailResponse>(
@@ -1619,9 +1617,7 @@ export function MapView() {
       : null,
     SOURCE_DETAIL_REFRESH_MS,
     {
-      cacheMode: 'session',
-      staleMs: SOURCE_DETAIL_CACHE_STALE_MS,
-      requestCache: 'force-cache',
+      cacheMode: 'none',
     }
   );
 

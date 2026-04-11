@@ -107,6 +107,38 @@ function formatBucketLabel(value: { bucket: string; label?: string | null } | nu
   return bucket;
 }
 
+function formatUtcCalendarDate(value: string | Date | null | undefined): string {
+  if (!value) return '-';
+  const date = value instanceof Date ? value : new Date(value);
+  if (Number.isNaN(date.getTime())) return '-';
+  try {
+    return new Intl.DateTimeFormat('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      timeZone: 'UTC',
+    }).format(date);
+  } catch {
+    return String(value);
+  }
+}
+
+function formatCompletedUtcDateRange(window: CountryBenchmarkWindow | null | undefined): string {
+  if (!window) return '-';
+  const start = new Date(window.windowStart);
+  const end = new Date(window.windowEnd);
+  if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) return '-';
+
+  const inclusiveEnd = new Date(end.getTime() - 24 * 60 * 60 * 1000);
+  if (inclusiveEnd.getTime() < start.getTime()) {
+    return formatUtcCalendarDate(start);
+  }
+
+  const startLabel = formatUtcCalendarDate(start);
+  const endLabel = formatUtcCalendarDate(inclusiveEnd);
+  return startLabel === endLabel ? startLabel : `${startLabel} to ${endLabel}`;
+}
+
 function formatDateTimeShort(value: string | null | undefined): string {
   return formatDateTime(value);
 }
@@ -358,17 +390,29 @@ export function BenchmarkView() {
         <article className="metric-card">
           <span><HelpTooltipLabel label="Daily (UTC)" description={BENCHMARK_COLUMN_HELP.benchmarkDailyBucket} /></span>
           <strong>{formatBucketLabel(benchmark.daily)}</strong>
-          <small>{benchmark.daily ? `${benchmark.totals.dailyPublishedCount.toLocaleString()} published` : 'No snapshot'}</small>
+          <small>
+            {benchmark.daily
+              ? `UTC day ${formatCompletedUtcDateRange(benchmark.daily)} · ${benchmark.totals.dailyPublishedCount.toLocaleString()} published`
+              : 'No snapshot'}
+          </small>
         </article>
         <article className="metric-card">
           <span>Week bucket</span>
           <strong>{formatBucketLabel(benchmark.weekly)}</strong>
-          <small>{benchmark.weekly ? `${benchmark.totals.weeklyPublishedCount.toLocaleString()} published` : 'No snapshot'}</small>
+          <small>
+            {benchmark.weekly
+              ? `UTC days ${formatCompletedUtcDateRange(benchmark.weekly)} · ${benchmark.totals.weeklyPublishedCount.toLocaleString()} published`
+              : 'No snapshot'}
+          </small>
         </article>
         <article className="metric-card">
           <span>Month bucket</span>
           <strong>{formatBucketLabel(benchmark.monthly)}</strong>
-          <small>{benchmark.monthly ? `${benchmark.totals.monthlyPublishedCount.toLocaleString()} published` : 'No snapshot'}</small>
+          <small>
+            {benchmark.monthly
+              ? `UTC days ${formatCompletedUtcDateRange(benchmark.monthly)} · ${benchmark.totals.monthlyPublishedCount.toLocaleString()} published`
+              : 'No snapshot'}
+          </small>
         </article>
         <article className="metric-card metric-card--generated">
           <span>Generated</span>
@@ -405,7 +449,11 @@ export function BenchmarkView() {
             <summary className="details-summary benchmark-bucket-summary">
               <div>
                 <div className="benchmark-bucket-title">Daily snapshot</div>
-                <div className="benchmark-bucket-copy">{formatBucketLabel(benchmark.daily)}</div>
+                <div className="benchmark-bucket-copy">
+                  {benchmark.daily
+                    ? `${formatBucketLabel(benchmark.daily)} · UTC day ${formatCompletedUtcDateRange(benchmark.daily)}`
+                    : formatBucketLabel(benchmark.daily)}
+                </div>
               </div>
               <span className="benchmark-bucket-toggle" aria-hidden="true" />
             </summary>
@@ -420,7 +468,11 @@ export function BenchmarkView() {
             <summary className="details-summary benchmark-bucket-summary">
               <div>
                 <div className="benchmark-bucket-title">Weekly snapshot</div>
-                <div className="benchmark-bucket-copy">{formatBucketLabel(benchmark.weekly)}</div>
+                <div className="benchmark-bucket-copy">
+                  {benchmark.weekly
+                    ? `${formatBucketLabel(benchmark.weekly)} · UTC days ${formatCompletedUtcDateRange(benchmark.weekly)}`
+                    : formatBucketLabel(benchmark.weekly)}
+                </div>
               </div>
               <span className="benchmark-bucket-toggle" aria-hidden="true" />
             </summary>
@@ -435,7 +487,11 @@ export function BenchmarkView() {
             <summary className="details-summary benchmark-bucket-summary">
               <div>
                 <div className="benchmark-bucket-title">Monthly snapshot</div>
-                <div className="benchmark-bucket-copy">{formatBucketLabel(benchmark.monthly)}</div>
+                <div className="benchmark-bucket-copy">
+                  {benchmark.monthly
+                    ? `${formatBucketLabel(benchmark.monthly)} · UTC days ${formatCompletedUtcDateRange(benchmark.monthly)}`
+                    : formatBucketLabel(benchmark.monthly)}
+                </div>
               </div>
               <span className="benchmark-bucket-toggle" aria-hidden="true" />
             </summary>

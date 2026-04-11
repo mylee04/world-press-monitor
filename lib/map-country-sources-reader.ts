@@ -2,10 +2,12 @@ import { inferGeoFromCountry } from '@/lib/geo';
 import {
   readDailyBenchmarkCountsForSource,
   readHourlyCountsForSource,
+  readCheckedSourcesByCountry,
   readLatestHealthBySource,
   readWindowedSourceMetrics,
   normalizeHealthStatus,
   type HealthSqlRow,
+  type IngestCheckedSourceSqlRow,
 } from '@/lib/map-store-db';
 import {
   buildAreaLabel,
@@ -21,7 +23,9 @@ import {
   classifySourceSitemapKind,
   getConfiguredDirectSourceEndpointBreakdownByCountry,
   getCountryCode,
+  getConfiguredDirectSourceCountByCountry,
   getSourceMeta,
+  isDirectPublisherSource,
   normalizeSourceKey,
   resolvePublisherCountryForSource,
 } from '@/lib/map-store-source-meta';
@@ -43,6 +47,7 @@ import type {
 type MapCountrySourcesBuildOptions = {
   metricRows?: SourceMetricWindowSqlRow[];
   healthBySource?: Map<string, HealthSqlRow>;
+  checkedRows?: IngestCheckedSourceSqlRow[];
 };
 
 function buildEmptyMapCountrySourcesPayload(
@@ -63,6 +68,8 @@ function buildEmptyMapCountrySourcesPayload(
     summary: {
       pub24h: 0,
       pub1h: 0,
+      configuredSources24h: 0,
+      checkedSources24h: 0,
       activeSources24h: 0,
       rssSources24h: 0,
       sitemapSources24h: 0,
@@ -93,6 +100,17 @@ export async function buildMapCountrySourcesPayload(
         ? Promise.resolve(options.healthBySource)
         : readLatestHealthBySource(),
     ]);
+    const checkedRows = options.checkedRows ?? await readCheckedSourcesByCountry(24);
+    const checkedSourceKeys = new Set<string>();
+    for (const row of checkedRows) {
+      const meta = getSourceMeta(row.source);
+      if (!isDirectPublisherSource(meta)) continue;
+      const sourceCountry = resolvePublisherCountryForSource(row.country, row.source);
+      if (sourceCountry !== country) continue;
+      const sourceKey = normalizeSourceKey(row.source);
+      if (!sourceKey) continue;
+      checkedSourceKeys.add(sourceKey);
+    }
     const bySource = new Map<string, MapSourceMetricRow>();
     const rawCoreSourceNames = new Set<string>();
 
@@ -200,6 +218,8 @@ export async function buildMapCountrySourcesPayload(
       summary: {
         pub24h: sourceRows.reduce((sum, row) => sum + row.pub24h, 0),
         pub1h: sourceRows.reduce((sum, row) => sum + row.pub1h, 0),
+        configuredSources24h: getConfiguredDirectSourceCountByCountry(country),
+        checkedSources24h: checkedSourceKeys.size,
         activeSources24h: sourceRows.length,
         rssSources24h: sourceRows.filter((row) => row.method === 'rss' || row.method === 'rss+sitemap').length,
         sitemapSources24h: sourceRows.filter((row) => row.method === 'sitemap' || row.method === 'rss+sitemap').length,

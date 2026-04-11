@@ -5,7 +5,7 @@ import path from 'node:path';
 import { buildMapCountryMetricsPayload } from '@/lib/map-country-metrics-builder';
 import { buildMapCountrySourcesPayload } from '@/lib/map-country-sources-reader';
 import { buildMapPublishersPayload } from '@/lib/map-publishers-builder';
-import { readLatestHealthBySource, readWindowedSourceMetrics } from '@/lib/map-store-db';
+import { readCheckedSourcesByCountry, readLatestHealthBySource, readWindowedSourceMetrics } from '@/lib/map-store-db';
 import {
   writeMapCountryMetricsSnapshot,
   writeMapCountrySourcesSnapshot,
@@ -54,18 +54,20 @@ async function main(): Promise<void> {
     console.log(`[map-snapshots] build start window=${window} metricVersion=${metricVersion}`);
 
     const sourceMetricsStartedAt = Date.now();
-    const [sourceMetricRows, healthBySource] = await Promise.all([
+    const [sourceMetricRows, healthBySource, checkedRows] = await Promise.all([
       readWindowedSourceMetrics(window, `coalesce(nullif(trim(source), ''), '') <> ''`),
       readLatestHealthBySource(),
+      readCheckedSourcesByCountry(24),
     ]);
     console.log(
-      `[map-snapshots] source metrics loaded window=${window} sourceRows=${sourceMetricRows.length} healthRows=${healthBySource.size} elapsedMs=${Date.now() - sourceMetricsStartedAt}`
+      `[map-snapshots] source metrics loaded window=${window} sourceRows=${sourceMetricRows.length} healthRows=${healthBySource.size} checkedRows=${checkedRows.length} elapsedMs=${Date.now() - sourceMetricsStartedAt}`
     );
 
     const countriesStartedAt = Date.now();
     const countries = await buildMapCountryMetricsPayload(window, {
       metricRows: sourceMetricRows,
       healthBySource,
+      checkedRows,
     });
     await writeMapCountryMetricsSnapshot(countries, metricVersion);
     await writeFile(getMapCountryMetricsSnapshotPath(window), JSON.stringify(countries));
@@ -80,6 +82,7 @@ async function main(): Promise<void> {
       const countrySources = await buildMapCountrySourcesPayload(country.country, window, {
         metricRows: sourceMetricRows,
         healthBySource,
+        checkedRows,
       });
       await writeMapCountrySourcesSnapshot(countrySources, metricVersion);
       countrySourcesSnapshot[country.country] = countrySources;
