@@ -158,6 +158,24 @@
   font-size: 0.82rem;
 }
 
+.chipLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(120, 199, 255, 0.12);
+  background: rgba(127, 227, 255, 0.08);
+  color: #d8f4ff;
+  font-size: 0.82rem;
+}
+
+.chipLink:hover,
+.tableLink:hover {
+  color: #ffffff;
+  text-decoration: none;
+}
+
 .statList {
   display: grid;
   gap: 10px;
@@ -361,6 +379,11 @@
 }
 
 .articleLink {
+  color: #e7f6ff;
+  font-weight: 650;
+}
+
+.tableLink {
   color: #e7f6ff;
   font-weight: 650;
 }

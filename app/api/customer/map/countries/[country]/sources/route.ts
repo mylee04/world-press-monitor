@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { readMapCountrySourcesFileSnapshot } from '@/lib/customer-map-snapshot-store';
 import { buildPublicSnapshotCacheHeaders, PUBLIC_MAP_RESPONSE_CACHE_CONTROL } from '@/lib/dashboard-cache-control';
 import { proxyPortalServerApiRequest, shouldUseLocalFallbackForPortalResponse } from '@/lib/customer-portal';
+import { sanitizeMapCountrySourcesForPublic } from '@/lib/map-public-payload';
 import { readMapCountrySources } from '@/lib/map-store';
 import type { MapCountrySourcesResponse } from '@/lib/map-types';
 import { normalizeMapMetricWindow } from '@/lib/map-store-windows';
@@ -42,21 +43,21 @@ export async function GET(request: NextRequest, context: { params: Promise<{ cou
     if (upstream.ok) {
       const payload = (await upstream.clone().json().catch(() => null)) as MapCountrySourcesResponse | null;
       if (hasCountrySourceData(payload)) {
-        return NextResponse.json(payload, {
+        return NextResponse.json(sanitizeMapCountrySourcesForPublic(payload), {
           status: 200,
           headers: buildPublicSnapshotCacheHeaders({ 'X-Data-Source': 'upstream' }),
         });
       }
 
       if (hasCountrySourceData(fileSnapshot)) {
-        return NextResponse.json(fileSnapshot, {
+        return NextResponse.json(sanitizeMapCountrySourcesForPublic(fileSnapshot), {
           status: 200,
           headers: buildPublicSnapshotCacheHeaders({ 'X-Data-Source': 'snapshot-file' }),
         });
       }
 
       if (hasCountrySourceData(localPayload)) {
-        return NextResponse.json(localPayload, {
+        return NextResponse.json(sanitizeMapCountrySourcesForPublic(localPayload), {
           status: 200,
           headers: buildPublicSnapshotCacheHeaders({ 'X-Data-Source': 'local-fallback' }),
         });
@@ -71,14 +72,14 @@ export async function GET(request: NextRequest, context: { params: Promise<{ cou
     }
 
     if (hasCountrySourceData(fileSnapshot)) {
-      return NextResponse.json(fileSnapshot, {
+      return NextResponse.json(sanitizeMapCountrySourcesForPublic(fileSnapshot), {
         status: 200,
         headers: buildPublicSnapshotCacheHeaders({ 'X-Data-Source': 'snapshot-file' }),
       });
     }
 
     if (hasCountrySourceData(localPayload)) {
-      return NextResponse.json(localPayload, {
+      return NextResponse.json(sanitizeMapCountrySourcesForPublic(localPayload), {
         status: 200,
         headers: buildPublicSnapshotCacheHeaders({ 'X-Data-Source': 'local-fallback' }),
       });

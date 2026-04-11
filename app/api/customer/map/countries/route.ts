@@ -6,6 +6,7 @@ import {
   normalizeMapCountryMetricsPayload,
 } from '@/lib/map-country-metrics-normalizer';
 import { proxyPortalServerApiRequest, shouldUseLocalFallbackForPortalResponse } from '@/lib/customer-portal';
+import { sanitizeMapCountryMetricsForPublic } from '@/lib/map-public-payload';
 import { readMapCountryMetrics } from '@/lib/map-store';
 import type { MapCountryMetricsResponse } from '@/lib/map-types';
 import { normalizeMapMetricWindow } from '@/lib/map-store-windows';
@@ -25,7 +26,7 @@ async function toCountryMetricsResponse(
     ? await normalizeMapCountryMetricsPayload(payload)
     : payload;
 
-  return NextResponse.json(normalizedPayload, {
+  return NextResponse.json(sanitizeMapCountryMetricsForPublic(normalizedPayload), {
     status: 200,
     headers: buildPublicSnapshotCacheHeaders({ 'X-Data-Source': source }),
   });

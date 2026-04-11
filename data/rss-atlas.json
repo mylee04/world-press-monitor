@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-03-16T18:51:10.652Z",
+  "generatedAt": "2026-04-11T04:22:46Z",
   "lastChecked": "2026-02-24T06:58:53.314Z",
   "countries": [
     {
@@ -6182,6 +6182,466 @@
           "url": "https://the-peak.ca/feed/",
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "SaltWire - Nova Scotia",
+          "url": "https://www.saltwire.com/category/nova-scotia/feed/",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "SaltWire - Newfoundland and Labrador",
+          "url": "https://www.saltwire.com/category/newfoundland-labrador/feed/",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "SaltWire - Prince Edward Island",
+          "url": "https://www.saltwire.com/category/prince-edward-island/feed/",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "APTN News",
+          "url": "https://www.aptnnews.ca/feed/",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Nunatsiaq News",
+          "url": "https://nunatsiaq.com/feed/",
+          "sitemapUrl": "https://nunatsiaq.com/news-sitemap.xml",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Brandon Sun",
+          "url": "https://www.brandonsun.com/feed/",
+          "sitemapUrl": "https://www.brandonsun.com/sitemap.xml",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "VOCM",
+          "url": "https://vocm.com/feed/",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Yukon News",
+          "url": "https://www.yukon-news.com/feed/",
+          "sitemapUrl": "https://www.yukon-news.com/sitemap.xml",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TBNewsWatch",
+          "url": "https://www.tbnewswatch.com/rss",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Cabin Radio",
+          "url": "https://cabinradio.ca/feed/",
+          "sitemapUrl": "https://cabinradio.ca/news-sitemap.xml",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "NNSL Media",
+          "url": "https://www.nnsl.com/feed/",
+          "sitemapUrl": "https://www.nnsl.com/sitemap-news.xml",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "NTV Newfoundland",
+          "url": "https://ntv.ca/feed/",
+          "sitemapUrl": "https://ntv.ca/sitemap_index.xml",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Lethbridge Herald",
+          "url": "https://lethbridgeherald.com/feed/",
+          "sitemapUrl": "https://lethbridgeherald.com/sitemap_index.xml",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Medicine Hat News",
+          "url": "https://medicinehatnews.com/feed/",
+          "sitemapUrl": "https://medicinehatnews.com/sitemap_index.xml",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "paNOW",
+          "url": "https://panow.com/feed/",
+          "sitemapUrl": "https://panow.com/sitemap.xml",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Battlefords NOW",
+          "url": "https://battlefordsnow.com/feed/",
+          "sitemapUrl": "https://battlefordsnow.com/sitemap.xml",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Moose Jaw Today",
+          "url": "https://www.moosejawtoday.com/rss",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "SaskToday.ca",
+          "url": "https://www.sasktoday.ca/rss",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "North Shore News",
+          "url": "https://www.nsnews.com/rss",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Richmond News",
+          "url": "https://www.richmond-news.com/rss",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Delta Optimist",
+          "url": "https://www.delta-optimist.com/rss",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Prince George Citizen",
+          "url": "https://www.princegeorgecitizen.com/rss",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Abbotsford News",
+          "url": "https://www.abbynews.com/feed/",
+          "sitemapUrl": "https://www.abbynews.com/sitemap-news.xml",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Agassiz-Harrison Observer",
+          "url": "https://www.agassizharrisonobserver.com/feed/",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Aldergrove Star",
+          "url": "https://www.aldergrovestar.com/feed/",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Campbell River Mirror",
+          "url": "https://www.campbellrivermirror.com/feed/",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Castlegar News",
+          "url": "https://www.castlegarnews.com/feed/",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Chilliwack Progress",
+          "url": "https://www.theprogress.com/feed/",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Comox Valley Record",
+          "url": "https://www.comoxvalleyrecord.com/feed/",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Cranbrook Townsman",
+          "url": "https://www.cranbrooktownsman.com/feed/",
+          "sitemapUrl": "https://www.cranbrooktownsman.com/sitemap-news.xml",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Maple Ridge News",
+          "url": "https://www.mapleridgenews.com/feed/",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Mission City Record",
+          "url": "https://www.missioncityrecord.com/feed/",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "North Delta Reporter",
+          "url": "https://www.northdeltareporter.com/feed/",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Penticton Western News",
+          "url": "https://www.pentictonwesternnews.com/feed/",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Quesnel Observer",
+          "url": "https://www.quesnelobserver.com/feed/",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Salmon Arm Observer",
+          "url": "https://www.saobserver.net/feed/",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Terrace Standard",
+          "url": "https://www.terracestandard.com/feed/",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Williams Lake Tribune",
+          "url": "https://www.wltribune.com/feed/",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Prince Rupert Northern View",
+          "url": "https://www.thenorthernview.com/feed/",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "SooToday",
+          "url": "https://www.sootoday.com/rss",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "BayToday",
+          "url": "https://www.baytoday.ca/rss",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Sudbury.com",
+          "url": "https://www.sudbury.com/rss",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "GuelphToday",
+          "url": "https://www.guelphtoday.com/rss",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "BarrieToday",
+          "url": "https://www.barrietoday.com/rss",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "OrilliaMatters",
+          "url": "https://www.orilliamatters.com/rss",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "ElliotLakeToday",
+          "url": "https://www.elliotlaketoday.com/rss",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "BradfordToday",
+          "url": "https://www.bradfordtoday.ca/rss",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CollingwoodToday",
+          "url": "https://www.collingwoodtoday.ca/rss",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "MidlandToday",
+          "url": "https://www.midlandtoday.ca/rss",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Vernon Morning Star",
+          "url": "https://www.vernonmorningstar.com/feed/",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Kelowna Capital News",
+          "url": "https://www.kelownacapnews.com/feed/",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Nanaimo News Bulletin",
+          "url": "https://www.nanaimobulletin.com/feed/",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Surrey Now-Leader",
+          "url": "https://www.surreynowleader.com/feed/",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Peace Arch News",
+          "url": "https://www.peacearchnews.com/feed/",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Langley Advance Times",
+          "url": "https://www.langleyadvancetimes.com/feed/",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Victoria News",
+          "url": "https://www.vicnews.com/feed/",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
           "valid": "valid"
         },
         {
@@ -22524,6 +22984,13 @@
           "url": "https://www.nyan.ax/feed/"
         },
         {
+          "name": "Alandstidningen",
+          "url": "https://www.alandstidningen.ax/rss/allt",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Vasabladet",
           "url": "https://www.vasabladet.fi/feed/"
         },
@@ -22578,6 +23045,76 @@
           "sitemapUrl": "https://www.satakunnankansa.fi/rss/custom/news-sitemap.xml"
         },
         {
+          "name": "Janakkalan Sanomat",
+          "sitemapUrl": "https://www.janakkalansanomat.fi/rss/custom/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Jamsan Seutu",
+          "sitemapUrl": "https://www.jamsanseutu.fi/rss/custom/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Kankaanpaan Seutu",
+          "sitemapUrl": "https://www.kankaanpaanseutu.fi/rss/custom/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Nokian Uutiset",
+          "sitemapUrl": "https://www.nokianuutiset.fi/rss/custom/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "KMV-lehti",
+          "sitemapUrl": "https://www.kmvlehti.fi/rss/custom/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Merikarvia-lehti",
+          "sitemapUrl": "https://www.merikarvialehti.fi/rss/custom/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Sydan-Satakunta",
+          "sitemapUrl": "https://www.sydansatakunta.fi/rss/custom/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Tyrvaan Sanomat",
+          "sitemapUrl": "https://www.tyrvaansanomat.fi/rss/custom/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Valkeakosken Sanomat",
+          "sitemapUrl": "https://www.valkeakoskensanomat.fi/rss/custom/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Rannikkoseutu",
+          "sitemapUrl": "https://www.rannikkoseutu.fi/rss/custom/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
           "name": "KSML",
           "url": "https://www.ksml.fi/feed/rss"
         },
@@ -22590,8 +23127,22 @@
           "url": "https://www.aamuposti.fi/feed/rss"
         },
         {
+          "name": "Vantaan Sanomat",
+          "url": "https://www.vantaansanomat.fi/feed/rss",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Keski-Uusimaa",
           "url": "https://www.keski-uusimaa.fi/feed/rss"
+        },
+        {
+          "name": "Lansivayla",
+          "url": "https://www.lansivayla.fi/feed/rss",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
         },
         {
           "name": "Lansi-Uusimaa",
@@ -22620,6 +23171,20 @@
         {
           "name": "Suur-Keuruu",
           "sitemapUrl": "https://www.suurkeuruu.fi/rss/custom/news-sitemap.xml"
+        },
+        {
+          "name": "Vastra Nyland",
+          "url": "https://www.vastranyland.fi/feed/",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Borgaabladet",
+          "url": "https://www.bbl.fi/feed/",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
         },
         {
           "name": "Ita-Savo",
@@ -22860,6 +23425,7 @@
         {
           "name": "Verkkouutiset",
           "url": "https://www.verkkouutiset.fi/feed/",
+          "sitemapUrl": "https://www.verkkouutiset.fi/news-sitemap.xml",
           "status": "NEW",
           "checkedDate": "03/16/2026",
           "valid": "valid",
@@ -23116,6 +23682,13 @@
           "checkedDate": "03/16/2026",
           "valid": "valid",
           "row": 203
+        },
+        {
+          "name": "Kansan Uutiset",
+          "url": "https://www.kansanuutiset.fi/feed/",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
         },
         {
           "name": "Kotimaa",

@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { buildPublicSnapshotCacheHeaders, PUBLIC_MAP_RESPONSE_CACHE_CONTROL } from '@/lib/dashboard-cache-control';
 import { proxyPortalServerApiRequest, shouldUseLocalFallbackForPortalResponse } from '@/lib/customer-portal';
+import { sanitizeMapSourceDetailForPublic } from '@/lib/map-public-payload';
 import { readMapSourceDetail } from '@/lib/map-store';
+import type { MapSourceDetailResponse } from '@/lib/map-types';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -25,6 +27,13 @@ export async function GET(request: NextRequest, context: { params: Promise<{ sou
       timeoutMs: MAP_SOURCE_DETAIL_UPSTREAM_TIMEOUT_MS,
     });
     if (upstream.ok) {
+      const payload = (await upstream.clone().json().catch(() => null)) as MapSourceDetailResponse | null;
+      if (payload) {
+        return NextResponse.json(sanitizeMapSourceDetailForPublic(payload), {
+          status: 200,
+          headers: buildPublicSnapshotCacheHeaders({ 'X-Data-Source': 'upstream' }),
+        });
+      }
       return upstream;
     }
 
@@ -34,7 +43,7 @@ export async function GET(request: NextRequest, context: { params: Promise<{ sou
     }
 
     if (localPayload) {
-      return NextResponse.json(localPayload, {
+      return NextResponse.json(sanitizeMapSourceDetailForPublic(localPayload), {
         status: 200,
         headers: buildPublicSnapshotCacheHeaders({ 'X-Data-Source': 'local-fallback' }),
       });
