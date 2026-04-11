@@ -56,6 +56,7 @@ import {
   type MapMode,
   type MapSearchResult,
 } from '@/lib/map-view-state';
+import { emptySourceEndpointBreakdown } from '@/lib/source-endpoint-classification';
 import type {
   MapCountryMetricRow,
   MapCountryMetricsResponse,
@@ -156,6 +157,8 @@ export function useMapViewModel() {
       lat: selectedSource.lat,
       lon: selectedSource.lon,
       method: selectedSource.method,
+      endpointProfile: selectedSource.endpointProfile || 'rss_only',
+      sitemapKind: selectedSource.sitemapKind || 'none',
       rssUrl: selectedSource.rssUrl,
       sitemapUrl: selectedSource.sitemapUrl,
       health: {
@@ -372,8 +375,10 @@ export function useMapViewModel() {
       activeSources24h: countryRow.activeSources24h,
       configuredSources24h: 0,
       checkedSources24h: 0,
+      configuredEndpointBreakdown: emptySourceEndpointBreakdown(),
       rssSources24h: 0,
       sitemapSources24h: 0,
+      endpointBreakdown24h: emptySourceEndpointBreakdown(),
       healthySources24h: countryRow.healthySources24h,
       degradedSources24h: countryRow.degradedSources24h,
       windows: {
@@ -386,6 +391,7 @@ export function useMapViewModel() {
           activeSources: countryRow.windows['1h'].activeSources,
           rssSources: 0,
           sitemapSources: 0,
+          endpointBreakdown: emptySourceEndpointBreakdown(),
           healthySources: countryRow.windows['1h'].healthySources,
           degradedSources: countryRow.windows['1h'].degradedSources,
         },
@@ -398,6 +404,7 @@ export function useMapViewModel() {
           activeSources: countryRow.windows['24h'].activeSources,
           rssSources: 0,
           sitemapSources: 0,
+          endpointBreakdown: emptySourceEndpointBreakdown(),
           healthySources: countryRow.windows['24h'].healthySources,
           degradedSources: countryRow.windows['24h'].degradedSources,
         },
@@ -410,6 +417,7 @@ export function useMapViewModel() {
           activeSources: countryRow.windows['7d'].activeSources,
           rssSources: 0,
           sitemapSources: 0,
+          endpointBreakdown: emptySourceEndpointBreakdown(),
           healthySources: countryRow.windows['7d'].healthySources,
           degradedSources: countryRow.windows['7d'].degradedSources,
         },

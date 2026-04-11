@@ -7,7 +7,9 @@ import {
 import { inferSourceCoordinate } from '@/lib/map-store-locations';
 import {
   buildMapSourceId,
+  classifySourceEndpoint,
   classifySourceMethod,
+  classifySourceSitemapKind,
   getSourceMeta,
   matchesDisplaySource,
   normalizeSourceKey,
@@ -38,6 +40,8 @@ export async function loadMapSourceDetail(sourceName: string): Promise<MapSource
     const rawSourceNames = [...new Set(matchingRows.map((row) => row.source))];
     const meta = getSourceMeta(normalizedSource);
     const method = classifySourceMethod(meta);
+    const endpointProfile = classifySourceEndpoint(meta);
+    const sitemapKind = classifySourceSitemapKind(meta);
     const healthRow = healthBySource.get(normalizeSourceKey(normalizedSource));
     const publisherInfo = resolvePublisherInfo(normalizedSource, country);
     const coord = inferSourceCoordinate(normalizedSource, country, {
@@ -73,6 +77,8 @@ export async function loadMapSourceDetail(sourceName: string): Promise<MapSource
       lat: coord.lat,
       lon: coord.lon,
       method,
+      endpointProfile,
+      sitemapKind,
       rssUrl: meta?.rssUrl || null,
       sitemapUrl: meta?.sitemapUrl || null,
       health: {

@@ -5,6 +5,11 @@ import type {
   MapPublisherCountryRow,
   MapPublisherMetricRow,
 } from '@/lib/map-types';
+import {
+  cloneSourceEndpointBreakdown,
+  emptySourceEndpointBreakdown,
+  type SourceEndpointBreakdown,
+} from '@/lib/source-endpoint-classification';
 
 export const MAP_WINDOWS: MapMetricWindow[] = ['1h', '24h', '7d'];
 export const DEFAULT_MAP_WINDOW: MapMetricWindow = '24h';
@@ -41,6 +46,7 @@ export type CountryWindowAccumulator = {
   activeSources: number;
   rssSources: number;
   sitemapSources: number;
+  endpointBreakdown: SourceEndpointBreakdown;
   healthySources: number;
   degradedSources: number;
 };
@@ -81,6 +87,7 @@ export function emptyCountryWindowAccumulator(): CountryWindowAccumulator {
     activeSources: 0,
     rssSources: 0,
     sitemapSources: 0,
+    endpointBreakdown: emptySourceEndpointBreakdown(),
     healthySources: 0,
     degradedSources: 0,
   };
@@ -144,6 +151,7 @@ export function toCountryWindowMetrics(value?: CountryWindowAccumulator): MapCou
     activeSources: current.activeSources,
     rssSources: current.rssSources,
     sitemapSources: current.sitemapSources,
+    endpointBreakdown: cloneSourceEndpointBreakdown(current.endpointBreakdown),
     healthySources: current.healthySources,
     degradedSources: current.degradedSources,
   };
@@ -200,6 +208,7 @@ export function buildCountryWindowsFromSqlRow(row: SourceMetricWindowSqlRow): Re
       activeSources: 0,
       rssSources: 0,
       sitemapSources: 0,
+      endpointBreakdown: emptySourceEndpointBreakdown(),
       healthySources: 0,
       degradedSources: 0,
     },
@@ -211,6 +220,7 @@ export function buildCountryWindowsFromSqlRow(row: SourceMetricWindowSqlRow): Re
       activeSources: 0,
       rssSources: 0,
       sitemapSources: 0,
+      endpointBreakdown: emptySourceEndpointBreakdown(),
       healthySources: 0,
       degradedSources: 0,
     },
@@ -222,6 +232,7 @@ export function buildCountryWindowsFromSqlRow(row: SourceMetricWindowSqlRow): Re
       activeSources: 0,
       rssSources: 0,
       sitemapSources: 0,
+      endpointBreakdown: emptySourceEndpointBreakdown(),
       healthySources: 0,
       degradedSources: 0,
     },

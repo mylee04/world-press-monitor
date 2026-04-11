@@ -8,8 +8,11 @@ import {
 } from '@/lib/map-store-db';
 import { rankTopCounts } from '@/lib/map-store-locations';
 import {
+  classifySourceEndpoint,
   getCountryCode,
   getConfiguredDirectSourceCountByCountry,
+  getConfiguredDirectSourceEndpointBreakdownByCountry,
+  getConfiguredDirectSourceEndpointBreakdownTotal,
   getSourceMeta,
   isDirectPublisherSource,
   normalizeSourceKey,
@@ -26,11 +29,18 @@ import {
 } from '@/lib/map-store-windows';
 import { resolvePublisherName } from '@/lib/publisher-groups';
 import { buildDisplaySourceName } from '@/lib/source-display';
+import {
+  addSourceEndpointProfile,
+  cloneSourceEndpointBreakdown,
+  emptySourceEndpointBreakdown,
+  mergeSourceEndpointBreakdown,
+} from '@/lib/source-endpoint-classification';
 import type {
   MapMetricWindow,
   MapCountryMetricsResponse,
   MapCountryMetricRow,
 } from '@/lib/map-types';
+import type { SourceEndpointProfile } from '@/lib/source-endpoint-classification';
 
 type MapCountryMetricsBuildOptions = {
   metricRows?: SourceMetricWindowSqlRow[];
@@ -68,6 +78,7 @@ export async function buildMapCountryMetricsPayload(
     windows: Record<MapMetricWindow, CountryWindowAccumulator>;
     hasRss: boolean;
     hasSitemap: boolean;
+    endpointProfile: SourceEndpointProfile;
     health: 'healthy' | 'warning' | 'degraded' | 'failing' | 'unknown';
   }>();
 
@@ -85,6 +96,7 @@ export async function buildMapCountryMetricsPayload(
       windows: buildCountryWindowsFromSqlRow(row),
       hasRss: Boolean(meta?.hasRss),
       hasSitemap: Boolean(meta?.hasSitemap),
+      endpointProfile: classifySourceEndpoint(meta),
       health,
     };
 
@@ -127,8 +139,10 @@ export async function buildMapCountryMetricsPayload(
       activeSources24h: 0,
       configuredSources24h: getConfiguredDirectSourceCountByCountry(country),
       checkedSources24h: checkedSourcesByCountry.get(country)?.size || 0,
+      configuredEndpointBreakdown: getConfiguredDirectSourceEndpointBreakdownByCountry(country),
       rssSources24h: 0,
       sitemapSources24h: 0,
+      endpointBreakdown24h: emptySourceEndpointBreakdown(),
       healthySources24h: 0,
       degradedSources24h: 0,
       windowsAcc: {
@@ -165,6 +179,7 @@ export async function buildMapCountryMetricsPayload(
         target.activeSources += 1;
         if (row.hasRss) target.rssSources += 1;
         if (row.hasSitemap) target.sitemapSources += 1;
+        addSourceEndpointProfile(target.endpointBreakdown, row.endpointProfile);
         if (row.health === 'healthy' || row.health === 'warning') {
           target.healthySources += 1;
         } else if (row.health !== 'unknown') {
@@ -176,6 +191,7 @@ export async function buildMapCountryMetricsPayload(
     current.activeSources24h = current.windowsAcc['24h'].activeSources;
     current.rssSources24h = current.windowsAcc['24h'].rssSources;
     current.sitemapSources24h = current.windowsAcc['24h'].sitemapSources;
+    current.endpointBreakdown24h = cloneSourceEndpointBreakdown(current.windowsAcc['24h'].endpointBreakdown);
     current.healthySources24h = current.windowsAcc['24h'].healthySources;
     current.degradedSources24h = current.windowsAcc['24h'].degradedSources;
 
@@ -199,8 +215,10 @@ export async function buildMapCountryMetricsPayload(
         activeSources24h: row.activeSources24h,
         configuredSources24h: row.configuredSources24h,
         checkedSources24h: row.checkedSources24h,
+        configuredEndpointBreakdown: cloneSourceEndpointBreakdown(row.configuredEndpointBreakdown),
         rssSources24h: row.rssSources24h,
         sitemapSources24h: row.sitemapSources24h,
+        endpointBreakdown24h: cloneSourceEndpointBreakdown(row.endpointBreakdown24h),
         healthySources24h: row.healthySources24h,
         degradedSources24h: row.degradedSources24h,
         windows,
@@ -227,6 +245,7 @@ export async function buildMapCountryMetricsPayload(
       target.activeSources += source.activeSources;
       target.rssSources += source.rssSources;
       target.sitemapSources += source.sitemapSources;
+      mergeSourceEndpointBreakdown(target.endpointBreakdown, source.endpointBreakdown);
       target.healthySources += source.healthySources;
       target.degradedSources += source.degradedSources;
     }
@@ -243,6 +262,7 @@ export async function buildMapCountryMetricsPayload(
       configuredSources24h: rows.reduce((sum, row) => sum + (row.configuredSources24h ?? 0), 0),
       checkedSources24h: rows.reduce((sum, row) => sum + (row.checkedSources24h ?? 0), 0),
       activeSources24h: rows.reduce((sum, row) => sum + row.activeSources24h, 0),
+      configuredEndpointBreakdown: getConfiguredDirectSourceEndpointBreakdownTotal(),
       windows: buildCountryWindowRecord(totalWindowsAcc),
     },
     countries: rows,

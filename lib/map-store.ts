@@ -16,6 +16,7 @@ import {
   type TimedCacheEntry,
   writeTimedCache,
 } from '@/lib/map-store-windows';
+import { emptySourceEndpointBreakdown } from '@/lib/source-endpoint-classification';
 import type {
   MapMetricWindow,
   MapCountryMetricsResponse,
@@ -77,6 +78,7 @@ function buildEmptyMapCountryMetricsPayload(window: MapMetricWindow): MapCountry
       configuredSources24h: 0,
       checkedSources24h: 0,
       activeSources24h: 0,
+      configuredEndpointBreakdown: emptySourceEndpointBreakdown(),
       windows: buildEmptyMapCountryWindows(),
     },
     countries: [],

@@ -17,8 +17,11 @@ import {
 } from '@/lib/map-store-locations';
 import {
   buildMapSourceId,
+  classifySourceEndpoint,
   classifySourceDistribution,
   classifySourceMethod,
+  classifySourceSitemapKind,
+  getConfiguredDirectSourceEndpointBreakdownByCountry,
   getCountryCode,
   getConfiguredDirectSourceCountByCountry,
   getSourceMeta,
@@ -30,6 +33,11 @@ import { readMapCountrySourcesSnapshot } from '@/lib/map-snapshot-store';
 import { MAP_WINDOWS, normalizeMapMetricWindow, type SourceMetricWindowSqlRow } from '@/lib/map-store-windows';
 import { resolvePublisherInfo } from '@/lib/publisher-groups';
 import { buildDisplaySourceName } from '@/lib/source-display';
+import {
+  addSourceEndpointProfile,
+  cloneSourceEndpointBreakdown,
+  emptySourceEndpointBreakdown,
+} from '@/lib/source-endpoint-classification';
 import type {
   MapMetricWindow,
   MapCountrySourcesResponse,
@@ -65,6 +73,8 @@ function buildEmptyMapCountrySourcesPayload(
       activeSources24h: 0,
       rssSources24h: 0,
       sitemapSources24h: 0,
+      configuredEndpointBreakdown: getConfiguredDirectSourceEndpointBreakdownByCountry(normalizedCountry),
+      endpointBreakdown24h: emptySourceEndpointBreakdown(),
     },
     topSources: [],
     topPublishers: [],
@@ -114,6 +124,8 @@ export async function buildMapCountrySourcesPayload(
       if (classifySourceDistribution(meta) === 'portal') continue;
       rawCoreSourceNames.add(row.source);
       const method = classifySourceMethod(meta);
+      const endpointProfile = classifySourceEndpoint(meta);
+      const sitemapKind = classifySourceSitemapKind(meta);
       const health = normalizeHealthStatus(healthBySource.get(normalizeSourceKey(row.source)));
       const windows = {
         '1h': {
@@ -174,6 +186,8 @@ export async function buildMapCountrySourcesPayload(
         firstSeen24h: windows['24h'].firstSeen,
         windows,
         method,
+        endpointProfile,
+        sitemapKind,
         health,
         rssUrl: meta?.rssUrl || null,
         sitemapUrl: meta?.sitemapUrl || null,
@@ -209,6 +223,11 @@ export async function buildMapCountrySourcesPayload(
         activeSources24h: sourceRows.length,
         rssSources24h: sourceRows.filter((row) => row.method === 'rss' || row.method === 'rss+sitemap').length,
         sitemapSources24h: sourceRows.filter((row) => row.method === 'sitemap' || row.method === 'rss+sitemap').length,
+        configuredEndpointBreakdown: getConfiguredDirectSourceEndpointBreakdownByCountry(country),
+        endpointBreakdown24h: sourceRows.reduce((acc, row) => {
+          addSourceEndpointProfile(acc, row.endpointProfile);
+          return acc;
+        }, emptySourceEndpointBreakdown()),
       },
       topSources: sourceRows.slice(0, 8).map((row) => ({ name: row.source, count: row.windows[selectedWindow].published })),
       topPublishers: rankTopCounts(

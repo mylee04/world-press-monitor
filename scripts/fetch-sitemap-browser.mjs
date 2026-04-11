@@ -16,9 +16,12 @@ function detectInterstitialState(payload) {
   if (!text) return 'none';
   if (isXmlPayload(text)) return 'xml';
   if (
+    text.includes('client challenge') ||
     text.includes('just a moment') ||
     text.includes('checking your browser') ||
     text.includes('verify you are human') ||
+    text.includes('javascript is disabled in your browser') ||
+    text.includes('a required part of this site couldn’t load') ||
     text.includes('cf-chl') ||
     text.includes('__cf_bm') ||
     text.includes('cloudflare')
@@ -85,6 +88,30 @@ async function waitForInterstitialToClear(page, timeoutMs) {
   return await readPagePayload(page);
 }
 
+async function launchBrowser(headless) {
+  try {
+    return await chromium.launch({ channel: 'chrome', headless });
+  } catch {
+    return await chromium.launch({ headless });
+  }
+}
+
+async function navigateForChallenge(page, targetUrl, timeoutMs) {
+  try {
+    const response = await page.goto(targetUrl, { waitUntil: 'domcontentloaded', timeout: 45000 });
+    await waitForInterstitialToClear(page, timeoutMs);
+    return response;
+  } catch (error) {
+    const target = new URL(targetUrl);
+    if (page.url() !== 'about:blank') {
+      throw error;
+    }
+    await page.goto(`${target.origin}/`, { waitUntil: 'domcontentloaded', timeout: 30000 });
+    await waitForInterstitialToClear(page, timeoutMs);
+    return null;
+  }
+}
+
 const url = process.argv[2];
 if (!url) {
   console.error('missing_url');
@@ -96,38 +123,22 @@ const interstitialTimeoutMs = Math.max(
   0,
   Number.parseInt(process.env.INGEST_BROWSER_SITEMAP_CHALLENGE_TIMEOUT_MS || '15000', 10) || 15000
 );
-const browser = await chromium.launch({
-  headless: !(headedEnv === '1' || headedEnv === 'true' || headedEnv === 'yes'),
-});
+const browser = await launchBrowser(!(headedEnv === '1' || headedEnv === 'true' || headedEnv === 'yes'));
 try {
   const context = await browser.newContext({
     userAgent:
       'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36',
+    viewport: { width: 1366, height: 900 },
   });
   const page = await context.newPage();
-  const target = new URL(url);
-
-  const ensureOriginContext = async () => {
-    await page.goto(`${target.origin}/`, { waitUntil: 'domcontentloaded', timeout: 30000 });
-    await waitForInterstitialToClear(page, interstitialTimeoutMs);
-  };
 
   if (url.toLowerCase().endsWith('.gz')) {
-    await ensureOriginContext();
+    await navigateForChallenge(page, new URL(url).origin, interstitialTimeoutMs);
     const fetched = await fetchBase64InPage(page, url);
     process.stdout.write(gunzipSync(Buffer.from(fetched.base64, 'base64')).toString('utf8'));
   } else {
-    await ensureOriginContext();
+    const response = await navigateForChallenge(page, url, interstitialTimeoutMs);
 
-    const initialFetch = await fetchTextInPage(page, url);
-    const normalizedPayload = normalizeXmlPayload(initialFetch.text);
-    if (isXmlPayload(normalizedPayload) && !normalizedPayload.includes('...')) {
-      process.stdout.write(normalizedPayload);
-      process.exit(0);
-    }
-
-    const response = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
-    await waitForInterstitialToClear(page, interstitialTimeoutMs);
     if (response) {
       const responseText = await response.text().catch(() => '');
       const normalizedResponseText = normalizeXmlPayload(responseText);
@@ -140,6 +151,13 @@ try {
     const bodyText = normalizeXmlPayload((await page.textContent('body')) || '');
     if (isXmlPayload(bodyText)) {
       process.stdout.write(bodyText);
+      process.exit(0);
+    }
+
+    const initialFetch = await fetchTextInPage(page, url);
+    const normalizedPayload = normalizeXmlPayload(initialFetch.text);
+    if (isXmlPayload(normalizedPayload) && !normalizedPayload.includes('...')) {
+      process.stdout.write(normalizedPayload);
       process.exit(0);
     }
 

@@ -162,7 +162,7 @@ const ENABLE_BROWSER_SITEMAP_FALLBACK = parseBoolEnv(process.env.INGEST_BROWSER_
 const BROWSER_SITEMAP_FALLBACK_DOMAINS = new Set(
   (
     process.env.INGEST_BROWSER_SITEMAP_DOMAINS ||
-    'www.ouest-france.fr,www.standaard.be,www.nieuwsblad.be,www.gva.be,www.hbvl.be,www.rtl.be,rtl.be,www.blick.ch,blick.ch,www.pna.gov.ph,pna.gov.ph,businessmirror.com.ph,www.malaya.com.ph,malaya.com.ph,manilastandard.net,www.manilastandard.net,news.abs-cbn.com'
+    'www.ouest-france.fr,www.standaard.be,www.nieuwsblad.be,www.gva.be,www.hbvl.be,www.rtl.be,rtl.be,www.blick.ch,blick.ch,www.pna.gov.ph,pna.gov.ph,businessmirror.com.ph,www.malaya.com.ph,malaya.com.ph,manilastandard.net,www.manilastandard.net,news.abs-cbn.com,www.startribune.com,www.miamiherald.com,www.kansascity.com,www.sacbee.com,www.charlotteobserver.com,www.newsobserver.com,www.star-telegram.com,www.fresnobee.com,www.idahostatesman.com,www.kentucky.com,www.thestate.com,www.thenewstribune.com,www.expressnews.com,www.timesunion.com,www.ctinsider.com,www.sfchronicle.com,www.sfgate.com,www.ctpost.com,www.nhregister.com,www.houstonchronicle.com'
   )
     .split(',')
     .map((value) => value.trim().toLowerCase())
@@ -2121,6 +2121,29 @@ async function fetchFeedWithFallback(url: string): Promise<FeedFetchResult> {
     };
   } catch (error) {
     const primaryMessage = error instanceof Error ? error.message : String(error);
+    if (shouldAttemptBrowserSitemapFallback(requestedUrl, null, '')) {
+      try {
+        const browserResponse = await fetchSitemapWithBrowser(requestedUrl);
+        const browserBody = await readResponseBody(browserResponse);
+        const browserFailure = describeFeedFailure(browserResponse, browserBody.body);
+        return {
+          requestedUrl,
+          finalUrl: browserResponse.url || requestedUrl,
+          contentType: normalizeResponseContentType(browserResponse),
+          responseMs: Date.now() - startMs,
+          sniffedType: inferResponseSniffType(browserResponse, browserBody.body),
+          shouldUseSitemapFallback: shouldRetryWithSitemap(browserResponse, browserBody.body),
+          response: browserResponse,
+          body: browserBody.body,
+          bodyLength: browserBody.bodyLength,
+          decodeFailed: browserBody.decodeFailed,
+          failureReason: browserFailure || undefined,
+          statusCode: browserResponse.status,
+        };
+      } catch {
+        // Keep the original network error details if browser loading also fails.
+      }
+    }
     return {
       requestedUrl,
       finalUrl: requestedUrl,
@@ -2145,15 +2168,27 @@ async function fetchWithRetryFeed(url: string, referrerUrl?: string): Promise<Re
   let redirects = 0;
 
   while (true) {
-    const response = await fetchWithRetry(currentUrl, {
-      timeoutMs: FETCH_TIMEOUT_MS,
-      fetchOptions: {
-        headers: buildFeedFetchHeaders(currentUrl, referrerUrl),
-        redirect: 'manual'
-      },
-      attempts: 1,
-      backoffMs: (attempt) => 200 + attempt * 300 + Math.floor(Math.random() * 200),
-    });
+    let response: Response;
+    try {
+      response = await fetchWithRetry(currentUrl, {
+        timeoutMs: FETCH_TIMEOUT_MS,
+        fetchOptions: {
+          headers: buildFeedFetchHeaders(currentUrl, referrerUrl),
+          redirect: 'manual'
+        },
+        attempts: 1,
+        backoffMs: (attempt) => 200 + attempt * 300 + Math.floor(Math.random() * 200),
+      });
+    } catch (error) {
+      if (shouldAttemptBrowserSitemapFallback(currentUrl, null, '')) {
+        try {
+          return await fetchSitemapWithBrowser(currentUrl);
+        } catch {
+          // Keep the original network error if browser loading also fails.
+        }
+      }
+      throw error;
+    }
 
     if (response.status >= 300 && response.status < 400) {
       const location = response.headers.get('location');

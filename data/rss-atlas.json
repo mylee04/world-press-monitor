@@ -534,7 +534,9 @@
         },
         {
           "name": "Las Vegas Review-Journal",
-          "url": "https://reviewjournal.com/feed",
+          "url": null,
+          "sitemapUrl": "https://www.reviewjournal.com/news_sitemap.xml",
+          "sourceType": "local",
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/18/2026",
           "valid": "needs verification",
@@ -674,6 +676,389 @@
           "sitemapUrl": "https://www.lansingstatejournal.com/news-sitemap.xml"
         },
         {
+          "name": "Miami Herald",
+          "url": null,
+          "sitemapUrl": "https://www.miamiherald.com/sitemap/story/update.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "Kansas City Star",
+          "url": null,
+          "sitemapUrl": "https://www.kansascity.com/sitemap/story/update.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "Sacramento Bee",
+          "url": null,
+          "sitemapUrl": "https://www.sacbee.com/sitemap/story/update.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "Charlotte Observer",
+          "url": null,
+          "sitemapUrl": "https://www.charlotteobserver.com/sitemap/story/update.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "News & Observer",
+          "url": null,
+          "sitemapUrl": "https://www.newsobserver.com/sitemap/story/update.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "Fort Worth Star-Telegram",
+          "url": null,
+          "sitemapUrl": "https://www.star-telegram.com/sitemap/story/update.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "Fresno Bee",
+          "url": null,
+          "sitemapUrl": "https://www.fresnobee.com/sitemap/story/update.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "Idaho Statesman",
+          "url": null,
+          "sitemapUrl": "https://www.idahostatesman.com/sitemap/story/update.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "Lexington Herald-Leader",
+          "url": null,
+          "sitemapUrl": "https://www.kentucky.com/sitemap/story/update.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "The State",
+          "url": null,
+          "sitemapUrl": "https://www.thestate.com/sitemap/story/update.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "AL.com",
+          "url": null,
+          "sitemapUrl": "https://www.al.com/arc/outboundfeeds/news-sitemap-index/?outputType=xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "NJ.com",
+          "url": null,
+          "sitemapUrl": "https://www.nj.com/arc/outboundfeeds/news-sitemap-index/?outputType=xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "Cleveland.com",
+          "url": null,
+          "sitemapUrl": "https://www.cleveland.com/arc/outboundfeeds/news-sitemap-index/?outputType=xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "MassLive",
+          "url": null,
+          "sitemapUrl": "https://www.masslive.com/arc/outboundfeeds/news-sitemap-index/?outputType=xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "PennLive",
+          "url": null,
+          "sitemapUrl": "https://www.pennlive.com/arc/outboundfeeds/news-sitemap-index/?outputType=xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "MLive",
+          "url": null,
+          "sitemapUrl": "https://www.mlive.com/arc/outboundfeeds/news-sitemap-index/?outputType=xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "SILive",
+          "url": null,
+          "sitemapUrl": "https://www.silive.com/arc/outboundfeeds/news-sitemap-index/?outputType=xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "LehighValleyLive",
+          "url": null,
+          "sitemapUrl": "https://www.lehighvalleylive.com/arc/outboundfeeds/news-sitemap-index/?outputType=xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "Syracuse.com",
+          "url": null,
+          "sitemapUrl": "https://www.syracuse.com/arc/outboundfeeds/news-sitemap-index/?outputType=xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "Atlanta Journal-Constitution",
+          "url": null,
+          "sitemapUrl": "https://feeds.ajc.com/arc/outboundfeeds/news-sitemap/?outputType=xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "Tampa Bay Times",
+          "url": null,
+          "sitemapUrl": "https://www.tampabay.com/arc/outboundfeeds/news-sitemap/?outputType=xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "St. Louis Post-Dispatch",
+          "url": "https://stltoday.com/search/?f=rss&t=article&l=50&s=start_time&sd=desc",
+          "sourceType": "local"
+        },
+        {
+          "name": "Star Tribune",
+          "url": null,
+          "sitemapUrl": "https://www.startribune.com/sitemap-fresh-news-index.xml/",
+          "sourceType": "local"
+        },
+        {
+          "name": "The Baltimore Banner",
+          "url": null,
+          "sitemapUrl": "https://www.thebanner.com/arc/outboundfeeds/sitemap-news/?outputType=xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "The Salt Lake Tribune",
+          "url": null,
+          "sitemapUrl": "https://www.sltrib.com/arc/outboundfeeds/sitemap/?outputType=xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "The Buffalo News",
+          "url": null,
+          "sitemapUrl": "https://buffalonews.com/tncms/sitemap/editorial.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "Boston Herald",
+          "url": null,
+          "sitemapUrl": "https://www.bostonherald.com/sitemap.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "Detroit News",
+          "url": null,
+          "sitemapUrl": "https://www.detroitnews.com/news-sitemap.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "NOLA.com",
+          "url": null,
+          "sitemapUrl": "https://www.nola.com/tncms/sitemap/editorial.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "The Advocate (Louisiana)",
+          "url": null,
+          "sitemapUrl": "https://www.theadvocate.com/tncms/sitemap/editorial.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "East Bay Times",
+          "url": null,
+          "sitemapUrl": "https://www.eastbaytimes.com/sitemap.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "Orange County Register",
+          "url": null,
+          "sitemapUrl": "https://www.ocregister.com/sitemap.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "Twin Cities",
+          "url": null,
+          "sitemapUrl": "https://www.twincities.com/sitemap.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "Sun Sentinel",
+          "url": null,
+          "sitemapUrl": "https://www.sun-sentinel.com/sitemap.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "Hartford Courant",
+          "url": null,
+          "sitemapUrl": "https://www.courant.com/sitemap.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "The Virginian-Pilot",
+          "url": null,
+          "sitemapUrl": "https://www.pilotonline.com/sitemap.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "Daily Press",
+          "url": null,
+          "sitemapUrl": "https://www.dailypress.com/sitemap.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "San Antonio Express-News",
+          "url": null,
+          "sitemapUrl": "https://www.expressnews.com/sitemap_news.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "Times Union",
+          "url": null,
+          "sitemapUrl": "https://www.timesunion.com/sitemap_news.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "CT Insider",
+          "url": null,
+          "sitemapUrl": "https://www.ctinsider.com/sitemap_news.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "CT Post",
+          "url": null,
+          "sitemapUrl": "https://www.ctpost.com/sitemap_news.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "New Haven Register",
+          "url": null,
+          "sitemapUrl": "https://www.nhregister.com/sitemap_news.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "SF Chronicle",
+          "url": null,
+          "sitemapUrl": "https://www.sfchronicle.com/sitemap_news.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "SFGATE",
+          "url": null,
+          "sitemapUrl": "https://www.sfgate.com/sitemap_news.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "Texas Tribune",
+          "url": null,
+          "sitemapUrl": "https://www.texastribune.org/news-sitemap.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "CalMatters",
+          "url": null,
+          "sitemapUrl": "https://calmatters.org/news-sitemap.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "Gothamist",
+          "url": null,
+          "sitemapUrl": "https://gothamist.com/sitemap-news.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "LAist",
+          "url": null,
+          "sitemapUrl": "https://laist.com/news-sitemap-content.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "WBEZ",
+          "url": null,
+          "sitemapUrl": "https://www.wbez.org/news-sitemap.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "NPR Illinois",
+          "url": null,
+          "sitemapUrl": "https://www.nprillinois.org/news-sitemap-content.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "ABC7 Chicago",
+          "url": null,
+          "sitemapUrl": "https://abc7chicago.com/sitemap/wls/stories.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "ABC7 Los Angeles",
+          "url": null,
+          "sitemapUrl": "https://abc7.com/sitemap/kabc/stories.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "Fox 5 New York",
+          "url": null,
+          "sitemapUrl": "https://www.fox5ny.com/sitemap.xml?type=fastchanging",
+          "sourceType": "local"
+        },
+        {
+          "name": "NBC New York",
+          "url": null,
+          "sitemapUrl": "https://www.nbcnewyork.com/sitemap-news.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "NBC Los Angeles",
+          "url": null,
+          "sitemapUrl": "https://www.nbclosangeles.com/sitemap-news.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "NBC Chicago",
+          "url": null,
+          "sitemapUrl": "https://www.nbcchicago.com/sitemap-news.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "WTOP",
+          "url": null,
+          "sitemapUrl": "https://wtop.com/wtop_sitemap_index.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "WSB-TV",
+          "url": null,
+          "sitemapUrl": "https://www.wsbtv.com/arc/outboundfeeds/news-sitemap-index?outputType=xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "KSAT",
+          "url": null,
+          "sitemapUrl": "https://www.ksat.com/arc/outboundfeeds/news-sitemap/?outputType=xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "Click2Houston",
+          "url": null,
+          "sitemapUrl": "https://www.click2houston.com/arc/outboundfeeds/news-sitemap/?outputType=xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "WSVN",
+          "url": null,
+          "sitemapUrl": "https://wsvn.com/news-sitemap.xml",
+          "sourceType": "local"
+        },
+        {
+          "name": "KHOU 11",
+          "url": null,
+          "sitemapUrl": "https://www.khou.com/feeds/googlenews",
+          "sourceType": "local"
+        },
+        {
+          "name": "WFAA",
+          "url": null,
+          "sitemapUrl": "https://www.wfaa.com/feeds/googlenews",
+          "sourceType": "local"
+        },
+        {
+          "name": "FOX 13 Seattle",
+          "url": null,
+          "sitemapUrl": "https://www.fox13seattle.com/sitemap.xml?type=fastchanging",
+          "sourceType": "local"
+        },
+        {
           "name": "Press Herald",
           "url": "https://www.pressherald.com/feed/"
         },
@@ -687,7 +1072,9 @@
         },
         {
           "name": "Honolulu Star-Advertiser",
-          "url": "https://staradvertiser.com/feed",
+          "url": null,
+          "sitemapUrl": "https://www.staradvertiser.com/sitemap-news.xml",
+          "sourceType": "local",
           "status": "⏩ OFFICIAL",
           "checkedDate": "02/18/2026",
           "valid": "needs verification",
