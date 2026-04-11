@@ -19,6 +19,10 @@ fi
 
 CRON_LINE="${CRON_MINUTE} * * * * TZ=${CRON_TZ} /bin/bash ${RUNNER} >> ${PROJECT_ROOT}/logs/news-country-discord-hourly.log 2>&1"
 
+deprecation_notice() {
+  echo "Deprecated: local macOS scheduling should use launchd via scripts/setup-launchd-local.sh or chained hooks from ingest-hourly. Keep this cron path only for legacy/manual hosts." >&2
+}
+
 usage() {
   cat <<'USAGE'
 Usage:
@@ -30,6 +34,10 @@ Commands:
   install   Add or refresh hourly country-count discord report cron job (at minute 30).
   uninstall Remove WPR news-country-discord cron job.
   print     Print crontab entry only.
+
+Deprecated:
+  Local macOS runtime should use `scripts/setup-launchd-local.sh` or the hourly ingest post-hooks.
+  This cron helper remains only for legacy/manual hosts.
 USAGE
 }
 
@@ -47,6 +55,7 @@ print_entry() {
 
 case "${1:-install}" in
   install)
+    deprecation_notice
     ensure_cron_available
     CURRENT="$(crontab -l 2>/dev/null || true)"
     CLEANED="$(echo "${CURRENT}" | awk -v m="${MARKER}" -v r="${RUNNER}" '$0 !~ m && index($0, r) == 0 {print}')"
@@ -59,6 +68,7 @@ case "${1:-install}" in
     ;;
 
   uninstall)
+    deprecation_notice
     ensure_cron_available
     CURRENT="$(crontab -l 2>/dev/null || true)"
     echo "${CURRENT}" |
@@ -68,6 +78,7 @@ case "${1:-install}" in
     ;;
 
   print)
+    deprecation_notice
     print_entry
     ;;
 

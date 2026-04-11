@@ -6,6 +6,56 @@
 
 ## Unreleased
 
+### [fd131e6] Add global RSS fastlane scheduling
+- Commit: fd131e60c93a759628f83ac63f3522caa36fef0c
+- Date: 2026-04-11 00:35:08 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	README.md
+    - M	lib/article-url-filters.ts
+    - A	lib/canada-network-groups.ts
+    - A	lib/canada-priority-outlets.ts
+    - A	lib/outlet-id.ts
+    - M	ops/launchd/com.wpr.api-runtime-watchdog.plist
+    - M	ops/launchd/com.wpr.ingest-hourly.plist
+    - A	ops/launchd/com.wpr.ingest-rss-fastlane-relaxed.plist
+    - A	ops/launchd/com.wpr.ingest-rss-fastlane-strict.plist
+    - M	package.json
+    - A	scripts/canada-candidate-priority.ts
+    - A	scripts/canada-priority-ingest.ts
+    - A	scripts/ingest-rss-fastlane.ts
+    - M	scripts/ingest-worker-summary.ts
+    - M	scripts/ingest-worker.ts
+    - A	scripts/run-ingest-rss-fastlane-local.sh
+    - M	scripts/setup-ingest-cron.sh
+    - M	scripts/setup-ingest-ops-cron.sh
+    - M	scripts/setup-launchd-local.sh
+    - M	scripts/setup-news-country-discord-cron.sh
+    - M	scripts/setup-rss-health-cron.sh
+  - Git stat:
+  - README.md                                          |  10 +
+  -  lib/article-url-filters.ts                         |  12 +
+  -  lib/canada-network-groups.ts                       |  67 ++
+  -  lib/canada-priority-outlets.ts                     |  73 ++
+  -  lib/outlet-id.ts                                   |  22 +
+  -  ops/launchd/com.wpr.api-runtime-watchdog.plist     |   2 +-
+  -  ops/launchd/com.wpr.ingest-hourly.plist            |   4 +-
+  -  .../com.wpr.ingest-rss-fastlane-relaxed.plist      |  29 +
+  -  .../com.wpr.ingest-rss-fastlane-strict.plist       |  35 +
+  -  package.json                                       |  11 +
+  -  scripts/canada-candidate-priority.ts               | 883 +++++++++++++++++++++
+  -  scripts/canada-priority-ingest.ts                  | 151 ++++
+  -  scripts/ingest-rss-fastlane.ts                     | 392 +++++++++
+  -  scripts/ingest-worker-summary.ts                   |   4 +-
+  -  scripts/ingest-worker.ts                           | 268 +++++--
+  -  scripts/run-ingest-rss-fastlane-local.sh           |  63 ++
+  -  scripts/setup-ingest-cron.sh                       |  11 +
+  -  scripts/setup-ingest-ops-cron.sh                   |  11 +
+  -  scripts/setup-launchd-local.sh                     |  81 +-
+  -  scripts/setup-news-country-discord-cron.sh         |  11 +
+  -  scripts/setup-rss-health-cron.sh                   |  11 +
+  -  21 files changed, 2089 insertions(+), 62 deletions(-)
+
 ### [c3fac86] Expand US source coverage and fix map endpoint typing
 - Commit: c3fac86560746435a3fbe318d5c1f644ced169ca
 - Date: 2026-04-11 00:05:50 -0500
