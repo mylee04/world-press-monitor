@@ -45,12 +45,22 @@ WPR_DATABASE_NAME=wpr
 WPM_DATABASE_NAME=wpr
 ```
 
+Local macOS scheduling should use `launchd`, not repo cron helpers.
+
+- primary scheduler: `bash scripts/setup-launchd-local.sh install`
+- legacy cron helpers in `scripts/setup-*-cron.sh` are deprecated for local macOS runtime
+- `bun run ingest:rss-fastlane` is the strict recurring fast-lane for the highest-risk RSS-only outlets
+- `bun run ingest:rss-fastlane:relaxed` is the wider recurring lane (`strict + one-miss`) with an outlet cap for safer scheduling
+- uncapped manual catch-up stays available only through direct CLI: `bun scripts/ingest-rss-fastlane.ts --mode=all`
+
 ## Useful Commands
 
 ```bash
 bun run web:dev
 bun run api:news:serve
 bun run ingest:once
+bun run ingest:rss-fastlane
+bun run ingest:rss-fastlane:relaxed
 bun run verify:readme-rss
 bun run rss:failure:watchlist
 ```

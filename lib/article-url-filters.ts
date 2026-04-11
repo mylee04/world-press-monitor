@@ -1,3 +1,5 @@
+import { isBlackPressHost, isVillageMediaHost } from './canada-network-groups';
+
 function safeParseUrl(url: string): URL | null {
   try {
     return new URL(url);
@@ -10,6 +12,8 @@ function trimTrailingSlashes(pathname: string): string {
   return pathname.replace(/\/+$/, '') || '/';
 }
 
+const VILLAGE_MEDIA_NON_ARTICLE_PATH_PATTERN = /^\/(?:classifieds|contests|events|flyers|newsletters?|obituaries|weather)(?:\/|$)/;
+const BLACK_PRESS_NON_ARTICLE_PATH_PATTERN = /^\/(?:classifieds|contests|crossword|e-edition|events|flyers|horoscope|obituaries|weather)(?:\/|$)/;
 const POLSKA_PRESS_REGIONAL_HOST_PATTERN =
   /(?:^|\.)(?:gazetakrakowska|dziennikzachodni|gazetawroclawska|gloswielkopolski|dziennikbaltycki|kurierlubelski|expressilustrowany|dzienniklodzki|echodnia|nowiny24|poranny)\.(?:pl|eu)$/;
 const POLSKA_PRESS_SOFT_CATEGORY_PATH_PATTERN = /\/ar\/c(?:6|7|8|9|11|13|14|17)-\d+/;
@@ -691,6 +695,14 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
       hostname.endsWith('thestate.com')) &&
     /^\/(?:sports|entertainment|living|opinion|charlottefive|miami-com|contributor-content|paid)(?:\/|$)/.test(pathname)
   ) {
+    return true;
+  }
+
+  if (isVillageMediaHost(hostname) && VILLAGE_MEDIA_NON_ARTICLE_PATH_PATTERN.test(pathname)) {
+    return true;
+  }
+
+  if (isBlackPressHost(hostname) && BLACK_PRESS_NON_ARTICLE_PATH_PATTERN.test(pathname)) {
     return true;
   }
 

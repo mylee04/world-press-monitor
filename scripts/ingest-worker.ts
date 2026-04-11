@@ -22,13 +22,16 @@ import { extractSourceCategoriesFromArticlePage } from '../lib/article-page-sect
 import { normalizeSourceCategories } from '../lib/article-taxonomy';
 import { classifySection, classifySectionByKeyword } from '../lib/keyword-classifier';
 import { inferGeoFromArticleSignals } from '../lib/geo';
+import { getCanadaSyndicationNetworkByUrl, type CanadaSyndicationNetwork } from '../lib/canada-network-groups';
+import { isCanadaPriorityOutlet } from '../lib/canada-priority-outlets';
+import { makeOutletId } from '../lib/outlet-id';
 import { buildFeedStableId } from '../lib/pipeline';
 import {
   buildMethodStats,
   ensureWorkerAuditsDir,
   filterItemsForPersistence,
   pickOutletChunk,
-  pickStableOutletBucketChunkNoWrap,
+  pickStableOutletBucketChunk,
   writeWorkerState,
   writeHybridBucketState,
   type BackfillWindow,
@@ -113,12 +116,13 @@ const HYBRID_LONG_TAIL_ROTATION_HOURS = Math.max(
 );
 const HYBRID_MAX_OUTLETS_PER_RUN = Math.max(
   100,
-  Math.min(5000, Number.parseInt(process.env.INGEST_HYBRID_MAX_OUTLETS || '1500', 10) || 1500)
+  Math.min(5000, Number.parseInt(process.env.INGEST_HYBRID_MAX_OUTLETS || '2000', 10) || 2000)
 );
 const HYBRID_MIN_LONG_TAIL_OUTLETS_PER_RUN = Math.max(
   0,
   Math.min(2000, Number.parseInt(process.env.INGEST_HYBRID_MIN_LONG_TAIL_OUTLETS || '900', 10) || 900)
 );
+const ENABLE_CANADA_PRIORITY_PINNING = parseBoolEnv(process.env.INGEST_ENABLE_CANADA_PRIORITY_PINNING, true);
 const ATLAS_PATH = process.env.ATLAS_PATH || resolve(process.cwd(), 'data/rss-atlas.json');
 const STATE_FILE = resolve(process.cwd(), 'audits/ingest-worker-state.json');
 const SUMMARY_FILE = resolve(process.cwd(), 'audits/ingest-worker-last.json');
@@ -197,6 +201,9 @@ const LATAM_ENTITY_TERMS = [
   'america latina',
 ];
 const BREAKING_TERMS = ['breaking', 'urgent', 'developing', 'just in', 'ultima hora', 'última hora', 'urgente', 'en vivo', 'flash'];
+const CANADA_NETWORK_TITLE_DEDUPE_WINDOW_MS = 36 * 60 * 60 * 1000;
+const CANADA_NETWORK_TITLE_MIN_LENGTH = 32;
+const CANADA_NETWORK_TITLE_MIN_TOKENS = 5;
 
 type AtlasFeed = {
   name: string;
@@ -267,6 +274,8 @@ type OutletSelectionSummary = {
   mode: 'all' | 'chunk' | 'hybrid';
   reason: string;
   dbBacked: boolean;
+  pinnedOutlets: number;
+  pinnedReason: string | null;
   headOutlets: number;
   longTailOutlets: number;
   longTailSelected: number;
@@ -310,6 +319,8 @@ async function selectOutletsForRun(
     mode: defaultMode,
     reason: defaultMode === 'all' ? 'full_scan' : 'stateful_chunk',
     dbBacked: false,
+    pinnedOutlets: 0,
+    pinnedReason: null,
     headOutlets: 0,
     longTailOutlets: sourceFilteredOutlets.length,
     longTailSelected: defaultSelection.selected.length,
@@ -331,10 +342,20 @@ async function selectOutletsForRun(
     && !BACKFILL_WINDOW
     && !COUNTRY_FILTER
     && !SOURCE_FILTER
+    && !OUTLET_ID_FILTER
     && defaultMode === 'all';
   if (!shouldApplyHybrid) {
     return { ...defaultSelection, selectionSummary: defaultSummary };
   }
+
+  const pinnedOutlets = ENABLE_CANADA_PRIORITY_PINNING
+    ? sourceFilteredOutlets.filter((outlet) => isCanadaPriorityOutlet(outlet))
+    : [];
+  const pinnedOutletIds = new Set(pinnedOutlets.map((outlet) => outlet.id));
+  const hybridCandidateOutlets = pinnedOutlets.length > 0
+    ? sourceFilteredOutlets.filter((outlet) => !pinnedOutletIds.has(outlet.id))
+    : sourceFilteredOutlets;
+  const schedulingBudget = Math.max(0, HYBRID_MAX_OUTLETS_PER_RUN - pinnedOutlets.length);
 
   const recentCounts = await readNewsArticlesRecentCounts({
     hours: HYBRID_HEAD_WINDOW_HOURS,
@@ -355,7 +376,7 @@ async function selectOutletsForRun(
     recentCountByOutlet.set(buildSourceCountryKey(row.source, row.country), row.articleCount);
   }
 
-  const rankedOutlets = sourceFilteredOutlets
+  const rankedOutlets = hybridCandidateOutlets
     .map((outlet) => ({
       outlet,
       articleCount: recentCountByOutlet.get(buildSourceCountryKey(outlet.schedulingSource || outlet.name, outlet.country)) || 0,
@@ -364,41 +385,39 @@ async function selectOutletsForRun(
 
   const headCandidates = rankedOutlets.filter((entry) => entry.articleCount >= HYBRID_HEAD_MIN_ARTICLES);
   const longTailOutlets = rankedOutlets.filter((entry) => entry.articleCount < HYBRID_HEAD_MIN_ARTICLES).map((entry) => entry.outlet);
-  const longTailBucketCount = 1;
-  const longTailBucket = 0;
-  const hasLongTailOutlets = longTailOutlets.length > 0;
-  const reservedLongTailOutlets = hasLongTailOutlets
-    ? Math.min(HYBRID_MIN_LONG_TAIL_OUTLETS_PER_RUN, HYBRID_MAX_OUTLETS_PER_RUN)
-    : 0;
-  const selectedHeadOutlets = headCandidates.map((entry) => entry.outlet);
-  const remainingBudget = hasLongTailOutlets ? reservedLongTailOutlets : 0;
-  const longTailSelection = hasLongTailOutlets && remainingBudget > 0
-    ? pickStableOutletBucketChunkNoWrap(
-      longTailOutlets,
-      longTailBucketCount,
-      longTailBucket,
-      remainingBudget,
-      STATE_FILE
-    )
-    : {
-        selected: [],
-        nextOffset: 0,
-        offset: 0,
-        total: 0,
-      };
+  const rotationBucket = Math.floor(nowMs / (60 * 60 * 1000)) % HYBRID_LONG_TAIL_ROTATION_HOURS;
+  const longTailSelection = pickStableOutletBucketChunk(
+    longTailOutlets,
+    HYBRID_LONG_TAIL_ROTATION_HOURS,
+    rotationBucket,
+    schedulingBudget,
+    STATE_FILE
+  );
+  const reservedLongTailOutlets = Math.min(HYBRID_MIN_LONG_TAIL_OUTLETS_PER_RUN, schedulingBudget);
+  const headSelectionBudget = longTailSelection.total > 0
+    ? Math.max(0, schedulingBudget - Math.min(reservedLongTailOutlets, longTailSelection.total))
+    : schedulingBudget;
+  const selectedHeadOutlets = headCandidates
+    .slice(0, Math.min(HYBRID_HEAD_MAX_OUTLETS, headSelectionBudget))
+    .map((entry) => entry.outlet);
+  const remainingBudget = Math.max(0, schedulingBudget - selectedHeadOutlets.length);
   const selectedLongTailOutlets = longTailSelection.selected;
+  const boundedLongTailOutlets = remainingBudget >= selectedLongTailOutlets.length
+    ? selectedLongTailOutlets
+    : selectedLongTailOutlets.slice(0, remainingBudget);
   const headOutletIds = new Set(selectedHeadOutlets.map((outlet) => outlet.id));
   const selectedOutletIds = new Set([
+    ...pinnedOutletIds,
     ...headOutletIds,
-    ...selectedLongTailOutlets.map((outlet) => outlet.id),
+    ...boundedLongTailOutlets.map((outlet) => outlet.id),
   ]);
   const selected = sourceFilteredOutlets.filter((outlet) => selectedOutletIds.has(outlet.id));
   const selectedLongTailNextOffset =
     longTailSelection.total === 0
       ? 0
-      : (longTailSelection.offset + selectedLongTailOutlets.length) % longTailSelection.total;
+      : (longTailSelection.offset + boundedLongTailOutlets.length) % longTailSelection.total;
   const budgetCapped = selectedHeadOutlets.length < Math.min(headCandidates.length, HYBRID_HEAD_MAX_OUTLETS)
-    || selectedLongTailOutlets.length < longTailSelection.total;
+    || boundedLongTailOutlets.length < longTailSelection.total;
 
   return {
     selected,
@@ -406,22 +425,24 @@ async function selectOutletsForRun(
     nextOffset: selectedLongTailNextOffset,
     selectionSummary: {
       mode: 'hybrid',
-      reason: '24h_volume_plus_long_tail_sequential',
+      reason: pinnedOutlets.length > 0 ? '24h_volume_plus_4h_rotation_with_canada_priority' : '24h_volume_plus_4h_rotation',
       dbBacked: true,
+      pinnedOutlets: pinnedOutlets.length,
+      pinnedReason: pinnedOutlets.length > 0 ? 'canada_priority_every_run' : null,
       headOutlets: selectedHeadOutlets.length,
       longTailOutlets: longTailOutlets.length,
-      longTailSelected: selectedLongTailOutlets.length,
+      longTailSelected: boundedLongTailOutlets.length,
       headWindowHours: HYBRID_HEAD_WINDOW_HOURS,
       headMinArticles: HYBRID_HEAD_MIN_ARTICLES,
       headMaxOutlets: HYBRID_HEAD_MAX_OUTLETS,
-      rotationHours: longTailBucketCount,
-      rotationBucket: longTailBucket,
+      rotationHours: HYBRID_LONG_TAIL_ROTATION_HOURS,
+      rotationBucket,
       longTailBucketOffset: longTailSelection.offset,
       longTailBucketNextOffset: selectedLongTailNextOffset,
       longTailBucketSize: longTailSelection.total,
       maxOutletsPerRun: HYBRID_MAX_OUTLETS_PER_RUN,
       reservedLongTailOutlets,
-      budgetCapped,
+      budgetCapped: budgetCapped || pinnedOutlets.length > HYBRID_MAX_OUTLETS_PER_RUN,
     },
   };
 }
@@ -429,20 +450,6 @@ async function selectOutletsForRun(
 function parsePublishedAtMs(value: string): number | null {
   const ms = new Date(value).getTime();
   return Number.isFinite(ms) ? ms : null;
-}
-
-function makeOutletId(countryName: string, sourceName: string, feedUrl: string): string {
-  const safe = normalizeText(`${countryName} ${sourceName}`)
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-    .replace(/-+/g, '-')
-    .slice(0, 120);
-  let hash = 2166136261;
-  for (let i = 0; i < feedUrl.length; i += 1) {
-    hash ^= feedUrl.charCodeAt(i);
-    hash = Math.imul(hash, 16777619);
-  }
-  return `${safe || 'source'}-${(hash >>> 0).toString(36)}`;
 }
 
 function coerceOutletTier(value: number | null | undefined): OutletTier {
@@ -855,6 +862,11 @@ type SourceFilter = {
   normalized: Set<string>;
 };
 
+type OutletIdFilter = {
+  display: string[];
+  normalized: Set<string>;
+};
+
 type MethodFilter = {
   display: EndpointMethod[];
   allowed: Set<EndpointMethod>;
@@ -963,6 +975,58 @@ function sourceMatchesFilter(source: string | undefined, filter: SourceFilter | 
 }
 
 const SOURCE_FILTER = parseSourceFilter(process.argv.slice(2), process.env.INGEST_SOURCES);
+
+function parseOutletIdFilter(argv: string[], envValue: string | undefined): OutletIdFilter | null {
+  const values: string[] = [];
+
+  const pushCsv = (raw: string | undefined): void => {
+    if (!raw) return;
+    raw
+      .split(',')
+      .map((part) => part.trim())
+      .filter((part) => part.length > 0)
+      .forEach((part) => values.push(part));
+  };
+
+  pushCsv(envValue);
+  pushCsv(process.env.INGEST_OUTLET_ID);
+  for (let i = 0; i < argv.length; i += 1) {
+    const token = argv[i];
+    if (token.startsWith('--outlet-ids=')) {
+      pushCsv(token.slice('--outlet-ids='.length));
+      continue;
+    }
+    if (token === '--outlet-ids') {
+      pushCsv(argv[i + 1]);
+      i += 1;
+      continue;
+    }
+    if (token.startsWith('--outlet-id=')) {
+      pushCsv(token.slice('--outlet-id='.length));
+      continue;
+    }
+    if (token === '--outlet-id') {
+      pushCsv(argv[i + 1]);
+      i += 1;
+      continue;
+    }
+  }
+
+  if (values.length === 0) return null;
+  const dedupedDisplay = [...new Set(values.map((value) => value.trim()).filter((value) => value.length > 0))];
+  if (dedupedDisplay.length === 0) return null;
+  return {
+    display: dedupedDisplay,
+    normalized: new Set(dedupedDisplay.map((value) => normalizeText(value))),
+  };
+}
+
+function outletIdMatchesFilter(outletId: string | undefined, filter: OutletIdFilter | null): boolean {
+  if (!filter) return true;
+  return filter.normalized.has(normalizeText(outletId || ''));
+}
+
+const OUTLET_ID_FILTER = parseOutletIdFilter(process.argv.slice(2), process.env.INGEST_OUTLET_IDS);
 
 function parseMethodFilter(argv: string[], envValue: string | undefined): MethodFilter | null {
   const values: string[] = [];
@@ -1146,6 +1210,102 @@ function mergeNewsItems(current: NewsItem, incoming: NewsItem): NewsItem {
     titleRepairAttemptedAt: preferred.titleRepairAttemptedAt || secondary.titleRepairAttemptedAt,
     titleRepairedAt: preferred.titleRepairedAt || secondary.titleRepairedAt,
   };
+}
+
+type CanadaNetworkCluster = {
+  network: CanadaSyndicationNetwork;
+  titleFingerprint: string;
+  item: NewsItem;
+  publishedAtMs: number;
+  size: number;
+};
+
+function buildCanadaNetworkClusterId(network: CanadaSyndicationNetwork, titleFingerprint: string): string {
+  const seed = `${network}:${titleFingerprint}`;
+  let hash = 2166136261;
+  for (let index = 0; index < seed.length; index += 1) {
+    hash ^= seed.charCodeAt(index);
+    hash = Math.imul(hash, 16777619);
+  }
+  return `${network}-${(hash >>> 0).toString(36)}`;
+}
+
+function buildCanadaNetworkTitleFingerprint(item: NewsItem): {
+  network: CanadaSyndicationNetwork;
+  titleFingerprint: string;
+  publishedAtMs: number;
+} | null {
+  const network = getCanadaSyndicationNetworkByUrl(item.link || '');
+  if (!network) return null;
+
+  const publishedAtMs = parsePublishedAtMs(item.publishedAt);
+  if (publishedAtMs === null) return null;
+
+  const titleFingerprint = normalizeDedupeText(item.title || '');
+  if (titleFingerprint.length < CANADA_NETWORK_TITLE_MIN_LENGTH) return null;
+
+  const meaningfulTokens = titleFingerprint.split(' ').filter((token) => token.length >= 3);
+  if (meaningfulTokens.length < CANADA_NETWORK_TITLE_MIN_TOKENS) return null;
+
+  return {
+    network,
+    titleFingerprint,
+    publishedAtMs,
+  };
+}
+
+function collapseCanadaNetworkDuplicates(items: NewsItem[]): NewsItem[] {
+  const passthrough: NewsItem[] = [];
+  const clustersByKey = new Map<string, CanadaNetworkCluster[]>();
+  const sorted = [...items].sort((left, right) => {
+    const leftMs = parsePublishedAtMs(left.publishedAt) ?? 0;
+    const rightMs = parsePublishedAtMs(right.publishedAt) ?? 0;
+    return rightMs - leftMs;
+  });
+
+  for (const item of sorted) {
+    const fingerprint = buildCanadaNetworkTitleFingerprint(item);
+    if (!fingerprint) {
+      passthrough.push(item);
+      continue;
+    }
+
+    const clusterKey = `${fingerprint.network}:${fingerprint.titleFingerprint}`;
+    const clusters = clustersByKey.get(clusterKey) || [];
+    const matchedCluster = clusters.find(
+      (cluster) => Math.abs(cluster.publishedAtMs - fingerprint.publishedAtMs) <= CANADA_NETWORK_TITLE_DEDUPE_WINDOW_MS
+    );
+
+    if (!matchedCluster) {
+      clusters.push({
+        network: fingerprint.network,
+        titleFingerprint: fingerprint.titleFingerprint,
+        item,
+        publishedAtMs: fingerprint.publishedAtMs,
+        size: 1,
+      });
+      clustersByKey.set(clusterKey, clusters);
+      continue;
+    }
+
+    matchedCluster.item = mergeNewsItems(matchedCluster.item, item);
+    matchedCluster.publishedAtMs = parsePublishedAtMs(matchedCluster.item.publishedAt) ?? matchedCluster.publishedAtMs;
+    matchedCluster.size += 1;
+  }
+
+  const clusteredItems = [...clustersByKey.values()].flatMap((clusters) =>
+    clusters.map((cluster) =>
+      cluster.size > 1
+        ? {
+            ...cluster.item,
+            clusterId: buildCanadaNetworkClusterId(cluster.network, cluster.titleFingerprint),
+            clusterSize: cluster.size,
+          }
+        : cluster.item
+    )
+  );
+
+  return [...passthrough, ...clusteredItems];
 }
 
 function normalizeFeedHost(host: string): string {
@@ -2225,7 +2385,9 @@ function dedupeAndSort(items: NewsItem[]): NewsItem[] {
     const prev = byLink.get(key);
     byLink.set(key, prev ? mergeNewsItems(prev, item) : item);
   }
-  return [...byLink.values()].sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+  return collapseCanadaNetworkDuplicates([...byLink.values()]).sort(
+    (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+  );
 }
 
 async function toNewsItem(
@@ -2884,7 +3046,8 @@ async function runOnce(): Promise<void> {
   const allOutlets = loadAtlasOutlets();
   const countryFilteredOutlets = allOutlets.filter((outlet) => countryMatchesFilter(outlet.country, COUNTRY_FILTER));
   const sourceFilteredOutlets = countryFilteredOutlets.filter((outlet) => sourceMatchesFilter(outlet.name, SOURCE_FILTER));
-  const { selected, nextOffset, offset, selectionSummary } = await selectOutletsForRun(sourceFilteredOutlets, nowMs);
+  const scopedOutlets = sourceFilteredOutlets.filter((outlet) => outletIdMatchesFilter(outlet.id, OUTLET_ID_FILTER));
+  const { selected, nextOffset, offset, selectionSummary } = await selectOutletsForRun(scopedOutlets, nowMs);
   const { endpointLookup, dedupedEndpoints, rssEndpoints, allSitemapEndpoints } = buildEndpointRuns(
     selected,
     methodMatchesFilter,
@@ -3230,7 +3393,7 @@ async function runOnce(): Promise<void> {
     started,
     allOutletsCount: allOutlets.length,
     countryFilteredOutletsCount: countryFilteredOutlets.length,
-    sourceFilteredOutletsCount: sourceFilteredOutlets.length,
+    sourceFilteredOutletsCount: scopedOutlets.length,
     selectedCount: selected.length,
     offset,
     nextOffset,
@@ -3269,7 +3432,7 @@ async function runOnce(): Promise<void> {
   console.log(formatWorkerSummaryLog({
     selectedCount: selected.length,
     countryFilteredOutletsCount: countryFilteredOutlets.length,
-    sourceFilteredOutletsCount: sourceFilteredOutlets.length,
+    sourceFilteredOutletsCount: scopedOutlets.length,
     allOutletsCount: allOutlets.length,
     attempted: counts.attempted,
     ok: counts.ok,
@@ -3298,6 +3461,9 @@ async function main(): Promise<void> {
   }
   if (SOURCE_FILTER) {
     console.log(`[ingest-worker] source filter enabled: ${SOURCE_FILTER.display.join(', ')}`);
+  }
+  if (OUTLET_ID_FILTER) {
+    console.log(`[ingest-worker] outlet id filter enabled: ${OUTLET_ID_FILTER.display.length} ids`);
   }
   if (METHOD_FILTER) {
     console.log(`[ingest-worker] method filter enabled: ${METHOD_FILTER.display.join(', ')}`);

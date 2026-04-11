@@ -15,7 +15,7 @@
   <key>RunAtLoad</key>
   <true/>
   <key>StartInterval</key>
-  <integer>60</integer>
+  <integer>300</integer>
   <key>StandardOutPath</key>
   <string>/Users/your-user/srv/world-press-radar/logs/launchd-api-runtime-watchdog.log</string>
   <key>StandardErrorPath</key>

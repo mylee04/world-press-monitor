@@ -20,6 +20,10 @@ ENV_PREFIX="TZ=${CRON_TZ}"
 CRON_LINE_HOURLY="0 * * * * ${ENV_PREFIX} ${RUNNER_HOURLY} >> ${PROJECT_ROOT}/logs/ingest-ops-hourly.log 2>&1"
 CRON_LINE_DAILY="0 2 * * * ${ENV_PREFIX} ${RUNNER_DAILY} >> ${PROJECT_ROOT}/logs/ingest-ops-daily.log 2>&1"
 
+deprecation_notice() {
+  echo "Deprecated: local macOS scheduling should use launchd via scripts/setup-launchd-local.sh. Keep this cron path only for legacy/manual hosts." >&2
+}
+
 usage() {
   cat <<'USAGE'
 Usage:
@@ -31,6 +35,10 @@ Commands:
   install   Add or refresh ingest ops cron jobs (hourly + daily at 02:00) using America/Chicago by default.
   uninstall Remove WPR ingest ops cron jobs.
   print     Print crontab entries only.
+
+Deprecated:
+  Local macOS runtime should use `scripts/setup-launchd-local.sh`.
+  This cron helper remains only for legacy/manual hosts.
 USAGE
 }
 
@@ -49,6 +57,7 @@ print_entry() {
 
 case "${1:-install}" in
   install)
+    deprecation_notice
     ensure_cron_available
     CURRENT="$(crontab -l 2>/dev/null || true)"
     CLEANED="$(echo "${CURRENT}" | awk -v m="${MARKER}" -v h="${RUNNER_HOURLY}" -v d="${RUNNER_DAILY}" '\
@@ -61,6 +70,7 @@ case "${1:-install}" in
     print_entry
     ;;
   uninstall)
+    deprecation_notice
     ensure_cron_available
     CURRENT="$(crontab -l 2>/dev/null || true)"
     echo "${CURRENT}" | \
@@ -70,6 +80,7 @@ case "${1:-install}" in
     echo "Removed cron jobs if they existed."
     ;;
   print)
+    deprecation_notice
     print_entry
     ;;
   *)

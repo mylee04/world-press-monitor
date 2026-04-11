@@ -41,6 +41,8 @@ type WorkerSummary = {
       mode: 'all' | 'chunk' | 'hybrid';
       reason: string;
       dbBacked: boolean;
+      pinnedOutlets: number;
+      pinnedReason: string | null;
       headOutlets: number;
       longTailOutlets: number;
       longTailSelected: number;
@@ -163,7 +165,7 @@ export function formatWorkerSummaryLog(params: {
     .map(({ source, count }) => `${source}:${count}`)
     .join(', ');
   const selectionSummary = params.selectionSummary.mode === 'hybrid'
-    ? `selection=hybrid(${params.selectionSummary.reason}) head=${params.selectionSummary.headOutlets} long_tail=${params.selectionSummary.longTailOutlets} long_tail_selected=${params.selectionSummary.longTailSelected} rotation=${(params.selectionSummary.rotationBucket ?? 0) + 1}/${params.selectionSummary.rotationHours ?? 1} bucket_offset=${params.selectionSummary.longTailBucketOffset ?? 0}->${params.selectionSummary.longTailBucketNextOffset ?? 0}/${params.selectionSummary.longTailBucketSize ?? 0} cap=${params.selectionSummary.maxOutletsPerRun ?? 'none'} reserved_long_tail=${params.selectionSummary.reservedLongTailOutlets ?? 0} capped=${params.selectionSummary.budgetCapped ? 'yes' : 'no'}`
+    ? `selection=hybrid(${params.selectionSummary.reason}) pinned=${params.selectionSummary.pinnedOutlets}${params.selectionSummary.pinnedReason ? `(${params.selectionSummary.pinnedReason})` : ''} head=${params.selectionSummary.headOutlets} long_tail=${params.selectionSummary.longTailOutlets} long_tail_selected=${params.selectionSummary.longTailSelected} rotation=${(params.selectionSummary.rotationBucket ?? 0) + 1}/${params.selectionSummary.rotationHours ?? 1} bucket_offset=${params.selectionSummary.longTailBucketOffset ?? 0}->${params.selectionSummary.longTailBucketNextOffset ?? 0}/${params.selectionSummary.longTailBucketSize ?? 0} cap=${params.selectionSummary.maxOutletsPerRun ?? 'none'} reserved_long_tail=${params.selectionSummary.reservedLongTailOutlets ?? 0} capped=${params.selectionSummary.budgetCapped ? 'yes' : 'no'}`
     : `selection=${params.selectionSummary.mode}(${params.selectionSummary.reason})`;
   return (
     `[ingest-worker] outlets=${params.selectedCount}/${params.sourceFilteredOutletsCount}/${params.countryFilteredOutletsCount}/${params.allOutletsCount} endpoints=${params.attempted} ok=${params.ok} failed=${params.failed} ` +

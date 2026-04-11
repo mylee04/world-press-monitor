@@ -14,13 +14,17 @@ WPR_RUNTIME_ROOT="${WPR_RUNTIME_ROOT:-${WPM_RUNTIME_ROOT:-${HOME}/srv/world-pres
 WPR_RUNTIME_REPO="${WPR_RUNTIME_REPO:-${WPM_RUNTIME_REPO:-${WPR_RUNTIME_ROOT}/repo}}"
 WPR_RUNTIME_LOG_DIR="${WPR_RUNTIME_LOG_DIR:-${WPM_RUNTIME_LOG_DIR:-${WPR_RUNTIME_ROOT}/logs}}"
 WPR_LAUNCHD_DIR="${WPR_LAUNCHD_DIR:-${WPM_LAUNCHD_DIR:-${HOME}/Library/LaunchAgents}}"
-LAUNCHD_DOMAIN="gui/$(id -u)"
+LAUNCHD_GUI_DOMAIN="gui/$(id -u)"
+LAUNCHD_USER_DOMAIN="user/$(id -u)"
+LAUNCHD_STATUS_DOMAINS=("${LAUNCHD_GUI_DOMAIN}" "${LAUNCHD_USER_DOMAIN}")
 
 PLIST_NAMES=(
   "com.wpr.api-news.plist"
   "com.wpr.api-tunnel.plist"
   "com.wpr.api-runtime-watchdog.plist"
   "com.wpr.ingest-hourly.plist"
+  "com.wpr.ingest-rss-fastlane-strict.plist"
+  "com.wpr.ingest-rss-fastlane-relaxed.plist"
   "com.wpr.health-daily.plist"
 )
 
@@ -29,6 +33,8 @@ LEGACY_PLIST_NAMES=(
   "com.wpm.api-tunnel.plist"
   "com.wpm.api-runtime-watchdog.plist"
   "com.wpm.ingest-hourly.plist"
+  "com.wpm.ingest-rss-fastlane-strict.plist"
+  "com.wpm.ingest-rss-fastlane-relaxed.plist"
   "com.wpm.health-daily.plist"
   "com.wpm.news-country-discord.plist"
   "com.wpm.ingest-ops-hourly.plist"
@@ -36,6 +42,63 @@ LEGACY_PLIST_NAMES=(
 
 escape_sed_replacement() {
   printf '%s' "$1" | sed -e 's/[\/&|]/\\&/g'
+}
+
+bootout_label_all_domains() {
+  local label=$1
+  local domain=""
+  for domain in "${LAUNCHD_STATUS_DOMAINS[@]}"; do
+    launchctl bootout "${domain}/${label}" >/dev/null 2>&1 || true
+  done
+}
+
+print_label_status() {
+  local label=$1
+  local domain=""
+  local output=""
+
+  for domain in "${LAUNCHD_STATUS_DOMAINS[@]}"; do
+    output="$(launchctl print "${domain}/${label}" 2>/dev/null || true)"
+    if [ -n "${output}" ]; then
+      echo "domain = ${domain}"
+      printf '%s\n' "${output}" | rg 'state =|runs =|last exit code =|path =|working directory =|stdout path =|stderr path ='
+      return 0
+    fi
+  done
+
+  echo "state = not loaded"
+}
+
+bootstrap_domain_for_label() {
+  local label=$1
+  case "${label}" in
+    com.wpr.ingest-hourly|com.wpm.ingest-hourly|com.wpr.ingest-rss-fastlane-strict|com.wpr.ingest-rss-fastlane-relaxed|com.wpm.ingest-rss-fastlane-strict|com.wpm.ingest-rss-fastlane-relaxed)
+      printf '%s\n' "${LAUNCHD_USER_DOMAIN}"
+      ;;
+    *)
+      printf '%s\n' "${LAUNCHD_GUI_DOMAIN}"
+      ;;
+  esac
+}
+
+bootstrap_label() {
+  local label=$1
+  local target_path=$2
+  local bootstrap_domain=""
+
+  bootstrap_domain="$(bootstrap_domain_for_label "${label}")"
+  launchctl enable "${bootstrap_domain}/${label}" >/dev/null 2>&1 || true
+  if launchctl bootstrap "${bootstrap_domain}" "${target_path}" >/dev/null 2>&1; then
+    return 0
+  fi
+
+  if launchctl print "${bootstrap_domain}/${label}" >/dev/null 2>&1; then
+    echo "WARN: launchctl bootstrap returned non-zero but ${label} is loaded in ${bootstrap_domain}" >&2
+    return 0
+  fi
+
+  echo "ERROR: failed to bootstrap ${label} in ${bootstrap_domain}" >&2
+  return 1
 }
 
 sync_runtime_repo() {
@@ -59,6 +122,7 @@ sync_runtime_repo() {
     "${WPR_RUNTIME_REPO}/scripts/ensure-api-runtime-local.sh" \
     "${WPR_RUNTIME_REPO}/scripts/run-api-news.sh" \
     "${WPR_RUNTIME_REPO}/scripts/run-ingest-hourly-local.sh" \
+    "${WPR_RUNTIME_REPO}/scripts/run-ingest-rss-fastlane-local.sh" \
     "${WPR_RUNTIME_REPO}/scripts/run-news-country-discord-report.sh" \
     "${WPR_RUNTIME_REPO}/scripts/run-ingest-ops-hourly.sh" \
     "${WPR_RUNTIME_REPO}/scripts/run-rss-health-daily-local.sh"
@@ -68,8 +132,8 @@ sync_runtime_repo() {
     bun install
   )
 
-  launchctl bootout "${LAUNCHD_DOMAIN}/com.wpm.export-deploy" >/dev/null 2>&1 || true
-  launchctl bootout "${LAUNCHD_DOMAIN}/com.wpr.export-deploy" >/dev/null 2>&1 || true
+  bootout_label_all_domains "com.wpm.export-deploy"
+  bootout_label_all_domains "com.wpr.export-deploy"
   rm -f "${WPR_LAUNCHD_DIR}/com.wpm.export-deploy.plist"
   rm -f "${WPR_LAUNCHD_DIR}/com.wpr.export-deploy.plist"
 }
@@ -98,7 +162,7 @@ install_launch_agents() {
     local label="${plist_name%.plist}"
     local target_path="${WPR_LAUNCHD_DIR}/${plist_name}"
 
-    launchctl bootout "${LAUNCHD_DOMAIN}/${label}" >/dev/null 2>&1 || true
+    bootout_label_all_domains "${label}"
     rm -f "${target_path}"
   done
 
@@ -108,8 +172,8 @@ install_launch_agents() {
     local target_path="${WPR_LAUNCHD_DIR}/${plist_name}"
 
     render_plist "${template_path}" "${target_path}"
-    launchctl bootout "${LAUNCHD_DOMAIN}/${label}" >/dev/null 2>&1 || true
-    launchctl bootstrap "${LAUNCHD_DOMAIN}" "${target_path}"
+    bootout_label_all_domains "${label}"
+    bootstrap_label "${label}" "${target_path}"
   done
 }
 
@@ -118,7 +182,7 @@ remove_launch_agents() {
     local label="${plist_name%.plist}"
     local target_path="${WPR_LAUNCHD_DIR}/${plist_name}"
 
-    launchctl bootout "${LAUNCHD_DOMAIN}/${label}" >/dev/null 2>&1 || true
+    bootout_label_all_domains "${label}"
     rm -f "${target_path}"
   done
 }
@@ -136,7 +200,7 @@ print_status() {
   for plist_name in "${PLIST_NAMES[@]}"; do
     local label="${plist_name%.plist}"
     echo "=== ${label} ==="
-    launchctl print "${LAUNCHD_DOMAIN}/${label}" 2>/dev/null | rg 'state =|runs =|last exit code =|path =|working directory =|stdout path ='
+    print_label_status "${label}"
     echo
   done
 }
@@ -153,6 +217,7 @@ Usage:
 Notes:
   - Runtime repo defaults to ~/srv/world-press-radar/repo.
   - Hourly country Discord report and hourly ingest ops report are chained from run-ingest-hourly-local.sh.
+  - Fast-lane RSS ingest runs as separate launchd jobs: strict every 30m, relaxed every 60m.
   - Legacy pre-radar launch agents are removed on install/update.
   - Do not point launchd at Desktop/Documents/Downloads worktrees.
 USAGE

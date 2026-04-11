@@ -42,6 +42,10 @@ build_cron_env_prefix() {
 ENV_PREFIX="$(build_cron_env_prefix)"
 CRON_LINE="30 0 * * * ${ENV_PREFIX} ${RUNNER} >> ${PROJECT_ROOT}/logs/rss-health-daily.log 2>&1"
 
+deprecation_notice() {
+  echo "Deprecated: local macOS scheduling should use launchd via scripts/setup-launchd-local.sh. Keep this cron path only for legacy/manual hosts." >&2
+}
+
 usage() {
   cat <<'USAGE'
 Usage:
@@ -53,6 +57,10 @@ Commands:
   install   Add or refresh daily 00:30 America/Chicago cron job.
   uninstall Remove WPR RSS health cron job.
   print     Print crontab entry only.
+
+Deprecated:
+  Local macOS runtime should use `scripts/setup-launchd-local.sh`.
+  This cron helper remains only for legacy/manual hosts.
 USAGE
 }
 
@@ -70,6 +78,7 @@ print_entry() {
 
 case "${1:-install}" in
   install)
+    deprecation_notice
     ensure_cron_available
     CURRENT="$(crontab -l 2>/dev/null || true)"
     CLEANED="$(echo "${CURRENT}" | awk -v m="${MARKER}" '$0 !~ m')"
@@ -82,12 +91,14 @@ case "${1:-install}" in
     print_entry
     ;;
   uninstall)
+    deprecation_notice
     ensure_cron_available
     CURRENT="$(crontab -l 2>/dev/null || true)"
     echo "${CURRENT}" | awk -v m="${MARKER}" '$0 !~ m && $0 !~ /run-rss-health-daily.sh/ {print}' | crontab -
     echo "Removed cron job if it existed."
     ;;
   print)
+    deprecation_notice
     print_entry
     ;;
   *)
