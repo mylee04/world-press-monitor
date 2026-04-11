@@ -13108,8 +13108,9 @@
           "name": "TVN24",
           "url": "https://tvn24.pl/najwazniejsze.xml",
           "status": "⏩ OFFICIAL",
-          "checkedDate": "04/08/2026",
-          "valid": "valid",
+          "checkedDate": "04/10/2026",
+          "valid": "invalid",
+          "enabled": false,
           "row": 3
         },
         {
@@ -13212,16 +13213,18 @@
           "name": "RMF24 Komentarze",
           "url": "https://www.rmf24.pl/tylko-w-rmf24/komentarze/feed",
           "status": null,
-          "checkedDate": null,
-          "valid": "needs verification",
+          "checkedDate": "04/10/2026",
+          "valid": "invalid",
+          "enabled": false,
           "row": 15
         },
         {
           "name": "RMF24 Podsumowanie dnia",
           "url": "https://www.rmf24.pl/fakty/podsumowanie-dnia/feed",
           "status": null,
-          "checkedDate": null,
-          "valid": "needs verification",
+          "checkedDate": "04/10/2026",
+          "valid": "invalid",
+          "enabled": false,
           "row": 16
         },
         {
@@ -13233,9 +13236,9 @@
         },
         {
           "name": "TVP Info - Sitemap 2026",
-          "sitemapUrl": "https://www.tvp.info/sitemap-full-2026-1.xml",
+          "sitemapUrl": "https://tvp.info/sitemap-full_index.xml",
           "status": "NEW",
-          "checkedDate": "03/18/2026",
+          "checkedDate": "04/10/2026",
           "valid": "valid"
         },
         {
@@ -13314,8 +13317,9 @@
           "name": "PolsatNews Czysta Polska",
           "url": "https://www.polsatnews.pl/rss/czysta-polska.xml",
           "status": null,
-          "checkedDate": null,
-          "valid": "needs verification",
+          "checkedDate": "04/10/2026",
+          "valid": "invalid",
+          "enabled": false,
           "row": 26
         },
         {
@@ -13354,40 +13358,44 @@
           "name": "PAP MediaRoom (All)",
           "url": "https://pap-mediaroom.pl/rss.xml",
           "status": null,
-          "checkedDate": null,
-          "valid": "needs verification",
+          "checkedDate": "04/10/2026",
+          "valid": "invalid",
+          "enabled": false,
           "row": 31
         },
         {
           "name": "PAP MediaRoom (Biznes i finanse)",
           "url": "https://pap-mediaroom.pl/kategoria/biznes-i-finanse/rss.xml",
           "status": null,
-          "checkedDate": null,
-          "valid": "needs verification",
+          "checkedDate": "04/10/2026",
+          "valid": "invalid",
+          "enabled": false,
           "row": 32
         },
         {
           "name": "PAP MediaRoom (Nauka i technologie)",
           "url": "https://pap-mediaroom.pl/kategoria/nauka-i-technologie/rss.xml",
           "status": null,
-          "checkedDate": null,
-          "valid": "needs verification",
+          "checkedDate": "04/10/2026",
+          "valid": "invalid",
+          "enabled": false,
           "row": 33
         },
         {
           "name": "PAP MediaRoom (Kalendarium)",
           "url": "https://pap-mediaroom.pl/kalendarium/rss.xml",
           "status": null,
-          "checkedDate": null,
-          "valid": "needs verification",
+          "checkedDate": "04/10/2026",
+          "valid": "invalid",
+          "enabled": false,
           "row": 34
         },
         {
           "name": "PAP Biznes",
           "url": "https://biznes.pap.pl/rss",
           "status": "NEW",
-          "checkedDate": "04/08/2026",
-          "valid": "needs verification"
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
         },
         {
           "name": "Onet Wiadomości (Top Portal News)",
@@ -13442,8 +13450,7 @@
         },
         {
           "name": "Business Insider Polska",
-          "url": "https://businessinsider.com.pl/.feed",
-          "sitemapUrl": "https://businessinsider.com.pl/sitemap_news.xml"
+          "url": "https://businessinsider.com.pl/.feed"
         },
         {
           "name": "Forsal",
@@ -13459,8 +13466,79 @@
         },
         {
           "name": "Dziennik Gazeta Prawna (Business/Legal)",
-          "url": "https://www.gazetaprawna.pl/rss.xml",
-          "enabled": false
+          "url": "https://www.gazetaprawna.pl/.feed",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "WNP",
+          "url": "https://www.wnp.pl/rss/serwis_rss.xml",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "PortalSamorzadowy - News Sitemap",
+          "sitemapUrl": "https://www.portalsamorzadowy.pl/sitemap-news.xml",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "PulsHR - News Sitemap",
+          "sitemapUrl": "https://www.pulshr.pl/sitemap-news.xml",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "PortalSpozywczy - News Sitemap",
+          "sitemapUrl": "https://www.portalspozywczy.pl/sitemap-news.xml",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Farmer - News Sitemap",
+          "sitemapUrl": "https://www.farmer.pl/sitemap-news.xml",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "PropertyNews - News Sitemap",
+          "sitemapUrl": "https://www.propertynews.pl/sitemap-news.xml",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "DlaHandlu - News Sitemap",
+          "sitemapUrl": "https://www.dlahandlu.pl/sitemap-news.xml",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Parkiet - News Sitemap",
+          "sitemapUrl": "https://www.parkiet.com/sitemaps/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Dziennik.pl - Wiadomości",
+          "url": "https://wiadomosci.dziennik.pl/.feed",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
         },
         {
           "name": "Rzeczpospolita - News Sitemap",
@@ -13474,23 +13552,22 @@
           "name": "Tok FM - Sitemap Index",
           "sitemapUrl": "https://www.tokfm.pl/esi/block/seo/sitemap/2/0",
           "status": "NEW",
-          "checkedDate": "04/08/2026",
-          "valid": "needs verification"
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
         },
         {
           "name": "Gość Niedzielny - Aktualności",
           "url": "https://www.gosc.pl/rss/rtr/c7a21.Aktualnosci-z-Gosciem-Niedzielnym",
-          "sitemapUrl": "https://www.gosc.pl/sitemap.xml",
           "status": "NEW",
-          "checkedDate": "04/08/2026",
-          "valid": "needs verification"
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
         },
         {
           "name": "Niedziela",
           "url": "https://www.niedziela.pl/rss",
           "status": "NEW",
-          "checkedDate": "04/08/2026",
-          "valid": "needs verification"
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
         },
         {
           "name": "Wiadomosci WP - Aktualnosci",
@@ -13515,15 +13592,17 @@
           "name": "PolsatNews - Sitemap 1",
           "sitemapUrl": "https://www.polsatnews.pl/sitemap1.xml",
           "status": "NEW",
-          "checkedDate": "03/19/2026",
-          "valid": "valid"
+          "checkedDate": "04/10/2026",
+          "valid": "invalid",
+          "enabled": false
         },
         {
           "name": "SE.pl - March 2026 Sitemap",
           "sitemapUrl": "https://www.se.pl/sitemap/sm-USNi-K83w-jzEn/2026/03/",
           "status": "NEW",
-          "checkedDate": "03/19/2026",
-          "valid": "valid"
+          "checkedDate": "04/10/2026",
+          "valid": "invalid",
+          "enabled": false
         },
         {
           "name": "Niezalezna",
@@ -13547,15 +13626,30 @@
         },
         {
           "name": "Polityka - News Sitemap",
-          "sitemapUrl": "https://www.polityka.pl/sitemap/newsSitemap.xml"
+          "sitemapUrl": "http://www.polityka.pl/newsSitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
         },
         {
           "name": "Dziennik.pl",
           "url": "https://www.dziennik.pl/.feed"
         },
         {
-          "name": "Puls Biznesu - Articles Sitemap",
-          "sitemapUrl": "https://www.pb.pl/sitemap/sitemap_articles_1.xml"
+          "name": "Puls Biznesu - Sitemap Index",
+          "sitemapUrl": "https://www.pb.pl/sitemap/index",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Notes from Poland",
+          "url": "https://notesfrompoland.com/feed/",
+          "language": "en",
+          "sourceType": "local",
+          "status": "NEW",
+          "checkedDate": "04/10/2026",
+          "valid": "valid"
         },
         {
           "name": "wPolityce - Publications Sitemap",
@@ -13563,7 +13657,10 @@
         },
         {
           "name": "TV Republika - Article Sitemap",
-          "sitemapUrl": "https://tvrepublika.pl/sitemaps/article/sitemap.xml"
+          "sitemapUrl": "https://tvrepublika.pl/sitemaps/article/sitemap.xml",
+          "checkedDate": "04/10/2026",
+          "valid": "invalid",
+          "enabled": false
         },
         {
           "name": "Rynek Zdrowia - News Sitemap",
