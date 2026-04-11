@@ -6,6 +6,70 @@
 
 ## Unreleased
 
+### [c3fac86] Expand US source coverage and fix map endpoint typing
+- Commit: c3fac86560746435a3fbe318d5c1f644ced169ca
+- Date: 2026-04-11 00:05:50 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	components/map-view.tsx
+    - M	components/use-map-view-model.ts
+    - M	data/country-benchmark.snapshot.json
+    - M	data/dashboard-summary.snapshot.json
+    - M	data/map-country-metrics.snapshot.1h.json
+    - M	data/map-country-metrics.snapshot.24h.json
+    - M	data/map-country-metrics.snapshot.7d.json
+    - M	data/map-country-sources.snapshot.1h.json
+    - M	data/map-country-sources.snapshot.24h.json
+    - M	data/map-country-sources.snapshot.7d.json
+    - M	data/map-publishers.snapshot.1h.json
+    - M	data/map-publishers.snapshot.24h.json
+    - M	data/map-publishers.snapshot.7d.json
+    - M	data/rss-atlas.json
+    - M	data/rss-catalog.csv
+    - M	data/rss-catalog.opml
+    - M	lib/article-url-filters.ts
+    - M	lib/map-country-metrics-builder.ts
+    - M	lib/map-country-metrics-reader.ts
+    - M	lib/map-country-sources-reader.ts
+    - M	lib/map-source-detail-reader.ts
+    - M	lib/map-store-source-meta.ts
+    - M	lib/map-store-windows.ts
+    - M	lib/map-store.ts
+    - M	lib/map-types.ts
+    - A	lib/source-endpoint-classification.ts
+    - M	scripts/fetch-sitemap-browser.mjs
+    - M	scripts/ingest-worker.ts
+  - Git stat:
+  - components/map-view.tsx                    |    8 +
+  -  components/use-map-view-model.ts           |    8 +
+  -  data/country-benchmark.snapshot.json       |    2 +-
+  -  data/dashboard-summary.snapshot.json       |    2 +-
+  -  data/map-country-metrics.snapshot.1h.json  |    2 +-
+  -  data/map-country-metrics.snapshot.24h.json |    2 +-
+  -  data/map-country-metrics.snapshot.7d.json  |    2 +-
+  -  data/map-country-sources.snapshot.1h.json  |    2 +-
+  -  data/map-country-sources.snapshot.24h.json |    2 +-
+  -  data/map-country-sources.snapshot.7d.json  |    2 +-
+  -  data/map-publishers.snapshot.1h.json       |    2 +-
+  -  data/map-publishers.snapshot.24h.json      |    2 +-
+  -  data/map-publishers.snapshot.7d.json       |    2 +-
+  -  data/rss-atlas.json                        |  391 +-
+  -  data/rss-catalog.csv                       | 5857 +++++++++++++++-------------
+  -  data/rss-catalog.opml                      | 2283 ++++++-----
+  -  lib/article-url-filters.ts                 |   16 +
+  -  lib/map-country-metrics-builder.ts         |   20 +
+  -  lib/map-country-metrics-reader.ts          |    2 +
+  -  lib/map-country-sources-reader.ts          |   19 +
+  -  lib/map-source-detail-reader.ts            |    6 +
+  -  lib/map-store-source-meta.ts               |   81 +-
+  -  lib/map-store-windows.ts                   |   11 +
+  -  lib/map-store.ts                           |    2 +
+  -  lib/map-types.ts                           |   16 +
+  -  lib/source-endpoint-classification.ts      |  138 +
+  -  scripts/fetch-sitemap-browser.mjs          |   58 +-
+  -  scripts/ingest-worker.ts                   |   55 +-
+  -  28 files changed, 5102 insertions(+), 3891 deletions(-)
+
 ### [aba92ba] [codex] Clarify active country labels on map
 - Commit: aba92ba725011c49c746a9d8598ca4d2448b8a77
 - Date: 2026-04-09 00:49:50 -0500
