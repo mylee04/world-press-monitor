@@ -29,7 +29,29 @@ const SOURCE_SPECIFIC_LOW_SIGNAL_TITLE_PATTERNS: ReadonlyArray<{
   { source: /zaobao/i, title: /^(?:china|singapore|world|finance|lifestyle|entertainment|forum|sports|sea|columns|views|talk|shorts|culture|gen|food|health|comic|zodiac|history heritage|design decor|fashion beauty|travel|campus|gadget|feature|motoring|zbclub)$/iu },
 ];
 
+const POLSKA_PRESS_SOURCE_MARKERS = [
+  'gazeta krakowska',
+  'dziennik zachodni',
+  'gazeta wrocławska',
+  'głos wielkopolski',
+  'dziennik bałtycki',
+  'kurier lubelski',
+  'express ilustrowany',
+  'dziennik łódzki',
+  'echo dnia',
+  'nowiny24',
+  'kurier poranny',
+] as const;
+
+const POLSKA_PRESS_LOW_SIGNAL_TITLE_PATTERNS: ReadonlyArray<RegExp> = [
+  /\b(?:quiz|memy|fotogaleria|archiwalne zdjęcia|zdjęcia z lat|przed laty)\b/iu,
+  /^(?:tak mieszka|tak żyje|tak dziś wygląda|masz te objawy|pomysł na obiad|obiad na|ciasta bez pieczenia|przepisy na|atrakcje w|tanie jedzenie|tajemnice różańca|kolor ma moc|gdzie mi z tym|ktoś powiesił to na klatce schodowej|podejrzane znaki na klatkach schodowych|ludwik zmywa w kuchni|rolnicy\.podlasie|podlaskie domy|piękna i niezwykła historia|kraków, którego już nie ma|to kraj kontrastów)/iu,
+  /\b(?:rutkowski|martyniuk|witamin(?:a|y)\s*b12|różaniec|modlitwa fatimska)\b/iu,
+  /\b(?:przepis(?:y)?|sałatk(?:a|i)|ciast(?:a|o)|obiad|restauracje|bary|stołówki|atrakcje)\b/iu,
+];
+
 const LOW_SIGNAL_URL_SEGMENTS = new Set([
+  'ar',
   'aapreleases',
   'article',
   'articles',
@@ -185,12 +207,21 @@ function titleFromLink(link: string, source = ''): string {
   }
 }
 
+function isPolskaPressLowSignalTitle(source: string, title: string): boolean {
+  const normalizedSource = source.toLowerCase();
+  if (!POLSKA_PRESS_SOURCE_MARKERS.some((marker) => normalizedSource.includes(marker))) {
+    return false;
+  }
+  return POLSKA_PRESS_LOW_SIGNAL_TITLE_PATTERNS.some((pattern) => pattern.test(title));
+}
+
 export function looksLikeLowSignalArticleTitle(title: string, source = '', link = ''): boolean {
   const normalizedTitle = normalizeHtmlText(title);
   const normalizedLink = decodeHtmlEntities(link || '');
   if (!normalizedTitle) return true;
   if (isKnownNonArticleUrl(source, normalizedLink)) return true;
   if (normalizedTitle === normalizedLink || /^https?:\/\//i.test(normalizedTitle)) return true;
+  if (isPolskaPressLowSignalTitle(source, normalizedTitle)) return true;
   if (/idnes/i.test(source) && /^bg\d{8}$/i.test(normalizedTitle)) return true;
   if (/ajel/i.test(source) && /^[a-z0-9]{8,12}$/i.test(normalizedTitle)) {
     const linkSlug = lastPathSegment(normalizedLink);

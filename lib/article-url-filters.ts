@@ -10,6 +10,14 @@ function trimTrailingSlashes(pathname: string): string {
   return pathname.replace(/\/+$/, '') || '/';
 }
 
+const POLSKA_PRESS_REGIONAL_HOST_PATTERN =
+  /(?:^|\.)(?:gazetakrakowska|dziennikzachodni|gazetawroclawska|gloswielkopolski|dziennikbaltycki|kurierlubelski|expressilustrowany|dzienniklodzki|echodnia|nowiny24|poranny)\.(?:pl|eu)$/;
+const POLSKA_PRESS_SOFT_CATEGORY_PATH_PATTERN = /\/ar\/c(?:6|7|8|9|11|13|14|17)-\d+/;
+
+function isPolskaPressRegionalHost(hostname: string): boolean {
+  return POLSKA_PRESS_REGIONAL_HOST_PATTERN.test(hostname);
+}
+
 export function isKnownNonArticleUrl(source: string, url: string): boolean {
   const parsed = safeParseUrl(url);
   if (!parsed) return false;
@@ -663,6 +671,10 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
       hostname.endsWith('mercurynews.com')) &&
     pathname.startsWith('/obituaries/')
   ) {
+    return true;
+  }
+
+  if (isPolskaPressRegionalHost(hostname) && POLSKA_PRESS_SOFT_CATEGORY_PATH_PATTERN.test(pathname)) {
     return true;
   }
 
