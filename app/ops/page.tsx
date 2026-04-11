@@ -6,6 +6,10 @@ import { OpsExplorer } from '@/components/ops-explorer';
 import { OpsLocalTimestamp } from '@/components/ops-local-timestamp';
 import styles from '@/components/ops-page.module.css';
 import type { CountryBenchmarkResponse } from '@/lib/benchmark-types';
+import {
+  readMapCountryMetricsFileSnapshot,
+  readMapCountrySourcesFileSnapshot,
+} from '@/lib/customer-map-snapshot-store';
 import type { MapCountryMetricsResponse, MapCountrySourcesResponse } from '@/lib/map-types';
 import { readMapCountryMetrics, readMapCountrySources } from '@/lib/map-store';
 import {
@@ -229,6 +233,48 @@ function computeNewsSitemapLeverageScore(row: StrategyCountryRow): number {
   return Math.round(base * ratioMultiplier);
 }
 
+function parseTimestamp(value: string | null | undefined): number {
+  if (!value) return Number.NEGATIVE_INFINITY;
+  const parsed = Date.parse(value);
+  return Number.isFinite(parsed) ? parsed : Number.NEGATIVE_INFINITY;
+}
+
+function hasCountryMetricsPayload(value: MapCountryMetricsResponse | null): value is MapCountryMetricsResponse {
+  return Boolean(value && Array.isArray(value.countries) && value.countries.length > 0);
+}
+
+function hasCountrySourcesPayload(value: MapCountrySourcesResponse | null): value is MapCountrySourcesResponse {
+  return Boolean(value && Array.isArray(value.sources) && value.sources.length > 0);
+}
+
+function pickFreshestCountryMetrics(
+  primary: MapCountryMetricsResponse | null,
+  fallback: MapCountryMetricsResponse | null
+): MapCountryMetricsResponse | null {
+  const primaryValid = hasCountryMetricsPayload(primary);
+  const fallbackValid = hasCountryMetricsPayload(fallback);
+  if (primaryValid && fallbackValid) {
+    return parseTimestamp(primary.generatedAt) >= parseTimestamp(fallback.generatedAt) ? primary : fallback;
+  }
+  if (primaryValid) return primary;
+  if (fallbackValid) return fallback;
+  return primary || fallback;
+}
+
+function pickFreshestCountrySources(
+  primary: MapCountrySourcesResponse | null,
+  fallback: MapCountrySourcesResponse | null
+): MapCountrySourcesResponse | null {
+  const primaryValid = hasCountrySourcesPayload(primary);
+  const fallbackValid = hasCountrySourcesPayload(fallback);
+  if (primaryValid && fallbackValid) {
+    return parseTimestamp(primary.generatedAt) >= parseTimestamp(fallback.generatedAt) ? primary : fallback;
+  }
+  if (primaryValid) return primary;
+  if (fallbackValid) return fallback;
+  return primary || fallback;
+}
+
 function findStrategyCountry(rows: StrategyCountryRow[], requestedCountry: string | null): StrategyCountryRow | null {
   if (!requestedCountry) return null;
   const target = requestedCountry.trim().toLowerCase();
@@ -308,11 +354,12 @@ export default async function OpsPage({ searchParams }: Props) {
   const params = (await searchParams) || {};
   const requestedEndpointCountry = getSingleQueryValue(params.endpointCountry);
 
-  const [summary, benchmark, mapCountries, internalMapCountries, apiHealth] = await Promise.all([
+  const [summary, benchmark, mapCountries, internalMapCountriesDb, internalMapCountriesFile, apiHealth] = await Promise.all([
     baseUrl ? fetchJson<NewsApiDashboardSummaryResponse>(`${baseUrl}/api/customer/dashboard/summary/`) : Promise.resolve(null),
     baseUrl ? fetchJson<CountryBenchmarkResponse>(`${baseUrl}/api/customer/benchmark/`) : Promise.resolve(null),
     baseUrl ? fetchJson<MapCountryMetricsResponse>(`${baseUrl}/api/customer/map/countries/?window=24h`) : Promise.resolve(null),
     readMapCountryMetrics('24h'),
+    readMapCountryMetricsFileSnapshot('24h'),
     (() => {
       const apiBase = process.env.WPR_INTERNAL_API_BASE_URL || process.env.WORLDPRESSRADAR_API_BASE_URL;
       const apiToken = process.env.WORLDPRESSRADAR_API_TOKEN || process.env.NEWS_API_TOKEN;
@@ -325,6 +372,8 @@ export default async function OpsPage({ searchParams }: Props) {
       });
     })(),
   ]);
+  const internalMapCountries =
+    pickFreshestCountryMetrics(internalMapCountriesDb, internalMapCountriesFile) || internalMapCountriesDb;
   const runnableAtlasStats = getRunnableAtlasSourceStats();
   const strategyRows = [...internalMapCountries.countries]
     .sort((left, right) => {
@@ -337,7 +386,13 @@ export default async function OpsPage({ searchParams }: Props) {
       return (right.configuredSources24h ?? 0) - (left.configuredSources24h ?? 0);
     });
   const selectedCountry = findStrategyCountry(strategyRows, requestedEndpointCountry);
-  const selectedCountrySources = selectedCountry ? await readMapCountrySources(selectedCountry.country, '24h') : null;
+  const [selectedCountrySourcesDb, selectedCountrySourcesFile] = selectedCountry
+    ? await Promise.all([
+        readMapCountrySources(selectedCountry.country, '24h'),
+        readMapCountrySourcesFileSnapshot(selectedCountry.country, '24h'),
+      ])
+    : [null, null];
+  const selectedCountrySources = pickFreshestCountrySources(selectedCountrySourcesDb, selectedCountrySourcesFile);
   const selectedCountryDrilldown = selectedCountry
     ? buildOpsCountryDrilldownRows(selectedCountry.country, selectedCountrySources)
     : [];
