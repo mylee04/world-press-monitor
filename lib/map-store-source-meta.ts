@@ -1,6 +1,16 @@
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { buildDisplaySourceName } from '@/lib/source-display';
+import {
+  addSourceEndpointProfile,
+  classifySitemapKindFromUrl,
+  classifySourceEndpointProfile,
+  cloneSourceEndpointBreakdown,
+  emptySourceEndpointBreakdown,
+  type SourceEndpointBreakdown,
+  type SourceEndpointProfile,
+  type SourceSitemapKind,
+} from '@/lib/source-endpoint-classification';
 
 type AtlasFeed = {
   name?: string;
@@ -30,12 +40,15 @@ export type SourceMethodMeta = {
   sitemapUrl: string | null;
   hasRss: boolean;
   hasSitemap: boolean;
+  sitemapKind: SourceSitemapKind;
+  endpointProfile: SourceEndpointProfile;
   distributionClass: SourceDistributionClass;
 };
 
 let atlasSourceMetaCache: Map<string, SourceMethodMeta> | null = null;
 let atlasCountryCodeCache: Map<string, string | null> | null = null;
 let atlasConfiguredSourcesByCountryCache: Map<string, number> | null = null;
+let atlasConfiguredEndpointBreakdownByCountryCache: Map<string, SourceEndpointBreakdown> | null = null;
 
 export function normalizeSourceKey(value: string): string {
   return buildDisplaySourceName(value || '').trim().toLowerCase();
@@ -82,12 +95,19 @@ function loadAtlasSourceMeta(): {
   sourceMeta: Map<string, SourceMethodMeta>;
   countryCodes: Map<string, string | null>;
   configuredSourcesByCountry: Map<string, number>;
+  configuredEndpointBreakdownByCountry: Map<string, SourceEndpointBreakdown>;
 } {
-  if (atlasSourceMetaCache && atlasCountryCodeCache && atlasConfiguredSourcesByCountryCache) {
+  if (
+    atlasSourceMetaCache
+    && atlasCountryCodeCache
+    && atlasConfiguredSourcesByCountryCache
+    && atlasConfiguredEndpointBreakdownByCountryCache
+  ) {
     return {
       sourceMeta: atlasSourceMetaCache,
       countryCodes: atlasCountryCodeCache,
       configuredSourcesByCountry: atlasConfiguredSourcesByCountryCache,
+      configuredEndpointBreakdownByCountry: atlasConfiguredEndpointBreakdownByCountryCache,
     };
   }
 
@@ -118,15 +138,22 @@ function loadAtlasSourceMeta(): {
       const displaySource = buildDisplaySourceName(rawName);
       const key = normalizeSourceKey(displaySource);
       const current = sourceMeta.get(key);
+      const rssUrl = current?.rssUrl || feed.url || null;
+      const sitemapUrl = current?.sitemapUrl || feed.sitemapUrl || null;
+      const hasRss = Boolean(rssUrl);
+      const hasSitemap = Boolean(sitemapUrl);
+      const sitemapKind = classifySitemapKindFromUrl(sitemapUrl);
       const next: SourceMethodMeta = {
         country: current?.country || countryName,
         countryCode: current?.countryCode || countryCode,
         source: current?.source || rawName,
         displaySource,
-        rssUrl: current?.rssUrl || feed.url || null,
-        sitemapUrl: current?.sitemapUrl || feed.sitemapUrl || null,
-        hasRss: Boolean(current?.rssUrl || feed.url || null),
-        hasSitemap: Boolean(current?.sitemapUrl || feed.sitemapUrl || null),
+        rssUrl,
+        sitemapUrl,
+        hasRss,
+        hasSitemap,
+        sitemapKind,
+        endpointProfile: classifySourceEndpointProfile({ hasRss, hasSitemap, sitemapKind }),
         distributionClass: mergeDistributionClass(current?.distributionClass, feed.distributionClass),
       };
       sourceMeta.set(key, next);
@@ -135,14 +162,28 @@ function loadAtlasSourceMeta(): {
   }
 
   const configuredSourceCounts = new Map<string, number>();
+  const configuredEndpointBreakdownByCountry = new Map<string, SourceEndpointBreakdown>();
   for (const [countryName, values] of configuredSourcesByCountry.entries()) {
     configuredSourceCounts.set(countryName, values.size);
+    const breakdown = emptySourceEndpointBreakdown();
+    for (const sourceKey of values) {
+      const meta = sourceMeta.get(sourceKey);
+      if (!meta) continue;
+      addSourceEndpointProfile(breakdown, meta.endpointProfile);
+    }
+    configuredEndpointBreakdownByCountry.set(countryName, breakdown);
   }
 
   atlasSourceMetaCache = sourceMeta;
   atlasCountryCodeCache = countryCodes;
   atlasConfiguredSourcesByCountryCache = configuredSourceCounts;
-  return { sourceMeta, countryCodes, configuredSourcesByCountry: configuredSourceCounts };
+  atlasConfiguredEndpointBreakdownByCountryCache = configuredEndpointBreakdownByCountry;
+  return {
+    sourceMeta,
+    countryCodes,
+    configuredSourcesByCountry: configuredSourceCounts,
+    configuredEndpointBreakdownByCountry,
+  };
 }
 
 export function getCountryCode(country: string): string | null {
@@ -164,6 +205,26 @@ export function getConfiguredDirectSourcesTotal(): number {
   return total;
 }
 
+export function getConfiguredDirectSourceEndpointBreakdownByCountry(country: string): SourceEndpointBreakdown {
+  const { configuredEndpointBreakdownByCountry } = loadAtlasSourceMeta();
+  return cloneSourceEndpointBreakdown(configuredEndpointBreakdownByCountry.get(country));
+}
+
+export function getConfiguredDirectSourceEndpointBreakdownTotal(): SourceEndpointBreakdown {
+  const { configuredEndpointBreakdownByCountry } = loadAtlasSourceMeta();
+  const total = emptySourceEndpointBreakdown();
+  for (const breakdown of configuredEndpointBreakdownByCountry.values()) {
+    total.rssOnly += breakdown.rssOnly;
+    total.newsSitemapOnly += breakdown.newsSitemapOnly;
+    total.sitemapIndexOnly += breakdown.sitemapIndexOnly;
+    total.otherSitemapOnly += breakdown.otherSitemapOnly;
+    total.rssPlusNewsSitemap += breakdown.rssPlusNewsSitemap;
+    total.rssPlusSitemapIndex += breakdown.rssPlusSitemapIndex;
+    total.rssPlusOtherSitemap += breakdown.rssPlusOtherSitemap;
+  }
+  return total;
+}
+
 export function getSourceMeta(source: string): SourceMethodMeta | null {
   const { sourceMeta } = loadAtlasSourceMeta();
   return sourceMeta.get(normalizeSourceKey(source)) || null;
@@ -173,6 +234,14 @@ export function classifySourceMethod(meta: SourceMethodMeta | null): 'rss' | 'si
   if (meta?.hasRss && meta?.hasSitemap) return 'rss+sitemap';
   if (meta?.hasSitemap) return 'sitemap';
   return 'rss';
+}
+
+export function classifySourceSitemapKind(meta: SourceMethodMeta | null): SourceSitemapKind {
+  return meta?.sitemapKind || 'none';
+}
+
+export function classifySourceEndpoint(meta: SourceMethodMeta | null): SourceEndpointProfile {
+  return meta?.endpointProfile || 'rss_only';
 }
 
 export function classifySourceDistribution(meta: SourceMethodMeta | null): SourceDistributionClass {

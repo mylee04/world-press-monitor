@@ -1,6 +1,7 @@
 import { buildMapCountryMetricsPayload } from '@/lib/map-country-metrics-builder';
 import { readMapCountryMetricsSnapshot } from '@/lib/map-snapshot-store';
 import { buildCountryWindowRecord } from '@/lib/map-store-windows';
+import { emptySourceEndpointBreakdown } from '@/lib/source-endpoint-classification';
 import type { MapCountryMetricsResponse, MapMetricWindow } from '@/lib/map-types';
 
 export { buildMapCountryMetricsPayload } from '@/lib/map-country-metrics-builder';
@@ -17,6 +18,7 @@ function buildEmptyMapCountryMetricsPayload(window: MapMetricWindow): MapCountry
       configuredSources24h: 0,
       checkedSources24h: 0,
       activeSources24h: 0,
+      configuredEndpointBreakdown: emptySourceEndpointBreakdown(),
       windows: buildCountryWindowRecord({}),
     },
     countries: [],

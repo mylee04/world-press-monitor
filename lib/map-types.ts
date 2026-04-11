@@ -1,3 +1,9 @@
+import type {
+  SourceEndpointBreakdown,
+  SourceEndpointProfile,
+  SourceSitemapKind,
+} from '@/lib/source-endpoint-classification';
+
 export type MapMetricWindow = '1h' | '24h' | '7d';
 export type MapStorageMode = 'postgres' | 'snapshot';
 export type MapPublisherConfidence = 'high' | 'medium' | 'low';
@@ -12,6 +18,7 @@ export type MapCountryWindowMetrics = {
   activeSources: number;
   rssSources: number;
   sitemapSources: number;
+  endpointBreakdown: SourceEndpointBreakdown;
   healthySources: number;
   degradedSources: number;
 };
@@ -30,8 +37,10 @@ export type MapCountryMetricRow = {
   activeSources24h: number;
   configuredSources24h: number;
   checkedSources24h: number;
+  configuredEndpointBreakdown: SourceEndpointBreakdown;
   rssSources24h: number;
   sitemapSources24h: number;
+  endpointBreakdown24h: SourceEndpointBreakdown;
   healthySources24h: number;
   degradedSources24h: number;
   windows: Record<MapMetricWindow, MapCountryWindowMetrics>;
@@ -50,6 +59,7 @@ export type MapCountryMetricsResponse = {
     configuredSources24h: number;
     checkedSources24h: number;
     activeSources24h: number;
+    configuredEndpointBreakdown: SourceEndpointBreakdown;
     windows: Record<MapMetricWindow, MapCountryWindowMetrics>;
   };
   countries: MapCountryMetricRow[];
@@ -127,6 +137,8 @@ export type MapSourceMetricRow = {
   firstSeen24h: number;
   windows: Record<MapMetricWindow, MapSourceWindowMetrics>;
   method: 'rss' | 'sitemap' | 'rss+sitemap';
+  endpointProfile: SourceEndpointProfile;
+  sitemapKind: SourceSitemapKind;
   health: 'healthy' | 'warning' | 'degraded' | 'failing' | 'unknown';
   rssUrl: string | null;
   sitemapUrl: string | null;
@@ -147,6 +159,8 @@ export type MapCountrySourcesResponse = {
     activeSources24h: number;
     rssSources24h: number;
     sitemapSources24h: number;
+    configuredEndpointBreakdown: SourceEndpointBreakdown;
+    endpointBreakdown24h: SourceEndpointBreakdown;
   };
   topSources: Array<{ name: string; count: number }>;
   topPublishers: Array<{ name: string; count: number }>;
@@ -172,6 +186,8 @@ export type MapSourceDetailResponse = {
   lat: number;
   lon: number;
   method: 'rss' | 'sitemap' | 'rss+sitemap';
+  endpointProfile: SourceEndpointProfile;
+  sitemapKind: SourceSitemapKind;
   rssUrl: string | null;
   sitemapUrl: string | null;
   health: {

@@ -678,6 +678,22 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     return true;
   }
 
+  if (
+    (hostname.endsWith('miamiherald.com') ||
+      hostname.endsWith('kansascity.com') ||
+      hostname.endsWith('sacbee.com') ||
+      hostname.endsWith('charlotteobserver.com') ||
+      hostname.endsWith('newsobserver.com') ||
+      hostname.endsWith('star-telegram.com') ||
+      hostname.endsWith('fresnobee.com') ||
+      hostname.endsWith('idahostatesman.com') ||
+      hostname.endsWith('kentucky.com') ||
+      hostname.endsWith('thestate.com')) &&
+    /^\/(?:sports|entertainment|living|opinion|charlottefive|miami-com|contributor-content|paid)(?:\/|$)/.test(pathname)
+  ) {
+    return true;
+  }
+
   if (pathname.startsWith('/iframe/')) {
     return true;
   }
