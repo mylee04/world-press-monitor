@@ -13508,7 +13508,776 @@
     {
       "name": "Israel",
       "code": "IL",
-      "feeds": []
+      "feeds": [
+        {
+          "name": "Times of Israel - Latest",
+          "url": "https://www.timesofisrael.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 1
+        },
+        {
+          "name": "Jerusalem Post - Israel News",
+          "url": "https://www.jpost.com/rss/rssfeedsisraelnews.aspx",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 2
+        },
+        {
+          "name": "Jerusalem Post - Middle East",
+          "url": "https://www.jpost.com/rss/rssfeedsmiddleeastnews.aspx",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 3
+        },
+        {
+          "name": "Jerusalem Post - World",
+          "url": "https://www.jpost.com/rss/rssfeedsinternational",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 4
+        },
+        {
+          "name": "Jerusalem Post - Front Page",
+          "url": "https://www.jpost.com/rss/rssfeedsfrontpage.aspx",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 5
+        },
+        {
+          "name": "Jerusalem Post - Business and Innovation",
+          "url": "https://www.jpost.com/rss/rssbusinessandinnovation",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 6
+        },
+        {
+          "name": "Jerusalem Post - Banking and Finance",
+          "url": "https://www.jpost.com/rss/rssbankingandfinance",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 7
+        },
+        {
+          "name": "Jerusalem Post - Energy and Infrastructure",
+          "url": "https://www.jpost.com/rss/rssenergyandinfrastructure",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 8
+        },
+        {
+          "name": "Jerusalem Post - Tech and Startups",
+          "url": "https://www.jpost.com/rss/rsstechandstartups",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 9
+        },
+        {
+          "name": "Jerusalem Post - Defense and Tech",
+          "url": "https://www.jpost.com/rss/rssfeeddefense-and-tech",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 10
+        },
+        {
+          "name": "Jerusalem Post - American Politics",
+          "url": "https://www.jpost.com/rss/rssfeedsamerican-politics",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 11
+        },
+        {
+          "name": "Jerusalem Post - Diaspora",
+          "url": "https://www.jpost.com/rss/rssfeedsdiaspora.aspx",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 12
+        },
+        {
+          "name": "Jerusalem Post - Antisemitism",
+          "url": "https://www.jpost.com/rss/rssfeedsantisemitism",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 13
+        },
+        {
+          "name": "Ynet - News",
+          "url": "https://www.ynet.co.il/Integration/StoryRss2.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 14
+        },
+        {
+          "name": "Ynet - Breaking News",
+          "url": "https://www.ynet.co.il/Integration/StoryRss1854.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 15
+        },
+        {
+          "name": "Ynet - Economy",
+          "url": "https://www.ynet.co.il/Integration/StoryRss6.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 16
+        },
+        {
+          "name": "Ynet - Sports",
+          "url": "https://www.ynet.co.il/Integration/StoryRss3.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 17
+        },
+        {
+          "name": "Ynet - Culture",
+          "url": "https://www.ynet.co.il/Integration/StoryRss538.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 18
+        },
+        {
+          "name": "Ynet - Health",
+          "url": "https://www.ynet.co.il/Integration/StoryRss1208.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 19
+        },
+        {
+          "name": "Ynet - Auto",
+          "url": "https://www.ynet.co.il/Integration/StoryRss550.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 20
+        },
+        {
+          "name": "Ynet - Food",
+          "url": "https://www.ynet.co.il/Integration/StoryRss975.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 21
+        },
+        {
+          "name": "Walla - Main News",
+          "url": "https://rss.walla.co.il/feed/1?type=main",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 22
+        },
+        {
+          "name": "Walla - Israel News",
+          "url": "https://rss.walla.co.il/feed/1",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 23
+        },
+        {
+          "name": "Walla - World News",
+          "url": "https://rss.walla.co.il/feed/2",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 24
+        },
+        {
+          "name": "Walla - Breaking News",
+          "url": "https://rss.walla.co.il/feed/22",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 25
+        },
+        {
+          "name": "Walla - Security",
+          "url": "https://rss.walla.co.il/feed/2689",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 26
+        },
+        {
+          "name": "Walla - Politics",
+          "url": "https://rss.walla.co.il/feed/2686",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 27
+        },
+        {
+          "name": "Walla - Finance",
+          "url": "https://rss.walla.co.il/feed/2?type=main",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 28
+        },
+        {
+          "name": "Walla - Sports",
+          "url": "https://rss.walla.co.il/feed/3?type=main",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 29
+        },
+        {
+          "name": "Walla - Culture",
+          "url": "https://rss.walla.co.il/feed/4?type=main",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 30
+        },
+        {
+          "name": "Walla - Auto",
+          "url": "https://rss.walla.co.il/feed/31?type=main",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 31
+        },
+        {
+          "name": "Walla - Health",
+          "url": "https://rss.walla.co.il/feed/139?type=main",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 32
+        },
+        {
+          "name": "Walla - Food",
+          "url": "https://rss.walla.co.il/feed/9?type=main",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 33
+        },
+        {
+          "name": "Walla - Fashion",
+          "url": "https://rss.walla.co.il/feed/24?type=main",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 34
+        },
+        {
+          "name": "Walla - Celebs",
+          "url": "https://rss.walla.co.il/feed/22?type=main",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 35
+        },
+        {
+          "name": "mako - Israel",
+          "url": "https://rcs.mako.co.il/rss/news-israel.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 36
+        },
+        {
+          "name": "mako - World",
+          "url": "https://rcs.mako.co.il/rss/news-world.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 37
+        },
+        {
+          "name": "mako - Military",
+          "url": "https://rcs.mako.co.il/rss/dac23afee62ff210VgnVCM2000002a0c10acRCRD.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 38
+        },
+        {
+          "name": "MivzakLive",
+          "url": "https://www.mivzaklive.co.il/feed",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 39
+        },
+        {
+          "name": "Maariv - Main News",
+          "url": "https://www.maariv.co.il/rss/rsschadashot",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 40
+        },
+        {
+          "name": "Maariv - Breaking News",
+          "url": "https://www.maariv.co.il/rss/rssfeedsmivzakichadashot",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 41
+        },
+        {
+          "name": "Maariv - Politics",
+          "url": "https://www.maariv.co.il/rss/rssfeedspolitimedini",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 42
+        },
+        {
+          "name": "Maariv - Israel News",
+          "url": "https://www.maariv.co.il/rss/rssfeedschadashotbaarez",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 43
+        },
+        {
+          "name": "Maariv - Security",
+          "url": "https://www.maariv.co.il/rss/rssfeedszavavebetachon",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 44
+        },
+        {
+          "name": "Maariv - World News",
+          "url": "https://www.maariv.co.il/rss/rssfeedschadashotbaolam",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 45
+        },
+        {
+          "name": "Maariv - Business",
+          "url": "https://www.maariv.co.il/rss/rssfeedsasakim",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 46
+        },
+        {
+          "name": "Maariv - Business World",
+          "url": "https://www.maariv.co.il/rss/rssfeedsasakimbaolam",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 47
+        },
+        {
+          "name": "Maariv - Economy Israel",
+          "url": "https://www.maariv.co.il/rss/rssfeedskalkalabaarez",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 48
+        },
+        {
+          "name": "Maariv - Technology",
+          "url": "https://www.maariv.co.il/rss/rssfeedstechnologeya",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 49
+        },
+        {
+          "name": "Maariv - Real Estate",
+          "url": "https://www.maariv.co.il/rss/rssfeedsnadlan",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 50
+        },
+        {
+          "name": "Maariv - Law",
+          "url": "https://www.maariv.co.il/rss/rssmishpat",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 51
+        },
+        {
+          "name": "Maariv - Consumer",
+          "url": "https://www.maariv.co.il/rss/rssfeedszarchanot",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 52
+        },
+        {
+          "name": "Maariv - Health",
+          "url": "https://www.maariv.co.il/rss/rssfeedsbriotveyeoz",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 53
+        },
+        {
+          "name": "Maariv - Local",
+          "url": "https://www.maariv.co.il/rss/rsshamekomon",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 54
+        },
+        {
+          "name": "Maariv - Culture",
+          "url": "https://www.maariv.co.il/rss/rssfeedstarbot",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 55
+        },
+        {
+          "name": "Maariv - Music",
+          "url": "https://www.maariv.co.il/rss/rssfeedsmozika",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 56
+        },
+        {
+          "name": "Maariv - Television",
+          "url": "https://www.maariv.co.il/rss/rssfeedstelevizya",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 57
+        },
+        {
+          "name": "Maariv - Celebs",
+          "url": "https://www.maariv.co.il/rss/rssfeedstmicelebsnews",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 58
+        },
+        {
+          "name": "Srugim",
+          "url": "https://www.srugim.co.il/feed",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 59
+        },
+        {
+          "name": "ICE",
+          "url": "https://www.ice.co.il/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 60
+        },
+        {
+          "name": "Israel Hayom - Latest",
+          "url": "https://www.israelhayom.co.il/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 61
+        },
+        {
+          "name": "Kipa",
+          "url": "https://www.kipa.co.il/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 62
+        },
+        {
+          "name": "Bechadrei Haredim",
+          "url": "https://www.bhol.co.il/feed",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 63
+        },
+        {
+          "name": "Kikar - Latest",
+          "url": "https://a.kikar.co.il/v1/rss/articles/latest/rss2",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 64
+        },
+        {
+          "name": "Kikar - War Diary",
+          "url": "https://a.kikar.co.il/v1/rss/articles/2014/rss2",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 65
+        },
+        {
+          "name": "Kikar - Security",
+          "url": "https://a.kikar.co.il/v1/rss/articles/1882/rss2",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 66
+        },
+        {
+          "name": "Kikar - Today at Kikar",
+          "url": "https://a.kikar.co.il/v1/rss/articles/1387/rss2",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 67
+        },
+        {
+          "name": "JDN",
+          "url": "https://www.jdn.co.il/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 68
+        },
+        {
+          "name": "ynetnews - English",
+          "url": "https://www.ynetnews.com/Integration/StoryRss2.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 69
+        },
+        {
+          "name": "ynetnews - English News",
+          "url": "https://www.ynet.co.il/Integration/StoryRss3082.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 70
+        },
+        {
+          "name": "ynetnews - English Opinion",
+          "url": "https://www.ynet.co.il/Integration/StoryRss3084.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 71
+        },
+        {
+          "name": "ynetnews - English Culture",
+          "url": "https://www.ynet.co.il/Integration/StoryRss3086.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 72
+        },
+        {
+          "name": "Israel National News",
+          "url": "https://www.israelnationalnews.com/Rss.aspx",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 73
+        },
+        {
+          "name": "Jerusalem Post - Sitemap Index",
+          "sitemapUrl": "https://www.jpost.com/jpgooglesitemap/sitemapindex.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 74
+        },
+        {
+          "name": "Walla - Sitemap Index",
+          "sitemapUrl": "https://news.walla.co.il/sitemap/1/index.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 75
+        },
+        {
+          "name": "mako - Sitemap Index",
+          "sitemapUrl": "https://www.mako.co.il/SiteMap/Mako-News-SitemapIndex.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 76
+        },
+        {
+          "name": "Maariv - Sitemap",
+          "sitemapUrl": "https://www.maariv.co.il/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 77
+        },
+        {
+          "name": "Srugim - Sitemap Index",
+          "sitemapUrl": "https://www.srugim.co.il/sitemap_index.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 78
+        },
+        {
+          "name": "ICE - Sitemap",
+          "sitemapUrl": "https://www.ice.co.il/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 79
+        },
+        {
+          "name": "Israel Hayom - Sitemap",
+          "sitemapUrl": "https://www.israelhayom.co.il/sitemaps/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 80
+        },
+        {
+          "name": "Kipa - Sitemap Index",
+          "sitemapUrl": "https://www.kipa.co.il/sitemap_index.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 81
+        },
+        {
+          "name": "Bechadrei Haredim - Sitemap Index",
+          "sitemapUrl": "https://www.bhol.co.il/sitemap_index.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 82
+        },
+        {
+          "name": "Kikar - Articles Sitemap",
+          "sitemapUrl": "https://a.kikar.co.il/v1/sitemap/articles",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 83
+        },
+        {
+          "name": "JDN - Sitemap Index",
+          "sitemapUrl": "https://www.jdn.co.il/sitemap_index.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 84
+        },
+        {
+          "name": "Israel National News - Sitemap",
+          "sitemapUrl": "https://www.israelnationalnews.com/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 85
+        },
+        {
+          "name": "Haaretz - Latest News Sitemap",
+          "sitemapUrl": "https://www.haaretz.com/news-sitemap-latest.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 86
+        },
+        {
+          "name": "Haaretz - Content News Sitemap",
+          "sitemapUrl": "https://www.haaretz.com/news-sitemap-content.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 87
+        },
+        {
+          "name": "TheMarker - Latest News Sitemap",
+          "sitemapUrl": "https://www.themarker.com/news-sitemap-latest.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 88
+        },
+        {
+          "name": "TheMarker - Content News Sitemap",
+          "sitemapUrl": "https://www.themarker.com/news-sitemap-content.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 89
+        },
+        {
+          "name": "Globes - Hebrew Sitemap",
+          "sitemapUrl": "https://www.globes.co.il/data/webservices/google-maps.ashx?language=he",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 90
+        },
+        {
+          "name": "Globes - English Sitemap",
+          "sitemapUrl": "https://www.globes.co.il/data/webservices/google-maps.ashx?language=en",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 91
+        },
+        {
+          "name": "Bizportal - Latest Sitemap",
+          "sitemapUrl": "https://www.bizportal.co.il/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 92
+        },
+        {
+          "name": "i24NEWS - English Articles Sitemap",
+          "sitemapUrl": "https://www.i24news.tv/en/sitemaps/articles.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 93
+        },
+        {
+          "name": "i24NEWS - Hebrew Articles Sitemap",
+          "sitemapUrl": "https://www.i24news.tv/he/sitemaps/articles.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 94
+        },
+        {
+          "name": "i24NEWS - English Google News Sitemap",
+          "sitemapUrl": "https://www.i24news.tv/en/sitemapGoogleNews.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 95
+        },
+        {
+          "name": "i24NEWS - Hebrew Google News Sitemap",
+          "sitemapUrl": "https://www.i24news.tv/he/sitemapGoogleNews.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 96
+        }
+      ]
     },
     {
       "name": "Jordan",

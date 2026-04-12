@@ -1353,6 +1353,102 @@ SA,Saudi Arabia,23,Arab News,https://www.arabnews.com/rss.xml,invalid,403,2026-0
 SA,Saudi Arabia,undefined,Sky News Arabia (Arabic Business),https://www.skynewsarabia.com/rss.xml,valid,200,2026-04-11T05:16:45.248Z
 SA,Saudi Arabia,undefined,Independent Arabia (Independent Arabic),https://www.independentarabia.com/rss.xml,valid,200,2026-04-11T05:16:45.248Z
 SA,Saudi Arabia,undefined,Saudi Gazette,https://saudigazette.com.sa/rssFeed/0,valid,200,2026-04-11T05:16:45.248Z
+IL,Israel,1,Times of Israel - Latest,https://www.timesofisrael.com/feed/,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,2,Jerusalem Post - Israel News,https://www.jpost.com/rss/rssfeedsisraelnews.aspx,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,3,Jerusalem Post - Middle East,https://www.jpost.com/rss/rssfeedsmiddleeastnews.aspx,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,4,Jerusalem Post - World,https://www.jpost.com/rss/rssfeedsinternational,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,5,Jerusalem Post - Front Page,https://www.jpost.com/rss/rssfeedsfrontpage.aspx,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,6,Jerusalem Post - Business and Innovation,https://www.jpost.com/rss/rssbusinessandinnovation,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,7,Jerusalem Post - Banking and Finance,https://www.jpost.com/rss/rssbankingandfinance,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,8,Jerusalem Post - Energy and Infrastructure,https://www.jpost.com/rss/rssenergyandinfrastructure,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,9,Jerusalem Post - Tech and Startups,https://www.jpost.com/rss/rsstechandstartups,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,10,Jerusalem Post - Defense and Tech,https://www.jpost.com/rss/rssfeeddefense-and-tech,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,11,Jerusalem Post - American Politics,https://www.jpost.com/rss/rssfeedsamerican-politics,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,12,Jerusalem Post - Diaspora,https://www.jpost.com/rss/rssfeedsdiaspora.aspx,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,13,Jerusalem Post - Antisemitism,https://www.jpost.com/rss/rssfeedsantisemitism,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,14,Ynet - News,https://www.ynet.co.il/Integration/StoryRss2.xml,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,15,Ynet - Breaking News,https://www.ynet.co.il/Integration/StoryRss1854.xml,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,16,Ynet - Economy,https://www.ynet.co.il/Integration/StoryRss6.xml,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,17,Ynet - Sports,https://www.ynet.co.il/Integration/StoryRss3.xml,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,18,Ynet - Culture,https://www.ynet.co.il/Integration/StoryRss538.xml,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,19,Ynet - Health,https://www.ynet.co.il/Integration/StoryRss1208.xml,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,20,Ynet - Auto,https://www.ynet.co.il/Integration/StoryRss550.xml,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,21,Ynet - Food,https://www.ynet.co.il/Integration/StoryRss975.xml,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,22,Walla - Main News,https://rss.walla.co.il/feed/1?type=main,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,23,Walla - Israel News,https://rss.walla.co.il/feed/1,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,24,Walla - World News,https://rss.walla.co.il/feed/2,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,25,Walla - Breaking News,https://rss.walla.co.il/feed/22,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,26,Walla - Security,https://rss.walla.co.il/feed/2689,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,27,Walla - Politics,https://rss.walla.co.il/feed/2686,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,28,Walla - Finance,https://rss.walla.co.il/feed/2?type=main,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,29,Walla - Sports,https://rss.walla.co.il/feed/3?type=main,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,30,Walla - Culture,https://rss.walla.co.il/feed/4?type=main,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,31,Walla - Auto,https://rss.walla.co.il/feed/31?type=main,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,32,Walla - Health,https://rss.walla.co.il/feed/139?type=main,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,33,Walla - Food,https://rss.walla.co.il/feed/9?type=main,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,34,Walla - Fashion,https://rss.walla.co.il/feed/24?type=main,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,35,Walla - Celebs,https://rss.walla.co.il/feed/22?type=main,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,36,mako - Israel,https://rcs.mako.co.il/rss/news-israel.xml,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,37,mako - World,https://rcs.mako.co.il/rss/news-world.xml,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,38,mako - Military,https://rcs.mako.co.il/rss/dac23afee62ff210VgnVCM2000002a0c10acRCRD.xml,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,39,MivzakLive,https://www.mivzaklive.co.il/feed,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,40,Maariv - Main News,https://www.maariv.co.il/rss/rsschadashot,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,41,Maariv - Breaking News,https://www.maariv.co.il/rss/rssfeedsmivzakichadashot,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,42,Maariv - Politics,https://www.maariv.co.il/rss/rssfeedspolitimedini,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,43,Maariv - Israel News,https://www.maariv.co.il/rss/rssfeedschadashotbaarez,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,44,Maariv - Security,https://www.maariv.co.il/rss/rssfeedszavavebetachon,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,45,Maariv - World News,https://www.maariv.co.il/rss/rssfeedschadashotbaolam,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,46,Maariv - Business,https://www.maariv.co.il/rss/rssfeedsasakim,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,47,Maariv - Business World,https://www.maariv.co.il/rss/rssfeedsasakimbaolam,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,48,Maariv - Economy Israel,https://www.maariv.co.il/rss/rssfeedskalkalabaarez,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,49,Maariv - Technology,https://www.maariv.co.il/rss/rssfeedstechnologeya,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,50,Maariv - Real Estate,https://www.maariv.co.il/rss/rssfeedsnadlan,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,51,Maariv - Law,https://www.maariv.co.il/rss/rssmishpat,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,52,Maariv - Consumer,https://www.maariv.co.il/rss/rssfeedszarchanot,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,53,Maariv - Health,https://www.maariv.co.il/rss/rssfeedsbriotveyeoz,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,54,Maariv - Local,https://www.maariv.co.il/rss/rsshamekomon,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,55,Maariv - Culture,https://www.maariv.co.il/rss/rssfeedstarbot,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,56,Maariv - Music,https://www.maariv.co.il/rss/rssfeedsmozika,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,57,Maariv - Television,https://www.maariv.co.il/rss/rssfeedstelevizya,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,58,Maariv - Celebs,https://www.maariv.co.il/rss/rssfeedstmicelebsnews,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,59,Srugim,https://www.srugim.co.il/feed,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,60,ICE,https://www.ice.co.il/rss,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,61,Israel Hayom - Latest,https://www.israelhayom.co.il/rss.xml,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,62,Kipa,https://www.kipa.co.il/feed/,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,63,Bechadrei Haredim,https://www.bhol.co.il/feed,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,64,Kikar - Latest,https://a.kikar.co.il/v1/rss/articles/latest/rss2,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,65,Kikar - War Diary,https://a.kikar.co.il/v1/rss/articles/2014/rss2,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,66,Kikar - Security,https://a.kikar.co.il/v1/rss/articles/1882/rss2,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,67,Kikar - Today at Kikar,https://a.kikar.co.il/v1/rss/articles/1387/rss2,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,68,JDN,https://www.jdn.co.il/feed/,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,69,ynetnews - English,https://www.ynetnews.com/Integration/StoryRss2.xml,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,70,ynetnews - English News,https://www.ynet.co.il/Integration/StoryRss3082.xml,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,71,ynetnews - English Opinion,https://www.ynet.co.il/Integration/StoryRss3084.xml,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,72,ynetnews - English Culture,https://www.ynet.co.il/Integration/StoryRss3086.xml,valid,200,2026-04-12T16:45:58.865Z
+IL,Israel,73,Israel National News,https://www.israelnationalnews.com/Rss.aspx,valid,N/A,
+IL,Israel,74,Jerusalem Post - Sitemap Index,https://www.jpost.com/jpgooglesitemap/sitemapindex.xml,needs verification,N/A,
+IL,Israel,75,Walla - Sitemap Index,https://news.walla.co.il/sitemap/1/index.xml,needs verification,N/A,
+IL,Israel,76,mako - Sitemap Index,https://www.mako.co.il/SiteMap/Mako-News-SitemapIndex.xml,needs verification,N/A,
+IL,Israel,77,Maariv - Sitemap,https://www.maariv.co.il/sitemap.xml,needs verification,N/A,
+IL,Israel,78,Srugim - Sitemap Index,https://www.srugim.co.il/sitemap_index.xml,needs verification,N/A,
+IL,Israel,79,ICE - Sitemap,https://www.ice.co.il/sitemap.xml,needs verification,N/A,
+IL,Israel,80,Israel Hayom - Sitemap,https://www.israelhayom.co.il/sitemaps/sitemap.xml,needs verification,N/A,
+IL,Israel,81,Kipa - Sitemap Index,https://www.kipa.co.il/sitemap_index.xml,needs verification,N/A,
+IL,Israel,82,Bechadrei Haredim - Sitemap Index,https://www.bhol.co.il/sitemap_index.xml,needs verification,N/A,
+IL,Israel,83,Kikar - Articles Sitemap,https://a.kikar.co.il/v1/sitemap/articles,needs verification,N/A,
+IL,Israel,84,JDN - Sitemap Index,https://www.jdn.co.il/sitemap_index.xml,needs verification,N/A,
+IL,Israel,85,Israel National News - Sitemap,https://www.israelnationalnews.com/sitemap.xml,needs verification,N/A,
+IL,Israel,86,Haaretz - Latest News Sitemap,https://www.haaretz.com/news-sitemap-latest.xml,needs verification,N/A,
+IL,Israel,87,Haaretz - Content News Sitemap,https://www.haaretz.com/news-sitemap-content.xml,needs verification,N/A,
+IL,Israel,88,TheMarker - Latest News Sitemap,https://www.themarker.com/news-sitemap-latest.xml,needs verification,N/A,
+IL,Israel,89,TheMarker - Content News Sitemap,https://www.themarker.com/news-sitemap-content.xml,needs verification,N/A,
+IL,Israel,90,Globes - Hebrew Sitemap,https://www.globes.co.il/data/webservices/google-maps.ashx?language=he,needs verification,N/A,
+IL,Israel,91,Globes - English Sitemap,https://www.globes.co.il/data/webservices/google-maps.ashx?language=en,needs verification,N/A,
+IL,Israel,92,Bizportal - Latest Sitemap,https://www.bizportal.co.il/sitemap.xml,needs verification,N/A,
+IL,Israel,93,i24NEWS - English Articles Sitemap,https://www.i24news.tv/en/sitemaps/articles.xml,needs verification,N/A,
+IL,Israel,94,i24NEWS - Hebrew Articles Sitemap,https://www.i24news.tv/he/sitemaps/articles.xml,needs verification,N/A,
+IL,Israel,95,i24NEWS - English Google News Sitemap,https://www.i24news.tv/en/sitemapGoogleNews.xml,needs verification,N/A,
+IL,Israel,96,i24NEWS - Hebrew Google News Sitemap,https://www.i24news.tv/he/sitemapGoogleNews.xml,needs verification,N/A,
 TW,Taiwan,4,Liberty Times - Business,https://news.ltn.com.tw/rss/business.xml,invalid,403,2026-04-11T05:16:45.248Z
 TW,Taiwan,5,TechNews Taiwan,https://technews.tw/feed/,valid,200,2026-04-11T05:16:45.248Z
 TW,Taiwan,6,CNA (Central News Agency),https://feeds.feedburner.com/cnaFirstNews,valid,200,2026-04-11T05:16:45.248Z

@@ -1403,6 +1403,102 @@
       <outline text="Saudi Gazette [valid]" title="Saudi Gazette [valid]" type="rss" xmlUrl="https://saudigazette.com.sa/rssFeed/0" htmlUrl="https://saudigazette.com.sa"/>
     </outline>
     <outline text="Israel (IL)" title="Israel (IL)">
+      <outline text="Times of Israel - Latest [valid]" title="Times of Israel - Latest [valid]" type="rss" xmlUrl="https://www.timesofisrael.com/feed/" htmlUrl="https://www.timesofisrael.com"/>
+      <outline text="Jerusalem Post - Israel News [valid]" title="Jerusalem Post - Israel News [valid]" type="rss" xmlUrl="https://www.jpost.com/rss/rssfeedsisraelnews.aspx" htmlUrl="https://www.jpost.com"/>
+      <outline text="Jerusalem Post - Middle East [valid]" title="Jerusalem Post - Middle East [valid]" type="rss" xmlUrl="https://www.jpost.com/rss/rssfeedsmiddleeastnews.aspx" htmlUrl="https://www.jpost.com"/>
+      <outline text="Jerusalem Post - World [valid]" title="Jerusalem Post - World [valid]" type="rss" xmlUrl="https://www.jpost.com/rss/rssfeedsinternational" htmlUrl="https://www.jpost.com"/>
+      <outline text="Jerusalem Post - Front Page [valid]" title="Jerusalem Post - Front Page [valid]" type="rss" xmlUrl="https://www.jpost.com/rss/rssfeedsfrontpage.aspx" htmlUrl="https://www.jpost.com"/>
+      <outline text="Jerusalem Post - Business and Innovation [valid]" title="Jerusalem Post - Business and Innovation [valid]" type="rss" xmlUrl="https://www.jpost.com/rss/rssbusinessandinnovation" htmlUrl="https://www.jpost.com"/>
+      <outline text="Jerusalem Post - Banking and Finance [valid]" title="Jerusalem Post - Banking and Finance [valid]" type="rss" xmlUrl="https://www.jpost.com/rss/rssbankingandfinance" htmlUrl="https://www.jpost.com"/>
+      <outline text="Jerusalem Post - Energy and Infrastructure [valid]" title="Jerusalem Post - Energy and Infrastructure [valid]" type="rss" xmlUrl="https://www.jpost.com/rss/rssenergyandinfrastructure" htmlUrl="https://www.jpost.com"/>
+      <outline text="Jerusalem Post - Tech and Startups [valid]" title="Jerusalem Post - Tech and Startups [valid]" type="rss" xmlUrl="https://www.jpost.com/rss/rsstechandstartups" htmlUrl="https://www.jpost.com"/>
+      <outline text="Jerusalem Post - Defense and Tech [valid]" title="Jerusalem Post - Defense and Tech [valid]" type="rss" xmlUrl="https://www.jpost.com/rss/rssfeeddefense-and-tech" htmlUrl="https://www.jpost.com"/>
+      <outline text="Jerusalem Post - American Politics [valid]" title="Jerusalem Post - American Politics [valid]" type="rss" xmlUrl="https://www.jpost.com/rss/rssfeedsamerican-politics" htmlUrl="https://www.jpost.com"/>
+      <outline text="Jerusalem Post - Diaspora [valid]" title="Jerusalem Post - Diaspora [valid]" type="rss" xmlUrl="https://www.jpost.com/rss/rssfeedsdiaspora.aspx" htmlUrl="https://www.jpost.com"/>
+      <outline text="Jerusalem Post - Antisemitism [valid]" title="Jerusalem Post - Antisemitism [valid]" type="rss" xmlUrl="https://www.jpost.com/rss/rssfeedsantisemitism" htmlUrl="https://www.jpost.com"/>
+      <outline text="Ynet - News [valid]" title="Ynet - News [valid]" type="rss" xmlUrl="https://www.ynet.co.il/Integration/StoryRss2.xml" htmlUrl="https://www.ynet.co.il"/>
+      <outline text="Ynet - Breaking News [valid]" title="Ynet - Breaking News [valid]" type="rss" xmlUrl="https://www.ynet.co.il/Integration/StoryRss1854.xml" htmlUrl="https://www.ynet.co.il"/>
+      <outline text="Ynet - Economy [valid]" title="Ynet - Economy [valid]" type="rss" xmlUrl="https://www.ynet.co.il/Integration/StoryRss6.xml" htmlUrl="https://www.ynet.co.il"/>
+      <outline text="Ynet - Sports [valid]" title="Ynet - Sports [valid]" type="rss" xmlUrl="https://www.ynet.co.il/Integration/StoryRss3.xml" htmlUrl="https://www.ynet.co.il"/>
+      <outline text="Ynet - Culture [valid]" title="Ynet - Culture [valid]" type="rss" xmlUrl="https://www.ynet.co.il/Integration/StoryRss538.xml" htmlUrl="https://www.ynet.co.il"/>
+      <outline text="Ynet - Health [valid]" title="Ynet - Health [valid]" type="rss" xmlUrl="https://www.ynet.co.il/Integration/StoryRss1208.xml" htmlUrl="https://www.ynet.co.il"/>
+      <outline text="Ynet - Auto [valid]" title="Ynet - Auto [valid]" type="rss" xmlUrl="https://www.ynet.co.il/Integration/StoryRss550.xml" htmlUrl="https://www.ynet.co.il"/>
+      <outline text="Ynet - Food [valid]" title="Ynet - Food [valid]" type="rss" xmlUrl="https://www.ynet.co.il/Integration/StoryRss975.xml" htmlUrl="https://www.ynet.co.il"/>
+      <outline text="Walla - Main News [valid]" title="Walla - Main News [valid]" type="rss" xmlUrl="https://rss.walla.co.il/feed/1?type=main" htmlUrl="https://rss.walla.co.il"/>
+      <outline text="Walla - Israel News [valid]" title="Walla - Israel News [valid]" type="rss" xmlUrl="https://rss.walla.co.il/feed/1" htmlUrl="https://rss.walla.co.il"/>
+      <outline text="Walla - World News [valid]" title="Walla - World News [valid]" type="rss" xmlUrl="https://rss.walla.co.il/feed/2" htmlUrl="https://rss.walla.co.il"/>
+      <outline text="Walla - Breaking News [valid]" title="Walla - Breaking News [valid]" type="rss" xmlUrl="https://rss.walla.co.il/feed/22" htmlUrl="https://rss.walla.co.il"/>
+      <outline text="Walla - Security [valid]" title="Walla - Security [valid]" type="rss" xmlUrl="https://rss.walla.co.il/feed/2689" htmlUrl="https://rss.walla.co.il"/>
+      <outline text="Walla - Politics [valid]" title="Walla - Politics [valid]" type="rss" xmlUrl="https://rss.walla.co.il/feed/2686" htmlUrl="https://rss.walla.co.il"/>
+      <outline text="Walla - Finance [valid]" title="Walla - Finance [valid]" type="rss" xmlUrl="https://rss.walla.co.il/feed/2?type=main" htmlUrl="https://rss.walla.co.il"/>
+      <outline text="Walla - Sports [valid]" title="Walla - Sports [valid]" type="rss" xmlUrl="https://rss.walla.co.il/feed/3?type=main" htmlUrl="https://rss.walla.co.il"/>
+      <outline text="Walla - Culture [valid]" title="Walla - Culture [valid]" type="rss" xmlUrl="https://rss.walla.co.il/feed/4?type=main" htmlUrl="https://rss.walla.co.il"/>
+      <outline text="Walla - Auto [valid]" title="Walla - Auto [valid]" type="rss" xmlUrl="https://rss.walla.co.il/feed/31?type=main" htmlUrl="https://rss.walla.co.il"/>
+      <outline text="Walla - Health [valid]" title="Walla - Health [valid]" type="rss" xmlUrl="https://rss.walla.co.il/feed/139?type=main" htmlUrl="https://rss.walla.co.il"/>
+      <outline text="Walla - Food [valid]" title="Walla - Food [valid]" type="rss" xmlUrl="https://rss.walla.co.il/feed/9?type=main" htmlUrl="https://rss.walla.co.il"/>
+      <outline text="Walla - Fashion [valid]" title="Walla - Fashion [valid]" type="rss" xmlUrl="https://rss.walla.co.il/feed/24?type=main" htmlUrl="https://rss.walla.co.il"/>
+      <outline text="Walla - Celebs [valid]" title="Walla - Celebs [valid]" type="rss" xmlUrl="https://rss.walla.co.il/feed/22?type=main" htmlUrl="https://rss.walla.co.il"/>
+      <outline text="mako - Israel [valid]" title="mako - Israel [valid]" type="rss" xmlUrl="https://rcs.mako.co.il/rss/news-israel.xml" htmlUrl="https://rcs.mako.co.il"/>
+      <outline text="mako - World [valid]" title="mako - World [valid]" type="rss" xmlUrl="https://rcs.mako.co.il/rss/news-world.xml" htmlUrl="https://rcs.mako.co.il"/>
+      <outline text="mako - Military [valid]" title="mako - Military [valid]" type="rss" xmlUrl="https://rcs.mako.co.il/rss/dac23afee62ff210VgnVCM2000002a0c10acRCRD.xml" htmlUrl="https://rcs.mako.co.il"/>
+      <outline text="MivzakLive [valid]" title="MivzakLive [valid]" type="rss" xmlUrl="https://www.mivzaklive.co.il/feed" htmlUrl="https://www.mivzaklive.co.il"/>
+      <outline text="Maariv - Main News [valid]" title="Maariv - Main News [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rsschadashot" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Maariv - Breaking News [valid]" title="Maariv - Breaking News [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rssfeedsmivzakichadashot" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Maariv - Politics [valid]" title="Maariv - Politics [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rssfeedspolitimedini" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Maariv - Israel News [valid]" title="Maariv - Israel News [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rssfeedschadashotbaarez" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Maariv - Security [valid]" title="Maariv - Security [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rssfeedszavavebetachon" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Maariv - World News [valid]" title="Maariv - World News [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rssfeedschadashotbaolam" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Maariv - Business [valid]" title="Maariv - Business [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rssfeedsasakim" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Maariv - Business World [valid]" title="Maariv - Business World [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rssfeedsasakimbaolam" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Maariv - Economy Israel [valid]" title="Maariv - Economy Israel [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rssfeedskalkalabaarez" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Maariv - Technology [valid]" title="Maariv - Technology [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rssfeedstechnologeya" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Maariv - Real Estate [valid]" title="Maariv - Real Estate [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rssfeedsnadlan" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Maariv - Law [valid]" title="Maariv - Law [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rssmishpat" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Maariv - Consumer [valid]" title="Maariv - Consumer [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rssfeedszarchanot" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Maariv - Health [valid]" title="Maariv - Health [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rssfeedsbriotveyeoz" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Maariv - Local [valid]" title="Maariv - Local [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rsshamekomon" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Maariv - Culture [valid]" title="Maariv - Culture [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rssfeedstarbot" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Maariv - Music [valid]" title="Maariv - Music [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rssfeedsmozika" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Maariv - Television [valid]" title="Maariv - Television [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rssfeedstelevizya" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Maariv - Celebs [valid]" title="Maariv - Celebs [valid]" type="rss" xmlUrl="https://www.maariv.co.il/rss/rssfeedstmicelebsnews" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Srugim [valid]" title="Srugim [valid]" type="rss" xmlUrl="https://www.srugim.co.il/feed" htmlUrl="https://www.srugim.co.il"/>
+      <outline text="ICE [valid]" title="ICE [valid]" type="rss" xmlUrl="https://www.ice.co.il/rss" htmlUrl="https://www.ice.co.il"/>
+      <outline text="Israel Hayom - Latest [valid]" title="Israel Hayom - Latest [valid]" type="rss" xmlUrl="https://www.israelhayom.co.il/rss.xml" htmlUrl="https://www.israelhayom.co.il"/>
+      <outline text="Kipa [valid]" title="Kipa [valid]" type="rss" xmlUrl="https://www.kipa.co.il/feed/" htmlUrl="https://www.kipa.co.il"/>
+      <outline text="Bechadrei Haredim [valid]" title="Bechadrei Haredim [valid]" type="rss" xmlUrl="https://www.bhol.co.il/feed" htmlUrl="https://www.bhol.co.il"/>
+      <outline text="Kikar - Latest [valid]" title="Kikar - Latest [valid]" type="rss" xmlUrl="https://a.kikar.co.il/v1/rss/articles/latest/rss2" htmlUrl="https://a.kikar.co.il"/>
+      <outline text="Kikar - War Diary [valid]" title="Kikar - War Diary [valid]" type="rss" xmlUrl="https://a.kikar.co.il/v1/rss/articles/2014/rss2" htmlUrl="https://a.kikar.co.il"/>
+      <outline text="Kikar - Security [valid]" title="Kikar - Security [valid]" type="rss" xmlUrl="https://a.kikar.co.il/v1/rss/articles/1882/rss2" htmlUrl="https://a.kikar.co.il"/>
+      <outline text="Kikar - Today at Kikar [valid]" title="Kikar - Today at Kikar [valid]" type="rss" xmlUrl="https://a.kikar.co.il/v1/rss/articles/1387/rss2" htmlUrl="https://a.kikar.co.il"/>
+      <outline text="JDN [valid]" title="JDN [valid]" type="rss" xmlUrl="https://www.jdn.co.il/feed/" htmlUrl="https://www.jdn.co.il"/>
+      <outline text="ynetnews - English [valid]" title="ynetnews - English [valid]" type="rss" xmlUrl="https://www.ynetnews.com/Integration/StoryRss2.xml" htmlUrl="https://www.ynetnews.com"/>
+      <outline text="ynetnews - English News [valid]" title="ynetnews - English News [valid]" type="rss" xmlUrl="https://www.ynet.co.il/Integration/StoryRss3082.xml" htmlUrl="https://www.ynet.co.il"/>
+      <outline text="ynetnews - English Opinion [valid]" title="ynetnews - English Opinion [valid]" type="rss" xmlUrl="https://www.ynet.co.il/Integration/StoryRss3084.xml" htmlUrl="https://www.ynet.co.il"/>
+      <outline text="ynetnews - English Culture [valid]" title="ynetnews - English Culture [valid]" type="rss" xmlUrl="https://www.ynet.co.il/Integration/StoryRss3086.xml" htmlUrl="https://www.ynet.co.il"/>
+      <outline text="Israel National News [valid]" title="Israel National News [valid]" type="rss" xmlUrl="https://www.israelnationalnews.com/Rss.aspx" htmlUrl="https://www.israelnationalnews.com"/>
+      <outline text="Jerusalem Post - Sitemap Index [needs verification]" title="Jerusalem Post - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.jpost.com/jpgooglesitemap/sitemapindex.xml" htmlUrl="https://www.jpost.com"/>
+      <outline text="Walla - Sitemap Index [needs verification]" title="Walla - Sitemap Index [needs verification]" type="rss" xmlUrl="https://news.walla.co.il/sitemap/1/index.xml" htmlUrl="https://news.walla.co.il"/>
+      <outline text="mako - Sitemap Index [needs verification]" title="mako - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.mako.co.il/SiteMap/Mako-News-SitemapIndex.xml" htmlUrl="https://www.mako.co.il"/>
+      <outline text="Maariv - Sitemap [needs verification]" title="Maariv - Sitemap [needs verification]" type="rss" xmlUrl="https://www.maariv.co.il/sitemap.xml" htmlUrl="https://www.maariv.co.il"/>
+      <outline text="Srugim - Sitemap Index [needs verification]" title="Srugim - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.srugim.co.il/sitemap_index.xml" htmlUrl="https://www.srugim.co.il"/>
+      <outline text="ICE - Sitemap [needs verification]" title="ICE - Sitemap [needs verification]" type="rss" xmlUrl="https://www.ice.co.il/sitemap.xml" htmlUrl="https://www.ice.co.il"/>
+      <outline text="Israel Hayom - Sitemap [needs verification]" title="Israel Hayom - Sitemap [needs verification]" type="rss" xmlUrl="https://www.israelhayom.co.il/sitemaps/sitemap.xml" htmlUrl="https://www.israelhayom.co.il"/>
+      <outline text="Kipa - Sitemap Index [needs verification]" title="Kipa - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.kipa.co.il/sitemap_index.xml" htmlUrl="https://www.kipa.co.il"/>
+      <outline text="Bechadrei Haredim - Sitemap Index [needs verification]" title="Bechadrei Haredim - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.bhol.co.il/sitemap_index.xml" htmlUrl="https://www.bhol.co.il"/>
+      <outline text="Kikar - Articles Sitemap [needs verification]" title="Kikar - Articles Sitemap [needs verification]" type="rss" xmlUrl="https://a.kikar.co.il/v1/sitemap/articles" htmlUrl="https://a.kikar.co.il"/>
+      <outline text="JDN - Sitemap Index [needs verification]" title="JDN - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.jdn.co.il/sitemap_index.xml" htmlUrl="https://www.jdn.co.il"/>
+      <outline text="Israel National News - Sitemap [needs verification]" title="Israel National News - Sitemap [needs verification]" type="rss" xmlUrl="https://www.israelnationalnews.com/sitemap.xml" htmlUrl="https://www.israelnationalnews.com"/>
+      <outline text="Haaretz - Latest News Sitemap [needs verification]" title="Haaretz - Latest News Sitemap [needs verification]" type="rss" xmlUrl="https://www.haaretz.com/news-sitemap-latest.xml" htmlUrl="https://www.haaretz.com"/>
+      <outline text="Haaretz - Content News Sitemap [needs verification]" title="Haaretz - Content News Sitemap [needs verification]" type="rss" xmlUrl="https://www.haaretz.com/news-sitemap-content.xml" htmlUrl="https://www.haaretz.com"/>
+      <outline text="TheMarker - Latest News Sitemap [needs verification]" title="TheMarker - Latest News Sitemap [needs verification]" type="rss" xmlUrl="https://www.themarker.com/news-sitemap-latest.xml" htmlUrl="https://www.themarker.com"/>
+      <outline text="TheMarker - Content News Sitemap [needs verification]" title="TheMarker - Content News Sitemap [needs verification]" type="rss" xmlUrl="https://www.themarker.com/news-sitemap-content.xml" htmlUrl="https://www.themarker.com"/>
+      <outline text="Globes - Hebrew Sitemap [needs verification]" title="Globes - Hebrew Sitemap [needs verification]" type="rss" xmlUrl="https://www.globes.co.il/data/webservices/google-maps.ashx?language=he" htmlUrl="https://www.globes.co.il"/>
+      <outline text="Globes - English Sitemap [needs verification]" title="Globes - English Sitemap [needs verification]" type="rss" xmlUrl="https://www.globes.co.il/data/webservices/google-maps.ashx?language=en" htmlUrl="https://www.globes.co.il"/>
+      <outline text="Bizportal - Latest Sitemap [needs verification]" title="Bizportal - Latest Sitemap [needs verification]" type="rss" xmlUrl="https://www.bizportal.co.il/sitemap.xml" htmlUrl="https://www.bizportal.co.il"/>
+      <outline text="i24NEWS - English Articles Sitemap [needs verification]" title="i24NEWS - English Articles Sitemap [needs verification]" type="rss" xmlUrl="https://www.i24news.tv/en/sitemaps/articles.xml" htmlUrl="https://www.i24news.tv"/>
+      <outline text="i24NEWS - Hebrew Articles Sitemap [needs verification]" title="i24NEWS - Hebrew Articles Sitemap [needs verification]" type="rss" xmlUrl="https://www.i24news.tv/he/sitemaps/articles.xml" htmlUrl="https://www.i24news.tv"/>
+      <outline text="i24NEWS - English Google News Sitemap [needs verification]" title="i24NEWS - English Google News Sitemap [needs verification]" type="rss" xmlUrl="https://www.i24news.tv/en/sitemapGoogleNews.xml" htmlUrl="https://www.i24news.tv"/>
+      <outline text="i24NEWS - Hebrew Google News Sitemap [needs verification]" title="i24NEWS - Hebrew Google News Sitemap [needs verification]" type="rss" xmlUrl="https://www.i24news.tv/he/sitemapGoogleNews.xml" htmlUrl="https://www.i24news.tv"/>
     </outline>
     <outline text="Jordan (JO)" title="Jordan (JO)">
     </outline>
