@@ -329,7 +329,7 @@ function shouldKeepSitemapLink(link: string, baseUrl?: string): boolean {
 export function parseSitemapWithStats(xml: string, limit = 12, baseUrl?: string): ParsedFeedBatch {
   const rows = [...xml.matchAll(/<(?:[\w.-]+:)?url\b[^>]*>([\s\S]*?)<\/(?:[\w.-]+:)?url>/gi)]
     .map((match) => match[1])
-    .map((body) => {
+    .map((body, index) => {
       const link = resolveFeedLink(parseTagByLocalName(body, 'loc'), baseUrl);
       const title =
         parseTag(body, 'news:title')
@@ -353,13 +353,21 @@ export function parseSitemapWithStats(xml: string, limit = 12, baseUrl?: string)
         missingLink: !link,
         missingSummary: true,
         missingPublishedAt: !publishedAt,
+        sortPublishedAtMs: publishedAt ? Date.parse(publishedAt) : Number.NaN,
+        sortIndex: index,
       };
     })
     .filter((row) => shouldKeepSitemapLink(row.link, baseUrl))
+    .sort((left, right) => {
+      const leftMs = Number.isFinite(left.sortPublishedAtMs) ? left.sortPublishedAtMs : Number.NEGATIVE_INFINITY;
+      const rightMs = Number.isFinite(right.sortPublishedAtMs) ? right.sortPublishedAtMs : Number.NEGATIVE_INFINITY;
+      if (rightMs !== leftMs) return rightMs - leftMs;
+      return left.sortIndex - right.sortIndex;
+    })
     .slice(0, limit);
 
   return {
-    items: toItems(rows),
-    stats: summarizeStats(rows),
+    items: toItems(rows.map(({ sortPublishedAtMs: _sortPublishedAtMs, sortIndex: _sortIndex, ...row }) => row)),
+    stats: summarizeStats(rows.map(({ sortPublishedAtMs: _sortPublishedAtMs, sortIndex: _sortIndex, ...row }) => row)),
   };
 }
