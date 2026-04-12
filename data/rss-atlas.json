@@ -29935,11 +29935,48 @@
           "url": "https://www.diena.lv/rss/?c=4"
         },
         {
+          "name": "Diena - Sports",
+          "url": "https://www.diena.lv/rss/?c=5",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Sportacentrs",
           "url": "https://sportacentrs.com/static/non-publish/rss/sc/rss.xml",
           "sitemapUrl": "https://sportacentrs.com/sitemap.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "eDruva",
+          "url": "https://edruva.lv/feed/",
+          "sitemapUrl": "https://edruva.lv/wp-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Kurzemnieks",
+          "url": "https://kurzemnieks.lv/feed/",
+          "sitemapUrl": "https://kurzemnieks.lv/wp-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Briva Daugava - Sitemap",
+          "sitemapUrl": "https://www.bdaugava.lv/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Novaja - Sitemap Index",
+          "sitemapUrl": "https://www.novaja.lv/wp-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
           "valid": "valid"
         }
       ]
