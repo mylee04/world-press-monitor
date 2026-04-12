@@ -1,4 +1,5 @@
 import { normalizeHtmlText } from './html-entities';
+import { normalizeLooseDateToIso } from './date-parsing';
 
 export interface ParsedFeedItem {
   title: string;
@@ -43,18 +44,6 @@ function clean(text: string): string {
 function escapeRegExp(value: string): string {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
-
-const DATE_TIMEZONE_OFFSETS: Record<string, string> = {
-  BST: '+0100',
-  CET: '+0100',
-  CEST: '+0200',
-  EET: '+0200',
-  EEST: '+0300',
-  MSD: '+0400',
-  MSK: '+0300',
-  WEST: '+0100',
-  WET: '+0000',
-};
 
 function parseTag(body: string, tag: string): string {
   const match = body.match(new RegExp(`<${tag}[^>]*>([\\s\\S]*?)<\\/${tag}>`, 'i'));
@@ -142,22 +131,7 @@ function parseDescription(body: string): string {
 function normalizePublishedAt(value: string): string {
   const raw = (value || '').trim();
   if (!raw) return '';
-  if (/^\d{4}-\d{2}-\d{2}$/.test(raw)) {
-    return new Date(`${raw}T12:00:00Z`).toISOString();
-  }
-  const directTs = new Date(raw).getTime();
-  if (Number.isFinite(directTs)) return new Date(directTs).toISOString();
-
-  const timezoneMatch = raw.match(/^(.*\s)([A-Z]{2,5})$/);
-  if (timezoneMatch) {
-    const normalizedTz = DATE_TIMEZONE_OFFSETS[timezoneMatch[2]];
-    if (normalizedTz) {
-      const tzTs = new Date(`${timezoneMatch[1]}${normalizedTz}`).getTime();
-      if (Number.isFinite(tzTs)) return new Date(tzTs).toISOString();
-    }
-  }
-
-  return '';
+  return normalizeLooseDateToIso(raw);
 }
 
 function inferPublishedAtFromLink(link: string): string {
@@ -219,6 +193,125 @@ function toItems(rows: ParsedFeedItemWithMissing[]): ParsedFeedItem[] {
       categories: row.categories,
       stableId: row.stableId || undefined,
     }));
+}
+
+function parseJsonLdBlocks(html: string): unknown[] {
+  const blocks = [...html.matchAll(/<script[^>]+type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)];
+  const values: unknown[] = [];
+  for (const match of blocks) {
+    const raw = clean(match[1] || '').trim();
+    if (!raw) continue;
+    const candidates = [
+      raw,
+      raw
+        .replace(/&quot;/g, '"')
+        .replace(/&#34;/g, '"')
+        .replace(/&amp;/g, '&')
+        .replace(/&#39;/g, '\'')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+    ];
+    for (const candidate of candidates) {
+      try {
+        values.push(JSON.parse(candidate));
+        break;
+      } catch {
+        // Continue trying the next normalized variant.
+      }
+    }
+  }
+  return values;
+}
+
+function normalizeJsonLdType(value: unknown): string[] {
+  if (Array.isArray(value)) return value.flatMap((entry) => normalizeJsonLdType(entry));
+  if (typeof value !== 'string') return [];
+  return [value.trim().toLowerCase()];
+}
+
+function looksLikeJsonLdCollection(node: Record<string, unknown>): boolean {
+  const types = normalizeJsonLdType(node['@type']);
+  return types.includes('collectionpage') || types.includes('itemlist');
+}
+
+function extractJsonLdListEntries(node: unknown, bucket: Array<Record<string, unknown>>): void {
+  if (Array.isArray(node)) {
+    for (const entry of node) {
+      extractJsonLdListEntries(entry, bucket);
+    }
+    return;
+  }
+  if (!node || typeof node !== 'object') return;
+
+  const record = node as Record<string, unknown>;
+  const listEntries = Array.isArray(record.itemListElement)
+    ? record.itemListElement.filter((entry): entry is Record<string, unknown> => Boolean(entry) && typeof entry === 'object')
+    : [];
+  if (looksLikeJsonLdCollection(record) && listEntries.length > 0) {
+    bucket.push(...listEntries);
+  }
+
+  for (const key of ['mainEntity', 'item', 'hasPart']) {
+    if (key in record) {
+      extractJsonLdListEntries(record[key], bucket);
+    }
+  }
+}
+
+function extractHtmlCollectionField(entry: Record<string, unknown>, keys: string[]): string {
+  for (const key of keys) {
+    const direct = entry[key];
+    if (typeof direct === 'string' && direct.trim()) return normalizeHtmlText(direct.trim());
+  }
+
+  const nested = entry.item;
+  if (nested && typeof nested === 'object' && !Array.isArray(nested)) {
+    return extractHtmlCollectionField(nested as Record<string, unknown>, keys);
+  }
+
+  return '';
+}
+
+export function parseHtmlCollectionWithStats(html: string, limit = 12, baseUrl?: string): ParsedFeedBatch {
+  const rawEntries: Array<Record<string, unknown>> = [];
+  for (const block of parseJsonLdBlocks(html)) {
+    extractJsonLdListEntries(block, rawEntries);
+  }
+
+  const deduped = new Map<string, ParsedFeedItemWithMissing>();
+  for (const entry of rawEntries) {
+    const link = resolveFeedLink(
+      extractHtmlCollectionField(entry, ['url', '@id', 'mainEntityOfPage']),
+      baseUrl
+    );
+    const title =
+      extractHtmlCollectionField(entry, ['name', 'headline', 'title'])
+      || inferTitleFromLink(link)
+      || link;
+    const publishedAt =
+      normalizePublishedAt(extractHtmlCollectionField(entry, ['datePublished', 'dateCreated', 'dateModified']))
+      || inferPublishedAtFromLink(link);
+    const key = link || `${title}|${publishedAt}`;
+    if (!key || deduped.has(key)) continue;
+    deduped.set(key, {
+      title,
+      description: '',
+      link,
+      publishedAt,
+      categories: [],
+      stableId: link,
+      missingTitle: !title,
+      missingLink: !link,
+      missingSummary: true,
+      missingPublishedAt: !publishedAt,
+    });
+  }
+
+  const rows = [...deduped.values()].slice(0, limit);
+  return {
+    items: toItems(rows),
+    stats: summarizeStats(rows),
+  };
 }
 
 export function parseRssOrAtom(xml: string, limit = 10): ParsedFeedItem[] {
@@ -340,7 +433,6 @@ export function parseSitemapWithStats(xml: string, limit = 12, baseUrl?: string)
         normalizePublishedAt(parseTag(body, 'news:publication_date'))
         || normalizePublishedAt(parseTagByLocalName(body, 'publication_date'))
         || normalizePublishedAt(parseTagByLocalName(body, 'lastmod'))
-        || normalizePublishedAt(parseTagByLocalName(body, 'priority'))
         || inferPublishedAtFromLink(link);
       return {
         title,

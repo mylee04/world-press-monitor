@@ -4,6 +4,8 @@ import {
   writeCountryBenchmarkSnapshot,
   writeDashboardSummarySnapshot,
 } from '@/lib/customer-dashboard-snapshot-store';
+import { closeBenchmarkStoreQueriesPool } from '@/lib/benchmark-store-queries';
+import { closeIngestionStorePool } from '@/lib/ingestion-store';
 import { readNewsDashboardSummary } from '@/lib/ingestion-store';
 import type { NewsApiDashboardSummaryResponse } from '@/lib/news-api';
 
@@ -153,7 +155,18 @@ async function main() {
   }
 }
 
-main().catch((error) => {
-  console.error('[build-customer-dashboard-snapshots] failed:', error instanceof Error ? error.stack || error.message : String(error));
-  process.exit(1);
-});
+async function shutdown(): Promise<void> {
+  await Promise.allSettled([
+    closeBenchmarkStoreQueriesPool(),
+    closeIngestionStorePool(),
+  ]);
+}
+
+main()
+  .catch((error) => {
+    console.error('[build-customer-dashboard-snapshots] failed:', error instanceof Error ? error.stack || error.message : String(error));
+    process.exitCode = 1;
+  })
+  .finally(async () => {
+    await shutdown();
+  });

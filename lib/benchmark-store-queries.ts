@@ -85,6 +85,13 @@ function getPool(): Pool {
   return pool;
 }
 
+export async function closeBenchmarkStoreQueriesPool(): Promise<void> {
+  if (!pool) return;
+  const current = pool;
+  pool = null;
+  await current.end().catch(() => undefined);
+}
+
 function parseMetricCount(value: string | number | null | undefined): number {
   if (typeof value === 'number') return Number.isFinite(value) ? value : 0;
   const parsed = Number.parseInt(String(value ?? ''), 10);

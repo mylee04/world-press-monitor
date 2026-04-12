@@ -23253,7 +23253,7 @@
         {
           "name": "DublinLive",
           "url": "https://www.dublinlive.ie/rss.xml",
-          "sitemapUrl": "https://www.dublinlive.ie/map_news.xml"
+          "sitemapUrl": "https://www.dublinlive.ie/sitemaps/sitemap_index.xml"
         },
         {
           "name": "Irish Examiner",
@@ -23289,12 +23289,12 @@
         {
           "name": "Irish Star",
           "url": "https://www.irishstar.com/rss.xml",
-          "sitemapUrl": "https://www.irishstar.com/map_news.xml"
+          "sitemapUrl": "https://www.irishstar.com/sitemaps/sitemap_index.xml"
         },
         {
           "name": "CorkBeo",
           "url": "https://www.corkbeo.ie/rss.xml",
-          "sitemapUrl": "https://www.corkbeo.ie/map_news.xml"
+          "sitemapUrl": "https://www.corkbeo.ie/sitemaps/sitemap_index.xml"
         },
         {
           "name": "GalwayBeo",
@@ -23464,15 +23464,16 @@
           "name": "The Sun Ireland",
           "url": null,
           "sitemapUrl": "https://www.thesun.ie/news-sitemap.xml",
-          "status": "NEW",
+          "enabled": false,
+          "status": "ERR",
           "checkedDate": "04/12/2026",
-          "valid": "valid",
+          "valid": "invalid",
           "row": 18
         },
         {
           "name": "BelfastLive",
           "url": "https://www.belfastlive.co.uk/rss.xml",
-          "sitemapUrl": "https://www.belfastlive.co.uk/map_news.xml",
+          "sitemapUrl": "https://www.belfastlive.co.uk/sitemaps/sitemap_index.xml",
           "status": "NEW",
           "checkedDate": "03/16/2026",
           "valid": "valid",
@@ -24052,7 +24053,7 @@
         {
           "name": "RSVP Live",
           "url": null,
-          "sitemapUrl": "https://www.rsvplive.ie/map_news.xml",
+          "sitemapUrl": "https://www.rsvplive.ie/sitemaps/sitemap_index.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/12/2026",
           "valid": "valid",
@@ -24892,6 +24893,7 @@
         {
           "name": "Mobilsiden",
           "url": "https://mobilsiden.dk/feed/",
+          "sitemapUrl": "https://mobilsiden.dk/sitemap_index.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/02/2026",
           "valid": "valid"
@@ -24944,7 +24946,8 @@
         },
         {
           "name": "Meremobil",
-          "url": "https://meremobil.dk/feed/"
+          "url": "https://meremobil.dk/feed/",
+          "sitemapUrl": "https://meremobil.dk/sitemap_index.xml"
         },
         {
           "name": "Recordere",
@@ -27771,12 +27774,75 @@
           "url": "https://spravy.pravda.sk/rss/xml/"
         },
         {
+          "name": "Pravda - Sitemap Index",
+          "sitemapUrl": "https://spravy.pravda.sk/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
           "name": "HNonline",
           "url": "https://hnonline.sk/feed"
         },
         {
           "name": "TVNoviny.sk",
           "sitemapUrl": "https://tvnoviny.sk/api/v1/sitemap-index"
+        },
+        {
+          "name": "STVR Spravy - RSS",
+          "url": "https://spravy.rtvs.sk/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "STVR Spravy - News Sitemap",
+          "sitemapUrl": "https://spravy.stvr.sk/news_sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "STVR Spravy - Slovensko Sitemap",
+          "sitemapUrl": "https://spravy.stvr.sk/slovensko_articles_sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "STVR Spravy - Svet Sitemap",
+          "sitemapUrl": "https://spravy.stvr.sk/svet_articles_sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "STVR Spravy - Ekonomika Sitemap",
+          "sitemapUrl": "https://spravy.stvr.sk/ekonomika_articles_sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "STVR Spravy - Regiony Sitemap",
+          "sitemapUrl": "https://spravy.stvr.sk/regiony_articles_sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "STVR Spravy - Sport Sitemap",
+          "sitemapUrl": "https://spravy.stvr.sk/sport_articles_sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "STVR Spravy - Radiozurnal Sitemap",
+          "sitemapUrl": "https://spravy.stvr.sk/radiozurnal_articles_sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
         },
         {
           "name": "TA3",
@@ -27823,6 +27889,41 @@
           "url": "https://www.topky.sk/rss/8/TOPKY"
         },
         {
+          "name": "Topky - Domace",
+          "url": "https://www.topky.sk/rss/10/Spravy_-_Domace.rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Topky - Zahranicne",
+          "url": "https://www.topky.sk/rss/11/Spravy_-_Zahranicne.rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Topky - Kultura",
+          "url": "https://www.topky.sk/rss/5/Kultura.rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Topky - Zaujimavosti",
+          "url": "https://www.topky.sk/rss/13/Zaujimavosti.rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Sportky - Futbal",
+          "url": "https://sportky.zoznam.sk/rss/14/Sport_-_Futbal.rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Novy Cas - Google News Sitemap",
           "sitemapUrl": "https://www.cas.sk/google_news.xml"
         },
@@ -27851,10 +27952,80 @@
           "sitemapUrl": "https://sita.sk/scripts/sitemap/current.php"
         },
         {
+          "name": "SITA.sk - All Feed",
+          "url": "https://sita.sk/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "SITA.sk - Spravy Feed",
+          "url": "https://sita.sk/kategoria/spravy/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "SITA.sk - Sport Feed",
+          "url": "https://sita.sk/kategoria/sport/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "SITA.sk - Ekonomika Feed",
+          "url": "https://sita.sk/kategoria/ekonomika/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "SITA.sk - Kultura Feed",
+          "url": "https://sita.sk/kategoria/kultura/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "SITA.sk - Zdravie Feed",
+          "url": "https://sita.sk/kategoria/zdravie/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Regiony Zoznam",
+          "url": "https://regiony.zoznam.sk/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Openiazoch",
+          "url": "https://openiazoch.zoznam.sk/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Sportnet",
           "url": "https://sportnet.sme.sk/rss/",
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Zive.sk - Najnovsie",
+          "url": "https://zive.aktuality.sk/rss/najnovsie/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Zive.sk - Mobilmania",
+          "url": "https://zive.aktuality.sk/rss/mobilmania/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
           "valid": "valid"
         },
         {
@@ -27890,6 +28061,20 @@
           "url": "https://www.postoj.sk/rss",
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Interez",
+          "url": "https://www.interez.sk/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Interez - News Sitemap",
+          "sitemapUrl": "https://www.interez.sk/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
           "valid": "valid"
         },
         {
@@ -28280,6 +28465,146 @@
         {
           "name": "Mediapool",
           "url": "https://www.mediapool.bg/rss"
+        },
+        {
+          "name": "BTA BG - Bulgaria",
+          "url": "https://www.bta.bg/bg/news/bulgaria/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "BTA BG - World",
+          "url": "https://www.bta.bg/bg/news/world/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "BTA BG - Balkans",
+          "url": "https://www.bta.bg/bg/news/balkans/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "BTA BG - Economy",
+          "url": "https://www.bta.bg/bg/news/economy/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "BTA BG - Sport",
+          "url": "https://www.bta.bg/bg/news/sport/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "BTA BG - LIK",
+          "url": "https://www.bta.bg/bg/news/lik/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "BTA EN - Bulgaria",
+          "url": "https://www.bta.bg/en/news/bulgaria/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "BTA EN - World",
+          "url": "https://www.bta.bg/en/news/world/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "BTA EN - Balkans",
+          "url": "https://www.bta.bg/en/news/balkans/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "BTA EN - Economy",
+          "url": "https://www.bta.bg/en/news/economy/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "BTA EN - Sport",
+          "url": "https://www.bta.bg/en/news/sport/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Bulgaria ON AIR - Latest",
+          "url": "https://www.bgonair.bg/rss/latest",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Bulgaria ON AIR - Bulgaria",
+          "url": "https://www.bgonair.bg/rss/c/2-bulgaria",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Bulgaria ON AIR - World",
+          "url": "https://www.bgonair.bg/rss/c/4-world",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Bulgaria ON AIR - Crime",
+          "url": "https://www.bgonair.bg/rss/c/166-kriminalno",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Bulgaria ON AIR - Sport",
+          "url": "https://www.bgonair.bg/rss/c/7-sport",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Bulgaria ON AIR - Science",
+          "url": "https://www.bgonair.bg/rss/c/5-science",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Bulgaria ON AIR - Reports",
+          "url": "https://www.bgonair.bg/rss/c/162-reportazhi",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Petel",
+          "url": "https://www.petel.bg/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Petel - Sitemap",
+          "sitemapUrl": "https://www.petel.bg/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
         },
         {
           "name": "BNR - Sitemap Index",
