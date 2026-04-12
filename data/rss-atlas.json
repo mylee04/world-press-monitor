@@ -28282,6 +28282,139 @@
           "status": "NEW",
           "checkedDate": "04/12/2026",
           "valid": "valid"
+        },
+        {
+          "name": "The Slovak Spectator",
+          "url": "https://spectator.sme.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Korzar",
+          "url": "https://korzar.sme.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Zahori.sk",
+          "url": "https://zahori.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "KosiceDnes",
+          "url": "https://kosicednes.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Veda na dosah",
+          "url": "https://vedanadosah.cvtisr.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Bratislava Dnes24",
+          "url": "https://bratislava.dnes24.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Trnava Dnes24",
+          "url": "https://trnava.dnes24.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Nitra Dnes24",
+          "url": "https://nitra.dnes24.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Zilina Dnes24",
+          "url": "https://zilina.dnes24.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Presov Dnes24",
+          "url": "https://presov.dnes24.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Kosice Dnes24",
+          "url": "https://kosice.dnes24.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Poprad Dnes24",
+          "url": "https://poprad.dnes24.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Trencin Dnes24",
+          "url": "https://trencin.dnes24.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Mediaklik",
+          "url": "https://mediaklik.sk/rss.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Mediaklik - Sitemap Index",
+          "sitemapUrl": "https://mediaklik.sk/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "MojAndroid",
+          "url": "https://www.mojandroid.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "MojAndroid - News Sitemap",
+          "sitemapUrl": "https://www.mojandroid.sk/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Autoviny",
+          "url": "https://www.autoviny.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Autoviny - News Sitemap",
+          "sitemapUrl": "https://www.autoviny.sk/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
         }
       ]
     },

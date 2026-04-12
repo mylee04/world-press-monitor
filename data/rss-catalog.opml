@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Sun, 12 Apr 2026 20:08:31 GMT</dateCreated>
+    <dateCreated>Sun, 12 Apr 2026 20:32:54 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -3803,6 +3803,25 @@
       <outline text="Info.sk - News Sitemap [needs verification]" title="Info.sk - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.info.sk/news-sitemap.xml" htmlUrl="https://www.info.sk"/>
       <outline text="Dnes24 [valid]" title="Dnes24 [valid]" type="rss" xmlUrl="https://www.dnes24.sk/rss" htmlUrl="https://www.dnes24.sk"/>
       <outline text="Plus 7 Dni - Google News Sitemap [needs verification]" title="Plus 7 Dni - Google News Sitemap [needs verification]" type="rss" xmlUrl="https://plus7dni.pluska.sk/google_news.xml" htmlUrl="https://plus7dni.pluska.sk"/>
+      <outline text="The Slovak Spectator [valid]" title="The Slovak Spectator [valid]" type="rss" xmlUrl="https://spectator.sme.sk/rss" htmlUrl="https://spectator.sme.sk"/>
+      <outline text="Korzar [valid]" title="Korzar [valid]" type="rss" xmlUrl="https://korzar.sme.sk/rss" htmlUrl="https://korzar.sme.sk"/>
+      <outline text="Zahori.sk [valid]" title="Zahori.sk [valid]" type="rss" xmlUrl="https://zahori.sk/rss" htmlUrl="https://zahori.sk"/>
+      <outline text="KosiceDnes [valid]" title="KosiceDnes [valid]" type="rss" xmlUrl="https://kosicednes.sk/rss" htmlUrl="https://kosicednes.sk"/>
+      <outline text="Veda na dosah [valid]" title="Veda na dosah [valid]" type="rss" xmlUrl="https://vedanadosah.cvtisr.sk/rss" htmlUrl="https://vedanadosah.cvtisr.sk"/>
+      <outline text="Bratislava Dnes24 [valid]" title="Bratislava Dnes24 [valid]" type="rss" xmlUrl="https://bratislava.dnes24.sk/rss" htmlUrl="https://bratislava.dnes24.sk"/>
+      <outline text="Trnava Dnes24 [valid]" title="Trnava Dnes24 [valid]" type="rss" xmlUrl="https://trnava.dnes24.sk/rss" htmlUrl="https://trnava.dnes24.sk"/>
+      <outline text="Nitra Dnes24 [valid]" title="Nitra Dnes24 [valid]" type="rss" xmlUrl="https://nitra.dnes24.sk/rss" htmlUrl="https://nitra.dnes24.sk"/>
+      <outline text="Zilina Dnes24 [valid]" title="Zilina Dnes24 [valid]" type="rss" xmlUrl="https://zilina.dnes24.sk/rss" htmlUrl="https://zilina.dnes24.sk"/>
+      <outline text="Presov Dnes24 [valid]" title="Presov Dnes24 [valid]" type="rss" xmlUrl="https://presov.dnes24.sk/rss" htmlUrl="https://presov.dnes24.sk"/>
+      <outline text="Kosice Dnes24 [valid]" title="Kosice Dnes24 [valid]" type="rss" xmlUrl="https://kosice.dnes24.sk/rss" htmlUrl="https://kosice.dnes24.sk"/>
+      <outline text="Poprad Dnes24 [valid]" title="Poprad Dnes24 [valid]" type="rss" xmlUrl="https://poprad.dnes24.sk/rss" htmlUrl="https://poprad.dnes24.sk"/>
+      <outline text="Trencin Dnes24 [valid]" title="Trencin Dnes24 [valid]" type="rss" xmlUrl="https://trencin.dnes24.sk/rss" htmlUrl="https://trencin.dnes24.sk"/>
+      <outline text="Mediaklik [valid]" title="Mediaklik [valid]" type="rss" xmlUrl="https://mediaklik.sk/rss.xml" htmlUrl="https://mediaklik.sk"/>
+      <outline text="Mediaklik - Sitemap Index [needs verification]" title="Mediaklik - Sitemap Index [needs verification]" type="rss" xmlUrl="https://mediaklik.sk/sitemap.xml" htmlUrl="https://mediaklik.sk"/>
+      <outline text="MojAndroid [valid]" title="MojAndroid [valid]" type="rss" xmlUrl="https://www.mojandroid.sk/rss" htmlUrl="https://www.mojandroid.sk"/>
+      <outline text="MojAndroid - News Sitemap [needs verification]" title="MojAndroid - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.mojandroid.sk/news-sitemap.xml" htmlUrl="https://www.mojandroid.sk"/>
+      <outline text="Autoviny [valid]" title="Autoviny [valid]" type="rss" xmlUrl="https://www.autoviny.sk/rss" htmlUrl="https://www.autoviny.sk"/>
+      <outline text="Autoviny - News Sitemap [needs verification]" title="Autoviny - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.autoviny.sk/news-sitemap.xml" htmlUrl="https://www.autoviny.sk"/>
     </outline>
     <outline text="Hungary (HU)" title="Hungary (HU)">
       <outline text="Index.hu [needs verification]" title="Index.hu [needs verification]" type="rss" xmlUrl="http://index.hu/sitemap/sitemapindex.xml" htmlUrl="http://index.hu"/>
@@ -4091,7 +4110,12 @@
       <outline text="Diena - Regions [valid]" title="Diena - Regions [valid]" type="rss" xmlUrl="https://www.diena.lv/rss/?c=21" htmlUrl="https://www.diena.lv"/>
       <outline text="Diena - Crime [valid]" title="Diena - Crime [valid]" type="rss" xmlUrl="https://www.diena.lv/rss/?c=23" htmlUrl="https://www.diena.lv"/>
       <outline text="Diena - World [valid]" title="Diena - World [valid]" type="rss" xmlUrl="https://www.diena.lv/rss/?c=4" htmlUrl="https://www.diena.lv"/>
+      <outline text="Diena - Sports [valid]" title="Diena - Sports [valid]" type="rss" xmlUrl="https://www.diena.lv/rss/?c=5" htmlUrl="https://www.diena.lv"/>
       <outline text="Sportacentrs [valid]" title="Sportacentrs [valid]" type="rss" xmlUrl="https://sportacentrs.com/static/non-publish/rss/sc/rss.xml" htmlUrl="https://sportacentrs.com"/>
+      <outline text="eDruva [valid]" title="eDruva [valid]" type="rss" xmlUrl="https://edruva.lv/feed/" htmlUrl="https://edruva.lv"/>
+      <outline text="Kurzemnieks [valid]" title="Kurzemnieks [valid]" type="rss" xmlUrl="https://kurzemnieks.lv/feed/" htmlUrl="https://kurzemnieks.lv"/>
+      <outline text="Briva Daugava - Sitemap [needs verification]" title="Briva Daugava - Sitemap [needs verification]" type="rss" xmlUrl="https://www.bdaugava.lv/sitemap.xml" htmlUrl="https://www.bdaugava.lv"/>
+      <outline text="Novaja - Sitemap Index [needs verification]" title="Novaja - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.novaja.lv/wp-sitemap.xml" htmlUrl="https://www.novaja.lv"/>
     </outline>
     <outline text="Estonia (EE)" title="Estonia (EE)">
       <outline text="Postimees [valid]" title="Postimees [valid]" type="rss" xmlUrl="https://www.postimees.ee/rss" htmlUrl="https://www.postimees.ee"/>

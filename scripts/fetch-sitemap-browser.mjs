@@ -1,4 +1,6 @@
 import { gunzipSync } from 'node:zlib';
+import { mkdirSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { chromium } from 'playwright';
 
 function normalizeXmlPayload(payload) {
@@ -19,6 +21,7 @@ function detectInterstitialState(payload) {
     text.includes('client challenge') ||
     text.includes('just a moment') ||
     text.includes('checking your browser') ||
+    text.includes('security verification') ||
     text.includes('verify you are human') ||
     text.includes('javascript is disabled in your browser') ||
     text.includes('a required part of this site couldn’t load') ||
@@ -101,11 +104,18 @@ async function waitForInterstitialToClear(page, timeoutMs) {
   return await readPagePayload(page);
 }
 
-async function launchBrowser(headless) {
+async function launchBrowserContext(headless, profileDir) {
+  mkdirSync(profileDir, { recursive: true });
+  const options = {
+    userAgent:
+      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36',
+    viewport: { width: 1366, height: 900 },
+    ignoreHTTPSErrors: true,
+  };
   try {
-    return await chromium.launch({ channel: 'chrome', headless });
+    return await chromium.launchPersistentContext(profileDir, { channel: 'chrome', headless, ...options });
   } catch {
-    return await chromium.launch({ headless });
+    return await chromium.launchPersistentContext(profileDir, { headless, ...options });
   }
 }
 
@@ -116,9 +126,18 @@ async function navigateForChallenge(page, targetUrl, timeoutMs) {
     await waitForInterstitialToClear(candidatePage, timeoutMs);
     return { response: null, page: candidatePage };
   };
+  const retryAfterOriginBootstrap = async (candidatePage) => {
+    await bootstrapFromOrigin(candidatePage);
+    const response = await candidatePage.goto(targetUrl, { waitUntil: 'domcontentloaded', timeout: 45000 });
+    await waitForInterstitialToClear(candidatePage, timeoutMs);
+    return { response, page: candidatePage };
+  };
   try {
     const response = await page.goto(targetUrl, { waitUntil: 'domcontentloaded', timeout: 45000 });
-    await waitForInterstitialToClear(page, timeoutMs);
+    const payload = await waitForInterstitialToClear(page, timeoutMs);
+    if (detectInterstitialState(payload) === 'challenge') {
+      return await retryAfterOriginBootstrap(page);
+    }
     return { response, page };
   } catch (error) {
     const errorMessage = String(error && error.message ? error.message : error);
@@ -131,11 +150,11 @@ async function navigateForChallenge(page, targetUrl, timeoutMs) {
       throw error;
     }
     try {
-      return await bootstrapFromOrigin(page);
+      return await retryAfterOriginBootstrap(page);
     } catch {
       try {
         const retryPage = await page.context().newPage();
-        return await bootstrapFromOrigin(retryPage);
+        return await retryAfterOriginBootstrap(retryPage);
       } catch {
         throw error;
       }
@@ -152,16 +171,11 @@ if (!url) {
 const headedEnv = (process.env.INGEST_BROWSER_SITEMAP_HEADED || process.env.PLAYWRIGHT_HEADED || '').trim().toLowerCase();
 const interstitialTimeoutMs = Math.max(
   0,
-  Number.parseInt(process.env.INGEST_BROWSER_SITEMAP_CHALLENGE_TIMEOUT_MS || '15000', 10) || 15000
+  Number.parseInt(process.env.INGEST_BROWSER_SITEMAP_CHALLENGE_TIMEOUT_MS || '30000', 10) || 30000
 );
-const browser = await launchBrowser(!(headedEnv === '1' || headedEnv === 'true' || headedEnv === 'yes'));
+const profileDir = resolve(process.cwd(), process.env.INGEST_BROWSER_SITEMAP_PROFILE_DIR || 'audits/browser-sitemap-profile');
+const context = await launchBrowserContext(!(headedEnv === '1' || headedEnv === 'true' || headedEnv === 'yes'), profileDir);
 try {
-  const context = await browser.newContext({
-    userAgent:
-      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36',
-    viewport: { width: 1366, height: 900 },
-    ignoreHTTPSErrors: true,
-  });
   const page = await context.newPage();
 
   if (url.toLowerCase().endsWith('.gz')) {
@@ -170,6 +184,12 @@ try {
     process.stdout.write(gunzipSync(Buffer.from(fetched.base64, 'base64')).toString('utf8'));
   } else {
     const { response, page: activePage } = await navigateForChallenge(page, url, interstitialTimeoutMs);
+    const pagePayload = normalizeXmlPayload(await readPagePayload(activePage));
+
+    if (isXmlPayload(pagePayload) && !pagePayload.includes('...')) {
+      process.stdout.write(pagePayload);
+      process.exit(0);
+    }
 
     if (response) {
       const responseText = await response.text().catch(() => '');
@@ -210,5 +230,5 @@ try {
     process.stdout.write(normalizedPayload);
   }
 } finally {
-  await browser.close();
+  await context.close();
 }
