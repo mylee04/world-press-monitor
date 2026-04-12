@@ -1667,8 +1667,8 @@ async function parseSitemapXmlRecursively(
       nextSeen.add(childUrl);
       const childResponse = await fetchWithRetryFeed(childUrl, sitemapUrl);
       if (!childResponse.ok) return null;
-      const childXml = await childResponse.text();
-      return await parseSitemapXmlRecursively(childUrl, childXml, depth + 1, nextSeen);
+      const childBody = await readResponseBody(childResponse);
+      return await parseSitemapXmlRecursively(childUrl, childBody.body, depth + 1, nextSeen);
     } catch {
       return null;
     }
@@ -1848,10 +1848,20 @@ const FEED_FETCH_HEADERS = {
   Pragma: 'no-cache'
 };
 
+const FEED_FETCH_HOSTS_WITH_MINIMAL_HEADERS = new Set(['offnews.bg', 'www.offnews.bg']);
+
 function buildFeedFetchHeaders(requestedUrl: string, referrerUrl?: string): Record<string, string> {
   const headers: Record<string, string> = { ...FEED_FETCH_HEADERS };
   try {
     const target = new URL(requestedUrl);
+    if (FEED_FETCH_HOSTS_WITH_MINIMAL_HEADERS.has(target.hostname.toLowerCase())) {
+      return {
+        Accept: FEED_FETCH_HEADERS.Accept,
+        'Accept-Language': FEED_FETCH_HEADERS['Accept-Language'],
+        'Cache-Control': FEED_FETCH_HEADERS['Cache-Control'],
+        Pragma: FEED_FETCH_HEADERS.Pragma,
+      };
+    }
     headers.Origin = target.origin;
     headers.Referer = referrerUrl || `${target.origin}/`;
   } catch {

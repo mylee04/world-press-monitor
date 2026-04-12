@@ -28607,6 +28607,20 @@
           "valid": "valid"
         },
         {
+          "name": "Offnews - Sitemap Index",
+          "sitemapUrl": "https://offnews.bg/sitemap/index.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Offnews - News Sitemap",
+          "sitemapUrl": "https://offnews.bg/xml/sitemap.php?type=news",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
           "name": "BNR - Sitemap Index",
           "url": null,
           "sitemapUrl": "https://bnr.bg/sitemap.xml",
