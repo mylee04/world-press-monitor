@@ -1,12 +1,14 @@
 #!/usr/bin/env bun
+import { spawnSync } from 'node:child_process';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { basename, resolve } from 'node:path';
 import { isKnownNonArticleUrl } from '@/lib/article-url-filters';
 import { fetchWithRetry } from '@/lib/fetch-utils';
 import { normalizeReadableArticleTitle } from '@/lib/html-entities';
-import { parseRssOrAtomWithStats, parseSitemapWithStats, type ParsedFeedBatch, type ParsedFeedItem } from '@/lib/parsers';
+import { parseHtmlCollectionWithStats, parseRssOrAtomWithStats, parseSitemapWithStats, type ParsedFeedBatch, type ParsedFeedItem } from '@/lib/parsers';
 import { runWithConcurrency } from '@/lib/concurrency';
-import { normalizeLinkForId } from '@/lib/pipeline';
+import { deriveUrlArticleStableId, normalizeLinkForId } from '@/lib/pipeline';
+import { normalizeLooseDateToIso } from '@/lib/date-parsing';
 
 type AtlasFeed = {
   row?: number;
@@ -97,6 +99,15 @@ const DEFAULT_ITEM_LIMIT = 1000;
 const DEFAULT_OUTPUT_PATH = resolve(process.cwd(), 'audits/rss-country-coverage-latest.json');
 const SITEMAP_INDEX_CHILDREN_LIMIT = 8;
 const SITEMAP_INDEX_MAX_DEPTH = 2;
+const ARTICLE_PUBLISHED_AT_FETCH_LIMIT = 60;
+const ARTICLE_PUBLISHED_AT_FALLBACK_SOURCES = [
+  'bernama',
+  'dk nyt',
+  'dk social',
+  'dk teknik og miljø',
+  'dk sundhed',
+  'dk indkøb',
+];
 
 const FEED_FETCH_HEADERS = {
   'User-Agent':
@@ -106,6 +117,20 @@ const FEED_FETCH_HEADERS = {
   'Accept-Language': process.env.INGEST_ACCEPT_LANGUAGE || 'en-US,en;q=0.9,es;q=0.8',
   'Accept-Encoding': 'gzip, deflate, br',
 };
+const ENABLE_BROWSER_SITEMAP_FALLBACK =
+  process.env.INGEST_BROWSER_SITEMAP_FALLBACK === undefined ||
+  /^(1|true|yes|on)$/i.test(process.env.INGEST_BROWSER_SITEMAP_FALLBACK);
+const BROWSER_SITEMAP_FALLBACK_DOMAINS = new Set(
+  (
+    process.env.INGEST_BROWSER_SITEMAP_DOMAINS ||
+    'www.ouest-france.fr,www.standaard.be,www.nieuwsblad.be,www.gva.be,www.hbvl.be,www.rtl.be,rtl.be,www.blick.ch,blick.ch,www.pna.gov.ph,pna.gov.ph,businessmirror.com.ph,www.malaya.com.ph,malaya.com.ph,manilastandard.net,www.manilastandard.net,news.abs-cbn.com,www.startribune.com,www.miamiherald.com,www.kansascity.com,www.sacbee.com,www.charlotteobserver.com,www.newsobserver.com,www.star-telegram.com,www.fresnobee.com,www.idahostatesman.com,www.kentucky.com,www.thestate.com,www.thenewstribune.com,www.expressnews.com,www.timesunion.com,www.ctinsider.com,www.sfchronicle.com,www.sfgate.com,www.ctpost.com,www.nhregister.com,www.houstonchronicle.com,www.jpnn.com,jabar.jpnn.com,jatim.jpnn.com,www.tribunnews.com,www.jawapos.com,kumparan.com,mediaindonesia.com,www.pikiran-rakyat.com,www.crimeworld.com,crimeworld.com,www.thesun.ie,thesun.ie,www.tvsarawak.my,tvsarawak.my,www.liepajniekiem.lv,liepajniekiem.lv'
+  )
+    .split(',')
+    .map((value) => value.trim().toLowerCase())
+    .filter(Boolean)
+);
+const BROWSER_SITEMAP_HELPER = resolve(process.cwd(), 'scripts/fetch-sitemap-browser.mjs');
+const articlePublishedAtCache = new Map<string, Promise<string>>();
 
 function parseArgValue(prefix: string): string[] {
   return process.argv
@@ -287,15 +312,215 @@ function isLikelyXmlPayload(body: string): boolean {
   );
 }
 
+function normalizeSourceKey(value: string): string {
+  return (value || '').trim().toLowerCase();
+}
+
+function shouldAttemptHtmlCollectionFeed(source: string, url: string): boolean {
+  try {
+    const parsed = new URL(url);
+    const hostname = parsed.hostname.toLowerCase();
+    if (
+      hostname === 'nyheder.tv2.dk'
+      || hostname === 'www.altinget.dk'
+      || hostname === 'herningfolkeblad.dk'
+      || hostname === 'midtjyllandsavis.dk'
+      || hostname === 'skivefolkeblad.dk'
+    ) return true;
+  } catch {
+    // Ignore malformed URLs and fall through to source-name matching.
+  }
+  const normalizedSource = normalizeSourceKey(source);
+  return (
+    normalizedSource.includes('tv2 nyheder - html collection')
+    || normalizedSource.includes('altinget christiansborg - html collection')
+    || normalizedSource.includes('altinget eu - html collection')
+    || normalizedSource.includes('altinget kommunal - html collection')
+    || normalizedSource.includes('altinget sundhed - html collection')
+    || normalizedSource.includes('altinget klima - html collection')
+    || normalizedSource.includes('herning folkeblad - html collection')
+    || normalizedSource.includes('midtjyllands avis - html collection')
+    || normalizedSource.includes('skive folkeblad - html collection')
+  );
+}
+
+function shouldFetchArticlePublishedAt(source: string, url: string): boolean {
+  if (!url || isKnownNonArticleUrl(source, url)) return false;
+  const normalizedSource = normalizeSourceKey(source);
+  return ARTICLE_PUBLISHED_AT_FALLBACK_SOURCES.some((candidate) => normalizedSource.includes(candidate));
+}
+
+function normalizeBernamaPublishedAtCandidate(value: string): string {
+  const trimmed = (value || '').trim();
+  const match = trimmed.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}))?\s*(AM|PM))?$/i);
+  if (!match) return '';
+
+  const day = Number.parseInt(match[1] || '0', 10);
+  const month = Number.parseInt(match[2] || '0', 10);
+  const year = Number.parseInt(match[3] || '0', 10);
+  let hour = Number.parseInt(match[4] || '0', 10);
+  const minute = Number.parseInt(match[5] || '0', 10);
+  const second = Number.parseInt(match[6] || '0', 10);
+  const meridiem = (match[7] || '').toUpperCase();
+
+  if (!Number.isFinite(day) || !Number.isFinite(month) || !Number.isFinite(year)) return '';
+  if (!Number.isFinite(hour) || !Number.isFinite(minute) || !Number.isFinite(second)) return '';
+  if (day < 1 || day > 31 || month < 1 || month > 12) return '';
+
+  if (meridiem === 'AM') {
+    hour = hour === 12 ? 0 : hour;
+  } else if (meridiem === 'PM') {
+    hour = hour === 12 ? 12 : hour + 12;
+  }
+
+  const utcMs = Date.UTC(year, month - 1, day, hour - 8, minute, second);
+  return Number.isFinite(utcMs) ? new Date(utcMs).toISOString() : '';
+}
+
+function extractArticlePagePublishedAt(source: string, html: string): string {
+  const patterns = [
+    /<meta[^>]+property=["']article:published_time["'][^>]+content=["']([^"']+)["']/i,
+    /<meta[^>]+name=["']pubdate["'][^>]+content=["']([^"']+)["']/i,
+    /"datePublished"\s*:\s*"([^"]+)"/i,
+    /"publishedDate"\s*:\s*"([^"]+)"/i,
+    /"publishedAt"\s*:\s*"([^"]+)"/i,
+    /<time[^>]+datetime=["']([^"']+)["']/i,
+  ];
+
+  for (const pattern of patterns) {
+    const raw = html.match(pattern)?.[1] || '';
+    const normalized =
+      (normalizeSourceKey(source).includes('bernama') ? normalizeBernamaPublishedAtCandidate(raw) : '')
+      || normalizeLooseDateToIso(raw);
+    if (normalized) return normalized;
+  }
+
+  return '';
+}
+
+async function fetchArticlePublishedAt(source: string, url: string, timeoutMs: number): Promise<string> {
+  const cacheKey = `${normalizeSourceKey(source)}\n${url.trim()}`;
+  const existing = articlePublishedAtCache.get(cacheKey);
+  if (existing) return existing;
+
+  const task = (async () => {
+    try {
+      const response = await fetchWithRetry(url, {
+        timeoutMs: Math.min(timeoutMs, 8000),
+        attempts: 2,
+        fetchOptions: {
+          redirect: 'follow',
+          headers: FEED_FETCH_HEADERS,
+        }
+      });
+      if (!response.ok) return '';
+      const contentType = (response.headers.get('content-type') || '').toLowerCase();
+      if (contentType && !contentType.includes('html') && !contentType.includes('xml')) return '';
+      return extractArticlePagePublishedAt(source, await response.text());
+    } catch {
+      return '';
+    }
+  })();
+
+  articlePublishedAtCache.set(cacheKey, task);
+  return task;
+}
+
+async function enrichItemsWithPublishedAt(
+  feed: FeedInput,
+  items: ParsedFeedItem[],
+  timeoutMs: number
+): Promise<ParsedFeedItem[]> {
+  const missing = items
+    .filter((item) => !toIso(item.publishedAt) && shouldFetchArticlePublishedAt(feed.source, item.link || ''))
+    .slice(0, ARTICLE_PUBLISHED_AT_FETCH_LIMIT);
+  if (missing.length === 0) return items;
+
+  const fetched = await runWithConcurrency(missing, Math.min(8, missing.length), async (item) => ({
+    link: item.link,
+    publishedAt: await fetchArticlePublishedAt(feed.source, item.link || '', timeoutMs),
+  }));
+  const publishedAtByLink = new Map(
+    fetched
+      .filter((row) => row.publishedAt)
+      .map((row) => [row.link, row.publishedAt] as const)
+  );
+
+  return items.map((item) => {
+    if (toIso(item.publishedAt) || !item.link) return item;
+    const publishedAt = publishedAtByLink.get(item.link);
+    return publishedAt ? { ...item, publishedAt } : item;
+  });
+}
+
+function shouldAttemptBrowserSitemapFallback(url: string, response: Response | null, body: string): boolean {
+  if (!ENABLE_BROWSER_SITEMAP_FALLBACK) return false;
+  try {
+    const parsed = new URL(url);
+    const host = parsed.hostname.toLowerCase();
+    if (!BROWSER_SITEMAP_FALLBACK_DOMAINS.has(host)) return false;
+    const path = `${parsed.pathname}${parsed.search}`.toLowerCase();
+    const isSitemapLike =
+      path.includes('sitemap') || path.endsWith('.xml') || path.endsWith('.xml.gz') || path.includes('googlenews');
+    const isFeedLike =
+      path === '/feed' ||
+      path === '/feed/' ||
+      path.endsWith('/feed') ||
+      path.endsWith('/feed/') ||
+      path.includes('/rss') ||
+      path.endsWith('.rss');
+    if (!isSitemapLike && !isFeedLike) return false;
+  } catch {
+    return false;
+  }
+
+  if (!response) return true;
+  if (response.status === 403 || response.status === 503) return true;
+  return isLikelyHtmlResponse(response.headers.get('content-type') || '', body);
+}
+
+function normalizeBrowserXmlPayload(payload: string): string {
+  const trimmed = payload.trim();
+  const xmlStart = trimmed.search(/<(?:\?xml|rss|feed|urlset|sitemapindex)\b/i);
+  return xmlStart >= 0 ? trimmed.slice(xmlStart) : trimmed;
+}
+
+function fetchXmlWithBrowser(url: string): Response {
+  const result = spawnSync('node', [BROWSER_SITEMAP_HELPER, url], {
+    cwd: process.cwd(),
+    env: process.env,
+    encoding: 'utf8',
+    maxBuffer: 32 * 1024 * 1024,
+  });
+
+  if (result.status !== 0) {
+    const stderr = result.stderr?.trim();
+    const stdout = result.stdout?.trim();
+    throw new Error(stderr || stdout || `browser_sitemap_helper_failed:${result.status ?? 'unknown'}`);
+  }
+
+  const xml = normalizeBrowserXmlPayload(result.stdout || '');
+  return new Response(xml, {
+    status: 200,
+    headers: { 'content-type': 'application/xml; charset=utf-8', 'x-browser-sitemap-fallback': '1' },
+  });
+}
+
 function parseSitemapIndexLocDateMs(loc: string): number | null {
-  const slashPattern = loc.match(/(20\d{2})\/(0[1-9]|1[0-2])\/([0-2]\d|3[01])/);
+  const slashPattern = loc.match(/(20\d{2})\/([1-9]|0[1-9]|1[0-2])(?:\/([1-9]|0[1-9]|[12]\d|3[01]))?(?=(?:\D|$))/);
   if (slashPattern) {
-    const ts = Date.parse(`${slashPattern[1]}-${slashPattern[2]}-${slashPattern[3]}T00:00:00Z`);
+    const year = Number.parseInt(slashPattern[1] || '0', 10);
+    const month = Number.parseInt(slashPattern[2] || '0', 10);
+    const day = Number.parseInt(slashPattern[3] || '1', 10);
+    const ts = Date.UTC(year, month - 1, day);
     return Number.isFinite(ts) ? ts : null;
   }
-  const dashPattern = loc.match(/(20\d{2})-(0[1-9]|1[0-2])-([0-2]\d|3[01])/);
+  const dashPattern = loc.match(/(20\d{2})-([1-9]|0[1-9]|1[0-2])(?:-([1-9]|0[1-9]|[12]\d|3[01]))?(?=(?:\D|$))/);
   if (dashPattern) {
-    const ts = Date.parse(`${dashPattern[1]}-${dashPattern[2]}-${dashPattern[3]}T00:00:00Z`);
+    const year = Number.parseInt(dashPattern[1] || '0', 10);
+    const month = Number.parseInt(dashPattern[2] || '0', 10);
+    const day = Number.parseInt(dashPattern[3] || '1', 10);
+    const ts = Date.UTC(year, month - 1, day);
     return Number.isFinite(ts) ? ts : null;
   }
 
@@ -304,8 +529,11 @@ function parseSitemapIndexLocDateMs(loc: string): number | null {
     const year = parsedUrl.searchParams.get('yyyy') || parsedUrl.searchParams.get('year');
     const month = parsedUrl.searchParams.get('mm') || parsedUrl.searchParams.get('month');
     const day = parsedUrl.searchParams.get('dd') || parsedUrl.searchParams.get('day');
-    if (year && month && day) {
-      const ts = Date.parse(`${year}-${month}-${day}T00:00:00Z`);
+    if (year && month) {
+      const yearNumber = Number.parseInt(year, 10);
+      const monthNumber = Number.parseInt(month, 10);
+      const dayNumber = Number.parseInt(day || '1', 10);
+      const ts = Date.UTC(yearNumber, monthNumber - 1, dayNumber);
       return Number.isFinite(ts) ? ts : null;
     }
   } catch {
@@ -331,6 +559,34 @@ function parseSitemapIndexLocNumericTail(loc: string): number | null {
   if (!match) return null;
   const parsed = Number.parseInt(match[1] || '', 10);
   return Number.isFinite(parsed) ? parsed : null;
+}
+
+type SitemapIndexEntry = {
+  loc: string;
+  lastmodMs: number | null;
+  locDateMs: number | null;
+  locNumericTail: number | null;
+  index: number;
+};
+
+function selectSitemapIndexEntries(entries: SitemapIndexEntry[], baseUrl: string): SitemapIndexEntry[] {
+  if (entries.length === 0) return [];
+
+  let hostname = '';
+  try {
+    hostname = new URL(baseUrl).hostname.toLowerCase();
+  } catch {
+    hostname = '';
+  }
+
+  const isKwongWah = hostname === 'www.kwongwah.com.my' || hostname === 'kwongwah.com.my';
+  if (isKwongWah) {
+    const kwongWahLimit = Math.min(4, SITEMAP_INDEX_CHILDREN_LIMIT);
+    const withLastmod = entries.filter((entry) => entry.lastmodMs !== null);
+    return (withLastmod.length > 0 ? withLastmod : entries).slice(0, kwongWahLimit);
+  }
+
+  return entries.slice(0, SITEMAP_INDEX_CHILDREN_LIMIT);
 }
 
 function parseSitemapIndex(xml: string, baseUrl: string): string[] {
@@ -375,7 +631,7 @@ function parseSitemapIndex(xml: string, baseUrl: string): string[] {
     return right.index - left.index;
   });
 
-  return entries.slice(0, SITEMAP_INDEX_CHILDREN_LIMIT).map((entry) => entry.loc);
+  return selectSitemapIndexEntries(entries, baseUrl).map((entry) => entry.loc);
 }
 
 function mergeParsedBatches(batches: ParsedFeedBatch[], itemLimit: number): ParsedFeedBatch {
@@ -399,7 +655,7 @@ function mergeParsedBatches(batches: ParsedFeedBatch[], itemLimit: number): Pars
     stats.missingLinkCount += batch.stats.missingLinkCount;
 
     for (const item of batch.items) {
-      const key = normalizeLinkForId(item.link) || `${item.title}|${item.publishedAt}`;
+      const key = deriveUrlArticleStableId(item.link) || normalizeLinkForId(item.link) || `${item.title}|${item.publishedAt}`;
       if (seen.has(key)) continue;
       seen.add(key);
       items.push(item);
@@ -455,16 +711,29 @@ async function parseXmlRecursively(
     if (nextSeen.has(childUrl)) return null;
     nextSeen.add(childUrl);
     try {
-      const response = await fetchWithRetry(childUrl, {
-        timeoutMs,
-        attempts,
-        fetchOptions: {
-          redirect: 'follow',
-          headers: FEED_FETCH_HEADERS,
-        }
-      });
-      if (!response.ok) return null;
-      const childBody = await response.text();
+      let response: Response | null = null;
+      let childBody = '';
+      try {
+        response = await fetchWithRetry(childUrl, {
+          timeoutMs,
+          attempts,
+          fetchOptions: {
+            redirect: 'follow',
+            headers: FEED_FETCH_HEADERS,
+          }
+        });
+        childBody = await response.text();
+      } catch {
+        response = null;
+      }
+
+      if (!response || ((!response.ok || isLikelyHtmlResponse(response.headers.get('content-type') || '', childBody)) && !isLikelyXmlPayload(childBody))) {
+        if (!shouldAttemptBrowserSitemapFallback(childUrl, response, childBody)) return null;
+        response = fetchXmlWithBrowser(childUrl);
+        childBody = await response.text();
+      }
+
+      if (!response.ok && !isLikelyXmlPayload(childBody)) return null;
       if (isLikelyHtmlResponse(response.headers.get('content-type') || '', childBody)) return null;
       return await parseXmlRecursively(childUrl, childBody, itemLimit, timeoutMs, attempts, depth + 1, nextSeen);
     } catch {
@@ -476,26 +745,46 @@ async function parseXmlRecursively(
 }
 
 function toIso(value: string): string | null {
-  if (!value) return null;
-  const ts = new Date(value).getTime();
-  if (!Number.isFinite(ts)) return null;
-  return new Date(ts).toISOString();
+  const normalized = normalizeLooseDateToIso(value);
+  return normalized || null;
 }
 
 async function inspectFeed(feed: FeedInput, itemLimit: number, timeoutMs: number, attempts: number): Promise<FeedInspection> {
   try {
-    const response = await fetchWithRetry(feed.url, {
-      timeoutMs,
-      attempts,
-      fetchOptions: {
-        redirect: 'follow',
-        headers: FEED_FETCH_HEADERS,
+    let response: Response | null = null;
+    let contentType = '';
+    let body = '';
+    try {
+      response = await fetchWithRetry(feed.url, {
+        timeoutMs,
+        attempts,
+        fetchOptions: {
+          redirect: 'follow',
+          headers: FEED_FETCH_HEADERS,
+        }
+      });
+      contentType = response.headers.get('content-type') || '';
+      body = await response.text();
+    } catch (error) {
+      if (!shouldAttemptBrowserSitemapFallback(feed.url, null, '')) {
+        throw error;
       }
-    });
-    const contentType = response.headers.get('content-type') || '';
-    const body = await response.text();
+      response = fetchXmlWithBrowser(feed.url);
+      contentType = response.headers.get('content-type') || '';
+      body = await response.text();
+    }
 
-    if (!response.ok) {
+    if (((!response.ok || isLikelyHtmlResponse(contentType, body)) && !isLikelyXmlPayload(body)) && shouldAttemptBrowserSitemapFallback(feed.url, response, body)) {
+      response = fetchXmlWithBrowser(feed.url);
+      contentType = response.headers.get('content-type') || '';
+      body = await response.text();
+    }
+
+    if (!response) {
+      throw new Error('FETCH_ERROR');
+    }
+
+    if (!response.ok && !isLikelyXmlPayload(body)) {
       return {
         ...feed,
         ok: false,
@@ -509,28 +798,33 @@ async function inspectFeed(feed: FeedInput, itemLimit: number, timeoutMs: number
       };
     }
 
+    let parsed: ParsedFeedBatch;
     if (isLikelyHtmlResponse(contentType, body)) {
-      return {
-        ...feed,
-        ok: false,
-        statusCode: response.status,
-        contentType,
-        error: 'HTML_RETURNED',
-        totalParsed: 0,
-        recent24h: 0,
-        sampleTitles: [],
-        recentLinkIds: [],
-      };
+      if (!shouldAttemptHtmlCollectionFeed(feed.source, response.url || feed.url)) {
+        return {
+          ...feed,
+          ok: false,
+          statusCode: response.status,
+          contentType,
+          error: 'HTML_RETURNED',
+          totalParsed: 0,
+          recent24h: 0,
+          sampleTitles: [],
+          recentLinkIds: [],
+        };
+      }
+      parsed = parseHtmlCollectionWithStats(body, itemLimit, response.url || feed.url);
+    } else {
+      parsed = (
+        feed.method === 'sitemap' || /<sitemapindex[\s>]|<(?:[\w.-]+:)?urlset[\s>]/i.test(body)
+      )
+        ? await parseXmlRecursively(feed.url, body, itemLimit, timeoutMs, attempts)
+        : parseRssOrAtomWithStats(body, itemLimit);
     }
-
-    const parsed = (
-      feed.method === 'sitemap' || /<sitemapindex[\s>]|<(?:[\w.-]+:)?urlset[\s>]/i.test(body)
-    )
-      ? await parseXmlRecursively(feed.url, body, itemLimit, timeoutMs, attempts)
-      : parseRssOrAtomWithStats(body, itemLimit);
+    const parsedItems = await enrichItemsWithPublishedAt(feed, parsed.items, timeoutMs);
     const nowMs = Date.now();
     const cutoffMs = nowMs - 24 * 60 * 60 * 1000;
-    const recentItems = parsed.items
+    const recentItems = parsedItems
       .map((item) => ({
         ...item,
         readableTitle: normalizeReadableArticleTitle(item.title || '', item.link || '', feed.source),
@@ -543,20 +837,20 @@ async function inspectFeed(feed: FeedInput, itemLimit: number, timeoutMs: number
         return Boolean(item.readableTitle);
       });
     const recentLinkIds = recentItems
-      .map((item) => normalizeLinkForId(item.link))
+      .map((item) => deriveUrlArticleStableId(item.link) || normalizeLinkForId(item.link))
       .filter(Boolean);
-    const newestItemAt = parsed.items
+    const newestItemAt = parsedItems
       .map((item) => toIso(item.publishedAt))
       .filter((value): value is string => Boolean(value))
       .sort((a, b) => b.localeCompare(a))[0];
 
     return {
       ...feed,
-      ok: parsed.items.length > 0,
+      ok: parsedItems.length > 0,
       statusCode: response.status,
       contentType,
-      error: parsed.items.length > 0 ? undefined : 'PARSE_EMPTY',
-      totalParsed: parsed.items.length,
+      error: parsedItems.length > 0 ? undefined : 'PARSE_EMPTY',
+      totalParsed: parsedItems.length,
       recent24h: recentItems.length,
       newestItemAt,
       sampleTitles: recentItems.slice(0, 3).map((item) => item.readableTitle || item.title),

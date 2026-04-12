@@ -29,6 +29,14 @@ function getPool(): Pool {
   return pool;
 }
 
+export async function closeMapSnapshotStorePool(): Promise<void> {
+  schemaReady = false;
+  if (!pool) return;
+  const current = pool;
+  pool = null;
+  await current.end().catch(() => undefined);
+}
+
 async function ensureMapSnapshotSchema(): Promise<void> {
   if (schemaReady) return;
   const db = getPool();

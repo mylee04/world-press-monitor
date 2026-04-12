@@ -10,9 +10,11 @@ import {
   writeMapCountryMetricsSnapshot,
   writeMapCountrySourcesSnapshot,
   writeMapPublishersSnapshot,
+  closeMapSnapshotStorePool,
 } from '@/lib/map-snapshot-store';
 import { DEFAULT_MAP_WINDOW, MAP_WINDOWS, normalizeMapMetricWindow } from '@/lib/map-store-windows';
 import type { MapCountrySourcesResponse, MapMetricWindow } from '@/lib/map-types';
+import { closeMapStoreDbPool } from '@/lib/map-store-db';
 
 function getMapCountryMetricsSnapshotPath(window: MapMetricWindow): string {
   return path.join(process.cwd(), 'data', `map-country-metrics.snapshot.${window}.json`);
@@ -110,7 +112,18 @@ async function main(): Promise<void> {
   }
 }
 
-main().catch((error) => {
-  console.error(`[map-snapshots] failed: ${error instanceof Error ? error.stack || error.message : String(error)}`);
-  process.exitCode = 1;
-});
+async function shutdown(): Promise<void> {
+  await Promise.allSettled([
+    closeMapStoreDbPool(),
+    closeMapSnapshotStorePool(),
+  ]);
+}
+
+main()
+  .catch((error) => {
+    console.error(`[map-snapshots] failed: ${error instanceof Error ? error.stack || error.message : String(error)}`);
+    process.exitCode = 1;
+  })
+  .finally(async () => {
+    await shutdown();
+  });

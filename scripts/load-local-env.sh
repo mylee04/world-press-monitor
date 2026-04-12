@@ -89,7 +89,30 @@ pick_env_files() {
   if [ "${emitted}" -eq 1 ]; then
     return 0
   fi
-  if [ -f "${WPR_PROJECT_ROOT}/.env.example" ]; then
+  local runtime_root_default runtime_repo_candidate
+  runtime_root_default="$(default_wpr_runtime_root)"
+  runtime_repo_candidate="${WPR_RUNTIME_REPO:-${WPM_RUNTIME_REPO:-${runtime_root_default}/repo}}"
+
+  if [ -d "${runtime_repo_candidate}" ] && [ "${runtime_repo_candidate}" != "${WPR_PROJECT_ROOT}" ]; then
+    emitted=0
+    if [ -f "${runtime_repo_candidate}/.env.local" ]; then
+      printf '%s\n' "${runtime_repo_candidate}/.env.local"
+      emitted=1
+    fi
+    if [ -f "${runtime_repo_candidate}/.env.macmini.local" ]; then
+      printf '%s\n' "${runtime_repo_candidate}/.env.macmini.local"
+      emitted=1
+    fi
+    if [ "${emitted}" -eq 1 ]; then
+      return 0
+    fi
+    if [ -f "${runtime_repo_candidate}/.env" ]; then
+      printf '%s\n' "${runtime_repo_candidate}/.env"
+      return 0
+    fi
+  fi
+
+  if [ -s "${WPR_PROJECT_ROOT}/.env.example" ]; then
     printf '%s\n' "${WPR_PROJECT_ROOT}/.env.example"
     return 0
   fi

@@ -1,4 +1,5 @@
 import { normalizeHtmlText } from './html-entities';
+import { normalizeLooseDateToIso } from './date-parsing';
 
 export interface ParsedFeedItem {
   title: string;
@@ -43,18 +44,6 @@ function clean(text: string): string {
 function escapeRegExp(value: string): string {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
-
-const DATE_TIMEZONE_OFFSETS: Record<string, string> = {
-  BST: '+0100',
-  CET: '+0100',
-  CEST: '+0200',
-  EET: '+0200',
-  EEST: '+0300',
-  MSD: '+0400',
-  MSK: '+0300',
-  WEST: '+0100',
-  WET: '+0000',
-};
 
 function parseTag(body: string, tag: string): string {
   const match = body.match(new RegExp(`<${tag}[^>]*>([\\s\\S]*?)<\\/${tag}>`, 'i'));
@@ -142,22 +131,7 @@ function parseDescription(body: string): string {
 function normalizePublishedAt(value: string): string {
   const raw = (value || '').trim();
   if (!raw) return '';
-  if (/^\d{4}-\d{2}-\d{2}$/.test(raw)) {
-    return new Date(`${raw}T12:00:00Z`).toISOString();
-  }
-  const directTs = new Date(raw).getTime();
-  if (Number.isFinite(directTs)) return new Date(directTs).toISOString();
-
-  const timezoneMatch = raw.match(/^(.*\s)([A-Z]{2,5})$/);
-  if (timezoneMatch) {
-    const normalizedTz = DATE_TIMEZONE_OFFSETS[timezoneMatch[2]];
-    if (normalizedTz) {
-      const tzTs = new Date(`${timezoneMatch[1]}${normalizedTz}`).getTime();
-      if (Number.isFinite(tzTs)) return new Date(tzTs).toISOString();
-    }
-  }
-
-  return '';
+  return normalizeLooseDateToIso(raw);
 }
 
 function inferPublishedAtFromLink(link: string): string {
@@ -219,6 +193,293 @@ function toItems(rows: ParsedFeedItemWithMissing[]): ParsedFeedItem[] {
       categories: row.categories,
       stableId: row.stableId || undefined,
     }));
+}
+
+function parseJsonLdBlocks(html: string): unknown[] {
+  const blocks = [...html.matchAll(/<script[^>]+type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)];
+  const values: unknown[] = [];
+  for (const match of blocks) {
+    const raw = clean(match[1] || '').trim();
+    if (!raw) continue;
+    const candidates = [
+      raw,
+      raw
+        .replace(/&quot;/g, '"')
+        .replace(/&#34;/g, '"')
+        .replace(/&amp;/g, '&')
+        .replace(/&#39;/g, '\'')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+    ];
+    for (const candidate of candidates) {
+      try {
+        values.push(JSON.parse(candidate));
+        break;
+      } catch {
+        // Continue trying the next normalized variant.
+      }
+    }
+  }
+  return values;
+}
+
+function normalizeJsonLdType(value: unknown): string[] {
+  if (Array.isArray(value)) return value.flatMap((entry) => normalizeJsonLdType(entry));
+  if (typeof value !== 'string') return [];
+  return [value.trim().toLowerCase()];
+}
+
+function looksLikeJsonLdCollection(node: Record<string, unknown>): boolean {
+  const types = normalizeJsonLdType(node['@type']);
+  return types.includes('collectionpage') || types.includes('itemlist');
+}
+
+function extractJsonLdListEntries(node: unknown, bucket: Array<Record<string, unknown>>): void {
+  if (Array.isArray(node)) {
+    for (const entry of node) {
+      extractJsonLdListEntries(entry, bucket);
+    }
+    return;
+  }
+  if (!node || typeof node !== 'object') return;
+
+  const record = node as Record<string, unknown>;
+  const listEntries = Array.isArray(record.itemListElement)
+    ? record.itemListElement.filter((entry): entry is Record<string, unknown> => Boolean(entry) && typeof entry === 'object')
+    : [];
+  if (looksLikeJsonLdCollection(record) && listEntries.length > 0) {
+    bucket.push(...listEntries);
+  }
+
+  for (const key of ['mainEntity', 'item', 'hasPart']) {
+    if (key in record) {
+      extractJsonLdListEntries(record[key], bucket);
+    }
+  }
+}
+
+function extractHtmlCollectionField(entry: Record<string, unknown>, keys: string[]): string {
+  for (const key of keys) {
+    const direct = entry[key];
+    if (typeof direct === 'string' && direct.trim()) return normalizeHtmlText(direct.trim());
+  }
+
+  const nested = entry.item;
+  if (nested && typeof nested === 'object' && !Array.isArray(nested)) {
+    return extractHtmlCollectionField(nested as Record<string, unknown>, keys);
+  }
+
+  return '';
+}
+
+function decodeJsQuotedString(value: string): string {
+  const trimmed = (value || '').trim();
+  if (!trimmed) return '';
+  try {
+    return normalizeHtmlText(JSON.parse(`"${trimmed}"`));
+  } catch {
+    return normalizeHtmlText(trimmed.replace(/\\"/g, '"').replace(/\\\\/g, '\\'));
+  }
+}
+
+function parseMhmHtmlCollectionWithStats(html: string, limit = 12, baseUrl?: string): ParsedFeedBatch {
+  const rows = [...html.matchAll(/\{uuid:"([0-9a-fA-F-]{36})",articleType:"[^"]*",headline:\{plain:"((?:\\.|[^"\\])*)",styled:"(?:\\.|[^"\\])*"\}[\s\S]*?publishedAt:"([^"]+)"/g)]
+    .map((match) => {
+      const uuid = (match[1] || '').trim();
+      const title = decodeJsQuotedString(match[2] || '') || inferTitleFromLink(uuid ? `/artikel/${uuid}` : '');
+      const link = resolveFeedLink(uuid ? `/artikel/${uuid}` : '', baseUrl);
+      const publishedAt = normalizePublishedAt(match[3] || '') || inferPublishedAtFromLink(link);
+      return {
+        title,
+        description: '',
+        link,
+        publishedAt,
+        categories: [],
+        stableId: uuid || link,
+        missingTitle: !title,
+        missingLink: !link,
+        missingSummary: true,
+        missingPublishedAt: !publishedAt,
+        sortPublishedAtMs: publishedAt ? Date.parse(publishedAt) : Number.NaN,
+      };
+    })
+    .filter((row, index, all) => row.link && all.findIndex((candidate) => candidate.link === row.link) === index)
+    .sort((left, right) => {
+      const leftMs = Number.isFinite(left.sortPublishedAtMs) ? left.sortPublishedAtMs : Number.NEGATIVE_INFINITY;
+      const rightMs = Number.isFinite(right.sortPublishedAtMs) ? right.sortPublishedAtMs : Number.NEGATIVE_INFINITY;
+      return rightMs - leftMs;
+    })
+    .slice(0, limit);
+
+  return {
+    items: toItems(rows.map(({ sortPublishedAtMs: _sortPublishedAtMs, ...row }) => row)),
+    stats: summarizeStats(rows.map(({ sortPublishedAtMs: _sortPublishedAtMs, ...row }) => row)),
+  };
+}
+
+function parseNuxtDataPayload(html: string): unknown[] {
+  const match = html.match(/<script[^>]+type=["']application\/json["'][^>]*data-nuxt-data[^>]*id=["']__NUXT_DATA__["'][^>]*>([\s\S]*?)<\/script>/i);
+  if (!match) return [];
+  try {
+    const parsed = JSON.parse(clean(match[1] || '').trim());
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+function readNuxtPrimitive(payload: unknown[], ref: unknown): unknown {
+  if (typeof ref === 'number' && Number.isInteger(ref) && ref >= 0 && ref < payload.length) {
+    const resolved = payload[ref];
+    if (
+      typeof resolved === 'string'
+      || typeof resolved === 'number'
+      || typeof resolved === 'boolean'
+      || resolved === null
+    ) {
+      return resolved;
+    }
+  }
+  return ref;
+}
+
+function readNuxtString(payload: unknown[], ref: unknown): string {
+  const resolved = readNuxtPrimitive(payload, ref);
+  return typeof resolved === 'string' ? normalizeHtmlText(resolved.trim()) : '';
+}
+
+function readNuxtPublishedAt(payload: unknown[], ref: unknown): string {
+  const resolved = readNuxtPrimitive(payload, ref);
+  return typeof resolved === 'string' ? normalizePublishedAt(resolved) || '' : '';
+}
+
+function parseAltingetHtmlCollectionWithStats(html: string, limit = 12, baseUrl?: string): ParsedFeedBatch {
+  let parsedUrl: URL | null = null;
+  try {
+    parsedUrl = baseUrl ? new URL(baseUrl) : null;
+  } catch {
+    parsedUrl = null;
+  }
+  if (!parsedUrl || parsedUrl.hostname !== 'www.altinget.dk') {
+    return { items: [], stats: summarizeStats([]) };
+  }
+
+  const payload = parseNuxtDataPayload(html);
+  if (payload.length === 0) {
+    return { items: [], stats: summarizeStats([]) };
+  }
+
+  const hrefs = [...html.matchAll(/href="(\/artikel\/[^"#?]+)"/g)]
+    .map((match) => clean(match[1] || '').trim())
+    .filter((href) => href && !href.startsWith('/artikel/om-altinget-') && href !== '/artikel/altingetdks-formaal-maalgruppe');
+  const hrefSet = new Set(hrefs);
+  if (hrefSet.size === 0) {
+    return { items: [], stats: summarizeStats([]) };
+  }
+
+  const publishedAtByArticleRef = new Map<number, string>();
+  for (const entry of payload) {
+    if (!entry || typeof entry !== 'object' || Array.isArray(entry)) continue;
+    const record = entry as Record<string, unknown>;
+    if (typeof record.articleId !== 'number') continue;
+    const publishedAt = readNuxtPublishedAt(payload, record.publishingDate);
+    if (!publishedAt) continue;
+    const existing = publishedAtByArticleRef.get(record.articleId);
+    if (!existing || Date.parse(publishedAt) > Date.parse(existing)) {
+      publishedAtByArticleRef.set(record.articleId, publishedAt);
+    }
+  }
+
+  const rows = payload
+    .flatMap((entry): ParsedFeedItemWithMissing[] => {
+      if (!entry || typeof entry !== 'object' || Array.isArray(entry)) return [];
+      const record = entry as Record<string, unknown>;
+      if (typeof record.id !== 'number') return [];
+      const urlKey = readNuxtString(payload, record.urlKey);
+      if (!urlKey) return [];
+      const href = urlKey.startsWith('/artikel/') ? urlKey : `/artikel/${urlKey}`;
+      if (!hrefSet.has(href)) return [];
+      const link = resolveFeedLink(href, baseUrl);
+      const publishedAt = publishedAtByArticleRef.get(record.id) || inferPublishedAtFromLink(link);
+      const title = readNuxtString(payload, record.headline) || inferTitleFromLink(link) || link;
+      const description = readNuxtString(payload, record.mainTeaser);
+      return [{
+        title,
+        description,
+        link,
+        publishedAt,
+        categories: [],
+        stableId: `altinget:${urlKey}`,
+        missingTitle: !title,
+        missingLink: !link,
+        missingSummary: !description,
+        missingPublishedAt: !publishedAt,
+      }];
+    })
+    .filter((row, index, all) => row.link && all.findIndex((candidate) => candidate.link === row.link) === index)
+    .sort((left, right) => {
+      const leftMs = left.publishedAt ? Date.parse(left.publishedAt) : Number.NEGATIVE_INFINITY;
+      const rightMs = right.publishedAt ? Date.parse(right.publishedAt) : Number.NEGATIVE_INFINITY;
+      return rightMs - leftMs;
+    })
+    .slice(0, limit);
+
+  return {
+    items: toItems(rows),
+    stats: summarizeStats(rows),
+  };
+}
+
+export function parseHtmlCollectionWithStats(html: string, limit = 12, baseUrl?: string): ParsedFeedBatch {
+  const rawEntries: Array<Record<string, unknown>> = [];
+  for (const block of parseJsonLdBlocks(html)) {
+    extractJsonLdListEntries(block, rawEntries);
+  }
+
+  const deduped = new Map<string, ParsedFeedItemWithMissing>();
+  for (const entry of rawEntries) {
+    const link = resolveFeedLink(
+      extractHtmlCollectionField(entry, ['url', '@id', 'mainEntityOfPage']),
+      baseUrl
+    );
+    const title =
+      extractHtmlCollectionField(entry, ['name', 'headline', 'title'])
+      || inferTitleFromLink(link)
+      || link;
+    const publishedAt =
+      normalizePublishedAt(extractHtmlCollectionField(entry, ['datePublished', 'dateCreated', 'dateModified']))
+      || inferPublishedAtFromLink(link);
+    const key = link || `${title}|${publishedAt}`;
+    if (!key || deduped.has(key)) continue;
+    deduped.set(key, {
+      title,
+      description: '',
+      link,
+      publishedAt,
+      categories: [],
+      stableId: link,
+      missingTitle: !title,
+      missingLink: !link,
+      missingSummary: true,
+      missingPublishedAt: !publishedAt,
+    });
+  }
+
+  const rows = [...deduped.values()].slice(0, limit);
+  const jsonLdResult = {
+    items: toItems(rows),
+    stats: summarizeStats(rows),
+  };
+  if (jsonLdResult.items.length > 0 || jsonLdResult.stats.totalCandidates > 0) {
+    return jsonLdResult;
+  }
+
+  const altingetResult = parseAltingetHtmlCollectionWithStats(html, limit, baseUrl);
+  if (altingetResult.items.length > 0 || altingetResult.stats.totalCandidates > 0) {
+    return altingetResult;
+  }
+
+  return parseMhmHtmlCollectionWithStats(html, limit, baseUrl);
 }
 
 export function parseRssOrAtom(xml: string, limit = 10): ParsedFeedItem[] {
@@ -329,7 +590,7 @@ function shouldKeepSitemapLink(link: string, baseUrl?: string): boolean {
 export function parseSitemapWithStats(xml: string, limit = 12, baseUrl?: string): ParsedFeedBatch {
   const rows = [...xml.matchAll(/<(?:[\w.-]+:)?url\b[^>]*>([\s\S]*?)<\/(?:[\w.-]+:)?url>/gi)]
     .map((match) => match[1])
-    .map((body) => {
+    .map((body, index) => {
       const link = resolveFeedLink(parseTagByLocalName(body, 'loc'), baseUrl);
       const title =
         parseTag(body, 'news:title')
@@ -340,7 +601,6 @@ export function parseSitemapWithStats(xml: string, limit = 12, baseUrl?: string)
         normalizePublishedAt(parseTag(body, 'news:publication_date'))
         || normalizePublishedAt(parseTagByLocalName(body, 'publication_date'))
         || normalizePublishedAt(parseTagByLocalName(body, 'lastmod'))
-        || normalizePublishedAt(parseTagByLocalName(body, 'priority'))
         || inferPublishedAtFromLink(link);
       return {
         title,
@@ -353,13 +613,21 @@ export function parseSitemapWithStats(xml: string, limit = 12, baseUrl?: string)
         missingLink: !link,
         missingSummary: true,
         missingPublishedAt: !publishedAt,
+        sortPublishedAtMs: publishedAt ? Date.parse(publishedAt) : Number.NaN,
+        sortIndex: index,
       };
     })
     .filter((row) => shouldKeepSitemapLink(row.link, baseUrl))
+    .sort((left, right) => {
+      const leftMs = Number.isFinite(left.sortPublishedAtMs) ? left.sortPublishedAtMs : Number.NEGATIVE_INFINITY;
+      const rightMs = Number.isFinite(right.sortPublishedAtMs) ? right.sortPublishedAtMs : Number.NEGATIVE_INFINITY;
+      if (rightMs !== leftMs) return rightMs - leftMs;
+      return left.sortIndex - right.sortIndex;
+    })
     .slice(0, limit);
 
   return {
-    items: toItems(rows),
-    stats: summarizeStats(rows),
+    items: toItems(rows.map(({ sortPublishedAtMs: _sortPublishedAtMs, sortIndex: _sortIndex, ...row }) => row)),
+    stats: summarizeStats(rows.map(({ sortPublishedAtMs: _sortPublishedAtMs, sortIndex: _sortIndex, ...row }) => row)),
   };
 }

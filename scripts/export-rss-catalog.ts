@@ -4,6 +4,7 @@ import { resolve } from 'node:path';
 type AtlasFeed = {
   name: string;
   url: string | null;
+  sitemapUrl?: string | null;
   status: string | null;
   checkedDate: string | null;
   valid: string | null;
@@ -111,16 +112,17 @@ function buildCsvRows(atlas: Atlas, auditMap: Map<string, AuditResult>): string 
   for (const country of atlas.countries) {
     for (const feed of country.feeds) {
       if (feed.enabled === false) continue;
-      if (!feed.url) continue;
+      const endpointUrl = feed.url?.trim() || feed.sitemapUrl?.trim() || '';
+      if (!endpointUrl) continue;
 
-      const audit = auditMap.get(makeKey(country.code, feed.name, feed.url));
+      const audit = feed.url ? auditMap.get(makeKey(country.code, feed.name, feed.url)) : undefined;
       const status = buildStatusText(audit, feed);
       rows.push([
         formatCsvValue(country.code),
         formatCsvValue(country.name),
         formatCsvValue(String(feed.row)),
         formatCsvValue(feed.name),
-        formatCsvValue(feed.url),
+        formatCsvValue(endpointUrl),
         formatCsvValue(status),
         formatCsvValue(audit?.httpCode !== undefined && audit?.httpCode !== null ? String(audit.httpCode) : 'N/A'),
         formatCsvValue(audit ? new Date().toISOString() : ''),
@@ -152,14 +154,15 @@ function buildOpml(atlas: Atlas, auditMap: Map<string, AuditResult>): string {
 
     for (const feed of country.feeds) {
       if (feed.enabled === false) continue;
-      if (!feed.url) continue;
+      const endpointUrl = feed.url?.trim() || feed.sitemapUrl?.trim() || '';
+      if (!endpointUrl) continue;
 
-      const audit = auditMap.get(makeKey(country.code, feed.name, feed.url));
+      const audit = feed.url ? auditMap.get(makeKey(country.code, feed.name, feed.url)) : undefined;
       const status = buildStatusText(audit, feed);
       const title = escapeXml(`${feed.name} [${status}]`);
-      const htmlUrl = escapeXml(getFeedHtml(feed.url));
+      const htmlUrl = escapeXml(getFeedHtml(endpointUrl));
       lines.push(
-        `      <outline text="${title}" title="${title}" type="rss" xmlUrl="${escapeXml(feed.url)}" htmlUrl="${htmlUrl}"/>`
+        `      <outline text="${title}" title="${title}" type="rss" xmlUrl="${escapeXml(endpointUrl)}" htmlUrl="${htmlUrl}"/>`
       );
     }
 

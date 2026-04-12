@@ -1,0 +1,22 @@
+[
+  {"source":"TV2 Nyheder - HTML Collection","rss":"https://nyheder.tv2.dk"},
+  {"source":"DK Nyt - Sitemap Index","sitemap":"https://www.dknyt.dk/sitemap-index.xml"},
+  {"source":"DK Social - Sitemap Index","sitemap":"https://www.dksocial.dk/sitemap-index.xml"},
+  {"source":"DK Teknik og Miljø - Sitemap Index","sitemap":"https://www.dkteknikogmiljoe.dk/sitemap-index.xml"},
+  {"source":"DK Sundhed - Sitemap Index","sitemap":"https://www.dk-sundhed.dk/sitemap-index.xml"},
+  {"source":"DK Indkøb - Sitemap Index","sitemap":"https://www.dkindkob.dk/sitemap-index.xml"},
+  {"source":"Dagbladet Ringkobing-Skjern - Sitemap","sitemap":"https://dbrs.dk/sitemap"},
+  {"source":"KobenhavnLIV - Sitemap","sitemap":"https://kobenhavnliv.dk/sitemap"},
+  {"source":"Danwatch - Sitemap","sitemap":"https://danwatch.dk/sitemap.xml"},
+  {"source":"FinansWatch - Sitemap Index","sitemap":"https://finanswatch.dk/sitemapindex.xml"},
+  {"source":"ShippingWatch - Sitemap Index","sitemap":"https://shippingwatch.dk/sitemapindex.xml"},
+  {"source":"MedWatch - Sitemap Index","sitemap":"https://medwatch.dk/sitemapindex.xml"},
+  {"source":"AgriWatch - Sitemap Index","sitemap":"https://agriwatch.dk/sitemapindex.xml"},
+  {"source":"ITWatch - Sitemap Index","sitemap":"https://itwatch.dk/sitemapindex.xml"},
+  {"source":"PolicyWatch - Sitemap Index","sitemap":"https://policywatch.dk/sitemapindex.xml"},
+  {"source":"AdvokatWatch - Sitemap Index","sitemap":"https://advokatwatch.dk/sitemapindex.xml"},
+  {"source":"DetailWatch - Sitemap Index","sitemap":"https://detailwatch.dk/sitemapindex.xml"},
+  {"source":"MobilityWatch - Sitemap Index","sitemap":"https://mobilitywatch.dk/sitemapindex.xml"},
+  {"source":"MediaWatch - Sitemap Index","sitemap":"https://mediawatch.dk/sitemapindex.xml"},
+  {"source":"EjendomsWatch - Sitemap Index","sitemap":"https://ejendomswatch.dk/sitemapindex.xml"}
+]

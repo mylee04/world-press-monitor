@@ -85,6 +85,73 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     return true;
   }
 
+  if (hostname.endsWith('campo.dk')) {
+    if (trimmedPathname === '/nyheder') return true;
+    if (pathname.startsWith('/club/')) return true;
+    if (pathname.startsWith('/player/')) return true;
+    if (pathname.startsWith('/staff/')) return true;
+    if (pathname.startsWith('/tag/')) return true;
+    if (pathname.startsWith('/type/')) return true;
+    if (pathname.startsWith('/turneringer/')) return true;
+    if (pathname.startsWith('/liga/')) return true;
+  }
+
+  if (hostname.endsWith('denoffentlige.dk') && /^\/[^/]+\/?$/.test(trimmedPathname)) {
+    return true;
+  }
+
+  if (hostname.endsWith('dagens.dk') || hostname.endsWith('nyheder24.dk')) {
+    if (/^\/skribent\/[^/]+\/?$/.test(trimmedPathname)) return true;
+    if (/^\/[^/]+\/?$/.test(trimmedPathname)) return true;
+  }
+
+  if (hostname.endsWith('alt.dk') && pathname.startsWith('/sponsored/')) {
+    return true;
+  }
+
+  if (hostname.endsWith('journalisten.dk') && pathname.startsWith('/jobannoncer/')) {
+    return true;
+  }
+
+  if (hostname.endsWith('dinavis.dk')) {
+    if (pathname.startsWith('/arkiv/')) return true;
+    if (pathname.startsWith('/direkte/')) return true;
+  }
+
+  if (hostname.endsWith('meremobil.dk')) {
+    if (pathname.startsWith('/tag/')) return true;
+    if (trimmedPathname === '/annonce' || trimmedPathname === '/nyheder' || trimmedPathname === '/seneste-nyheder') return true;
+  }
+
+  if (hostname.endsWith('mobilsiden.dk') && trimmedPathname === '/') {
+    return true;
+  }
+
+  if ((hostname === 'ing.dk' || hostname.endsWith('.ing.dk')) && normalizedSource.includes('sitemap index')) {
+    if (trimmedPathname === '/nyheder' || trimmedPathname === '/debat' || trimmedPathname === '/redaktion' || trimmedPathname === '/blogs' || trimmedPathname === '/podcast' || trimmedPathname === '/emner' || trimmedPathname === '/vidensbank' || trimmedPathname === '/app' || trimmedPathname === '/rss-feeds-fra-ingenioeren') return true;
+    if (pathname.startsWith('/emne/')) return true;
+    if (pathname.startsWith('/holdninger/')) return true;
+    if (pathname.startsWith('/noter/')) return true;
+    if (/^\/[^/]+\/?$/.test(trimmedPathname) && !trimmedPathname.startsWith('/artikel/')) return true;
+  }
+
+  if (hostname.endsWith('version2.dk') && normalizedSource.includes('sitemap index')) {
+    if (trimmedPathname === '/artikler' || trimmedPathname === '/blogs' || trimmedPathname === '/debat' || trimmedPathname === '/nyhedsbreve' || trimmedPathname === '/redaktion' || trimmedPathname === '/emner' || trimmedPathname === '/vidensbank' || trimmedPathname === '/feeds' || trimmedPathname === '/ingenioren-abonnement' || trimmedPathname === '/fokus') return true;
+    if (pathname.startsWith('/emne/')) return true;
+    if (pathname.startsWith('/fokus/')) return true;
+    if (/^\/[^/]+\/?$/.test(trimmedPathname) && !trimmedPathname.startsWith('/artikel/')) return true;
+  }
+
+  if (hostname.endsWith('altinget.dk') && normalizedSource.includes('sitemap index')) {
+    if (!pathname.startsWith('/artikel/')) return true;
+  }
+
+  if (hostname.endsWith('dbrs.dk') || hostname.endsWith('kobenhavnliv.dk')) {
+    if (pathname.startsWith('/arkiv')) return true;
+    if (trimmedPathname === '/video' || trimmedPathname === '/jfmplay') return true;
+    if (/^\/[^/]+\/?$/.test(trimmedPathname)) return true;
+  }
+
   if (hostname.endsWith('dailymaverick.co.za')) {
     if (pathname.startsWith('/opinionista/')) return true;
     if (pathname.startsWith('/crossword/')) return true;

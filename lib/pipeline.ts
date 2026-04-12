@@ -1,3 +1,5 @@
+import { parseLooseDateMs } from './date-parsing';
+
 export type DraftStatus = 'draft' | 'approved' | 'published';
 export type DistributionPlatform = 'twitter' | 'instagram' | 'linkedin' | 'tiktok' | 'newsletter';
 
@@ -141,14 +143,33 @@ export function buildFeedStableId(value: string, link = ''): string {
   }
 }
 
+export function deriveUrlArticleStableId(link: string): string {
+  const normalizedLink = normalizeLinkForId(link);
+  if (!normalizedLink) return '';
+  try {
+    const parsed = new URL(normalizedLink);
+    const hostname = parsed.hostname.toLowerCase();
+    const pathname = parsed.pathname.replace(/\/+$/, '');
+    const tail = pathname.split('/').filter(Boolean).pop() || '';
+    if (!tail) return '';
+
+    if (hostname.endsWith('ligeher.nu') && /^\d+$/.test(tail)) {
+      return `article:${hostname}:${tail}`;
+    }
+
+    return '';
+  } catch {
+    return '';
+  }
+}
+
 export function draftIdFromLink(link: string): string {
   const normalized = normalizeLinkForId(link);
   return normalized || `draft-${Math.random().toString(36).slice(2, 10)}`;
 }
 
 export function parseDateSafe(value: string): number {
-  const ts = new Date(value).getTime();
-  return Number.isFinite(ts) ? ts : 0;
+  return parseLooseDateMs(value) ?? 0;
 }
 
 export function isLikelyBreakingTitle(title: string): boolean {

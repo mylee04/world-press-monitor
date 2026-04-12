@@ -58,12 +58,23 @@ type FollowupRemediationReport = {
   };
 };
 
+type WafTriageReport = {
+  generatedAt?: string;
+  summary?: Record<string, number>;
+  hostFamilies?: Array<{
+    host?: string;
+    total?: number;
+    nextStep?: string;
+  }>;
+};
+
 const HEALTH_PATH = resolve(process.cwd(), 'audits/readme_rss_health_latest.json');
 const AUTO_REPAIR_PATH = resolve(process.cwd(), 'audits/rss_auto_repair_candidates_latest.json');
 const HARD_403_PATH = resolve(process.cwd(), 'audits/rss_hard_403_backlog_latest.json');
 const STALE_PATH = resolve(process.cwd(), 'audits/rss_stale_watchlist_latest.json');
 const SAFE_DISABLE_PATH = resolve(process.cwd(), 'audits/rss_safe_disable_now_latest.json');
 const FOLLOWUP_REMEDIATION_PATH = resolve(process.cwd(), 'audits/rss_followup_remediation_latest.json');
+const WAF_TRIAGE_PATH = resolve(process.cwd(), 'audits/rss_waf_pattern_triage_latest.json');
 
 const WEBHOOK_ENV_KEYS = [
   'RSS_OPS_DAILY_DISCORD_WEBHOOK_URL',
@@ -111,12 +122,25 @@ function topKinds(map: Record<string, number> | undefined, limit: number): strin
   return rows.map(([kind, count]) => `${kind} ${count}`).join(', ');
 }
 
+function topHosts(
+  hostFamilies: Array<{ host?: string; total?: number }> | undefined,
+  limit: number
+): string {
+  if (!hostFamilies || hostFamilies.length === 0) return '없음';
+  const rows = hostFamilies
+    .filter((item) => item.host && (item.total || 0) > 0)
+    .slice(0, limit);
+  if (rows.length === 0) return '없음';
+  return rows.map((item) => `${item.host} ${item.total ?? 0}`).join(', ');
+}
+
 function buildDescription(
   health: HealthReport | null,
   autoRepair: AutoRepairReport | null,
   hard403: Hard403BacklogReport | null,
   stale: StaleWatchlistReport | null,
-  followup: FollowupRemediationReport | null
+  followup: FollowupRemediationReport | null,
+  wafTriage: WafTriageReport | null
 ): string {
   const lines: string[] = [];
 
@@ -167,6 +191,13 @@ function buildDescription(
     );
   }
 
+  if (wafTriage?.summary) {
+    lines.push(
+      `WAF triage: cluster ${wafTriage.summary.HOST_FAMILY_WAF_CLUSTER ?? 0} / same-host ${wafTriage.summary.SAME_HOST_CANONICAL_PATH_SWAP ?? 0} / duplicate ${wafTriage.summary.DUPLICATE_ATLAS_URL_FAILURE ?? 0} / root-reuse ${wafTriage.summary.ROOT_SITEMAP_SUCCESS_REUSE ?? 0}`
+    );
+    lines.push(`상위 host-family: ${topHosts(wafTriage.hostFamilies, 5)}`);
+  }
+
   return lines.join('\n');
 }
 
@@ -202,9 +233,11 @@ async function main(): Promise<void> {
   const stale = readJsonIfExists<StaleWatchlistReport>(STALE_PATH);
   const safeDisable = readJsonIfExists<{ total?: number }>(SAFE_DISABLE_PATH);
   const followup = readJsonIfExists<FollowupRemediationReport>(FOLLOWUP_REMEDIATION_PATH);
+  const wafTriage = readJsonIfExists<WafTriageReport>(WAF_TRIAGE_PATH);
 
-  const description = buildDescription(health, autoRepair, hard403, stale, followup);
+  const description = buildDescription(health, autoRepair, hard403, stale, followup, wafTriage);
   const timestamp =
+    wafTriage?.generatedAt ||
     followup?.generatedAt ||
     stale?.generatedAt ||
     hard403?.generatedAt ||

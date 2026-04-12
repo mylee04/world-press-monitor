@@ -1,0 +1,8 @@
+[
+  {"source":"DinAvis - Sitemap Index","sitemap":"https://dinavis.dk/sitemapindex.xml"},
+  {"source":"DinAvis - Seneste","rss":"https://feeds.dinavis.dk/seneste"},
+  {"source":"DinAvis - Topnyheder","rss":"https://feeds.dinavis.dk/topnyheder"},
+  {"source":"Herning Folkeblad - HTML Collection","rss":"https://herningfolkeblad.dk"},
+  {"source":"Midtjyllands Avis - HTML Collection","rss":"https://midtjyllandsavis.dk"},
+  {"source":"Skive Folkeblad - HTML Collection","rss":"https://skivefolkeblad.dk"}
+]

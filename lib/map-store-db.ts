@@ -52,6 +52,13 @@ function getPool(): Pool {
   return pool;
 }
 
+export async function closeMapStoreDbPool(): Promise<void> {
+  if (!pool) return;
+  const current = pool;
+  pool = null;
+  await current.end().catch(() => undefined);
+}
+
 export function normalizeHealthStatus(row: HealthSqlRow | undefined): 'healthy' | 'warning' | 'degraded' | 'failing' | 'unknown' {
   if (!row) return 'unknown';
   const normalized = (row.health_classification || '').trim().toLowerCase();

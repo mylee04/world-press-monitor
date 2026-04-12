@@ -10394,13 +10394,44 @@
           "enabled": false
         },
         {
-          "name": "Tempo.co (Politics and Investigations)",
-          "url": "https://tempo.co/rss"
+          "name": "Tempo.co - Sitemap Index",
+          "sitemapUrl": "https://www.tempo.co/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 83
         },
         {
-          "name": "Liputan6 (General Portal)",
-          "url": "https://www.liputan6.com/rss",
-          "enabled": false
+          "name": "Liputan6 Politik",
+          "url": "https://feed.liputan6.com/rss/news",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 84
+        },
+        {
+          "name": "Liputan6 Bisnis",
+          "url": "https://feed.liputan6.com/rss/bisnis",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 85
+        },
+        {
+          "name": "Liputan6 Global",
+          "url": "https://feed.liputan6.com/rss/global",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 86
+        },
+        {
+          "name": "Liputan6 Regional",
+          "url": "https://feed.liputan6.com/rss/regional",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 87
         },
         {
           "name": "Suara (Independent News)",
@@ -10442,7 +10473,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/21/2026",
           "valid": "needs verification",
-          "row": 63
+          "row": 63,
+          "enabled": false
         },
         {
           "name": "Viva - Sitemap Index",
@@ -10595,6 +10627,1078 @@
           "checkedDate": "03/21/2026",
           "valid": "needs verification",
           "row": 82
+        },
+        {
+          "name": "Okezone - Nasional Sitemap",
+          "sitemapUrl": "https://news.okezone.com/nasional/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 88
+        },
+        {
+          "name": "Okezone - Megapolitan Sitemap",
+          "sitemapUrl": "https://news.okezone.com/megapolitan/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 89
+        },
+        {
+          "name": "Okezone - Internasional Sitemap",
+          "sitemapUrl": "https://news.okezone.com/international/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 90
+        },
+        {
+          "name": "Okezone - Nusantara Sitemap",
+          "sitemapUrl": "https://news.okezone.com/nusantara/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 91
+        },
+        {
+          "name": "iNews - News Sitemap",
+          "sitemapUrl": "https://www.inews.id/news/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 92
+        },
+        {
+          "name": "iNews - Jabar Sitemap",
+          "sitemapUrl": "https://jabar.inews.id/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 93
+        },
+        {
+          "name": "iNews - Jateng Sitemap",
+          "sitemapUrl": "https://jateng.inews.id/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 94
+        },
+        {
+          "name": "iNews - Jatim Sitemap",
+          "sitemapUrl": "https://jatim.inews.id/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 95
+        },
+        {
+          "name": "iNews - Sumut Sitemap",
+          "sitemapUrl": "https://sumut.inews.id/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 96
+        },
+        {
+          "name": "JPNN - Nasional Sitemap",
+          "sitemapUrl": "https://www.jpnn.com/sitemap_post_nasional.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 97
+        },
+        {
+          "name": "JPNN - Internasional Sitemap",
+          "sitemapUrl": "https://www.jpnn.com/sitemap_post_internasional.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 98
+        },
+        {
+          "name": "JPNN - Daerah Sitemap",
+          "sitemapUrl": "https://www.jpnn.com/sitemap_post_daerah.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 99
+        },
+        {
+          "name": "JPNN - Ekonomi Sitemap",
+          "sitemapUrl": "https://www.jpnn.com/sitemap_post_ekonomi.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 100
+        },
+        {
+          "name": "JPNN - Teknologi Sitemap",
+          "sitemapUrl": "https://www.jpnn.com/sitemap_post_teknologi.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 101
+        },
+        {
+          "name": "JPNN - Politik Sitemap",
+          "sitemapUrl": "https://www.jpnn.com/sitemap_post_politik.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 102
+        },
+        {
+          "name": "JPNN - Jabar Terkini Sitemap",
+          "sitemapUrl": "https://jabar.jpnn.com/sitemap_post_jabar-terkini.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 103
+        },
+        {
+          "name": "JPNN - Jatim Terkini Sitemap",
+          "sitemapUrl": "https://jatim.jpnn.com/sitemap_post_jatim-terkini.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 104
+        },
+        {
+          "name": "IDN Times - News Sitemap",
+          "sitemapUrl": "https://www.idntimes.com/news/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 105
+        },
+        {
+          "name": "IDN Times - Jabar Sitemap",
+          "sitemapUrl": "https://jabar.idntimes.com/jabar/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 106
+        },
+        {
+          "name": "IDN Times - Jateng Sitemap",
+          "sitemapUrl": "https://jateng.idntimes.com/jateng/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 107
+        },
+        {
+          "name": "IDN Times - Jatim Sitemap",
+          "sitemapUrl": "https://jatim.idntimes.com/jatim/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 108
+        },
+        {
+          "name": "IDN Times - Sumut Sitemap",
+          "sitemapUrl": "https://sumut.idntimes.com/sumut/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 109
+        },
+        {
+          "name": "Tribunnews - Nasional Sitemap",
+          "sitemapUrl": "https://www.tribunnews.com/nasional/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 110
+        },
+        {
+          "name": "Tribunnews - Regional Sitemap",
+          "sitemapUrl": "https://www.tribunnews.com/regional/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 111
+        },
+        {
+          "name": "Tribunnews - Metropolitan Sitemap",
+          "sitemapUrl": "https://www.tribunnews.com/metropolitan/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 112
+        },
+        {
+          "name": "The Jakarta Post - News Sitemap",
+          "sitemapUrl": "https://www.thejakartapost.com/news/news/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 113
+        },
+        {
+          "name": "The Jakarta Post - National News Sitemap",
+          "sitemapUrl": "https://www.thejakartapost.com/news/national/news/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 114
+        },
+        {
+          "name": "The Jakarta Post - Politics News Sitemap",
+          "sitemapUrl": "https://www.thejakartapost.com/news/politics/news/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 115
+        },
+        {
+          "name": "The Jakarta Post - Business News Sitemap",
+          "sitemapUrl": "https://www.thejakartapost.com/news/business/news/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 116
+        },
+        {
+          "name": "tvOne News - Berita Sitemap",
+          "sitemapUrl": "https://www.tvonenews.com/sitemap/news/berita.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 117
+        },
+        {
+          "name": "tvOne News - Ekonomi Sitemap",
+          "sitemapUrl": "https://www.tvonenews.com/sitemap/news/ekonomi.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 118
+        },
+        {
+          "name": "tvOne News - Daerah Sitemap",
+          "sitemapUrl": "https://www.tvonenews.com/sitemap/news/daerah.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 119
+        },
+        {
+          "name": "Harian Jogja - Sitemap Index",
+          "sitemapUrl": "https://www.harianjogja.com/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 120
+        },
+        {
+          "name": "Fajar - RSS Feed",
+          "url": "https://fajar.co.id/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 121
+        },
+        {
+          "name": "iNews - Bali Sitemap",
+          "sitemapUrl": "https://bali.inews.id/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 122
+        },
+        {
+          "name": "iNews - Banten Sitemap",
+          "sitemapUrl": "https://banten.inews.id/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 123
+        },
+        {
+          "name": "iNews - Kaltim Sitemap",
+          "sitemapUrl": "https://kaltim.inews.id/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 124
+        },
+        {
+          "name": "iNews - Lampung Sitemap",
+          "sitemapUrl": "https://lampung.inews.id/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 125
+        },
+        {
+          "name": "iNews - Sumsel Sitemap",
+          "sitemapUrl": "https://sumsel.inews.id/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 126
+        },
+        {
+          "name": "iNews - Sulsel Sitemap",
+          "sitemapUrl": "https://sulsel.inews.id/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 127
+        },
+        {
+          "name": "IDN Times - Bali Sitemap",
+          "sitemapUrl": "https://bali.idntimes.com/bali/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 128
+        },
+        {
+          "name": "IDN Times - Banten Sitemap",
+          "sitemapUrl": "https://banten.idntimes.com/banten/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 129
+        },
+        {
+          "name": "IDN Times - Jogja Sitemap",
+          "sitemapUrl": "https://jogja.idntimes.com/jogja/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 130
+        },
+        {
+          "name": "IDN Times - Kaltim Sitemap",
+          "sitemapUrl": "https://kaltim.idntimes.com/kaltim/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 131
+        },
+        {
+          "name": "IDN Times - Lampung Sitemap",
+          "sitemapUrl": "https://lampung.idntimes.com/lampung/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 132
+        },
+        {
+          "name": "IDN Times - NTB Sitemap",
+          "sitemapUrl": "https://ntb.idntimes.com/ntb/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 133
+        },
+        {
+          "name": "IDN Times - Sulsel Sitemap",
+          "sitemapUrl": "https://sulsel.idntimes.com/sulsel/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 134
+        },
+        {
+          "name": "IDN Times - Sumsel Sitemap",
+          "sitemapUrl": "https://sumsel.idntimes.com/sumsel/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 135
+        },
+        {
+          "name": "iNews - Aceh Sitemap",
+          "sitemapUrl": "https://aceh.inews.id/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 136
+        },
+        {
+          "name": "iNews - Yogya Sitemap",
+          "sitemapUrl": "https://yogya.inews.id/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 137
+        },
+        {
+          "name": "iNews - Kalbar Sitemap",
+          "sitemapUrl": "https://kalbar.inews.id/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 138
+        },
+        {
+          "name": "iNews - Babel Sitemap",
+          "sitemapUrl": "https://babel.inews.id/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 139
+        },
+        {
+          "name": "iNews - Maluku Sitemap",
+          "sitemapUrl": "https://maluku.inews.id/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 140
+        },
+        {
+          "name": "iNews - Papua Sitemap",
+          "sitemapUrl": "https://papua.inews.id/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 141
+        },
+        {
+          "name": "iNews - Sumbar Sitemap",
+          "sitemapUrl": "https://sumbar.inews.id/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 142
+        },
+        {
+          "name": "iNews - NTB Sitemap",
+          "sitemapUrl": "https://ntb.inews.id/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 143
+        },
+        {
+          "name": "iNews - Sulut Sitemap",
+          "sitemapUrl": "https://sulut.inews.id/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 144
+        },
+        {
+          "name": "iNews - Kalteng Sitemap",
+          "sitemapUrl": "https://kalteng.inews.id/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 145
+        },
+        {
+          "name": "iNews - Kalsel Sitemap",
+          "sitemapUrl": "https://kalsel.inews.id/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 146
+        },
+        {
+          "name": "iNews - Jambi Sitemap",
+          "sitemapUrl": "https://jambi.inews.id/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 147
+        },
+        {
+          "name": "iNews - Regional Sitemap",
+          "sitemapUrl": "https://regional.inews.id/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 148
+        },
+        {
+          "name": "iNews - Nasional News Sitemap",
+          "sitemapUrl": "https://www.inews.id/news/nasional/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 149
+        },
+        {
+          "name": "iNews - Internasional News Sitemap",
+          "sitemapUrl": "https://www.inews.id/news/internasional/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 150
+        },
+        {
+          "name": "iNews - Megapolitan News Sitemap",
+          "sitemapUrl": "https://www.inews.id/news/megapolitan/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 151
+        },
+        {
+          "name": "iNews - Finance Sitemap",
+          "sitemapUrl": "https://www.inews.id/finance/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 152
+        },
+        {
+          "name": "iNews - Sport Sitemap",
+          "sitemapUrl": "https://www.inews.id/sport/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 153
+        },
+        {
+          "name": "iNews - Lifestyle Sitemap",
+          "sitemapUrl": "https://www.inews.id/lifestyle/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 154
+        },
+        {
+          "name": "iNews - Travel Sitemap",
+          "sitemapUrl": "https://www.inews.id/travel/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 155
+        },
+        {
+          "name": "iNews - Otomotif Sitemap",
+          "sitemapUrl": "https://www.inews.id/otomotif/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 156
+        },
+        {
+          "name": "iNews - Techno Sitemap",
+          "sitemapUrl": "https://www.inews.id/techno/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 157
+        },
+        {
+          "name": "IDN Times - Business News Sitemap",
+          "sitemapUrl": "https://www.idntimes.com/business/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 158
+        },
+        {
+          "name": "IDN Times - Tech News Sitemap",
+          "sitemapUrl": "https://www.idntimes.com/tech/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 159
+        },
+        {
+          "name": "IDN Times - Health News Sitemap",
+          "sitemapUrl": "https://www.idntimes.com/health/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 160
+        },
+        {
+          "name": "IDN Times - Sport News Sitemap",
+          "sitemapUrl": "https://www.idntimes.com/sport/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 161
+        },
+        {
+          "name": "IDN Times - Travel News Sitemap",
+          "sitemapUrl": "https://www.idntimes.com/travel/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 162
+        },
+        {
+          "name": "IDN Times - Food News Sitemap",
+          "sitemapUrl": "https://www.idntimes.com/food/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 163
+        },
+        {
+          "name": "IDN Times - Opinion News Sitemap",
+          "sitemapUrl": "https://www.idntimes.com/opinion/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 164
+        },
+        {
+          "name": "IDN Times - Science News Sitemap",
+          "sitemapUrl": "https://www.idntimes.com/science/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 165
+        },
+        {
+          "name": "IDN Times - Life News Sitemap",
+          "sitemapUrl": "https://www.idntimes.com/life/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 166
+        },
+        {
+          "name": "IDN Times - Hype News Sitemap",
+          "sitemapUrl": "https://www.idntimes.com/hype/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 167
+        },
+        {
+          "name": "IDN Times - Automotive News Sitemap",
+          "sitemapUrl": "https://www.idntimes.com/automotive/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 168
+        },
+        {
+          "name": "IDN Times - Korea News Sitemap",
+          "sitemapUrl": "https://www.idntimes.com/korea/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 169
+        },
+        {
+          "name": "IDN Times - Men News Sitemap",
+          "sitemapUrl": "https://www.idntimes.com/men/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 170
+        },
+        {
+          "name": "IDN Times - Lokal Berdaya News Sitemap",
+          "sitemapUrl": "https://www.idntimes.com/lokal-berdaya/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 171
+        },
+        {
+          "name": "Jawa Pos - News Sitemap",
+          "sitemapUrl": "https://www.jawapos.com/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 172
+        },
+        {
+          "name": "Jawa Pos - Recent Posts Sitemap",
+          "sitemapUrl": "https://www.jawapos.com/post-recent.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 173
+        },
+        {
+          "name": "Kumparan - News Channel Sitemap",
+          "sitemapUrl": "https://kumparan.com/sitemap_channel_news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 174
+        },
+        {
+          "name": "Kumparan - Bisnis Channel Sitemap",
+          "sitemapUrl": "https://kumparan.com/sitemap_channel_bisnis.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 175
+        },
+        {
+          "name": "Kumparan - Bola Sports Channel Sitemap",
+          "sitemapUrl": "https://kumparan.com/sitemap_channel_bola-sports.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 176
+        },
+        {
+          "name": "Media Indonesia - Politik dan Hukum Sitemap",
+          "sitemapUrl": "https://mediaindonesia.com/politik-dan-hukum/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 177
+        },
+        {
+          "name": "Media Indonesia - Ekonomi Sitemap",
+          "sitemapUrl": "https://mediaindonesia.com/ekonomi/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 178
+        },
+        {
+          "name": "Media Indonesia - Nusantara Sitemap",
+          "sitemapUrl": "https://mediaindonesia.com/nusantara/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 179
+        },
+        {
+          "name": "Media Indonesia - Internasional Sitemap",
+          "sitemapUrl": "https://mediaindonesia.com/internasional/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 180
+        },
+        {
+          "name": "Pikiran Rakyat - News Sitemap",
+          "sitemapUrl": "https://www.pikiran-rakyat.com/news/sitemap_news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 181
+        },
+        {
+          "name": "Pikiran Rakyat - Ekonomi Sitemap",
+          "sitemapUrl": "https://www.pikiran-rakyat.com/ekonomi/sitemap_news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 182
+        },
+        {
+          "name": "Pikiran Rakyat - Teknologi Sitemap",
+          "sitemapUrl": "https://www.pikiran-rakyat.com/teknologi/sitemap_news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 183
+        },
+        {
+          "name": "Katadata - Berita Sitemap",
+          "sitemapUrl": "https://katadata.co.id/sitemap/berita/sitemap_news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 184
+        },
+        {
+          "name": "Warta Ekonomi - News Sitemap",
+          "sitemapUrl": "https://wartaekonomi.co.id/news/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 185
+        },
+        {
+          "name": "VOI - RSS Feed",
+          "url": "https://voi.id/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 186
+        },
+        {
+          "name": "Poskota - News Sitemap",
+          "sitemapUrl": "https://www.poskota.co.id/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 187
+        },
+        {
+          "name": "Akurat - RSS Feed",
+          "url": "https://www.akurat.co/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 188
+        },
+        {
+          "name": "Inilah - News Sitemap",
+          "sitemapUrl": "https://www.inilah.com/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 189
+        },
+        {
+          "name": "BeritaJatim - RSS Feed",
+          "url": "https://beritajatim.com/feed",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 190
+        },
+        {
+          "name": "Suara Surabaya - RSS Feed",
+          "url": "https://www.suarasurabaya.net/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 191
+        },
+        {
+          "name": "Bali Post - Post Sitemap",
+          "sitemapUrl": "https://www.balipost.com/post-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 192
+        },
+        {
+          "name": "Medcom.id - Nasional Sitemap",
+          "sitemapUrl": "https://www.medcom.id/sitemap_nasional.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 193
+        },
+        {
+          "name": "Koran Jakarta - News Sitemap",
+          "sitemapUrl": "https://www.koran-jakarta.com/news/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 194
+        },
+        {
+          "name": "Tagar - News Sitemap",
+          "sitemapUrl": "https://www.tagar.id/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 195
+        },
+        {
+          "name": "Batamnews - Sitemap Index",
+          "sitemapUrl": "https://www.batamnews.co.id/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 196
+        },
+        {
+          "name": "RMOL - RSS Feed",
+          "url": "https://rmol.id/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 197
+        },
+        {
+          "name": "Alinea - Peristiwa Sitemap",
+          "sitemapUrl": "https://www.alinea.id/peristiwa/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 198
+        },
+        {
+          "name": "BantenNews - RSS Feed",
+          "url": "https://www.bantennews.co.id/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 200
+        },
+        {
+          "name": "BeritaSatu - Nasional News Sitemap",
+          "sitemapUrl": "https://www.beritasatu.com/sitemap/nasional/news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 201
+        },
+        {
+          "name": "BeritaSatu - Ekonomi News Sitemap",
+          "sitemapUrl": "https://www.beritasatu.com/sitemap/ekonomi/news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 202
+        },
+        {
+          "name": "BeritaSatu - Sport News Sitemap",
+          "sitemapUrl": "https://www.beritasatu.com/sitemap/sport/news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 203
+        },
+        {
+          "name": "BeritaSatu - Lifestyle News Sitemap",
+          "sitemapUrl": "https://www.beritasatu.com/sitemap/lifestyle/news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 204
+        },
+        {
+          "name": "Investor Daily - News Sitemap",
+          "sitemapUrl": "https://investor.id/sitemap_news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 205
+        },
+        {
+          "name": "Kompasiana - News Sitemap",
+          "sitemapUrl": "https://www.kompasiana.com/news/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 206
+        },
+        {
+          "name": "NTBSatu - Sitemap Index",
+          "sitemapUrl": "https://ntbsatu.com/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 207
+        },
+        {
+          "name": "KR Jogja - News Sitemap",
+          "sitemapUrl": "https://www.krjogja.com/sitemap-news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 208
+        },
+        {
+          "name": "Acehtrend - News Latest Sitemap",
+          "sitemapUrl": "https://www.acehtrend.com/sitemap/news-latest.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 209
+        },
+        {
+          "name": "Times Indonesia - News Sitemap",
+          "sitemapUrl": "https://timesindonesia.co.id/sitemap/news/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 210
+        },
+        {
+          "name": "Koran Sulindo - RSS Feed",
+          "url": "https://koransulindo.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 211
+        },
+        {
+          "name": "Kabar Banten - RSS Feed",
+          "url": "https://kabarbanten.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 212
+        },
+        {
+          "name": "Banten Raya - RSS Feed",
+          "url": "https://bantenraya.co.id/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 213
+        },
+        {
+          "name": "Lampost - RSS Feed",
+          "url": "https://lampost.co/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 214
+        },
+        {
+          "name": "Surabaya Pagi - RSS Feed",
+          "url": "https://surabayapagi.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 215
+        },
+        {
+          "name": "BeritaSatu - Nusantara News Sitemap",
+          "sitemapUrl": "https://www.beritasatu.com/sitemap/nusantara/news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 216
+        },
+        {
+          "name": "BeritaSatu - Internasional News Sitemap",
+          "sitemapUrl": "https://www.beritasatu.com/sitemap/internasional/news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 217
+        },
+        {
+          "name": "BeritaSatu - Ototekno News Sitemap",
+          "sitemapUrl": "https://www.beritasatu.com/sitemap/ototekno/news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 218
+        },
+        {
+          "name": "BeritaSatu - DKI Jakarta News Sitemap",
+          "sitemapUrl": "https://www.beritasatu.com/sitemap/dki-jakarta/news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 219
+        },
+        {
+          "name": "BeritaSatu - Multimedia News Sitemap",
+          "sitemapUrl": "https://www.beritasatu.com/sitemap/multimedia/news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 220
+        },
+        {
+          "name": "BeritaSatu - Bplus News Sitemap",
+          "sitemapUrl": "https://www.beritasatu.com/sitemap/bplus/news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 221
+        },
+        {
+          "name": "KR Jogja - Web Sitemap",
+          "sitemapUrl": "https://www.krjogja.com/sitemap-web.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 222
         }
       ]
     },
@@ -13508,7 +14612,776 @@
     {
       "name": "Israel",
       "code": "IL",
-      "feeds": []
+      "feeds": [
+        {
+          "name": "Times of Israel - Latest",
+          "url": "https://www.timesofisrael.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 1
+        },
+        {
+          "name": "Jerusalem Post - Israel News",
+          "url": "https://www.jpost.com/rss/rssfeedsisraelnews.aspx",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 2
+        },
+        {
+          "name": "Jerusalem Post - Middle East",
+          "url": "https://www.jpost.com/rss/rssfeedsmiddleeastnews.aspx",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 3
+        },
+        {
+          "name": "Jerusalem Post - World",
+          "url": "https://www.jpost.com/rss/rssfeedsinternational",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 4
+        },
+        {
+          "name": "Jerusalem Post - Front Page",
+          "url": "https://www.jpost.com/rss/rssfeedsfrontpage.aspx",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 5
+        },
+        {
+          "name": "Jerusalem Post - Business and Innovation",
+          "url": "https://www.jpost.com/rss/rssbusinessandinnovation",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 6
+        },
+        {
+          "name": "Jerusalem Post - Banking and Finance",
+          "url": "https://www.jpost.com/rss/rssbankingandfinance",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 7
+        },
+        {
+          "name": "Jerusalem Post - Energy and Infrastructure",
+          "url": "https://www.jpost.com/rss/rssenergyandinfrastructure",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 8
+        },
+        {
+          "name": "Jerusalem Post - Tech and Startups",
+          "url": "https://www.jpost.com/rss/rsstechandstartups",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 9
+        },
+        {
+          "name": "Jerusalem Post - Defense and Tech",
+          "url": "https://www.jpost.com/rss/rssfeeddefense-and-tech",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 10
+        },
+        {
+          "name": "Jerusalem Post - American Politics",
+          "url": "https://www.jpost.com/rss/rssfeedsamerican-politics",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 11
+        },
+        {
+          "name": "Jerusalem Post - Diaspora",
+          "url": "https://www.jpost.com/rss/rssfeedsdiaspora.aspx",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 12
+        },
+        {
+          "name": "Jerusalem Post - Antisemitism",
+          "url": "https://www.jpost.com/rss/rssfeedsantisemitism",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 13
+        },
+        {
+          "name": "Ynet - News",
+          "url": "https://www.ynet.co.il/Integration/StoryRss2.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 14
+        },
+        {
+          "name": "Ynet - Breaking News",
+          "url": "https://www.ynet.co.il/Integration/StoryRss1854.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 15
+        },
+        {
+          "name": "Ynet - Economy",
+          "url": "https://www.ynet.co.il/Integration/StoryRss6.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 16
+        },
+        {
+          "name": "Ynet - Sports",
+          "url": "https://www.ynet.co.il/Integration/StoryRss3.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 17
+        },
+        {
+          "name": "Ynet - Culture",
+          "url": "https://www.ynet.co.il/Integration/StoryRss538.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 18
+        },
+        {
+          "name": "Ynet - Health",
+          "url": "https://www.ynet.co.il/Integration/StoryRss1208.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 19
+        },
+        {
+          "name": "Ynet - Auto",
+          "url": "https://www.ynet.co.il/Integration/StoryRss550.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 20
+        },
+        {
+          "name": "Ynet - Food",
+          "url": "https://www.ynet.co.il/Integration/StoryRss975.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 21
+        },
+        {
+          "name": "Walla - Main News",
+          "url": "https://rss.walla.co.il/feed/1?type=main",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 22
+        },
+        {
+          "name": "Walla - Israel News",
+          "url": "https://rss.walla.co.il/feed/1",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 23
+        },
+        {
+          "name": "Walla - World News",
+          "url": "https://rss.walla.co.il/feed/2",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 24
+        },
+        {
+          "name": "Walla - Breaking News",
+          "url": "https://rss.walla.co.il/feed/22",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 25
+        },
+        {
+          "name": "Walla - Security",
+          "url": "https://rss.walla.co.il/feed/2689",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 26
+        },
+        {
+          "name": "Walla - Politics",
+          "url": "https://rss.walla.co.il/feed/2686",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 27
+        },
+        {
+          "name": "Walla - Finance",
+          "url": "https://rss.walla.co.il/feed/2?type=main",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 28
+        },
+        {
+          "name": "Walla - Sports",
+          "url": "https://rss.walla.co.il/feed/3?type=main",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 29
+        },
+        {
+          "name": "Walla - Culture",
+          "url": "https://rss.walla.co.il/feed/4?type=main",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 30
+        },
+        {
+          "name": "Walla - Auto",
+          "url": "https://rss.walla.co.il/feed/31?type=main",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 31
+        },
+        {
+          "name": "Walla - Health",
+          "url": "https://rss.walla.co.il/feed/139?type=main",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 32
+        },
+        {
+          "name": "Walla - Food",
+          "url": "https://rss.walla.co.il/feed/9?type=main",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 33
+        },
+        {
+          "name": "Walla - Fashion",
+          "url": "https://rss.walla.co.il/feed/24?type=main",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 34
+        },
+        {
+          "name": "Walla - Celebs",
+          "url": "https://rss.walla.co.il/feed/22?type=main",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 35
+        },
+        {
+          "name": "mako - Israel",
+          "url": "https://rcs.mako.co.il/rss/news-israel.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 36
+        },
+        {
+          "name": "mako - World",
+          "url": "https://rcs.mako.co.il/rss/news-world.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 37
+        },
+        {
+          "name": "mako - Military",
+          "url": "https://rcs.mako.co.il/rss/dac23afee62ff210VgnVCM2000002a0c10acRCRD.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 38
+        },
+        {
+          "name": "MivzakLive",
+          "url": "https://www.mivzaklive.co.il/feed",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 39
+        },
+        {
+          "name": "Maariv - Main News",
+          "url": "https://www.maariv.co.il/rss/rsschadashot",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 40
+        },
+        {
+          "name": "Maariv - Breaking News",
+          "url": "https://www.maariv.co.il/rss/rssfeedsmivzakichadashot",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 41
+        },
+        {
+          "name": "Maariv - Politics",
+          "url": "https://www.maariv.co.il/rss/rssfeedspolitimedini",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 42
+        },
+        {
+          "name": "Maariv - Israel News",
+          "url": "https://www.maariv.co.il/rss/rssfeedschadashotbaarez",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 43
+        },
+        {
+          "name": "Maariv - Security",
+          "url": "https://www.maariv.co.il/rss/rssfeedszavavebetachon",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 44
+        },
+        {
+          "name": "Maariv - World News",
+          "url": "https://www.maariv.co.il/rss/rssfeedschadashotbaolam",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 45
+        },
+        {
+          "name": "Maariv - Business",
+          "url": "https://www.maariv.co.il/rss/rssfeedsasakim",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 46
+        },
+        {
+          "name": "Maariv - Business World",
+          "url": "https://www.maariv.co.il/rss/rssfeedsasakimbaolam",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 47
+        },
+        {
+          "name": "Maariv - Economy Israel",
+          "url": "https://www.maariv.co.il/rss/rssfeedskalkalabaarez",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 48
+        },
+        {
+          "name": "Maariv - Technology",
+          "url": "https://www.maariv.co.il/rss/rssfeedstechnologeya",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 49
+        },
+        {
+          "name": "Maariv - Real Estate",
+          "url": "https://www.maariv.co.il/rss/rssfeedsnadlan",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 50
+        },
+        {
+          "name": "Maariv - Law",
+          "url": "https://www.maariv.co.il/rss/rssmishpat",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 51
+        },
+        {
+          "name": "Maariv - Consumer",
+          "url": "https://www.maariv.co.il/rss/rssfeedszarchanot",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 52
+        },
+        {
+          "name": "Maariv - Health",
+          "url": "https://www.maariv.co.il/rss/rssfeedsbriotveyeoz",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 53
+        },
+        {
+          "name": "Maariv - Local",
+          "url": "https://www.maariv.co.il/rss/rsshamekomon",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 54
+        },
+        {
+          "name": "Maariv - Culture",
+          "url": "https://www.maariv.co.il/rss/rssfeedstarbot",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 55
+        },
+        {
+          "name": "Maariv - Music",
+          "url": "https://www.maariv.co.il/rss/rssfeedsmozika",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 56
+        },
+        {
+          "name": "Maariv - Television",
+          "url": "https://www.maariv.co.il/rss/rssfeedstelevizya",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 57
+        },
+        {
+          "name": "Maariv - Celebs",
+          "url": "https://www.maariv.co.il/rss/rssfeedstmicelebsnews",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 58
+        },
+        {
+          "name": "Srugim",
+          "url": "https://www.srugim.co.il/feed",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 59
+        },
+        {
+          "name": "ICE",
+          "url": "https://www.ice.co.il/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 60
+        },
+        {
+          "name": "Israel Hayom - Latest",
+          "url": "https://www.israelhayom.co.il/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 61
+        },
+        {
+          "name": "Kipa",
+          "url": "https://www.kipa.co.il/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 62
+        },
+        {
+          "name": "Bechadrei Haredim",
+          "url": "https://www.bhol.co.il/feed",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 63
+        },
+        {
+          "name": "Kikar - Latest",
+          "url": "https://a.kikar.co.il/v1/rss/articles/latest/rss2",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 64
+        },
+        {
+          "name": "Kikar - War Diary",
+          "url": "https://a.kikar.co.il/v1/rss/articles/2014/rss2",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 65
+        },
+        {
+          "name": "Kikar - Security",
+          "url": "https://a.kikar.co.il/v1/rss/articles/1882/rss2",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 66
+        },
+        {
+          "name": "Kikar - Today at Kikar",
+          "url": "https://a.kikar.co.il/v1/rss/articles/1387/rss2",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 67
+        },
+        {
+          "name": "JDN",
+          "url": "https://www.jdn.co.il/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 68
+        },
+        {
+          "name": "ynetnews - English",
+          "url": "https://www.ynetnews.com/Integration/StoryRss2.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 69
+        },
+        {
+          "name": "ynetnews - English News",
+          "url": "https://www.ynet.co.il/Integration/StoryRss3082.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 70
+        },
+        {
+          "name": "ynetnews - English Opinion",
+          "url": "https://www.ynet.co.il/Integration/StoryRss3084.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 71
+        },
+        {
+          "name": "ynetnews - English Culture",
+          "url": "https://www.ynet.co.il/Integration/StoryRss3086.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/03/2026",
+          "valid": "valid",
+          "row": 72
+        },
+        {
+          "name": "Israel National News",
+          "url": "https://www.israelnationalnews.com/Rss.aspx",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 73
+        },
+        {
+          "name": "Jerusalem Post - Sitemap Index",
+          "sitemapUrl": "https://www.jpost.com/jpgooglesitemap/sitemapindex.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 74
+        },
+        {
+          "name": "Walla - Sitemap Index",
+          "sitemapUrl": "https://news.walla.co.il/sitemap/1/index.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 75
+        },
+        {
+          "name": "mako - Sitemap Index",
+          "sitemapUrl": "https://www.mako.co.il/SiteMap/Mako-News-SitemapIndex.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 76
+        },
+        {
+          "name": "Maariv - Sitemap",
+          "sitemapUrl": "https://www.maariv.co.il/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 77
+        },
+        {
+          "name": "Srugim - Sitemap Index",
+          "sitemapUrl": "https://www.srugim.co.il/sitemap_index.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 78
+        },
+        {
+          "name": "ICE - Sitemap",
+          "sitemapUrl": "https://www.ice.co.il/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 79
+        },
+        {
+          "name": "Israel Hayom - Sitemap",
+          "sitemapUrl": "https://www.israelhayom.co.il/sitemaps/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 80
+        },
+        {
+          "name": "Kipa - Sitemap Index",
+          "sitemapUrl": "https://www.kipa.co.il/sitemap_index.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 81
+        },
+        {
+          "name": "Bechadrei Haredim - Sitemap Index",
+          "sitemapUrl": "https://www.bhol.co.il/sitemap_index.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 82
+        },
+        {
+          "name": "Kikar - Articles Sitemap",
+          "sitemapUrl": "https://a.kikar.co.il/v1/sitemap/articles",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 83
+        },
+        {
+          "name": "JDN - Sitemap Index",
+          "sitemapUrl": "https://www.jdn.co.il/sitemap_index.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 84
+        },
+        {
+          "name": "Israel National News - Sitemap",
+          "sitemapUrl": "https://www.israelnationalnews.com/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 85
+        },
+        {
+          "name": "Haaretz - Latest News Sitemap",
+          "sitemapUrl": "https://www.haaretz.com/news-sitemap-latest.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 86
+        },
+        {
+          "name": "Haaretz - Content News Sitemap",
+          "sitemapUrl": "https://www.haaretz.com/news-sitemap-content.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 87
+        },
+        {
+          "name": "TheMarker - Latest News Sitemap",
+          "sitemapUrl": "https://www.themarker.com/news-sitemap-latest.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 88
+        },
+        {
+          "name": "TheMarker - Content News Sitemap",
+          "sitemapUrl": "https://www.themarker.com/news-sitemap-content.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 89
+        },
+        {
+          "name": "Globes - Hebrew Sitemap",
+          "sitemapUrl": "https://www.globes.co.il/data/webservices/google-maps.ashx?language=he",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 90
+        },
+        {
+          "name": "Globes - English Sitemap",
+          "sitemapUrl": "https://www.globes.co.il/data/webservices/google-maps.ashx?language=en",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 91
+        },
+        {
+          "name": "Bizportal - Latest Sitemap",
+          "sitemapUrl": "https://www.bizportal.co.il/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 92
+        },
+        {
+          "name": "i24NEWS - English Articles Sitemap",
+          "sitemapUrl": "https://www.i24news.tv/en/sitemaps/articles.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 93
+        },
+        {
+          "name": "i24NEWS - Hebrew Articles Sitemap",
+          "sitemapUrl": "https://www.i24news.tv/he/sitemaps/articles.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 94
+        },
+        {
+          "name": "i24NEWS - English Google News Sitemap",
+          "sitemapUrl": "https://www.i24news.tv/en/sitemapGoogleNews.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 95
+        },
+        {
+          "name": "i24NEWS - Hebrew Google News Sitemap",
+          "sitemapUrl": "https://www.i24news.tv/he/sitemapGoogleNews.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "needs verification",
+          "row": 96
+        }
+      ]
     },
     {
       "name": "Jordan",
@@ -21380,7 +23253,7 @@
         {
           "name": "DublinLive",
           "url": "https://www.dublinlive.ie/rss.xml",
-          "sitemapUrl": "https://www.dublinlive.ie/map_news.xml"
+          "sitemapUrl": "https://www.dublinlive.ie/sitemaps/sitemap_index.xml"
         },
         {
           "name": "Irish Examiner",
@@ -21416,12 +23289,12 @@
         {
           "name": "Irish Star",
           "url": "https://www.irishstar.com/rss.xml",
-          "sitemapUrl": "https://www.irishstar.com/map_news.xml"
+          "sitemapUrl": "https://www.irishstar.com/sitemaps/sitemap_index.xml"
         },
         {
           "name": "CorkBeo",
           "url": "https://www.corkbeo.ie/rss.xml",
-          "sitemapUrl": "https://www.corkbeo.ie/map_news.xml"
+          "sitemapUrl": "https://www.corkbeo.ie/sitemaps/sitemap_index.xml"
         },
         {
           "name": "GalwayBeo",
@@ -21442,11 +23315,13 @@
         },
         {
           "name": "Extra.ie",
-          "url": "https://extra.ie/feed"
+          "url": "https://extra.ie/feed",
+          "sitemapUrl": "https://extra.ie/news-sitemap.xml"
         },
         {
-          "name": "Sunday World",
-          "url": "https://www.sundayworld.com/feed"
+          "name": "Crime World",
+          "url": null,
+          "sitemapUrl": "https://www.crimeworld.com/sitemap-news.xml"
         },
         {
           "name": "RTÉ News - World",
@@ -21587,15 +23462,18 @@
         },
         {
           "name": "The Sun Ireland",
-          "url": "https://www.thesun.ie/feed/",
-          "status": "NEW",
-          "checkedDate": "03/16/2026",
-          "valid": "valid",
+          "url": null,
+          "sitemapUrl": "https://www.thesun.ie/news-sitemap.xml",
+          "enabled": false,
+          "status": "ERR",
+          "checkedDate": "04/12/2026",
+          "valid": "invalid",
           "row": 18
         },
         {
           "name": "BelfastLive",
           "url": "https://www.belfastlive.co.uk/rss.xml",
+          "sitemapUrl": "https://www.belfastlive.co.uk/sitemaps/sitemap_index.xml",
           "status": "NEW",
           "checkedDate": "03/16/2026",
           "valid": "valid",
@@ -21604,9 +23482,10 @@
         {
           "name": "Buzz.ie",
           "url": "https://www.buzz.ie/rss.xml",
+          "enabled": false,
           "status": "NEW",
-          "checkedDate": "03/16/2026",
-          "valid": "valid",
+          "checkedDate": "04/12/2026",
+          "valid": "invalid",
           "row": 20
         },
         {
@@ -21756,16 +23635,18 @@
         {
           "name": "Donegal Daily",
           "url": "https://www.donegaldaily.com/feed/",
+          "enabled": false,
           "status": "⏩ OFFICIAL",
-          "checkedDate": "03/29/2026",
-          "valid": "valid",
+          "checkedDate": "04/12/2026",
+          "valid": "invalid",
           "row": 197
         },
         {
           "name": "Clare Echo",
           "url": "https://www.clareecho.ie/feed/",
+          "sitemapUrl": "https://www.clareecho.ie/sitemap_index.xml",
           "status": "⏩ OFFICIAL",
-          "checkedDate": "03/29/2026",
+          "checkedDate": "04/12/2026",
           "valid": "valid",
           "row": 198
         },
@@ -22063,16 +23944,18 @@
         {
           "name": "Highland Radio",
           "url": "https://highlandradio.com/feed/",
+          "sitemapUrl": "https://highlandradio.com/wp-sitemap.xml",
           "status": "⏩ OFFICIAL",
-          "checkedDate": "04/02/2026",
+          "checkedDate": "04/12/2026",
           "valid": "valid",
           "row": 234
         },
         {
           "name": "Clare FM",
           "url": "https://www.clare.fm/feed/",
+          "sitemapUrl": "https://www.clare.fm/sitemap_index.xml",
           "status": "⏩ OFFICIAL",
-          "checkedDate": "04/02/2026",
+          "checkedDate": "04/12/2026",
           "valid": "valid",
           "row": 235
         },
@@ -22104,6 +23987,7 @@
         {
           "name": "Laois Today",
           "url": "https://www.laoistoday.ie/feed/",
+          "sitemapUrl": "https://www.laoistoday.ie/sitemap_index.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/02/2026",
           "valid": "valid",
@@ -22120,6 +24004,7 @@
         {
           "name": "Dublin Gazette",
           "url": "https://dublingazette.com/feed/",
+          "sitemapUrl": "https://dublingazette.com/sitemap_index.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/02/2026",
           "valid": "valid",
@@ -22140,6 +24025,129 @@
           "checkedDate": "04/02/2026",
           "valid": "valid",
           "row": 243
+        },
+        {
+          "name": "Irish Examiner - Sport",
+          "url": "https://feeds.feedburner.com/iesport",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 244
+        },
+        {
+          "name": "Irish Examiner - World",
+          "url": "https://feeds.feedburner.com/ieworld",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 245
+        },
+        {
+          "name": "Irish Examiner - Business",
+          "url": "https://feeds.feedburner.com/iebusiness",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 246
+        },
+        {
+          "name": "RSVP Live",
+          "url": null,
+          "sitemapUrl": "https://www.rsvplive.ie/sitemaps/sitemap_index.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 247
+        },
+        {
+          "name": "EVOKE",
+          "url": "https://evoke.ie/feed",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 248
+        },
+        {
+          "name": "WLR FM",
+          "url": "https://www.wlrfm.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 249
+        },
+        {
+          "name": "Tipp FM",
+          "url": "https://tippfm.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 250
+        },
+        {
+          "name": "KCLR96FM",
+          "url": "https://kclr96fm.com/feed/",
+          "sitemapUrl": "https://kclr96fm.com/sitemap_index.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 251
+        },
+        {
+          "name": "Northern Sound",
+          "url": "https://www.northernsound.ie/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 252
+        },
+        {
+          "name": "Radio Kerry",
+          "url": "https://www.radiokerry.ie/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 253
+        },
+        {
+          "name": "Shannonside",
+          "url": "https://www.shannonside.ie/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 254
+        },
+        {
+          "name": "Newstalk - News",
+          "url": "https://www.newstalk.com/news/feed",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 255
+        },
+        {
+          "name": "JOE.ie - News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.joe.ie/news-sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 256
+        },
+        {
+          "name": "Drogheda Life",
+          "url": "https://droghedalife.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 257
+        },
+        {
+          "name": "Hot Press",
+          "url": "https://www.hotpress.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 258
         }
       ]
     },
@@ -22885,6 +24893,7 @@
         {
           "name": "Mobilsiden",
           "url": "https://mobilsiden.dk/feed/",
+          "sitemapUrl": "https://mobilsiden.dk/sitemap_index.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/02/2026",
           "valid": "valid"
@@ -22937,11 +24946,249 @@
         },
         {
           "name": "Meremobil",
-          "url": "https://meremobil.dk/feed/"
+          "url": "https://meremobil.dk/feed/",
+          "sitemapUrl": "https://meremobil.dk/sitemap_index.xml"
         },
         {
           "name": "Recordere",
           "url": "https://www.recordere.dk/feed/"
+        },
+        {
+          "name": "Nyheder.dk - News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.nyheder.dk/?lab_viewport=newssitemap",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 137
+        },
+        {
+          "name": "Dagens - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.dagens.dk/sitemap_index.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 138
+        },
+        {
+          "name": "Nyheder24 - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://nyheder24.dk/sitemap_index.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 139
+        },
+        {
+          "name": "DenOffentlige - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.denoffentlige.dk/sitemap_index.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 140
+        },
+        {
+          "name": "Bold - News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://bold.dk/feed/rss/articles/google/news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 141
+        },
+        {
+          "name": "Tipsbladet - News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.tipsbladet.dk/news-sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 142
+        },
+        {
+          "name": "Campo - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://campo.dk/sitemap_index.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 143
+        },
+        {
+          "name": "Se og Hør - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.seoghoer.dk/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 144
+        },
+        {
+          "name": "BILLED-BLADET - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.billedbladet.dk/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 145
+        },
+        {
+          "name": "InsideBusiness - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://ib.dk/sitemap_index.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 146
+        },
+        {
+          "name": "Alt om Kendte - News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://altomkendte.dk/news-sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 147
+        },
+        {
+          "name": "ALT.dk - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.alt.dk/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 148
+        },
+        {
+          "name": "Folkebladet Lemvig - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://folkebladetlemvig.dk/sitemap",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 149
+        },
+        {
+          "name": "Nordschleswiger - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.nordschleswiger.dk/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 150
+        },
+        {
+          "name": "TV2 Nyheder - HTML Collection",
+          "url": "https://nyheder.tv2.dk",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 151
+        },
+        {
+          "name": "Dagbladet Ringkobing-Skjern - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://dbrs.dk/sitemap",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 152
+        },
+        {
+          "name": "KobenhavnLIV - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://kobenhavnliv.dk/sitemap",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 153
+        },
+        {
+          "name": "LigeHer - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://ligeher.nu/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 154
+        },
+        {
+          "name": "AmagerLIV - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://amagerliv.dk/sitemap",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 155
+        },
+        {
+          "name": "FrederiksbergLIV - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://frederiksbergliv.dk/sitemap",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 156
+        },
+        {
+          "name": "EsbjergLiv - News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://esbjergliv.dk/news-sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 157
+        },
+        {
+          "name": "DinAvis - Seneste",
+          "url": "https://feeds.dinavis.dk/seneste",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 158
+        },
+        {
+          "name": "DinAvis - Topnyheder",
+          "url": "https://feeds.dinavis.dk/topnyheder",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 159
+        },
+        {
+          "name": "Herning Folkeblad - HTML Collection",
+          "url": "https://herningfolkeblad.dk",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 160
+        },
+        {
+          "name": "Midtjyllands Avis - HTML Collection",
+          "url": "https://midtjyllandsavis.dk",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 161
+        },
+        {
+          "name": "Skive Folkeblad - HTML Collection",
+          "url": "https://skivefolkeblad.dk",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 162
+        },
+        {
+          "name": "Fredericia Dagblad - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://frdb.dk/sitemap",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 163
         }
       ]
     },
@@ -25576,12 +27823,99 @@
           "url": "https://spravy.pravda.sk/rss/xml/"
         },
         {
+          "name": "Pravda - Sitemap Index",
+          "sitemapUrl": "https://spravy.pravda.sk/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
           "name": "HNonline",
           "url": "https://hnonline.sk/feed"
         },
         {
-          "name": "TVNoviny.sk",
-          "sitemapUrl": "https://tvnoviny.sk/api/v1/sitemap-index"
+          "name": "TVNoviny.sk - Ekonomika Sitemap",
+          "sitemapUrl": "https://tvnoviny.sk/api/v1/sitemap?type=article&category=tvnoviny-260",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TVNoviny.sk - Nike Liga Sitemap",
+          "sitemapUrl": "https://tvnoviny.sk/api/v1/sitemap?type=article&category=tvnoviny-547",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "STVR Spravy - RSS",
+          "url": "https://spravy.rtvs.sk/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "STVR Spravy - News Sitemap",
+          "sitemapUrl": "https://spravy.stvr.sk/news_sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "STVR Spravy - Slovensko Sitemap",
+          "sitemapUrl": "https://spravy.stvr.sk/slovensko_articles_sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "STVR Spravy - Svet Sitemap",
+          "sitemapUrl": "https://spravy.stvr.sk/svet_articles_sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "STVR Spravy - Ekonomika Sitemap",
+          "sitemapUrl": "https://spravy.stvr.sk/ekonomika_articles_sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "STVR Spravy - Regiony Sitemap",
+          "sitemapUrl": "https://spravy.stvr.sk/regiony_articles_sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "STVR Spravy - Sport Sitemap",
+          "sitemapUrl": "https://spravy.stvr.sk/sport_articles_sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "STVR Spravy - Radiozurnal Sitemap",
+          "sitemapUrl": "https://spravy.stvr.sk/radiozurnal_articles_sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "STVR Spravy - Minuta Po Minute Sitemap",
+          "sitemapUrl": "https://spravy.stvr.sk/minuta-po-minute-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "STVR Spravy - Minuta Po Minute Sitemap 2",
+          "sitemapUrl": "https://spravy.stvr.sk/minuta-po-minute-sitemap2.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
         },
         {
           "name": "TA3",
@@ -25628,6 +27962,41 @@
           "url": "https://www.topky.sk/rss/8/TOPKY"
         },
         {
+          "name": "Topky - Domace",
+          "url": "https://www.topky.sk/rss/10/Spravy_-_Domace.rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Topky - Zahranicne",
+          "url": "https://www.topky.sk/rss/11/Spravy_-_Zahranicne.rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Topky - Kultura",
+          "url": "https://www.topky.sk/rss/5/Kultura.rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Topky - Zaujimavosti",
+          "url": "https://www.topky.sk/rss/13/Zaujimavosti.rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Sportky - Futbal",
+          "url": "https://sportky.zoznam.sk/rss/14/Sport_-_Futbal.rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Novy Cas - Google News Sitemap",
           "sitemapUrl": "https://www.cas.sk/google_news.xml"
         },
@@ -25656,10 +28025,80 @@
           "sitemapUrl": "https://sita.sk/scripts/sitemap/current.php"
         },
         {
+          "name": "SITA.sk - All Feed",
+          "url": "https://sita.sk/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "SITA.sk - Spravy Feed",
+          "url": "https://sita.sk/kategoria/spravy/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "SITA.sk - Sport Feed",
+          "url": "https://sita.sk/kategoria/sport/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "SITA.sk - Ekonomika Feed",
+          "url": "https://sita.sk/kategoria/ekonomika/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "SITA.sk - Kultura Feed",
+          "url": "https://sita.sk/kategoria/kultura/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "SITA.sk - Zdravie Feed",
+          "url": "https://sita.sk/kategoria/zdravie/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Regiony Zoznam",
+          "url": "https://regiony.zoznam.sk/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Openiazoch",
+          "url": "https://openiazoch.zoznam.sk/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Sportnet",
           "url": "https://sportnet.sme.sk/rss/",
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Zive.sk - Najnovsie",
+          "url": "https://zive.aktuality.sk/rss/najnovsie/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Zive.sk - Mobilmania",
+          "url": "https://zive.aktuality.sk/rss/mobilmania/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
           "valid": "valid"
         },
         {
@@ -25698,6 +28137,20 @@
           "valid": "valid"
         },
         {
+          "name": "Interez",
+          "url": "https://www.interez.sk/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Interez - News Sitemap",
+          "sitemapUrl": "https://www.interez.sk/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Bystricoviny",
           "url": "https://www.bystricoviny.sk/feed/",
           "status": "⏩ OFFICIAL",
@@ -25730,6 +28183,237 @@
           "url": "https://touchit.sk/feed/",
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Forbes Slovakia",
+          "url": "https://www.forbes.sk/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Fontech",
+          "url": "https://fontech.startitup.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Bratislavak",
+          "url": "https://www.bratislavak.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Kosicak",
+          "url": "https://www.kosicak.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Presovak",
+          "url": "https://www.presovak.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Trnavak",
+          "url": "https://www.trnavak.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Nitrak",
+          "url": "https://www.nitrak.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Trencinak",
+          "url": "https://www.trencinak.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Zilinak",
+          "url": "https://www.zilinak.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "BBonline",
+          "url": "https://bbonline.sk/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Trencin24",
+          "url": "https://www.trencin24.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Info.sk - News Sitemap",
+          "sitemapUrl": "https://www.info.sk/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Dnes24",
+          "url": "https://www.dnes24.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Plus 7 Dni - Google News Sitemap",
+          "sitemapUrl": "https://plus7dni.pluska.sk/google_news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "The Slovak Spectator",
+          "url": "https://spectator.sme.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Korzar",
+          "url": "https://korzar.sme.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Zahori.sk",
+          "url": "https://zahori.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "KosiceDnes",
+          "url": "https://kosicednes.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Veda na dosah",
+          "url": "https://vedanadosah.cvtisr.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Bratislava Dnes24",
+          "url": "https://bratislava.dnes24.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Trnava Dnes24",
+          "url": "https://trnava.dnes24.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Nitra Dnes24",
+          "url": "https://nitra.dnes24.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Zilina Dnes24",
+          "url": "https://zilina.dnes24.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Presov Dnes24",
+          "url": "https://presov.dnes24.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Kosice Dnes24",
+          "url": "https://kosice.dnes24.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Poprad Dnes24",
+          "url": "https://poprad.dnes24.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Trencin Dnes24",
+          "url": "https://trencin.dnes24.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Mediaklik",
+          "url": "https://mediaklik.sk/rss.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Mediaklik - Sitemap Index",
+          "sitemapUrl": "https://mediaklik.sk/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "MojAndroid",
+          "url": "https://www.mojandroid.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "MojAndroid - News Sitemap",
+          "sitemapUrl": "https://www.mojandroid.sk/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Autoviny",
+          "url": "https://www.autoviny.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Autoviny - News Sitemap",
+          "sitemapUrl": "https://www.autoviny.sk/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
           "valid": "valid"
         }
       ]
@@ -26085,6 +28769,160 @@
         {
           "name": "Mediapool",
           "url": "https://www.mediapool.bg/rss"
+        },
+        {
+          "name": "BTA BG - Bulgaria",
+          "url": "https://www.bta.bg/bg/news/bulgaria/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "BTA BG - World",
+          "url": "https://www.bta.bg/bg/news/world/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "BTA BG - Balkans",
+          "url": "https://www.bta.bg/bg/news/balkans/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "BTA BG - Economy",
+          "url": "https://www.bta.bg/bg/news/economy/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "BTA BG - Sport",
+          "url": "https://www.bta.bg/bg/news/sport/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "BTA BG - LIK",
+          "url": "https://www.bta.bg/bg/news/lik/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "BTA EN - Bulgaria",
+          "url": "https://www.bta.bg/en/news/bulgaria/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "BTA EN - World",
+          "url": "https://www.bta.bg/en/news/world/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "BTA EN - Balkans",
+          "url": "https://www.bta.bg/en/news/balkans/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "BTA EN - Economy",
+          "url": "https://www.bta.bg/en/news/economy/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "BTA EN - Sport",
+          "url": "https://www.bta.bg/en/news/sport/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Bulgaria ON AIR - Latest",
+          "url": "https://www.bgonair.bg/rss/latest",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Bulgaria ON AIR - Bulgaria",
+          "url": "https://www.bgonair.bg/rss/c/2-bulgaria",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Bulgaria ON AIR - World",
+          "url": "https://www.bgonair.bg/rss/c/4-world",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Bulgaria ON AIR - Crime",
+          "url": "https://www.bgonair.bg/rss/c/166-kriminalno",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Bulgaria ON AIR - Sport",
+          "url": "https://www.bgonair.bg/rss/c/7-sport",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Bulgaria ON AIR - Science",
+          "url": "https://www.bgonair.bg/rss/c/5-science",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Bulgaria ON AIR - Reports",
+          "url": "https://www.bgonair.bg/rss/c/162-reportazhi",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Petel",
+          "url": "https://www.petel.bg/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Petel - Sitemap",
+          "sitemapUrl": "https://www.petel.bg/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Offnews - Sitemap Index",
+          "sitemapUrl": "https://offnews.bg/sitemap/index.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Offnews - News Sitemap",
+          "sitemapUrl": "https://offnews.bg/xml/sitemap.php?type=news",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
         },
         {
           "name": "BNR - Sitemap Index",
@@ -27010,8 +29848,92 @@
           "sitemapUrl": "https://www.delfi.lv/sitemap/index.xml"
         },
         {
+          "name": "Delfi Latvia - Main",
+          "url": "https://www.delfi.lv/rss/index.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Delfi Latvia - Bizness",
+          "url": "https://www.delfi.lv/bizness/rss/index.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Delfi Latvia - Sports",
+          "url": "https://www.delfi.lv/sports/rss/index.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Delfi Latvia - Auto",
+          "url": "https://www.delfi.lv/auto/rss/index.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Delfi Latvia - Kultura",
+          "url": "https://www.delfi.lv/kultura/rss/index.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Delfi Latvia - Video",
+          "url": "https://www.delfi.lv/video/rss/index.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Delfi Latvia - Life",
+          "url": "https://www.delfi.lv/life/rss/index.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Rus Delfi Latvia - News 1",
           "sitemapUrl": "https://rus.delfi.lv/sitemap/news/1/index.xml"
+        },
+        {
+          "name": "Rus Delfi Latvia - Main",
+          "url": "https://rus.delfi.lv/rss/index.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Rus Delfi Latvia - Biznes",
+          "url": "https://rus.delfi.lv/biznes/rss/index.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Rus Delfi Latvia - Sport",
+          "url": "https://rus.delfi.lv/sport/rss/index.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Rus Delfi Latvia - Life",
+          "url": "https://rus.delfi.lv/life/rss/index.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Rus Delfi Latvia - Turgid",
+          "url": "https://rus.delfi.lv/turgid/rss/index.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
         },
         {
           "name": "Jauns.lv",
@@ -27048,6 +29970,53 @@
         {
           "name": "Mixnews Latvia",
           "url": "https://mixnews.lv/feed/"
+        },
+        {
+          "name": "Bauskas Dzive",
+          "url": "https://bauskasdzive.lv/feed/",
+          "sitemapUrl": "https://bauskasdzive.lv/wp-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Staburags",
+          "url": "https://staburags.lv/feed/",
+          "sitemapUrl": "https://staburags.lv/wp-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Dzirkstele",
+          "url": "https://www.dzirkstele.lv/feed/",
+          "sitemapUrl": "https://dzirkstele.lv/wp-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Ziemellatvija",
+          "url": "https://ziemellatvija.lv/feed/",
+          "sitemapUrl": "https://ziemellatvija.lv/wp-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "ZZ.lv",
+          "url": "https://zz.lv/feed/",
+          "sitemapUrl": "https://zz.lv/wp-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Liepajniekiem - Sitemap Index",
+          "sitemapUrl": "https://www.liepajniekiem.lv/wp-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
         },
         {
           "name": "Gorod.lv",
@@ -27099,11 +30068,48 @@
           "url": "https://www.diena.lv/rss/?c=4"
         },
         {
+          "name": "Diena - Sports",
+          "url": "https://www.diena.lv/rss/?c=5",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Sportacentrs",
           "url": "https://sportacentrs.com/static/non-publish/rss/sc/rss.xml",
           "sitemapUrl": "https://sportacentrs.com/sitemap.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "eDruva",
+          "url": "https://edruva.lv/feed/",
+          "sitemapUrl": "https://edruva.lv/wp-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Kurzemnieks",
+          "url": "https://kurzemnieks.lv/feed/",
+          "sitemapUrl": "https://kurzemnieks.lv/wp-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Briva Daugava - Sitemap",
+          "sitemapUrl": "https://www.bdaugava.lv/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Novaja - Sitemap Index",
+          "sitemapUrl": "https://www.novaja.lv/wp-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
           "valid": "valid"
         }
       ]
@@ -27796,8 +30802,8 @@
           "url": "https://mothership.sg/feed/"
         },
         {
-          "name": "CNA Singapore",
-          "url": "https://www.channelnewsasia.com/api/v1/rss-outbound-feed?_format=xml&category=1821876"
+          "name": "CNA Today",
+          "url": "https://www.channelnewsasia.com/api/v1/rss-outbound-feed?_format=xml&category=679471"
         },
         {
           "name": "Straits Times Sport",
@@ -27818,7 +30824,7 @@
         {
           "name": "Straits Times - Current Month Feeds Sitemap",
           "url": null,
-          "sitemapUrl": "https://www.straitstimes.com/sitemap/2026/03/feeds.xml"
+          "sitemapUrl": "https://www.straitstimes.com/sitemap/2026/04/feeds.xml"
         },
         {
           "name": "Business Times International",
@@ -27842,8 +30848,7 @@
         },
         {
           "name": "Business Times Wealth",
-          "url": "https://www.businesstimes.com.sg/rss/wealth",
-          "enabled": false
+          "url": "https://www.businesstimes.com.sg/rss/wealth"
         },
         {
           "name": "Business Times Property",
@@ -27851,12 +30856,16 @@
         },
         {
           "name": "Business Times Startups & Tech",
-          "url": "https://www.businesstimes.com.sg/rss/startups-tech",
-          "enabled": false
+          "url": "https://www.businesstimes.com.sg/rss/startups-tech"
         },
         {
           "name": "Business Times - Google News Sitemap",
           "url": "https://www.businesstimes.com.sg/googlenews.xml"
+        },
+        {
+          "name": "Business Times - Current Month Feeds Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.businesstimes.com.sg/sitemap/2026/04/feeds.xml"
         },
         {
           "name": "MustShareNews",
@@ -27884,8 +30893,30 @@
           "url": "https://www.beritaharian.sg/rss.xml"
         },
         {
+          "name": "Berita Harian - Google News Sitemap",
+          "url": "https://www.beritaharian.sg/googlenews.xml"
+        },
+        {
+          "name": "Berita Harian - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.beritaharian.sg/sitemap.xml",
+          "category": "News",
+          "language": "ms",
+          "sourceType": "sitemap",
+          "enabled": true
+        },
+        {
           "name": "Tamil Murasu",
           "url": "https://www.tamilmurasu.com.sg/rss.xml"
+        },
+        {
+          "name": "Tamil Murasu - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.tamilmurasu.com.sg/sitemap.xml",
+          "category": "News",
+          "language": "ta",
+          "sourceType": "sitemap",
+          "enabled": true
         },
         {
           "name": "Tamil Murasu - Google News Sitemap",
@@ -27921,24 +30952,33 @@
           "valid": "valid"
         },
         {
-          "name": "CNA Latest News",
+          "name": "CNA Asia",
           "url": "https://www.channelnewsasia.com/api/v1/rss-outbound-feed?_format=xml&category=6511"
         },
         {
-          "name": "CNA East Asia",
+          "name": "CNA Singapore",
           "url": "https://www.channelnewsasia.com/api/v1/rss-outbound-feed?_format=xml&category=10416"
         },
         {
-          "name": "CNA World",
+          "name": "CNA Sport",
           "url": "https://www.channelnewsasia.com/api/v1/rss-outbound-feed?_format=xml&category=10296"
         },
         {
-          "name": "CNA Business",
+          "name": "CNA World",
           "url": "https://www.channelnewsasia.com/api/v1/rss-outbound-feed?_format=xml&category=6311"
         },
         {
-          "name": "CNA Asia",
+          "name": "CNA Business",
           "url": "https://www.channelnewsasia.com/api/v1/rss-outbound-feed?_format=xml&category=6936"
+        },
+        {
+          "name": "CNA - News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.channelnewsasia.com/api/v1/sitemap-news-feed?_format=xml",
+          "category": "News",
+          "language": "en",
+          "sourceType": "sitemap",
+          "enabled": true
         },
         {
           "name": "Singapore Business Review - Sitemap",
@@ -27964,6 +31004,15 @@
           "category": "Entertainment",
           "language": "en",
           "sourceType": "rss",
+          "enabled": true
+        },
+        {
+          "name": "8days - News Sitemap",
+          "url": null,
+          "sitemapUrl": "https://www.8days.sg/api/v1/sitemap-news-feed?_format=xml",
+          "category": "Entertainment",
+          "language": "en",
+          "sourceType": "sitemap",
           "enabled": true
         },
         {
@@ -28029,6 +31078,24 @@
         {
           "name": "tabla!",
           "url": "https://www.tabla.com.sg/rss.xml"
+        },
+        {
+          "name": "STOMP - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.stomp.sg/sitemap.xml",
+          "category": "News",
+          "language": "en",
+          "sourceType": "sitemap",
+          "enabled": true
+        },
+        {
+          "name": "tabla! - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.tabla.com.sg/sitemap.xml",
+          "category": "News",
+          "language": "en",
+          "sourceType": "sitemap",
+          "enabled": true
         }
       ]
     },
@@ -28650,6 +31717,13 @@
           "url": "https://www.malaysiakini.com/rss/en/news.rss"
         },
         {
+          "name": "Malaysiakini - News (ZH)",
+          "url": "https://www.malaysiakini.com/rss/zh/news.rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Kosmo - Feed",
           "url": "https://www.kosmo.com.my/feed/"
         },
@@ -28682,6 +31756,20 @@
           "sitemapUrl": "https://www.bernama.com/sitemap.xml"
         },
         {
+          "name": "Bernama",
+          "url": "https://www.bernama.com/en/rssfeed.php",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Bernama - Malay",
+          "url": "https://www.bernama.com/bm/rssfeed.php",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
           "name": "NST - Sitemap",
           "sitemapUrl": "https://www.nst.com.my/sitemap.xml"
         },
@@ -28692,6 +31780,20 @@
         {
           "name": "Malay Mail - Money Feed",
           "url": "https://www.malaymail.com/feed/rss/money"
+        },
+        {
+          "name": "Malay Mail - Malaysia Feed",
+          "url": "https://www.malaymail.com/feed/rss/malaysia",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Malay Mail - World Feed",
+          "url": "https://www.malaymail.com/feed/rss/world",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
         },
         {
           "name": "Kosmo - Sitemap Index",
@@ -28708,6 +31810,13 @@
         {
           "name": "Free Malaysia Today - Nation Feed",
           "url": "https://www.freemalaysiatoday.com/category/nation/feed/"
+        },
+        {
+          "name": "Free Malaysia Today - Business RSS",
+          "url": "https://www.freemalaysiatoday.com/feeds/rss/business",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
         },
         {
           "name": "Free Malaysia Today - World Feed",
@@ -28742,6 +31851,20 @@
           "sitemapUrl": "https://www.sarawaktribune.com/sitemap_index.xml"
         },
         {
+          "name": "Sarawak Tribune",
+          "url": "https://www.sarawaktribune.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TVS Sarawak - Sitemap Index",
+          "sitemapUrl": "https://www.tvsarawak.my/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
           "name": "DayakDaily - Feed",
           "url": "https://dayakdaily.com/feed/"
         },
@@ -28766,6 +31889,13 @@
           "sitemapUrl": "https://www.businesstoday.com.my/sitemaps.xml"
         },
         {
+          "name": "CodeBlue",
+          "url": "https://codeblue.galencentre.org/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
           "name": "MalaysiaNow - Feed",
           "url": "https://www.malaysianow.com/feed/"
         },
@@ -28776,6 +31906,20 @@
         {
           "name": "Scoop - Feed",
           "url": "https://scoop.my/feed/"
+        },
+        {
+          "name": "Kwong Wah - Sitemap Index",
+          "sitemapUrl": "https://www.kwongwah.com.my/sitemap_index.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "See Hua - Sitemap Index",
+          "sitemapUrl": "https://www.seehua.com/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
         },
         {
           "name": "The Vibes - Sitemap",

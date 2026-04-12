@@ -6,6 +6,128 @@
 
 ## Unreleased
 
+### [04b4f99] Improve Ireland sitemap coverage
+- Commit: 04b4f99403c36ff9496605be077950bb00f29641
+- Date: 2026-04-12 14:41:27 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	data/country-benchmark.snapshot.json
+    - M	data/dashboard-summary.snapshot.json
+    - M	data/map-country-metrics.snapshot.1h.json
+    - M	data/map-country-metrics.snapshot.24h.json
+    - M	data/map-country-metrics.snapshot.7d.json
+    - M	data/map-country-sources.snapshot.1h.json
+    - M	data/map-country-sources.snapshot.24h.json
+    - M	data/map-country-sources.snapshot.7d.json
+    - M	data/map-publishers.snapshot.1h.json
+    - M	data/map-publishers.snapshot.24h.json
+    - M	data/map-publishers.snapshot.7d.json
+    - M	data/rss-atlas.json
+    - M	lib/benchmark-store-queries.ts
+    - M	lib/ingestion-store.ts
+    - M	lib/map-snapshot-store.ts
+    - M	lib/map-store-db.ts
+    - M	lib/parsers.ts
+    - M	scripts/build-customer-dashboard-snapshots.ts
+    - M	scripts/build-map-snapshots.ts
+    - M	scripts/rss-country-coverage.ts
+  - Git stat:
+  - data/country-benchmark.snapshot.json          |   2 +-
+  -  data/dashboard-summary.snapshot.json          |   2 +-
+  -  data/map-country-metrics.snapshot.1h.json     |   2 +-
+  -  data/map-country-metrics.snapshot.24h.json    |   2 +-
+  -  data/map-country-metrics.snapshot.7d.json     |   2 +-
+  -  data/map-country-sources.snapshot.1h.json     |   2 +-
+  -  data/map-country-sources.snapshot.24h.json    |   2 +-
+  -  data/map-country-sources.snapshot.7d.json     |   2 +-
+  -  data/map-publishers.snapshot.1h.json          |   2 +-
+  -  data/map-publishers.snapshot.24h.json         |   2 +-
+  -  data/map-publishers.snapshot.7d.json          |   2 +-
+  -  data/rss-atlas.json                           | 341 +++++++++++++++++++++-
+  -  lib/benchmark-store-queries.ts                |   7 +
+  -  lib/ingestion-store.ts                        |  12 +
+  -  lib/map-snapshot-store.ts                     |   8 +
+  -  lib/map-store-db.ts                           |   7 +
+  -  lib/parsers.ts                                | 150 ++++++++--
+  -  scripts/build-customer-dashboard-snapshots.ts |  21 +-
+  -  scripts/build-map-snapshots.ts                |  21 +-
+  -  scripts/rss-country-coverage.ts               | 390 ++++++++++++++++++++++----
+  -  20 files changed, 866 insertions(+), 113 deletions(-)
+
+### [cc6de0e] Expand Malaysia sources and harden sitemap ingest
+- Commit: cc6de0eaa4b033c102b93e49380118fd6dfc9a7d
+- Date: 2026-04-12 14:36:39 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	data/rss-atlas.json
+    - A	lib/date-parsing.ts
+    - M	lib/publisher-groups.ts
+    - M	scripts/fetch-sitemap-browser.mjs
+    - M	scripts/ingest-worker.ts
+  - Git stat:
+  - data/rss-atlas.json               |   7 ++
+  -  lib/date-parsing.ts               | 128 ++++++++++++++++++++++++++++++++++
+  -  lib/publisher-groups.ts           |  25 ++++++-
+  -  scripts/fetch-sitemap-browser.mjs |  63 +++++++++++++----
+  -  scripts/ingest-worker.ts          | 143 +++++++++++++++++++++++++++++++-------
+  -  5 files changed, 324 insertions(+), 42 deletions(-)
+
+### [e93bea0] Add Singapore coverage plan and prioritize fresh sitemap entries
+- Commit: e93bea0e92306516061a451c6b6332b26517175a
+- Date: 2026-04-12 14:21:44 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - A	data/singapore-coverage-layer-plan-20260412.md
+    - M	lib/parsers.ts
+  - Git stat:
+  - data/singapore-coverage-layer-plan-20260412.md | 172 +++++++++++++++++++++++++
+  -  lib/parsers.ts                                 |  14 +-
+  -  2 files changed, 183 insertions(+), 3 deletions(-)
+
+### [9939486] Expand Indonesia source atlas and refresh 24h snapshots
+- Commit: 9939486a5257e84dbcdf3d5ac30a5d7ad435846e
+- Date: 2026-04-12 14:17:02 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	data/map-country-metrics.snapshot.24h.json
+    - M	data/map-country-sources.snapshot.24h.json
+    - M	data/rss-atlas.json
+  - Git stat:
+  - data/map-country-metrics.snapshot.24h.json |    2 +-
+  -  data/map-country-sources.snapshot.24h.json |    2 +-
+  -  data/rss-atlas.json                        | 1789 ++++++++++++++++++++++++++--
+  -  3 files changed, 1675 insertions(+), 118 deletions(-)
+
+### [61299c3] Add Israel source atlas and coverage plan
+- Commit: 61299c3977e43e3277aa44ae41fee155a32dd900
+- Date: 2026-04-12 11:52:35 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - A	data/israel-overseas-coverage-plan-20260412.md
+    - M	data/rss-atlas.json
+    - M	data/rss-catalog.csv
+    - M	data/rss-catalog.opml
+  - Git stat:
+  - data/israel-overseas-coverage-plan-20260412.md |  47 ++
+  -  data/rss-atlas.json                            | 771 ++++++++++++++++++++++++-
+  -  data/rss-catalog.csv                           |  96 +++
+  -  data/rss-catalog.opml                          |  96 +++
+  -  4 files changed, 1009 insertions(+), 1 deletion(-)
+
+### [624041e] Improve RSS WAF queue reporting and env fallback
+- Commit: 624041ebac35546d25f5ab257f249b6271f21a1c
+- Date: 2026-04-12 11:12:10 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	scripts/load-local-env.sh
+    - M	scripts/rss-ops-daily-discord.ts
+    - M	scripts/rss-waf-pattern-triage.ts
+  - Git stat:
+  - scripts/load-local-env.sh         |  25 ++++++++-
+  -  scripts/rss-ops-daily-discord.ts  |  37 ++++++++++++-
+  -  scripts/rss-waf-pattern-triage.ts | 107 +++++++++++++++++++++++++++++++++-----
+  -  3 files changed, 152 insertions(+), 17 deletions(-)
+
 ### [fd131e6] Add global RSS fastlane scheduling
 - Commit: fd131e60c93a759628f83ac63f3522caa36fef0c
 - Date: 2026-04-11 00:35:08 -0500

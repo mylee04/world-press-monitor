@@ -161,6 +161,18 @@ function buildCustomerVisibleTitleQualitySql(columnExpression: string): string {
   return `coalesce(nullif(trim(${columnExpression}), ''), 'ok') <> 'suspect'`;
 }
 
+export async function closeIngestionStorePool(): Promise<void> {
+  schemaReady = false;
+  schemaReadyPromise = null;
+  dashboardSummaryCache = new Map();
+  poolFailed = false;
+  poolDisabledReason = 'not_initialized';
+  if (!pool) return;
+  const current = pool;
+  pool = null;
+  await current.end().catch(() => undefined);
+}
+
 function truncateText(value: string, maxChars: number): string {
   return truncatePersistedText(value, maxChars);
 }
