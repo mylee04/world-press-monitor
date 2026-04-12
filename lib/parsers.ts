@@ -272,6 +272,164 @@ function extractHtmlCollectionField(entry: Record<string, unknown>, keys: string
   return '';
 }
 
+function decodeJsQuotedString(value: string): string {
+  const trimmed = (value || '').trim();
+  if (!trimmed) return '';
+  try {
+    return normalizeHtmlText(JSON.parse(`"${trimmed}"`));
+  } catch {
+    return normalizeHtmlText(trimmed.replace(/\\"/g, '"').replace(/\\\\/g, '\\'));
+  }
+}
+
+function parseMhmHtmlCollectionWithStats(html: string, limit = 12, baseUrl?: string): ParsedFeedBatch {
+  const rows = [...html.matchAll(/\{uuid:"([0-9a-fA-F-]{36})",articleType:"[^"]*",headline:\{plain:"((?:\\.|[^"\\])*)",styled:"(?:\\.|[^"\\])*"\}[\s\S]*?publishedAt:"([^"]+)"/g)]
+    .map((match) => {
+      const uuid = (match[1] || '').trim();
+      const title = decodeJsQuotedString(match[2] || '') || inferTitleFromLink(uuid ? `/artikel/${uuid}` : '');
+      const link = resolveFeedLink(uuid ? `/artikel/${uuid}` : '', baseUrl);
+      const publishedAt = normalizePublishedAt(match[3] || '') || inferPublishedAtFromLink(link);
+      return {
+        title,
+        description: '',
+        link,
+        publishedAt,
+        categories: [],
+        stableId: uuid || link,
+        missingTitle: !title,
+        missingLink: !link,
+        missingSummary: true,
+        missingPublishedAt: !publishedAt,
+        sortPublishedAtMs: publishedAt ? Date.parse(publishedAt) : Number.NaN,
+      };
+    })
+    .filter((row, index, all) => row.link && all.findIndex((candidate) => candidate.link === row.link) === index)
+    .sort((left, right) => {
+      const leftMs = Number.isFinite(left.sortPublishedAtMs) ? left.sortPublishedAtMs : Number.NEGATIVE_INFINITY;
+      const rightMs = Number.isFinite(right.sortPublishedAtMs) ? right.sortPublishedAtMs : Number.NEGATIVE_INFINITY;
+      return rightMs - leftMs;
+    })
+    .slice(0, limit);
+
+  return {
+    items: toItems(rows.map(({ sortPublishedAtMs: _sortPublishedAtMs, ...row }) => row)),
+    stats: summarizeStats(rows.map(({ sortPublishedAtMs: _sortPublishedAtMs, ...row }) => row)),
+  };
+}
+
+function parseNuxtDataPayload(html: string): unknown[] {
+  const match = html.match(/<script[^>]+type=["']application\/json["'][^>]*data-nuxt-data[^>]*id=["']__NUXT_DATA__["'][^>]*>([\s\S]*?)<\/script>/i);
+  if (!match) return [];
+  try {
+    const parsed = JSON.parse(clean(match[1] || '').trim());
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+function readNuxtPrimitive(payload: unknown[], ref: unknown): unknown {
+  if (typeof ref === 'number' && Number.isInteger(ref) && ref >= 0 && ref < payload.length) {
+    const resolved = payload[ref];
+    if (
+      typeof resolved === 'string'
+      || typeof resolved === 'number'
+      || typeof resolved === 'boolean'
+      || resolved === null
+    ) {
+      return resolved;
+    }
+  }
+  return ref;
+}
+
+function readNuxtString(payload: unknown[], ref: unknown): string {
+  const resolved = readNuxtPrimitive(payload, ref);
+  return typeof resolved === 'string' ? normalizeHtmlText(resolved.trim()) : '';
+}
+
+function readNuxtPublishedAt(payload: unknown[], ref: unknown): string {
+  const resolved = readNuxtPrimitive(payload, ref);
+  return typeof resolved === 'string' ? normalizePublishedAt(resolved) || '' : '';
+}
+
+function parseAltingetHtmlCollectionWithStats(html: string, limit = 12, baseUrl?: string): ParsedFeedBatch {
+  let parsedUrl: URL | null = null;
+  try {
+    parsedUrl = baseUrl ? new URL(baseUrl) : null;
+  } catch {
+    parsedUrl = null;
+  }
+  if (!parsedUrl || parsedUrl.hostname !== 'www.altinget.dk') {
+    return { items: [], stats: summarizeStats([]) };
+  }
+
+  const payload = parseNuxtDataPayload(html);
+  if (payload.length === 0) {
+    return { items: [], stats: summarizeStats([]) };
+  }
+
+  const hrefs = [...html.matchAll(/href="(\/artikel\/[^"#?]+)"/g)]
+    .map((match) => clean(match[1] || '').trim())
+    .filter((href) => href && !href.startsWith('/artikel/om-altinget-') && href !== '/artikel/altingetdks-formaal-maalgruppe');
+  const hrefSet = new Set(hrefs);
+  if (hrefSet.size === 0) {
+    return { items: [], stats: summarizeStats([]) };
+  }
+
+  const publishedAtByArticleRef = new Map<number, string>();
+  for (const entry of payload) {
+    if (!entry || typeof entry !== 'object' || Array.isArray(entry)) continue;
+    const record = entry as Record<string, unknown>;
+    if (typeof record.articleId !== 'number') continue;
+    const publishedAt = readNuxtPublishedAt(payload, record.publishingDate);
+    if (!publishedAt) continue;
+    const existing = publishedAtByArticleRef.get(record.articleId);
+    if (!existing || Date.parse(publishedAt) > Date.parse(existing)) {
+      publishedAtByArticleRef.set(record.articleId, publishedAt);
+    }
+  }
+
+  const rows = payload
+    .flatMap((entry): ParsedFeedItemWithMissing[] => {
+      if (!entry || typeof entry !== 'object' || Array.isArray(entry)) return [];
+      const record = entry as Record<string, unknown>;
+      if (typeof record.id !== 'number') return [];
+      const urlKey = readNuxtString(payload, record.urlKey);
+      if (!urlKey) return [];
+      const href = urlKey.startsWith('/artikel/') ? urlKey : `/artikel/${urlKey}`;
+      if (!hrefSet.has(href)) return [];
+      const link = resolveFeedLink(href, baseUrl);
+      const publishedAt = publishedAtByArticleRef.get(record.id) || inferPublishedAtFromLink(link);
+      const title = readNuxtString(payload, record.headline) || inferTitleFromLink(link) || link;
+      const description = readNuxtString(payload, record.mainTeaser);
+      return [{
+        title,
+        description,
+        link,
+        publishedAt,
+        categories: [],
+        stableId: `altinget:${urlKey}`,
+        missingTitle: !title,
+        missingLink: !link,
+        missingSummary: !description,
+        missingPublishedAt: !publishedAt,
+      }];
+    })
+    .filter((row, index, all) => row.link && all.findIndex((candidate) => candidate.link === row.link) === index)
+    .sort((left, right) => {
+      const leftMs = left.publishedAt ? Date.parse(left.publishedAt) : Number.NEGATIVE_INFINITY;
+      const rightMs = right.publishedAt ? Date.parse(right.publishedAt) : Number.NEGATIVE_INFINITY;
+      return rightMs - leftMs;
+    })
+    .slice(0, limit);
+
+  return {
+    items: toItems(rows),
+    stats: summarizeStats(rows),
+  };
+}
+
 export function parseHtmlCollectionWithStats(html: string, limit = 12, baseUrl?: string): ParsedFeedBatch {
   const rawEntries: Array<Record<string, unknown>> = [];
   for (const block of parseJsonLdBlocks(html)) {
@@ -308,10 +466,20 @@ export function parseHtmlCollectionWithStats(html: string, limit = 12, baseUrl?:
   }
 
   const rows = [...deduped.values()].slice(0, limit);
-  return {
+  const jsonLdResult = {
     items: toItems(rows),
     stats: summarizeStats(rows),
   };
+  if (jsonLdResult.items.length > 0 || jsonLdResult.stats.totalCandidates > 0) {
+    return jsonLdResult;
+  }
+
+  const altingetResult = parseAltingetHtmlCollectionWithStats(html, limit, baseUrl);
+  if (altingetResult.items.length > 0 || altingetResult.stats.totalCandidates > 0) {
+    return altingetResult;
+  }
+
+  return parseMhmHtmlCollectionWithStats(html, limit, baseUrl);
 }
 
 export function parseRssOrAtom(xml: string, limit = 10): ParsedFeedItem[] {

@@ -1,0 +1,13 @@
+[
+  {"source":"Nyheder.dk - News Sitemap","sitemap":"https://www.nyheder.dk/?lab_viewport=newssitemap"},
+  {"source":"Danwatch - Sitemap Index","sitemap":"https://danwatch.dk/sitemap.xml"},
+  {"source":"DenOffentlige - Sitemap Index","sitemap":"https://www.denoffentlige.dk/sitemap_index.xml"},
+  {"source":"InsideBusiness - Sitemap Index","sitemap":"https://ib.dk/sitemap_index.xml"},
+  {"source":"FinansWatch - Sitemap Index","sitemap":"https://finanswatch.dk/sitemapindex.xml"},
+  {"source":"ShippingWatch - Sitemap Index","sitemap":"https://shippingwatch.dk/sitemapindex.xml"},
+  {"source":"MedWatch - Sitemap Index","sitemap":"https://medwatch.dk/sitemapindex.xml"},
+  {"source":"AgriWatch - Sitemap Index","sitemap":"https://agriwatch.dk/sitemapindex.xml"},
+  {"source":"ITWatch - Sitemap Index","sitemap":"https://itwatch.dk/sitemapindex.xml"},
+  {"source":"PolicyWatch - Sitemap Index","sitemap":"https://policywatch.dk/sitemapindex.xml"},
+  {"source":"DinAvis - Sitemap Index","sitemap":"https://dinavis.dk/sitemapindex.xml"}
+]

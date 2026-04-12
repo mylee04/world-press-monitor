@@ -25140,6 +25140,55 @@
           "checkedDate": "04/12/2026",
           "valid": "valid",
           "row": 157
+        },
+        {
+          "name": "DinAvis - Seneste",
+          "url": "https://feeds.dinavis.dk/seneste",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 158
+        },
+        {
+          "name": "DinAvis - Topnyheder",
+          "url": "https://feeds.dinavis.dk/topnyheder",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 159
+        },
+        {
+          "name": "Herning Folkeblad - HTML Collection",
+          "url": "https://herningfolkeblad.dk",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 160
+        },
+        {
+          "name": "Midtjyllands Avis - HTML Collection",
+          "url": "https://midtjyllandsavis.dk",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 161
+        },
+        {
+          "name": "Skive Folkeblad - HTML Collection",
+          "url": "https://skivefolkeblad.dk",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 162
+        },
+        {
+          "name": "Fredericia Dagblad - Sitemap",
+          "url": null,
+          "sitemapUrl": "https://frdb.dk/sitemap",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "row": 163
         }
       ]
     },
@@ -27785,8 +27834,18 @@
           "url": "https://hnonline.sk/feed"
         },
         {
-          "name": "TVNoviny.sk",
-          "sitemapUrl": "https://tvnoviny.sk/api/v1/sitemap-index"
+          "name": "TVNoviny.sk - Ekonomika Sitemap",
+          "sitemapUrl": "https://tvnoviny.sk/api/v1/sitemap?type=article&category=tvnoviny-260",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TVNoviny.sk - Nike Liga Sitemap",
+          "sitemapUrl": "https://tvnoviny.sk/api/v1/sitemap?type=article&category=tvnoviny-547",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
         },
         {
           "name": "STVR Spravy - RSS",
@@ -27840,6 +27899,20 @@
         {
           "name": "STVR Spravy - Radiozurnal Sitemap",
           "sitemapUrl": "https://spravy.stvr.sk/radiozurnal_articles_sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "STVR Spravy - Minuta Po Minute Sitemap",
+          "sitemapUrl": "https://spravy.stvr.sk/minuta-po-minute-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "STVR Spravy - Minuta Po Minute Sitemap 2",
+          "sitemapUrl": "https://spravy.stvr.sk/minuta-po-minute-sitemap2.xml",
           "status": "NEW",
           "checkedDate": "04/12/2026",
           "valid": "valid"
@@ -28110,6 +28183,104 @@
           "url": "https://touchit.sk/feed/",
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/02/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Forbes Slovakia",
+          "url": "https://www.forbes.sk/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Fontech",
+          "url": "https://fontech.startitup.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Bratislavak",
+          "url": "https://www.bratislavak.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Kosicak",
+          "url": "https://www.kosicak.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Presovak",
+          "url": "https://www.presovak.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Trnavak",
+          "url": "https://www.trnavak.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Nitrak",
+          "url": "https://www.nitrak.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Trencinak",
+          "url": "https://www.trencinak.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Zilinak",
+          "url": "https://www.zilinak.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "BBonline",
+          "url": "https://bbonline.sk/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Trencin24",
+          "url": "https://www.trencin24.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Info.sk - News Sitemap",
+          "sitemapUrl": "https://www.info.sk/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Dnes24",
+          "url": "https://www.dnes24.sk/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Plus 7 Dni - Google News Sitemap",
+          "sitemapUrl": "https://plus7dni.pluska.sk/google_news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
           "valid": "valid"
         }
       ]
@@ -29544,8 +29715,92 @@
           "sitemapUrl": "https://www.delfi.lv/sitemap/index.xml"
         },
         {
+          "name": "Delfi Latvia - Main",
+          "url": "https://www.delfi.lv/rss/index.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Delfi Latvia - Bizness",
+          "url": "https://www.delfi.lv/bizness/rss/index.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Delfi Latvia - Sports",
+          "url": "https://www.delfi.lv/sports/rss/index.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Delfi Latvia - Auto",
+          "url": "https://www.delfi.lv/auto/rss/index.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Delfi Latvia - Kultura",
+          "url": "https://www.delfi.lv/kultura/rss/index.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Delfi Latvia - Video",
+          "url": "https://www.delfi.lv/video/rss/index.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Delfi Latvia - Life",
+          "url": "https://www.delfi.lv/life/rss/index.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Rus Delfi Latvia - News 1",
           "sitemapUrl": "https://rus.delfi.lv/sitemap/news/1/index.xml"
+        },
+        {
+          "name": "Rus Delfi Latvia - Main",
+          "url": "https://rus.delfi.lv/rss/index.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Rus Delfi Latvia - Biznes",
+          "url": "https://rus.delfi.lv/biznes/rss/index.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Rus Delfi Latvia - Sport",
+          "url": "https://rus.delfi.lv/sport/rss/index.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Rus Delfi Latvia - Life",
+          "url": "https://rus.delfi.lv/life/rss/index.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Rus Delfi Latvia - Turgid",
+          "url": "https://rus.delfi.lv/turgid/rss/index.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
         },
         {
           "name": "Jauns.lv",
@@ -29582,6 +29837,53 @@
         {
           "name": "Mixnews Latvia",
           "url": "https://mixnews.lv/feed/"
+        },
+        {
+          "name": "Bauskas Dzive",
+          "url": "https://bauskasdzive.lv/feed/",
+          "sitemapUrl": "https://bauskasdzive.lv/wp-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Staburags",
+          "url": "https://staburags.lv/feed/",
+          "sitemapUrl": "https://staburags.lv/wp-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Dzirkstele",
+          "url": "https://www.dzirkstele.lv/feed/",
+          "sitemapUrl": "https://dzirkstele.lv/wp-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Ziemellatvija",
+          "url": "https://ziemellatvija.lv/feed/",
+          "sitemapUrl": "https://ziemellatvija.lv/wp-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "ZZ.lv",
+          "url": "https://zz.lv/feed/",
+          "sitemapUrl": "https://zz.lv/wp-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Liepajniekiem - Sitemap Index",
+          "sitemapUrl": "https://www.liepajniekiem.lv/wp-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
         },
         {
           "name": "Gorod.lv",

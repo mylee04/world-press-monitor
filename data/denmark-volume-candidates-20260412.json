@@ -1,0 +1,12 @@
+[
+  {"source":"Nyheder.dk - News Sitemap","sitemap":"https://www.nyheder.dk/?lab_viewport=newssitemap"},
+  {"source":"Dagens - Sitemap Index","sitemap":"https://www.dagens.dk/sitemap_index.xml"},
+  {"source":"Nyheder24 - Sitemap Index","sitemap":"https://nyheder24.dk/sitemap_index.xml"},
+  {"source":"DenOffentlige - Sitemap Index","sitemap":"https://www.denoffentlige.dk/sitemap_index.xml"},
+  {"source":"Bold - News Sitemap","sitemap":"https://bold.dk/feed/rss/articles/google/news.xml"},
+  {"source":"Tipsbladet - News Sitemap","sitemap":"https://www.tipsbladet.dk/news-sitemap.xml"},
+  {"source":"Campo - Sitemap Index","sitemap":"https://campo.dk/sitemap_index.xml"},
+  {"source":"Se og Hør - Sitemap Index","sitemap":"https://www.seoghoer.dk/sitemap.xml"},
+  {"source":"BILLED-BLADET - Sitemap Index","sitemap":"https://www.billedbladet.dk/sitemap.xml"},
+  {"source":"DinAvis - Sitemap Index","sitemap":"https://dinavis.dk/sitemapindex.xml"}
+]

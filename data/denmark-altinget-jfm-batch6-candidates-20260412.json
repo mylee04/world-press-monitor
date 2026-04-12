@@ -1,0 +1,8 @@
+[
+  { "source": "Altinget Christiansborg - HTML Collection", "rss": "https://www.altinget.dk/christiansborg" },
+  { "source": "Altinget EU - HTML Collection", "rss": "https://www.altinget.dk/eu" },
+  { "source": "Altinget Kommunal - HTML Collection", "rss": "https://www.altinget.dk/kommunal" },
+  { "source": "Altinget Sundhed - HTML Collection", "rss": "https://www.altinget.dk/sundhed" },
+  { "source": "Altinget Klima - HTML Collection", "rss": "https://www.altinget.dk/klima" },
+  { "source": "Fredericia Dagblad - Sitemap", "sitemap": "https://frdb.dk/sitemap" }
+]

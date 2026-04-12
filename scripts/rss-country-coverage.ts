@@ -123,7 +123,7 @@ const ENABLE_BROWSER_SITEMAP_FALLBACK =
 const BROWSER_SITEMAP_FALLBACK_DOMAINS = new Set(
   (
     process.env.INGEST_BROWSER_SITEMAP_DOMAINS ||
-    'www.ouest-france.fr,www.standaard.be,www.nieuwsblad.be,www.gva.be,www.hbvl.be,www.rtl.be,rtl.be,www.blick.ch,blick.ch,www.pna.gov.ph,pna.gov.ph,businessmirror.com.ph,www.malaya.com.ph,malaya.com.ph,manilastandard.net,www.manilastandard.net,news.abs-cbn.com,www.startribune.com,www.miamiherald.com,www.kansascity.com,www.sacbee.com,www.charlotteobserver.com,www.newsobserver.com,www.star-telegram.com,www.fresnobee.com,www.idahostatesman.com,www.kentucky.com,www.thestate.com,www.thenewstribune.com,www.expressnews.com,www.timesunion.com,www.ctinsider.com,www.sfchronicle.com,www.sfgate.com,www.ctpost.com,www.nhregister.com,www.houstonchronicle.com,www.jpnn.com,jabar.jpnn.com,jatim.jpnn.com,www.tribunnews.com,www.jawapos.com,kumparan.com,mediaindonesia.com,www.pikiran-rakyat.com,www.crimeworld.com,crimeworld.com,www.thesun.ie,thesun.ie,www.tvsarawak.my,tvsarawak.my'
+    'www.ouest-france.fr,www.standaard.be,www.nieuwsblad.be,www.gva.be,www.hbvl.be,www.rtl.be,rtl.be,www.blick.ch,blick.ch,www.pna.gov.ph,pna.gov.ph,businessmirror.com.ph,www.malaya.com.ph,malaya.com.ph,manilastandard.net,www.manilastandard.net,news.abs-cbn.com,www.startribune.com,www.miamiherald.com,www.kansascity.com,www.sacbee.com,www.charlotteobserver.com,www.newsobserver.com,www.star-telegram.com,www.fresnobee.com,www.idahostatesman.com,www.kentucky.com,www.thestate.com,www.thenewstribune.com,www.expressnews.com,www.timesunion.com,www.ctinsider.com,www.sfchronicle.com,www.sfgate.com,www.ctpost.com,www.nhregister.com,www.houstonchronicle.com,www.jpnn.com,jabar.jpnn.com,jatim.jpnn.com,www.tribunnews.com,www.jawapos.com,kumparan.com,mediaindonesia.com,www.pikiran-rakyat.com,www.crimeworld.com,crimeworld.com,www.thesun.ie,thesun.ie,www.tvsarawak.my,tvsarawak.my,www.liepajniekiem.lv,liepajniekiem.lv'
   )
     .split(',')
     .map((value) => value.trim().toLowerCase())
@@ -319,11 +319,29 @@ function normalizeSourceKey(value: string): string {
 function shouldAttemptHtmlCollectionFeed(source: string, url: string): boolean {
   try {
     const parsed = new URL(url);
-    if (parsed.hostname.toLowerCase() === 'nyheder.tv2.dk') return true;
+    const hostname = parsed.hostname.toLowerCase();
+    if (
+      hostname === 'nyheder.tv2.dk'
+      || hostname === 'www.altinget.dk'
+      || hostname === 'herningfolkeblad.dk'
+      || hostname === 'midtjyllandsavis.dk'
+      || hostname === 'skivefolkeblad.dk'
+    ) return true;
   } catch {
     // Ignore malformed URLs and fall through to source-name matching.
   }
-  return normalizeSourceKey(source).includes('tv2 nyheder - html collection');
+  const normalizedSource = normalizeSourceKey(source);
+  return (
+    normalizedSource.includes('tv2 nyheder - html collection')
+    || normalizedSource.includes('altinget christiansborg - html collection')
+    || normalizedSource.includes('altinget eu - html collection')
+    || normalizedSource.includes('altinget kommunal - html collection')
+    || normalizedSource.includes('altinget sundhed - html collection')
+    || normalizedSource.includes('altinget klima - html collection')
+    || normalizedSource.includes('herning folkeblad - html collection')
+    || normalizedSource.includes('midtjyllands avis - html collection')
+    || normalizedSource.includes('skive folkeblad - html collection')
+  );
 }
 
 function shouldFetchArticlePublishedAt(source: string, url: string): boolean {
