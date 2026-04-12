@@ -6,7 +6,7 @@ import { resolve } from 'node:path';
 import { isKnownNonArticleUrl } from '../lib/article-url-filters';
 import { extractArticlePageTitle } from '../lib/article-page-title';
 import { buildArticlePageFetchHeaders } from '../lib/article-page-fetch';
-import { parseRssOrAtomWithStats, parseSitemapWithStats } from '../lib/parsers';
+import { parseHtmlCollectionWithStats, parseRssOrAtomWithStats, parseSitemapWithStats } from '../lib/parsers';
 import { inferSourceCategoriesFromUrlPath } from '../lib/source-category-path-segments';
 import {
   looksLikeLowSignalArticleTitle,
@@ -25,7 +25,8 @@ import { inferGeoFromArticleSignals } from '../lib/geo';
 import { getCanadaSyndicationNetworkByUrl, type CanadaSyndicationNetwork } from '../lib/canada-network-groups';
 import { isCanadaPriorityOutlet } from '../lib/canada-priority-outlets';
 import { makeOutletId } from '../lib/outlet-id';
-import { buildFeedStableId } from '../lib/pipeline';
+import { buildFeedStableId, deriveUrlArticleStableId } from '../lib/pipeline';
+import { normalizeLooseDateToIso, parseLooseDateMs } from '../lib/date-parsing';
 import {
   buildMethodStats,
   ensureWorkerAuditsDir,
@@ -166,7 +167,7 @@ const ENABLE_BROWSER_SITEMAP_FALLBACK = parseBoolEnv(process.env.INGEST_BROWSER_
 const BROWSER_SITEMAP_FALLBACK_DOMAINS = new Set(
   (
     process.env.INGEST_BROWSER_SITEMAP_DOMAINS ||
-    'www.ouest-france.fr,www.standaard.be,www.nieuwsblad.be,www.gva.be,www.hbvl.be,www.rtl.be,rtl.be,www.blick.ch,blick.ch,www.pna.gov.ph,pna.gov.ph,businessmirror.com.ph,www.malaya.com.ph,malaya.com.ph,manilastandard.net,www.manilastandard.net,news.abs-cbn.com,www.startribune.com,www.miamiherald.com,www.kansascity.com,www.sacbee.com,www.charlotteobserver.com,www.newsobserver.com,www.star-telegram.com,www.fresnobee.com,www.idahostatesman.com,www.kentucky.com,www.thestate.com,www.thenewstribune.com,www.expressnews.com,www.timesunion.com,www.ctinsider.com,www.sfchronicle.com,www.sfgate.com,www.ctpost.com,www.nhregister.com,www.houstonchronicle.com'
+    'www.ouest-france.fr,www.standaard.be,www.nieuwsblad.be,www.gva.be,www.hbvl.be,www.rtl.be,rtl.be,www.blick.ch,blick.ch,www.pna.gov.ph,pna.gov.ph,businessmirror.com.ph,www.malaya.com.ph,malaya.com.ph,manilastandard.net,www.manilastandard.net,news.abs-cbn.com,www.startribune.com,www.miamiherald.com,www.kansascity.com,www.sacbee.com,www.charlotteobserver.com,www.newsobserver.com,www.star-telegram.com,www.fresnobee.com,www.idahostatesman.com,www.kentucky.com,www.thestate.com,www.thenewstribune.com,www.expressnews.com,www.timesunion.com,www.ctinsider.com,www.sfchronicle.com,www.sfgate.com,www.ctpost.com,www.nhregister.com,www.houstonchronicle.com,www.jpnn.com,jabar.jpnn.com,jatim.jpnn.com,www.tribunnews.com,www.jawapos.com,kumparan.com,mediaindonesia.com,www.pikiran-rakyat.com,www.crimeworld.com,crimeworld.com,www.thesun.ie,thesun.ie,www.tvsarawak.my,tvsarawak.my,www.batamnews.co.id'
   )
     .split(',')
     .map((value) => value.trim().toLowerCase())
@@ -448,8 +449,7 @@ async function selectOutletsForRun(
 }
 
 function parsePublishedAtMs(value: string): number | null {
-  const ms = new Date(value).getTime();
-  return Number.isFinite(ms) ? ms : null;
+  return parseLooseDateMs(value);
 }
 
 function coerceOutletTier(value: number | null | undefined): OutletTier {
@@ -567,14 +567,20 @@ function decodeXmlEntities(value: string): string {
 
 function parseSitemapIndexLocDateMs(loc: string): number | null {
   const normalized = decodeXmlEntities(loc);
-  const slashPattern = normalized.match(/(20\d{2})\/(0[1-9]|1[0-2])\/([0-2]\d|3[01])/);
+  const slashPattern = normalized.match(/(20\d{2})\/([1-9]|0[1-9]|1[0-2])(?:\/([1-9]|0[1-9]|[12]\d|3[01]))?(?=(?:\D|$))/);
   if (slashPattern) {
-    const ts = Date.parse(`${slashPattern[1]}-${slashPattern[2]}-${slashPattern[3]}T00:00:00Z`);
+    const year = Number.parseInt(slashPattern[1] || '0', 10);
+    const month = Number.parseInt(slashPattern[2] || '0', 10);
+    const day = Number.parseInt(slashPattern[3] || '1', 10);
+    const ts = Date.UTC(year, month - 1, day);
     return Number.isFinite(ts) ? ts : null;
   }
-  const dashPattern = normalized.match(/(20\d{2})-(0[1-9]|1[0-2])-([0-2]\d|3[01])/);
+  const dashPattern = normalized.match(/(20\d{2})-([1-9]|0[1-9]|1[0-2])(?:-([1-9]|0[1-9]|[12]\d|3[01]))?(?=(?:\D|$))/);
   if (dashPattern) {
-    const ts = Date.parse(`${dashPattern[1]}-${dashPattern[2]}-${dashPattern[3]}T00:00:00Z`);
+    const year = Number.parseInt(dashPattern[1] || '0', 10);
+    const month = Number.parseInt(dashPattern[2] || '0', 10);
+    const day = Number.parseInt(dashPattern[3] || '1', 10);
+    const ts = Date.UTC(year, month - 1, day);
     return Number.isFinite(ts) ? ts : null;
   }
 
@@ -583,8 +589,11 @@ function parseSitemapIndexLocDateMs(loc: string): number | null {
     const year = parsedUrl.searchParams.get('yyyy') || parsedUrl.searchParams.get('year');
     const month = parsedUrl.searchParams.get('mm') || parsedUrl.searchParams.get('month');
     const day = parsedUrl.searchParams.get('dd') || parsedUrl.searchParams.get('day');
-    if (year && month && day) {
-      const ts = Date.parse(`${year}-${month}-${day}T00:00:00Z`);
+    if (year && month) {
+      const yearNumber = Number.parseInt(year, 10);
+      const monthNumber = Number.parseInt(month, 10);
+      const dayNumber = Number.parseInt(day || '1', 10);
+      const ts = Date.UTC(yearNumber, monthNumber - 1, dayNumber);
       return Number.isFinite(ts) ? ts : null;
     }
   } catch {
@@ -622,6 +631,28 @@ function resolveSitemapLoc(loc: string, baseUrl: string | null): string {
   }
 }
 
+function selectSitemapIndexEntries(entries: SitemapIndexEntry[], baseUrl: string | null): SitemapIndexEntry[] {
+  if (entries.length === 0) return [];
+
+  let hostname = '';
+  if (baseUrl) {
+    try {
+      hostname = new URL(baseUrl).hostname.toLowerCase();
+    } catch {
+      hostname = '';
+    }
+  }
+
+  const isKwongWah = hostname === 'www.kwongwah.com.my' || hostname === 'kwongwah.com.my';
+  if (isKwongWah) {
+    const kwongWahLimit = Math.min(4, SITEMAP_INDEX_CHILDREN_LIMIT);
+    const withLastmod = entries.filter((entry) => entry.lastmodMs !== null);
+    return (withLastmod.length > 0 ? withLastmod : entries).slice(0, kwongWahLimit);
+  }
+
+  return entries.slice(0, SITEMAP_INDEX_CHILDREN_LIMIT);
+}
+
 function parseSitemapIndex(xml: string, baseUrl: string | null = null): string[] {
   if (!/<sitemapindex[\s>]/i.test(xml)) return [];
   const entries = [...xml.matchAll(/<sitemap>([\s\S]*?)<\/sitemap>/gi)]
@@ -656,9 +687,7 @@ function parseSitemapIndex(xml: string, baseUrl: string | null = null): string[]
     return right.index - left.index;
   });
 
-  return entries
-    .slice(0, SITEMAP_INDEX_CHILDREN_LIMIT)
-    .map((entry) => entry.loc);
+  return selectSitemapIndexEntries(entries, baseUrl).map((entry) => entry.loc);
 }
 
 type ParsedSitemapResult = ReturnType<typeof parseSitemapWithStats>;
@@ -1172,8 +1201,8 @@ function scoreItemUrlAgainstTitle(item: NewsItem): number {
 }
 
 function mergeNewsItems(current: NewsItem, incoming: NewsItem): NewsItem {
-  const currentPublishedAt = new Date(current.publishedAt).getTime();
-  const incomingPublishedAt = new Date(incoming.publishedAt).getTime();
+  const currentPublishedAt = parsePublishedAtMs(current.publishedAt) ?? 0;
+  const incomingPublishedAt = parsePublishedAtMs(incoming.publishedAt) ?? 0;
   const currentScore =
     scoreItemUrlAgainstTitle(current)
     + (current.description ? Math.min(current.description.length, 400) / 10000 : 0)
@@ -1869,7 +1898,14 @@ function shouldFetchArticlePublishedAt(source: string, url: string): boolean {
   if (!url || isKnownNonArticleUrl(source, url)) return false;
   const normalizedSource = normalizeSourceKey(source);
   return (
+    normalizedSource === 'bernama' ||
+    normalizedSource.includes('bernama -') ||
     normalizedSource === '9news' ||
+    normalizedSource.includes('dk nyt') ||
+    normalizedSource.includes('dk social') ||
+    normalizedSource.includes('dk teknik og miljø') ||
+    normalizedSource.includes('dk sundhed') ||
+    normalizedSource.includes('dk indkøb') ||
     normalizedSource.includes('news.com.au national top news') ||
     normalizedSource.includes('news.com.au finance') ||
     normalizedSource.includes('news.com.au world') ||
@@ -1878,15 +1914,51 @@ function shouldFetchArticlePublishedAt(source: string, url: string): boolean {
   );
 }
 
+function shouldAttemptHtmlCollectionFeed(source: string, url: string): boolean {
+  try {
+    const parsed = new URL(url);
+    if (parsed.hostname.toLowerCase() === 'nyheder.tv2.dk') return true;
+  } catch {
+    // Ignore malformed URLs and fall through to source-name matching.
+  }
+  return normalizeSourceKey(source).includes('tv2 nyheder - html collection');
+}
+
 function normalizePublishedAtCandidate(value: string): string {
   const trimmed = (value || '').trim();
   if (!trimmed) return '';
-  const ts = new Date(trimmed).getTime();
-  if (!Number.isFinite(ts)) return '';
-  return new Date(ts).toISOString();
+  return normalizeLooseDateToIso(trimmed);
 }
 
-function extractArticlePagePublishedAt(html: string): string {
+function normalizeBernamaPublishedAtCandidate(value: string): string {
+  const trimmed = (value || '').trim();
+  const match = trimmed.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}))?\s*(AM|PM))?$/i);
+  if (!match) return '';
+
+  const day = Number.parseInt(match[1] || '0', 10);
+  const month = Number.parseInt(match[2] || '0', 10);
+  const year = Number.parseInt(match[3] || '0', 10);
+  let hour = Number.parseInt(match[4] || '0', 10);
+  const minute = Number.parseInt(match[5] || '0', 10);
+  const second = Number.parseInt(match[6] || '0', 10);
+  const meridiem = (match[7] || '').toUpperCase();
+
+  if (!Number.isFinite(day) || !Number.isFinite(month) || !Number.isFinite(year)) return '';
+  if (!Number.isFinite(hour) || !Number.isFinite(minute) || !Number.isFinite(second)) return '';
+  if (day < 1 || day > 31 || month < 1 || month > 12) return '';
+
+  if (meridiem === 'AM') {
+    hour = hour === 12 ? 0 : hour;
+  } else if (meridiem === 'PM') {
+    hour = hour === 12 ? 12 : hour + 12;
+  }
+
+  // Bernama article pages expose local Malaysia time in day-first format.
+  const utcMs = Date.UTC(year, month - 1, day, hour - 8, minute, second);
+  return Number.isFinite(utcMs) ? new Date(utcMs).toISOString() : '';
+}
+
+function extractArticlePagePublishedAt(source: string, html: string): string {
   const patterns = [
     /<meta[^>]+property=["']article:published_time["'][^>]+content=["']([^"']+)["']/i,
     /<meta[^>]+name=["']pubdate["'][^>]+content=["']([^"']+)["']/i,
@@ -1897,8 +1969,10 @@ function extractArticlePagePublishedAt(html: string): string {
   ];
 
   for (const pattern of patterns) {
-    const match = html.match(pattern);
-    const normalized = normalizePublishedAtCandidate(match?.[1] || '');
+    const raw = html.match(pattern)?.[1] || '';
+    const normalized =
+      (normalizeSourceKey(source).includes('bernama') ? normalizeBernamaPublishedAtCandidate(raw) : '')
+      || normalizePublishedAtCandidate(raw);
     if (normalized) return normalized;
   }
 
@@ -2020,7 +2094,7 @@ async function fetchArticlePagePublishedAt(source: string, url: string): Promise
       const contentType = (response.headers.get('content-type') || '').toLowerCase();
       if (contentType && !contentType.includes('html') && !contentType.includes('xml')) return '';
       const html = (await readResponseText(response, response.url || url)).text;
-      return extractArticlePagePublishedAt(html);
+      return extractArticlePagePublishedAt(source, html);
     } catch {
       return '';
     }
@@ -2128,6 +2202,7 @@ function isFallbackRetryStatus(status: number): boolean {
 
 function describeFeedFailure(response: Response, body: string): string {
   if (!response.ok) {
+    if (isLikelyXmlPayload(body)) return '';
     return `http_${response.status}`;
   }
   if (isLikelyHtmlResponse(response, body)) {
@@ -2195,6 +2270,7 @@ function feedResultRunMeta(feedResult: FeedFetchResult) {
 }
 
 function shouldRetryWithSitemap(response: Response, body: string): boolean {
+  if (isLikelyXmlPayload(body)) return false;
   if (!response.ok) return isFallbackRetryStatus(response.status);
   return isLikelyHtmlResponse(response, body);
 }
@@ -2386,7 +2462,7 @@ function dedupeAndSort(items: NewsItem[]): NewsItem[] {
     byLink.set(key, prev ? mergeNewsItems(prev, item) : item);
   }
   return collapseCanadaNetworkDuplicates([...byLink.values()]).sort(
-    (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+    (a, b) => (parsePublishedAtMs(b.publishedAt) ?? 0) - (parsePublishedAtMs(a.publishedAt) ?? 0)
   );
 }
 
@@ -2482,7 +2558,10 @@ async function toNewsItem(
   if (parsePublishedAtMs(publishedAt) === null) {
     return null;
   }
-  const stableId = buildFeedStableId(row.stableId || '', row.link || '') || undefined;
+  const stableId =
+    buildFeedStableId(row.stableId || '', row.link || '')
+    || deriveUrlArticleStableId(row.link || '')
+    || undefined;
   return annotateWorldLatam({
     id: row.link,
     outletId: outlet.id,
@@ -2577,7 +2656,12 @@ async function fetchRss(
   try {
     const feedResult = await fetchFeedWithFallback(outlet.rssUrl);
     const feedDiagnosticRunFields = feedResultRunMeta(feedResult);
-    if (!feedResult.response || feedResult.failureReason || !feedResult.response.ok) {
+    const hasUsableXmlPayload = Boolean(feedResult.response && isLikelyXmlPayload(feedResult.body));
+    const supportsHtmlCollection =
+      Boolean(feedResult.response)
+      && isLikelyHtmlResponse(feedResult.response as Response, feedResult.body)
+      && shouldAttemptHtmlCollectionFeed(outlet.name, feedResult.finalUrl || outlet.rssUrl);
+    if (!feedResult.response || (feedResult.failureReason && !supportsHtmlCollection) || (!feedResult.response.ok && !hasUsableXmlPayload)) {
       const fallbackUsed: FallbackKind = getFallbackKind(feedResult);
       const useSitemapFallback = options.allowSitemapFallback && ENABLE_RSS_TO_SITEMAP_FALLBACK && feedResult.shouldUseSitemapFallback;
       if (useSitemapFallback) {
@@ -2686,7 +2770,12 @@ async function fetchRss(
       };
     }
     const xml = feedResult.body;
-    const parsed = parseRssOrAtomWithStats(xml, RSS_ITEM_LIMIT);
+    const parsed = (
+      isLikelyHtmlResponse(feedResult.response, xml) &&
+      shouldAttemptHtmlCollectionFeed(outlet.name, feedResult.finalUrl || outlet.rssUrl)
+    )
+      ? parseHtmlCollectionWithStats(xml, RSS_ITEM_LIMIT, feedResult.finalUrl || outlet.rssUrl)
+      : parseRssOrAtomWithStats(xml, RSS_ITEM_LIMIT);
     if (parsed.stats.validCount === 0) {
       const parsedFailure = classifyParsedFeedFailure({
         response: feedResult.response,

@@ -2717,7 +2717,12 @@ const PUBLISHER_RULES: PublisherRule[] = [
   { publisher: 'Mondo', countries: ['Serbia'], exact: ['Mondo'] },
   { publisher: 'Republika', countries: ['Serbia'], exact: ['Republika'] },
   { publisher: 'Alo', countries: ['Serbia'], exact: ['Alo'] },
-  { publisher: 'Malaysiakini', countries: ['Malaysia'], exact: ['Malaysiakini - News'] },
+  {
+    publisher: 'Malaysiakini',
+    countries: ['Malaysia'],
+    exact: ['Malaysiakini - News'],
+    prefixes: ['Malaysiakini -'],
+  },
   {
     publisher: 'Kosmo',
     countries: ['Malaysia'],
@@ -2739,7 +2744,7 @@ const PUBLISHER_RULES: PublisherRule[] = [
     exact: ['Astro Awani'],
     prefixes: ['Astro Awani -'],
   },
-  { publisher: 'Bernama', countries: ['Malaysia'], exact: ['Bernama'] },
+  { publisher: 'Bernama', countries: ['Malaysia'], exact: ['Bernama'], prefixes: ['Bernama -'] },
   { publisher: 'NST', countries: ['Malaysia'], exact: ['NST'] },
   {
     publisher: 'Malay Mail',
@@ -2760,7 +2765,18 @@ const PUBLISHER_RULES: PublisherRule[] = [
     exact: ['The Sun'],
     prefixes: ['The Sun -'],
   },
-  { publisher: 'Sarawak Tribune', countries: ['Malaysia'], exact: ['Sarawak Tribune'] },
+  {
+    publisher: 'Sarawak Tribune',
+    countries: ['Malaysia'],
+    exact: ['Sarawak Tribune'],
+    prefixes: ['Sarawak Tribune -'],
+  },
+  {
+    publisher: 'TVS Sarawak',
+    countries: ['Malaysia'],
+    exact: ['TVS Sarawak - Sitemap Index'],
+    prefixes: ['TVS Sarawak -'],
+  },
   { publisher: 'DayakDaily', countries: ['Malaysia'], exact: ['DayakDaily - Feed'] },
   { publisher: 'Focus Malaysia', countries: ['Malaysia'], exact: ['Focus Malaysia - Feed'] },
   {
@@ -2781,7 +2797,10 @@ const PUBLISHER_RULES: PublisherRule[] = [
     exact: ['MalaysiaNow'],
     prefixes: ['MalaysiaNow -'],
   },
+  { publisher: 'CodeBlue', countries: ['Malaysia'], exact: ['CodeBlue'] },
   { publisher: 'Scoop', countries: ['Malaysia'], exact: ['Scoop - Feed'] },
+  { publisher: 'Kwong Wah', countries: ['Malaysia'], exact: ['Kwong Wah - Sitemap Index'] },
+  { publisher: 'See Hua', countries: ['Malaysia'], exact: ['See Hua - Sitemap Index'] },
   { publisher: 'The Vibes', countries: ['Malaysia'], exact: ['The Vibes'] },
   { publisher: 'Observador', countries: ['Portugal'], exact: ['Observador'] },
   { publisher: 'ECO', countries: ['Portugal'], exact: ['ECO'] },

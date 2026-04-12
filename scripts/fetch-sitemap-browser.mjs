@@ -50,6 +50,19 @@ async function fetchTextInPage(page, targetUrl) {
   }, targetUrl);
 }
 
+async function fetchTextWithContextRequest(context, targetUrl) {
+  const response = await context.request.get(String(targetUrl), {
+    failOnStatusCode: false,
+    maxRedirects: 5,
+    timeout: 30000,
+  });
+  return {
+    status: response.status(),
+    contentType: response.headers()['content-type'] || '',
+    text: await response.text(),
+  };
+}
+
 async function fetchBase64InPage(page, targetUrl) {
   return await page.evaluate(async (url) => {
     const response = await fetch(String(url), { credentials: 'include' });
@@ -97,18 +110,36 @@ async function launchBrowser(headless) {
 }
 
 async function navigateForChallenge(page, targetUrl, timeoutMs) {
+  const target = new URL(targetUrl);
+  const bootstrapFromOrigin = async (candidatePage) => {
+    await candidatePage.goto(`${target.origin}/`, { waitUntil: 'domcontentloaded', timeout: 30000 });
+    await waitForInterstitialToClear(candidatePage, timeoutMs);
+    return { response: null, page: candidatePage };
+  };
   try {
     const response = await page.goto(targetUrl, { waitUntil: 'domcontentloaded', timeout: 45000 });
     await waitForInterstitialToClear(page, timeoutMs);
-    return response;
+    return { response, page };
   } catch (error) {
-    const target = new URL(targetUrl);
-    if (page.url() !== 'about:blank') {
+    const errorMessage = String(error && error.message ? error.message : error);
+    const currentUrl = page.url();
+    const shouldBootstrapFromOrigin =
+      currentUrl === 'about:blank' ||
+      currentUrl.startsWith('chrome-error://') ||
+      errorMessage.includes('ERR_TOO_MANY_REDIRECTS');
+    if (!shouldBootstrapFromOrigin) {
       throw error;
     }
-    await page.goto(`${target.origin}/`, { waitUntil: 'domcontentloaded', timeout: 30000 });
-    await waitForInterstitialToClear(page, timeoutMs);
-    return null;
+    try {
+      return await bootstrapFromOrigin(page);
+    } catch {
+      try {
+        const retryPage = await page.context().newPage();
+        return await bootstrapFromOrigin(retryPage);
+      } catch {
+        throw error;
+      }
+    }
   }
 }
 
@@ -129,15 +160,16 @@ try {
     userAgent:
       'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36',
     viewport: { width: 1366, height: 900 },
+    ignoreHTTPSErrors: true,
   });
   const page = await context.newPage();
 
   if (url.toLowerCase().endsWith('.gz')) {
-    await navigateForChallenge(page, new URL(url).origin, interstitialTimeoutMs);
-    const fetched = await fetchBase64InPage(page, url);
+    const { page: activePage } = await navigateForChallenge(page, new URL(url).origin, interstitialTimeoutMs);
+    const fetched = await fetchBase64InPage(activePage, url);
     process.stdout.write(gunzipSync(Buffer.from(fetched.base64, 'base64')).toString('utf8'));
   } else {
-    const response = await navigateForChallenge(page, url, interstitialTimeoutMs);
+    const { response, page: activePage } = await navigateForChallenge(page, url, interstitialTimeoutMs);
 
     if (response) {
       const responseText = await response.text().catch(() => '');
@@ -148,23 +180,30 @@ try {
       }
     }
 
-    const bodyText = normalizeXmlPayload((await page.textContent('body')) || '');
+    const bodyText = normalizeXmlPayload((await activePage.textContent('body')) || '');
     if (isXmlPayload(bodyText)) {
       process.stdout.write(bodyText);
       process.exit(0);
     }
 
-    const initialFetch = await fetchTextInPage(page, url);
+    const initialFetch = await fetchTextInPage(activePage, url).catch(() => ({ status: 0, contentType: '', text: '' }));
     const normalizedPayload = normalizeXmlPayload(initialFetch.text);
     if (isXmlPayload(normalizedPayload) && !normalizedPayload.includes('...')) {
       process.stdout.write(normalizedPayload);
       process.exit(0);
     }
 
-    const finalFetch = await fetchTextInPage(page, url);
+    const finalFetch = await fetchTextInPage(activePage, url).catch(() => ({ status: 0, contentType: '', text: '' }));
     const normalizedFinalFetch = normalizeXmlPayload(finalFetch.text);
     if (isXmlPayload(normalizedFinalFetch) && !normalizedFinalFetch.includes('...')) {
       process.stdout.write(normalizedFinalFetch);
+      process.exit(0);
+    }
+
+    const requestFetch = await fetchTextWithContextRequest(context, url).catch(() => null);
+    const normalizedRequestFetch = normalizeXmlPayload(requestFetch?.text || '');
+    if (isXmlPayload(normalizedRequestFetch) && !normalizedRequestFetch.includes('...')) {
+      process.stdout.write(normalizedRequestFetch);
       process.exit(0);
     }
 

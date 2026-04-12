@@ -31097,6 +31097,13 @@
           "url": "https://scoop.my/feed/"
         },
         {
+          "name": "Kwong Wah - Sitemap Index",
+          "sitemapUrl": "https://www.kwongwah.com.my/sitemap_index.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
           "name": "See Hua - Sitemap Index",
           "sitemapUrl": "https://www.seehua.com/sitemap.xml",
           "status": "NEW",
