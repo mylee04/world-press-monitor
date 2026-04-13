@@ -1,0 +1,62 @@
+[
+  {
+    "source": "To Vima",
+    "sitemap": "https://www.tovima.gr/wp-content/uploads/json/sitemap-news.xml"
+  },
+  {
+    "source": "Newsbeast",
+    "sitemap": "https://www.newsbeast.gr/news-sitemap.xml"
+  },
+  {
+    "source": "Ethnos",
+    "sitemap": "https://www.ethnos.gr/googlenews"
+  },
+  {
+    "source": "The Press Project",
+    "sitemap": "https://thepressproject.gr/sitemap_index.xml"
+  },
+  {
+    "source": "Insider Greece",
+    "sitemap": "https://www.insider.gr/gnews.xml"
+  },
+  {
+    "source": "Fortune Greece",
+    "sitemap": "https://www.fortunegreece.com/sitemap_index.xml"
+  },
+  {
+    "source": "Techblog",
+    "sitemap": "https://techblog.gr/sitemap_index.xml"
+  },
+  {
+    "source": "Newmoney",
+    "sitemap": "https://www.newmoney.gr/news.xml"
+  },
+  {
+    "source": "OT.gr",
+    "sitemap": "https://www.ot.gr/wp-content/uploads/json/sitemap-news.xml"
+  },
+  {
+    "source": "Dikastiko",
+    "sitemap": "https://www.dikastiko.gr/sitemap.xml"
+  },
+  {
+    "source": "DailyPharmaNews",
+    "sitemap": "https://dailypharmanews.gr/news-sitemap.xml"
+  },
+  {
+    "source": "To Vima International",
+    "sitemap": "https://www.tovima.com/sitemap_index.xml"
+  },
+  {
+    "source": "iefimerida",
+    "sitemap": "https://www.iefimerida.gr/sitemap.xml"
+  },
+  {
+    "source": "SKAI",
+    "sitemap": "https://www.skai.gr/sitemap.xml"
+  },
+  {
+    "source": "Real",
+    "sitemap": "https://www.real.gr/news-sitemap.xml"
+  }
+]

@@ -8681,12 +8681,60 @@
         },
         {
           "name": "Habr (all)",
-          "url": "https://habr.com/ru/rss/all/all/?fl=ru",
-          "status": null,
-          "checkedDate": null,
-          "valid": "needs verification",
+          "url": "https://habr.com/ru/rss/articles/?fl=ru",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
           "row": 13,
-          "enabled": false
+          "enabled": true
+        },
+        {
+          "name": "VC.ru",
+          "url": "https://vc.ru/rss/all",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 14
+        },
+        {
+          "name": "CNews",
+          "url": "https://www.cnews.ru/inc/rss/news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 15
+        },
+        {
+          "name": "3DNews",
+          "url": "https://3dnews.ru/news/rss/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 16
+        },
+        {
+          "name": "iXBT",
+          "url": "https://www.ixbt.com/export/news.rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 17
+        },
+        {
+          "name": "ComNews",
+          "url": "https://www.comnews.ru/rss/yandex.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 18
+        },
+        {
+          "name": "SecurityLab",
+          "url": "https://www.securitylab.ru/_services/export/rss/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 19
         },
         {
           "name": "RIA Novosti (Russian State Broadcaster)",
@@ -8711,6 +8759,48 @@
         {
           "name": "Gazeta.ru (General News)",
           "url": "https://www.gazeta.ru/export/rss/lenta.xml",
+          "enabled": false
+        },
+        {
+          "name": "Gazeta.ru - News Sitemap",
+          "sitemapUrl": "https://www.gazeta.ru/sitemap_news-y.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 28
+        },
+        {
+          "name": "Gazeta.ru - Articles Sitemap",
+          "sitemapUrl": "https://www.gazeta.ru/sitemap_articles-y.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 29
+        },
+        {
+          "name": "Regnum - News Sitemap",
+          "sitemapUrl": "https://regnum.ru/sitemap/news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 30
+        },
+        {
+          "name": "Fontanka - Sitemap Index",
+          "sitemapUrl": "https://www.fontanka.ru/sitemaps/index.xml.gz",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 31,
+          "enabled": false
+        },
+        {
+          "name": "47news - Sitemap Index",
+          "sitemapUrl": "https://47news.ru/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 32,
           "enabled": false
         },
         {
@@ -8754,7 +8844,147 @@
         {
           "name": "Moskovsky Komsomolets (Mass outlet #2)",
           "url": "https://www.mk.ru/rss/news/index.xml",
-          "enabled": false
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 33,
+          "enabled": true
+        },
+        {
+          "name": "Moskovsky Komsomolets - Politics",
+          "url": "https://www.mk.ru/rss/politics/index.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 34
+        },
+        {
+          "name": "Moskovsky Komsomolets - Social",
+          "url": "https://www.mk.ru/rss/social/index.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 35
+        },
+        {
+          "name": "Moskovsky Komsomolets - Incidents",
+          "url": "https://www.mk.ru/rss/incident/index.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 36
+        },
+        {
+          "name": "Moskovsky Komsomolets - Sport",
+          "url": "https://www.mk.ru/rss/sport/index.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 37
+        },
+        {
+          "name": "Moskovsky Komsomolets - Economics",
+          "url": "https://www.mk.ru/rss/economics/index.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 38
+        },
+        {
+          "name": "Moskovsky Komsomolets - Science",
+          "url": "https://www.mk.ru/rss/science/index.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 39
+        },
+        {
+          "name": "Moskovsky Komsomolets - Culture",
+          "url": "https://www.mk.ru/rss/culture/index.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 40
+        },
+        {
+          "name": "NGS - Sitemap Index",
+          "sitemapUrl": "https://ngs.ru/sitemaps/index.xml.gz",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 41
+        },
+        {
+          "name": "74.ru - Sitemap Index",
+          "sitemapUrl": "https://74.ru/sitemaps/index.xml.gz",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 42
+        },
+        {
+          "name": "72.ru - Sitemap Index",
+          "sitemapUrl": "https://72.ru/sitemaps/index.xml.gz",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 43
+        },
+        {
+          "name": "93.ru - Sitemap Index",
+          "sitemapUrl": "https://93.ru/sitemaps/index.xml.gz",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 44
+        },
+        {
+          "name": "116.ru - Sitemap Index",
+          "sitemapUrl": "https://116.ru/sitemaps/index.xml.gz",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 45
+        },
+        {
+          "name": "59.ru - Sitemap Index",
+          "sitemapUrl": "https://59.ru/sitemaps/index.xml.gz",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 46
+        },
+        {
+          "name": "161.ru - Sitemap Index",
+          "sitemapUrl": "https://161.ru/sitemaps/index.xml.gz",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 47
+        },
+        {
+          "name": "29.ru - Sitemap Index",
+          "sitemapUrl": "https://29.ru/sitemaps/index.xml.gz",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 48
+        },
+        {
+          "name": "76.ru - Sitemap Index",
+          "sitemapUrl": "https://76.ru/sitemaps/index.xml.gz",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 49
+        },
+        {
+          "name": "NN.ru - Sitemap Index",
+          "sitemapUrl": "https://www.nn.ru/sitemaps/index.xml.gz",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 50
         },
         {
           "name": "Rambler News (Portal News)",
@@ -29465,15 +29695,18 @@
         },
         {
           "name": "To Vima",
-          "url": "https://www.tovima.gr/feed/"
+          "url": "https://www.tovima.gr/feed/",
+          "sitemapUrl": "https://www.tovima.gr/wp-content/uploads/json/sitemap-news.xml"
         },
         {
           "name": "Newsbeast",
-          "url": "https://www.newsbeast.gr/feed"
+          "url": "https://www.newsbeast.gr/feed",
+          "sitemapUrl": "https://www.newsbeast.gr/news-sitemap.xml"
         },
         {
           "name": "Ethnos",
-          "url": "https://www.ethnos.gr/rss.xml"
+          "url": "https://www.ethnos.gr/rss.xml",
+          "sitemapUrl": "https://www.ethnos.gr/googlenews"
         },
         {
           "name": "Newsit - News Sitemap",
@@ -29573,6 +29806,7 @@
         {
           "name": "The Press Project",
           "url": "https://thepressproject.gr/feed/",
+          "sitemapUrl": "https://thepressproject.gr/sitemap_index.xml",
           "language": "el",
           "tier": "primary"
         },
@@ -29586,30 +29820,35 @@
         {
           "name": "Insider Greece",
           "url": "https://www.insider.gr/rss",
+          "sitemapUrl": "https://www.insider.gr/gnews.xml",
           "language": "el",
           "tier": "primary"
         },
         {
           "name": "Fortune Greece",
           "url": "https://www.fortunegreece.com/feed/",
+          "sitemapUrl": "https://www.fortunegreece.com/sitemap_index.xml",
           "language": "el",
           "tier": "primary"
         },
         {
           "name": "Techblog",
           "url": "https://techblog.gr/feed/",
+          "sitemapUrl": "https://techblog.gr/sitemap_index.xml",
           "language": "el",
           "tier": "primary"
         },
         {
           "name": "Newmoney",
           "url": "https://www.newmoney.gr/feed/",
+          "sitemapUrl": "https://www.newmoney.gr/news.xml",
           "language": "el",
           "tier": "primary"
         },
         {
           "name": "OT.gr",
           "url": "https://www.ot.gr/feed/",
+          "sitemapUrl": "https://www.ot.gr/wp-content/uploads/json/sitemap-news.xml",
           "language": "el",
           "tier": "primary"
         },
@@ -29622,6 +29861,7 @@
         {
           "name": "Dikastiko",
           "url": "https://www.dikastiko.gr/feed/",
+          "sitemapUrl": "https://www.dikastiko.gr/sitemap.xml",
           "language": "el",
           "tier": "primary"
         },
@@ -29634,12 +29874,38 @@
         {
           "name": "DailyPharmaNews",
           "url": "https://dailypharmanews.gr/feed/",
+          "sitemapUrl": "https://dailypharmanews.gr/news-sitemap.xml",
+          "language": "el",
+          "tier": "primary"
+        },
+        {
+          "name": "Real - News Sitemap",
+          "sitemapUrl": "https://www.real.gr/news-sitemap.xml",
+          "language": "el",
+          "tier": "primary"
+        },
+        {
+          "name": "Dnews - News Sitemap",
+          "sitemapUrl": "https://www.dnews.gr/sitemap_news.xml",
+          "language": "el",
+          "tier": "primary"
+        },
+        {
+          "name": "Zarpanews - Sitemap Index",
+          "sitemapUrl": "https://www.zarpanews.gr/sitemap_index.xml",
+          "language": "el",
+          "tier": "primary"
+        },
+        {
+          "name": "Alpha TV - News Sitemap",
+          "sitemapUrl": "https://www.alphatv.gr/news-sitemap.xml",
           "language": "el",
           "tier": "primary"
         },
         {
           "name": "To Vima International",
           "url": "https://www.tovima.com/feed/",
+          "sitemapUrl": "https://www.tovima.com/sitemap_index.xml",
           "language": "en",
           "tier": "primary"
         }
@@ -35152,6 +35418,82 @@
         {
           "name": "Geo.tv",
           "url": "https://www.geo.tv/rss/1/1"
+        }
+      ]
+    },
+    {
+      "name": "Kazakhstan",
+      "code": "KZ",
+      "feeds": [
+        {
+          "name": "Inform.kz - Sitemap Index",
+          "sitemapUrl": "https://www.inform.kz/sitemaps/sitemap_index_ru.xml"
+        },
+        {
+          "name": "Inform.kz - Google News Sitemap",
+          "sitemapUrl": "https://www.inform.kz/sitemaps/google-news_ru.xml"
+        },
+        {
+          "name": "Inform.kz - Last News 300 Sitemap",
+          "sitemapUrl": "https://www.inform.kz/sitemaps/sitemap-last-news-300_ru.xml"
+        },
+        {
+          "name": "Kursiv Media",
+          "url": "https://kursiv.media/feed/"
+        },
+        {
+          "name": "Kapital.kz - Current Articles Sitemap",
+          "sitemapUrl": "https://kapital.kz/sitemap/articles/current.xml"
+        },
+        {
+          "name": "Inbusiness.kz",
+          "url": "https://inbusiness.kz/rss",
+          "sitemapUrl": "https://inbusiness.kz/gnews-sitemap.xml"
+        },
+        {
+          "name": "Vlast.kz",
+          "url": "https://vlast.kz/feed",
+          "sitemapUrl": "https://vlast.kz/sitemap.xml"
+        },
+        {
+          "name": "Informburo.kz - Sitemap Index",
+          "sitemapUrl": "https://informburo.kz/sitemap.xml"
+        },
+        {
+          "name": "Zakon.kz - Sitemap Index",
+          "sitemapUrl": "https://www.zakon.kz/sitemap/index.xml"
+        },
+        {
+          "name": "Zakon.kz - Google News Sitemap",
+          "sitemapUrl": "https://www.zakon.kz/google-news-sitemap.xml"
+        },
+        {
+          "name": "Forbes Kazakhstan - Sitemap Index",
+          "sitemapUrl": "https://forbes.kz/sitemaps/sitemap_index-articles_ru.xml"
+        },
+        {
+          "name": "Forbes Kazakhstan - Google News Sitemap",
+          "sitemapUrl": "https://forbes.kz/sitemaps/google-news-articles_ru.xml"
+        },
+        {
+          "name": "Forbes Kazakhstan - Last News 300 Sitemap",
+          "sitemapUrl": "https://forbes.kz/sitemaps/sitemap-last-news-300_ru.xml"
+        },
+        {
+          "name": "BAQ.kz - Sitemap Index",
+          "sitemapUrl": "https://baq.kz/sitemap.xml"
+        },
+        {
+          "name": "BAQ.kz - Google News Sitemap",
+          "sitemapUrl": "https://baq.kz/sitemap-google.xml"
+        },
+        {
+          "name": "Qazaqstan TV - Sitemap Index",
+          "sitemapUrl": "https://qazaqstan.tv/sitemap.xml"
+        },
+        {
+          "name": "Ulysmedia.kz - Sitemap Index",
+          "sitemapUrl": "https://ulysmedia.kz/sitemap.xml"
         }
       ]
     }

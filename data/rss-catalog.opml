@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Mon, 13 Apr 2026 21:17:54 GMT</dateCreated>
+    <dateCreated>Mon, 13 Apr 2026 21:25:40 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -1209,11 +1209,21 @@
       <outline text="The Moscow Times [valid]" title="The Moscow Times [valid]" type="rss" xmlUrl="https://www.themoscowtimes.com/rss/news" htmlUrl="https://www.themoscowtimes.com"/>
       <outline text="PravdaReport [valid]" title="PravdaReport [valid]" type="rss" xmlUrl="https://www.pravdareport.com/export.xml" htmlUrl="https://www.pravdareport.com"/>
       <outline text="Meduza (all) [valid]" title="Meduza (all) [valid]" type="rss" xmlUrl="https://meduza.io/rss2/all" htmlUrl="https://meduza.io"/>
+      <outline text="Habr (all) [valid]" title="Habr (all) [valid]" type="rss" xmlUrl="https://habr.com/ru/rss/articles/?fl=ru" htmlUrl="https://habr.com"/>
+      <outline text="VC.ru [valid]" title="VC.ru [valid]" type="rss" xmlUrl="https://vc.ru/rss/all" htmlUrl="https://vc.ru"/>
+      <outline text="CNews [valid]" title="CNews [valid]" type="rss" xmlUrl="https://www.cnews.ru/inc/rss/news.xml" htmlUrl="https://www.cnews.ru"/>
+      <outline text="3DNews [valid]" title="3DNews [valid]" type="rss" xmlUrl="https://3dnews.ru/news/rss/" htmlUrl="https://3dnews.ru"/>
+      <outline text="iXBT [valid]" title="iXBT [valid]" type="rss" xmlUrl="https://www.ixbt.com/export/news.rss" htmlUrl="https://www.ixbt.com"/>
+      <outline text="ComNews [valid]" title="ComNews [valid]" type="rss" xmlUrl="https://www.comnews.ru/rss/yandex.xml" htmlUrl="https://www.comnews.ru"/>
+      <outline text="SecurityLab [valid]" title="SecurityLab [valid]" type="rss" xmlUrl="https://www.securitylab.ru/_services/export/rss/" htmlUrl="https://www.securitylab.ru"/>
       <outline text="RIA Novosti (Russian State Broadcaster) [valid]" title="RIA Novosti (Russian State Broadcaster) [valid]" type="rss" xmlUrl="https://ria.ru/export/rss2/archive/index.xml" htmlUrl="https://ria.ru"/>
       <outline text="TASS (TASS Russian Main) [valid]" title="TASS (TASS Russian Main) [valid]" type="rss" xmlUrl="https://tass.ru/rss/v2.xml" htmlUrl="https://tass.ru"/>
       <outline text="RBC (Russian Finance/Economy #1) [valid]" title="RBC (Russian Finance/Economy #1) [valid]" type="rss" xmlUrl="https://rssexport.rbc.ru/rbcnews/news/30/full.rss" htmlUrl="https://rssexport.rbc.ru"/>
       <outline text="Kommersant (Economy/Business Major Daily) [valid]" title="Kommersant (Economy/Business Major Daily) [valid]" type="rss" xmlUrl="https://www.kommersant.ru/RSS/news.xml" htmlUrl="https://www.kommersant.ru"/>
       <outline text="Vedomosti (Economy Major Daily) [valid]" title="Vedomosti (Economy Major Daily) [valid]" type="rss" xmlUrl="https://www.vedomosti.ru/rss/news" htmlUrl="https://www.vedomosti.ru"/>
+      <outline text="Gazeta.ru - News Sitemap [needs verification]" title="Gazeta.ru - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.gazeta.ru/sitemap_news-y.xml" htmlUrl="https://www.gazeta.ru"/>
+      <outline text="Gazeta.ru - Articles Sitemap [needs verification]" title="Gazeta.ru - Articles Sitemap [needs verification]" type="rss" xmlUrl="https://www.gazeta.ru/sitemap_articles-y.xml" htmlUrl="https://www.gazeta.ru"/>
+      <outline text="Regnum - News Sitemap [needs verification]" title="Regnum - News Sitemap [needs verification]" type="rss" xmlUrl="https://regnum.ru/sitemap/news.xml" htmlUrl="https://regnum.ru"/>
       <outline text="Izvestia (Traditional Daily) [valid]" title="Izvestia (Traditional Daily) [valid]" type="rss" xmlUrl="https://iz.ru/xml/rss/all.xml" htmlUrl="https://iz.ru"/>
       <outline text="RT Russian (RT Russian Main) [valid]" title="RT Russian (RT Russian Main) [valid]" type="rss" xmlUrl="https://russian.rt.com/rss" htmlUrl="https://russian.rt.com"/>
       <outline text="Rossiyskaya Gazeta (Official Gazette) [valid]" title="Rossiyskaya Gazeta (Official Gazette) [valid]" type="rss" xmlUrl="https://rg.ru/xml/index.xml" htmlUrl="https://rg.ru"/>
@@ -1221,6 +1231,24 @@
       <outline text="BFM.ru (Business Radio) [valid]" title="BFM.ru (Business Radio) [valid]" type="rss" xmlUrl="https://www.bfm.ru/news.rss" htmlUrl="https://www.bfm.ru"/>
       <outline text="Expert.ru (Economy Magazine) [invalid]" title="Expert.ru (Economy Magazine) [invalid]" type="rss" xmlUrl="https://www.expert.ru/rss/" htmlUrl="https://www.expert.ru"/>
       <outline text="Finmarket.ru (Finance/Investment) [valid]" title="Finmarket.ru (Finance/Investment) [valid]" type="rss" xmlUrl="http://www.finmarket.ru/rss/mainnews.asp" htmlUrl="http://www.finmarket.ru"/>
+      <outline text="Moskovsky Komsomolets (Mass outlet #2) [valid]" title="Moskovsky Komsomolets (Mass outlet #2) [valid]" type="rss" xmlUrl="https://www.mk.ru/rss/news/index.xml" htmlUrl="https://www.mk.ru"/>
+      <outline text="Moskovsky Komsomolets - Politics [valid]" title="Moskovsky Komsomolets - Politics [valid]" type="rss" xmlUrl="https://www.mk.ru/rss/politics/index.xml" htmlUrl="https://www.mk.ru"/>
+      <outline text="Moskovsky Komsomolets - Social [valid]" title="Moskovsky Komsomolets - Social [valid]" type="rss" xmlUrl="https://www.mk.ru/rss/social/index.xml" htmlUrl="https://www.mk.ru"/>
+      <outline text="Moskovsky Komsomolets - Incidents [valid]" title="Moskovsky Komsomolets - Incidents [valid]" type="rss" xmlUrl="https://www.mk.ru/rss/incident/index.xml" htmlUrl="https://www.mk.ru"/>
+      <outline text="Moskovsky Komsomolets - Sport [valid]" title="Moskovsky Komsomolets - Sport [valid]" type="rss" xmlUrl="https://www.mk.ru/rss/sport/index.xml" htmlUrl="https://www.mk.ru"/>
+      <outline text="Moskovsky Komsomolets - Economics [valid]" title="Moskovsky Komsomolets - Economics [valid]" type="rss" xmlUrl="https://www.mk.ru/rss/economics/index.xml" htmlUrl="https://www.mk.ru"/>
+      <outline text="Moskovsky Komsomolets - Science [valid]" title="Moskovsky Komsomolets - Science [valid]" type="rss" xmlUrl="https://www.mk.ru/rss/science/index.xml" htmlUrl="https://www.mk.ru"/>
+      <outline text="Moskovsky Komsomolets - Culture [valid]" title="Moskovsky Komsomolets - Culture [valid]" type="rss" xmlUrl="https://www.mk.ru/rss/culture/index.xml" htmlUrl="https://www.mk.ru"/>
+      <outline text="NGS - Sitemap Index [needs verification]" title="NGS - Sitemap Index [needs verification]" type="rss" xmlUrl="https://ngs.ru/sitemaps/index.xml.gz" htmlUrl="https://ngs.ru"/>
+      <outline text="74.ru - Sitemap Index [needs verification]" title="74.ru - Sitemap Index [needs verification]" type="rss" xmlUrl="https://74.ru/sitemaps/index.xml.gz" htmlUrl="https://74.ru"/>
+      <outline text="72.ru - Sitemap Index [needs verification]" title="72.ru - Sitemap Index [needs verification]" type="rss" xmlUrl="https://72.ru/sitemaps/index.xml.gz" htmlUrl="https://72.ru"/>
+      <outline text="93.ru - Sitemap Index [needs verification]" title="93.ru - Sitemap Index [needs verification]" type="rss" xmlUrl="https://93.ru/sitemaps/index.xml.gz" htmlUrl="https://93.ru"/>
+      <outline text="116.ru - Sitemap Index [needs verification]" title="116.ru - Sitemap Index [needs verification]" type="rss" xmlUrl="https://116.ru/sitemaps/index.xml.gz" htmlUrl="https://116.ru"/>
+      <outline text="59.ru - Sitemap Index [needs verification]" title="59.ru - Sitemap Index [needs verification]" type="rss" xmlUrl="https://59.ru/sitemaps/index.xml.gz" htmlUrl="https://59.ru"/>
+      <outline text="161.ru - Sitemap Index [needs verification]" title="161.ru - Sitemap Index [needs verification]" type="rss" xmlUrl="https://161.ru/sitemaps/index.xml.gz" htmlUrl="https://161.ru"/>
+      <outline text="29.ru - Sitemap Index [needs verification]" title="29.ru - Sitemap Index [needs verification]" type="rss" xmlUrl="https://29.ru/sitemaps/index.xml.gz" htmlUrl="https://29.ru"/>
+      <outline text="76.ru - Sitemap Index [needs verification]" title="76.ru - Sitemap Index [needs verification]" type="rss" xmlUrl="https://76.ru/sitemaps/index.xml.gz" htmlUrl="https://76.ru"/>
+      <outline text="NN.ru - Sitemap Index [needs verification]" title="NN.ru - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.nn.ru/sitemaps/index.xml.gz" htmlUrl="https://www.nn.ru"/>
     </outline>
     <outline text="South Korea (KR)" title="South Korea (KR)">
       <outline text="Yonhap (EN) [needs verification]" title="Yonhap (EN) [needs verification]" type="rss" xmlUrl="https://www.yna.co.kr/news-sitemap6.xml" htmlUrl="https://www.yna.co.kr"/>
@@ -3954,6 +3982,10 @@
       <outline text="Dikastiko [needs verification]" title="Dikastiko [needs verification]" type="rss" xmlUrl="https://www.dikastiko.gr/feed/" htmlUrl="https://www.dikastiko.gr"/>
       <outline text="Oneman [needs verification]" title="Oneman [needs verification]" type="rss" xmlUrl="https://www.oneman.gr/feed/" htmlUrl="https://www.oneman.gr"/>
       <outline text="DailyPharmaNews [needs verification]" title="DailyPharmaNews [needs verification]" type="rss" xmlUrl="https://dailypharmanews.gr/feed/" htmlUrl="https://dailypharmanews.gr"/>
+      <outline text="Real - News Sitemap [needs verification]" title="Real - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.real.gr/news-sitemap.xml" htmlUrl="https://www.real.gr"/>
+      <outline text="Dnews - News Sitemap [needs verification]" title="Dnews - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.dnews.gr/sitemap_news.xml" htmlUrl="https://www.dnews.gr"/>
+      <outline text="Zarpanews - Sitemap Index [needs verification]" title="Zarpanews - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.zarpanews.gr/sitemap_index.xml" htmlUrl="https://www.zarpanews.gr"/>
+      <outline text="Alpha TV - News Sitemap [needs verification]" title="Alpha TV - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.alphatv.gr/news-sitemap.xml" htmlUrl="https://www.alphatv.gr"/>
       <outline text="To Vima International [needs verification]" title="To Vima International [needs verification]" type="rss" xmlUrl="https://www.tovima.com/feed/" htmlUrl="https://www.tovima.com"/>
     </outline>
     <outline text="Romania (RO)" title="Romania (RO)">
@@ -5013,6 +5045,25 @@
     <outline text="Pakistan (PK)" title="Pakistan (PK)">
       <outline text="Pakistan Dawn [needs verification]" title="Pakistan Dawn [needs verification]" type="rss" xmlUrl="https://www.dawn.com/feeds/home" htmlUrl="https://www.dawn.com"/>
       <outline text="Geo.tv [needs verification]" title="Geo.tv [needs verification]" type="rss" xmlUrl="https://www.geo.tv/rss/1/1" htmlUrl="https://www.geo.tv"/>
+    </outline>
+    <outline text="Kazakhstan (KZ)" title="Kazakhstan (KZ)">
+      <outline text="Inform.kz - Sitemap Index [needs verification]" title="Inform.kz - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.inform.kz/sitemaps/sitemap_index_ru.xml" htmlUrl="https://www.inform.kz"/>
+      <outline text="Inform.kz - Google News Sitemap [needs verification]" title="Inform.kz - Google News Sitemap [needs verification]" type="rss" xmlUrl="https://www.inform.kz/sitemaps/google-news_ru.xml" htmlUrl="https://www.inform.kz"/>
+      <outline text="Inform.kz - Last News 300 Sitemap [needs verification]" title="Inform.kz - Last News 300 Sitemap [needs verification]" type="rss" xmlUrl="https://www.inform.kz/sitemaps/sitemap-last-news-300_ru.xml" htmlUrl="https://www.inform.kz"/>
+      <outline text="Kursiv Media [needs verification]" title="Kursiv Media [needs verification]" type="rss" xmlUrl="https://kursiv.media/feed/" htmlUrl="https://kursiv.media"/>
+      <outline text="Kapital.kz - Current Articles Sitemap [needs verification]" title="Kapital.kz - Current Articles Sitemap [needs verification]" type="rss" xmlUrl="https://kapital.kz/sitemap/articles/current.xml" htmlUrl="https://kapital.kz"/>
+      <outline text="Inbusiness.kz [needs verification]" title="Inbusiness.kz [needs verification]" type="rss" xmlUrl="https://inbusiness.kz/rss" htmlUrl="https://inbusiness.kz"/>
+      <outline text="Vlast.kz [needs verification]" title="Vlast.kz [needs verification]" type="rss" xmlUrl="https://vlast.kz/feed" htmlUrl="https://vlast.kz"/>
+      <outline text="Informburo.kz - Sitemap Index [needs verification]" title="Informburo.kz - Sitemap Index [needs verification]" type="rss" xmlUrl="https://informburo.kz/sitemap.xml" htmlUrl="https://informburo.kz"/>
+      <outline text="Zakon.kz - Sitemap Index [needs verification]" title="Zakon.kz - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.zakon.kz/sitemap/index.xml" htmlUrl="https://www.zakon.kz"/>
+      <outline text="Zakon.kz - Google News Sitemap [needs verification]" title="Zakon.kz - Google News Sitemap [needs verification]" type="rss" xmlUrl="https://www.zakon.kz/google-news-sitemap.xml" htmlUrl="https://www.zakon.kz"/>
+      <outline text="Forbes Kazakhstan - Sitemap Index [needs verification]" title="Forbes Kazakhstan - Sitemap Index [needs verification]" type="rss" xmlUrl="https://forbes.kz/sitemaps/sitemap_index-articles_ru.xml" htmlUrl="https://forbes.kz"/>
+      <outline text="Forbes Kazakhstan - Google News Sitemap [needs verification]" title="Forbes Kazakhstan - Google News Sitemap [needs verification]" type="rss" xmlUrl="https://forbes.kz/sitemaps/google-news-articles_ru.xml" htmlUrl="https://forbes.kz"/>
+      <outline text="Forbes Kazakhstan - Last News 300 Sitemap [needs verification]" title="Forbes Kazakhstan - Last News 300 Sitemap [needs verification]" type="rss" xmlUrl="https://forbes.kz/sitemaps/sitemap-last-news-300_ru.xml" htmlUrl="https://forbes.kz"/>
+      <outline text="BAQ.kz - Sitemap Index [needs verification]" title="BAQ.kz - Sitemap Index [needs verification]" type="rss" xmlUrl="https://baq.kz/sitemap.xml" htmlUrl="https://baq.kz"/>
+      <outline text="BAQ.kz - Google News Sitemap [needs verification]" title="BAQ.kz - Google News Sitemap [needs verification]" type="rss" xmlUrl="https://baq.kz/sitemap-google.xml" htmlUrl="https://baq.kz"/>
+      <outline text="Qazaqstan TV - Sitemap Index [needs verification]" title="Qazaqstan TV - Sitemap Index [needs verification]" type="rss" xmlUrl="https://qazaqstan.tv/sitemap.xml" htmlUrl="https://qazaqstan.tv"/>
+      <outline text="Ulysmedia.kz - Sitemap Index [needs verification]" title="Ulysmedia.kz - Sitemap Index [needs verification]" type="rss" xmlUrl="https://ulysmedia.kz/sitemap.xml" htmlUrl="https://ulysmedia.kz"/>
     </outline>
   </body>
 </opml>

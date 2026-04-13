@@ -93,13 +93,34 @@ async function readPagePayload(page) {
   return `${title}\n${content}\n${bodyText}`;
 }
 
+function isClosedTargetError(error) {
+  const message = String(error && error.message ? error.message : error || '').toLowerCase();
+  return (
+    message.includes('target page, context or browser has been closed') ||
+    message.includes('page has been closed') ||
+    message.includes('browser has been closed') ||
+    message.includes('context has been closed')
+  );
+}
+
 async function waitForInterstitialToClear(page, timeoutMs) {
   const deadline = Date.now() + timeoutMs;
   while (Date.now() < deadline) {
-    const payload = await readPagePayload(page);
+    let payload = '';
+    try {
+      payload = await readPagePayload(page);
+    } catch (error) {
+      if (isClosedTargetError(error)) throw error;
+      payload = '';
+    }
     const state = detectInterstitialState(payload);
     if (state !== 'challenge') return payload;
-    await page.waitForTimeout(1000);
+    try {
+      await page.waitForTimeout(1000);
+    } catch (error) {
+      if (isClosedTargetError(error)) throw error;
+      break;
+    }
   }
   return await readPagePayload(page);
 }
@@ -121,16 +142,41 @@ async function launchBrowserContext(headless, profileDir) {
 
 async function navigateForChallenge(page, targetUrl, timeoutMs) {
   const target = new URL(targetUrl);
+  const createFreshPage = async () => {
+    try {
+      return await page.context().newPage();
+    } catch {
+      return page;
+    }
+  };
   const bootstrapFromOrigin = async (candidatePage) => {
-    await candidatePage.goto(`${target.origin}/`, { waitUntil: 'domcontentloaded', timeout: 30000 });
-    await waitForInterstitialToClear(candidatePage, timeoutMs);
+    try {
+      await candidatePage.goto(`${target.origin}/`, { waitUntil: 'domcontentloaded', timeout: 30000 });
+      await waitForInterstitialToClear(candidatePage, timeoutMs);
+    } catch (error) {
+      if (!isClosedTargetError(error)) throw error;
+      const retryPage = await createFreshPage();
+      await retryPage.goto(`${target.origin}/`, { waitUntil: 'domcontentloaded', timeout: 30000 });
+      await waitForInterstitialToClear(retryPage, timeoutMs);
+      return { response: null, page: retryPage };
+    }
     return { response: null, page: candidatePage };
   };
   const retryAfterOriginBootstrap = async (candidatePage) => {
-    await bootstrapFromOrigin(candidatePage);
-    const response = await candidatePage.goto(targetUrl, { waitUntil: 'domcontentloaded', timeout: 45000 });
-    await waitForInterstitialToClear(candidatePage, timeoutMs);
-    return { response, page: candidatePage };
+    const bootstrapped = await bootstrapFromOrigin(candidatePage);
+    const activePage = bootstrapped.page;
+    try {
+      const response = await activePage.goto(targetUrl, { waitUntil: 'domcontentloaded', timeout: 45000 });
+      await waitForInterstitialToClear(activePage, timeoutMs);
+      return { response, page: activePage };
+    } catch (error) {
+      if (!isClosedTargetError(error)) throw error;
+      const retryPage = await createFreshPage();
+      await bootstrapFromOrigin(retryPage);
+      const response = await retryPage.goto(targetUrl, { waitUntil: 'domcontentloaded', timeout: 45000 });
+      await waitForInterstitialToClear(retryPage, timeoutMs);
+      return { response, page: retryPage };
+    }
   };
   try {
     const response = await page.goto(targetUrl, { waitUntil: 'domcontentloaded', timeout: 45000 });
@@ -145,7 +191,8 @@ async function navigateForChallenge(page, targetUrl, timeoutMs) {
     const shouldBootstrapFromOrigin =
       currentUrl === 'about:blank' ||
       currentUrl.startsWith('chrome-error://') ||
-      errorMessage.includes('ERR_TOO_MANY_REDIRECTS');
+      errorMessage.includes('ERR_TOO_MANY_REDIRECTS') ||
+      isClosedTargetError(error);
     if (!shouldBootstrapFromOrigin) {
       throw error;
     }
