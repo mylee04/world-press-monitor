@@ -1,0 +1,54 @@
+[
+  {
+    "source": "La Dépêche",
+    "sitemap": "https://www.ladepeche.fr/sitemap-news.xml"
+  },
+  {
+    "source": "Midi Libre",
+    "sitemap": "https://www.midilibre.fr/sitemap-news.xml"
+  },
+  {
+    "source": "Nice-Matin",
+    "sitemap": "https://www.nicematin.com/googlenews.xml"
+  },
+  {
+    "source": "La Croix",
+    "sitemap": "https://www.la-croix.com/feeds/sitemaps/sitemap_news.xml"
+  },
+  {
+    "source": "France Bleu",
+    "sitemap": "https://www.francebleu.fr/sitemap-news.xml"
+  },
+  {
+    "source": "Presse Citron",
+    "sitemap": "https://www.presse-citron.net/sitemap-news.xml"
+  },
+  {
+    "source": "Sciences et Avenir",
+    "sitemap": "https://www.sciencesetavenir.fr/sitemap.news.xml"
+  },
+  {
+    "source": "01Net",
+    "sitemap": "https://www.01net.com/sitemap-news.xml"
+  },
+  {
+    "source": "Journal du Geek",
+    "sitemap": "https://www.journaldugeek.com/news-sitemap.xml"
+  },
+  {
+    "source": "Clubic",
+    "sitemap": "https://www.clubic.com/sitemap_news.xml"
+  },
+  {
+    "source": "Capital",
+    "sitemap": "https://www.capital.fr/sitemap/news.xml"
+  },
+  {
+    "source": "Les Numériques",
+    "sitemap": "https://www.lesnumeriques.com/sitemap-google-news.xml"
+  },
+  {
+    "source": "Numerama",
+    "sitemap": "https://www.numerama.com/news-sitemap.xml"
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "source": "Sud Ouest",
+    "sitemap": "https://www.sudouest.fr/sitemap-news.xml"
+  },
+  {
+    "source": "Ouest-France (Regional News/Society)",
+    "sitemap": "https://www.ouest-france.fr/googlenews.xml"
+  },
+  {
+    "source": "Challenges.fr (Business)",
+    "sitemap": "https://www.challenges.fr/sitemap.xml"
+  },
+  {
+    "source": "Lyon Capitale",
+    "sitemap": "https://www.lyoncapitale.fr/sitemap-news.xml"
+  }
+]
