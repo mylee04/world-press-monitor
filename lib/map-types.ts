@@ -6,6 +6,7 @@ import type {
 
 export type MapMetricWindow = '1h' | '24h' | '7d';
 export type MapStorageMode = 'postgres' | 'snapshot';
+export type MapDataSource = 'upstream' | 'snapshot-file' | 'local-fallback';
 export type MapPublisherConfidence = 'high' | 'medium' | 'low';
 export type MapSourceLocationKind = 'headquarters' | 'inferred-city' | 'hub' | 'foreign-operated' | 'country-fallback';
 
@@ -51,6 +52,7 @@ export type MapCountryMetricRow = {
 export type MapCountryMetricsResponse = {
   generatedAt: string;
   storage: MapStorageMode;
+  dataSource?: MapDataSource;
   window: MapMetricWindow;
   totals: {
     countries: number;
@@ -108,6 +110,7 @@ export type MapPublisherMetricRow = {
 export type MapPublishersResponse = {
   generatedAt: string;
   storage: MapStorageMode;
+  dataSource?: MapDataSource;
   window: MapMetricWindow;
   publishers: MapPublisherMetricRow[];
 };
@@ -146,6 +149,7 @@ export type MapSourceMetricRow = {
 
 export type MapCountrySourcesResponse = {
   generatedAt: string;
+  dataSource?: MapDataSource;
   country: string;
   countryCode: string | null;
   window: MapMetricWindow;
@@ -174,6 +178,7 @@ export type MapCountrySourcesResponse = {
 
 export type MapSourceDetailResponse = {
   generatedAt: string;
+  dataSource?: MapDataSource;
   sourceId: string;
   source: string;
   publisher: string | null;

@@ -4,7 +4,7 @@ import { buildPublicSnapshotCacheHeaders, PUBLIC_MAP_RESPONSE_CACHE_CONTROL } fr
 import { proxyPortalServerApiRequest, shouldUseLocalFallbackForPortalResponse } from '@/lib/customer-portal';
 import { sanitizeMapCountrySourcesForPublic } from '@/lib/map-public-payload';
 import { readMapCountrySources } from '@/lib/map-store';
-import type { MapCountrySourcesResponse } from '@/lib/map-types';
+import type { MapCountrySourcesResponse, MapDataSource } from '@/lib/map-types';
 import { normalizeMapMetricWindow } from '@/lib/map-store-windows';
 
 export const runtime = 'nodejs';
@@ -16,6 +16,13 @@ function hasCountrySourceData(payload: MapCountrySourcesResponse | null | undefi
     payload &&
     (((payload.summary?.activeSources24h || 0) > 0) || (Array.isArray(payload.sources) && payload.sources.length > 0))
   );
+}
+
+function withDataSource(payload: MapCountrySourcesResponse, dataSource: MapDataSource): MapCountrySourcesResponse {
+  return {
+    ...payload,
+    dataSource,
+  };
 }
 
 export async function GET(request: NextRequest, context: { params: Promise<{ country: string }> }) {
@@ -43,21 +50,21 @@ export async function GET(request: NextRequest, context: { params: Promise<{ cou
     if (upstream.ok) {
       const payload = (await upstream.clone().json().catch(() => null)) as MapCountrySourcesResponse | null;
       if (hasCountrySourceData(payload)) {
-        return NextResponse.json(sanitizeMapCountrySourcesForPublic(payload), {
+        return NextResponse.json(sanitizeMapCountrySourcesForPublic(withDataSource(payload, 'upstream')), {
           status: 200,
           headers: buildPublicSnapshotCacheHeaders({ 'X-Data-Source': 'upstream' }),
         });
       }
 
       if (hasCountrySourceData(fileSnapshot)) {
-        return NextResponse.json(sanitizeMapCountrySourcesForPublic(fileSnapshot), {
+        return NextResponse.json(sanitizeMapCountrySourcesForPublic(withDataSource(fileSnapshot, 'snapshot-file')), {
           status: 200,
           headers: buildPublicSnapshotCacheHeaders({ 'X-Data-Source': 'snapshot-file' }),
         });
       }
 
       if (hasCountrySourceData(localPayload)) {
-        return NextResponse.json(sanitizeMapCountrySourcesForPublic(localPayload), {
+        return NextResponse.json(sanitizeMapCountrySourcesForPublic(withDataSource(localPayload, 'local-fallback')), {
           status: 200,
           headers: buildPublicSnapshotCacheHeaders({ 'X-Data-Source': 'local-fallback' }),
         });
@@ -72,14 +79,14 @@ export async function GET(request: NextRequest, context: { params: Promise<{ cou
     }
 
     if (hasCountrySourceData(fileSnapshot)) {
-      return NextResponse.json(sanitizeMapCountrySourcesForPublic(fileSnapshot), {
+      return NextResponse.json(sanitizeMapCountrySourcesForPublic(withDataSource(fileSnapshot, 'snapshot-file')), {
         status: 200,
         headers: buildPublicSnapshotCacheHeaders({ 'X-Data-Source': 'snapshot-file' }),
       });
     }
 
     if (hasCountrySourceData(localPayload)) {
-      return NextResponse.json(sanitizeMapCountrySourcesForPublic(localPayload), {
+      return NextResponse.json(sanitizeMapCountrySourcesForPublic(withDataSource(localPayload, 'local-fallback')), {
         status: 200,
         headers: buildPublicSnapshotCacheHeaders({ 'X-Data-Source': 'local-fallback' }),
       });

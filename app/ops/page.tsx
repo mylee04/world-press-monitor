@@ -442,7 +442,7 @@ export default async function OpsPage({ searchParams }: Props) {
           <article className={styles.statusCard}>
             <span className={styles.statusLabel}>Map 24h</span>
             <strong>{formatAge(mapCountries?.generatedAt)}</strong>
-            <p>{mapCountries?.storage || 'Unavailable'}</p>
+            <p>{mapCountries?.dataSource || mapCountries?.storage || 'Unavailable'}</p>
             <small><OpsLocalTimestamp value={mapCountries?.generatedAt} /></small>
           </article>
         </div>
@@ -509,7 +509,7 @@ export default async function OpsPage({ searchParams }: Props) {
         <article className={styles.detailPanel}>
           <h2>Map Snapshot</h2>
           <div className={styles.detailMeta}>
-            <span className={styles.chip}>{mapCountries?.storage || 'unknown'}</span>
+            <span className={styles.chip}>{mapCountries?.dataSource || mapCountries?.storage || 'unknown'}</span>
             <span className={styles.chip}><OpsLocalTimestamp value={mapCountries?.generatedAt} /></span>
           </div>
           <p className={styles.detailNote}>

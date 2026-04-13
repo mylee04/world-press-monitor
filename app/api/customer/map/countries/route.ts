@@ -8,7 +8,7 @@ import {
 import { proxyPortalServerApiRequest, shouldUseLocalFallbackForPortalResponse } from '@/lib/customer-portal';
 import { sanitizeMapCountryMetricsForPublic } from '@/lib/map-public-payload';
 import { readMapCountryMetrics } from '@/lib/map-store';
-import type { MapCountryMetricsResponse } from '@/lib/map-types';
+import type { MapCountryMetricsResponse, MapDataSource } from '@/lib/map-types';
 import { normalizeMapMetricWindow } from '@/lib/map-store-windows';
 
 export const runtime = 'nodejs';
@@ -20,13 +20,13 @@ function hasCountryMetrics(payload: MapCountryMetricsResponse | null | undefined
 
 async function toCountryMetricsResponse(
   payload: MapCountryMetricsResponse,
-  source: 'upstream' | 'snapshot-file' | 'local-fallback'
+  source: MapDataSource
 ) {
   const normalizedPayload = mapCountryMetricsNeedsNormalization(payload)
     ? await normalizeMapCountryMetricsPayload(payload)
     : payload;
 
-  return NextResponse.json(sanitizeMapCountryMetricsForPublic(normalizedPayload), {
+  return NextResponse.json(sanitizeMapCountryMetricsForPublic({ ...normalizedPayload, dataSource: source }), {
     status: 200,
     headers: buildPublicSnapshotCacheHeaders({ 'X-Data-Source': source }),
   });

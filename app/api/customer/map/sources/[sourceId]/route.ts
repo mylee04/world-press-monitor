@@ -3,11 +3,18 @@ import { buildPublicSnapshotCacheHeaders, PUBLIC_MAP_RESPONSE_CACHE_CONTROL } fr
 import { proxyPortalServerApiRequest, shouldUseLocalFallbackForPortalResponse } from '@/lib/customer-portal';
 import { sanitizeMapSourceDetailForPublic } from '@/lib/map-public-payload';
 import { readMapSourceDetail } from '@/lib/map-store';
-import type { MapSourceDetailResponse } from '@/lib/map-types';
+import type { MapSourceDetailResponse, MapDataSource } from '@/lib/map-types';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 const MAP_SOURCE_DETAIL_UPSTREAM_TIMEOUT_MS = 30_000;
+
+function withDataSource(payload: MapSourceDetailResponse, dataSource: MapDataSource): MapSourceDetailResponse {
+  return {
+    ...payload,
+    dataSource,
+  };
+}
 
 export async function GET(request: NextRequest, context: { params: Promise<{ sourceId: string }> }) {
   try {
@@ -29,7 +36,7 @@ export async function GET(request: NextRequest, context: { params: Promise<{ sou
     if (upstream.ok) {
       const payload = (await upstream.clone().json().catch(() => null)) as MapSourceDetailResponse | null;
       if (payload) {
-        return NextResponse.json(sanitizeMapSourceDetailForPublic(payload), {
+        return NextResponse.json(sanitizeMapSourceDetailForPublic(withDataSource(payload, 'upstream')), {
           status: 200,
           headers: buildPublicSnapshotCacheHeaders({ 'X-Data-Source': 'upstream' }),
         });
@@ -43,7 +50,7 @@ export async function GET(request: NextRequest, context: { params: Promise<{ sou
     }
 
     if (localPayload) {
-      return NextResponse.json(sanitizeMapSourceDetailForPublic(localPayload), {
+      return NextResponse.json(sanitizeMapSourceDetailForPublic(withDataSource(localPayload, 'local-fallback')), {
         status: 200,
         headers: buildPublicSnapshotCacheHeaders({ 'X-Data-Source': 'local-fallback' }),
       });
