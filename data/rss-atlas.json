@@ -35489,12 +35489,28 @@
           "sitemapUrl": "https://baq.kz/sitemap-google.xml"
         },
         {
-          "name": "Qazaqstan TV - Sitemap Index",
-          "sitemapUrl": "https://qazaqstan.tv/sitemap.xml"
-        },
-        {
           "name": "Ulysmedia.kz - Sitemap Index",
           "sitemapUrl": "https://ulysmedia.kz/sitemap.xml"
+        },
+        {
+          "name": "Tengri News - Russian Sitemap",
+          "sitemapUrl": "https://tengrinews.kz/sitemap_ru.xml"
+        },
+        {
+          "name": "24.kz - Russian News Sitemap",
+          "sitemapUrl": "https://24.kz/ru/news-sitemap"
+        },
+        {
+          "name": "24.kz - Kazakh News Sitemap",
+          "sitemapUrl": "https://24.kz/kz/news-sitemap"
+        },
+        {
+          "name": "KT.kz - Russian Contents Sitemap",
+          "sitemapUrl": "https://www.kt.kz/sitemaps/rus/contents.xml"
+        },
+        {
+          "name": "Sputnik Kazakhstan - Article Sitemap Index",
+          "sitemapUrl": "https://sputnik.kz/sitemap_article_index.xml"
         }
       ]
     }

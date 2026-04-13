@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Mon, 13 Apr 2026 21:25:40 GMT</dateCreated>
+    <dateCreated>Mon, 13 Apr 2026 21:31:40 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -5062,8 +5062,12 @@
       <outline text="Forbes Kazakhstan - Last News 300 Sitemap [needs verification]" title="Forbes Kazakhstan - Last News 300 Sitemap [needs verification]" type="rss" xmlUrl="https://forbes.kz/sitemaps/sitemap-last-news-300_ru.xml" htmlUrl="https://forbes.kz"/>
       <outline text="BAQ.kz - Sitemap Index [needs verification]" title="BAQ.kz - Sitemap Index [needs verification]" type="rss" xmlUrl="https://baq.kz/sitemap.xml" htmlUrl="https://baq.kz"/>
       <outline text="BAQ.kz - Google News Sitemap [needs verification]" title="BAQ.kz - Google News Sitemap [needs verification]" type="rss" xmlUrl="https://baq.kz/sitemap-google.xml" htmlUrl="https://baq.kz"/>
-      <outline text="Qazaqstan TV - Sitemap Index [needs verification]" title="Qazaqstan TV - Sitemap Index [needs verification]" type="rss" xmlUrl="https://qazaqstan.tv/sitemap.xml" htmlUrl="https://qazaqstan.tv"/>
       <outline text="Ulysmedia.kz - Sitemap Index [needs verification]" title="Ulysmedia.kz - Sitemap Index [needs verification]" type="rss" xmlUrl="https://ulysmedia.kz/sitemap.xml" htmlUrl="https://ulysmedia.kz"/>
+      <outline text="Tengri News - Russian Sitemap [needs verification]" title="Tengri News - Russian Sitemap [needs verification]" type="rss" xmlUrl="https://tengrinews.kz/sitemap_ru.xml" htmlUrl="https://tengrinews.kz"/>
+      <outline text="24.kz - Russian News Sitemap [needs verification]" title="24.kz - Russian News Sitemap [needs verification]" type="rss" xmlUrl="https://24.kz/ru/news-sitemap" htmlUrl="https://24.kz"/>
+      <outline text="24.kz - Kazakh News Sitemap [needs verification]" title="24.kz - Kazakh News Sitemap [needs verification]" type="rss" xmlUrl="https://24.kz/kz/news-sitemap" htmlUrl="https://24.kz"/>
+      <outline text="KT.kz - Russian Contents Sitemap [needs verification]" title="KT.kz - Russian Contents Sitemap [needs verification]" type="rss" xmlUrl="https://www.kt.kz/sitemaps/rus/contents.xml" htmlUrl="https://www.kt.kz"/>
+      <outline text="Sputnik Kazakhstan - Article Sitemap Index [needs verification]" title="Sputnik Kazakhstan - Article Sitemap Index [needs verification]" type="rss" xmlUrl="https://sputnik.kz/sitemap_article_index.xml" htmlUrl="https://sputnik.kz"/>
     </outline>
   </body>
 </opml>
