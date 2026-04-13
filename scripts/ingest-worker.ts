@@ -1706,6 +1706,15 @@ const ENABLE_RSS_TO_SITEMAP_FALLBACK = parseBoolEnv(process.env.INGEST_RSS_SITEM
 const ENABLE_EXPLICIT_SITEMAP_PARALLEL = parseBoolEnv(process.env.INGEST_EXPLICIT_SITEMAP_PARALLEL, true);
 const ENABLE_ARTICLE_META_CATEGORY_FALLBACK = parseBoolEnv(process.env.INGEST_ARTICLE_META_CATEGORY_FALLBACK, true);
 const ENABLE_ARTICLE_TITLE_FALLBACK = parseBoolEnv(process.env.INGEST_ARTICLE_TITLE_FALLBACK, true);
+const ARTICLE_TITLE_FETCH_MAX_PER_RUN = BACKFILL_WINDOW
+  ? Number.MAX_SAFE_INTEGER
+  : Math.max(0, Math.min(5000, Number.parseInt(process.env.INGEST_ARTICLE_TITLE_MAX_FETCHES || '200', 10) || 200));
+const ARTICLE_TITLE_FETCH_MAX_PER_SOURCE = BACKFILL_WINDOW
+  ? Number.MAX_SAFE_INTEGER
+  : Math.max(
+      0,
+      Math.min(500, Number.parseInt(process.env.INGEST_ARTICLE_TITLE_MAX_FETCHES_PER_SOURCE || '32', 10) || 32)
+    );
 const ARTICLE_META_CATEGORY_FETCH_MAX_PER_RUN = BACKFILL_WINDOW
   ? Number.MAX_SAFE_INTEGER
   : Math.max(0, Math.min(5000, Number.parseInt(process.env.INGEST_ARTICLE_META_CATEGORY_MAX_FETCHES || '400', 10) || 400));
@@ -1820,21 +1829,76 @@ const ARTICLE_PUBLISHED_AT_FETCH_MAX_PER_SOURCE = Math.max(
   1,
   Math.min(500, Number.parseInt(process.env.INGEST_ARTICLE_PUBLISHED_AT_FETCH_MAX_PER_SOURCE || '180', 10) || 180)
 );
+const ARTICLE_PAGE_FETCH_TIMEOUT_MS = Math.max(
+  ARTICLE_META_CATEGORY_FETCH_TIMEOUT_MS,
+  ARTICLE_TITLE_FETCH_TIMEOUT_MS,
+  ARTICLE_PUBLISHED_AT_FETCH_TIMEOUT_MS
+);
 
-const articleMetaCategoryCache = new Map<string, Promise<string[]>>();
-const articleTitleCache = new Map<string, Promise<string>>();
-const articlePublishedAtCache = new Map<string, Promise<string>>();
+type ArticlePageSignalKey = 'title' | 'publishedAt' | 'metaCategory';
+type ArticlePageSignals = {
+  title: string;
+  publishedAt: string;
+  categories: string[];
+};
+type ArticlePageFallbackRequest = {
+  title: boolean;
+  publishedAt: boolean;
+  metaCategory: boolean;
+};
+type ArticlePageFallbackSignalStats = {
+  requested: number;
+  triggered: number;
+  fulfilled: number;
+  budgetSkipped: number;
+};
+type ArticlePageFallbackStats = {
+  pageFetch: {
+    fetchesStarted: number;
+    cacheHits: number;
+    fetchFailures: number;
+    totalElapsedMs: number;
+  };
+  title: ArticlePageFallbackSignalStats;
+  publishedAt: ArticlePageFallbackSignalStats;
+  metaCategory: ArticlePageFallbackSignalStats;
+};
+
+const EMPTY_ARTICLE_PAGE_SIGNALS: ArticlePageSignals = {
+  title: '',
+  publishedAt: '',
+  categories: [],
+};
+
+const articlePageSignalsCache = new Map<string, Promise<ArticlePageSignals>>();
+const articleTitleFetchCountsBySource = new Map<string, number>();
 const articleMetaCategoryFetchCountsBySource = new Map<string, number>();
 const articlePublishedAtFetchCountsBySource = new Map<string, number>();
-const articleMetaCategoryStats = {
-  fetchesStarted: 0,
-  cacheHits: 0,
-  budgetSkipped: 0,
-};
-const articlePublishedAtStats = {
-  fetchesStarted: 0,
-  cacheHits: 0,
-  budgetSkipped: 0,
+const articlePageFallbackStats: ArticlePageFallbackStats = {
+  pageFetch: {
+    fetchesStarted: 0,
+    cacheHits: 0,
+    fetchFailures: 0,
+    totalElapsedMs: 0,
+  },
+  title: {
+    requested: 0,
+    triggered: 0,
+    fulfilled: 0,
+    budgetSkipped: 0,
+  },
+  publishedAt: {
+    requested: 0,
+    triggered: 0,
+    fulfilled: 0,
+    budgetSkipped: 0,
+  },
+  metaCategory: {
+    requested: 0,
+    triggered: 0,
+    fulfilled: 0,
+    budgetSkipped: 0,
+  },
 };
 
 const FEED_FETCH_HEADERS = {
@@ -1873,6 +1937,151 @@ function buildFeedFetchHeaders(requestedUrl: string, referrerUrl?: string): Reco
 
 function normalizeSourceKey(value: string): string {
   return (value || '').trim().toLowerCase();
+}
+
+function buildArticlePageCacheKey(source: string, url: string): string {
+  return `${normalizeSourceKey(source)}\n${url.trim()}`;
+}
+
+function getArticlePageSignalStats(kind: ArticlePageSignalKey): ArticlePageFallbackSignalStats {
+  switch (kind) {
+    case 'title':
+      return articlePageFallbackStats.title;
+    case 'publishedAt':
+      return articlePageFallbackStats.publishedAt;
+    case 'metaCategory':
+      return articlePageFallbackStats.metaCategory;
+  }
+}
+
+function getArticlePageSourceCountMap(kind: ArticlePageSignalKey): Map<string, number> {
+  switch (kind) {
+    case 'title':
+      return articleTitleFetchCountsBySource;
+    case 'publishedAt':
+      return articlePublishedAtFetchCountsBySource;
+    case 'metaCategory':
+      return articleMetaCategoryFetchCountsBySource;
+  }
+}
+
+function getArticlePageFetchMaxPerRun(kind: ArticlePageSignalKey): number {
+  switch (kind) {
+    case 'title':
+      return ARTICLE_TITLE_FETCH_MAX_PER_RUN;
+    case 'publishedAt':
+      return ARTICLE_PUBLISHED_AT_FETCH_MAX_PER_RUN;
+    case 'metaCategory':
+      return ARTICLE_META_CATEGORY_FETCH_MAX_PER_RUN;
+  }
+}
+
+function getArticlePageFetchMaxPerSource(kind: ArticlePageSignalKey): number {
+  switch (kind) {
+    case 'title':
+      return ARTICLE_TITLE_FETCH_MAX_PER_SOURCE;
+    case 'publishedAt':
+      return ARTICLE_PUBLISHED_AT_FETCH_MAX_PER_SOURCE;
+    case 'metaCategory':
+      return ARTICLE_META_CATEGORY_FETCH_MAX_PER_SOURCE;
+  }
+}
+
+function hasArticlePageRequest(request: ArticlePageFallbackRequest): boolean {
+  return request.title || request.publishedAt || request.metaCategory;
+}
+
+function recordArticlePageFallbackRequested(request: ArticlePageFallbackRequest): void {
+  if (request.title) articlePageFallbackStats.title.requested += 1;
+  if (request.publishedAt) articlePageFallbackStats.publishedAt.requested += 1;
+  if (request.metaCategory) articlePageFallbackStats.metaCategory.requested += 1;
+}
+
+function canTriggerArticlePageFallback(kind: ArticlePageSignalKey, normalizedSource: string): boolean {
+  const stats = getArticlePageSignalStats(kind);
+  if (stats.triggered >= getArticlePageFetchMaxPerRun(kind)) {
+    return false;
+  }
+  const countsBySource = getArticlePageSourceCountMap(kind);
+  const sourceCount = countsBySource.get(normalizedSource) || 0;
+  if (sourceCount >= getArticlePageFetchMaxPerSource(kind)) {
+    return false;
+  }
+  return true;
+}
+
+function authorizeArticlePageFetch(
+  source: string,
+  request: ArticlePageFallbackRequest
+): ArticlePageFallbackRequest {
+  const normalizedSource = normalizeSourceKey(source);
+  const authorized: ArticlePageFallbackRequest = {
+    title: false,
+    publishedAt: false,
+    metaCategory: false,
+  };
+
+  if (request.publishedAt && canTriggerArticlePageFallback('publishedAt', normalizedSource)) {
+    authorized.publishedAt = true;
+    articlePageFallbackStats.publishedAt.triggered += 1;
+    articlePublishedAtFetchCountsBySource.set(
+      normalizedSource,
+      (articlePublishedAtFetchCountsBySource.get(normalizedSource) || 0) + 1
+    );
+  }
+  if (request.title && canTriggerArticlePageFallback('title', normalizedSource)) {
+    authorized.title = true;
+    articlePageFallbackStats.title.triggered += 1;
+    articleTitleFetchCountsBySource.set(
+      normalizedSource,
+      (articleTitleFetchCountsBySource.get(normalizedSource) || 0) + 1
+    );
+  }
+  if (request.metaCategory && canTriggerArticlePageFallback('metaCategory', normalizedSource)) {
+    authorized.metaCategory = true;
+    articlePageFallbackStats.metaCategory.triggered += 1;
+    articleMetaCategoryFetchCountsBySource.set(
+      normalizedSource,
+      (articleMetaCategoryFetchCountsBySource.get(normalizedSource) || 0) + 1
+    );
+  }
+
+  if (!hasArticlePageRequest(authorized)) {
+    if (request.title) articlePageFallbackStats.title.budgetSkipped += 1;
+    if (request.publishedAt) articlePageFallbackStats.publishedAt.budgetSkipped += 1;
+    if (request.metaCategory) articlePageFallbackStats.metaCategory.budgetSkipped += 1;
+  }
+
+  return authorized;
+}
+
+function recordArticlePageFallbackFulfilled(
+  request: ArticlePageFallbackRequest,
+  signals: ArticlePageSignals
+): void {
+  if (request.title && signals.title) {
+    articlePageFallbackStats.title.fulfilled += 1;
+  }
+  if (request.publishedAt && signals.publishedAt) {
+    articlePageFallbackStats.publishedAt.fulfilled += 1;
+  }
+  if (request.metaCategory && signals.categories.length > 0) {
+    articlePageFallbackStats.metaCategory.fulfilled += 1;
+  }
+}
+
+function snapshotArticlePageFallbackStats() {
+  return {
+    pageFetch: {
+      ...articlePageFallbackStats.pageFetch,
+      averageElapsedMs: articlePageFallbackStats.pageFetch.fetchesStarted > 0
+        ? Math.round(articlePageFallbackStats.pageFetch.totalElapsedMs / articlePageFallbackStats.pageFetch.fetchesStarted)
+        : 0,
+    },
+    title: { ...articlePageFallbackStats.title },
+    publishedAt: { ...articlePageFallbackStats.publishedAt },
+    metaCategory: { ...articlePageFallbackStats.metaCategory },
+  };
 }
 
 function shouldFetchArticleMetaCategories(source: string, url: string, existingCategories: readonly string[]): boolean {
@@ -2015,128 +2224,66 @@ function extractArticlePagePublishedAt(source: string, html: string): string {
   return '';
 }
 
-async function fetchArticleMetaCategories(source: string, url: string): Promise<string[]> {
-  const normalizedSource = normalizeSourceKey(source);
-  const cacheKey = `${normalizedSource}\n${url.trim()}`;
-  const existing = articleMetaCategoryCache.get(cacheKey);
+async function loadArticlePageSignals(
+  source: string,
+  url: string,
+  request: ArticlePageFallbackRequest
+): Promise<ArticlePageSignals> {
+  if (!hasArticlePageRequest(request) || !url) {
+    return EMPTY_ARTICLE_PAGE_SIGNALS;
+  }
+
+  recordArticlePageFallbackRequested(request);
+
+  const cacheKey = buildArticlePageCacheKey(source, url);
+  const existing = articlePageSignalsCache.get(cacheKey);
   if (existing) {
-    articleMetaCategoryStats.cacheHits += 1;
+    articlePageFallbackStats.pageFetch.cacheHits += 1;
     return existing;
   }
 
-  if (articleMetaCategoryStats.fetchesStarted >= ARTICLE_META_CATEGORY_FETCH_MAX_PER_RUN) {
-    articleMetaCategoryStats.budgetSkipped += 1;
-    return [];
+  const authorized = authorizeArticlePageFetch(source, request);
+  if (!hasArticlePageRequest(authorized)) {
+    return EMPTY_ARTICLE_PAGE_SIGNALS;
   }
 
-  const sourceCount = articleMetaCategoryFetchCountsBySource.get(normalizedSource) || 0;
-  if (sourceCount >= ARTICLE_META_CATEGORY_FETCH_MAX_PER_SOURCE) {
-    articleMetaCategoryStats.budgetSkipped += 1;
-    return [];
-  }
-
-  articleMetaCategoryStats.fetchesStarted += 1;
-  articleMetaCategoryFetchCountsBySource.set(normalizedSource, sourceCount + 1);
-
-  const task = (async () => {
+  articlePageFallbackStats.pageFetch.fetchesStarted += 1;
+  const task = (async (): Promise<ArticlePageSignals> => {
+    const startedMs = Date.now();
     try {
       const response = await fetchWithRetry(url, {
-        timeoutMs: ARTICLE_META_CATEGORY_FETCH_TIMEOUT_MS,
+        timeoutMs: ARTICLE_PAGE_FETCH_TIMEOUT_MS,
         attempts: 2,
         fetchOptions: {
           headers: buildArticlePageFetchHeaders(url),
           redirect: 'follow',
         },
       });
-      if (!response.ok) return [];
+      if (!response.ok) {
+        articlePageFallbackStats.pageFetch.fetchFailures += 1;
+        return EMPTY_ARTICLE_PAGE_SIGNALS;
+      }
       const contentType = (response.headers.get('content-type') || '').toLowerCase();
-      if (contentType && !contentType.includes('html') && !contentType.includes('xml')) return [];
-      const html = (await readResponseText(response, response.url || url)).text;
-      return normalizeSourceCategories(extractSourceCategoriesFromArticlePage({ source, html }));
+      if (contentType && !contentType.includes('html') && !contentType.includes('xml')) {
+        articlePageFallbackStats.pageFetch.fetchFailures += 1;
+        return EMPTY_ARTICLE_PAGE_SIGNALS;
+      }
+      const resolvedUrl = response.url || url;
+      const html = (await readResponseText(response, resolvedUrl)).text;
+      return {
+        title: normalizeReadableArticleTitle(extractArticlePageTitle(html), resolvedUrl, source),
+        publishedAt: extractArticlePagePublishedAt(source, html),
+        categories: normalizeSourceCategories(extractSourceCategoriesFromArticlePage({ source, html })),
+      };
     } catch {
-      return [];
+      articlePageFallbackStats.pageFetch.fetchFailures += 1;
+      return EMPTY_ARTICLE_PAGE_SIGNALS;
+    } finally {
+      articlePageFallbackStats.pageFetch.totalElapsedMs += Date.now() - startedMs;
     }
   })();
 
-  articleMetaCategoryCache.set(cacheKey, task);
-  return task;
-}
-
-async function fetchArticlePageTitle(source: string, url: string): Promise<string> {
-  const cacheKey = `${normalizeSourceKey(source)}\n${url.trim()}`;
-  const existing = articleTitleCache.get(cacheKey);
-  if (existing) {
-    return existing;
-  }
-
-  const task = (async () => {
-    try {
-      const response = await fetchWithRetry(url, {
-        timeoutMs: ARTICLE_TITLE_FETCH_TIMEOUT_MS,
-        attempts: 2,
-        fetchOptions: {
-          headers: buildArticlePageFetchHeaders(url),
-          redirect: 'follow',
-        },
-      });
-      if (!response.ok) return '';
-      const contentType = (response.headers.get('content-type') || '').toLowerCase();
-      if (contentType && !contentType.includes('html') && !contentType.includes('xml')) return '';
-      const html = (await readResponseText(response, response.url || url)).text;
-      return normalizeReadableArticleTitle(extractArticlePageTitle(html), response.url || url, source);
-    } catch {
-      return '';
-    }
-  })();
-
-  articleTitleCache.set(cacheKey, task);
-  return task;
-}
-
-async function fetchArticlePagePublishedAt(source: string, url: string): Promise<string> {
-  const normalizedSource = normalizeSourceKey(source);
-  const cacheKey = `${normalizedSource}\n${url.trim()}`;
-  const existing = articlePublishedAtCache.get(cacheKey);
-  if (existing) {
-    articlePublishedAtStats.cacheHits += 1;
-    return existing;
-  }
-
-  if (articlePublishedAtStats.fetchesStarted >= ARTICLE_PUBLISHED_AT_FETCH_MAX_PER_RUN) {
-    articlePublishedAtStats.budgetSkipped += 1;
-    return '';
-  }
-
-  const sourceCount = articlePublishedAtFetchCountsBySource.get(normalizedSource) || 0;
-  if (sourceCount >= ARTICLE_PUBLISHED_AT_FETCH_MAX_PER_SOURCE) {
-    articlePublishedAtStats.budgetSkipped += 1;
-    return '';
-  }
-
-  articlePublishedAtStats.fetchesStarted += 1;
-  articlePublishedAtFetchCountsBySource.set(normalizedSource, sourceCount + 1);
-
-  const task = (async () => {
-    try {
-      const response = await fetchWithRetry(url, {
-        timeoutMs: ARTICLE_PUBLISHED_AT_FETCH_TIMEOUT_MS,
-        attempts: 2,
-        fetchOptions: {
-          headers: buildArticlePageFetchHeaders(url),
-          redirect: 'follow',
-        },
-      });
-      if (!response.ok) return '';
-      const contentType = (response.headers.get('content-type') || '').toLowerCase();
-      if (contentType && !contentType.includes('html') && !contentType.includes('xml')) return '';
-      const html = (await readResponseText(response, response.url || url)).text;
-      return extractArticlePagePublishedAt(source, html);
-    } catch {
-      return '';
-    }
-  })();
-
-  articlePublishedAtCache.set(cacheKey, task);
+  articlePageSignalsCache.set(cacheKey, task);
   return task;
 }
 
@@ -2535,9 +2682,34 @@ async function toNewsItem(
   }
   let titleRepairAttempted = false;
   let titleRepairSource: 'article_page' | null = null;
-  if (shouldFetchArticlePageTitle(outlet.name, row.link || '', row.title || title)) {
+  const articlePageRequest: ArticlePageFallbackRequest = {
+    title: shouldFetchArticlePageTitle(outlet.name, row.link || '', row.title || title),
+    publishedAt: false,
+    metaCategory: false,
+  };
+  let rawPublishedAt = (row.publishedAt || '').trim();
+  if (!rawPublishedAt && shouldFetchArticlePublishedAt(outlet.name, row.link || '')) {
+    articlePageRequest.publishedAt = true;
+  }
+  let sourceCategories = normalizeSourceCategories(row.categories || []);
+  if (sourceCategories.length === 0) {
+    sourceCategories = inferSourceCategoriesFromUrlPath({
+      source: outlet.name,
+      url: row.link || '',
+    });
+  }
+  if (shouldFetchArticleMetaCategories(outlet.name, row.link || '', sourceCategories)) {
+    articlePageRequest.metaCategory = true;
+  }
+
+  const articlePageSignals = hasArticlePageRequest(articlePageRequest)
+    ? await loadArticlePageSignals(outlet.name, row.link || '', articlePageRequest)
+    : EMPTY_ARTICLE_PAGE_SIGNALS;
+  recordArticlePageFallbackFulfilled(articlePageRequest, articlePageSignals);
+
+  if (articlePageRequest.title) {
     titleRepairAttempted = true;
-    const pageTitle = await fetchArticlePageTitle(outlet.name, row.link || '');
+    const pageTitle = articlePageSignals.title;
     if (pageTitle) {
       title = pageTitle;
       titleRepairSource = 'article_page';
@@ -2555,9 +2727,8 @@ async function toNewsItem(
   }
   title = titleAssessment.normalizedTitle;
   const description = normalizeHtmlText(row.description || '');
-  let rawPublishedAt = (row.publishedAt || '').trim();
-  if (!rawPublishedAt && shouldFetchArticlePublishedAt(outlet.name, row.link || '')) {
-    rawPublishedAt = await fetchArticlePagePublishedAt(outlet.name, row.link || '');
+  if (!rawPublishedAt && articlePageRequest.publishedAt) {
+    rawPublishedAt = articlePageSignals.publishedAt;
   }
   if (!rawPublishedAt && DROP_ITEMS_WITHOUT_PUBLISHED_AT) {
     onMissingPublishedAtCandidate?.({
@@ -2582,15 +2753,8 @@ async function toNewsItem(
     fallbackCountry: normalizedCountry,
   });
   const fallbackSection = outlet.section || 'others';
-  let sourceCategories = normalizeSourceCategories(row.categories || []);
-  if (sourceCategories.length === 0) {
-    sourceCategories = inferSourceCategoriesFromUrlPath({
-      source: outlet.name,
-      url: row.link || '',
-    });
-  }
-  if (shouldFetchArticleMetaCategories(outlet.name, row.link || '', sourceCategories)) {
-    const pageCategories = await fetchArticleMetaCategories(outlet.name, row.link || '');
+  if (articlePageRequest.metaCategory) {
+    const pageCategories = articlePageSignals.categories;
     if (pageCategories.length > 0) {
       sourceCategories = normalizeSourceCategories([...sourceCategories, ...pageCategories]);
     }
@@ -3529,6 +3693,7 @@ async function runOnce(): Promise<void> {
   }
 
   const counts = summarizeEndpointResults(diagnostics);
+  const articlePageFallbackSummary = snapshotArticlePageFallbackStats();
   const summary = buildWorkerSummary({
     started,
     allOutletsCount: allOutlets.length,
@@ -3546,7 +3711,7 @@ async function runOnce(): Promise<void> {
     persistedMissingPublishedAt: persistedMissingPublishedAt.persisted,
     persistedDiagnostics: persistedDiag.persisted,
     fallbackSummary,
-    articleMetaCategorySummary: { ...articleMetaCategoryStats },
+    articlePageFallbackSummary,
     selectionSummary,
   });
 
@@ -3583,7 +3748,7 @@ async function runOnce(): Promise<void> {
     explicitSitemapParallel: ENABLE_EXPLICIT_SITEMAP_PARALLEL,
     failingKeysSize: failingKeys.size,
     fallbackSummary,
-    articleMetaCategorySummary: articleMetaCategoryStats,
+    articlePageFallbackSummary,
     selectionSummary,
     methodStats,
     mergedCount: merged.length,

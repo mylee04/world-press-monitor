@@ -2,6 +2,7 @@ import type { Pool } from 'pg';
 import type { NewsSection } from '@/lib/types';
 import { decodeHtmlEntities, looksLikeLowSignalArticleTitle, normalizeArticleTitle, normalizeHtmlText, normalizeReadableArticleTitle } from '@/lib/html-entities';
 import { getSourceMeta, isDirectPublisherSource } from '@/lib/map-store-source-meta';
+import { isRunnableAtlasSource } from '@/lib/runnable-atlas-stats';
 import { buildDisplaySourceName } from '@/lib/source-display';
 import { buildArticleTaxonomy, isTopicAllowedForSection, NEWS_SECTION_ORDER, normalizeSourceCategories } from '@/lib/article-taxonomy';
 import { truncatePersistedText } from '@/lib/news-write-helpers';
@@ -540,10 +541,9 @@ export async function readNewsDashboardSummaryWithDeps(
   ]);
 
   const checkedSourceNames = checkedSourcesResult.rows
-    .map((row) => getSourceMeta(row.source))
-    .map((meta) => meta?.source)
+    .map((row) => buildDisplaySourceName(row.source || '').toLowerCase())
     .filter((source): source is string => Boolean(source))
-    .map((source) => buildDisplaySourceName(source).toLowerCase());
+    .filter((source) => isRunnableAtlasSource(source));
 
   const checkedSources24h = new Set<string>(checkedSourceNames).size;
 

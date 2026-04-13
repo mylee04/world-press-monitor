@@ -32,10 +32,32 @@ type WorkerSummary = {
       sitemapBackoffSkipped: number;
       sitemapPolicyDisabled: number;
     };
-    articleMetaCategory: {
-      fetchesStarted: number;
-      cacheHits: number;
-      budgetSkipped: number;
+    articlePageFallback: {
+      pageFetch: {
+        fetchesStarted: number;
+        cacheHits: number;
+        fetchFailures: number;
+        totalElapsedMs: number;
+        averageElapsedMs: number;
+      };
+      title: {
+        requested: number;
+        triggered: number;
+        fulfilled: number;
+        budgetSkipped: number;
+      };
+      publishedAt: {
+        requested: number;
+        triggered: number;
+        fulfilled: number;
+        budgetSkipped: number;
+      };
+      metaCategory: {
+        requested: number;
+        triggered: number;
+        fulfilled: number;
+        budgetSkipped: number;
+      };
     };
     selection: {
       mode: 'all' | 'chunk' | 'hybrid';
@@ -103,7 +125,7 @@ export function buildWorkerSummary(params: {
   persistedMissingPublishedAt: number;
   persistedDiagnostics: number;
   fallbackSummary: WorkerSummary['worker']['fallback'];
-  articleMetaCategorySummary: WorkerSummary['worker']['articleMetaCategory'];
+  articlePageFallbackSummary: WorkerSummary['worker']['articlePageFallback'];
   selectionSummary: WorkerSummary['worker']['selection'];
 }): WorkerSummary {
   const counts = summarizeEndpointResults(params.diagnostics);
@@ -130,7 +152,7 @@ export function buildWorkerSummary(params: {
       missingPublishedAtPersisted: params.persistedMissingPublishedAt,
       diagnosticsPersisted: params.persistedDiagnostics,
       fallback: params.fallbackSummary,
-      articleMetaCategory: params.articleMetaCategorySummary,
+      articlePageFallback: params.articlePageFallbackSummary,
       selection: params.selectionSummary,
       mergedItemsBySource: buildSourceCounts(params.mergedItems),
     },
@@ -151,7 +173,7 @@ export function formatWorkerSummaryLog(params: {
   explicitSitemapParallel: boolean;
   failingKeysSize: number;
   fallbackSummary: WorkerSummary['worker']['fallback'];
-  articleMetaCategorySummary: WorkerSummary['worker']['articleMetaCategory'];
+  articlePageFallbackSummary: WorkerSummary['worker']['articlePageFallback'];
   selectionSummary: WorkerSummary['worker']['selection'];
   methodStats: Record<'rss' | 'sitemap', { attempted: number; ok: number; fail: number }>;
   mergedCount: number;
@@ -176,7 +198,10 @@ export function formatWorkerSummaryLog(params: {
     `explicit_sitemap_parallel=${params.explicitSitemapParallel ? 'on' : 'off'} ` +
     `backoff_skipped_total=${params.failingKeysSize} backoff_skipped=[rss=${params.fallbackSummary.rssBackoffSkipped}, sitemap=${params.fallbackSummary.sitemapBackoffSkipped}] ` +
     `sitemap_policy_disabled=${params.fallbackSummary.sitemapPolicyDisabled} ` +
-    `article_meta_category=[fetches=${params.articleMetaCategorySummary.fetchesStarted}, cache_hits=${params.articleMetaCategorySummary.cacheHits}, budget_skipped=${params.articleMetaCategorySummary.budgetSkipped}] ` +
+    `article_page_fetch=[fetches=${params.articlePageFallbackSummary.pageFetch.fetchesStarted}, cache_hits=${params.articlePageFallbackSummary.pageFetch.cacheHits}, failures=${params.articlePageFallbackSummary.pageFetch.fetchFailures}, total_elapsed_ms=${params.articlePageFallbackSummary.pageFetch.totalElapsedMs}, avg_elapsed_ms=${params.articlePageFallbackSummary.pageFetch.averageElapsedMs}] ` +
+    `title_fallback=[requested=${params.articlePageFallbackSummary.title.requested}, triggered=${params.articlePageFallbackSummary.title.triggered}, fulfilled=${params.articlePageFallbackSummary.title.fulfilled}, budget_skipped=${params.articlePageFallbackSummary.title.budgetSkipped}] ` +
+    `published_at_fallback=[requested=${params.articlePageFallbackSummary.publishedAt.requested}, triggered=${params.articlePageFallbackSummary.publishedAt.triggered}, fulfilled=${params.articlePageFallbackSummary.publishedAt.fulfilled}, budget_skipped=${params.articlePageFallbackSummary.publishedAt.budgetSkipped}] ` +
+    `meta_category_fallback=[requested=${params.articlePageFallbackSummary.metaCategory.requested}, triggered=${params.articlePageFallbackSummary.metaCategory.triggered}, fulfilled=${params.articlePageFallbackSummary.metaCategory.fulfilled}, budget_skipped=${params.articlePageFallbackSummary.metaCategory.budgetSkipped}] ` +
     `method_stats= [rss attempted=${params.methodStats.rss.attempted}, ok=${params.methodStats.rss.ok}, fail=${params.methodStats.rss.fail}(${formatPercent(params.methodStats.rss.fail, params.methodStats.rss.attempted)}%); ` +
     `[sitemap attempted=${params.methodStats.sitemap.attempted}, ok=${params.methodStats.sitemap.ok}, fail=${params.methodStats.sitemap.fail}(${formatPercent(params.methodStats.sitemap.fail, params.methodStats.sitemap.attempted)}%)] ` +
     `sitemapFallback=${params.fallbackSummary.rssSitemapFallbackSuccess}/${params.fallbackSummary.rssSitemapFallbackAttempts} skipped=${params.fallbackSummary.rssSitemapFallbackSkipped} unique=${params.mergedCount} persisted=${params.persistedArticles} newsArticles=${params.persistedArticles} elapsedMs=${params.elapsedMs}` +

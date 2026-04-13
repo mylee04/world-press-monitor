@@ -23,6 +23,7 @@ import {
 import type { NewsApiDashboardSummaryResponse } from '@/lib/news-api';
 import { isValidOpsSessionToken, OPS_LOGIN_PATH, OPS_SESSION_COOKIE } from '@/lib/ops-auth';
 import { resolvePublisherInfo } from '@/lib/publisher-groups';
+import { getRunnableAtlasSourceStats } from '@/lib/runnable-atlas-stats';
 import type {
   SourceEndpointBreakdown,
   SourceEndpointProfile,
@@ -157,42 +158,6 @@ function getSingleQueryValue(value: string | string[] | undefined): string | nul
     }
   }
   return null;
-}
-
-function getRunnableAtlasSourceStats(): { sourceNames: number; outletRows: number } {
-  const atlas = rssAtlas as {
-    countries?: Array<{
-      feeds?: Array<{
-        name?: string;
-        url?: string | null;
-        sitemapUrl?: string | null;
-        enabled?: boolean;
-      }>;
-    }>;
-  } | undefined;
-  if (!atlas || !Array.isArray(atlas.countries)) {
-    return { sourceNames: 0, outletRows: 0 };
-  }
-
-  const seen = new Set<string>();
-  let outletRows = 0;
-  for (const country of atlas.countries) {
-    const feeds = Array.isArray(country?.feeds) ? country.feeds : [];
-    for (const feed of feeds) {
-      if (feed?.enabled === false) continue;
-      const hasRssUrl = typeof feed?.url === 'string' && feed.url.trim().length > 0;
-      const hasSitemapUrl = typeof feed?.sitemapUrl === 'string' && feed.sitemapUrl.trim().length > 0;
-      if (!hasRssUrl && !hasSitemapUrl) continue;
-      const name = (feed?.name || '').trim();
-      if (!name) continue;
-      outletRows += 1;
-      seen.add(buildDisplaySourceName(name).toLowerCase());
-    }
-  }
-  return {
-    sourceNames: seen.size,
-    outletRows,
-  };
 }
 
 function formatSourceCount(count: number | undefined | null, total: number): string {
