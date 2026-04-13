@@ -117,6 +117,7 @@
 
 .detailPanel {
   display: grid;
+  align-content: start;
   gap: 14px;
   padding: 22px;
   border: 1px solid rgba(120, 199, 255, 0.12);
@@ -133,6 +134,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  align-items: center;
 }
 
 .detailNote {
