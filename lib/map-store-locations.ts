@@ -34,6 +34,7 @@ const PRIMARY_MEDIA_HUBS = new Map<string, { name: string; lat: number; lon: num
   ['Japan', { name: 'Tokyo', lat: 35.6762, lon: 139.6503 }],
   ['Taiwan', { name: 'Taipei', lat: 25.033, lon: 121.5654 }],
   ['Vietnam', { name: 'Hanoi', lat: 21.0278, lon: 105.8342 }],
+  ['Kazakhstan', { name: 'Astana', lat: 51.1694, lon: 71.4491 }],
   ['Singapore', { name: 'Singapore', lat: 1.3521, lon: 103.8198 }],
   ['Italy', { name: 'Rome', lat: 41.9028, lon: 12.4964 }],
   ['Russia', { name: 'Moscow', lat: 55.7558, lon: 37.6173 }],

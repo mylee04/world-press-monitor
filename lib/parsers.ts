@@ -134,6 +134,30 @@ function normalizePublishedAt(value: string): string {
   return normalizeLooseDateToIso(raw);
 }
 
+function padDatePart(value: number): string {
+  return String(value).padStart(2, '0');
+}
+
+function buildFixedOffsetIso(
+  year: number,
+  month: number,
+  day: number,
+  hour = 0,
+  minute = 0,
+  offset = '-04:00'
+): string {
+  if (
+    !Number.isFinite(year) ||
+    !Number.isFinite(month) ||
+    !Number.isFinite(day) ||
+    !Number.isFinite(hour) ||
+    !Number.isFinite(minute)
+  ) return '';
+  return normalizePublishedAt(
+    `${String(year).padStart(4, '0')}-${padDatePart(month)}-${padDatePart(day)}T${padDatePart(hour)}:${padDatePart(minute)}:00${offset}`
+  );
+}
+
 function inferPublishedAtFromLink(link: string): string {
   const url = (link || '').toLowerCase();
   if (!url) return '';
@@ -615,6 +639,131 @@ function parseAltingetHtmlCollectionWithStats(html: string, limit = 12, baseUrl?
   };
 }
 
+function parseT13HtmlCollectionWithStats(html: string, limit = 12, baseUrl?: string): ParsedFeedBatch {
+  let parsedUrl: URL | null = null;
+  try {
+    parsedUrl = baseUrl ? new URL(baseUrl) : null;
+  } catch {
+    parsedUrl = null;
+  }
+  if (!parsedUrl || parsedUrl.hostname !== 'www.t13.cl' || parsedUrl.pathname !== '/lo-ultimo') {
+    return { items: [], stats: summarizeStats([]) };
+  }
+
+  const deduped = new Map<string, ParsedFeedItemWithMissing>();
+  for (const match of html.matchAll(/<a[^>]+href=["'](\/noticia\/[^"'?#]+(?:[?#][^"']*)?)["'][^>]*>([\s\S]*?)<\/a>/gi)) {
+    const link = resolveFeedLink(match[1] || '', baseUrl);
+    if (!link) continue;
+
+    const rawText = stripHtml(match[2] || '').replace(/\s+/g, ' ').trim();
+    const title = normalizeHtmlText(rawText.replace(/^\d{1,2}:\d{2}\s+/, '').trim()) || inferTitleFromLink(link) || link;
+    const timeMatch = rawText.match(/^(\d{1,2}):(\d{2})\b/);
+    const dateMatch = link.match(/-(\d{1,2})-(\d{1,2})-(20\d{2})(?:$|[?#])/);
+    const publishedAt = dateMatch
+      ? buildFixedOffsetIso(
+          Number.parseInt(dateMatch[3] || '', 10),
+          Number.parseInt(dateMatch[2] || '', 10),
+          Number.parseInt(dateMatch[1] || '', 10),
+          Number.parseInt(timeMatch?.[1] || '0', 10),
+          Number.parseInt(timeMatch?.[2] || '0', 10)
+        ) || inferPublishedAtFromLink(link)
+      : inferPublishedAtFromLink(link);
+
+    const categories = (() => {
+      try {
+        const segments = new URL(link).pathname.split('/').filter(Boolean);
+        return segments.slice(1, -1).map((value) => normalizeHtmlText(value)).filter(Boolean).slice(0, 3);
+      } catch {
+        return [];
+      }
+    })();
+
+    const current = deduped.get(link);
+    if (current && current.title.length >= title.length) continue;
+    deduped.set(link, {
+      title,
+      description: '',
+      link,
+      publishedAt,
+      categories,
+      stableId: link,
+      missingTitle: !title,
+      missingLink: !link,
+      missingSummary: true,
+      missingPublishedAt: !publishedAt,
+    });
+  }
+
+  const rows = [...deduped.values()]
+    .sort((left, right) => {
+      const leftMs = left.publishedAt ? Date.parse(left.publishedAt) : Number.NEGATIVE_INFINITY;
+      const rightMs = right.publishedAt ? Date.parse(right.publishedAt) : Number.NEGATIVE_INFINITY;
+      return rightMs - leftMs;
+    })
+    .slice(0, limit);
+
+  return {
+    items: toItems(rows),
+    stats: summarizeStats(rows),
+  };
+}
+
+function parseSoyChileHtmlCollectionWithStats(html: string, limit = 12, baseUrl?: string): ParsedFeedBatch {
+  let parsedUrl: URL | null = null;
+  try {
+    parsedUrl = baseUrl ? new URL(baseUrl) : null;
+  } catch {
+    parsedUrl = null;
+  }
+  const pathname = parsedUrl?.pathname.toLowerCase() || '';
+  if (!parsedUrl || parsedUrl.hostname !== 'www.soychile.cl' || (pathname !== '/urljson/noticias' && pathname !== '/todas')) {
+    return { items: [], stats: summarizeStats([]) };
+  }
+
+  const deduped = new Map<string, ParsedFeedItemWithMissing>();
+  for (const match of html.matchAll(/fechaModificacion:"([^"]+)",titulo:"((?:\\.|[^"\\])*)",permalink:"((?:\\.|[^"\\])*)"/g)) {
+    const publishedAt = normalizePublishedAt(match[1] || '');
+    const title = decodeJsQuotedString(match[2] || '') || '';
+    const link = resolveFeedLink(decodeJsQuotedString(match[3] || ''), baseUrl);
+    if (!link || !/\/20\d{2}\/[01]\d\/[0-3]\d\/\d+\/[^/?#]+\.html(?:$|[?#])/.test(link)) continue;
+
+    const categories = (() => {
+      try {
+        const segments = new URL(link).pathname.split('/').filter(Boolean);
+        return [segments[1], segments[0]].map((value) => normalizeHtmlText(value || '')).filter(Boolean).slice(0, 2);
+      } catch {
+        return [];
+      }
+    })();
+
+    deduped.set(link, {
+      title: title || inferTitleFromLink(link) || link,
+      description: '',
+      link,
+      publishedAt: publishedAt || inferPublishedAtFromLink(link),
+      categories,
+      stableId: link,
+      missingTitle: !title,
+      missingLink: !link,
+      missingSummary: true,
+      missingPublishedAt: !(publishedAt || inferPublishedAtFromLink(link)),
+    });
+  }
+
+  const rows = [...deduped.values()]
+    .sort((left, right) => {
+      const leftMs = left.publishedAt ? Date.parse(left.publishedAt) : Number.NEGATIVE_INFINITY;
+      const rightMs = right.publishedAt ? Date.parse(right.publishedAt) : Number.NEGATIVE_INFINITY;
+      return rightMs - leftMs;
+    })
+    .slice(0, limit);
+
+  return {
+    items: toItems(rows),
+    stats: summarizeStats(rows),
+  };
+}
+
 export function parseHtmlCollectionWithStats(html: string, limit = 12, baseUrl?: string): ParsedFeedBatch {
   const rawEntries: Array<Record<string, unknown>> = [];
   for (const block of parseJsonLdBlocks(html)) {
@@ -677,6 +826,16 @@ export function parseHtmlCollectionWithStats(html: string, limit = 12, baseUrl?:
   const guanchaResult = parseGuanchaHtmlCollectionWithStats(html, limit, baseUrl);
   if (guanchaResult.items.length > 0 || guanchaResult.stats.totalCandidates > 0) {
     return guanchaResult;
+  }
+
+  const t13Result = parseT13HtmlCollectionWithStats(html, limit, baseUrl);
+  if (t13Result.items.length > 0 || t13Result.stats.totalCandidates > 0) {
+    return t13Result;
+  }
+
+  const soyChileResult = parseSoyChileHtmlCollectionWithStats(html, limit, baseUrl);
+  if (soyChileResult.items.length > 0 || soyChileResult.stats.totalCandidates > 0) {
+    return soyChileResult;
   }
 
   return parseMhmHtmlCollectionWithStats(html, limit, baseUrl);

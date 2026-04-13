@@ -81,6 +81,10 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     return true;
   }
 
+  if (hostname.endsWith('redgol.cl') && pathname.startsWith('/apuestas/')) {
+    return true;
+  }
+
   if (hostname.endsWith('delo.si') && pathname.startsWith('/tag/')) {
     return true;
   }
@@ -924,6 +928,32 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
   }
 
   if (hostname.endsWith('moosejawtoday.com') && pathname.startsWith('/obituaries/')) {
+    return true;
+  }
+
+  if (hostname.endsWith('dikastiko.gr')) {
+    if (trimmedPathname === '/') return true;
+    if (pathname.startsWith('/videos/')) return true;
+  }
+
+  if (hostname.endsWith('tovima.com') && trimmedPathname === '/') {
+    return true;
+  }
+
+  if (hostname.endsWith('real.gr')) {
+    if (pathname.startsWith('/gynaika/')) return true;
+    if (pathname.startsWith('/lifestyle/')) return true;
+  }
+
+  if (hostname.endsWith('dnews.gr') && pathname.startsWith('/eidhseis/life/')) {
+    return true;
+  }
+
+  if (hostname.endsWith('star.gr') && pathname.startsWith('/lifestyle/')) {
+    return true;
+  }
+
+  if (hostname.endsWith('zarpanews.gr') && pathname.startsWith('/roi-eidiseon/')) {
     return true;
   }
 

@@ -1,0 +1,22 @@
+[
+  {
+    "source": "Dnews - News Sitemap",
+    "sitemap": "https://www.dnews.gr/sitemap_news.xml"
+  },
+  {
+    "source": "Zarpanews - Sitemap Index",
+    "sitemap": "https://www.zarpanews.gr/sitemap_index.xml"
+  },
+  {
+    "source": "Alpha TV - News Sitemap",
+    "sitemap": "https://www.alphatv.gr/news-sitemap.xml"
+  },
+  {
+    "source": "Star - Google News Sitemap",
+    "sitemap": "https://www.star.gr/sitemaps/google-news.xml"
+  },
+  {
+    "source": "Newpost - News Sitemap",
+    "sitemap": "https://newpost.gr/news-sitemap.xml"
+  }
+]

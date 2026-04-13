@@ -90,6 +90,30 @@ const FETCH_CONCURRENCY = Math.max(
   4,
   Math.min(120, Number.parseInt(process.env.INGEST_FETCH_CONCURRENCY || '24', 10) || 24)
 );
+const RUSSIAN_REGIONAL_SITEMAP_HOSTS = new Set([
+  'ngs.ru',
+  'www.ngs.ru',
+  '74.ru',
+  'www.74.ru',
+  '72.ru',
+  'www.72.ru',
+  '93.ru',
+  'www.93.ru',
+  '116.ru',
+  'www.116.ru',
+  '59.ru',
+  'www.59.ru',
+  '161.ru',
+  'www.161.ru',
+  '29.ru',
+  'www.29.ru',
+  '76.ru',
+  'www.76.ru',
+  'nn.ru',
+  'www.nn.ru',
+]);
+const RUSSIAN_REGIONAL_SITEMAP_URL_LIMIT = 120;
+const REGNUM_SITEMAP_URL_LIMIT = 64;
 const LOOP_INTERVAL_SEC = Math.max(
   60,
   Math.min(3600, Number.parseInt(process.env.INGEST_LOOP_INTERVAL_SEC || '300', 10) || 300)
@@ -167,7 +191,7 @@ const ENABLE_BROWSER_SITEMAP_FALLBACK = parseBoolEnv(process.env.INGEST_BROWSER_
 const BROWSER_SITEMAP_FALLBACK_DOMAINS = new Set(
   (
     process.env.INGEST_BROWSER_SITEMAP_DOMAINS ||
-    'www.ouest-france.fr,www.sudouest.fr,www.challenges.fr,www.firstpost.com,firstpost.com,www.dnaindia.com,dnaindia.com,yourstory.com,www.yourstory.com,www.business-standard.com,business-standard.com,www.news18.com,news18.com,www.ndtv.com,ndtv.com,www.orilliamatters.com,orilliamatters.com,www.collingwoodtoday.ca,collingwoodtoday.ca,www.vancouverisawesome.com,vancouverisawesome.com,www.nsnews.com,nsnews.com,www.richmond-news.com,richmond-news.com,www.princegeorgecitizen.com,princegeorgecitizen.com,www.delta-optimist.com,delta-optimist.com,www.moosejawtoday.com,moosejawtoday.com,www.sasktoday.ca,sasktoday.ca,www.bradfordtoday.ca,bradfordtoday.ca,www.elliotlaketoday.com,elliotlaketoday.com,www.midlandtoday.ca,midlandtoday.ca,www.standaard.be,www.nieuwsblad.be,www.gva.be,www.hbvl.be,www.rtl.be,rtl.be,www.blick.ch,blick.ch,www.pna.gov.ph,pna.gov.ph,businessmirror.com.ph,www.malaya.com.ph,malaya.com.ph,manilastandard.net,www.manilastandard.net,news.abs-cbn.com,www.startribune.com,www.miamiherald.com,www.kansascity.com,www.sacbee.com,www.charlotteobserver.com,www.newsobserver.com,www.star-telegram.com,www.fresnobee.com,www.idahostatesman.com,www.kentucky.com,www.thestate.com,www.thenewstribune.com,www.expressnews.com,www.timesunion.com,www.ctinsider.com,www.sfchronicle.com,www.sfgate.com,www.ctpost.com,www.nhregister.com,www.houstonchronicle.com,www.jpnn.com,jabar.jpnn.com,jatim.jpnn.com,www.tribunnews.com,www.jawapos.com,kumparan.com,mediaindonesia.com,www.pikiran-rakyat.com,www.crimeworld.com,crimeworld.com,www.thesun.ie,thesun.ie,www.thesun.co.uk,thesun.co.uk,www.telegraph.co.uk,telegraph.co.uk,www.tvsarawak.my,tvsarawak.my,www.batamnews.co.id,www.sme.sk,spectator.sme.sk,korzar.sme.sk,kosice.korzar.sme.sk,presov.korzar.sme.sk,mytrencin.sme.sk,myorava.sme.sk,mybystrica.sme.sk,nitra.sme.sk,zilina.sme.sk,myzvolen.sme.sk,myliptov.sme.sk,mytopolcany.sme.sk,mynovohrad.sme.sk,myturiec.sme.sk,mynitra.sme.sk,mytrnava.sme.sk,mykysuce.sme.sk,myzilina.sme.sk,www.liepajniekiem.lv,liepajniekiem.lv,guardian.ng,www.guardian.ng,nairametrics.com,www.nairametrics.com,premiumtimesng.com,www.premiumtimesng.com'
+    'www.ouest-france.fr,www.sudouest.fr,www.challenges.fr,www.firstpost.com,firstpost.com,www.dnaindia.com,dnaindia.com,yourstory.com,www.yourstory.com,www.business-standard.com,business-standard.com,www.news18.com,news18.com,www.ndtv.com,ndtv.com,www.orilliamatters.com,orilliamatters.com,www.collingwoodtoday.ca,collingwoodtoday.ca,www.vancouverisawesome.com,vancouverisawesome.com,www.nsnews.com,nsnews.com,www.richmond-news.com,richmond-news.com,www.princegeorgecitizen.com,princegeorgecitizen.com,www.delta-optimist.com,delta-optimist.com,www.moosejawtoday.com,moosejawtoday.com,www.sasktoday.ca,sasktoday.ca,www.bradfordtoday.ca,bradfordtoday.ca,www.elliotlaketoday.com,elliotlaketoday.com,www.midlandtoday.ca,midlandtoday.ca,www.standaard.be,www.nieuwsblad.be,www.gva.be,www.hbvl.be,www.rtl.be,rtl.be,www.blick.ch,blick.ch,www.pna.gov.ph,pna.gov.ph,businessmirror.com.ph,www.malaya.com.ph,malaya.com.ph,manilastandard.net,www.manilastandard.net,news.abs-cbn.com,www.startribune.com,www.miamiherald.com,www.kansascity.com,www.sacbee.com,www.charlotteobserver.com,www.newsobserver.com,www.star-telegram.com,www.fresnobee.com,www.idahostatesman.com,www.kentucky.com,www.thestate.com,www.thenewstribune.com,www.expressnews.com,www.timesunion.com,www.ctinsider.com,www.sfchronicle.com,www.sfgate.com,www.ctpost.com,www.nhregister.com,www.houstonchronicle.com,www.jpnn.com,jabar.jpnn.com,jatim.jpnn.com,www.tribunnews.com,www.jawapos.com,kumparan.com,mediaindonesia.com,www.pikiran-rakyat.com,www.crimeworld.com,crimeworld.com,www.thesun.ie,thesun.ie,www.thesun.co.uk,thesun.co.uk,www.telegraph.co.uk,telegraph.co.uk,www.tvsarawak.my,tvsarawak.my,www.batamnews.co.id,www.sme.sk,spectator.sme.sk,korzar.sme.sk,kosice.korzar.sme.sk,presov.korzar.sme.sk,mytrencin.sme.sk,myorava.sme.sk,mybystrica.sme.sk,nitra.sme.sk,zilina.sme.sk,myzvolen.sme.sk,myliptov.sme.sk,mytopolcany.sme.sk,mynovohrad.sme.sk,myturiec.sme.sk,mynitra.sme.sk,mytrnava.sme.sk,mykysuce.sme.sk,myzilina.sme.sk,www.liepajniekiem.lv,liepajniekiem.lv,guardian.ng,www.guardian.ng,nairametrics.com,www.nairametrics.com,premiumtimesng.com,www.premiumtimesng.com,www.news247.gr,news247.gr,www.sport24.gr,sport24.gr,www.documentonews.gr,documentonews.gr'
   )
     .split(',')
     .map((value) => value.trim().toLowerCase())
@@ -612,6 +636,11 @@ function parseSitemapIndexLocNumericTail(loc: string): number | null {
       const parsedFrom = Number.parseInt(fromParam, 10);
       if (Number.isFinite(parsedFrom)) return -parsedFrom;
     }
+    const startParam = parsedUrl.searchParams.get('start');
+    if (startParam) {
+      const parsedStart = Number.parseInt(startParam, 10);
+      if (Number.isFinite(parsedStart)) return -parsedStart;
+    }
   } catch {
     // Ignore malformed URLs and fall through.
   }
@@ -629,6 +658,28 @@ function resolveSitemapLoc(loc: string, baseUrl: string | null): string {
   } catch {
     return normalized;
   }
+}
+
+function resolveHostSpecificSitemapItemLimit(baseUrl: string | null | undefined, fallbackLimit: number): number {
+  if (!baseUrl) return fallbackLimit;
+
+  try {
+    const parsed = new URL(baseUrl);
+    const hostname = parsed.hostname.toLowerCase();
+    const pathname = parsed.pathname.toLowerCase();
+
+    if (RUSSIAN_REGIONAL_SITEMAP_HOSTS.has(hostname) && /\/articles_20\d{2}_\d{2}\.xml(?:\.gz)?$/.test(pathname)) {
+      return Math.min(fallbackLimit, RUSSIAN_REGIONAL_SITEMAP_URL_LIMIT);
+    }
+
+    if ((hostname === 'regnum.ru' || hostname === 'www.regnum.ru') && /\/sitemap\/news\/20\d{2}-\d{2}\.xml$/.test(pathname)) {
+      return Math.min(fallbackLimit, REGNUM_SITEMAP_URL_LIMIT);
+    }
+  } catch {
+    return fallbackLimit;
+  }
+
+  return fallbackLimit;
 }
 
 function selectSitemapIndexEntries(entries: SitemapIndexEntry[], baseUrl: string | null): SitemapIndexEntry[] {
@@ -650,6 +701,43 @@ function selectSitemapIndexEntries(entries: SitemapIndexEntry[], baseUrl: string
     return (withLastmod.length > 0 ? withLastmod : entries).slice(0, kwongWahLimit);
   }
 
+  const isFontanka = hostname === 'www.fontanka.ru' || hostname === 'fontanka.ru';
+  if (isFontanka) {
+    const fontankaLimit = Math.min(2, SITEMAP_INDEX_CHILDREN_LIMIT);
+    const monthlyEntries = entries
+      .filter((entry) => /\/articles_(20\d{2})_(0[1-9]|1[0-2])\.xml(?:\.gz)?$/i.test(entry.loc))
+      .sort((left, right) => {
+        const leftMatch = left.loc.match(/\/articles_(20\d{2})_(0[1-9]|1[0-2])\.xml(?:\.gz)?$/i);
+        const rightMatch = right.loc.match(/\/articles_(20\d{2})_(0[1-9]|1[0-2])\.xml(?:\.gz)?$/i);
+        const leftStamp = leftMatch ? Date.UTC(Number.parseInt(leftMatch[1] || '0', 10), Number.parseInt(leftMatch[2] || '1', 10) - 1, 1) : Number.NEGATIVE_INFINITY;
+        const rightStamp = rightMatch ? Date.UTC(Number.parseInt(rightMatch[1] || '0', 10), Number.parseInt(rightMatch[2] || '1', 10) - 1, 1) : Number.NEGATIVE_INFINITY;
+        return rightStamp - leftStamp;
+      });
+    if (monthlyEntries.length > 0) return monthlyEntries.slice(0, fontankaLimit);
+  }
+
+  const is47News = hostname === '47news.ru' || hostname === 'www.47news.ru';
+  if (is47News) {
+    const latestArticleChildren = entries.filter((entry) => /\/articles-\d+\.xml(?:\.gz)?$/i.test(entry.loc));
+    if (latestArticleChildren.length > 0) {
+      return latestArticleChildren.slice(0, Math.min(2, SITEMAP_INDEX_CHILDREN_LIMIT));
+    }
+  }
+
+  const isZarpanews = hostname === 'www.zarpanews.gr' || hostname === 'zarpanews.gr';
+  if (isZarpanews) {
+    const postEntries = entries.filter((entry) => /\/post-sitemap\d*\.xml(?:\.gz)?$/i.test(entry.loc));
+    if (postEntries.length > 0) {
+      return postEntries.slice(0, Math.min(2, SITEMAP_INDEX_CHILDREN_LIMIT));
+    }
+  }
+
+  const isRussianRegionalPortal = RUSSIAN_REGIONAL_SITEMAP_HOSTS.has(hostname);
+  if (isRussianRegionalPortal) {
+    const monthlyArticleEntries = entries.filter((entry) => /\/articles_20\d{2}_\d{2}\.xml(?:\.gz)?$/i.test(entry.loc));
+    if (monthlyArticleEntries.length > 0) return monthlyArticleEntries.slice(0, 1);
+  }
+
   const isMendozaPost = hostname === 'www.mendozapost.com' || hostname === 'mendozapost.com';
   if (isMendozaPost) {
     const mendozaLimit = Math.min(4, SITEMAP_INDEX_CHILDREN_LIMIT);
@@ -658,6 +746,18 @@ function selectSitemapIndexEntries(entries: SitemapIndexEntry[], baseUrl: string
       ? contentEntries
       : entries.filter((entry) => !/sitemap-(?:tag|author|image|images)_/i.test(entry.loc));
     return (preferredEntries.length > 0 ? preferredEntries : entries).slice(0, mendozaLimit);
+  }
+
+  const isRegnumNewsIndex = hostname === 'regnum.ru' && baseUrl ? (() => {
+    try {
+      return new URL(baseUrl).pathname === '/sitemap/news.xml';
+    } catch {
+      return false;
+    }
+  })() : false;
+  if (isRegnumNewsIndex) {
+    const monthlyEntries = entries.filter((entry) => /\/sitemap\/news\/20\d{2}-\d{2}\.xml$/i.test(entry.loc));
+    if (monthlyEntries.length > 0) return monthlyEntries.slice(0, 1);
   }
 
   return entries.slice(0, SITEMAP_INDEX_CHILDREN_LIMIT);
@@ -1660,7 +1760,8 @@ async function parseSitemapXmlRecursively(
   depth = 0,
   seen = new Set<string>()
 ): Promise<ParsedSitemapResult | null> {
-  const sitemap = parseSitemapWithStats(xml, SITEMAP_ITEM_LIMIT, sitemapUrl);
+  const sitemapItemLimit = resolveHostSpecificSitemapItemLimit(sitemapUrl, SITEMAP_ITEM_LIMIT);
+  const sitemap = parseSitemapWithStats(xml, sitemapItemLimit, sitemapUrl);
   const parsed = sitemap.items.length > 0 || sitemap.stats.totalCandidates > 0
     ? sitemap
     : parseRssOrAtomWithStats(xml, RSS_ITEM_LIMIT);
@@ -2163,6 +2264,8 @@ function shouldAttemptHtmlCollectionFeed(source: string, url: string): boolean {
       || hostname === 'herningfolkeblad.dk'
       || hostname === 'midtjyllandsavis.dk'
       || hostname === 'skivefolkeblad.dk'
+      || (hostname === 'www.t13.cl' && pathname === '/lo-ultimo')
+      || (hostname === 'www.soychile.cl' && (pathname === '/urljson/noticias' || pathname === '/todas'))
       || (hostname === 'www.yicai.com' && pathname.startsWith('/news'))
       || (hostname === 'www.cls.cn' && pathname.startsWith('/telegraph'))
       || (hostname === 'www.guancha.cn' && pathname.startsWith('/economy'))
@@ -2181,6 +2284,8 @@ function shouldAttemptHtmlCollectionFeed(source: string, url: string): boolean {
     || normalizedSource.includes('herning folkeblad - html collection')
     || normalizedSource.includes('midtjyllands avis - html collection')
     || normalizedSource.includes('skive folkeblad - html collection')
+    || normalizedSource.includes('t13 - lo ultimo html collection')
+    || normalizedSource.includes('soychile - todas las noticias html collection')
     || normalizedSource.includes('yicai - news html collection')
     || normalizedSource.includes('cls - telegraph html collection')
     || normalizedSource.includes('guancha - economy html collection')
