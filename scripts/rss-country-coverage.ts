@@ -123,7 +123,7 @@ const ENABLE_BROWSER_SITEMAP_FALLBACK =
 const BROWSER_SITEMAP_FALLBACK_DOMAINS = new Set(
   (
     process.env.INGEST_BROWSER_SITEMAP_DOMAINS ||
-    'www.ouest-france.fr,www.sudouest.fr,www.challenges.fr,www.standaard.be,www.nieuwsblad.be,www.gva.be,www.hbvl.be,www.rtl.be,rtl.be,www.blick.ch,blick.ch,www.pna.gov.ph,pna.gov.ph,businessmirror.com.ph,www.malaya.com.ph,malaya.com.ph,manilastandard.net,www.manilastandard.net,news.abs-cbn.com,www.startribune.com,www.miamiherald.com,www.kansascity.com,www.sacbee.com,www.charlotteobserver.com,www.newsobserver.com,www.star-telegram.com,www.fresnobee.com,www.idahostatesman.com,www.kentucky.com,www.thestate.com,www.thenewstribune.com,www.expressnews.com,www.timesunion.com,www.ctinsider.com,www.sfchronicle.com,www.sfgate.com,www.ctpost.com,www.nhregister.com,www.houstonchronicle.com,www.jpnn.com,jabar.jpnn.com,jatim.jpnn.com,www.tribunnews.com,www.jawapos.com,kumparan.com,mediaindonesia.com,www.pikiran-rakyat.com,www.crimeworld.com,crimeworld.com,www.thesun.ie,thesun.ie,www.thesun.co.uk,thesun.co.uk,www.telegraph.co.uk,telegraph.co.uk,www.tvsarawak.my,tvsarawak.my,www.liepajniekiem.lv,liepajniekiem.lv,guardian.ng,www.guardian.ng,nairametrics.com,www.nairametrics.com,premiumtimesng.com,www.premiumtimesng.com'
+    'www.ouest-france.fr,www.sudouest.fr,www.challenges.fr,www.firstpost.com,firstpost.com,www.dnaindia.com,dnaindia.com,yourstory.com,www.yourstory.com,www.business-standard.com,business-standard.com,www.news18.com,news18.com,www.ndtv.com,ndtv.com,www.standaard.be,www.nieuwsblad.be,www.gva.be,www.hbvl.be,www.rtl.be,rtl.be,www.blick.ch,blick.ch,www.pna.gov.ph,pna.gov.ph,businessmirror.com.ph,www.malaya.com.ph,malaya.com.ph,manilastandard.net,www.manilastandard.net,news.abs-cbn.com,www.startribune.com,www.miamiherald.com,www.kansascity.com,www.sacbee.com,www.charlotteobserver.com,www.newsobserver.com,www.star-telegram.com,www.fresnobee.com,www.idahostatesman.com,www.kentucky.com,www.thestate.com,www.thenewstribune.com,www.expressnews.com,www.timesunion.com,www.ctinsider.com,www.sfchronicle.com,www.sfgate.com,www.ctpost.com,www.nhregister.com,www.houstonchronicle.com,www.jpnn.com,jabar.jpnn.com,jatim.jpnn.com,www.tribunnews.com,www.jawapos.com,kumparan.com,mediaindonesia.com,www.pikiran-rakyat.com,www.crimeworld.com,crimeworld.com,www.thesun.ie,thesun.ie,www.thesun.co.uk,thesun.co.uk,www.telegraph.co.uk,telegraph.co.uk,www.tvsarawak.my,tvsarawak.my,www.liepajniekiem.lv,liepajniekiem.lv,guardian.ng,www.guardian.ng,nairametrics.com,www.nairametrics.com,premiumtimesng.com,www.premiumtimesng.com'
   )
     .split(',')
     .map((value) => value.trim().toLowerCase())
@@ -599,9 +599,13 @@ function selectSitemapIndexEntries(entries: SitemapIndexEntry[], baseUrl: string
 
 function parseSitemapIndex(xml: string, baseUrl: string): string[] {
   if (!/<sitemapindex[\s>]/i.test(xml)) return [];
-  const entries = [...xml.matchAll(/<sitemap>([\s\S]*?)<\/sitemap>/gi)]
-    .map((match, index) => {
-      const body = match[1] || '';
+  const strictMatches = [...xml.matchAll(/<sitemap>([\s\S]*?)<\/sitemap>/gi)]
+    .map((match) => match[1] || '');
+  const entries = (strictMatches.length > 0
+    ? strictMatches
+    : [...xml.matchAll(/<sitemap\b[^>]*>([\s\S]*?)(?=<\/sitemap>|<sitemap\b|$)/gi)].map((match) => match[1] || '')
+  )
+    .map((body, index) => {
       const locRaw = cleanSitemapIndexValue(body.match(/<loc[^>]*>([\s\S]*?)<\/loc>/i)?.[1] || '');
       let loc = '';
       if (locRaw) {

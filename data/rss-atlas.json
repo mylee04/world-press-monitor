@@ -2503,7 +2503,6 @@
         {
           "name": "Yahoo Japan - Business",
           "url": "https://news.yahoo.co.jp/rss/categories/business.xml",
-          "distributionClass": "portal",
           "status": null,
           "checkedDate": "04/13/2026",
           "valid": "needs verification",
@@ -2512,7 +2511,6 @@
         {
           "name": "Yahoo Japan - World",
           "url": "https://news.yahoo.co.jp/rss/categories/world.xml",
-          "distributionClass": "portal",
           "status": null,
           "checkedDate": "04/13/2026",
           "valid": "needs verification",
@@ -2521,7 +2519,6 @@
         {
           "name": "Yahoo Japan - IT/Tech",
           "url": "https://news.yahoo.co.jp/rss/categories/it.xml",
-          "distributionClass": "portal",
           "status": null,
           "checkedDate": "04/13/2026",
           "valid": "needs verification",
@@ -2530,7 +2527,6 @@
         {
           "name": "Yahoo Japan - Domestic",
           "url": "https://news.yahoo.co.jp/rss/categories/domestic.xml",
-          "distributionClass": "portal",
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/13/2026",
           "valid": "needs verification"
@@ -2538,7 +2534,6 @@
         {
           "name": "Yahoo Japan - Entertainment",
           "url": "https://news.yahoo.co.jp/rss/categories/entertainment.xml",
-          "distributionClass": "portal",
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/13/2026",
           "valid": "needs verification"
@@ -2546,7 +2541,6 @@
         {
           "name": "Yahoo Japan - Sports",
           "url": "https://news.yahoo.co.jp/rss/categories/sports.xml",
-          "distributionClass": "portal",
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/13/2026",
           "valid": "needs verification"
@@ -2581,7 +2575,6 @@
         {
           "name": "Kyodo News",
           "url": "https://news.yahoo.co.jp/rss/media/kyodonews/all.xml",
-          "distributionClass": "portal",
           "status": null,
           "checkedDate": "04/13/2026",
           "valid": "needs verification",
@@ -2674,13 +2667,12 @@
           "row": 54
         },
         {
-          "name": "Yomiuri Latest",
+          "name": "Yomiuri - Latest Sitemap",
           "sitemapUrl": "https://www.yomiuri.co.jp/sitemap-news-latest.xml",
           "status": null,
-          "checkedDate": "03/15/2026",
+          "checkedDate": "04/13/2026",
           "valid": "needs verification",
-          "row": 55,
-          "enabled": false
+          "row": 55
         },
         {
           "name": "Yomiuri - Full Sitemap",
@@ -2739,10 +2731,9 @@
         {
           "name": "Abema Times - Latest Sitemap",
           "url": null,
-          "enabled": false,
           "sitemapUrl": "https://times.abema.tv/common/files/sitemap-latest.xml",
           "status": "⏩ OFFICIAL",
-          "checkedDate": "03/15/2026",
+          "checkedDate": "04/13/2026",
           "valid": "needs verification",
           "row": 56
         },
@@ -2759,10 +2750,9 @@
         {
           "name": "Sponichi - Recent Sitemap",
           "url": null,
-          "enabled": false,
           "sitemapUrl": "https://www.sponichi.co.jp/sitemap_recent.xml",
           "status": "⏩ OFFICIAL",
-          "checkedDate": "03/15/2026",
+          "checkedDate": "04/13/2026",
           "valid": "needs verification",
           "row": 56
         },
@@ -2845,14 +2835,12 @@
         },
         {
           "name": "Newsweek Japan",
-          "url": "https://www.newsweekjapan.jp/headlines.rss",
+          "url": "https://news.yahoo.co.jp/rss/media/newsweek/all.xml",
           "category": "world",
           "tier": 2,
-          "status": "⏩ OFFICIAL",
-          "checkedDate": null,
+          "checkedDate": "04/13/2026",
           "valid": "needs verification",
-          "row": 62,
-          "enabled": false
+          "row": 62
         },
         {
           "name": "JBpress (Japan Business Press)",
@@ -2875,12 +2863,11 @@
         },
         {
           "name": "President Online (Business)",
-          "url": "https://president.jp/list/feed/rss",
+          "url": "https://news.yahoo.co.jp/rss/media/president/all.xml",
           "status": null,
-          "checkedDate": "02/23/2026",
-          "valid": null,
-          "row": 65,
-          "enabled": false
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification",
+          "row": 65
         },
         {
           "name": "Zenn (Tech)",
@@ -2900,8 +2887,9 @@
         },
         {
           "name": "Nikkan Kogyo (Industrial Manufacturing News)",
-          "url": "https://www.nikkan.co.jp/rss/news",
-          "enabled": false
+          "url": "https://news.yahoo.co.jp/rss/media/nkogyo/all.xml",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
         },
         {
           "name": "Livedoor News (General Top Stories)",
@@ -2921,8 +2909,9 @@
         },
         {
           "name": "Minkabu (Stocks/Investing)",
-          "url": "https://minkabu.jp/news/feed",
-          "enabled": false
+          "url": "https://news.yahoo.co.jp/rss/media/minkabu/all.xml",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
         },
         {
           "name": "Tokyo Shimbun General News",
@@ -2935,7 +2924,87 @@
         },
         {
           "name": "Business Insider Japan",
-          "url": "https://www.businessinsider.jp/feed/index.xml"
+          "url": "https://www.businessinsider.jp/feed/index.xml",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Nikkei Business",
+          "url": "https://news.yahoo.co.jp/rss/media/business/all.xml",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Netorabo",
+          "url": "https://news.yahoo.co.jp/rss/media/it_nlab/all.xml",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "36Kr Japan",
+          "url": "https://news.yahoo.co.jp/rss/media/krjapan/all.xml",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "AERA DIGITAL",
+          "url": "https://news.yahoo.co.jp/rss/media/sasahi/all.xml",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Bunshun Online",
+          "url": "https://news.yahoo.co.jp/rss/media/bunshun/all.xml",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Full-Count",
+          "url": "https://news.yahoo.co.jp/rss/media/fullcount/all.xml",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Gekisaka",
+          "url": "https://news.yahoo.co.jp/rss/media/gekisaka/all.xml",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "ENCOUNT",
+          "url": "https://news.yahoo.co.jp/rss/media/encount/all.xml",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Hint-Pot",
+          "url": "https://news.yahoo.co.jp/rss/media/hintpot/all.xml",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Kuruma no News",
+          "url": "https://news.yahoo.co.jp/rss/media/kurumans/all.xml",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Response",
+          "url": "https://news.yahoo.co.jp/rss/media/rps/all.xml",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Newswitch",
+          "url": "https://news.yahoo.co.jp/rss/media/newswitch/all.xml",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Shukan Josei PRIME",
+          "url": "https://news.yahoo.co.jp/rss/media/jprime/all.xml",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
         },
         {
           "name": "Hatena Bookmark Economy",
@@ -4113,6 +4182,7 @@
         {
           "name": "Firstpost",
           "url": "https://www.firstpost.com/commonfeeds/v1/mfp/rss/web-stories.xml",
+          "sitemapUrl": "https://www.firstpost.com/commonfeeds/v1/mfp/sitemap/google-news.xml",
           "status": null,
           "checkedDate": null,
           "valid": null,
@@ -4121,6 +4191,7 @@
         {
           "name": "DNA India (India)",
           "url": "https://www.dnaindia.com/feeds/india.xml",
+          "sitemapUrl": "https://www.dnaindia.com/googlenews.xml",
           "status": null,
           "checkedDate": null,
           "valid": null,
@@ -4398,6 +4469,18 @@
         {
           "name": "Republic World",
           "sitemapUrl": "https://www.republicworld.com/sitemaps/sitemaps-news.xml",
+          "language": "en",
+          "tier": "primary"
+        },
+        {
+          "name": "News18",
+          "sitemapUrl": "https://www.news18.com/commonfeeds/v1/eng/sitemap/google-news.xml",
+          "language": "en",
+          "tier": "primary"
+        },
+        {
+          "name": "Business Standard",
+          "sitemapUrl": "https://www.business-standard.com/sitemap/news-sitemap.xml",
           "language": "en",
           "tier": "primary"
         }

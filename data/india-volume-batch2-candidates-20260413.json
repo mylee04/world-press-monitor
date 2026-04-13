@@ -1,0 +1,26 @@
+[
+  {
+    "source": "Firstpost",
+    "sitemap": "https://www.firstpost.com/commonfeeds/v1/mfp/sitemap/google-news.xml"
+  },
+  {
+    "source": "DNA India (India)",
+    "sitemap": "https://www.dnaindia.com/googlenews.xml"
+  },
+  {
+    "source": "YourStory",
+    "sitemap": "https://yourstory.com/sitemap_index.xml"
+  },
+  {
+    "source": "Business Standard",
+    "sitemap": "https://www.business-standard.com/sitemap/news-sitemap.xml"
+  },
+  {
+    "source": "News18",
+    "sitemap": "https://www.news18.com/commonfeeds/v1/eng/sitemap/google-news.xml"
+  },
+  {
+    "source": "NDTV (Latest)",
+    "sitemap": "https://www.ndtv.com/sitemap.xml?yyyy=2026&mm=4&sitename=ndtv-news&category="
+  }
+]

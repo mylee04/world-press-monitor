@@ -148,6 +148,82 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     return true;
   }
 
+  if (hostname.endsWith('amarujala.com')) {
+    if (pathname.startsWith('/kavya/')) return true;
+    if (pathname.startsWith('/video/')) return true;
+    if (pathname.startsWith('/video-shots/')) return true;
+    if (pathname.startsWith('/photo-gallery/')) return true;
+    if (pathname.startsWith('/web-stories/')) return true;
+    if (pathname.startsWith('/live/')) return true;
+  }
+
+  if (hostname.endsWith('moneycontrol.com')) {
+    if (pathname.startsWith('/entertainment/')) return true;
+    if (pathname.startsWith('/sports/')) return true;
+    if (pathname.startsWith('/lifestyle/')) return true;
+    if (pathname.startsWith('/health-and-fitness/')) return true;
+    if (pathname.startsWith('/astrology/')) return true;
+    if (pathname.startsWith('/news/videos')) return true;
+    if (pathname.startsWith('/news/podcast')) return true;
+  }
+
+  if (hostname.endsWith('republicworld.com')) {
+    if (pathname.startsWith('/entertainment/')) return true;
+    if (pathname.startsWith('/videos/')) return true;
+    if (pathname.startsWith('/shows/')) return true;
+    if (pathname.startsWith('/viral/')) return true;
+    if (pathname.startsWith('/initiatives/')) return true;
+    if (pathname.startsWith('/lifestyle/')) return true;
+  }
+
+  if (hostname.endsWith('economictimes.indiatimes.com')) {
+    if (pathname.startsWith('/magazines/panache/')) return true;
+    if (pathname.startsWith('/news/newsblogs/')) return true;
+    if (pathname.startsWith('/astrology/')) return true;
+  }
+
+  if (hostname.endsWith('scroll.in')) {
+    if (pathname.startsWith('/reel/')) return true;
+    if (pathname.startsWith('/video/')) return true;
+  }
+
+  if (hostname.endsWith('thequint.com') && pathname.startsWith('/brandstudio/')) {
+    return true;
+  }
+
+  if (hostname.endsWith('firstpost.com')) {
+    if (pathname.startsWith('/auto/')) return true;
+    if (pathname.startsWith('/entertainment/')) return true;
+    if (pathname.startsWith('/firstcricket/')) return true;
+    if (pathname.startsWith('/lifestyle/')) return true;
+    if (pathname.startsWith('/opinion/')) return true;
+    if (pathname.startsWith('/sports/')) return true;
+  }
+
+  if (hostname.endsWith('dnaindia.com')) {
+    if (pathname.startsWith('/bollywood/')) return true;
+    if (pathname.startsWith('/cricket/')) return true;
+    if (pathname.startsWith('/entertainment/')) return true;
+  }
+
+  if (hostname.endsWith('news18.com')) {
+    if (pathname.startsWith('/cricket/')) return true;
+    if (pathname.startsWith('/lifestyle/')) return true;
+    if (pathname.startsWith('/movies/')) return true;
+    if (pathname.startsWith('/photogallery/')) return true;
+    if (pathname.startsWith('/sports/')) return true;
+    if (pathname.startsWith('/viral/')) return true;
+  }
+
+  if (hostname.endsWith('business-standard.com')) {
+    if (pathname.startsWith('/book/')) return true;
+    if (pathname.startsWith('/content/specials/')) return true;
+    if (pathname.startsWith('/cricket/')) return true;
+    if (pathname.startsWith('/health/')) return true;
+    if (pathname.startsWith('/opinion/')) return true;
+    if (pathname.startsWith('/sports/')) return true;
+  }
+
   if (hostname.endsWith('localmatters.co.nz')) {
     if (pathname.startsWith('/category/')) return true;
     if (pathname.startsWith('/tag/')) return true;

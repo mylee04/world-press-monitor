@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Mon, 13 Apr 2026 15:05:24 GMT</dateCreated>
+    <dateCreated>Mon, 13 Apr 2026 15:37:59 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -344,28 +344,37 @@
       <outline text="CNET Japan [needs verification]" title="CNET Japan [needs verification]" type="rss" xmlUrl="https://feeds.japan.cnet.com/rss/cnet/all.rdf" htmlUrl="https://feeds.japan.cnet.com"/>
       <outline text="Smart Japan [valid]" title="Smart Japan [valid]" type="rss" xmlUrl="https://rss.itmedia.co.jp/rss/2.0/smartjapan.xml" htmlUrl="https://rss.itmedia.co.jp"/>
       <outline text="Nikkei - News Sitemap [needs verification]" title="Nikkei - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.nikkei.com/sitemap.xml" htmlUrl="https://www.nikkei.com"/>
+      <outline text="Yomiuri - Latest Sitemap [needs verification]" title="Yomiuri - Latest Sitemap [needs verification]" type="rss" xmlUrl="https://www.yomiuri.co.jp/sitemap-news-latest.xml" htmlUrl="https://www.yomiuri.co.jp"/>
       <outline text="Yomiuri - Full Sitemap [needs verification]" title="Yomiuri - Full Sitemap [needs verification]" type="rss" xmlUrl="https://www.yomiuri.co.jp/sitemap.xml" htmlUrl="https://www.yomiuri.co.jp"/>
       <outline text="Mainichi Flash [invalid]" title="Mainichi Flash [invalid]" type="rss" xmlUrl="https://mainichi.jp/rss/etc/mainichi-flash.rss" htmlUrl="https://mainichi.jp"/>
       <outline text="Sankei - Google Sitemap Index [needs verification]" title="Sankei - Google Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.sankei.com/feeds/google-sitemapindex/?outputType=xml" htmlUrl="https://www.sankei.com"/>
       <outline text="FNN Prime - Sitemap [needs verification]" title="FNN Prime - Sitemap [needs verification]" type="rss" xmlUrl="https://www.fnn.jp/sitemap.xml" htmlUrl="https://www.fnn.jp"/>
       <outline text="Jiji Press - Sitemap [needs verification]" title="Jiji Press - Sitemap [needs verification]" type="rss" xmlUrl="https://www.jiji.com/sitemap.xml" htmlUrl="https://www.jiji.com"/>
       <outline text="NTV - News Sitemap [needs verification]" title="NTV - News Sitemap [needs verification]" type="rss" xmlUrl="https://news.ntv.co.jp/news-sitemap.xml" htmlUrl="https://news.ntv.co.jp"/>
+      <outline text="Abema Times - Latest Sitemap [needs verification]" title="Abema Times - Latest Sitemap [needs verification]" type="rss" xmlUrl="https://times.abema.tv/common/files/sitemap-latest.xml" htmlUrl="https://times.abema.tv"/>
+      <outline text="Sponichi - Recent Sitemap [needs verification]" title="Sponichi - Recent Sitemap [needs verification]" type="rss" xmlUrl="https://www.sponichi.co.jp/sitemap_recent.xml" htmlUrl="https://www.sponichi.co.jp"/>
       <outline text="Chunichi - News Sitemap [needs verification]" title="Chunichi - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.chunichi.co.jp/sitemap_news.xml" htmlUrl="https://www.chunichi.co.jp"/>
       <outline text="TBS News DIG - Sitemap [needs verification]" title="TBS News DIG - Sitemap [needs verification]" type="rss" xmlUrl="https://newsdig.tbs.co.jp/sitemap.xml" htmlUrl="https://newsdig.tbs.co.jp"/>
       <outline text="Tokyo Sports - Sitemap [needs verification]" title="Tokyo Sports - Sitemap [needs verification]" type="rss" xmlUrl="https://www.tokyo-sports.co.jp/sitemap.xml" htmlUrl="https://www.tokyo-sports.co.jp"/>
       <outline text="Gizmodo Japan [valid]" title="Gizmodo Japan [valid]" type="rss" xmlUrl="https://www.gizmodo.jp/index.xml" htmlUrl="https://www.gizmodo.jp"/>
       <outline text="Goo News (Business) [invalid]" title="Goo News (Business) [invalid]" type="rss" xmlUrl="https://news.goo.ne.jp/rss/topstories/business/index.rdf" htmlUrl="https://news.goo.ne.jp"/>
       <outline text="Goo News (Politics) [invalid]" title="Goo News (Politics) [invalid]" type="rss" xmlUrl="https://news.goo.ne.jp/rss/topstories/politics/index.rdf" htmlUrl="https://news.goo.ne.jp"/>
+      <outline text="Newsweek Japan [needs verification]" title="Newsweek Japan [needs verification]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/media/newsweek/all.xml" htmlUrl="https://news.yahoo.co.jp"/>
       <outline text="JBpress (Japan Business Press) [valid]" title="JBpress (Japan Business Press) [valid]" type="rss" xmlUrl="https://jbpress.ismedia.jp/list/feed/rss" htmlUrl="https://jbpress.ismedia.jp"/>
+      <outline text="President Online (Business) [needs verification]" title="President Online (Business) [needs verification]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/media/president/all.xml" htmlUrl="https://news.yahoo.co.jp"/>
       <outline text="Zenn (Tech) [valid]" title="Zenn (Tech) [valid]" type="rss" xmlUrl="https://zenn.dev/feed" htmlUrl="https://zenn.dev"/>
       <outline text="NHK News (Politics - Category 1) [valid]" title="NHK News (Politics - Category 1) [valid]" type="rss" xmlUrl="https://www.nhk.or.jp/rss/news/cat1.xml" htmlUrl="https://www.nhk.or.jp"/>
       <outline text="NHK News (Economy/Business - Category 3) [valid]" title="NHK News (Economy/Business - Category 3) [valid]" type="rss" xmlUrl="https://www.nhk.or.jp/rss/news/cat3.xml" htmlUrl="https://www.nhk.or.jp"/>
+      <outline text="Nikkan Kogyo (Industrial Manufacturing News) [needs verification]" title="Nikkan Kogyo (Industrial Manufacturing News) [needs verification]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/media/nkogyo/all.xml" htmlUrl="https://news.yahoo.co.jp"/>
       <outline text="Livedoor News (General Top Stories) [valid]" title="Livedoor News (General Top Stories) [valid]" type="rss" xmlUrl="https://news.livedoor.com/topics/rss/top.xml" htmlUrl="https://news.livedoor.com"/>
       <outline text="Livedoor News (Economy) [valid]" title="Livedoor News (Economy) [valid]" type="rss" xmlUrl="https://news.livedoor.com/topics/rss/eco.xml" htmlUrl="https://news.livedoor.com"/>
       <outline text="GIGAZINE (Tech) [valid]" title="GIGAZINE (Tech) [valid]" type="rss" xmlUrl="https://gigazine.net/news/rss_2.0/" htmlUrl="https://gigazine.net"/>
       <outline text="Qiita (Japanese IT Trends) [valid]" title="Qiita (Japanese IT Trends) [valid]" type="rss" xmlUrl="https://qiita.com/popular-items/feed" htmlUrl="https://qiita.com"/>
+      <outline text="Minkabu (Stocks/Investing) [needs verification]" title="Minkabu (Stocks/Investing) [needs verification]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/media/minkabu/all.xml" htmlUrl="https://news.yahoo.co.jp"/>
       <outline text="ASCII.jp Mac Tech [valid]" title="ASCII.jp Mac Tech [valid]" type="rss" xmlUrl="https://ascii.jp/mac/rss.xml" htmlUrl="https://ascii.jp"/>
       <outline text="Business Insider Japan [valid]" title="Business Insider Japan [valid]" type="rss" xmlUrl="https://www.businessinsider.jp/feed/index.xml" htmlUrl="https://www.businessinsider.jp"/>
+      <outline text="Nikkei Business [needs verification]" title="Nikkei Business [needs verification]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/media/business/all.xml" htmlUrl="https://news.yahoo.co.jp"/>
+      <outline text="Netorabo [needs verification]" title="Netorabo [needs verification]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/media/it_nlab/all.xml" htmlUrl="https://news.yahoo.co.jp"/>
       <outline text="ASCII.jp [needs verification]" title="ASCII.jp [needs verification]" type="rss" xmlUrl="https://ascii.jp/rss.xml" htmlUrl="https://ascii.jp"/>
       <outline text="Impress Watch [needs verification]" title="Impress Watch [needs verification]" type="rss" xmlUrl="https://www.watch.impress.co.jp/data/rss/1.0/ipw/feed.rdf" htmlUrl="https://www.watch.impress.co.jp"/>
       <outline text="GAME Watch [needs verification]" title="GAME Watch [needs verification]" type="rss" xmlUrl="https://game.watch.impress.co.jp/data/rss/1.0/gmw/feed.rdf" htmlUrl="https://game.watch.impress.co.jp"/>
@@ -576,6 +585,8 @@
       <outline text="The Better India [needs verification]" title="The Better India [needs verification]" type="rss" xmlUrl="https://www.thebetterindia.com/feed/" htmlUrl="https://www.thebetterindia.com"/>
       <outline text="Economic Times [needs verification]" title="Economic Times [needs verification]" type="rss" xmlUrl="https://economictimes.indiatimes.com/etstatic/sitemaps/et/news/sitemap-today.xml" htmlUrl="https://economictimes.indiatimes.com"/>
       <outline text="Republic World [needs verification]" title="Republic World [needs verification]" type="rss" xmlUrl="https://www.republicworld.com/sitemaps/sitemaps-news.xml" htmlUrl="https://www.republicworld.com"/>
+      <outline text="News18 [needs verification]" title="News18 [needs verification]" type="rss" xmlUrl="https://www.news18.com/commonfeeds/v1/eng/sitemap/google-news.xml" htmlUrl="https://www.news18.com"/>
+      <outline text="Business Standard [needs verification]" title="Business Standard [needs verification]" type="rss" xmlUrl="https://www.business-standard.com/sitemap/news-sitemap.xml" htmlUrl="https://www.business-standard.com"/>
     </outline>
     <outline text="United Kingdom (GB)" title="United Kingdom (GB)">
       <outline text="Financial Times - World [valid]" title="Financial Times - World [valid]" type="rss" xmlUrl="https://www.ft.com/world?format=rss" htmlUrl="https://www.ft.com"/>

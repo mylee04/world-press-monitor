@@ -1,0 +1,14 @@
+[
+  {
+    "source": "YourStory",
+    "sitemap": "https://yourstory.com/sitemap_index.xml"
+  },
+  {
+    "source": "Business Standard",
+    "sitemap": "https://www.business-standard.com/sitemap/news-sitemap.xml"
+  },
+  {
+    "source": "NDTV (Latest)",
+    "sitemap": "https://www.ndtv.com/sitemap.xml?yyyy=2026&mm=4&sitename=ndtv-news&category="
+  }
+]

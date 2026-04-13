@@ -1,0 +1,14 @@
+[
+  {
+    "source": "Firstpost",
+    "sitemap": "https://www.firstpost.com/commonfeeds/v1/mfp/sitemap/google-news.xml"
+  },
+  {
+    "source": "DNA India (India)",
+    "sitemap": "https://www.dnaindia.com/googlenews.xml"
+  },
+  {
+    "source": "News18",
+    "sitemap": "https://www.news18.com/commonfeeds/v1/eng/sitemap/google-news.xml"
+  }
+]
