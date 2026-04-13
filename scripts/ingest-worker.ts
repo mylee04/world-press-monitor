@@ -1959,6 +1959,8 @@ function shouldAttemptHtmlCollectionFeed(source: string, url: string): boolean {
       || hostname === 'herningfolkeblad.dk'
       || hostname === 'midtjyllandsavis.dk'
       || hostname === 'skivefolkeblad.dk'
+      || (hostname === 'www.t13.cl' && pathname === '/lo-ultimo')
+      || (hostname === 'www.soychile.cl' && (pathname === '/urljson/noticias' || pathname === '/todas'))
       || (hostname === 'www.yicai.com' && pathname.startsWith('/news'))
       || (hostname === 'www.cls.cn' && pathname.startsWith('/telegraph'))
       || (hostname === 'www.guancha.cn' && pathname.startsWith('/economy'))
@@ -1977,6 +1979,8 @@ function shouldAttemptHtmlCollectionFeed(source: string, url: string): boolean {
     || normalizedSource.includes('herning folkeblad - html collection')
     || normalizedSource.includes('midtjyllands avis - html collection')
     || normalizedSource.includes('skive folkeblad - html collection')
+    || normalizedSource.includes('t13 - lo ultimo html collection')
+    || normalizedSource.includes('soychile - todas las noticias html collection')
     || normalizedSource.includes('yicai - news html collection')
     || normalizedSource.includes('cls - telegraph html collection')
     || normalizedSource.includes('guancha - economy html collection')

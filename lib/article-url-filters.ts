@@ -81,6 +81,10 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     return true;
   }
 
+  if (hostname.endsWith('redgol.cl') && pathname.startsWith('/apuestas/')) {
+    return true;
+  }
+
   if (hostname.endsWith('delo.si') && pathname.startsWith('/tag/')) {
     return true;
   }

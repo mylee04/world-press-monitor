@@ -21519,10 +21519,10 @@
           "sitemapUrl": "https://www.24horas.cl/24horas/site/sitemap_pags.xml"
         },
         {
-          "name": "24Horas - Sitemap 202603",
-          "sitemapUrl": "https://www.24horas.cl/24horas/site/sitemap/sitemap_pags_202603.xml.gz",
+          "name": "24Horas - Sitemap 202604",
+          "sitemapUrl": "https://www.24horas.cl/24horas/site/sitemap/sitemap_pags_202604.xml.gz",
           "status": "NEW",
-          "checkedDate": "03/18/2026",
+          "checkedDate": "04/13/2026",
           "valid": "valid"
         },
         {
@@ -21890,6 +21890,13 @@
           "row": 73
         },
         {
+          "name": "Diario El Día - Sitemap Index",
+          "sitemapUrl": "https://www.diarioeldia.cl/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Publimetro Chile - Home",
           "url": "https://www.publimetro.cl/arc/outboundfeeds/rss/",
           "status": "⏩ OFFICIAL",
@@ -21989,6 +21996,90 @@
           "valid": "needs verification",
           "row": 80,
           "sitemapUrl": "https://www.chilevision.cl/_files/sitemaps/sitemap_news.xml"
+        },
+        {
+          "name": "T13 - Lo Último HTML Collection",
+          "url": "https://www.t13.cl/lo-ultimo",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "SoyChile - Todas las noticias HTML Collection",
+          "url": "https://www.soychile.cl/todas",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "RedGol",
+          "url": "https://redgol.cl/rss/feed",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "En Cancha - Sitemap Index",
+          "url": null,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "sitemapUrl": "https://www.encancha.cl/arc/outboundfeeds/sitemap-index/?outputType=xml"
+        },
+        {
+          "name": "En Cancha - News Sitemap Index",
+          "url": null,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "sitemapUrl": "https://www.encancha.cl/arc/outboundfeeds/sitemap-news-index/?outputType=xml"
+        },
+        {
+          "name": "PrensaFútbol",
+          "url": "https://www.prensafutbol.cl/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "PrensaFútbol - News Sitemap",
+          "url": null,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "sitemapUrl": "https://www.prensafutbol.cl/news-sitemap.xml"
+        },
+        {
+          "name": "Sabes - Sitemap Index",
+          "url": null,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "sitemapUrl": "https://sabes.cl/sitemap.xml"
+        },
+        {
+          "name": "Sabes - News Sitemap",
+          "url": null,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "sitemapUrl": "https://sabes.cl/sitemap-news.xml"
+        },
+        {
+          "name": "SabesDeportes - Sitemap Index",
+          "url": null,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "sitemapUrl": "https://sabesdeportes.com/sitemap.xml"
+        },
+        {
+          "name": "SabesDeportes - News Sitemap",
+          "url": null,
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "sitemapUrl": "https://sabesdeportes.com/sitemap-news.xml"
         },
         {
           "name": "Emol - Espectáculos Sitemap 2026",

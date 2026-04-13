@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Mon, 13 Apr 2026 20:58:32 GMT</dateCreated>
+    <dateCreated>Mon, 13 Apr 2026 21:17:54 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -2836,7 +2836,7 @@
       <outline text="Emol - Deportes Sitemap 2026 [needs verification]" title="Emol - Deportes Sitemap 2026 [needs verification]" type="rss" xmlUrl="https://www.emol.com/sitemap/xml/sitemap4_2026.xml" htmlUrl="https://www.emol.com"/>
       <outline text="BioBioChile - Home [valid]" title="BioBioChile - Home [valid]" type="rss" xmlUrl="https://feeds.feedburner.com/radiobiobio/NNeJ" htmlUrl="https://feeds.feedburner.com"/>
       <outline text="24Horas - Sitemap Index [needs verification]" title="24Horas - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.24horas.cl/24horas/site/sitemap_pags.xml" htmlUrl="https://www.24horas.cl"/>
-      <outline text="24Horas - Sitemap 202603 [needs verification]" title="24Horas - Sitemap 202603 [needs verification]" type="rss" xmlUrl="https://www.24horas.cl/24horas/site/sitemap/sitemap_pags_202603.xml.gz" htmlUrl="https://www.24horas.cl"/>
+      <outline text="24Horas - Sitemap 202604 [needs verification]" title="24Horas - Sitemap 202604 [needs verification]" type="rss" xmlUrl="https://www.24horas.cl/24horas/site/sitemap/sitemap_pags_202604.xml.gz" htmlUrl="https://www.24horas.cl"/>
       <outline text="Cooperativa - Economía [valid]" title="Cooperativa - Economía [valid]" type="rss" xmlUrl="https://www.cooperativa.cl/noticias/site/tax/port/all/rss_5___1.xml" htmlUrl="https://www.cooperativa.cl"/>
       <outline text="Cooperativa - País [valid]" title="Cooperativa - País [valid]" type="rss" xmlUrl="https://www.cooperativa.cl/noticias/site/tax/port/all/rss_3___1.xml" htmlUrl="https://www.cooperativa.cl"/>
       <outline text="Cooperativa - País (모바일) [valid]" title="Cooperativa - País (모바일) [valid]" type="rss" xmlUrl="https://m.cooperativa.cl/noticias/site/tax/port/all/rss_3___1.xml" htmlUrl="https://m.cooperativa.cl"/>
@@ -2872,6 +2872,7 @@
       <outline text="Futuro [valid]" title="Futuro [valid]" type="rss" xmlUrl="https://www.futuro.cl/feed/" htmlUrl="https://www.futuro.cl"/>
       <outline text="Rock&amp;Pop [valid]" title="Rock&amp;Pop [valid]" type="rss" xmlUrl="https://www.rockandpop.cl/feed/" htmlUrl="https://www.rockandpop.cl"/>
       <outline text="Diario Talca [needs verification]" title="Diario Talca [needs verification]" type="rss" xmlUrl="https://diariotalca.cl/feed/" htmlUrl="https://diariotalca.cl"/>
+      <outline text="Diario El Día - Sitemap Index [needs verification]" title="Diario El Día - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.diarioeldia.cl/sitemap.xml" htmlUrl="https://www.diarioeldia.cl"/>
       <outline text="Publimetro Chile - Home [valid]" title="Publimetro Chile - Home [valid]" type="rss" xmlUrl="https://www.publimetro.cl/arc/outboundfeeds/rss/" htmlUrl="https://www.publimetro.cl"/>
       <outline text="Cooperativa - Portada [valid]" title="Cooperativa - Portada [valid]" type="rss" xmlUrl="https://www.cooperativa.cl/noticias/site/tax/port/all/rss____1.xml" htmlUrl="https://www.cooperativa.cl"/>
       <outline text="Cooperativa - Google News RSS [valid]" title="Cooperativa - Google News RSS [valid]" type="rss" xmlUrl="https://www.cooperativa.cl/noticias/google_news_rss.xml" htmlUrl="https://www.cooperativa.cl"/>
@@ -2884,6 +2885,17 @@
       <outline text="El Mostrador [needs verification]" title="El Mostrador [needs verification]" type="rss" xmlUrl="https://www.elmostrador.cl/sitemap_news.xml" htmlUrl="https://www.elmostrador.cl"/>
       <outline text="El Dínamo [needs verification]" title="El Dínamo [needs verification]" type="rss" xmlUrl="https://www.eldinamo.cl/_files/sitemaps/sitemap_news.xml" htmlUrl="https://www.eldinamo.cl"/>
       <outline text="Chilevisión Noticias [needs verification]" title="Chilevisión Noticias [needs verification]" type="rss" xmlUrl="https://www.chilevision.cl/_files/sitemaps/sitemap_news.xml" htmlUrl="https://www.chilevision.cl"/>
+      <outline text="T13 - Lo Último HTML Collection [valid]" title="T13 - Lo Último HTML Collection [valid]" type="rss" xmlUrl="https://www.t13.cl/lo-ultimo" htmlUrl="https://www.t13.cl"/>
+      <outline text="SoyChile - Todas las noticias HTML Collection [valid]" title="SoyChile - Todas las noticias HTML Collection [valid]" type="rss" xmlUrl="https://www.soychile.cl/todas" htmlUrl="https://www.soychile.cl"/>
+      <outline text="RedGol [valid]" title="RedGol [valid]" type="rss" xmlUrl="https://redgol.cl/rss/feed" htmlUrl="https://redgol.cl"/>
+      <outline text="En Cancha - Sitemap Index [needs verification]" title="En Cancha - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.encancha.cl/arc/outboundfeeds/sitemap-index/?outputType=xml" htmlUrl="https://www.encancha.cl"/>
+      <outline text="En Cancha - News Sitemap Index [needs verification]" title="En Cancha - News Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.encancha.cl/arc/outboundfeeds/sitemap-news-index/?outputType=xml" htmlUrl="https://www.encancha.cl"/>
+      <outline text="PrensaFútbol [valid]" title="PrensaFútbol [valid]" type="rss" xmlUrl="https://www.prensafutbol.cl/feed/" htmlUrl="https://www.prensafutbol.cl"/>
+      <outline text="PrensaFútbol - News Sitemap [needs verification]" title="PrensaFútbol - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.prensafutbol.cl/news-sitemap.xml" htmlUrl="https://www.prensafutbol.cl"/>
+      <outline text="Sabes - Sitemap Index [needs verification]" title="Sabes - Sitemap Index [needs verification]" type="rss" xmlUrl="https://sabes.cl/sitemap.xml" htmlUrl="https://sabes.cl"/>
+      <outline text="Sabes - News Sitemap [needs verification]" title="Sabes - News Sitemap [needs verification]" type="rss" xmlUrl="https://sabes.cl/sitemap-news.xml" htmlUrl="https://sabes.cl"/>
+      <outline text="SabesDeportes - Sitemap Index [needs verification]" title="SabesDeportes - Sitemap Index [needs verification]" type="rss" xmlUrl="https://sabesdeportes.com/sitemap.xml" htmlUrl="https://sabesdeportes.com"/>
+      <outline text="SabesDeportes - News Sitemap [needs verification]" title="SabesDeportes - News Sitemap [needs verification]" type="rss" xmlUrl="https://sabesdeportes.com/sitemap-news.xml" htmlUrl="https://sabesdeportes.com"/>
       <outline text="Emol - Espectáculos Sitemap 2026 [needs verification]" title="Emol - Espectáculos Sitemap 2026 [needs verification]" type="rss" xmlUrl="https://www.emol.com/sitemap/xml/sitemap5_2026.xml" htmlUrl="https://www.emol.com"/>
       <outline text="Emol - Crónica Sitemap 2026 [needs verification]" title="Emol - Crónica Sitemap 2026 [needs verification]" type="rss" xmlUrl="https://www.emol.com/sitemap/xml/sitemap6_2026.xml" htmlUrl="https://www.emol.com"/>
       <outline text="Emol - Tecnología Sitemap 2026 [needs verification]" title="Emol - Tecnología Sitemap 2026 [needs verification]" type="rss" xmlUrl="https://www.emol.com/sitemap/xml/sitemap7_2026.xml" htmlUrl="https://www.emol.com"/>
