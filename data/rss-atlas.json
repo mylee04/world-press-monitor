@@ -8780,6 +8780,7 @@
         {
           "name": "Regnum - News Sitemap",
           "sitemapUrl": "https://regnum.ru/sitemap/news.xml",
+          "enabled": false,
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/13/2026",
           "valid": "valid",

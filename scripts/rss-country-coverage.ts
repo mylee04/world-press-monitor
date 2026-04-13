@@ -99,6 +99,30 @@ const DEFAULT_ITEM_LIMIT = 1000;
 const DEFAULT_OUTPUT_PATH = resolve(process.cwd(), 'audits/rss-country-coverage-latest.json');
 const SITEMAP_INDEX_CHILDREN_LIMIT = 8;
 const SITEMAP_INDEX_MAX_DEPTH = 2;
+const RUSSIAN_REGIONAL_SITEMAP_HOSTS = new Set([
+  'ngs.ru',
+  'www.ngs.ru',
+  '74.ru',
+  'www.74.ru',
+  '72.ru',
+  'www.72.ru',
+  '93.ru',
+  'www.93.ru',
+  '116.ru',
+  'www.116.ru',
+  '59.ru',
+  'www.59.ru',
+  '161.ru',
+  'www.161.ru',
+  '29.ru',
+  'www.29.ru',
+  '76.ru',
+  'www.76.ru',
+  'nn.ru',
+  'www.nn.ru',
+]);
+const RUSSIAN_REGIONAL_SITEMAP_URL_LIMIT = 120;
+const REGNUM_SITEMAP_URL_LIMIT = 64;
 const ARTICLE_PUBLISHED_AT_FETCH_LIMIT = 60;
 const ARTICLE_PUBLISHED_AT_FALLBACK_SOURCES = [
   'bernama',
@@ -577,6 +601,26 @@ function cleanSitemapIndexValue(value: string): string {
     .trim();
 }
 
+function resolveHostSpecificSitemapItemLimit(baseUrl: string, fallbackLimit: number): number {
+  try {
+    const parsed = new URL(baseUrl);
+    const hostname = parsed.hostname.toLowerCase();
+    const pathname = parsed.pathname.toLowerCase();
+
+    if (RUSSIAN_REGIONAL_SITEMAP_HOSTS.has(hostname) && /\/articles_20\d{2}_\d{2}\.xml(?:\.gz)?$/.test(pathname)) {
+      return Math.min(fallbackLimit, RUSSIAN_REGIONAL_SITEMAP_URL_LIMIT);
+    }
+
+    if ((hostname === 'regnum.ru' || hostname === 'www.regnum.ru') && /\/sitemap\/news\/20\d{2}-\d{2}\.xml$/.test(pathname)) {
+      return Math.min(fallbackLimit, REGNUM_SITEMAP_URL_LIMIT);
+    }
+  } catch {
+    return fallbackLimit;
+  }
+
+  return fallbackLimit;
+}
+
 function selectSitemapIndexEntries(entries: SitemapIndexEntry[], baseUrl: string): SitemapIndexEntry[] {
   if (entries.length === 0) return [];
 
@@ -621,28 +665,7 @@ function selectSitemapIndexEntries(entries: SitemapIndexEntry[], baseUrl: string
     if (postEntries.length > 0) return postEntries.slice(0, Math.min(2, SITEMAP_INDEX_CHILDREN_LIMIT));
   }
 
-  const isRussianRegionalPortal = new Set([
-    'ngs.ru',
-    'www.ngs.ru',
-    '74.ru',
-    'www.74.ru',
-    '72.ru',
-    'www.72.ru',
-    '93.ru',
-    'www.93.ru',
-    '116.ru',
-    'www.116.ru',
-    '59.ru',
-    'www.59.ru',
-    '161.ru',
-    'www.161.ru',
-    '29.ru',
-    'www.29.ru',
-    '76.ru',
-    'www.76.ru',
-    'nn.ru',
-    'www.nn.ru',
-  ]).has(hostname);
+  const isRussianRegionalPortal = RUSSIAN_REGIONAL_SITEMAP_HOSTS.has(hostname);
   if (isRussianRegionalPortal) {
     const monthlyArticleEntries = entries.filter((entry) => /\/articles_20\d{2}_\d{2}\.xml(?:\.gz)?$/i.test(entry.loc));
     if (monthlyArticleEntries.length > 0) return monthlyArticleEntries.slice(0, 1);
@@ -764,7 +787,7 @@ async function parseXmlRecursively(
   depth = 0,
   seen = new Set<string>()
 ): Promise<ParsedFeedBatch> {
-  const sitemap = parseSitemapWithStats(body, itemLimit, url);
+  const sitemap = parseSitemapWithStats(body, resolveHostSpecificSitemapItemLimit(url, itemLimit), url);
   if (sitemap.items.length > 0 || sitemap.stats.totalCandidates > 0) {
     return sitemap;
   }
