@@ -612,6 +612,11 @@ function parseSitemapIndexLocNumericTail(loc: string): number | null {
       const parsedFrom = Number.parseInt(fromParam, 10);
       if (Number.isFinite(parsedFrom)) return -parsedFrom;
     }
+    const startParam = parsedUrl.searchParams.get('start');
+    if (startParam) {
+      const parsedStart = Number.parseInt(startParam, 10);
+      if (Number.isFinite(parsedStart)) return -parsedStart;
+    }
   } catch {
     // Ignore malformed URLs and fall through.
   }

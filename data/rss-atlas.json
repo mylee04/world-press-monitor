@@ -25179,12 +25179,142 @@
           "row": 225
         },
         {
-          "name": "ABC Nyheter - Article Sitemap",
+          "name": "Avisa Oslo",
+          "url": "https://www.ao.no/service/rss"
+        },
+        {
+          "name": "Moss Avis",
+          "url": "https://www.moss-avis.no/service/rss"
+        },
+        {
+          "name": "Ringerikes Blad",
+          "url": "https://www.ringblad.no/service/rss"
+        },
+        {
+          "name": "Sarpsborg Arbeiderblad",
+          "url": "https://www.sa.no/service/rss"
+        },
+        {
+          "name": "Akershus Amtstidende",
+          "url": "https://www.amta.no/service/rss"
+        },
+        {
+          "name": "Tønsbergs Blad",
+          "url": "https://www.tb.no/service/rss"
+        },
+        {
+          "name": "Gjengangeren",
+          "url": "https://www.gjengangeren.no/service/rss"
+        },
+        {
+          "name": "Hamar Arbeiderblad",
+          "url": "https://www.h-a.no/service/rss"
+        },
+        {
+          "name": "Rana Blad",
+          "url": "https://www.ranablad.no/service/rss"
+        },
+        {
+          "name": "Laagendalsposten",
+          "url": "https://www.laagendalsposten.no/service/rss"
+        },
+        {
+          "name": "Avisa Nordland",
+          "url": "https://www.an.no/service/rss"
+        },
+        {
+          "name": "Lofotposten",
+          "url": "https://www.lofotposten.no/service/rss"
+        },
+        {
+          "name": "Helgelendingen",
+          "url": "https://www.helgelendingen.no/service/rss"
+        },
+        {
+          "name": "Bladet Vesterålen",
+          "url": "https://www.blv.no/service/rss"
+        },
+        {
+          "name": "Fremover",
+          "url": "https://www.fremover.no/service/rss"
+        },
+        {
+          "name": "Opdalingen",
+          "url": "https://www.opdalingen.no/rss"
+        },
+        {
+          "name": "Bygdeposten",
+          "url": "https://www.bygdeposten.no/service/rss"
+        },
+        {
+          "name": "Rakkestad Avis",
+          "url": "https://www.r-a.no/service/rss"
+        },
+        {
+          "name": "Tvedestrandsposten",
+          "url": "https://www.tvedestrandsposten.no/service/rss"
+        },
+        {
+          "name": "Jarlsberg Avis",
+          "url": "https://www.jarlsbergavis.no/service/rss"
+        },
+        {
+          "name": "Smaalenenes Avis",
+          "url": "https://www.smaalenene.no/service/rss"
+        },
+        {
+          "name": "Vestby Avis",
+          "url": "https://www.vestbyavis.no/service/rss"
+        },
+        {
+          "name": "Porsgrunns Dagblad",
+          "url": "https://www.pd.no/service/rss"
+        },
+        {
+          "name": "Lierposten",
+          "url": "https://www.lierposten.no/service/rss"
+        },
+        {
+          "name": "Fjordenes Tidende",
+          "url": "https://www.fjt.no/rss"
+        },
+        {
+          "name": "Møre-Nytt",
+          "url": "https://www.morenytt.no/rss"
+        },
+        {
+          "name": "Vestlandsnytt",
+          "url": "https://www.vestlandsnytt.no/rss"
+        },
+        {
+          "name": "Tronder-Avisa",
+          "url": "https://www.t-a.no/service/rss"
+        },
+        {
+          "name": "Nationen",
+          "url": "https://www.nationen.no/service/rss"
+        },
+        {
+          "name": "Document",
+          "url": "https://www.document.no/feed/"
+        },
+        {
+          "name": "ABC Nyheter - Sitemap Index",
           "url": null,
-          "sitemapUrl": "https://www.abcnyheter.no/sitemap?start=0&pageType=article",
+          "sitemapUrl": "https://www.abcnyheter.no/sitemapindex.xml",
           "status": "⏩ OFFICIAL",
-          "checkedDate": "03/31/2026",
+          "checkedDate": "04/13/2026",
           "valid": "valid"
+        },
+        {
+          "name": "Se og Hør - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.seher.no/sitemapindex.xml"
+        },
+        {
+          "name": "Dinside - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.dinside.no/sitemapindex.xml"
         },
         {
           "name": "Dagen - Sitemap",

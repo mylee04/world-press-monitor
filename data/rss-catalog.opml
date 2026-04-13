@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Mon, 13 Apr 2026 19:46:41 GMT</dateCreated>
+    <dateCreated>Mon, 13 Apr 2026 20:58:32 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -3283,7 +3283,39 @@
       <outline text="Innherred [valid]" title="Innherred [valid]" type="rss" xmlUrl="https://www.innherred.no/rss" htmlUrl="https://www.innherred.no"/>
       <outline text="Hallingdølen [valid]" title="Hallingdølen [valid]" type="rss" xmlUrl="https://www.hallingdolen.no/rss" htmlUrl="https://www.hallingdolen.no"/>
       <outline text="Sunnhordland [valid]" title="Sunnhordland [valid]" type="rss" xmlUrl="https://www.sunnhordland.no/rss" htmlUrl="https://www.sunnhordland.no"/>
-      <outline text="ABC Nyheter - Article Sitemap [needs verification]" title="ABC Nyheter - Article Sitemap [needs verification]" type="rss" xmlUrl="https://www.abcnyheter.no/sitemap?start=0&amp;pageType=article" htmlUrl="https://www.abcnyheter.no"/>
+      <outline text="Avisa Oslo [needs verification]" title="Avisa Oslo [needs verification]" type="rss" xmlUrl="https://www.ao.no/service/rss" htmlUrl="https://www.ao.no"/>
+      <outline text="Moss Avis [needs verification]" title="Moss Avis [needs verification]" type="rss" xmlUrl="https://www.moss-avis.no/service/rss" htmlUrl="https://www.moss-avis.no"/>
+      <outline text="Ringerikes Blad [needs verification]" title="Ringerikes Blad [needs verification]" type="rss" xmlUrl="https://www.ringblad.no/service/rss" htmlUrl="https://www.ringblad.no"/>
+      <outline text="Sarpsborg Arbeiderblad [needs verification]" title="Sarpsborg Arbeiderblad [needs verification]" type="rss" xmlUrl="https://www.sa.no/service/rss" htmlUrl="https://www.sa.no"/>
+      <outline text="Akershus Amtstidende [needs verification]" title="Akershus Amtstidende [needs verification]" type="rss" xmlUrl="https://www.amta.no/service/rss" htmlUrl="https://www.amta.no"/>
+      <outline text="Tønsbergs Blad [needs verification]" title="Tønsbergs Blad [needs verification]" type="rss" xmlUrl="https://www.tb.no/service/rss" htmlUrl="https://www.tb.no"/>
+      <outline text="Gjengangeren [needs verification]" title="Gjengangeren [needs verification]" type="rss" xmlUrl="https://www.gjengangeren.no/service/rss" htmlUrl="https://www.gjengangeren.no"/>
+      <outline text="Hamar Arbeiderblad [needs verification]" title="Hamar Arbeiderblad [needs verification]" type="rss" xmlUrl="https://www.h-a.no/service/rss" htmlUrl="https://www.h-a.no"/>
+      <outline text="Rana Blad [needs verification]" title="Rana Blad [needs verification]" type="rss" xmlUrl="https://www.ranablad.no/service/rss" htmlUrl="https://www.ranablad.no"/>
+      <outline text="Laagendalsposten [needs verification]" title="Laagendalsposten [needs verification]" type="rss" xmlUrl="https://www.laagendalsposten.no/service/rss" htmlUrl="https://www.laagendalsposten.no"/>
+      <outline text="Avisa Nordland [needs verification]" title="Avisa Nordland [needs verification]" type="rss" xmlUrl="https://www.an.no/service/rss" htmlUrl="https://www.an.no"/>
+      <outline text="Lofotposten [needs verification]" title="Lofotposten [needs verification]" type="rss" xmlUrl="https://www.lofotposten.no/service/rss" htmlUrl="https://www.lofotposten.no"/>
+      <outline text="Helgelendingen [needs verification]" title="Helgelendingen [needs verification]" type="rss" xmlUrl="https://www.helgelendingen.no/service/rss" htmlUrl="https://www.helgelendingen.no"/>
+      <outline text="Bladet Vesterålen [needs verification]" title="Bladet Vesterålen [needs verification]" type="rss" xmlUrl="https://www.blv.no/service/rss" htmlUrl="https://www.blv.no"/>
+      <outline text="Fremover [needs verification]" title="Fremover [needs verification]" type="rss" xmlUrl="https://www.fremover.no/service/rss" htmlUrl="https://www.fremover.no"/>
+      <outline text="Opdalingen [needs verification]" title="Opdalingen [needs verification]" type="rss" xmlUrl="https://www.opdalingen.no/rss" htmlUrl="https://www.opdalingen.no"/>
+      <outline text="Bygdeposten [needs verification]" title="Bygdeposten [needs verification]" type="rss" xmlUrl="https://www.bygdeposten.no/service/rss" htmlUrl="https://www.bygdeposten.no"/>
+      <outline text="Rakkestad Avis [needs verification]" title="Rakkestad Avis [needs verification]" type="rss" xmlUrl="https://www.r-a.no/service/rss" htmlUrl="https://www.r-a.no"/>
+      <outline text="Tvedestrandsposten [needs verification]" title="Tvedestrandsposten [needs verification]" type="rss" xmlUrl="https://www.tvedestrandsposten.no/service/rss" htmlUrl="https://www.tvedestrandsposten.no"/>
+      <outline text="Jarlsberg Avis [needs verification]" title="Jarlsberg Avis [needs verification]" type="rss" xmlUrl="https://www.jarlsbergavis.no/service/rss" htmlUrl="https://www.jarlsbergavis.no"/>
+      <outline text="Smaalenenes Avis [needs verification]" title="Smaalenenes Avis [needs verification]" type="rss" xmlUrl="https://www.smaalenene.no/service/rss" htmlUrl="https://www.smaalenene.no"/>
+      <outline text="Vestby Avis [needs verification]" title="Vestby Avis [needs verification]" type="rss" xmlUrl="https://www.vestbyavis.no/service/rss" htmlUrl="https://www.vestbyavis.no"/>
+      <outline text="Porsgrunns Dagblad [needs verification]" title="Porsgrunns Dagblad [needs verification]" type="rss" xmlUrl="https://www.pd.no/service/rss" htmlUrl="https://www.pd.no"/>
+      <outline text="Lierposten [needs verification]" title="Lierposten [needs verification]" type="rss" xmlUrl="https://www.lierposten.no/service/rss" htmlUrl="https://www.lierposten.no"/>
+      <outline text="Fjordenes Tidende [needs verification]" title="Fjordenes Tidende [needs verification]" type="rss" xmlUrl="https://www.fjt.no/rss" htmlUrl="https://www.fjt.no"/>
+      <outline text="Møre-Nytt [needs verification]" title="Møre-Nytt [needs verification]" type="rss" xmlUrl="https://www.morenytt.no/rss" htmlUrl="https://www.morenytt.no"/>
+      <outline text="Vestlandsnytt [needs verification]" title="Vestlandsnytt [needs verification]" type="rss" xmlUrl="https://www.vestlandsnytt.no/rss" htmlUrl="https://www.vestlandsnytt.no"/>
+      <outline text="Tronder-Avisa [needs verification]" title="Tronder-Avisa [needs verification]" type="rss" xmlUrl="https://www.t-a.no/service/rss" htmlUrl="https://www.t-a.no"/>
+      <outline text="Nationen [needs verification]" title="Nationen [needs verification]" type="rss" xmlUrl="https://www.nationen.no/service/rss" htmlUrl="https://www.nationen.no"/>
+      <outline text="Document [needs verification]" title="Document [needs verification]" type="rss" xmlUrl="https://www.document.no/feed/" htmlUrl="https://www.document.no"/>
+      <outline text="ABC Nyheter - Sitemap Index [needs verification]" title="ABC Nyheter - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.abcnyheter.no/sitemapindex.xml" htmlUrl="https://www.abcnyheter.no"/>
+      <outline text="Se og Hør - Sitemap Index [needs verification]" title="Se og Hør - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.seher.no/sitemapindex.xml" htmlUrl="https://www.seher.no"/>
+      <outline text="Dinside - Sitemap Index [needs verification]" title="Dinside - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.dinside.no/sitemapindex.xml" htmlUrl="https://www.dinside.no"/>
       <outline text="Dagen - Sitemap [needs verification]" title="Dagen - Sitemap [needs verification]" type="rss" xmlUrl="https://www.dagen.no/sitemap.xml" htmlUrl="https://www.dagen.no"/>
       <outline text="Dagsavisen - Sitemap [needs verification]" title="Dagsavisen - Sitemap [needs verification]" type="rss" xmlUrl="https://www.dagsavisen.no/sitemap.xml" htmlUrl="https://www.dagsavisen.no"/>
       <outline text="Vårt Land - Sitemap [needs verification]" title="Vårt Land - Sitemap [needs verification]" type="rss" xmlUrl="https://www.vl.no/sitemap.xml" htmlUrl="https://www.vl.no"/>
