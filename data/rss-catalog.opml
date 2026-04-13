@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Mon, 13 Apr 2026 15:37:59 GMT</dateCreated>
+    <dateCreated>Mon, 13 Apr 2026 16:16:02 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -375,6 +375,29 @@
       <outline text="Business Insider Japan [valid]" title="Business Insider Japan [valid]" type="rss" xmlUrl="https://www.businessinsider.jp/feed/index.xml" htmlUrl="https://www.businessinsider.jp"/>
       <outline text="Nikkei Business [needs verification]" title="Nikkei Business [needs verification]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/media/business/all.xml" htmlUrl="https://news.yahoo.co.jp"/>
       <outline text="Netorabo [needs verification]" title="Netorabo [needs verification]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/media/it_nlab/all.xml" htmlUrl="https://news.yahoo.co.jp"/>
+      <outline text="36Kr Japan [needs verification]" title="36Kr Japan [needs verification]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/media/krjapan/all.xml" htmlUrl="https://news.yahoo.co.jp"/>
+      <outline text="AERA DIGITAL [needs verification]" title="AERA DIGITAL [needs verification]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/media/sasahi/all.xml" htmlUrl="https://news.yahoo.co.jp"/>
+      <outline text="Bunshun Online [needs verification]" title="Bunshun Online [needs verification]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/media/bunshun/all.xml" htmlUrl="https://news.yahoo.co.jp"/>
+      <outline text="Full-Count [needs verification]" title="Full-Count [needs verification]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/media/fullcount/all.xml" htmlUrl="https://news.yahoo.co.jp"/>
+      <outline text="Gekisaka [needs verification]" title="Gekisaka [needs verification]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/media/gekisaka/all.xml" htmlUrl="https://news.yahoo.co.jp"/>
+      <outline text="ENCOUNT [needs verification]" title="ENCOUNT [needs verification]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/media/encount/all.xml" htmlUrl="https://news.yahoo.co.jp"/>
+      <outline text="Hint-Pot [needs verification]" title="Hint-Pot [needs verification]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/media/hintpot/all.xml" htmlUrl="https://news.yahoo.co.jp"/>
+      <outline text="Kuruma no News [needs verification]" title="Kuruma no News [needs verification]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/media/kurumans/all.xml" htmlUrl="https://news.yahoo.co.jp"/>
+      <outline text="Response [needs verification]" title="Response [needs verification]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/media/rps/all.xml" htmlUrl="https://news.yahoo.co.jp"/>
+      <outline text="Newswitch [needs verification]" title="Newswitch [needs verification]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/media/newswitch/all.xml" htmlUrl="https://news.yahoo.co.jp"/>
+      <outline text="Shukan Josei PRIME [needs verification]" title="Shukan Josei PRIME [needs verification]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/media/jprime/all.xml" htmlUrl="https://news.yahoo.co.jp"/>
+      <outline text="Kyoto Shimbun [needs verification]" title="Kyoto Shimbun [needs verification]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/media/kyt/all.xml" htmlUrl="https://news.yahoo.co.jp"/>
+      <outline text="Nishinippon [needs verification]" title="Nishinippon [needs verification]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/media/nishinp/all.xml" htmlUrl="https://news.yahoo.co.jp"/>
+      <outline text="Kanaloco [needs verification]" title="Kanaloco [needs verification]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/media/kana/all.xml" htmlUrl="https://news.yahoo.co.jp"/>
+      <outline text="Sanyo Shimbun Digital [needs verification]" title="Sanyo Shimbun Digital [needs verification]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/media/sanyo/all.xml" htmlUrl="https://news.yahoo.co.jp"/>
+      <outline text="Kumanichi [needs verification]" title="Kumanichi [needs verification]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/media/kumanichi/all.xml" htmlUrl="https://news.yahoo.co.jp"/>
+      <outline text="Ehime Shimbun ONLINE [needs verification]" title="Ehime Shimbun ONLINE [needs verification]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/media/ehime/all.xml" htmlUrl="https://news.yahoo.co.jp"/>
+      <outline text="Shimo-tsuke Shimbun Digital [needs verification]" title="Shimo-tsuke Shimbun Digital [needs verification]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/media/soon/all.xml" htmlUrl="https://news.yahoo.co.jp"/>
+      <outline text="Saga Shimbun [needs verification]" title="Saga Shimbun [needs verification]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/media/saga/all.xml" htmlUrl="https://news.yahoo.co.jp"/>
+      <outline text="Network Shop Forum [needs verification]" title="Network Shop Forum [needs verification]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/media/netshop/all.xml" htmlUrl="https://news.yahoo.co.jp"/>
+      <outline text="Bengo.com News [needs verification]" title="Bengo.com News [needs verification]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/media/bengocom/all.xml" htmlUrl="https://news.yahoo.co.jp"/>
+      <outline text="Otaku Soken [needs verification]" title="Otaku Soken [needs verification]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/media/otakulab/all.xml" htmlUrl="https://news.yahoo.co.jp"/>
+      <outline text="Norimono News [needs verification]" title="Norimono News [needs verification]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/media/norimono/all.xml" htmlUrl="https://news.yahoo.co.jp"/>
       <outline text="ASCII.jp [needs verification]" title="ASCII.jp [needs verification]" type="rss" xmlUrl="https://ascii.jp/rss.xml" htmlUrl="https://ascii.jp"/>
       <outline text="Impress Watch [needs verification]" title="Impress Watch [needs verification]" type="rss" xmlUrl="https://www.watch.impress.co.jp/data/rss/1.0/ipw/feed.rdf" htmlUrl="https://www.watch.impress.co.jp"/>
       <outline text="GAME Watch [needs verification]" title="GAME Watch [needs verification]" type="rss" xmlUrl="https://game.watch.impress.co.jp/data/rss/1.0/gmw/feed.rdf" htmlUrl="https://game.watch.impress.co.jp"/>

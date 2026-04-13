@@ -3007,6 +3007,78 @@
           "valid": "needs verification"
         },
         {
+          "name": "Kyoto Shimbun",
+          "url": "https://news.yahoo.co.jp/rss/media/kyt/all.xml",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Nishinippon",
+          "url": "https://news.yahoo.co.jp/rss/media/nishinp/all.xml",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Kanaloco",
+          "url": "https://news.yahoo.co.jp/rss/media/kana/all.xml",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Sanyo Shimbun Digital",
+          "url": "https://news.yahoo.co.jp/rss/media/sanyo/all.xml",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Kumanichi",
+          "url": "https://news.yahoo.co.jp/rss/media/kumanichi/all.xml",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Ehime Shimbun ONLINE",
+          "url": "https://news.yahoo.co.jp/rss/media/ehime/all.xml",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Shimo-tsuke Shimbun Digital",
+          "url": "https://news.yahoo.co.jp/rss/media/soon/all.xml",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Saga Shimbun",
+          "url": "https://news.yahoo.co.jp/rss/media/saga/all.xml",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Network Shop Forum",
+          "url": "https://news.yahoo.co.jp/rss/media/netshop/all.xml",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Bengo.com News",
+          "url": "https://news.yahoo.co.jp/rss/media/bengocom/all.xml",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Otaku Soken",
+          "url": "https://news.yahoo.co.jp/rss/media/otakulab/all.xml",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Norimono News",
+          "url": "https://news.yahoo.co.jp/rss/media/norimono/all.xml",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
           "name": "Hatena Bookmark Economy",
           "url": "https://b.hatena.ne.jp/hotentry/economics.rss",
           "enabled": false
