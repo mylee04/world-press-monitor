@@ -2502,30 +2502,54 @@
         },
         {
           "name": "Yahoo Japan - Business",
-          "url": "https://news.yahoo.co.jp/rss/topics/business.xml",
+          "url": "https://news.yahoo.co.jp/rss/categories/business.xml",
           "distributionClass": "portal",
           "status": null,
-          "checkedDate": null,
+          "checkedDate": "04/13/2026",
           "valid": "needs verification",
           "row": 39
         },
         {
           "name": "Yahoo Japan - World",
-          "url": "https://news.yahoo.co.jp/rss/topics/world.xml",
+          "url": "https://news.yahoo.co.jp/rss/categories/world.xml",
           "distributionClass": "portal",
           "status": null,
-          "checkedDate": null,
+          "checkedDate": "04/13/2026",
           "valid": "needs verification",
           "row": 40
         },
         {
           "name": "Yahoo Japan - IT/Tech",
-          "url": "https://news.yahoo.co.jp/rss/topics/it.xml",
+          "url": "https://news.yahoo.co.jp/rss/categories/it.xml",
           "distributionClass": "portal",
           "status": null,
-          "checkedDate": null,
+          "checkedDate": "04/13/2026",
           "valid": "needs verification",
           "row": 41
+        },
+        {
+          "name": "Yahoo Japan - Domestic",
+          "url": "https://news.yahoo.co.jp/rss/categories/domestic.xml",
+          "distributionClass": "portal",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Yahoo Japan - Entertainment",
+          "url": "https://news.yahoo.co.jp/rss/categories/entertainment.xml",
+          "distributionClass": "portal",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Yahoo Japan - Sports",
+          "url": "https://news.yahoo.co.jp/rss/categories/sports.xml",
+          "distributionClass": "portal",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
         },
         {
           "name": "Reuters Japan",
@@ -2559,7 +2583,7 @@
           "url": "https://news.yahoo.co.jp/rss/media/kyodonews/all.xml",
           "distributionClass": "portal",
           "status": null,
-          "checkedDate": null,
+          "checkedDate": "04/13/2026",
           "valid": "needs verification",
           "row": 45
         },
@@ -2603,8 +2627,7 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 50,
-          "enabled": false
+          "row": 50
         },
         {
           "name": "Wired Japan",
@@ -2987,6 +3010,120 @@
           "url": "https://codezine.jp/rss/new/20/index.xml",
           "language": "ja",
           "tier": "primary"
+        },
+        {
+          "name": "Mynavi News - Index",
+          "url": "https://news.mynavi.jp/rss/index",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Mynavi News - Techplus Enterprise",
+          "url": "https://news.mynavi.jp/rss/techplus/enterprise",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Mynavi News - Techplus Technology",
+          "url": "https://news.mynavi.jp/rss/techplus/technology",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Mynavi News - Digital Mobile",
+          "url": "https://news.mynavi.jp/rss/digital/mobile",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Mynavi News - Entertainment",
+          "url": "https://news.mynavi.jp/rss/entertainment/entertainment",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Mynavi News - Life",
+          "url": "https://news.mynavi.jp/rss/kurashi/life",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Mynavi News - Digital PC",
+          "url": "https://news.mynavi.jp/rss/digital/pc",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Mynavi News - Hobby Game",
+          "url": "https://news.mynavi.jp/rss/entertainment/hobby/game",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Mynavi News - Digital Gadget",
+          "url": "https://news.mynavi.jp/rss/digital/gadget",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Nikkan Sports - General",
+          "url": "https://www.nikkansports.com/general/atom.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Nikkan Sports - Sports",
+          "url": "https://www.nikkansports.com/sports/atom.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Nikkan Sports - Entertainment",
+          "url": "https://www.nikkansports.com/entertainment/atom.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Nikkan Sports - Baseball",
+          "url": "https://www.nikkansports.com/baseball/atom.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "Nikkan Sports - Soccer",
+          "url": "https://www.nikkansports.com/soccer/atom.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "47NEWS - Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.47news.jp/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
+        },
+        {
+          "name": "ORICON - News Sitemap Index",
+          "url": null,
+          "sitemapUrl": "https://www.oricon.co.jp/sitemap/sitemap_news_index.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "needs verification"
         }
       ]
     },
@@ -4000,6 +4137,7 @@
         {
           "name": "Amar Ujala (Breaking)",
           "url": "https://www.amarujala.com/rss/breaking-news.xml",
+          "sitemapUrl": "https://www.amarujala.com/sitemap-news-v1.xml",
           "status": null,
           "checkedDate": null,
           "valid": null,
@@ -4024,6 +4162,7 @@
         {
           "name": "Scroll.in",
           "url": "https://feeds.feedburner.com/ScrollinArticles.rss",
+          "sitemapUrl": "https://scroll.in/sitemap/news-sitemap.xml",
           "status": null,
           "checkedDate": null,
           "valid": null,
@@ -4057,6 +4196,7 @@
         {
           "name": "The Quint",
           "url": "https://prod-qt-images.s3.amazonaws.com/production/thequint/feed.xml",
+          "sitemapUrl": "https://www.thequint.com/sitemap/today",
           "status": null,
           "checkedDate": null,
           "valid": null,
@@ -4065,6 +4205,7 @@
         {
           "name": "Telangana Today",
           "url": "https://telanganatoday.com/feed",
+          "sitemapUrl": "https://telanganatoday.com/news-sitemap.xml",
           "status": null,
           "checkedDate": null,
           "valid": null,
@@ -4204,12 +4345,14 @@
         {
           "name": "Moneycontrol",
           "url": "https://www.moneycontrol.com/rss/latestnews.xml",
+          "sitemapUrl": "https://www.moneycontrol.com/news/news-sitemap.xml",
           "language": "en",
           "tier": "primary"
         },
         {
           "name": "The Siasat Daily",
           "url": "https://www.siasat.com/feed/",
+          "sitemapUrl": "https://www.siasat.com/news-sitemap.xml",
           "language": "en",
           "tier": "primary"
         },
@@ -4228,18 +4371,33 @@
         {
           "name": "TelecomTalk",
           "url": "https://telecomtalk.info/feed/",
+          "sitemapUrl": "https://telecomtalk.info/news.xml",
           "language": "en",
           "tier": "primary"
         },
         {
           "name": "Medical Dialogues",
           "url": "https://medicaldialogues.in/feed",
+          "sitemapUrl": "https://medicaldialogues.in/news-sitemap-daily.xml",
           "language": "en",
           "tier": "primary"
         },
         {
           "name": "The Better India",
           "url": "https://www.thebetterindia.com/feed/",
+          "sitemapUrl": "https://thebetterindia.com/news-sitemap.xml",
+          "language": "en",
+          "tier": "primary"
+        },
+        {
+          "name": "Economic Times",
+          "sitemapUrl": "https://economictimes.indiatimes.com/etstatic/sitemaps/et/news/sitemap-today.xml",
+          "language": "en",
+          "tier": "primary"
+        },
+        {
+          "name": "Republic World",
+          "sitemapUrl": "https://www.republicworld.com/sitemaps/sitemaps-news.xml",
           "language": "en",
           "tier": "primary"
         }
@@ -20865,12 +21023,99 @@
         {
           "name": "TyC Sports",
           "url": null,
-          "status": "⏩ OFFICIAL",
-          "checkedDate": null,
-          "valid": "needs verification",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
           "row": 98,
-          "enabled": false,
           "sitemapUrl": "https://www.tycsports.com/sitemap_news_48hs.xml"
+        },
+        {
+          "name": "El Litoral",
+          "url": null,
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 99,
+          "sitemapUrl": "https://www.ellitoral.com/sitemaps/sitemap_google_news.xml"
+        },
+        {
+          "name": "Diario UNO",
+          "url": null,
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 100,
+          "sitemapUrl": "https://www.diariouno.com.ar/sitemap-news.xml"
+        },
+        {
+          "name": "El Patagónico",
+          "url": null,
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 101,
+          "sitemapUrl": "https://www.elpatagonico.com/sitemap-news.xml"
+        },
+        {
+          "name": "Cadena 3",
+          "url": null,
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 102,
+          "sitemapUrl": "https://www.cadena3.com/feed/sitemap-news.xml"
+        },
+        {
+          "name": "El Ancasti",
+          "url": null,
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 103,
+          "sitemapUrl": "https://www.elancasti.com.ar/sitemap-news.xml"
+        },
+        {
+          "name": "El Once",
+          "url": null,
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 104,
+          "sitemapUrl": "https://www.elonce.com/sitemap-news.xml"
+        },
+        {
+          "name": "El Ciudadano Rosario",
+          "url": "https://www.elciudadanoweb.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 105
+        },
+        {
+          "name": "El Tribuno - Jujuy",
+          "url": "https://www.eltribuno.com/jujuy/feed/",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 106
+        },
+        {
+          "name": "0223",
+          "url": null,
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 107,
+          "sitemapUrl": "https://www.0223.com.ar/sitemaps_news.xml"
+        },
+        {
+          "name": "Mendoza Post",
+          "url": null,
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 108,
+          "sitemapUrl": "https://www.mendozapost.com/files/sitemap/sitemap.xml.gz"
         }
       ]
     },

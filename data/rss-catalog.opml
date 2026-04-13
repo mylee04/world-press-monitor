@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Mon, 13 Apr 2026 04:53:46 GMT</dateCreated>
+    <dateCreated>Mon, 13 Apr 2026 15:05:24 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -332,12 +332,16 @@
       <outline text="J-CASTトレンド [valid]" title="J-CASTトレンド [valid]" type="rss" xmlUrl="https://www.j-cast.com/trend/index.xml" htmlUrl="https://www.j-cast.com"/>
       <outline text="J-CAST会社ウォッチ [valid]" title="J-CAST会社ウォッチ [valid]" type="rss" xmlUrl="https://www.j-cast.com/kaisha/index.xml" htmlUrl="https://www.j-cast.com"/>
       <outline text="GIGAZINE (Atom) [valid]" title="GIGAZINE (Atom) [valid]" type="rss" xmlUrl="https://gigazine.net/news/rss_atom/" htmlUrl="https://gigazine.net"/>
-      <outline text="Yahoo Japan - Business [valid]" title="Yahoo Japan - Business [valid]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/topics/business.xml" htmlUrl="https://news.yahoo.co.jp"/>
-      <outline text="Yahoo Japan - World [valid]" title="Yahoo Japan - World [valid]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/topics/world.xml" htmlUrl="https://news.yahoo.co.jp"/>
-      <outline text="Yahoo Japan - IT/Tech [valid]" title="Yahoo Japan - IT/Tech [valid]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/topics/it.xml" htmlUrl="https://news.yahoo.co.jp"/>
+      <outline text="Yahoo Japan - Business [needs verification]" title="Yahoo Japan - Business [needs verification]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/categories/business.xml" htmlUrl="https://news.yahoo.co.jp"/>
+      <outline text="Yahoo Japan - World [needs verification]" title="Yahoo Japan - World [needs verification]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/categories/world.xml" htmlUrl="https://news.yahoo.co.jp"/>
+      <outline text="Yahoo Japan - IT/Tech [needs verification]" title="Yahoo Japan - IT/Tech [needs verification]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/categories/it.xml" htmlUrl="https://news.yahoo.co.jp"/>
+      <outline text="Yahoo Japan - Domestic [needs verification]" title="Yahoo Japan - Domestic [needs verification]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/categories/domestic.xml" htmlUrl="https://news.yahoo.co.jp"/>
+      <outline text="Yahoo Japan - Entertainment [needs verification]" title="Yahoo Japan - Entertainment [needs verification]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/categories/entertainment.xml" htmlUrl="https://news.yahoo.co.jp"/>
+      <outline text="Yahoo Japan - Sports [needs verification]" title="Yahoo Japan - Sports [needs verification]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/categories/sports.xml" htmlUrl="https://news.yahoo.co.jp"/>
       <outline text="Kyodo News [valid]" title="Kyodo News [valid]" type="rss" xmlUrl="https://news.yahoo.co.jp/rss/media/kyodonews/all.xml" htmlUrl="https://news.yahoo.co.jp"/>
       <outline text="Toyo Keizai [valid]" title="Toyo Keizai [valid]" type="rss" xmlUrl="https://toyokeizai.net/list/feed/rss" htmlUrl="https://toyokeizai.net"/>
       <outline text="Diamond Online [invalid]" title="Diamond Online [invalid]" type="rss" xmlUrl="https://diamond.jp/list/feed/rss" htmlUrl="https://diamond.jp"/>
+      <outline text="CNET Japan [needs verification]" title="CNET Japan [needs verification]" type="rss" xmlUrl="https://feeds.japan.cnet.com/rss/cnet/all.rdf" htmlUrl="https://feeds.japan.cnet.com"/>
       <outline text="Smart Japan [valid]" title="Smart Japan [valid]" type="rss" xmlUrl="https://rss.itmedia.co.jp/rss/2.0/smartjapan.xml" htmlUrl="https://rss.itmedia.co.jp"/>
       <outline text="Nikkei - News Sitemap [needs verification]" title="Nikkei - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.nikkei.com/sitemap.xml" htmlUrl="https://www.nikkei.com"/>
       <outline text="Yomiuri - Full Sitemap [needs verification]" title="Yomiuri - Full Sitemap [needs verification]" type="rss" xmlUrl="https://www.yomiuri.co.jp/sitemap.xml" htmlUrl="https://www.yomiuri.co.jp"/>
@@ -371,6 +375,22 @@
       <outline text="MarkeZine [needs verification]" title="MarkeZine [needs verification]" type="rss" xmlUrl="https://markezine.jp/rss/new/20/index.xml" htmlUrl="https://markezine.jp"/>
       <outline text="EnterpriseZine [needs verification]" title="EnterpriseZine [needs verification]" type="rss" xmlUrl="https://enterprisezine.jp/rss/new/20/index.xml" htmlUrl="https://enterprisezine.jp"/>
       <outline text="CodeZine [needs verification]" title="CodeZine [needs verification]" type="rss" xmlUrl="https://codezine.jp/rss/new/20/index.xml" htmlUrl="https://codezine.jp"/>
+      <outline text="Mynavi News - Index [needs verification]" title="Mynavi News - Index [needs verification]" type="rss" xmlUrl="https://news.mynavi.jp/rss/index" htmlUrl="https://news.mynavi.jp"/>
+      <outline text="Mynavi News - Techplus Enterprise [needs verification]" title="Mynavi News - Techplus Enterprise [needs verification]" type="rss" xmlUrl="https://news.mynavi.jp/rss/techplus/enterprise" htmlUrl="https://news.mynavi.jp"/>
+      <outline text="Mynavi News - Techplus Technology [needs verification]" title="Mynavi News - Techplus Technology [needs verification]" type="rss" xmlUrl="https://news.mynavi.jp/rss/techplus/technology" htmlUrl="https://news.mynavi.jp"/>
+      <outline text="Mynavi News - Digital Mobile [needs verification]" title="Mynavi News - Digital Mobile [needs verification]" type="rss" xmlUrl="https://news.mynavi.jp/rss/digital/mobile" htmlUrl="https://news.mynavi.jp"/>
+      <outline text="Mynavi News - Entertainment [needs verification]" title="Mynavi News - Entertainment [needs verification]" type="rss" xmlUrl="https://news.mynavi.jp/rss/entertainment/entertainment" htmlUrl="https://news.mynavi.jp"/>
+      <outline text="Mynavi News - Life [needs verification]" title="Mynavi News - Life [needs verification]" type="rss" xmlUrl="https://news.mynavi.jp/rss/kurashi/life" htmlUrl="https://news.mynavi.jp"/>
+      <outline text="Mynavi News - Digital PC [needs verification]" title="Mynavi News - Digital PC [needs verification]" type="rss" xmlUrl="https://news.mynavi.jp/rss/digital/pc" htmlUrl="https://news.mynavi.jp"/>
+      <outline text="Mynavi News - Hobby Game [needs verification]" title="Mynavi News - Hobby Game [needs verification]" type="rss" xmlUrl="https://news.mynavi.jp/rss/entertainment/hobby/game" htmlUrl="https://news.mynavi.jp"/>
+      <outline text="Mynavi News - Digital Gadget [needs verification]" title="Mynavi News - Digital Gadget [needs verification]" type="rss" xmlUrl="https://news.mynavi.jp/rss/digital/gadget" htmlUrl="https://news.mynavi.jp"/>
+      <outline text="Nikkan Sports - General [needs verification]" title="Nikkan Sports - General [needs verification]" type="rss" xmlUrl="https://www.nikkansports.com/general/atom.xml" htmlUrl="https://www.nikkansports.com"/>
+      <outline text="Nikkan Sports - Sports [needs verification]" title="Nikkan Sports - Sports [needs verification]" type="rss" xmlUrl="https://www.nikkansports.com/sports/atom.xml" htmlUrl="https://www.nikkansports.com"/>
+      <outline text="Nikkan Sports - Entertainment [needs verification]" title="Nikkan Sports - Entertainment [needs verification]" type="rss" xmlUrl="https://www.nikkansports.com/entertainment/atom.xml" htmlUrl="https://www.nikkansports.com"/>
+      <outline text="Nikkan Sports - Baseball [needs verification]" title="Nikkan Sports - Baseball [needs verification]" type="rss" xmlUrl="https://www.nikkansports.com/baseball/atom.xml" htmlUrl="https://www.nikkansports.com"/>
+      <outline text="Nikkan Sports - Soccer [needs verification]" title="Nikkan Sports - Soccer [needs verification]" type="rss" xmlUrl="https://www.nikkansports.com/soccer/atom.xml" htmlUrl="https://www.nikkansports.com"/>
+      <outline text="47NEWS - Sitemap Index [needs verification]" title="47NEWS - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.47news.jp/sitemap.xml" htmlUrl="https://www.47news.jp"/>
+      <outline text="ORICON - News Sitemap Index [needs verification]" title="ORICON - News Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.oricon.co.jp/sitemap/sitemap_news_index.xml" htmlUrl="https://www.oricon.co.jp"/>
     </outline>
     <outline text="Germany (DE)" title="Germany (DE)">
       <outline text="Handelsblatt - Top [valid]" title="Handelsblatt - Top [valid]" type="rss" xmlUrl="https://www.handelsblatt.com/contentexport/feed/top-themen" htmlUrl="https://www.handelsblatt.com"/>
@@ -554,6 +574,8 @@
       <outline text="TelecomTalk [needs verification]" title="TelecomTalk [needs verification]" type="rss" xmlUrl="https://telecomtalk.info/feed/" htmlUrl="https://telecomtalk.info"/>
       <outline text="Medical Dialogues [needs verification]" title="Medical Dialogues [needs verification]" type="rss" xmlUrl="https://medicaldialogues.in/feed" htmlUrl="https://medicaldialogues.in"/>
       <outline text="The Better India [needs verification]" title="The Better India [needs verification]" type="rss" xmlUrl="https://www.thebetterindia.com/feed/" htmlUrl="https://www.thebetterindia.com"/>
+      <outline text="Economic Times [needs verification]" title="Economic Times [needs verification]" type="rss" xmlUrl="https://economictimes.indiatimes.com/etstatic/sitemaps/et/news/sitemap-today.xml" htmlUrl="https://economictimes.indiatimes.com"/>
+      <outline text="Republic World [needs verification]" title="Republic World [needs verification]" type="rss" xmlUrl="https://www.republicworld.com/sitemaps/sitemaps-news.xml" htmlUrl="https://www.republicworld.com"/>
     </outline>
     <outline text="United Kingdom (GB)" title="United Kingdom (GB)">
       <outline text="Financial Times - World [valid]" title="Financial Times - World [valid]" type="rss" xmlUrl="https://www.ft.com/world?format=rss" htmlUrl="https://www.ft.com"/>
@@ -2736,6 +2758,17 @@
       <outline text="Minutouno [needs verification]" title="Minutouno [needs verification]" type="rss" xmlUrl="https://www.minutouno.com/sitemap-news.xml" htmlUrl="https://www.minutouno.com"/>
       <outline text="Urgente24 [needs verification]" title="Urgente24 [needs verification]" type="rss" xmlUrl="https://urgente24.com/sitemap-news.xml" htmlUrl="https://urgente24.com"/>
       <outline text="El Destape Web [needs verification]" title="El Destape Web [needs verification]" type="rss" xmlUrl="https://www.eldestapeweb.com/sitemap-news.xml" htmlUrl="https://www.eldestapeweb.com"/>
+      <outline text="TyC Sports [needs verification]" title="TyC Sports [needs verification]" type="rss" xmlUrl="https://www.tycsports.com/sitemap_news_48hs.xml" htmlUrl="https://www.tycsports.com"/>
+      <outline text="El Litoral [needs verification]" title="El Litoral [needs verification]" type="rss" xmlUrl="https://www.ellitoral.com/sitemaps/sitemap_google_news.xml" htmlUrl="https://www.ellitoral.com"/>
+      <outline text="Diario UNO [needs verification]" title="Diario UNO [needs verification]" type="rss" xmlUrl="https://www.diariouno.com.ar/sitemap-news.xml" htmlUrl="https://www.diariouno.com.ar"/>
+      <outline text="El Patagónico [needs verification]" title="El Patagónico [needs verification]" type="rss" xmlUrl="https://www.elpatagonico.com/sitemap-news.xml" htmlUrl="https://www.elpatagonico.com"/>
+      <outline text="Cadena 3 [needs verification]" title="Cadena 3 [needs verification]" type="rss" xmlUrl="https://www.cadena3.com/feed/sitemap-news.xml" htmlUrl="https://www.cadena3.com"/>
+      <outline text="El Ancasti [needs verification]" title="El Ancasti [needs verification]" type="rss" xmlUrl="https://www.elancasti.com.ar/sitemap-news.xml" htmlUrl="https://www.elancasti.com.ar"/>
+      <outline text="El Once [needs verification]" title="El Once [needs verification]" type="rss" xmlUrl="https://www.elonce.com/sitemap-news.xml" htmlUrl="https://www.elonce.com"/>
+      <outline text="El Ciudadano Rosario [valid]" title="El Ciudadano Rosario [valid]" type="rss" xmlUrl="https://www.elciudadanoweb.com/feed/" htmlUrl="https://www.elciudadanoweb.com"/>
+      <outline text="El Tribuno - Jujuy [valid]" title="El Tribuno - Jujuy [valid]" type="rss" xmlUrl="https://www.eltribuno.com/jujuy/feed/" htmlUrl="https://www.eltribuno.com"/>
+      <outline text="0223 [needs verification]" title="0223 [needs verification]" type="rss" xmlUrl="https://www.0223.com.ar/sitemaps_news.xml" htmlUrl="https://www.0223.com.ar"/>
+      <outline text="Mendoza Post [needs verification]" title="Mendoza Post [needs verification]" type="rss" xmlUrl="https://www.mendozapost.com/files/sitemap/sitemap.xml.gz" htmlUrl="https://www.mendozapost.com"/>
     </outline>
     <outline text="Chile (CL)" title="Chile (CL)">
       <outline text="Diario Financiero [valid]" title="Diario Financiero [valid]" type="rss" xmlUrl="https://www.df.cl/noticias/site/list/port/rss.xml" htmlUrl="https://www.df.cl"/>
