@@ -3120,6 +3120,251 @@
           "valid": "valid"
         },
         {
+          "name": "t-online - Nachrichten",
+          "url": "https://www.t-online.de/nachrichten/feed.rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "t-online - Ukraine",
+          "url": "https://www.t-online.de/nachrichten/ukraine/feed.rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "t-online - Sport",
+          "url": "https://www.t-online.de/sport/feed.rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "t-online - Finanzen",
+          "url": "https://www.t-online.de/finanzen/feed.rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "t-online - Digital",
+          "url": "https://www.t-online.de/digital/feed.rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "BR24 - Oberbayern",
+          "url": "https://nachrichtenfeeds.br.de/rdf/boards/UZlJdUE",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "BR24 - Oberpfalz",
+          "url": "https://nachrichtenfeeds.br.de/rdf/boards/UZlL3V1",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "BR24 - Niederbayern",
+          "url": "https://nachrichtenfeeds.br.de/rdf/boards/UZlLX5M",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "BR24 - Schwaben",
+          "url": "https://nachrichtenfeeds.br.de/rdf/boards/UZlMIJH",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "BR24 - Unterfranken",
+          "url": "https://nachrichtenfeeds.br.de/rdf/boards/UZlMw8z",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "BR24 - Oberfranken",
+          "url": "https://nachrichtenfeeds.br.de/rdf/boards/UZlNKwl",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "BR24 - Mittelfranken",
+          "url": "https://nachrichtenfeeds.br.de/rdf/boards/UZlNk5T",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "WAZ - News Sitemap",
+          "sitemapUrl": "https://www.waz.de/sitemaps/news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Hamburger Abendblatt - News Sitemap",
+          "sitemapUrl": "https://www.abendblatt.de/sitemaps/news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Freie Presse - News Sitemap",
+          "sitemapUrl": "https://www.freiepresse.de/sitemaps/articles_news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Leipziger Volkszeitung - Politik",
+          "url": "https://www.lvz.de/arc/outboundfeeds/rss/category/politik/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Leipziger Volkszeitung - Sport",
+          "url": "https://www.lvz.de/arc/outboundfeeds/rss/category/sport/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Leipziger Volkszeitung - Wirtschaft",
+          "url": "https://www.lvz.de/arc/outboundfeeds/rss/category/wirtschaft/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Stuttgarter Nachrichten - News Sitemap",
+          "sitemapUrl": "https://www.stuttgarter-nachrichten.de/docs.newsmap_stuttgarter_nachrichten.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Mannheimer Morgen - News Sitemap Index",
+          "sitemapUrl": "https://www.mannheimer-morgen.de/sitemap-index/258-News_Sitemap_Mannheimer_Morgen.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "RP Online - Sitemap Index",
+          "sitemapUrl": "https://rp-online.de/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "KSTA - Politik",
+          "url": "https://feed.ksta.de/feed/rss/politik/index.rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "KSTA - Panorama",
+          "url": "https://feed.ksta.de/feed/rss/panorama/index.rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "KSTA - Koeln",
+          "url": "https://feed.ksta.de/feed/rss/koeln/index.rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "KSTA - Rhein-Erft",
+          "url": "https://feed.ksta.de/feed/rss/region/rhein-erft/index.rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Saechsische Zeitung",
+          "url": "https://www.saechsische.de/arc/outboundfeeds/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Saechsische Zeitung - Dresden",
+          "url": "https://www.saechsische.de/arc/outboundfeeds/rss/category/lokales/dresden/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Saechsische Zeitung - Bautzen LK",
+          "url": "https://www.saechsische.de/arc/outboundfeeds/rss/category/lokales/bautzen-lk/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Saechsische Zeitung - Goerlitz LK",
+          "url": "https://www.saechsische.de/arc/outboundfeeds/rss/category/lokales/goerlitz-lk/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Ruhr Nachrichten",
+          "url": "https://www.ruhrnachrichten.de/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Ruhr Nachrichten - Dortmund",
+          "url": "https://www.ruhrnachrichten.de/lokales/dortmund/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Ruhr Nachrichten - Sport",
+          "url": "https://www.ruhrnachrichten.de/sport/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Ruhr Nachrichten - News Sitemap",
+          "sitemapUrl": "https://www.ruhrnachrichten.de/wp-content/uploads/sitemaps/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "BR24 - Meldungen",
+          "url": "https://www.br.de/nachrichten/meldungen/nachrichten-bayerischer-rundfunk100~newsRss.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "BR24 - Gesundheit",
+          "url": "https://nachrichtenfeeds.br.de/rdf/tags/gesundheit",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Handelsblatt Economy",
           "url": "https://www.handelsblatt.com/contentexport/feed/finanzen/",
           "status": "⏩ OFFICIAL",
@@ -4234,6 +4479,440 @@
           "url": "https://www.londonworld.com/rss",
           "language": "en",
           "tier": "primary"
+        },
+        {
+          "name": "Bristol Post",
+          "url": "https://bristolpost.co.uk/?service=rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Football London",
+          "url": "https://football.london/?service=rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "LancsLive",
+          "url": "https://lancs.live/?service=rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Nottingham Post",
+          "url": "https://nottinghampost.com/?service=rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Coventry Telegraph",
+          "url": "https://coventrytelegraph.net/?service=rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Devon Live",
+          "url": "https://devonlive.com/?service=rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Glasgow Live",
+          "url": "https://glasgowlive.co.uk/?service=rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Leicester Mercury",
+          "url": "https://leicestermercury.co.uk/?service=rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Cambridge News",
+          "url": "https://cambridge-news.co.uk/?service=rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Cornwall Live",
+          "url": "https://cornwalllive.com/?service=rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Somerset Live",
+          "url": "https://somersetlive.co.uk/?service=rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Essex Live",
+          "url": "https://essexlive.news/?service=rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Derbyshire Live",
+          "url": "https://derbytelegraph.co.uk/?service=rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Hull Live",
+          "url": "https://hulldailymail.co.uk/?service=rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Gloucestershire Live",
+          "url": "https://gloucestershirelive.co.uk/?service=rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "KentLive",
+          "url": "https://kentlive.news/?service=rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Lincolnshire Live",
+          "url": "https://lincolnshirelive.co.uk/?service=rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Surrey Live",
+          "url": "https://getsurrey.co.uk/?service=rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Sussex Express",
+          "url": "https://sussexexpress.co.uk/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Yorkshire Post",
+          "url": "https://yorkshirepost.co.uk/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Blackpool Gazette",
+          "url": "https://blackpoolgazette.co.uk/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Shields Gazette",
+          "url": "https://shieldsgazette.com/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Sunderland Echo",
+          "url": "https://sunderlandecho.com/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "The Star Sheffield",
+          "url": "https://thestar.co.uk/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Yorkshire Evening Post",
+          "url": "https://yorkshireeveningpost.co.uk/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "The News Portsmouth",
+          "url": "https://portsmouth.co.uk/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Peterborough Telegraph",
+          "url": "https://peterboroughtoday.co.uk/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Wigan Today",
+          "url": "https://wigantoday.net/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Doncaster Free Press",
+          "url": "https://doncasterfreepress.co.uk/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Burnley Express",
+          "url": "https://burnleyexpress.net/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Hartlepool Mail",
+          "url": "https://hartlepoolmail.co.uk/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Lancaster Guardian",
+          "url": "https://lancasterguardian.co.uk/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Northants Telegraph",
+          "url": "https://northantstelegraph.co.uk/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Worksop Guardian",
+          "url": "https://worksopguardian.co.uk/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Halifax Courier",
+          "url": "https://halifaxcourier.co.uk/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Bedford Today",
+          "url": "https://bedfordtoday.co.uk/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "LincolnshireWorld",
+          "url": "https://lincolnshireworld.com/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Northumberland Gazette",
+          "url": "https://northumberlandgazette.co.uk/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "The Northern Echo",
+          "url": "https://thenorthernecho.co.uk/news/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Herald Scotland",
+          "url": "https://heraldscotland.com/news/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Daily Echo",
+          "url": "https://dailyecho.co.uk/news/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Oxford Mail",
+          "url": "https://oxfordmail.co.uk/news/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Greenock Telegraph",
+          "url": "https://greenocktelegraph.co.uk/news/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Reading Chronicle",
+          "url": "https://readingchronicle.co.uk/news/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Warrington Guardian",
+          "url": "https://warringtonguardian.co.uk/news/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Bucks Free Press",
+          "url": "https://bucksfreepress.co.uk/news/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Glasgow Times",
+          "url": "https://glasgowtimes.co.uk/news/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Bracknell News",
+          "url": "https://bracknellnews.co.uk/news/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "News and Star",
+          "url": "https://newsandstar.co.uk/news/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "South Wales Argus",
+          "url": "https://southwalesargus.co.uk/news/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Watford Observer",
+          "url": "https://watfordobserver.co.uk/news/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Hampshire Chronicle",
+          "url": "https://hampshirechronicle.co.uk/news/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "The Argus",
+          "url": "https://theargus.co.uk/news/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Salisbury Journal",
+          "url": "https://salisburyjournal.co.uk/news/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Bournemouth Echo",
+          "url": "https://bournemouthecho.co.uk/news/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Gazette News",
+          "url": "https://gazette-news.co.uk/news/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Swindon Advertiser",
+          "url": "https://swindonadvertiser.co.uk/news/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "The Bolton News",
+          "url": "https://theboltonnews.co.uk/news/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Worcester News",
+          "url": "https://worcesternews.co.uk/news/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "St Helens Star",
+          "url": "https://sthelensstar.co.uk/news/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Bury Times",
+          "url": "https://burytimes.co.uk/news/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Times Series",
+          "url": "https://times-series.co.uk/news/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
         }
       ]
     },
@@ -4294,6 +4973,7 @@
         {
           "name": "Sud Ouest",
           "url": "https://www.sudouest.fr/essentiel/rss.xml",
+          "sitemapUrl": "https://www.sudouest.fr/sitemap-news.xml",
           "status": null,
           "checkedDate": null,
           "valid": null,
@@ -4569,7 +5249,8 @@
         },
         {
           "name": "Ouest-France (Regional News/Society)",
-          "url": "https://www.ouest-france.fr/rss-en-continu.xml"
+          "url": "https://www.ouest-france.fr/rss-en-continu.xml",
+          "sitemapUrl": "https://www.ouest-france.fr/googlenews.xml"
         },
         {
           "name": "20 Minutes (Economy Breaking)",
@@ -4747,6 +5428,7 @@
         {
           "name": "Lyon Capitale",
           "url": "https://www.lyoncapitale.fr/feed",
+          "sitemapUrl": "https://www.lyoncapitale.fr/sitemap-news.xml",
           "language": "fr",
           "tier": "primary"
         },

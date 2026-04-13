@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Mon, 13 Apr 2026 03:58:06 GMT</dateCreated>
+    <dateCreated>Mon, 13 Apr 2026 04:09:43 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -426,6 +426,41 @@
       <outline text="RND - Wirtschaft [valid]" title="RND - Wirtschaft [valid]" type="rss" xmlUrl="https://www.rnd.de/arc/outboundfeeds/rss/category/wirtschaft/" htmlUrl="https://www.rnd.de"/>
       <outline text="RND - Sport [valid]" title="RND - Sport [valid]" type="rss" xmlUrl="https://www.rnd.de/arc/outboundfeeds/rss/category/sport/" htmlUrl="https://www.rnd.de"/>
       <outline text="RND - Panorama [valid]" title="RND - Panorama [valid]" type="rss" xmlUrl="https://www.rnd.de/arc/outboundfeeds/rss/category/panorama/" htmlUrl="https://www.rnd.de"/>
+      <outline text="t-online - Nachrichten [valid]" title="t-online - Nachrichten [valid]" type="rss" xmlUrl="https://www.t-online.de/nachrichten/feed.rss" htmlUrl="https://www.t-online.de"/>
+      <outline text="t-online - Ukraine [valid]" title="t-online - Ukraine [valid]" type="rss" xmlUrl="https://www.t-online.de/nachrichten/ukraine/feed.rss" htmlUrl="https://www.t-online.de"/>
+      <outline text="t-online - Sport [valid]" title="t-online - Sport [valid]" type="rss" xmlUrl="https://www.t-online.de/sport/feed.rss" htmlUrl="https://www.t-online.de"/>
+      <outline text="t-online - Finanzen [valid]" title="t-online - Finanzen [valid]" type="rss" xmlUrl="https://www.t-online.de/finanzen/feed.rss" htmlUrl="https://www.t-online.de"/>
+      <outline text="t-online - Digital [valid]" title="t-online - Digital [valid]" type="rss" xmlUrl="https://www.t-online.de/digital/feed.rss" htmlUrl="https://www.t-online.de"/>
+      <outline text="BR24 - Oberbayern [valid]" title="BR24 - Oberbayern [valid]" type="rss" xmlUrl="https://nachrichtenfeeds.br.de/rdf/boards/UZlJdUE" htmlUrl="https://nachrichtenfeeds.br.de"/>
+      <outline text="BR24 - Oberpfalz [valid]" title="BR24 - Oberpfalz [valid]" type="rss" xmlUrl="https://nachrichtenfeeds.br.de/rdf/boards/UZlL3V1" htmlUrl="https://nachrichtenfeeds.br.de"/>
+      <outline text="BR24 - Niederbayern [valid]" title="BR24 - Niederbayern [valid]" type="rss" xmlUrl="https://nachrichtenfeeds.br.de/rdf/boards/UZlLX5M" htmlUrl="https://nachrichtenfeeds.br.de"/>
+      <outline text="BR24 - Schwaben [valid]" title="BR24 - Schwaben [valid]" type="rss" xmlUrl="https://nachrichtenfeeds.br.de/rdf/boards/UZlMIJH" htmlUrl="https://nachrichtenfeeds.br.de"/>
+      <outline text="BR24 - Unterfranken [valid]" title="BR24 - Unterfranken [valid]" type="rss" xmlUrl="https://nachrichtenfeeds.br.de/rdf/boards/UZlMw8z" htmlUrl="https://nachrichtenfeeds.br.de"/>
+      <outline text="BR24 - Oberfranken [valid]" title="BR24 - Oberfranken [valid]" type="rss" xmlUrl="https://nachrichtenfeeds.br.de/rdf/boards/UZlNKwl" htmlUrl="https://nachrichtenfeeds.br.de"/>
+      <outline text="BR24 - Mittelfranken [valid]" title="BR24 - Mittelfranken [valid]" type="rss" xmlUrl="https://nachrichtenfeeds.br.de/rdf/boards/UZlNk5T" htmlUrl="https://nachrichtenfeeds.br.de"/>
+      <outline text="WAZ - News Sitemap [needs verification]" title="WAZ - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.waz.de/sitemaps/news.xml" htmlUrl="https://www.waz.de"/>
+      <outline text="Hamburger Abendblatt - News Sitemap [needs verification]" title="Hamburger Abendblatt - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.abendblatt.de/sitemaps/news.xml" htmlUrl="https://www.abendblatt.de"/>
+      <outline text="Freie Presse - News Sitemap [needs verification]" title="Freie Presse - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.freiepresse.de/sitemaps/articles_news.xml" htmlUrl="https://www.freiepresse.de"/>
+      <outline text="Leipziger Volkszeitung - Politik [valid]" title="Leipziger Volkszeitung - Politik [valid]" type="rss" xmlUrl="https://www.lvz.de/arc/outboundfeeds/rss/category/politik/" htmlUrl="https://www.lvz.de"/>
+      <outline text="Leipziger Volkszeitung - Sport [valid]" title="Leipziger Volkszeitung - Sport [valid]" type="rss" xmlUrl="https://www.lvz.de/arc/outboundfeeds/rss/category/sport/" htmlUrl="https://www.lvz.de"/>
+      <outline text="Leipziger Volkszeitung - Wirtschaft [valid]" title="Leipziger Volkszeitung - Wirtschaft [valid]" type="rss" xmlUrl="https://www.lvz.de/arc/outboundfeeds/rss/category/wirtschaft/" htmlUrl="https://www.lvz.de"/>
+      <outline text="Stuttgarter Nachrichten - News Sitemap [needs verification]" title="Stuttgarter Nachrichten - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.stuttgarter-nachrichten.de/docs.newsmap_stuttgarter_nachrichten.xml" htmlUrl="https://www.stuttgarter-nachrichten.de"/>
+      <outline text="Mannheimer Morgen - News Sitemap Index [needs verification]" title="Mannheimer Morgen - News Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.mannheimer-morgen.de/sitemap-index/258-News_Sitemap_Mannheimer_Morgen.xml" htmlUrl="https://www.mannheimer-morgen.de"/>
+      <outline text="RP Online - Sitemap Index [needs verification]" title="RP Online - Sitemap Index [needs verification]" type="rss" xmlUrl="https://rp-online.de/sitemap.xml" htmlUrl="https://rp-online.de"/>
+      <outline text="KSTA - Politik [valid]" title="KSTA - Politik [valid]" type="rss" xmlUrl="https://feed.ksta.de/feed/rss/politik/index.rss" htmlUrl="https://feed.ksta.de"/>
+      <outline text="KSTA - Panorama [valid]" title="KSTA - Panorama [valid]" type="rss" xmlUrl="https://feed.ksta.de/feed/rss/panorama/index.rss" htmlUrl="https://feed.ksta.de"/>
+      <outline text="KSTA - Koeln [valid]" title="KSTA - Koeln [valid]" type="rss" xmlUrl="https://feed.ksta.de/feed/rss/koeln/index.rss" htmlUrl="https://feed.ksta.de"/>
+      <outline text="KSTA - Rhein-Erft [valid]" title="KSTA - Rhein-Erft [valid]" type="rss" xmlUrl="https://feed.ksta.de/feed/rss/region/rhein-erft/index.rss" htmlUrl="https://feed.ksta.de"/>
+      <outline text="Saechsische Zeitung [valid]" title="Saechsische Zeitung [valid]" type="rss" xmlUrl="https://www.saechsische.de/arc/outboundfeeds/rss/" htmlUrl="https://www.saechsische.de"/>
+      <outline text="Saechsische Zeitung - Dresden [valid]" title="Saechsische Zeitung - Dresden [valid]" type="rss" xmlUrl="https://www.saechsische.de/arc/outboundfeeds/rss/category/lokales/dresden/" htmlUrl="https://www.saechsische.de"/>
+      <outline text="Saechsische Zeitung - Bautzen LK [valid]" title="Saechsische Zeitung - Bautzen LK [valid]" type="rss" xmlUrl="https://www.saechsische.de/arc/outboundfeeds/rss/category/lokales/bautzen-lk/" htmlUrl="https://www.saechsische.de"/>
+      <outline text="Saechsische Zeitung - Goerlitz LK [valid]" title="Saechsische Zeitung - Goerlitz LK [valid]" type="rss" xmlUrl="https://www.saechsische.de/arc/outboundfeeds/rss/category/lokales/goerlitz-lk/" htmlUrl="https://www.saechsische.de"/>
+      <outline text="Ruhr Nachrichten [valid]" title="Ruhr Nachrichten [valid]" type="rss" xmlUrl="https://www.ruhrnachrichten.de/feed/" htmlUrl="https://www.ruhrnachrichten.de"/>
+      <outline text="Ruhr Nachrichten - Dortmund [valid]" title="Ruhr Nachrichten - Dortmund [valid]" type="rss" xmlUrl="https://www.ruhrnachrichten.de/lokales/dortmund/feed/" htmlUrl="https://www.ruhrnachrichten.de"/>
+      <outline text="Ruhr Nachrichten - Sport [valid]" title="Ruhr Nachrichten - Sport [valid]" type="rss" xmlUrl="https://www.ruhrnachrichten.de/sport/feed/" htmlUrl="https://www.ruhrnachrichten.de"/>
+      <outline text="Ruhr Nachrichten - News Sitemap [needs verification]" title="Ruhr Nachrichten - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.ruhrnachrichten.de/wp-content/uploads/sitemaps/news-sitemap.xml" htmlUrl="https://www.ruhrnachrichten.de"/>
+      <outline text="BR24 - Meldungen [valid]" title="BR24 - Meldungen [valid]" type="rss" xmlUrl="https://www.br.de/nachrichten/meldungen/nachrichten-bayerischer-rundfunk100~newsRss.xml" htmlUrl="https://www.br.de"/>
+      <outline text="BR24 - Gesundheit [valid]" title="BR24 - Gesundheit [valid]" type="rss" xmlUrl="https://nachrichtenfeeds.br.de/rdf/tags/gesundheit" htmlUrl="https://nachrichtenfeeds.br.de"/>
       <outline text="Handelsblatt Economy [valid]" title="Handelsblatt Economy [valid]" type="rss" xmlUrl="https://www.handelsblatt.com/contentexport/feed/finanzen/" htmlUrl="https://www.handelsblatt.com"/>
       <outline text="Frankfurter Allgemeine [valid]" title="Frankfurter Allgemeine [valid]" type="rss" xmlUrl="https://www.faz.net/rss/aktuell/wirtschaft/" htmlUrl="https://www.faz.net"/>
       <outline text="Frankfurter Allgemeine - News Sitemap [needs verification]" title="Frankfurter Allgemeine - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.faz.net/sitemap-news.xml" htmlUrl="https://www.faz.net"/>
@@ -590,6 +625,68 @@
       <outline text="The National Wales [needs verification]" title="The National Wales [needs verification]" type="rss" xmlUrl="https://nation.cymru/feed/" htmlUrl="https://nation.cymru"/>
       <outline text="Shropshire Star [needs verification]" title="Shropshire Star [needs verification]" type="rss" xmlUrl="https://www.shropshirestar.com/rss/" htmlUrl="https://www.shropshirestar.com"/>
       <outline text="LondonWorld [needs verification]" title="LondonWorld [needs verification]" type="rss" xmlUrl="https://www.londonworld.com/rss" htmlUrl="https://www.londonworld.com"/>
+      <outline text="Bristol Post [valid]" title="Bristol Post [valid]" type="rss" xmlUrl="https://bristolpost.co.uk/?service=rss" htmlUrl="https://bristolpost.co.uk"/>
+      <outline text="Football London [valid]" title="Football London [valid]" type="rss" xmlUrl="https://football.london/?service=rss" htmlUrl="https://football.london"/>
+      <outline text="LancsLive [valid]" title="LancsLive [valid]" type="rss" xmlUrl="https://lancs.live/?service=rss" htmlUrl="https://lancs.live"/>
+      <outline text="Nottingham Post [valid]" title="Nottingham Post [valid]" type="rss" xmlUrl="https://nottinghampost.com/?service=rss" htmlUrl="https://nottinghampost.com"/>
+      <outline text="Coventry Telegraph [valid]" title="Coventry Telegraph [valid]" type="rss" xmlUrl="https://coventrytelegraph.net/?service=rss" htmlUrl="https://coventrytelegraph.net"/>
+      <outline text="Devon Live [valid]" title="Devon Live [valid]" type="rss" xmlUrl="https://devonlive.com/?service=rss" htmlUrl="https://devonlive.com"/>
+      <outline text="Glasgow Live [valid]" title="Glasgow Live [valid]" type="rss" xmlUrl="https://glasgowlive.co.uk/?service=rss" htmlUrl="https://glasgowlive.co.uk"/>
+      <outline text="Leicester Mercury [valid]" title="Leicester Mercury [valid]" type="rss" xmlUrl="https://leicestermercury.co.uk/?service=rss" htmlUrl="https://leicestermercury.co.uk"/>
+      <outline text="Cambridge News [valid]" title="Cambridge News [valid]" type="rss" xmlUrl="https://cambridge-news.co.uk/?service=rss" htmlUrl="https://cambridge-news.co.uk"/>
+      <outline text="Cornwall Live [valid]" title="Cornwall Live [valid]" type="rss" xmlUrl="https://cornwalllive.com/?service=rss" htmlUrl="https://cornwalllive.com"/>
+      <outline text="Somerset Live [valid]" title="Somerset Live [valid]" type="rss" xmlUrl="https://somersetlive.co.uk/?service=rss" htmlUrl="https://somersetlive.co.uk"/>
+      <outline text="Essex Live [valid]" title="Essex Live [valid]" type="rss" xmlUrl="https://essexlive.news/?service=rss" htmlUrl="https://essexlive.news"/>
+      <outline text="Derbyshire Live [valid]" title="Derbyshire Live [valid]" type="rss" xmlUrl="https://derbytelegraph.co.uk/?service=rss" htmlUrl="https://derbytelegraph.co.uk"/>
+      <outline text="Hull Live [valid]" title="Hull Live [valid]" type="rss" xmlUrl="https://hulldailymail.co.uk/?service=rss" htmlUrl="https://hulldailymail.co.uk"/>
+      <outline text="Gloucestershire Live [valid]" title="Gloucestershire Live [valid]" type="rss" xmlUrl="https://gloucestershirelive.co.uk/?service=rss" htmlUrl="https://gloucestershirelive.co.uk"/>
+      <outline text="KentLive [valid]" title="KentLive [valid]" type="rss" xmlUrl="https://kentlive.news/?service=rss" htmlUrl="https://kentlive.news"/>
+      <outline text="Lincolnshire Live [valid]" title="Lincolnshire Live [valid]" type="rss" xmlUrl="https://lincolnshirelive.co.uk/?service=rss" htmlUrl="https://lincolnshirelive.co.uk"/>
+      <outline text="Surrey Live [valid]" title="Surrey Live [valid]" type="rss" xmlUrl="https://getsurrey.co.uk/?service=rss" htmlUrl="https://getsurrey.co.uk"/>
+      <outline text="Sussex Express [valid]" title="Sussex Express [valid]" type="rss" xmlUrl="https://sussexexpress.co.uk/rss/" htmlUrl="https://sussexexpress.co.uk"/>
+      <outline text="Yorkshire Post [valid]" title="Yorkshire Post [valid]" type="rss" xmlUrl="https://yorkshirepost.co.uk/rss/" htmlUrl="https://yorkshirepost.co.uk"/>
+      <outline text="Blackpool Gazette [valid]" title="Blackpool Gazette [valid]" type="rss" xmlUrl="https://blackpoolgazette.co.uk/rss/" htmlUrl="https://blackpoolgazette.co.uk"/>
+      <outline text="Shields Gazette [valid]" title="Shields Gazette [valid]" type="rss" xmlUrl="https://shieldsgazette.com/rss/" htmlUrl="https://shieldsgazette.com"/>
+      <outline text="Sunderland Echo [valid]" title="Sunderland Echo [valid]" type="rss" xmlUrl="https://sunderlandecho.com/rss/" htmlUrl="https://sunderlandecho.com"/>
+      <outline text="The Star Sheffield [valid]" title="The Star Sheffield [valid]" type="rss" xmlUrl="https://thestar.co.uk/rss/" htmlUrl="https://thestar.co.uk"/>
+      <outline text="Yorkshire Evening Post [valid]" title="Yorkshire Evening Post [valid]" type="rss" xmlUrl="https://yorkshireeveningpost.co.uk/rss/" htmlUrl="https://yorkshireeveningpost.co.uk"/>
+      <outline text="The News Portsmouth [valid]" title="The News Portsmouth [valid]" type="rss" xmlUrl="https://portsmouth.co.uk/rss/" htmlUrl="https://portsmouth.co.uk"/>
+      <outline text="Peterborough Telegraph [valid]" title="Peterborough Telegraph [valid]" type="rss" xmlUrl="https://peterboroughtoday.co.uk/rss/" htmlUrl="https://peterboroughtoday.co.uk"/>
+      <outline text="Wigan Today [valid]" title="Wigan Today [valid]" type="rss" xmlUrl="https://wigantoday.net/rss/" htmlUrl="https://wigantoday.net"/>
+      <outline text="Doncaster Free Press [valid]" title="Doncaster Free Press [valid]" type="rss" xmlUrl="https://doncasterfreepress.co.uk/rss/" htmlUrl="https://doncasterfreepress.co.uk"/>
+      <outline text="Burnley Express [valid]" title="Burnley Express [valid]" type="rss" xmlUrl="https://burnleyexpress.net/rss/" htmlUrl="https://burnleyexpress.net"/>
+      <outline text="Hartlepool Mail [valid]" title="Hartlepool Mail [valid]" type="rss" xmlUrl="https://hartlepoolmail.co.uk/rss/" htmlUrl="https://hartlepoolmail.co.uk"/>
+      <outline text="Lancaster Guardian [valid]" title="Lancaster Guardian [valid]" type="rss" xmlUrl="https://lancasterguardian.co.uk/rss/" htmlUrl="https://lancasterguardian.co.uk"/>
+      <outline text="Northants Telegraph [valid]" title="Northants Telegraph [valid]" type="rss" xmlUrl="https://northantstelegraph.co.uk/rss/" htmlUrl="https://northantstelegraph.co.uk"/>
+      <outline text="Worksop Guardian [valid]" title="Worksop Guardian [valid]" type="rss" xmlUrl="https://worksopguardian.co.uk/rss/" htmlUrl="https://worksopguardian.co.uk"/>
+      <outline text="Halifax Courier [valid]" title="Halifax Courier [valid]" type="rss" xmlUrl="https://halifaxcourier.co.uk/rss/" htmlUrl="https://halifaxcourier.co.uk"/>
+      <outline text="Bedford Today [valid]" title="Bedford Today [valid]" type="rss" xmlUrl="https://bedfordtoday.co.uk/rss/" htmlUrl="https://bedfordtoday.co.uk"/>
+      <outline text="LincolnshireWorld [valid]" title="LincolnshireWorld [valid]" type="rss" xmlUrl="https://lincolnshireworld.com/rss/" htmlUrl="https://lincolnshireworld.com"/>
+      <outline text="Northumberland Gazette [valid]" title="Northumberland Gazette [valid]" type="rss" xmlUrl="https://northumberlandgazette.co.uk/rss/" htmlUrl="https://northumberlandgazette.co.uk"/>
+      <outline text="The Northern Echo [valid]" title="The Northern Echo [valid]" type="rss" xmlUrl="https://thenorthernecho.co.uk/news/rss/" htmlUrl="https://thenorthernecho.co.uk"/>
+      <outline text="Herald Scotland [valid]" title="Herald Scotland [valid]" type="rss" xmlUrl="https://heraldscotland.com/news/rss/" htmlUrl="https://heraldscotland.com"/>
+      <outline text="Daily Echo [valid]" title="Daily Echo [valid]" type="rss" xmlUrl="https://dailyecho.co.uk/news/rss/" htmlUrl="https://dailyecho.co.uk"/>
+      <outline text="Oxford Mail [valid]" title="Oxford Mail [valid]" type="rss" xmlUrl="https://oxfordmail.co.uk/news/rss/" htmlUrl="https://oxfordmail.co.uk"/>
+      <outline text="Greenock Telegraph [valid]" title="Greenock Telegraph [valid]" type="rss" xmlUrl="https://greenocktelegraph.co.uk/news/rss/" htmlUrl="https://greenocktelegraph.co.uk"/>
+      <outline text="Reading Chronicle [valid]" title="Reading Chronicle [valid]" type="rss" xmlUrl="https://readingchronicle.co.uk/news/rss/" htmlUrl="https://readingchronicle.co.uk"/>
+      <outline text="Warrington Guardian [valid]" title="Warrington Guardian [valid]" type="rss" xmlUrl="https://warringtonguardian.co.uk/news/rss/" htmlUrl="https://warringtonguardian.co.uk"/>
+      <outline text="Bucks Free Press [valid]" title="Bucks Free Press [valid]" type="rss" xmlUrl="https://bucksfreepress.co.uk/news/rss/" htmlUrl="https://bucksfreepress.co.uk"/>
+      <outline text="Glasgow Times [valid]" title="Glasgow Times [valid]" type="rss" xmlUrl="https://glasgowtimes.co.uk/news/rss/" htmlUrl="https://glasgowtimes.co.uk"/>
+      <outline text="Bracknell News [valid]" title="Bracknell News [valid]" type="rss" xmlUrl="https://bracknellnews.co.uk/news/rss/" htmlUrl="https://bracknellnews.co.uk"/>
+      <outline text="News and Star [valid]" title="News and Star [valid]" type="rss" xmlUrl="https://newsandstar.co.uk/news/rss/" htmlUrl="https://newsandstar.co.uk"/>
+      <outline text="South Wales Argus [valid]" title="South Wales Argus [valid]" type="rss" xmlUrl="https://southwalesargus.co.uk/news/rss/" htmlUrl="https://southwalesargus.co.uk"/>
+      <outline text="Watford Observer [valid]" title="Watford Observer [valid]" type="rss" xmlUrl="https://watfordobserver.co.uk/news/rss/" htmlUrl="https://watfordobserver.co.uk"/>
+      <outline text="Hampshire Chronicle [valid]" title="Hampshire Chronicle [valid]" type="rss" xmlUrl="https://hampshirechronicle.co.uk/news/rss/" htmlUrl="https://hampshirechronicle.co.uk"/>
+      <outline text="The Argus [valid]" title="The Argus [valid]" type="rss" xmlUrl="https://theargus.co.uk/news/rss/" htmlUrl="https://theargus.co.uk"/>
+      <outline text="Salisbury Journal [valid]" title="Salisbury Journal [valid]" type="rss" xmlUrl="https://salisburyjournal.co.uk/news/rss/" htmlUrl="https://salisburyjournal.co.uk"/>
+      <outline text="Bournemouth Echo [valid]" title="Bournemouth Echo [valid]" type="rss" xmlUrl="https://bournemouthecho.co.uk/news/rss/" htmlUrl="https://bournemouthecho.co.uk"/>
+      <outline text="Gazette News [valid]" title="Gazette News [valid]" type="rss" xmlUrl="https://gazette-news.co.uk/news/rss/" htmlUrl="https://gazette-news.co.uk"/>
+      <outline text="Swindon Advertiser [valid]" title="Swindon Advertiser [valid]" type="rss" xmlUrl="https://swindonadvertiser.co.uk/news/rss/" htmlUrl="https://swindonadvertiser.co.uk"/>
+      <outline text="The Bolton News [valid]" title="The Bolton News [valid]" type="rss" xmlUrl="https://theboltonnews.co.uk/news/rss/" htmlUrl="https://theboltonnews.co.uk"/>
+      <outline text="Worcester News [valid]" title="Worcester News [valid]" type="rss" xmlUrl="https://worcesternews.co.uk/news/rss/" htmlUrl="https://worcesternews.co.uk"/>
+      <outline text="St Helens Star [valid]" title="St Helens Star [valid]" type="rss" xmlUrl="https://sthelensstar.co.uk/news/rss/" htmlUrl="https://sthelensstar.co.uk"/>
+      <outline text="Bury Times [valid]" title="Bury Times [valid]" type="rss" xmlUrl="https://burytimes.co.uk/news/rss/" htmlUrl="https://burytimes.co.uk"/>
+      <outline text="Times Series [valid]" title="Times Series [valid]" type="rss" xmlUrl="https://times-series.co.uk/news/rss/" htmlUrl="https://times-series.co.uk"/>
     </outline>
     <outline text="France (FR)" title="France (FR)">
       <outline text="France 24 [valid]" title="France 24 [valid]" type="rss" xmlUrl="https://www.france24.com/en/rss" htmlUrl="https://www.france24.com"/>
