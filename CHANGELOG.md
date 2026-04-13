@@ -6,6 +6,26 @@
 
 ## Unreleased
 
+### [25a743a] Clarify ops map data source provenance
+- Commit: 25a743a33eec71e13416a5533c951e0e85d0f315
+- Date: 2026-04-13 07:35:31 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	app/api/customer/map/countries/[country]/sources/route.ts
+    - M	app/api/customer/map/countries/route.ts
+    - M	app/api/customer/map/publishers/route.ts
+    - M	app/api/customer/map/sources/[sourceId]/route.ts
+    - M	app/ops/page.tsx
+    - M	lib/map-types.ts
+  - Git stat:
+  - .../customer/map/countries/[country]/sources/route.ts | 19 +++++++++++++------
+  -  app/api/customer/map/countries/route.ts               |  6 +++---
+  -  app/api/customer/map/publishers/route.ts              | 19 +++++++++++++------
+  -  app/api/customer/map/sources/[sourceId]/route.ts      | 13 ++++++++++---
+  -  app/ops/page.tsx                                      |  4 ++--
+  -  lib/map-types.ts                                      |  5 +++++
+  -  6 files changed, 46 insertions(+), 20 deletions(-)
+
 ### [04b4f99] Improve Ireland sitemap coverage
 - Commit: 04b4f99403c36ff9496605be077950bb00f29641
 - Date: 2026-04-12 14:41:27 -0500
