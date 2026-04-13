@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Mon, 13 Apr 2026 03:40:26 GMT</dateCreated>
+    <dateCreated>Mon, 13 Apr 2026 03:58:06 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -400,7 +400,32 @@
       <outline text="BILD - Unterhaltung [valid]" title="BILD - Unterhaltung [valid]" type="rss" xmlUrl="https://www.bild.de/feed/unterhaltung.xml" htmlUrl="https://www.bild.de"/>
       <outline text="BILD - Regional Chemnitz [valid]" title="BILD - Regional Chemnitz [valid]" type="rss" xmlUrl="https://www.bild.de/feed/regional-chemnitz.xml" htmlUrl="https://www.bild.de"/>
       <outline text="BILD - News Sitemap [needs verification]" title="BILD - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.bild.de/sitemap-news.xml" htmlUrl="https://www.bild.de"/>
-      <outline text="Focus [valid]" title="Focus [valid]" type="rss" xmlUrl="https://www.focus.de/rss/" htmlUrl="https://www.focus.de"/>
+      <outline text="FOCUS Online [valid]" title="FOCUS Online [valid]" type="rss" xmlUrl="https://www.focus.de/rss/" htmlUrl="https://www.focus.de"/>
+      <outline text="FOCUS Online - Politik [valid]" title="FOCUS Online - Politik [valid]" type="rss" xmlUrl="https://www.focus.de/politik/rss/" htmlUrl="https://www.focus.de"/>
+      <outline text="FOCUS Online - Finanzen [valid]" title="FOCUS Online - Finanzen [valid]" type="rss" xmlUrl="https://www.focus.de/finanzen/rss/" htmlUrl="https://www.focus.de"/>
+      <outline text="FOCUS Online - Panorama [valid]" title="FOCUS Online - Panorama [valid]" type="rss" xmlUrl="https://www.focus.de/panorama/rss/" htmlUrl="https://www.focus.de"/>
+      <outline text="FOCUS Online - Sport [valid]" title="FOCUS Online - Sport [valid]" type="rss" xmlUrl="https://www.focus.de/sport/rss/" htmlUrl="https://www.focus.de"/>
+      <outline text="STERN.DE - Alle Nachrichten [valid]" title="STERN.DE - Alle Nachrichten [valid]" type="rss" xmlUrl="https://www.stern.de/feed/standard/alle-nachrichten/" htmlUrl="https://www.stern.de"/>
+      <outline text="STERN.DE - Politik [valid]" title="STERN.DE - Politik [valid]" type="rss" xmlUrl="https://www.stern.de/feed/standard/politik/" htmlUrl="https://www.stern.de"/>
+      <outline text="STERN.DE - Wirtschaft [valid]" title="STERN.DE - Wirtschaft [valid]" type="rss" xmlUrl="https://www.stern.de/feed/standard/wirtschaft/" htmlUrl="https://www.stern.de"/>
+      <outline text="STERN.DE - Panorama [valid]" title="STERN.DE - Panorama [valid]" type="rss" xmlUrl="https://www.stern.de/feed/standard/panorama/" htmlUrl="https://www.stern.de"/>
+      <outline text="STERN.DE - Sport [valid]" title="STERN.DE - Sport [valid]" type="rss" xmlUrl="https://www.stern.de/feed/standard/sport/" htmlUrl="https://www.stern.de"/>
+      <outline text="STERN.DE - Digital [valid]" title="STERN.DE - Digital [valid]" type="rss" xmlUrl="https://www.stern.de/feed/standard/digital/" htmlUrl="https://www.stern.de"/>
+      <outline text="ZDFheute [valid]" title="ZDFheute [valid]" type="rss" xmlUrl="https://www.zdfheute.de/rss/zdf/nachrichten" htmlUrl="https://www.zdfheute.de"/>
+      <outline text="ZDFheute - Politik [valid]" title="ZDFheute - Politik [valid]" type="rss" xmlUrl="https://www.zdfheute.de/rss/zdf/politik" htmlUrl="https://www.zdfheute.de"/>
+      <outline text="MDR Aktuell [valid]" title="MDR Aktuell [valid]" type="rss" xmlUrl="https://www.mdr.de/nachrichten/index-rss.xml" htmlUrl="https://www.mdr.de"/>
+      <outline text="MDR Sachsen [valid]" title="MDR Sachsen [valid]" type="rss" xmlUrl="https://www.mdr.de/nachrichten/sachsen/index-rss.xml" htmlUrl="https://www.mdr.de"/>
+      <outline text="MDR Sachsen-Anhalt [valid]" title="MDR Sachsen-Anhalt [valid]" type="rss" xmlUrl="https://www.mdr.de/nachrichten/sachsen-anhalt/index-rss.xml" htmlUrl="https://www.mdr.de"/>
+      <outline text="MDR Thüringen [valid]" title="MDR Thüringen [valid]" type="rss" xmlUrl="https://www.mdr.de/nachrichten/thueringen/index-rss.xml" htmlUrl="https://www.mdr.de"/>
+      <outline text="NDR Hamburg [valid]" title="NDR Hamburg [valid]" type="rss" xmlUrl="https://www.ndr.de/nachrichten/hamburg/index~rdf.xml" htmlUrl="https://www.ndr.de"/>
+      <outline text="NDR Niedersachsen [valid]" title="NDR Niedersachsen [valid]" type="rss" xmlUrl="https://www.ndr.de/nachrichten/niedersachsen/index~rdf.xml" htmlUrl="https://www.ndr.de"/>
+      <outline text="NDR Schleswig-Holstein [valid]" title="NDR Schleswig-Holstein [valid]" type="rss" xmlUrl="https://www.ndr.de/nachrichten/schleswig-holstein/index~rdf.xml" htmlUrl="https://www.ndr.de"/>
+      <outline text="NDR Mecklenburg-Vorpommern [valid]" title="NDR Mecklenburg-Vorpommern [valid]" type="rss" xmlUrl="https://www.ndr.de/nachrichten/mecklenburg-vorpommern/index~rdf.xml" htmlUrl="https://www.ndr.de"/>
+      <outline text="NDR Info [valid]" title="NDR Info [valid]" type="rss" xmlUrl="https://www.ndr.de/nachrichten/info/index~rdf.xml" htmlUrl="https://www.ndr.de"/>
+      <outline text="RND - Politik [valid]" title="RND - Politik [valid]" type="rss" xmlUrl="https://www.rnd.de/arc/outboundfeeds/rss/category/politik/" htmlUrl="https://www.rnd.de"/>
+      <outline text="RND - Wirtschaft [valid]" title="RND - Wirtschaft [valid]" type="rss" xmlUrl="https://www.rnd.de/arc/outboundfeeds/rss/category/wirtschaft/" htmlUrl="https://www.rnd.de"/>
+      <outline text="RND - Sport [valid]" title="RND - Sport [valid]" type="rss" xmlUrl="https://www.rnd.de/arc/outboundfeeds/rss/category/sport/" htmlUrl="https://www.rnd.de"/>
+      <outline text="RND - Panorama [valid]" title="RND - Panorama [valid]" type="rss" xmlUrl="https://www.rnd.de/arc/outboundfeeds/rss/category/panorama/" htmlUrl="https://www.rnd.de"/>
       <outline text="Handelsblatt Economy [valid]" title="Handelsblatt Economy [valid]" type="rss" xmlUrl="https://www.handelsblatt.com/contentexport/feed/finanzen/" htmlUrl="https://www.handelsblatt.com"/>
       <outline text="Frankfurter Allgemeine [valid]" title="Frankfurter Allgemeine [valid]" type="rss" xmlUrl="https://www.faz.net/rss/aktuell/wirtschaft/" htmlUrl="https://www.faz.net"/>
       <outline text="Frankfurter Allgemeine - News Sitemap [needs verification]" title="Frankfurter Allgemeine - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.faz.net/sitemap-news.xml" htmlUrl="https://www.faz.net"/>
@@ -495,7 +520,7 @@
       <outline text="The Better India [needs verification]" title="The Better India [needs verification]" type="rss" xmlUrl="https://www.thebetterindia.com/feed/" htmlUrl="https://www.thebetterindia.com"/>
     </outline>
     <outline text="United Kingdom (GB)" title="United Kingdom (GB)">
-      <outline text="Financial Times - World [needs verification]" title="Financial Times - World [needs verification]" type="rss" xmlUrl="https://www.ft.com/sitemaps/news.xml" htmlUrl="https://www.ft.com"/>
+      <outline text="Financial Times - World [valid]" title="Financial Times - World [valid]" type="rss" xmlUrl="https://www.ft.com/world?format=rss" htmlUrl="https://www.ft.com"/>
       <outline text="Financial Times - Energy [needs verification]" title="Financial Times - Energy [needs verification]" type="rss" xmlUrl="https://www.ft.com/sitemaps/news.xml" htmlUrl="https://www.ft.com"/>
       <outline text="BBC News - Business [valid]" title="BBC News - Business [valid]" type="rss" xmlUrl="https://feeds.bbci.co.uk/news/business/rss.xml" htmlUrl="https://feeds.bbci.co.uk"/>
       <outline text="BBC News - World [valid]" title="BBC News - World [valid]" type="rss" xmlUrl="https://feeds.bbci.co.uk/news/world/rss.xml" htmlUrl="https://feeds.bbci.co.uk"/>
@@ -506,11 +531,17 @@
       <outline text="Telegraph - Business [invalid]" title="Telegraph - Business [invalid]" type="rss" xmlUrl="https://www.telegraph.co.uk/business/rss.xml" htmlUrl="https://www.telegraph.co.uk"/>
       <outline text="City A.M. (London Finance) [valid]" title="City A.M. (London Finance) [valid]" type="rss" xmlUrl="https://www.cityam.com/feed/" htmlUrl="https://www.cityam.com"/>
       <outline text="The Independent [valid]" title="The Independent [valid]" type="rss" xmlUrl="https://www.independent.co.uk/rss" htmlUrl="https://www.independent.co.uk"/>
-      <outline text="Financial Times UK [valid]" title="Financial Times UK [valid]" type="rss" xmlUrl="https://www.ft.com/?format=rss" htmlUrl="https://www.ft.com"/>
+      <outline text="Financial Times UK [valid]" title="Financial Times UK [valid]" type="rss" xmlUrl="https://www.ft.com/rss/home/uk" htmlUrl="https://www.ft.com"/>
       <outline text="The Telegraph UK [invalid]" title="The Telegraph UK [invalid]" type="rss" xmlUrl="https://www.telegraph.co.uk/rss.xml" htmlUrl="https://www.telegraph.co.uk"/>
       <outline text="Daily Mail [valid]" title="Daily Mail [valid]" type="rss" xmlUrl="https://www.dailymail.co.uk/home/index.rss" htmlUrl="https://www.dailymail.co.uk"/>
       <outline text="Metro UK [valid]" title="Metro UK [valid]" type="rss" xmlUrl="https://metro.co.uk/feed/" htmlUrl="https://metro.co.uk"/>
+      <outline text="Metro UK News [valid]" title="Metro UK News [valid]" type="rss" xmlUrl="https://metro.co.uk/news/feed/" htmlUrl="https://metro.co.uk"/>
       <outline text="The Sun [invalid]" title="The Sun [invalid]" type="rss" xmlUrl="https://www.thesun.co.uk/feed/" htmlUrl="https://www.thesun.co.uk"/>
+      <outline text="The Sun - News [valid]" title="The Sun - News [valid]" type="rss" xmlUrl="https://www.thesun.co.uk/news/feed/" htmlUrl="https://www.thesun.co.uk"/>
+      <outline text="The Sun - Sport [valid]" title="The Sun - Sport [valid]" type="rss" xmlUrl="https://www.thesun.co.uk/sport/feed/" htmlUrl="https://www.thesun.co.uk"/>
+      <outline text="The Sun - TV [valid]" title="The Sun - TV [valid]" type="rss" xmlUrl="https://www.thesun.co.uk/tv/feed/" htmlUrl="https://www.thesun.co.uk"/>
+      <outline text="The Sun - Money [valid]" title="The Sun - Money [valid]" type="rss" xmlUrl="https://www.thesun.co.uk/money/feed/" htmlUrl="https://www.thesun.co.uk"/>
+      <outline text="The Sun - Fabulous [valid]" title="The Sun - Fabulous [valid]" type="rss" xmlUrl="https://www.thesun.co.uk/fabulous/feed/" htmlUrl="https://www.thesun.co.uk"/>
       <outline text="The Sun - News Sitemap [needs verification]" title="The Sun - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.thesun.co.uk/news-sitemap.xml" htmlUrl="https://www.thesun.co.uk"/>
       <outline text="The Guardian UK [valid]" title="The Guardian UK [valid]" type="rss" xmlUrl="https://www.theguardian.com/uk/rss" htmlUrl="https://www.theguardian.com"/>
       <outline text="Sky News [valid]" title="Sky News [valid]" type="rss" xmlUrl="https://feeds.skynews.com/feeds/rss/uk.xml" htmlUrl="https://feeds.skynews.com"/>
@@ -525,6 +556,8 @@
       <outline text="The Evening Standard [valid]" title="The Evening Standard [valid]" type="rss" xmlUrl="https://www.standard.co.uk/rss" htmlUrl="https://www.standard.co.uk"/>
       <outline text="BBC News - Sitemap Index [needs verification]" title="BBC News - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.bbc.com/sitemaps/https-index-com-news.xml" htmlUrl="https://www.bbc.com"/>
       <outline text="Mirror - News Sitemap [needs verification]" title="Mirror - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.mirror.co.uk/map_news.xml" htmlUrl="https://www.mirror.co.uk"/>
+      <outline text="Mirror - Sport [valid]" title="Mirror - Sport [valid]" type="rss" xmlUrl="https://www.mirror.co.uk/sport/rss.xml" htmlUrl="https://www.mirror.co.uk"/>
+      <outline text="Mirror - 3am [valid]" title="Mirror - 3am [valid]" type="rss" xmlUrl="https://www.mirror.co.uk/3am/rss.xml" htmlUrl="https://www.mirror.co.uk"/>
       <outline text="Daily Express - Google News Sitemap [needs verification]" title="Daily Express - Google News Sitemap [needs verification]" type="rss" xmlUrl="https://www.express.co.uk/googlenews.xml" htmlUrl="https://www.express.co.uk"/>
       <outline text="Daily Star - News Sitemap [needs verification]" title="Daily Star - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.dailystar.co.uk/map_news.xml" htmlUrl="https://www.dailystar.co.uk"/>
       <outline text="Daily Record - News Sitemap [needs verification]" title="Daily Record - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.dailyrecord.co.uk/map_news.xml" htmlUrl="https://www.dailyrecord.co.uk"/>
@@ -542,7 +575,7 @@
       <outline text="BBC Persian [valid]" title="BBC Persian [valid]" type="rss" xmlUrl="https://feeds.bbci.co.uk/persian/rss.xml" htmlUrl="https://feeds.bbci.co.uk"/>
       <outline text="The Guardian - Americas [valid]" title="The Guardian - Americas [valid]" type="rss" xmlUrl="https://www.theguardian.com/world/americas/rss" htmlUrl="https://www.theguardian.com"/>
       <outline text="The Guardian - Middle East [valid]" title="The Guardian - Middle East [valid]" type="rss" xmlUrl="https://www.theguardian.com/world/middleeast/rss" htmlUrl="https://www.theguardian.com"/>
-      <outline text="FlightGlobal [valid]" title="FlightGlobal [valid]" type="rss" xmlUrl="https://www.flightglobal.com/rss" htmlUrl="https://www.flightglobal.com"/>
+      <outline text="FlightGlobal [valid]" title="FlightGlobal [valid]" type="rss" xmlUrl="https://www.flightglobal.com/feed/" htmlUrl="https://www.flightglobal.com"/>
       <outline text="Simple Flying [valid]" title="Simple Flying [valid]" type="rss" xmlUrl="https://simpleflying.com/feed/" htmlUrl="https://simpleflying.com"/>
       <outline text="Nature News [valid]" title="Nature News [valid]" type="rss" xmlUrl="https://feeds.nature.com/nature/rss/current" htmlUrl="https://feeds.nature.com"/>
       <outline text="New Statesman [needs verification]" title="New Statesman [needs verification]" type="rss" xmlUrl="https://www.newstatesman.com/feed" htmlUrl="https://www.newstatesman.com"/>
@@ -722,6 +755,42 @@
       <outline text="VeronaSera [needs verification]" title="VeronaSera [needs verification]" type="rss" xmlUrl="https://www.veronasera.it/rss" htmlUrl="https://www.veronasera.it"/>
       <outline text="MessinaToday [needs verification]" title="MessinaToday [needs verification]" type="rss" xmlUrl="https://www.messinatoday.it/rss" htmlUrl="https://www.messinatoday.it"/>
       <outline text="LeccePrima [needs verification]" title="LeccePrima [needs verification]" type="rss" xmlUrl="https://www.lecceprima.it/rss" htmlUrl="https://www.lecceprima.it"/>
+      <outline text="Il Secolo XIX [valid]" title="Il Secolo XIX [valid]" type="rss" xmlUrl="https://www.ilsecoloxix.it/rss/finegil/ilsecoloxix/feed.rss" htmlUrl="https://www.ilsecoloxix.it"/>
+      <outline text="La Nazione [valid]" title="La Nazione [valid]" type="rss" xmlUrl="https://www.lanazione.it/rss" htmlUrl="https://www.lanazione.it"/>
+      <outline text="L&apos;Unione Sarda [valid]" title="L&apos;Unione Sarda [valid]" type="rss" xmlUrl="https://www.unionesarda.it/sitemaps/rss" htmlUrl="https://www.unionesarda.it"/>
+      <outline text="Il Gazzettino - Home RSS [valid]" title="Il Gazzettino - Home RSS [valid]" type="rss" xmlUrl="https://www.ilgazzettino.it/rss/home.xml" htmlUrl="https://www.ilgazzettino.it"/>
+      <outline text="Il Gazzettino - News Sitemap [needs verification]" title="Il Gazzettino - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.ilgazzettino.it/?sez=XML&amp;p=MapNews" htmlUrl="https://www.ilgazzettino.it"/>
+      <outline text="Quotidiano di Puglia - Home RSS [valid]" title="Quotidiano di Puglia - Home RSS [valid]" type="rss" xmlUrl="https://www.quotidianodipuglia.it/rss/home.xml" htmlUrl="https://www.quotidianodipuglia.it"/>
+      <outline text="Quotidiano di Puglia - News Sitemap [needs verification]" title="Quotidiano di Puglia - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.quotidianodipuglia.it/?sez=XML&amp;p=MapNews" htmlUrl="https://www.quotidianodipuglia.it"/>
+      <outline text="La Sicilia - News Sitemap [needs verification]" title="La Sicilia - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.lasicilia.it/siteMapNews.jsp" htmlUrl="https://www.lasicilia.it"/>
+      <outline text="La Sicilia - Sitemap Index [needs verification]" title="La Sicilia - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.lasicilia.it/siteMap.jsp" htmlUrl="https://www.lasicilia.it"/>
+      <outline text="Avvenire - Google News Sitemap [needs verification]" title="Avvenire - Google News Sitemap [needs verification]" type="rss" xmlUrl="https://www.avvenire.it/google-news-sitemap.xml" htmlUrl="https://www.avvenire.it"/>
+      <outline text="Avvenire - Sitemap Index [needs verification]" title="Avvenire - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.avvenire.it/sitemap.xml" htmlUrl="https://www.avvenire.it"/>
+      <outline text="Tuttosport - News Sitemap [needs verification]" title="Tuttosport - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.tuttosport.com/site_map_news.xml" htmlUrl="https://www.tuttosport.com"/>
+      <outline text="Tuttosport - Sitemap Index [needs verification]" title="Tuttosport - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.tuttosport.com/sitemaps/index.xml" htmlUrl="https://www.tuttosport.com"/>
+      <outline text="Il Tirreno - Sitemap Index [needs verification]" title="Il Tirreno - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.iltirreno.it/sitemap.xml" htmlUrl="https://www.iltirreno.it"/>
+      <outline text="La Nuova Sardegna - Sitemap Index [needs verification]" title="La Nuova Sardegna - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.lanuovasardegna.it/sitemap.xml" htmlUrl="https://www.lanuovasardegna.it"/>
+      <outline text="Gazzetta del Sud - Sitemap Index [needs verification]" title="Gazzetta del Sud - Sitemap Index [needs verification]" type="rss" xmlUrl="https://gazzettadelsud.it/sitemap.xml" htmlUrl="https://gazzettadelsud.it"/>
+      <outline text="Giornale di Sicilia - Sitemap Index [needs verification]" title="Giornale di Sicilia - Sitemap Index [needs verification]" type="rss" xmlUrl="https://gds.it/sitemap.xml" htmlUrl="https://gds.it"/>
+      <outline text="Giornale di Sicilia - Palermo Sitemap Index [needs verification]" title="Giornale di Sicilia - Palermo Sitemap Index [needs verification]" type="rss" xmlUrl="https://palermo.gds.it/sitemap.xml" htmlUrl="https://palermo.gds.it"/>
+      <outline text="Gazzetta del Sud - Calabria Sitemap Index [needs verification]" title="Gazzetta del Sud - Calabria Sitemap Index [needs verification]" type="rss" xmlUrl="https://calabria.gazzettadelsud.it/sitemap.xml" htmlUrl="https://calabria.gazzettadelsud.it"/>
+      <outline text="FirenzeToday [valid]" title="FirenzeToday [valid]" type="rss" xmlUrl="https://www.firenzetoday.it/rss" htmlUrl="https://www.firenzetoday.it"/>
+      <outline text="CesenaToday [valid]" title="CesenaToday [valid]" type="rss" xmlUrl="https://www.cesenatoday.it/rss" htmlUrl="https://www.cesenatoday.it"/>
+      <outline text="ParmaToday [valid]" title="ParmaToday [valid]" type="rss" xmlUrl="https://www.parmatoday.it/rss" htmlUrl="https://www.parmatoday.it"/>
+      <outline text="ModenaToday [valid]" title="ModenaToday [valid]" type="rss" xmlUrl="https://www.modenatoday.it/rss" htmlUrl="https://www.modenatoday.it"/>
+      <outline text="ForliToday [valid]" title="ForliToday [valid]" type="rss" xmlUrl="https://www.forlitoday.it/rss" htmlUrl="https://www.forlitoday.it"/>
+      <outline text="TrentoToday [valid]" title="TrentoToday [valid]" type="rss" xmlUrl="https://www.trentotoday.it/rss" htmlUrl="https://www.trentotoday.it"/>
+      <outline text="TrevisoToday [valid]" title="TrevisoToday [valid]" type="rss" xmlUrl="https://www.trevisotoday.it/rss" htmlUrl="https://www.trevisotoday.it"/>
+      <outline text="VeneziaToday [valid]" title="VeneziaToday [valid]" type="rss" xmlUrl="https://www.veneziatoday.it/rss" htmlUrl="https://www.veneziatoday.it"/>
+      <outline text="UdineToday [valid]" title="UdineToday [valid]" type="rss" xmlUrl="https://www.udinetoday.it/rss" htmlUrl="https://www.udinetoday.it"/>
+      <outline text="TriestePrima [valid]" title="TriestePrima [valid]" type="rss" xmlUrl="https://www.triesteprima.it/rss" htmlUrl="https://www.triesteprima.it"/>
+      <outline text="NovaraToday [valid]" title="NovaraToday [valid]" type="rss" xmlUrl="https://www.novaratoday.it/rss" htmlUrl="https://www.novaratoday.it"/>
+      <outline text="MonzaToday [valid]" title="MonzaToday [valid]" type="rss" xmlUrl="https://www.monzatoday.it/rss" htmlUrl="https://www.monzatoday.it"/>
+      <outline text="LivornoToday [valid]" title="LivornoToday [valid]" type="rss" xmlUrl="https://www.livornotoday.it/rss" htmlUrl="https://www.livornotoday.it"/>
+      <outline text="ArezzoNotizie [valid]" title="ArezzoNotizie [valid]" type="rss" xmlUrl="https://www.arezzonotizie.it/rss" htmlUrl="https://www.arezzonotizie.it"/>
+      <outline text="PerugiaToday [valid]" title="PerugiaToday [valid]" type="rss" xmlUrl="https://www.perugiatoday.it/rss" htmlUrl="https://www.perugiatoday.it"/>
+      <outline text="FoggiaToday [valid]" title="FoggiaToday [valid]" type="rss" xmlUrl="https://www.foggiatoday.it/rss" htmlUrl="https://www.foggiatoday.it"/>
+      <outline text="SalernoToday [valid]" title="SalernoToday [valid]" type="rss" xmlUrl="https://www.salernotoday.it/rss" htmlUrl="https://www.salernotoday.it"/>
       <outline text="Sky TG24 [needs verification]" title="Sky TG24 [needs verification]" type="rss" xmlUrl="https://tg24.sky.it/rss/tg24.xml" htmlUrl="https://tg24.sky.it"/>
       <outline text="Corriere dello Sport [needs verification]" title="Corriere dello Sport [needs verification]" type="rss" xmlUrl="https://www.corrieredellosport.it/rss/home.xml" htmlUrl="https://www.corrieredellosport.it"/>
     </outline>

@@ -2937,12 +2937,187 @@
           "sitemapUrl": "https://www.bild.de/sitemap-news.xml"
         },
         {
-          "name": "Focus",
+          "name": "FOCUS Online",
           "url": "https://www.focus.de/rss/",
           "status": "⏩ OFFICIAL",
-          "checkedDate": null,
-          "valid": "needs verification",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
           "row": 13
+        },
+        {
+          "name": "FOCUS Online - Politik",
+          "url": "https://www.focus.de/politik/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "FOCUS Online - Finanzen",
+          "url": "https://www.focus.de/finanzen/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "FOCUS Online - Panorama",
+          "url": "https://www.focus.de/panorama/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "FOCUS Online - Sport",
+          "url": "https://www.focus.de/sport/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "STERN.DE - Alle Nachrichten",
+          "url": "https://www.stern.de/feed/standard/alle-nachrichten/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "STERN.DE - Politik",
+          "url": "https://www.stern.de/feed/standard/politik/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "STERN.DE - Wirtschaft",
+          "url": "https://www.stern.de/feed/standard/wirtschaft/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "STERN.DE - Panorama",
+          "url": "https://www.stern.de/feed/standard/panorama/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "STERN.DE - Sport",
+          "url": "https://www.stern.de/feed/standard/sport/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "STERN.DE - Digital",
+          "url": "https://www.stern.de/feed/standard/digital/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "ZDFheute",
+          "url": "https://www.zdfheute.de/rss/zdf/nachrichten",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "ZDFheute - Politik",
+          "url": "https://www.zdfheute.de/rss/zdf/politik",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "MDR Aktuell",
+          "url": "https://www.mdr.de/nachrichten/index-rss.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "MDR Sachsen",
+          "url": "https://www.mdr.de/nachrichten/sachsen/index-rss.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "MDR Sachsen-Anhalt",
+          "url": "https://www.mdr.de/nachrichten/sachsen-anhalt/index-rss.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "MDR Thüringen",
+          "url": "https://www.mdr.de/nachrichten/thueringen/index-rss.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "NDR Hamburg",
+          "url": "https://www.ndr.de/nachrichten/hamburg/index~rdf.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "NDR Niedersachsen",
+          "url": "https://www.ndr.de/nachrichten/niedersachsen/index~rdf.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "NDR Schleswig-Holstein",
+          "url": "https://www.ndr.de/nachrichten/schleswig-holstein/index~rdf.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "NDR Mecklenburg-Vorpommern",
+          "url": "https://www.ndr.de/nachrichten/mecklenburg-vorpommern/index~rdf.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "NDR Info",
+          "url": "https://www.ndr.de/nachrichten/info/index~rdf.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "RND - Politik",
+          "url": "https://www.rnd.de/arc/outboundfeeds/rss/category/politik/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "RND - Wirtschaft",
+          "url": "https://www.rnd.de/arc/outboundfeeds/rss/category/wirtschaft/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "RND - Sport",
+          "url": "https://www.rnd.de/arc/outboundfeeds/rss/category/sport/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "RND - Panorama",
+          "url": "https://www.rnd.de/arc/outboundfeeds/rss/category/panorama/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
         },
         {
           "name": "Handelsblatt Economy",
@@ -3613,9 +3788,10 @@
       "feeds": [
         {
           "name": "Financial Times - World",
-          "status": "ERR",
-          "checkedDate": "02/18/2026",
-          "valid": "invalid",
+          "url": "https://www.ft.com/world?format=rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
           "row": 1,
           "sitemapUrl": "https://www.ft.com/sitemaps/news.xml"
         },
@@ -3702,10 +3878,10 @@
         },
         {
           "name": "Financial Times UK",
-          "url": "https://www.ft.com/?format=rss",
-          "status": "⏩ OFFICIAL",
-          "checkedDate": null,
-          "valid": "needs verification",
+          "url": "https://www.ft.com/rss/home/uk",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
           "row": 14,
           "sitemapUrl": "https://www.ft.com/sitemaps/news.xml"
         },
@@ -3737,12 +3913,54 @@
           "sitemapUrl": "https://metro.co.uk/news-sitemap.xml"
         },
         {
+          "name": "Metro UK News",
+          "url": "https://metro.co.uk/news/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
           "name": "The Sun",
           "url": "https://www.thesun.co.uk/feed/",
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
           "row": 22
+        },
+        {
+          "name": "The Sun - News",
+          "url": "https://www.thesun.co.uk/news/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "The Sun - Sport",
+          "url": "https://www.thesun.co.uk/sport/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "The Sun - TV",
+          "url": "https://www.thesun.co.uk/tv/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "The Sun - Money",
+          "url": "https://www.thesun.co.uk/money/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "The Sun - Fabulous",
+          "url": "https://www.thesun.co.uk/fabulous/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
         },
         {
           "name": "The Sun - News Sitemap",
@@ -3847,6 +4065,20 @@
           "sitemapUrl": "https://www.mirror.co.uk/map_news.xml"
         },
         {
+          "name": "Mirror - Sport",
+          "url": "https://www.mirror.co.uk/sport/rss.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Mirror - 3am",
+          "url": "https://www.mirror.co.uk/3am/rss.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Daily Express - Google News Sitemap",
           "sitemapUrl": "https://www.express.co.uk/googlenews.xml"
         },
@@ -3916,7 +4148,10 @@
         },
         {
           "name": "FlightGlobal",
-          "url": "https://www.flightglobal.com/rss"
+          "url": "https://www.flightglobal.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
         },
         {
           "name": "Simple Flying",
@@ -4092,6 +4327,7 @@
         {
           "name": "La Croix",
           "url": "https://www.la-croix.com/feeds/rss/site.xml",
+          "sitemapUrl": "https://www.la-croix.com/feeds/sitemaps/sitemap_news.xml",
           "status": null,
           "checkedDate": null,
           "valid": null,
@@ -4100,6 +4336,7 @@
         {
           "name": "La Dépêche",
           "url": "https://www.ladepeche.fr/rss.xml",
+          "sitemapUrl": "https://www.ladepeche.fr/sitemap-news.xml",
           "status": null,
           "checkedDate": null,
           "valid": null,
@@ -4349,11 +4586,13 @@
         },
         {
           "name": "Midi Libre",
-          "url": "https://www.midilibre.fr/rss.xml"
+          "url": "https://www.midilibre.fr/rss.xml",
+          "sitemapUrl": "https://www.midilibre.fr/sitemap-news.xml"
         },
         {
           "name": "Nice-Matin",
-          "url": "https://www.nicematin.com/rss"
+          "url": "https://www.nicematin.com/rss",
+          "sitemapUrl": "https://www.nicematin.com/googlenews.xml"
         },
         {
           "name": "CNEWS",
@@ -4373,23 +4612,28 @@
         },
         {
           "name": "Numerama",
-          "url": "https://www.numerama.com/feed/"
+          "url": "https://www.numerama.com/feed/",
+          "sitemapUrl": "https://www.numerama.com/news-sitemap.xml"
         },
         {
           "name": "Clubic",
-          "url": "https://www.clubic.com/feed/news.rss"
+          "url": "https://www.clubic.com/feed/news.rss",
+          "sitemapUrl": "https://www.clubic.com/sitemap_news.xml"
         },
         {
           "name": "01Net",
-          "url": "https://www.01net.com/rss/actualites/"
+          "url": "https://www.01net.com/rss/actualites/",
+          "sitemapUrl": "https://www.01net.com/sitemap-news.xml"
         },
         {
           "name": "Presse Citron",
-          "url": "https://www.presse-citron.net/feed/"
+          "url": "https://www.presse-citron.net/feed/",
+          "sitemapUrl": "https://www.presse-citron.net/sitemap-news.xml"
         },
         {
           "name": "Journal du Geek",
-          "url": "https://www.journaldugeek.com/feed/"
+          "url": "https://www.journaldugeek.com/feed/",
+          "sitemapUrl": "https://www.journaldugeek.com/news-sitemap.xml"
         },
         {
           "name": "Le Progrès",
@@ -4515,6 +4759,7 @@
         {
           "name": "Capital",
           "url": "https://www.capital.fr/rss",
+          "sitemapUrl": "https://www.capital.fr/sitemap/news.xml",
           "language": "fr",
           "tier": "primary"
         },
@@ -4545,18 +4790,21 @@
         {
           "name": "France Bleu",
           "url": "https://www.francebleu.fr/rss/a-la-une.xml",
+          "sitemapUrl": "https://www.francebleu.fr/sitemap-news.xml",
           "language": "fr",
           "tier": "primary"
         },
         {
           "name": "Sciences et Avenir",
           "url": "https://www.sciencesetavenir.fr/rss.xml",
+          "sitemapUrl": "https://www.sciencesetavenir.fr/sitemap.news.xml",
           "language": "fr",
           "tier": "primary"
         },
         {
           "name": "Les Numériques",
           "url": "https://www.lesnumeriques.com/rss.xml",
+          "sitemapUrl": "https://www.lesnumeriques.com/sitemap-google-news.xml",
           "language": "fr",
           "tier": "primary"
         }
@@ -5010,6 +5258,258 @@
         {
           "name": "LeccePrima",
           "url": "https://www.lecceprima.it/rss"
+        },
+        {
+          "name": "Il Secolo XIX",
+          "url": "https://www.ilsecoloxix.it/rss/finegil/ilsecoloxix/feed.rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "La Nazione",
+          "url": "https://www.lanazione.it/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "L'Unione Sarda",
+          "url": "https://www.unionesarda.it/sitemaps/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Il Gazzettino - Home RSS",
+          "url": "https://www.ilgazzettino.it/rss/home.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Il Gazzettino - News Sitemap",
+          "sitemapUrl": "https://www.ilgazzettino.it/?sez=XML&p=MapNews",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Quotidiano di Puglia - Home RSS",
+          "url": "https://www.quotidianodipuglia.it/rss/home.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Quotidiano di Puglia - News Sitemap",
+          "sitemapUrl": "https://www.quotidianodipuglia.it/?sez=XML&p=MapNews",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "La Sicilia - News Sitemap",
+          "sitemapUrl": "https://www.lasicilia.it/siteMapNews.jsp",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "La Sicilia - Sitemap Index",
+          "sitemapUrl": "https://www.lasicilia.it/siteMap.jsp",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Avvenire - Google News Sitemap",
+          "sitemapUrl": "https://www.avvenire.it/google-news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Avvenire - Sitemap Index",
+          "sitemapUrl": "https://www.avvenire.it/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Tuttosport - News Sitemap",
+          "sitemapUrl": "https://www.tuttosport.com/site_map_news.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Tuttosport - Sitemap Index",
+          "sitemapUrl": "https://www.tuttosport.com/sitemaps/index.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Il Tirreno - Sitemap Index",
+          "sitemapUrl": "https://www.iltirreno.it/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "La Nuova Sardegna - Sitemap Index",
+          "sitemapUrl": "https://www.lanuovasardegna.it/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Gazzetta del Sud - Sitemap Index",
+          "sitemapUrl": "https://gazzettadelsud.it/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Giornale di Sicilia - Sitemap Index",
+          "sitemapUrl": "https://gds.it/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Giornale di Sicilia - Palermo Sitemap Index",
+          "sitemapUrl": "https://palermo.gds.it/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Gazzetta del Sud - Calabria Sitemap Index",
+          "sitemapUrl": "https://calabria.gazzettadelsud.it/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "FirenzeToday",
+          "url": "https://www.firenzetoday.it/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CesenaToday",
+          "url": "https://www.cesenatoday.it/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "ParmaToday",
+          "url": "https://www.parmatoday.it/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "ModenaToday",
+          "url": "https://www.modenatoday.it/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "ForliToday",
+          "url": "https://www.forlitoday.it/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TrentoToday",
+          "url": "https://www.trentotoday.it/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TrevisoToday",
+          "url": "https://www.trevisotoday.it/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "VeneziaToday",
+          "url": "https://www.veneziatoday.it/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "UdineToday",
+          "url": "https://www.udinetoday.it/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TriestePrima",
+          "url": "https://www.triesteprima.it/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "NovaraToday",
+          "url": "https://www.novaratoday.it/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "MonzaToday",
+          "url": "https://www.monzatoday.it/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "LivornoToday",
+          "url": "https://www.livornotoday.it/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "ArezzoNotizie",
+          "url": "https://www.arezzonotizie.it/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "PerugiaToday",
+          "url": "https://www.perugiatoday.it/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "FoggiaToday",
+          "url": "https://www.foggiatoday.it/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "SalernoToday",
+          "url": "https://www.salernotoday.it/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
         },
         {
           "name": "Sky TG24",
