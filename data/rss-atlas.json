@@ -1409,7 +1409,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/12/2026",
           "valid": "valid",
-          "row": 1
+          "row": 1,
+          "enabled": false
         },
         {
           "name": "TechNode",
@@ -1468,7 +1469,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/12/2026",
           "valid": "valid",
-          "row": 8
+          "row": 8,
+          "enabled": false
         },
         {
           "name": "China Daily - BizChina",
@@ -1476,7 +1478,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/12/2026",
           "valid": "valid",
-          "row": 9
+          "row": 9,
+          "enabled": false
         },
         {
           "name": "China Daily - Opinion",
@@ -1484,7 +1487,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/12/2026",
           "valid": "valid",
-          "row": 10
+          "row": 10,
+          "enabled": false
         },
         {
           "name": "China Daily - Sports",
@@ -1492,7 +1496,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/12/2026",
           "valid": "valid",
-          "row": 11
+          "row": 11,
+          "enabled": false
         },
         {
           "name": "China Daily - Entertainment",
@@ -1500,7 +1505,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/12/2026",
           "valid": "valid",
-          "row": 12
+          "row": 12,
+          "enabled": false
         },
         {
           "name": "China Daily - Lifestyle",
@@ -1508,7 +1514,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/12/2026",
           "valid": "valid",
-          "row": 13
+          "row": 13,
+          "enabled": false
         },
         {
           "name": "China Daily - Photos",
@@ -1516,7 +1523,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/12/2026",
           "valid": "valid",
-          "row": 14
+          "row": 14,
+          "enabled": false
         },
         {
           "name": "China Daily - China Daily (main)",
@@ -1524,7 +1532,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/12/2026",
           "valid": "valid",
-          "row": 15
+          "row": 15,
+          "enabled": false
         },
         {
           "name": "China Daily - HK Edition",
@@ -1532,7 +1541,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/12/2026",
           "valid": "valid",
-          "row": 16
+          "row": 16,
+          "enabled": false
         },
         {
           "name": "China Daily - USA",
@@ -1540,7 +1550,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/12/2026",
           "valid": "valid",
-          "row": 17
+          "row": 17,
+          "enabled": false
         },
         {
           "name": "China Daily - Europe",
@@ -1548,7 +1559,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/12/2026",
           "valid": "valid",
-          "row": 18
+          "row": 18,
+          "enabled": false
         },
         {
           "name": "People.cn - Politics",
@@ -1556,7 +1568,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 19
+          "row": 19,
+          "enabled": false
         },
         {
           "name": "People.cn - Society",
@@ -1564,7 +1577,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 20
+          "row": 20,
+          "enabled": false
         },
         {
           "name": "People.cn - Legal",
@@ -1572,7 +1586,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 21
+          "row": 21,
+          "enabled": false
         },
         {
           "name": "People.cn - World",
@@ -1580,7 +1595,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 22
+          "row": 22,
+          "enabled": false
         },
         {
           "name": "People.cn - Opinion",
@@ -1588,7 +1604,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 23
+          "row": 23,
+          "enabled": false
         },
         {
           "name": "People.cn - ChinaPic",
@@ -1596,21 +1613,24 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 24
+          "row": 24,
+          "enabled": false
         },
         {
           "name": "People.cn - All News",
           "url": "https://www.people.com.cn/rss/ywkx.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/12/2026",
-          "valid": "valid"
+          "valid": "valid",
+          "enabled": false
         },
         {
           "name": "People.cn - Taiwan/HK/Macao",
           "url": "https://www.people.com.cn/rss/haixia.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/12/2026",
-          "valid": "valid"
+          "valid": "valid",
+          "enabled": false
         },
         {
           "name": "CGTN - Documentary",
@@ -1651,63 +1671,72 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/12/2026",
           "valid": "valid",
-          "row": 29
+          "row": 29,
+          "enabled": false
         },
         {
           "name": "Xinhua - World",
           "url": "https://www.xinhuanet.com/world/news_world.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/12/2026",
-          "valid": "valid"
+          "valid": "valid",
+          "enabled": false
         },
         {
           "name": "Xinhua - Local",
           "url": "https://www.xinhuanet.com/local/news_province.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/12/2026",
-          "valid": "valid"
+          "valid": "valid",
+          "enabled": false
         },
         {
           "name": "Xinhua - Military",
           "url": "https://www.xinhuanet.com/mil/news_mil.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/12/2026",
-          "valid": "valid"
+          "valid": "valid",
+          "enabled": false
         },
         {
           "name": "Xinhua - Taiwan",
           "url": "https://www.xinhuanet.com/tw/news_tw.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/12/2026",
-          "valid": "valid"
+          "valid": "valid",
+          "enabled": false
         },
         {
           "name": "Xinhua - Overseas",
           "url": "https://www.xinhuanet.com/overseas/news_overseas.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/12/2026",
-          "valid": "valid"
+          "valid": "valid",
+          "enabled": false
         },
         {
           "name": "Xinhua - Finance",
           "url": "https://www.xinhuanet.com/finance/news_finance.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/12/2026",
-          "valid": "valid"
+          "valid": "valid",
+          "enabled": false
         },
         {
           "name": "Xinhua - Fortune",
           "url": "https://www.xinhuanet.com/fortune/news_fortune.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/12/2026",
-          "valid": "valid"
+          "valid": "valid",
+          "enabled": false
         },
         {
           "name": "Xinhua - Tech",
           "url": "https://www.xinhuanet.com/tech/news_tech.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/12/2026",
-          "valid": "valid"
+          "valid": "valid",
+          "enabled": false
         },
         {
           "name": "People.cn - Finance",
@@ -1715,7 +1744,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/23/2026",
           "valid": "needs verification",
-          "row": 40
+          "row": 40,
+          "enabled": false
         },
         {
           "name": "People.cn - Military",
@@ -1723,7 +1753,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/23/2026",
           "valid": "needs verification",
-          "row": 41
+          "row": 41,
+          "enabled": false
         },
         {
           "name": "People.cn - Culture",
@@ -1731,32 +1762,143 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/23/2026",
           "valid": "needs verification",
-          "row": 42
+          "row": 42,
+          "enabled": false
         },
         {
           "name": "Sina Finance (Top Financial Portal)",
           "url": "https://rss.sina.com.cn/roll/finance/hot_roll.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/12/2026",
-          "valid": "valid"
+          "valid": "valid",
+          "enabled": false
         },
         {
           "name": "Sina - World",
-          "url": "https://rss.sina.com.cn/news/world/focus15.xml"
+          "url": "https://rss.sina.com.cn/news/world/focus15.xml",
+          "enabled": false
         },
         {
           "name": "Sina - China",
           "url": "https://rss.sina.com.cn/news/china/focus15.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/12/2026",
-          "valid": "valid"
+          "valid": "valid",
+          "enabled": false
         },
         {
           "name": "Sina - Society",
           "url": "https://rss.sina.com.cn/news/society/focus15.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "enabled": false
+        },
+        {
+          "name": "36Kr",
+          "url": "https://36kr.com/feed",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
           "valid": "valid"
+        },
+        {
+          "name": "ITHome",
+          "url": "https://www.ithome.com/rss/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Leiphone",
+          "url": "https://www.leiphone.com/feed",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "QbitAI",
+          "url": "https://www.qbitai.com/feed",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TMTPost",
+          "url": "https://www.tmtpost.com/rss.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "iFanr",
+          "url": "https://www.ifanr.com/feed",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "OSChina - News",
+          "url": "https://www.oschina.net/news/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "InfoQ China",
+          "url": "https://www.infoq.cn/feed.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Solidot",
+          "url": "https://www.solidot.org/index.rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "SSPAI",
+          "url": "https://sspai.com/feed",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Yicai - News HTML Collection",
+          "url": "https://www.yicai.com/news",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CLS - Telegraph HTML Collection",
+          "url": "https://www.cls.cn/telegraph",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "CLS - Sitemap Index",
+          "sitemapUrl": "https://www.cls.cn/map.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Guancha - Economy HTML Collection",
+          "url": "https://www.guancha.cn/economy?s=dhcaijing",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "BJNews - Sitemap",
+          "sitemapUrl": "https://www.bjnews.com.cn/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid",
+          "enabled": false
         },
         {
           "name": "HK01 (Hong Kong Digital Media Top Feed)",
@@ -1795,7 +1937,8 @@
         },
         {
           "name": "Tencent Tech (Tencent Technology News)",
-          "url": "https://new.qq.com/ch/tech/"
+          "url": "https://new.qq.com/ch/tech/",
+          "enabled": false
         },
         {
           "name": "China News Service - Scroll News",
@@ -1917,7 +2060,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/23/2026",
           "valid": "needs verification",
-          "row": 44
+          "row": 44,
+          "enabled": false
         },
         {
           "name": "Sixth Tone",

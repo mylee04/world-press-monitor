@@ -1786,6 +1786,7 @@ const ARTICLE_TITLE_FALLBACK_SOURCES = new Set(
       'eurointegration',
       'vol.at',
       'independent.ie',
+      'cls',
       'aamulehti',
       'helsingin sanomat',
       'ilta-sanomat',
@@ -1928,12 +1929,16 @@ function shouldAttemptHtmlCollectionFeed(source: string, url: string): boolean {
   try {
     const parsed = new URL(url);
     const hostname = parsed.hostname.toLowerCase();
+    const pathname = parsed.pathname.toLowerCase();
     if (
       hostname === 'nyheder.tv2.dk'
       || hostname === 'www.altinget.dk'
       || hostname === 'herningfolkeblad.dk'
       || hostname === 'midtjyllandsavis.dk'
       || hostname === 'skivefolkeblad.dk'
+      || (hostname === 'www.yicai.com' && pathname.startsWith('/news'))
+      || (hostname === 'www.cls.cn' && pathname.startsWith('/telegraph'))
+      || (hostname === 'www.guancha.cn' && pathname.startsWith('/economy'))
     ) return true;
   } catch {
     // Ignore malformed URLs and fall through to source-name matching.
@@ -1949,6 +1954,9 @@ function shouldAttemptHtmlCollectionFeed(source: string, url: string): boolean {
     || normalizedSource.includes('herning folkeblad - html collection')
     || normalizedSource.includes('midtjyllands avis - html collection')
     || normalizedSource.includes('skive folkeblad - html collection')
+    || normalizedSource.includes('yicai - news html collection')
+    || normalizedSource.includes('cls - telegraph html collection')
+    || normalizedSource.includes('guancha - economy html collection')
   );
 }
 

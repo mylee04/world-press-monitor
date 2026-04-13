@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Mon, 13 Apr 2026 04:22:54 GMT</dateCreated>
+    <dateCreated>Mon, 13 Apr 2026 04:53:46 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -242,54 +242,31 @@
       <outline text="Aviation Week [invalid]" title="Aviation Week [invalid]" type="rss" xmlUrl="https://www.aviationweek.com/rss" htmlUrl="https://www.aviationweek.com"/>
     </outline>
     <outline text="China (CN)" title="China (CN)">
-      <outline text="China Daily - World [valid]" title="China Daily - World [valid]" type="rss" xmlUrl="https://www.chinadaily.com.cn/rss/world_rss.xml" htmlUrl="https://www.chinadaily.com.cn"/>
       <outline text="TechNode [needs verification]" title="TechNode [needs verification]" type="rss" xmlUrl="https://technode.com/news-sitemap.xml" htmlUrl="https://technode.com"/>
       <outline text="South China Morning Post [valid]" title="South China Morning Post [valid]" type="rss" xmlUrl="https://www.scmp.com/rss/91/feed" htmlUrl="https://www.scmp.com"/>
       <outline text="Initium [valid]" title="Initium [valid]" type="rss" xmlUrl="https://theinitium.com/feed" htmlUrl="https://theinitium.com"/>
       <outline text="Liberty Times [valid]" title="Liberty Times [valid]" type="rss" xmlUrl="https://news.ltn.com.tw/rss/all.xml" htmlUrl="https://news.ltn.com.tw"/>
-      <outline text="China Daily - China [valid]" title="China Daily - China [valid]" type="rss" xmlUrl="https://www.chinadaily.com.cn/rss/china_rss.xml" htmlUrl="https://www.chinadaily.com.cn"/>
-      <outline text="China Daily - BizChina [valid]" title="China Daily - BizChina [valid]" type="rss" xmlUrl="https://www.chinadaily.com.cn/rss/bizchina_rss.xml" htmlUrl="https://www.chinadaily.com.cn"/>
-      <outline text="China Daily - Opinion [valid]" title="China Daily - Opinion [valid]" type="rss" xmlUrl="https://www.chinadaily.com.cn/rss/opinion_rss.xml" htmlUrl="https://www.chinadaily.com.cn"/>
-      <outline text="China Daily - Sports [valid]" title="China Daily - Sports [valid]" type="rss" xmlUrl="https://www.chinadaily.com.cn/rss/sports_rss.xml" htmlUrl="https://www.chinadaily.com.cn"/>
-      <outline text="China Daily - Entertainment [valid]" title="China Daily - Entertainment [valid]" type="rss" xmlUrl="https://www.chinadaily.com.cn/rss/entertainment_rss.xml" htmlUrl="https://www.chinadaily.com.cn"/>
-      <outline text="China Daily - Lifestyle [valid]" title="China Daily - Lifestyle [valid]" type="rss" xmlUrl="https://www.chinadaily.com.cn/rss/lifestyle_rss.xml" htmlUrl="https://www.chinadaily.com.cn"/>
-      <outline text="China Daily - Photos [valid]" title="China Daily - Photos [valid]" type="rss" xmlUrl="https://www.chinadaily.com.cn/rss/photo_rss.xml" htmlUrl="https://www.chinadaily.com.cn"/>
-      <outline text="China Daily - China Daily (main) [valid]" title="China Daily - China Daily (main) [valid]" type="rss" xmlUrl="https://www.chinadaily.com.cn/rss/cndy_rss.xml" htmlUrl="https://www.chinadaily.com.cn"/>
-      <outline text="China Daily - HK Edition [valid]" title="China Daily - HK Edition [valid]" type="rss" xmlUrl="https://www.chinadaily.com.cn/rss/hk_rss.xml" htmlUrl="https://www.chinadaily.com.cn"/>
-      <outline text="China Daily - USA [valid]" title="China Daily - USA [valid]" type="rss" xmlUrl="https://usa.chinadaily.com.cn/rss.xml" htmlUrl="https://usa.chinadaily.com.cn"/>
-      <outline text="China Daily - Europe [valid]" title="China Daily - Europe [valid]" type="rss" xmlUrl="https://europe.chinadaily.com.cn/rss.xml" htmlUrl="https://europe.chinadaily.com.cn"/>
-      <outline text="People.cn - Politics [valid]" title="People.cn - Politics [valid]" type="rss" xmlUrl="https://www.people.com.cn/rss/politics.xml" htmlUrl="https://www.people.com.cn"/>
-      <outline text="People.cn - Society [valid]" title="People.cn - Society [valid]" type="rss" xmlUrl="https://www.people.com.cn/rss/society.xml" htmlUrl="https://www.people.com.cn"/>
-      <outline text="People.cn - Legal [valid]" title="People.cn - Legal [valid]" type="rss" xmlUrl="https://www.people.com.cn/rss/legal.xml" htmlUrl="https://www.people.com.cn"/>
-      <outline text="People.cn - World [valid]" title="People.cn - World [valid]" type="rss" xmlUrl="https://www.people.com.cn/rss/world.xml" htmlUrl="https://www.people.com.cn"/>
-      <outline text="People.cn - Opinion [valid]" title="People.cn - Opinion [valid]" type="rss" xmlUrl="https://www.people.com.cn/rss/opinion.xml" htmlUrl="https://www.people.com.cn"/>
-      <outline text="People.cn - ChinaPic [valid]" title="People.cn - ChinaPic [valid]" type="rss" xmlUrl="https://www.people.com.cn/rss/chinapic.xml" htmlUrl="https://www.people.com.cn"/>
-      <outline text="People.cn - All News [valid]" title="People.cn - All News [valid]" type="rss" xmlUrl="https://www.people.com.cn/rss/ywkx.xml" htmlUrl="https://www.people.com.cn"/>
-      <outline text="People.cn - Taiwan/HK/Macao [valid]" title="People.cn - Taiwan/HK/Macao [valid]" type="rss" xmlUrl="https://www.people.com.cn/rss/haixia.xml" htmlUrl="https://www.people.com.cn"/>
       <outline text="CGTN - Documentary [valid]" title="CGTN - Documentary [valid]" type="rss" xmlUrl="https://www.cgtn.com/subscribe/rss/section/documentary.xml" htmlUrl="https://www.cgtn.com"/>
       <outline text="RTHK [valid]" title="RTHK [valid]" type="rss" xmlUrl="https://rthk.hk/rthk/news/rss/c_expressnews_clocal.xml" htmlUrl="https://rthk.hk"/>
       <outline text="FT Chinese [valid]" title="FT Chinese [valid]" type="rss" xmlUrl="https://www.ftchinese.com/rss/feed" htmlUrl="https://www.ftchinese.com"/>
-      <outline text="Xinhua - Politics [valid]" title="Xinhua - Politics [valid]" type="rss" xmlUrl="https://www.xinhuanet.com/politics/news_politics.xml" htmlUrl="https://www.xinhuanet.com"/>
-      <outline text="Xinhua - World [valid]" title="Xinhua - World [valid]" type="rss" xmlUrl="https://www.xinhuanet.com/world/news_world.xml" htmlUrl="https://www.xinhuanet.com"/>
-      <outline text="Xinhua - Local [valid]" title="Xinhua - Local [valid]" type="rss" xmlUrl="https://www.xinhuanet.com/local/news_province.xml" htmlUrl="https://www.xinhuanet.com"/>
-      <outline text="Xinhua - Military [valid]" title="Xinhua - Military [valid]" type="rss" xmlUrl="https://www.xinhuanet.com/mil/news_mil.xml" htmlUrl="https://www.xinhuanet.com"/>
-      <outline text="Xinhua - Taiwan [valid]" title="Xinhua - Taiwan [valid]" type="rss" xmlUrl="https://www.xinhuanet.com/tw/news_tw.xml" htmlUrl="https://www.xinhuanet.com"/>
-      <outline text="Xinhua - Overseas [valid]" title="Xinhua - Overseas [valid]" type="rss" xmlUrl="https://www.xinhuanet.com/overseas/news_overseas.xml" htmlUrl="https://www.xinhuanet.com"/>
-      <outline text="Xinhua - Finance [valid]" title="Xinhua - Finance [valid]" type="rss" xmlUrl="https://www.xinhuanet.com/finance/news_finance.xml" htmlUrl="https://www.xinhuanet.com"/>
-      <outline text="Xinhua - Fortune [valid]" title="Xinhua - Fortune [valid]" type="rss" xmlUrl="https://www.xinhuanet.com/fortune/news_fortune.xml" htmlUrl="https://www.xinhuanet.com"/>
-      <outline text="Xinhua - Tech [valid]" title="Xinhua - Tech [valid]" type="rss" xmlUrl="https://www.xinhuanet.com/tech/news_tech.xml" htmlUrl="https://www.xinhuanet.com"/>
-      <outline text="People.cn - Finance [valid]" title="People.cn - Finance [valid]" type="rss" xmlUrl="https://www.people.com.cn/rss/finance.xml" htmlUrl="https://www.people.com.cn"/>
-      <outline text="People.cn - Military [valid]" title="People.cn - Military [valid]" type="rss" xmlUrl="https://www.people.com.cn/rss/military.xml" htmlUrl="https://www.people.com.cn"/>
-      <outline text="People.cn - Culture [valid]" title="People.cn - Culture [valid]" type="rss" xmlUrl="https://www.people.com.cn/rss/culture.xml" htmlUrl="https://www.people.com.cn"/>
-      <outline text="Sina Finance (Top Financial Portal) [valid]" title="Sina Finance (Top Financial Portal) [valid]" type="rss" xmlUrl="https://rss.sina.com.cn/roll/finance/hot_roll.xml" htmlUrl="https://rss.sina.com.cn"/>
-      <outline text="Sina - World [needs verification]" title="Sina - World [needs verification]" type="rss" xmlUrl="https://rss.sina.com.cn/news/world/focus15.xml" htmlUrl="https://rss.sina.com.cn"/>
-      <outline text="Sina - China [valid]" title="Sina - China [valid]" type="rss" xmlUrl="https://rss.sina.com.cn/news/china/focus15.xml" htmlUrl="https://rss.sina.com.cn"/>
-      <outline text="Sina - Society [valid]" title="Sina - Society [valid]" type="rss" xmlUrl="https://rss.sina.com.cn/news/society/focus15.xml" htmlUrl="https://rss.sina.com.cn"/>
+      <outline text="36Kr [valid]" title="36Kr [valid]" type="rss" xmlUrl="https://36kr.com/feed" htmlUrl="https://36kr.com"/>
+      <outline text="ITHome [valid]" title="ITHome [valid]" type="rss" xmlUrl="https://www.ithome.com/rss/" htmlUrl="https://www.ithome.com"/>
+      <outline text="Leiphone [valid]" title="Leiphone [valid]" type="rss" xmlUrl="https://www.leiphone.com/feed" htmlUrl="https://www.leiphone.com"/>
+      <outline text="QbitAI [valid]" title="QbitAI [valid]" type="rss" xmlUrl="https://www.qbitai.com/feed" htmlUrl="https://www.qbitai.com"/>
+      <outline text="TMTPost [valid]" title="TMTPost [valid]" type="rss" xmlUrl="https://www.tmtpost.com/rss.xml" htmlUrl="https://www.tmtpost.com"/>
+      <outline text="iFanr [valid]" title="iFanr [valid]" type="rss" xmlUrl="https://www.ifanr.com/feed" htmlUrl="https://www.ifanr.com"/>
+      <outline text="OSChina - News [valid]" title="OSChina - News [valid]" type="rss" xmlUrl="https://www.oschina.net/news/rss" htmlUrl="https://www.oschina.net"/>
+      <outline text="InfoQ China [valid]" title="InfoQ China [valid]" type="rss" xmlUrl="https://www.infoq.cn/feed.xml" htmlUrl="https://www.infoq.cn"/>
+      <outline text="Solidot [valid]" title="Solidot [valid]" type="rss" xmlUrl="https://www.solidot.org/index.rss" htmlUrl="https://www.solidot.org"/>
+      <outline text="SSPAI [valid]" title="SSPAI [valid]" type="rss" xmlUrl="https://sspai.com/feed" htmlUrl="https://sspai.com"/>
+      <outline text="Yicai - News HTML Collection [valid]" title="Yicai - News HTML Collection [valid]" type="rss" xmlUrl="https://www.yicai.com/news" htmlUrl="https://www.yicai.com"/>
+      <outline text="CLS - Telegraph HTML Collection [valid]" title="CLS - Telegraph HTML Collection [valid]" type="rss" xmlUrl="https://www.cls.cn/telegraph" htmlUrl="https://www.cls.cn"/>
+      <outline text="CLS - Sitemap Index [needs verification]" title="CLS - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.cls.cn/map.xml" htmlUrl="https://www.cls.cn"/>
+      <outline text="Guancha - Economy HTML Collection [valid]" title="Guancha - Economy HTML Collection [valid]" type="rss" xmlUrl="https://www.guancha.cn/economy?s=dhcaijing" htmlUrl="https://www.guancha.cn"/>
       <outline text="Ming Pao (Hong Kong Flagship Newspaper) [valid]" title="Ming Pao (Hong Kong Flagship Newspaper) [valid]" type="rss" xmlUrl="https://news.mingpao.com/rss/pns/s00001.xml" htmlUrl="https://news.mingpao.com"/>
       <outline text="Stheadline [valid]" title="Stheadline [valid]" type="rss" xmlUrl="https://www.stheadline.com/rss" htmlUrl="https://www.stheadline.com"/>
       <outline text="am730 [needs verification]" title="am730 [needs verification]" type="rss" xmlUrl="https://www.am730.com.hk/sitemap.xml" htmlUrl="https://www.am730.com.hk"/>
       <outline text="Orange News [needs verification]" title="Orange News [needs verification]" type="rss" xmlUrl="https://www.orangenews.hk/sitemap.xml" htmlUrl="https://www.orangenews.hk"/>
-      <outline text="Tencent Tech (Tencent Technology News) [invalid]" title="Tencent Tech (Tencent Technology News) [invalid]" type="rss" xmlUrl="https://new.qq.com/ch/tech/" htmlUrl="https://new.qq.com"/>
       <outline text="China News Service - Scroll News [valid]" title="China News Service - Scroll News [valid]" type="rss" xmlUrl="https://www.chinanews.com.cn/rss/scroll-news.xml" htmlUrl="https://www.chinanews.com.cn"/>
       <outline text="China News Service - China [valid]" title="China News Service - China [valid]" type="rss" xmlUrl="https://www.chinanews.com.cn/rss/china.xml" htmlUrl="https://www.chinanews.com.cn"/>
       <outline text="China News Service - World [valid]" title="China News Service - World [valid]" type="rss" xmlUrl="https://www.chinanews.com.cn/rss/world.xml" htmlUrl="https://www.chinanews.com.cn"/>
@@ -306,7 +283,6 @@
       <outline text="Hong Kong Free Press [valid]" title="Hong Kong Free Press [valid]" type="rss" xmlUrl="https://hongkongfp.com/feed/" htmlUrl="https://hongkongfp.com"/>
       <outline text="Shine - News Sitemap [needs verification]" title="Shine - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.shine.cn/sitemap-news.xml" htmlUrl="https://www.shine.cn"/>
       <outline text="Global Times - News Sitemap [needs verification]" title="Global Times - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.globaltimes.cn/sitemap.xml" htmlUrl="https://www.globaltimes.cn"/>
-      <outline text="Caixin Global [invalid]" title="Caixin Global [invalid]" type="rss" xmlUrl="https://gateway.caixin.com/api/data/global/feedlyRss.xml" htmlUrl="https://gateway.caixin.com"/>
       <outline text="Sixth Tone [valid]" title="Sixth Tone [valid]" type="rss" xmlUrl="https://www.sixthtone.com/rss/index.xml" htmlUrl="https://www.sixthtone.com"/>
       <outline text="ECNS [valid]" title="ECNS [valid]" type="rss" xmlUrl="https://www.ecns.cn/rss/rss.xml" htmlUrl="https://www.ecns.cn"/>
       <outline text="CGTN - China [valid]" title="CGTN - China [valid]" type="rss" xmlUrl="https://www.cgtn.com/subscribe/rss/section/china.xml" htmlUrl="https://www.cgtn.com"/>
