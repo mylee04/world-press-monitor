@@ -1,0 +1,22 @@
+[
+  {
+    "source": "Montreal Gazette",
+    "sitemap": "https://montrealgazette.com/news-sitemap.xml"
+  },
+  {
+    "source": "Winnipeg Free Press",
+    "sitemap": "https://www.winnipegfreepress.com/sitemap.xml"
+  },
+  {
+    "source": "BradfordToday",
+    "sitemap": "https://www.bradfordtoday.ca/sitemaps/news-sitemap.xml"
+  },
+  {
+    "source": "ElliotLakeToday",
+    "sitemap": "https://www.elliotlaketoday.com/sitemaps/news-sitemap.xml"
+  },
+  {
+    "source": "MidlandToday",
+    "sitemap": "https://www.midlandtoday.ca/sitemaps/news-sitemap.xml"
+  }
+]

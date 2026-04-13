@@ -1,0 +1,26 @@
+[
+  {
+    "source": "OrilliaMatters",
+    "sitemap": "https://www.orilliamatters.com/sitemaps/news-sitemap.xml"
+  },
+  {
+    "source": "CollingwoodToday",
+    "sitemap": "https://www.collingwoodtoday.ca/sitemaps/news-sitemap.xml"
+  },
+  {
+    "source": "Vancouver Is Awesome",
+    "sitemap": "https://www.vancouverisawesome.com/sitemaps/news-sitemap.xml"
+  },
+  {
+    "source": "North Shore News",
+    "sitemap": "https://www.nsnews.com/sitemaps/news-sitemap.xml"
+  },
+  {
+    "source": "Richmond News",
+    "sitemap": "https://www.richmond-news.com/sitemaps/news-sitemap.xml"
+  },
+  {
+    "source": "Prince George Citizen",
+    "sitemap": "https://www.princegeorgecitizen.com/sitemaps/news-sitemap.xml"
+  }
+]

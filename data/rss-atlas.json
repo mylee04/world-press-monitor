@@ -8243,6 +8243,7 @@
         {
           "name": "Moose Jaw Today",
           "url": "https://www.moosejawtoday.com/rss",
+          "sitemapUrl": "https://www.moosejawtoday.com/sitemaps/news-sitemap.xml",
           "sourceType": "local",
           "status": "NEW",
           "checkedDate": "04/10/2026",
@@ -8251,6 +8252,7 @@
         {
           "name": "SaskToday.ca",
           "url": "https://www.sasktoday.ca/rss",
+          "sitemapUrl": "https://www.sasktoday.ca/sitemaps/news-sitemap.xml",
           "sourceType": "local",
           "status": "NEW",
           "checkedDate": "04/10/2026",
@@ -8277,6 +8279,7 @@
         {
           "name": "Delta Optimist",
           "url": "https://www.delta-optimist.com/rss",
+          "sitemapUrl": "https://www.delta-optimist.com/sitemaps/news-sitemap.xml",
           "sourceType": "local",
           "status": "NEW",
           "checkedDate": "04/10/2026",
