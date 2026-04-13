@@ -98,7 +98,44 @@ const PUBLISHER_RULES: PublisherRule[] = [
   { publisher: 'DMG Media', countries: ['Australia', 'United Kingdom'], prefixes: ['Daily Mail'] },
   { publisher: 'The Guardian Australia', countries: ['Australia'], prefixes: ['The Guardian Australia'] },
   { publisher: 'The Independent', countries: ['United Kingdom'], prefixes: ['The Independent'] },
-  { publisher: 'Reach', countries: ['United Kingdom'], prefixes: ['Mirror', 'Daily Express', 'Manchester Evening News'] },
+  {
+    publisher: 'Reach',
+    countries: ['United Kingdom'],
+    exact: [
+      'Bristol Post', 'Football London', 'LancsLive', 'Nottingham Post', 'Coventry Telegraph', 'Devon Live',
+      'Glasgow Live', 'Leicester Mercury', 'Cambridge News', 'Cornwall Live', 'Somerset Live', 'Essex Live',
+      'Derbyshire Live', 'Hull Live', 'Gloucestershire Live', 'KentLive', 'Lincolnshire Live', 'Surrey Live',
+      'Belfast Live', 'Gazette Live', 'Stoke Sentinel', 'Cheshire Live'
+    ],
+    prefixes: ['Mirror', 'Daily Express', 'Manchester Evening News'],
+  },
+  {
+    publisher: 'National World',
+    countries: ['United Kingdom'],
+    exact: [
+      'The Scotsman', 'LondonWorld', 'Sussex Express', 'Yorkshire Post', 'Blackpool Gazette', 'Shields Gazette',
+      'Sunderland Echo', 'The Star Sheffield', 'Yorkshire Evening Post', 'The News Portsmouth', 'Peterborough Telegraph',
+      'Wigan Today', 'Doncaster Free Press', 'Burnley Express', 'Hartlepool Mail', 'Lancaster Guardian',
+      'Northants Telegraph', 'Worksop Guardian', 'Halifax Courier', 'Bedford Today', 'LincolnshireWorld',
+      'Northumberland Gazette', 'Banbury Guardian', 'Daventry Express', 'DerbyWorld', 'Dewsbury Reporter',
+      'Falkirk Herald', 'Harrogate Advertiser', 'Luton Today', 'Mansfield Chad', 'Newsletter',
+      'Northampton Chronicle', 'Wakefield Express', 'Whitby Gazette'
+    ],
+  },
+  {
+    publisher: 'Newsquest',
+    countries: ['United Kingdom'],
+    exact: [
+      'The Northern Echo', 'Herald Scotland', 'Daily Echo', 'Oxford Mail', 'Greenock Telegraph', 'Reading Chronicle',
+      'Warrington Guardian', 'Bucks Free Press', 'Glasgow Times', 'Bracknell News', 'News and Star',
+      'South Wales Argus', 'Watford Observer', 'Hampshire Chronicle', 'The Argus', 'Salisbury Journal',
+      'Bournemouth Echo', 'Gazette News', 'Swindon Advertiser', 'The Bolton News', 'Worcester News',
+      'St Helens Star', 'Bury Times', 'Times Series', 'County Press', 'Dorset Echo', 'East Anglian Daily Times',
+      'Echo News', 'Enfield Independent', 'Halstead Gazette', 'Hereford Times', 'Ilford Recorder',
+      'Ipswich Star', 'Lancashire Telegraph', 'Romford Recorder', 'Wilts and Gloucestershire Standard',
+      'Wirral Globe'
+    ],
+  },
   {
     publisher: 'Reach',
     countries: ['Ireland'],
@@ -3958,6 +3995,7 @@ const PUBLISHER_RULES: PublisherRule[] = [
   { publisher: 'Le Parisien', countries: ['France'], exact: ['Le Parisien - News Sitemap Index'] },
   { publisher: 'Les Numériques', countries: ['France'], exact: ['Les Numériques'] },
   { publisher: 'Libération', countries: ['France'], exact: ['Libération - News Sitemap'] },
+  { publisher: 'Lyon Capitale', countries: ['France'], exact: ['Lyon Capitale'] },
   { publisher: 'Mediacités', countries: ['France'], exact: ['Mediacités'] },
   { publisher: 'Mediapart', countries: ['France'], exact: ['Mediapart'] },
   { publisher: 'Midi Libre', countries: ['France'], exact: ['Midi Libre'] },
