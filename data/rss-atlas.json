@@ -7805,7 +7805,7 @@
           "status": "NEW",
           "checkedDate": "03/18/2026",
           "valid": "valid",
-          "sitemapUrl": "https://montrealgazette.com/sitemap-news.xml"
+          "sitemapUrl": "https://montrealgazette.com/news-sitemap.xml"
         },
         {
           "name": "Vancouver Sun",
@@ -7942,6 +7942,7 @@
         {
           "name": "Winnipeg Free Press",
           "url": "https://www.winnipegfreepress.com/feed",
+          "sitemapUrl": "https://www.winnipegfreepress.com/sitemap.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/24/2026",
           "valid": "needs verification"
@@ -8475,6 +8476,7 @@
         {
           "name": "ElliotLakeToday",
           "url": "https://www.elliotlaketoday.com/rss",
+          "sitemapUrl": "https://www.elliotlaketoday.com/sitemaps/news-sitemap.xml",
           "sourceType": "local",
           "status": "NEW",
           "checkedDate": "04/10/2026",
@@ -8483,6 +8485,7 @@
         {
           "name": "BradfordToday",
           "url": "https://www.bradfordtoday.ca/rss",
+          "sitemapUrl": "https://www.bradfordtoday.ca/sitemaps/news-sitemap.xml",
           "sourceType": "local",
           "status": "NEW",
           "checkedDate": "04/10/2026",
@@ -8499,6 +8502,7 @@
         {
           "name": "MidlandToday",
           "url": "https://www.midlandtoday.ca/rss",
+          "sitemapUrl": "https://www.midlandtoday.ca/sitemaps/news-sitemap.xml",
           "sourceType": "local",
           "status": "NEW",
           "checkedDate": "04/10/2026",
@@ -9403,6 +9407,14 @@
           "url": "https://www.metropoles.com/saude/feed"
         },
         {
+          "name": "Metropoles - Distrito Federal",
+          "url": "https://www.metropoles.com/distrito-federal/feed"
+        },
+        {
+          "name": "Metropoles - Negocios",
+          "url": "https://www.metropoles.com/negocios/feed"
+        },
+        {
           "name": "O Globo - News Sitemap",
           "sitemapUrl": "https://oglobo.globo.com/sitemap/oglobo/news.xml"
         },
@@ -9451,6 +9463,10 @@
           "url": "https://www.terra.com.br/noticias/rss.xml"
         },
         {
+          "name": "Terra Economia",
+          "url": "https://www.terra.com.br/economia/rss.xml"
+        },
+        {
           "name": "Olhar Digital",
           "url": "https://olhardigital.com.br/feed/"
         },
@@ -9486,6 +9502,38 @@
           "name": "ND Mais",
           "url": "https://ndmais.com.br/feed/",
           "sitemapUrl": "https://ndmais.com.br/news-sitemap.xml"
+        },
+        {
+          "name": "Gazeta do Povo - Últimas",
+          "url": "https://www.gazetadopovo.com.br/feed/rss/ultimas-noticias.xml"
+        },
+        {
+          "name": "O Tempo",
+          "sitemapUrl": "https://www.otempo.com.br/sitemap-api/otempo/sitemap_news.xml"
+        },
+        {
+          "name": "Correio24horas",
+          "sitemapUrl": "https://www.correio24horas.com.br/0000/01/news-sitemap.xml"
+        },
+        {
+          "name": "Diário do Pará",
+          "sitemapUrl": "https://diariodopara.com.br/wp-content/sitemaps/news-sitemap.xml"
+        },
+        {
+          "name": "Diário de Pernambuco",
+          "sitemapUrl": "https://www.diariodepernambuco.com.br/sitemap.xml"
+        },
+        {
+          "name": "A Tarde",
+          "sitemapUrl": "https://atarde.com.br/news-sitemap.xml"
+        },
+        {
+          "name": "NSC Total",
+          "sitemapUrl": "https://www.nsctotal.com.br/yoast-news-sitemap.xml"
+        },
+        {
+          "name": "R7",
+          "sitemapUrl": "https://noticias.r7.com/arc/outboundfeeds/sitemap-news-index/"
         }
       ]
     },
@@ -34555,6 +34603,26 @@
           "url": "https://nld.com.vn/rss/giao-duc-khoa-hoc.rss"
         },
         {
+          "name": "Nguoi Lao Dong - Thoi Su",
+          "url": "https://nld.com.vn/rss/thoi-su.rss"
+        },
+        {
+          "name": "Nguoi Lao Dong - Phap Luat",
+          "url": "https://nld.com.vn/rss/phap-luat.rss"
+        },
+        {
+          "name": "Nguoi Lao Dong - The Thao",
+          "url": "https://nld.com.vn/rss/the-thao.rss"
+        },
+        {
+          "name": "Nguoi Lao Dong - Latest News Sitemap",
+          "sitemapUrl": "https://nld.com.vn/latest-news-sitemap.xml"
+        },
+        {
+          "name": "Nguoi Lao Dong - Google News Sitemap",
+          "sitemapUrl": "https://nld.com.vn/google-news-sitemap.xml"
+        },
+        {
           "name": "VOV",
           "url": "https://vov.vn/rss/home.rss"
         },
@@ -34653,6 +34721,62 @@
         {
           "name": "Bao Phap Luat - Latest Articles",
           "sitemapUrl": "https://baophapluat.vn/sitemaps/latest-articles.xml"
+        },
+        {
+          "name": "Bao Phap Luat - Google News Sitemap",
+          "sitemapUrl": "https://baophapluat.vn/sitemaps/google-news.xml"
+        },
+        {
+          "name": "Bao Moi - Sitemap Index",
+          "sitemapUrl": "https://baomoi.com/sitemaps/sitemap.xml"
+        },
+        {
+          "name": "Soha",
+          "url": "https://soha.vn/rss/home.rss"
+        },
+        {
+          "name": "Soha - Kinh Doanh",
+          "url": "https://soha.vn/rss/kinh-doanh.rss"
+        },
+        {
+          "name": "Soha - Cong Nghe",
+          "url": "https://soha.vn/rss/cong-nghe.rss"
+        },
+        {
+          "name": "Soha - Latest News Sitemap",
+          "sitemapUrl": "https://soha.vn/latest-news-sitemap.xml"
+        },
+        {
+          "name": "CafeF",
+          "url": "https://cafef.vn/home.rss"
+        },
+        {
+          "name": "CafeF - Thi Truong Chung Khoan",
+          "url": "https://cafef.vn/thi-truong-chung-khoan.rss"
+        },
+        {
+          "name": "CafeF - Bat Dong San",
+          "url": "https://cafef.vn/bat-dong-san.rss"
+        },
+        {
+          "name": "CafeF - Latest News Sitemap",
+          "sitemapUrl": "https://cafef.vn/latest-news-sitemap.xml"
+        },
+        {
+          "name": "CafeBiz",
+          "url": "https://cafebiz.vn/rss/home.rss"
+        },
+        {
+          "name": "CafeBiz - Latest News Sitemap",
+          "sitemapUrl": "https://cafebiz.vn/latestnews-sitemap.xml"
+        },
+        {
+          "name": "Kenh14",
+          "url": "https://kenh14.vn/rss/home.rss"
+        },
+        {
+          "name": "Kenh14 - Latest News Sitemap",
+          "sitemapUrl": "https://kenh14.vn/latest-news-sitemap.xml"
         },
         {
           "name": "QDND - Top 300 Sitemap",
