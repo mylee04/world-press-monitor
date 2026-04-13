@@ -22610,10 +22610,99 @@
         {
           "name": "Dominican Today",
           "url": "https://dominicantoday.com/feed/",
+          "sitemapUrl": "https://dominicantoday.com/kumarharshit-news-sitemap.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/13/2026",
           "valid": "valid",
           "row": 74
+        },
+        {
+          "name": "Atardecer",
+          "sitemapUrl": "https://atardecer.com.do/sitemap_index.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 75
+        },
+        {
+          "name": "Al Acecho RD",
+          "url": "https://www.alacechord.com/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 76
+        },
+        {
+          "name": "Cable Noticioso",
+          "url": "https://www.cablenoticioso.com.do/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 77
+        },
+        {
+          "name": "Noticias República",
+          "url": "https://noticiasrepublica.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 78
+        },
+        {
+          "name": "Ahora Mismo",
+          "url": "https://ahoramismo.com.do/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 79
+        },
+        {
+          "name": "Acontecer del Cibao",
+          "url": "https://www.acontecerdelcibao.com/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 80
+        },
+        {
+          "name": "Azize Informa",
+          "url": "https://azizeinforma.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 81
+        },
+        {
+          "name": "Al Mismo Tiempo",
+          "url": "https://almismotiempo.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 82
+        },
+        {
+          "name": "Caribbean Digital",
+          "url": "https://caribbeandigital.net/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 83
+        },
+        {
+          "name": "Noticias Buscando Soluciones",
+          "url": "https://www.noticiasbuscandosoluciones.com/rss.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 84
+        },
+        {
+          "name": "Buscando la Noticia",
+          "sitemapUrl": "https://buscandolanoticia.com/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 85
         }
       ]
     },

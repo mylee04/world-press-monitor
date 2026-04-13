@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Mon, 13 Apr 2026 17:13:53 GMT</dateCreated>
+    <dateCreated>Mon, 13 Apr 2026 19:46:41 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -2960,6 +2960,17 @@
       <outline text="Costa Verde DR [valid]" title="Costa Verde DR [valid]" type="rss" xmlUrl="https://costaverdedr.com/feed/" htmlUrl="https://costaverdedr.com"/>
       <outline text="Agenda56 [valid]" title="Agenda56 [valid]" type="rss" xmlUrl="https://agenda56.com/feed/" htmlUrl="https://agenda56.com"/>
       <outline text="Dominican Today [valid]" title="Dominican Today [valid]" type="rss" xmlUrl="https://dominicantoday.com/feed/" htmlUrl="https://dominicantoday.com"/>
+      <outline text="Atardecer [needs verification]" title="Atardecer [needs verification]" type="rss" xmlUrl="https://atardecer.com.do/sitemap_index.xml" htmlUrl="https://atardecer.com.do"/>
+      <outline text="Al Acecho RD [valid]" title="Al Acecho RD [valid]" type="rss" xmlUrl="https://www.alacechord.com/rss.xml" htmlUrl="https://www.alacechord.com"/>
+      <outline text="Cable Noticioso [valid]" title="Cable Noticioso [valid]" type="rss" xmlUrl="https://www.cablenoticioso.com.do/rss.xml" htmlUrl="https://www.cablenoticioso.com.do"/>
+      <outline text="Noticias República [valid]" title="Noticias República [valid]" type="rss" xmlUrl="https://noticiasrepublica.com/feed/" htmlUrl="https://noticiasrepublica.com"/>
+      <outline text="Ahora Mismo [valid]" title="Ahora Mismo [valid]" type="rss" xmlUrl="https://ahoramismo.com.do/feed/" htmlUrl="https://ahoramismo.com.do"/>
+      <outline text="Acontecer del Cibao [valid]" title="Acontecer del Cibao [valid]" type="rss" xmlUrl="https://www.acontecerdelcibao.com/rss.xml" htmlUrl="https://www.acontecerdelcibao.com"/>
+      <outline text="Azize Informa [valid]" title="Azize Informa [valid]" type="rss" xmlUrl="https://azizeinforma.com/feed/" htmlUrl="https://azizeinforma.com"/>
+      <outline text="Al Mismo Tiempo [valid]" title="Al Mismo Tiempo [valid]" type="rss" xmlUrl="https://almismotiempo.com/feed/" htmlUrl="https://almismotiempo.com"/>
+      <outline text="Caribbean Digital [valid]" title="Caribbean Digital [valid]" type="rss" xmlUrl="https://caribbeandigital.net/feed/" htmlUrl="https://caribbeandigital.net"/>
+      <outline text="Noticias Buscando Soluciones [valid]" title="Noticias Buscando Soluciones [valid]" type="rss" xmlUrl="https://www.noticiasbuscandosoluciones.com/rss.xml" htmlUrl="https://www.noticiasbuscandosoluciones.com"/>
+      <outline text="Buscando la Noticia [needs verification]" title="Buscando la Noticia [needs verification]" type="rss" xmlUrl="https://buscandolanoticia.com/sitemap.xml" htmlUrl="https://buscandolanoticia.com"/>
     </outline>
     <outline text="Uruguay (UY)" title="Uruguay (UY)">
       <outline text="El Observador - Home [valid]" title="El Observador - Home [valid]" type="rss" xmlUrl="https://www.elobservador.com.uy/rss/pages/home.xml" htmlUrl="https://www.elobservador.com.uy"/>
