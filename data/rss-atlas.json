@@ -21990,7 +21990,7 @@
         {
           "name": "BusinessDesk",
           "url": "https://businessdesk.co.nz/feed",
-          "sitemapUrl": "https://businessdesk.co.nz/sitemap.xml",
+          "sitemapUrl": "https://businessdesk.co.nz/news-sitemap.xml",
           "status": "NEW",
           "checkedDate": "04/02/2026",
           "valid": "valid",
@@ -22071,6 +22071,7 @@
         {
           "name": "Waatea News",
           "url": "https://waateanews.com/feed/",
+          "sitemapUrl": "https://waateanews.com/wp-sitemap.xml",
           "status": "NEW",
           "checkedDate": "04/02/2026",
           "valid": "valid",
@@ -22079,6 +22080,7 @@
         {
           "name": "Otago Daily Times",
           "url": "https://www.odt.co.nz/news/feed",
+          "sitemapUrl": "https://www.odt.co.nz/sitemap.xml",
           "status": "NEW",
           "checkedDate": "04/02/2026",
           "valid": "valid",
@@ -22128,6 +22130,7 @@
         {
           "name": "Local Matters",
           "url": "https://www.localmatters.co.nz/feed/",
+          "sitemapUrl": "https://www.localmatters.co.nz/sitemap_index.xml",
           "status": "NEW",
           "checkedDate": "04/02/2026",
           "valid": "valid",
@@ -22136,6 +22139,7 @@
         {
           "name": "Chris Lynch Media",
           "url": "https://www.chrislynchmedia.com/feed/",
+          "sitemapUrl": "https://www.chrislynchmedia.com/sitemap_index.xml",
           "status": "NEW",
           "checkedDate": "04/02/2026",
           "valid": "valid",
@@ -22144,6 +22148,7 @@
         {
           "name": "Farmers Weekly",
           "url": "https://www.farmersweekly.co.nz/feed/",
+          "sitemapUrl": "https://www.farmersweekly.co.nz/sitemap.xml",
           "status": "NEW",
           "checkedDate": "04/02/2026",
           "valid": "valid",
@@ -22216,6 +22221,7 @@
         {
           "name": "ChannelLife NZ",
           "url": "https://channellife.co.nz/feed",
+          "sitemapUrl": "https://channellife.co.nz/sitemap-news.xml",
           "status": "NEW",
           "checkedDate": "04/02/2026",
           "valid": "valid",
@@ -29738,7 +29744,10 @@
         },
         {
           "name": "Diena",
-          "sitemapUrl": "https://diena.lt/sitemap.xml"
+          "url": "https://diena.lt/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
         },
         {
           "name": "TV3 Lithuania - Sitemap Index",
@@ -29748,10 +29757,10 @@
           "valid": "valid"
         },
         {
-          "name": "Kauno Diena - Sitemap Index",
-          "sitemapUrl": "https://kauno.diena.lt/sitemap.xml",
+          "name": "Kauno Diena",
+          "url": "https://kauno.diena.lt/rss",
           "status": "NEW",
-          "checkedDate": "03/20/2026",
+          "checkedDate": "04/12/2026",
           "valid": "valid"
         },
         {
@@ -29822,6 +29831,49 @@
           "name": "AeroTime",
           "url": "https://aerotime.aero/feed",
           "sitemapUrl": "https://www.aerotime.aero/news-sitemap.xml"
+        },
+        {
+          "name": "Klaipeda Diena",
+          "url": "https://klaipeda.diena.lt/rss",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Atvira Klaipeda",
+          "url": "https://www.atviraklaipeda.lt/feed",
+          "sitemapUrl": "https://www.atviraklaipeda.lt/post-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Regionu naujienos",
+          "sitemapUrl": "https://www.regionunaujienos.lt/post-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Verslo zinios - Verslo aplinka",
+          "url": "https://www.vz.lt/rss?channel=verslo-aplinka",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Verslo zinios - Rinkos",
+          "url": "https://www.vz.lt/rss?channel=rinkos",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Verslo zinios - Technologijos",
+          "url": "https://www.vz.lt/rss?channel=technologijos",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
         }
       ]
     },
@@ -30701,6 +30753,7 @@
         },
         {
           "name": "Premium Times Nigeria",
+          "url": "https://www.premiumtimesng.com/feed/",
           "sitemapUrl": "https://www.premiumtimesng.com/news-sitemap.xml"
         },
         {
@@ -30753,6 +30806,13 @@
           "url": "https://independent.ng/feed/"
         },
         {
+          "name": "Guardian Nigeria - News Sitemap",
+          "sitemapUrl": "https://guardian.ng/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
           "name": "TheCable - Sitemap Index",
           "sitemapUrl": "https://www.thecable.ng/sitemap_index.xml",
           "status": "NEW",
@@ -30767,9 +30827,94 @@
           "valid": "valid"
         },
         {
+          "name": "Tribune Online",
+          "url": "https://tribuneonlineng.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "The Sun Nigeria",
+          "url": "https://thesun.ng/feed/",
+          "sitemapUrl": "https://thesun.ng/sitemap_index.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TheWill",
+          "url": "https://thewillnews.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Business A.M.",
+          "url": "https://businessamlive.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Daily Nigerian",
+          "url": "https://dailynigerian.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "The Eagle Online",
+          "url": "https://theeagleonline.com.ng/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Voice of Nigeria",
+          "url": "https://von.gov.ng/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "News Agency of Nigeria",
+          "url": "https://nannews.ng/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TVC News",
+          "url": "https://www.tvcnews.tv/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "This Nigeria",
+          "url": "https://thisnigeria.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "News Diary Online",
+          "url": "https://newsdiaryonline.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
           "name": "TechCabal",
           "url": "https://techcabal.com/feed/",
           "sitemapUrl": "https://techcabal.com/sitemap-posttype-post.2026.xml"
+        },
+        {
+          "name": "Nairametrics - News Sitemap",
+          "sitemapUrl": "https://nairametrics.com/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
         }
       ]
     },

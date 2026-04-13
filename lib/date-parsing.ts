@@ -10,7 +10,34 @@ const DATE_TIMEZONE_OFFSETS: Record<string, string> = {
   WET: '+0000',
 };
 
+const LITHUANIAN_MONTH_ALIASES: Array<[RegExp, string]> = [
+  [/\b(?:sausio|sau)\b/giu, 'Jan'],
+  [/\b(?:vasario|vas)\b/giu, 'Feb'],
+  [/\b(?:kovo|kov)\b/giu, 'Mar'],
+  [/\b(?:balandzio|baland\u017eio|bal)\b/giu, 'Apr'],
+  [/\b(?:geguzes|gegu\u017e\u0117s|geg)\b/giu, 'May'],
+  [/\b(?:birzelio|bir\u017eelio|bir)\b/giu, 'Jun'],
+  [/\b(?:liepos|lie)\b/giu, 'Jul'],
+  [/\b(?:rugpjucio|rugpj\u016b\u010dio|rgp)\b/giu, 'Aug'],
+  [/\b(?:rugsejo|rugs\u0117jo|rgs)\b/giu, 'Sep'],
+  [/\b(?:spalio|spa)\b/giu, 'Oct'],
+  [/\b(?:lapkricio|lapkri\u010dio|lap)\b/giu, 'Nov'],
+  [/\b(?:gruodzio|gruod\u017eio|grd)\b/giu, 'Dec'],
+];
+
 const formatterCache = new Map<string, Intl.DateTimeFormat>();
+
+function normalizeLocalizedDateText(value: string): string {
+  let normalized = value.trim();
+  normalized = normalized.replace(
+    /^(?:pirmadienis|antradienis|treciadienis|tre\u010diadienis|ketvirtadienis|penktadienis|sestadienis|\u0161e\u0161tadienis|sekmadienis|pir|ant|tre|ket|pen|ses|\u0161e\u0161|sek),?\s+/iu,
+    ''
+  );
+  for (const [pattern, replacement] of LITHUANIAN_MONTH_ALIASES) {
+    normalized = normalized.replace(pattern, replacement);
+  }
+  return normalized;
+}
 
 function getOffsetFormatter(timeZone: string): Intl.DateTimeFormat | null {
   const cached = formatterCache.get(timeZone);
@@ -95,16 +122,17 @@ export function parseLooseDateMs(value: unknown): number | null {
 
   const raw = value.trim();
   if (!raw) return null;
+  const normalizedRaw = normalizeLocalizedDateText(raw);
 
-  if (/^\d{4}-\d{2}-\d{2}$/.test(raw)) {
-    const dateOnlyMs = Date.parse(`${raw}T12:00:00Z`);
+  if (/^\d{4}-\d{2}-\d{2}$/.test(normalizedRaw)) {
+    const dateOnlyMs = Date.parse(`${normalizedRaw}T12:00:00Z`);
     return Number.isFinite(dateOnlyMs) ? dateOnlyMs : null;
   }
 
-  const directMs = Date.parse(raw);
+  const directMs = Date.parse(normalizedRaw);
   if (Number.isFinite(directMs)) return directMs;
 
-  const abbreviationMatch = raw.match(/^(.*\s)([A-Z]{2,5})$/);
+  const abbreviationMatch = normalizedRaw.match(/^(.*\s)([A-Z]{2,5})$/);
   if (abbreviationMatch) {
     const normalizedOffset = DATE_TIMEZONE_OFFSETS[abbreviationMatch[2]];
     if (normalizedOffset) {
@@ -113,7 +141,7 @@ export function parseLooseDateMs(value: unknown): number | null {
     }
   }
 
-  const namedTimeZoneMatch = raw.match(/^(.*\S)\s([A-Za-z_]+\/[A-Za-z0-9_.+-]+)$/);
+  const namedTimeZoneMatch = normalizedRaw.match(/^(.*\S)\s([A-Za-z_]+\/[A-Za-z0-9_.+-]+)$/);
   if (namedTimeZoneMatch) {
     const namedTimeZoneMs = parseNamedTimeZoneDateMs(namedTimeZoneMatch[1], namedTimeZoneMatch[2]);
     if (namedTimeZoneMs !== null) return namedTimeZoneMs;
