@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Mon, 13 Apr 2026 16:53:00 GMT</dateCreated>
+    <dateCreated>Mon, 13 Apr 2026 16:59:00 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -2958,6 +2958,8 @@
       <outline text="Barriga Verde [valid]" title="Barriga Verde [valid]" type="rss" xmlUrl="https://barrigaverde.net/feed/" htmlUrl="https://barrigaverde.net"/>
       <outline text="La Información [valid]" title="La Información [valid]" type="rss" xmlUrl="https://lainformacion.com.do/news/feed" htmlUrl="https://lainformacion.com.do"/>
       <outline text="Costa Verde DR [valid]" title="Costa Verde DR [valid]" type="rss" xmlUrl="https://costaverdedr.com/feed/" htmlUrl="https://costaverdedr.com"/>
+      <outline text="Agenda56 [valid]" title="Agenda56 [valid]" type="rss" xmlUrl="https://agenda56.com/feed/" htmlUrl="https://agenda56.com"/>
+      <outline text="Dominican Today [valid]" title="Dominican Today [valid]" type="rss" xmlUrl="https://dominicantoday.com/feed/" htmlUrl="https://dominicantoday.com"/>
     </outline>
     <outline text="Uruguay (UY)" title="Uruguay (UY)">
       <outline text="El Observador - Home [valid]" title="El Observador - Home [valid]" type="rss" xmlUrl="https://www.elobservador.com.uy/rss/pages/home.xml" htmlUrl="https://www.elobservador.com.uy"/>

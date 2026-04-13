@@ -8034,6 +8034,7 @@
         {
           "name": "Vancouver Is Awesome",
           "url": "https://www.vancouverisawesome.com/rss",
+          "sitemapUrl": "https://www.vancouverisawesome.com/sitemaps/news-sitemap.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/02/2026",
           "valid": "valid"
@@ -8258,6 +8259,7 @@
         {
           "name": "North Shore News",
           "url": "https://www.nsnews.com/rss",
+          "sitemapUrl": "https://www.nsnews.com/sitemaps/news-sitemap.xml",
           "sourceType": "local",
           "status": "NEW",
           "checkedDate": "04/10/2026",
@@ -8266,6 +8268,7 @@
         {
           "name": "Richmond News",
           "url": "https://www.richmond-news.com/rss",
+          "sitemapUrl": "https://www.richmond-news.com/sitemaps/news-sitemap.xml",
           "sourceType": "local",
           "status": "NEW",
           "checkedDate": "04/10/2026",
@@ -8282,6 +8285,7 @@
         {
           "name": "Prince George Citizen",
           "url": "https://www.princegeorgecitizen.com/rss",
+          "sitemapUrl": "https://www.princegeorgecitizen.com/sitemaps/news-sitemap.xml",
           "sourceType": "local",
           "status": "NEW",
           "checkedDate": "04/10/2026",
@@ -8468,6 +8472,7 @@
         {
           "name": "OrilliaMatters",
           "url": "https://www.orilliamatters.com/rss",
+          "sitemapUrl": "https://www.orilliamatters.com/sitemaps/news-sitemap.xml",
           "sourceType": "local",
           "status": "NEW",
           "checkedDate": "04/10/2026",
@@ -8494,6 +8499,7 @@
         {
           "name": "CollingwoodToday",
           "url": "https://www.collingwoodtoday.ca/rss",
+          "sitemapUrl": "https://www.collingwoodtoday.ca/sitemaps/news-sitemap.xml",
           "sourceType": "local",
           "status": "NEW",
           "checkedDate": "04/10/2026",
@@ -22589,6 +22595,22 @@
           "checkedDate": "03/27/2026",
           "valid": "valid",
           "row": 72
+        },
+        {
+          "name": "Agenda56",
+          "url": "https://agenda56.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 73
+        },
+        {
+          "name": "Dominican Today",
+          "url": "https://dominicantoday.com/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 74
         }
       ]
     },
