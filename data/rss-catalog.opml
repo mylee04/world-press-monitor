@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Mon, 13 Apr 2026 16:16:02 GMT</dateCreated>
+    <dateCreated>Mon, 13 Apr 2026 19:46:41 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -1310,6 +1310,8 @@
       <outline text="Metropoles - Main Feed [valid]" title="Metropoles - Main Feed [valid]" type="rss" xmlUrl="https://www.metropoles.com/feed" htmlUrl="https://www.metropoles.com"/>
       <outline text="Metropoles - Brasil Feed [valid]" title="Metropoles - Brasil Feed [valid]" type="rss" xmlUrl="https://www.metropoles.com/brasil/feed" htmlUrl="https://www.metropoles.com"/>
       <outline text="Metropoles - Saúde Feed [valid]" title="Metropoles - Saúde Feed [valid]" type="rss" xmlUrl="https://www.metropoles.com/saude/feed" htmlUrl="https://www.metropoles.com"/>
+      <outline text="Metropoles - Distrito Federal [needs verification]" title="Metropoles - Distrito Federal [needs verification]" type="rss" xmlUrl="https://www.metropoles.com/distrito-federal/feed" htmlUrl="https://www.metropoles.com"/>
+      <outline text="Metropoles - Negocios [needs verification]" title="Metropoles - Negocios [needs verification]" type="rss" xmlUrl="https://www.metropoles.com/negocios/feed" htmlUrl="https://www.metropoles.com"/>
       <outline text="O Globo - News Sitemap [needs verification]" title="O Globo - News Sitemap [needs verification]" type="rss" xmlUrl="https://oglobo.globo.com/sitemap/oglobo/news.xml" htmlUrl="https://oglobo.globo.com"/>
       <outline text="Estadão - Sitemap Index by Day [needs verification]" title="Estadão - Sitemap Index by Day [needs verification]" type="rss" xmlUrl="https://www.estadao.com.br/arc/outboundfeeds/sitemap-index-by-day/?outputType=xml" htmlUrl="https://www.estadao.com.br"/>
       <outline text="Jovem Pan [valid]" title="Jovem Pan [valid]" type="rss" xmlUrl="https://www.jovempan.com.br/feed/" htmlUrl="https://www.jovempan.com.br"/>
@@ -1321,6 +1323,7 @@
       <outline text="O Antagonista - Economia [needs verification]" title="O Antagonista - Economia [needs verification]" type="rss" xmlUrl="https://oantagonista.com.br/economia/feed/" htmlUrl="https://oantagonista.com.br"/>
       <outline text="Terra [valid]" title="Terra [valid]" type="rss" xmlUrl="https://www.terra.com.br/rss.xml" htmlUrl="https://www.terra.com.br"/>
       <outline text="Terra Noticias [valid]" title="Terra Noticias [valid]" type="rss" xmlUrl="https://www.terra.com.br/noticias/rss.xml" htmlUrl="https://www.terra.com.br"/>
+      <outline text="Terra Economia [needs verification]" title="Terra Economia [needs verification]" type="rss" xmlUrl="https://www.terra.com.br/economia/rss.xml" htmlUrl="https://www.terra.com.br"/>
       <outline text="Olhar Digital [valid]" title="Olhar Digital [valid]" type="rss" xmlUrl="https://olhardigital.com.br/feed/" htmlUrl="https://olhardigital.com.br"/>
       <outline text="Superinteressante [valid]" title="Superinteressante [valid]" type="rss" xmlUrl="https://www.super.abril.com.br/feed/" htmlUrl="https://www.super.abril.com.br"/>
       <outline text="Bnews [valid]" title="Bnews [valid]" type="rss" xmlUrl="https://www.bnews.com.br/feed/" htmlUrl="https://www.bnews.com.br"/>
@@ -1330,6 +1333,14 @@
       <outline text="CNN Brasil - Sitemap Index [needs verification]" title="CNN Brasil - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.cnnbrasil.com.br/sitemap_index.xml" htmlUrl="https://www.cnnbrasil.com.br"/>
       <outline text="ConJur [valid]" title="ConJur [valid]" type="rss" xmlUrl="https://www.conjur.com.br/rss.xml" htmlUrl="https://www.conjur.com.br"/>
       <outline text="ND Mais [valid]" title="ND Mais [valid]" type="rss" xmlUrl="https://ndmais.com.br/feed/" htmlUrl="https://ndmais.com.br"/>
+      <outline text="Gazeta do Povo - Últimas [needs verification]" title="Gazeta do Povo - Últimas [needs verification]" type="rss" xmlUrl="https://www.gazetadopovo.com.br/feed/rss/ultimas-noticias.xml" htmlUrl="https://www.gazetadopovo.com.br"/>
+      <outline text="O Tempo [needs verification]" title="O Tempo [needs verification]" type="rss" xmlUrl="https://www.otempo.com.br/sitemap-api/otempo/sitemap_news.xml" htmlUrl="https://www.otempo.com.br"/>
+      <outline text="Correio24horas [needs verification]" title="Correio24horas [needs verification]" type="rss" xmlUrl="https://www.correio24horas.com.br/0000/01/news-sitemap.xml" htmlUrl="https://www.correio24horas.com.br"/>
+      <outline text="Diário do Pará [needs verification]" title="Diário do Pará [needs verification]" type="rss" xmlUrl="https://diariodopara.com.br/wp-content/sitemaps/news-sitemap.xml" htmlUrl="https://diariodopara.com.br"/>
+      <outline text="Diário de Pernambuco [needs verification]" title="Diário de Pernambuco [needs verification]" type="rss" xmlUrl="https://www.diariodepernambuco.com.br/sitemap.xml" htmlUrl="https://www.diariodepernambuco.com.br"/>
+      <outline text="A Tarde [needs verification]" title="A Tarde [needs verification]" type="rss" xmlUrl="https://atarde.com.br/news-sitemap.xml" htmlUrl="https://atarde.com.br"/>
+      <outline text="NSC Total [needs verification]" title="NSC Total [needs verification]" type="rss" xmlUrl="https://www.nsctotal.com.br/yoast-news-sitemap.xml" htmlUrl="https://www.nsctotal.com.br"/>
+      <outline text="R7 [needs verification]" title="R7 [needs verification]" type="rss" xmlUrl="https://noticias.r7.com/arc/outboundfeeds/sitemap-news-index/" htmlUrl="https://noticias.r7.com"/>
     </outline>
     <outline text="Australia (AU)" title="Australia (AU)">
       <outline text="ABC News - Business [valid]" title="ABC News - Business [valid]" type="rss" xmlUrl="https://www.abc.net.au/news/feed/51892/rss.xml" htmlUrl="https://www.abc.net.au"/>
@@ -2947,6 +2958,19 @@
       <outline text="Barriga Verde [valid]" title="Barriga Verde [valid]" type="rss" xmlUrl="https://barrigaverde.net/feed/" htmlUrl="https://barrigaverde.net"/>
       <outline text="La Información [valid]" title="La Información [valid]" type="rss" xmlUrl="https://lainformacion.com.do/news/feed" htmlUrl="https://lainformacion.com.do"/>
       <outline text="Costa Verde DR [valid]" title="Costa Verde DR [valid]" type="rss" xmlUrl="https://costaverdedr.com/feed/" htmlUrl="https://costaverdedr.com"/>
+      <outline text="Agenda56 [valid]" title="Agenda56 [valid]" type="rss" xmlUrl="https://agenda56.com/feed/" htmlUrl="https://agenda56.com"/>
+      <outline text="Dominican Today [valid]" title="Dominican Today [valid]" type="rss" xmlUrl="https://dominicantoday.com/feed/" htmlUrl="https://dominicantoday.com"/>
+      <outline text="Atardecer [needs verification]" title="Atardecer [needs verification]" type="rss" xmlUrl="https://atardecer.com.do/sitemap_index.xml" htmlUrl="https://atardecer.com.do"/>
+      <outline text="Al Acecho RD [valid]" title="Al Acecho RD [valid]" type="rss" xmlUrl="https://www.alacechord.com/rss.xml" htmlUrl="https://www.alacechord.com"/>
+      <outline text="Cable Noticioso [valid]" title="Cable Noticioso [valid]" type="rss" xmlUrl="https://www.cablenoticioso.com.do/rss.xml" htmlUrl="https://www.cablenoticioso.com.do"/>
+      <outline text="Noticias República [valid]" title="Noticias República [valid]" type="rss" xmlUrl="https://noticiasrepublica.com/feed/" htmlUrl="https://noticiasrepublica.com"/>
+      <outline text="Ahora Mismo [valid]" title="Ahora Mismo [valid]" type="rss" xmlUrl="https://ahoramismo.com.do/feed/" htmlUrl="https://ahoramismo.com.do"/>
+      <outline text="Acontecer del Cibao [valid]" title="Acontecer del Cibao [valid]" type="rss" xmlUrl="https://www.acontecerdelcibao.com/rss.xml" htmlUrl="https://www.acontecerdelcibao.com"/>
+      <outline text="Azize Informa [valid]" title="Azize Informa [valid]" type="rss" xmlUrl="https://azizeinforma.com/feed/" htmlUrl="https://azizeinforma.com"/>
+      <outline text="Al Mismo Tiempo [valid]" title="Al Mismo Tiempo [valid]" type="rss" xmlUrl="https://almismotiempo.com/feed/" htmlUrl="https://almismotiempo.com"/>
+      <outline text="Caribbean Digital [valid]" title="Caribbean Digital [valid]" type="rss" xmlUrl="https://caribbeandigital.net/feed/" htmlUrl="https://caribbeandigital.net"/>
+      <outline text="Noticias Buscando Soluciones [valid]" title="Noticias Buscando Soluciones [valid]" type="rss" xmlUrl="https://www.noticiasbuscandosoluciones.com/rss.xml" htmlUrl="https://www.noticiasbuscandosoluciones.com"/>
+      <outline text="Buscando la Noticia [needs verification]" title="Buscando la Noticia [needs verification]" type="rss" xmlUrl="https://buscandolanoticia.com/sitemap.xml" htmlUrl="https://buscandolanoticia.com"/>
     </outline>
     <outline text="Uruguay (UY)" title="Uruguay (UY)">
       <outline text="El Observador - Home [valid]" title="El Observador - Home [valid]" type="rss" xmlUrl="https://www.elobservador.com.uy/rss/pages/home.xml" htmlUrl="https://www.elobservador.com.uy"/>
@@ -4890,6 +4914,11 @@
       <outline text="Nguoi Lao Dong [valid]" title="Nguoi Lao Dong [valid]" type="rss" xmlUrl="https://nld.com.vn/rss/home.rss" htmlUrl="https://nld.com.vn"/>
       <outline text="Nguoi Lao Dong - Kinh Te [valid]" title="Nguoi Lao Dong - Kinh Te [valid]" type="rss" xmlUrl="https://nld.com.vn/rss/kinh-te.rss" htmlUrl="https://nld.com.vn"/>
       <outline text="Nguoi Lao Dong - Giao Duc Khoa Hoc [valid]" title="Nguoi Lao Dong - Giao Duc Khoa Hoc [valid]" type="rss" xmlUrl="https://nld.com.vn/rss/giao-duc-khoa-hoc.rss" htmlUrl="https://nld.com.vn"/>
+      <outline text="Nguoi Lao Dong - Thoi Su [needs verification]" title="Nguoi Lao Dong - Thoi Su [needs verification]" type="rss" xmlUrl="https://nld.com.vn/rss/thoi-su.rss" htmlUrl="https://nld.com.vn"/>
+      <outline text="Nguoi Lao Dong - Phap Luat [needs verification]" title="Nguoi Lao Dong - Phap Luat [needs verification]" type="rss" xmlUrl="https://nld.com.vn/rss/phap-luat.rss" htmlUrl="https://nld.com.vn"/>
+      <outline text="Nguoi Lao Dong - The Thao [needs verification]" title="Nguoi Lao Dong - The Thao [needs verification]" type="rss" xmlUrl="https://nld.com.vn/rss/the-thao.rss" htmlUrl="https://nld.com.vn"/>
+      <outline text="Nguoi Lao Dong - Latest News Sitemap [needs verification]" title="Nguoi Lao Dong - Latest News Sitemap [needs verification]" type="rss" xmlUrl="https://nld.com.vn/latest-news-sitemap.xml" htmlUrl="https://nld.com.vn"/>
+      <outline text="Nguoi Lao Dong - Google News Sitemap [needs verification]" title="Nguoi Lao Dong - Google News Sitemap [needs verification]" type="rss" xmlUrl="https://nld.com.vn/google-news-sitemap.xml" htmlUrl="https://nld.com.vn"/>
       <outline text="VOV [valid]" title="VOV [valid]" type="rss" xmlUrl="https://vov.vn/rss/home.rss" htmlUrl="https://vov.vn"/>
       <outline text="Suc Khoe &amp; Doi Song [valid]" title="Suc Khoe &amp; Doi Song [valid]" type="rss" xmlUrl="https://suckhoedoisong.vn/index.rss" htmlUrl="https://suckhoedoisong.vn"/>
       <outline text="VietnamPlus [valid]" title="VietnamPlus [valid]" type="rss" xmlUrl="https://www.vietnamplus.vn/rss/home.rss" htmlUrl="https://www.vietnamplus.vn"/>
@@ -4915,6 +4944,20 @@
       <outline text="VietnamFinance - Sitemap [needs verification]" title="VietnamFinance - Sitemap [needs verification]" type="rss" xmlUrl="https://vietnamfinance.vn/sitemap.xml" htmlUrl="https://vietnamfinance.vn"/>
       <outline text="Vietnam Investment Review - Sitemap [needs verification]" title="Vietnam Investment Review - Sitemap [needs verification]" type="rss" xmlUrl="https://vir.com.vn/sitemap.xml" htmlUrl="https://vir.com.vn"/>
       <outline text="Bao Phap Luat - Latest Articles [needs verification]" title="Bao Phap Luat - Latest Articles [needs verification]" type="rss" xmlUrl="https://baophapluat.vn/sitemaps/latest-articles.xml" htmlUrl="https://baophapluat.vn"/>
+      <outline text="Bao Phap Luat - Google News Sitemap [needs verification]" title="Bao Phap Luat - Google News Sitemap [needs verification]" type="rss" xmlUrl="https://baophapluat.vn/sitemaps/google-news.xml" htmlUrl="https://baophapluat.vn"/>
+      <outline text="Bao Moi - Sitemap Index [needs verification]" title="Bao Moi - Sitemap Index [needs verification]" type="rss" xmlUrl="https://baomoi.com/sitemaps/sitemap.xml" htmlUrl="https://baomoi.com"/>
+      <outline text="Soha [needs verification]" title="Soha [needs verification]" type="rss" xmlUrl="https://soha.vn/rss/home.rss" htmlUrl="https://soha.vn"/>
+      <outline text="Soha - Kinh Doanh [needs verification]" title="Soha - Kinh Doanh [needs verification]" type="rss" xmlUrl="https://soha.vn/rss/kinh-doanh.rss" htmlUrl="https://soha.vn"/>
+      <outline text="Soha - Cong Nghe [needs verification]" title="Soha - Cong Nghe [needs verification]" type="rss" xmlUrl="https://soha.vn/rss/cong-nghe.rss" htmlUrl="https://soha.vn"/>
+      <outline text="Soha - Latest News Sitemap [needs verification]" title="Soha - Latest News Sitemap [needs verification]" type="rss" xmlUrl="https://soha.vn/latest-news-sitemap.xml" htmlUrl="https://soha.vn"/>
+      <outline text="CafeF [needs verification]" title="CafeF [needs verification]" type="rss" xmlUrl="https://cafef.vn/home.rss" htmlUrl="https://cafef.vn"/>
+      <outline text="CafeF - Thi Truong Chung Khoan [needs verification]" title="CafeF - Thi Truong Chung Khoan [needs verification]" type="rss" xmlUrl="https://cafef.vn/thi-truong-chung-khoan.rss" htmlUrl="https://cafef.vn"/>
+      <outline text="CafeF - Bat Dong San [needs verification]" title="CafeF - Bat Dong San [needs verification]" type="rss" xmlUrl="https://cafef.vn/bat-dong-san.rss" htmlUrl="https://cafef.vn"/>
+      <outline text="CafeF - Latest News Sitemap [needs verification]" title="CafeF - Latest News Sitemap [needs verification]" type="rss" xmlUrl="https://cafef.vn/latest-news-sitemap.xml" htmlUrl="https://cafef.vn"/>
+      <outline text="CafeBiz [needs verification]" title="CafeBiz [needs verification]" type="rss" xmlUrl="https://cafebiz.vn/rss/home.rss" htmlUrl="https://cafebiz.vn"/>
+      <outline text="CafeBiz - Latest News Sitemap [needs verification]" title="CafeBiz - Latest News Sitemap [needs verification]" type="rss" xmlUrl="https://cafebiz.vn/latestnews-sitemap.xml" htmlUrl="https://cafebiz.vn"/>
+      <outline text="Kenh14 [needs verification]" title="Kenh14 [needs verification]" type="rss" xmlUrl="https://kenh14.vn/rss/home.rss" htmlUrl="https://kenh14.vn"/>
+      <outline text="Kenh14 - Latest News Sitemap [needs verification]" title="Kenh14 - Latest News Sitemap [needs verification]" type="rss" xmlUrl="https://kenh14.vn/latest-news-sitemap.xml" htmlUrl="https://kenh14.vn"/>
       <outline text="QDND - Top 300 Sitemap [needs verification]" title="QDND - Top 300 Sitemap [needs verification]" type="rss" xmlUrl="https://www.qdnd.vn/sitemaps/0/top300article.xml" htmlUrl="https://www.qdnd.vn"/>
     </outline>
     <outline text="Mongolia (MN)" title="Mongolia (MN)">

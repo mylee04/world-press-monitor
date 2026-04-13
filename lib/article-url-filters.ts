@@ -901,7 +901,29 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     return true;
   }
 
+  if (isVillageMediaHost(hostname)) {
+    if (pathname.startsWith('/good-morning/')) return true;
+    if (pathname.startsWith('/letters-to-the-editor/')) return true;
+  }
+
   if (isBlackPressHost(hostname) && BLACK_PRESS_NON_ARTICLE_PATH_PATTERN.test(pathname)) {
+    return true;
+  }
+
+  if (
+    hostname.endsWith('nsnews.com') ||
+    hostname.endsWith('richmond-news.com') ||
+    hostname.endsWith('princegeorgecitizen.com') ||
+    hostname.endsWith('delta-optimist.com')
+  ) {
+    if (pathname.startsWith('/sponsored/')) return true;
+  }
+
+  if (hostname.endsWith('delta-optimist.com') && pathname.startsWith('/opinion/')) {
+    return true;
+  }
+
+  if (hostname.endsWith('moosejawtoday.com') && pathname.startsWith('/obituaries/')) {
     return true;
   }
 
