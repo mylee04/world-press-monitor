@@ -160,10 +160,32 @@ function getSingleQueryValue(value: string | string[] | undefined): string | nul
   return null;
 }
 
-function formatSourceCount(count: number | undefined | null, total: number): string {
-  if (typeof count !== 'number' || !Number.isFinite(count)) return 'Unavailable';
-  if (!Number.isFinite(total) || total <= 0) return formatInt(count);
-  return `${formatInt(count)} out of ${formatInt(total)}`;
+function formatSourceCount(
+  count: number | undefined | null,
+  total: number
+): { value: string; note: string | null } {
+  if (typeof count !== 'number' || !Number.isFinite(count)) {
+    return {
+      value: 'Unavailable',
+      note: null,
+    };
+  }
+  if (!Number.isFinite(total) || total <= 0) {
+    return {
+      value: formatInt(count),
+      note: null,
+    };
+  }
+  if (count <= total) {
+    return {
+      value: `${formatInt(count)} out of ${formatInt(total)}`,
+      note: null,
+    };
+  }
+  return {
+    value: `${formatInt(count)} raw upstream`,
+    note: `Raw upstream attempted-source count includes non-runnable atlas names, so it is not directly comparable to the runnable denominator of ${formatInt(total)}.`,
+  };
 }
 
 function countNewsSitemapCapable(value: SourceEndpointBreakdown): number {
@@ -340,6 +362,7 @@ export default async function OpsPage({ searchParams }: Props) {
   const internalMapCountries =
     pickFreshestCountryMetrics(internalMapCountriesDb, internalMapCountriesFile) || internalMapCountriesDb;
   const runnableAtlasStats = getRunnableAtlasSourceStats();
+  const checkedSourceDisplay = formatSourceCount(summary?.totals.checkedSources24h, runnableAtlasStats.sourceNames);
   const strategyRows = [...internalMapCountries.countries]
     .sort((left, right) => {
       const leftScore = computeNewsSitemapLeverageScore(left);
@@ -437,13 +460,14 @@ export default async function OpsPage({ searchParams }: Props) {
             </div>
             <div className={styles.statRow}>
               <span>Distinct worker-attempted sources 24h</span>
-              <strong>{formatSourceCount(summary?.totals.checkedSources24h, runnableAtlasStats.sourceNames)}</strong>
+              <strong>{checkedSourceDisplay.value}</strong>
             </div>
             <div className={styles.statRow}>
               <span>31d rows window</span>
               <strong>{formatInt(summary?.totals.rowsWindow)}</strong>
             </div>
           </div>
+          {checkedSourceDisplay.note ? <p className={styles.detailNote}>{checkedSourceDisplay.note}</p> : null}
         </article>
 
         <article className={styles.detailPanel}>
