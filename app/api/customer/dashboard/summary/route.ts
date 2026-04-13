@@ -2,6 +2,7 @@ import { NextRequest } from 'next/server';
 import { buildPublicSnapshotCacheHeaders, PUBLIC_MAP_RESPONSE_CACHE_CONTROL } from '@/lib/dashboard-cache-control';
 import { readDashboardSummarySnapshot } from '@/lib/customer-dashboard-snapshot-store';
 import { proxyPortalServerApiRequest, shouldUseLocalFallbackForPortalResponse } from '@/lib/customer-portal';
+import { readNewsDashboardSummary } from '@/lib/ingestion-store';
 import type { DashboardDataSource } from '@/lib/news-api';
 
 type DashboardSummaryPayload = {
@@ -142,6 +143,7 @@ function buildDisabledSummaryResponse(reason?: string): DashboardSummaryPayload 
 export async function GET(request: NextRequest) {
   const snapshot = await readDashboardSummarySnapshot();
   const snapshotPayload = snapshot as unknown as DashboardSummaryPayload | null | undefined;
+  const localSummary = await readNewsDashboardSummary();
 
   const upstream = await proxyPortalServerApiRequest(request, '/api/dashboard/summary', {
     cacheControl: PUBLIC_MAP_RESPONSE_CACHE_CONTROL,
@@ -149,10 +151,28 @@ export async function GET(request: NextRequest) {
     timeoutMs: DASHBOARD_SUMMARY_UPSTREAM_TIMEOUT_MS,
   });
 
+  const localCheckedSources24h =
+    localSummary.storage === 'postgres'
+      ? Number(localSummary.totals?.checkedSources24h || 0)
+      : null;
+
   if (upstream.ok) {
     const payload = (await upstream.clone().json().catch(() => null)) as DashboardSummaryPayload | null;
     if (isUsableDashboardSummarySnapshot(payload)) {
-      return buildSummaryResponse({ ...payload, dataSource: 'upstream' }, 'upstream');
+      const totals = payload.totals && typeof payload.totals === 'object' ? payload.totals : {};
+      return buildSummaryResponse(
+        {
+          ...payload,
+          dataSource: 'upstream',
+          totals: localCheckedSources24h == null
+            ? totals
+            : {
+                ...totals,
+                checkedSources24h: localCheckedSources24h,
+              },
+        },
+        'upstream'
+      );
     }
 
     if (isUsableDashboardSummarySnapshot(snapshotPayload)) {
