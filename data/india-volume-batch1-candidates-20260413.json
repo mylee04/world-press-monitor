@@ -1,0 +1,50 @@
+[
+  {
+    "source": "The Siasat Daily",
+    "sitemap": "https://www.siasat.com/news-sitemap.xml"
+  },
+  {
+    "source": "Scroll.in",
+    "sitemap": "https://scroll.in/sitemap/news-sitemap.xml"
+  },
+  {
+    "source": "Amar Ujala (Breaking)",
+    "sitemap": "https://www.amarujala.com/sitemap-news-v1.xml"
+  },
+  {
+    "source": "The Quint",
+    "sitemap": "https://www.thequint.com/sitemap/today"
+  },
+  {
+    "source": "Moneycontrol",
+    "sitemap": "https://www.moneycontrol.com/news/news-sitemap.xml"
+  },
+  {
+    "source": "TelecomTalk",
+    "sitemap": "https://telecomtalk.info/news.xml"
+  },
+  {
+    "source": "Medical Dialogues",
+    "sitemap": "https://medicaldialogues.in/news-sitemap-daily.xml"
+  },
+  {
+    "source": "Telangana Today",
+    "sitemap": "https://telanganatoday.com/news-sitemap.xml"
+  },
+  {
+    "source": "The Better India",
+    "sitemap": "https://thebetterindia.com/news-sitemap.xml"
+  },
+  {
+    "source": "TechGenYZ",
+    "sitemap": "https://techgenyz.com/sitemap_index.xml"
+  },
+  {
+    "source": "Economic Times",
+    "sitemap": "https://economictimes.indiatimes.com/etstatic/sitemaps/et/news/sitemap-today.xml"
+  },
+  {
+    "source": "Republic World",
+    "sitemap": "https://www.republicworld.com/sitemaps/sitemaps-news.xml"
+  }
+]

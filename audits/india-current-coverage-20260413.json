@@ -1,0 +1,1097 @@
+{
+  "generatedAt": "2026-04-13T15:35:52.916Z",
+  "countries": [
+    {
+      "country": "India",
+      "currentFeeds": 61,
+      "candidateFeeds": 0,
+      "currentOk": 61,
+      "candidateOk": 0,
+      "currentRecent24h": 6417,
+      "currentUnique24h": 5688,
+      "candidateRecent24h": 0,
+      "candidateUnique24h": 0,
+      "candidateNewRecent24h": 0,
+      "topCandidates": []
+    }
+  ],
+  "results": [
+    {
+      "country": "India",
+      "source": "The Times of India (Top Stories)",
+      "url": "https://timesofindia.indiatimes.com/sitemap/today",
+      "kind": "current",
+      "method": "sitemap",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "text/xml;charset=UTF-8",
+      "totalParsed": 1000,
+      "recent24h": 706,
+      "newestItemAt": "2026-04-13T15:32:08.000Z",
+      "sampleTitles": [
+        "Everything is Pre-Decided in Life? Then Why Akal Mrityu Happens | Ft. Acharya Sumit",
+        "Pope Leo Slams ‘Delusion Of Power’ As Trump Fires Back With Explosive Attack | WATCH",
+        "Do snakes really hear the flute: The truth behind the snake charmer myth"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "Economic Times",
+      "url": "https://economictimes.indiatimes.com/etstatic/sitemaps/et/news/sitemap-today.xml",
+      "kind": "current",
+      "method": "sitemap",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "text/xml;charset=UTF-8",
+      "totalParsed": 571,
+      "recent24h": 489,
+      "newestItemAt": "2026-04-13T15:33:28.000Z",
+      "sampleTitles": [
+        "The Boroughs Trailer drops: Another 'Upside Down' by Duffer Brothers? All about the show with a Stranger Things-style twist",
+        "Stocks sink, Iran move falters: Pakistan is a high-beta nation",
+        "McDonald's to add extra energy and fizz to US menus, WSJ reports"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "ThePrint - Google News Sitemap",
+      "url": "https://theprint.in/googlenews.xml",
+      "kind": "current",
+      "method": "sitemap",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "text/xml;charset=UTF-8",
+      "totalParsed": 1000,
+      "recent24h": 442,
+      "newestItemAt": "2026-04-13T15:35:00.000Z",
+      "sampleTitles": [
+        "‘Main grihasth nahi hoon, par pata bohot hai,’ says PM Modi at Nari Shakti Vandan programme in Delhi",
+        "Hungary’s election winner Magyar says to suspend state media news broadcast",
+        "Hungary vote removes Ukraine’s staunchest foe in EU"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "The Hindu (National)",
+      "url": "https://www.thehindu.com/sitemap/googlenews/all/all.xml",
+      "kind": "current",
+      "method": "sitemap",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/xml; charset=utf-8",
+      "totalParsed": 886,
+      "recent24h": 423,
+      "newestItemAt": "2026-04-13T15:32:03.000Z",
+      "sampleTitles": [
+        "Minister pushes for four-lane expansion of NH passing through Banaganapalle",
+        "Death of BDS student: students boycott classes, allege misconduct by faculty members",
+        "Poshan Pakhwada to play key role in healthy Andhra Pradesh: Palla"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "Hindustan Times - News Sitemap",
+      "url": "https://www.hindustantimes.com/sitemap/news.xml",
+      "kind": "current",
+      "method": "sitemap",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/rss+xml;charset=UTF-8",
+      "totalParsed": 700,
+      "recent24h": 418,
+      "newestItemAt": "2026-04-13T15:27:00.000Z",
+      "sampleTitles": [
+        "1992 Women’s Candidates: Susan Polgar’s dream run & an absurd end",
+        "The message in Viktor Orban’s defeat",
+        "Air India’s continuing saga of turbulence"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "Amar Ujala (Breaking)",
+      "url": "https://www.amarujala.com/sitemap-news-v1.xml",
+      "kind": "current",
+      "method": "sitemap",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/xml",
+      "totalParsed": 700,
+      "recent24h": 413,
+      "newestItemAt": "2026-04-13T15:31:03.000Z",
+      "sampleTitles": [
+        "Gurugram News सीसीटीवी फुटेज से की जा रही उपद्रवियों की पहचान",
+        "Noida News कॉमर्शियल सिलिंडर न मिल पाने से घरेलू सिलिंडर का कर रहे इस्तेमाल",
+        "Meerut News जिले में नौ परीक्षा केंद्रों पर होगी असिस्टेंट प्रोफेसर परीक्षा"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "The Indian Express",
+      "url": "https://indianexpress.com/news-sitemap.xml",
+      "kind": "current",
+      "method": "sitemap",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/xml",
+      "totalParsed": 515,
+      "recent24h": 345,
+      "newestItemAt": "2026-04-13T15:33:24.000Z",
+      "sampleTitles": [
+        "Asha Bhosle Funeral LIVE Updates: Legendary singer cremated, mourners sing her songs; Amitabh Bachchan remembers ‘iconic’ Asha",
+        "‘Somebody asked me to recuse for first time in my life’: Justice Swarana Kanta Sharma reserves order in recusal plea",
+        "Pakistan television channel pulled up for airing Asha Bhosle tribute in ‘wilful defiance of Supreme Court judgment’"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "Moneycontrol",
+      "url": "https://www.moneycontrol.com/news/news-sitemap.xml",
+      "kind": "current",
+      "method": "sitemap",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "text/xml;charset=UTF-8",
+      "totalParsed": 764,
+      "recent24h": 342,
+      "newestItemAt": "2026-04-13T15:30:34.000Z",
+      "sampleTitles": [
+        "Xiaomi to launch Mini LED Series smart TVs on April 15",
+        "Kamlesh D. Shroff takes charge as the brokers' association ANMI President",
+        "FII/FPIs net sell Indian equities worth Rs 1711 crore, DIIs net buy Rs 2432 crore on April 13"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "Business Standard",
+      "url": "https://www.business-standard.com/sitemap/news-sitemap.xml",
+      "kind": "current",
+      "method": "sitemap",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/xml; charset=utf-8",
+      "totalParsed": 462,
+      "recent24h": 320,
+      "newestItemAt": "2026-04-13T15:17:36.000Z",
+      "sampleTitles": [
+        "IMD forecasts 'below-normal' monsoon in 2026 for the first time in 3 years",
+        "PM seeks Opposition backing for Women's Reservation Act amendments",
+        "Over 31,700 PNG consumers surrender LPG connections amid govt push"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "India Today (India)",
+      "url": "https://www.indiatoday.in/news-it-sitemap.xml",
+      "kind": "current",
+      "method": "sitemap",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/xml",
+      "totalParsed": 466,
+      "recent24h": 268,
+      "newestItemAt": "2026-04-13T15:33:44.000Z",
+      "sampleTitles": [
+        "Don’t interfere: China fires warning shot at US over Hormuz blockade",
+        "CISF’s quick action helps German passenger retrieve bag at Delhi airport",
+        "RR manager Romi Bhinder issued show-cause by BCCI for using phone in dugout"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "Livemint - Today Sitemap",
+      "url": "https://www.livemint.com/sitemap/today.xml",
+      "kind": "current",
+      "method": "sitemap",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/xml;charset=UTF-8",
+      "totalParsed": 243,
+      "recent24h": 242,
+      "newestItemAt": "2026-04-13T15:34:45.000Z",
+      "sampleTitles": [
+        "Orange Cap in IPL 2026: Heinrich Klaasen, Ishan Kishan displace Vaibhav Suryavanshi for most runs during SRH vs RR",
+        "Zohran Mamdani marks 100 days as NYC mayor: A look at Democratic Socialist's 3 new priorities and 'pothole politics'",
+        "NFL Draft 2026: Dates, location, top prospects, order; here's everything you need to know"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "News18",
+      "url": "https://www.news18.com/commonfeeds/v1/eng/sitemap/google-news.xml",
+      "kind": "current",
+      "method": "sitemap",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/xml; charset=utf-8",
+      "totalParsed": 687,
+      "recent24h": 215,
+      "newestItemAt": "2026-04-13T15:33:26.000Z",
+      "sampleTitles": [
+        "Iran President Slams Trump Over Remarks On Pope Leo, Calls It 'Desecration Of Jesus' ...",
+        "Haryana's Thermal Power Plants Are Still Using Freshwater, Reveals RTI Reply ...",
+        "Strait Of Hormuz Open For India, No Toll Levied On Its Tankers: Iran Envoy ..."
+      ]
+    },
+    {
+      "country": "India",
+      "source": "Deccan Herald - News Sitemap",
+      "url": "https://www.deccanherald.com/news_sitemap.xml",
+      "kind": "current",
+      "method": "sitemap",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "text/xml",
+      "totalParsed": 370,
+      "recent24h": 201,
+      "newestItemAt": "2026-04-13T15:34:48.643Z",
+      "sampleTitles": [
+        "Nashik incident being treated with utmost seriousness: Tata Sons Chairman N Chandrasekaran",
+        "IPL 2026 | BCCI anti-corruption unit showcauses Rajasthan Royals manager Romi Bhinder",
+        "PM Modi to inaugurate Guru Bairavaikya Mandira on April 15"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "The Indian Express",
+      "url": "https://indianexpress.com/feed",
+      "kind": "current",
+      "method": "rss",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "totalParsed": 200,
+      "recent24h": 200,
+      "newestItemAt": "2026-04-13T15:13:45.000Z",
+      "sampleTitles": [
+        "QUICK COMMENT | If it is 0/1, call Ishan Kishan: SRH’s daring No.3 is proving to be IPL’s top crisis-manager",
+        "Pak ISI behind grenade attack on Amritsar police station, 6 arrested",
+        "Why Manipur CM Khemchand’s task is cut out: Jiribam outreach to Bishnupur setback"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "Telangana Today",
+      "url": "https://telanganatoday.com/feed",
+      "kind": "current",
+      "method": "rss",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "totalParsed": 500,
+      "recent24h": 146,
+      "newestItemAt": "2026-04-13T15:29:52.000Z",
+      "sampleTitles": [
+        "NCLT initiates insolvency proceedings against Venugopal Dhoot",
+        "Over speed, reckless driving causing death of vehicular: Collector",
+        "BRS gears up for massive public meeting in Jagtial"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "Telangana Today",
+      "url": "https://telanganatoday.com/news-sitemap.xml",
+      "kind": "current",
+      "method": "sitemap",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "text/xml; charset=utf-8",
+      "totalParsed": 1000,
+      "recent24h": 145,
+      "newestItemAt": "2026-04-13T15:23:03.000Z",
+      "sampleTitles": [
+        "Over speed, reckless driving causing death of vehicular: Collector",
+        "BRS gears up for massive public meeting in Jagtial",
+        "Telangana DGP Shivadhar Reddy asks auto drivers, motorists to follow road safety norms"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "Republic World",
+      "url": "https://www.republicworld.com/sitemaps/sitemaps-news.xml",
+      "kind": "current",
+      "method": "sitemap",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/xml",
+      "totalParsed": 1000,
+      "recent24h": 139,
+      "newestItemAt": "2026-04-13T15:20:35.000Z",
+      "sampleTitles": [
+        "US Naval Blockade Against Iran Begins; UKMTO Confirms Enforcement at Iranian Ports",
+        "IMD Forecasts Below-Normal Monsoon for India in 2026, Rainfall Likely at 92% of Average",
+        "Tata Sons Chairperson Chandrasekaran Vows Strict Action In Sexual Abuse Case At TCS Nashik"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "ABP News",
+      "url": "https://news.abplive.com/google-news-sitemap.xml",
+      "kind": "current",
+      "method": "sitemap",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/xml",
+      "totalParsed": 410,
+      "recent24h": 103,
+      "newestItemAt": "2026-04-13T15:18:44.000Z",
+      "sampleTitles": [
+        "Wall Street Slips As US-Iran Talks Fail, Oil Surge Fuels Market Jitters",
+        "Pakistan Regulator Issues Notice To Top News Channel For Airing Asha Bhosle's Songs",
+        "Pezeshkian Backs Pope Leo Amid Trump’s ‘Weak’ Attack, War Of Words Escalates"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "Firstpost",
+      "url": "https://www.firstpost.com/commonfeeds/v1/mfp/sitemap/google-news.xml",
+      "kind": "current",
+      "method": "sitemap",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/xml; charset=utf-8",
+      "totalParsed": 296,
+      "recent24h": 94,
+      "newestItemAt": "2026-04-13T15:22:56.000Z",
+      "sampleTitles": [
+        "How Trump’s Hormuz blockade could impact India ...",
+        "China envoy quotes from Jeffery Sachs’ interview with Firstpost to hail India’s Brics leadership ...",
+        "US judge dismisses Trump’s $10 billion defamation suit against WSJ about Epstein letter ..."
+      ]
+    },
+    {
+      "country": "India",
+      "source": "The Siasat Daily",
+      "url": "https://www.siasat.com/news-sitemap.xml",
+      "kind": "current",
+      "method": "sitemap",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "text/xml; charset=UTF-8",
+      "totalParsed": 174,
+      "recent24h": 93,
+      "newestItemAt": "2026-04-13T15:26:16.000Z",
+      "sampleTitles": [
+        "Hyderabad woman prisoner escapes while receiving treatment in hospital",
+        "Hyderabad: 18-yr-old killed in Old City graveyard hours after buying family tea",
+        "Hyderabad: Neighbour who raped minor, got her pregnant, sentenced to life"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "Hindustan Times - India News RSS",
+      "url": "https://www.hindustantimes.com/feeds/rss/india-news/rssfeed.xml",
+      "kind": "current",
+      "method": "rss",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/rss+xml;charset=UTF-8",
+      "totalParsed": 100,
+      "recent24h": 67,
+      "newestItemAt": "2026-04-13T15:09:03.000Z",
+      "sampleTitles": [
+        "BJD appoints Manas Mangaraj as Rajya Sabha leader after exit of Sasmit Patra",
+        "RSS events, ideology bias: What Kejriwal told HC judge Sharma in court, asking her to quit his case",
+        "Does Iran charge India a toll for the Strait of Hormuz passage? Tehran's envoy answers"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "The Hindu (National)",
+      "url": "https://www.thehindu.com/news/national/?service=rss",
+      "kind": "current",
+      "method": "rss",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/xml",
+      "totalParsed": 60,
+      "recent24h": 60,
+      "newestItemAt": "2026-04-13T15:28:47.000Z",
+      "sampleTitles": [
+        "Hippo Hamsini at Tyavarekoppa safari remains critical, vets dart antibiotics",
+        "Kejriwal appears before Justice Sharma in Delhi HC; seeks her recusal",
+        "SC asks NIA to check the political background of people involved in Malda gherao case"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "Medical Dialogues",
+      "url": "https://medicaldialogues.in/feed",
+      "kind": "current",
+      "method": "rss",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "text/xml",
+      "totalParsed": 86,
+      "recent24h": 52,
+      "newestItemAt": "2026-04-13T15:30:54.000Z",
+      "sampleTitles": [
+        "Liraglutide Reduces Sleep Apnea Severity in Obese COPD Patients: Study",
+        "Mannitol reliable Alternative Clearance Marker in CKD, suggests research",
+        "4-week Vancomycin pulse and taper regimen reduces C. difficile recurrence, finds study"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "Medical Dialogues",
+      "url": "https://medicaldialogues.in/news-sitemap-daily.xml",
+      "kind": "current",
+      "method": "sitemap",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/xml",
+      "totalParsed": 86,
+      "recent24h": 52,
+      "newestItemAt": "2026-04-13T15:30:54.000Z",
+      "sampleTitles": [
+        "Liraglutide Reduces Sleep Apnea Severity in Obese COPD Patients: Study",
+        "Mannitol reliable Alternative Clearance Marker in CKD, suggests research",
+        "4-week Vancomycin pulse and taper regimen reduces C. difficile recurrence, finds study"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "The Siasat Daily",
+      "url": "https://www.siasat.com/feed/",
+      "kind": "current",
+      "method": "rss",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "totalParsed": 40,
+      "recent24h": 40,
+      "newestItemAt": "2026-04-13T15:26:16.000Z",
+      "sampleTitles": [
+        "Hyderabad woman prisoner escapes while receiving treatment in hospital",
+        "Hyderabad: 18-yr-old killed in Old City graveyard hours after buying family tea",
+        "Hyderabad: Neighbour who raped minor, got her pregnant, sentenced to life"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "Livemint - RSS News",
+      "url": "https://www.livemint.com/rss/news",
+      "kind": "current",
+      "method": "rss",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/xml;charset=UTF-8",
+      "totalParsed": 35,
+      "recent24h": 35,
+      "newestItemAt": "2026-04-13T15:08:11.000Z",
+      "sampleTitles": [
+        "Australia names ‘standout candidate’ Susan Coyle as first woman Army chief - All you need to know",
+        "Assam govt moves SC against anticipatory bail to Congress leader Pawan Khera",
+        "‘Come close, get eliminated’: Trump issues stark warning to Iranian ships as Strait of Hormuz blockade gets underway"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "DNA India (India)",
+      "url": "https://www.dnaindia.com/googlenews.xml",
+      "kind": "current",
+      "method": "sitemap",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/xml; charset=utf-8",
+      "totalParsed": 95,
+      "recent24h": 34,
+      "newestItemAt": "2026-04-13T15:34:35.000Z",
+      "sampleTitles": [
+        "US blockade of Strait of Hormuz begins: How may it impact India? How your bills may increase? Explained here",
+        "US-Iran war to resume soon? Trump's planned Hormuz Strait blockade begins as Iran vows to fight back",
+        "US blockade of Strait of Hormuz begins: Inside Pentagon's military plan-destroyers, drones, 5th Fleet Explained"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "IndiaVision",
+      "url": "https://www.indiavision.com/feed",
+      "kind": "current",
+      "method": "rss",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "totalParsed": 25,
+      "recent24h": 25,
+      "newestItemAt": "2026-04-13T15:04:43.000Z",
+      "sampleTitles": [
+        "U.S. begins blockade in Strait of Hormuz; Trump warns Iran 'attack ships' to stay away",
+        "Judge dismisses Trump $10B defamation lawsuit against Murdoch, WSJ about Epstein letter",
+        "Treasury yields are little changed as collapse of Iran talks clouds inflation outlook"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "Scroll.in",
+      "url": "https://scroll.in/sitemap/news-sitemap.xml",
+      "kind": "current",
+      "method": "sitemap",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/xml",
+      "totalParsed": 200,
+      "recent24h": 23,
+      "newestItemAt": "2026-04-13T15:28:34.000Z",
+      "sampleTitles": [
+        "Justice Swarana Kanta Sharma’s orders, conduct outside court has created apprehension: Kejriwal",
+        "Top updates: US naval blockade takes effect, Trump threatens to destroy Iranian ‘attack ships’",
+        "Hungary: Is the defeat of Viktor Orbán’s authoritarian regime really a setback for illiberalism?"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "Scroll.in",
+      "url": "https://feeds.feedburner.com/ScrollinArticles.rss",
+      "kind": "current",
+      "method": "rss",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "text/xml; charset=utf-8",
+      "totalParsed": 100,
+      "recent24h": 22,
+      "newestItemAt": "2026-04-13T14:00:01.000Z",
+      "sampleTitles": [
+        "Hungary: Is the defeat of Viktor Orbán’s authoritarian regime really a setback for illiberalism?",
+        "Citizens kept in dark about proposed women’s quota amendments, delimitation: Civil society group",
+        "Rush Hour: SC says EC deviated from SIR process in Bengal, violence at Noida workers’ protest & more"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "India Today (India)",
+      "url": "https://www.indiatoday.in/rss/1206578",
+      "kind": "current",
+      "method": "rss",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "text/xml",
+      "totalParsed": 20,
+      "recent24h": 20,
+      "newestItemAt": "2026-04-13T14:48:04.000Z",
+      "sampleTitles": [
+        "New Bihar CM's oath on April 15, Nitish Kumar's son out of race",
+        "Life term, steep fines: Punjab brings law against Guru Granth Sahib desecration",
+        "India receives first Iranian oil cargo in 7 years as US's Hormuz blockade nears"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "NDTV - Top Stories",
+      "url": "https://feeds.feedburner.com/ndtvnews-top-stories",
+      "kind": "current",
+      "method": "rss",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "text/xml; charset=utf-8",
+      "totalParsed": 20,
+      "recent24h": 20,
+      "newestItemAt": "2026-04-13T14:16:26.000Z",
+      "sampleTitles": [
+        "US-Iran-Israel War LIVE Updates: Deadline Ends For Trump's Hormuz Naval Blockade, Iranian Ports",
+        "US Called Netanyahu From Islamabad. He Says, \"The Explosion Came From...\"",
+        "NATO Allies Refuse To Join Trump's Strait of Hormuz Blockade Plan"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "OrissaPOST",
+      "url": "https://www.orissapost.com/feed/",
+      "kind": "current",
+      "method": "rss",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "totalParsed": 20,
+      "recent24h": 20,
+      "newestItemAt": "2026-04-13T15:24:36.000Z",
+      "sampleTitles": [
+        "RS to elect deputy chairman April 17; NDA likely to renominate Harivansh",
+        "LPG carrier Jag Vikram with 20,400 tonnes of cargo to reach Kandla Tuesday",
+        "Over 1.76 lakh families join Odisha’s self-enumeration drive"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "The Times of India (Top Stories)",
+      "url": "https://timesofindia.indiatimes.com/rssfeedstopstories.cms",
+      "kind": "current",
+      "method": "rss",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "text/xml;charset=UTF-8",
+      "totalParsed": 33,
+      "recent24h": 20,
+      "newestItemAt": "2026-04-13T15:07:44.000Z",
+      "sampleTitles": [
+        "How Iran is using China’s playbook to counter Donald Trump’s threats",
+        "Iran offers navigation support to India in Hormuz amid US blockade; rejects charging toll",
+        "Google CEO Sundar Pichai has a message for all American technology companies"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "NDTV (Latest)",
+      "url": "https://feeds.feedburner.com/NDTV-LatestNews",
+      "kind": "current",
+      "method": "rss",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "text/xml; charset=utf-8",
+      "totalParsed": 20,
+      "recent24h": 19,
+      "newestItemAt": "2026-04-13T15:01:46.000Z",
+      "sampleTitles": [
+        "Adani Green Energy Receives Highest ESG Score Among Indian Peers",
+        "Hidden Hormone Disorder Affecting Your Heart? Doctors Warn",
+        "US Judge Tosses Trump's $20-Billion Defamation Suit WSJ Over 'Epstein Birthday Letter'"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "ABP News",
+      "url": "https://news.abplive.com/home/feed",
+      "kind": "current",
+      "method": "rss",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/xml",
+      "totalParsed": 18,
+      "recent24h": 15,
+      "newestItemAt": "2026-04-13T14:51:48.000Z",
+      "sampleTitles": [
+        "Trump Claims Iran Navy ‘Obliterated’, Warns Of Immediate Strike On Any Vessel Near Blockade",
+        "'You Attended RSS Events Four Times': Kejriwal Accuses Delhi HC Justice Swarnakanta Sharma Of Bias",
+        "BJP To Announce Bihar’s New CM Tomorrow; Nitish Kumar Set To Resign"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "The Better India",
+      "url": "https://www.thebetterindia.com/feed/",
+      "kind": "current",
+      "method": "rss",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/xml",
+      "totalParsed": 50,
+      "recent24h": 13,
+      "newestItemAt": "2026-04-13T14:30:37.000Z",
+      "sampleTitles": [
+        "Gorakhpur Teacher Cycles to Everest Base Camp, Creates History in 14 Days",
+        "With 4 New Cubs, India’s Cheetah Count Rises to 57: A First Wild Birth by Indian-Born Female",
+        "Asha Bhosle’s Life | A Story Beyond Music #ashabhosle #shorts"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "The Quint",
+      "url": "https://prod-qt-images.s3.amazonaws.com/production/thequint/feed.xml",
+      "kind": "current",
+      "method": "rss",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/atom+xml; charset=utf-8",
+      "totalParsed": 20,
+      "recent24h": 12,
+      "newestItemAt": "2026-04-13T14:36:53.889Z",
+      "sampleTitles": [
+        "US Navy Begins Strait of Hormuz Blockade After US-Iran Talks Fail",
+        "'Not Enough Time Left': Deleted Voters in West Bengal Are Now Facing Dead End",
+        "West Bengal SIR: SC Says 34 Lakh With Pending Appeals Cannot Vote in 2026 Polls"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "The Quint",
+      "url": "https://www.thequint.com/sitemap/today",
+      "kind": "current",
+      "method": "sitemap",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "text/xml; charset=utf-8",
+      "totalParsed": 14,
+      "recent24h": 12,
+      "newestItemAt": "2026-04-13T14:36:53.000Z",
+      "sampleTitles": [
+        "US Navy Begins Strait of Hormuz Blockade After US-Iran Talks Fail",
+        "'Not Enough Time Left': Deleted Voters in West Bengal Are Now Facing Dead End",
+        "West Bengal SIR: SC Says 34 Lakh With Pending Appeals Cannot Vote in 2026 Polls"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "The Better India",
+      "url": "https://thebetterindia.com/news-sitemap.xml",
+      "kind": "current",
+      "method": "sitemap",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/xml",
+      "totalParsed": 38,
+      "recent24h": 11,
+      "newestItemAt": "2026-04-13T14:30:37.000Z",
+      "sampleTitles": [
+        "Gorakhpur Teacher Cycles to Everest Base Camp, Creates History in 14 Days",
+        "With 4 New Cubs, India’s Cheetah Count Rises to 57: A First Wild Birth by Indian-Born Female",
+        "At 98, This Ahmedabad Nani Turned Her Love for Cooking Into a Viral Food Business"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "Amar Ujala (Breaking)",
+      "url": "https://www.amarujala.com/rss/breaking-news.xml",
+      "kind": "current",
+      "method": "rss",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/xml",
+      "totalParsed": 11,
+      "recent24h": 10,
+      "newestItemAt": "2026-04-13T03:29:38.000Z",
+      "sampleTitles": [
+        "होर्मुज पर बढ़ी तनातनी: 'नाकाबंदी के पास भी आए तो ईरानी जहाजों को कर देंगे तबाह', ईरान को ट्रंप की खुली धमकी",
+        "Noida Labour Protest: नोएडा हिंसा के बाद सख्त हुई योगी सरकार, मजदूर-उद्योग विवाद सुलझाने को बनी हाई लेवल कमेटी",
+        "पाकिस्तान में आशा भोसले को श्रद्धांजलि देने पर बवाल, सरकार ने चैनल को भेजा कारण बताओ नोटिस; जानें पूरा मामला"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "DNA India (India)",
+      "url": "https://www.dnaindia.com/feeds/india.xml",
+      "kind": "current",
+      "method": "rss",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/xml; charset=utf-8",
+      "totalParsed": 20,
+      "recent24h": 10,
+      "newestItemAt": "2026-04-13T13:53:31.000Z",
+      "sampleTitles": [
+        "Women's Reservation Bill: Congress-BJP tangle over delimitation, Nari Shakti Vandan Adhiniyam implementation| Explained",
+        "Noida workers' protest: UP govt rolls out new labour rules in Gautam Buddh Nagar; workers to get double overtime pay, compensation, more",
+        "Noida workers' protest: UP Police files FIR against social media handles for allegedly spreading rumours, check details"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "Star of Mysore",
+      "url": "https://starofmysore.com/feed/",
+      "kind": "current",
+      "method": "rss",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "totalParsed": 10,
+      "recent24h": 10,
+      "newestItemAt": "2026-04-13T13:15:00.000Z",
+      "sampleTitles": [
+        "Devaraj Urs Road to go litter-free",
+        "MCC to extend litter-free model around Mysore Palace next",
+        "Man forced to live as Transgender"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "The Times of Bengal",
+      "url": "https://www.thetimesofbengal.com/feed/",
+      "kind": "current",
+      "method": "rss",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "totalParsed": 10,
+      "recent24h": 10,
+      "newestItemAt": "2026-04-13T15:07:24.000Z",
+      "sampleTitles": [
+        "Indian Navy providing escort to 15 Indian ships stranded due to US blockade in Strait of Hormuz",
+        "Jackie Shroff slams paparazzi at Asha Bhosle’s funeral over inappropriate question, video goes viral",
+        "No LPG shortage, refrain from panic buying, use gas responsibly, don’t stock up: Govt to people"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "News Today (TN)",
+      "url": "https://newstodaynet.com/feed",
+      "kind": "current",
+      "method": "rss",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "totalParsed": 9,
+      "recent24h": 9,
+      "newestItemAt": "2026-04-13T09:12:42.000Z",
+      "sampleTitles": [
+        "E-paper 13 April 2026",
+        "Tamil Nadu poll campaign heats up",
+        "Stalin questions FM over paddy MSP bonus row"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "TelecomTalk",
+      "url": "https://telecomtalk.info/feed/",
+      "kind": "current",
+      "method": "rss",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "totalParsed": 20,
+      "recent24h": 8,
+      "newestItemAt": "2026-04-13T14:58:40.000Z",
+      "sampleTitles": [
+        "Infinix Note 60 Pro Specifications Revealed Ahead of Launch",
+        "TRAI May Bring Back Voice Only Plans What This Means for Your Recharge",
+        "Indian Telecom Sector Flags Power Outages, Diesel Curbs, and Supply Chain Disruptions: Report"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "TelecomTalk",
+      "url": "https://telecomtalk.info/news.xml",
+      "kind": "current",
+      "method": "sitemap",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "text/xml;charset=UTF-8",
+      "totalParsed": 9,
+      "recent24h": 8,
+      "newestItemAt": "2026-04-13T14:58:40.000Z",
+      "sampleTitles": [
+        "Infinix Note 60 Pro Specifications Revealed Ahead of Launch",
+        "TRAI May Bring Back Voice Only Plans What This Means for Your Recharge",
+        "Indian Telecom Sector Flags Power Outages, Diesel Curbs, and Supply Chain Disruptions: Report"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "Medianama",
+      "url": "https://www.medianama.com/feed/",
+      "kind": "current",
+      "method": "rss",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "totalParsed": 10,
+      "recent24h": 7,
+      "newestItemAt": "2026-04-13T12:31:24.000Z",
+      "sampleTitles": [
+        "“No scientific evidence”: 438 scientists call for pause on age-based controls until benefits and risks understood",
+        "Developer partially bypasses Google’s AI watermark, undermining detection India’s deepfake rules rely on",
+        "Event Announcement: IT Rules and the Future of Online Speech in India, April 23, #NAMA"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "YourStory",
+      "url": "https://yourstory.com/feed",
+      "kind": "current",
+      "method": "rss",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/rss+xml; charset=utf-8",
+      "totalParsed": 20,
+      "recent24h": 7,
+      "newestItemAt": "2026-04-13T14:00:00.000Z",
+      "sampleTitles": [
+        "Startup news and updates: Daily Roundup (April 13, 2026)",
+        "Greengine Deploys World’s First Vertical Algal Biofilm Carbon Capture & Utilization Unit",
+        "Why 98% of startups fail? A BigBasket competitor’s journey from early traction to shutdown"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "Inc42",
+      "url": "https://inc42.com/feed/",
+      "kind": "current",
+      "method": "rss",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "totalParsed": 24,
+      "recent24h": 5,
+      "newestItemAt": "2026-04-13T13:08:12.000Z",
+      "sampleTitles": [
+        "BharatPe Cofounder Shashvat Nakrani Steps Down To Launch New Venture",
+        "Cashfree Payments Appoints Ex-Visa Exec Sameer Gandhi As CFO",
+        "Ola Electric Slumps 8%, Ather Energy Hits All-Time High"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "Inc42",
+      "url": "https://inc42.com/news-sitemap.xml",
+      "kind": "current",
+      "method": "sitemap",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "text/xml; charset=UTF-8",
+      "totalParsed": 6,
+      "recent24h": 4,
+      "newestItemAt": "2026-04-13T09:52:28.000Z",
+      "sampleTitles": [
+        "Cashfree Payments Appoints Ex-Visa Exec Sameer Gandhi As CFO",
+        "Ola Electric Slumps 8%, Ather Energy Hits All-Time High",
+        "Why ShareChat Stopped Chasing Instagram And Bet Big On Microdramas"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "Odishabarta",
+      "url": "https://odishabarta.com/feed",
+      "kind": "current",
+      "method": "rss",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "totalParsed": 10,
+      "recent24h": 3,
+      "newestItemAt": "2026-04-13T01:55:22.000Z",
+      "sampleTitles": [
+        "CCTV Surveillance at Ratha Khala During Rath Yatra Chariot Construction",
+        "Mother Slits Throat of Son & Daughter in Jharsuguda",
+        "FOREST RANGE OFFICER, GUDARI, RAYAGADA INTERCEPTED BY VIGILANCE"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "OpIndia",
+      "url": "https://www.opindia.com/feed",
+      "kind": "current",
+      "method": "rss",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "totalParsed": 10,
+      "recent24h": 3,
+      "newestItemAt": "2026-04-13T14:43:30.000Z",
+      "sampleTitles": [
+        "Nashik TCS scandal: Sexual relations on pretext of marriage, sexual advances at office, derogatory remarks on Hindu deities; read how Danish Sheikh, Tausif Attar and Nida Khan targeted Hindu woman – FIR details",
+        "Special Intensive Revision: Over 5.2 crore names purged across 12 states and 3 UTs; Uttar Pradesh leads deletions, followed by West Bengal and Tamil Nadu. Full details inside",
+        "US-Trump flip-flop on Strait of Hormuz blockade and Iran war, how it endangers the region and worsens the energy crisis for Asia"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "WYM News (Blogspot)",
+      "url": "https://latestnewsupdate4you.blogspot.com/feeds/posts/default",
+      "kind": "current",
+      "method": "rss",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/atom+xml; charset=UTF-8",
+      "totalParsed": 25,
+      "recent24h": 3,
+      "newestItemAt": "2026-04-12T20:35:37.508Z",
+      "sampleTitles": [
+        "2026 Candidates Tournament: R Vaishali squanders lead after losing to China’s Zhu Jiner",
+        "Sherfane Rutherford slams 71 but Royal Challengers Bengaluru defeat Mumbai Indians by 18 runs",
+        "Nihal Sarin does the double over World Champion D Gukesh to win Menorca Open in Spain"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "TechGenYZ",
+      "url": "https://techgenyz.com/feed/",
+      "kind": "current",
+      "method": "rss",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "totalParsed": 10,
+      "recent24h": 2,
+      "newestItemAt": "2026-04-13T10:10:25.000Z",
+      "sampleTitles": [
+        "Infinix Note 60 Pro 5G Launch: Key Features You’ll Love",
+        "Apple AI Shake-Up: Critical Signs of a Major Reset"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "Chandigarh Metro",
+      "url": "https://chandigarhmetro.com/feed/",
+      "kind": "current",
+      "method": "rss",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "totalParsed": 10,
+      "recent24h": 1,
+      "newestItemAt": "2026-04-13T09:38:59.000Z",
+      "sampleTitles": [
+        "Why the 1Win App on iOS Works Differently Than on Android and Which Features Are Missing on Each Platform"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "The India Bizz",
+      "url": "https://theindiabizz.com/feed",
+      "kind": "current",
+      "method": "rss",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "text/xml;charset=UTF-8",
+      "totalParsed": 10,
+      "recent24h": 1,
+      "newestItemAt": "2026-04-12T18:07:25.000Z",
+      "sampleTitles": [
+        "Donncha: Media Picker for Immich: Self-Hosted Photos in WordPress"
+      ]
+    },
+    {
+      "country": "India",
+      "source": "Chandigarh City News",
+      "url": "https://feeds.feedburner.com/ChandigarhCityNews",
+      "kind": "current",
+      "method": "rss",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "text/xml; charset=utf-8",
+      "totalParsed": 10,
+      "recent24h": 0,
+      "newestItemAt": "2026-04-01T08:58:31.000Z",
+      "sampleTitles": []
+    },
+    {
+      "country": "India",
+      "source": "Firstpost",
+      "url": "https://www.firstpost.com/commonfeeds/v1/mfp/rss/web-stories.xml",
+      "kind": "current",
+      "method": "rss",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/xml; charset=utf-8",
+      "totalParsed": 200,
+      "recent24h": 0,
+      "newestItemAt": "2026-03-06T10:54:25.000Z",
+      "sampleTitles": []
+    },
+    {
+      "country": "India",
+      "source": "Moneycontrol",
+      "url": "https://www.moneycontrol.com/rss/latestnews.xml",
+      "kind": "current",
+      "method": "rss",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/xml",
+      "totalParsed": 15,
+      "recent24h": 0,
+      "newestItemAt": "2024-04-23T08:11:02.000Z",
+      "sampleTitles": []
+    },
+    {
+      "country": "India",
+      "source": "Storify News",
+      "url": "https://www.storifynews.com/feed/",
+      "kind": "current",
+      "method": "rss",
+      "ok": true,
+      "statusCode": 200,
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "totalParsed": 107,
+      "recent24h": 0,
+      "newestItemAt": "2026-04-12T06:28:00.000Z",
+      "sampleTitles": []
+    }
+  ]
+}

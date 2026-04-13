@@ -752,6 +752,16 @@ export function parseSitemap(xml: string, limit = 12): ParsedFeedItem[] {
   return parseSitemapWithStats(xml, limit).items;
 }
 
+function extractSitemapUrlBodies(xml: string): string[] {
+  const strictMatches = [...xml.matchAll(/<(?:[\w.-]+:)?url\b[^>]*>([\s\S]*?)<\/(?:[\w.-]+:)?url>/gi)]
+    .map((match) => match[1] || '');
+  if (strictMatches.length > 0) return strictMatches;
+
+  // Some news sitemaps are malformed near the tail but still contain parseable <url> blocks.
+  return [...xml.matchAll(/<(?:[\w.-]+:)?url\b[^>]*>([\s\S]*?)(?=<\/(?:[\w.-]+:)?url>|<(?:[\w.-]+:)?url\b|$)/gi)]
+    .map((match) => match[1] || '');
+}
+
 function resolveFeedLink(link: string, baseUrl?: string): string {
   if (!link) return '';
   if (link.startsWith('//')) return `https:${link}`;
@@ -788,8 +798,7 @@ function shouldKeepSitemapLink(link: string, baseUrl?: string): boolean {
 }
 
 export function parseSitemapWithStats(xml: string, limit = 12, baseUrl?: string): ParsedFeedBatch {
-  const rows = [...xml.matchAll(/<(?:[\w.-]+:)?url\b[^>]*>([\s\S]*?)<\/(?:[\w.-]+:)?url>/gi)]
-    .map((match) => match[1])
+  const rows = extractSitemapUrlBodies(xml)
     .map((body, index) => {
       const link = resolveFeedLink(parseTagByLocalName(body, 'loc'), baseUrl);
       const title =

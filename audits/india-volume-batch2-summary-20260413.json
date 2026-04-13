@@ -1,0 +1,43 @@
+{
+  "generatedAt": "2026-04-13T15:36:25Z",
+  "country": "India",
+  "method": "derived-from-pre-add-audits",
+  "rawUnique24h": 1007,
+  "cleanUnique24h": 665,
+  "acceptedSources": [
+    {
+      "source": "Business Standard",
+      "sitemap": "https://www.business-standard.com/sitemap/news-sitemap.xml",
+      "rawUnique24h": 350,
+      "cleanUnique24h": 321
+    },
+    {
+      "source": "News18",
+      "sitemap": "https://www.news18.com/commonfeeds/v1/eng/sitemap/google-news.xml",
+      "rawUnique24h": 434,
+      "cleanUnique24h": 217
+    },
+    {
+      "source": "Firstpost",
+      "sitemap": "https://www.firstpost.com/commonfeeds/v1/mfp/sitemap/google-news.xml",
+      "rawUnique24h": 154,
+      "cleanUnique24h": 94
+    },
+    {
+      "source": "DNA India (India)",
+      "sitemap": "https://www.dnaindia.com/googlenews.xml",
+      "rawUnique24h": 69,
+      "cleanUnique24h": 33
+    }
+  ],
+  "retainedButNotAdded": [
+    {
+      "source": "YourStory",
+      "reason": "RSS remains active, but sitemap automation still stalled behind Cloudflare challenge"
+    },
+    {
+      "source": "NDTV (Latest)",
+      "reason": "Monthly child sitemap parsed but contributed only 1 unique article in 24h"
+    }
+  ]
+}

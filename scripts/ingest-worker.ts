@@ -167,7 +167,7 @@ const ENABLE_BROWSER_SITEMAP_FALLBACK = parseBoolEnv(process.env.INGEST_BROWSER_
 const BROWSER_SITEMAP_FALLBACK_DOMAINS = new Set(
   (
     process.env.INGEST_BROWSER_SITEMAP_DOMAINS ||
-    'www.ouest-france.fr,www.sudouest.fr,www.challenges.fr,www.standaard.be,www.nieuwsblad.be,www.gva.be,www.hbvl.be,www.rtl.be,rtl.be,www.blick.ch,blick.ch,www.pna.gov.ph,pna.gov.ph,businessmirror.com.ph,www.malaya.com.ph,malaya.com.ph,manilastandard.net,www.manilastandard.net,news.abs-cbn.com,www.startribune.com,www.miamiherald.com,www.kansascity.com,www.sacbee.com,www.charlotteobserver.com,www.newsobserver.com,www.star-telegram.com,www.fresnobee.com,www.idahostatesman.com,www.kentucky.com,www.thestate.com,www.thenewstribune.com,www.expressnews.com,www.timesunion.com,www.ctinsider.com,www.sfchronicle.com,www.sfgate.com,www.ctpost.com,www.nhregister.com,www.houstonchronicle.com,www.jpnn.com,jabar.jpnn.com,jatim.jpnn.com,www.tribunnews.com,www.jawapos.com,kumparan.com,mediaindonesia.com,www.pikiran-rakyat.com,www.crimeworld.com,crimeworld.com,www.thesun.ie,thesun.ie,www.thesun.co.uk,thesun.co.uk,www.telegraph.co.uk,telegraph.co.uk,www.tvsarawak.my,tvsarawak.my,www.batamnews.co.id,www.sme.sk,spectator.sme.sk,korzar.sme.sk,kosice.korzar.sme.sk,presov.korzar.sme.sk,mytrencin.sme.sk,myorava.sme.sk,mybystrica.sme.sk,nitra.sme.sk,zilina.sme.sk,myzvolen.sme.sk,myliptov.sme.sk,mytopolcany.sme.sk,mynovohrad.sme.sk,myturiec.sme.sk,mynitra.sme.sk,mytrnava.sme.sk,mykysuce.sme.sk,myzilina.sme.sk,www.liepajniekiem.lv,liepajniekiem.lv,guardian.ng,www.guardian.ng,nairametrics.com,www.nairametrics.com,premiumtimesng.com,www.premiumtimesng.com'
+    'www.ouest-france.fr,www.sudouest.fr,www.challenges.fr,www.firstpost.com,firstpost.com,www.dnaindia.com,dnaindia.com,yourstory.com,www.yourstory.com,www.business-standard.com,business-standard.com,www.news18.com,news18.com,www.ndtv.com,ndtv.com,www.standaard.be,www.nieuwsblad.be,www.gva.be,www.hbvl.be,www.rtl.be,rtl.be,www.blick.ch,blick.ch,www.pna.gov.ph,pna.gov.ph,businessmirror.com.ph,www.malaya.com.ph,malaya.com.ph,manilastandard.net,www.manilastandard.net,news.abs-cbn.com,www.startribune.com,www.miamiherald.com,www.kansascity.com,www.sacbee.com,www.charlotteobserver.com,www.newsobserver.com,www.star-telegram.com,www.fresnobee.com,www.idahostatesman.com,www.kentucky.com,www.thestate.com,www.thenewstribune.com,www.expressnews.com,www.timesunion.com,www.ctinsider.com,www.sfchronicle.com,www.sfgate.com,www.ctpost.com,www.nhregister.com,www.houstonchronicle.com,www.jpnn.com,jabar.jpnn.com,jatim.jpnn.com,www.tribunnews.com,www.jawapos.com,kumparan.com,mediaindonesia.com,www.pikiran-rakyat.com,www.crimeworld.com,crimeworld.com,www.thesun.ie,thesun.ie,www.thesun.co.uk,thesun.co.uk,www.telegraph.co.uk,telegraph.co.uk,www.tvsarawak.my,tvsarawak.my,www.batamnews.co.id,www.sme.sk,spectator.sme.sk,korzar.sme.sk,kosice.korzar.sme.sk,presov.korzar.sme.sk,mytrencin.sme.sk,myorava.sme.sk,mybystrica.sme.sk,nitra.sme.sk,zilina.sme.sk,myzvolen.sme.sk,myliptov.sme.sk,mytopolcany.sme.sk,mynovohrad.sme.sk,myturiec.sme.sk,mynitra.sme.sk,mytrnava.sme.sk,mykysuce.sme.sk,myzilina.sme.sk,www.liepajniekiem.lv,liepajniekiem.lv,guardian.ng,www.guardian.ng,nairametrics.com,www.nairametrics.com,premiumtimesng.com,www.premiumtimesng.com'
   )
     .split(',')
     .map((value) => value.trim().toLowerCase())
@@ -650,14 +650,31 @@ function selectSitemapIndexEntries(entries: SitemapIndexEntry[], baseUrl: string
     return (withLastmod.length > 0 ? withLastmod : entries).slice(0, kwongWahLimit);
   }
 
+  const isMendozaPost = hostname === 'www.mendozapost.com' || hostname === 'mendozapost.com';
+  if (isMendozaPost) {
+    const mendozaLimit = Math.min(4, SITEMAP_INDEX_CHILDREN_LIMIT);
+    const contentEntries = entries.filter((entry) => /sitemap-content_/i.test(entry.loc));
+    const preferredEntries = contentEntries.length > 0
+      ? contentEntries
+      : entries.filter((entry) => !/sitemap-(?:tag|author|image|images)_/i.test(entry.loc));
+    return (preferredEntries.length > 0 ? preferredEntries : entries).slice(0, mendozaLimit);
+  }
+
   return entries.slice(0, SITEMAP_INDEX_CHILDREN_LIMIT);
+}
+
+function extractSitemapIndexBodies(xml: string): string[] {
+  const strictMatches = [...xml.matchAll(/<sitemap>([\s\S]*?)<\/sitemap>/gi)]
+    .map((match) => match[1] || '');
+  if (strictMatches.length > 0) return strictMatches;
+  return [...xml.matchAll(/<sitemap\b[^>]*>([\s\S]*?)(?=<\/sitemap>|<sitemap\b|$)/gi)]
+    .map((match) => match[1] || '');
 }
 
 function parseSitemapIndex(xml: string, baseUrl: string | null = null): string[] {
   if (!/<sitemapindex[\s>]/i.test(xml)) return [];
-  const entries = [...xml.matchAll(/<sitemap>([\s\S]*?)<\/sitemap>/gi)]
-    .map((match, index) => {
-      const body = match[1] || '';
+  const entries = extractSitemapIndexBodies(xml)
+    .map((body, index) => {
       const loc = resolveSitemapLoc(body.match(/<loc[^>]*>([\s\S]*?)<\/loc>/i)?.[1]?.trim() || '', baseUrl);
       const lastmodRaw = decodeXmlEntities(body.match(/<lastmod[^>]*>([\s\S]*?)<\/lastmod>/i)?.[1]?.trim() || '');
       const lastmodMs = lastmodRaw ? Date.parse(lastmodRaw) : NaN;
@@ -1801,6 +1818,7 @@ const ARTICLE_TITLE_FALLBACK_SOURCES = new Set(
       'ilta-sanomat',
       'is.fi',
       'fnn',
+      'oricon',
       'puls 24',
       'ekstra bladet',
     ].join(',')
