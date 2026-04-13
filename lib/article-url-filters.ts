@@ -127,6 +127,27 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     return true;
   }
 
+  if (hostname.endsWith('01net.com') && normalizedSource.includes('01net')) {
+    if (!pathname.startsWith('/actualites/')) return true;
+  }
+
+  if (hostname.endsWith('journaldugeek.com') && normalizedSource.includes('journal du geek')) {
+    if (!/^\/20\d{2}\//.test(pathname)) return true;
+  }
+
+  if (hostname.endsWith('ouest-france.fr')) {
+    if (pathname.startsWith('/meteo/')) return true;
+  }
+
+  if (hostname.endsWith('sudouest.fr')) {
+    if (pathname.startsWith('/meteo/')) return true;
+    if (pathname.startsWith('/redaction/ephemeride/')) return true;
+  }
+
+  if (hostname.endsWith('challenges.fr') && pathname.startsWith('/partenaires/')) {
+    return true;
+  }
+
   if (hostname.endsWith('localmatters.co.nz')) {
     if (pathname.startsWith('/category/')) return true;
     if (pathname.startsWith('/tag/')) return true;

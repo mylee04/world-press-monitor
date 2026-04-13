@@ -145,6 +145,10 @@ function inferPublishedAtFromLink(link: string): string {
   if (dashPattern) {
     return normalizePublishedAt(`${dashPattern[1]}-${dashPattern[2]}-${dashPattern[3]}T00:00:00Z`);
   }
+  const underscorePattern = url.match(/(20\d{2})_(0[1-9]|1[0-2])_([0-2]\d|3[01])/);
+  if (underscorePattern) {
+    return normalizePublishedAt(`${underscorePattern[1]}-${underscorePattern[2]}-${underscorePattern[3]}T00:00:00Z`);
+  }
   return '';
 }
 
@@ -328,6 +332,187 @@ function parseNuxtDataPayload(html: string): unknown[] {
   }
 }
 
+function parseJsonScriptBlock(html: string, id: string): unknown {
+  const escapedId = escapeRegExp(id);
+  const match = html.match(new RegExp(`<script[^>]+id=["']${escapedId}["'][^>]+type=["']application/json["'][^>]*>([\\s\\S]*?)<\\/script>`, 'i'));
+  if (!match) return null;
+  try {
+    return JSON.parse(clean(match[1] || '').trim());
+  } catch {
+    return null;
+  }
+}
+
+function parseYicaiHtmlCollectionWithStats(html: string, limit = 12, baseUrl?: string): ParsedFeedBatch {
+  let parsedUrl: URL | null = null;
+  try {
+    parsedUrl = baseUrl ? new URL(baseUrl) : null;
+  } catch {
+    parsedUrl = null;
+  }
+  if (!parsedUrl || parsedUrl.hostname !== 'www.yicai.com' || !parsedUrl.pathname.startsWith('/news')) {
+    return { items: [], stats: summarizeStats([]) };
+  }
+
+  const match = html.match(/firstlist\s*=\s*(\[[\s\S]*?\])\s*[,;]\s*(?:newsId|var|window|<\/script>)/i);
+  if (!match) return { items: [], stats: summarizeStats([]) };
+
+  let payload: unknown = null;
+  try {
+    payload = JSON.parse(match[1] || '[]');
+  } catch {
+    return { items: [], stats: summarizeStats([]) };
+  }
+  if (!Array.isArray(payload)) {
+    return { items: [], stats: summarizeStats([]) };
+  }
+
+  const rows = payload
+    .flatMap((entry): ParsedFeedItemWithMissing[] => {
+      if (!entry || typeof entry !== 'object' || Array.isArray(entry)) return [];
+      const record = entry as Record<string, unknown>;
+      const link = resolveFeedLink(extractHtmlCollectionField(record, ['url', 'NewsUrl', 'ShareUrl']), baseUrl);
+      if (!/\/news\/\d+\.html(?:$|[?#])/.test(link)) return [];
+      const title = extractHtmlCollectionField(record, ['NewsTitle', 'title']) || inferTitleFromLink(link) || link;
+      const description = stripHtml(extractHtmlCollectionField(record, ['Summary', 'SummaryPlain', 'NewsSummary', 'brief'])).slice(0, 1600);
+      const publishedAt =
+        normalizePublishedAt(extractHtmlCollectionField(record, ['CreateDate', 'pubDate', 'LastDate', 'EntityPublishDate']))
+        || inferPublishedAtFromLink(link);
+      const category = extractHtmlCollectionField(record, ['ChannelName']);
+      return [{
+        title,
+        description,
+        link,
+        publishedAt,
+        categories: category ? [category] : [],
+        stableId: extractHtmlCollectionField(record, ['NewsID']) || link,
+        missingTitle: !title,
+        missingLink: !link,
+        missingSummary: !description,
+        missingPublishedAt: !publishedAt,
+      }];
+    })
+    .filter((row, index, all) => row.link && all.findIndex((candidate) => candidate.link === row.link) === index)
+    .sort((left, right) => {
+      const leftMs = left.publishedAt ? Date.parse(left.publishedAt) : Number.NEGATIVE_INFINITY;
+      const rightMs = right.publishedAt ? Date.parse(right.publishedAt) : Number.NEGATIVE_INFINITY;
+      return rightMs - leftMs;
+    })
+    .slice(0, limit);
+
+  return {
+    items: toItems(rows),
+    stats: summarizeStats(rows),
+  };
+}
+
+function parseClsHtmlCollectionWithStats(html: string, limit = 12, baseUrl?: string): ParsedFeedBatch {
+  let parsedUrl: URL | null = null;
+  try {
+    parsedUrl = baseUrl ? new URL(baseUrl) : null;
+  } catch {
+    parsedUrl = null;
+  }
+  if (!parsedUrl || parsedUrl.hostname !== 'www.cls.cn' || !parsedUrl.pathname.startsWith('/telegraph')) {
+    return { items: [], stats: summarizeStats([]) };
+  }
+
+  const payload = parseJsonScriptBlock(html, '__NEXT_DATA__');
+  if (!payload || typeof payload !== 'object' || Array.isArray(payload)) {
+    return { items: [], stats: summarizeStats([]) };
+  }
+
+  const telegraphList = ((((payload as Record<string, unknown>).props as Record<string, unknown> | undefined)?.initialState as Record<string, unknown> | undefined)?.telegraph as Record<string, unknown> | undefined)?.telegraphList;
+  if (!Array.isArray(telegraphList)) {
+    return { items: [], stats: summarizeStats([]) };
+  }
+
+  const rows = telegraphList
+    .flatMap((entry): ParsedFeedItemWithMissing[] => {
+      if (!entry || typeof entry !== 'object' || Array.isArray(entry)) return [];
+      const record = entry as Record<string, unknown>;
+      const id = typeof record.id === 'number' || typeof record.id === 'string' ? String(record.id) : '';
+      const link = resolveFeedLink(id ? `/detail/${id}` : extractHtmlCollectionField(record, ['shareurl', 'assocArticleUrl']), baseUrl);
+      const description = stripHtml(extractHtmlCollectionField(record, ['brief', 'content'])).slice(0, 1600);
+      const title = extractHtmlCollectionField(record, ['title']) || description.slice(0, 80) || inferTitleFromLink(link) || link;
+      const ctime = record.ctime;
+      const publishedAt =
+        (typeof ctime === 'number' && Number.isFinite(ctime) ? new Date(ctime * 1000).toISOString() : '')
+        || normalizePublishedAt(extractHtmlCollectionField(record, ['modified_time']))
+        || inferPublishedAtFromLink(link);
+      return [{
+        title,
+        description,
+        link,
+        publishedAt,
+        categories: ['telegraph'],
+        stableId: id ? `cls:${id}` : link,
+        missingTitle: !title,
+        missingLink: !link,
+        missingSummary: !description,
+        missingPublishedAt: !publishedAt,
+      }];
+    })
+    .filter((row, index, all) => row.link && all.findIndex((candidate) => candidate.link === row.link) === index)
+    .sort((left, right) => {
+      const leftMs = left.publishedAt ? Date.parse(left.publishedAt) : Number.NEGATIVE_INFINITY;
+      const rightMs = right.publishedAt ? Date.parse(right.publishedAt) : Number.NEGATIVE_INFINITY;
+      return rightMs - leftMs;
+    })
+    .slice(0, limit);
+
+  return {
+    items: toItems(rows),
+    stats: summarizeStats(rows),
+  };
+}
+
+function parseGuanchaHtmlCollectionWithStats(html: string, limit = 12, baseUrl?: string): ParsedFeedBatch {
+  let parsedUrl: URL | null = null;
+  try {
+    parsedUrl = baseUrl ? new URL(baseUrl) : null;
+  } catch {
+    parsedUrl = null;
+  }
+  if (!parsedUrl || parsedUrl.hostname !== 'www.guancha.cn' || !parsedUrl.pathname.startsWith('/economy')) {
+    return { items: [], stats: summarizeStats([]) };
+  }
+
+  const primaryMatches = [...html.matchAll(/<h4[^>]*>\s*<a[^>]+href=["']((?:https?:\/\/(?:www\.)?guancha\.cn)?\/[a-z-]+\/20\d{2}_\d{2}_\d{2}_[^"']+\.shtml)["'][^>]*>([\s\S]*?)<\/a>/gi)];
+  const secondaryMatches = [...html.matchAll(/<a[^>]+href=["']((?:https?:\/\/(?:www\.)?guancha\.cn)?\/[a-z-]+\/20\d{2}_\d{2}_\d{2}_[^"']+\.shtml)["'][^>]+title=["']([^"']+)["']/gi)];
+
+  const rows = [...primaryMatches, ...secondaryMatches]
+    .map((match) => {
+      const link = resolveFeedLink(match[1] || '', baseUrl);
+      const title = stripHtml(match[2] || '') || inferTitleFromLink(link) || link;
+      const publishedAt = inferPublishedAtFromLink(link);
+      return {
+        title,
+        description: '',
+        link,
+        publishedAt,
+        categories: ['economy'],
+        stableId: link,
+        missingTitle: !title,
+        missingLink: !link,
+        missingSummary: true,
+        missingPublishedAt: !publishedAt,
+      };
+    })
+    .filter((row, index, all) => row.link && all.findIndex((candidate) => candidate.link === row.link) === index)
+    .sort((left, right) => {
+      const leftMs = left.publishedAt ? Date.parse(left.publishedAt) : Number.NEGATIVE_INFINITY;
+      const rightMs = right.publishedAt ? Date.parse(right.publishedAt) : Number.NEGATIVE_INFINITY;
+      return rightMs - leftMs;
+    })
+    .slice(0, limit);
+
+  return {
+    items: toItems(rows),
+    stats: summarizeStats(rows),
+  };
+}
+
 function readNuxtPrimitive(payload: unknown[], ref: unknown): unknown {
   if (typeof ref === 'number' && Number.isInteger(ref) && ref >= 0 && ref < payload.length) {
     const resolved = payload[ref];
@@ -477,6 +662,21 @@ export function parseHtmlCollectionWithStats(html: string, limit = 12, baseUrl?:
   const altingetResult = parseAltingetHtmlCollectionWithStats(html, limit, baseUrl);
   if (altingetResult.items.length > 0 || altingetResult.stats.totalCandidates > 0) {
     return altingetResult;
+  }
+
+  const yicaiResult = parseYicaiHtmlCollectionWithStats(html, limit, baseUrl);
+  if (yicaiResult.items.length > 0 || yicaiResult.stats.totalCandidates > 0) {
+    return yicaiResult;
+  }
+
+  const clsResult = parseClsHtmlCollectionWithStats(html, limit, baseUrl);
+  if (clsResult.items.length > 0 || clsResult.stats.totalCandidates > 0) {
+    return clsResult;
+  }
+
+  const guanchaResult = parseGuanchaHtmlCollectionWithStats(html, limit, baseUrl);
+  if (guanchaResult.items.length > 0 || guanchaResult.stats.totalCandidates > 0) {
+    return guanchaResult;
   }
 
   return parseMhmHtmlCollectionWithStats(html, limit, baseUrl);

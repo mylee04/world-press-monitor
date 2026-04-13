@@ -167,7 +167,7 @@ const ENABLE_BROWSER_SITEMAP_FALLBACK = parseBoolEnv(process.env.INGEST_BROWSER_
 const BROWSER_SITEMAP_FALLBACK_DOMAINS = new Set(
   (
     process.env.INGEST_BROWSER_SITEMAP_DOMAINS ||
-    'www.ouest-france.fr,www.standaard.be,www.nieuwsblad.be,www.gva.be,www.hbvl.be,www.rtl.be,rtl.be,www.blick.ch,blick.ch,www.pna.gov.ph,pna.gov.ph,businessmirror.com.ph,www.malaya.com.ph,malaya.com.ph,manilastandard.net,www.manilastandard.net,news.abs-cbn.com,www.startribune.com,www.miamiherald.com,www.kansascity.com,www.sacbee.com,www.charlotteobserver.com,www.newsobserver.com,www.star-telegram.com,www.fresnobee.com,www.idahostatesman.com,www.kentucky.com,www.thestate.com,www.thenewstribune.com,www.expressnews.com,www.timesunion.com,www.ctinsider.com,www.sfchronicle.com,www.sfgate.com,www.ctpost.com,www.nhregister.com,www.houstonchronicle.com,www.jpnn.com,jabar.jpnn.com,jatim.jpnn.com,www.tribunnews.com,www.jawapos.com,kumparan.com,mediaindonesia.com,www.pikiran-rakyat.com,www.crimeworld.com,crimeworld.com,www.thesun.ie,thesun.ie,www.tvsarawak.my,tvsarawak.my,www.batamnews.co.id,www.sme.sk,spectator.sme.sk,korzar.sme.sk,kosice.korzar.sme.sk,presov.korzar.sme.sk,mytrencin.sme.sk,myorava.sme.sk,mybystrica.sme.sk,nitra.sme.sk,zilina.sme.sk,myzvolen.sme.sk,myliptov.sme.sk,mytopolcany.sme.sk,mynovohrad.sme.sk,myturiec.sme.sk,mynitra.sme.sk,mytrnava.sme.sk,mykysuce.sme.sk,myzilina.sme.sk,www.liepajniekiem.lv,liepajniekiem.lv,guardian.ng,www.guardian.ng,nairametrics.com,www.nairametrics.com,premiumtimesng.com,www.premiumtimesng.com'
+    'www.ouest-france.fr,www.sudouest.fr,www.challenges.fr,www.standaard.be,www.nieuwsblad.be,www.gva.be,www.hbvl.be,www.rtl.be,rtl.be,www.blick.ch,blick.ch,www.pna.gov.ph,pna.gov.ph,businessmirror.com.ph,www.malaya.com.ph,malaya.com.ph,manilastandard.net,www.manilastandard.net,news.abs-cbn.com,www.startribune.com,www.miamiherald.com,www.kansascity.com,www.sacbee.com,www.charlotteobserver.com,www.newsobserver.com,www.star-telegram.com,www.fresnobee.com,www.idahostatesman.com,www.kentucky.com,www.thestate.com,www.thenewstribune.com,www.expressnews.com,www.timesunion.com,www.ctinsider.com,www.sfchronicle.com,www.sfgate.com,www.ctpost.com,www.nhregister.com,www.houstonchronicle.com,www.jpnn.com,jabar.jpnn.com,jatim.jpnn.com,www.tribunnews.com,www.jawapos.com,kumparan.com,mediaindonesia.com,www.pikiran-rakyat.com,www.crimeworld.com,crimeworld.com,www.thesun.ie,thesun.ie,www.thesun.co.uk,thesun.co.uk,www.telegraph.co.uk,telegraph.co.uk,www.tvsarawak.my,tvsarawak.my,www.batamnews.co.id,www.sme.sk,spectator.sme.sk,korzar.sme.sk,kosice.korzar.sme.sk,presov.korzar.sme.sk,mytrencin.sme.sk,myorava.sme.sk,mybystrica.sme.sk,nitra.sme.sk,zilina.sme.sk,myzvolen.sme.sk,myliptov.sme.sk,mytopolcany.sme.sk,mynovohrad.sme.sk,myturiec.sme.sk,mynitra.sme.sk,mytrnava.sme.sk,mykysuce.sme.sk,myzilina.sme.sk,www.liepajniekiem.lv,liepajniekiem.lv,guardian.ng,www.guardian.ng,nairametrics.com,www.nairametrics.com,premiumtimesng.com,www.premiumtimesng.com'
   )
     .split(',')
     .map((value) => value.trim().toLowerCase())
@@ -1786,6 +1786,7 @@ const ARTICLE_TITLE_FALLBACK_SOURCES = new Set(
       'eurointegration',
       'vol.at',
       'independent.ie',
+      'cls',
       'aamulehti',
       'helsingin sanomat',
       'ilta-sanomat',
@@ -1928,12 +1929,16 @@ function shouldAttemptHtmlCollectionFeed(source: string, url: string): boolean {
   try {
     const parsed = new URL(url);
     const hostname = parsed.hostname.toLowerCase();
+    const pathname = parsed.pathname.toLowerCase();
     if (
       hostname === 'nyheder.tv2.dk'
       || hostname === 'www.altinget.dk'
       || hostname === 'herningfolkeblad.dk'
       || hostname === 'midtjyllandsavis.dk'
       || hostname === 'skivefolkeblad.dk'
+      || (hostname === 'www.yicai.com' && pathname.startsWith('/news'))
+      || (hostname === 'www.cls.cn' && pathname.startsWith('/telegraph'))
+      || (hostname === 'www.guancha.cn' && pathname.startsWith('/economy'))
     ) return true;
   } catch {
     // Ignore malformed URLs and fall through to source-name matching.
@@ -1949,6 +1954,9 @@ function shouldAttemptHtmlCollectionFeed(source: string, url: string): boolean {
     || normalizedSource.includes('herning folkeblad - html collection')
     || normalizedSource.includes('midtjyllands avis - html collection')
     || normalizedSource.includes('skive folkeblad - html collection')
+    || normalizedSource.includes('yicai - news html collection')
+    || normalizedSource.includes('cls - telegraph html collection')
+    || normalizedSource.includes('guancha - economy html collection')
   );
 }
 
@@ -2167,6 +2175,7 @@ function shouldAttemptBrowserSitemapFallback(url: string, response: Response | n
 
   if (!response) return true;
   if (response.status === 403 || response.status === 503) return true;
+  if (!body.trim()) return true;
   return isLikelyHtmlResponse(response, body);
 }
 
@@ -2462,8 +2471,22 @@ async function fetchWithRetryFeed(url: string, referrerUrl?: string): Promise<Re
 
       const nextUrl = await resolveRedirectUrl(currentUrl, location);
       await validateFeedUrl(nextUrl);
+      if (nextUrl === currentUrl && shouldAttemptBrowserSitemapFallback(currentUrl, response, '')) {
+        try {
+          return await fetchSitemapWithBrowser(currentUrl);
+        } catch {
+          // Fall through to the existing redirect handling if browser loading fails.
+        }
+      }
       redirects += 1;
       if (redirects > FEED_MAX_REDIRECTS) {
+        if (shouldAttemptBrowserSitemapFallback(currentUrl, response, '')) {
+          try {
+            return await fetchSitemapWithBrowser(currentUrl);
+          } catch {
+            // Keep the original redirect loop failure if browser loading also fails.
+          }
+        }
         throw new Error(`blocked_feed_url:too_many_redirects:${redirects}`);
       }
       currentUrl = nextUrl;
