@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Sun, 12 Apr 2026 20:32:54 GMT</dateCreated>
+    <dateCreated>Mon, 13 Apr 2026 03:36:29 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -4052,9 +4052,9 @@
       <outline text="15min - Articles Index [needs verification]" title="15min - Articles Index [needs verification]" type="rss" xmlUrl="https://www.15min.lt/static/sitemaps/articles_index.xml" htmlUrl="https://www.15min.lt"/>
       <outline text="15min - Live Sitemap [needs verification]" title="15min - Live Sitemap [needs verification]" type="rss" xmlUrl="https://www.15min.lt/static/sitemaps/live/articles/sitemap_1.xml" htmlUrl="https://www.15min.lt"/>
       <outline text="Lrytas [valid]" title="Lrytas [valid]" type="rss" xmlUrl="https://www.lrytas.lt/rss" htmlUrl="https://www.lrytas.lt"/>
-      <outline text="Diena [needs verification]" title="Diena [needs verification]" type="rss" xmlUrl="https://diena.lt/sitemap.xml" htmlUrl="https://diena.lt"/>
+      <outline text="Diena [valid]" title="Diena [valid]" type="rss" xmlUrl="https://diena.lt/rss" htmlUrl="https://diena.lt"/>
       <outline text="TV3 Lithuania - Sitemap Index [needs verification]" title="TV3 Lithuania - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.tv3.lt/sitemap.xml" htmlUrl="https://www.tv3.lt"/>
-      <outline text="Kauno Diena - Sitemap Index [needs verification]" title="Kauno Diena - Sitemap Index [needs verification]" type="rss" xmlUrl="https://kauno.diena.lt/sitemap.xml" htmlUrl="https://kauno.diena.lt"/>
+      <outline text="Kauno Diena [valid]" title="Kauno Diena [valid]" type="rss" xmlUrl="https://kauno.diena.lt/rss" htmlUrl="https://kauno.diena.lt"/>
       <outline text="TV3 Lithuania - Week 2026-12 Sitemap [needs verification]" title="TV3 Lithuania - Week 2026-12 Sitemap [needs verification]" type="rss" xmlUrl="https://www.tv3.lt/sitemap_tv3.lt_2026_12.xml" htmlUrl="https://www.tv3.lt"/>
       <outline text="Bernardinai [valid]" title="Bernardinai [valid]" type="rss" xmlUrl="https://www.bernardinai.lt/feed/rss" htmlUrl="https://www.bernardinai.lt"/>
       <outline text="VE.lt - News Sitemap [valid]" title="VE.lt - News Sitemap [valid]" type="rss" xmlUrl="https://ve.lt/rss" htmlUrl="https://ve.lt"/>
@@ -4065,6 +4065,12 @@
       <outline text="Suvalkietis [valid]" title="Suvalkietis [valid]" type="rss" xmlUrl="https://www.suvalkietis.lt/feed/" htmlUrl="https://www.suvalkietis.lt"/>
       <outline text="Alkas [valid]" title="Alkas [valid]" type="rss" xmlUrl="https://alkas.lt/feed/" htmlUrl="https://alkas.lt"/>
       <outline text="AeroTime [valid]" title="AeroTime [valid]" type="rss" xmlUrl="https://aerotime.aero/feed" htmlUrl="https://aerotime.aero"/>
+      <outline text="Klaipeda Diena [valid]" title="Klaipeda Diena [valid]" type="rss" xmlUrl="https://klaipeda.diena.lt/rss" htmlUrl="https://klaipeda.diena.lt"/>
+      <outline text="Atvira Klaipeda [valid]" title="Atvira Klaipeda [valid]" type="rss" xmlUrl="https://www.atviraklaipeda.lt/feed" htmlUrl="https://www.atviraklaipeda.lt"/>
+      <outline text="Regionu naujienos [needs verification]" title="Regionu naujienos [needs verification]" type="rss" xmlUrl="https://www.regionunaujienos.lt/post-sitemap.xml" htmlUrl="https://www.regionunaujienos.lt"/>
+      <outline text="Verslo zinios - Verslo aplinka [valid]" title="Verslo zinios - Verslo aplinka [valid]" type="rss" xmlUrl="https://www.vz.lt/rss?channel=verslo-aplinka" htmlUrl="https://www.vz.lt"/>
+      <outline text="Verslo zinios - Rinkos [valid]" title="Verslo zinios - Rinkos [valid]" type="rss" xmlUrl="https://www.vz.lt/rss?channel=rinkos" htmlUrl="https://www.vz.lt"/>
+      <outline text="Verslo zinios - Technologijos [valid]" title="Verslo zinios - Technologijos [valid]" type="rss" xmlUrl="https://www.vz.lt/rss?channel=technologijos" htmlUrl="https://www.vz.lt"/>
     </outline>
     <outline text="Latvia (LV)" title="Latvia (LV)">
       <outline text="TVNET [valid]" title="TVNET [valid]" type="rss" xmlUrl="https://www.tvnet.lv/rss" htmlUrl="https://www.tvnet.lv"/>
@@ -4240,7 +4246,7 @@
     <outline text="Nigeria (NG)" title="Nigeria (NG)">
       <outline text="Punch Nigeria [valid]" title="Punch Nigeria [valid]" type="rss" xmlUrl="https://rss.punchng.com/v1/category/latest_news" htmlUrl="https://rss.punchng.com"/>
       <outline text="Vanguard Nigeria [valid]" title="Vanguard Nigeria [valid]" type="rss" xmlUrl="https://www.vanguardngr.com/feed/" htmlUrl="https://www.vanguardngr.com"/>
-      <outline text="Premium Times Nigeria [needs verification]" title="Premium Times Nigeria [needs verification]" type="rss" xmlUrl="https://www.premiumtimesng.com/news-sitemap.xml" htmlUrl="https://www.premiumtimesng.com"/>
+      <outline text="Premium Times Nigeria [needs verification]" title="Premium Times Nigeria [needs verification]" type="rss" xmlUrl="https://www.premiumtimesng.com/feed/" htmlUrl="https://www.premiumtimesng.com"/>
       <outline text="Daily Trust [valid]" title="Daily Trust [valid]" type="rss" xmlUrl="https://dailytrust.com/feed/" htmlUrl="https://dailytrust.com"/>
       <outline text="Channels TV [valid]" title="Channels TV [valid]" type="rss" xmlUrl="https://www.channelstv.com/feed/" htmlUrl="https://www.channelstv.com"/>
       <outline text="BusinessDay Nigeria [valid]" title="BusinessDay Nigeria [valid]" type="rss" xmlUrl="https://businessday.ng/feed/" htmlUrl="https://businessday.ng"/>
@@ -4253,9 +4259,18 @@
       <outline text="Daily Post Nigeria [valid]" title="Daily Post Nigeria [valid]" type="rss" xmlUrl="https://dailypost.ng/feed/" htmlUrl="https://dailypost.ng"/>
       <outline text="PM News Nigeria [valid]" title="PM News Nigeria [valid]" type="rss" xmlUrl="https://pmnewsnigeria.com/feed/" htmlUrl="https://pmnewsnigeria.com"/>
       <outline text="Independent Nigeria [invalid]" title="Independent Nigeria [invalid]" type="rss" xmlUrl="https://independent.ng/feed/" htmlUrl="https://independent.ng"/>
+      <outline text="Guardian Nigeria - News Sitemap [needs verification]" title="Guardian Nigeria - News Sitemap [needs verification]" type="rss" xmlUrl="https://guardian.ng/news-sitemap.xml" htmlUrl="https://guardian.ng"/>
       <outline text="TheCable - Sitemap Index [needs verification]" title="TheCable - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.thecable.ng/sitemap_index.xml" htmlUrl="https://www.thecable.ng"/>
       <outline text="Sahara Reporters [valid]" title="Sahara Reporters [valid]" type="rss" xmlUrl="https://saharareporters.com/articles/rss-feed" htmlUrl="https://saharareporters.com"/>
+      <outline text="Tribune Online [valid]" title="Tribune Online [valid]" type="rss" xmlUrl="https://tribuneonlineng.com/feed/" htmlUrl="https://tribuneonlineng.com"/>
+      <outline text="The Sun Nigeria [valid]" title="The Sun Nigeria [valid]" type="rss" xmlUrl="https://thesun.ng/feed/" htmlUrl="https://thesun.ng"/>
+      <outline text="TheWill [valid]" title="TheWill [valid]" type="rss" xmlUrl="https://thewillnews.com/feed/" htmlUrl="https://thewillnews.com"/>
+      <outline text="Business A.M. [valid]" title="Business A.M. [valid]" type="rss" xmlUrl="https://businessamlive.com/feed/" htmlUrl="https://businessamlive.com"/>
+      <outline text="Daily Nigerian [valid]" title="Daily Nigerian [valid]" type="rss" xmlUrl="https://dailynigerian.com/feed/" htmlUrl="https://dailynigerian.com"/>
+      <outline text="The Eagle Online [valid]" title="The Eagle Online [valid]" type="rss" xmlUrl="https://theeagleonline.com.ng/feed/" htmlUrl="https://theeagleonline.com.ng"/>
+      <outline text="Voice of Nigeria [valid]" title="Voice of Nigeria [valid]" type="rss" xmlUrl="https://von.gov.ng/feed/" htmlUrl="https://von.gov.ng"/>
       <outline text="TechCabal [valid]" title="TechCabal [valid]" type="rss" xmlUrl="https://techcabal.com/feed/" htmlUrl="https://techcabal.com"/>
+      <outline text="Nairametrics - News Sitemap [needs verification]" title="Nairametrics - News Sitemap [needs verification]" type="rss" xmlUrl="https://nairametrics.com/news-sitemap.xml" htmlUrl="https://nairametrics.com"/>
     </outline>
     <outline text="Singapore (SG)" title="Singapore (SG)">
       <outline text="Straits Times World [valid]" title="Straits Times World [valid]" type="rss" xmlUrl="https://www.straitstimes.com/news/world/rss.xml" htmlUrl="https://www.straitstimes.com"/>
