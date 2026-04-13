@@ -1,0 +1,42 @@
+[
+  {
+    "source": "Otago Daily Times",
+    "sitemap": "https://www.odt.co.nz/sitemap.xml"
+  },
+  {
+    "source": "Farmers Weekly",
+    "sitemap": "https://www.farmersweekly.co.nz/sitemap.xml"
+  },
+  {
+    "source": "Local Matters",
+    "sitemap": "https://www.localmatters.co.nz/sitemap_index.xml"
+  },
+  {
+    "source": "Chris Lynch Media",
+    "sitemap": "https://www.chrislynchmedia.com/sitemap_index.xml"
+  },
+  {
+    "source": "Waatea News",
+    "sitemap": "https://waateanews.com/wp-sitemap.xml"
+  },
+  {
+    "source": "Waikato Business News",
+    "sitemap": "https://wbn.co.nz/sitemap_index.xml"
+  },
+  {
+    "source": "Hospitality Business",
+    "sitemap": "https://www.hospitalitybusiness.co.nz/sitemap_index.xml"
+  },
+  {
+    "source": "SecurityBrief NZ",
+    "sitemap": "https://securitybrief.co.nz/sitemap-news.xml"
+  },
+  {
+    "source": "ChannelLife NZ",
+    "sitemap": "https://channellife.co.nz/sitemap-news.xml"
+  },
+  {
+    "source": "IT Brief NZ",
+    "sitemap": "https://itbrief.co.nz/sitemap-news.xml"
+  }
+]

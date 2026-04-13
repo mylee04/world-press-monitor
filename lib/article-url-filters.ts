@@ -127,6 +127,41 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     return true;
   }
 
+  if (hostname.endsWith('localmatters.co.nz')) {
+    if (pathname.startsWith('/category/')) return true;
+    if (pathname.startsWith('/tag/')) return true;
+  }
+
+  if (hostname.endsWith('chrislynchmedia.com')) {
+    if (trimmedPathname === '/news-more') return true;
+    if (pathname.startsWith('/category/')) return true;
+    if (pathname.startsWith('/tag/')) return true;
+  }
+
+  if (hostname.endsWith('farmersweekly.co.nz')) {
+    if (pathname.startsWith('/tag/')) return true;
+    if (pathname.startsWith('/author/')) return true;
+    if (
+      trimmedPathname === '/property'
+      || trimmedPathname === '/opinion'
+      || trimmedPathname === '/markets'
+      || trimmedPathname === '/people'
+      || trimmedPathname === '/politics'
+      || trimmedPathname === '/technology'
+      || trimmedPathname === '/news/dairy'
+      || trimmedPathname === '/lifestyle/rural-lifestyle-leisure'
+    ) return true;
+  }
+
+  if (
+    hostname.endsWith('securitybrief.co.nz')
+    || hostname.endsWith('itbrief.co.nz')
+    || hostname.endsWith('channellife.co.nz')
+    || hostname.endsWith('techday.co.nz')
+  ) {
+    if (!pathname.startsWith('/story/')) return true;
+  }
+
   if ((hostname === 'ing.dk' || hostname.endsWith('.ing.dk')) && normalizedSource.includes('sitemap index')) {
     if (trimmedPathname === '/nyheder' || trimmedPathname === '/debat' || trimmedPathname === '/redaktion' || trimmedPathname === '/blogs' || trimmedPathname === '/podcast' || trimmedPathname === '/emner' || trimmedPathname === '/vidensbank' || trimmedPathname === '/app' || trimmedPathname === '/rss-feeds-fra-ingenioeren') return true;
     if (pathname.startsWith('/emne/')) return true;

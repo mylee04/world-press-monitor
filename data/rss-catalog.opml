@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Mon, 13 Apr 2026 03:36:29 GMT</dateCreated>
+    <dateCreated>Mon, 13 Apr 2026 03:40:26 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -4269,6 +4269,10 @@
       <outline text="Daily Nigerian [valid]" title="Daily Nigerian [valid]" type="rss" xmlUrl="https://dailynigerian.com/feed/" htmlUrl="https://dailynigerian.com"/>
       <outline text="The Eagle Online [valid]" title="The Eagle Online [valid]" type="rss" xmlUrl="https://theeagleonline.com.ng/feed/" htmlUrl="https://theeagleonline.com.ng"/>
       <outline text="Voice of Nigeria [valid]" title="Voice of Nigeria [valid]" type="rss" xmlUrl="https://von.gov.ng/feed/" htmlUrl="https://von.gov.ng"/>
+      <outline text="News Agency of Nigeria [valid]" title="News Agency of Nigeria [valid]" type="rss" xmlUrl="https://nannews.ng/feed/" htmlUrl="https://nannews.ng"/>
+      <outline text="TVC News [valid]" title="TVC News [valid]" type="rss" xmlUrl="https://www.tvcnews.tv/feed/" htmlUrl="https://www.tvcnews.tv"/>
+      <outline text="This Nigeria [valid]" title="This Nigeria [valid]" type="rss" xmlUrl="https://thisnigeria.com/feed/" htmlUrl="https://thisnigeria.com"/>
+      <outline text="News Diary Online [valid]" title="News Diary Online [valid]" type="rss" xmlUrl="https://newsdiaryonline.com/feed/" htmlUrl="https://newsdiaryonline.com"/>
       <outline text="TechCabal [valid]" title="TechCabal [valid]" type="rss" xmlUrl="https://techcabal.com/feed/" htmlUrl="https://techcabal.com"/>
       <outline text="Nairametrics - News Sitemap [needs verification]" title="Nairametrics - News Sitemap [needs verification]" type="rss" xmlUrl="https://nairametrics.com/news-sitemap.xml" htmlUrl="https://nairametrics.com"/>
     </outline>

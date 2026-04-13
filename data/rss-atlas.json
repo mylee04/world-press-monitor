@@ -30877,6 +30877,34 @@
           "valid": "valid"
         },
         {
+          "name": "News Agency of Nigeria",
+          "url": "https://nannews.ng/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TVC News",
+          "url": "https://www.tvcnews.tv/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "This Nigeria",
+          "url": "https://thisnigeria.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "News Diary Online",
+          "url": "https://newsdiaryonline.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/12/2026",
+          "valid": "valid"
+        },
+        {
           "name": "TechCabal",
           "url": "https://techcabal.com/feed/",
           "sitemapUrl": "https://techcabal.com/sitemap-posttype-post.2026.xml"

@@ -123,7 +123,7 @@ const ENABLE_BROWSER_SITEMAP_FALLBACK =
 const BROWSER_SITEMAP_FALLBACK_DOMAINS = new Set(
   (
     process.env.INGEST_BROWSER_SITEMAP_DOMAINS ||
-    'www.ouest-france.fr,www.standaard.be,www.nieuwsblad.be,www.gva.be,www.hbvl.be,www.rtl.be,rtl.be,www.blick.ch,blick.ch,www.pna.gov.ph,pna.gov.ph,businessmirror.com.ph,www.malaya.com.ph,malaya.com.ph,manilastandard.net,www.manilastandard.net,news.abs-cbn.com,www.startribune.com,www.miamiherald.com,www.kansascity.com,www.sacbee.com,www.charlotteobserver.com,www.newsobserver.com,www.star-telegram.com,www.fresnobee.com,www.idahostatesman.com,www.kentucky.com,www.thestate.com,www.thenewstribune.com,www.expressnews.com,www.timesunion.com,www.ctinsider.com,www.sfchronicle.com,www.sfgate.com,www.ctpost.com,www.nhregister.com,www.houstonchronicle.com,www.jpnn.com,jabar.jpnn.com,jatim.jpnn.com,www.tribunnews.com,www.jawapos.com,kumparan.com,mediaindonesia.com,www.pikiran-rakyat.com,www.crimeworld.com,crimeworld.com,www.thesun.ie,thesun.ie,www.tvsarawak.my,tvsarawak.my,www.liepajniekiem.lv,liepajniekiem.lv'
+    'www.ouest-france.fr,www.standaard.be,www.nieuwsblad.be,www.gva.be,www.hbvl.be,www.rtl.be,rtl.be,www.blick.ch,blick.ch,www.pna.gov.ph,pna.gov.ph,businessmirror.com.ph,www.malaya.com.ph,malaya.com.ph,manilastandard.net,www.manilastandard.net,news.abs-cbn.com,www.startribune.com,www.miamiherald.com,www.kansascity.com,www.sacbee.com,www.charlotteobserver.com,www.newsobserver.com,www.star-telegram.com,www.fresnobee.com,www.idahostatesman.com,www.kentucky.com,www.thestate.com,www.thenewstribune.com,www.expressnews.com,www.timesunion.com,www.ctinsider.com,www.sfchronicle.com,www.sfgate.com,www.ctpost.com,www.nhregister.com,www.houstonchronicle.com,www.jpnn.com,jabar.jpnn.com,jatim.jpnn.com,www.tribunnews.com,www.jawapos.com,kumparan.com,mediaindonesia.com,www.pikiran-rakyat.com,www.crimeworld.com,crimeworld.com,www.thesun.ie,thesun.ie,www.tvsarawak.my,tvsarawak.my,www.liepajniekiem.lv,liepajniekiem.lv,guardian.ng,www.guardian.ng,nairametrics.com,www.nairametrics.com,premiumtimesng.com,www.premiumtimesng.com'
   )
     .split(',')
     .map((value) => value.trim().toLowerCase())
@@ -569,6 +569,13 @@ type SitemapIndexEntry = {
   index: number;
 };
 
+function cleanSitemapIndexValue(value: string): string {
+  return value
+    .replace(/<!\[CDATA\[(.*?)\]\]>/gs, '$1')
+    .replace(/&amp;/gi, '&')
+    .trim();
+}
+
 function selectSitemapIndexEntries(entries: SitemapIndexEntry[], baseUrl: string): SitemapIndexEntry[] {
   if (entries.length === 0) return [];
 
@@ -594,7 +601,7 @@ function parseSitemapIndex(xml: string, baseUrl: string): string[] {
   const entries = [...xml.matchAll(/<sitemap>([\s\S]*?)<\/sitemap>/gi)]
     .map((match, index) => {
       const body = match[1] || '';
-      const locRaw = body.match(/<loc[^>]*>([\s\S]*?)<\/loc>/i)?.[1]?.trim() || '';
+      const locRaw = cleanSitemapIndexValue(body.match(/<loc[^>]*>([\s\S]*?)<\/loc>/i)?.[1] || '');
       let loc = '';
       if (locRaw) {
         try {
@@ -603,7 +610,7 @@ function parseSitemapIndex(xml: string, baseUrl: string): string[] {
           loc = locRaw;
         }
       }
-      const lastmodRaw = body.match(/<lastmod[^>]*>([\s\S]*?)<\/lastmod>/i)?.[1]?.trim() || '';
+      const lastmodRaw = cleanSitemapIndexValue(body.match(/<lastmod[^>]*>([\s\S]*?)<\/lastmod>/i)?.[1] || '');
       const lastmodMs = lastmodRaw ? Date.parse(lastmodRaw) : NaN;
       return {
         loc,
