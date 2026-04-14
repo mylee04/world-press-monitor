@@ -764,6 +764,72 @@ function parseSoyChileHtmlCollectionWithStats(html: string, limit = 12, baseUrl?
   };
 }
 
+function parseAboUnderrattelserHtmlCollectionWithStats(html: string, limit = 12, baseUrl?: string): ParsedFeedBatch {
+  let parsedUrl: URL | null = null;
+  try {
+    parsedUrl = baseUrl ? new URL(baseUrl) : null;
+  } catch {
+    parsedUrl = null;
+  }
+  const hostname = parsedUrl?.hostname.toLowerCase() || '';
+  if (hostname !== 'www.abounderrattelser.fi' && hostname !== 'abounderrattelser.fi') {
+    return { items: [], stats: summarizeStats([]) };
+  }
+
+  const deduped = new Map<string, ParsedFeedItemWithMissing>();
+  const itemPattern =
+    /<li class="ew-article-list__item">[\s\S]*?<a[^>]+href="([^"]+)"[^>]*class="category"[^>]*>([\s\S]*?)<\/a>\s*<a[^>]+href="([^"]+)"[^>]*>([\s\S]*?)<div class="pubdate">([\s\S]*?)<\/div>\s*<\/a>/gi;
+  const datePattern = /(\d{1,2})\.(\d{1,2})\.(\d{4}),\s*(\d{1,2}):(\d{2})/;
+
+  for (const match of html.matchAll(itemPattern)) {
+    const link = resolveFeedLink(match[3] || '', baseUrl);
+    if (!link) continue;
+
+    const rawCategory = stripHtml(match[2] || '').replace(/\s+/g, ' ').trim();
+    const title = stripHtml(match[4] || '').replace(/\s+/g, ' ').trim() || inferTitleFromLink(link) || link;
+    const rawPublishedAt = stripHtml(match[5] || '').replace(/\s+/g, ' ').trim();
+    const dateMatch = rawPublishedAt.match(datePattern);
+    const month = Number.parseInt(dateMatch?.[2] || '0', 10);
+    const publishedAt = dateMatch
+      ? buildFixedOffsetIso(
+          Number.parseInt(dateMatch?.[3] || '0', 10),
+          month,
+          Number.parseInt(dateMatch?.[1] || '0', 10),
+          Number.parseInt(dateMatch?.[4] || '0', 10),
+          Number.parseInt(dateMatch?.[5] || '0', 10),
+          month >= 4 && month <= 10 ? '+03:00' : '+02:00'
+        )
+      : inferPublishedAtFromLink(link);
+    const categories = rawCategory ? [normalizeHtmlText(rawCategory)] : [];
+
+    deduped.set(link, {
+      title,
+      description: '',
+      link,
+      publishedAt,
+      categories,
+      stableId: link,
+      missingTitle: !title,
+      missingLink: !link,
+      missingSummary: true,
+      missingPublishedAt: !publishedAt,
+    });
+  }
+
+  const rows = [...deduped.values()]
+    .sort((left, right) => {
+      const leftMs = left.publishedAt ? Date.parse(left.publishedAt) : Number.NEGATIVE_INFINITY;
+      const rightMs = right.publishedAt ? Date.parse(right.publishedAt) : Number.NEGATIVE_INFINITY;
+      return rightMs - leftMs;
+    })
+    .slice(0, limit);
+
+  return {
+    items: toItems(rows),
+    stats: summarizeStats(rows),
+  };
+}
+
 export function parseHtmlCollectionWithStats(html: string, limit = 12, baseUrl?: string): ParsedFeedBatch {
   const rawEntries: Array<Record<string, unknown>> = [];
   for (const block of parseJsonLdBlocks(html)) {
@@ -836,6 +902,11 @@ export function parseHtmlCollectionWithStats(html: string, limit = 12, baseUrl?:
   const soyChileResult = parseSoyChileHtmlCollectionWithStats(html, limit, baseUrl);
   if (soyChileResult.items.length > 0 || soyChileResult.stats.totalCandidates > 0) {
     return soyChileResult;
+  }
+
+  const aboUnderrattelserResult = parseAboUnderrattelserHtmlCollectionWithStats(html, limit, baseUrl);
+  if (aboUnderrattelserResult.items.length > 0 || aboUnderrattelserResult.stats.totalCandidates > 0) {
+    return aboUnderrattelserResult;
   }
 
   return parseMhmHtmlCollectionWithStats(html, limit, baseUrl);

@@ -1,0 +1,70 @@
+[
+  {
+    "source": "Abo Underrattelser - HTML Collection",
+    "rss": "https://www.abounderrattelser.fi/"
+  },
+  {
+    "source": "Vastra Nyland - Hango",
+    "rss": "https://www.vastranyland.fi/feeds/section/hango/feed.xml"
+  },
+  {
+    "source": "Vastra Nyland - Raseborg",
+    "rss": "https://www.vastranyland.fi/feeds/section/raseborg/feed.xml"
+  },
+  {
+    "source": "Vastra Nyland - Inga",
+    "rss": "https://www.vastranyland.fi/feeds/section/inga/feed.xml"
+  },
+  {
+    "source": "Vastra Nyland - Sjundea",
+    "rss": "https://www.vastranyland.fi/feeds/section/sjundea/feed.xml"
+  },
+  {
+    "source": "Vastra Nyland - Kyrkslatt",
+    "rss": "https://www.vastranyland.fi/feeds/section/kyrkslatt/feed.xml"
+  },
+  {
+    "source": "Borgaabladet - Borga",
+    "rss": "https://www.bbl.fi/feeds/section/borga/feed.xml"
+  },
+  {
+    "source": "Borgaabladet - Sibbo",
+    "rss": "https://www.bbl.fi/feeds/section/sibbo/feed.xml"
+  },
+  {
+    "source": "Osterbottens Tidning - Jakobstad",
+    "rss": "https://www.osterbottenstidning.fi/feeds/section/jakobstad/feed.xml"
+  },
+  {
+    "source": "Osterbottens Tidning - Karleby",
+    "rss": "https://www.osterbottenstidning.fi/feeds/section/karleby/feed.xml"
+  },
+  {
+    "source": "Osterbottens Tidning - Kronoby",
+    "rss": "https://www.osterbottenstidning.fi/feeds/section/kronoby/feed.xml"
+  },
+  {
+    "source": "Vasabladet - Vasa",
+    "rss": "https://www.vasabladet.fi/feeds/section/vasa/feed.xml"
+  },
+  {
+    "source": "Vasabladet - Korsholm",
+    "rss": "https://www.vasabladet.fi/feeds/section/korsholm/feed.xml"
+  },
+  {
+    "source": "Vasabladet - Narpes",
+    "rss": "https://www.vasabladet.fi/feeds/section/narpes/feed.xml"
+  },
+  {
+    "source": "Vasabladet - Malax",
+    "rss": "https://www.vasabladet.fi/feeds/section/malax/feed.xml"
+  },
+  {
+    "source": "Vasabladet - Vora",
+    "rss": "https://www.vasabladet.fi/feeds/section/vora/feed.xml"
+  },
+  {
+    "source": "Vasabladet - Kasko",
+    "rss": "https://www.vasabladet.fi/feeds/section/kasko/feed.xml"
+  }
+]

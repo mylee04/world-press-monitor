@@ -28105,23 +28105,86 @@
           "url": "https://www.hbl.fi/feeds/feed.xml"
         },
         {
-          "name": "Nya Aland",
-          "url": "https://www.nyan.ax/feed/"
+          "name": "Abo Underrattelser - HTML Collection",
+          "url": "https://www.abounderrattelser.fi/",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
         },
         {
-          "name": "Alandstidningen",
-          "url": "https://www.alandstidningen.ax/rss/allt",
-          "status": "NEW",
-          "checkedDate": "04/10/2026",
-          "valid": "valid"
+          "name": "Nya Aland",
+          "url": "https://www.nyan.ax/feed/"
         },
         {
           "name": "Vasabladet",
           "url": "https://www.vasabladet.fi/feed/"
         },
         {
+          "name": "Vasabladet - Vasa",
+          "url": "https://www.vasabladet.fi/feeds/section/vasa/feed.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Vasabladet - Korsholm",
+          "url": "https://www.vasabladet.fi/feeds/section/korsholm/feed.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Vasabladet - Narpes",
+          "url": "https://www.vasabladet.fi/feeds/section/narpes/feed.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Vasabladet - Malax",
+          "url": "https://www.vasabladet.fi/feeds/section/malax/feed.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Vasabladet - Vora",
+          "url": "https://www.vasabladet.fi/feeds/section/vora/feed.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Vasabladet - Kasko",
+          "url": "https://www.vasabladet.fi/feeds/section/kasko/feed.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Osterbottens Tidning",
           "url": "https://www.ot.fi/feed/"
+        },
+        {
+          "name": "Osterbottens Tidning - Jakobstad",
+          "url": "https://www.osterbottenstidning.fi/feeds/section/jakobstad/feed.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Osterbottens Tidning - Karleby",
+          "url": "https://www.osterbottenstidning.fi/feeds/section/karleby/feed.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Osterbottens Tidning - Kronoby",
+          "url": "https://www.osterbottenstidning.fi/feeds/section/kronoby/feed.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
         },
         {
           "name": "Ostnyland",
@@ -28305,10 +28368,59 @@
           "valid": "valid"
         },
         {
+          "name": "Vastra Nyland - Hango",
+          "url": "https://www.vastranyland.fi/feeds/section/hango/feed.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Vastra Nyland - Raseborg",
+          "url": "https://www.vastranyland.fi/feeds/section/raseborg/feed.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Vastra Nyland - Inga",
+          "url": "https://www.vastranyland.fi/feeds/section/inga/feed.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Vastra Nyland - Sjundea",
+          "url": "https://www.vastranyland.fi/feeds/section/sjundea/feed.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Vastra Nyland - Kyrkslatt",
+          "url": "https://www.vastranyland.fi/feeds/section/kyrkslatt/feed.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Borgaabladet",
           "url": "https://www.bbl.fi/feed/",
           "status": "NEW",
           "checkedDate": "04/10/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Borgaabladet - Borga",
+          "url": "https://www.bbl.fi/feeds/section/borga/feed.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Borgaabladet - Sibbo",
+          "url": "https://www.bbl.fi/feeds/section/sibbo/feed.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
           "valid": "valid"
         },
         {
