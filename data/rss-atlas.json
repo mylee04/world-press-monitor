@@ -35279,16 +35279,250 @@
       "feeds": [
         {
           "name": "Primicias",
-          "url": "https://www.primicias.ec/feed/",
-          "sitemapUrl": "https://www.primicias.ec/sitemap-google-news.xml"
+          "sitemapUrl": "https://www.primicias.ec/sitemap-google-news.xml",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Primicias - Sitemap Index",
+          "sitemapUrl": "https://www.primicias.ec/sitemap-index.xml",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
         },
         {
           "name": "El Universo",
-          "url": "https://www.eluniverso.com/arc/outboundfeeds/rss/category/noticias/?outputType=xml"
+          "url": "https://www.eluniverso.com/arc/outboundfeeds/rss/?outputType=xml",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
         },
         {
           "name": "El Comercio Ecuador",
-          "url": "https://www.elcomercio.com/feed/"
+          "url": "https://www.elcomercio.com/feed/",
+          "sitemapUrl": "https://www.elcomercio.com/sitemap.xml",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Expreso",
+          "url": "https://www.expreso.ec/rss/home.xml",
+          "sitemapUrl": "https://www.expreso.ec/sitemap-index.xml",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Expreso - Ecuador",
+          "url": "https://www.expreso.ec/rss/ecuador.xml",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Expreso - Guayaquil",
+          "url": "https://www.expreso.ec/rss/guayaquil.xml",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Expreso - Quito",
+          "url": "https://www.expreso.ec/rss/quito.xml",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Extra",
+          "url": "https://www.extra.ec/rss/home.xml",
+          "sitemapUrl": "https://www.extra.ec/sitemap-index.xml",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Teleamazonas",
+          "sitemapUrl": "https://www.teleamazonas.com/sitemap-google-news.xml",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Teleamazonas - Sitemap Index",
+          "sitemapUrl": "https://www.teleamazonas.com/sitemap-index.xml",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Metro Ecuador",
+          "url": "https://www.metroecuador.com.ec/arc/outboundfeeds/google-news-feed/?outputType=xml",
+          "sitemapUrl": "https://www.metroecuador.com.ec/arc/outboundfeeds/sitemap-index/?outputType=xml",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "El Diario",
+          "url": "https://www.eldiario.ec/rss/global.xml",
+          "sitemapUrl": "https://www.eldiario.ec/sitemap/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "El Diario - Sitemap Index",
+          "sitemapUrl": "https://www.eldiario.ec/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "El Diario - Manabi",
+          "url": "https://www.eldiario.ec/rss/manabi.xml",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "El Diario - Portoviejo",
+          "url": "https://www.eldiario.ec/rss/portoviejo.xml",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Vistazo",
+          "url": "https://www.vistazo.com/rss/portada",
+          "sitemapUrl": "https://www.vistazo.com/sitemapforgoogle.xml",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "El Mercurio",
+          "url": "https://elmercurio.com.ec/feed/",
+          "sitemapUrl": "https://elmercurio.com.ec/sitemap_index.xml",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "El Mercurio - Cuenca",
+          "url": "https://elmercurio.com.ec/category/cuenca/feed/",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "El Mercurio - Deportivo Cuenca",
+          "url": "https://elmercurio.com.ec/category/deportes/deportivo-cuenca/feed/",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "El Mercurio - Azogues",
+          "url": "https://elmercurio.com.ec/category/azogues/feed/",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "El Mercurio - Canar",
+          "url": "https://elmercurio.com.ec/category/canar/feed/",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "El Mercurio - Region",
+          "url": "https://elmercurio.com.ec/category/region/feed/",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Cronica Loja",
+          "url": "https://cronica.com.ec/feed/",
+          "sitemapUrl": "https://cronica.com.ec/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Cronica Loja - Loja",
+          "url": "https://cronica.com.ec/category/loja/feed/",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Cronica Loja - Noticias",
+          "url": "https://cronica.com.ec/category/noticias/feed/",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Informate Manabi",
+          "url": "https://informatemanabi.com/feed/",
+          "sitemapUrl": "https://informatemanabi.com/sitemap_index.xml",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Informate Manabi - Notas del Dia",
+          "url": "https://informatemanabi.com/category/notas-del-dia/feed/",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Oromar TV",
+          "sitemapUrl": "https://oromartv.com/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Machala 24/7",
+          "url": "https://machala247.com/index.php/feed/",
+          "sitemapUrl": "https://machala247.com/wp-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Machala 24/7 - El Oro",
+          "url": "https://machala247.com/index.php/category/el-oro/feed/",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "El Heraldo Ambato",
+          "url": "https://www.elheraldo.com.ec/feed/",
+          "sitemapUrl": "https://www.elheraldo.com.ec/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "El Diario de Riobamba",
+          "url": "https://eldiarioderiobamba.com/feed/",
+          "sitemapUrl": "https://eldiarioderiobamba.com/wp-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Diario Centro",
+          "url": "https://www.eldiario.ec/centro/rss/global.xml",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
         }
       ]
     },
@@ -35347,8 +35581,7 @@
         },
         {
           "name": "El Espectador",
-          "sitemapUrl": "https://www.elespectador.com/arc/outboundfeeds/news-sitemap/?outputType=xml",
-          "enabled": false
+          "sitemapUrl": "https://www.elespectador.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
         },
         {
           "name": "Semana",

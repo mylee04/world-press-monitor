@@ -1,0 +1,12 @@
+[
+  {"source":"El Mercurio - Azogues","rss":"https://elmercurio.com.ec/category/azogues/feed/"},
+  {"source":"El Mercurio - Canar","rss":"https://elmercurio.com.ec/category/canar/feed/"},
+  {"source":"El Mercurio - Region","rss":"https://elmercurio.com.ec/category/region/feed/"},
+  {"source":"Oromar TV - Sitemap","sitemap":"https://oromartv.com/sitemap.xml"},
+  {"source":"Telerama - Sitemap","sitemap":"https://www.telerama.ec/sitemap.xml"},
+  {"source":"La Tarde Cuenca - Feed","rss":"https://www.latarde.com.ec/feed/"},
+  {"source":"La Tarde Cuenca - News Sitemap","sitemap":"https://www.latarde.com.ec/sitemap-news.xml"},
+  {"source":"El Caracter Canar - Feed","rss":"https://elcaracter.canar.gob.ec/feed/"},
+  {"source":"El Caracter Canar - Sitemap Index","sitemap":"https://elcaracter.canar.gob.ec/sitemap_index.xml"},
+  {"source":"El Diario - Manta","rss":"https://www.eldiario.ec/rss/manta.xml"}
+]

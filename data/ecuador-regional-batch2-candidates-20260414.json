@@ -1,0 +1,20 @@
+[
+  {"source":"El Mercurio - Feed","rss":"https://elmercurio.com.ec/feed/"},
+  {"source":"El Mercurio - Sitemap Index","sitemap":"https://elmercurio.com.ec/sitemap_index.xml"},
+  {"source":"El Mercurio - Cuenca","rss":"https://elmercurio.com.ec/category/cuenca/feed/"},
+  {"source":"El Mercurio - Region","rss":"https://elmercurio.com.ec/category/region/feed/"},
+  {"source":"El Mercurio - Deportivo Cuenca","rss":"https://elmercurio.com.ec/category/deportes/deportivo-cuenca/feed/"},
+  {"source":"Cronica Loja - Feed","rss":"https://cronica.com.ec/feed/"},
+  {"source":"Cronica Loja - News Sitemap","sitemap":"https://cronica.com.ec/news-sitemap.xml"},
+  {"source":"Cronica Loja - Loja","rss":"https://cronica.com.ec/category/loja/feed/"},
+  {"source":"Cronica Loja - Noticias","rss":"https://cronica.com.ec/category/noticias/feed/"},
+  {"source":"Informate Manabi - Feed","rss":"https://informatemanabi.com/feed/"},
+  {"source":"Informate Manabi - Sitemap Index","sitemap":"https://informatemanabi.com/sitemap_index.xml"},
+  {"source":"Informate Manabi - Notas del Dia","rss":"https://informatemanabi.com/category/notas-del-dia/feed/"},
+  {"source":"Informate Manabi - Comunidad","rss":"https://informatemanabi.com/category/comunidad/feed/"},
+  {"source":"Informate Manabi - Politica","rss":"https://informatemanabi.com/category/politica/feed/"},
+  {"source":"El Diario - Global RSS","rss":"https://www.eldiario.ec/rss/global.xml"},
+  {"source":"El Diario - Manabi","rss":"https://www.eldiario.ec/rss/manabi.xml"},
+  {"source":"El Diario - Portoviejo","rss":"https://www.eldiario.ec/rss/portoviejo.xml"},
+  {"source":"El Diario - Manta","rss":"https://www.eldiario.ec/rss/manta.xml"}
+]

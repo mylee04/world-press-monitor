@@ -1,0 +1,19 @@
+[
+  {"source":"Primicias - Sitemap Index","sitemap":"https://www.primicias.ec/sitemap-index.xml"},
+  {"source":"El Universo - Main RSS","rss":"https://www.eluniverso.com/arc/outboundfeeds/rss/?outputType=xml"},
+  {"source":"El Comercio Ecuador - Sitemap Index","sitemap":"https://www.elcomercio.com/sitemap.xml"},
+  {"source":"Expreso - Sitemap Index","sitemap":"https://www.expreso.ec/sitemap-index.xml"},
+  {"source":"Expreso - Home RSS","rss":"https://www.expreso.ec/rss/home.xml"},
+  {"source":"Expreso - Ecuador","rss":"https://www.expreso.ec/rss/ecuador.xml"},
+  {"source":"Expreso - Guayaquil","rss":"https://www.expreso.ec/rss/guayaquil.xml"},
+  {"source":"Expreso - Quito","rss":"https://www.expreso.ec/rss/quito.xml"},
+  {"source":"Extra - Sitemap Index","sitemap":"https://www.extra.ec/sitemap-index.xml"},
+  {"source":"Extra - Home RSS","rss":"https://www.extra.ec/rss/home.xml"},
+  {"source":"Vistazo - RSS Portada","rss":"https://www.vistazo.com/rss/portada"},
+  {"source":"Vistazo - Mega Sitemap","sitemap":"https://www.vistazo.com/megasitemap.xml"},
+  {"source":"Metro Ecuador - Sitemap Index","sitemap":"https://www.metroecuador.com.ec/arc/outboundfeeds/sitemap-index/?outputType=xml"},
+  {"source":"Metro Ecuador - Google News","rss":"https://www.metroecuador.com.ec/arc/outboundfeeds/google-news-feed/?outputType=xml"},
+  {"source":"Teleamazonas - Sitemap Index","sitemap":"https://www.teleamazonas.com/sitemap-index.xml"},
+  {"source":"El Diario - Sitemap Index","sitemap":"https://www.eldiario.ec/sitemap.xml"},
+  {"source":"El Diario - News Sitemap","sitemap":"https://www.eldiario.ec/sitemap/news-sitemap.xml"}
+]

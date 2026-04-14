@@ -1,0 +1,18 @@
+[
+  {"source":"Machala 24/7 - Feed","rss":"https://machala247.com/index.php/feed/"},
+  {"source":"Machala 24/7 - Sitemap","sitemap":"https://machala247.com/wp-sitemap.xml"},
+  {"source":"Machala 24/7 - El Oro","rss":"https://machala247.com/index.php/category/el-oro/feed/"},
+  {"source":"El Heraldo Ambato - Feed","rss":"https://www.elheraldo.com.ec/feed/"},
+  {"source":"El Heraldo Ambato - Sitemap","sitemap":"https://www.elheraldo.com.ec/sitemap.xml"},
+  {"source":"El Heraldo Ambato - Ciudad","rss":"https://www.elheraldo.com.ec/category/ciudad/feed/"},
+  {"source":"El Heraldo Ambato - Ultima Hora","rss":"https://www.elheraldo.com.ec/category/ultima-hora/feed/"},
+  {"source":"La Prensa Riobamba - Feed","rss":"https://laprensa.com.ec/feed/"},
+  {"source":"La Prensa Riobamba - Sitemap","sitemap":"https://laprensa.com.ec/sitemap_index.xml"},
+  {"source":"El Diario de Riobamba - Feed","rss":"https://eldiarioderiobamba.com/feed/"},
+  {"source":"El Diario de Riobamba - Sitemap","sitemap":"https://eldiarioderiobamba.com/wp-sitemap.xml"},
+  {"source":"El Diario de Riobamba - Ciudad","rss":"https://eldiarioderiobamba.com/category/ciudad/feed/"},
+  {"source":"El Diario de Riobamba - Actualidad","rss":"https://eldiarioderiobamba.com/category/actualidad/feed/"},
+  {"source":"Diario Centro - Global RSS","rss":"https://www.eldiario.ec/centro/rss/global.xml"},
+  {"source":"Diario Centro - Santo Domingo","rss":"https://www.eldiario.ec/centro/rss/santo-domingo-2.xml"},
+  {"source":"Diario Centro - Manta","rss":"https://www.eldiario.ec/centro/rss/manta.xml"}
+]
