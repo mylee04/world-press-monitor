@@ -595,32 +595,32 @@ export function BenchmarkView() {
                 const rank = index + 1;
                 return (
                   <tr key={`${period}-${row.country}`}>
-                    <td>
+                    <td data-label="Rank">
                       <span className={`benchmark-rank-badge ${rank <= 3 ? 'is-podium' : ''}`}>#{rank}</span>
                     </td>
-                    <td>
+                    <td data-label="Market">
                       <div className="benchmark-market-cell">
                         <strong>{row.country}</strong>
                         <span>{row.countryCode || 'n/a'}</span>
                       </div>
                     </td>
-                    <td>
+                    <td data-label="Observed Output">
                       <strong>{metrics.output.toLocaleString()}</strong>
                       <div className="muted">fresh {metrics.fresh.toLocaleString()} · late {metrics.late.toLocaleString()}</div>
                     </td>
-                    <td>
+                    <td data-label="Timeliness">
                       <strong>{lateShare}</strong>
                       <div className="muted">fresh rate {freshRate}</div>
                     </td>
-                    <td>
+                    <td data-label="Coverage">
                       <span className={`benchmark-badge is-${coverageBadge.tone}`}>{coverageBadge.label}</span>
                       <div className="muted">{metrics.active.toLocaleString()} {metrics.activeDescriptor}</div>
                     </td>
-                    <td>
+                    <td data-label="Concentration">
                       <span className={`benchmark-badge is-${concentrationBadge.tone}`}>{concentrationBadge.label}</span>
                       <div className="muted">Top 5 {formatPercentFromBps(metrics.top5)} · Top 1 {formatPercentFromBps(metrics.top1)}</div>
                     </td>
-                    <td>
+                    <td data-label="Confidence">
                       <span className={`benchmark-badge is-${confidenceBadge.tone}`}>{confidenceBadge.label}</span>
                       <div className="muted">observed benchmark read</div>
                     </td>

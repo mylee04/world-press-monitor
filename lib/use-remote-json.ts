@@ -11,6 +11,7 @@ export type JsonState<T> = {
 
 export const REMOTE_JSON_AUTO_REFRESH_MS = 60 * 60 * 1000;
 export const REMOTE_JSON_STALE_CACHE_MS = 30 * 60 * 1000;
+export const REMOTE_JSON_REQUEST_TIMEOUT_MS = 25 * 1000;
 
 export type RemoteJsonCacheMode = 'none' | 'memory' | 'session';
 
@@ -90,6 +91,13 @@ function writeCachedRemoteJson<T>(url: string, value: CachedRemoteJsonValue<T>, 
   }
 }
 
+function getRemoteJsonErrorMessage(error: unknown, timeoutMs: number): string {
+  if (error instanceof Error && error.name === 'AbortError') {
+    return `Request timed out after ${Math.round(timeoutMs / 1000)} seconds.`;
+  }
+  return error instanceof Error ? error.message : 'Failed to load resource.';
+}
+
 export function useRemoteJson<T>(
   url: string | null,
   refreshMs = REMOTE_JSON_AUTO_REFRESH_MS,
@@ -138,7 +146,13 @@ export function useRemoteJson<T>(
       }
 
       try {
-        const response = await fetch(url, { cache: requestCache, credentials: 'same-origin' });
+        const controller = new AbortController();
+        const timeout = window.setTimeout(() => controller.abort(), REMOTE_JSON_REQUEST_TIMEOUT_MS);
+        const response = await fetch(url, {
+          cache: requestCache,
+          credentials: 'same-origin',
+          signal: controller.signal,
+        }).finally(() => window.clearTimeout(timeout));
         if (!response.ok) {
           const payload = (await response.json().catch(() => null)) as { message?: string } | null;
           throw new Error(payload?.message || `${response.status} ${response.statusText}`);
@@ -159,7 +173,7 @@ export function useRemoteJson<T>(
           setState((current) => ({
             data: current.data,
             loading: false,
-            error: error instanceof Error ? error.message : 'Failed to load resource.',
+            error: getRemoteJsonErrorMessage(error, REMOTE_JSON_REQUEST_TIMEOUT_MS),
             updatedAt: current.updatedAt,
           }));
         }

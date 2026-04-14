@@ -73,7 +73,7 @@ export function MapBenchmarkSheet({
                 <tbody>
                   {rows.map((row) => (
                     <tr key={row.country} className={row.selected ? 'is-selected' : ''}>
-                      <td>
+                      <td data-label="Country">
                         <button
                           type="button"
                           className="map-benchmark-country"
@@ -84,23 +84,23 @@ export function MapBenchmarkSheet({
                           <span>{row.countryCode || 'n/a'}</span>
                         </button>
                       </td>
-                      <td>
+                      <td data-label="24h">
                         <strong>{formatNumber(row.hourlyPublished24h)}</strong>
                         <span>fresh {formatNumber(row.hourlyFresh24h)}</span>
                       </td>
-                      <td>
+                      <td data-label="Late">
                         <strong>{formatLateShare(row.hourlyLate24h, row.hourlyInserted24h)}</strong>
                         <span>{formatNumber(row.hourlyLate24h)} late</span>
                       </td>
-                      <td>
+                      <td data-label="Active">
                         <strong>{formatNumber(row.hourlyActiveSources24h)}</strong>
                         <span>1h {formatNumber(row.hourlyActiveSources1h)}</span>
                       </td>
-                      <td>
+                      <td data-label="Top 5">
                         <strong>{formatPercentFromBps(row.hourlyTop5SourceShareBps)}</strong>
                         <span>top 1 {formatPercentFromBps(row.hourlyTopSourceShareBps)}</span>
                       </td>
-                      <td>
+                      <td data-label="Prev Day">
                         <strong>{formatNumber(row.dailyPublishedCount)}</strong>
                         <span>{formatNumber(row.dailyActiveSourcesCount)} active</span>
                       </td>

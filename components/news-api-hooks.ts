@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { CountryBenchmarkResponse } from '@/lib/benchmark-types';
 import { useCustomerAccess } from '@/components/customer-access-provider';
-import { useRemoteJson } from '@/lib/use-remote-json';
+import { REMOTE_JSON_REQUEST_TIMEOUT_MS, useRemoteJson } from '@/lib/use-remote-json';
 import type {
   NewsApiDashboardSummaryResponse,
   NewsApiFiltersResponse,
@@ -57,9 +57,13 @@ function useRemoteJsonResource<T>(url: string | null): JsonState<T> {
       error: null,
     }));
 
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), REMOTE_JSON_REQUEST_TIMEOUT_MS);
+
     fetch(url, {
       cache: 'no-store',
       credentials: 'same-origin',
+      signal: controller.signal,
       headers: {
         Accept: 'application/json',
       },
@@ -81,13 +85,23 @@ function useRemoteJsonResource<T>(url: string | null): JsonState<T> {
           setState({
             data: null,
             loading: false,
-            error: error instanceof Error ? error.message : 'Failed to load API resource',
+            error:
+              error instanceof Error && error.name === 'AbortError'
+                ? `Request timed out after ${Math.round(REMOTE_JSON_REQUEST_TIMEOUT_MS / 1000)} seconds.`
+                : error instanceof Error
+                  ? error.message
+                  : 'Failed to load API resource',
           });
         }
+      })
+      .finally(() => {
+        window.clearTimeout(timeout);
       });
 
     return () => {
       cancelled = true;
+      controller.abort();
+      window.clearTimeout(timeout);
     };
   }, [url]);
 
