@@ -771,6 +771,27 @@ function selectSitemapIndexEntries(entries: SitemapIndexEntry[], baseUrl: string
     }
   }
 
+  const isRollingSportsSitemap = hostname === 'www.laola1.at'
+    || hostname === 'laola1.at'
+    || hostname === 'www.90minuten.at'
+    || hostname === '90minuten.at';
+  if (isRollingSportsSitemap) {
+    const rollingEntries = entries
+      .map((entry) => {
+        const match = entry.loc.match(/\/storage\/sitemap\/\d+\/sitemap_(\d+)\.xml(?:\.gz)?$/i);
+        return {
+          entry,
+          numericId: match ? Number.parseInt(match[1] || '-1', 10) : Number.NaN,
+        };
+      })
+      .filter((candidate) => Number.isFinite(candidate.numericId))
+      .sort((left, right) => right.numericId - left.numericId)
+      .map((candidate) => candidate.entry);
+    if (rollingEntries.length > 0) {
+      return rollingEntries.slice(0, Math.min(2, SITEMAP_INDEX_CHILDREN_LIMIT));
+    }
+  }
+
   const isRussianRegionalPortal = RUSSIAN_REGIONAL_SITEMAP_HOSTS.has(hostname);
   if (isRussianRegionalPortal) {
     const monthlyArticleEntries = entries.filter((entry) => /\/articles_20\d{2}_\d{2}\.xml(?:\.gz)?$/i.test(entry.loc));
@@ -929,6 +950,7 @@ const ONE_DAY_MS = 24 * 60 * 60 * 1000;
 const INGEST_MAX_ARTICLE_AGE_DAYS = Math.max(1, Math.min(3650, Number.parseInt(process.env.INGEST_MAX_ARTICLE_AGE_DAYS || '365', 10) || 365));
 const INGEST_MAX_ARTICLE_AGE_MS = INGEST_MAX_ARTICLE_AGE_DAYS * ONE_DAY_MS;
 const HEUTE_SITEMAP_MAX_ARTICLE_AGE_MS = 3 * ONE_DAY_MS;
+const ROLLING_SPORTS_SITEMAP_MAX_ARTICLE_AGE_MS = 3 * ONE_DAY_MS;
 const MAX_CONSECUTIVE_DEFAULT = 0;
 
 type EndpointRunPolicyState = {
@@ -950,6 +972,12 @@ function maxArticleAgeMsForOutlet(outlet: OutletFeed, method: 'rss' | 'sitemap')
   const normalizedSource = outlet.name.trim().toLowerCase();
   if (method === 'sitemap' && normalizedSource === 'heute - sitemap index') {
     return HEUTE_SITEMAP_MAX_ARTICLE_AGE_MS;
+  }
+  if (method === 'sitemap' && (
+    normalizedSource === 'laola1 - sitemap index'
+    || normalizedSource === '90 minuten - sitemap index'
+  )) {
+    return ROLLING_SPORTS_SITEMAP_MAX_ARTICLE_AGE_MS;
   }
   return INGEST_MAX_ARTICLE_AGE_MS;
 }
