@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Tue, 14 Apr 2026 03:02:24 GMT</dateCreated>
+    <dateCreated>Tue, 14 Apr 2026 03:18:53 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -3148,6 +3148,7 @@
       <outline text="Finanzen.at (Stocks/Finance) [invalid]" title="Finanzen.at (Stocks/Finance) [invalid]" type="rss" xmlUrl="https://www.finanzen.at/rss/news" htmlUrl="https://www.finanzen.at"/>
       <outline text="Börse Express - Google News Sitemap [needs verification]" title="Börse Express - Google News Sitemap [needs verification]" type="rss" xmlUrl="https://www.boerse-express.com/gsitemapnews.xml" htmlUrl="https://www.boerse-express.com"/>
       <outline text="Kronen Zeitung [needs verification]" title="Kronen Zeitung [needs verification]" type="rss" xmlUrl="https://www.krone.at/sitemap-articles.xml" htmlUrl="https://www.krone.at"/>
+      <outline text="Kronen Zeitung - Google News Sitemap [needs verification]" title="Kronen Zeitung - Google News Sitemap [needs verification]" type="rss" xmlUrl="https://www.krone.at/google-news-sitemap.xml" htmlUrl="https://www.krone.at"/>
       <outline text="Heute - Sitemap Index [needs verification]" title="Heute - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.heute.at/sitemap/sitemap.xml" htmlUrl="https://www.heute.at"/>
       <outline text="OE24 [needs verification]" title="OE24 [needs verification]" type="rss" xmlUrl="https://www.oe24.at/sitemap-news.xml" htmlUrl="https://www.oe24.at"/>
       <outline text="OR Nachrichten [needs verification]" title="OR Nachrichten [needs verification]" type="rss" xmlUrl="https://www.nachrichten.at/google-news.sitemap.xml" htmlUrl="https://www.nachrichten.at"/>
@@ -3156,6 +3157,8 @@
       <outline text="Weekend - Chronik Sitemap [needs verification]" title="Weekend - Chronik Sitemap [needs verification]" type="rss" xmlUrl="https://www.weekend.at/channel-chronik-sitemap.xml" htmlUrl="https://www.weekend.at"/>
       <outline text="W24 - News HTML Collection [valid]" title="W24 - News HTML Collection [valid]" type="rss" xmlUrl="https://www.w24.at/News" htmlUrl="https://www.w24.at"/>
       <outline text="Laumat [valid]" title="Laumat [valid]" type="rss" xmlUrl="https://www.laumat.at/xml/laumat_beitraege.xml" htmlUrl="https://www.laumat.at"/>
+      <outline text="LAOLA1 - Sitemap Index [needs verification]" title="LAOLA1 - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.laola1.at/storage/sitemap/1/sitemap_index.xml" htmlUrl="https://www.laola1.at"/>
+      <outline text="90 Minuten - Sitemap Index [needs verification]" title="90 Minuten - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.90minuten.at/storage/sitemap/3/sitemap_index.xml" htmlUrl="https://www.90minuten.at"/>
       <outline text="Salzburger Nachrichten - News Sitemap [needs verification]" title="Salzburger Nachrichten - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.sn.at/news-artikel.sitemap.xml" htmlUrl="https://www.sn.at"/>
       <outline text="Salzburg24 - News Artikel Sitemap [needs verification]" title="Salzburg24 - News Artikel Sitemap [needs verification]" type="rss" xmlUrl="https://www.salzburg24.at/news-artikel.sitemap.xml" htmlUrl="https://www.salzburg24.at"/>
       <outline text="Wiener Zeitung - News Sitemap [needs verification]" title="Wiener Zeitung - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.wienerzeitung.at/sitemap-news.xml" htmlUrl="https://www.wienerzeitung.at"/>

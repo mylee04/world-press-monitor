@@ -24332,6 +24332,13 @@
           "valid": "valid"
         },
         {
+          "name": "Kronen Zeitung - Google News Sitemap",
+          "sitemapUrl": "https://www.krone.at/google-news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Heute",
           "url": "https://www.heute.at/rss/news",
           "enabled": false
@@ -24379,6 +24386,20 @@
         {
           "name": "Laumat",
           "url": "https://www.laumat.at/xml/laumat_beitraege.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "LAOLA1 - Sitemap Index",
+          "sitemapUrl": "https://www.laola1.at/storage/sitemap/1/sitemap_index.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "90 Minuten - Sitemap Index",
+          "sitemapUrl": "https://www.90minuten.at/storage/sitemap/3/sitemap_index.xml",
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/13/2026",
           "valid": "valid"
