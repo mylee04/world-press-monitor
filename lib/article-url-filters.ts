@@ -148,6 +148,13 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     if (pathname.startsWith('/redaction/ephemeride/')) return true;
   }
 
+  if (hostname.endsWith('heute.at')) {
+    if (pathname.startsWith('/g/')) return true;
+    if (pathname.startsWith('/v/')) return true;
+    if (pathname.startsWith('/wetter')) return true;
+    if (pathname.startsWith('/tag/')) return true;
+  }
+
   if (hostname.endsWith('challenges.fr') && pathname.startsWith('/partenaires/')) {
     return true;
   }
@@ -954,6 +961,14 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
   }
 
   if (hostname.endsWith('zarpanews.gr') && pathname.startsWith('/roi-eidiseon/')) {
+    return true;
+  }
+
+  if (hostname.endsWith('vi.nl') && pathname.startsWith('/video/')) {
+    return true;
+  }
+
+  if (hostname.endsWith('autoblog.nl') && pathname.startsWith('/video/')) {
     return true;
   }
 
