@@ -75,6 +75,25 @@ const GLOBE_CENTER_Y = 554;
 const GLOBE_RADIUS = 422;
 const GLOBE_ROTATION_LON = 78;
 const GLOBE_ROTATION_LAT = 18;
+
+type LargeCountryLabelConfig = {
+  label: string;
+  dx: number;
+  dy: number;
+};
+
+const LARGE_TERRITORY_GLOBE_LABELS: Record<string, LargeCountryLabelConfig> = {
+  Russia: { label: 'Russia', dx: -14, dy: 34 },
+  China: { label: 'China', dx: 0, dy: 22 },
+  India: { label: 'India', dx: 8, dy: 24 },
+  Mongolia: { label: 'Mongolia', dx: 0, dy: -18 },
+  'United States': { label: 'United States', dx: 0, dy: 32 },
+  Canada: { label: 'Canada', dx: 0, dy: -18 },
+  Kazakhstan: { label: 'Kazakhstan', dx: 10, dy: 24 },
+  Australia: { label: 'Australia', dx: 0, dy: 24 },
+  Brazil: { label: 'Brazil', dx: 0, dy: 20 },
+};
+
 type CountrySafeInsets = {
   left: number;
   right: number;
@@ -1013,6 +1032,25 @@ function WorldGlobeSvg({
     );
   }, [visibleCountries, window]);
 
+  const largeInteriorLabels = useMemo(() => {
+    const alreadyLabeled = new Set(labelCandidates.map(({ row }) => row.country));
+    return buildNonOverlappingLabels(
+      visibleCountries
+        .filter(({ row }) => row.country in LARGE_TERRITORY_GLOBE_LABELS && !alreadyLabeled.has(row.country))
+        .map(({ row, point }) => {
+          const config = LARGE_TERRITORY_GLOBE_LABELS[row.country];
+          return {
+            row,
+            label: config.label,
+            x: round(point.x + config.dx, 2),
+            y: round(point.y + config.dy, 2),
+          };
+        })
+        .filter((item) => item.x >= 86 && item.x <= GLOBE_WIDTH - 86 && item.y >= 72 && item.y <= GLOBE_HEIGHT - 72),
+      104
+    );
+  }, [labelCandidates, visibleCountries]);
+
   return (
     <svg viewBox={`0 0 ${GLOBE_WIDTH} ${GLOBE_HEIGHT}`} className="map-svg-stage" role="img" aria-label="Global publishing globe">
       <defs>
@@ -1168,6 +1206,14 @@ function WorldGlobeSvg({
                 {row.country}
               </text>
             </g>
+          ))
+        : null}
+
+      {layers.labels
+        ? largeInteriorLabels.map(({ row, label, x, y }) => (
+            <text key={`${row.country}-interior-label`} x={x} y={y} textAnchor="middle" className="map-country-label-large">
+              {label}
+            </text>
           ))
         : null}
     </svg>

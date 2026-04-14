@@ -7,7 +7,12 @@ import type {
 } from '@/lib/map-types';
 import type { MapMode } from '@/lib/map-view-state';
 import type { MapSidePanelCountrySummaryDisplay } from '@/components/map-side-panel-types';
-import { round } from '@/components/map-side-panel-overview-utils';
+import {
+  formatCoverageValue,
+  getSourceCoverageDisplay,
+  hasCoverageValue,
+  round,
+} from '@/components/map-side-panel-overview-utils';
 
 type OverviewStatsSectionProps = {
   activeWindowDescriptor: string;
@@ -27,33 +32,8 @@ type OverviewStatsSectionProps = {
   totalWindowMetrics: MapCountryMetricsResponse['totals']['windows'][MapMetricWindow] | null;
 };
 
-const SOURCE_COVERAGE_WARNING_THRESHOLD = 0.2;
-
-function hasCoverageValue(value: number | null | undefined): value is number {
-  return typeof value === 'number' && Number.isFinite(value);
-}
-
-function formatCoverageValue(value: number | null | undefined): string {
-  return hasCoverageValue(value) ? formatNumber(value) : '-';
-}
-
 function isLowCoverage(configured: number | null | undefined, checked: number | null | undefined): boolean {
-  if (!hasCoverageValue(configured) || !hasCoverageValue(checked)) return false;
-  return configured > 0 && checked / configured <= SOURCE_COVERAGE_WARNING_THRESHOLD;
-}
-
-function formatSourceCoverageSourceStats(configured: number | null | undefined, checked: number | null | undefined): string {
-  if (!hasCoverageValue(configured) || configured <= 0) return 'Configured unavailable';
-  if (!hasCoverageValue(checked)) return `${formatNumber(configured)} configured · checked unavailable`;
-  return `${formatNumber(checked)} of ${formatNumber(configured)} checked`;
-}
-
-function sourceCoveragePercent(configured: number | null | undefined, checked: number | null | undefined): string {
-  if (!hasCoverageValue(configured) || !hasCoverageValue(checked) || configured <= 0) {
-    return '-';
-  }
-
-  return `${round((checked / configured) * 100, 1)}%`;
+  return getSourceCoverageDisplay(configured, checked).isLowCoverage;
 }
 
 function isSourceCoverageWarning(configured: number | null | undefined, checked: number | null | undefined): boolean {
@@ -89,6 +69,12 @@ export function OverviewStatsSection({
   )
     ? 'is-low-coverage'
     : '';
+  const totalCoverageDisplay = totals
+    ? getSourceCoverageDisplay(totals.configuredSources24h, totals.checkedSources24h)
+    : null;
+  const selectedCountryCoverageDisplay = selectedCountry
+    ? getSourceCoverageDisplay(selectedCountry.configuredSources24h, selectedCountry.checkedSources24h)
+    : null;
 
   if (!selectedCountry && mapMode === 'countries' && totals) {
     return (
@@ -115,13 +101,13 @@ export function OverviewStatsSection({
         </article>
         <article className={`map-stat-card ${totalCoverageClass}`}>
           <span>Checked Coverage (24h)</span>
-          <strong>{sourceCoveragePercent(totals.configuredSources24h, totals.checkedSources24h)}</strong>
+          <strong>{totalCoverageDisplay?.percent || '-'}</strong>
           <span className="map-stat-alert-label">
             {!hasCoverageValue(totals.checkedSources24h)
               ? 'Checked coverage unavailable in this snapshot'
               : isLowCoverage(totals.configuredSources24h, totals.checkedSources24h)
-              ? `Low coverage · ${formatSourceCoverageSourceStats(totals.configuredSources24h, totals.checkedSources24h)}`
-              : formatSourceCoverageSourceStats(totals.configuredSources24h, totals.checkedSources24h)}
+              ? `Low coverage · ${totalCoverageDisplay?.stats || 'Configured unavailable'}`
+              : totalCoverageDisplay?.stats || 'Configured unavailable'}
           </span>
         </article>
         <article className="map-stat-card">
@@ -200,17 +186,14 @@ export function OverviewStatsSection({
         <article className={`map-stat-card ${selectedCountryCoverageClass}`}>
           <span>Checked Coverage (24h)</span>
           <strong>
-            {sourceCoveragePercent(selectedCountry.configuredSources24h, selectedCountry.checkedSources24h)}
+            {selectedCountryCoverageDisplay?.percent || '-'}
           </strong>
           <span className="map-stat-alert-label">
             {!hasCoverageValue(selectedCountry.checkedSources24h)
               ? 'Checked coverage unavailable in this snapshot'
               : isLowCoverage(selectedCountry.configuredSources24h, selectedCountry.checkedSources24h)
-              ? `Low coverage · ${formatSourceCoverageSourceStats(
-                  selectedCountry.configuredSources24h,
-                  selectedCountry.checkedSources24h
-                )}`
-              : formatSourceCoverageSourceStats(selectedCountry.configuredSources24h, selectedCountry.checkedSources24h)}
+              ? `Low coverage · ${selectedCountryCoverageDisplay?.stats || 'Configured unavailable'}`
+              : selectedCountryCoverageDisplay?.stats || 'Configured unavailable'}
           </span>
         </article>
         <article className="map-stat-card">

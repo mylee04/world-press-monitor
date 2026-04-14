@@ -18,7 +18,12 @@ import type {
   MapSidePanelRankedCount,
   MapSidePanelRegionCount,
 } from '@/components/map-side-panel-types';
-import { itemDegradedShare, round } from '@/components/map-side-panel-overview-utils';
+import {
+  formatCoverageValue,
+  getSourceCoverageDisplay,
+  itemDegradedShare,
+  round,
+} from '@/components/map-side-panel-overview-utils';
 
 type OverviewBreakdownSectionProps = {
   activeWindowDescriptor: string;
@@ -42,34 +47,12 @@ type OverviewBreakdownSectionProps = {
   topPublishers: MapPublisherMetricRow[];
 };
 
-const SOURCE_COVERAGE_WARNING_THRESHOLD = 0.2;
-
-function hasCoverageValue(value: number | null | undefined): value is number {
-  return typeof value === 'number' && Number.isFinite(value);
-}
-
-function formatCoverageValue(value: number | null | undefined): string {
-  return hasCoverageValue(value) ? formatNumber(value) : '-';
-}
-
 function isLowCoverage(configured: number | null | undefined, checked: number | null | undefined): boolean {
-  if (!hasCoverageValue(configured) || !hasCoverageValue(checked)) return false;
-  return configured > 0 && checked / configured <= SOURCE_COVERAGE_WARNING_THRESHOLD;
+  return getSourceCoverageDisplay(configured, checked).isLowCoverage;
 }
 
 function isSourceCoverageWarning(configured: number | null | undefined, checked: number | null | undefined): boolean {
   return isLowCoverage(configured, checked);
-}
-
-function formatSourceCoverage(configured: number | null | undefined, checked: number | null | undefined): string {
-  if (!hasCoverageValue(configured) || !hasCoverageValue(checked) || configured <= 0) return '-';
-  return `${round((checked / configured) * 100, 1)}%`;
-}
-
-function formatCoverageStats(configured: number | null | undefined, checked: number | null | undefined): string {
-  if (!hasCoverageValue(configured) || configured <= 0) return 'Configured unavailable';
-  if (!hasCoverageValue(checked)) return `${formatNumber(configured)} configured · checked unavailable`;
-  return `${formatNumber(checked)} of ${formatNumber(configured)} checked`;
 }
 
 export function OverviewBreakdownSection({
@@ -142,8 +125,8 @@ export function OverviewBreakdownSection({
                   {formatNumber(item.activeSources24h)} active
                 </span>
                 <span>
-                  Checked coverage {formatSourceCoverage(item.configuredSources24h, item.checkedSources24h)} ·{' '}
-                  {formatCoverageStats(item.configuredSources24h, item.checkedSources24h)}
+                  Checked coverage {getSourceCoverageDisplay(item.configuredSources24h, item.checkedSources24h).percent} ·{' '}
+                  {getSourceCoverageDisplay(item.configuredSources24h, item.checkedSources24h).stats}
                   {isSourceCoverageWarning(item.configuredSources24h, item.checkedSources24h) ? (
                     <span className="map-list-low-coverage-label">Low coverage</span>
                   ) : null}
