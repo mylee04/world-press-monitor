@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Mon, 13 Apr 2026 21:31:40 GMT</dateCreated>
+    <dateCreated>Tue, 14 Apr 2026 03:02:24 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -1223,7 +1223,6 @@
       <outline text="Vedomosti (Economy Major Daily) [valid]" title="Vedomosti (Economy Major Daily) [valid]" type="rss" xmlUrl="https://www.vedomosti.ru/rss/news" htmlUrl="https://www.vedomosti.ru"/>
       <outline text="Gazeta.ru - News Sitemap [needs verification]" title="Gazeta.ru - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.gazeta.ru/sitemap_news-y.xml" htmlUrl="https://www.gazeta.ru"/>
       <outline text="Gazeta.ru - Articles Sitemap [needs verification]" title="Gazeta.ru - Articles Sitemap [needs verification]" type="rss" xmlUrl="https://www.gazeta.ru/sitemap_articles-y.xml" htmlUrl="https://www.gazeta.ru"/>
-      <outline text="Regnum - News Sitemap [needs verification]" title="Regnum - News Sitemap [needs verification]" type="rss" xmlUrl="https://regnum.ru/sitemap/news.xml" htmlUrl="https://regnum.ru"/>
       <outline text="Izvestia (Traditional Daily) [valid]" title="Izvestia (Traditional Daily) [valid]" type="rss" xmlUrl="https://iz.ru/xml/rss/all.xml" htmlUrl="https://iz.ru"/>
       <outline text="RT Russian (RT Russian Main) [valid]" title="RT Russian (RT Russian Main) [valid]" type="rss" xmlUrl="https://russian.rt.com/rss" htmlUrl="https://russian.rt.com"/>
       <outline text="Rossiyskaya Gazeta (Official Gazette) [valid]" title="Rossiyskaya Gazeta (Official Gazette) [valid]" type="rss" xmlUrl="https://rg.ru/xml/index.xml" htmlUrl="https://rg.ru"/>
@@ -2052,6 +2051,11 @@
       <outline text="FCUpdate [valid]" title="FCUpdate [valid]" type="rss" xmlUrl="https://www.fcupdate.nl/rss" htmlUrl="https://www.fcupdate.nl"/>
       <outline text="Autoblog [valid]" title="Autoblog [valid]" type="rss" xmlUrl="https://www.autoblog.nl/feed/news.xml" htmlUrl="https://www.autoblog.nl"/>
       <outline text="AutoWeek [valid]" title="AutoWeek [valid]" type="rss" xmlUrl="https://www.autoweek.nl/rss/" htmlUrl="https://www.autoweek.nl"/>
+      <outline text="Noordhollands Dagblad [needs verification]" title="Noordhollands Dagblad [needs verification]" type="rss" xmlUrl="https://www.noordhollandsdagblad.nl/sitemap-news.xml" htmlUrl="https://www.noordhollandsdagblad.nl"/>
+      <outline text="Haarlems Dagblad [needs verification]" title="Haarlems Dagblad [needs verification]" type="rss" xmlUrl="https://www.haarlemsdagblad.nl/sitemap-news.xml" htmlUrl="https://www.haarlemsdagblad.nl"/>
+      <outline text="Leidsch Dagblad [needs verification]" title="Leidsch Dagblad [needs verification]" type="rss" xmlUrl="https://www.leidschdagblad.nl/sitemap-news.xml" htmlUrl="https://www.leidschdagblad.nl"/>
+      <outline text="IJmuider Courant [needs verification]" title="IJmuider Courant [needs verification]" type="rss" xmlUrl="https://www.ijmuidercourant.nl/sitemap-news.xml" htmlUrl="https://www.ijmuidercourant.nl"/>
+      <outline text="Gooi en Eemlander [needs verification]" title="Gooi en Eemlander [needs verification]" type="rss" xmlUrl="https://www.gooieneemlander.nl/sitemap-news.xml" htmlUrl="https://www.gooieneemlander.nl"/>
       <outline text="BNNVARA [valid]" title="BNNVARA [valid]" type="rss" xmlUrl="https://www.bnnvara.nl/api/rss/bnnvara" htmlUrl="https://www.bnnvara.nl"/>
       <outline text="Joop [valid]" title="Joop [valid]" type="rss" xmlUrl="https://www.bnnvara.nl/api/rss/joop" htmlUrl="https://www.bnnvara.nl"/>
       <outline text="Zembla [valid]" title="Zembla [valid]" type="rss" xmlUrl="https://www.bnnvara.nl/api/rss/zembla" htmlUrl="https://www.bnnvara.nl"/>
@@ -2514,7 +2518,7 @@
       <outline text="Dagens Nyheter [valid]" title="Dagens Nyheter [valid]" type="rss" xmlUrl="https://www.dn.se/nyheter/rss/" htmlUrl="https://www.dn.se"/>
       <outline text="Dagens Industri [valid]" title="Dagens Industri [valid]" type="rss" xmlUrl="https://www.di.se/rss/" htmlUrl="https://www.di.se"/>
       <outline text="Dagens Samhalle [needs verification]" title="Dagens Samhalle [needs verification]" type="rss" xmlUrl="https://www.dagenssamhalle.se/rss.xml" htmlUrl="https://www.dagenssamhalle.se"/>
-      <outline text="Dagens PS [needs verification]" title="Dagens PS [needs verification]" type="rss" xmlUrl="https://www.dagensps.se/feed/" htmlUrl="https://www.dagensps.se"/>
+      <outline text="Dagens PS [valid]" title="Dagens PS [valid]" type="rss" xmlUrl="https://www.dagensps.se/feed/" htmlUrl="https://www.dagensps.se"/>
       <outline text="SVT Nyheter [valid]" title="SVT Nyheter [valid]" type="rss" xmlUrl="https://www.svt.se/nyheter/rss.xml" htmlUrl="https://www.svt.se"/>
       <outline text="Göteborgs-Posten [valid]" title="Göteborgs-Posten [valid]" type="rss" xmlUrl="https://www.gp.se/rss" htmlUrl="https://www.gp.se"/>
       <outline text="Sveriges Television [valid]" title="Sveriges Television [valid]" type="rss" xmlUrl="https://www.svt.se/nyheter/ekonomi/rss.xml" htmlUrl="https://www.svt.se"/>
@@ -2534,14 +2538,13 @@
       <outline text="GT - Nyheter [valid]" title="GT - Nyheter [valid]" type="rss" xmlUrl="https://feeds.expressen.se/gt/" htmlUrl="https://feeds.expressen.se"/>
       <outline text="Svenska Dagbladet - Frontpage [valid]" title="Svenska Dagbladet - Frontpage [valid]" type="rss" xmlUrl="https://www.svd.se/?service=rss" htmlUrl="https://www.svd.se"/>
       <outline text="Svenska Dagbladet - 48h Sitemap [needs verification]" title="Svenska Dagbladet - 48h Sitemap [needs verification]" type="rss" xmlUrl="https://www.svd.se/sitemaps/files/articles-48hrs.xml" htmlUrl="https://www.svd.se"/>
-      <outline text="TV4 - Article Sitemap 2026-3 [needs verification]" title="TV4 - Article Sitemap 2026-3 [needs verification]" type="rss" xmlUrl="https://www.tv4.se/api/sitemaps/article/2026-3.xml" htmlUrl="https://www.tv4.se"/>
-      <outline text="TV4 - Breaking News Sitemap 2026-3 [needs verification]" title="TV4 - Breaking News Sitemap 2026-3 [needs verification]" type="rss" xmlUrl="https://www.tv4.se/api/sitemaps/breaking-news/2026-3.xml" htmlUrl="https://www.tv4.se"/>
+      <outline text="TV4 - Sitemap Index [needs verification]" title="TV4 - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.tv4.se/sitemap.xml" htmlUrl="https://www.tv4.se"/>
       <outline text="The Local Sweden (EN) [valid]" title="The Local Sweden (EN) [valid]" type="rss" xmlUrl="https://feeds.thelocal.com/rss/se" htmlUrl="https://feeds.thelocal.com"/>
-      <outline text="Arbetet [needs verification]" title="Arbetet [needs verification]" type="rss" xmlUrl="https://arbetet.se/feed/" htmlUrl="https://arbetet.se"/>
+      <outline text="Arbetet [valid]" title="Arbetet [valid]" type="rss" xmlUrl="https://arbetet.se/feed/" htmlUrl="https://arbetet.se"/>
       <outline text="Sveriges Radio - Ekot nyhetssändning (pod) [valid]" title="Sveriges Radio - Ekot nyhetssändning (pod) [valid]" type="rss" xmlUrl="https://api.sr.se/api/rss/pod/3795" htmlUrl="https://api.sr.se"/>
       <outline text="Sveriges Radio - P3 Nyheter på en minut (pod) [valid]" title="Sveriges Radio - P3 Nyheter på en minut (pod) [valid]" type="rss" xmlUrl="https://api.sr.se/api/rss/pod/22376" htmlUrl="https://api.sr.se"/>
       <outline text="Sveriges Radio - Radio Sweden på lätt svenska (program) [valid]" title="Sveriges Radio - Radio Sweden på lätt svenska (program) [valid]" type="rss" xmlUrl="https://api.sr.se/api/rss/program/4916?format=1" htmlUrl="https://api.sr.se"/>
-      <outline text="Radio Sweden - Sweden Today (podcast xml) [invalid]" title="Radio Sweden - Sweden Today (podcast xml) [invalid]" type="rss" xmlUrl="http://sverigesradio.se/Podradio/xml/SRI_en_sweToday.xml" htmlUrl="http://sverigesradio.se"/>
+      <outline text="Radio Sweden - Sweden Today (podcast xml) [valid]" title="Radio Sweden - Sweden Today (podcast xml) [valid]" type="rss" xmlUrl="https://api.sr.se/api/rss/program/2054?format=1" htmlUrl="https://api.sr.se"/>
       <outline text="Proletären [valid]" title="Proletären [valid]" type="rss" xmlUrl="https://proletaren.se/rss.xml" htmlUrl="https://proletaren.se"/>
       <outline text="SVT Lokal - Sydnytt [valid]" title="SVT Lokal - Sydnytt [valid]" type="rss" xmlUrl="http://svt.se/nyheter/regionalt/sydnytt/rss.xml" htmlUrl="http://svt.se"/>
       <outline text="SVT Lokal - Blekingenytt [valid]" title="SVT Lokal - Blekingenytt [valid]" type="rss" xmlUrl="http://svt.se/nyheter/regionalt/blekingenytt/rss.xml" htmlUrl="http://svt.se"/>
@@ -2554,6 +2557,9 @@
       <outline text="Barometern - News Sitemap [needs verification]" title="Barometern - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.barometern.se/sitemap-news.xml" htmlUrl="https://www.barometern.se"/>
       <outline text="BLT - News Sitemap [needs verification]" title="BLT - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.blt.se/sitemap-news.xml" htmlUrl="https://www.blt.se"/>
       <outline text="Ystads Allehanda - News Sitemap [needs verification]" title="Ystads Allehanda - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.ystadsallehanda.se/sitemap-news.xml" htmlUrl="https://www.ystadsallehanda.se"/>
+      <outline text="Ölandsbladet [valid]" title="Ölandsbladet [valid]" type="rss" xmlUrl="https://www.olandsbladet.se/feeds/feed.xml" htmlUrl="https://www.olandsbladet.se"/>
+      <outline text="UT [valid]" title="UT [valid]" type="rss" xmlUrl="https://www.ut.se/feeds/feed.xml" htmlUrl="https://www.ut.se"/>
+      <outline text="Växjöbladet [valid]" title="Växjöbladet [valid]" type="rss" xmlUrl="https://www.vaxjobladet.se/feeds/feed.xml" htmlUrl="https://www.vaxjobladet.se"/>
       <outline text="Norra Skåne - News Sitemap [needs verification]" title="Norra Skåne - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.nsk.se/sitemap-news.xml" htmlUrl="https://www.nsk.se"/>
       <outline text="Nerikes Allehanda - News Sitemap [needs verification]" title="Nerikes Allehanda - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.na.se/sitemap-news.xml" htmlUrl="https://www.na.se"/>
       <outline text="Sundsvalls Tidning [valid]" title="Sundsvalls Tidning [valid]" type="rss" xmlUrl="https://www.st.nu/feeds/feed.xml" htmlUrl="https://www.st.nu"/>
@@ -2573,17 +2579,16 @@
       <outline text="Dagens Industri (Economy #1 Daily) [valid]" title="Dagens Industri (Economy #1 Daily) [valid]" type="rss" xmlUrl="https://www.di.se/rss" htmlUrl="https://www.di.se"/>
       <outline text="Dagens Nyheter Ekonomi (Economy) [valid]" title="Dagens Nyheter Ekonomi (Economy) [valid]" type="rss" xmlUrl="https://www.dn.se/ekonomi/rss/" htmlUrl="https://www.dn.se"/>
       <outline text="Svenska Dagbladet Näringsliv (Business) [valid]" title="Svenska Dagbladet Näringsliv (Business) [valid]" type="rss" xmlUrl="https://www.svd.se/naringsliv/?service=rss" htmlUrl="https://www.svd.se"/>
-      <outline text="Ny Teknik (Tech and Engineering) [needs verification]" title="Ny Teknik (Tech and Engineering) [needs verification]" type="rss" xmlUrl="https://www.nyteknik.se/sitemap.xml" htmlUrl="https://www.nyteknik.se"/>
+      <outline text="Ny Teknik (Tech and Engineering) [needs verification]" title="Ny Teknik (Tech and Engineering) [needs verification]" type="rss" xmlUrl="https://www.nyteknik.se/sitemapindex.xml" htmlUrl="https://www.nyteknik.se"/>
       <outline text="Breakit (Startups and VC) [valid]" title="Breakit (Startups and VC) [valid]" type="rss" xmlUrl="https://www.breakit.se/feed/artiklar" htmlUrl="https://www.breakit.se"/>
       <outline text="Privata Affärer (Personal Finance/Investing) [valid]" title="Privata Affärer (Personal Finance/Investing) [valid]" type="rss" xmlUrl="https://www.privataaffarer.se/rss.xml" htmlUrl="https://www.privataaffarer.se"/>
       <outline text="UNT - News Sitemap [needs verification]" title="UNT - News Sitemap [needs verification]" type="rss" xmlUrl="https://unt.se/sitemap/sitemap-news.xml" htmlUrl="https://unt.se"/>
       <outline text="Corren - News Sitemap [needs verification]" title="Corren - News Sitemap [needs verification]" type="rss" xmlUrl="https://corren.se/sitemap/sitemap-news.xml" htmlUrl="https://corren.se"/>
       <outline text="NT - News Sitemap [needs verification]" title="NT - News Sitemap [needs verification]" type="rss" xmlUrl="https://nt.se/sitemap/sitemap-news.xml" htmlUrl="https://nt.se"/>
-      <outline text="Hallandsposten - News Sitemap [needs verification]" title="Hallandsposten - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.hallandsposten.se/sitemap/news-sitemap.xml" htmlUrl="https://www.hallandsposten.se"/>
-      <outline text="Hallands Nyheter - News Sitemap [needs verification]" title="Hallands Nyheter - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.hn.se/sitemap/news-sitemap.xml" htmlUrl="https://www.hn.se"/>
       <outline text="TTELA - News Sitemap [needs verification]" title="TTELA - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.ttela.se/sitemap/news-sitemap.xml" htmlUrl="https://www.ttela.se"/>
-      <outline text="Bohuslänningen - News Sitemap [needs verification]" title="Bohuslänningen - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.bohuslaningen.se/sitemap/news-sitemap.xml" htmlUrl="https://www.bohuslaningen.se"/>
-      <outline text="Alingsås Tidning - News Sitemap [needs verification]" title="Alingsås Tidning - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.alingsastidning.se/sitemap/news-sitemap.xml" htmlUrl="https://www.alingsastidning.se"/>
+      <outline text="Härryda-Posten - News Sitemap [needs verification]" title="Härryda-Posten - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.harrydaposten.se/sitemap/news-sitemap.xml" htmlUrl="https://www.harrydaposten.se"/>
+      <outline text="Kungsbacka-Posten - News Sitemap [needs verification]" title="Kungsbacka-Posten - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.kungsbackaposten.se/sitemap/news-sitemap.xml" htmlUrl="https://www.kungsbackaposten.se"/>
+      <outline text="Partille Tidning - News Sitemap [needs verification]" title="Partille Tidning - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.partilletidning.se/sitemap/news-sitemap.xml" htmlUrl="https://www.partilletidning.se"/>
       <outline text="NWT - News Sitemap [needs verification]" title="NWT - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.nwt.se/sitemaps/news/sitemap.xml" htmlUrl="https://www.nwt.se"/>
       <outline text="Sydöstran - News Sitemap [needs verification]" title="Sydöstran - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.sydostran.se/sitemap-news.xml" htmlUrl="https://www.sydostran.se"/>
       <outline text="Kristianstadsbladet - News Sitemap [needs verification]" title="Kristianstadsbladet - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.kristianstadsbladet.se/sitemap-news.xml" htmlUrl="https://www.kristianstadsbladet.se"/>
@@ -3139,12 +3144,18 @@
       <outline text="PULS 24 - Article Sitemap [needs verification]" title="PULS 24 - Article Sitemap [needs verification]" type="rss" xmlUrl="https://www.puls24.at/sitemaps/article/sitemap.xml" htmlUrl="https://www.puls24.at"/>
       <outline text="exxpress [needs verification]" title="exxpress [needs verification]" type="rss" xmlUrl="https://exxpress.at/wp-sitemap.xml" htmlUrl="https://exxpress.at"/>
       <outline text="MeinBezirk [needs verification]" title="MeinBezirk [needs verification]" type="rss" xmlUrl="https://www.meinbezirk.at/sitemap.xml" htmlUrl="https://www.meinbezirk.at"/>
+      <outline text="MeinBezirk RSS [valid]" title="MeinBezirk RSS [valid]" type="rss" xmlUrl="https://www.meinbezirk.at/rss" htmlUrl="https://www.meinbezirk.at"/>
       <outline text="Finanzen.at (Stocks/Finance) [invalid]" title="Finanzen.at (Stocks/Finance) [invalid]" type="rss" xmlUrl="https://www.finanzen.at/rss/news" htmlUrl="https://www.finanzen.at"/>
-      <outline text="Kronen Zeitung [needs verification]" title="Kronen Zeitung [needs verification]" type="rss" xmlUrl="https://www.krone.at/google-news-sitemap.xml" htmlUrl="https://www.krone.at"/>
+      <outline text="Börse Express - Google News Sitemap [needs verification]" title="Börse Express - Google News Sitemap [needs verification]" type="rss" xmlUrl="https://www.boerse-express.com/gsitemapnews.xml" htmlUrl="https://www.boerse-express.com"/>
+      <outline text="Kronen Zeitung [needs verification]" title="Kronen Zeitung [needs verification]" type="rss" xmlUrl="https://www.krone.at/sitemap-articles.xml" htmlUrl="https://www.krone.at"/>
       <outline text="Heute - Sitemap Index [needs verification]" title="Heute - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.heute.at/sitemap/sitemap.xml" htmlUrl="https://www.heute.at"/>
       <outline text="OE24 [needs verification]" title="OE24 [needs verification]" type="rss" xmlUrl="https://www.oe24.at/sitemap-news.xml" htmlUrl="https://www.oe24.at"/>
       <outline text="OR Nachrichten [needs verification]" title="OR Nachrichten [needs verification]" type="rss" xmlUrl="https://www.nachrichten.at/google-news.sitemap.xml" htmlUrl="https://www.nachrichten.at"/>
       <outline text="Vienna Online [needs verification]" title="Vienna Online [needs verification]" type="rss" xmlUrl="https://www.vienna.at/sitemap-news.xml" htmlUrl="https://www.vienna.at"/>
+      <outline text="Weekend - News Sitemap [needs verification]" title="Weekend - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.weekend.at/news-sitemap.xml" htmlUrl="https://www.weekend.at"/>
+      <outline text="Weekend - Chronik Sitemap [needs verification]" title="Weekend - Chronik Sitemap [needs verification]" type="rss" xmlUrl="https://www.weekend.at/channel-chronik-sitemap.xml" htmlUrl="https://www.weekend.at"/>
+      <outline text="W24 - News HTML Collection [valid]" title="W24 - News HTML Collection [valid]" type="rss" xmlUrl="https://www.w24.at/News" htmlUrl="https://www.w24.at"/>
+      <outline text="Laumat [valid]" title="Laumat [valid]" type="rss" xmlUrl="https://www.laumat.at/xml/laumat_beitraege.xml" htmlUrl="https://www.laumat.at"/>
       <outline text="Salzburger Nachrichten - News Sitemap [needs verification]" title="Salzburger Nachrichten - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.sn.at/news-artikel.sitemap.xml" htmlUrl="https://www.sn.at"/>
       <outline text="Salzburg24 - News Artikel Sitemap [needs verification]" title="Salzburg24 - News Artikel Sitemap [needs verification]" type="rss" xmlUrl="https://www.salzburg24.at/news-artikel.sitemap.xml" htmlUrl="https://www.salzburg24.at"/>
       <outline text="Wiener Zeitung - News Sitemap [needs verification]" title="Wiener Zeitung - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.wienerzeitung.at/sitemap-news.xml" htmlUrl="https://www.wienerzeitung.at"/>
@@ -3169,6 +3180,7 @@
       <outline text="Nachrichten.at - Wirtschaft Sitemap [needs verification]" title="Nachrichten.at - Wirtschaft Sitemap [needs verification]" type="rss" xmlUrl="https://www.nachrichten.at/wirtschaft.sitemap.xml" htmlUrl="https://www.nachrichten.at"/>
       <outline text="Nachrichten.at - Chronik Sitemap [needs verification]" title="Nachrichten.at - Chronik Sitemap [needs verification]" type="rss" xmlUrl="https://www.nachrichten.at/chronik.sitemap.xml" htmlUrl="https://www.nachrichten.at"/>
       <outline text="Nachrichten.at - Politik Sitemap [needs verification]" title="Nachrichten.at - Politik Sitemap [needs verification]" type="rss" xmlUrl="https://www.nachrichten.at/politik.sitemap.xml" htmlUrl="https://www.nachrichten.at"/>
+      <outline text="Nachrichten.at - Google News Sitemap [needs verification]" title="Nachrichten.at - Google News Sitemap [needs verification]" type="rss" xmlUrl="https://www.nachrichten.at/google-news.sitemap.xml" htmlUrl="https://www.nachrichten.at"/>
       <outline text="Kurier - Article Sitemap [needs verification]" title="Kurier - Article Sitemap [needs verification]" type="rss" xmlUrl="https://kurier.at/sitemaps_article.xml" htmlUrl="https://kurier.at"/>
       <outline text="news.at - Articles Sitemap [needs verification]" title="news.at - Articles Sitemap [needs verification]" type="rss" xmlUrl="https://www.news.at/sitemaps/sitemap-news-articles.xml" htmlUrl="https://www.news.at"/>
       <outline text="news.at - Google News Sitemap [needs verification]" title="news.at - Google News Sitemap [needs verification]" type="rss" xmlUrl="https://www.news.at/sitemaps/sitemap-news-googlenews.xml" htmlUrl="https://www.news.at"/>
@@ -3544,6 +3556,20 @@
       <outline text="Noticias ao Minuto - Desporto [valid]" title="Noticias ao Minuto - Desporto [valid]" type="rss" xmlUrl="https://www.noticiasaominuto.com/rss/desporto" htmlUrl="https://www.noticiasaominuto.com"/>
       <outline text="Noticias ao Minuto - Tech [valid]" title="Noticias ao Minuto - Tech [valid]" type="rss" xmlUrl="https://www.noticiasaominuto.com/rss/tech" htmlUrl="https://www.noticiasaominuto.com"/>
       <outline text="Noticias ao Minuto - Fama [valid]" title="Noticias ao Minuto - Fama [valid]" type="rss" xmlUrl="https://www.noticiasaominuto.com/rss/fama" htmlUrl="https://www.noticiasaominuto.com"/>
+      <outline text="Jornal de Notícias - News Sitemap [needs verification]" title="Jornal de Notícias - News Sitemap [needs verification]" type="rss" xmlUrl="https://apix.noticiasilimitadas.pt/feed/jn/news/sitemap.xml" htmlUrl="https://apix.noticiasilimitadas.pt"/>
+      <outline text="O Jogo - News Sitemap [needs verification]" title="O Jogo - News Sitemap [needs verification]" type="rss" xmlUrl="https://apix.noticiasilimitadas.pt/feed/oj/news/sitemap.xml" htmlUrl="https://apix.noticiasilimitadas.pt"/>
+      <outline text="TSF - News Sitemap [needs verification]" title="TSF - News Sitemap [needs verification]" type="rss" xmlUrl="https://apix.noticiasilimitadas.pt/feed/tsf/news/sitemap.xml" htmlUrl="https://apix.noticiasilimitadas.pt"/>
+      <outline text="JM Madeira - Google Sitemap Index [needs verification]" title="JM Madeira - Google Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.jm-madeira.pt/sitemapforgoogle.xml" htmlUrl="https://www.jm-madeira.pt"/>
+      <outline text="Jornal do Centro - Post Sitemap [needs verification]" title="Jornal do Centro - Post Sitemap [needs verification]" type="rss" xmlUrl="https://www.jornaldocentro.pt/post-sitemap.xml" htmlUrl="https://www.jornaldocentro.pt"/>
+      <outline text="Região de Leiria - Post Sitemap 1 [needs verification]" title="Região de Leiria - Post Sitemap 1 [needs verification]" type="rss" xmlUrl="https://www.regiaodeleiria.pt/post-sitemap1.xml" htmlUrl="https://www.regiaodeleiria.pt"/>
+      <outline text="Renascença - Geral [valid]" title="Renascença - Geral [valid]" type="rss" xmlUrl="https://rr.pt/rss/rssfeed.aspx?section=section_noticias" htmlUrl="https://rr.pt"/>
+      <outline text="Renascença - Política [valid]" title="Renascença - Política [valid]" type="rss" xmlUrl="https://rr.pt/rss/rssfeed.aspx?fid=85" htmlUrl="https://rr.pt"/>
+      <outline text="Renascença - Economia [valid]" title="Renascença - Economia [valid]" type="rss" xmlUrl="https://rr.pt/rss/rssfeed.aspx?fid=86" htmlUrl="https://rr.pt"/>
+      <outline text="Renascença - Mundo [valid]" title="Renascença - Mundo [valid]" type="rss" xmlUrl="https://rr.pt/rss/rssfeed.aspx?fid=88" htmlUrl="https://rr.pt"/>
+      <outline text="Mais Semanário - Post Sitemap 20 [needs verification]" title="Mais Semanário - Post Sitemap 20 [needs verification]" type="rss" xmlUrl="https://maissemanario.pt/post-sitemap20.xml" htmlUrl="https://maissemanario.pt"/>
+      <outline text="Terra Ruiva - Post Sitemap 14 [needs verification]" title="Terra Ruiva - Post Sitemap 14 [needs verification]" type="rss" xmlUrl="https://www.terraruiva.pt/post-sitemap14.xml" htmlUrl="https://www.terraruiva.pt"/>
+      <outline text="Rádio Comercial - News Sitemap [needs verification]" title="Rádio Comercial - News Sitemap [needs verification]" type="rss" xmlUrl="https://radiocomercial.pt/sitemaps/sitemap-news.xml" htmlUrl="https://radiocomercial.pt"/>
+      <outline text="Rádio Campanário - Post Sitemap 90 [needs verification]" title="Rádio Campanário - Post Sitemap 90 [needs verification]" type="rss" xmlUrl="https://www.radiocampanario.com/post-sitemap90.xml" htmlUrl="https://www.radiocampanario.com"/>
     </outline>
     <outline text="Denmark (DK)" title="Denmark (DK)">
       <outline text="DR Nyheder [valid]" title="DR Nyheder [valid]" type="rss" xmlUrl="https://www.dr.dk/nyheder/service/feeds/allenyheder" htmlUrl="https://www.dr.dk"/>
@@ -3683,7 +3709,7 @@
       <outline text="Helsingin Sanomat [valid]" title="Helsingin Sanomat [valid]" type="rss" xmlUrl="https://www.hs.fi/rss/tuoreimmat.xml" htmlUrl="https://www.hs.fi"/>
       <outline text="Ilta-Sanomat [valid]" title="Ilta-Sanomat [valid]" type="rss" xmlUrl="https://www.is.fi/rss/tuoreimmat.xml" htmlUrl="https://www.is.fi"/>
       <outline text="Iltalehti [valid]" title="Iltalehti [valid]" type="rss" xmlUrl="https://www.iltalehti.fi/rss.xml" htmlUrl="https://www.iltalehti.fi"/>
-      <outline text="MTV Uutiset [needs verification]" title="MTV Uutiset [needs verification]" type="rss" xmlUrl="https://www.mtvuutiset.fi/newssitemap" htmlUrl="https://www.mtvuutiset.fi"/>
+      <outline text="MTV Uutiset [needs verification]" title="MTV Uutiset [needs verification]" type="rss" xmlUrl="https://www.mtvuutiset.fi/sitemap.xml" htmlUrl="https://www.mtvuutiset.fi"/>
       <outline text="Kauppalehti [needs verification]" title="Kauppalehti [needs verification]" type="rss" xmlUrl="https://www.kauppalehti.fi/sitemaps/sitemap_latest.xml.gz" htmlUrl="https://www.kauppalehti.fi"/>
       <outline text="HBL [valid]" title="HBL [valid]" type="rss" xmlUrl="https://www.hbl.fi/feeds/feed.xml" htmlUrl="https://www.hbl.fi"/>
       <outline text="Nya Aland [valid]" title="Nya Aland [valid]" type="rss" xmlUrl="https://www.nyan.ax/feed/" htmlUrl="https://www.nyan.ax"/>
@@ -3725,6 +3751,12 @@
       <outline text="Suur-Keuruu [needs verification]" title="Suur-Keuruu [needs verification]" type="rss" xmlUrl="https://www.suurkeuruu.fi/rss/custom/news-sitemap.xml" htmlUrl="https://www.suurkeuruu.fi"/>
       <outline text="Vastra Nyland [valid]" title="Vastra Nyland [valid]" type="rss" xmlUrl="https://www.vastranyland.fi/feed/" htmlUrl="https://www.vastranyland.fi"/>
       <outline text="Borgaabladet [valid]" title="Borgaabladet [valid]" type="rss" xmlUrl="https://www.bbl.fi/feed/" htmlUrl="https://www.bbl.fi"/>
+      <outline text="Nya Ostis [valid]" title="Nya Ostis [valid]" type="rss" xmlUrl="https://www.nyaostis.fi/feed/" htmlUrl="https://www.nyaostis.fi"/>
+      <outline text="Svenska Yle - Huvudstadsregionen [valid]" title="Svenska Yle - Huvudstadsregionen [valid]" type="rss" xmlUrl="https://svenska.yle.fi/rss/huvudstadsregionen" htmlUrl="https://svenska.yle.fi"/>
+      <outline text="Svenska Yle - Vastnyland [valid]" title="Svenska Yle - Vastnyland [valid]" type="rss" xmlUrl="https://svenska.yle.fi/rss/vastnyland" htmlUrl="https://svenska.yle.fi"/>
+      <outline text="Svenska Yle - Aboland [valid]" title="Svenska Yle - Aboland [valid]" type="rss" xmlUrl="https://svenska.yle.fi/rss/aboland" htmlUrl="https://svenska.yle.fi"/>
+      <outline text="Svenska Yle - Osterbotten [valid]" title="Svenska Yle - Osterbotten [valid]" type="rss" xmlUrl="https://svenska.yle.fi/rss/osterbotten" htmlUrl="https://svenska.yle.fi"/>
+      <outline text="Svenska Yle - Ostnyland [valid]" title="Svenska Yle - Ostnyland [valid]" type="rss" xmlUrl="https://svenska.yle.fi/rss/ostnyland" htmlUrl="https://svenska.yle.fi"/>
       <outline text="Ita-Savo [valid]" title="Ita-Savo [valid]" type="rss" xmlUrl="https://www.ita-savo.fi/feed/rss" htmlUrl="https://www.ita-savo.fi"/>
       <outline text="Ita-Hame [valid]" title="Ita-Hame [valid]" type="rss" xmlUrl="https://www.itahame.fi/feed/rss" htmlUrl="https://www.itahame.fi"/>
       <outline text="Uutisvuoksi [valid]" title="Uutisvuoksi [valid]" type="rss" xmlUrl="https://www.uutisvuoksi.fi/feed/rss" htmlUrl="https://www.uutisvuoksi.fi"/>
@@ -3748,18 +3780,16 @@
       <outline text="Karjalainen [valid]" title="Karjalainen [valid]" type="rss" xmlUrl="https://www.karjalainen.fi/rss" htmlUrl="https://www.karjalainen.fi"/>
       <outline text="Hameen Sanomat [valid]" title="Hameen Sanomat [valid]" type="rss" xmlUrl="https://www.hameensanomat.fi/feed/rss" htmlUrl="https://www.hameensanomat.fi"/>
       <outline text="Kouvolan Sanomat [valid]" title="Kouvolan Sanomat [valid]" type="rss" xmlUrl="https://www.kouvolansanomat.fi/feed/rss" htmlUrl="https://www.kouvolansanomat.fi"/>
-      <outline text="Keskipohjanmaa [valid]" title="Keskipohjanmaa [valid]" type="rss" xmlUrl="https://www.keskipohjanmaa.fi/feed/rss" htmlUrl="https://www.keskipohjanmaa.fi"/>
+      <outline text="Keskipohjanmaa [needs verification]" title="Keskipohjanmaa [needs verification]" type="rss" xmlUrl="https://www.keskipohjanmaa.fi/sitemap/news" htmlUrl="https://www.keskipohjanmaa.fi"/>
       <outline text="Kymen Sanomat [valid]" title="Kymen Sanomat [valid]" type="rss" xmlUrl="https://www.kymensanomat.fi/feed/rss" htmlUrl="https://www.kymensanomat.fi"/>
       <outline text="Etela-Saimaa [valid]" title="Etela-Saimaa [valid]" type="rss" xmlUrl="https://www.esaimaa.fi/feed/rss" htmlUrl="https://www.esaimaa.fi"/>
       <outline text="Uusimaa [valid]" title="Uusimaa [valid]" type="rss" xmlUrl="https://www.uusimaa.fi/feed/rss" htmlUrl="https://www.uusimaa.fi"/>
-      <outline text="Kainuun Sanomat [valid]" title="Kainuun Sanomat [valid]" type="rss" xmlUrl="https://www.kainuunsanomat.fi/feed/rss" htmlUrl="https://www.kainuunsanomat.fi"/>
       <outline text="Aamulehti - Sitemap Index [needs verification]" title="Aamulehti - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.aamulehti.fi/sitemap/html/al/sitemapindex.xml" htmlUrl="https://www.aamulehti.fi"/>
       <outline text="Talouselama - Sitemap Index [needs verification]" title="Talouselama - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.talouselama.fi/sitemaps/sitemapindex.xml" htmlUrl="https://www.talouselama.fi"/>
       <outline text="Tekniikkatalous - Sitemap Index [needs verification]" title="Tekniikkatalous - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.tekniikkatalous.fi/sitemaps/sitemapindex.xml" htmlUrl="https://www.tekniikkatalous.fi"/>
       <outline text="Verkkouutiset [valid]" title="Verkkouutiset [valid]" type="rss" xmlUrl="https://www.verkkouutiset.fi/feed/" htmlUrl="https://www.verkkouutiset.fi"/>
       <outline text="Ilta-Sanomat - Sitemap Index [needs verification]" title="Ilta-Sanomat - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.is.fi/sitemap/html/is/sitemapindex.xml" htmlUrl="https://www.is.fi"/>
       <outline text="Helsingin Sanomat - Sitemap Index [needs verification]" title="Helsingin Sanomat - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.hs.fi/sitemap/html/hs/sitemapindex.xml" htmlUrl="https://www.hs.fi"/>
-      <outline text="MTV Uutiset - Sitemap Index [needs verification]" title="MTV Uutiset - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.mtvuutiset.fi/sitemap.xml" htmlUrl="https://www.mtvuutiset.fi"/>
       <outline text="Iltalehti - Sitemap Index [needs verification]" title="Iltalehti - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.iltalehti.fi/sitemap/iltalehti.xml" htmlUrl="https://www.iltalehti.fi"/>
       <outline text="Helsingin Sanomat - Politiikka [valid]" title="Helsingin Sanomat - Politiikka [valid]" type="rss" xmlUrl="https://www.hs.fi/rss/politiikka.xml" htmlUrl="https://www.hs.fi"/>
       <outline text="Helsingin Sanomat - Kulttuuri [valid]" title="Helsingin Sanomat - Kulttuuri [valid]" type="rss" xmlUrl="https://www.hs.fi/rss/kulttuuri.xml" htmlUrl="https://www.hs.fi"/>
@@ -3797,6 +3827,27 @@
       <outline text="Arvopaperi [valid]" title="Arvopaperi [valid]" type="rss" xmlUrl="https://www.arvopaperi.fi/api/feed/v2/rss/ap" htmlUrl="https://www.arvopaperi.fi"/>
       <outline text="Seiska [valid]" title="Seiska [valid]" type="rss" xmlUrl="https://www.seiska.fi/latest.rss" htmlUrl="https://www.seiska.fi"/>
       <outline text="Suomen Kuvalehti [valid]" title="Suomen Kuvalehti [valid]" type="rss" xmlUrl="https://suomenkuvalehti.fi/feed/" htmlUrl="https://suomenkuvalehti.fi"/>
+      <outline text="Verkkouutiset - Sitemap Index [needs verification]" title="Verkkouutiset - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.verkkouutiset.fi/sitemap_index.xml" htmlUrl="https://www.verkkouutiset.fi"/>
+      <outline text="Suomenmaa - Sitemap Index [needs verification]" title="Suomenmaa - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.suomenmaa.fi/sitemap_index.xml" htmlUrl="https://www.suomenmaa.fi"/>
+      <outline text="Maaseudun Tulevaisuus - Sitemap Index [needs verification]" title="Maaseudun Tulevaisuus - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.maaseuduntulevaisuus.fi/sitemaps/sitemap.xml" htmlUrl="https://www.maaseuduntulevaisuus.fi"/>
+      <outline text="Keskipohjanmaa - Sitemap Index [needs verification]" title="Keskipohjanmaa - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.keskipohjanmaa.fi/sitemap.xml" htmlUrl="https://www.keskipohjanmaa.fi"/>
+      <outline text="Suomen Kuvalehti - Sitemap Index [needs verification]" title="Suomen Kuvalehti - Sitemap Index [needs verification]" type="rss" xmlUrl="https://suomenkuvalehti.fi/sitemap_index.xml" htmlUrl="https://suomenkuvalehti.fi"/>
+      <outline text="Kainuun Sanomat - Sitemap Index [needs verification]" title="Kainuun Sanomat - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.kainuunsanomat.fi/sitemap.xml" htmlUrl="https://www.kainuunsanomat.fi"/>
+      <outline text="Kotimaa - Sitemap Index [needs verification]" title="Kotimaa - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.kotimaa.fi/wp-sitemap.xml" htmlUrl="https://www.kotimaa.fi"/>
+      <outline text="Kauppalehti - Sitemap Index [needs verification]" title="Kauppalehti - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.kauppalehti.fi/sitemaps/sitemapindex.xml" htmlUrl="https://www.kauppalehti.fi"/>
+      <outline text="Arvopaperi - Sitemap Index [needs verification]" title="Arvopaperi - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.arvopaperi.fi/sitemaps/sitemapindex.xml" htmlUrl="https://www.arvopaperi.fi"/>
+      <outline text="Janakkalan Sanomat - Sitemap Index [needs verification]" title="Janakkalan Sanomat - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.janakkalansanomat.fi/sitemap/html/jan/sitemapindex.xml" htmlUrl="https://www.janakkalansanomat.fi"/>
+      <outline text="Jamsan Seutu - Sitemap Index [needs verification]" title="Jamsan Seutu - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.jamsanseutu.fi/sitemap/html/js/sitemapindex.xml" htmlUrl="https://www.jamsanseutu.fi"/>
+      <outline text="Kankaanpaan Seutu - Sitemap Index [needs verification]" title="Kankaanpaan Seutu - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.kankaanpaanseutu.fi/sitemap/html/ks/sitemapindex.xml" htmlUrl="https://www.kankaanpaanseutu.fi"/>
+      <outline text="Nokian Uutiset - Sitemap Index [needs verification]" title="Nokian Uutiset - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.nokianuutiset.fi/sitemap/html/nu/sitemapindex.xml" htmlUrl="https://www.nokianuutiset.fi"/>
+      <outline text="KMV-lehti - Sitemap Index [needs verification]" title="KMV-lehti - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.kmvlehti.fi/sitemap/html/kmv/sitemapindex.xml" htmlUrl="https://www.kmvlehti.fi"/>
+      <outline text="Merikarvia-lehti - Sitemap Index [needs verification]" title="Merikarvia-lehti - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.merikarvialehti.fi/sitemap/html/mk/sitemapindex.xml" htmlUrl="https://www.merikarvialehti.fi"/>
+      <outline text="Sydan-Satakunta - Sitemap Index [needs verification]" title="Sydan-Satakunta - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.sydansatakunta.fi/sitemap/html/ss/sitemapindex.xml" htmlUrl="https://www.sydansatakunta.fi"/>
+      <outline text="Tyrvaan Sanomat - Sitemap Index [needs verification]" title="Tyrvaan Sanomat - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.tyrvaansanomat.fi/sitemap/html/tyr/sitemapindex.xml" htmlUrl="https://www.tyrvaansanomat.fi"/>
+      <outline text="Valkeakosken Sanomat - Sitemap Index [needs verification]" title="Valkeakosken Sanomat - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.valkeakoskensanomat.fi/sitemap/html/vs/sitemapindex.xml" htmlUrl="https://www.valkeakoskensanomat.fi"/>
+      <outline text="Rannikkoseutu - Sitemap Index [needs verification]" title="Rannikkoseutu - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.rannikkoseutu.fi/sitemap/html/rks/sitemapindex.xml" htmlUrl="https://www.rannikkoseutu.fi"/>
+      <outline text="Satakunnan Kansa - Sitemap Index [needs verification]" title="Satakunnan Kansa - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.satakunnankansa.fi/sitemap/html/sk/sitemapindex.xml" htmlUrl="https://www.satakunnankansa.fi"/>
+      <outline text="Suur-Keuruu - Sitemap Index [needs verification]" title="Suur-Keuruu - Sitemap Index [needs verification]" type="rss" xmlUrl="https://www.suurkeuruu.fi/sitemap/html/suk/sitemapindex.xml" htmlUrl="https://www.suurkeuruu.fi"/>
     </outline>
     <outline text="Czech Republic (CZ)" title="Czech Republic (CZ)">
       <outline text="ČT24 [valid]" title="ČT24 [valid]" type="rss" xmlUrl="https://ct24.ceskatelevize.cz/rss/tema/vyber-redakce-84313" htmlUrl="https://ct24.ceskatelevize.cz"/>

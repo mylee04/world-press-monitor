@@ -944,13 +944,18 @@ function isSameHostOrSubdomain(candidateHost: string, baseHost: string): boolean
   );
 }
 
+function isAllowedCrossHostSitemapLink(candidateHost: string, baseHost: string): boolean {
+  if (baseHost !== 'apix.noticiasilimitadas.pt') return false;
+  return new Set(['jn.pt', 'ojogo.pt', 'tsf.pt']).has(candidateHost);
+}
+
 function shouldKeepSitemapLink(link: string, baseUrl?: string): boolean {
   if (!link || !baseUrl) return true;
   try {
     const linkHost = normalizeHostForSitemapFilter(new URL(link).hostname);
     const baseHost = normalizeHostForSitemapFilter(new URL(baseUrl).hostname);
     if (!linkHost || !baseHost) return true;
-    return isSameHostOrSubdomain(linkHost, baseHost);
+    return isSameHostOrSubdomain(linkHost, baseHost) || isAllowedCrossHostSitemapLink(linkHost, baseHost);
   } catch {
     return true;
   }
