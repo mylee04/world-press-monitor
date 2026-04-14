@@ -17,6 +17,32 @@ const BLACK_PRESS_NON_ARTICLE_PATH_PATTERN = /^\/(?:classifieds|contests|crosswo
 const POLSKA_PRESS_REGIONAL_HOST_PATTERN =
   /(?:^|\.)(?:gazetakrakowska|dziennikzachodni|gazetawroclawska|gloswielkopolski|dziennikbaltycki|kurierlubelski|expressilustrowany|dzienniklodzki|echodnia|nowiny24|poranny)\.(?:pl|eu)$/;
 const POLSKA_PRESS_SOFT_CATEGORY_PATH_PATTERN = /\/ar\/c(?:6|7|8|9|11|13|14|17)-\d+/;
+const ARABIAN_BUSINESS_NON_ARTICLE_PATHS = new Set([
+  '/abnews',
+  '/business',
+  '/business/education',
+  '/business/energy',
+  '/business/healthcare',
+  '/business/retail',
+  '/business/start-ups',
+  '/business/technology',
+  '/business/tourism-hospitality',
+  '/business/transport',
+  '/finance',
+  '/finance/banking',
+  '/finance/economy',
+  '/opinion',
+  '/politics',
+  '/real-estate',
+  '/real-estate/commercial',
+  '/t-magazine',
+  '/t-magazine/art',
+  '/t-magazine/culture',
+  '/t-magazine/design-interiors',
+  '/t-magazine/fashion',
+  '/t-magazine/food',
+  '/world',
+]);
 
 function isPolskaPressRegionalHost(hostname: string): boolean {
   return POLSKA_PRESS_REGIONAL_HOST_PATTERN.test(hostname);
@@ -157,6 +183,15 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
 
   if (hostname.endsWith('challenges.fr') && pathname.startsWith('/partenaires/')) {
     return true;
+  }
+
+  if (hostname.endsWith('arabianbusiness.com')) {
+    if (ARABIAN_BUSINESS_NON_ARTICLE_PATHS.has(trimmedPathname)) return true;
+    if (pathname.startsWith('/live-')) return true;
+  }
+
+  if (hostname.endsWith('arnnewscentre.ae')) {
+    if (/^\/(?:en|ar|ml)\/news\/(?:entertainment|quirky|lifestyle)(?:\/|$)/.test(pathname)) return true;
   }
 
   if (hostname.endsWith('amarujala.com')) {

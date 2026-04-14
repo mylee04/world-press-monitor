@@ -34823,8 +34823,37 @@
         {
           "name": "Arabian Business",
           "url": "https://www.arabianbusiness.com/feed/",
+          "sitemapUrl": "https://www.arabianbusiness.com/sitemap_index.xml",
           "status": "NEW",
           "checkedDate": "03/31/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "WAM English - News Sitemap",
+          "sitemapUrl": "https://www.wam.ae/en/sitemap/news.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Sharjah24 - News Sitemap",
+          "sitemapUrl": "https://sharjah24.ae/NewsSitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Gulf Today - HTML Collection",
+          "url": "https://www.gulftoday.ae/news",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "ARN News Centre - HTML Collection",
+          "url": "https://www.arnnewscentre.ae/",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
           "valid": "valid"
         },
         {

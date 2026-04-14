@@ -158,6 +158,25 @@ function buildFixedOffsetIso(
   );
 }
 
+function inferRelativeAgePublishedAt(value: string, nowMs = Date.now()): string {
+  const trimmed = normalizeHtmlText(value || '').replace(/\s+/g, ' ').trim().toLowerCase();
+  if (!trimmed) return '';
+
+  const match = trimmed.match(/^(\d+)\s+(minute|minutes|hour|hours|day|days)\s+ago$/i);
+  if (!match) return '';
+
+  const amount = Number.parseInt(match[1] || '0', 10);
+  const unit = (match[2] || '').toLowerCase();
+  if (!Number.isFinite(amount) || amount < 0) return '';
+
+  const deltaMs =
+    unit.startsWith('minute') ? amount * 60 * 1000
+    : unit.startsWith('hour') ? amount * 60 * 60 * 1000
+    : amount * 24 * 60 * 60 * 1000;
+
+  return normalizePublishedAt(new Date(nowMs - deltaMs).toISOString());
+}
+
 function inferPublishedAtFromLink(link: string): string {
   const url = (link || '').toLowerCase();
   if (!url) return '';
@@ -830,6 +849,141 @@ function parseAboUnderrattelserHtmlCollectionWithStats(html: string, limit = 12,
   };
 }
 
+function parseGulfTodayHtmlCollectionWithStats(html: string, limit = 12, baseUrl?: string): ParsedFeedBatch {
+  let parsedUrl: URL | null = null;
+  try {
+    parsedUrl = baseUrl ? new URL(baseUrl) : null;
+  } catch {
+    parsedUrl = null;
+  }
+  const hostname = parsedUrl?.hostname.toLowerCase() || '';
+  const pathname = parsedUrl?.pathname.toLowerCase() || '';
+  if ((hostname !== 'www.gulftoday.ae' && hostname !== 'gulftoday.ae') || (pathname !== '/news' && pathname !== '/news/')) {
+    return { items: [], stats: summarizeStats([]) };
+  }
+
+  const deduped = new Map<string, ParsedFeedItemWithMissing>();
+  const featuredPattern =
+    /<a href="([^"]+\/news\/20\d{2}\/\d{2}\/\d{2}\/[^"]+)" class="tile-featured-news-card[^"]*">[\s\S]*?<img[^>]+alt="([^"]*)"[\s\S]*?<span>\s*([^<]+?)\s*<\/span>/gi;
+  const cardPattern =
+    /<a href="([^"]+\/news\/20\d{2}\/\d{2}\/\d{2}\/[^"]+)"\s*class="tile-card news [^"]+">[\s\S]*?<h2 class="uk-card-title"[^>]*>([\s\S]*?)<\/h2>[\s\S]*?<p>\s*([\s\S]*?)\s*<\/p>[\s\S]*?<div class="tile-info">[\s\S]*?<span>\s*([^<]+?)\s*<\/span>/gi;
+
+  for (const match of html.matchAll(featuredPattern)) {
+    const link = resolveFeedLink(match[1] || '', baseUrl);
+    if (!link) continue;
+
+    const title = stripHtml(match[2] || '').replace(/\s+/g, ' ').trim() || inferTitleFromLink(link) || link;
+    const publishedAt = inferRelativeAgePublishedAt(match[3] || '') || inferPublishedAtFromLink(link);
+
+    deduped.set(link, {
+      title,
+      description: '',
+      link,
+      publishedAt,
+      categories: ['news'],
+      stableId: link,
+      missingTitle: !title,
+      missingLink: !link,
+      missingSummary: true,
+      missingPublishedAt: !publishedAt,
+    });
+  }
+
+  for (const match of html.matchAll(cardPattern)) {
+    const link = resolveFeedLink(match[1] || '', baseUrl);
+    if (!link) continue;
+
+    const title = stripHtml(match[2] || '').replace(/\s+/g, ' ').trim() || inferTitleFromLink(link) || link;
+    const description = stripHtml(match[3] || '').replace(/\s+/g, ' ').trim();
+    const publishedAt = inferRelativeAgePublishedAt(match[4] || '') || inferPublishedAtFromLink(link);
+
+    const current = deduped.get(link);
+    if (current && current.description.length >= description.length) continue;
+    deduped.set(link, {
+      title,
+      description,
+      link,
+      publishedAt,
+      categories: ['news'],
+      stableId: link,
+      missingTitle: !title,
+      missingLink: !link,
+      missingSummary: !description,
+      missingPublishedAt: !publishedAt,
+    });
+  }
+
+  const rows = [...deduped.values()]
+    .sort((left, right) => {
+      const leftMs = left.publishedAt ? Date.parse(left.publishedAt) : Number.NEGATIVE_INFINITY;
+      const rightMs = right.publishedAt ? Date.parse(right.publishedAt) : Number.NEGATIVE_INFINITY;
+      return rightMs - leftMs;
+    })
+    .slice(0, limit);
+
+  return {
+    items: toItems(rows),
+    stats: summarizeStats(rows),
+  };
+}
+
+function parseArnNewsCentreHtmlCollectionWithStats(html: string, limit = 12, baseUrl?: string): ParsedFeedBatch {
+  let parsedUrl: URL | null = null;
+  try {
+    parsedUrl = baseUrl ? new URL(baseUrl) : null;
+  } catch {
+    parsedUrl = null;
+  }
+  const hostname = parsedUrl?.hostname.toLowerCase() || '';
+  if (hostname !== 'www.arnnewscentre.ae' && hostname !== 'arnnewscentre.ae') {
+    return { items: [], stats: summarizeStats([]) };
+  }
+
+  const allowedSections = new Set(['uae', 'international', 'business', 'sports']);
+  const deduped = new Map<string, ParsedFeedItemWithMissing>();
+  const itemPattern =
+    /<div class="c-pod__content">[\s\S]*?<a href="([^"]+)" class="c-pod__link">[\s\S]*?<strong class="c-pod__title">([\s\S]*?)<\/strong>[\s\S]*?<\/a>(?:[\s\S]*?<p class="c-pod__description">([\s\S]*?)<\/p>)?/gi;
+
+  for (const match of html.matchAll(itemPattern)) {
+    const link = resolveFeedLink(match[1] || '', baseUrl);
+    if (!link) continue;
+
+    let categories: string[] = [];
+    try {
+      const segments = new URL(link).pathname.split('/').filter(Boolean);
+      const section = segments[2] || '';
+      if (segments[0] !== 'en' || segments[1] !== 'news' || !allowedSections.has(section)) continue;
+      categories = [normalizeHtmlText(section)];
+    } catch {
+      continue;
+    }
+
+    const title = stripHtml(match[2] || '').replace(/\s+/g, ' ').trim() || inferTitleFromLink(link) || link;
+    const description = stripHtml(match[3] || '').replace(/\s+/g, ' ').trim();
+
+    const current = deduped.get(link);
+    if (current && current.description.length >= description.length) continue;
+    deduped.set(link, {
+      title,
+      description,
+      link,
+      publishedAt: '',
+      categories,
+      stableId: link,
+      missingTitle: !title,
+      missingLink: !link,
+      missingSummary: !description,
+      missingPublishedAt: true,
+    });
+  }
+
+  const rows = [...deduped.values()].slice(0, limit);
+  return {
+    items: toItems(rows),
+    stats: summarizeStats(rows),
+  };
+}
+
 export function parseHtmlCollectionWithStats(html: string, limit = 12, baseUrl?: string): ParsedFeedBatch {
   const rawEntries: Array<Record<string, unknown>> = [];
   for (const block of parseJsonLdBlocks(html)) {
@@ -907,6 +1061,16 @@ export function parseHtmlCollectionWithStats(html: string, limit = 12, baseUrl?:
   const aboUnderrattelserResult = parseAboUnderrattelserHtmlCollectionWithStats(html, limit, baseUrl);
   if (aboUnderrattelserResult.items.length > 0 || aboUnderrattelserResult.stats.totalCandidates > 0) {
     return aboUnderrattelserResult;
+  }
+
+  const gulfTodayResult = parseGulfTodayHtmlCollectionWithStats(html, limit, baseUrl);
+  if (gulfTodayResult.items.length > 0 || gulfTodayResult.stats.totalCandidates > 0) {
+    return gulfTodayResult;
+  }
+
+  const arnNewsCentreResult = parseArnNewsCentreHtmlCollectionWithStats(html, limit, baseUrl);
+  if (arnNewsCentreResult.items.length > 0 || arnNewsCentreResult.stats.totalCandidates > 0) {
+    return arnNewsCentreResult;
   }
 
   return parseMhmHtmlCollectionWithStats(html, limit, baseUrl);
