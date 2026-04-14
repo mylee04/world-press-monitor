@@ -1007,6 +1007,24 @@ export function isKnownNonArticleUrl(source: string, url: string): boolean {
     return true;
   }
 
+  if (hostname.endsWith('elfinanciero.com.mx')) {
+    if (pathname.startsWith('/cartones/')) return true;
+    if (pathname.startsWith('/mundo-empresa/')) return true;
+    if (pathname.startsWith('/opinion/')) return true;
+  }
+
+  if (hostname.endsWith('yucatan.com.mx') && pathname.startsWith('/juegos/')) {
+    return true;
+  }
+
+  if (hostname.endsWith('vanguardia.com.mx') && pathname.startsWith('/opinion/')) {
+    return true;
+  }
+
+  if (hostname.endsWith('24-horas.mx') && pathname === '/minuto-a-minuto/') {
+    return true;
+  }
+
   if (pathname.startsWith('/iframe/')) {
     return true;
   }

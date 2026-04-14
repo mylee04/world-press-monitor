@@ -1052,6 +1052,71 @@ function parseArnNewsCentreHtmlCollectionWithStats(html: string, limit = 12, bas
   };
 }
 
+function parseOemHtmlCollectionWithStats(html: string, limit = 12, baseUrl?: string): ParsedFeedBatch {
+  let parsedUrl: URL | null = null;
+  try {
+    parsedUrl = baseUrl ? new URL(baseUrl) : null;
+  } catch {
+    parsedUrl = null;
+  }
+  const hostname = parsedUrl?.hostname.toLowerCase() || '';
+  const pathSegments = (parsedUrl?.pathname || '').split('/').filter(Boolean);
+  const publication = pathSegments[0] || '';
+  const section = pathSegments[1] || '';
+  if (hostname !== 'oem.com.mx' || !publication || section !== 'local') {
+    return { items: [], stats: summarizeStats([]) };
+  }
+
+  const deduped = new Map<string, ParsedFeedItemWithMissing>();
+  const itemPattern = /<a[^>]+href="([^"]+)"[^>]+title="([^"]+)"[^>]*>/gi;
+  for (const match of html.matchAll(itemPattern)) {
+    const href = match[1] || '';
+    const title = stripHtml(match[2] || '').replace(/\s+/g, ' ').trim();
+    const link = resolveFeedLink(href, baseUrl);
+    if (!link || !title) continue;
+
+    let parsedLink: URL;
+    try {
+      parsedLink = new URL(link);
+    } catch {
+      continue;
+    }
+
+    const segments = parsedLink.pathname.split('/').filter(Boolean);
+    const linkPublication = segments[0] || '';
+    const linkSection = segments[1] || '';
+    if (linkPublication !== publication || linkSection !== 'local') continue;
+    if (!/-\d+(?:$|[/?#])/.test(parsedLink.pathname)) continue;
+    if (parsedLink.pathname.includes('/buscar/')) continue;
+
+    deduped.set(link, {
+      title,
+      description: '',
+      link,
+      publishedAt: '',
+      categories: ['local'],
+      stableId: link,
+      missingTitle: !title,
+      missingLink: !link,
+      missingSummary: true,
+      missingPublishedAt: true,
+    });
+  }
+
+  const rows = [...deduped.values()]
+    .sort((left, right) => {
+      const leftId = Number.parseInt(left.link.match(/-(\d+)(?:$|[/?#])/i)?.[1] || '0', 10);
+      const rightId = Number.parseInt(right.link.match(/-(\d+)(?:$|[/?#])/i)?.[1] || '0', 10);
+      return rightId - leftId;
+    })
+    .slice(0, limit);
+
+  return {
+    items: toItems(rows),
+    stats: summarizeStats(rows),
+  };
+}
+
 export function parseHtmlCollectionWithStats(html: string, limit = 12, baseUrl?: string): ParsedFeedBatch {
   const rawEntries: Array<Record<string, unknown>> = [];
   for (const block of parseJsonLdBlocks(html)) {
@@ -1144,6 +1209,11 @@ export function parseHtmlCollectionWithStats(html: string, limit = 12, baseUrl?:
   const arnNewsCentreResult = parseArnNewsCentreHtmlCollectionWithStats(html, limit, baseUrl);
   if (arnNewsCentreResult.items.length > 0 || arnNewsCentreResult.stats.totalCandidates > 0) {
     return arnNewsCentreResult;
+  }
+
+  const oemResult = parseOemHtmlCollectionWithStats(html, limit, baseUrl);
+  if (oemResult.items.length > 0 || oemResult.stats.totalCandidates > 0) {
+    return oemResult;
   }
 
   return parseMhmHtmlCollectionWithStats(html, limit, baseUrl);

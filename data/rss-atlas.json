@@ -12169,11 +12169,20 @@
         },
         {
           "name": "Diario de Yucatan",
-          "url": "https://www.yucatan.com.mx/feed"
+          "url": "https://www.yucatan.com.mx/feed",
+          "sitemapUrl": "https://www.yucatan.com.mx/news-sitemap.xml"
         },
         {
           "name": "Vanguardia MX",
-          "url": "https://vanguardia.com.mx/rss.xml"
+          "url": "https://vanguardia.com.mx/rss.xml",
+          "sitemapUrl": "https://vanguardia.com.mx/sitemapforgoogle.xml"
+        },
+        {
+          "name": "Informador - Google News Sitemap",
+          "sitemapUrl": "https://www.informador.mx/sitemaps/googlenews.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/14/2026",
+          "valid": "needs verification"
         },
         {
           "name": "Quadratin Mexico",
@@ -12189,36 +12198,99 @@
           "url": "https://www.elsoldepuebla.com.mx/rss"
         },
         {
+          "name": "El Sol de Puebla - Local HTML Collection",
+          "url": "https://oem.com.mx/elsoldepuebla/local/",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
           "name": "El Sol de Toluca",
           "url": "https://www.elsoldetoluca.com.mx/rss"
+        },
+        {
+          "name": "El Sol de Toluca - Local HTML Collection",
+          "url": "https://oem.com.mx/elsoldetoluca/local/",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
         },
         {
           "name": "El Sol de Morelia",
           "url": "https://www.elsoldemorelia.com.mx/rss"
         },
         {
+          "name": "El Sol de Morelia - Local HTML Collection",
+          "url": "https://oem.com.mx/elsoldemorelia/local/",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
           "name": "El Sol de Tijuana",
           "url": "https://www.elsoldetijuana.com.mx/rss"
+        },
+        {
+          "name": "El Sol de Tijuana - Local HTML Collection",
+          "url": "https://oem.com.mx/elsoldetijuana/local/",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
         },
         {
           "name": "El Occidental",
           "url": "https://www.eloccidental.com.mx/rss"
         },
         {
+          "name": "El Occidental - Local HTML Collection",
+          "url": "https://oem.com.mx/eloccidental/local/",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
           "name": "El Sudcaliforniano",
           "url": "https://www.elsudcaliforniano.com.mx/rss"
+        },
+        {
+          "name": "El Sudcaliforniano - Local HTML Collection",
+          "url": "https://oem.com.mx/elsudcaliforniano/local/",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
         },
         {
           "name": "El Sol de Hermosillo",
           "url": "https://www.elsoldehermosillo.com.mx/rss"
         },
         {
+          "name": "El Sol de Hermosillo - Local HTML Collection",
+          "url": "https://oem.com.mx/elsoldehermosillo/local/",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
           "name": "El Sol de Leon",
           "url": "https://www.elsoldeleon.com.mx/rss"
         },
         {
+          "name": "El Sol de Leon - Local HTML Collection",
+          "url": "https://oem.com.mx/elsoldeleon/local/",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
           "name": "El Sol de San Luis",
           "url": "https://www.elsoldesanluis.com.mx/rss"
+        },
+        {
+          "name": "El Sol de San Luis - Local HTML Collection",
+          "url": "https://oem.com.mx/elsoldesanluis/local/",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
         },
         {
           "name": "24 Horas Mexico",
