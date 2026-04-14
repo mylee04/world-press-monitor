@@ -23826,6 +23826,28 @@
           "checkedDate": null,
           "valid": "needs verification"
         }
+        ,{
+          "name": "Medios Públicos",
+          "url": "https://mediospublicos.uy/feed/",
+          "status": "NEW",
+          "checkedDate": null,
+          "valid": "needs verification"
+        }
+        ,{
+          "name": "El Pueblo",
+          "url": "https://elpueblodigital.uy/feed/",
+          "status": "NEW",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "sitemapUrl": "https://elpueblodigital.uy/wp-sitemap.xml"
+        }
+        ,{
+          "name": "Correo de Punta del Este",
+          "url": "https://correopuntadeleste.com/feed/",
+          "status": "NEW",
+          "checkedDate": null,
+          "valid": "needs verification"
+        }
       ]
     },
     {
