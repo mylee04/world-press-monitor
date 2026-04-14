@@ -783,6 +783,74 @@ function parseSoyChileHtmlCollectionWithStats(html: string, limit = 12, baseUrl?
   };
 }
 
+function parseW24HtmlCollectionWithStats(html: string, limit = 12, baseUrl?: string): ParsedFeedBatch {
+  let parsedUrl: URL | null = null;
+  try {
+    parsedUrl = baseUrl ? new URL(baseUrl) : null;
+  } catch {
+    parsedUrl = null;
+  }
+  const hostname = parsedUrl?.hostname.toLowerCase() || '';
+  const pathname = parsedUrl?.pathname.toLowerCase() || '';
+  if ((hostname !== 'www.w24.at' && hostname !== 'w24.at') || pathname !== '/news') {
+    return { items: [], stats: summarizeStats([]) };
+  }
+
+  const deduped = new Map<string, ParsedFeedItemWithMissing>();
+  const datePattern = /(\d{2})\.(\d{2})\.(\d{4}),\s*(\d{2}):(\d{2})\s*Uhr/i;
+  const itemPattern =
+    /<li>\s*<a class="clearfix hasAuthor" href="([^"]+)"[\s\S]*?<div>\s*([^<]+)\s*<\/div>[\s\S]*?<h2>([\s\S]*?)<\/h2>[\s\S]*?<div class="smallDate">\s*([^<]+?)\s*<\/div>[\s\S]*?<div class="teaser">([\s\S]*?)<\/div>/g;
+
+  for (const match of html.matchAll(itemPattern)) {
+    const link = resolveFeedLink(match[1] || '', baseUrl);
+    if (!link) continue;
+
+    const rawCategory = stripHtml(match[2] || '').replace(/\u00a0/g, ' ').trim();
+    const title = stripHtml(match[3] || '').trim() || inferTitleFromLink(link) || link;
+    const rawPublishedAt = normalizeHtmlText(match[4] || '').trim();
+    const rawSummary = stripHtml(match[5] || '').replace(/\s+/g, ' ').trim();
+    const dateMatch = rawPublishedAt.match(datePattern);
+    const month = Number.parseInt(dateMatch?.[2] || '0', 10);
+    const publishedAt = dateMatch
+      ? buildFixedOffsetIso(
+          Number.parseInt(dateMatch?.[3] || '0', 10),
+          month,
+          Number.parseInt(dateMatch?.[1] || '0', 10),
+          Number.parseInt(dateMatch?.[4] || '0', 10),
+          Number.parseInt(dateMatch?.[5] || '0', 10),
+          month >= 4 && month <= 10 ? '+02:00' : '+01:00'
+        )
+      : inferPublishedAtFromLink(link);
+
+    const categories = rawCategory && rawCategory !== '&nbsp;' ? [normalizeHtmlText(rawCategory)] : [];
+    deduped.set(link, {
+      title,
+      description: rawSummary,
+      link,
+      publishedAt,
+      categories,
+      stableId: link,
+      missingTitle: !title,
+      missingLink: !link,
+      missingSummary: !rawSummary,
+      missingPublishedAt: !publishedAt,
+    });
+  }
+
+  const rows = [...deduped.values()]
+    .sort((left, right) => {
+      const leftMs = left.publishedAt ? Date.parse(left.publishedAt) : Number.NEGATIVE_INFINITY;
+      const rightMs = right.publishedAt ? Date.parse(right.publishedAt) : Number.NEGATIVE_INFINITY;
+      return rightMs - leftMs;
+    })
+    .slice(0, limit);
+
+  return {
+    items: toItems(rows),
+    stats: summarizeStats(rows),
+  };
+}
+
 function parseAboUnderrattelserHtmlCollectionWithStats(html: string, limit = 12, baseUrl?: string): ParsedFeedBatch {
   let parsedUrl: URL | null = null;
   try {
@@ -1056,6 +1124,11 @@ export function parseHtmlCollectionWithStats(html: string, limit = 12, baseUrl?:
   const soyChileResult = parseSoyChileHtmlCollectionWithStats(html, limit, baseUrl);
   if (soyChileResult.items.length > 0 || soyChileResult.stats.totalCandidates > 0) {
     return soyChileResult;
+  }
+
+  const w24Result = parseW24HtmlCollectionWithStats(html, limit, baseUrl);
+  if (w24Result.items.length > 0 || w24Result.stats.totalCandidates > 0) {
+    return w24Result;
   }
 
   const aboUnderrattelserResult = parseAboUnderrattelserHtmlCollectionWithStats(html, limit, baseUrl);

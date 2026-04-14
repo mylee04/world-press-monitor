@@ -23839,6 +23839,13 @@
           "sitemapUrl": "https://radiocarve.uy/sitemap_index.xml"
         },
         {
+          "name": "Medios Públicos",
+          "url": "https://mediospublicos.uy/feed/",
+          "status": "NEW",
+          "checkedDate": null,
+          "valid": "needs verification"
+        },
+        {
           "name": "El Telégrafo",
           "url": "https://www.eltelegrafo.com/feed/",
           "status": "⏩ OFFICIAL",
@@ -23847,12 +23854,27 @@
           "sitemapUrl": "https://www.eltelegrafo.com/sitemap.xml"
         },
         {
+          "name": "El Pueblo",
+          "url": "https://elpueblodigital.uy/feed/",
+          "status": "NEW",
+          "checkedDate": null,
+          "valid": "needs verification",
+          "sitemapUrl": "https://elpueblodigital.uy/wp-sitemap.xml"
+        },
+        {
           "name": "Carmelo Portal",
           "url": "https://www.carmeloportal.com/feed",
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
           "sitemapUrl": "https://www.carmeloportal.com/sitemap_index.xml"
+        },
+        {
+          "name": "Correo de Punta del Este",
+          "url": "https://correopuntadeleste.com/feed/",
+          "status": "NEW",
+          "checkedDate": null,
+          "valid": "needs verification"
         },
         {
           "name": "San José Ahora",
@@ -23967,28 +23989,6 @@
         {
           "name": "Tenfield - RSS",
           "url": "https://www.tenfield.com.uy/rss",
-          "status": "NEW",
-          "checkedDate": null,
-          "valid": "needs verification"
-        }
-        ,{
-          "name": "Medios Públicos",
-          "url": "https://mediospublicos.uy/feed/",
-          "status": "NEW",
-          "checkedDate": null,
-          "valid": "needs verification"
-        }
-        ,{
-          "name": "El Pueblo",
-          "url": "https://elpueblodigital.uy/feed/",
-          "status": "NEW",
-          "checkedDate": null,
-          "valid": "needs verification",
-          "sitemapUrl": "https://elpueblodigital.uy/wp-sitemap.xml"
-        }
-        ,{
-          "name": "Correo de Punta del Este",
-          "url": "https://correopuntadeleste.com/feed/",
           "status": "NEW",
           "checkedDate": null,
           "valid": "needs verification"
