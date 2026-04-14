@@ -6,6 +6,18 @@
 
 ## Unreleased
 
+### [615cfe79] Apply RSS WAF remediation and stale disables
+- Commit: 615cfe79185ff639ba0a8b210b55b07c55c4f5c6
+- Date: 2026-04-14 08:23:09 -0500
+- Author: Kevinlee49
+  - Changed files:
+    - M	data/rss-atlas.json
+    - M	scripts/rss-hard-403-backlog.ts
+  - Git stat:
+  - data/rss-atlas.json             | 152 ++++++++++++++++++++++++++++------------
+  -  scripts/rss-hard-403-backlog.ts |  15 ++++
+  -  2 files changed, 121 insertions(+), 46 deletions(-)
+
 ### [25a743a] Clarify ops map data source provenance
 - Commit: 25a743a33eec71e13416a5533c951e0e85d0f315
 - Date: 2026-04-13 07:35:31 -0500
