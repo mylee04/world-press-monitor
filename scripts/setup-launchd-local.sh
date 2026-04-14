@@ -17,12 +17,18 @@ WPR_LAUNCHD_DIR="${WPR_LAUNCHD_DIR:-${WPM_LAUNCHD_DIR:-${HOME}/Library/LaunchAge
 LAUNCHD_GUI_DOMAIN="gui/$(id -u)"
 LAUNCHD_USER_DOMAIN="user/$(id -u)"
 LAUNCHD_STATUS_DOMAINS=("${LAUNCHD_GUI_DOMAIN}" "${LAUNCHD_USER_DOMAIN}")
+WPR_LAUNCHD_FORCE_ACTIVE_RELOAD="${WPR_LAUNCHD_FORCE_ACTIVE_RELOAD:-0}"
 
 PLIST_NAMES=(
   "com.wpr.api-news.plist"
   "com.wpr.api-tunnel.plist"
   "com.wpr.api-runtime-watchdog.plist"
   "com.wpr.ingest-hourly.plist"
+  "com.wpr.ingest-benchmark-hourly.plist"
+  "com.wpr.map-snapshots-hourly.plist"
+  "com.wpr.customer-dashboard-hourly.plist"
+  "com.wpr.news-country-discord-hourly.plist"
+  "com.wpr.ingest-ops-hourly.plist"
   "com.wpr.ingest-rss-fastlane-strict.plist"
   "com.wpr.ingest-rss-fastlane-relaxed.plist"
   "com.wpr.health-daily.plist"
@@ -42,6 +48,61 @@ LEGACY_PLIST_NAMES=(
 
 escape_sed_replacement() {
   printf '%s' "$1" | sed -e 's/[\/&|]/\\&/g'
+}
+
+is_truthy() {
+  case "${1:-}" in
+    1|true|TRUE|yes|YES|on|ON)
+      return 0
+      ;;
+    *)
+      return 1
+      ;;
+  esac
+}
+
+is_protected_running_job_label() {
+  local label=$1
+  case "${label}" in
+    com.wpr.ingest-hourly|com.wpm.ingest-hourly|com.wpr.ingest-benchmark-hourly|com.wpr.map-snapshots-hourly|com.wpr.customer-dashboard-hourly|com.wpr.news-country-discord-hourly|com.wpr.ingest-ops-hourly|com.wpr.ingest-rss-fastlane-strict|com.wpr.ingest-rss-fastlane-relaxed|com.wpm.ingest-rss-fastlane-strict|com.wpm.ingest-rss-fastlane-relaxed)
+      return 0
+      ;;
+    *)
+      return 1
+      ;;
+  esac
+}
+
+label_is_running() {
+  local label=$1
+  local domain=""
+  local output=""
+
+  for domain in "${LAUNCHD_STATUS_DOMAINS[@]}"; do
+    output="$(launchctl print "${domain}/${label}" 2>/dev/null || true)"
+    if [ -z "${output}" ]; then
+      continue
+    fi
+    if printf '%s\n' "${output}" | rg -q 'active count = [1-9][0-9]*|state = running|state = xpcproxy'; then
+      return 0
+    fi
+  done
+
+  return 1
+}
+
+should_defer_reload_for_label() {
+  local label=$1
+
+  if is_truthy "${WPR_LAUNCHD_FORCE_ACTIVE_RELOAD}"; then
+    return 1
+  fi
+
+  if ! is_protected_running_job_label "${label}"; then
+    return 1
+  fi
+
+  label_is_running "${label}"
 }
 
 bootout_label_all_domains() {
@@ -72,7 +133,7 @@ print_label_status() {
 bootstrap_domain_for_label() {
   local label=$1
   case "${label}" in
-    com.wpr.ingest-hourly|com.wpm.ingest-hourly|com.wpr.ingest-rss-fastlane-strict|com.wpr.ingest-rss-fastlane-relaxed|com.wpm.ingest-rss-fastlane-strict|com.wpm.ingest-rss-fastlane-relaxed)
+    com.wpr.ingest-hourly|com.wpm.ingest-hourly|com.wpr.ingest-benchmark-hourly|com.wpr.map-snapshots-hourly|com.wpr.customer-dashboard-hourly|com.wpr.news-country-discord-hourly|com.wpr.ingest-ops-hourly|com.wpr.ingest-rss-fastlane-strict|com.wpr.ingest-rss-fastlane-relaxed|com.wpm.ingest-rss-fastlane-strict|com.wpm.ingest-rss-fastlane-relaxed)
       printf '%s\n' "${LAUNCHD_USER_DOMAIN}"
       ;;
     *)
@@ -85,17 +146,23 @@ bootstrap_label() {
   local label=$1
   local target_path=$2
   local bootstrap_domain=""
+  local attempt=0
 
   bootstrap_domain="$(bootstrap_domain_for_label "${label}")"
   launchctl enable "${bootstrap_domain}/${label}" >/dev/null 2>&1 || true
-  if launchctl bootstrap "${bootstrap_domain}" "${target_path}" >/dev/null 2>&1; then
-    return 0
-  fi
+  while [ "${attempt}" -lt 3 ]; do
+    if launchctl bootstrap "${bootstrap_domain}" "${target_path}" >/dev/null 2>&1; then
+      return 0
+    fi
 
-  if launchctl print "${bootstrap_domain}/${label}" >/dev/null 2>&1; then
-    echo "WARN: launchctl bootstrap returned non-zero but ${label} is loaded in ${bootstrap_domain}" >&2
-    return 0
-  fi
+    if launchctl print "${bootstrap_domain}/${label}" >/dev/null 2>&1; then
+      echo "WARN: launchctl bootstrap returned non-zero but ${label} is loaded in ${bootstrap_domain}" >&2
+      return 0
+    fi
+
+    sleep 1
+    attempt=$((attempt + 1))
+  done
 
   echo "ERROR: failed to bootstrap ${label} in ${bootstrap_domain}" >&2
   return 1
@@ -115,11 +182,21 @@ sync_runtime_repo() {
     --exclude 'out' \
     --exclude '.next' \
     --exclude '.wpr-state' \
+    --exclude 'audits/browser-sitemap-profile' \
+    --exclude 'audits/playwright-sitemap-profile' \
+    --exclude 'audits/playwright-sitemap-profile-debug' \
+    --exclude 'data/articles.db' \
     --exclude 'data/news.db' \
+    --exclude 'data/dashboard-summary.snapshot.json' \
+    --exclude 'data/country-benchmark.snapshot.json' \
+    --exclude 'data/map-country-metrics.snapshot.*.json' \
+    --exclude 'data/map-publishers.snapshot.*.json' \
+    --exclude 'data/map-country-sources.snapshot.*.json' \
     "${PROJECT_ROOT}/" "${WPR_RUNTIME_REPO}/"
 
   chmod +x \
     "${WPR_RUNTIME_REPO}/scripts/ensure-api-runtime-local.sh" \
+    "${WPR_RUNTIME_REPO}/scripts/run-ingest-downstream-task.sh" \
     "${WPR_RUNTIME_REPO}/scripts/run-api-news.sh" \
     "${WPR_RUNTIME_REPO}/scripts/run-ingest-hourly-local.sh" \
     "${WPR_RUNTIME_REPO}/scripts/run-ingest-rss-fastlane-local.sh" \
@@ -172,6 +249,10 @@ install_launch_agents() {
     local target_path="${WPR_LAUNCHD_DIR}/${plist_name}"
 
     render_plist "${template_path}" "${target_path}"
+    if should_defer_reload_for_label "${label}"; then
+      echo "INFO: ${label} is currently running; keeping the active job alive and deferring launchd reload." >&2
+      continue
+    fi
     bootout_label_all_domains "${label}"
     bootstrap_label "${label}" "${target_path}"
   done
@@ -216,8 +297,10 @@ Usage:
 
 Notes:
   - Runtime repo defaults to ~/srv/world-press-radar/repo.
-  - Hourly country Discord report and hourly ingest ops report are chained from run-ingest-hourly-local.sh.
+  - Hourly ingest only runs ingest:once and records a success marker.
+  - Benchmark/map/customer/news-country/ingest-ops run as separate downstream jobs with their own locks.
   - Fast-lane RSS ingest runs as separate launchd jobs: strict every 30m, relaxed every 60m.
+  - update/install keeps active ingest/downstream jobs alive by default; set WPR_LAUNCHD_FORCE_ACTIVE_RELOAD=1 to force a reload anyway.
   - Legacy pre-radar launch agents are removed on install/update.
   - Do not point launchd at Desktop/Documents/Downloads worktrees.
 USAGE

@@ -76,6 +76,7 @@ function getDisabledSummaryMessage(reason?: string): string {
 
 function getSummarySourceLabel(source?: DashboardDataSource): string {
   if (source === 'upstream') return 'Live portal';
+  if (source === 'local-fallback') return 'Local live fallback';
   if (source === 'snapshot-fallback') return 'Snapshot fallback';
   if (source === 'disabled-snapshot-fallback') return 'Disabled snapshot fallback';
   if (source === 'disabled-fallback') return 'Disabled fallback';
@@ -85,6 +86,10 @@ function getSummarySourceLabel(source?: DashboardDataSource): string {
 function getSummarySourceMessage(summary: NewsApiDashboardSummaryResponse): string {
   if (summary.dataSource === 'upstream') {
     return 'Using the live portal API. Metrics may lag the source database by up to 1 hour.';
+  }
+
+  if (summary.dataSource === 'local-fallback') {
+    return 'Using the local live summary because the portal payload was stale or unavailable.';
   }
 
   const reason = summary.reason?.trim() || '';

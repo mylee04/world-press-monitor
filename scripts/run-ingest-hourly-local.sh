@@ -14,6 +14,8 @@ STATE_DIR="${WPR_STATE_DIR:-${WPM_STATE_DIR:-${PROJECT_ROOT}/.wpr-state}}"
 LOCK_DIR="${STATE_DIR}/ingest-hourly.lock"
 LOCK_PID_FILE="${LOCK_DIR}/pid"
 LOCK_STARTED_FILE="${LOCK_DIR}/started_at_utc"
+LAST_SUCCESS_RUN_ID_FILE="${STATE_DIR}/ingest-hourly-last-success-run-id"
+LAST_SUCCESS_COMPLETED_FILE="${STATE_DIR}/ingest-hourly-last-success-completed-at-utc"
 INGEST_MAX_RUNTIME_SECONDS="${WPR_INGEST_MAX_RUNTIME_SECONDS:-${WPM_INGEST_MAX_RUNTIME_SECONDS:-6600}}"
 INGEST_TIMEOUT_GRACE_SECONDS="${WPR_INGEST_TIMEOUT_GRACE_SECONDS:-${WPM_INGEST_TIMEOUT_GRACE_SECONDS:-60}}"
 
@@ -189,7 +191,7 @@ send_ingest_failure_notice() {
 ⚠️ WPR ingest ${reason} ($(date -u '+%Y-%m-%dT%H:%M:%SZ'))
 Started: ${started_at}
 Reason: ${detail}
-Action: this run did not reach post-ingest reporting, so no fresh hourly country/ops Discord report was published from it.
+Action: this run did not record a successful ingest marker, so downstream benchmark/map/customer/Discord jobs will not run for it.
 Next step: the next scheduled hourly ingest will retry automatically.
 EOF
   )
@@ -205,33 +207,21 @@ EOF
   fi
 }
 
-run_post_ingest_hooks() {
-  if [ "${WPR_POST_INGEST_REPORTS:-${WPM_POST_INGEST_REPORTS:-1}}" = "0" ]; then
-    printf '[%s] Post-ingest hooks disabled via WPR_POST_INGEST_REPORTS=0\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
-    return 0
-  fi
+write_ingest_success_marker() {
+  local run_id="unknown"
+  local completed_at=""
 
-  printf '[%s] Trigger post-ingest hourly reports\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
-
-  if ! bash "${SCRIPT_DIR}/run-news-country-discord-report.sh"; then
-    printf '[%s] WARN: news-country discord hook failed\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
+  if [ -f "${LOCK_STARTED_FILE}" ]; then
+    run_id="$(tr -d '\n' < "${LOCK_STARTED_FILE}" 2>/dev/null || printf 'unknown')"
   fi
+  completed_at="$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
 
-  if ! bash "${SCRIPT_DIR}/run-ingest-ops-hourly.sh"; then
-    printf '[%s] WARN: ingest-ops hourly hook failed\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
-  fi
-
-  if ! bun run benchmark:build; then
-    printf '[%s] WARN: benchmark snapshot table build hook failed\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
-  fi
-
-  if ! bun run map:snapshots:build; then
-    printf '[%s] WARN: map snapshot build hook failed\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
-  fi
-
-  if ! bun run customer:dashboard:snapshots:build; then
-    printf '[%s] WARN: customer dashboard snapshot build hook failed\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
-  fi
+  printf '%s\n' "${run_id}" > "${LAST_SUCCESS_RUN_ID_FILE}"
+  printf '%s\n' "${completed_at}" > "${LAST_SUCCESS_COMPLETED_FILE}"
+  printf '[%s] Recorded hourly ingest success marker run_id=%s completed=%s\n' \
+    "$(date -u '+%Y-%m-%d %H:%M:%S %Z')" \
+    "${run_id}" \
+    "${completed_at}"
 }
 
 ingest_exit_code=0
@@ -248,4 +238,4 @@ if [ "${ingest_exit_code}" -ne 0 ]; then
   exit "${ingest_exit_code}"
 fi
 
-run_post_ingest_hooks >>"${LOG_FILE}" 2>&1
+write_ingest_success_marker >>"${LOG_FILE}" 2>&1

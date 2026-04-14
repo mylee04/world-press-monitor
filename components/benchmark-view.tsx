@@ -145,6 +145,7 @@ function formatDateTimeShort(value: string | null | undefined): string {
 
 function getBenchmarkSourceLabel(source?: DashboardDataSource): string {
   if (source === 'upstream') return 'Live portal';
+  if (source === 'local-fallback') return 'Local live fallback';
   if (source === 'snapshot-fallback') return 'Snapshot fallback';
   if (source === 'disabled-snapshot-fallback') return 'Disabled snapshot fallback';
   if (source === 'disabled-fallback') return 'Disabled fallback';

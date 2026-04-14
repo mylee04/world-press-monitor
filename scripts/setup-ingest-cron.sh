@@ -38,6 +38,10 @@ Commands:
 Deprecated:
   Local macOS runtime should use `scripts/setup-launchd-local.sh`.
   This cron helper remains only for legacy/manual hosts.
+
+Important:
+  This helper installs only the core hourly ingest.
+  Install `scripts/setup-ingest-downstream-cron.sh` separately for benchmark/map/customer/Discord downstream jobs.
 USAGE
 }
 

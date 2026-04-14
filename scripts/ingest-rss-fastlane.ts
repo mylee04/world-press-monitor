@@ -273,7 +273,6 @@ function buildIngestCommand(options: CliOptions, outletIds: string[]): { args: s
       '--method=rss',
     ],
     env: {
-      INGEST_ENABLE_CANADA_PRIORITY_PINNING: 'false',
       INGEST_FETCH_CONCURRENCY: String(options.fetchConcurrency),
       INGEST_ITEM_MAP_CONCURRENCY: String(options.itemMapConcurrency),
       INGEST_HYBRID_OUTLET_SCHEDULING: 'false',

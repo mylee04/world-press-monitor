@@ -96,7 +96,6 @@ function buildCommand(mode: Mode, reconcileDays: number): { args: string[]; env:
         '--method=rss',
       ],
       env: {
-        INGEST_ENABLE_CANADA_PRIORITY_PINNING: 'false',
         INGEST_FETCH_CONCURRENCY: '6',
         INGEST_ITEM_MAP_CONCURRENCY: '12',
       },
@@ -112,9 +111,7 @@ function buildCommand(mode: Mode, reconcileDays: number): { args: string[]; env:
       '--method=rss',
       '--method=sitemap',
     ],
-    env: {
-      INGEST_ENABLE_CANADA_PRIORITY_PINNING: 'true',
-    },
+    env: {},
   };
 }
 

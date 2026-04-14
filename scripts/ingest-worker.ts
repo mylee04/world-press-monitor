@@ -23,7 +23,6 @@ import { normalizeSourceCategories } from '../lib/article-taxonomy';
 import { classifySection, classifySectionByKeyword } from '../lib/keyword-classifier';
 import { inferGeoFromArticleSignals } from '../lib/geo';
 import { getCanadaSyndicationNetworkByUrl, type CanadaSyndicationNetwork } from '../lib/canada-network-groups';
-import { isCanadaPriorityOutlet } from '../lib/canada-priority-outlets';
 import { makeOutletId } from '../lib/outlet-id';
 import { buildFeedStableId, deriveUrlArticleStableId } from '../lib/pipeline';
 import { normalizeLooseDateToIso, parseLooseDateMs } from '../lib/date-parsing';
@@ -32,7 +31,7 @@ import {
   ensureWorkerAuditsDir,
   filterItemsForPersistence,
   pickOutletChunk,
-  pickStableOutletBucketChunk,
+  pickStableOutletBucketChunkNoWrap,
   writeWorkerState,
   writeHybridBucketState,
   type BackfillWindow,
@@ -133,21 +132,20 @@ const HYBRID_HEAD_MIN_ARTICLES = Math.max(
 );
 const HYBRID_HEAD_MAX_OUTLETS = Math.max(
   10,
-  Math.min(5000, Number.parseInt(process.env.INGEST_HEAD_MAX_OUTLETS || '2000', 10) || 2000)
+  Math.min(5000, Number.parseInt(process.env.INGEST_HEAD_MAX_OUTLETS || '5000', 10) || 5000)
 );
-const HYBRID_LONG_TAIL_ROTATION_HOURS = Math.max(
-  2,
-  Math.min(24, Number.parseInt(process.env.INGEST_LONG_TAIL_ROTATION_HOURS || '4', 10) || 4)
-);
-const HYBRID_MAX_OUTLETS_PER_RUN = Math.max(
-  100,
-  Math.min(5000, Number.parseInt(process.env.INGEST_HYBRID_MAX_OUTLETS || '2000', 10) || 2000)
-);
-const HYBRID_MIN_LONG_TAIL_OUTLETS_PER_RUN = Math.max(
+const HYBRID_LONG_TAIL_TARGET_OUTLETS_PER_RUN = Math.max(
   0,
-  Math.min(2000, Number.parseInt(process.env.INGEST_HYBRID_MIN_LONG_TAIL_OUTLETS || '900', 10) || 900)
+  Math.min(
+    2000,
+    Number.parseInt(
+      process.env.INGEST_HYBRID_TARGET_LONG_TAIL_OUTLETS
+      || process.env.INGEST_HYBRID_MIN_LONG_TAIL_OUTLETS
+      || '900',
+      10
+    ) || 900
+  )
 );
-const ENABLE_CANADA_PRIORITY_PINNING = parseBoolEnv(process.env.INGEST_ENABLE_CANADA_PRIORITY_PINNING, true);
 const ATLAS_PATH = process.env.ATLAS_PATH || resolve(process.cwd(), 'data/rss-atlas.json');
 const STATE_FILE = resolve(process.cwd(), 'audits/ingest-worker-state.json');
 const SUMMARY_FILE = resolve(process.cwd(), 'audits/ingest-worker-last.json');
@@ -394,15 +392,6 @@ async function selectOutletsForRun(
     return { ...defaultSelection, selectionSummary: defaultSummary };
   }
 
-  const pinnedOutlets = ENABLE_CANADA_PRIORITY_PINNING
-    ? sourceFilteredOutlets.filter((outlet) => isCanadaPriorityOutlet(outlet))
-    : [];
-  const pinnedOutletIds = new Set(pinnedOutlets.map((outlet) => outlet.id));
-  const hybridCandidateOutlets = pinnedOutlets.length > 0
-    ? sourceFilteredOutlets.filter((outlet) => !pinnedOutletIds.has(outlet.id))
-    : sourceFilteredOutlets;
-  const schedulingBudget = Math.max(0, HYBRID_MAX_OUTLETS_PER_RUN - pinnedOutlets.length);
-
   const recentCounts = await readNewsArticlesRecentCounts({
     hours: HYBRID_HEAD_WINDOW_HOURS,
     limit: 100000,
@@ -422,7 +411,7 @@ async function selectOutletsForRun(
     recentCountByOutlet.set(buildSourceCountryKey(row.source, row.country), row.articleCount);
   }
 
-  const rankedOutlets = hybridCandidateOutlets
+  const rankedOutlets = sourceFilteredOutlets
     .map((outlet) => ({
       outlet,
       articleCount: recentCountByOutlet.get(buildSourceCountryKey(outlet.schedulingSource || outlet.name, outlet.country)) || 0,
@@ -431,38 +420,31 @@ async function selectOutletsForRun(
 
   const headCandidates = rankedOutlets.filter((entry) => entry.articleCount >= HYBRID_HEAD_MIN_ARTICLES);
   const longTailOutlets = rankedOutlets.filter((entry) => entry.articleCount < HYBRID_HEAD_MIN_ARTICLES).map((entry) => entry.outlet);
-  const rotationBucket = Math.floor(nowMs / (60 * 60 * 1000)) % HYBRID_LONG_TAIL_ROTATION_HOURS;
-  const longTailSelection = pickStableOutletBucketChunk(
+  const selectedHeadOutlets = headCandidates
+    .slice(0, HYBRID_HEAD_MAX_OUTLETS)
+    .map((entry) => entry.outlet);
+  const longTailSelection = pickStableOutletBucketChunkNoWrap(
     longTailOutlets,
-    HYBRID_LONG_TAIL_ROTATION_HOURS,
-    rotationBucket,
-    schedulingBudget,
+    1,
+    0,
+    HYBRID_LONG_TAIL_TARGET_OUTLETS_PER_RUN,
     STATE_FILE
   );
-  const reservedLongTailOutlets = Math.min(HYBRID_MIN_LONG_TAIL_OUTLETS_PER_RUN, schedulingBudget);
-  const headSelectionBudget = longTailSelection.total > 0
-    ? Math.max(0, schedulingBudget - Math.min(reservedLongTailOutlets, longTailSelection.total))
-    : schedulingBudget;
-  const selectedHeadOutlets = headCandidates
-    .slice(0, Math.min(HYBRID_HEAD_MAX_OUTLETS, headSelectionBudget))
-    .map((entry) => entry.outlet);
-  const remainingBudget = Math.max(0, schedulingBudget - selectedHeadOutlets.length);
-  const selectedLongTailOutlets = longTailSelection.selected;
-  const boundedLongTailOutlets = remainingBudget >= selectedLongTailOutlets.length
-    ? selectedLongTailOutlets
-    : selectedLongTailOutlets.slice(0, remainingBudget);
+  const boundedLongTailOutlets = longTailSelection.selected;
+  const longTailCycleHours = boundedLongTailOutlets.length > 0
+    ? Math.max(1, Math.ceil(longTailOutlets.length / Math.max(1, HYBRID_LONG_TAIL_TARGET_OUTLETS_PER_RUN)))
+    : null;
+  const longTailCycleStep = boundedLongTailOutlets.length > 0
+    ? Math.floor(longTailSelection.offset / Math.max(1, HYBRID_LONG_TAIL_TARGET_OUTLETS_PER_RUN))
+    : null;
   const headOutletIds = new Set(selectedHeadOutlets.map((outlet) => outlet.id));
   const selectedOutletIds = new Set([
-    ...pinnedOutletIds,
     ...headOutletIds,
     ...boundedLongTailOutlets.map((outlet) => outlet.id),
   ]);
   const selected = sourceFilteredOutlets.filter((outlet) => selectedOutletIds.has(outlet.id));
-  const selectedLongTailNextOffset =
-    longTailSelection.total === 0
-      ? 0
-      : (longTailSelection.offset + boundedLongTailOutlets.length) % longTailSelection.total;
-  const budgetCapped = selectedHeadOutlets.length < Math.min(headCandidates.length, HYBRID_HEAD_MAX_OUTLETS)
+  const selectedLongTailNextOffset = longTailSelection.nextOffset;
+  const budgetCapped = selectedHeadOutlets.length < headCandidates.length
     || boundedLongTailOutlets.length < longTailSelection.total;
 
   return {
@@ -471,24 +453,24 @@ async function selectOutletsForRun(
     nextOffset: selectedLongTailNextOffset,
     selectionSummary: {
       mode: 'hybrid',
-      reason: pinnedOutlets.length > 0 ? '24h_volume_plus_4h_rotation_with_canada_priority' : '24h_volume_plus_4h_rotation',
+      reason: '24h_volume_plus_sequential_long_tail',
       dbBacked: true,
-      pinnedOutlets: pinnedOutlets.length,
-      pinnedReason: pinnedOutlets.length > 0 ? 'canada_priority_every_run' : null,
+      pinnedOutlets: 0,
+      pinnedReason: null,
       headOutlets: selectedHeadOutlets.length,
       longTailOutlets: longTailOutlets.length,
       longTailSelected: boundedLongTailOutlets.length,
       headWindowHours: HYBRID_HEAD_WINDOW_HOURS,
       headMinArticles: HYBRID_HEAD_MIN_ARTICLES,
       headMaxOutlets: HYBRID_HEAD_MAX_OUTLETS,
-      rotationHours: HYBRID_LONG_TAIL_ROTATION_HOURS,
-      rotationBucket,
+      rotationHours: longTailCycleHours,
+      rotationBucket: longTailCycleStep,
       longTailBucketOffset: longTailSelection.offset,
       longTailBucketNextOffset: selectedLongTailNextOffset,
       longTailBucketSize: longTailSelection.total,
-      maxOutletsPerRun: HYBRID_MAX_OUTLETS_PER_RUN,
-      reservedLongTailOutlets,
-      budgetCapped: budgetCapped || pinnedOutlets.length > HYBRID_MAX_OUTLETS_PER_RUN,
+      maxOutletsPerRun: selectedHeadOutlets.length + HYBRID_LONG_TAIL_TARGET_OUTLETS_PER_RUN,
+      reservedLongTailOutlets: HYBRID_LONG_TAIL_TARGET_OUTLETS_PER_RUN,
+      budgetCapped,
     },
   };
 }
@@ -4047,10 +4029,11 @@ async function runOnce(): Promise<void> {
     && selectionSummary.rotationHours
     && selectionSummary.rotationBucket !== null
   ) {
+    const usesSequentialLongTailRotation = selectionSummary.reason === '24h_volume_plus_sequential_long_tail';
     writeHybridBucketState(
       STATE_FILE,
-      selectionSummary.rotationHours,
-      selectionSummary.rotationBucket,
+      usesSequentialLongTailRotation ? 1 : selectionSummary.rotationHours,
+      usesSequentialLongTailRotation ? 0 : selectionSummary.rotationBucket,
       nextOffset,
       summary.generatedAt,
       process.cwd()

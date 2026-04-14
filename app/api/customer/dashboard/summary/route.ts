@@ -37,6 +37,66 @@ function hasAnyDashboardSummaryPayload(payload: DashboardSummaryPayload | null |
   return Boolean(payload && typeof payload === 'object');
 }
 
+function parseGeneratedAt(value: string | null | undefined): number {
+  if (!value) return Number.NEGATIVE_INFINITY;
+  const parsed = Date.parse(value);
+  return Number.isFinite(parsed) ? parsed : Number.NEGATIVE_INFINITY;
+}
+
+function normalizeLocalSummaryPayload(
+  summary: Awaited<ReturnType<typeof readNewsDashboardSummary>>
+): DashboardSummaryPayload | null {
+  if (summary.storage !== 'postgres') {
+    return null;
+  }
+
+  return {
+    storage: summary.storage,
+    generatedAt: summary.generatedAt,
+    windowDays: summary.windowDays,
+    latestHours: summary.latestHours,
+    latestDate: summary.latestDate,
+    previewDate: summary.previewDate,
+    totals: summary.totals,
+    sectionTotals: summary.sectionTotals,
+    recentDates: summary.recentDates,
+    topicSampleSize: summary.topicSampleSize,
+    topicGroups: summary.topicGroups,
+    sourceCategoryCoverage: summary.sourceCategoryCoverage,
+    preview: {
+      articleCount: summary.preview.articleCount,
+      topCountries: summary.preview.topCountries
+        .filter((item): item is { country: string; count: number } => Boolean(item.country))
+        .map((item) => ({
+          country: item.country,
+          countryCode: null,
+          count: item.count,
+        })),
+      headlines: summary.preview.headlines.map((item) => ({
+        ...item,
+        countryCode: null,
+      })),
+    },
+  };
+}
+
+function withLocalCheckedSourceCount(
+  payload: DashboardSummaryPayload,
+  localCheckedSources24h: number | null
+): DashboardSummaryPayload {
+  const totals = payload.totals && typeof payload.totals === 'object' ? payload.totals : {};
+  if (localCheckedSources24h == null) {
+    return payload;
+  }
+  return {
+    ...payload,
+    totals: {
+      ...totals,
+      checkedSources24h: localCheckedSources24h,
+    },
+  };
+}
+
 async function readUpstreamFailureMessage(upstream: Response): Promise<string | undefined> {
   try {
     const rawPayload = await upstream.text();
@@ -144,6 +204,7 @@ export async function GET(request: NextRequest) {
   const snapshot = await readDashboardSummarySnapshot();
   const snapshotPayload = snapshot as unknown as DashboardSummaryPayload | null | undefined;
   const localSummary = await readNewsDashboardSummary();
+  const localSummaryPayload = normalizeLocalSummaryPayload(localSummary);
 
   const upstream = await proxyPortalServerApiRequest(request, '/api/dashboard/summary', {
     cacheControl: PUBLIC_MAP_RESPONSE_CACHE_CONTROL,
@@ -159,19 +220,31 @@ export async function GET(request: NextRequest) {
   if (upstream.ok) {
     const payload = (await upstream.clone().json().catch(() => null)) as DashboardSummaryPayload | null;
     if (isUsableDashboardSummarySnapshot(payload)) {
-      const totals = payload.totals && typeof payload.totals === 'object' ? payload.totals : {};
+      const upstreamPayload = withLocalCheckedSourceCount(payload, localCheckedSources24h);
+      if (
+        localSummaryPayload
+        && parseGeneratedAt(localSummaryPayload.generatedAt) > parseGeneratedAt(upstreamPayload.generatedAt)
+      ) {
+        return buildSummaryResponse(
+          {
+            ...withLocalCheckedSourceCount(localSummaryPayload, localCheckedSources24h),
+            dataSource: 'local-fallback',
+            reason: 'Local live summary is newer than the upstream portal payload.',
+          },
+          'local-fallback'
+        );
+      }
+      return buildSummaryResponse({ ...upstreamPayload, dataSource: 'upstream' }, 'upstream');
+    }
+
+    if (localSummaryPayload) {
       return buildSummaryResponse(
         {
-          ...payload,
-          dataSource: 'upstream',
-          totals: localCheckedSources24h == null
-            ? totals
-            : {
-                ...totals,
-                checkedSources24h: localCheckedSources24h,
-              },
+          ...withLocalCheckedSourceCount(localSummaryPayload, localCheckedSources24h),
+          dataSource: 'local-fallback',
+          reason: 'Using the local live summary because the upstream payload was unavailable or incomplete.',
         },
-        'upstream'
+        'local-fallback'
       );
     }
 

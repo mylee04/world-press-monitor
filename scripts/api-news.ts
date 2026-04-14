@@ -1874,12 +1874,12 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
       return;
     }
 
-    if (shouldUseSnapshotCache && summarySnapshot && summarySnapshot.storage === 'postgres') {
-      if (!isFreshDashboardSummarySnapshot(summarySnapshot, dashboardSummarySnapshotMaxAgeMs)) {
-        console.warn('[api-news] serving stale dashboard summary snapshot before live rebuild', {
-          generatedAt: (summarySnapshot as { generatedAt?: string | null }).generatedAt ?? null,
-        });
-      }
+    if (
+      shouldUseSnapshotCache
+      && summarySnapshot
+      && summarySnapshot.storage === 'postgres'
+      && isFreshDashboardSummarySnapshot(summarySnapshot, dashboardSummarySnapshotMaxAgeMs)
+    ) {
       dashboardSummaryCache = {
         cacheKey,
         payload: summarySnapshot,
@@ -1887,6 +1887,12 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
       };
       sendJsonResponse(req, res, jsonResponse(summarySnapshot, 200), rateLimitDecision);
       return;
+    }
+
+    if (shouldUseSnapshotCache && summarySnapshot && summarySnapshot.storage === 'postgres') {
+      console.warn('[api-news] stale dashboard summary snapshot detected; attempting live rebuild', {
+        generatedAt: (summarySnapshot as { generatedAt?: string | null }).generatedAt ?? null,
+      });
     }
 
     try {

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.wpr.map-snapshots-hourly</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/zsh</string>
+    <string>-lc</string>
+    <string>bash /Users/your-user/srv/world-press-radar/repo/scripts/run-ingest-downstream-task.sh --task=map</string>
+  </array>
+  <key>WorkingDirectory</key>
+  <string>/Users/your-user/srv/world-press-radar/repo</string>
+  <key>LimitLoadToSessionType</key>
+  <string>Background</string>
+  <key>RunAtLoad</key>
+  <false/>
+  <key>StartCalendarInterval</key>
+  <array>
+    <dict><key>Minute</key><integer>1</integer></dict>
+    <dict><key>Minute</key><integer>6</integer></dict>
+    <dict><key>Minute</key><integer>11</integer></dict>
+    <dict><key>Minute</key><integer>16</integer></dict>
+    <dict><key>Minute</key><integer>21</integer></dict>
+    <dict><key>Minute</key><integer>26</integer></dict>
+    <dict><key>Minute</key><integer>31</integer></dict>
+    <dict><key>Minute</key><integer>36</integer></dict>
+    <dict><key>Minute</key><integer>41</integer></dict>
+    <dict><key>Minute</key><integer>46</integer></dict>
+    <dict><key>Minute</key><integer>51</integer></dict>
+    <dict><key>Minute</key><integer>56</integer></dict>
+  </array>
+  <key>StandardOutPath</key>
+  <string>/Users/your-user/srv/world-press-radar/logs/launchd-map-snapshots-hourly.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/your-user/srv/world-press-radar/logs/launchd-map-snapshots-hourly.log</string>
+</dict>
+</plist>

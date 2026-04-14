@@ -20,7 +20,7 @@ fi
 CRON_LINE="${CRON_MINUTE} * * * * TZ=${CRON_TZ} /bin/bash ${RUNNER} >> ${PROJECT_ROOT}/logs/news-country-discord-hourly.log 2>&1"
 
 deprecation_notice() {
-  echo "Deprecated: local macOS scheduling should use launchd via scripts/setup-launchd-local.sh or chained hooks from ingest-hourly. Keep this cron path only for legacy/manual hosts." >&2
+  echo "Deprecated: local macOS scheduling should use launchd via scripts/setup-launchd-local.sh. Keep this cron path only for legacy/manual hosts." >&2
 }
 
 usage() {
@@ -36,7 +36,7 @@ Commands:
   print     Print crontab entry only.
 
 Deprecated:
-  Local macOS runtime should use `scripts/setup-launchd-local.sh` or the hourly ingest post-hooks.
+  Local macOS runtime should use `scripts/setup-launchd-local.sh`.
   This cron helper remains only for legacy/manual hosts.
 USAGE
 }

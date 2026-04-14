@@ -1,5 +1,6 @@
 export type DashboardDataSource =
   | 'upstream'
+  | 'local-fallback'
   | 'snapshot-fallback'
   | 'disabled-fallback'
   | 'disabled-snapshot-fallback';
