@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 
-import { writeFile } from 'node:fs/promises';
+import { rename, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { buildMapCountryMetricsPayload } from '@/lib/map-country-metrics-builder';
 import { buildMapCountrySourcesPayload } from '@/lib/map-country-sources-reader';
@@ -26,6 +26,12 @@ function getMapPublishersSnapshotPath(window: MapMetricWindow): string {
 
 function getMapCountrySourcesSnapshotPath(window: MapMetricWindow): string {
   return path.join(process.cwd(), 'data', `map-country-sources.snapshot.${window}.json`);
+}
+
+async function writeJsonFileAtomic(filePath: string, payload: unknown): Promise<void> {
+  const tempPath = `${filePath}.tmp`;
+  await writeFile(tempPath, `${JSON.stringify(payload)}\n`, 'utf8');
+  await rename(tempPath, filePath);
 }
 
 function parseArgValue(flag: string): string | null {
@@ -72,7 +78,7 @@ async function main(): Promise<void> {
       checkedRows,
     });
     await writeMapCountryMetricsSnapshot(countries, metricVersion);
-    await writeFile(getMapCountryMetricsSnapshotPath(window), JSON.stringify(countries));
+    await writeJsonFileAtomic(getMapCountryMetricsSnapshotPath(window), countries);
     console.log(
       `[map-snapshots] countries written window=${window} rows=${countries.countries.length} elapsedMs=${Date.now() - countriesStartedAt}`
     );
@@ -92,7 +98,7 @@ async function main(): Promise<void> {
         `[map-snapshots] country sources written window=${window} country=${country.country} rows=${countrySources.sources.length} elapsedMs=${Date.now() - countryStartedAt}`
       );
     }
-    await writeFile(getMapCountrySourcesSnapshotPath(window), JSON.stringify(countrySourcesSnapshot));
+    await writeJsonFileAtomic(getMapCountrySourcesSnapshotPath(window), countrySourcesSnapshot);
     console.log(
       `[map-snapshots] country sources snapshot written window=${window} countries=${countries.countries.length} elapsedMs=${Date.now() - countrySourcesStartedAt}`
     );
@@ -103,7 +109,7 @@ async function main(): Promise<void> {
       healthBySource,
     });
     await writeMapPublishersSnapshot(publishers, metricVersion);
-    await writeFile(getMapPublishersSnapshotPath(window), JSON.stringify(publishers));
+    await writeJsonFileAtomic(getMapPublishersSnapshotPath(window), publishers);
     console.log(
       `[map-snapshots] publishers written window=${window} rows=${publishers.publishers.length} elapsedMs=${Date.now() - publishersStartedAt}`
     );

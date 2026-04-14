@@ -19296,6 +19296,151 @@
           "valid": "valid"
         },
         {
+          "name": "Enköpings-Posten",
+          "url": "https://eposten.se/rss",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "sitemapUrl": "https://eposten.se/sitemap/sitemap-news.xml"
+        },
+        {
+          "name": "Eskilstuna-Kuriren",
+          "url": "https://ekuriren.se/rss",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "sitemapUrl": "https://ekuriren.se/sitemap/sitemap-news.xml"
+        },
+        {
+          "name": "Helagotland",
+          "url": "https://helagotland.se/rss",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "sitemapUrl": "https://helagotland.se/sitemap/sitemap-news.xml"
+        },
+        {
+          "name": "Katrineholms-Kuriren",
+          "url": "https://kkuriren.se/rss",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "sitemapUrl": "https://kkuriren.se/sitemap/sitemap-news.xml"
+        },
+        {
+          "name": "MVT",
+          "url": "https://mvt.se/rss",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "sitemapUrl": "https://mvt.se/sitemap/sitemap-news.xml"
+        },
+        {
+          "name": "Norrbottens-Kuriren",
+          "url": "https://kuriren.nu/rss",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "sitemapUrl": "https://kuriren.nu/sitemap/sitemap-news.xml"
+        },
+        {
+          "name": "NSD",
+          "url": "https://nsd.se/rss",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "sitemapUrl": "https://nsd.se/sitemap/sitemap-news.xml"
+        },
+        {
+          "name": "PT",
+          "url": "https://pt.se/rss",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "sitemapUrl": "https://pt.se/sitemap/sitemap-news.xml"
+        },
+        {
+          "name": "Strengnäs Tidning",
+          "url": "https://strengnastidning.se/rss",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "sitemapUrl": "https://strengnastidning.se/sitemap/sitemap-news.xml"
+        },
+        {
+          "name": "SN",
+          "url": "https://sn.se/rss",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "sitemapUrl": "https://sn.se/sitemap/sitemap-news.xml"
+        },
+        {
+          "name": "Vimmerby Tidning",
+          "url": "https://vimmerbytidning.se/rss",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "sitemapUrl": "https://vimmerbytidning.se/sitemap/sitemap-news.xml"
+        },
+        {
+          "name": "VT",
+          "url": "https://vt.se/rss",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "sitemapUrl": "https://vt.se/sitemap/sitemap-news.xml"
+        },
+        {
+          "name": "Smålands-Tidningen",
+          "url": "https://www.smt.se/feeds/feed.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Smålands Dagblad",
+          "url": "https://www.smalandsdagblad.se/feeds/feed.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Tranås Tidning",
+          "url": "https://www.tranastidning.se/feeds/feed.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Vetlanda-Posten",
+          "url": "https://www.vetlandaposten.se/feeds/feed.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Bärgslagsbladet/Arboga Tidning",
+          "url": "https://www.bblat.se/feeds/feed.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Västgöta-Bladet",
+          "url": "https://www.vastgotabladet.se/feeds/feed.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Skaraborgs Läns Tidning",
+          "url": "https://www.skaraborgslanstidning.se/feeds/feed.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
           "name": "SVT Lokal - Stockholm",
           "url": "https://www.svt.se/nyheter/lokalt/stockholm/rss.xml",
           "status": "NEW",
