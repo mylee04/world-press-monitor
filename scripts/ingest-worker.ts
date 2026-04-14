@@ -2389,6 +2389,8 @@ function shouldAttemptHtmlCollectionFeed(source: string, url: string): boolean {
       || hostname === 'herningfolkeblad.dk'
       || hostname === 'midtjyllandsavis.dk'
       || hostname === 'skivefolkeblad.dk'
+      || hostname === 'www.abounderrattelser.fi'
+      || hostname === 'abounderrattelser.fi'
       || (hostname === 'www.t13.cl' && pathname === '/lo-ultimo')
       || (hostname === 'www.soychile.cl' && (pathname === '/urljson/noticias' || pathname === '/todas'))
       || ((hostname === 'www.w24.at' || hostname === 'w24.at') && pathname === '/news')
@@ -2410,6 +2412,7 @@ function shouldAttemptHtmlCollectionFeed(source: string, url: string): boolean {
     || normalizedSource.includes('herning folkeblad - html collection')
     || normalizedSource.includes('midtjyllands avis - html collection')
     || normalizedSource.includes('skive folkeblad - html collection')
+    || normalizedSource.includes('abo underrattelser - html collection')
     || normalizedSource.includes('t13 - lo ultimo html collection')
     || normalizedSource.includes('soychile - todas las noticias html collection')
     || normalizedSource.includes('w24 - news html collection')

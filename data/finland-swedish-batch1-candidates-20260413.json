@@ -1,0 +1,26 @@
+[
+  {
+    "source": "Nya Ostis",
+    "rss": "https://www.nyaostis.fi/feed/"
+  },
+  {
+    "source": "Svenska Yle - Huvudstadsregionen",
+    "rss": "https://svenska.yle.fi/rss/huvudstadsregionen"
+  },
+  {
+    "source": "Svenska Yle - Vastnyland",
+    "rss": "https://svenska.yle.fi/rss/vastnyland"
+  },
+  {
+    "source": "Svenska Yle - Aboland",
+    "rss": "https://svenska.yle.fi/rss/aboland"
+  },
+  {
+    "source": "Svenska Yle - Osterbotten",
+    "rss": "https://svenska.yle.fi/rss/osterbotten"
+  },
+  {
+    "source": "Svenska Yle - Ostnyland",
+    "rss": "https://svenska.yle.fi/rss/ostnyland"
+  }
+]

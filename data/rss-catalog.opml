@@ -3712,10 +3712,19 @@
       <outline text="MTV Uutiset [needs verification]" title="MTV Uutiset [needs verification]" type="rss" xmlUrl="https://www.mtvuutiset.fi/sitemap.xml" htmlUrl="https://www.mtvuutiset.fi"/>
       <outline text="Kauppalehti [needs verification]" title="Kauppalehti [needs verification]" type="rss" xmlUrl="https://www.kauppalehti.fi/sitemaps/sitemap_latest.xml.gz" htmlUrl="https://www.kauppalehti.fi"/>
       <outline text="HBL [valid]" title="HBL [valid]" type="rss" xmlUrl="https://www.hbl.fi/feeds/feed.xml" htmlUrl="https://www.hbl.fi"/>
+      <outline text="Abo Underrattelser - HTML Collection [valid]" title="Abo Underrattelser - HTML Collection [valid]" type="rss" xmlUrl="https://www.abounderrattelser.fi/" htmlUrl="https://www.abounderrattelser.fi"/>
       <outline text="Nya Aland [valid]" title="Nya Aland [valid]" type="rss" xmlUrl="https://www.nyan.ax/feed/" htmlUrl="https://www.nyan.ax"/>
-      <outline text="Alandstidningen [valid]" title="Alandstidningen [valid]" type="rss" xmlUrl="https://www.alandstidningen.ax/rss/allt" htmlUrl="https://www.alandstidningen.ax"/>
       <outline text="Vasabladet [valid]" title="Vasabladet [valid]" type="rss" xmlUrl="https://www.vasabladet.fi/feed/" htmlUrl="https://www.vasabladet.fi"/>
+      <outline text="Vasabladet - Vasa [valid]" title="Vasabladet - Vasa [valid]" type="rss" xmlUrl="https://www.vasabladet.fi/feeds/section/vasa/feed.xml" htmlUrl="https://www.vasabladet.fi"/>
+      <outline text="Vasabladet - Korsholm [valid]" title="Vasabladet - Korsholm [valid]" type="rss" xmlUrl="https://www.vasabladet.fi/feeds/section/korsholm/feed.xml" htmlUrl="https://www.vasabladet.fi"/>
+      <outline text="Vasabladet - Narpes [valid]" title="Vasabladet - Narpes [valid]" type="rss" xmlUrl="https://www.vasabladet.fi/feeds/section/narpes/feed.xml" htmlUrl="https://www.vasabladet.fi"/>
+      <outline text="Vasabladet - Malax [valid]" title="Vasabladet - Malax [valid]" type="rss" xmlUrl="https://www.vasabladet.fi/feeds/section/malax/feed.xml" htmlUrl="https://www.vasabladet.fi"/>
+      <outline text="Vasabladet - Vora [valid]" title="Vasabladet - Vora [valid]" type="rss" xmlUrl="https://www.vasabladet.fi/feeds/section/vora/feed.xml" htmlUrl="https://www.vasabladet.fi"/>
+      <outline text="Vasabladet - Kasko [valid]" title="Vasabladet - Kasko [valid]" type="rss" xmlUrl="https://www.vasabladet.fi/feeds/section/kasko/feed.xml" htmlUrl="https://www.vasabladet.fi"/>
       <outline text="Osterbottens Tidning [valid]" title="Osterbottens Tidning [valid]" type="rss" xmlUrl="https://www.ot.fi/feed/" htmlUrl="https://www.ot.fi"/>
+      <outline text="Osterbottens Tidning - Jakobstad [valid]" title="Osterbottens Tidning - Jakobstad [valid]" type="rss" xmlUrl="https://www.osterbottenstidning.fi/feeds/section/jakobstad/feed.xml" htmlUrl="https://www.osterbottenstidning.fi"/>
+      <outline text="Osterbottens Tidning - Karleby [valid]" title="Osterbottens Tidning - Karleby [valid]" type="rss" xmlUrl="https://www.osterbottenstidning.fi/feeds/section/karleby/feed.xml" htmlUrl="https://www.osterbottenstidning.fi"/>
+      <outline text="Osterbottens Tidning - Kronoby [valid]" title="Osterbottens Tidning - Kronoby [valid]" type="rss" xmlUrl="https://www.osterbottenstidning.fi/feeds/section/kronoby/feed.xml" htmlUrl="https://www.osterbottenstidning.fi"/>
       <outline text="Ostnyland [valid]" title="Ostnyland [valid]" type="rss" xmlUrl="https://www.ostnyland.fi/feed/" htmlUrl="https://www.ostnyland.fi"/>
       <outline text="Sydin [valid]" title="Sydin [valid]" type="rss" xmlUrl="https://www.sydin.fi/feeds/feed.xml" htmlUrl="https://www.sydin.fi"/>
       <outline text="ESS [valid]" title="ESS [valid]" type="rss" xmlUrl="https://www.ess.fi/feed/rss" htmlUrl="https://www.ess.fi"/>
@@ -3750,7 +3759,14 @@
       <outline text="Warkauden Lehti [valid]" title="Warkauden Lehti [valid]" type="rss" xmlUrl="https://www.warkaudenlehti.fi/feed/rss" htmlUrl="https://www.warkaudenlehti.fi"/>
       <outline text="Suur-Keuruu [needs verification]" title="Suur-Keuruu [needs verification]" type="rss" xmlUrl="https://www.suurkeuruu.fi/rss/custom/news-sitemap.xml" htmlUrl="https://www.suurkeuruu.fi"/>
       <outline text="Vastra Nyland [valid]" title="Vastra Nyland [valid]" type="rss" xmlUrl="https://www.vastranyland.fi/feed/" htmlUrl="https://www.vastranyland.fi"/>
+      <outline text="Vastra Nyland - Hango [valid]" title="Vastra Nyland - Hango [valid]" type="rss" xmlUrl="https://www.vastranyland.fi/feeds/section/hango/feed.xml" htmlUrl="https://www.vastranyland.fi"/>
+      <outline text="Vastra Nyland - Raseborg [valid]" title="Vastra Nyland - Raseborg [valid]" type="rss" xmlUrl="https://www.vastranyland.fi/feeds/section/raseborg/feed.xml" htmlUrl="https://www.vastranyland.fi"/>
+      <outline text="Vastra Nyland - Inga [valid]" title="Vastra Nyland - Inga [valid]" type="rss" xmlUrl="https://www.vastranyland.fi/feeds/section/inga/feed.xml" htmlUrl="https://www.vastranyland.fi"/>
+      <outline text="Vastra Nyland - Sjundea [valid]" title="Vastra Nyland - Sjundea [valid]" type="rss" xmlUrl="https://www.vastranyland.fi/feeds/section/sjundea/feed.xml" htmlUrl="https://www.vastranyland.fi"/>
+      <outline text="Vastra Nyland - Kyrkslatt [valid]" title="Vastra Nyland - Kyrkslatt [valid]" type="rss" xmlUrl="https://www.vastranyland.fi/feeds/section/kyrkslatt/feed.xml" htmlUrl="https://www.vastranyland.fi"/>
       <outline text="Borgaabladet [valid]" title="Borgaabladet [valid]" type="rss" xmlUrl="https://www.bbl.fi/feed/" htmlUrl="https://www.bbl.fi"/>
+      <outline text="Borgaabladet - Borga [valid]" title="Borgaabladet - Borga [valid]" type="rss" xmlUrl="https://www.bbl.fi/feeds/section/borga/feed.xml" htmlUrl="https://www.bbl.fi"/>
+      <outline text="Borgaabladet - Sibbo [valid]" title="Borgaabladet - Sibbo [valid]" type="rss" xmlUrl="https://www.bbl.fi/feeds/section/sibbo/feed.xml" htmlUrl="https://www.bbl.fi"/>
       <outline text="Nya Ostis [valid]" title="Nya Ostis [valid]" type="rss" xmlUrl="https://www.nyaostis.fi/feed/" htmlUrl="https://www.nyaostis.fi"/>
       <outline text="Svenska Yle - Huvudstadsregionen [valid]" title="Svenska Yle - Huvudstadsregionen [valid]" type="rss" xmlUrl="https://svenska.yle.fi/rss/huvudstadsregionen" htmlUrl="https://svenska.yle.fi"/>
       <outline text="Svenska Yle - Vastnyland [valid]" title="Svenska Yle - Vastnyland [valid]" type="rss" xmlUrl="https://svenska.yle.fi/rss/vastnyland" htmlUrl="https://svenska.yle.fi"/>

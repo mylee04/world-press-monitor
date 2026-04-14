@@ -371,6 +371,8 @@ function shouldAttemptHtmlCollectionFeed(source: string, url: string): boolean {
       || hostname === 'herningfolkeblad.dk'
       || hostname === 'midtjyllandsavis.dk'
       || hostname === 'skivefolkeblad.dk'
+      || hostname === 'www.abounderrattelser.fi'
+      || hostname === 'abounderrattelser.fi'
     ) return true;
   } catch {
     // Ignore malformed URLs and fall through to source-name matching.
@@ -386,6 +388,7 @@ function shouldAttemptHtmlCollectionFeed(source: string, url: string): boolean {
     || normalizedSource.includes('herning folkeblad - html collection')
     || normalizedSource.includes('midtjyllands avis - html collection')
     || normalizedSource.includes('skive folkeblad - html collection')
+    || normalizedSource.includes('abo underrattelser - html collection')
   );
 }
 

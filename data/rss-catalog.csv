@@ -3617,25 +3617,34 @@ DK,Denmark,160,Herning Folkeblad - HTML Collection,https://herningfolkeblad.dk,v
 DK,Denmark,161,Midtjyllands Avis - HTML Collection,https://midtjyllandsavis.dk,valid,N/A,
 DK,Denmark,162,Skive Folkeblad - HTML Collection,https://skivefolkeblad.dk,valid,N/A,
 DK,Denmark,163,Fredericia Dagblad - Sitemap,https://frdb.dk/sitemap,needs verification,N/A,
-FI,Finland,undefined,Yle Uutiset,https://feeds.yle.fi/uutiset/v1/majorHeadlines/YLE_UUTISET.rss?publisherIds=YLE_UUTISET,invalid (ERR),N/A,2026-04-14T03:02:24.469Z
-FI,Finland,undefined,Helsingin Sanomat,https://www.hs.fi/rss/tuoreimmat.xml,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,undefined,Ilta-Sanomat,https://www.is.fi/rss/tuoreimmat.xml,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,undefined,Iltalehti,https://www.iltalehti.fi/rss.xml,valid,200,2026-04-14T03:02:24.469Z
+FI,Finland,undefined,Yle Uutiset,https://feeds.yle.fi/uutiset/v1/majorHeadlines/YLE_UUTISET.rss?publisherIds=YLE_UUTISET,invalid (ERR),N/A,2026-04-14T03:26:36.299Z
+FI,Finland,undefined,Helsingin Sanomat,https://www.hs.fi/rss/tuoreimmat.xml,valid,200,2026-04-14T03:26:36.299Z
+FI,Finland,undefined,Ilta-Sanomat,https://www.is.fi/rss/tuoreimmat.xml,valid,200,2026-04-14T03:26:36.299Z
+FI,Finland,undefined,Iltalehti,https://www.iltalehti.fi/rss.xml,valid,200,2026-04-14T03:26:36.299Z
 FI,Finland,undefined,MTV Uutiset,https://www.mtvuutiset.fi/sitemap.xml,needs verification,N/A,
 FI,Finland,undefined,Kauppalehti,https://www.kauppalehti.fi/sitemaps/sitemap_latest.xml.gz,needs verification,N/A,
-FI,Finland,undefined,HBL,https://www.hbl.fi/feeds/feed.xml,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,undefined,Nya Aland,https://www.nyan.ax/feed/,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,undefined,Alandstidningen,https://www.alandstidningen.ax/rss/allt,valid,N/A,
-FI,Finland,undefined,Vasabladet,https://www.vasabladet.fi/feed/,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,undefined,Osterbottens Tidning,https://www.ot.fi/feed/,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,undefined,Ostnyland,https://www.ostnyland.fi/feed/,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,undefined,Sydin,https://www.sydin.fi/feeds/feed.xml,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,undefined,ESS,https://www.ess.fi/feed/rss,valid,200,2026-04-14T03:02:24.469Z
+FI,Finland,undefined,HBL,https://www.hbl.fi/feeds/feed.xml,valid,200,2026-04-14T03:26:36.299Z
+FI,Finland,undefined,Abo Underrattelser - HTML Collection,https://www.abounderrattelser.fi/,valid,N/A,
+FI,Finland,undefined,Nya Aland,https://www.nyan.ax/feed/,valid,200,2026-04-14T03:26:36.299Z
+FI,Finland,undefined,Vasabladet,https://www.vasabladet.fi/feed/,valid,200,2026-04-14T03:26:36.299Z
+FI,Finland,undefined,Vasabladet - Vasa,https://www.vasabladet.fi/feeds/section/vasa/feed.xml,valid,N/A,
+FI,Finland,undefined,Vasabladet - Korsholm,https://www.vasabladet.fi/feeds/section/korsholm/feed.xml,valid,N/A,
+FI,Finland,undefined,Vasabladet - Narpes,https://www.vasabladet.fi/feeds/section/narpes/feed.xml,valid,N/A,
+FI,Finland,undefined,Vasabladet - Malax,https://www.vasabladet.fi/feeds/section/malax/feed.xml,valid,N/A,
+FI,Finland,undefined,Vasabladet - Vora,https://www.vasabladet.fi/feeds/section/vora/feed.xml,valid,N/A,
+FI,Finland,undefined,Vasabladet - Kasko,https://www.vasabladet.fi/feeds/section/kasko/feed.xml,valid,N/A,
+FI,Finland,undefined,Osterbottens Tidning,https://www.ot.fi/feed/,valid,200,2026-04-14T03:26:36.299Z
+FI,Finland,undefined,Osterbottens Tidning - Jakobstad,https://www.osterbottenstidning.fi/feeds/section/jakobstad/feed.xml,valid,N/A,
+FI,Finland,undefined,Osterbottens Tidning - Karleby,https://www.osterbottenstidning.fi/feeds/section/karleby/feed.xml,valid,N/A,
+FI,Finland,undefined,Osterbottens Tidning - Kronoby,https://www.osterbottenstidning.fi/feeds/section/kronoby/feed.xml,valid,N/A,
+FI,Finland,undefined,Ostnyland,https://www.ostnyland.fi/feed/,valid,200,2026-04-14T03:26:36.299Z
+FI,Finland,undefined,Sydin,https://www.sydin.fi/feeds/feed.xml,valid,200,2026-04-14T03:26:36.299Z
+FI,Finland,undefined,ESS,https://www.ess.fi/feed/rss,valid,200,2026-04-14T03:26:36.299Z
 FI,Finland,undefined,Turun Sanomat - Latest Sitemap,https://www.ts.fi/sitemap_latest.xml,needs verification,N/A,
 FI,Finland,undefined,Turun Sanomat - Google News,https://www.ts.fi/gnews_sitemap.xml,needs verification,N/A,
-FI,Finland,undefined,Kaleva - Uusimmat,https://kaleva.fi/feedit/rss/managed-listing/rss-uusimmat/,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,undefined,Lapin Kansa - Lappi,https://www.lapinkansa.fi/feedit/rss/managed-listing/lappi/,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,undefined,Lapin Kansa - Urheilu,https://www.lapinkansa.fi/feedit/rss/managed-listing/urheilu/,valid,200,2026-04-14T03:02:24.469Z
+FI,Finland,undefined,Kaleva - Uusimmat,https://kaleva.fi/feedit/rss/managed-listing/rss-uusimmat/,valid,200,2026-04-14T03:26:36.299Z
+FI,Finland,undefined,Lapin Kansa - Lappi,https://www.lapinkansa.fi/feedit/rss/managed-listing/lappi/,valid,200,2026-04-14T03:26:36.299Z
+FI,Finland,undefined,Lapin Kansa - Urheilu,https://www.lapinkansa.fi/feedit/rss/managed-listing/urheilu/,valid,200,2026-04-14T03:26:36.300Z
 FI,Finland,undefined,Aamulehti,https://www.aamulehti.fi/rss/custom/news-sitemap.xml,needs verification,N/A,
 FI,Finland,undefined,Satakunnan Kansa,https://www.satakunnankansa.fi/rss/custom/news-sitemap.xml,needs verification,N/A,
 FI,Finland,undefined,Janakkalan Sanomat,https://www.janakkalansanomat.fi/rss/custom/news-sitemap.xml,needs verification,N/A,
@@ -3648,97 +3657,104 @@ FI,Finland,undefined,Sydan-Satakunta,https://www.sydansatakunta.fi/rss/custom/ne
 FI,Finland,undefined,Tyrvaan Sanomat,https://www.tyrvaansanomat.fi/rss/custom/news-sitemap.xml,needs verification,N/A,
 FI,Finland,undefined,Valkeakosken Sanomat,https://www.valkeakoskensanomat.fi/rss/custom/news-sitemap.xml,needs verification,N/A,
 FI,Finland,undefined,Rannikkoseutu,https://www.rannikkoseutu.fi/rss/custom/news-sitemap.xml,needs verification,N/A,
-FI,Finland,undefined,KSML,https://www.ksml.fi/feed/rss,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,undefined,Maaseudun Tulevaisuus,https://www.maaseuduntulevaisuus.fi/feeds/maaseuduntulevaisuus,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,undefined,Aamuposti,https://www.aamuposti.fi/feed/rss,valid,200,2026-04-14T03:02:24.469Z
+FI,Finland,undefined,KSML,https://www.ksml.fi/feed/rss,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,undefined,Maaseudun Tulevaisuus,https://www.maaseuduntulevaisuus.fi/feeds/maaseuduntulevaisuus,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,undefined,Aamuposti,https://www.aamuposti.fi/feed/rss,valid,200,2026-04-14T03:26:36.300Z
 FI,Finland,undefined,Vantaan Sanomat,https://www.vantaansanomat.fi/feed/rss,valid,N/A,
-FI,Finland,undefined,Keski-Uusimaa,https://www.keski-uusimaa.fi/feed/rss,valid,200,2026-04-14T03:02:24.469Z
+FI,Finland,undefined,Keski-Uusimaa,https://www.keski-uusimaa.fi/feed/rss,valid,200,2026-04-14T03:26:36.300Z
 FI,Finland,undefined,Lansivayla,https://www.lansivayla.fi/feed/rss,valid,N/A,
-FI,Finland,undefined,Lansi-Uusimaa,https://www.lansi-uusimaa.fi/feed/rss,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,undefined,Loviisan Sanomat,https://www.loviisansanomat.fi/feed/rss,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,undefined,Lansi-Savo,https://www.lansi-savo.fi/feed/rss,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,undefined,Forssan Lehti,https://www.forssanlehti.fi/feed/rss,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,undefined,Salon Seudun Sanomat,https://www.sss.fi/feed/rss,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,undefined,Warkauden Lehti,https://www.warkaudenlehti.fi/feed/rss,valid,200,2026-04-14T03:02:24.469Z
+FI,Finland,undefined,Lansi-Uusimaa,https://www.lansi-uusimaa.fi/feed/rss,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,undefined,Loviisan Sanomat,https://www.loviisansanomat.fi/feed/rss,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,undefined,Lansi-Savo,https://www.lansi-savo.fi/feed/rss,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,undefined,Forssan Lehti,https://www.forssanlehti.fi/feed/rss,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,undefined,Salon Seudun Sanomat,https://www.sss.fi/feed/rss,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,undefined,Warkauden Lehti,https://www.warkaudenlehti.fi/feed/rss,valid,200,2026-04-14T03:26:36.300Z
 FI,Finland,undefined,Suur-Keuruu,https://www.suurkeuruu.fi/rss/custom/news-sitemap.xml,needs verification,N/A,
 FI,Finland,undefined,Vastra Nyland,https://www.vastranyland.fi/feed/,valid,N/A,
+FI,Finland,undefined,Vastra Nyland - Hango,https://www.vastranyland.fi/feeds/section/hango/feed.xml,valid,N/A,
+FI,Finland,undefined,Vastra Nyland - Raseborg,https://www.vastranyland.fi/feeds/section/raseborg/feed.xml,valid,N/A,
+FI,Finland,undefined,Vastra Nyland - Inga,https://www.vastranyland.fi/feeds/section/inga/feed.xml,valid,N/A,
+FI,Finland,undefined,Vastra Nyland - Sjundea,https://www.vastranyland.fi/feeds/section/sjundea/feed.xml,valid,N/A,
+FI,Finland,undefined,Vastra Nyland - Kyrkslatt,https://www.vastranyland.fi/feeds/section/kyrkslatt/feed.xml,valid,N/A,
 FI,Finland,undefined,Borgaabladet,https://www.bbl.fi/feed/,valid,N/A,
+FI,Finland,undefined,Borgaabladet - Borga,https://www.bbl.fi/feeds/section/borga/feed.xml,valid,N/A,
+FI,Finland,undefined,Borgaabladet - Sibbo,https://www.bbl.fi/feeds/section/sibbo/feed.xml,valid,N/A,
 FI,Finland,undefined,Nya Ostis,https://www.nyaostis.fi/feed/,valid,N/A,
 FI,Finland,undefined,Svenska Yle - Huvudstadsregionen,https://svenska.yle.fi/rss/huvudstadsregionen,valid,N/A,
 FI,Finland,undefined,Svenska Yle - Vastnyland,https://svenska.yle.fi/rss/vastnyland,valid,N/A,
 FI,Finland,undefined,Svenska Yle - Aboland,https://svenska.yle.fi/rss/aboland,valid,N/A,
 FI,Finland,undefined,Svenska Yle - Osterbotten,https://svenska.yle.fi/rss/osterbotten,valid,N/A,
 FI,Finland,undefined,Svenska Yle - Ostnyland,https://svenska.yle.fi/rss/ostnyland,valid,N/A,
-FI,Finland,undefined,Ita-Savo,https://www.ita-savo.fi/feed/rss,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,undefined,Ita-Hame,https://www.itahame.fi/feed/rss,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,undefined,Uutisvuoksi,https://www.uutisvuoksi.fi/feed/rss,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,undefined,Yle Uutiset - Kotimaa,https://feeds.yle.fi/uutiset/v1/recent.rss?publisherIds=YLE_UUTISET&concepts=18-34837,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,1,Ilta-Sanomat - Kotimaa,https://www.is.fi/rss/kotimaa.xml,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,2,Ilta-Sanomat - Ulkomaat,https://www.is.fi/rss/ulkomaat.xml,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,3,Ilta-Sanomat - Taloussanomat,https://www.is.fi/rss/taloussanomat.xml,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,4,Ilta-Sanomat - Urheilu,https://www.is.fi/rss/urheilu.xml,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,5,Iltalehti - Uutiset,https://www.iltalehti.fi/rss/uutiset.xml,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,6,Iltalehti - Kotimaa,https://www.iltalehti.fi/rss/kotimaa.xml,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,7,Iltalehti - Ulkomaat,https://www.iltalehti.fi/rss/ulkomaat.xml,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,8,Iltalehti - Talous,https://www.iltalehti.fi/rss/talous.xml,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,9,Helsingin Sanomat - Talous,https://www.hs.fi/rss/talous.xml,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,10,Helsingin Sanomat - Urheilu,https://www.hs.fi/rss/urheilu.xml,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,11,Yle Uutiset - Maailma,https://feeds.yle.fi/uutiset/v1/recent.rss?publisherIds=YLE_UUTISET&concepts=18-34953,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,12,Yle Uutiset - Talous,https://feeds.yle.fi/uutiset/v1/recent.rss?publisherIds=YLE_UUTISET&concepts=18-19274,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,13,Yle Urheilu,https://feeds.yle.fi/uutiset/v1/recent.rss?publisherIds=YLE_URHEILU,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,14,Yle Uutiset - Kulttuuri,https://feeds.yle.fi/uutiset/v1/recent.rss?publisherIds=YLE_UUTISET&concepts=18-150067,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,15,Yle Uutiset - Paakaupunkiseutu,"https://feeds.yle.fi/uutiset/v1/recent.rss?publisherIds=YLE_UUTISET&concepts=18-34953,18-34837",valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,16,Savon Sanomat,https://www.savonsanomat.fi/feed/rss,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,17,Karjalainen,https://www.karjalainen.fi/rss,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,18,Hameen Sanomat,https://www.hameensanomat.fi/feed/rss,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,19,Kouvolan Sanomat,https://www.kouvolansanomat.fi/feed/rss,valid,200,2026-04-14T03:02:24.469Z
+FI,Finland,undefined,Ita-Savo,https://www.ita-savo.fi/feed/rss,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,undefined,Ita-Hame,https://www.itahame.fi/feed/rss,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,undefined,Uutisvuoksi,https://www.uutisvuoksi.fi/feed/rss,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,undefined,Yle Uutiset - Kotimaa,https://feeds.yle.fi/uutiset/v1/recent.rss?publisherIds=YLE_UUTISET&concepts=18-34837,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,1,Ilta-Sanomat - Kotimaa,https://www.is.fi/rss/kotimaa.xml,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,2,Ilta-Sanomat - Ulkomaat,https://www.is.fi/rss/ulkomaat.xml,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,3,Ilta-Sanomat - Taloussanomat,https://www.is.fi/rss/taloussanomat.xml,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,4,Ilta-Sanomat - Urheilu,https://www.is.fi/rss/urheilu.xml,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,5,Iltalehti - Uutiset,https://www.iltalehti.fi/rss/uutiset.xml,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,6,Iltalehti - Kotimaa,https://www.iltalehti.fi/rss/kotimaa.xml,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,7,Iltalehti - Ulkomaat,https://www.iltalehti.fi/rss/ulkomaat.xml,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,8,Iltalehti - Talous,https://www.iltalehti.fi/rss/talous.xml,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,9,Helsingin Sanomat - Talous,https://www.hs.fi/rss/talous.xml,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,10,Helsingin Sanomat - Urheilu,https://www.hs.fi/rss/urheilu.xml,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,11,Yle Uutiset - Maailma,https://feeds.yle.fi/uutiset/v1/recent.rss?publisherIds=YLE_UUTISET&concepts=18-34953,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,12,Yle Uutiset - Talous,https://feeds.yle.fi/uutiset/v1/recent.rss?publisherIds=YLE_UUTISET&concepts=18-19274,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,13,Yle Urheilu,https://feeds.yle.fi/uutiset/v1/recent.rss?publisherIds=YLE_URHEILU,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,14,Yle Uutiset - Kulttuuri,https://feeds.yle.fi/uutiset/v1/recent.rss?publisherIds=YLE_UUTISET&concepts=18-150067,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,15,Yle Uutiset - Paakaupunkiseutu,"https://feeds.yle.fi/uutiset/v1/recent.rss?publisherIds=YLE_UUTISET&concepts=18-34953,18-34837",valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,16,Savon Sanomat,https://www.savonsanomat.fi/feed/rss,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,17,Karjalainen,https://www.karjalainen.fi/rss,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,18,Hameen Sanomat,https://www.hameensanomat.fi/feed/rss,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,19,Kouvolan Sanomat,https://www.kouvolansanomat.fi/feed/rss,valid,200,2026-04-14T03:26:36.300Z
 FI,Finland,20,Keskipohjanmaa,https://www.keskipohjanmaa.fi/sitemap/news,needs verification,N/A,
-FI,Finland,21,Kymen Sanomat,https://www.kymensanomat.fi/feed/rss,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,22,Etela-Saimaa,https://www.esaimaa.fi/feed/rss,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,23,Uusimaa,https://www.uusimaa.fi/feed/rss,valid,200,2026-04-14T03:02:24.469Z
+FI,Finland,21,Kymen Sanomat,https://www.kymensanomat.fi/feed/rss,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,22,Etela-Saimaa,https://www.esaimaa.fi/feed/rss,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,23,Uusimaa,https://www.uusimaa.fi/feed/rss,valid,200,2026-04-14T03:26:36.300Z
 FI,Finland,123,Aamulehti - Sitemap Index,https://www.aamulehti.fi/sitemap/html/al/sitemapindex.xml,needs verification,N/A,
 FI,Finland,124,Talouselama - Sitemap Index,https://www.talouselama.fi/sitemaps/sitemapindex.xml,needs verification,N/A,
 FI,Finland,125,Tekniikkatalous - Sitemap Index,https://www.tekniikkatalous.fi/sitemaps/sitemapindex.xml,needs verification,N/A,
-FI,Finland,126,Verkkouutiset,https://www.verkkouutiset.fi/feed/,valid,200,2026-04-14T03:02:24.469Z
+FI,Finland,126,Verkkouutiset,https://www.verkkouutiset.fi/feed/,valid,200,2026-04-14T03:26:36.300Z
 FI,Finland,143,Ilta-Sanomat - Sitemap Index,https://www.is.fi/sitemap/html/is/sitemapindex.xml,needs verification,N/A,
 FI,Finland,144,Helsingin Sanomat - Sitemap Index,https://www.hs.fi/sitemap/html/hs/sitemapindex.xml,needs verification,N/A,
 FI,Finland,146,Iltalehti - Sitemap Index,https://www.iltalehti.fi/sitemap/iltalehti.xml,needs verification,N/A,
-FI,Finland,149,Helsingin Sanomat - Politiikka,https://www.hs.fi/rss/politiikka.xml,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,150,Helsingin Sanomat - Kulttuuri,https://www.hs.fi/rss/kulttuuri.xml,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,151,Ilta-Sanomat - Viihde,https://www.is.fi/rss/viihde.xml,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,152,Ilta-Sanomat - Digitoday,https://www.is.fi/rss/digitoday.xml,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,153,Ilta-Sanomat - Autot,https://www.is.fi/rss/autot.xml,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,154,Iltalehti - Viihde,https://www.iltalehti.fi/rss/viihde.xml,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,155,Iltalehti - Urheilu,https://www.iltalehti.fi/rss/urheilu.xml,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,156,Iltalehti - Digiuutiset,https://www.iltalehti.fi/rss/digiuutiset.xml,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,157,Iltalehti - TV ja leffat,https://www.iltalehti.fi/rss/tv-ja-leffat.xml,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,185,Ilta-Sanomat - Politiikka,https://www.is.fi/rss/politiikka.xml,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,186,Ilta-Sanomat - Tiede,https://www.is.fi/rss/tiede.xml,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,187,Ilta-Sanomat - Terveys,https://www.is.fi/rss/terveys.xml,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,188,Ilta-Sanomat - Matkat,https://www.is.fi/rss/matkat.xml,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,189,Ilta-Sanomat - Formula 1,https://www.is.fi/rss/formula1.xml,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,190,Iltalehti - Politiikka,https://www.iltalehti.fi/rss/politiikka.xml,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,191,Iltalehti - Autot,https://www.iltalehti.fi/rss/autot.xml,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,192,Iltalehti - Terveys,https://www.iltalehti.fi/rss/terveys.xml,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,193,Iltalehti - Jalkapallo,https://www.iltalehti.fi/rss/jalkapallo.xml,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,194,Iltalehti - Jaakiekko,https://www.iltalehti.fi/rss/jaakiekko.xml,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,196,Ilta-Sanomat - Jaakiekko,https://www.is.fi/rss/jaakiekko.xml,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,197,Ilta-Sanomat - Jalkapallo,https://www.is.fi/rss/jalkapallo.xml,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,198,Ilta-Sanomat - Ralli,https://www.is.fi/rss/ralli.xml,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,199,Iltalehti - Musiikki,https://www.iltalehti.fi/rss/musiikki.xml,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,200,Iltalehti - NHL,https://www.iltalehti.fi/rss/nhl.xml,valid,200,2026-04-14T03:02:24.469Z
+FI,Finland,149,Helsingin Sanomat - Politiikka,https://www.hs.fi/rss/politiikka.xml,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,150,Helsingin Sanomat - Kulttuuri,https://www.hs.fi/rss/kulttuuri.xml,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,151,Ilta-Sanomat - Viihde,https://www.is.fi/rss/viihde.xml,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,152,Ilta-Sanomat - Digitoday,https://www.is.fi/rss/digitoday.xml,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,153,Ilta-Sanomat - Autot,https://www.is.fi/rss/autot.xml,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,154,Iltalehti - Viihde,https://www.iltalehti.fi/rss/viihde.xml,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,155,Iltalehti - Urheilu,https://www.iltalehti.fi/rss/urheilu.xml,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,156,Iltalehti - Digiuutiset,https://www.iltalehti.fi/rss/digiuutiset.xml,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,157,Iltalehti - TV ja leffat,https://www.iltalehti.fi/rss/tv-ja-leffat.xml,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,185,Ilta-Sanomat - Politiikka,https://www.is.fi/rss/politiikka.xml,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,186,Ilta-Sanomat - Tiede,https://www.is.fi/rss/tiede.xml,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,187,Ilta-Sanomat - Terveys,https://www.is.fi/rss/terveys.xml,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,188,Ilta-Sanomat - Matkat,https://www.is.fi/rss/matkat.xml,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,189,Ilta-Sanomat - Formula 1,https://www.is.fi/rss/formula1.xml,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,190,Iltalehti - Politiikka,https://www.iltalehti.fi/rss/politiikka.xml,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,191,Iltalehti - Autot,https://www.iltalehti.fi/rss/autot.xml,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,192,Iltalehti - Terveys,https://www.iltalehti.fi/rss/terveys.xml,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,193,Iltalehti - Jalkapallo,https://www.iltalehti.fi/rss/jalkapallo.xml,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,194,Iltalehti - Jaakiekko,https://www.iltalehti.fi/rss/jaakiekko.xml,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,196,Ilta-Sanomat - Jaakiekko,https://www.is.fi/rss/jaakiekko.xml,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,197,Ilta-Sanomat - Jalkapallo,https://www.is.fi/rss/jalkapallo.xml,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,198,Ilta-Sanomat - Ralli,https://www.is.fi/rss/ralli.xml,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,199,Iltalehti - Musiikki,https://www.iltalehti.fi/rss/musiikki.xml,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,200,Iltalehti - NHL,https://www.iltalehti.fi/rss/nhl.xml,valid,200,2026-04-14T03:26:36.300Z
 FI,Finland,201,Uusi Suomi - Sitemap Index,https://www.uusisuomi.fi/sitemaps/sitemapindex.xml,needs verification,N/A,
-FI,Finland,202,Suomenmaa,https://www.suomenmaa.fi/feed/,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,203,Demokraatti,https://demokraatti.fi/feed/,valid,200,2026-04-14T03:02:24.469Z
+FI,Finland,202,Suomenmaa,https://www.suomenmaa.fi/feed/,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,203,Demokraatti,https://demokraatti.fi/feed/,valid,200,2026-04-14T03:26:36.300Z
 FI,Finland,undefined,Kansan Uutiset,https://www.kansanuutiset.fi/feed/,valid,N/A,
-FI,Finland,undefined,Kotimaa,https://www.kotimaa.fi/feed/,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,204,Tivi,https://www.tivi.fi/api/feed/v2/rss/tv,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,205,Mikrobitti,https://www.mikrobitti.fi/api/feed/v2/rss/mb,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,206,Tekniikka & Talous,https://www.tekniikkatalous.fi/api/feed/v2/rss/tt,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,207,Talouselama,https://www.talouselama.fi/api/feed/v2/rss/te,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,208,Arvopaperi,https://www.arvopaperi.fi/api/feed/v2/rss/ap,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,209,Seiska,https://www.seiska.fi/latest.rss,valid,200,2026-04-14T03:02:24.469Z
-FI,Finland,undefined,Suomen Kuvalehti,https://suomenkuvalehti.fi/feed/,valid,200,2026-04-14T03:02:24.469Z
+FI,Finland,undefined,Kotimaa,https://www.kotimaa.fi/feed/,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,204,Tivi,https://www.tivi.fi/api/feed/v2/rss/tv,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,205,Mikrobitti,https://www.mikrobitti.fi/api/feed/v2/rss/mb,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,206,Tekniikka & Talous,https://www.tekniikkatalous.fi/api/feed/v2/rss/tt,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,207,Talouselama,https://www.talouselama.fi/api/feed/v2/rss/te,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,208,Arvopaperi,https://www.arvopaperi.fi/api/feed/v2/rss/ap,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,209,Seiska,https://www.seiska.fi/latest.rss,valid,200,2026-04-14T03:26:36.300Z
+FI,Finland,undefined,Suomen Kuvalehti,https://suomenkuvalehti.fi/feed/,valid,200,2026-04-14T03:26:36.300Z
 FI,Finland,210,Verkkouutiset - Sitemap Index,https://www.verkkouutiset.fi/sitemap_index.xml,needs verification,N/A,
 FI,Finland,211,Suomenmaa - Sitemap Index,https://www.suomenmaa.fi/sitemap_index.xml,needs verification,N/A,
 FI,Finland,212,Maaseudun Tulevaisuus - Sitemap Index,https://www.maaseuduntulevaisuus.fi/sitemaps/sitemap.xml,needs verification,N/A,
