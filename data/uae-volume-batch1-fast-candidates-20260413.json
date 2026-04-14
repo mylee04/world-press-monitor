@@ -1,0 +1,14 @@
+[
+  {
+    "source": "WAM English - News Sitemap",
+    "sitemap": "https://www.wam.ae/en/sitemap/news.xml"
+  },
+  {
+    "source": "Sharjah24 - News Sitemap",
+    "sitemap": "https://sharjah24.ae/NewsSitemap.xml"
+  },
+  {
+    "source": "The National - News Sitemap Index",
+    "sitemap": "https://www.thenationalnews.com/arc/outboundfeeds/news-sitemap-index/?outputType=xml"
+  }
+]

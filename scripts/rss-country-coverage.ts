@@ -152,6 +152,7 @@ const ARTICLE_PUBLISHED_AT_FALLBACK_SOURCES = [
   'dk teknik og miljø',
   'dk sundhed',
   'dk indkøb',
+  'arn news centre',
 ];
 
 const FEED_FETCH_HEADERS = {
@@ -168,7 +169,7 @@ const ENABLE_BROWSER_SITEMAP_FALLBACK =
 const BROWSER_SITEMAP_FALLBACK_DOMAINS = new Set(
   (
     process.env.INGEST_BROWSER_SITEMAP_DOMAINS ||
-    'www.ouest-france.fr,www.sudouest.fr,www.challenges.fr,www.firstpost.com,firstpost.com,www.dnaindia.com,dnaindia.com,yourstory.com,www.yourstory.com,www.business-standard.com,business-standard.com,www.news18.com,news18.com,www.ndtv.com,ndtv.com,www.orilliamatters.com,orilliamatters.com,www.collingwoodtoday.ca,collingwoodtoday.ca,www.vancouverisawesome.com,vancouverisawesome.com,www.nsnews.com,nsnews.com,www.richmond-news.com,richmond-news.com,www.princegeorgecitizen.com,princegeorgecitizen.com,www.delta-optimist.com,delta-optimist.com,www.moosejawtoday.com,moosejawtoday.com,www.sasktoday.ca,sasktoday.ca,www.bradfordtoday.ca,bradfordtoday.ca,www.elliotlaketoday.com,elliotlaketoday.com,www.midlandtoday.ca,midlandtoday.ca,www.standaard.be,www.nieuwsblad.be,www.gva.be,www.hbvl.be,www.rtl.be,rtl.be,www.blick.ch,blick.ch,www.pna.gov.ph,pna.gov.ph,businessmirror.com.ph,www.malaya.com.ph,malaya.com.ph,manilastandard.net,www.manilastandard.net,news.abs-cbn.com,www.startribune.com,www.miamiherald.com,www.kansascity.com,www.sacbee.com,www.charlotteobserver.com,www.newsobserver.com,www.star-telegram.com,www.fresnobee.com,www.idahostatesman.com,www.kentucky.com,www.thestate.com,www.thenewstribune.com,www.expressnews.com,www.timesunion.com,www.ctinsider.com,www.sfchronicle.com,www.sfgate.com,www.ctpost.com,www.nhregister.com,www.houstonchronicle.com,www.jpnn.com,jabar.jpnn.com,jatim.jpnn.com,www.tribunnews.com,www.jawapos.com,kumparan.com,mediaindonesia.com,www.pikiran-rakyat.com,www.crimeworld.com,crimeworld.com,www.thesun.ie,thesun.ie,www.thesun.co.uk,thesun.co.uk,www.telegraph.co.uk,telegraph.co.uk,www.tvsarawak.my,tvsarawak.my,www.liepajniekiem.lv,liepajniekiem.lv,guardian.ng,www.guardian.ng,nairametrics.com,www.nairametrics.com,premiumtimesng.com,www.premiumtimesng.com,www.news247.gr,news247.gr,www.sport24.gr,sport24.gr,www.documentonews.gr,documentonews.gr,www.noordhollandsdagblad.nl,noordhollandsdagblad.nl,www.haarlemsdagblad.nl,haarlemsdagblad.nl,www.leidschdagblad.nl,leidschdagblad.nl,www.ijmuidercourant.nl,ijmuidercourant.nl,www.gooieneemlander.nl,gooieneemlander.nl,www.autoweek.nl,autoweek.nl'
+    'www.ouest-france.fr,www.sudouest.fr,www.challenges.fr,www.firstpost.com,firstpost.com,www.dnaindia.com,dnaindia.com,yourstory.com,www.yourstory.com,www.business-standard.com,business-standard.com,www.news18.com,news18.com,www.ndtv.com,ndtv.com,www.orilliamatters.com,orilliamatters.com,www.collingwoodtoday.ca,collingwoodtoday.ca,www.vancouverisawesome.com,vancouverisawesome.com,www.nsnews.com,nsnews.com,www.richmond-news.com,richmond-news.com,www.princegeorgecitizen.com,princegeorgecitizen.com,www.delta-optimist.com,delta-optimist.com,www.moosejawtoday.com,moosejawtoday.com,www.sasktoday.ca,sasktoday.ca,www.bradfordtoday.ca,bradfordtoday.ca,www.elliotlaketoday.com,elliotlaketoday.com,www.midlandtoday.ca,midlandtoday.ca,www.standaard.be,www.nieuwsblad.be,www.gva.be,www.hbvl.be,www.rtl.be,rtl.be,www.blick.ch,blick.ch,www.pna.gov.ph,pna.gov.ph,businessmirror.com.ph,www.malaya.com.ph,malaya.com.ph,manilastandard.net,www.manilastandard.net,news.abs-cbn.com,www.startribune.com,www.miamiherald.com,www.kansascity.com,www.sacbee.com,www.charlotteobserver.com,www.newsobserver.com,www.star-telegram.com,www.fresnobee.com,www.idahostatesman.com,www.kentucky.com,www.thestate.com,www.thenewstribune.com,www.expressnews.com,www.timesunion.com,www.ctinsider.com,www.sfchronicle.com,www.sfgate.com,www.ctpost.com,www.nhregister.com,www.houstonchronicle.com,www.jpnn.com,jabar.jpnn.com,jatim.jpnn.com,www.tribunnews.com,www.jawapos.com,kumparan.com,mediaindonesia.com,www.pikiran-rakyat.com,www.crimeworld.com,crimeworld.com,www.thesun.ie,thesun.ie,www.thesun.co.uk,thesun.co.uk,www.telegraph.co.uk,telegraph.co.uk,www.tvsarawak.my,tvsarawak.my,www.liepajniekiem.lv,liepajniekiem.lv,guardian.ng,www.guardian.ng,nairametrics.com,www.nairametrics.com,premiumtimesng.com,www.premiumtimesng.com,www.news247.gr,news247.gr,www.sport24.gr,sport24.gr,www.documentonews.gr,documentonews.gr,www.noordhollandsdagblad.nl,noordhollandsdagblad.nl,www.haarlemsdagblad.nl,haarlemsdagblad.nl,www.leidschdagblad.nl,leidschdagblad.nl,www.ijmuidercourant.nl,ijmuidercourant.nl,www.gooieneemlander.nl,gooieneemlander.nl,www.autoweek.nl,autoweek.nl,www.arabianbusiness.com,arabianbusiness.com'
   )
     .split(',')
     .map((value) => value.trim().toLowerCase())
@@ -365,6 +366,7 @@ function shouldAttemptHtmlCollectionFeed(source: string, url: string): boolean {
   try {
     const parsed = new URL(url);
     const hostname = parsed.hostname.toLowerCase();
+    const pathname = parsed.pathname.toLowerCase();
     if (
       hostname === 'nyheder.tv2.dk'
       || hostname === 'www.altinget.dk'
@@ -373,6 +375,9 @@ function shouldAttemptHtmlCollectionFeed(source: string, url: string): boolean {
       || hostname === 'skivefolkeblad.dk'
       || hostname === 'www.abounderrattelser.fi'
       || hostname === 'abounderrattelser.fi'
+      || ((hostname === 'www.gulftoday.ae' || hostname === 'gulftoday.ae') && (pathname === '/news' || pathname === '/news/'))
+      || hostname === 'www.arnnewscentre.ae'
+      || hostname === 'arnnewscentre.ae'
     ) return true;
   } catch {
     // Ignore malformed URLs and fall through to source-name matching.
@@ -389,6 +394,8 @@ function shouldAttemptHtmlCollectionFeed(source: string, url: string): boolean {
     || normalizedSource.includes('midtjyllands avis - html collection')
     || normalizedSource.includes('skive folkeblad - html collection')
     || normalizedSource.includes('abo underrattelser - html collection')
+    || normalizedSource.includes('gulf today - html collection')
+    || normalizedSource.includes('arn news centre - html collection')
   );
 }
 
