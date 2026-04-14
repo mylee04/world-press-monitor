@@ -3609,6 +3609,12 @@ th {
     width: auto;
   }
 
+  .help-tooltip {
+    left: auto;
+    right: 0;
+    width: min(260px, calc(100vw - 48px));
+  }
+
   .map-workbench {
     min-height: auto;
     padding: 10px;
