@@ -35323,6 +35323,55 @@
           "status": "NEW",
           "checkedDate": "03/31/2026",
           "valid": "valid"
+        },
+        {
+          "name": "El Nuevo Siglo",
+          "url": "https://www.elnuevosiglo.com.co/rss.xml",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Valora Analitik",
+          "url": "https://www.valoraanalitik.com/feed/",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "El Universal Colombia - Latest News Sitemap",
+          "sitemapUrl": "https://www.eluniversal.com.co/arc/outboundfeeds/sitemap-news/latest/",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Vanguardia Colombia - Latest News Sitemap",
+          "sitemapUrl": "https://www.vanguardia.com/arc/outboundfeeds/sitemap-news/latest/",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Publimetro Colombia",
+          "url": "https://www.publimetro.co/arc/outboundfeeds/rss/?outputType=xml",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Pulzo - Latest Monthly Sitemap",
+          "sitemapUrl": "https://www.pulzo.com/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Pulzo - Google News",
+          "url": "https://www.pulzo.com/rss/google",
+          "status": "NEW",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
         }
       ]
     },

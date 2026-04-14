@@ -820,6 +820,19 @@ function selectSitemapIndexEntries(entries: SitemapIndexEntry[], baseUrl: string
     if (monthlyEntries.length > 0) return monthlyEntries.slice(0, 1);
   }
 
+  const isPulzo = hostname === 'www.pulzo.com' || hostname === 'pulzo.com';
+  if (isPulzo) {
+    const monthlyEntries = entries
+      .filter((entry) => /\/sitemap\/sitemap-pt-post-20\d{2}-\d{2}\.xml$/i.test(entry.loc))
+      .sort((left, right) => {
+        const leftStamp = left.locDateMs ?? Number.NEGATIVE_INFINITY;
+        const rightStamp = right.locDateMs ?? Number.NEGATIVE_INFINITY;
+        if (rightStamp !== leftStamp) return rightStamp - leftStamp;
+        return right.index - left.index;
+      });
+    if (monthlyEntries.length > 0) return monthlyEntries.slice(0, 1);
+  }
+
   const isMtvUutiset = hostname === 'www.mtvuutiset.fi' || hostname === 'mtvuutiset.fi';
   if (isMtvUutiset) {
     const preferredEntries = entries.filter((entry) => /(?:^|\/)(?:newssitemap|videositemap)(?:\.xml(?:\.gz)?)?$/i.test(entry.loc));
@@ -970,6 +983,13 @@ type EndpointRunPolicyState = {
 
 function maxArticleAgeMsForOutlet(outlet: OutletFeed, method: 'rss' | 'sitemap'): number {
   const normalizedSource = outlet.name.trim().toLowerCase();
+  if (
+    (method === 'rss' && normalizedSource === 'publimetro colombia')
+    || normalizedSource === 'pulzo - latest monthly sitemap'
+    || (method === 'rss' && normalizedSource === 'pulzo - google news')
+  ) {
+    return ONE_DAY_MS;
+  }
   if (method === 'sitemap' && normalizedSource === 'heute - sitemap index') {
     return HEUTE_SITEMAP_MAX_ARTICLE_AGE_MS;
   }
