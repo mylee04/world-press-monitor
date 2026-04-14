@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Tue, 14 Apr 2026 03:18:53 GMT</dateCreated>
+    <dateCreated>Tue, 14 Apr 2026 03:54:10 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -2597,6 +2597,25 @@
       <outline text="Västerbottens-Kuriren - News Sitemap [needs verification]" title="Västerbottens-Kuriren - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.vk.se/google-news-sitemap.xml" htmlUrl="https://www.vk.se"/>
       <outline text="Skaraborgs Allehanda - News Sitemap [needs verification]" title="Skaraborgs Allehanda - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.sla.se/sitemaps/news/sitemap.xml" htmlUrl="https://www.sla.se"/>
       <outline text="Smålänningen [valid]" title="Smålänningen [valid]" type="rss" xmlUrl="https://www.smalanningen.se/feeds/feed.xml" htmlUrl="https://www.smalanningen.se"/>
+      <outline text="Enköpings-Posten [valid]" title="Enköpings-Posten [valid]" type="rss" xmlUrl="https://eposten.se/rss" htmlUrl="https://eposten.se"/>
+      <outline text="Eskilstuna-Kuriren [valid]" title="Eskilstuna-Kuriren [valid]" type="rss" xmlUrl="https://ekuriren.se/rss" htmlUrl="https://ekuriren.se"/>
+      <outline text="Helagotland [valid]" title="Helagotland [valid]" type="rss" xmlUrl="https://helagotland.se/rss" htmlUrl="https://helagotland.se"/>
+      <outline text="Katrineholms-Kuriren [valid]" title="Katrineholms-Kuriren [valid]" type="rss" xmlUrl="https://kkuriren.se/rss" htmlUrl="https://kkuriren.se"/>
+      <outline text="MVT [valid]" title="MVT [valid]" type="rss" xmlUrl="https://mvt.se/rss" htmlUrl="https://mvt.se"/>
+      <outline text="Norrbottens-Kuriren [valid]" title="Norrbottens-Kuriren [valid]" type="rss" xmlUrl="https://kuriren.nu/rss" htmlUrl="https://kuriren.nu"/>
+      <outline text="NSD [valid]" title="NSD [valid]" type="rss" xmlUrl="https://nsd.se/rss" htmlUrl="https://nsd.se"/>
+      <outline text="PT [valid]" title="PT [valid]" type="rss" xmlUrl="https://pt.se/rss" htmlUrl="https://pt.se"/>
+      <outline text="Strengnäs Tidning [valid]" title="Strengnäs Tidning [valid]" type="rss" xmlUrl="https://strengnastidning.se/rss" htmlUrl="https://strengnastidning.se"/>
+      <outline text="SN [valid]" title="SN [valid]" type="rss" xmlUrl="https://sn.se/rss" htmlUrl="https://sn.se"/>
+      <outline text="Vimmerby Tidning [valid]" title="Vimmerby Tidning [valid]" type="rss" xmlUrl="https://vimmerbytidning.se/rss" htmlUrl="https://vimmerbytidning.se"/>
+      <outline text="VT [valid]" title="VT [valid]" type="rss" xmlUrl="https://vt.se/rss" htmlUrl="https://vt.se"/>
+      <outline text="Smålands-Tidningen [valid]" title="Smålands-Tidningen [valid]" type="rss" xmlUrl="https://www.smt.se/feeds/feed.xml" htmlUrl="https://www.smt.se"/>
+      <outline text="Smålands Dagblad [valid]" title="Smålands Dagblad [valid]" type="rss" xmlUrl="https://www.smalandsdagblad.se/feeds/feed.xml" htmlUrl="https://www.smalandsdagblad.se"/>
+      <outline text="Tranås Tidning [valid]" title="Tranås Tidning [valid]" type="rss" xmlUrl="https://www.tranastidning.se/feeds/feed.xml" htmlUrl="https://www.tranastidning.se"/>
+      <outline text="Vetlanda-Posten [valid]" title="Vetlanda-Posten [valid]" type="rss" xmlUrl="https://www.vetlandaposten.se/feeds/feed.xml" htmlUrl="https://www.vetlandaposten.se"/>
+      <outline text="Bärgslagsbladet/Arboga Tidning [valid]" title="Bärgslagsbladet/Arboga Tidning [valid]" type="rss" xmlUrl="https://www.bblat.se/feeds/feed.xml" htmlUrl="https://www.bblat.se"/>
+      <outline text="Västgöta-Bladet [valid]" title="Västgöta-Bladet [valid]" type="rss" xmlUrl="https://www.vastgotabladet.se/feeds/feed.xml" htmlUrl="https://www.vastgotabladet.se"/>
+      <outline text="Skaraborgs Läns Tidning [valid]" title="Skaraborgs Läns Tidning [valid]" type="rss" xmlUrl="https://www.skaraborgslanstidning.se/feeds/feed.xml" htmlUrl="https://www.skaraborgslanstidning.se"/>
       <outline text="SVT Lokal - Stockholm [valid]" title="SVT Lokal - Stockholm [valid]" type="rss" xmlUrl="https://www.svt.se/nyheter/lokalt/stockholm/rss.xml" htmlUrl="https://www.svt.se"/>
       <outline text="SVT Lokal - Väst [valid]" title="SVT Lokal - Väst [valid]" type="rss" xmlUrl="https://www.svt.se/nyheter/lokalt/vast/rss.xml" htmlUrl="https://www.svt.se"/>
       <outline text="SVT Lokal - Uppsala [valid]" title="SVT Lokal - Uppsala [valid]" type="rss" xmlUrl="https://www.svt.se/nyheter/lokalt/uppsala/rss.xml" htmlUrl="https://www.svt.se"/>
@@ -3104,6 +3123,9 @@
       <outline text="Telemundo - RSS [valid]" title="Telemundo - RSS [valid]" type="rss" xmlUrl="https://www.telemundo.com.uy/feed/rss" htmlUrl="https://www.telemundo.com.uy"/>
       <outline text="Grupo R Multimedio - RSS [valid]" title="Grupo R Multimedio - RSS [valid]" type="rss" xmlUrl="https://www.grupormultimedio.com/rss" htmlUrl="https://www.grupormultimedio.com"/>
       <outline text="Tenfield - RSS [valid]" title="Tenfield - RSS [valid]" type="rss" xmlUrl="https://www.tenfield.com.uy/rss" htmlUrl="https://www.tenfield.com.uy"/>
+      <outline text="Medios Públicos [needs verification]" title="Medios Públicos [needs verification]" type="rss" xmlUrl="https://mediospublicos.uy/feed/" htmlUrl="https://mediospublicos.uy"/>
+      <outline text="El Pueblo [needs verification]" title="El Pueblo [needs verification]" type="rss" xmlUrl="https://elpueblodigital.uy/feed/" htmlUrl="https://elpueblodigital.uy"/>
+      <outline text="Correo de Punta del Este [needs verification]" title="Correo de Punta del Este [needs verification]" type="rss" xmlUrl="https://correopuntadeleste.com/feed/" htmlUrl="https://correopuntadeleste.com"/>
     </outline>
     <outline text="Austria (AT)" title="Austria (AT)">
       <outline text="Der Standard [valid]" title="Der Standard [valid]" type="rss" xmlUrl="https://www.derstandard.at/rss" htmlUrl="https://www.derstandard.at"/>
