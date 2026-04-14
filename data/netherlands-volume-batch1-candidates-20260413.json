@@ -1,0 +1,46 @@
+[
+  {
+    "source": "LC - News Sitemap",
+    "sitemap": "https://static.lc.nl/sitemap/sitemap_news.xml"
+  },
+  {
+    "source": "DVHN - News Sitemap",
+    "sitemap": "https://static.dvhn.nl/sitemap/sitemap_news.xml"
+  },
+  {
+    "source": "Noordhollands Dagblad - News Sitemap",
+    "sitemap": "https://www.noordhollandsdagblad.nl/sitemap-news.xml"
+  },
+  {
+    "source": "Haarlems Dagblad - News Sitemap",
+    "sitemap": "https://www.haarlemsdagblad.nl/sitemap-news.xml"
+  },
+  {
+    "source": "Leidsch Dagblad - News Sitemap",
+    "sitemap": "https://www.leidschdagblad.nl/sitemap-news.xml"
+  },
+  {
+    "source": "IJmuider Courant - News Sitemap",
+    "sitemap": "https://www.ijmuidercourant.nl/sitemap-news.xml"
+  },
+  {
+    "source": "Gooi en Eemlander - News Sitemap",
+    "sitemap": "https://www.gooieneemlander.nl/sitemap-news.xml"
+  },
+  {
+    "source": "VI - Google News Sitemap",
+    "sitemap": "https://www.vi.nl/sitemap-google-news.xml"
+  },
+  {
+    "source": "VoetbalPrimeur - Google News Sitemap",
+    "sitemap": "https://www.voetbalprimeur.nl/sitemap-google-news.xml"
+  },
+  {
+    "source": "FCUpdate - Google News Sitemap",
+    "sitemap": "https://www.fcupdate.nl/storage/sitemaps/google_news.xml"
+  },
+  {
+    "source": "Autoblog - Google News Sitemap",
+    "sitemap": "https://www.autoblog.nl/sitemap-google-news.xml"
+  }
+]

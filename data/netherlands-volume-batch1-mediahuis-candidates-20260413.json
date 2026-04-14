@@ -1,0 +1,22 @@
+[
+  {
+    "source": "Noordhollands Dagblad - News Sitemap",
+    "sitemap": "https://www.noordhollandsdagblad.nl/sitemap-news.xml"
+  },
+  {
+    "source": "Haarlems Dagblad - News Sitemap",
+    "sitemap": "https://www.haarlemsdagblad.nl/sitemap-news.xml"
+  },
+  {
+    "source": "Leidsch Dagblad - News Sitemap",
+    "sitemap": "https://www.leidschdagblad.nl/sitemap-news.xml"
+  },
+  {
+    "source": "IJmuider Courant - News Sitemap",
+    "sitemap": "https://www.ijmuidercourant.nl/sitemap-news.xml"
+  },
+  {
+    "source": "Gooi en Eemlander - News Sitemap",
+    "sitemap": "https://www.gooieneemlander.nl/sitemap-news.xml"
+  }
+]

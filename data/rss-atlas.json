@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generatedAt": "2026-04-11T04:22:46Z",
-  "lastChecked": "2026-02-24T06:58:53.314Z",
+  "generatedAt": "2026-04-14T02:53:59Z",
+  "lastChecked": "2026-04-14T02:53:59Z",
   "countries": [
     {
       "name": "United States",
@@ -15127,23 +15127,47 @@
         },
         {
           "name": "VI",
-          "url": "https://www.vi.nl/feed/news.xml"
+          "url": "https://www.vi.nl/feed/news.xml",
+          "sitemapUrl": "https://www.vi.nl/sitemap-google-news.xml"
         },
         {
           "name": "VoetbalPrimeur",
-          "url": "https://www.voetbalprimeur.nl/feed/news.xml"
+          "url": "https://www.voetbalprimeur.nl/feed/news.xml",
+          "sitemapUrl": "https://www.voetbalprimeur.nl/sitemap-google-news.xml"
         },
         {
           "name": "FCUpdate",
-          "url": "https://www.fcupdate.nl/rss"
+          "url": "https://www.fcupdate.nl/rss",
+          "sitemapUrl": "https://www.fcupdate.nl/storage/sitemaps/google_news.xml"
         },
         {
           "name": "Autoblog",
-          "url": "https://www.autoblog.nl/feed/news.xml"
+          "url": "https://www.autoblog.nl/feed/news.xml",
+          "sitemapUrl": "https://www.autoblog.nl/sitemap-google-news.xml"
         },
         {
           "name": "AutoWeek",
           "url": "https://www.autoweek.nl/rss/"
+        },
+        {
+          "name": "Noordhollands Dagblad",
+          "sitemapUrl": "https://www.noordhollandsdagblad.nl/sitemap-news.xml"
+        },
+        {
+          "name": "Haarlems Dagblad",
+          "sitemapUrl": "https://www.haarlemsdagblad.nl/sitemap-news.xml"
+        },
+        {
+          "name": "Leidsch Dagblad",
+          "sitemapUrl": "https://www.leidschdagblad.nl/sitemap-news.xml"
+        },
+        {
+          "name": "IJmuider Courant",
+          "sitemapUrl": "https://www.ijmuidercourant.nl/sitemap-news.xml"
+        },
+        {
+          "name": "Gooi en Eemlander",
+          "sitemapUrl": "https://www.gooieneemlander.nl/sitemap-news.xml"
         },
         {
           "name": "BNNVARA",
@@ -18628,18 +18652,19 @@
           "name": "Dagens Nyheter",
           "url": "https://www.dn.se/nyheter/rss/",
           "status": "⏩ OFFICIAL",
-          "checkedDate": null,
-          "valid": "needs verification",
-          "row": 2
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 2,
+          "sitemapUrl": "https://www.dn.se/news-sitemap.xml"
         },
         {
           "name": "Dagens Industri",
           "url": "https://www.di.se/rss/",
           "status": "⏩ OFFICIAL",
-          "checkedDate": null,
-          "valid": "needs verification",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
           "row": 7,
-          "sitemapUrl": "https://www.di.se/sitemap-news.xml"
+          "sitemapUrl": "https://www.di.se/sitemap.xml"
         },
         {
           "name": "Dagens Samhalle",
@@ -18647,7 +18672,11 @@
         },
         {
           "name": "Dagens PS",
-          "url": "https://www.dagensps.se/feed/"
+          "url": "https://www.dagensps.se/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "sitemapUrl": "https://www.dagensps.se/sitemap_index.xml"
         },
         {
           "name": "SVT Nyheter",
@@ -18802,18 +18831,19 @@
           "valid": "valid"
         },
         {
-          "name": "TV4 - Article Sitemap 2026-3",
-          "sitemapUrl": "https://www.tv4.se/api/sitemaps/article/2026-3.xml",
+          "name": "TV4 - Sitemap Index",
+          "sitemapUrl": "https://www.tv4.se/sitemap.xml",
           "status": "NEW",
-          "checkedDate": "03/18/2026",
+          "checkedDate": "04/13/2026",
           "valid": "valid"
         },
         {
           "name": "TV4 - Breaking News Sitemap 2026-3",
           "sitemapUrl": "https://www.tv4.se/api/sitemaps/breaking-news/2026-3.xml",
-          "status": "NEW",
-          "checkedDate": "03/18/2026",
-          "valid": "valid"
+          "enabled": false,
+          "status": "ERR",
+          "checkedDate": "04/13/2026",
+          "valid": "invalid"
         },
         {
           "name": "The Local Sweden (EN)",
@@ -18825,7 +18855,11 @@
         },
         {
           "name": "Arbetet",
-          "url": "https://arbetet.se/feed/"
+          "url": "https://arbetet.se/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "sitemapUrl": "https://arbetet.se/sitemap-news.xml"
         },
         {
           "name": "Sveriges Radio - Ekot nyhetssändning (pod)",
@@ -18853,10 +18887,10 @@
         },
         {
           "name": "Radio Sweden - Sweden Today (podcast xml)",
-          "url": "http://sverigesradio.se/Podradio/xml/SRI_en_sweToday.xml",
+          "url": "https://api.sr.se/api/rss/program/2054?format=1",
           "status": "⏩ OFFICIAL",
-          "checkedDate": null,
-          "valid": "needs verification",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
           "row": 42,
           "sitemapUrl": "https://www.sverigesradio.se/newssitemap"
         },
@@ -18949,6 +18983,30 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/24/2026",
           "valid": "needs verification"
+        },
+        {
+          "name": "Ölandsbladet",
+          "url": "https://www.olandsbladet.se/feeds/feed.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "sitemapUrl": "https://www.olandsbladet.se/sitemap.xml"
+        },
+        {
+          "name": "UT",
+          "url": "https://www.ut.se/feeds/feed.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "sitemapUrl": "https://www.ut.se/sitemap.xml"
+        },
+        {
+          "name": "Växjöbladet",
+          "url": "https://www.vaxjobladet.se/feeds/feed.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "sitemapUrl": "https://www.vaxjobladet.se/sitemap.xml"
         },
         {
           "name": "Norra Skåne - News Sitemap",
@@ -19087,9 +19145,9 @@
         },
         {
           "name": "Ny Teknik (Tech and Engineering)",
-          "sitemapUrl": "https://www.nyteknik.se/sitemap.xml",
+          "sitemapUrl": "https://www.nyteknik.se/sitemapindex.xml",
           "status": "NEW",
-          "checkedDate": "04/01/2026",
+          "checkedDate": "04/13/2026",
           "valid": "valid"
         },
         {
@@ -19124,16 +19182,18 @@
         {
           "name": "Hallandsposten - News Sitemap",
           "sitemapUrl": "https://www.hallandsposten.se/sitemap/news-sitemap.xml",
-          "status": "NEW",
-          "checkedDate": "04/01/2026",
-          "valid": "valid"
+          "enabled": false,
+          "status": "ERR",
+          "checkedDate": "04/13/2026",
+          "valid": "invalid"
         },
         {
           "name": "Hallands Nyheter - News Sitemap",
           "sitemapUrl": "https://www.hn.se/sitemap/news-sitemap.xml",
-          "status": "NEW",
-          "checkedDate": "04/01/2026",
-          "valid": "valid"
+          "enabled": false,
+          "status": "ERR",
+          "checkedDate": "04/13/2026",
+          "valid": "invalid"
         },
         {
           "name": "TTELA - News Sitemap",
@@ -19145,15 +19205,38 @@
         {
           "name": "Bohuslänningen - News Sitemap",
           "sitemapUrl": "https://www.bohuslaningen.se/sitemap/news-sitemap.xml",
-          "status": "NEW",
-          "checkedDate": "04/01/2026",
-          "valid": "valid"
+          "enabled": false,
+          "status": "ERR",
+          "checkedDate": "04/13/2026",
+          "valid": "invalid"
         },
         {
           "name": "Alingsås Tidning - News Sitemap",
           "sitemapUrl": "https://www.alingsastidning.se/sitemap/news-sitemap.xml",
+          "enabled": false,
+          "status": "ERR",
+          "checkedDate": "04/13/2026",
+          "valid": "invalid"
+        },
+        {
+          "name": "Härryda-Posten - News Sitemap",
+          "sitemapUrl": "https://www.harrydaposten.se/sitemap/news-sitemap.xml",
           "status": "NEW",
-          "checkedDate": "04/01/2026",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Kungsbacka-Posten - News Sitemap",
+          "sitemapUrl": "https://www.kungsbackaposten.se/sitemap/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Partille Tidning - News Sitemap",
+          "sitemapUrl": "https://www.partilletidning.se/sitemap/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
           "valid": "valid"
         },
         {
@@ -24052,8 +24135,22 @@
           "valid": "needs verification"
         },
         {
+          "name": "MeinBezirk RSS",
+          "url": "https://www.meinbezirk.at/rss",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Finanzen.at (Stocks/Finance)",
           "url": "https://www.finanzen.at/rss/news"
+        },
+        {
+          "name": "Börse Express - Google News Sitemap",
+          "sitemapUrl": "https://www.boerse-express.com/gsitemapnews.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
         },
         {
           "name": "Trend.at (Business Magazine)",
@@ -24062,7 +24159,10 @@
         },
         {
           "name": "Kronen Zeitung",
-          "sitemapUrl": "https://www.krone.at/google-news-sitemap.xml"
+          "sitemapUrl": "https://www.krone.at/sitemap-articles.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
         },
         {
           "name": "Heute",
@@ -24087,6 +24187,34 @@
         {
           "name": "Vienna Online",
           "sitemapUrl": "https://www.vienna.at/sitemap-news.xml"
+        },
+        {
+          "name": "Weekend - News Sitemap",
+          "sitemapUrl": "https://www.weekend.at/news-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Weekend - Chronik Sitemap",
+          "sitemapUrl": "https://www.weekend.at/channel-chronik-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "W24 - News HTML Collection",
+          "url": "https://www.w24.at/News",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Laumat",
+          "url": "https://www.laumat.at/xml/laumat_beitraege.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
         },
         {
           "name": "Salzburger Nachrichten - News Sitemap",
@@ -24247,6 +24375,13 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "04/01/2026",
           "valid": "needs verification"
+        },
+        {
+          "name": "Nachrichten.at - Google News Sitemap",
+          "sitemapUrl": "https://www.nachrichten.at/google-news.sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
         },
         {
           "name": "Kurier - Article Sitemap",
@@ -26960,6 +27095,104 @@
           "status": "NEW",
           "checkedDate": "03/18/2026",
           "valid": "valid"
+        },
+        {
+          "name": "Jornal de Notícias - News Sitemap",
+          "sitemapUrl": "https://apix.noticiasilimitadas.pt/feed/jn/news/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "O Jogo - News Sitemap",
+          "sitemapUrl": "https://apix.noticiasilimitadas.pt/feed/oj/news/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "TSF - News Sitemap",
+          "sitemapUrl": "https://apix.noticiasilimitadas.pt/feed/tsf/news/sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "JM Madeira - Google Sitemap Index",
+          "sitemapUrl": "https://www.jm-madeira.pt/sitemapforgoogle.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Jornal do Centro - Post Sitemap",
+          "sitemapUrl": "https://www.jornaldocentro.pt/post-sitemap.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Região de Leiria - Post Sitemap 1",
+          "sitemapUrl": "https://www.regiaodeleiria.pt/post-sitemap1.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Renascença - Geral",
+          "url": "https://rr.pt/rss/rssfeed.aspx?section=section_noticias",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Renascença - Política",
+          "url": "https://rr.pt/rss/rssfeed.aspx?fid=85",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Renascença - Economia",
+          "url": "https://rr.pt/rss/rssfeed.aspx?fid=86",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Renascença - Mundo",
+          "url": "https://rr.pt/rss/rssfeed.aspx?fid=88",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Mais Semanário - Post Sitemap 20",
+          "sitemapUrl": "https://maissemanario.pt/post-sitemap20.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Terra Ruiva - Post Sitemap 14",
+          "sitemapUrl": "https://www.terraruiva.pt/post-sitemap14.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Rádio Comercial - News Sitemap",
+          "sitemapUrl": "https://radiocomercial.pt/sitemaps/sitemap-news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Rádio Campanário - Post Sitemap 90",
+          "sitemapUrl": "https://www.radiocampanario.com/post-sitemap90.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
         }
       ]
     },
@@ -27839,7 +28072,7 @@
         },
         {
           "name": "MTV Uutiset",
-          "sitemapUrl": "https://www.mtvuutiset.fi/newssitemap"
+          "sitemapUrl": "https://www.mtvuutiset.fi/sitemap.xml"
         },
         {
           "name": "Kauppalehti",
@@ -28057,6 +28290,48 @@
           "valid": "valid"
         },
         {
+          "name": "Nya Ostis",
+          "url": "https://www.nyaostis.fi/feed/",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Svenska Yle - Huvudstadsregionen",
+          "url": "https://svenska.yle.fi/rss/huvudstadsregionen",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Svenska Yle - Vastnyland",
+          "url": "https://svenska.yle.fi/rss/vastnyland",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Svenska Yle - Aboland",
+          "url": "https://svenska.yle.fi/rss/aboland",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Svenska Yle - Osterbotten",
+          "url": "https://svenska.yle.fi/rss/osterbotten",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
+          "name": "Svenska Yle - Ostnyland",
+          "url": "https://svenska.yle.fi/rss/ostnyland",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid"
+        },
+        {
           "name": "Ita-Savo",
           "url": "https://www.ita-savo.fi/feed/rss"
         },
@@ -28226,7 +28501,7 @@
         },
         {
           "name": "Keskipohjanmaa",
-          "url": "https://www.keskipohjanmaa.fi/feed/rss",
+          "url": null,
           "sitemapUrl": "https://www.keskipohjanmaa.fi/sitemap/news",
           "status": "NEW",
           "checkedDate": "03/16/2026",
@@ -28263,7 +28538,8 @@
           "status": "NEW",
           "checkedDate": "03/16/2026",
           "valid": "valid",
-          "row": 24
+          "row": 24,
+          "enabled": false
         },
         {
           "name": "Aamulehti - Sitemap Index",
@@ -28318,15 +28594,6 @@
           "checkedDate": "03/16/2026",
           "valid": "valid",
           "row": 144
-        },
-        {
-          "name": "MTV Uutiset - Sitemap Index",
-          "url": null,
-          "sitemapUrl": "https://www.mtvuutiset.fi/sitemap.xml",
-          "status": "NEW",
-          "checkedDate": "03/16/2026",
-          "valid": "valid",
-          "row": 145
         },
         {
           "name": "Iltalehti - Sitemap Index",
@@ -28615,6 +28882,174 @@
         {
           "name": "Suomen Kuvalehti",
           "url": "https://suomenkuvalehti.fi/feed/"
+        },
+        {
+          "name": "Verkkouutiset - Sitemap Index",
+          "sitemapUrl": "https://www.verkkouutiset.fi/sitemap_index.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 210
+        },
+        {
+          "name": "Suomenmaa - Sitemap Index",
+          "sitemapUrl": "https://www.suomenmaa.fi/sitemap_index.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 211
+        },
+        {
+          "name": "Maaseudun Tulevaisuus - Sitemap Index",
+          "sitemapUrl": "https://www.maaseuduntulevaisuus.fi/sitemaps/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 212
+        },
+        {
+          "name": "Keskipohjanmaa - Sitemap Index",
+          "sitemapUrl": "https://www.keskipohjanmaa.fi/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 213
+        },
+        {
+          "name": "Suomen Kuvalehti - Sitemap Index",
+          "sitemapUrl": "https://suomenkuvalehti.fi/sitemap_index.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 214
+        },
+        {
+          "name": "Kainuun Sanomat - Sitemap Index",
+          "sitemapUrl": "https://www.kainuunsanomat.fi/sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 215
+        },
+        {
+          "name": "Kotimaa - Sitemap Index",
+          "sitemapUrl": "https://www.kotimaa.fi/wp-sitemap.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 216
+        },
+        {
+          "name": "Kauppalehti - Sitemap Index",
+          "sitemapUrl": "https://www.kauppalehti.fi/sitemaps/sitemapindex.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 217
+        },
+        {
+          "name": "Arvopaperi - Sitemap Index",
+          "sitemapUrl": "https://www.arvopaperi.fi/sitemaps/sitemapindex.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 218
+        },
+        {
+          "name": "Janakkalan Sanomat - Sitemap Index",
+          "sitemapUrl": "https://www.janakkalansanomat.fi/sitemap/html/jan/sitemapindex.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 219
+        },
+        {
+          "name": "Jamsan Seutu - Sitemap Index",
+          "sitemapUrl": "https://www.jamsanseutu.fi/sitemap/html/js/sitemapindex.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 220
+        },
+        {
+          "name": "Kankaanpaan Seutu - Sitemap Index",
+          "sitemapUrl": "https://www.kankaanpaanseutu.fi/sitemap/html/ks/sitemapindex.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 221
+        },
+        {
+          "name": "Nokian Uutiset - Sitemap Index",
+          "sitemapUrl": "https://www.nokianuutiset.fi/sitemap/html/nu/sitemapindex.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 222
+        },
+        {
+          "name": "KMV-lehti - Sitemap Index",
+          "sitemapUrl": "https://www.kmvlehti.fi/sitemap/html/kmv/sitemapindex.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 223
+        },
+        {
+          "name": "Merikarvia-lehti - Sitemap Index",
+          "sitemapUrl": "https://www.merikarvialehti.fi/sitemap/html/mk/sitemapindex.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 224
+        },
+        {
+          "name": "Sydan-Satakunta - Sitemap Index",
+          "sitemapUrl": "https://www.sydansatakunta.fi/sitemap/html/ss/sitemapindex.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 225
+        },
+        {
+          "name": "Tyrvaan Sanomat - Sitemap Index",
+          "sitemapUrl": "https://www.tyrvaansanomat.fi/sitemap/html/tyr/sitemapindex.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 226
+        },
+        {
+          "name": "Valkeakosken Sanomat - Sitemap Index",
+          "sitemapUrl": "https://www.valkeakoskensanomat.fi/sitemap/html/vs/sitemapindex.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 227
+        },
+        {
+          "name": "Rannikkoseutu - Sitemap Index",
+          "sitemapUrl": "https://www.rannikkoseutu.fi/sitemap/html/rks/sitemapindex.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 228
+        },
+        {
+          "name": "Satakunnan Kansa - Sitemap Index",
+          "sitemapUrl": "https://www.satakunnankansa.fi/sitemap/html/sk/sitemapindex.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 229
+        },
+        {
+          "name": "Suur-Keuruu - Sitemap Index",
+          "sitemapUrl": "https://www.suurkeuruu.fi/sitemap/html/suk/sitemapindex.xml",
+          "status": "NEW",
+          "checkedDate": "04/13/2026",
+          "valid": "valid",
+          "row": 230
         }
       ]
     },

@@ -3,7 +3,7 @@ import { spawnSync } from 'node:child_process';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { basename, resolve } from 'node:path';
 import { isKnownNonArticleUrl } from '@/lib/article-url-filters';
-import { fetchWithRetry } from '@/lib/fetch-utils';
+import { fetchWithRetry, readResponseText } from '@/lib/fetch-utils';
 import { normalizeReadableArticleTitle } from '@/lib/html-entities';
 import { parseHtmlCollectionWithStats, parseRssOrAtomWithStats, parseSitemapWithStats, type ParsedFeedBatch, type ParsedFeedItem } from '@/lib/parsers';
 import { runWithConcurrency } from '@/lib/concurrency';
@@ -99,6 +99,27 @@ const DEFAULT_ITEM_LIMIT = 1000;
 const DEFAULT_OUTPUT_PATH = resolve(process.cwd(), 'audits/rss-country-coverage-latest.json');
 const SITEMAP_INDEX_CHILDREN_LIMIT = 8;
 const SITEMAP_INDEX_MAX_DEPTH = 2;
+const MAX_FUTURE_PUBLISHED_AT_MS = 24 * 60 * 60 * 1000;
+const ZERO_FUTURE_PUBLISHED_AT_HOSTS = [
+  'noordhollandsdagblad.nl',
+  'haarlemsdagblad.nl',
+  'leidschdagblad.nl',
+  'ijmuidercourant.nl',
+  'gooieneemlander.nl',
+];
+
+function maxFuturePublishedAtMsForUrl(url: string | undefined): number {
+  if (!url) return MAX_FUTURE_PUBLISHED_AT_MS;
+  try {
+    const hostname = new URL(url).hostname.toLowerCase();
+    if (ZERO_FUTURE_PUBLISHED_AT_HOSTS.some((host) => hostname === host || hostname.endsWith(`.${host}`))) {
+      return 0;
+    }
+  } catch {
+    return MAX_FUTURE_PUBLISHED_AT_MS;
+  }
+  return MAX_FUTURE_PUBLISHED_AT_MS;
+}
 const RUSSIAN_REGIONAL_SITEMAP_HOSTS = new Set([
   'ngs.ru',
   'www.ngs.ru',
@@ -147,7 +168,7 @@ const ENABLE_BROWSER_SITEMAP_FALLBACK =
 const BROWSER_SITEMAP_FALLBACK_DOMAINS = new Set(
   (
     process.env.INGEST_BROWSER_SITEMAP_DOMAINS ||
-    'www.ouest-france.fr,www.sudouest.fr,www.challenges.fr,www.firstpost.com,firstpost.com,www.dnaindia.com,dnaindia.com,yourstory.com,www.yourstory.com,www.business-standard.com,business-standard.com,www.news18.com,news18.com,www.ndtv.com,ndtv.com,www.orilliamatters.com,orilliamatters.com,www.collingwoodtoday.ca,collingwoodtoday.ca,www.vancouverisawesome.com,vancouverisawesome.com,www.nsnews.com,nsnews.com,www.richmond-news.com,richmond-news.com,www.princegeorgecitizen.com,princegeorgecitizen.com,www.delta-optimist.com,delta-optimist.com,www.moosejawtoday.com,moosejawtoday.com,www.sasktoday.ca,sasktoday.ca,www.bradfordtoday.ca,bradfordtoday.ca,www.elliotlaketoday.com,elliotlaketoday.com,www.midlandtoday.ca,midlandtoday.ca,www.standaard.be,www.nieuwsblad.be,www.gva.be,www.hbvl.be,www.rtl.be,rtl.be,www.blick.ch,blick.ch,www.pna.gov.ph,pna.gov.ph,businessmirror.com.ph,www.malaya.com.ph,malaya.com.ph,manilastandard.net,www.manilastandard.net,news.abs-cbn.com,www.startribune.com,www.miamiherald.com,www.kansascity.com,www.sacbee.com,www.charlotteobserver.com,www.newsobserver.com,www.star-telegram.com,www.fresnobee.com,www.idahostatesman.com,www.kentucky.com,www.thestate.com,www.thenewstribune.com,www.expressnews.com,www.timesunion.com,www.ctinsider.com,www.sfchronicle.com,www.sfgate.com,www.ctpost.com,www.nhregister.com,www.houstonchronicle.com,www.jpnn.com,jabar.jpnn.com,jatim.jpnn.com,www.tribunnews.com,www.jawapos.com,kumparan.com,mediaindonesia.com,www.pikiran-rakyat.com,www.crimeworld.com,crimeworld.com,www.thesun.ie,thesun.ie,www.thesun.co.uk,thesun.co.uk,www.telegraph.co.uk,telegraph.co.uk,www.tvsarawak.my,tvsarawak.my,www.liepajniekiem.lv,liepajniekiem.lv,guardian.ng,www.guardian.ng,nairametrics.com,www.nairametrics.com,premiumtimesng.com,www.premiumtimesng.com,www.news247.gr,news247.gr,www.sport24.gr,sport24.gr,www.documentonews.gr,documentonews.gr'
+    'www.ouest-france.fr,www.sudouest.fr,www.challenges.fr,www.firstpost.com,firstpost.com,www.dnaindia.com,dnaindia.com,yourstory.com,www.yourstory.com,www.business-standard.com,business-standard.com,www.news18.com,news18.com,www.ndtv.com,ndtv.com,www.orilliamatters.com,orilliamatters.com,www.collingwoodtoday.ca,collingwoodtoday.ca,www.vancouverisawesome.com,vancouverisawesome.com,www.nsnews.com,nsnews.com,www.richmond-news.com,richmond-news.com,www.princegeorgecitizen.com,princegeorgecitizen.com,www.delta-optimist.com,delta-optimist.com,www.moosejawtoday.com,moosejawtoday.com,www.sasktoday.ca,sasktoday.ca,www.bradfordtoday.ca,bradfordtoday.ca,www.elliotlaketoday.com,elliotlaketoday.com,www.midlandtoday.ca,midlandtoday.ca,www.standaard.be,www.nieuwsblad.be,www.gva.be,www.hbvl.be,www.rtl.be,rtl.be,www.blick.ch,blick.ch,www.pna.gov.ph,pna.gov.ph,businessmirror.com.ph,www.malaya.com.ph,malaya.com.ph,manilastandard.net,www.manilastandard.net,news.abs-cbn.com,www.startribune.com,www.miamiherald.com,www.kansascity.com,www.sacbee.com,www.charlotteobserver.com,www.newsobserver.com,www.star-telegram.com,www.fresnobee.com,www.idahostatesman.com,www.kentucky.com,www.thestate.com,www.thenewstribune.com,www.expressnews.com,www.timesunion.com,www.ctinsider.com,www.sfchronicle.com,www.sfgate.com,www.ctpost.com,www.nhregister.com,www.houstonchronicle.com,www.jpnn.com,jabar.jpnn.com,jatim.jpnn.com,www.tribunnews.com,www.jawapos.com,kumparan.com,mediaindonesia.com,www.pikiran-rakyat.com,www.crimeworld.com,crimeworld.com,www.thesun.ie,thesun.ie,www.thesun.co.uk,thesun.co.uk,www.telegraph.co.uk,telegraph.co.uk,www.tvsarawak.my,tvsarawak.my,www.liepajniekiem.lv,liepajniekiem.lv,guardian.ng,www.guardian.ng,nairametrics.com,www.nairametrics.com,premiumtimesng.com,www.premiumtimesng.com,www.news247.gr,news247.gr,www.sport24.gr,sport24.gr,www.documentonews.gr,documentonews.gr,www.noordhollandsdagblad.nl,noordhollandsdagblad.nl,www.haarlemsdagblad.nl,haarlemsdagblad.nl,www.leidschdagblad.nl,leidschdagblad.nl,www.ijmuidercourant.nl,ijmuidercourant.nl,www.gooieneemlander.nl,gooieneemlander.nl,www.autoweek.nl,autoweek.nl'
   )
     .split(',')
     .map((value) => value.trim().toLowerCase())
@@ -440,7 +461,7 @@ async function fetchArticlePublishedAt(source: string, url: string, timeoutMs: n
       if (!response.ok) return '';
       const contentType = (response.headers.get('content-type') || '').toLowerCase();
       if (contentType && !contentType.includes('html') && !contentType.includes('xml')) return '';
-      return extractArticlePagePublishedAt(source, await response.text());
+      return extractArticlePagePublishedAt(source, (await readResponseText(response, url)).text);
     } catch {
       return '';
     }
@@ -683,11 +704,86 @@ function selectSitemapIndexEntries(entries: SitemapIndexEntry[], baseUrl: string
     if (monthlyEntries.length > 0) return monthlyEntries.slice(0, 1);
   }
 
+  const isMtvUutiset = hostname === 'www.mtvuutiset.fi' || hostname === 'mtvuutiset.fi';
+  if (isMtvUutiset) {
+    const preferredEntries = entries.filter((entry) => /(?:^|\/)(?:newssitemap|videositemap)(?:\.xml(?:\.gz)?)?$/i.test(entry.loc));
+    if (preferredEntries.length > 0) {
+      return preferredEntries.slice(0, Math.min(2, SITEMAP_INDEX_CHILDREN_LIMIT));
+    }
+  }
+
+  const nowMs = Date.now();
+  const scoredEntries = entries
+    .map((entry) => ({ entry, score: scoreSitemapIndexEntry(entry, nowMs) }))
+    .filter((row) => row.score > 0)
+    .sort((left, right) => {
+      if (right.score !== left.score) return right.score - left.score;
+      const leftLastmod = left.entry.lastmodMs ?? Number.NEGATIVE_INFINITY;
+      const rightLastmod = right.entry.lastmodMs ?? Number.NEGATIVE_INFINITY;
+      if (rightLastmod !== leftLastmod) return rightLastmod - leftLastmod;
+      const leftLocDate = left.entry.locDateMs ?? Number.NEGATIVE_INFINITY;
+      const rightLocDate = right.entry.locDateMs ?? Number.NEGATIVE_INFINITY;
+      if (rightLocDate !== leftLocDate) return rightLocDate - leftLocDate;
+      return right.entry.index - left.entry.index;
+    })
+    .map((row) => row.entry);
+  if (scoredEntries.length > 0) {
+    return scoredEntries.slice(0, SITEMAP_INDEX_CHILDREN_LIMIT);
+  }
+
   return entries.slice(0, SITEMAP_INDEX_CHILDREN_LIMIT);
+}
+
+function scoreSitemapIndexEntry(entry: SitemapIndexEntry, nowMs: number): number {
+  const loc = entry.loc.toLowerCase();
+  let score = 0;
+
+  if (/(?:^|\/)(?:newssitemap|news-sitemap|gnews_sitemap|gnews|google-news|google_news|sitemap_latest|latest)(?:\.xml(?:\.gz)?)?$/i.test(loc)) {
+    score += 600;
+  }
+  if (/(?:^|\/)(?:videositemap|video-sitemap)(?:\.xml(?:\.gz)?)?$/i.test(loc)) {
+    score += 520;
+  }
+  if (/sitemap(?:[_-](?:main|content|post|posts))|\/sitemap\/news\b|\/post-sitemap|\/posts?\b|\/articles?\b/i.test(loc)) {
+    score += 180;
+  }
+  if (/(?:author|tag|toptag|top-tags|top_tags|weather|horoskop|horoscope|navigation|teemasivut|minisite|maintopics|main-topics|legacy-taxonomies|\/site\/sitemap)/i.test(loc)) {
+    score -= 420;
+  }
+
+  if (entry.lastmodMs !== null) {
+    if (entry.lastmodMs >= nowMs - 2 * 24 * 60 * 60 * 1000) score += 220;
+    else if (entry.lastmodMs < nowMs - 60 * 24 * 60 * 60 * 1000) score -= 120;
+  }
+
+  if (entry.locDateMs !== null) {
+    if (entry.locDateMs >= nowMs - 35 * 24 * 60 * 60 * 1000) score += 80;
+    else if (entry.locDateMs < nowMs - 45 * 24 * 60 * 60 * 1000) score -= 220;
+  }
+
+  return score;
+}
+
+function resolveSitemapIndexOverrides(baseUrl: string): string[] {
+  try {
+    const parsed = new URL(baseUrl);
+    const hostname = parsed.hostname.toLowerCase();
+    const pathname = parsed.pathname.toLowerCase();
+
+    if ((hostname === 'www.ts.fi' || hostname === 'ts.fi') && pathname === '/content/app/staticsitemaps/sitemapindex_recent.xml') {
+      return ['https://www.ts.fi/sitemap_latest.xml', 'https://www.ts.fi/gnews_sitemap.xml'];
+    }
+  } catch {
+    return [];
+  }
+
+  return [];
 }
 
 function parseSitemapIndex(xml: string, baseUrl: string): string[] {
   if (!/<sitemapindex[\s>]/i.test(xml)) return [];
+  const overrideChildren = resolveSitemapIndexOverrides(baseUrl);
+  if (overrideChildren.length > 0) return overrideChildren;
   const strictMatches = [...xml.matchAll(/<sitemap>([\s\S]*?)<\/sitemap>/gi)]
     .map((match) => match[1] || '');
   const entries = (strictMatches.length > 0
@@ -823,7 +919,7 @@ async function parseXmlRecursively(
             headers: FEED_FETCH_HEADERS,
           }
         });
-        childBody = await response.text();
+        childBody = (await readResponseText(response, childUrl)).text;
       } catch {
         response = null;
       }
@@ -831,7 +927,7 @@ async function parseXmlRecursively(
       if (!response || ((!response.ok || isLikelyHtmlResponse(response.headers.get('content-type') || '', childBody)) && !isLikelyXmlPayload(childBody))) {
         if (!shouldAttemptBrowserSitemapFallback(childUrl, response, childBody)) return null;
         response = fetchXmlWithBrowser(childUrl);
-        childBody = await response.text();
+        childBody = (await readResponseText(response, childUrl)).text;
       }
 
       if (!response.ok && !isLikelyXmlPayload(childBody)) return null;
@@ -865,20 +961,20 @@ async function inspectFeed(feed: FeedInput, itemLimit: number, timeoutMs: number
         }
       });
       contentType = response.headers.get('content-type') || '';
-      body = await response.text();
+      body = (await readResponseText(response, feed.url)).text;
     } catch (error) {
       if (!shouldAttemptBrowserSitemapFallback(feed.url, null, '')) {
         throw error;
       }
       response = fetchXmlWithBrowser(feed.url);
       contentType = response.headers.get('content-type') || '';
-      body = await response.text();
+      body = (await readResponseText(response, feed.url)).text;
     }
 
     if (((!response.ok || isLikelyHtmlResponse(contentType, body)) && !isLikelyXmlPayload(body)) && shouldAttemptBrowserSitemapFallback(feed.url, response, body)) {
       response = fetchXmlWithBrowser(feed.url);
       contentType = response.headers.get('content-type') || '';
-      body = await response.text();
+      body = (await readResponseText(response, feed.url)).text;
     }
 
     if (!response) {
@@ -934,13 +1030,16 @@ async function inspectFeed(feed: FeedInput, itemLimit: number, timeoutMs: number
         if (!item.link || isKnownNonArticleUrl(feed.source, item.link || '')) return false;
         const iso = toIso(item.publishedAt);
         if (!iso) return false;
-        if (new Date(iso).getTime() < cutoffMs) return false;
+        const publishedAtMs = new Date(iso).getTime();
+        const maxFuturePublishedAtMs = maxFuturePublishedAtMsForUrl(item.link || feed.url);
+        if (publishedAtMs < cutoffMs) return false;
+        if (publishedAtMs > nowMs + maxFuturePublishedAtMs) return false;
         return Boolean(item.readableTitle);
       });
     const recentLinkIds = recentItems
       .map((item) => deriveUrlArticleStableId(item.link) || normalizeLinkForId(item.link))
       .filter(Boolean);
-    const newestItemAt = parsedItems
+    const newestItemAt = recentItems
       .map((item) => toIso(item.publishedAt))
       .filter((value): value is string => Boolean(value))
       .sort((a, b) => b.localeCompare(a))[0];
