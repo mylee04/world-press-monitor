@@ -4151,6 +4151,10 @@ const PUBLISHER_RULES: PublisherRule[] = [
   { publisher: 'Gulf Business', countries: ['United Arab Emirates'], exact: ['Gulf Business'] },
   { publisher: 'Economy Middle East', countries: ['United Arab Emirates'], exact: ['Economy Middle East'] },
   { publisher: 'Arabian Business', countries: ['United Arab Emirates'], exact: ['Arabian Business'] },
+  { publisher: 'Emirates News Agency', countries: ['United Arab Emirates'], exact: ['WAM English - News Sitemap'] },
+  { publisher: 'Sharjah24', countries: ['United Arab Emirates'], exact: ['Sharjah24 - News Sitemap'] },
+  { publisher: 'Gulf Today', countries: ['United Arab Emirates'], exact: ['Gulf Today - HTML Collection'] },
+  { publisher: 'ARN News Centre', countries: ['United Arab Emirates'], exact: ['ARN News Centre - HTML Collection'] },
   { publisher: 'Albayan', countries: ['United Arab Emirates'], exact: ['Albayan - News Sitemap'] },
   {
     publisher: 'Emarat Al Youm',

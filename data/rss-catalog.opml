@@ -2,7 +2,7 @@
 <opml version="1.1">
   <head>
     <title>PressLab RSS Atlas Catalog</title>
-    <dateCreated>Tue, 14 Apr 2026 03:02:24 GMT</dateCreated>
+    <dateCreated>Tue, 14 Apr 2026 03:50:43 GMT</dateCreated>
     <ownerName>PressLab</ownerName>
   </head>
   <body>
@@ -3104,6 +3104,9 @@
       <outline text="Telemundo - RSS [valid]" title="Telemundo - RSS [valid]" type="rss" xmlUrl="https://www.telemundo.com.uy/feed/rss" htmlUrl="https://www.telemundo.com.uy"/>
       <outline text="Grupo R Multimedio - RSS [valid]" title="Grupo R Multimedio - RSS [valid]" type="rss" xmlUrl="https://www.grupormultimedio.com/rss" htmlUrl="https://www.grupormultimedio.com"/>
       <outline text="Tenfield - RSS [valid]" title="Tenfield - RSS [valid]" type="rss" xmlUrl="https://www.tenfield.com.uy/rss" htmlUrl="https://www.tenfield.com.uy"/>
+      <outline text="Medios Públicos [needs verification]" title="Medios Públicos [needs verification]" type="rss" xmlUrl="https://mediospublicos.uy/feed/" htmlUrl="https://mediospublicos.uy"/>
+      <outline text="El Pueblo [needs verification]" title="El Pueblo [needs verification]" type="rss" xmlUrl="https://elpueblodigital.uy/feed/" htmlUrl="https://elpueblodigital.uy"/>
+      <outline text="Correo de Punta del Este [needs verification]" title="Correo de Punta del Este [needs verification]" type="rss" xmlUrl="https://correopuntadeleste.com/feed/" htmlUrl="https://correopuntadeleste.com"/>
     </outline>
     <outline text="Austria (AT)" title="Austria (AT)">
       <outline text="Der Standard [valid]" title="Der Standard [valid]" type="rss" xmlUrl="https://www.derstandard.at/rss" htmlUrl="https://www.derstandard.at"/>
@@ -4838,6 +4841,10 @@
       <outline text="Gulf Business [valid]" title="Gulf Business [valid]" type="rss" xmlUrl="https://gulfbusiness.com/feed/" htmlUrl="https://gulfbusiness.com"/>
       <outline text="Economy Middle East [valid]" title="Economy Middle East [valid]" type="rss" xmlUrl="https://economymiddleeast.com/feed/" htmlUrl="https://economymiddleeast.com"/>
       <outline text="Arabian Business [invalid]" title="Arabian Business [invalid]" type="rss" xmlUrl="https://www.arabianbusiness.com/feed/" htmlUrl="https://www.arabianbusiness.com"/>
+      <outline text="WAM English - News Sitemap [needs verification]" title="WAM English - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.wam.ae/en/sitemap/news.xml" htmlUrl="https://www.wam.ae"/>
+      <outline text="Sharjah24 - News Sitemap [needs verification]" title="Sharjah24 - News Sitemap [needs verification]" type="rss" xmlUrl="https://sharjah24.ae/NewsSitemap.xml" htmlUrl="https://sharjah24.ae"/>
+      <outline text="Gulf Today - HTML Collection [valid]" title="Gulf Today - HTML Collection [valid]" type="rss" xmlUrl="https://www.gulftoday.ae/news" htmlUrl="https://www.gulftoday.ae"/>
+      <outline text="ARN News Centre - HTML Collection [valid]" title="ARN News Centre - HTML Collection [valid]" type="rss" xmlUrl="https://www.arnnewscentre.ae/" htmlUrl="https://www.arnnewscentre.ae"/>
       <outline text="Albayan - News Sitemap [needs verification]" title="Albayan - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.albayan.ae/news-sitemap.xml" htmlUrl="https://www.albayan.ae"/>
       <outline text="Emarat Al Youm - News Sitemap [needs verification]" title="Emarat Al Youm - News Sitemap [needs verification]" type="rss" xmlUrl="https://www.emaratalyoum.com/news-sitemaps-1.368006?ot=ot.AjaxPageLayout" htmlUrl="https://www.emaratalyoum.com"/>
       <outline text="Emarat Al Youm - Local Section [needs verification]" title="Emarat Al Youm - Local Section [needs verification]" type="rss" xmlUrl="https://www.emaratalyoum.com/news-sitemaps-1.368006/local-section-1.1075475?ot=ot.AjaxPageLayout" htmlUrl="https://www.emaratalyoum.com"/>
