@@ -45,7 +45,8 @@
           "status": "ERR",
           "checkedDate": "02/18/2026",
           "valid": "invalid",
-          "row": 6
+          "row": 6,
+          "enabled": false
         },
         {
           "name": "CNN - News Sitemap",
@@ -1340,7 +1341,8 @@
         {
           "name": "Blockworks",
           "url": "https://blockworks.co/feed",
-          "sitemapUrl": "https://blockworks.com/news-sitemap-index.xml"
+          "sitemapUrl": "https://blockworks.com/news-sitemap-index.xml",
+          "enabled": false
         },
         {
           "name": "Decrypt",
@@ -1638,7 +1640,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/26/2026",
           "valid": "valid",
-          "row": 25
+          "row": 25,
+          "enabled": false
         },
         {
           "name": "Zaobao (realtime)",
@@ -2181,7 +2184,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": "03/26/2026",
           "valid": "valid",
-          "row": 59
+          "row": 59,
+          "enabled": false
         }
       ]
     },
@@ -2454,7 +2458,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 33
+          "row": 33,
+          "enabled": false
         },
         {
           "name": "BOOKウォッチ",
@@ -4050,7 +4055,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 34
+          "row": 34,
+          "enabled": false
         },
         {
           "name": "Süddeutsche - Bildung",
@@ -4058,7 +4064,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 35
+          "row": 35,
+          "enabled": false
         },
         {
           "name": "Süddeutsche - Reise",
@@ -4258,7 +4265,8 @@
           "status": null,
           "checkedDate": null,
           "valid": null,
-          "row": 6
+          "row": 6,
+          "enabled": false
         },
         {
           "name": "DNA India (India)",
@@ -4490,7 +4498,8 @@
           "url": "https://www.moneycontrol.com/rss/latestnews.xml",
           "sitemapUrl": "https://www.moneycontrol.com/news/news-sitemap.xml",
           "language": "en",
-          "tier": "primary"
+          "tier": "primary",
+          "enabled": false
         },
         {
           "name": "The Siasat Daily",
@@ -5796,7 +5805,8 @@
           "status": null,
           "checkedDate": null,
           "valid": null,
-          "row": 20
+          "row": 20,
+          "enabled": false
         },
         {
           "name": "Le Monde (EN – Main)",
@@ -6332,7 +6342,8 @@
           "status": null,
           "checkedDate": null,
           "valid": null,
-          "row": 13
+          "row": 13,
+          "enabled": false
         },
         {
           "name": "Corriere della Sera (Ultimora)",
@@ -6365,7 +6376,8 @@
           "status": null,
           "checkedDate": null,
           "valid": null,
-          "row": 17
+          "row": 17,
+          "enabled": false
         },
         {
           "name": "Il Sole 24 Ore (Italia)",
@@ -6389,7 +6401,8 @@
           "status": null,
           "checkedDate": null,
           "valid": null,
-          "row": 20
+          "row": 20,
+          "enabled": false
         },
         {
           "name": "IL Tempo",
@@ -8637,7 +8650,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 7
+          "row": 7,
+          "enabled": false
         },
         {
           "name": "RT News",
@@ -9581,11 +9595,13 @@
         },
         {
           "name": "G1 Ciência e Saúde",
-          "url": "https://g1.globo.com/rss/g1/ciencia-e-saude/"
+          "url": "https://g1.globo.com/rss/g1/ciencia-e-saude/",
+          "enabled": false
         },
         {
           "name": "G1 Economia - Tecnologia",
-          "url": "https://g1.globo.com/rss/g1/economia/tecnologia/"
+          "url": "https://g1.globo.com/rss/g1/economia/tecnologia/",
+          "enabled": false
         },
         {
           "name": "G1 Carros",
@@ -9865,7 +9881,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 9
+          "row": 9,
+          "enabled": false
         },
         {
           "name": "Australian Broadcasting Corporation - World",
@@ -11401,7 +11418,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 41
+          "row": 41,
+          "enabled": false
         },
         {
           "name": "La Vanguardia - Deportes",
@@ -11467,7 +11485,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 48
+          "row": 48,
+          "enabled": false
         },
         {
           "name": "El Periódico de la Energía (에너지/전력망 특화)",
@@ -12200,6 +12219,13 @@
         {
           "name": "El Sol de San Luis",
           "url": "https://www.elsoldesanluis.com.mx/rss"
+        },
+        {
+          "name": "24 Horas Mexico",
+          "url": "https://24-horas.mx/feed/",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
         }
       ]
     },
@@ -14555,7 +14581,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 44
+          "row": 44,
+          "enabled": false
         },
         {
           "name": "NOS Jeugdjournaal",
@@ -15666,7 +15693,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 25
+          "row": 25,
+          "enabled": false
         },
         {
           "name": "NZZ (Latest)",
@@ -16187,7 +16215,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 34
+          "row": 34,
+          "enabled": false
         },
         {
           "name": "Hürriyet (Spor)",
@@ -16227,7 +16256,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 39
+          "row": 39,
+          "enabled": false
         },
         {
           "name": "Sabah (Anasayfa)",
@@ -16608,7 +16638,8 @@
           "status": null,
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 10
+          "row": 10,
+          "enabled": false
         },
         {
           "name": "Al Madina - Main",
@@ -17614,7 +17645,15 @@
     {
       "name": "Jordan",
       "code": "JO",
-      "feeds": []
+      "feeds": [
+        {
+          "name": "Al Mamlaka TV - News Sitemap",
+          "sitemapUrl": "https://www.almamlakatv.com/sitemap-news.xml",
+          "status": "⏩ OFFICIAL",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
+        }
+      ]
     },
     {
       "name": "Kuwait",
@@ -17656,7 +17695,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 14
+          "row": 14,
+          "enabled": false
         },
         {
           "name": "CNA 政治",
@@ -19623,9 +19663,10 @@
           "name": "HLN (Het Laatste Nieuws)",
           "url": "https://www.hln.be/home/rss.xml",
           "status": "⏩ OFFICIAL",
-          "checkedDate": null,
-          "valid": "needs verification",
-          "row": 29
+          "checkedDate": "04/14/2026",
+          "valid": "valid",
+          "row": 29,
+          "sitemapUrl": "https://www.hln.be/sitemap-news.xml"
         },
         {
           "name": "Brussels Morning",
@@ -19909,7 +19950,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 26
+          "row": 26,
+          "enabled": false
         },
         {
           "name": "Thai PBS (news feed endpoint)",
@@ -20117,7 +20159,10 @@
         },
         {
           "name": "Matichon (Leading Political Daily)",
-          "url": "https://www.matichon.co.th/feed"
+          "url": "https://www.matichon.co.th/feed",
+          "sitemapUrl": "https://www.matichon.co.th/wp-sitemap.xml",
+          "checkedDate": "04/14/2026",
+          "valid": "valid"
         },
         {
           "name": "Prachachat (Business/Economy #1)",
@@ -20748,7 +20793,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 41
+          "row": 41,
+          "enabled": false
         },
         {
           "name": "MehrNews (EN) - Historical Sites",
@@ -20774,7 +20820,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 44
+          "row": 44,
+          "enabled": false
         },
         {
           "name": "ISNA (EN) - Social",
@@ -21051,7 +21098,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 21
+          "row": 21,
+          "enabled": false
         },
         {
           "name": "Página/12 - Psicología",
@@ -21857,7 +21905,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 8
+          "row": 8,
+          "enabled": false
         },
         {
           "name": "Infoweek",
@@ -23800,7 +23849,8 @@
           "url": "https://www.180.com.uy/feed.php",
           "status": "NEW",
           "checkedDate": null,
-          "valid": "needs verification"
+          "valid": "needs verification",
+          "enabled": false
         },
         {
           "name": "Uypress - Internacionales",
@@ -24812,7 +24862,8 @@
           "status": "NEW",
           "checkedDate": "04/02/2026",
           "valid": "valid",
-          "row": 15
+          "row": 15,
+          "enabled": false
         },
         {
           "name": "RNZ - Pacific",
@@ -25503,7 +25554,8 @@
           "status": "⏩ OFFICIAL",
           "checkedDate": null,
           "valid": "needs verification",
-          "row": 53
+          "row": 53,
+          "enabled": false
         },
         {
           "name": "VG (Verdens Gang)",
@@ -26472,7 +26524,8 @@
           "status": "NEW",
           "checkedDate": "03/16/2026",
           "valid": "valid",
-          "row": 25
+          "row": 25,
+          "enabled": false
         },
         {
           "name": "Extra.ie - Sport",
@@ -27229,7 +27282,8 @@
         },
         {
           "name": "MadreMedia",
-          "url": "https://madremedia.pt/feed/"
+          "url": "https://madremedia.pt/feed/",
+          "enabled": false
         },
         {
           "name": "NiT",
@@ -27966,7 +28020,8 @@
         },
         {
           "name": "The Local Denmark",
-          "url": "https://feeds.thelocal.com/rss/builder/dk"
+          "url": "https://feeds.thelocal.com/rss/builder/dk",
+          "enabled": false
         },
         {
           "name": "Globalnyt",
@@ -35220,7 +35275,8 @@
         },
         {
           "name": "El Espectador",
-          "sitemapUrl": "https://www.elespectador.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+          "sitemapUrl": "https://www.elespectador.com/arc/outboundfeeds/news-sitemap/?outputType=xml",
+          "enabled": false
         },
         {
           "name": "Semana",
@@ -35463,7 +35519,8 @@
         },
         {
           "name": "MalaysiaNow - Malaysia Feed",
-          "url": "https://www.malaysianow.com/tag/malaysia/feed"
+          "url": "https://www.malaysianow.com/tag/malaysia/feed",
+          "enabled": false
         },
         {
           "name": "Scoop - Feed",
@@ -35623,7 +35680,8 @@
         },
         {
           "name": "BusinessWorld - World Feed",
-          "url": "https://www.bworldonline.com/world/feed/"
+          "url": "https://www.bworldonline.com/world/feed/",
+          "enabled": false
         },
         {
           "name": "BusinessWorld - The Nation Feed",
@@ -35720,7 +35778,8 @@
         },
         {
           "name": "The Manila Times - Regions Feed",
-          "url": "https://www.manilatimes.net/news/regions/feed/"
+          "url": "https://www.manilatimes.net/news/regions/feed/",
+          "enabled": false
         },
         {
           "name": "The Manila Times - Sports Feed",
@@ -35796,7 +35855,8 @@
         },
         {
           "name": "Bohol Chronicle - Feed",
-          "url": "https://www.boholchronicle.com.ph/feed/"
+          "url": "https://www.boholchronicle.com.ph/feed/",
+          "enabled": false
         },
         {
           "name": "Mindanao Times - Feed",

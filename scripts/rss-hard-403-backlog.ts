@@ -150,6 +150,18 @@ function tryParseUrl(value: string): URL | null {
   }
 }
 
+function isSameHostAlternateCovered(atlasUrl: string | null, failedUrl: string): boolean {
+  const normalizedAtlasUrl = normalizeUrl(atlasUrl);
+  const normalizedFailedUrl = normalizeUrl(failedUrl);
+  if (!normalizedAtlasUrl || !normalizedFailedUrl || normalizedAtlasUrl === normalizedFailedUrl) return false;
+
+  const atlasParsed = tryParseUrl(normalizedAtlasUrl);
+  const failedParsed = tryParseUrl(normalizedFailedUrl);
+  if (!atlasParsed || !failedParsed) return false;
+
+  return atlasParsed.hostname.toLowerCase() === failedParsed.hostname.toLowerCase();
+}
+
 async function loadRows(pool: Pool, options: CliOptions): Promise<Row[]> {
   const sql = `
     with ranked as (
@@ -261,6 +273,9 @@ function buildBacklog(rows: Row[], atlas: Atlas): BacklogItem[] {
 
     const representedElsewhere = activeAtlasUrls.has(`${item.method}|||${item.country}|||${normalizedSuccessUrl}`);
     return !representedElsewhere;
+  }).filter((item) => {
+    if (item.action !== 'MANUAL_WAF_REVIEW') return true;
+    return !isSameHostAlternateCovered(item.atlasUrl, item.latestFailedUrl);
   });
 
   backlog.sort((a, b) => {
