@@ -24,13 +24,12 @@ PLIST_NAMES=(
   "com.wpr.api-tunnel.plist"
   "com.wpr.api-runtime-watchdog.plist"
   "com.wpr.ingest-hourly.plist"
+  "com.wpr.ingest-cold-tail-hourly.plist"
   "com.wpr.ingest-benchmark-hourly.plist"
   "com.wpr.map-snapshots-hourly.plist"
   "com.wpr.customer-dashboard-hourly.plist"
   "com.wpr.news-country-discord-hourly.plist"
   "com.wpr.ingest-ops-hourly.plist"
-  "com.wpr.ingest-rss-fastlane-strict.plist"
-  "com.wpr.ingest-rss-fastlane-relaxed.plist"
   "com.wpr.health-daily.plist"
 )
 
@@ -44,6 +43,11 @@ LEGACY_PLIST_NAMES=(
   "com.wpm.health-daily.plist"
   "com.wpm.news-country-discord.plist"
   "com.wpm.ingest-ops-hourly.plist"
+)
+
+RETIRED_PLIST_NAMES=(
+  "com.wpr.ingest-rss-fastlane-strict.plist"
+  "com.wpr.ingest-rss-fastlane-relaxed.plist"
 )
 
 escape_sed_replacement() {
@@ -64,7 +68,7 @@ is_truthy() {
 is_protected_running_job_label() {
   local label=$1
   case "${label}" in
-    com.wpr.ingest-hourly|com.wpm.ingest-hourly|com.wpr.ingest-benchmark-hourly|com.wpr.map-snapshots-hourly|com.wpr.customer-dashboard-hourly|com.wpr.news-country-discord-hourly|com.wpr.ingest-ops-hourly|com.wpr.ingest-rss-fastlane-strict|com.wpr.ingest-rss-fastlane-relaxed|com.wpm.ingest-rss-fastlane-strict|com.wpm.ingest-rss-fastlane-relaxed)
+    com.wpr.ingest-hourly|com.wpm.ingest-hourly|com.wpr.ingest-cold-tail-hourly|com.wpr.ingest-benchmark-hourly|com.wpr.map-snapshots-hourly|com.wpr.customer-dashboard-hourly|com.wpr.news-country-discord-hourly|com.wpr.ingest-ops-hourly)
       return 0
       ;;
     *)
@@ -133,7 +137,7 @@ print_label_status() {
 bootstrap_domain_for_label() {
   local label=$1
   case "${label}" in
-    com.wpr.ingest-hourly|com.wpm.ingest-hourly|com.wpr.ingest-benchmark-hourly|com.wpr.map-snapshots-hourly|com.wpr.customer-dashboard-hourly|com.wpr.news-country-discord-hourly|com.wpr.ingest-ops-hourly|com.wpr.ingest-rss-fastlane-strict|com.wpr.ingest-rss-fastlane-relaxed|com.wpm.ingest-rss-fastlane-strict|com.wpm.ingest-rss-fastlane-relaxed)
+    com.wpr.ingest-hourly|com.wpm.ingest-hourly|com.wpr.ingest-cold-tail-hourly|com.wpr.ingest-benchmark-hourly|com.wpr.map-snapshots-hourly|com.wpr.customer-dashboard-hourly|com.wpr.news-country-discord-hourly|com.wpr.ingest-ops-hourly)
       printf '%s\n' "${LAUNCHD_USER_DOMAIN}"
       ;;
     *)
@@ -198,6 +202,7 @@ sync_runtime_repo() {
     "${WPR_RUNTIME_REPO}/scripts/ensure-api-runtime-local.sh" \
     "${WPR_RUNTIME_REPO}/scripts/run-ingest-downstream-task.sh" \
     "${WPR_RUNTIME_REPO}/scripts/run-api-news.sh" \
+    "${WPR_RUNTIME_REPO}/scripts/run-ingest-cold-tail-local.sh" \
     "${WPR_RUNTIME_REPO}/scripts/run-ingest-hourly-local.sh" \
     "${WPR_RUNTIME_REPO}/scripts/run-ingest-rss-fastlane-local.sh" \
     "${WPR_RUNTIME_REPO}/scripts/run-news-country-discord-report.sh" \
@@ -243,6 +248,14 @@ install_launch_agents() {
     rm -f "${target_path}"
   done
 
+  for plist_name in "${RETIRED_PLIST_NAMES[@]}"; do
+    local label="${plist_name%.plist}"
+    local target_path="${WPR_LAUNCHD_DIR}/${plist_name}"
+
+    bootout_label_all_domains "${label}"
+    rm -f "${target_path}"
+  done
+
   for plist_name in "${PLIST_NAMES[@]}"; do
     local label="${plist_name%.plist}"
     local template_path="${PROJECT_ROOT}/ops/launchd/${plist_name}"
@@ -259,6 +272,14 @@ install_launch_agents() {
 }
 
 remove_launch_agents() {
+  for plist_name in "${RETIRED_PLIST_NAMES[@]}"; do
+    local label="${plist_name%.plist}"
+    local target_path="${WPR_LAUNCHD_DIR}/${plist_name}"
+
+    bootout_label_all_domains "${label}"
+    rm -f "${target_path}"
+  done
+
   for plist_name in "${PLIST_NAMES[@]}"; do
     local label="${plist_name%.plist}"
     local target_path="${WPR_LAUNCHD_DIR}/${plist_name}"
@@ -297,9 +318,9 @@ Usage:
 
 Notes:
   - Runtime repo defaults to ~/srv/world-press-radar/repo.
-  - Hourly ingest only runs ingest:once and records a success marker.
+  - Hourly ingest only runs head + warm ingest:once and records a success marker.
+  - Cold-tail rotation runs as a separate launchd job and no longer adds load to the main hourly ingest.
   - Benchmark/map/customer/news-country/ingest-ops run as separate downstream jobs with their own locks.
-  - Fast-lane RSS ingest runs as separate launchd jobs: strict every 30m, relaxed every 60m.
   - update/install keeps active ingest/downstream jobs alive by default; set WPR_LAUNCHD_FORCE_ACTIVE_RELOAD=1 to force a reload anyway.
   - Legacy pre-radar launch agents are removed on install/update.
   - Do not point launchd at Desktop/Documents/Downloads worktrees.

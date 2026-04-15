@@ -6,6 +6,7 @@ export type WorkerState = {
   offset: number;
   updatedAt: string;
   hybridBucketOffsets?: Record<string, { offset: number; updatedAt: string }>;
+  namedOffsets?: Record<string, { offset: number; updatedAt: string }>;
 };
 
 export type BackfillWindow = {
@@ -40,6 +41,18 @@ function readWorkerStateRaw(stateFile: string): WorkerState {
               ])
             )
           : undefined,
+      namedOffsets:
+        json.namedOffsets && typeof json.namedOffsets === 'object'
+          ? Object.fromEntries(
+              Object.entries(json.namedOffsets).map(([offsetKey, offsetState]) => [
+                offsetKey,
+                {
+                  offset: Number.isFinite(offsetState.offset) ? Math.max(0, Math.floor(offsetState.offset)) : 0,
+                  updatedAt: offsetState.updatedAt || new Date(0).toISOString(),
+                },
+              ])
+            )
+          : undefined,
     };
   } catch {
     return { offset: 0, updatedAt: new Date(0).toISOString() };
@@ -64,6 +77,7 @@ export function writeWorkerState(stateFile: string, state: WorkerState, cwd: str
         offset: Number.isFinite(state.offset) ? Math.max(0, Math.floor(state.offset)) : existingState.offset,
         updatedAt: state.updatedAt || existingState.updatedAt,
         hybridBucketOffsets: state.hybridBucketOffsets ?? existingState.hybridBucketOffsets,
+        namedOffsets: state.namedOffsets ?? existingState.namedOffsets,
       },
       null,
       2
@@ -185,6 +199,44 @@ export function writeHybridBucketState(
       hybridBucketOffsets: {
         ...(existingState.hybridBucketOffsets || {}),
         [bucketKey]: {
+          offset: Math.max(0, Math.floor(offset)),
+          updatedAt,
+        },
+      },
+    },
+    cwd
+  );
+}
+
+export function readNamedOffsetState(
+  stateFile: string,
+  stateKey: string,
+  modulo: number
+): { offset: number; updatedAt: string } {
+  const state = readWorkerStateRaw(stateFile);
+  const rawOffset = state.namedOffsets?.[stateKey]?.offset || 0;
+  const normalizedModulo = Math.max(1, Math.floor(modulo));
+  return {
+    offset: rawOffset % normalizedModulo,
+    updatedAt: state.namedOffsets?.[stateKey]?.updatedAt || new Date(0).toISOString(),
+  };
+}
+
+export function writeNamedOffsetState(
+  stateFile: string,
+  stateKey: string,
+  offset: number,
+  updatedAt: string,
+  cwd: string
+): void {
+  const existingState = readWorkerStateRaw(stateFile);
+  writeWorkerState(
+    stateFile,
+    {
+      ...existingState,
+      namedOffsets: {
+        ...(existingState.namedOffsets || {}),
+        [stateKey]: {
           offset: Math.max(0, Math.floor(offset)),
           updatedAt,
         },

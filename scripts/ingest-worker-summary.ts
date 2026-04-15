@@ -39,6 +39,7 @@ type WorkerSummary = {
         fetchFailures: number;
         totalElapsedMs: number;
         averageElapsedMs: number;
+        timeBudgetSkipped: number;
       };
       title: {
         requested: number;
@@ -68,11 +69,15 @@ type WorkerSummary = {
       headOutlets: number;
       longTailOutlets: number;
       longTailSelected: number;
+      coldTailOutlets: number;
+      coldTailSelected: number;
       headWindowHours: number | null;
       headMinArticles: number | null;
       headMaxOutlets: number | null;
       rotationHours: number | null;
       rotationBucket: number | null;
+      coldTailRotationHours: number | null;
+      coldTailRotationBucket: number | null;
       longTailBucketOffset: number | null;
       longTailBucketNextOffset: number | null;
       longTailBucketSize: number | null;
@@ -187,7 +192,7 @@ export function formatWorkerSummaryLog(params: {
     .map(({ source, count }) => `${source}:${count}`)
     .join(', ');
   const selectionSummary = params.selectionSummary.mode === 'hybrid'
-    ? `selection=hybrid(${params.selectionSummary.reason}) pinned=${params.selectionSummary.pinnedOutlets}${params.selectionSummary.pinnedReason ? `(${params.selectionSummary.pinnedReason})` : ''} head=${params.selectionSummary.headOutlets} long_tail=${params.selectionSummary.longTailOutlets} long_tail_selected=${params.selectionSummary.longTailSelected} rotation=${(params.selectionSummary.rotationBucket ?? 0) + 1}/${params.selectionSummary.rotationHours ?? 1} bucket_offset=${params.selectionSummary.longTailBucketOffset ?? 0}->${params.selectionSummary.longTailBucketNextOffset ?? 0}/${params.selectionSummary.longTailBucketSize ?? 0} cap=${params.selectionSummary.maxOutletsPerRun ?? 'none'} reserved_long_tail=${params.selectionSummary.reservedLongTailOutlets ?? 0} capped=${params.selectionSummary.budgetCapped ? 'yes' : 'no'}`
+    ? `selection=hybrid(${params.selectionSummary.reason}) pinned=${params.selectionSummary.pinnedOutlets}${params.selectionSummary.pinnedReason ? `(${params.selectionSummary.pinnedReason})` : ''} head=${params.selectionSummary.headOutlets} long_tail=${params.selectionSummary.longTailOutlets} long_tail_selected=${params.selectionSummary.longTailSelected} rotation=${(params.selectionSummary.rotationBucket ?? 0) + 1}/${params.selectionSummary.rotationHours ?? 1} bucket_offset=${params.selectionSummary.longTailBucketOffset ?? 0}->${params.selectionSummary.longTailBucketNextOffset ?? 0}/${params.selectionSummary.longTailBucketSize ?? 0} cold_tail=${params.selectionSummary.coldTailOutlets} cold_tail_selected=${params.selectionSummary.coldTailSelected} cold_rotation=${(params.selectionSummary.coldTailRotationBucket ?? 0) + 1}/${params.selectionSummary.coldTailRotationHours ?? 1} cap=${params.selectionSummary.maxOutletsPerRun ?? 'none'} reserved_long_tail=${params.selectionSummary.reservedLongTailOutlets ?? 0} capped=${params.selectionSummary.budgetCapped ? 'yes' : 'no'}`
     : `selection=${params.selectionSummary.mode}(${params.selectionSummary.reason})`;
   return (
     `[ingest-worker] outlets=${params.selectedCount}/${params.sourceFilteredOutletsCount}/${params.countryFilteredOutletsCount}/${params.allOutletsCount} endpoints=${params.attempted} ok=${params.ok} failed=${params.failed} ` +
@@ -198,7 +203,7 @@ export function formatWorkerSummaryLog(params: {
     `explicit_sitemap_parallel=${params.explicitSitemapParallel ? 'on' : 'off'} ` +
     `backoff_skipped_total=${params.failingKeysSize} backoff_skipped=[rss=${params.fallbackSummary.rssBackoffSkipped}, sitemap=${params.fallbackSummary.sitemapBackoffSkipped}] ` +
     `sitemap_policy_disabled=${params.fallbackSummary.sitemapPolicyDisabled} ` +
-    `article_page_fetch=[fetches=${params.articlePageFallbackSummary.pageFetch.fetchesStarted}, cache_hits=${params.articlePageFallbackSummary.pageFetch.cacheHits}, failures=${params.articlePageFallbackSummary.pageFetch.fetchFailures}, total_elapsed_ms=${params.articlePageFallbackSummary.pageFetch.totalElapsedMs}, avg_elapsed_ms=${params.articlePageFallbackSummary.pageFetch.averageElapsedMs}] ` +
+    `article_page_fetch=[fetches=${params.articlePageFallbackSummary.pageFetch.fetchesStarted}, cache_hits=${params.articlePageFallbackSummary.pageFetch.cacheHits}, failures=${params.articlePageFallbackSummary.pageFetch.fetchFailures}, total_elapsed_ms=${params.articlePageFallbackSummary.pageFetch.totalElapsedMs}, avg_elapsed_ms=${params.articlePageFallbackSummary.pageFetch.averageElapsedMs}, time_budget_skipped=${params.articlePageFallbackSummary.pageFetch.timeBudgetSkipped}] ` +
     `title_fallback=[requested=${params.articlePageFallbackSummary.title.requested}, triggered=${params.articlePageFallbackSummary.title.triggered}, fulfilled=${params.articlePageFallbackSummary.title.fulfilled}, budget_skipped=${params.articlePageFallbackSummary.title.budgetSkipped}] ` +
     `published_at_fallback=[requested=${params.articlePageFallbackSummary.publishedAt.requested}, triggered=${params.articlePageFallbackSummary.publishedAt.triggered}, fulfilled=${params.articlePageFallbackSummary.publishedAt.fulfilled}, budget_skipped=${params.articlePageFallbackSummary.publishedAt.budgetSkipped}] ` +
     `meta_category_fallback=[requested=${params.articlePageFallbackSummary.metaCategory.requested}, triggered=${params.articlePageFallbackSummary.metaCategory.triggered}, fulfilled=${params.articlePageFallbackSummary.metaCategory.fulfilled}, budget_skipped=${params.articlePageFallbackSummary.metaCategory.budgetSkipped}] ` +

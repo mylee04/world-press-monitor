@@ -2231,10 +2231,12 @@ async function upsertIngestOpsRollups(db: Pool, runs: IngestionEndpointRun[], de
   }
 }
 
-export async function persistNewsArticles(items: NewsItem[]): Promise<{ persisted: number; storage: 'postgres' | 'disabled'; reason?: string }> {
+export async function persistNewsArticles(
+  items: NewsItem[],
+): Promise<{ persisted: number; inserted: number; updated: number; storage: 'postgres' | 'disabled'; reason?: string }> {
   const db = getPool();
-  if (!db) return { persisted: 0, storage: 'disabled', reason: poolDisabledReason };
-  if (!items.length) return { persisted: 0, storage: 'postgres' };
+  if (!db) return { persisted: 0, inserted: 0, updated: 0, storage: 'disabled', reason: poolDisabledReason };
+  if (!items.length) return { persisted: 0, inserted: 0, updated: 0, storage: 'postgres' };
 
   return persistNewsArticlesWithDeps(
     {

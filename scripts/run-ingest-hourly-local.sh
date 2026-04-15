@@ -14,10 +14,13 @@ STATE_DIR="${WPR_STATE_DIR:-${WPM_STATE_DIR:-${PROJECT_ROOT}/.wpr-state}}"
 LOCK_DIR="${STATE_DIR}/ingest-hourly.lock"
 LOCK_PID_FILE="${LOCK_DIR}/pid"
 LOCK_STARTED_FILE="${LOCK_DIR}/started_at_utc"
+LOCK_SCHEDULED_SLOT_FILE="${LOCK_DIR}/scheduled_slot_utc"
 LAST_SUCCESS_RUN_ID_FILE="${STATE_DIR}/ingest-hourly-last-success-run-id"
 LAST_SUCCESS_COMPLETED_FILE="${STATE_DIR}/ingest-hourly-last-success-completed-at-utc"
 INGEST_MAX_RUNTIME_SECONDS="${WPR_INGEST_MAX_RUNTIME_SECONDS:-${WPM_INGEST_MAX_RUNTIME_SECONDS:-6600}}"
 INGEST_TIMEOUT_GRACE_SECONDS="${WPR_INGEST_TIMEOUT_GRACE_SECONDS:-${WPM_INGEST_TIMEOUT_GRACE_SECONDS:-60}}"
+HOURLY_SLOT_MINUTE="${WPR_INGEST_SLOT_MINUTE:-${WPM_INGEST_SLOT_MINUTE:-25}}"
+HOURLY_SLOT_INTERVAL_SECONDS=3600
 
 unset PGHOST PGPORT PGUSER PGPASSWORD PGDATABASE PGSSLROOTCERT PGSSLCERT PGSSLKEY PGPASSFILE PGSSLMODE
 TIMEZONE="${INGEST_TZ:-America/Chicago}"
@@ -34,27 +37,48 @@ log_utc() {
   printf '[%s] %s\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')" "$1"
 }
 
+compute_scheduled_slot_at_or_before() {
+  local reference_epoch="${1:-now}"
+  python3 - "${TIMEZONE}" "${HOURLY_SLOT_MINUTE}" "${reference_epoch}" <<'PY'
+from datetime import datetime, timedelta, timezone
+from zoneinfo import ZoneInfo
+import sys
+
+tz = ZoneInfo(sys.argv[1])
+slot_minute = int(sys.argv[2])
+reference = sys.argv[3]
+
+if reference == 'now':
+    now_local = datetime.now(tz)
+else:
+    now_local = datetime.fromtimestamp(int(reference), tz=timezone.utc).astimezone(tz)
+
+slot_local = now_local.replace(minute=slot_minute, second=0, microsecond=0)
+if now_local < slot_local:
+    slot_local -= timedelta(hours=1)
+
+slot_utc = slot_local.astimezone(timezone.utc)
+print(slot_utc.strftime('%Y-%m-%dT%H:%M:%SZ'))
+print(int(slot_utc.timestamp()))
+PY
+}
+
+epoch_to_utc_iso() {
+  date -u -r "$1" '+%Y-%m-%dT%H:%M:%SZ'
+}
+
+refresh_lock_metadata() {
+  local actual_started_at="$1"
+  local scheduled_slot_at="$2"
+  printf '%s\n' "$$" > "${LOCK_PID_FILE}"
+  printf '%s\n' "${actual_started_at}" > "${LOCK_STARTED_FILE}"
+  printf '%s\n' "${scheduled_slot_at}" > "${LOCK_SCHEDULED_SLOT_FILE}"
+}
+
 find_timeout_command() {
   command -v gtimeout >/dev/null 2>&1 && command -v gtimeout && return 0
   command -v timeout >/dev/null 2>&1 && command -v timeout && return 0
   return 1
-}
-
-find_other_hourly_wrapper_pid() {
-  ps -axo pid=,ppid=,command= | awk -v self="$$" -v parent="${PPID:-0}" -v script_path="${SCRIPT_DIR}/run-ingest-hourly-local.sh" '
-    {
-      pid=$1
-      $1=""
-      $2=""
-      sub(/^[[:space:]]+/, "", $0)
-    }
-    $0 == ("bash " script_path) || $0 == ("/bin/bash " script_path) {
-      if (pid != self && pid != parent) {
-        print pid
-        exit 0
-      }
-    }
-  '
 }
 
 release_lock() {
@@ -89,6 +113,7 @@ acquire_single_flight_lock() {
   if mkdir "${LOCK_DIR}" 2>/dev/null; then
     printf '%s\n' "$$" > "${LOCK_PID_FILE}"
     date -u '+%Y-%m-%dT%H:%M:%SZ' > "${LOCK_STARTED_FILE}"
+    : > "${LOCK_SCHEDULED_SLOT_FILE}"
     trap release_lock EXIT
     return 0
   fi
@@ -114,6 +139,7 @@ acquire_single_flight_lock() {
   if mkdir "${LOCK_DIR}" 2>/dev/null; then
     printf '%s\n' "$$" > "${LOCK_PID_FILE}"
     date -u '+%Y-%m-%dT%H:%M:%SZ' > "${LOCK_STARTED_FILE}"
+    : > "${LOCK_SCHEDULED_SLOT_FILE}"
     trap release_lock EXIT
     return 0
   fi
@@ -123,12 +149,6 @@ acquire_single_flight_lock() {
 }
 
 if ! acquire_single_flight_lock; then
-  exit 0
-fi
-
-if OTHER_HOURLY_WRAPPER_PID="$(find_other_hourly_wrapper_pid)" && [ -n "${OTHER_HOURLY_WRAPPER_PID}" ]; then
-  log_utc "SKIP: another hourly ingest launcher is already active (pid=${OTHER_HOURLY_WRAPPER_PID})." >>"${LOG_FILE}"
-  send_skip_notice "${OTHER_HOURLY_WRAPPER_PID}" "process-scan"
   exit 0
 fi
 
@@ -224,18 +244,47 @@ write_ingest_success_marker() {
     "${completed_at}"
 }
 
-ingest_exit_code=0
+current_slot_iso=""
+current_slot_epoch=0
 {
-  printf '\n[%s] Start hourly ingest pipeline (local postgres)\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
-  printf 'Project: %s\n' "${PROJECT_ROOT}"
-  printf 'Env file: %s\n' "${WPR_ENV_FILE_SOURCE:-${WPM_ENV_FILE_SOURCE:-inline-defaults}}"
-  printf 'Command: %s\n' "${RUNNER_COMMAND[*]}"
-  run_hourly_ingest
-} >>"${LOG_FILE}" 2>&1 || ingest_exit_code=$?
+  IFS= read -r current_slot_iso || true
+  IFS= read -r current_slot_epoch || true
+} < <(compute_scheduled_slot_at_or_before now)
+run_sequence=0
 
-if [ "${ingest_exit_code}" -ne 0 ]; then
-  send_ingest_failure_notice "${ingest_exit_code}"
-  exit "${ingest_exit_code}"
-fi
+while :; do
+  run_sequence=$((run_sequence + 1))
+  current_run_started_at="$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
+  refresh_lock_metadata "${current_run_started_at}" "${current_slot_iso}"
 
-write_ingest_success_marker >>"${LOG_FILE}" 2>&1
+  ingest_exit_code=0
+  {
+    printf '\n[%s] Start hourly ingest pipeline (local postgres)\n' "$(date -u '+%Y-%m-%d %H:%M:%S %Z')"
+    printf 'Project: %s\n' "${PROJECT_ROOT}"
+    printf 'Env file: %s\n' "${WPR_ENV_FILE_SOURCE:-${WPM_ENV_FILE_SOURCE:-inline-defaults}}"
+    printf 'Command: %s\n' "${RUNNER_COMMAND[*]}"
+    printf 'Scheduled slot: %s\n' "${current_slot_iso}"
+    printf 'Catch-up sequence: %s\n' "${run_sequence}"
+    run_hourly_ingest
+  } >>"${LOG_FILE}" 2>&1 || ingest_exit_code=$?
+
+  if [ "${ingest_exit_code}" -ne 0 ]; then
+    send_ingest_failure_notice "${ingest_exit_code}"
+    exit "${ingest_exit_code}"
+  fi
+
+  write_ingest_success_marker >>"${LOG_FILE}" 2>&1
+
+  next_slot_epoch=$((current_slot_epoch + HOURLY_SLOT_INTERVAL_SECONDS))
+  now_epoch="$(date '+%s')"
+  if [ "${now_epoch}" -lt "${next_slot_epoch}" ]; then
+    break
+  fi
+
+  next_slot_iso="$(epoch_to_utc_iso "${next_slot_epoch}")"
+  printf '[%s] CATCH-UP: missed scheduled hourly slot %s while active; launching immediate replay.\n' \
+    "$(date -u '+%Y-%m-%d %H:%M:%S %Z')" \
+    "${next_slot_iso}" >>"${LOG_FILE}"
+  current_slot_epoch="${next_slot_epoch}"
+  current_slot_iso="${next_slot_iso}"
+done

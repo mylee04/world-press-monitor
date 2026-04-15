@@ -31,9 +31,12 @@ import {
   ensureWorkerAuditsDir,
   filterItemsForPersistence,
   pickOutletChunk,
+  pickStableOutletBucket,
   pickStableOutletBucketChunkNoWrap,
-  writeWorkerState,
+  readNamedOffsetState,
   writeHybridBucketState,
+  writeNamedOffsetState,
+  writeWorkerState,
   type BackfillWindow,
 } from './ingest-worker-support';
 import {
@@ -130,6 +133,20 @@ const HYBRID_HEAD_MIN_ARTICLES = Math.max(
   1,
   Math.min(10000, Number.parseInt(process.env.INGEST_HEAD_MIN_ARTICLES_24H || '50', 10) || 50)
 );
+const HYBRID_COLD_TAIL_MAX_ARTICLES = Math.max(
+  0,
+  Math.min(
+    HYBRID_HEAD_MIN_ARTICLES - 1,
+    Number.parseInt(process.env.INGEST_COLD_TAIL_MAX_ARTICLES_24H || '9', 10) || 9
+  )
+);
+const HYBRID_COLD_TAIL_ROTATION_HOURS = Math.max(
+  1,
+  Math.min(24, Number.parseInt(process.env.INGEST_COLD_TAIL_ROTATION_HOURS || '12', 10) || 12)
+);
+const HYBRID_INCLUDE_COLD_TAIL_IN_HOURLY = parseBoolEnv(process.env.INGEST_INCLUDE_COLD_TAIL_IN_HOURLY, true);
+const HYBRID_COLD_TAIL_ONLY = parseBoolEnv(process.env.INGEST_ONLY_COLD_TAIL, false);
+const INGEST_TIME_ZONE = process.env.INGEST_TZ || 'America/Chicago';
 const HYBRID_HEAD_MAX_OUTLETS = Math.max(
   10,
   Math.min(5000, Number.parseInt(process.env.INGEST_HEAD_MAX_OUTLETS || '5000', 10) || 5000)
@@ -149,6 +166,11 @@ const HYBRID_LONG_TAIL_TARGET_OUTLETS_PER_RUN = Math.max(
 const ATLAS_PATH = process.env.ATLAS_PATH || resolve(process.cwd(), 'data/rss-atlas.json');
 const STATE_FILE = resolve(process.cwd(), 'audits/ingest-worker-state.json');
 const SUMMARY_FILE = resolve(process.cwd(), 'audits/ingest-worker-last.json');
+const COLD_TAIL_BUCKET_STATE_KEY = `coldTailBucketRotation:${HYBRID_COLD_TAIL_ROTATION_HOURS}`;
+const BACKFILL_PROGRESS_CHECKPOINT_FILE = process.env.INGEST_BACKFILL_CHECKPOINT_FILE?.trim() || '';
+const BACKFILL_PROGRESS_CHUNK_INDEX = Number.isFinite(Number.parseInt(process.env.INGEST_BACKFILL_CHUNK_INDEX || '', 10))
+  ? Number.parseInt(process.env.INGEST_BACKFILL_CHUNK_INDEX || '', 10)
+  : null;
 const FAIL_BACKOFF_ENABLED = (process.env.INGEST_FAIL_BACKOFF_ENABLED || 'true').toLowerCase() !== 'false';
 const FAIL_BACKOFF_WINDOW_MINUTES = Math.max(
   10,
@@ -194,6 +216,52 @@ const ZERO_FUTURE_PUBLISHED_AT_HOSTS = [
   'ijmuidercourant.nl',
   'gooieneemlander.nl',
 ];
+
+type BackfillChunkProgressPatch = {
+  totalOutlets?: number;
+  totalEndpointRuns?: number;
+  completedOutlets?: number;
+  completedEndpointRuns?: number;
+  lastCompletedOutletId?: string | null;
+  createdRows?: number;
+  updatedRows?: number;
+  persistedRows?: number;
+  progressPhase?: 'fetching' | 'persisting' | 'completed';
+  progressUpdatedAt?: string;
+};
+
+function patchBackfillChunkCheckpoint(patch: BackfillChunkProgressPatch): void {
+  if (!BACKFILL_PROGRESS_CHECKPOINT_FILE || BACKFILL_PROGRESS_CHUNK_INDEX === null || BACKFILL_PROGRESS_CHUNK_INDEX < 0) {
+    return;
+  }
+
+  try {
+    const raw = readFileSync(BACKFILL_PROGRESS_CHECKPOINT_FILE, 'utf8');
+    const json = JSON.parse(raw) as { updatedAt?: string; chunkResults?: Array<Record<string, unknown>> };
+    const chunkResults = Array.isArray(json.chunkResults) ? [...json.chunkResults] : [];
+    const currentChunk = chunkResults[BACKFILL_PROGRESS_CHUNK_INDEX] || {};
+    chunkResults[BACKFILL_PROGRESS_CHUNK_INDEX] = {
+      ...currentChunk,
+      ...patch,
+      progressUpdatedAt: patch.progressUpdatedAt || new Date().toISOString(),
+    };
+    writeFileSync(
+      BACKFILL_PROGRESS_CHECKPOINT_FILE,
+      JSON.stringify(
+        {
+          ...json,
+          updatedAt: new Date().toISOString(),
+          chunkResults,
+        },
+        null,
+        2
+      ),
+      'utf8'
+    );
+  } catch {
+    // best-effort progress reporting only
+  }
+}
 
 function maxFuturePublishedAtMsForUrl(url: string | undefined): number {
   if (!url) return MAX_FUTURE_PUBLISHED_AT_MS;
@@ -323,11 +391,15 @@ type OutletSelectionSummary = {
   headOutlets: number;
   longTailOutlets: number;
   longTailSelected: number;
+  coldTailOutlets: number;
+  coldTailSelected: number;
   headWindowHours: number | null;
   headMinArticles: number | null;
   headMaxOutlets: number | null;
   rotationHours: number | null;
   rotationBucket: number | null;
+  coldTailRotationHours: number | null;
+  coldTailRotationBucket: number | null;
   longTailBucketOffset: number | null;
   longTailBucketNextOffset: number | null;
   longTailBucketSize: number | null;
@@ -346,6 +418,18 @@ function compareOutletByPriority(
 ): number {
   if (right.articleCount !== left.articleCount) return right.articleCount - left.articleCount;
   return left.outlet.country.localeCompare(right.outlet.country) || left.outlet.name.localeCompare(right.outlet.name);
+}
+
+function getTimeZoneHourBucket(nowMs: number, timeZone: string, bucketCount: number): number {
+  if (bucketCount <= 1) return 0;
+  const formatter = new Intl.DateTimeFormat('en-US', {
+    timeZone,
+    hour: 'numeric',
+    hour12: false,
+  });
+  const rawHour = Number.parseInt(formatter.format(new Date(nowMs)), 10);
+  const hour = Number.isFinite(rawHour) ? rawHour : new Date(nowMs).getUTCHours();
+  return ((hour % bucketCount) + bucketCount) % bucketCount;
 }
 
 async function selectOutletsForRun(
@@ -368,11 +452,15 @@ async function selectOutletsForRun(
     headOutlets: 0,
     longTailOutlets: sourceFilteredOutlets.length,
     longTailSelected: defaultSelection.selected.length,
+    coldTailOutlets: 0,
+    coldTailSelected: 0,
     headWindowHours: null,
     headMinArticles: null,
     headMaxOutlets: null,
     rotationHours: null,
     rotationBucket: null,
+    coldTailRotationHours: null,
+    coldTailRotationBucket: null,
     longTailBucketOffset: null,
     longTailBucketNextOffset: null,
     longTailBucketSize: null,
@@ -419,33 +507,51 @@ async function selectOutletsForRun(
     .sort(compareOutletByPriority);
 
   const headCandidates = rankedOutlets.filter((entry) => entry.articleCount >= HYBRID_HEAD_MIN_ARTICLES);
-  const longTailOutlets = rankedOutlets.filter((entry) => entry.articleCount < HYBRID_HEAD_MIN_ARTICLES).map((entry) => entry.outlet);
+  const coldTailEntries = rankedOutlets.filter((entry) => entry.articleCount <= HYBRID_COLD_TAIL_MAX_ARTICLES);
+  const warmLongTailEntries = rankedOutlets.filter(
+    (entry) => entry.articleCount < HYBRID_HEAD_MIN_ARTICLES && entry.articleCount > HYBRID_COLD_TAIL_MAX_ARTICLES
+  );
+  const coldTailOutlets = coldTailEntries.map((entry) => entry.outlet);
+  const warmLongTailOutlets = warmLongTailEntries.map((entry) => entry.outlet);
   const selectedHeadOutlets = headCandidates
     .slice(0, HYBRID_HEAD_MAX_OUTLETS)
     .map((entry) => entry.outlet);
+  const coldTailBucketIndex = HYBRID_COLD_TAIL_ONLY
+    ? readNamedOffsetState(STATE_FILE, COLD_TAIL_BUCKET_STATE_KEY, HYBRID_COLD_TAIL_ROTATION_HOURS).offset
+    : getTimeZoneHourBucket(nowMs, INGEST_TIME_ZONE, HYBRID_COLD_TAIL_ROTATION_HOURS);
+  const rotatedColdTailOutlets = pickStableOutletBucket(
+    coldTailOutlets,
+    HYBRID_COLD_TAIL_ROTATION_HOURS,
+    coldTailBucketIndex
+  );
+  const warmLongTailBudget = HYBRID_LONG_TAIL_TARGET_OUTLETS_PER_RUN;
   const longTailSelection = pickStableOutletBucketChunkNoWrap(
-    longTailOutlets,
+    warmLongTailOutlets,
     1,
     0,
-    HYBRID_LONG_TAIL_TARGET_OUTLETS_PER_RUN,
+    warmLongTailBudget,
     STATE_FILE
   );
-  const boundedLongTailOutlets = longTailSelection.selected;
-  const longTailCycleHours = boundedLongTailOutlets.length > 0
-    ? Math.max(1, Math.ceil(longTailOutlets.length / Math.max(1, HYBRID_LONG_TAIL_TARGET_OUTLETS_PER_RUN)))
+  const boundedWarmLongTailOutlets = HYBRID_COLD_TAIL_ONLY ? [] : longTailSelection.selected;
+  const selectedColdTailOutlets = HYBRID_COLD_TAIL_ONLY
+    ? rotatedColdTailOutlets
+    : (HYBRID_INCLUDE_COLD_TAIL_IN_HOURLY ? rotatedColdTailOutlets : []);
+  const selectedLongTailOutlets = [...boundedWarmLongTailOutlets, ...selectedColdTailOutlets];
+  const longTailCycleHours = boundedWarmLongTailOutlets.length > 0
+    ? Math.max(1, Math.ceil(warmLongTailOutlets.length / Math.max(1, warmLongTailBudget || 1)))
     : null;
-  const longTailCycleStep = boundedLongTailOutlets.length > 0
-    ? Math.floor(longTailSelection.offset / Math.max(1, HYBRID_LONG_TAIL_TARGET_OUTLETS_PER_RUN))
+  const longTailCycleStep = boundedWarmLongTailOutlets.length > 0
+    ? Math.floor(longTailSelection.offset / Math.max(1, warmLongTailBudget || 1))
     : null;
   const headOutletIds = new Set(selectedHeadOutlets.map((outlet) => outlet.id));
   const selectedOutletIds = new Set([
     ...headOutletIds,
-    ...boundedLongTailOutlets.map((outlet) => outlet.id),
+    ...selectedLongTailOutlets.map((outlet) => outlet.id),
   ]);
   const selected = sourceFilteredOutlets.filter((outlet) => selectedOutletIds.has(outlet.id));
   const selectedLongTailNextOffset = longTailSelection.nextOffset;
   const budgetCapped = selectedHeadOutlets.length < headCandidates.length
-    || boundedLongTailOutlets.length < longTailSelection.total;
+    || boundedWarmLongTailOutlets.length < longTailSelection.total;
 
   return {
     selected,
@@ -453,24 +559,28 @@ async function selectOutletsForRun(
     nextOffset: selectedLongTailNextOffset,
     selectionSummary: {
       mode: 'hybrid',
-      reason: '24h_volume_plus_sequential_long_tail',
+      reason: HYBRID_COLD_TAIL_ONLY ? '24h_volume_plus_sequential_cold_tail_rotation_only' : '24h_volume_plus_sequential_long_tail',
       dbBacked: true,
       pinnedOutlets: 0,
       pinnedReason: null,
-      headOutlets: selectedHeadOutlets.length,
-      longTailOutlets: longTailOutlets.length,
-      longTailSelected: boundedLongTailOutlets.length,
-      headWindowHours: HYBRID_HEAD_WINDOW_HOURS,
-      headMinArticles: HYBRID_HEAD_MIN_ARTICLES,
-      headMaxOutlets: HYBRID_HEAD_MAX_OUTLETS,
+      headOutlets: HYBRID_COLD_TAIL_ONLY ? 0 : selectedHeadOutlets.length,
+      longTailOutlets: HYBRID_COLD_TAIL_ONLY ? 0 : warmLongTailOutlets.length,
+      longTailSelected: boundedWarmLongTailOutlets.length,
+      coldTailOutlets: coldTailOutlets.length,
+      coldTailSelected: selectedColdTailOutlets.length,
+      headWindowHours: HYBRID_COLD_TAIL_ONLY ? null : HYBRID_HEAD_WINDOW_HOURS,
+      headMinArticles: HYBRID_COLD_TAIL_ONLY ? null : HYBRID_HEAD_MIN_ARTICLES,
+      headMaxOutlets: HYBRID_COLD_TAIL_ONLY ? null : HYBRID_HEAD_MAX_OUTLETS,
       rotationHours: longTailCycleHours,
       rotationBucket: longTailCycleStep,
+      coldTailRotationHours: HYBRID_COLD_TAIL_ROTATION_HOURS,
+      coldTailRotationBucket: coldTailBucketIndex,
       longTailBucketOffset: longTailSelection.offset,
       longTailBucketNextOffset: selectedLongTailNextOffset,
-      longTailBucketSize: longTailSelection.total,
-      maxOutletsPerRun: selectedHeadOutlets.length + HYBRID_LONG_TAIL_TARGET_OUTLETS_PER_RUN,
-      reservedLongTailOutlets: HYBRID_LONG_TAIL_TARGET_OUTLETS_PER_RUN,
-      budgetCapped,
+      longTailBucketSize: HYBRID_COLD_TAIL_ONLY ? 0 : longTailSelection.total,
+      maxOutletsPerRun: selected.length,
+      reservedLongTailOutlets: HYBRID_COLD_TAIL_ONLY ? 0 : HYBRID_LONG_TAIL_TARGET_OUTLETS_PER_RUN,
+      budgetCapped: HYBRID_COLD_TAIL_ONLY ? false : budgetCapped,
     },
   };
 }
@@ -1387,6 +1497,35 @@ function parseDateOnlyUtc(raw: string | undefined): number | null {
   return Number.isFinite(parsed) ? parsed : null;
 }
 
+function parseIsoTimestamp(raw: string | undefined): number | null {
+  if (!raw) return null;
+  const trimmed = raw.trim();
+  if (!trimmed.includes('T')) return null;
+  if (!/(Z|[+-]\d{2}:\d{2})$/i.test(trimmed)) return null;
+  const parsed = Date.parse(trimmed);
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
+function parseBackfillBoundary(raw: string | undefined): { fromMs: number; toExclusiveMs: number } | null {
+  const dateOnly = parseDateOnlyUtc(raw);
+  if (dateOnly !== null) {
+    return {
+      fromMs: dateOnly,
+      toExclusiveMs: dateOnly + ONE_DAY_MS,
+    };
+  }
+
+  const isoTimestamp = parseIsoTimestamp(raw);
+  if (isoTimestamp !== null) {
+    return {
+      fromMs: isoTimestamp,
+      toExclusiveMs: isoTimestamp,
+    };
+  }
+
+  return null;
+}
+
 function parseBackfillWindow(argv: string[], envFrom: string | undefined, envTo: string | undefined): BackfillWindow | null {
   let from = envFrom?.trim() || '';
   let to = envTo?.trim() || '';
@@ -1414,17 +1553,17 @@ function parseBackfillWindow(argv: string[], envFrom: string | undefined, envTo:
   }
 
   if (!from || !to) return null;
-  const fromMs = parseDateOnlyUtc(from);
-  const toMs = parseDateOnlyUtc(to);
-  if (fromMs === null || toMs === null || toMs < fromMs) {
+  const fromBoundary = parseBackfillBoundary(from);
+  const toBoundary = parseBackfillBoundary(to);
+  if (!fromBoundary || !toBoundary || toBoundary.toExclusiveMs < fromBoundary.fromMs) {
     throw new Error(`Invalid backfill window: from=${from || '-'} to=${to || '-'}`);
   }
 
   return {
     from,
     to,
-    fromMs,
-    toExclusiveMs: toMs + ONE_DAY_MS,
+    fromMs: fromBoundary.fromMs,
+    toExclusiveMs: toBoundary.toExclusiveMs,
   };
 }
 
@@ -1979,24 +2118,22 @@ const ENABLE_RSS_TO_SITEMAP_FALLBACK = parseBoolEnv(process.env.INGEST_RSS_SITEM
 const ENABLE_EXPLICIT_SITEMAP_PARALLEL = parseBoolEnv(process.env.INGEST_EXPLICIT_SITEMAP_PARALLEL, true);
 const ENABLE_ARTICLE_META_CATEGORY_FALLBACK = parseBoolEnv(process.env.INGEST_ARTICLE_META_CATEGORY_FALLBACK, true);
 const ENABLE_ARTICLE_TITLE_FALLBACK = parseBoolEnv(process.env.INGEST_ARTICLE_TITLE_FALLBACK, true);
-const ARTICLE_TITLE_FETCH_MAX_PER_RUN = BACKFILL_WINDOW
-  ? Number.MAX_SAFE_INTEGER
-  : Math.max(0, Math.min(5000, Number.parseInt(process.env.INGEST_ARTICLE_TITLE_MAX_FETCHES || '200', 10) || 200));
-const ARTICLE_TITLE_FETCH_MAX_PER_SOURCE = BACKFILL_WINDOW
-  ? Number.MAX_SAFE_INTEGER
-  : Math.max(
-      0,
-      Math.min(500, Number.parseInt(process.env.INGEST_ARTICLE_TITLE_MAX_FETCHES_PER_SOURCE || '32', 10) || 32)
-    );
-const ARTICLE_META_CATEGORY_FETCH_MAX_PER_RUN = BACKFILL_WINDOW
-  ? Number.MAX_SAFE_INTEGER
-  : Math.max(0, Math.min(5000, Number.parseInt(process.env.INGEST_ARTICLE_META_CATEGORY_MAX_FETCHES || '400', 10) || 400));
-const ARTICLE_META_CATEGORY_FETCH_MAX_PER_SOURCE = BACKFILL_WINDOW
-  ? Number.MAX_SAFE_INTEGER
-  : Math.max(
-      0,
-      Math.min(500, Number.parseInt(process.env.INGEST_ARTICLE_META_CATEGORY_MAX_FETCHES_PER_SOURCE || '40', 10) || 40)
-    );
+const ARTICLE_TITLE_FETCH_MAX_PER_RUN = Math.max(
+  0,
+  Math.min(5000, Number.parseInt(process.env.INGEST_ARTICLE_TITLE_MAX_FETCHES || '200', 10) || 200)
+);
+const ARTICLE_TITLE_FETCH_MAX_PER_SOURCE = Math.max(
+  0,
+  Math.min(500, Number.parseInt(process.env.INGEST_ARTICLE_TITLE_MAX_FETCHES_PER_SOURCE || '32', 10) || 32)
+);
+const ARTICLE_META_CATEGORY_FETCH_MAX_PER_RUN = Math.max(
+  0,
+  Math.min(5000, Number.parseInt(process.env.INGEST_ARTICLE_META_CATEGORY_MAX_FETCHES || '400', 10) || 400)
+);
+const ARTICLE_META_CATEGORY_FETCH_MAX_PER_SOURCE = Math.max(
+  0,
+  Math.min(500, Number.parseInt(process.env.INGEST_ARTICLE_META_CATEGORY_MAX_FETCHES_PER_SOURCE || '40', 10) || 40)
+);
 const ARTICLE_META_CATEGORY_FALLBACK_SOURCES = new Set(
   (
     process.env.INGEST_ARTICLE_META_CATEGORY_SOURCES
@@ -2108,6 +2245,10 @@ const ARTICLE_PAGE_FETCH_TIMEOUT_MS = Math.max(
   ARTICLE_TITLE_FETCH_TIMEOUT_MS,
   ARTICLE_PUBLISHED_AT_FETCH_TIMEOUT_MS
 );
+const ARTICLE_PAGE_FETCH_TOTAL_BUDGET_MS = Math.max(
+  0,
+  Math.min(3_600_000, Number.parseInt(process.env.INGEST_ARTICLE_PAGE_TOTAL_BUDGET_MS || '600000', 10) || 600000)
+);
 
 type ArticlePageSignalKey = 'title' | 'publishedAt' | 'metaCategory';
 type ArticlePageSignals = {
@@ -2132,6 +2273,7 @@ type ArticlePageFallbackStats = {
     cacheHits: number;
     fetchFailures: number;
     totalElapsedMs: number;
+    timeBudgetSkipped: number;
   };
   title: ArticlePageFallbackSignalStats;
   publishedAt: ArticlePageFallbackSignalStats;
@@ -2154,6 +2296,7 @@ const articlePageFallbackStats: ArticlePageFallbackStats = {
     cacheHits: 0,
     fetchFailures: 0,
     totalElapsedMs: 0,
+    timeBudgetSkipped: 0,
   },
   title: {
     requested: 0,
@@ -2284,6 +2427,10 @@ function canTriggerArticlePageFallback(kind: ArticlePageSignalKey, normalizedSou
   return true;
 }
 
+function hasArticlePageFetchTimeBudgetRemaining(): boolean {
+  return articlePageFallbackStats.pageFetch.totalElapsedMs < ARTICLE_PAGE_FETCH_TOTAL_BUDGET_MS;
+}
+
 function authorizeArticlePageFetch(
   source: string,
   request: ArticlePageFallbackRequest
@@ -2294,6 +2441,14 @@ function authorizeArticlePageFetch(
     publishedAt: false,
     metaCategory: false,
   };
+
+  if (!hasArticlePageFetchTimeBudgetRemaining()) {
+    articlePageFallbackStats.pageFetch.timeBudgetSkipped += 1;
+    if (request.title) articlePageFallbackStats.title.budgetSkipped += 1;
+    if (request.publishedAt) articlePageFallbackStats.publishedAt.budgetSkipped += 1;
+    if (request.metaCategory) articlePageFallbackStats.metaCategory.budgetSkipped += 1;
+    return authorized;
+  }
 
   if (request.publishedAt && canTriggerArticlePageFallback('publishedAt', normalizedSource)) {
     authorized.publishedAt = true;
@@ -3661,6 +3816,45 @@ async function runOnce(): Promise<void> {
     methodMatchesFilter,
     METHOD_FILTER
   );
+  const remainingEndpointsByOutlet = new Map<string, number>();
+  for (const endpoint of dedupedEndpoints) {
+    remainingEndpointsByOutlet.set(endpoint.outlet.id, (remainingEndpointsByOutlet.get(endpoint.outlet.id) || 0) + 1);
+  }
+  let completedEndpointRuns = 0;
+  let completedOutlets = 0;
+  patchBackfillChunkCheckpoint({
+    totalOutlets: selected.length,
+    totalEndpointRuns: dedupedEndpoints.length,
+    completedOutlets: 0,
+    completedEndpointRuns: 0,
+    progressPhase: 'fetching',
+    progressUpdatedAt: new Date().toISOString(),
+  });
+
+  const markEndpointCompleted = (outletId: string): void => {
+    completedEndpointRuns += 1;
+    const currentRemaining = remainingEndpointsByOutlet.get(outletId) || 0;
+    const nextRemaining = Math.max(0, currentRemaining - 1);
+    if (nextRemaining === 0) {
+      remainingEndpointsByOutlet.delete(outletId);
+      completedOutlets += 1;
+      patchBackfillChunkCheckpoint({
+        completedOutlets,
+        completedEndpointRuns,
+        lastCompletedOutletId: outletId,
+        progressPhase: 'fetching',
+        progressUpdatedAt: new Date().toISOString(),
+      });
+      return;
+    }
+    remainingEndpointsByOutlet.set(outletId, nextRemaining);
+    patchBackfillChunkCheckpoint({
+      completedOutlets,
+      completedEndpointRuns,
+      progressPhase: 'fetching',
+      progressUpdatedAt: new Date().toISOString(),
+    });
+  };
   const watermarks = await readIngestionFeedWatermarks(
     dedupedEndpoints.map((endpoint) => ({
       outletId: endpoint.outlet.id,
@@ -3722,54 +3916,58 @@ async function runOnce(): Promise<void> {
   const missingPublishedAtCandidates: MissingPublishedAtCandidate[] = [];
 
   const rssResults = await runWithConcurrency<EndpointRun, EndpointResult>(rssEndpoints, FETCH_CONCURRENCY, async (endpoint) => {
-    const endpointKey = `${endpoint.outlet.id}:${endpoint.method}`;
-    if (failingKeys.has(endpointKey)) {
-      fallbackSummary.rssBackoffSkipped += 1;
-      return {
-        items: [],
-        run: {
-          outletId: endpoint.outlet.id,
-          source: endpoint.outlet.name,
-          country: normalizeCountryName(endpoint.outlet.country),
-          method: 'rss',
-          attempted: false,
-          circuitOpen: true,
-          ok: false,
-          statusCode: null,
-          parsedCount: 0,
-          fetchedCount: 0,
-          parsedLimit: RSS_ITEM_LIMIT,
-          sampleCapped: false,
-          recent24h: 0,
-          missingTitleCount: 0,
-          missingSummaryCount: 0,
-          missingPublishedAtCount: 0,
-          missingLinkCount: 0,
-          error: 'cooldown_high_fail',
+    try {
+      const endpointKey = `${endpoint.outlet.id}:${endpoint.method}`;
+      if (failingKeys.has(endpointKey)) {
+        fallbackSummary.rssBackoffSkipped += 1;
+        return {
+          items: [],
+          run: {
+            outletId: endpoint.outlet.id,
+            source: endpoint.outlet.name,
+            country: normalizeCountryName(endpoint.outlet.country),
+            method: 'rss',
+            attempted: false,
+            circuitOpen: true,
+            ok: false,
+            statusCode: null,
+            parsedCount: 0,
+            fetchedCount: 0,
+            parsedLimit: RSS_ITEM_LIMIT,
+            sampleCapped: false,
+            recent24h: 0,
+            missingTitleCount: 0,
+            missingSummaryCount: 0,
+            missingPublishedAtCount: 0,
+            missingLinkCount: 0,
+            error: 'cooldown_high_fail',
+          },
+          fallbackUsed: 'none',
+        };
+      }
+      const result = await fetchRss(endpoint.outlet, {
+        allowSitemapFallback: false,
+        fallbackPublishedAt,
+        onMissingPublishedAtCandidate: (candidate) => {
+          missingPublishedAtCandidates.push(candidate);
         },
-        fallbackUsed: 'none',
+      });
+      const lastPublicationAt = watermarks.get(endpointKey) || null;
+      return {
+        ...result,
+        items: filterItemsForPersistence({
+          items: result.items,
+          lastPublicationAt,
+          nowMs,
+          backfillWindow: BACKFILL_WINDOW,
+          ignoreWatermark: BACKFILL_IGNORE_WATERMARK,
+          maxArticleAgeMs: maxArticleAgeMsForOutlet(endpoint.outlet, 'rss'),
+          parsePublishedAtMs,
+        }),
       };
+    } finally {
+      markEndpointCompleted(endpoint.outlet.id);
     }
-    const result = await fetchRss(endpoint.outlet, {
-      allowSitemapFallback: false,
-      fallbackPublishedAt,
-      onMissingPublishedAtCandidate: (candidate) => {
-        missingPublishedAtCandidates.push(candidate);
-      },
-    });
-    const lastPublicationAt = watermarks.get(endpointKey) || null;
-    return {
-      ...result,
-      items: filterItemsForPersistence({
-        items: result.items,
-        lastPublicationAt,
-        nowMs,
-        backfillWindow: BACKFILL_WINDOW,
-        ignoreWatermark: BACKFILL_IGNORE_WATERMARK,
-        maxArticleAgeMs: maxArticleAgeMsForOutlet(endpoint.outlet, 'rss'),
-        parsePublishedAtMs,
-      }),
-    };
   });
 
   const failedRssResultByOutlet = new Map<string, EndpointResult>();
@@ -3785,109 +3983,113 @@ async function runOnce(): Promise<void> {
   });
 
   const sitemapResults = await runWithConcurrency<EndpointRun, EndpointResult>(sitemapEndpoints, FETCH_CONCURRENCY, async (endpoint) => {
-    const endpointKey = `${endpoint.outlet.id}:${endpoint.method}`;
-    if (failingKeys.has(endpointKey)) {
-      fallbackSummary.sitemapBackoffSkipped += 1;
+    try {
+      const endpointKey = `${endpoint.outlet.id}:${endpoint.method}`;
+      if (failingKeys.has(endpointKey)) {
+        fallbackSummary.sitemapBackoffSkipped += 1;
+        return {
+          items: [],
+          run: {
+            method: 'sitemap',
+            outletId: endpoint.outlet.id,
+            source: endpoint.outlet.name,
+            country: normalizeCountryName(endpoint.outlet.country),
+            attempted: false,
+            circuitOpen: true,
+            ok: false,
+            statusCode: null,
+            parsedCount: 0,
+            fetchedCount: 0,
+            parsedLimit: SITEMAP_ITEM_LIMIT,
+            sampleCapped: false,
+            recent24h: 0,
+            missingTitleCount: 0,
+            missingSummaryCount: 0,
+            missingPublishedAtCount: 0,
+            missingLinkCount: 0,
+            error: 'cooldown_high_fail',
+          },
+          fallbackUsed: 'none',
+        };
+      }
+      const policyState = sitemapPolicyStatesByOutlet.get(endpoint.outlet.id);
+      const disableSitemapFallbackForOutlet = disabledSitemapOutletIds.has(endpoint.outlet.id);
+      if (!BACKFILL_IGNORE_BACKOFF && isSitemapPolicyBlocked(policyState, nowMs)) {
+        fallbackSummary.sitemapPolicyDisabled += 1;
+        const reason = policyState?.reason || policyState?.status || 'disabled';
+        return {
+          items: [],
+          run: {
+            method: 'sitemap',
+            outletId: endpoint.outlet.id,
+            source: endpoint.outlet.name,
+            country: normalizeCountryName(endpoint.outlet.country),
+            attempted: false,
+            circuitOpen: true,
+            ok: false,
+            statusCode: null,
+            parsedCount: 0,
+            fetchedCount: 0,
+            parsedLimit: SITEMAP_ITEM_LIMIT,
+            sampleCapped: false,
+            recent24h: 0,
+            missingTitleCount: 0,
+            missingSummaryCount: 0,
+            missingPublishedAtCount: 0,
+            missingLinkCount: 0,
+            error: `sitemap_policy_disabled:${reason}`,
+          },
+          fallbackUsed: 'none',
+        };
+      }
+      if (disableSitemapFallbackForOutlet) {
+        return {
+          items: [],
+          run: {
+            method: 'sitemap',
+            outletId: endpoint.outlet.id,
+            source: endpoint.outlet.name,
+            country: normalizeCountryName(endpoint.outlet.country),
+            attempted: false,
+            circuitOpen: true,
+            ok: false,
+            statusCode: null,
+            parsedCount: 0,
+            fetchedCount: 0,
+            parsedLimit: SITEMAP_ITEM_LIMIT,
+            sampleCapped: false,
+            recent24h: 0,
+            missingTitleCount: 0,
+            missingSummaryCount: 0,
+            missingPublishedAtCount: 0,
+            missingLinkCount: 0,
+            error: 'sitemap_disabled_by_policy',
+          },
+          fallbackUsed: 'none',
+        };
+      }
+      const result = await fetchSitemap(endpoint.outlet, fallbackPublishedAt, (candidate) => {
+        missingPublishedAtCandidates.push(candidate);
+      });
+      const lastPublicationAt = watermarks.get(endpointKey) || null;
+      if (!result.run.attempted) {
+        return { ...result, items: [] };
+      }
       return {
-        items: [],
-        run: {
-          method: 'sitemap',
-          outletId: endpoint.outlet.id,
-          source: endpoint.outlet.name,
-          country: normalizeCountryName(endpoint.outlet.country),
-          attempted: false,
-          circuitOpen: true,
-          ok: false,
-          statusCode: null,
-          parsedCount: 0,
-          fetchedCount: 0,
-          parsedLimit: SITEMAP_ITEM_LIMIT,
-          sampleCapped: false,
-          recent24h: 0,
-          missingTitleCount: 0,
-          missingSummaryCount: 0,
-          missingPublishedAtCount: 0,
-          missingLinkCount: 0,
-          error: 'cooldown_high_fail',
-        },
-        fallbackUsed: 'none',
+        ...result,
+        items: filterItemsForPersistence({
+          items: result.items,
+          lastPublicationAt,
+          nowMs,
+          backfillWindow: BACKFILL_WINDOW,
+          ignoreWatermark: BACKFILL_IGNORE_WATERMARK,
+          maxArticleAgeMs: maxArticleAgeMsForOutlet(endpoint.outlet, 'sitemap'),
+          parsePublishedAtMs,
+        }),
       };
+    } finally {
+      markEndpointCompleted(endpoint.outlet.id);
     }
-    const policyState = sitemapPolicyStatesByOutlet.get(endpoint.outlet.id);
-    const disableSitemapFallbackForOutlet = disabledSitemapOutletIds.has(endpoint.outlet.id);
-    if (!BACKFILL_IGNORE_BACKOFF && isSitemapPolicyBlocked(policyState, nowMs)) {
-      fallbackSummary.sitemapPolicyDisabled += 1;
-      const reason = policyState?.reason || policyState?.status || 'disabled';
-      return {
-        items: [],
-        run: {
-          method: 'sitemap',
-          outletId: endpoint.outlet.id,
-          source: endpoint.outlet.name,
-          country: normalizeCountryName(endpoint.outlet.country),
-          attempted: false,
-          circuitOpen: true,
-          ok: false,
-          statusCode: null,
-          parsedCount: 0,
-          fetchedCount: 0,
-          parsedLimit: SITEMAP_ITEM_LIMIT,
-          sampleCapped: false,
-          recent24h: 0,
-          missingTitleCount: 0,
-          missingSummaryCount: 0,
-          missingPublishedAtCount: 0,
-          missingLinkCount: 0,
-          error: `sitemap_policy_disabled:${reason}`,
-        },
-        fallbackUsed: 'none',
-      };
-    }
-    if (disableSitemapFallbackForOutlet) {
-      return {
-        items: [],
-        run: {
-          method: 'sitemap',
-          outletId: endpoint.outlet.id,
-          source: endpoint.outlet.name,
-          country: normalizeCountryName(endpoint.outlet.country),
-          attempted: false,
-          circuitOpen: true,
-          ok: false,
-          statusCode: null,
-          parsedCount: 0,
-          fetchedCount: 0,
-          parsedLimit: SITEMAP_ITEM_LIMIT,
-          sampleCapped: false,
-          recent24h: 0,
-          missingTitleCount: 0,
-          missingSummaryCount: 0,
-          missingPublishedAtCount: 0,
-          missingLinkCount: 0,
-          error: 'sitemap_disabled_by_policy',
-        },
-        fallbackUsed: 'none',
-      };
-    }
-    const result = await fetchSitemap(endpoint.outlet, fallbackPublishedAt, (candidate) => {
-      missingPublishedAtCandidates.push(candidate);
-    });
-    const lastPublicationAt = watermarks.get(endpointKey) || null;
-    if (!result.run.attempted) {
-      return { ...result, items: [] };
-    }
-    return {
-      ...result,
-      items: filterItemsForPersistence({
-        items: result.items,
-        lastPublicationAt,
-        nowMs,
-        backfillWindow: BACKFILL_WINDOW,
-        ignoreWatermark: BACKFILL_IGNORE_WATERMARK,
-        maxArticleAgeMs: maxArticleAgeMsForOutlet(endpoint.outlet, 'sitemap'),
-        parsePublishedAtMs,
-      }),
-    };
   });
 
   const results = [...rssResults, ...sitemapResults];
@@ -3976,7 +4178,20 @@ async function runOnce(): Promise<void> {
   }
 
   const merged = dedupeAndSort(results.flatMap((r) => r.items));
+  patchBackfillChunkCheckpoint({
+    completedOutlets: selected.length,
+    completedEndpointRuns: dedupedEndpoints.length,
+    progressPhase: 'persisting',
+    progressUpdatedAt: new Date().toISOString(),
+  });
   const persistedNewsArticles = await persistNewsArticles(merged);
+  patchBackfillChunkCheckpoint({
+    persistedRows: persistedNewsArticles.persisted,
+    createdRows: persistedNewsArticles.inserted,
+    updatedRows: persistedNewsArticles.updated,
+    progressPhase: 'persisting',
+    progressUpdatedAt: new Date().toISOString(),
+  });
   const persistedMissingPublishedAt = await persistMissingPublishedAtCandidates(missingPublishedAtCandidates);
   const persistedDiag = await persistIngestionDiagnostics(diagnostics, { runner: 'worker' });
   const watermarkRows = [...endpointMaxPublicationAtMs.entries()]
@@ -4039,6 +4254,24 @@ async function runOnce(): Promise<void> {
       process.cwd()
     );
   }
+  if (
+    !BACKFILL_WINDOW
+    && selectionSummary.mode === 'hybrid'
+    && HYBRID_COLD_TAIL_ONLY
+    && selectionSummary.coldTailOutlets > 0
+    && selectionSummary.coldTailRotationHours
+    && selectionSummary.coldTailRotationBucket !== null
+  ) {
+    const nextColdTailRotationBucket =
+      (selectionSummary.coldTailRotationBucket + 1) % Math.max(1, selectionSummary.coldTailRotationHours);
+    writeNamedOffsetState(
+      STATE_FILE,
+      COLD_TAIL_BUCKET_STATE_KEY,
+      nextColdTailRotationBucket,
+      summary.generatedAt,
+      process.cwd()
+    );
+  }
   console.log(formatWorkerSummaryLog({
     selectedCount: selected.length,
     countryFilteredOutletsCount: countryFilteredOutlets.length,
@@ -4062,6 +4295,15 @@ async function runOnce(): Promise<void> {
     missingPublishedAtPersisted: persistedMissingPublishedAt.persisted,
     mergedItemsBySource: summary.worker.mergedItemsBySource,
   }));
+  patchBackfillChunkCheckpoint({
+    completedOutlets: selected.length,
+    completedEndpointRuns: dedupedEndpoints.length,
+    persistedRows: persistedNewsArticles.persisted,
+    createdRows: persistedNewsArticles.inserted,
+    updatedRows: persistedNewsArticles.updated,
+    progressPhase: 'completed',
+    progressUpdatedAt: new Date().toISOString(),
+  });
 }
 
 async function main(): Promise<void> {

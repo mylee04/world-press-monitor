@@ -3,6 +3,7 @@ import type { Pool } from 'pg';
 import type { NewsItem } from '@/lib/types';
 import {
   preferPersistedArticleRow,
+  sanitizeTextForDatabase,
   type NewsArticlePersistable,
   type MissingPublishedAtPersistable,
   toMissingPublishedAtPersistable,
@@ -46,6 +47,49 @@ export type IngestionPersistenceDeps = {
   storedTitleMaxChars: number;
   storedSnippetMaxChars: number;
 };
+
+type InsertedFlagRow = {
+  inserted_row: boolean;
+};
+
+async function executeReturningInsertedFlags(
+  db: Pool,
+  queryText: string,
+  values: unknown[],
+  label: string
+): Promise<InsertedFlagRow[]> {
+  try {
+    const result = await db.query<InsertedFlagRow>(queryText, values);
+    return result.rows;
+  } catch (error) {
+    const code = typeof (error as { code?: unknown })?.code === 'string' ? String((error as { code: string }).code) : '';
+    const isInvalidUtf8 = code === '22021' || (error instanceof Error && error.message.includes('invalid byte sequence for encoding'));
+    if (isInvalidUtf8) {
+      const sanitizedValues = values.map((value) => {
+        if (typeof value === 'string') return sanitizeTextForDatabase(value);
+        if (Array.isArray(value)) {
+          return value.map((entry) => (typeof entry === 'string' ? sanitizeTextForDatabase(entry) : entry));
+        }
+        if (value instanceof Uint8Array) {
+          return sanitizeTextForDatabase(new TextDecoder('utf-8').decode(value));
+        }
+        return value;
+      });
+      if (process.env.INGEST_SQL_DEBUG === '1') {
+        console.error(`[ingest-store] ${label} retrying with sanitized UTF-8 values`);
+      }
+      const result = await db.query<InsertedFlagRow>(queryText, sanitizedValues);
+      return result.rows;
+    }
+    if (process.env.INGEST_SQL_DEBUG === '1') {
+      console.error(`[ingest-store] ${label} failed`);
+      console.error(queryText);
+      console.error(`param_count=${values.length}`);
+      console.error(values.slice(0, 30));
+    }
+    throw error;
+  }
+}
 
 async function resolveExistingArticleExternalIds(
   db: Pool,
@@ -97,10 +141,10 @@ async function resolveExistingArticleExternalIds(
 export async function persistNewsArticlesWithDeps(
   deps: IngestionPersistenceDeps,
   items: NewsItem[],
-): Promise<{ persisted: number; storage: 'postgres' | 'disabled'; reason?: string }> {
+) : Promise<{ persisted: number; inserted: number; updated: number; storage: 'postgres' | 'disabled'; reason?: string }> {
   const db = deps.getPool();
-  if (!db) return { persisted: 0, storage: 'disabled', reason: 'missing_database_url' };
-  if (!items.length) return { persisted: 0, storage: 'postgres' };
+  if (!db) return { persisted: 0, inserted: 0, updated: 0, storage: 'disabled', reason: 'missing_database_url' };
+  if (!items.length) return { persisted: 0, inserted: 0, updated: 0, storage: 'postgres' };
 
   await deps.ensureSchema();
   const rows = (
@@ -115,7 +159,7 @@ export async function persistNewsArticlesWithDeps(
       )
     )
   ).filter((row): row is NewsArticlePersistable => Boolean(row));
-  if (!rows.length) return { persisted: 0, storage: 'postgres' };
+  if (!rows.length) return { persisted: 0, inserted: 0, updated: 0, storage: 'postgres' };
   const resolvedExisting = await resolveExistingArticleExternalIds(db, rows);
   const resolvedRows = rows.map((row) => ({
     ...row,
@@ -142,6 +186,8 @@ export async function persistNewsArticlesWithDeps(
   }, new Map<string, NewsArticlePersistable>()).values()];
 
   const groups = deps.chunk(insertRows, 250);
+  let inserted = 0;
+  let updated = 0;
   for (const group of groups) {
     const values: unknown[] = [];
     const parts: string[] = [];
@@ -182,7 +228,7 @@ export async function persistNewsArticlesWithDeps(
       );
     });
 
-    await deps.executeIngestionQuery(
+    const resultRows = await executeReturningInsertedFlags(
       db,
       `
       insert into news_articles (
@@ -289,13 +335,21 @@ export async function persistNewsArticlesWithDeps(
         source = excluded.source,
         language = excluded.language,
         updated_at = now()
+      returning (xmax = 0) as inserted_row
       `,
       values,
       'persistNewsArticles.insert'
     );
+    for (const row of resultRows) {
+      if (row.inserted_row) {
+        inserted += 1;
+      } else {
+        updated += 1;
+      }
+    }
   }
 
-  return { persisted: insertRows.length, storage: 'postgres' };
+  return { persisted: insertRows.length, inserted, updated, storage: 'postgres' };
 }
 
 export async function backfillNewsArticleFeedCategoriesWithDeps(
