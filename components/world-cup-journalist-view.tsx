@@ -5408,38 +5408,6 @@ function SignalRow({
   );
 }
 
-function SeedRow({
-  label,
-  appearanceType,
-  url,
-  i18n,
-}: {
-  label: string | null;
-  appearanceType: string | null;
-  url: string | null;
-  i18n: WorldCupJournalistI18n;
-}) {
-  return (
-    <article className={styles.seedRow}>
-      <div>
-        <h3 className={styles.seedTitle}>
-          {label || url || i18n.labels.unavailable}
-        </h3>
-        {appearanceType ? (
-          <p className={styles.seedMeta}>
-            {formatAppearanceType(appearanceType, i18n)}
-          </p>
-        ) : null}
-      </div>
-      {url ? (
-        <a href={url} target="_blank" rel="noreferrer">
-          {i18n.actions.open}
-        </a>
-      ) : null}
-    </article>
-  );
-}
-
 export function WorldCupJournalistView({
   snapshot,
   selectedTeam,
@@ -5458,33 +5426,11 @@ export function WorldCupJournalistView({
     selectedTeam.team.editorial.coverageStatus,
     i18n,
   );
-  const coverageStatusTone = coverageTone(
-    selectedTeam.team.editorial.coverageStatus,
-  );
   const scopeTierBadge =
     selectedTeam.team.scopeTier === "secondary" ||
     selectedTeam.team.editorial.coverageStatus !== "ok"
       ? formatScopeTierLabel(selectedTeam.team.scopeTier, i18n)
       : null;
-  const sourceKindBadge = formatSourceMetaBadge(
-    selectedTeam.team.officialSource.sourceKind,
-  );
-  const sourceTierBadge = formatSourceMetaBadge(
-    selectedTeam.team.editorial.sourceTier,
-  );
-  const parserTypeBadge = formatSourceMetaBadge(
-    selectedTeam.team.officialSource.parserType,
-  );
-  const sourceLabelBadge = formatDisplaySourceLabel(
-    selectedTeam.team.officialSource.sourceLabel,
-    selectedTeam.team.canonicalName,
-  );
-  const issueBadges = prioritizeEditorialIssues(
-    selectedTeam.team.editorial.issues,
-  )
-    .slice(0, 2)
-    .map((issue) => formatSourceMetaBadge(issue))
-    .filter((badge): badge is string => Boolean(badge));
   const coverageNotice = getCoverageNotice(selectedTeam, i18n);
   const limitedCoverageEmptyMessage = getLimitedCoverageEmptyMessage(
     selectedTeam,
@@ -5746,96 +5692,6 @@ export function WorldCupJournalistView({
     selectedTeam.team.canonicalName,
   );
   const teamFreshnessMetrics = buildTeamFreshnessMetrics(selectedTeam, i18n);
-  const [officialFreshness, statusFreshness, storylineFreshness] =
-    teamFreshnessMetrics;
-  const staleOfficialQueue = snapshot.teams
-    .map((team) => ({
-      team,
-      metric: getTeamFreshnessMetric(team, "official", i18n),
-    }))
-    .filter((item) => item.metric.state === "stale")
-    .sort((left, right) => {
-      const ageDelta =
-        (right.metric.ageDays ?? -1) - (left.metric.ageDays ?? -1);
-      if (ageDelta !== 0) return ageDelta;
-      return left.team.team.canonicalName.localeCompare(
-        right.team.team.canonicalName,
-        i18n.locale,
-      );
-    });
-  const staleStorylineQueue = snapshot.teams
-    .map((team) => ({
-      team,
-      metric: getTeamFreshnessMetric(team, "storyline", i18n),
-    }))
-    .filter((item) => item.metric.state === "stale")
-    .sort((left, right) => {
-      const ageDelta =
-        (right.metric.ageDays ?? -1) - (left.metric.ageDays ?? -1);
-      if (ageDelta !== 0) return ageDelta;
-      return left.team.team.canonicalName.localeCompare(
-        right.team.team.canonicalName,
-        i18n.locale,
-      );
-    });
-  const coverageQueue = snapshot.teams
-    .filter((team) => team.team.editorial.coverageStatus !== "ok")
-    .sort((left, right) => {
-      const leftPriority =
-        left.team.editorial.coverageStatus === "blocker" ? 0 : 1;
-      const rightPriority =
-        right.team.editorial.coverageStatus === "blocker" ? 0 : 1;
-      if (leftPriority !== rightPriority) return leftPriority - rightPriority;
-      return left.team.canonicalName.localeCompare(
-        right.team.canonicalName,
-        i18n.locale,
-      );
-    });
-  const deskFacts = [
-    {
-      label: i18n.labels.status,
-      value:
-        [coverageStatusBadge, scopeTierBadge].filter(Boolean).join(" · ") ||
-        renderSourceQuality(selectedTeam, i18n),
-    },
-    {
-      label: i18n.labels.officialSource,
-      value: renderSourceQuality(selectedTeam, i18n),
-    },
-    {
-      label: i18n.labels.lastOfficialSignal,
-      value: formatDateTime(
-        selectedTeam.team.summary.latestOfficialAppearanceAt,
-        i18n,
-      ),
-    },
-    {
-      label: i18n.labels.officialFreshness,
-      value: formatFreshnessSummary(officialFreshness, i18n),
-    },
-    {
-      label: i18n.labels.lastStatusRefresh,
-      value: formatDateTime(
-        selectedTeam.team.summary.latestCurrentStatusAt,
-        i18n,
-      ),
-    },
-    {
-      label: i18n.labels.statusFreshness,
-      value: formatFreshnessSummary(statusFreshness, i18n),
-    },
-    {
-      label: i18n.labels.lastStorylineSignal,
-      value: formatDateTime(
-        selectedTeam.team.summary.latestStorylineSeenAt,
-        i18n,
-      ),
-    },
-    {
-      label: i18n.labels.storylineFreshness,
-      value: formatFreshnessSummary(storylineFreshness, i18n),
-    },
-  ];
   const teamOptions = snapshot.teams.map((team) => ({
     slug: team.team.slug,
     label: team.team.canonicalName,
@@ -6025,6 +5881,31 @@ export function WorldCupJournalistView({
         <p className={styles.rosterSortNote}>
           {formatCardSortModeNote(cardSortMode, language)}
         </p>
+        {staffLedger.length ? (
+          <div className={styles.staffBenchStrip}>
+            <div className={styles.staffBenchHeader}>
+              <span className={styles.kicker}>{i18n.labels.staffBench}</span>
+              <strong className={styles.staffBenchTitle}>
+                {i18n.labels.technicalStaffOnFile}
+              </strong>
+            </div>
+            <div className={styles.staffBenchRail}>
+              {staffLedger.map((item) => (
+                <PersonNameLink
+                  key={`staff-bench:${item.id}`}
+                  teamSlug={selectedTeam.team.slug}
+                  personId={item.id}
+                  label={item.displayName}
+                  active={selectedEntry?.id === item.id}
+                  language={language}
+                  filters={activeFilters}
+                  onSelect={handleSelectPerson}
+                  className={styles.staffBenchButton}
+                />
+              ))}
+            </div>
+          </div>
+        ) : null}
 
         {playerEntries.length ? (
           <div className={styles.rosterGrid}>
@@ -6318,272 +6199,35 @@ export function WorldCupJournalistView({
             </section>
           ) : null}
 
-          <section className={styles.sidebarPanel}>
-            <span className={styles.kicker}>{i18n.labels.refreshQueue}</span>
-            <h2 className={styles.sideTitle}>{i18n.labels.refreshQueue}</h2>
-            <div className={styles.factGrid}>
-              <div>
-                <span className={styles.factLabel}>
-                  {i18n.labels.staleOfficialQueue}
+          <details
+            className={`${styles.sidebarPanel} ${styles.collapsiblePanel}`.trim()}
+          >
+            <summary className={styles.collapsibleSummary}>
+              <div className={styles.collapsibleSummaryText}>
+                <span className={styles.kicker}>{i18n.labels.latestSignals}</span>
+                <span className={styles.collapsibleTitle}>
+                  {i18n.labels.officialMaterialToMineNext}
                 </span>
-                <strong className={styles.factValue}>
-                  {staleOfficialQueue.length}
-                </strong>
               </div>
-              <div>
-                <span className={styles.factLabel}>
-                  {i18n.labels.staleStorylineQueue}
-                </span>
-                <strong className={styles.factValue}>
-                  {staleStorylineQueue.length}
-                </strong>
-              </div>
-              <div>
-                <span className={styles.factLabel}>
-                  {i18n.labels.coverageBlockers}
-                </span>
-                <strong className={styles.factValue}>
-                  {
-                    coverageQueue.filter(
-                      (team) =>
-                        team.team.editorial.coverageStatus === "blocker",
-                    ).length
-                  }
-                </strong>
-              </div>
-              <div>
-                <span className={styles.factLabel}>{i18n.labels.status}</span>
-                <strong className={styles.factValue}>
-                  {coverageQueue.length}
-                </strong>
+              <span className={styles.collapsibleCount}>
+                {selectedTeam.officialAppearanceTimeline.length}
+              </span>
+            </summary>
+            <div className={styles.collapsibleBody}>
+              <div className={styles.signalList}>
+                {selectedTeam.officialAppearanceTimeline.length ? (
+                  selectedTeam.officialAppearanceTimeline.map((item) => (
+                    <SignalRow item={item} i18n={i18n} key={item.appearanceId} />
+                  ))
+                ) : (
+                  <div className={styles.emptyState}>
+                    {limitedCoverageEmptyMessage ||
+                      i18n.empty.noOfficialAppearance}
+                  </div>
+                )}
               </div>
             </div>
-            {coverageQueue.length ? (
-              <div className={styles.laneMiniList}>
-                <span className={styles.factLabel}>
-                  {i18n.labels.coverageBlockers}
-                </span>
-                {coverageQueue.slice(0, 8).map((team) => (
-                  <article
-                    className={styles.laneMiniRow}
-                    key={`coverage:${team.team.slug}`}
-                  >
-                    <Link
-                      href={buildTeamHref(
-                        team.team.slug,
-                        language,
-                        activeFilters,
-                      )}
-                      className={styles.personLink}
-                    >
-                      <strong>{team.team.canonicalName}</strong>
-                    </Link>
-                    <span className={styles.laneMiniMeta}>
-                      {formatCoverageStatusLabel(
-                        team.team.editorial.coverageStatus,
-                        i18n,
-                      )}
-                    </span>
-                  </article>
-                ))}
-              </div>
-            ) : null}
-            {staleOfficialQueue.length ? (
-              <div className={styles.laneMiniList}>
-                <span className={styles.factLabel}>
-                  {i18n.labels.staleOfficialQueue}
-                </span>
-                {staleOfficialQueue.map((item) => (
-                  <article
-                    className={styles.laneMiniRow}
-                    key={`official-stale:${item.team.team.slug}`}
-                  >
-                    <Link
-                      href={buildTeamHref(
-                        item.team.team.slug,
-                        language,
-                        activeFilters,
-                      )}
-                      className={styles.personLink}
-                    >
-                      <strong>{item.team.team.canonicalName}</strong>
-                    </Link>
-                    <span className={styles.laneMiniMeta}>
-                      {formatFreshnessValue(item.metric, i18n)}
-                    </span>
-                  </article>
-                ))}
-              </div>
-            ) : null}
-            {staleStorylineQueue.length ? (
-              <div className={styles.laneMiniList}>
-                <span className={styles.factLabel}>
-                  {i18n.labels.staleStorylineQueue}
-                </span>
-                {staleStorylineQueue.map((item) => (
-                  <article
-                    className={styles.laneMiniRow}
-                    key={`storyline-stale:${item.team.team.slug}`}
-                  >
-                    <Link
-                      href={buildTeamHref(
-                        item.team.team.slug,
-                        language,
-                        activeFilters,
-                      )}
-                      className={styles.personLink}
-                    >
-                      <strong>{item.team.team.canonicalName}</strong>
-                    </Link>
-                    <span className={styles.laneMiniMeta}>
-                      {formatFreshnessValue(item.metric, i18n)}
-                    </span>
-                  </article>
-                ))}
-              </div>
-            ) : null}
-          </section>
-
-          <section className={styles.sidebarPanel}>
-            <span className={styles.kicker}>{i18n.labels.deskBrief}</span>
-            <h2 className={styles.sideTitle}>
-              {i18n.labels.howToReadThisExport}
-            </h2>
-            <div className={styles.factGrid}>
-              {deskFacts.map((fact) => (
-                <div key={fact.label}>
-                  <span className={styles.factLabel}>{fact.label}</span>
-                  <strong className={styles.factValue}>{fact.value}</strong>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <section className={styles.sidebarPanel}>
-            <span className={styles.kicker}>{i18n.labels.sourceMap}</span>
-            <h2 className={styles.sideTitle}>
-              {i18n.labels.officialSourceAndSeedUrls}
-            </h2>
-            <p className={styles.sideBody}>
-              {summarizeOfficialSourceNote(selectedTeam, i18n)}
-            </p>
-            <div className={styles.sourceMeta}>
-              {coverageStatusBadge ? (
-                <span className={badgeClass(coverageStatusTone)}>
-                  {coverageStatusBadge}
-                </span>
-              ) : null}
-              {scopeTierBadge ? (
-                <span className={badgeClass("muted")}>{scopeTierBadge}</span>
-              ) : null}
-              {sourceTierBadge ? (
-                <span className={badgeClass("muted")}>{sourceTierBadge}</span>
-              ) : null}
-              {sourceKindBadge ? (
-                <span className={badgeClass("muted")}>{sourceKindBadge}</span>
-              ) : null}
-              {parserTypeBadge ? (
-                <span className={badgeClass("muted")}>{parserTypeBadge}</span>
-              ) : null}
-              {sourceLabelBadge ? (
-                <span className={badgeClass("default")}>
-                  {sourceLabelBadge}
-                </span>
-              ) : null}
-              {issueBadges.map((badge) => (
-                <span className={badgeClass("danger")} key={badge}>
-                  {badge}
-                </span>
-              ))}
-            </div>
-            <div className={styles.seedList}>
-              {selectedTeam.team.officialSource.appearanceSeeds.length ? (
-                selectedTeam.team.officialSource.appearanceSeeds.map((seed) => (
-                  <SeedRow
-                    appearanceType={seed.appearanceType}
-                    label={seed.label}
-                    url={seed.url}
-                    i18n={i18n}
-                    key={`${seed.url || seed.label}`}
-                  />
-                ))
-              ) : (
-                <div className={styles.emptyState}>{i18n.empty.noSeed}</div>
-              )}
-            </div>
-            {selectedTeam.team.officialSource.sourceUrl ? (
-              <a
-                href={selectedTeam.team.officialSource.sourceUrl}
-                target="_blank"
-                rel="noreferrer"
-                className={styles.primarySourceLink}
-              >
-                {i18n.actions.openPrimaryOfficialSource}
-              </a>
-            ) : null}
-          </section>
-
-          <section className={styles.sidebarPanel}>
-            <span className={styles.kicker}>{i18n.labels.latestSignals}</span>
-            <h2 className={styles.sideTitle}>
-              {i18n.labels.officialMaterialToMineNext}
-            </h2>
-            <div className={styles.signalList}>
-              {selectedTeam.officialAppearanceTimeline.length ? (
-                selectedTeam.officialAppearanceTimeline.map((item) => (
-                  <SignalRow item={item} i18n={i18n} key={item.appearanceId} />
-                ))
-              ) : (
-                <div className={styles.emptyState}>
-                  {limitedCoverageEmptyMessage ||
-                    i18n.empty.noOfficialAppearance}
-                </div>
-              )}
-            </div>
-          </section>
-
-          <section className={styles.sidebarPanel}>
-            <span className={styles.kicker}>{i18n.labels.staffBench}</span>
-            <h2 className={styles.sideTitle}>
-              {i18n.labels.technicalStaffOnFile}
-            </h2>
-            <div className={styles.staffList}>
-              {staffLedger.length ? (
-                staffLedger.map((item) => (
-                  <article
-                    className={`${styles.staffRow} ${selectedEntry?.id === item.id ? styles.staffRowActive : ""}`.trim()}
-                    key={item.id}
-                  >
-                    <div className={styles.staffIdentity}>
-                      <PortraitThumb
-                        portrait={item.portrait}
-                        name={item.displayName}
-                        size="sm"
-                      />
-                      <div>
-                        <h3 className={styles.staffName}>
-                          <PersonNameLink
-                            teamSlug={selectedTeam.team.slug}
-                            personId={item.id}
-                            label={item.displayName}
-                            active={selectedEntry?.id === item.id}
-                            language={language}
-                            filters={activeFilters}
-                            onSelect={handleSelectPerson}
-                          />
-                        </h3>
-                        <p className={styles.staffMeta}>{item.roleLabel}</p>
-                      </div>
-                    </div>
-                  </article>
-                ))
-              ) : (
-                <div className={styles.emptyState}>
-                  {i18n.empty.allStaffMoved}
-                </div>
-              )}
-            </div>
-          </section>
+          </details>
         </aside>
       </div>
 
