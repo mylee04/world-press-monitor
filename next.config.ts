@@ -9,6 +9,13 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
+  outputFileTracingIncludes: {
+    '/*': [
+      './data/football-world-cup-journalist.latest.json',
+      './output/football-world-cup-journalist/latest.json',
+      './data/football-world-cup-human-interest-pilot.canonical.json',
+    ],
+  },
 };
 
 export default nextConfig;

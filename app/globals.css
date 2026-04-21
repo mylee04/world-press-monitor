@@ -119,6 +119,26 @@ select {
   flex: 0 0 auto;
 }
 
+@media (max-width: 1080px) {
+  .site-header {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .site-header > div {
+    width: 100%;
+  }
+
+  .site-header nav {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    overflow: visible;
+    white-space: normal;
+  }
+}
+
 .page-stack {
   display: grid;
   gap: 20px;
@@ -318,6 +338,8 @@ html:has(.landing-page-root),
 body:has(.landing-page-root),
 html:has(.dashboard-page-root),
 body:has(.dashboard-page-root),
+html:has(.world-cup-page-root),
+body:has(.world-cup-page-root),
 html:has(.benchmark-page-root),
 body:has(.benchmark-page-root),
 html:has(.contact-page-root),
@@ -334,6 +356,7 @@ body:has(.ops-page-root) {
 body:has(.map-page-root),
 body:has(.landing-page-root),
 body:has(.dashboard-page-root),
+body:has(.world-cup-page-root),
 body:has(.benchmark-page-root),
 body:has(.contact-page-root),
 body:has(.ops-page-root) {
@@ -369,6 +392,7 @@ body:has(.map-page-root) .app-shell {
 body:has(.map-page-root) .site-header,
 body:has(.landing-page-root) .site-header,
 body:has(.dashboard-page-root) .site-header,
+body:has(.world-cup-page-root) .site-header,
 body:has(.benchmark-page-root) .site-header,
 body:has(.contact-page-root) .site-header,
 body:has(.ops-page-root) .site-header {
@@ -382,6 +406,7 @@ body:has(.ops-page-root) .site-header {
 body:has(.map-page-root) .site-header p,
 body:has(.landing-page-root) .site-header p,
 body:has(.dashboard-page-root) .site-header p,
+body:has(.world-cup-page-root) .site-header p,
 body:has(.benchmark-page-root) .site-header p,
 body:has(.contact-page-root) .site-header p,
 body:has(.ops-page-root) .site-header p {
@@ -391,6 +416,7 @@ body:has(.ops-page-root) .site-header p {
 body:has(.map-page-root) .brand-kicker,
 body:has(.landing-page-root) .brand-kicker,
 body:has(.dashboard-page-root) .brand-kicker,
+body:has(.world-cup-page-root) .brand-kicker,
 body:has(.benchmark-page-root) .brand-kicker,
 body:has(.contact-page-root) .brand-kicker,
 body:has(.ops-page-root) .brand-kicker {
@@ -400,6 +426,7 @@ body:has(.ops-page-root) .brand-kicker {
 body:has(.map-page-root) .site-header nav a,
 body:has(.landing-page-root) .site-header nav a,
 body:has(.dashboard-page-root) .site-header nav a,
+body:has(.world-cup-page-root) .site-header nav a,
 body:has(.benchmark-page-root) .site-header nav a,
 body:has(.contact-page-root) .site-header nav a,
 body:has(.ops-page-root) .site-header nav a {
@@ -411,6 +438,7 @@ body:has(.ops-page-root) .site-header nav a {
 body:has(.map-page-root) .site-header nav a:hover,
 body:has(.landing-page-root) .site-header nav a:hover,
 body:has(.dashboard-page-root) .site-header nav a:hover,
+body:has(.world-cup-page-root) .site-header nav a:hover,
 body:has(.benchmark-page-root) .site-header nav a:hover,
 body:has(.contact-page-root) .site-header nav a:hover,
 body:has(.ops-page-root) .site-header nav a:hover {
