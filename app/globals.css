@@ -119,6 +119,26 @@ select {
   flex: 0 0 auto;
 }
 
+@media (max-width: 1080px) {
+  .site-header {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .site-header > div {
+    width: 100%;
+  }
+
+  .site-header nav {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    overflow: visible;
+    white-space: normal;
+  }
+}
+
 .page-stack {
   display: grid;
   gap: 20px;
