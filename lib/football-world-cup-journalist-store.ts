@@ -667,6 +667,17 @@ async function readArtifactJson<T>(relativePath: string): Promise<T | null> {
   return null;
 }
 
+async function readBundledSnapshotJson(): Promise<FootballWorldCupJournalistSnapshot | null> {
+  try {
+    const module = await import('../output/football-world-cup-journalist/latest.json');
+    const parsed = (module.default ?? module) as unknown as FootballWorldCupJournalistSnapshot;
+    if (parsed && Array.isArray(parsed.teams)) return parsed;
+  } catch {
+    // Fall back to the filesystem search path first; only use the bundled module when needed.
+  }
+  return null;
+}
+
 function diffDaysFromNow(value: NullableString): number | null {
   if (!value) return null;
   const ts = Date.parse(value);
@@ -895,6 +906,30 @@ export async function readFootballWorldCupJournalistSnapshot(): Promise<Football
       continue;
     }
   }
+
+  const bundledSnapshot = await readBundledSnapshotJson();
+  if (bundledSnapshot) {
+    const normalized = normalizeFootballWorldCupJournalistSnapshot(bundledSnapshot);
+    const [coverage, quality, diff] = await Promise.all([
+      readArtifactJson<CoverageAuditPayload>(COVERAGE_AUDIT_RELATIVE_PATH),
+      readArtifactJson<QualityAuditPayload>(QUALITY_AUDIT_RELATIVE_PATH),
+      readArtifactJson<EditorialDiffPayload>(EDITORIAL_DIFF_RELATIVE_PATH),
+    ]);
+    const withEditorial = applyEditorialOverlay(normalized, coverage, quality, diff);
+    const personIds = withEditorial.teams.flatMap((team) =>
+      [...team.playerCards, ...team.staffCards]
+        .map((card) => Number(card.sportsPersonId))
+        .filter((value) => Number.isFinite(value) && value > 0)
+    );
+
+    try {
+      const instagramRows = await readLatestInstagramProfilesByPersonIds(personIds);
+      return applyInstagramOverlay(withEditorial, instagramRows);
+    } catch {
+      return withEditorial;
+    }
+  }
+
   return null;
 }
 
