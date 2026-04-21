@@ -19,6 +19,7 @@ export type WorldCupJournalistI18n = {
     statusAlerts: string;
     officialSignals: string;
     rosterSize: string;
+    headCoach: string;
     leadAnglesTitle: string;
     leadAnglesNote: string;
     watchlist: string;
@@ -220,6 +221,7 @@ const I18N: Record<WorldCupJournalistLanguage, WorldCupJournalistI18n> = {
       statusAlerts: 'Status alerts',
       officialSignals: 'Official signals',
       rosterSize: 'Roster size',
+      headCoach: 'Head coach',
       leadAnglesTitle: 'What this team is actually talking about',
       leadAnglesNote: 'The page now favors live hooks over generic profile copy.',
       watchlist: 'Watchlist',
@@ -431,6 +433,7 @@ const I18N: Record<WorldCupJournalistLanguage, WorldCupJournalistI18n> = {
       statusAlerts: '상태 알림',
       officialSignals: '공식 시그널',
       rosterSize: '로스터 규모',
+      headCoach: '헤드코치',
       leadAnglesTitle: '이 팀이 지금 실제로 말하고 있는 것',
       leadAnglesNote: '이 페이지는 일반 프로필 문구보다 현재 쓸 수 있는 훅을 우선합니다.',
       watchlist: '워치리스트',
@@ -641,6 +644,7 @@ const I18N: Record<WorldCupJournalistLanguage, WorldCupJournalistI18n> = {
       statusAlerts: '状態アラート',
       officialSignals: '公式シグナル',
       rosterSize: '登録人数',
+      headCoach: '監督',
       leadAnglesTitle: 'このチームが今実際に語っていること',
       leadAnglesNote: 'このページでは一般的なプロフィール文より、今すぐ使えるフックを優先します。',
       watchlist: 'ウォッチリスト',
@@ -851,6 +855,7 @@ const I18N: Record<WorldCupJournalistLanguage, WorldCupJournalistI18n> = {
       statusAlerts: 'Alertas de estado',
       officialSignals: 'Señales oficiales',
       rosterSize: 'Tamaño de la lista',
+      headCoach: 'Entrenador principal',
       leadAnglesTitle: 'De qué está hablando realmente este equipo',
       leadAnglesNote: 'La página prioriza ganchos vigentes por encima del texto de perfil genérico.',
       watchlist: 'Lista de seguimiento',
@@ -1061,6 +1066,7 @@ const I18N: Record<WorldCupJournalistLanguage, WorldCupJournalistI18n> = {
       statusAlerts: 'Cảnh báo trạng thái',
       officialSignals: 'Tín hiệu chính thức',
       rosterSize: 'Quy mô danh sách',
+      headCoach: 'Huấn luyện viên trưởng',
       leadAnglesTitle: 'Đội này thực sự đang nói về điều gì',
       leadAnglesNote: 'Trang này ưu tiên các hook đang sống hơn phần mô tả hồ sơ chung chung.',
       watchlist: 'Danh sách theo dõi',
@@ -1271,6 +1277,7 @@ const I18N: Record<WorldCupJournalistLanguage, WorldCupJournalistI18n> = {
       statusAlerts: 'Allerte di stato',
       officialSignals: 'Segnali ufficiali',
       rosterSize: 'Dimensione rosa',
+      headCoach: 'Allenatore capo',
       leadAnglesTitle: 'Di cosa sta parlando davvero questa squadra',
       leadAnglesNote: 'La pagina privilegia i ganci vivi rispetto al testo profilo generico.',
       watchlist: 'Watchlist',
@@ -1481,6 +1488,7 @@ const I18N: Record<WorldCupJournalistLanguage, WorldCupJournalistI18n> = {
       statusAlerts: 'Alertes de statut',
       officialSignals: 'Signaux officiels',
       rosterSize: 'Taille de la liste',
+      headCoach: 'Entraîneur principal',
       leadAnglesTitle: 'Ce dont cette équipe parle vraiment en ce moment',
       leadAnglesNote: 'La page met en avant les hooks actifs avant le texte de profil générique.',
       watchlist: 'Watchlist',

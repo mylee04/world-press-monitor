@@ -2539,13 +2539,21 @@ function buildTeamVisualProfile(
   };
 }
 
+function isCoachLikeCard(card: JournalistPersonCard): boolean {
+  const position =
+    `${card.role.positionGroup || ""} ${card.role.roleLabel || ""}`.toLocaleLowerCase(
+      "en-US",
+    );
+  return /head coach|manager|coach/.test(position);
+}
+
 function buildPositionVisual(card: JournalistPersonCard): PositionVisual {
   const position =
     `${card.role.positionGroup || ""} ${card.role.roleLabel || ""}`.toLocaleLowerCase(
       "en-US",
     );
   if (card.role.roleType !== "player") {
-    if (/head coach|manager|coach/.test(position)) {
+    if (isCoachLikeCard(card)) {
       return {
         label: "Coach",
         accent: "#f58b62",
@@ -5559,6 +5567,18 @@ export function WorldCupJournalistView({
     cardSortMode,
     i18n.locale,
   );
+  const headCoachEntry =
+    atlasEntries.find((entry) => {
+      if (entry.isPlayer) return false;
+      const card = cardById.get(entry.id);
+      return card ? isCoachLikeCard(card) : false;
+    }) || null;
+  const headCoachSummary = headCoachEntry
+    ? compactText(
+        headCoachEntry.hook || headCoachEntry.evidence || headCoachEntry.roleLabel,
+        88,
+      )
+    : null;
   const featureTargetEntries = sortAtlasEntries(
     allEntries.filter(
       (entry) =>
@@ -5580,7 +5600,10 @@ export function WorldCupJournalistView({
   const watchEntries = allEntries.filter((item) => item.signalScore > 0);
   const watchIds = new Set(watchEntries.map((item) => item.id));
   const staffLedger = allEntries.filter(
-    (item) => !item.isPlayer && !watchIds.has(item.id),
+    (item) =>
+      !item.isPlayer &&
+      !watchIds.has(item.id) &&
+      item.id !== headCoachEntry?.id,
   );
   const selectedHumanInterestRecord = selectedCard
     ? resolveHumanInterestRecord(
@@ -5708,12 +5731,6 @@ export function WorldCupJournalistView({
   const statusAlerts = watchEntries.filter(
     (item) => item.category === "status",
   ).length;
-  const deskTakeaway = buildDeskTakeaway(
-    selectedTeam,
-    watchEntries,
-    unfilteredLeadDeck,
-    i18n,
-  );
   const teamMentionArticleCount =
     officialNewsSummary?.mentionBreakdown.find(
       (item) => item.entityType === "team",
@@ -5794,14 +5811,6 @@ export function WorldCupJournalistView({
             <h1 className={styles.teamName}>
               {selectedTeam.team.canonicalName}
             </h1>
-            <p className={styles.heroSummary}>{deskTakeaway}</p>
-          </div>
-          <div className={styles.heroMeta}>
-            <span>
-              {i18n.labels.exported} {formatDateTime(snapshot.exportedAt, i18n)}
-            </span>
-            <span>{selectedTeam.team.competitionEditionName}</span>
-            <span>{renderSourceQuality(selectedTeam, i18n)}</span>
           </div>
           <div className={styles.freshnessStrip}>
             {teamFreshnessMetrics.map((metric) => (
@@ -5843,9 +5852,35 @@ export function WorldCupJournalistView({
         </div>
 
         <div className={styles.statStrip}>
+          {headCoachEntry ? (
+            <button
+              type="button"
+              className={`${styles.statCard} ${styles.statCardButton} ${selectedEntry?.id === headCoachEntry.id ? styles.statCardButtonActive : ""}`.trim()}
+              onClick={() => handleSelectPerson(headCoachEntry.id)}
+              aria-haspopup="dialog"
+              aria-expanded={selectedEntry?.id === headCoachEntry.id}
+            >
+              <span className={styles.statLabel}>{i18n.labels.headCoach}</span>
+              <strong className={styles.statPersonValue}>
+                {headCoachEntry.displayName}
+              </strong>
+              <small className={styles.statHint}>
+                {headCoachSummary || headCoachEntry.roleLabel}
+              </small>
+              <span className={styles.statCta}>{i18n.actions.openDossier}</span>
+            </button>
+          ) : (
+            <article className={styles.statCard}>
+              <span className={styles.statLabel}>{i18n.labels.headCoach}</span>
+              <strong className={styles.statValue}>{i18n.labels.unavailable}</strong>
+              <small className={styles.statHint}>
+                {i18n.labels.technicalStaffOnFile}
+              </small>
+            </article>
+          )}
           <button
             type="button"
-            className={`${styles.statCard} ${styles.statCardButton}`.trim()}
+            className={`${styles.statCard} ${styles.statCardButton} ${activeDeskPanel === "leadAngles" ? styles.statCardButtonActive : ""}`.trim()}
             onClick={() => handleOpenDeskPanel("leadAngles")}
             aria-haspopup="dialog"
             aria-expanded={activeDeskPanel === "leadAngles"}
@@ -5855,6 +5890,7 @@ export function WorldCupJournalistView({
               {unfilteredLeadDeck.length}
             </strong>
             <small className={styles.statHint}>{i18n.hints.leadAngles}</small>
+            <span className={styles.statCta}>{i18n.actions.open}</span>
           </button>
           <article className={styles.statCard}>
             <span className={styles.statLabel}>{i18n.labels.statusAlerts}</span>
@@ -5863,7 +5899,7 @@ export function WorldCupJournalistView({
           </article>
           <button
             type="button"
-            className={`${styles.statCard} ${styles.statCardButton}`.trim()}
+            className={`${styles.statCard} ${styles.statCardButton} ${activeDeskPanel === "officialSignals" ? styles.statCardButtonActive : ""}`.trim()}
             onClick={() => handleOpenDeskPanel("officialSignals")}
             aria-haspopup="dialog"
             aria-expanded={activeDeskPanel === "officialSignals"}
@@ -5877,6 +5913,7 @@ export function WorldCupJournalistView({
             <small className={styles.statHint}>
               {i18n.hints.officialSignals}
             </small>
+            <span className={styles.statCta}>{i18n.actions.open}</span>
           </button>
           <article className={styles.statCard}>
             <span className={styles.statLabel}>{i18n.labels.rosterSize}</span>
