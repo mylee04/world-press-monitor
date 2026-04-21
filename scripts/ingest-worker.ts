@@ -275,6 +275,10 @@ function maxFuturePublishedAtMsForUrl(url: string | undefined): number {
   }
   return MAX_FUTURE_PUBLISHED_AT_MS;
 }
+const BROWSER_SITEMAP_FALLBACK_DENYLIST = new Set([
+  'www.arabianbusiness.com',
+  'arabianbusiness.com',
+]);
 const BROWSER_SITEMAP_FALLBACK_DOMAINS = new Set(
   (
     process.env.INGEST_BROWSER_SITEMAP_DOMAINS ||
@@ -282,7 +286,7 @@ const BROWSER_SITEMAP_FALLBACK_DOMAINS = new Set(
   )
     .split(',')
     .map((value) => value.trim().toLowerCase())
-    .filter(Boolean)
+    .filter((host) => Boolean(host) && !BROWSER_SITEMAP_FALLBACK_DENYLIST.has(host))
 );
 const BROWSER_SITEMAP_HELPER = resolve(process.cwd(), 'scripts/fetch-sitemap-browser.mjs');
 const SITEMAP_TEMPORARY_DISABLE_THRESHOLD = Math.max(
@@ -339,6 +343,26 @@ type AtlasCountry = {
 type AtlasCatalog = {
   countries: AtlasCountry[];
 };
+
+function isTemporarilyBlockedAtlasFeed(feed: AtlasFeed): boolean {
+  if ((feed.name || '').trim().toLowerCase() === 'arabian business') {
+    return true;
+  }
+
+  for (const candidate of [feed.url, feed.sitemapUrl]) {
+    if (!candidate || typeof candidate !== 'string') continue;
+    try {
+      const hostname = new URL(candidate).hostname.toLowerCase();
+      if (BROWSER_SITEMAP_FALLBACK_DENYLIST.has(hostname)) {
+        return true;
+      }
+    } catch {
+      // Ignore malformed URLs here and let the normal ingest path handle them.
+    }
+  }
+
+  return false;
+}
 
 function normalizeText(value: string): string {
   return value
@@ -618,6 +642,7 @@ function loadAtlasOutlets(): OutletFeed[] {
       return (Array.isArray(country.feeds) ? country.feeds : [])
       .filter((feed): feed is AtlasFeed => {
         if (feed.enabled === false) return false;
+        if (isTemporarilyBlockedAtlasFeed(feed)) return false;
         const hasRssUrl = feed.url !== null && typeof feed.url === 'string' && feed.url.trim().length > 0;
         const hasExplicitSitemapUrl = typeof feed.sitemapUrl === 'string' && feed.sitemapUrl.trim().length > 0;
         return hasRssUrl || hasExplicitSitemapUrl;
