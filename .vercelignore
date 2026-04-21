@@ -19,6 +19,11 @@ tsconfig.tsbuildinfo
 .warm-daemon.pid
 logs/
 output
+!output/
+output/*
+!output/football-world-cup-journalist/
+output/football-world-cup-journalist/*
+!output/football-world-cup-journalist/latest.json
 .playwright-cli
 .wpr-state
 .wpr-static-deploy-lock
