@@ -124,22 +124,6 @@
   letter-spacing: -0.03em;
 }
 
-.heroSummary {
-  max-width: 68ch;
-  margin: 0;
-  color: rgba(245, 239, 229, 0.88);
-  line-height: 1.5;
-  font-size: 1.02rem;
-}
-
-.heroMeta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  color: rgba(245, 239, 229, 0.72);
-  font-size: 0.93rem;
-}
-
 .freshnessStrip {
   display: grid;
   gap: 12px;
@@ -266,6 +250,14 @@
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.16);
 }
 
+.statCardButtonActive {
+  border-color: rgba(255, 203, 120, 0.32);
+  background: rgba(255, 248, 236, 0.12);
+  box-shadow:
+    0 0 0 1px rgba(255, 203, 120, 0.12) inset,
+    0 16px 36px rgba(0, 0, 0, 0.18);
+}
+
 .statCardButton:focus-visible {
   outline: 2px solid rgba(255, 211, 140, 0.8);
   outline-offset: 2px;
@@ -284,9 +276,32 @@
   line-height: 1;
 }
 
+.statPersonValue {
+  color: #fff4df;
+  font-family:
+    "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  font-size: 1.28rem;
+  line-height: 1.15;
+}
+
 .statHint {
   color: rgba(245, 239, 229, 0.72);
   line-height: 1.45;
+}
+
+.statCta {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  margin-top: auto;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 215, 151, 0.18);
+  background: rgba(11, 16, 26, 0.46);
+  color: rgba(255, 241, 214, 0.94);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
 }
 
 .teamRail {
