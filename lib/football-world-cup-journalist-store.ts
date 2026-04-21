@@ -456,7 +456,10 @@ type EditorialDiffPayload = {
   teams: EditorialDiffTeam[];
 };
 
-const SNAPSHOT_RELATIVE_PATH = path.join('output', 'football-world-cup-journalist', 'latest.json');
+const SNAPSHOT_RELATIVE_PATHS = [
+  path.join('data', 'football-world-cup-journalist.latest.json'),
+  path.join('output', 'football-world-cup-journalist', 'latest.json'),
+];
 const COVERAGE_AUDIT_RELATIVE_PATH = path.join('audits', 'football_world_cup_coverage_latest.json');
 const QUALITY_AUDIT_RELATIVE_PATH = path.join('audits', 'football_world_cup_journalist_quality_latest.json');
 const EDITORIAL_DIFF_RELATIVE_PATH = path.join('audits', 'football_world_cup_editorial_diff_latest.json');
@@ -648,7 +651,11 @@ function getSnapshotRootDirectories(): string[] {
 }
 
 function getSnapshotPaths(): string[] {
-  return getSnapshotRootDirectories().map((rootDir) => path.join(rootDir, SNAPSHOT_RELATIVE_PATH));
+  return uniquePaths(
+    getSnapshotRootDirectories().flatMap((rootDir) =>
+      SNAPSHOT_RELATIVE_PATHS.map((relativePath) => path.join(rootDir, relativePath))
+    )
+  );
 }
 
 function getArtifactPaths(relativePath: string): string[] {
@@ -663,17 +670,6 @@ async function readArtifactJson<T>(relativePath: string): Promise<T | null> {
     } catch {
       continue;
     }
-  }
-  return null;
-}
-
-async function readBundledSnapshotJson(): Promise<FootballWorldCupJournalistSnapshot | null> {
-  try {
-    const module = await import('../output/football-world-cup-journalist/latest.json');
-    const parsed = (module.default ?? module) as unknown as FootballWorldCupJournalistSnapshot;
-    if (parsed && Array.isArray(parsed.teams)) return parsed;
-  } catch {
-    // Fall back to the filesystem search path first; only use the bundled module when needed.
   }
   return null;
 }
@@ -907,32 +903,9 @@ export async function readFootballWorldCupJournalistSnapshot(): Promise<Football
     }
   }
 
-  const bundledSnapshot = await readBundledSnapshotJson();
-  if (bundledSnapshot) {
-    const normalized = normalizeFootballWorldCupJournalistSnapshot(bundledSnapshot);
-    const [coverage, quality, diff] = await Promise.all([
-      readArtifactJson<CoverageAuditPayload>(COVERAGE_AUDIT_RELATIVE_PATH),
-      readArtifactJson<QualityAuditPayload>(QUALITY_AUDIT_RELATIVE_PATH),
-      readArtifactJson<EditorialDiffPayload>(EDITORIAL_DIFF_RELATIVE_PATH),
-    ]);
-    const withEditorial = applyEditorialOverlay(normalized, coverage, quality, diff);
-    const personIds = withEditorial.teams.flatMap((team) =>
-      [...team.playerCards, ...team.staffCards]
-        .map((card) => Number(card.sportsPersonId))
-        .filter((value) => Number.isFinite(value) && value > 0)
-    );
-
-    try {
-      const instagramRows = await readLatestInstagramProfilesByPersonIds(personIds);
-      return applyInstagramOverlay(withEditorial, instagramRows);
-    } catch {
-      return withEditorial;
-    }
-  }
-
   return null;
 }
 
 export function resolveFootballWorldCupJournalistSnapshotPath(): string {
-  return path.join(process.cwd(), SNAPSHOT_RELATIVE_PATH);
+  return path.join(process.cwd(), SNAPSHOT_RELATIVE_PATHS[0] || SNAPSHOT_RELATIVE_PATHS[1]!);
 }

@@ -11,6 +11,7 @@ const nextConfig: NextConfig = {
   },
   outputFileTracingIncludes: {
     '/*': [
+      './data/football-world-cup-journalist.latest.json',
       './output/football-world-cup-journalist/latest.json',
       './data/football-world-cup-human-interest-pilot.canonical.json',
     ],
