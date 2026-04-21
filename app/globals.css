@@ -59,6 +59,7 @@ select {
 
 .site-header {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   gap: 20px;
@@ -75,9 +76,14 @@ select {
   min-width: 0;
 }
 
+.site-header > div {
+  flex: 0 1 430px;
+}
+
 .site-header p {
   margin: 6px 0 0;
   color: var(--muted);
+  max-width: 40ch;
 }
 
 .brand-kicker,
@@ -92,16 +98,11 @@ select {
 
 .site-header nav {
   display: flex;
-  flex-wrap: nowrap;
+  flex: 1 1 520px;
+  flex-wrap: wrap;
   gap: 8px;
+  justify-content: flex-end;
   max-width: 100%;
-  overflow-x: auto;
-  white-space: nowrap;
-  scrollbar-width: none;
-}
-
-.site-header nav::-webkit-scrollbar {
-  display: none;
 }
 
 .site-header nav a,
@@ -134,8 +135,6 @@ select {
     width: 100%;
     flex-wrap: wrap;
     justify-content: flex-start;
-    overflow: visible;
-    white-space: normal;
   }
 }
 

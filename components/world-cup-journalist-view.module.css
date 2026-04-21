@@ -246,6 +246,31 @@
   backdrop-filter: blur(14px);
 }
 
+.statCardButton {
+  appearance: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  color: inherit;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    background 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.statCardButton:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 210, 135, 0.22);
+  background: rgba(255, 248, 236, 0.1);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.16);
+}
+
+.statCardButton:focus-visible {
+  outline: 2px solid rgba(255, 211, 140, 0.8);
+  outline-offset: 2px;
+}
+
 .statLabel {
   color: rgba(255, 226, 180, 0.72);
   text-transform: uppercase;
@@ -539,6 +564,13 @@
   gap: 4px;
 }
 
+.staffBenchNote {
+  margin: 0;
+  color: rgba(245, 239, 229, 0.66);
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
 .staffBenchTitle {
   color: #fff4df;
   font-size: 0.95rem;
@@ -546,46 +578,75 @@
 }
 
 .staffBenchRail {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
 }
 
 .staffBenchButton {
-  display: inline-flex;
-  align-items: center;
-  min-height: 34px;
-  padding: 0 12px;
-  border-radius: 999px;
+  appearance: none;
+  display: grid;
+  gap: 6px;
+  min-height: 78px;
+  padding: 14px;
+  border-radius: 18px;
   border: 1px solid rgba(255, 220, 171, 0.12);
-  background: rgba(255, 255, 255, 0.04);
-  color: rgba(255, 244, 223, 0.82);
-  font-size: 0.8rem;
-  font-weight: 700;
-  line-height: 1;
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(243, 191, 106, 0.14),
+      transparent 42%
+    ),
+    rgba(11, 16, 26, 0.86);
+  color: rgba(255, 244, 223, 0.92);
+  text-align: left;
+  cursor: pointer;
   transition:
     border-color 160ms ease,
     background 160ms ease,
     color 160ms ease,
-    transform 160ms ease;
+    transform 160ms ease,
+    box-shadow 160ms ease;
 }
 
 .staffBenchButton:hover {
   transform: translateY(-1px);
-  border-color: rgba(255, 210, 135, 0.24);
-  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 210, 135, 0.28);
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(243, 191, 106, 0.18),
+      transparent 44%
+    ),
+    rgba(16, 22, 34, 0.94);
   color: #fff4df;
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.2);
 }
 
-.staffBenchButton.personLinkActive {
+.staffBenchButtonActive {
   border-color: rgba(255, 203, 120, 0.4);
-  background: linear-gradient(
-    135deg,
-    rgba(107, 48, 27, 0.82),
-    rgba(23, 20, 29, 0.92)
-  );
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(255, 203, 120, 0.22),
+      transparent 44%
+    ),
+    linear-gradient(135deg, rgba(107, 48, 27, 0.82), rgba(23, 20, 29, 0.92));
   color: #fff1d4;
   box-shadow: 0 0 0 1px rgba(255, 203, 120, 0.14) inset;
+}
+
+.staffBenchName {
+  color: #fff4df;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.staffBenchRole {
+  color: rgba(245, 239, 229, 0.64);
+  font-size: 0.78rem;
+  line-height: 1.35;
 }
 
 .rosterGrid {
@@ -1841,6 +1902,81 @@
   backdrop-filter: blur(16px);
 }
 
+.deskDrawerBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  justify-items: end;
+  padding: 20px;
+  background: rgba(6, 9, 15, 0.68);
+  backdrop-filter: blur(14px);
+}
+
+.deskDrawer {
+  width: min(760px, 100%);
+  max-height: calc(100vh - 40px);
+  overflow: auto;
+  display: grid;
+  gap: 18px;
+  padding: 22px;
+  border-radius: 28px;
+  border: 1px solid var(--desk-card-line);
+  background: linear-gradient(180deg, var(--desk-card), var(--desk-card-soft));
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+}
+
+.deskDrawerHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.deskDrawerTitleGroup {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.deskDrawerTitle {
+  margin: 0;
+  color: #fff4df;
+  font-size: 1.72rem;
+  line-height: 1.02;
+}
+
+.deskDrawerNote {
+  margin: 0;
+  color: rgba(245, 239, 229, 0.7);
+  line-height: 1.55;
+}
+
+.deskDrawerClose {
+  appearance: none;
+  min-height: 38px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 220, 171, 0.12);
+  background: rgba(11, 16, 26, 0.42);
+  color: rgba(255, 244, 223, 0.88);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  flex: none;
+}
+
+.deskDrawerClose:hover {
+  border-color: rgba(255, 210, 135, 0.24);
+  background: rgba(18, 24, 36, 0.72);
+}
+
+.deskDrawerBody,
+.drawerSection {
+  display: grid;
+  gap: 16px;
+}
+
 .detailModalWindow {
   width: min(1120px, 100%);
 }
@@ -2318,6 +2454,11 @@
     padding: 16px;
   }
 
+  .deskDrawerBackdrop {
+    padding: 16px;
+    justify-items: stretch;
+  }
+
   .detailSection {
     position: static;
     max-height: none;
@@ -2328,6 +2469,11 @@
 @media (max-width: 780px) {
   .hero {
     padding: 22px;
+  }
+
+  .deskDrawer {
+    width: 100%;
+    max-height: calc(100vh - 32px);
   }
 
   .rosterGrid {
@@ -2376,6 +2522,10 @@
     grid-template-columns: 1fr;
   }
 
+  .staffBenchRail {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .detailPager {
     justify-content: flex-start;
   }
@@ -2416,6 +2566,11 @@
     padding: 18px;
   }
 
+  .deskDrawer {
+    padding: 18px;
+    border-radius: 22px;
+  }
+
   .leadGrid,
   .watchGrid,
   .spotlightGrid,
@@ -2429,6 +2584,11 @@
     grid-template-columns: 1fr;
   }
 
+  .staffBenchRail {
+    grid-template-columns: 1fr;
+  }
+
+  .deskDrawerBackdrop,
   .detailModalBackdrop {
     padding: 10px;
   }

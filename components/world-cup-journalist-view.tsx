@@ -144,6 +144,8 @@ type CardSortMode =
   | "risk_radar"
   | "official_voices";
 
+type DeskPanelKey = "leadAngles" | "officialSignals";
+
 type TeamVisualProfile = {
   crestLabel: string;
   crestShort: string;
@@ -5494,6 +5496,9 @@ export function WorldCupJournalistView({
   const [activePersonId, setActivePersonId] = useState<string | null>(
     requestedSelectedCard?.sportsPersonId || null,
   );
+  const [activeDeskPanel, setActiveDeskPanel] = useState<DeskPanelKey | null>(
+    null,
+  );
   const [cardSortMode, setCardSortMode] =
     useState<CardSortMode>("star_power");
 
@@ -5523,6 +5528,7 @@ export function WorldCupJournalistView({
   };
 
   const handleSelectPerson = (personId: string) => {
+    setActiveDeskPanel(null);
     setActivePersonId(personId);
     syncSelectedPersonInUrl(personId);
   };
@@ -5628,15 +5634,48 @@ export function WorldCupJournalistView({
     leadType: normalizedLeadType,
     leadSource: normalizedLeadSource,
   };
+  const [drawerLeadType, setDrawerLeadType] = useState<string | null>(
+    normalizedLeadType,
+  );
+  const [drawerLeadSource, setDrawerLeadSource] = useState<string | null>(
+    normalizedLeadSource,
+  );
 
   useEffect(() => {
-    if (!selectedCard || !selectedEntry) return;
+    setDrawerLeadType(normalizedLeadType);
+    setDrawerLeadSource(normalizedLeadSource);
+  }, [normalizedLeadType, normalizedLeadSource, selectedTeam.team.slug]);
+
+  const activeDrawerLeadType = normalizeLeadFilterValue(
+    drawerLeadType,
+    typeOptions,
+  );
+  const drawerSourceBaseLeads = activeDrawerLeadType
+    ? unfilteredLeadDeck.filter(
+        (item) => item.provenanceType === activeDrawerLeadType,
+      )
+    : unfilteredLeadDeck;
+  const drawerSourceOptions = buildLeadFilterOptions(
+    drawerSourceBaseLeads,
+    "provenanceSource",
+  );
+  const activeDrawerLeadSource = normalizeLeadFilterValue(
+    drawerLeadSource,
+    drawerSourceOptions,
+  );
+
+  useEffect(() => {
+    if (!selectedCard && !activeDeskPanel) return;
 
     const previousOverflow = document.body.style.overflow;
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key !== "Escape") return;
-      setActivePersonId(null);
-      syncSelectedPersonInUrl(null);
+      if (selectedCard) {
+        setActivePersonId(null);
+        syncSelectedPersonInUrl(null);
+        return;
+      }
+      setActiveDeskPanel(null);
     };
 
     document.body.style.overflow = "hidden";
@@ -5647,30 +5686,25 @@ export function WorldCupJournalistView({
     };
   }, [
     selectedCard,
-    selectedEntry,
+    activeDeskPanel,
     selectedTeam.team.slug,
     language,
     activeFilters.leadType,
     activeFilters.leadSource,
   ]);
 
-  const leadDeck = buildLeadDeck(
-    selectedTeam,
-    watchEntries,
-    language,
-    i18n,
-    activeFilters,
-  );
-  const filteredLeadDeck = leadDeck
+  const filteredLeadDeck = unfilteredLeadDeck
     .filter((item) =>
-      normalizedLeadType ? item.provenanceType === normalizedLeadType : true,
-    )
-    .filter((item) =>
-      normalizedLeadSource
-        ? item.provenanceSource === normalizedLeadSource
+      activeDrawerLeadType
+        ? item.provenanceType === activeDrawerLeadType
         : true,
     )
-    .slice(0, 6);
+    .filter((item) =>
+      activeDrawerLeadSource
+        ? item.provenanceSource === activeDrawerLeadSource
+        : true,
+    )
+    .slice(0, 12);
   const statusAlerts = watchEntries.filter(
     (item) => item.category === "status",
   ).length;
@@ -5702,6 +5736,31 @@ export function WorldCupJournalistView({
       ? "선수를 한 화면에서 훑고, 클릭하면 기사거리 상세를 별도 창으로 엽니다."
       : "Scan the whole squad here, then click any player to open the dossier.";
   const rosterSortLabel = language === "ko" ? "선수 정렬" : "Player Order";
+  const closeLabel = language === "ko" ? "닫기" : "Close";
+
+  const handleOpenDeskPanel = (panel: DeskPanelKey) => {
+    setActivePersonId(null);
+    syncSelectedPersonInUrl(null);
+    setActiveDeskPanel(panel);
+  };
+
+  const handleCloseDeskPanel = () => {
+    setActiveDeskPanel(null);
+  };
+
+  const handleLeadTypeFilter = (value: string | null) => {
+    setDrawerLeadType(value);
+    setDrawerLeadSource(null);
+  };
+
+  const handleLeadSourceFilter = (value: string | null) => {
+    setDrawerLeadSource(value);
+  };
+
+  const handleSelectStaffBenchPerson = (personId: string) => {
+    setActiveDeskPanel(null);
+    handleSelectPerson(personId);
+  };
 
   return (
     <div className={`page-stack world-cup-page-root ${styles.root}`}>
@@ -5784,19 +5843,31 @@ export function WorldCupJournalistView({
         </div>
 
         <div className={styles.statStrip}>
-          <article className={styles.statCard}>
+          <button
+            type="button"
+            className={`${styles.statCard} ${styles.statCardButton}`.trim()}
+            onClick={() => handleOpenDeskPanel("leadAngles")}
+            aria-haspopup="dialog"
+            aria-expanded={activeDeskPanel === "leadAngles"}
+          >
             <span className={styles.statLabel}>{i18n.labels.leadAngles}</span>
             <strong className={styles.statValue}>
               {unfilteredLeadDeck.length}
             </strong>
             <small className={styles.statHint}>{i18n.hints.leadAngles}</small>
-          </article>
+          </button>
           <article className={styles.statCard}>
             <span className={styles.statLabel}>{i18n.labels.statusAlerts}</span>
             <strong className={styles.statValue}>{statusAlerts}</strong>
             <small className={styles.statHint}>{i18n.hints.statusAlerts}</small>
           </article>
-          <article className={styles.statCard}>
+          <button
+            type="button"
+            className={`${styles.statCard} ${styles.statCardButton}`.trim()}
+            onClick={() => handleOpenDeskPanel("officialSignals")}
+            aria-haspopup="dialog"
+            aria-expanded={activeDeskPanel === "officialSignals"}
+          >
             <span className={styles.statLabel}>
               {i18n.labels.officialSignals}
             </span>
@@ -5806,7 +5877,7 @@ export function WorldCupJournalistView({
             <small className={styles.statHint}>
               {i18n.hints.officialSignals}
             </small>
-          </article>
+          </button>
           <article className={styles.statCard}>
             <span className={styles.statLabel}>{i18n.labels.rosterSize}</span>
             <strong className={styles.statValue}>
@@ -5888,20 +5959,23 @@ export function WorldCupJournalistView({
               <strong className={styles.staffBenchTitle}>
                 {i18n.labels.technicalStaffOnFile}
               </strong>
+              <p className={styles.staffBenchNote}>
+                {language === "ko"
+                  ? "코칭스태프는 이름 카드를 눌러 바로 상세 패널을 엽니다."
+                  : "Tap any staff card to open the coach dossier directly."}
+              </p>
             </div>
             <div className={styles.staffBenchRail}>
               {staffLedger.map((item) => (
-                <PersonNameLink
+                <button
+                  type="button"
                   key={`staff-bench:${item.id}`}
-                  teamSlug={selectedTeam.team.slug}
-                  personId={item.id}
-                  label={item.displayName}
-                  active={selectedEntry?.id === item.id}
-                  language={language}
-                  filters={activeFilters}
-                  onSelect={handleSelectPerson}
-                  className={styles.staffBenchButton}
-                />
+                  className={`${styles.staffBenchButton} ${selectedEntry?.id === item.id ? styles.staffBenchButtonActive : ""}`.trim()}
+                  onClick={() => handleSelectStaffBenchPerson(item.id)}
+                >
+                  <span className={styles.staffBenchName}>{item.displayName}</span>
+                  <span className={styles.staffBenchRole}>{item.roleLabel}</span>
+                </button>
               ))}
             </div>
           </div>
@@ -5932,304 +6006,270 @@ export function WorldCupJournalistView({
         )}
       </section>
 
-      <div className={styles.layout}>
-        <div className={styles.mainColumn}>
-          <section className={styles.sectionBlock} id="lead-angles">
-            <div className={styles.blockHead}>
-              <div>
-                <span className={styles.kicker}>{i18n.labels.leadAngles}</span>
-                <h2 className={styles.blockTitle}>
-                  {i18n.labels.leadAnglesTitle}
-                </h2>
-              </div>
-              <div className={styles.blockTools}>
-                <p className={styles.blockNote}>{i18n.labels.leadAnglesNote}</p>
-                <div className={styles.filterBoard}>
-                  <div className={styles.filterGroup}>
-                    <span className={styles.filterGroupLabel}>
-                      {i18n.labels.sourceType}
-                    </span>
-                    <div className={styles.filterPillRail}>
-                      <Link
-                        href={buildLeadFilterHref({
-                          teamSlug: selectedTeam.team.slug,
-                          language,
-                          selectedPersonId: selectedEntry?.id,
-                          filters: { leadType: null, leadSource: null },
-                        })}
-                        className={`${styles.filterPill} ${!activeFilters.leadType ? styles.filterPillActive : ""}`.trim()}
-                      >
-                        <span>{i18n.labels.allSourceTypes}</span>
-                        <small>{unfilteredLeadDeck.length}</small>
-                      </Link>
-                      {typeOptions.map((option) => (
-                        <Link
-                          href={buildLeadFilterHref({
-                            teamSlug: selectedTeam.team.slug,
-                            language,
-                            selectedPersonId: selectedEntry?.id,
-                            filters: {
-                              leadType: option.value,
-                              leadSource: null,
-                            },
-                          })}
-                          className={`${styles.filterPill} ${activeFilters.leadType === option.value ? styles.filterPillActive : ""}`.trim()}
-                          key={`type:${option.value}`}
-                        >
-                          <span>{option.label}</span>
-                          <small>{option.count}</small>
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                  <div className={styles.filterGroup}>
-                    <span className={styles.filterGroupLabel}>
-                      {i18n.labels.sourceFilter}
-                    </span>
-                    <div className={styles.filterPillRail}>
-                      <Link
-                        href={buildLeadFilterHref({
-                          teamSlug: selectedTeam.team.slug,
-                          language,
-                          selectedPersonId: selectedEntry?.id,
-                          filters: {
-                            leadType: activeFilters.leadType,
-                            leadSource: null,
-                          },
-                        })}
-                        className={`${styles.filterPill} ${!activeFilters.leadSource ? styles.filterPillActive : ""}`.trim()}
-                      >
-                        <span>{i18n.labels.allSources}</span>
-                        <small>{sourceBaseLeads.length}</small>
-                      </Link>
-                      {sourceOptions.map((option) => (
-                        <Link
-                          href={buildLeadFilterHref({
-                            teamSlug: selectedTeam.team.slug,
-                            language,
-                            selectedPersonId: selectedEntry?.id,
-                            filters: {
-                              leadType: activeFilters.leadType,
-                              leadSource: option.value,
-                            },
-                          })}
-                          className={`${styles.filterPill} ${activeFilters.leadSource === option.value ? styles.filterPillActive : ""}`.trim()}
-                          key={`source:${option.value}`}
-                        >
-                          <span>{option.label}</span>
-                          <small>{option.count}</small>
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {filteredLeadDeck.length ? (
-              <div className={styles.leadGrid}>
-                {filteredLeadDeck.map((item) => (
-                  <LeadCard
-                    item={item}
-                    key={item.id}
-                    active={selectedEntry?.id === item.personId}
-                    onSelectPerson={handleSelectPerson}
-                    i18n={i18n}
-                  />
-                ))}
-              </div>
-            ) : (
-              <div className={styles.emptyState}>
-                {limitedCoverageEmptyMessage ||
-                  (activeFilters.leadType || activeFilters.leadSource
-                    ? i18n.empty.noLeadAngleMatch
-                    : i18n.empty.noLeadAngle)}
-              </div>
-            )}
-          </section>
-        </div>
-
-        <aside className={styles.sideColumn}>
-          {officialNewsSummary ? (
-            <section className={styles.sidebarPanel} id="official-news-lane">
-              <span className={styles.kicker}>{officialLaneCopy.kicker}</span>
-              <h2 className={styles.sideTitle}>{officialLaneCopy.title}</h2>
-              <p className={styles.sideBody}>{officialLaneCopy.note}</p>
-              <div className={styles.factGrid}>
-                <div>
-                  <span className={styles.factLabel}>
-                    {officialLaneCopy.officialArticles}
-                  </span>
-                  <strong className={styles.factValue}>
-                    {officialNewsSummary.totals.officialArticles}
-                  </strong>
-                </div>
-                <div>
-                  <span className={styles.factLabel}>
-                    {officialLaneCopy.linkedArticles}
-                  </span>
-                  <strong className={styles.factValue}>
-                    {officialNewsSummary.totals.linkedArticles}
-                  </strong>
-                </div>
-                <div>
-                  <span className={styles.factLabel}>
-                    {officialLaneCopy.teamLinkedArticles}
-                  </span>
-                  <strong className={styles.factValue}>
-                    {teamMentionArticleCount}
-                  </strong>
-                </div>
-                <div>
-                  <span className={styles.factLabel}>
-                    {officialLaneCopy.openGaps}
-                  </span>
-                  <strong className={styles.factValue}>
-                    {remainingGapTeams.length}
-                  </strong>
-                </div>
-              </div>
-              <article className={styles.laneSummaryCard}>
-                <div className={styles.laneSummaryTop}>
-                  <strong className={styles.laneSummaryTitle}>
-                    {officialLaneCopy.selectedTeam}
-                  </strong>
-                  {selectedTeamGap ? (
-                    <span className={badgeClass("warm")}>
-                      {officialLaneCopy.openGaps}
-                    </span>
-                  ) : null}
-                </div>
-                {selectedTeamOfficialNews ? (
-                  <p className={styles.laneSummaryBody}>
-                    {selectedTeam.team.canonicalName}:{" "}
-                    {selectedTeamOfficialNews.officialArticles} /{" "}
-                    {selectedTeamOfficialNews.linkedArticles} /{" "}
-                    {selectedTeamOfficialNews.teamMentionArticles}
-                  </p>
-                ) : (
-                  <p className={styles.laneSummaryBody}>
-                    {officialLaneCopy.noSelectedTeamData}
-                  </p>
-                )}
-              </article>
-              {officialNewsSummary.topTeams.length ? (
-                <div className={styles.laneMiniList}>
-                  <span className={styles.factLabel}>
-                    {officialLaneCopy.topTeams}
-                  </span>
-                  {officialNewsSummary.topTeams.slice(0, 5).map((team) => (
-                    <article className={styles.laneMiniRow} key={team.team}>
-                      {snapshot.teams.find(
-                        (item) => item.team.canonicalName === team.team,
-                      ) ? (
-                        <Link
-                          href={buildLeadFilterHref({
-                            teamSlug:
-                              snapshot.teams.find(
-                                (item) => item.team.canonicalName === team.team,
-                              )?.team.slug || selectedTeam.team.slug,
-                            language,
-                            anchor: "official-news-lane",
-                          })}
-                          className={styles.personLink}
-                        >
-                          <strong>{team.team}</strong>
-                        </Link>
-                      ) : (
-                        <strong>{team.team}</strong>
-                      )}
-                      <span className={styles.laneMiniMeta}>
-                        {team.officialArticles} / {team.linkedArticles} /{" "}
-                        {team.teamMentionArticles}
-                      </span>
-                    </article>
-                  ))}
-                </div>
-              ) : null}
-              {selectedTeamOfficialNews?.recentArticles.length ? (
-                <div className={styles.laneArticleList}>
-                  <span className={styles.factLabel}>
-                    {officialLaneCopy.recentArticles}
-                  </span>
-                  {selectedTeamOfficialNews.recentArticles.map((article) => (
-                    <article
-                      className={styles.laneArticleRow}
-                      key={`${article.url}:${article.publicationDatetime}`}
-                    >
-                      <div>
-                        <h3 className={styles.seedTitle}>{article.title}</h3>
-                        <p className={styles.laneArticleMeta}>
-                          {[
-                            formatDateTime(article.publicationDatetime, i18n),
-                            article.entityTypes.join(", "),
-                          ]
-                            .filter(Boolean)
-                            .join(" · ")}
-                        </p>
-                      </div>
-                      <a href={article.url} target="_blank" rel="noreferrer">
-                        {i18n.actions.openArticle}
-                      </a>
-                    </article>
-                  ))}
-                </div>
-              ) : null}
-              {remainingGapTeams.length ? (
-                <div className={styles.laneBadgeRail}>
-                  <span className={styles.factLabel}>
-                    {officialLaneCopy.remainingGapTeams}
-                  </span>
-                  <div className={styles.sourceMeta}>
-                    {remainingGapTeams.map((team) => (
-                      <span className={badgeClass("muted")} key={team}>
-                        {team}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ) : null}
-              <a
-                href={`/api/customer/world-cup/official-news?days=${officialNewsSummary.windowDays}&team=${encodeURIComponent(selectedTeam.team.canonicalName)}`}
-                target="_blank"
-                rel="noreferrer"
-                className={styles.primarySourceLink}
-              >
-                {officialLaneCopy.openJson}
-              </a>
-            </section>
-          ) : null}
-
-          <details
-            className={`${styles.sidebarPanel} ${styles.collapsiblePanel}`.trim()}
+      {activeDeskPanel ? (
+        <div
+          className={styles.deskDrawerBackdrop}
+          onClick={handleCloseDeskPanel}
+        >
+          <aside
+            className={styles.deskDrawer}
+            role="dialog"
+            aria-modal="true"
+            aria-label={
+              activeDeskPanel === "leadAngles"
+                ? i18n.labels.leadAnglesTitle
+                : i18n.labels.officialSignals
+            }
+            onClick={(event) => event.stopPropagation()}
           >
-            <summary className={styles.collapsibleSummary}>
-              <div className={styles.collapsibleSummaryText}>
-                <span className={styles.kicker}>{i18n.labels.latestSignals}</span>
-                <span className={styles.collapsibleTitle}>
-                  {i18n.labels.officialMaterialToMineNext}
+            <div className={styles.deskDrawerHeader}>
+              <div className={styles.deskDrawerTitleGroup}>
+                <span className={styles.kicker}>
+                  {activeDeskPanel === "leadAngles"
+                    ? i18n.labels.leadAngles
+                    : i18n.labels.officialSignals}
                 </span>
+                <h2 className={styles.deskDrawerTitle}>
+                  {activeDeskPanel === "leadAngles"
+                    ? i18n.labels.leadAnglesTitle
+                    : i18n.labels.officialMaterialToMineNext}
+                </h2>
+                <p className={styles.deskDrawerNote}>
+                  {activeDeskPanel === "leadAngles"
+                    ? i18n.labels.leadAnglesNote
+                    : officialLaneCopy.note}
+                </p>
               </div>
-              <span className={styles.collapsibleCount}>
-                {selectedTeam.officialAppearanceTimeline.length}
-              </span>
-            </summary>
-            <div className={styles.collapsibleBody}>
-              <div className={styles.signalList}>
-                {selectedTeam.officialAppearanceTimeline.length ? (
-                  selectedTeam.officialAppearanceTimeline.map((item) => (
-                    <SignalRow item={item} i18n={i18n} key={item.appearanceId} />
-                  ))
-                ) : (
-                  <div className={styles.emptyState}>
-                    {limitedCoverageEmptyMessage ||
-                      i18n.empty.noOfficialAppearance}
-                  </div>
-                )}
-              </div>
+              <button
+                type="button"
+                className={styles.deskDrawerClose}
+                onClick={handleCloseDeskPanel}
+              >
+                {closeLabel}
+              </button>
             </div>
-          </details>
-        </aside>
-      </div>
+
+            <div className={styles.deskDrawerBody}>
+              {activeDeskPanel === "leadAngles" ? (
+                <>
+                  <div className={styles.filterBoard}>
+                    <div className={styles.filterGroup}>
+                      <span className={styles.filterGroupLabel}>
+                        {i18n.labels.sourceType}
+                      </span>
+                      <div className={styles.filterPillRail}>
+                        <button
+                          type="button"
+                          onClick={() => handleLeadTypeFilter(null)}
+                          className={`${styles.filterPill} ${styles.filterPillButton} ${!activeDrawerLeadType ? styles.filterPillActive : ""}`.trim()}
+                        >
+                          <span>{i18n.labels.allSourceTypes}</span>
+                          <small>{unfilteredLeadDeck.length}</small>
+                        </button>
+                        {typeOptions.map((option) => (
+                          <button
+                            type="button"
+                            key={`drawer-type:${option.value}`}
+                            onClick={() => handleLeadTypeFilter(option.value)}
+                            className={`${styles.filterPill} ${styles.filterPillButton} ${activeDrawerLeadType === option.value ? styles.filterPillActive : ""}`.trim()}
+                          >
+                            <span>{option.label}</span>
+                            <small>{option.count}</small>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    <div className={styles.filterGroup}>
+                      <span className={styles.filterGroupLabel}>
+                        {i18n.labels.sourceFilter}
+                      </span>
+                      <div className={styles.filterPillRail}>
+                        <button
+                          type="button"
+                          onClick={() => handleLeadSourceFilter(null)}
+                          className={`${styles.filterPill} ${styles.filterPillButton} ${!activeDrawerLeadSource ? styles.filterPillActive : ""}`.trim()}
+                        >
+                          <span>{i18n.labels.allSources}</span>
+                          <small>{drawerSourceBaseLeads.length}</small>
+                        </button>
+                        {drawerSourceOptions.map((option) => (
+                          <button
+                            type="button"
+                            key={`drawer-source:${option.value}`}
+                            onClick={() => handleLeadSourceFilter(option.value)}
+                            className={`${styles.filterPill} ${styles.filterPillButton} ${activeDrawerLeadSource === option.value ? styles.filterPillActive : ""}`.trim()}
+                          >
+                            <span>{option.label}</span>
+                            <small>{option.count}</small>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {filteredLeadDeck.length ? (
+                    <div className={styles.leadGrid}>
+                      {filteredLeadDeck.map((item) => (
+                        <LeadCard
+                          item={item}
+                          key={`drawer-lead:${item.id}`}
+                          active={selectedEntry?.id === item.personId}
+                          onSelectPerson={handleSelectPerson}
+                          i18n={i18n}
+                        />
+                      ))}
+                    </div>
+                  ) : (
+                    <div className={styles.emptyState}>
+                      {limitedCoverageEmptyMessage ||
+                        (activeDrawerLeadType || activeDrawerLeadSource
+                          ? i18n.empty.noLeadAngleMatch
+                          : i18n.empty.noLeadAngle)}
+                    </div>
+                  )}
+                </>
+              ) : (
+                <>
+                  {officialNewsSummary ? (
+                    <section className={styles.drawerSection}>
+                      <div className={styles.factGrid}>
+                        <div>
+                          <span className={styles.factLabel}>
+                            {officialLaneCopy.officialArticles}
+                          </span>
+                          <strong className={styles.factValue}>
+                            {officialNewsSummary.totals.officialArticles}
+                          </strong>
+                        </div>
+                        <div>
+                          <span className={styles.factLabel}>
+                            {officialLaneCopy.linkedArticles}
+                          </span>
+                          <strong className={styles.factValue}>
+                            {officialNewsSummary.totals.linkedArticles}
+                          </strong>
+                        </div>
+                        <div>
+                          <span className={styles.factLabel}>
+                            {officialLaneCopy.teamLinkedArticles}
+                          </span>
+                          <strong className={styles.factValue}>
+                            {teamMentionArticleCount}
+                          </strong>
+                        </div>
+                        <div>
+                          <span className={styles.factLabel}>
+                            {officialLaneCopy.openGaps}
+                          </span>
+                          <strong className={styles.factValue}>
+                            {remainingGapTeams.length}
+                          </strong>
+                        </div>
+                      </div>
+
+                      <article className={styles.laneSummaryCard}>
+                        <div className={styles.laneSummaryTop}>
+                          <strong className={styles.laneSummaryTitle}>
+                            {officialLaneCopy.selectedTeam}
+                          </strong>
+                          {selectedTeamGap ? (
+                            <span className={badgeClass("warm")}>
+                              {officialLaneCopy.openGaps}
+                            </span>
+                          ) : null}
+                        </div>
+                        {selectedTeamOfficialNews ? (
+                          <p className={styles.laneSummaryBody}>
+                            {selectedTeam.team.canonicalName}:{" "}
+                            {selectedTeamOfficialNews.officialArticles} /{" "}
+                            {selectedTeamOfficialNews.linkedArticles} /{" "}
+                            {selectedTeamOfficialNews.teamMentionArticles}
+                          </p>
+                        ) : (
+                          <p className={styles.laneSummaryBody}>
+                            {officialLaneCopy.noSelectedTeamData}
+                          </p>
+                        )}
+                      </article>
+
+                      {selectedTeamOfficialNews?.recentArticles.length ? (
+                        <div className={styles.laneArticleList}>
+                          <span className={styles.factLabel}>
+                            {officialLaneCopy.recentArticles}
+                          </span>
+                          {selectedTeamOfficialNews.recentArticles.map(
+                            (article) => (
+                              <article
+                                className={styles.laneArticleRow}
+                                key={`${article.url}:${article.publicationDatetime}`}
+                              >
+                                <div>
+                                  <h3 className={styles.seedTitle}>
+                                    {article.title}
+                                  </h3>
+                                  <p className={styles.laneArticleMeta}>
+                                    {[
+                                      formatDateTime(
+                                        article.publicationDatetime,
+                                        i18n,
+                                      ),
+                                      article.entityTypes.join(", "),
+                                    ]
+                                      .filter(Boolean)
+                                      .join(" · ")}
+                                  </p>
+                                </div>
+                                <a
+                                  href={article.url}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                >
+                                  {i18n.actions.openArticle}
+                                </a>
+                              </article>
+                            ),
+                          )}
+                        </div>
+                      ) : null}
+
+                      <a
+                        href={`/api/customer/world-cup/official-news?days=${officialNewsSummary.windowDays}&team=${encodeURIComponent(selectedTeam.team.canonicalName)}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className={styles.primarySourceLink}
+                      >
+                        {officialLaneCopy.openJson}
+                      </a>
+                    </section>
+                  ) : null}
+
+                  <section className={styles.drawerSection}>
+                    <span className={styles.factLabel}>
+                      {i18n.labels.latestSignals}
+                    </span>
+                    <div className={styles.signalList}>
+                      {selectedTeam.officialAppearanceTimeline.length ? (
+                        selectedTeam.officialAppearanceTimeline.map((item) => (
+                          <SignalRow
+                            item={item}
+                            i18n={i18n}
+                            key={`drawer-signal:${item.appearanceId}`}
+                          />
+                        ))
+                      ) : (
+                        <div className={styles.emptyState}>
+                          {limitedCoverageEmptyMessage ||
+                            i18n.empty.noOfficialAppearance}
+                        </div>
+                      )}
+                    </div>
+                  </section>
+                </>
+              )}
+            </div>
+          </aside>
+        </div>
+      ) : null}
 
       {selectedCard && selectedEntry ? (
         <div
