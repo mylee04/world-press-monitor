@@ -2023,6 +2023,7 @@
 .detailLabels,
 .detailActions,
 .aliasRail,
+.detailHintRail,
 .detailInlineMeta {
   display: flex;
   flex-wrap: wrap;
@@ -2050,6 +2051,25 @@
   color: rgba(245, 239, 229, 0.78);
   line-height: 1.44;
   font-size: 0.94rem;
+}
+
+.coverageMeter {
+  position: relative;
+  overflow: hidden;
+  height: 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 218, 163, 0.08);
+  background: rgba(255, 226, 180, 0.08);
+}
+
+.coverageMeterFill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    rgba(243, 191, 106, 0.94),
+    rgba(143, 210, 255, 0.92)
+  );
 }
 
 .detailFactGrid,
@@ -2150,6 +2170,26 @@
   text-decoration: none;
   border-color: rgba(184, 214, 236, 0.34);
   background: rgba(184, 214, 236, 0.12);
+  color: var(--desk-link-soft-hover);
+}
+
+.detailTagLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(184, 214, 236, 0.18);
+  background: rgba(184, 214, 236, 0.08);
+  color: var(--desk-link-soft);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.detailTagLink:hover {
+  text-decoration: none;
+  border-color: rgba(184, 214, 236, 0.3);
+  background: rgba(184, 214, 236, 0.14);
   color: var(--desk-link-soft-hover);
 }
 

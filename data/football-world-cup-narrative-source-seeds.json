@@ -1,0 +1,980 @@
+{
+  "records": [
+    {
+      "teamCanonicalName": "Argentina",
+      "personCanonicalName": "Julian Alvarez",
+      "entries": [
+        {
+          "lane": "feature_profile",
+          "title": "Julian Alvarez player page at Atletico de Madrid",
+          "summary": "Official Atletico player page with biography, season profile, and career context.",
+          "sourceLabel": "Atletico de Madrid",
+          "sourceUrl": "https://en.atleticodemadrid.com/jugadores/julian-alvarez-2024-2025-2",
+          "sourceTier": "official",
+          "sourceKind": "club_player_profile",
+          "observedAt": null
+        },
+        {
+          "lane": "official_voice",
+          "title": "Julian Alvarez interview at the FIFA Club World Cup",
+          "summary": "FIFA interview on Alvarez's form and the tournament stage with Atletico Madrid.",
+          "sourceLabel": "FIFA",
+          "sourceUrl": "https://www.fifa.com/en/tournaments/mens/club-world-cup/usa-2025/articles/julian-alvarez-interview",
+          "sourceTier": "official",
+          "sourceKind": "official_interview",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "Argentina",
+      "personCanonicalName": "Emiliano Martinez",
+      "entries": [
+        {
+          "lane": "feature_profile",
+          "title": "Emiliano Martinez player profile at Aston Villa",
+          "summary": "Official Aston Villa player page with career timeline and national-team context.",
+          "sourceLabel": "Aston Villa",
+          "sourceUrl": "https://www.avfc.co.uk/players/emilianomartinez/",
+          "sourceTier": "official",
+          "sourceKind": "club_player_profile",
+          "observedAt": null
+        },
+        {
+          "lane": "official_voice",
+          "title": "Emi Martinez says he is proud of his Aston Villa journey",
+          "summary": "Official club interview-style reaction reflecting on his Villa career and status in the squad.",
+          "sourceLabel": "Aston Villa",
+          "sourceUrl": "https://www.avfc.co.uk/news/2025/january/08/mart-nez--proud--of-villa-journey/",
+          "sourceTier": "official",
+          "sourceKind": "club_interview",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "Argentina",
+      "personCanonicalName": "Enzo Fernandez",
+      "entries": [
+        {
+          "lane": "feature_profile",
+          "title": "Enzo Fernandez transfer profile at Chelsea",
+          "summary": "Official Chelsea transfer page with role description and move context.",
+          "sourceLabel": "Chelsea FC",
+          "sourceUrl": "https://www.chelseafc.com/en/news/article/fernandez-transfers-to-chelsea",
+          "sourceTier": "official",
+          "sourceKind": "transfer_profile",
+          "observedAt": null
+        },
+        {
+          "lane": "official_voice",
+          "title": "Enzo Fernandez interview: the Argentina years",
+          "summary": "Official Chelsea interview covering youth football, family setting, and Argentina pathway.",
+          "sourceLabel": "Chelsea FC",
+          "sourceUrl": "https://www.chelseafc.com/en/news/article/enzo-fernandez-interview-the-argentina-years",
+          "sourceTier": "official",
+          "sourceKind": "official_interview",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "Argentina",
+      "personCanonicalName": "Alexis Mac Allister",
+      "entries": [
+        {
+          "lane": "feature_profile",
+          "title": "Alexis Mac Allister player profile at Liverpool",
+          "summary": "Official Liverpool player page with backstory, honours, and squad context.",
+          "sourceLabel": "Liverpool FC",
+          "sourceUrl": "https://www.liverpoolfc.com/team/mens/player/alexis-mac-allister",
+          "sourceTier": "official",
+          "sourceKind": "club_player_profile",
+          "observedAt": null
+        },
+        {
+          "lane": "official_voice",
+          "title": "Alexis Mac Allister interview on Liverpool's current form",
+          "summary": "Official Liverpool interview ahead of Manchester City with direct quotes on team momentum.",
+          "sourceLabel": "Liverpool FC",
+          "sourceUrl": "https://www.liverpoolfc.com/news/alexis-mac-allister-interview-were-good-moment-need-keep-improving",
+          "sourceTier": "official",
+          "sourceKind": "official_interview",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "Argentina",
+      "personCanonicalName": "Cristian Romero",
+      "entries": [
+        {
+          "lane": "feature_profile",
+          "title": "Cristian Romero player profile at Tottenham Hotspur",
+          "summary": "Official Spurs player page with bio, honours, and current leadership context.",
+          "sourceLabel": "Tottenham Hotspur",
+          "sourceUrl": "https://www.tottenhamhotspur.com/player/221632/cristian-romero",
+          "sourceTier": "official",
+          "sourceKind": "club_player_profile",
+          "observedAt": null
+        },
+        {
+          "lane": "official_voice",
+          "title": "Cristian Romero on captaincy: 'This is amazing for me'",
+          "summary": "Official Spurs interview with direct quotes after being named captain.",
+          "sourceLabel": "Tottenham Hotspur",
+          "sourceUrl": "https://www.tottenhamhotspur.com/news/2025/august/cristian-romero-on-captaincy-this-is-amazing-for-me/",
+          "sourceTier": "official",
+          "sourceKind": "official_interview",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "Argentina",
+      "personCanonicalName": "Nicolas Otamendi",
+      "entries": [
+        {
+          "lane": "feature_profile",
+          "title": "Nicolas Otamendi player profile at Benfica",
+          "summary": "Official Benfica squad page with biography, club history, and national-team context.",
+          "sourceLabel": "SL Benfica",
+          "sourceUrl": "https://www.slbenfica.pt/en-us/futebol/plantel-principal/otamendi",
+          "sourceTier": "official",
+          "sourceKind": "club_player_profile",
+          "observedAt": null
+        },
+        {
+          "lane": "official_voice",
+          "title": "Otamendi: 'I'll always be grateful to Benfica'",
+          "summary": "Benfica-hosted interview with direct quotes on his spell at the club and ambitions.",
+          "sourceLabel": "SL Benfica",
+          "sourceUrl": "https://www.slbenfica.pt/en-us/agora/noticias/2024/01/09/futebol-benfica-otamendi-entrevista-jornal-record",
+          "sourceTier": "official",
+          "sourceKind": "official_interview",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "Belgium",
+      "personCanonicalName": "Jeremy Doku",
+      "entries": [
+        {
+          "lane": "feature_profile",
+          "title": "Jeremy Doku profile at Manchester City",
+          "summary": "Official Manchester City bio page with career path, attributes, and honours.",
+          "sourceLabel": "Manchester City",
+          "sourceUrl": "https://www.mancity.com/players/jeremy-doku",
+          "sourceTier": "official",
+          "sourceKind": "club_player_profile",
+          "observedAt": null
+        },
+        {
+          "lane": "broadcast",
+          "title": "Jeremy Doku says he is maturing at City",
+          "summary": "City video interview on development, form, and adapting to elite expectations.",
+          "sourceLabel": "Manchester City",
+          "sourceUrl": "https://www.mancity.com/citytv/mens/jeremy-doku-202526-video-interview-63898468",
+          "sourceTier": "official",
+          "sourceKind": "video_interview",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "South Korea",
+      "personCanonicalName": "Lee Kangin",
+      "entries": [
+        {
+          "lane": "feature_profile",
+          "title": "Lee Kang-in player profile at Paris Saint-Germain",
+          "summary": "Official PSG squad page with biography, previous clubs, and player details.",
+          "sourceLabel": "Paris Saint-Germain",
+          "sourceUrl": "https://en.psg.fr/teams/first-team/squad/lee-kang-in",
+          "sourceTier": "official",
+          "sourceKind": "club_player_profile",
+          "observedAt": null
+        },
+        {
+          "lane": "official_voice",
+          "title": "Lee Kang-in: 'The fans make me a better player'",
+          "summary": "Official PSG interview with direct quotes on his family settling in Paris and fan support.",
+          "sourceLabel": "Paris Saint-Germain",
+          "sourceUrl": "https://en.psg.fr/teams/first-team/content/lee-kang-in-the-fans-make-me-a-better-player-psg-interview-paris-saint-germain-ligue-1-2024-2025",
+          "sourceTier": "official",
+          "sourceKind": "official_interview",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "South Korea",
+      "personCanonicalName": "Hwang Heechan",
+      "entries": [
+        {
+          "lane": "feature_profile",
+          "title": "Hee Chan Hwang player profile at Wolves",
+          "summary": "Official Wolves first-team page with bio, major tournaments, and club-season context.",
+          "sourceLabel": "Wolverhampton Wanderers",
+          "sourceUrl": "https://www.wolves.co.uk/teams/mens-first-team/hee-chan-hwang/",
+          "sourceTier": "official",
+          "sourceKind": "club_player_profile",
+          "observedAt": null
+        },
+        {
+          "lane": "official_voice",
+          "title": "Hwang: 'We're still believing and we think we can do it'",
+          "summary": "Official Wolves interview with direct quotes on belief, coaching, and his learning process.",
+          "sourceLabel": "Wolverhampton Wanderers",
+          "sourceUrl": "https://www.wolves.co.uk/news/mens-first-team/2026033-hwang-we-re-still-believing-and-we-think-we-can-do-it/?isNative=true",
+          "sourceTier": "official",
+          "sourceKind": "official_interview",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "Portugal",
+      "personCanonicalName": "Bruno Fernandes",
+      "entries": [
+        {
+          "lane": "feature_profile",
+          "title": "Bruno Fernandes player profile at Manchester United",
+          "summary": "Official United player page with pathway, role, and leadership framing.",
+          "sourceLabel": "Manchester United",
+          "sourceUrl": "https://www.manutd.com/en/players-and-staff/detail/BrunoFernandes",
+          "sourceTier": "official",
+          "sourceKind": "club_player_profile",
+          "observedAt": null
+        },
+        {
+          "lane": "broadcast",
+          "title": "Bruno Fernandes first interview after signing for Manchester United",
+          "summary": "Official MUTV interview on his move to Old Trafford and Premier League ambition.",
+          "sourceLabel": "Manchester United",
+          "sourceUrl": "https://www.manutd.com/en/news/detail/bruno-fernandes-first-interview-as-man-united-new-signing-in-full",
+          "sourceTier": "official",
+          "sourceKind": "video_interview",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "Uruguay",
+      "personCanonicalName": "Federico Valverde",
+      "entries": [
+        {
+          "lane": "feature_profile",
+          "title": "Federico Valverde official Real Madrid player profile",
+          "summary": "Official Real Madrid page with personal details, career path, and honours.",
+          "sourceLabel": "Real Madrid",
+          "sourceUrl": "https://www.realmadrid.com/en-US/football/first-team/players/federico-santiago-valverde-dipetta",
+          "sourceTier": "official",
+          "sourceKind": "club_player_profile",
+          "observedAt": null
+        },
+        {
+          "lane": "official_voice",
+          "title": "Valverde: 'The Real Madrid shirt makes you even stronger'",
+          "summary": "Real Madrid-hosted UEFA interview on captaincy, shirt legacy, and ambition.",
+          "sourceLabel": "Real Madrid",
+          "sourceUrl": "https://www.realmadrid.com/en-US/news/football/first-team/latest-news/entrevista-uefa-valverde-06-04-2025",
+          "sourceTier": "official",
+          "sourceKind": "official_interview",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "Spain",
+      "personCanonicalName": "Pedri González",
+      "entries": [
+        {
+          "lane": "feature_profile",
+          "title": "Pedri player page at FC Barcelona",
+          "summary": "Official Barcelona player page with origin story, honours, and first-team context.",
+          "sourceLabel": "FC Barcelona",
+          "sourceUrl": "https://www.fcbarcelona.com/en/futbol/primer-equipo/jugadores/70486/pedri",
+          "sourceTier": "official",
+          "sourceKind": "club_player_profile",
+          "observedAt": null
+        },
+        {
+          "lane": "official_voice",
+          "title": "Pedri: 'I'm really looking forward to growing with the best in the world'",
+          "summary": "Official Barcelona interview from his introduction period with direct quotes on development.",
+          "sourceLabel": "FC Barcelona",
+          "sourceUrl": "https://www.fcbarcelona.com/en/football/first-team/noticies/1756535/pedri-tinc-moltes-ganes-de-gaudir-i-creixer-amb-els-millors-del-mon",
+          "sourceTier": "official",
+          "sourceKind": "official_interview",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "Brazil",
+      "personCanonicalName": "Vinicius Jr.",
+      "entries": [
+        {
+          "lane": "feature_profile",
+          "title": "Vini Jr. official Real Madrid player profile",
+          "summary": "Official Real Madrid page with background, Flamengo path, and honours.",
+          "sourceLabel": "Real Madrid",
+          "sourceUrl": "https://www.realmadrid.com/en-US/football/first-team/players/vinicius-paixao-de-oliveira-junior",
+          "sourceTier": "official",
+          "sourceKind": "club_player_profile",
+          "observedAt": null
+        },
+        {
+          "lane": "official_voice",
+          "title": "Vini Jr.: 'We want to win the first World Cup because people never forget the first one'",
+          "summary": "Realmadrid TV interview from the Club World Cup buildup with direct quotes on ambition.",
+          "sourceLabel": "Real Madrid",
+          "sourceUrl": "https://www.realmadrid.com/en-US/news/football/first-team/latest-news/vini-jr-queremos-ganar-el-primer-mundial-porque-del-primero-la-gente-nunca-se-olvida-15-06-2025",
+          "sourceTier": "official",
+          "sourceKind": "official_interview",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "United States",
+      "personCanonicalName": "Christian Pulisic",
+      "entries": [
+        {
+          "lane": "feature_profile",
+          "title": "Christian Pulisic: our focus at AC Milan",
+          "summary": "Official AC Milan feature profile covering his role, background, and playing traits.",
+          "sourceLabel": "AC Milan",
+          "sourceUrl": "https://www.acmilan.com/en/news/articles/focus/2023-07-14/christian-pulisic-our-focus",
+          "sourceTier": "official",
+          "sourceKind": "club_feature_profile",
+          "observedAt": null
+        },
+        {
+          "lane": "broadcast",
+          "title": "Pulisic: 'I'm at the right place'",
+          "summary": "Milan TV interview on his feelings after joining the club.",
+          "sourceLabel": "AC Milan",
+          "sourceUrl": "https://www.acmilan.com/en/news/videos/interviews/2023-07-14/pulisic-i-m-at-the-right-place",
+          "sourceTier": "official",
+          "sourceKind": "video_interview",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "England",
+      "personCanonicalName": "Jude Bellingham",
+      "entries": [
+        {
+          "lane": "feature_profile",
+          "title": "Jude Bellingham official Real Madrid player profile",
+          "summary": "Official Real Madrid player page with birthplace, measurements, and career timeline.",
+          "sourceLabel": "Real Madrid",
+          "sourceUrl": "https://www.realmadrid.com/en-US/football/first-team/players/jude-bellingham",
+          "sourceTier": "official",
+          "sourceKind": "club_player_profile",
+          "observedAt": null
+        },
+        {
+          "lane": "official_voice",
+          "title": "Bellingham: 'This club is the highest you can aspire to in football'",
+          "summary": "Real Madrid-hosted UEFA interview on his move, family context, and first season.",
+          "sourceLabel": "Real Madrid",
+          "sourceUrl": "https://www.realmadrid.com/en-US/news/football/first-team/latest-news/bellingham-uefa-06-05-2024",
+          "sourceTier": "official",
+          "sourceKind": "official_interview",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "Germany",
+      "personCanonicalName": "Florian Wirtz",
+      "entries": [
+        {
+          "lane": "official_voice",
+          "title": "Watch Florian Wirtz's first official Liverpool FC interview",
+          "summary": "Official Liverpool video interview from his first days at the club.",
+          "sourceLabel": "Liverpool FC",
+          "sourceUrl": "https://www.liverpoolfc.com/news/watch-full-florian-wirtzs-first-official-liverpool-fc-interview",
+          "sourceTier": "official",
+          "sourceKind": "official_interview",
+          "observedAt": null
+        },
+        {
+          "lane": "broadcast",
+          "title": "Florian Wirtz on his Liverpool goalscoring streak",
+          "summary": "Official Liverpool video/news interview on form and adaptation.",
+          "sourceLabel": "Liverpool FC",
+          "sourceUrl": "https://www.liverpoolfc.com/news/i-just-enjoy-it-florian-wirtz-goalscoring-streak-liverpool",
+          "sourceTier": "official",
+          "sourceKind": "video_interview",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "Argentina",
+      "personCanonicalName": "Lionel Messi",
+      "entries": [
+        {
+          "lane": "official_voice",
+          "title": "Messi provides remarks at the America Business Forum",
+          "summary": "Inter Miami-published stage remarks with direct Messi quotes on Miami, family comfort, the club, and the new stadium.",
+          "sourceLabel": "Inter Miami CF",
+          "sourceUrl": "https://www.intermiamicf.com/news/messi-provides-heartfelt-remarks-receives-keys-to-the-city-of-miami-at-the-america-business-forum",
+          "sourceTier": "official",
+          "sourceKind": "official_stage_interview",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "South Korea",
+      "personCanonicalName": "Son Heungmin",
+      "entries": [
+        {
+          "lane": "official_voice",
+          "title": "LAFC signs Son Heung-Min",
+          "summary": "Official LAFC signing article with Son's direct quotes on joining Los Angeles, trophies, and the new MLS chapter.",
+          "sourceLabel": "Los Angeles Football Club",
+          "sourceUrl": "https://www.lafc.com/news/lafc-signs-global-football-icon-son-heung-min",
+          "sourceTier": "official",
+          "sourceKind": "official_quote",
+          "observedAt": null
+        },
+        {
+          "lane": "broadcast",
+          "title": "Son's debut: The Week That Was",
+          "summary": "Official LAFC debut feature with Son quotes on Korean fans, pride, and adapting after his first match.",
+          "sourceLabel": "Los Angeles Football Club",
+          "sourceUrl": "https://www.lafc.com/news/son-s-debut-the-week-that-was",
+          "sourceTier": "official",
+          "sourceKind": "official_reaction",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "Spain",
+      "personCanonicalName": "Lamine Yamal",
+      "entries": [
+        {
+          "lane": "official_voice",
+          "title": "Lamine Yamal: 'Comeback is no miracle'",
+          "summary": "Official FC Barcelona press-conference article with direct quotes on leadership, pressure, and knockout-stage belief.",
+          "sourceLabel": "FC Barcelona",
+          "sourceUrl": "https://www.fcbarcelona.com/en/football/first-team/news/4486960/lamine-yamal-comeback-is-no-miracle",
+          "sourceTier": "official",
+          "sourceKind": "press_conference",
+          "observedAt": null
+        },
+        {
+          "lane": "official_voice",
+          "title": "Lamine Yamal: '2024 has given me a lot of experience'",
+          "summary": "Barça One official interview recap with Lamine Yamal reflecting on growth, La Masia, and working under Hansi Flick.",
+          "sourceLabel": "FC Barcelona",
+          "sourceUrl": "https://www.fcbarcelona.com/en/football/first-team/news/4190829/lamine-yamal-2024-has-given-me-a-lot-of-experience/featured",
+          "sourceTier": "official",
+          "sourceKind": "official_interview",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "England",
+      "personCanonicalName": "Harry Kane",
+      "entries": [
+        {
+          "lane": "official_voice",
+          "title": "Harry Kane: I love this energy",
+          "summary": "Official FC Bayern interview on his return from EURO duty, family reset, back fitness, and early impressions of Vincent Kompany.",
+          "sourceLabel": "FC Bayern",
+          "sourceUrl": "https://fcbayern.com/en/news/2024/08/interview-with-kane-prior-to-spurs-clash",
+          "sourceTier": "official",
+          "sourceKind": "official_interview",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "Croatia",
+      "personCanonicalName": "Luka Modrić",
+      "entries": [
+        {
+          "lane": "official_voice",
+          "title": "Modrić: 'Real Madrid means everything to me'",
+          "summary": "Official Real Madrid TV interview after his contract renewal, covering captaincy, family connection, and club identity.",
+          "sourceLabel": "Real Madrid",
+          "sourceUrl": "https://www.realmadrid.com/en-US/news/football/first-team/personalities/modric-17-07-2024",
+          "sourceTier": "official",
+          "sourceKind": "official_interview",
+          "observedAt": null
+        },
+        {
+          "lane": "official_voice",
+          "title": "Modrić: 'I will always be a madridista'",
+          "summary": "Official Real Madrid farewell interview with direct reflections on his long career, identity, and relationship with supporters.",
+          "sourceLabel": "Real Madrid",
+          "sourceUrl": "https://www.realmadrid.com/en-US/news/football/first-team/latest-news/luka-modric-ha-sido-un-viaje-largo-e-inolvidable-10-07-2025",
+          "sourceTier": "official",
+          "sourceKind": "official_interview",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "England",
+      "personCanonicalName": "Bukayo Saka",
+      "entries": [
+        {
+          "lane": "official_voice",
+          "title": "Bukayo Saka: In my own words",
+          "summary": "Official Arsenal first-person feature with Saka on family influence, early football memories, and breaking into the first team.",
+          "sourceLabel": "Arsenal",
+          "sourceUrl": "https://www.arsenal.com/news/bukayo-saka-my-own-words",
+          "sourceTier": "official",
+          "sourceKind": "first_person_feature",
+          "observedAt": null
+        },
+        {
+          "lane": "official_voice",
+          "title": "Saka: It's been a really special week for me",
+          "summary": "Official Arsenal interview after his England call-up and Premier League goal, with direct quotes on pride and family celebration.",
+          "sourceLabel": "Arsenal",
+          "sourceUrl": "https://www.arsenal.com/news/saka-its-been-really-special-week-me",
+          "sourceTier": "official",
+          "sourceKind": "official_interview",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "Brazil",
+      "personCanonicalName": "Endrick",
+      "entries": [
+        {
+          "lane": "official_voice",
+          "title": "Endrick: 'Playing at the Bernabéu is going to be crazy'",
+          "summary": "Official Realmadrid TV first interview after his presentation, covering his childhood dream and arrival at the club.",
+          "sourceLabel": "Real Madrid",
+          "sourceUrl": "https://www.realmadrid.com/en-US/news/football/first-team/latest-news/endrick-jugar-en-el-bernabeu-va-a-ser-una-locura-28-07-2024",
+          "sourceTier": "official",
+          "sourceKind": "official_interview",
+          "observedAt": null
+        },
+        {
+          "lane": "official_voice",
+          "title": "Endrick: 'Madrid has amazing players and it's a dream come true to be here'",
+          "summary": "Official Realmadrid TV interview from preseason on teammates, adaptation, training, and fan reaction.",
+          "sourceLabel": "Real Madrid",
+          "sourceUrl": "https://www.realmadrid.com/en-US/news/football/first-team/latest-news/endrick-el-madrid-tiene-jugadores-increibles-y-es-un-sueno-poder-estar-aqui-02-08-2024",
+          "sourceTier": "official",
+          "sourceKind": "official_interview",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "Canada",
+      "personCanonicalName": "Jonathan David",
+      "entries": [
+        {
+          "lane": "official_voice",
+          "title": "Jonathan David joins Juventus",
+          "summary": "Official Juventus signing article anchoring his Canada career, Haitian family background, club path, and move to Turin.",
+          "sourceLabel": "Juventus",
+          "sourceUrl": "https://www.juventus.com/en/news/articles/jonathan-david-joins-juventus",
+          "sourceTier": "official",
+          "sourceKind": "official_signing_profile",
+          "observedAt": null
+        },
+        {
+          "lane": "feature_profile",
+          "title": "Jonathan David, cold-blooded goalscorer from Canada",
+          "summary": "Official LOSC longform interview/profile with direct first-person identity context on Haiti, Canada, and his development path.",
+          "sourceLabel": "LOSC",
+          "sourceUrl": "https://www.losc.fr/node/9083",
+          "sourceTier": "official",
+          "sourceKind": "club_feature_interview",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "Argentina",
+      "personCanonicalName": "Rodrigo De Paul",
+      "entries": [
+        {
+          "lane": "official_voice",
+          "title": "De Paul: 'I want to write the most important pages of Inter Miami's history'",
+          "summary": "Official Inter Miami interview with direct De Paul quotes on ambition, mentality, and starting a new chapter in South Florida.",
+          "sourceLabel": "Inter Miami CF",
+          "sourceUrl": "https://www.intermiamicf.com/news/de-paul-i-want-to-write-the-most-important-pages-of-inter-miami-s-history",
+          "sourceTier": "official",
+          "sourceKind": "official_interview",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "South Korea",
+      "personCanonicalName": "Cho Guesung",
+      "entries": [
+        {
+          "lane": "official_voice",
+          "title": "Interview with goalscorer and assist-maker Cho Gue-sung",
+          "summary": "Official FC Midtjylland interview with Cho on match impact, adaptation in Denmark, teammates, coaches, and supporters.",
+          "sourceLabel": "FC Midtjylland",
+          "sourceUrl": "https://www.fcm.dk/nyheder/interview-med-maalscorer-og-assistmager-cho-gue-sung/",
+          "sourceTier": "official",
+          "sourceKind": "official_interview",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "South Korea",
+      "personCanonicalName": "Paik Seung Ho",
+      "entries": [
+        {
+          "lane": "official_voice",
+          "title": "Paik signs new Birmingham deal until 2028",
+          "summary": "BBC report carrying Paik's direct quotes after his Birmingham City contract extension, useful as a verified public voice fallback.",
+          "sourceLabel": "BBC Sport",
+          "sourceUrl": "https://feeds.bbci.co.uk/sport/football/articles/c8rdmnp354zo",
+          "sourceTier": "reported",
+          "sourceKind": "reported_quote_pending_official_replacement",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "South Korea",
+      "personCanonicalName": "Oh Hyeongyu",
+      "entries": [
+        {
+          "lane": "official_voice",
+          "title": "South Korean Hyeon-gyu Oh signs for four seasons at KRC Genk",
+          "summary": "Official KRC Genk transfer article with Oh's direct quote on choosing Genk and wanting to show himself.",
+          "sourceLabel": "KRC Genk",
+          "sourceUrl": "https://www.krcgenk.be/en/news/5601/south-korean-hyeon-gyu-oh-signs-for-4-seasons-at-krc-genk",
+          "sourceTier": "official",
+          "sourceKind": "official_quote",
+          "observedAt": null
+        },
+        {
+          "lane": "feature_profile",
+          "title": "Hyeongyu Oh Celtic player profile",
+          "summary": "Official Celtic player profile carrying biography, height, previous clubs, debut, and a move quote.",
+          "sourceLabel": "Celtic FC",
+          "sourceUrl": "https://www.celticfc.com/players/hyeongyu-oh",
+          "sourceTier": "official",
+          "sourceKind": "club_player_profile",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "South Korea",
+      "personCanonicalName": "Seol Youngwoo",
+      "entries": [
+        {
+          "lane": "official_voice",
+          "title": "Seol Young-woo's Red Star move not done deal",
+          "summary": "Korea JoongAng Daily report with Seol's mixed-zone quote about his long-running dream of playing in Europe.",
+          "sourceLabel": "Korea JoongAng Daily",
+          "sourceUrl": "https://koreajoongangdaily.joins.com/news/2024-06-11/sports/football/Seol-Youngwoos-Red-Star-move-not-done-deal-Report/2065833",
+          "sourceTier": "reported",
+          "sourceKind": "reported_quote_pending_official_replacement",
+          "observedAt": null
+        },
+        {
+          "lane": "feature_profile",
+          "title": "Young-woo Seol player profile at FK Crvena zvezda",
+          "summary": "Official Red Star profile with birthplace, height, club path, position, and move context.",
+          "sourceLabel": "FK Crvena zvezda",
+          "sourceUrl": "https://www.crvenazvezdafk.com/en/zvezda-tim/jung-vu-seol",
+          "sourceTier": "official",
+          "sourceKind": "club_player_profile",
+          "observedAt": null
+        },
+        {
+          "lane": "feature_profile",
+          "title": "Seol candidate for the best player in Asia",
+          "summary": "Official Red Star article on Seol's AFC Player of the Year shortlist, national-team standing, and early club impact.",
+          "sourceLabel": "FK Crvena zvezda",
+          "sourceUrl": "https://www.crvenazvezdafk.com/vesti/seol-candidate-for-the-best-player-in-asia",
+          "sourceTier": "official",
+          "sourceKind": "club_official_award_article",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "Argentina",
+      "personCanonicalName": "Geronimo Rulli",
+      "entries": [
+        {
+          "lane": "official_voice",
+          "title": "Rulli ninth Argentine to join Ajax",
+          "summary": "Official Ajax feature page linking his first interview and debut remarks after joining the club.",
+          "sourceLabel": "AFC Ajax",
+          "sourceUrl": "https://english.ajax.nl/articles/rulli-ninth-argentine-to-join-ajax/",
+          "sourceTier": "official",
+          "sourceKind": "club_feature_interview",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "Argentina",
+      "personCanonicalName": "Nicolas Gonzalez",
+      "entries": [
+        {
+          "lane": "official_voice",
+          "title": "Nico Gonzalez: Scoring as a bianconero was a dream",
+          "summary": "Official Juventus press introduction with direct Gonzalez quotes on scoring, responsibility, and adapting to Juventus.",
+          "sourceLabel": "Juventus",
+          "sourceUrl": "https://www.juventus.com/en/news/articles/nico-gonzalez-scoring-as-a-bianconeri-was-a-dream",
+          "sourceTier": "official",
+          "sourceKind": "press_conference",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "Belgium",
+      "personCanonicalName": "Axel Witsel",
+      "entries": [
+        {
+          "lane": "official_voice",
+          "title": "Witsel: 'For me, Atlético is a great club'",
+          "summary": "Official Atlético video/interview page from Witsel's arrival, carrying his first club message.",
+          "sourceLabel": "Atlético de Madrid",
+          "sourceUrl": "https://en.atleticodemadrid.com/videos/witsel-for-me-atletico-is-a-great-club",
+          "sourceTier": "official",
+          "sourceKind": "official_video_interview",
+          "observedAt": null
+        },
+        {
+          "lane": "official_voice",
+          "title": "Thank you, Witsel",
+          "summary": "Official Atlético farewell article with Witsel's direct statement on trust, passion, support, and memories.",
+          "sourceLabel": "Atlético de Madrid",
+          "sourceUrl": "https://en.atleticodemadrid.com/noticias/thank-you-witsel",
+          "sourceTier": "official",
+          "sourceKind": "official_quote",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "South Korea",
+      "personCanonicalName": "Lee Jaesung",
+      "entries": [
+        {
+          "lane": "official_voice",
+          "title": "Lee: 'Every moment here is a highlight'",
+          "summary": "Official Mainz interview with Lee on his contract extension, Mainz identity, family atmosphere, and sporting aims.",
+          "sourceLabel": "1. FSV Mainz 05",
+          "sourceUrl": "https://www.mainz05.de/en/news-en/interview-jae-sung-lee-240226",
+          "sourceTier": "official",
+          "sourceKind": "official_interview",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "Brazil",
+      "personCanonicalName": "Raphinha",
+      "entries": [
+        {
+          "lane": "official_voice",
+          "title": "Raphinha: 'I will always give my all to make the Barça fans happy'",
+          "summary": "Official FC Barcelona interview recap from his early Barça period, covering playing style, adaptation, and motivation.",
+          "sourceLabel": "FC Barcelona",
+          "sourceUrl": "https://www.fcbarcelona.com/en/football/first-team/news/2690986/raphinha-i-will-always-give-my-all-to-make-the-bara-fans-happy",
+          "sourceTier": "official",
+          "sourceKind": "official_interview",
+          "observedAt": null
+        },
+        {
+          "lane": "official_voice",
+          "title": "Raphinha focused on trophies",
+          "summary": "Official FC Barcelona presentation article with Raphinha quotes on childhood dreams, Ronaldinho, and club ambitions.",
+          "sourceLabel": "FC Barcelona",
+          "sourceUrl": "https://www.fcbarcelona.com/en/football/first-team/news/2678719/raphinha-focused-on-trophies/featured",
+          "sourceTier": "official",
+          "sourceKind": "official_presentation_quote",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "Ghana",
+      "personCanonicalName": "Inaki Williams",
+      "entries": [
+        {
+          "lane": "official_voice",
+          "title": "Iñaki Williams: 'Los Williams are all those people who come here searching for a better life'",
+          "summary": "Official Athletic Club post-screening interview article with Iñaki on family, values, migration, and Athletic identity.",
+          "sourceLabel": "Athletic Club",
+          "sourceUrl": "https://www.athletic-club.eus/en/news/2024/11/21/inaki-los-williams-are-all-those-people-who-come-here-searching-for-a-better-life/",
+          "sourceTier": "official",
+          "sourceKind": "official_interview",
+          "observedAt": null
+        },
+        {
+          "lane": "official_voice",
+          "title": "Iñaki Williams: 'I want to help both sides'",
+          "summary": "Official Athletic Club press article with Iñaki quotes on Ghana duty, AFCON timing, and club-country balance.",
+          "sourceLabel": "Athletic Club",
+          "sourceUrl": "https://www.athletic-club.eus/en/news/2023/12/29/inaki-williams-i-want-to-help-both-sides/",
+          "sourceTier": "official",
+          "sourceKind": "press_conference",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "Belgium",
+      "personCanonicalName": "Charles De Ketelaere",
+      "entries": [
+        {
+          "lane": "official_voice",
+          "title": "De Ketelaere: 'I will show my quality'",
+          "summary": "Official AC Milan first press conference with De Ketelaere on choosing Milan, fan passion, and his role.",
+          "sourceLabel": "AC Milan",
+          "sourceUrl": "https://www.acmilan.com/en/news/articles/press-conference/2022-08-05/de-ketelaere-i-will-show-my-quality",
+          "sourceTier": "official",
+          "sourceKind": "press_conference",
+          "observedAt": null
+        },
+        {
+          "lane": "public_context",
+          "title": "Seven things to know about Charles De Ketelaere",
+          "summary": "Official AC Milan human-interest profile with youth, education, multisport, and Club Brugge background.",
+          "sourceLabel": "AC Milan",
+          "sourceUrl": "https://www.acmilan.com/en/news/articles/specials/2022-08-04/seven-things-to-know-about-charles-de-ketelaere",
+          "sourceTier": "official",
+          "sourceKind": "club_feature_profile",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "Germany",
+      "personCanonicalName": "Nico Schlotterbeck",
+      "entries": [
+        {
+          "lane": "official_voice",
+          "title": "Nico Schlotterbeck: 'That moment gave me a real boost'",
+          "summary": "Official BVB TV interview recap on his comeback, rehabilitation, nerves, and return to the starting XI.",
+          "sourceLabel": "Borussia Dortmund",
+          "sourceUrl": "https://www.bvb.de/de/en/news/news-overview/news.html/2025/9/23/Nico-Schlotterbeck-That-moment-gave-me-a-real-boost.html",
+          "sourceTier": "official",
+          "sourceKind": "official_interview",
+          "observedAt": null
+        },
+        {
+          "lane": "official_voice",
+          "title": "That's why I'm here: Nico Schlotterbeck on his decision in favour of BVB",
+          "summary": "Official BVB interview on contract decision, supporters, club identity, and sporting prospects.",
+          "sourceLabel": "Borussia Dortmund",
+          "sourceUrl": "https://www.bvb.de/de/en/news/news-overview/news.html/2026/4/10/Thats-why-Im-here-Nico-Schlotterbeck-on-his-decision-in-favour-of-BVB.html",
+          "sourceTier": "official",
+          "sourceKind": "official_interview",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "Argentina",
+      "personCanonicalName": "Maximo Perrone",
+      "entries": [
+        {
+          "lane": "official_voice",
+          "title": "Maximo Perrone on learning from Pep and the inspiration behind his City shirt number",
+          "summary": "Official Manchester City interview with Perrone on adapting to England, Guardiola, Julian Alvarez, and his shirt number.",
+          "sourceLabel": "Manchester City",
+          "sourceUrl": "https://live.mancity.com/news/mens/maximo-perrone-on-city-pep-guardiola-and-his-special-shirt-number-63812062",
+          "sourceTier": "official",
+          "sourceKind": "official_interview",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "Australia",
+      "personCanonicalName": "Nestory Irankunda",
+      "entries": [
+        {
+          "lane": "official_voice",
+          "title": "Nestory Irankunda interview: 'Want to prove myself here'",
+          "summary": "Official FC Bayern interview covering family influence, migration to Germany, position change, celebration, and goals.",
+          "sourceLabel": "FC Bayern",
+          "sourceUrl": "https://fcbayern.com/en/news/2024/06/nestory-irankunda-interview-want-to-prove-myself-here",
+          "sourceTier": "official",
+          "sourceKind": "official_interview",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "Australia",
+      "personCanonicalName": "Mathew Ryan",
+      "entries": [
+        {
+          "lane": "official_voice",
+          "title": "Ryan credits great collective effort in tough Palestine win",
+          "summary": "Official Socceroos article with Mathew Ryan quotes on World Cup qualifying, resilience, and keeping a clean sheet.",
+          "sourceLabel": "Socceroos",
+          "sourceUrl": "https://www.socceroos.com.au/news/ryan-credits-great-collective-effort-tough-palestine-win",
+          "sourceTier": "official",
+          "sourceKind": "official_interview",
+          "observedAt": null
+        },
+        {
+          "lane": "official_voice",
+          "title": "Ryan pleased with tournament mode Socceroos marching onto Asian Cup Quarter Finals",
+          "summary": "Official Socceroos interview with Ryan on tournament priorities and knockout-stage discipline.",
+          "sourceLabel": "Socceroos",
+          "sourceUrl": "https://socceroos.com.au/news/ryan-pleased-tournament-mode-socceroos-marching-asian-cup-quarterfinals",
+          "sourceTier": "official",
+          "sourceKind": "official_interview",
+          "observedAt": null
+        }
+      ]
+    },
+    {
+      "teamCanonicalName": "Argentina",
+      "personCanonicalName": "Tomas Palacios",
+      "entries": [
+        {
+          "lane": "official_voice",
+          "title": "Palacios: 'I'm proud to be here, and I will give my best'",
+          "summary": "Official Inter TV first-words interview with Palacios on his move, position change, Lautaro inspiration, and goals.",
+          "sourceLabel": "Inter",
+          "sourceUrl": "https://www.inter.it/en/news/palacios-im-proud-to-be-here-and-i-will-give-my-best",
+          "sourceTier": "official",
+          "sourceKind": "official_interview",
+          "observedAt": null
+        },
+        {
+          "lane": "public_context",
+          "title": "Welcome Home: Tomás Palacios takes centre stage",
+          "summary": "Official Inter TV feature with Palacios on family, origins, football passion, and brotherly inspiration.",
+          "sourceLabel": "Inter",
+          "sourceUrl": "https://www.inter.it/en/news/welcome-home-tomas-palacios-takes-centre-stage-in-episode-four",
+          "sourceTier": "official",
+          "sourceKind": "club_feature_interview",
+          "observedAt": null
+        }
+      ]
+    }
+  ]
+}

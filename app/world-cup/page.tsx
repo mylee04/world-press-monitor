@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { WorldCupDocumentLanguage } from '@/components/world-cup-document-language';
 import { WorldCupJournalistView } from '@/components/world-cup-journalist-view';
+import { buildFootballWorldCupDossierProgram } from '@/lib/football-world-cup-dossier-program';
 import { readFootballOfficialNewsLaneSummary } from '@/lib/football-official-news-store';
 import { readFootballWorldCupHumanInterestPilotCanonical } from '@/lib/football-world-cup-human-interest-store';
 import {
@@ -150,6 +151,10 @@ export default async function WorldCupPage({ searchParams }: Props) {
     team.team.slug === requestedTeam || team.team.canonicalName === requestedTeam
   ) || snapshot.teams[0];
   const officialNewsSummary = await readFootballOfficialNewsLaneSummary(30, selectedTeam.team.canonicalName).catch(() => null);
+  const dossierProgram = buildFootballWorldCupDossierProgram(
+    snapshot,
+    humanInterestPayload?.records || [],
+  );
 
   return (
     <>
@@ -163,6 +168,7 @@ export default async function WorldCupPage({ searchParams }: Props) {
         selectedLeadType={requestedLeadType}
         selectedLeadSource={requestedLeadSource}
         humanInterestRecords={humanInterestPayload?.records || []}
+        dossierProgram={dossierProgram}
       />
     </>
   );

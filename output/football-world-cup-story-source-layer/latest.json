@@ -1,0 +1,706 @@
+{
+  "generatedAt": "2026-04-24T05:14:29.435Z",
+  "apply": true,
+  "scope": "target-completeness",
+  "targetCount": 578,
+  "updatedCount": 1,
+  "withStorySources": 578,
+  "withOfficialVoices": 578,
+  "withBroadcast": 64,
+  "bigFiveTargetCount": 383,
+  "bigFiveWithStorySources": 383,
+  "bigFiveWithAtLeastFourSources": 383,
+  "qualityGradeCounts": {
+    "strong": 73,
+    "usable": 432,
+    "thin": 73
+  },
+  "thinPlayers": [
+    {
+      "seedRank": 323,
+      "teamCanonicalName": "Canada",
+      "personCanonicalName": "Mathieu Choinière",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 439,
+      "teamCanonicalName": "Canada",
+      "personCanonicalName": "Derek Cornelius",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 470,
+      "teamCanonicalName": "Canada",
+      "personCanonicalName": "Maxime Crépeau",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 234,
+      "teamCanonicalName": "Mexico",
+      "personCanonicalName": "Johan Vásquez",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 447,
+      "teamCanonicalName": "Mexico",
+      "personCanonicalName": "Germán Berterame",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 243,
+      "teamCanonicalName": "Brazil",
+      "personCanonicalName": "Danilo (Botafogo)",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 318,
+      "teamCanonicalName": "Brazil",
+      "personCanonicalName": "Ibañez",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 476,
+      "teamCanonicalName": "Spain",
+      "personCanonicalName": "Ander Barrenetxea",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 407,
+      "teamCanonicalName": "Spain",
+      "personCanonicalName": "Pablo Fornals",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 453,
+      "teamCanonicalName": "Portugal",
+      "personCanonicalName": "Pedro Gonçalves",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 399,
+      "teamCanonicalName": "Netherlands",
+      "personCanonicalName": "Jerdy Schouten",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 440,
+      "teamCanonicalName": "Belgium",
+      "personCanonicalName": "Dodi Lukebakio",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 426,
+      "teamCanonicalName": "Belgium",
+      "personCanonicalName": "Mika Godts",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 428,
+      "teamCanonicalName": "Belgium",
+      "personCanonicalName": "Nicolas Raskin",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 311,
+      "teamCanonicalName": "Croatia",
+      "personCanonicalName": "Josip Šutalo",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 469,
+      "teamCanonicalName": "Croatia",
+      "personCanonicalName": "Martin Erlić",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 454,
+      "teamCanonicalName": "Croatia",
+      "personCanonicalName": "Petar Musa",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 413,
+      "teamCanonicalName": "Uruguay",
+      "personCanonicalName": "Brian Rodríguez",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 403,
+      "teamCanonicalName": "Uruguay",
+      "personCanonicalName": "Juan Manuel Sanabria",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 121,
+      "teamCanonicalName": "Japan",
+      "personCanonicalName": "Watanabe Tsuyoshi",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 333,
+      "teamCanonicalName": "Japan",
+      "personCanonicalName": "Ueda Ayase",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 327,
+      "teamCanonicalName": "Japan",
+      "personCanonicalName": "Saito Koki",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 149,
+      "teamCanonicalName": "South Korea",
+      "personCanonicalName": "Lee Taeseok",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 315,
+      "teamCanonicalName": "South Korea",
+      "personCanonicalName": "Eom Jisung",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 320,
+      "teamCanonicalName": "South Korea",
+      "personCanonicalName": "Kim Seunggyu",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 321,
+      "teamCanonicalName": "South Korea",
+      "personCanonicalName": "Kim Taehyeon",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 329,
+      "teamCanonicalName": "South Korea",
+      "personCanonicalName": "Song Bumkeun",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 331,
+      "teamCanonicalName": "South Korea",
+      "personCanonicalName": "Yang Hyun Jun",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 465,
+      "teamCanonicalName": "South Korea",
+      "personCanonicalName": "Kim Jingyu",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 400,
+      "teamCanonicalName": "Colombia",
+      "personCanonicalName": "Jhon Córdoba",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 242,
+      "teamCanonicalName": "Ecuador",
+      "personCanonicalName": "Carlos Gruezo",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 310,
+      "teamCanonicalName": "Ecuador",
+      "personCanonicalName": "Jeremy Sarmiento",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 464,
+      "teamCanonicalName": "Ecuador",
+      "personCanonicalName": "José Cifuentes",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 427,
+      "teamCanonicalName": "Ecuador",
+      "personCanonicalName": "Moises Ramirez",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 319,
+      "teamCanonicalName": "Turkey",
+      "personCanonicalName": "Kerem Aktürkoğlu",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 325,
+      "teamCanonicalName": "Turkey",
+      "personCanonicalName": "Orkun Kökçü",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 410,
+      "teamCanonicalName": "Turkey",
+      "personCanonicalName": "Aral Şimşir",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 461,
+      "teamCanonicalName": "Turkey",
+      "personCanonicalName": "Deniz Gül",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 472,
+      "teamCanonicalName": "Switzerland",
+      "personCanonicalName": "Yvon Mvogo",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 396,
+      "teamCanonicalName": "Australia",
+      "personCanonicalName": "Aziz Behich",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 397,
+      "teamCanonicalName": "Australia",
+      "personCanonicalName": "Cameron Burgess",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 401,
+      "teamCanonicalName": "Australia",
+      "personCanonicalName": "Jordan Bos",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 408,
+      "teamCanonicalName": "Australia",
+      "personCanonicalName": "Paul Okon‑engstler",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 409,
+      "teamCanonicalName": "Algeria",
+      "personCanonicalName": "Anis Hadj-Moussa",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 449,
+      "teamCanonicalName": "Algeria",
+      "personCanonicalName": "Houssem Aouar",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 456,
+      "teamCanonicalName": "Algeria",
+      "personCanonicalName": "Ramiz Zerrouki",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 445,
+      "teamCanonicalName": "Austria",
+      "personCanonicalName": "Florian Grillitsch",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 452,
+      "teamCanonicalName": "Austria",
+      "personCanonicalName": "Patrick Pentz",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 433,
+      "teamCanonicalName": "Austria",
+      "personCanonicalName": "Tobias Lawal",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 437,
+      "teamCanonicalName": "Bosnia-Herzegovina",
+      "personCanonicalName": "Amar Dedić",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 438,
+      "teamCanonicalName": "Bosnia-Herzegovina",
+      "personCanonicalName": "Armin Gigović",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 412,
+      "teamCanonicalName": "Cape Verde Islands",
+      "personCanonicalName": "Benchimol",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 402,
+      "teamCanonicalName": "Cape Verde Islands",
+      "personCanonicalName": "Jovane Cabral",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 425,
+      "teamCanonicalName": "Cape Verde Islands",
+      "personCanonicalName": "Laros Duarte",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 429,
+      "teamCanonicalName": "Cape Verde Islands",
+      "personCanonicalName": "Sidny Cabral",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 446,
+      "teamCanonicalName": "Congo DR",
+      "personCanonicalName": "Gedeon Kalulu",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 422,
+      "teamCanonicalName": "Congo DR",
+      "personCanonicalName": "Joris Kayembe",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 457,
+      "teamCanonicalName": "Congo DR",
+      "personCanonicalName": "Samuel Moutoussamy",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 432,
+      "teamCanonicalName": "Congo DR",
+      "personCanonicalName": "Theo Bongonda",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 404,
+      "teamCanonicalName": "Curaçao",
+      "personCanonicalName": "Juninho Bacuna",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 424,
+      "teamCanonicalName": "Curaçao",
+      "personCanonicalName": "Jürgen Locadia",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": null,
+      "teamCanonicalName": "Egypt",
+      "personCanonicalName": "Mohamed Abdelmoneim",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 442,
+      "teamCanonicalName": "Ivory Coast",
+      "personCanonicalName": "Emmanuel Agbadou",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 390,
+      "teamCanonicalName": "Ivory Coast",
+      "personCanonicalName": "Ousmane Diomande",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 230,
+      "teamCanonicalName": "Norway",
+      "personCanonicalName": "Erling Braut Haaland",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 393,
+      "teamCanonicalName": "Norway",
+      "personCanonicalName": "Thelonious Aasgaard",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 395,
+      "teamCanonicalName": "Panama",
+      "personCanonicalName": "Amir Murillo",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 381,
+      "teamCanonicalName": "Scotland",
+      "personCanonicalName": "Anthony Ralston",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 385,
+      "teamCanonicalName": "Scotland",
+      "personCanonicalName": "Findlay Curtis",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 387,
+      "teamCanonicalName": "Scotland",
+      "personCanonicalName": "John Souttar",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 388,
+      "teamCanonicalName": "Scotland",
+      "personCanonicalName": "Kieran Tierney",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 389,
+      "teamCanonicalName": "Scotland",
+      "personCanonicalName": "Liam Kelly",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    },
+    {
+      "seedRank": 441,
+      "teamCanonicalName": "Uzbekistan",
+      "personCanonicalName": "Eldor Shomurodov",
+      "qualityScore": 16,
+      "qualitySignals": [
+        "official roster/source anchor"
+      ]
+    }
+  ],
+  "reportedFallbackPlayers": [
+    {
+      "seedRank": 18,
+      "teamCanonicalName": "South Korea",
+      "personCanonicalName": "Paik Seung Ho",
+      "sources": [
+        {
+          "title": "Paik signs new Birmingham deal until 2028",
+          "sourceLabel": "BBC Sport",
+          "sourceUrl": "https://feeds.bbci.co.uk/sport/football/articles/c8rdmnp354zo",
+          "sourceKind": "reported_quote_pending_official_replacement"
+        }
+      ]
+    },
+    {
+      "seedRank": 32,
+      "teamCanonicalName": "South Korea",
+      "personCanonicalName": "Seol Youngwoo",
+      "sources": [
+        {
+          "title": "Seol Young-woo's Red Star move not done deal",
+          "sourceLabel": "Korea JoongAng Daily",
+          "sourceUrl": "https://koreajoongangdaily.joins.com/news/2024-06-11/sports/football/Seol-Youngwoos-Red-Star-move-not-done-deal-Report/2065833",
+          "sourceKind": "reported_quote_pending_official_replacement"
+        }
+      ]
+    }
+  ],
+  "snapshotPath": "/Users/myungeunlee/Desktop/mylee/world-press-radar-git/data/football-world-cup-journalist.latest.json"
+}

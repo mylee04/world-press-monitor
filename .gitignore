@@ -39,6 +39,7 @@ audits/*.csv
 listening_dashboard_shallow/
 audits/playwright-sitemap-profile/
 audits/playwright-sitemap-profile-debug/
+output/football-world-cup-player-biography-backfill/
 data/news.db
 tmp-map-check.png
 .vercel

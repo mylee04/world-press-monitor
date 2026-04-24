@@ -1,0 +1,19 @@
+{
+  "count": 383,
+  "withStorySources": 383,
+  "withAtLeast4": 383,
+  "averageSources": 8.8,
+  "buckets": {
+    "0": 0,
+    "1": 0,
+    "2-3": 0,
+    "4-6": 7,
+    "7+": 376
+  },
+  "grades": {
+    "strong": 54,
+    "usable": 326,
+    "thin": 3
+  },
+  "under4": []
+}

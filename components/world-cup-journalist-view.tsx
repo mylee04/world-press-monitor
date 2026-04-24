@@ -5,6 +5,19 @@ import { useEffect, useState, type CSSProperties } from "react";
 import { WorldCupLanguageSelect } from "@/components/world-cup-language-select";
 import { WorldCupTeamSelect } from "@/components/world-cup-team-select";
 import styles from "@/components/world-cup-journalist-view.module.css";
+import {
+  buildFootballWorldCupDossierCoverage,
+  FOOTBALL_WORLD_CUP_DOSSIER_PLAYBOOK,
+  type FootballWorldCupDossierCoverage,
+  type FootballWorldCupDossierFieldCategory,
+  type FootballWorldCupDossierFieldId,
+  type FootballWorldCupDossierSourceTier,
+} from "@/lib/football-world-cup-dossier";
+import type {
+  FootballWorldCupDossierProgram,
+  FootballWorldCupDossierProgramPlayer,
+  FootballWorldCupDossierSeedTier,
+} from "@/lib/football-world-cup-dossier-program";
 import type { FootballOfficialNewsLaneSummary } from "@/lib/football-official-news-store";
 import type {
   HumanInterestPilotRecord,
@@ -40,6 +53,7 @@ type Props = {
   selectedLeadType?: string | null;
   selectedLeadSource?: string | null;
   humanInterestRecords?: HumanInterestPilotRecord[];
+  dossierProgram?: FootballWorldCupDossierProgram | null;
 };
 
 type Tone = "default" | "muted" | "warm" | "danger";
@@ -86,6 +100,13 @@ type PersonEntry = {
   scoreBreakdown: ScoreBreakdownItem[];
   signalScore: number;
   starPowerScore: number;
+  dossierCoverage: FootballWorldCupDossierCoverage | null;
+  dossierCompletenessPct: number | null;
+  dossierMissingFieldCount: number | null;
+  dossierSeedRank: number | null;
+  dossierSeedTier: FootballWorldCupDossierSeedTier | null;
+  dossierActionPriorityScore: number | null;
+  missingLiveBiography: boolean;
   rarity: CardRarity;
   lane: string;
   laneTone: Tone;
@@ -226,6 +247,23 @@ type BackgroundCopy = {
   handedness: string;
   source: string;
   present: string;
+};
+
+type DossierCopy = {
+  kicker: string;
+  title: string;
+  note: string;
+  targetProgram: string;
+  coverage: string;
+  fieldsFilled: string;
+  currentSources: string;
+  byCategory: string;
+  missingFields: string;
+  recommendedSources: string;
+  sourceCoverage: string;
+  openExample: string;
+  hintPolicy: string;
+  bestFor: string;
 };
 
 type HumanInterestAngleItem =
@@ -410,6 +448,51 @@ const LOCALIZED_BACKGROUND_COPY: Record<
   vi: ENGLISH_BACKGROUND_COPY,
   it: ENGLISH_BACKGROUND_COPY,
   fr: ENGLISH_BACKGROUND_COPY,
+};
+
+const ENGLISH_DOSSIER_COPY: DossierCopy = {
+  kicker: "Dossier coverage",
+  title: `Top-${FOOTBALL_WORLD_CUP_DOSSIER_PLAYBOOK.targetProgram.targetPlayerCount} player dossier ladder`,
+  note: `This block shows how close the player is to the richer ${FOOTBALL_WORLD_CUP_DOSSIER_PLAYBOOK.targetProgram.targetPlayerCount}-player standard and which source types should fill the next gaps.`,
+  targetProgram: "Target program",
+  coverage: "Coverage",
+  fieldsFilled: "Fields filled",
+  currentSources: "Sources on file",
+  byCategory: "By category",
+  missingFields: "Missing next",
+  recommendedSources: "Best next sources",
+  sourceCoverage: "Source coverage",
+  openExample: "Open example",
+  hintPolicy: "Hint-only sources remain discovery only until verified.",
+  bestFor: "Best for",
+};
+
+const LOCALIZED_DOSSIER_COPY: Record<
+  WorldCupJournalistLanguage,
+  DossierCopy
+> = {
+  en: ENGLISH_DOSSIER_COPY,
+  ko: {
+    kicker: "dossier 커버리지",
+    title: `Top-${FOOTBALL_WORLD_CUP_DOSSIER_PLAYBOOK.targetProgram.targetPlayerCount} 선수 dossier 레일`,
+    note: `이 블록은 이 선수가 더 촘촘한 ${FOOTBALL_WORLD_CUP_DOSSIER_PLAYBOOK.targetProgram.targetPlayerCount}명 기준에서 어디까지 채워졌는지와, 다음 빈칸을 어떤 소스에서 메워야 하는지 보여줍니다.`,
+    targetProgram: "타깃 프로그램",
+    coverage: "커버리지",
+    fieldsFilled: "채워진 필드",
+    currentSources: "현재 보유 소스",
+    byCategory: "카테고리별",
+    missingFields: "다음 누락 필드",
+    recommendedSources: "다음 우선 소스",
+    sourceCoverage: "커버 가능한 필드",
+    openExample: "예시 열기",
+    hintPolicy: "힌트 전용 소스는 검증 전까지 discovery 용도로만 유지합니다.",
+    bestFor: "채우기 좋은 필드",
+  },
+  ja: ENGLISH_DOSSIER_COPY,
+  es: ENGLISH_DOSSIER_COPY,
+  vi: ENGLISH_DOSSIER_COPY,
+  it: ENGLISH_DOSSIER_COPY,
+  fr: ENGLISH_DOSSIER_COPY,
 };
 
 const SCORE_BREAKDOWN_LIMITS: Record<ScoreBreakdownKey, number> = {
@@ -1520,6 +1603,111 @@ function humanizeToken(value: string): string {
     .replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
+function localizeDossierFieldLabel(
+  fieldId: FootballWorldCupDossierFieldId,
+  i18n: WorldCupJournalistI18n,
+): string {
+  if (i18n.code !== "ko") return humanizeToken(fieldId);
+  const labels: Record<FootballWorldCupDossierFieldId, string> = {
+    full_name: "이름",
+    local_name: "현지 표기명",
+    birth_date: "생년월일",
+    birth_place: "출생지",
+    primary_nationality: "국적",
+    eligibility: "대표 자격 맥락",
+    height_cm: "신장",
+    weight_kg: "체중",
+    preferred_foot: "주발",
+    primary_position: "주 포지션",
+    secondary_positions: "부 포지션",
+    current_club: "현재 소속팀",
+    squad_number: "등번호",
+    youth_clubs: "유소년 팀",
+    senior_club_history: "시니어 클럽 경력",
+    national_team_debut: "대표팀 데뷔",
+    captaincy: "주장 여부",
+    family_background: "가족 배경",
+    languages: "언어",
+    education_or_dual_path: "학업·이중 경로",
+    hometown_or_community: "고향·커뮤니티",
+    injury_status: "부상 상태",
+    transfer_status: "이적 상태",
+    role_change: "역할 변화",
+    controversy_watch: "논란 감시",
+    official_quote: "공식 코멘트 동선",
+    rumor_score: "루머 점수",
+  };
+  return labels[fieldId];
+}
+
+function localizeDossierCategoryLabel(
+  category: FootballWorldCupDossierFieldCategory,
+  i18n: WorldCupJournalistI18n,
+): string {
+  if (i18n.code !== "ko") return humanizeToken(category);
+  const labels: Record<FootballWorldCupDossierFieldCategory, string> = {
+    identity: "신원",
+    physical: "피지컬",
+    football_identity: "축구 정체성",
+    career: "경력",
+    public_context: "공개 맥락",
+    newsroom_hooks: "기사거리",
+  };
+  return labels[category];
+}
+
+function localizeDossierTierLabel(
+  tier: FootballWorldCupDossierSourceTier,
+  i18n: WorldCupJournalistI18n,
+): string {
+  if (i18n.code !== "ko") return humanizeToken(tier);
+  const labels: Record<FootballWorldCupDossierSourceTier, string> = {
+    tier1_anchor: "Tier 1 앵커",
+    tier2_reference: "Tier 2 레퍼런스",
+    tier3_backfill: "Tier 3 백필",
+    tier4_hint: "Tier 4 힌트",
+  };
+  return labels[tier];
+}
+
+function dossierTierTone(tier: FootballWorldCupDossierSourceTier): Tone {
+  if (tier === "tier1_anchor") return "default";
+  if (tier === "tier2_reference") return "muted";
+  if (tier === "tier3_backfill") return "warm";
+  return "danger";
+}
+
+function formatSeedTierLabel(
+  tier: FootballWorldCupDossierSeedTier | null,
+  i18n: WorldCupJournalistI18n,
+): string | null {
+  if (!tier) return null;
+  const targetPlayerCount =
+    FOOTBALL_WORLD_CUP_DOSSIER_PLAYBOOK.targetProgram.targetPlayerCount;
+  if (i18n.code !== "ko") {
+    if (tier === "top20") return "Top 20";
+    if (tier === "top50") return "Top 50";
+    if (tier === "top100") return "Top 100";
+    return `Top ${targetPlayerCount}`;
+  }
+  if (tier === "top20") return "상위 20";
+  if (tier === "top50") return "상위 50";
+  if (tier === "top100") return "상위 100";
+  return `상위 ${targetPlayerCount}`;
+}
+
+function formatDossierCoverageChip(
+  pct: number | null,
+  i18n: WorldCupJournalistI18n,
+): string | null {
+  if (pct == null) return null;
+  return i18n.code === "ko" ? `도시어 ${pct}%` : `Dossier ${pct}%`;
+}
+
+function formatBioGapLabel(i18n: WorldCupJournalistI18n): string {
+  return i18n.code === "ko" ? "바이오 공백" : "Bio gap";
+}
+
 function countPatternMatches(value: string, pattern: RegExp): number {
   return value.match(pattern)?.length || 0;
 }
@@ -2092,6 +2280,7 @@ function rewriteStorylineSummary(
 function buildPersonBadges(
   card: JournalistPersonCard,
   i18n: WorldCupJournalistI18n,
+  dossierProgramEntry?: FootballWorldCupDossierProgramPlayer | null,
 ): BadgeItem[] {
   const structured = card.statusPanel.structured;
   const items: BadgeItem[] = [];
@@ -2116,6 +2305,14 @@ function buildPersonBadges(
       label: i18n.counts.officialSignal(card.officialAppearanceTimeline.length),
       tone: "muted",
     });
+  }
+  const seedTierLabel = formatSeedTierLabel(
+    dossierProgramEntry?.seedTier || null,
+    i18n,
+  );
+  if (seedTierLabel) items.push({ label: seedTierLabel, tone: "default" });
+  if (dossierProgramEntry?.missingLiveBiography) {
+    items.push({ label: formatBioGapLabel(i18n), tone: "warm" });
   }
   return items;
 }
@@ -2239,12 +2436,18 @@ function buildPersonEntry(
   card: JournalistPersonCard,
   i18n: WorldCupJournalistI18n,
   humanInterestRecord?: HumanInterestPilotRecord | null,
+  dossierProgramEntry?: FootballWorldCupDossierProgramPlayer | null,
 ): PersonEntry {
   const structured = card.statusPanel.structured;
   const scoreBreakdown = buildPersonScoreBreakdown(
     card,
     i18n.code,
     humanInterestRecord,
+  );
+  const dossierCoverage = buildFootballWorldCupDossierCoverage(
+    card,
+    humanInterestRecord,
+    FOOTBALL_WORLD_CUP_DOSSIER_PLAYBOOK,
   );
   const starPowerScore = computeStarPowerScore(card, humanInterestRecord);
   const signalScore = scoreBreakdown.reduce(
@@ -2298,10 +2501,20 @@ function buildPersonEntry(
       card.profile?.sourceUrl ||
       null,
     updatedAt: card.statusPanel.updatedAt,
-    badges: buildPersonBadges(card, i18n),
+    badges: buildPersonBadges(card, i18n, dossierProgramEntry),
     scoreBreakdown,
     signalScore,
     starPowerScore,
+    dossierCoverage,
+    dossierCompletenessPct: dossierProgramEntry?.completenessPct ?? dossierCoverage.completenessPct,
+    dossierMissingFieldCount:
+      dossierProgramEntry?.missingFieldCount ?? dossierCoverage.missingFields.length,
+    dossierSeedRank: dossierProgramEntry?.seedRank || null,
+    dossierSeedTier: dossierProgramEntry?.seedTier || null,
+    dossierActionPriorityScore: dossierProgramEntry?.actionPriorityScore || null,
+    missingLiveBiography:
+      dossierProgramEntry?.missingLiveBiography ??
+      !Boolean(card.profile?.biographySourceUrl),
     rarity: buildCardRarity(buildDisplayHeatScore(signalScore)),
     lane,
     laneTone,
@@ -4464,6 +4677,14 @@ function SquadCard({
             <strong>{compactClub}</strong>
           </span>
         ) : null}
+        {item.dossierCompletenessPct != null ? (
+          <span className={styles.squadCardStatChip}>
+            <span>
+              {i18n.code === "ko" ? "도시어" : "Dossier"}
+            </span>
+            <strong>{item.dossierCompletenessPct}%</strong>
+          </span>
+        ) : null}
         <span className={styles.squadCardStatChip}>
           <span>{atlasCopy.official}</span>
           <strong>{officialCount}</strong>
@@ -4495,6 +4716,9 @@ function SquadCard({
         <div className={styles.squadCardLinks}>
           {item.updatedAt ? (
             <span>{formatDateTime(item.updatedAt, i18n)}</span>
+          ) : null}
+          {item.dossierSeedRank ? (
+            <span>#{item.dossierSeedRank}</span>
           ) : null}
           <span className={badgeClass(dossierTone)}>
             {i18n.actions.openDossier}
@@ -4721,6 +4945,7 @@ function PersonDetailPanel({
   onSelectPerson,
   onClearSelection,
   i18n,
+  humanInterestRecord,
   humanInterestAngles,
   researchNotes,
 }: {
@@ -4737,6 +4962,7 @@ function PersonDetailPanel({
   onSelectPerson: (personId: string) => void;
   onClearSelection: () => void;
   i18n: WorldCupJournalistI18n;
+  humanInterestRecord: HumanInterestPilotRecord | null;
   humanInterestAngles: HumanInterestAngleItem[];
   researchNotes: HumanInterestPilotResearchNote[];
 }) {
@@ -4744,6 +4970,7 @@ function PersonDetailPanel({
   const humanInterestAngleCopy = LOCALIZED_HUMAN_INTEREST_ANGLE_COPY[i18n.code];
   const researchHintCopy = LOCALIZED_RESEARCH_HINT_COPY[i18n.code];
   const backgroundCopy = LOCALIZED_BACKGROUND_COPY[i18n.code];
+  const dossierCopy = LOCALIZED_DOSSIER_COPY[i18n.code];
   const positionVisual = buildPositionVisual(card);
   const aliases = collectAliases(card);
   const claims = collectPersonClaims(card);
@@ -4860,6 +5087,7 @@ function PersonDetailPanel({
         Boolean(value) && value !== entry.hook && value !== entry.statusLine,
     ) || null;
   const compactDetailNarrative = compactText(detailNarrative, 120);
+  const dossierCoverage = entry.isPlayer ? entry.dossierCoverage : null;
   const detailFacts = [
     {
       label: i18n.labels.status,
@@ -5118,6 +5346,198 @@ function PersonDetailPanel({
           )}
         </section>
 
+        {dossierCoverage ? (
+          <>
+            <section className={styles.detailCard}>
+              <span className={styles.kicker}>{dossierCopy.kicker}</span>
+              <h3 className={styles.detailCardTitle}>{dossierCopy.title}</h3>
+              <p className={styles.detailBodyText}>{dossierCopy.note}</p>
+              <div className={styles.coverageMeter} aria-hidden="true">
+                <div
+                  className={styles.coverageMeterFill}
+                  style={{ width: `${dossierCoverage.completenessPct}%` }}
+                />
+              </div>
+              <div className={styles.detailFactGrid}>
+                <div className={styles.detailFactCard}>
+                  <span className={styles.factLabel}>{dossierCopy.coverage}</span>
+                  <strong className={styles.factValue}>
+                    {dossierCoverage.completenessPct}%
+                  </strong>
+                </div>
+                <div className={styles.detailFactCard}>
+                  <span className={styles.factLabel}>{dossierCopy.fieldsFilled}</span>
+                  <strong className={styles.factValue}>
+                    {dossierCoverage.filledCount}/{dossierCoverage.totalCount}
+                  </strong>
+                </div>
+                <div className={styles.detailFactCard}>
+                  <span className={styles.factLabel}>{dossierCopy.currentSources}</span>
+                  <strong className={styles.factValue}>
+                    {dossierCoverage.currentSources.length}
+                  </strong>
+                </div>
+                <div className={styles.detailFactCard}>
+                  <span className={styles.factLabel}>{dossierCopy.targetProgram}</span>
+                  <strong className={styles.factValue}>
+                    {FOOTBALL_WORLD_CUP_DOSSIER_PLAYBOOK.targetProgram.targetPlayerCount}
+                    -player
+                  </strong>
+                </div>
+                {entry.dossierSeedRank ? (
+                  <div className={styles.detailFactCard}>
+                    <span className={styles.factLabel}>
+                      {i18n.code === "ko" ? "시드 순위" : "Seed rank"}
+                    </span>
+                    <strong className={styles.factValue}>
+                      #{entry.dossierSeedRank}
+                      {entry.dossierSeedTier
+                        ? ` · ${formatSeedTierLabel(entry.dossierSeedTier, i18n)}`
+                        : ""}
+                    </strong>
+                  </div>
+                ) : null}
+                {entry.missingLiveBiography ? (
+                  <div className={styles.detailFactCard}>
+                    <span className={styles.factLabel}>
+                      {i18n.code === "ko" ? "라이브 바이오" : "Live bio"}
+                    </span>
+                    <strong className={styles.factValue}>
+                      {i18n.code === "ko" ? "아직 비어 있음" : "Missing now"}
+                    </strong>
+                  </div>
+                ) : null}
+              </div>
+
+              <div className={styles.detailList}>
+                <article className={styles.detailItem}>
+                  <div className={styles.detailItemTop}>
+                    <strong className={styles.detailItemTitle}>
+                      {dossierCopy.byCategory}
+                    </strong>
+                  </div>
+                  <div className={styles.detailHintRail}>
+                    {dossierCoverage.categoryCoverage.map((item) => (
+                      <span
+                        className={badgeClass(
+                          item.filledCount === item.totalCount ? "default" : "muted",
+                        )}
+                        key={`dossier-category:${item.category}`}
+                      >
+                        {localizeDossierCategoryLabel(item.category, i18n)}{" "}
+                        {item.filledCount}/{item.totalCount}
+                      </span>
+                    ))}
+                  </div>
+                </article>
+
+                {dossierCoverage.currentSources.length ? (
+                  <article className={styles.detailItem}>
+                    <div className={styles.detailItemTop}>
+                      <strong className={styles.detailItemTitle}>
+                        {dossierCopy.currentSources}
+                      </strong>
+                    </div>
+                    <div className={styles.detailHintRail}>
+                      {dossierCoverage.currentSources.slice(0, 8).map((source) =>
+                        source.url ? (
+                          <a
+                            className={styles.detailTagLink}
+                            href={source.url}
+                            key={`dossier-source:${source.label}:${source.url || "nolink"}`}
+                            rel="noreferrer"
+                            target="_blank"
+                          >
+                            {source.label}
+                          </a>
+                        ) : (
+                          <span
+                            className={badgeClass("muted")}
+                            key={`dossier-source:${source.label}:${source.url || "nolink"}`}
+                          >
+                            {source.label}
+                          </span>
+                        ),
+                      )}
+                    </div>
+                  </article>
+                ) : null}
+
+                {dossierCoverage.missingFields.length ? (
+                  <article className={styles.detailItem}>
+                    <div className={styles.detailItemTop}>
+                      <strong className={styles.detailItemTitle}>
+                        {dossierCopy.missingFields}
+                      </strong>
+                    </div>
+                    <div className={styles.detailHintRail}>
+                      {dossierCoverage.missingFields.slice(0, 10).map((field) => (
+                        <span
+                          className={badgeClass("warm")}
+                          key={`dossier-missing:${field.id}`}
+                        >
+                          {localizeDossierFieldLabel(field.id, i18n)}
+                        </span>
+                      ))}
+                    </div>
+                  </article>
+                ) : null}
+              </div>
+            </section>
+
+            {dossierCoverage.recommendedSources.length ? (
+              <section className={styles.detailCard}>
+                <span className={styles.kicker}>{dossierCopy.recommendedSources}</span>
+                <h3 className={styles.detailCardTitle}>
+                  {FOOTBALL_WORLD_CUP_DOSSIER_PLAYBOOK.targetProgram.label}
+                </h3>
+                <p className={styles.detailBodyText}>{dossierCopy.hintPolicy}</p>
+                <div className={styles.detailList}>
+                  {dossierCoverage.recommendedSources.map((source) => {
+                    const example = source.examples[0] || null;
+                    return (
+                      <article
+                        className={styles.detailItem}
+                        key={`dossier-rec:${source.sourceId}`}
+                      >
+                        <div className={styles.detailItemTop}>
+                          <strong className={styles.detailItemTitle}>
+                            {source.label}
+                          </strong>
+                          <span className={badgeClass(dossierTierTone(source.tier))}>
+                            {localizeDossierTierLabel(source.tier, i18n)}
+                          </span>
+                        </div>
+                        <p className={styles.detailBodyText}>{source.description}</p>
+                        <p className={styles.detailBodyText}>{source.usage}</p>
+                        <div className={styles.detailInlineMeta}>
+                          <span>{dossierCopy.bestFor}</span>
+                          <span>
+                            {source.matchedFieldIds
+                              .slice(0, 6)
+                              .map((fieldId) =>
+                                localizeDossierFieldLabel(fieldId, i18n),
+                              )
+                              .join(" · ")}
+                          </span>
+                        </div>
+                        <div className={styles.detailInlineMeta}>
+                          <span>{source.verificationNote}</span>
+                          {example?.url ? (
+                            <a href={example.url} target="_blank" rel="noreferrer">
+                              {dossierCopy.openExample}
+                            </a>
+                          ) : null}
+                        </div>
+                      </article>
+                    );
+                  })}
+                </div>
+              </section>
+            ) : null}
+          </>
+        ) : null}
+
         {compactClaims.length ? (
           <section className={styles.detailCard}>
             <span className={styles.kicker}>{i18n.labels.claims}</span>
@@ -5324,6 +5744,9 @@ function WatchCard({
 
       <div className={styles.watchMeta}>
         <span>{formatDateTime(item.updatedAt, i18n)}</span>
+        {item.dossierCompletenessPct != null ? (
+          <span>{formatDossierCoverageChip(item.dossierCompletenessPct, i18n)}</span>
+        ) : null}
         {item.href ? (
           <a href={item.href} target="_blank" rel="noreferrer">
             {i18n.actions.openSource}
@@ -5427,6 +5850,7 @@ export function WorldCupJournalistView({
   selectedLeadType,
   selectedLeadSource,
   humanInterestRecords = [],
+  dossierProgram = null,
 }: Props) {
   const i18n = getWorldCupJournalistI18n(language);
   const officialLaneCopy = LOCALIZED_OFFICIAL_NEWS_LANE[language];
@@ -5455,6 +5879,9 @@ export function WorldCupJournalistView({
       record,
     ]),
   );
+  const dossierProgramById = new Map(
+    (dossierProgram?.targetPlayers || []).map((item) => [item.sportsPersonId, item]),
+  );
   const allCards = [...selectedTeam.playerCards, ...selectedTeam.staffCards];
   const cardById = new Map(allCards.map((card) => [card.sportsPersonId, card]));
   const allEntries = allCards
@@ -5467,6 +5894,7 @@ export function WorldCupJournalistView({
           card,
           humanInterestRecordByKey,
         ),
+        dossierProgramById.get(card.sportsPersonId) || null,
       ),
     )
     .sort((left, right) => {
@@ -5559,6 +5987,7 @@ export function WorldCupJournalistView({
           selectedCard,
           humanInterestRecordByKey,
         ),
+        dossierProgramById.get(selectedCard.sportsPersonId) || null,
       )
     : null;
   const atlasEntries = sortAtlasEntries(allEntries, cardSortMode, i18n.locale);
@@ -6334,6 +6763,7 @@ export function WorldCupJournalistView({
               onSelectPerson={handleSelectPerson}
               onClearSelection={handleClearSelectedPerson}
               i18n={i18n}
+              humanInterestRecord={selectedHumanInterestRecord}
               humanInterestAngles={selectedHumanInterestAngles}
               researchNotes={selectedResearchNotes}
             />

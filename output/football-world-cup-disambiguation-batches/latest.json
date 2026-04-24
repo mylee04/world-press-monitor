@@ -1,0 +1,190 @@
+{
+  "generatedAt": "2026-04-23T18:57:02.283Z",
+  "apply": true,
+  "scope": "target-completeness",
+  "chunkSize": 10,
+  "rankFrom": 141,
+  "rankTo": 300,
+  "batchCount": 16,
+  "okCount": 16,
+  "timeoutCount": 0,
+  "appliedCount": 137,
+  "results": [
+    {
+      "rankFrom": 141,
+      "rankTo": 150,
+      "ok": true,
+      "timedOut": false,
+      "durationMs": 2587,
+      "targetCount": 10,
+      "appliedCount": 5,
+      "error": null,
+      "warnings": []
+    },
+    {
+      "rankFrom": 151,
+      "rankTo": 160,
+      "ok": true,
+      "timedOut": false,
+      "durationMs": 2259,
+      "targetCount": 10,
+      "appliedCount": 10,
+      "error": null,
+      "warnings": []
+    },
+    {
+      "rankFrom": 161,
+      "rankTo": 170,
+      "ok": true,
+      "timedOut": false,
+      "durationMs": 2333,
+      "targetCount": 10,
+      "appliedCount": 6,
+      "error": null,
+      "warnings": []
+    },
+    {
+      "rankFrom": 171,
+      "rankTo": 180,
+      "ok": true,
+      "timedOut": false,
+      "durationMs": 2492,
+      "targetCount": 10,
+      "appliedCount": 10,
+      "error": null,
+      "warnings": []
+    },
+    {
+      "rankFrom": 181,
+      "rankTo": 190,
+      "ok": true,
+      "timedOut": false,
+      "durationMs": 2370,
+      "targetCount": 10,
+      "appliedCount": 9,
+      "error": null,
+      "warnings": []
+    },
+    {
+      "rankFrom": 191,
+      "rankTo": 200,
+      "ok": true,
+      "timedOut": false,
+      "durationMs": 2432,
+      "targetCount": 10,
+      "appliedCount": 10,
+      "error": null,
+      "warnings": []
+    },
+    {
+      "rankFrom": 201,
+      "rankTo": 210,
+      "ok": true,
+      "timedOut": false,
+      "durationMs": 2289,
+      "targetCount": 10,
+      "appliedCount": 9,
+      "error": null,
+      "warnings": []
+    },
+    {
+      "rankFrom": 211,
+      "rankTo": 220,
+      "ok": true,
+      "timedOut": false,
+      "durationMs": 2215,
+      "targetCount": 10,
+      "appliedCount": 7,
+      "error": null,
+      "warnings": []
+    },
+    {
+      "rankFrom": 221,
+      "rankTo": 230,
+      "ok": true,
+      "timedOut": false,
+      "durationMs": 2377,
+      "targetCount": 10,
+      "appliedCount": 10,
+      "error": null,
+      "warnings": []
+    },
+    {
+      "rankFrom": 231,
+      "rankTo": 240,
+      "ok": true,
+      "timedOut": false,
+      "durationMs": 2276,
+      "targetCount": 10,
+      "appliedCount": 10,
+      "error": null,
+      "warnings": []
+    },
+    {
+      "rankFrom": 241,
+      "rankTo": 250,
+      "ok": true,
+      "timedOut": false,
+      "durationMs": 2266,
+      "targetCount": 10,
+      "appliedCount": 8,
+      "error": null,
+      "warnings": []
+    },
+    {
+      "rankFrom": 251,
+      "rankTo": 260,
+      "ok": true,
+      "timedOut": false,
+      "durationMs": 2252,
+      "targetCount": 10,
+      "appliedCount": 10,
+      "error": null,
+      "warnings": []
+    },
+    {
+      "rankFrom": 261,
+      "rankTo": 270,
+      "ok": true,
+      "timedOut": false,
+      "durationMs": 2288,
+      "targetCount": 10,
+      "appliedCount": 8,
+      "error": null,
+      "warnings": []
+    },
+    {
+      "rankFrom": 271,
+      "rankTo": 280,
+      "ok": true,
+      "timedOut": false,
+      "durationMs": 2241,
+      "targetCount": 10,
+      "appliedCount": 8,
+      "error": null,
+      "warnings": []
+    },
+    {
+      "rankFrom": 281,
+      "rankTo": 290,
+      "ok": true,
+      "timedOut": false,
+      "durationMs": 2260,
+      "targetCount": 10,
+      "appliedCount": 8,
+      "error": null,
+      "warnings": []
+    },
+    {
+      "rankFrom": 291,
+      "rankTo": 300,
+      "ok": true,
+      "timedOut": false,
+      "durationMs": 2276,
+      "targetCount": 10,
+      "appliedCount": 9,
+      "error": null,
+      "warnings": []
+    }
+  ]
+}
